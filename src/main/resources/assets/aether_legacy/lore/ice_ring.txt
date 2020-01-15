@@ -1,0 +1,1 @@
+A ring which allows you to freeze water, and lava when walked on.

@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"holiday_leaves=holiday_leaves": {
+			"model": "aether_legacy:holiday_leaves"
+		},
+		"holiday_leaves=decorated_holiday_leaves": {
+			"model": "aether_legacy:decorated_holiday_leaves"
+		}
+	}
+}

@@ -1,0 +1,11 @@
+{
+    
+	"variants": 
+	{
+        
+		"half=bottom": { "model": "aether_legacy:carved_stone" },
+        				"half=top": { "model": "aether_legacy:carved_stone" }
+    
+	}
+
+}

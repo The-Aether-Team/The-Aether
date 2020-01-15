@@ -1,0 +1,11 @@
+{
+    
+	"parent": "block/fence_side",
+    
+	"textures": 
+	{
+        
+	"texture": "aether_legacy:blocks/skyroot_plank"
+    
+	}
+}

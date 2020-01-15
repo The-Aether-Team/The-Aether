@@ -1,0 +1,1 @@
+A directional item which points to the users spawn point.

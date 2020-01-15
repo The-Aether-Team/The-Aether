@@ -1,0 +1,12 @@
+{
+    
+	"variants": 
+	{
+        
+		"half=bottom": { "model": "aether_legacy:angelic_half_slab" },
+        	
+		"half=top": { "model": "aether_legacy:angelic_upper_slab" }
+    
+	}
+
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "S S",
+    " Z "
+  ],
+  "key": {
+    "Z": {
+      "item": "aether_legacy:zanite_gemstone"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "aether_legacy:zanite_pendant"
+  }
+}

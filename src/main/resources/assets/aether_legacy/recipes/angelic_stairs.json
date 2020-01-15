@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "aether_legacy:dungeon_block",
+      "data": 2
+    }
+  },
+  "result": {
+    "item": "aether_legacy:angelic_stairs",
+    "count": 4
+  }
+}

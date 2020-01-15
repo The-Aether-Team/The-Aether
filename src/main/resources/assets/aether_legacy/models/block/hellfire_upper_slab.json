@@ -1,0 +1,15 @@
+{
+    
+	"parent": "block/upper_slab",
+    
+	"textures": {
+        
+		"bottom": "aether_legacy:blocks/hellfire_stone",
+        
+		"top": "aether_legacy:blocks/hellfire_stone",
+        
+		"side": "aether_legacy:blocks/hellfire_stone"
+    
+	}
+
+}

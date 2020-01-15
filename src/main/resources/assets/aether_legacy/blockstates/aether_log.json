@@ -1,0 +1,28 @@
+{
+	"variants": {
+		"aether_logs=golden_oak_log,axis=x": {
+			"model": "aether_legacy:golden_oak_log", "x": 90, "y": 90
+		},
+		"aether_logs=golden_oak_log,axis=y": {
+			"model": "aether_legacy:golden_oak_log"
+		},
+		"aether_logs=golden_oak_log,axis=z": {
+			"model": "aether_legacy:golden_oak_log", "x": 90
+		},
+		"aether_logs=golden_oak_log,axis=none": {
+			"model": "aether_legacy:golden_oak_log_bark"
+		},
+		"aether_logs=skyroot_log,axis=x": {
+			"model": "aether_legacy:skyroot_log", "x": 90, "y": 90
+		},
+		"aether_logs=skyroot_log,axis=y": {
+			"model": "aether_legacy:skyroot_log"
+		},
+		"aether_logs=skyroot_log,axis=z": {
+			"model": "aether_legacy:skyroot_log", "x": 90
+		},
+		"aether_logs=skyroot_log,axis=none": {
+			"model": "aether_legacy:skyroot_log_bark"
+		}
+	}
+}

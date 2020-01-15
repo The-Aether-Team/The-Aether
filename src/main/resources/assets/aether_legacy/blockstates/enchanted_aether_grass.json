@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"normal": [
+			{ "model": "aether_legacy:enchanted_aether_grass" },
+			{ "model": "aether_legacy:enchanted_aether_grass", "y": 90 },
+			{ "model": "aether_legacy:enchanted_aether_grass", "y": 180 },
+			{ "model": "aether_legacy:enchanted_aether_grass", "y": 270 }
+		]
+	}
+}

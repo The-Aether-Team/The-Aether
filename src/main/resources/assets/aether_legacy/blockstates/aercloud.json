@@ -1,0 +1,16 @@
+{
+	"variants": {
+		"aether_aercloud=cold_aercloud": {
+			"model": "aether_legacy:cold_aercloud"
+		},
+		"aether_aercloud=blue_aercloud": {
+			"model": "aether_legacy:blue_aercloud"
+		},
+		"aether_aercloud=golden_aercloud": {
+			"model": "aether_legacy:golden_aercloud"
+		},
+		"aether_aercloud=pink_aercloud": {
+			"model": "aether_legacy:pink_aercloud"
+		}
+	}
+}

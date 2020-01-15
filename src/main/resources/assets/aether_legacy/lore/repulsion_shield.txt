@@ -1,0 +1,3 @@
+A shield that protects the user from most projectiles. 
+It will reflect the projectile back at the thrower and cause damage to them. 
+Each time a projectile is reflected the shield will be damaged.

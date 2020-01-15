@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    "###",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "item": "aether_legacy:skyroot_stick"
+    }
+  },
+  "result": {
+    "item": "minecraft:ladder",
+    "count": 3
+  }
+}

@@ -1,0 +1,25 @@
+{
+  	"display": {
+	  	"icon": {
+			"item": "aether_legacy:lore_book"
+		},
+		"title": {
+			"translate": "advancement.aether_legacy.loreception"
+		},
+		"description": {
+			"translate": "advancement.aether_legacy.loreception.desc"
+		},
+		"hidden": true
+	},
+  	"parent": "aether_legacy:enter_aether",
+	"criteria": {
+		"enter_aether": {
+			"trigger": "aether_legacy:lore_item",
+			"conditions": {
+				"item": {
+					"item": "aether_legacy:lore_book"
+				}
+			}
+		}
+	}
+}

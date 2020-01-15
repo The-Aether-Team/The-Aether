@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aether_legacy:skyroot_bucket",
+      "data": 2
+    },
+	{
+       "item": "aether_legacy:dart_shooter",
+      "data": 0
+    }
+  ],
+  "result": {
+    "item": "aether_legacy:dart_shooter",
+      "data": 1,
+    "count": 1
+  }
+}

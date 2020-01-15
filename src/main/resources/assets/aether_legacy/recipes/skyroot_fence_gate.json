@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_fence_gate",
+  "pattern": [
+    "#W#",
+    "#W#"
+  ],
+  "key": {
+    "#": {
+      "item": "aether_legacy:skyroot_stick"
+    },
+    "W": {
+      "item": "aether_legacy:skyroot_plank"
+    }
+  },
+  "result": {
+    "item": "aether_legacy:skyroot_fence_gate"
+  }
+}

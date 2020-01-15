@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"normal": [
+			{ "model": "aether_legacy:holystone" },
+			{ "model": "aether_legacy:holystone", "y": 90 },
+			{ "model": "aether_legacy:holystone", "y": 180 },
+			{ "model": "aether_legacy:holystone", "y": 270 }
+		]
+	}
+}

@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether_legacy:angelic_wall"
+    ]
+  },
+  "criteria": {
+    "has_angelic": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aether_legacy:dungeon_block",
+            "data": 2
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether_legacy:angelic_wall"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_angelic",
+      "has_the_recipe"
+    ]
+  ]
+}

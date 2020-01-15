@@ -1,0 +1,11 @@
+{
+    
+	"variants": 
+	{
+        
+		"half=bottom": { "model": "aether_legacy:mossy_holystone" },
+        		"half=top": { "model": "aether_legacy:mossy_holystone" }
+    
+	}
+
+}

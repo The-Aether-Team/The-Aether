@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether_legacy:yellow_cape"
+    ]
+  },
+  "criteria": {
+    "has_yellow_wool": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:wool",
+            "data": 4
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether_legacy:yellow_cape"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_yellow_wool",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "aether_legacy:mossy_holystone"
+    }
+  },
+  "result": {
+    "item": "aether_legacy:mossy_holystone_stairs",
+    "count": 4
+  }
+}

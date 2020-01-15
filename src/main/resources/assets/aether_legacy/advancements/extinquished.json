@@ -1,0 +1,23 @@
+{
+  	"display": {
+	  	"icon": {
+			"item": "aether_legacy:dungeon_key",
+			"data": 2
+		},
+		"title": {
+			"translate": "advancement.aether_legacy.gold_dungeon"
+		},
+		"description": {
+			"translate": "advancement.aether_legacy.gold_dungeon.desc"
+		},
+		"frame": "challenge"
+	},
+  	"parent": "aether_legacy:dethroned",
+	"criteria": {
+		"enter_aether": {
+			"trigger": "aether_legacy:defeat_sun_spirit",
+			"conditions": {
+			}
+		}
+	}
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "HHH",
+    "HBH",
+    "HHH"
+  ],
+  "key": {
+    "B": {
+      "item": "aether_legacy:skyroot_bucket",
+      "data":2
+    },
+    "H": {
+      "item": "aether_legacy:dart",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "aether_legacy:dart",
+    "data": 1,
+    "count": 8
+  }
+}

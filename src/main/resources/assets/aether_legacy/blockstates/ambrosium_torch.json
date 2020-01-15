@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=up": { "model": "aether_legacy:ambrosium_torch" },
+        "facing=east": { "model": "aether_legacy:ambrosium_torch_wall" },
+        "facing=south": { "model": "aether_legacy:ambrosium_torch_wall", "y": 90 },
+        "facing=west": { "model": "aether_legacy:ambrosium_torch_wall", "y": 180 },
+        "facing=north": { "model": "aether_legacy:ambrosium_torch_wall", "y": 270 }
+    }
+}

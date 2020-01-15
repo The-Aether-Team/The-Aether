@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    " X "
+  ],
+  "key": {
+    "#": [
+      {
+        "item": "aether_legacy:skyroot_plank"
+      }
+    ],
+    "X": {
+      "item": "aether_legacy:skyroot_stick"
+    }
+  },
+  "result": {
+    "item": "minecraft:sign",
+    "count": 3
+  }
+}

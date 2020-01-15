@@ -1,0 +1,1 @@
+A sticky substance that slows player down and negates their fall damage.

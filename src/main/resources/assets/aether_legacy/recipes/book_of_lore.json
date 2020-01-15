@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aether_legacy:ambrosium_shard"
+    },
+	{
+      "item": "minecraft:book"
+    }
+  ],
+  "result": {
+    "item": "aether_legacy:lore_book",
+    "count": 1
+  }
+}

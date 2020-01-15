@@ -1,0 +1,11 @@
+{
+    
+	"variants": 
+	{
+        
+		"half=bottom": { "model": "aether_legacy:skyroot_plank" },
+        			"half=top": { "model": "aether_legacy:skyroot_plank" }
+    
+	}
+
+}

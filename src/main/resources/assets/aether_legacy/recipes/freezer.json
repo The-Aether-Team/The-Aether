@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "HHH",
+    "HIH",
+    "SSS"
+  ],
+  "key": {
+    "I": {
+      "item": "aether_legacy:icestone"
+    },
+    "H": {
+      "item": "aether_legacy:holystone"
+    },
+    "S": {
+      "item": "aether_legacy:skyroot_plank"
+    }
+  },
+  "result": {
+    "item": "aether_legacy:freezer"
+  }
+}

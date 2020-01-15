@@ -1,0 +1,6 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "aether_legacy:items/accessories/cape_color_base"
+	}
+}

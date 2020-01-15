@@ -1,0 +1,26 @@
+{
+  	"display": {
+	  	"icon": {
+			"item": "aether_legacy:aercloud",
+			"data": 1
+		},
+		"title": {
+			"translate": "advancement.aether_legacy.blue_aercloud"
+		},
+		"description": {
+			"translate": "advancement.aether_legacy.blue_aercloud.desc"
+		}
+	},
+  	"parent": "aether_legacy:enter_aether",
+	"criteria": {
+		"enter_aether": {
+			"trigger": "minecraft:enter_block",
+			"conditions": {
+				"block": "aether_legacy:aercloud",
+				"state": {
+					"aether_aercloud": "blue_aercloud"
+				}
+			}
+		}
+	}
+}

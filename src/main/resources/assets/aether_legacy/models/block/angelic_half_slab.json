@@ -1,0 +1,15 @@
+{
+    
+	"parent": "block/half_slab",
+    
+	"textures": {
+        
+		"bottom": "aether_legacy:blocks/angelic_stone",
+        
+		"top": "aether_legacy:blocks/angelic_stone",
+        
+		"side": "aether_legacy:blocks/angelic_stone"
+    
+	}
+
+}

@@ -1,0 +1,11 @@
+{
+    
+	"variants": 
+	{
+        
+		"half=bottom": { "model": "aether_legacy:holystone_brick" },
+        		"half=top": { "model": "aether_legacy:holystone_brick" }
+    
+	}
+
+}

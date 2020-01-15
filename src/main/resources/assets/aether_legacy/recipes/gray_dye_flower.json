@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "light_gray_dye",
+  "ingredients": [
+    {
+      "item": "aether_legacy:white_flower"
+    }
+  ],
+  "result": {
+    "item": "minecraft:dye",
+    "data": 7,
+    "count": 2
+  }
+}

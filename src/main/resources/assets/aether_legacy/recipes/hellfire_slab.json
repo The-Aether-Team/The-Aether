@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "aether_legacy:dungeon_block",
+      "data": 4
+    }
+  },
+  "result": {
+    "item": "aether_legacy:hellfire_slab",
+    "data": 0,
+    "count": 6
+  }
+}

@@ -1,0 +1,22 @@
+{
+	"variants": {
+		"aether_legacy_dungeon_stone=carved_stone": {
+			"model": "aether_legacy:carved_stone"
+		},
+		"aether_legacy_dungeon_stone=sentry_stone": {
+			"model": "aether_legacy:sentry_stone"
+		},
+		"aether_legacy_dungeon_stone=angelic_stone": {
+			"model": "aether_legacy:angelic_stone"
+		},
+		"aether_legacy_dungeon_stone=light_angelic_stone": {
+			"model": "aether_legacy:light_angelic_stone"
+		},
+		"aether_legacy_dungeon_stone=hellfire_stone": {
+			"model": "aether_legacy:hellfire_stone"
+		},
+		"aether_legacy_dungeon_stone=light_hellfire_stone": {
+			"model": "aether_legacy:light_hellfire_stone"
+		}
+	}
+}

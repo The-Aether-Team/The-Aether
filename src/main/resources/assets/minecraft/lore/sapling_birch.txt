@@ -1,0 +1,1 @@
+One of the six varieties of sapling. These can be placed on any natural block like grass, dirt, or podzol. To be able to grow, it requires a light level at least 9 and needs at least 7 spaces above to be able to grow. Can be instantly grown with bone meal.

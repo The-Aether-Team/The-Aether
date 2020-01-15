@@ -1,0 +1,15 @@
+{
+    
+	"parent": "block/upper_slab",
+    
+	"textures": {
+        
+		"bottom": "aether_legacy:blocks/holystone_brick",
+        
+		"top": "aether_legacy:blocks/holystone_brick",
+        
+		"side": "aether_legacy:blocks/holystone_brick"
+    
+	}
+
+}

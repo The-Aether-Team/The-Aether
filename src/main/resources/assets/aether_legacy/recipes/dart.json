@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X",
+    "#",
+    "Y"
+  ],
+  "key": {
+    "#": {
+      "item": "aether_legacy:skyroot_stick"
+    },
+    "X": {
+      "item": "minecraft:feather"
+    },
+    "Y": {
+      "item": "aether_legacy:golden_amber"
+    }
+  },
+  "result": {
+    "item": "aether_legacy:dart",
+    "data": 0,
+    "count": 4
+  }
+}

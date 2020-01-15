@@ -1,0 +1,16 @@
+{
+    
+	"parent": "block/outer_stairs",
+    
+	"textures": 
+	{
+        
+		"bottom": "aether_legacy:blocks/aerogel",
+        
+		"top": "aether_legacy:blocks/aerogel",
+        
+		"side": "aether_legacy:blocks/aerogel"
+    
+	}
+
+}

@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether_legacy:poison_dart"
+    ]
+  },
+  "criteria": {
+    "has_dart": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aether_legacy:dart",
+            "data": 0
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether_legacy:poison_dart"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_dart",
+      "has_the_recipe"
+    ]
+  ]
+}

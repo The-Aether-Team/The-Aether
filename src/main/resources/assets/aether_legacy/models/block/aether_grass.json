@@ -1,0 +1,9 @@
+{
+	"parent": "aether_legacy:block/multi_texture_base",
+	"textures": {
+		"particle": "aether_legacy:blocks/aether_dirt",
+		"bottom": "aether_legacy:blocks/aether_dirt",
+		"top": "aether_legacy:blocks/aether_grass_top",
+		"side": "aether_legacy:blocks/aether_grass_side"
+	}
+}

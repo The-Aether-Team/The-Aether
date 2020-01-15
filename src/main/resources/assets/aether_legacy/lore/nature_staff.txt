@@ -1,0 +1,1 @@
+A staff that can allow for commanding tamed Moas. It can allow them to sit on the ground.

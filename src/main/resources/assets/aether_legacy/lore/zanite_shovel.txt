@@ -1,0 +1,1 @@
+One of Aether's mid-tier tools, as you mine dirt and Quicksoil, the durrability will decrease, and get faster. If you wait long enough it will start to break blocks instantly! Be careful repairing it, as it will be slower when there is more durability.

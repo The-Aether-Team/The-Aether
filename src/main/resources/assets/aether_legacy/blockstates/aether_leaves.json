@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"aether_leaves=green_leaves": {
+			"model": "aether_legacy:green_leaves"
+		},
+		"aether_leaves=golden_oak_leaves": {
+			"model": "aether_legacy:golden_oak_leaves"
+		}
+	}
+}

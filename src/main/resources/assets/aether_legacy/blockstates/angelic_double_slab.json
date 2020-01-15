@@ -1,0 +1,12 @@
+{
+    
+	"variants": 
+	{
+        
+		"half=bottom": { "model": "aether_legacy:angelic_stone" },
+        	
+		"half=top": { "model": "aether_legacy:angelic_stone" }
+    
+	}
+
+}

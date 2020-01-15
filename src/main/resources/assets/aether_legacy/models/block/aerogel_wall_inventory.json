@@ -1,0 +1,11 @@
+{
+    
+	"parent": "block/wall_inventory",
+    
+	"textures": {
+        
+		"wall": "aether_legacy:blocks/aerogel"
+    
+	}
+
+}

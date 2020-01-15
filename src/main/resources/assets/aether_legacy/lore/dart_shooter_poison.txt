@@ -1,0 +1,1 @@
+A Dart Shooter which shoots Poison darts. Shooting this at something infects them with a deadly poison!

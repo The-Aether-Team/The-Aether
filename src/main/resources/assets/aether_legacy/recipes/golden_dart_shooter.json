@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "S",
+    "F"
+  ],
+  "key": {
+    "S": {
+      "item": "aether_legacy:skyroot_plank"
+    },
+    "F": {
+      "item": "aether_legacy:golden_amber"
+    }
+  },
+  "result": {
+    "item": "aether_legacy:dart_shooter",
+    "data": 0
+  }
+}

@@ -1,0 +1,16 @@
+{
+    
+	"parent": "block/inner_stairs",
+    
+	"textures": 
+	{
+        
+		"bottom": "aether_legacy:blocks/skyroot_plank",
+        
+		"top": "aether_legacy:blocks/skyroot_plank",
+        
+		"side": "aether_legacy:blocks/skyroot_plank"
+    
+	}
+
+}

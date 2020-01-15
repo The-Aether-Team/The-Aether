@@ -1,0 +1,24 @@
+{
+  	"display": {
+	  	"icon": {
+			"item": "minecraft:saddle"
+		},
+		"title": {
+			"translate": "advancement.aether_legacy.mount_phyg"
+		},
+		"description": {
+			"translate": "advancement.aether_legacy.mount_phyg.desc"
+		}
+	},
+  	"parent": "aether_legacy:to_infinity_and_beyond",
+	"criteria": {
+		"enter_aether": {
+			"trigger": "aether_legacy:mount_entity",
+			"conditions": {
+				"entity": {
+					"type": "aether_legacy:phyg"
+				}
+			}
+		}
+	}
+}

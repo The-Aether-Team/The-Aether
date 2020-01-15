@@ -1,0 +1,26 @@
+{
+  	"display": {
+	  	"icon": {
+			"item": "aether_legacy:dungeon_key",
+			"data": 0
+		},
+		"title": {
+			"translate": "advancement.aether_legacy.bronze_dungeon"
+		},
+		"description": {
+			"translate": "advancement.aether_legacy.bronze_dungeon.desc"
+		},
+		"frame": "challenge"
+	},
+  	"parent": "aether_legacy:enter_aether",
+	"criteria": {
+		"enter_aether": {
+			"trigger": "minecraft:player_killed_entity",
+			"conditions": {
+				"entity": {
+					"type": "aether_legacy:slider"
+				}
+			}
+		}
+	}
+}

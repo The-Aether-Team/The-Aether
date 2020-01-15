@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "aether_legacy:skyroot_stick"
+    },
+    "X": {
+      "item": "aether_legacy:zanite_gemstone"
+    }
+  },
+  "result": {
+    "item": "aether_legacy:nature_staff"
+  }
+}

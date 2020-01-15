@@ -1,0 +1,16 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "aether_legacy:treasure_chest"
+		},
+		"facing=west": {
+			"model": "aether_legacy:treasure_chest"
+		},
+		"facing=east": {
+			"model": "aether_legacy:treasure_chest"
+		},
+		"facing=south": {
+			"model": "aether_legacy:treasure_chest"
+		}
+	}
+}

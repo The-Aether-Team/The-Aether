@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    " # ",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "aether_legacy:skyroot_stick"
+    },
+    "X": {
+      "item": "aether_legacy:zanite_gemstone"
+    }
+  },
+  "result": {
+    "item": "aether_legacy:zanite_pickaxe"
+  }
+}

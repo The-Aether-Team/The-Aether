@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "zanite",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "aether_legacy:zanite_block"
+    }
+  },
+  "result": {
+    "item": "aether_legacy:zanite_gemstone",
+    "count": 9
+  }
+}

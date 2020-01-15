@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "aether_legacy:enchanted_gravitite"
+    }
+  },
+  "result": {
+    "item": "aether_legacy:gravitite_gloves"
+  }
+}

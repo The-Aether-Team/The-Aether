@@ -1,0 +1,30 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "aether_legacy:blocks/aercloud"
+	},
+    	"elements": [
+        
+	{   
+		"from": [ 0, 0, 0 ],
+            
+		"to": [ 16, 16, 16 ],
+            
+		"faces": {
+                
+			"down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#all", "cullface": "down", "tintindex": 0 },
+                
+			"up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#all",    "cullface": "up", "tintindex": 0 },
+                
+			"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#all",   "cullface": "north", "tintindex": 0 },
+                
+			"south": { "uv": [ 0, 0, 16, 16 ], "texture": "#all",   "cullface": "south", "tintindex": 0 },
+                
+			"west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#all",   "cullface": "west", "tintindex": 0 },
+                
+			"east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#all",   "cullface": "east", "tintindex": 0 }
+            
+		}
+        
+	}]
+}

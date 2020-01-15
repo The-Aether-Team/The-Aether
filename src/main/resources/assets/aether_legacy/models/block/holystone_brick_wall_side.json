@@ -1,0 +1,11 @@
+{
+   
+ 	"parent": "block/wall_side",
+    
+	"textures": {
+        
+		"wall": "aether_legacy:blocks/holystone_brick"
+    
+	}
+
+}

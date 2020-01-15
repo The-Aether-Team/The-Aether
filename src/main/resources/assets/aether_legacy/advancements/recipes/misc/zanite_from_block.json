@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether_legacy:zanite_from_block"
+    ]
+  },
+  "criteria": {
+    "has_zanite_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aether_legacy:zanite_block"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether_legacy:zanite_from_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_zanite_block",
+      "has_the_recipe"
+    ]
+  ]
+}

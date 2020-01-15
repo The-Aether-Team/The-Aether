@@ -1,0 +1,1 @@
+Structure voids can be placed as part of a structure and are ignored when the structure file is saved.

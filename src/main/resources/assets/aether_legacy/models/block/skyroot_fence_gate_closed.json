@@ -1,0 +1,6 @@
+{
+    "parent": "block/fence_gate_closed",
+    "textures": {
+        "texture": "aether_legacy:blocks/skyroot_plank"
+    }
+}
