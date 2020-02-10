@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:items/accessories/chain_gloves"
+		"layer0": "aether_legacy:item/accessories/chain_gloves"
 	}
 }

@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "aether_legacy:blocks/enchanted_gravitite"
+		"all": "aether_legacy:block/enchanted_gravitite"
 	}
 }

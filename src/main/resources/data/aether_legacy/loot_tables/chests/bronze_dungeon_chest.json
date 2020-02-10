@@ -1,0 +1,125 @@
+{
+	"type": "chest",
+	"pools": [
+		{
+			"name": "main",
+			"rolls": {
+				"min": 3,
+				"max": 5
+			},
+			"entries": [
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:zanite_pickaxe"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:zanite_axe"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:zanite_sword"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:zanite_shovel"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:swet_cape"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:ambrosium_shard",
+					"functions": [
+						{
+							"function": "set_count",
+							"count": {
+								"min": 1,
+								"max": 10
+							}
+						}
+					]
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:golden_dart",
+					"functions": [
+						{
+							"function": "set_count",
+							"count": {
+								"min": 1,
+								"max": 5
+							}
+						}
+					]
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:poison_dart",
+					"functions": [
+						{
+							"function": "set_count",
+							"count": {
+								"min": 1,
+								"max": 3
+							}
+						}
+					]
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:enchanted_dart",
+					"functions": [
+						{
+							"function": "set_count",
+							"count": {
+								"min": 1,
+								"max": 3
+							}
+						}
+					]
+				},
+				{
+					"type": "loot_table",
+					"weight": 1,
+					"name": "aether_legacy:chests/bronze_dungeon_chest_sub0"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:skyroot_poison_bucket"
+				},
+				{
+					"type": "loot_table",
+					"weight": 1,
+					"name": "aether_legacy:chests/bronze_dungeon_chest_sub1"
+				},
+				{
+					"type": "loot_table",
+					"weight": 1,
+					"name": "aether_legacy:chests/bronze_dungeon_chest_sub2"
+				},
+				{
+					"type": "loot_table",
+					"weight": 1,
+					"name": "aether_legacy:chests/bronze_dungeon_chest_sub3"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:ambrosium_torch"
+				}
+			]
+		}
+	]
+}

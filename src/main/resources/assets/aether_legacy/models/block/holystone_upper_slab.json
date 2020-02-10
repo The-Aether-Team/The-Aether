@@ -4,11 +4,11 @@
     
 	"textures": {
         
-		"bottom": "aether_legacy:blocks/holystone",
+		"bottom": "aether_legacy:block/holystone",
         
-		"top": "aether_legacy:blocks/holystone",
+		"top": "aether_legacy:block/holystone",
         
-		"side": "aether_legacy:blocks/holystone"
+		"side": "aether_legacy:block/holystone"
     
 	}
 

@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "aether_legacy:blocks/mossy_holystone"
+		"all": "aether_legacy:block/mossy_holystone"
 	}
 }

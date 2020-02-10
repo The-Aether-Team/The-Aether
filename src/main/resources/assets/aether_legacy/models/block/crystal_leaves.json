@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "aether_legacy:blocks/crystal_leaves"
+		"all": "aether_legacy:block/crystal_leaves"
 	}
 }

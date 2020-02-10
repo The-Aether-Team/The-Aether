@@ -1,0 +1,38 @@
+{
+	"type": "chest",
+	"pools": [
+		{
+			"name": "valkyrie_cape",
+			"rolls": 1,
+			"conditions": [
+				{
+					"condition": "aether_legacy:valkyrie_cape_enabled"
+				}
+			],
+			"entries": [
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:valkyrie_cape"
+				}
+			]
+		},
+		{
+			"name": "golden_feather",
+			"rolls": 1,
+			"conditions": [
+				{
+					"condition": "aether_legacy:valkyrie_cape_enabled",
+					"enabled": false
+				}
+			],
+			"entries": [
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:golden_feather"
+				}
+			]
+		}
+	]
+}

@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:items/music/aether_tune"
+		"layer0": "aether_legacy:item/music/aether_tune"
 	}
 }

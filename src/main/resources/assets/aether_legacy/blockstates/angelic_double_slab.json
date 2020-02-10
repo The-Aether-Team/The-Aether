@@ -3,9 +3,9 @@
 	"variants": 
 	{
         
-		"half=bottom": { "model": "aether_legacy:angelic_stone" },
+		"half=bottom": { "model": "aether_legacy:block/angelic_stone" },
         	
-		"half=top": { "model": "aether_legacy:angelic_stone" }
+		"half=top": { "model": "aether_legacy:block/angelic_stone" }
     
 	}
 

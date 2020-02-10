@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:items/misc/hammer_projectile"
+		"layer0": "aether_legacy:item/misc/hammer_projectile"
 	}
 }

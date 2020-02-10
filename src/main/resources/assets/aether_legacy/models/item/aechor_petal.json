@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:items/misc/aechor_petal"
+		"layer0": "aether_legacy:item/misc/aechor_petal"
 	}
 }

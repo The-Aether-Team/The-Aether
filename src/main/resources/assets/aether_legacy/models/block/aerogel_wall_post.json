@@ -4,7 +4,7 @@
     
 	"textures": {
         
-		"wall": "aether_legacy:blocks/aerogel"
+		"wall": "aether_legacy:block/aerogel"
     
 	}
 

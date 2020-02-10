@@ -1,10 +1,10 @@
 {
 	"variants": {
 		"axis=x": {
-			"model": "aether_legacy:aether_portal_ns"
+			"model": "aether_legacy:block/aether_portal_ns"
 		},
 		"axis=z": {
-			"model": "aether_legacy:aether_portal_ew"
+			"model": "aether_legacy:block/aether_portal_ew"
 		}
 	}
 }

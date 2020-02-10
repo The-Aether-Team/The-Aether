@@ -4,7 +4,7 @@
     
 	"textures": {
         
-		"wall": "aether_legacy:blocks/holystone_brick"
+		"wall": "aether_legacy:block/holystone_brick"
     
 	}
 

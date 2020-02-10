@@ -1,7 +1,7 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:items/misc/egg/moa_egg",
-		"layer1": "aether_legacy:items/misc/egg/moa_egg_spot"
+		"layer0": "aether_legacy:item/misc/egg/moa_egg",
+		"layer1": "aether_legacy:item/misc/egg/moa_egg_spot"
 	}
 }

@@ -1,7 +1,7 @@
 {
 	"variants": {
-		"normal": {
-			"model": "aether_legacy:white_flower"
+		"": {
+			"model": "aether_legacy:block/white_flower"
 		}
 	}
 }

@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:items/accessories/regeneration_stone"
+		"layer0": "aether_legacy:item/accessories/regeneration_stone"
 	}
 }

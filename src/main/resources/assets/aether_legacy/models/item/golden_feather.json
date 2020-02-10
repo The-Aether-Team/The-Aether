@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:items/accessories/golden_feather"
+		"layer0": "aether_legacy:item/accessories/golden_feather"
 	}
 }

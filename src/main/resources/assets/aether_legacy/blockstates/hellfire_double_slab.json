@@ -3,8 +3,8 @@
 	"variants": 
 	{
         
-		"half=bottom": { "model": "aether_legacy:hellfire_stone" },
-        			"half=top": { "model": "aether_legacy:hellfire_stone" }
+		"half=bottom": { "model": "aether_legacy:block/hellfire_stone" },
+        			"half=top": { "model": "aether_legacy:block/hellfire_stone" }
     
 	}
 

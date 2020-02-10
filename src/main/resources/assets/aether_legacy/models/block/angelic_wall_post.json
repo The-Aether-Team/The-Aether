@@ -4,7 +4,7 @@
     
 	"textures": {
         
-		"wall": "aether_legacy:blocks/angelic_stone"
+		"wall": "aether_legacy:block/angelic_stone"
     
 	}
 

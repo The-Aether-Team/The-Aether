@@ -1,7 +1,7 @@
 {
 	"variants": {
-		"normal": {
-			"model": "aether_legacy:berry_bush"
+		"": {
+			"model": "aether_legacy:block/berry_bush"
 		}
 	}
 }

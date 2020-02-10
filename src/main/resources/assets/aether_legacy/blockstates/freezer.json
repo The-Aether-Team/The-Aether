@@ -1,7 +1,7 @@
 {
 	"variants": {
-		"normal": {
-			"model": "aether_legacy:freezer"
+		"": {
+			"model": "aether_legacy:block/freezer"
 		}
 	}
 }

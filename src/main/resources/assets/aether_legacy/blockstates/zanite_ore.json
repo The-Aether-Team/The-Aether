@@ -1,7 +1,7 @@
 {
 	"variants": {
-		"normal": {
-			"model": "aether_legacy:zanite_ore"
+		"": {
+			"model": "aether_legacy:block/zanite_ore"
 		}
 	}
 }

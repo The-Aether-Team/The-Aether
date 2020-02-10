@@ -1,0 +1,26 @@
+{
+	"type": "chest",
+	"pools": [
+		{
+			"name": "main",
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "item",
+					"weight": 2,
+					"name": "aether_legacy:gravitite_helmet"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:gravitite_leggings"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:gravitite_chestplate"
+				}
+			]
+		}
+	]
+}

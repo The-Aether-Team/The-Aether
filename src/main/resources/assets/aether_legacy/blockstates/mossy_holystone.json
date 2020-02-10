@@ -1,7 +1,7 @@
 {
 	"variants": {
-		"normal": {
-			"model": "aether_legacy:mossy_holystone"
+		"": {
+			"model": "aether_legacy:block/mossy_holystone"
 		}
 	}
 }

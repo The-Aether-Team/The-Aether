@@ -4,11 +4,11 @@
     
 	"textures": {
         
-		"bottom": "aether_legacy:blocks/mossy_holystone",
+		"bottom": "aether_legacy:block/mossy_holystone",
         
-		"top": "aether_legacy:blocks/mossy_holystone",
+		"top": "aether_legacy:block/mossy_holystone",
         
-		"side": "aether_legacy:blocks/mossy_holystone"
+		"side": "aether_legacy:block/mossy_holystone"
     
 	}
 

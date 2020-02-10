@@ -1,10 +1,10 @@
 {
 	"variants": {
-		"normal": [
-			{ "model": "aether_legacy:quicksoil" },
-			{ "model": "aether_legacy:quicksoil", "y": 90 },
-			{ "model": "aether_legacy:quicksoil", "y": 180 },
-			{ "model": "aether_legacy:quicksoil", "y": 270 }
+		"": [
+			{ "model": "aether_legacy:block/quicksoil" },
+			{ "model": "aether_legacy:block/quicksoil", "y": 90 },
+			{ "model": "aether_legacy:block/quicksoil", "y": 180 },
+			{ "model": "aether_legacy:block/quicksoil", "y": 270 }
 		]
 	}
 }

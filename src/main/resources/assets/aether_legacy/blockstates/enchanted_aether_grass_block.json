@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "aether_legacy:block/enchanted_aether_grass_block" },
+			{ "model": "aether_legacy:block/enchanted_aether_grass_block", "y": 90 },
+			{ "model": "aether_legacy:block/enchanted_aether_grass_block", "y": 180 },
+			{ "model": "aether_legacy:block/enchanted_aether_grass_block", "y": 270 }
+		]
+	}
+}

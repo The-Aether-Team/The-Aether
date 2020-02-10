@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "aether_legacy:blocks/quicksoil_glass"
+		"all": "aether_legacy:block/quicksoil_glass"
 	}
 }

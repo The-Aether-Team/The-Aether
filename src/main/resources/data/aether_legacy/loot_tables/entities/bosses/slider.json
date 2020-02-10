@@ -1,0 +1,53 @@
+{
+    "type": "entity",
+    "pools": [
+        {
+            "name": "key",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "aether_legacy:bronze_dungeon_key",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": 1
+                        },
+                        {
+                            "function": "looting_enchant",
+                            "count": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "stone",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "aether_legacy:carved_stone",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 7,
+                                "max": 10
+                            }
+                        },
+                        {
+                            "function": "looting_enchant",
+                            "count": {
+                                "min": 0,
+                                "max": 3
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

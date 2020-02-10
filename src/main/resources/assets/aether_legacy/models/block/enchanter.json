@@ -1,9 +1,9 @@
 {
 	"parent": "aether_legacy:block/multi_texture_base",
 	"textures": {
-		"particle": "aether_legacy:blocks/enchanter_bottom",
-		"bottom": "aether_legacy:blocks/enchanter_bottom",
-		"top": "aether_legacy:blocks/enchanter_bottom",
-		"side": "aether_legacy:blocks/enchanter_side"
+		"particle": "aether_legacy:block/enchanter_bottom",
+		"bottom": "aether_legacy:block/enchanter_bottom",
+		"top": "aether_legacy:block/enchanter_bottom",
+		"side": "aether_legacy:block/enchanter_side"
 	}
 }

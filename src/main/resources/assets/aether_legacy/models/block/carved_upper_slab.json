@@ -4,11 +4,11 @@
     
 	"textures": {
         
-		"bottom": "aether_legacy:blocks/carved_stone",
+		"bottom": "aether_legacy:block/carved_stone",
         
-		"top": "aether_legacy:blocks/carved_stone",
+		"top": "aether_legacy:block/carved_stone",
         
-		"side": "aether_legacy:blocks/carved_stone"
+		"side": "aether_legacy:block/carved_stone"
     
 	}
 

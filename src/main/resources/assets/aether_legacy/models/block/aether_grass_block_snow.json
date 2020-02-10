@@ -1,0 +1,8 @@
+{
+	"parent": "block/cube_bottom_top",
+	"textures": {
+		"bottom": "aether_legacy:block/aether_dirt",
+		"top": "aether_legacy:block/aether_grass_block_top",
+		"side": "aether_legacy:block/aether_grass_block_snow"
+	}
+}

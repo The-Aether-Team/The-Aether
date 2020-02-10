@@ -3,8 +3,8 @@
 	"variants": 
 	{
         
-		"half=bottom": { "model": "aether_legacy:aerogel" },
-        			"half=top": { "model": "aether_legacy:aerogel" }
+		"half=bottom": { "model": "aether_legacy:block/aerogel" },
+        			"half=top": { "model": "aether_legacy:block/aerogel" }
     
 	}
 
