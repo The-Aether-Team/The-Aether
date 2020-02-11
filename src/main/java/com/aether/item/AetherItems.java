@@ -2,287 +2,303 @@ package com.aether.item;
 
 import com.aether.Aether;
 import com.aether.block.AetherBlocks;
-import com.aether.block.TintedAercloudBlock;
+import com.aether.block.IAetherBlockColor;
+import com.aether.entity.monster.MimicEntity;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(Aether.MODID)
 public class AetherItems {
 	
 	// Items for blocks
-	public static final Item
-		AETHER_GRASS_BLOCK = null,
-		ENCHANTED_AETHER_GRASS_BLOCK = null,
-		AETHER_DIRT = null,
-		HOLYSTONE = null,
-		MOSSY_HOLYSTONE = null,
-		HOLYSTONE_BRICKS = null,
-		COLD_AERCLOUD = null,
-		BLUE_AERCLOUD = null,
-		GOLDEN_AERCLOUD = null,
-		PINK_AERCLOUD = null,
-		QUICKSOIL = null,
-		ICESTONE = null,
-		AMBROSIUM_ORE = null,
-		ZANITE_ORE = null,
-		GRAVITITE_ORE = null,
-		SKYROOT_LEAVES = null,
-		GOLDEN_OAK_LEAVES = null,
-		CRYSTAL_LEAVES = null,
-		HOLIDAY_LEAVES = null,
-		SKYROOT_LOG = null,
-		GOLDEN_OAK_LOG = null,
-		SKYROOT_PLANKS = null,
-		QUICKSOIL_GLASS = null,
-		AEROGEL = null,
-		ENCHANTED_GRAVITITE = null,
-		ZANITE_BLOCK = null,
-		BERRY_BUSH = null,
-		ENCHANTER = null,
-		FREEZER = null,
-		INCUBATOR = null,
-		AMBROSIUM_TORCH = null,
-		CHEST_MIMIC = null,
-		TREASURE_CHEST = null,
-		CARVED_STONE = null,
-		SENTRY_STONE = null,
-		ANGELIC_STONE = null,
-		LIGHT_ANGELIC_STONE = null,
-		HELLFIRE_STONE = null,
-		LIGHT_HELLFIRE_STONE = null,
-		LOCKED_CARVED_STONE = null,
-		LOCKED_SENTRY_STONE = null,
-		LOCKED_ANGELIC_STONE = null,
-		LOCKED_LIGHT_ANGELIC_STONE = null,
-		LOCKED_HELLFIRE_STONE = null,
-		LOCKED_LIGHT_HELLFIRE_STONE = null,
-		TRAPPED_CARVED_STONE = null,
-		TRAPPED_SENTRY_STONE = null,
-		TRAPPED_ANGELIC_STONE = null,
-		TRAPPED_LIGHT_ANGELIC_STONE = null,
-		TRAPPED_HELLFIRE_STONE = null,
-		TRAPPED_LIGHT_HELLFIRE_STONE = null,
-		PURPLE_FLOWER = null,
-		WHITE_FLOWER = null,
-		SKYROOT_SAPLING = null,
-		GOLDEN_OAK_SAPLING = null,
-		CRYSTAL_SAPLING = null,
-		PILLAR = null,
-		PILLAR_TOP = null,
-		SKYROOT_FENCE = null,
-		SKYROOT_FENCE_GATE = null,
-		CARVED_STAIRS = null,
-		ANGELIC_STAIRS = null,
-		HELLFIRE_STAIRS = null,
-		SKYROOT_STAIRS = null,
-		HOLYSTONE_STAIRS = null,
-		MOSSY_HOLYSTONE_STAIRS = null,
-		HOLYSTONE_BRICK_STAIRS = null,
-		AEROGEL_STAIRS = null,
-		CARVED_SLAB = null,
-		ANGELIC_SLAB = null,
-		HELLFIRE_SLAB = null,
-		SKYROOT_SLAB = null,
-		HOLYSTONE_SLAB = null,
-		MOSSY_HOLYSTONE_SLAB = null,
-		HOLYSTONE_BRICK_SLAB = null,
-		AEROGEL_SLAB = null,
-		CARVED_WALL = null,
-		ANGELIC_WALL = null,
-		HELLFIRE_WALL = null,
-		HOLYSTONE_WALL = null,
-		MOSSY_HOLYSTONE_WALL = null,
-		HOLYSTONE_BRICK_WALL = null,
-		AEROGEL_WALL = null,
-		PRESENT = null,
-		SUN_ALTAR = null,
-		SKYROOT_BOOKSHELF = null;
+	public static final BlockItem AETHER_GRASS_BLOCK = null;
+	public static final BlockItem ENCHANTED_AETHER_GRASS_BLOCK = null;
+	public static final BlockItem AETHER_DIRT = null;
+	public static final BlockItem HOLYSTONE = null;
+	public static final BlockItem MOSSY_HOLYSTONE = null;
+	public static final BlockItem HOLYSTONE_BRICKS = null;
+	public static final BlockItem COLD_AERCLOUD = null;
+	public static final TintedBlockItem BLUE_AERCLOUD = null;
+	public static final TintedBlockItem GOLDEN_AERCLOUD = null;
+	public static final BlockItem PINK_AERCLOUD = null;
+	public static final BlockItem QUICKSOIL = null;
+	public static final BlockItem ICESTONE = null;
+	public static final BlockItem AMBROSIUM_ORE = null;
+	public static final BlockItem ZANITE_ORE = null;
+	public static final BlockItem GRAVITITE_ORE = null;
+	public static final BlockItem SKYROOT_LEAVES = null;
+	public static final BlockItem GOLDEN_OAK_LEAVES = null;
+	public static final BlockItem CRYSTAL_LEAVES = null;
+	public static final BlockItem HOLIDAY_LEAVES = null;
+	public static final BlockItem SKYROOT_LOG = null;
+	public static final BlockItem GOLDEN_OAK_LOG = null;
+	public static final BlockItem SKYROOT_PLANKS = null;
+	public static final BlockItem QUICKSOIL_GLASS = null;
+	public static final BlockItem AEROGEL = null;
+	public static final BlockItem ENCHANTED_GRAVITITE = null;
+	public static final BlockItem ZANITE_BLOCK = null;
+	public static final BlockItem BERRY_BUSH = null;
+	public static final BlockItem BERRY_BUSH_STEM = null;
+	public static final BlockItem ENCHANTER = null;
+	public static final BlockItem FREEZER = null;
+	public static final BlockItem INCUBATOR = null;
+	public static final BlockItem AMBROSIUM_TORCH = null;
+	public static final BlockItem CHEST_MIMIC = null;
+	public static final BlockItem TREASURE_CHEST = null;
+	public static final BlockItem CARVED_STONE = null;
+	public static final BlockItem SENTRY_STONE = null;
+	public static final BlockItem ANGELIC_STONE = null;
+	public static final BlockItem LIGHT_ANGELIC_STONE = null;
+	public static final BlockItem HELLFIRE_STONE = null;
+	public static final BlockItem LIGHT_HELLFIRE_STONE = null;
+	public static final BlockItem LOCKED_CARVED_STONE = null;
+	public static final BlockItem LOCKED_SENTRY_STONE = null;
+	public static final BlockItem LOCKED_ANGELIC_STONE = null;
+	public static final BlockItem LOCKED_LIGHT_ANGELIC_STONE = null;
+	public static final BlockItem LOCKED_HELLFIRE_STONE = null;
+	public static final BlockItem LOCKED_LIGHT_HELLFIRE_STONE = null;
+	public static final BlockItem TRAPPED_CARVED_STONE = null;
+	public static final BlockItem TRAPPED_SENTRY_STONE = null;
+	public static final BlockItem TRAPPED_ANGELIC_STONE = null;
+	public static final BlockItem TRAPPED_LIGHT_ANGELIC_STONE = null;
+	public static final BlockItem TRAPPED_HELLFIRE_STONE = null;
+	public static final BlockItem TRAPPED_LIGHT_HELLFIRE_STONE = null;
+	public static final BlockItem PURPLE_FLOWER = null;
+	public static final BlockItem WHITE_FLOWER = null;
+	public static final BlockItem SKYROOT_SAPLING = null;
+	public static final BlockItem GOLDEN_OAK_SAPLING = null;
+	public static final BlockItem CRYSTAL_SAPLING = null;
+	public static final BlockItem PILLAR = null;
+	public static final BlockItem PILLAR_TOP = null;
+	public static final BlockItem SKYROOT_FENCE = null;
+	public static final BlockItem SKYROOT_FENCE_GATE = null;
+	public static final BlockItem CARVED_STAIRS = null;
+	public static final BlockItem ANGELIC_STAIRS = null;
+	public static final BlockItem HELLFIRE_STAIRS = null;
+	public static final BlockItem SKYROOT_STAIRS = null;
+	public static final BlockItem HOLYSTONE_STAIRS = null;
+	public static final BlockItem MOSSY_HOLYSTONE_STAIRS = null;
+	public static final BlockItem HOLYSTONE_BRICK_STAIRS = null;
+	public static final BlockItem AEROGEL_STAIRS = null;
+	public static final BlockItem CARVED_SLAB = null;
+	public static final BlockItem ANGELIC_SLAB = null;
+	public static final BlockItem HELLFIRE_SLAB = null;
+	public static final BlockItem SKYROOT_SLAB = null;
+	public static final BlockItem HOLYSTONE_SLAB = null;
+	public static final BlockItem MOSSY_HOLYSTONE_SLAB = null;
+	public static final BlockItem HOLYSTONE_BRICK_SLAB = null;
+	public static final BlockItem AEROGEL_SLAB = null;
+	public static final BlockItem CARVED_WALL = null;
+	public static final BlockItem ANGELIC_WALL = null;
+	public static final BlockItem HELLFIRE_WALL = null;
+	public static final BlockItem HOLYSTONE_WALL = null;
+	public static final BlockItem MOSSY_HOLYSTONE_WALL = null;
+	public static final BlockItem HOLYSTONE_BRICK_WALL = null;
+	public static final BlockItem AEROGEL_WALL = null;
+	public static final BlockItem PRESENT = null;
+	public static final BlockItem SUN_ALTAR = null;
+	public static final BlockItem SKYROOT_BOOKSHELF = null;
 	
 	// Items
-	public static final Item
-		ZANITE_GEMSTONE = null,
-		AMBROSIUM_SHARD = null,
-		GOLDEN_AMBER = null,
-		AECHOR_PETAL = null,
-		SWETTY_BALL = null,
-		SKYROOT_PICKAXE = null,
-		SKYROOT_AXE = null,
-		SKYROOT_SHOVEL = null,
-		SKYROOT_SWORD = null,
-		HOLYSTONE_PICKAXE = null,
-		HOLYSTONE_AXE = null,
-		HOLYSTONE_SHOVEL = null,
-		HOLYSTONE_SWORD = null,
-		ZANITE_PICKAXE = null,
-		ZANITE_AXE = null,
-		ZANITE_SHOVEL = null,
-		ZANITE_SWORD = null,
-		GRAVITITE_PICKAXE = null,
-		GRAVITITE_AXE = null,
-		GRAVITITE_SHOVEL = null,
-		GRAVITITE_SWORD = null,
-		VALKYRIE_PICKAXE = null,
-		VALKYRIE_AXE = null,
-		VALKYRIE_SHOVEL = null,
-		VALKYRIE_SWORD = null,
-		ZANITE_HELMET = null,
-		ZANITE_CHESTPLATE = null,
-		ZANITE_LEGGINGS = null,
-		ZANITE_BOOTS = null,
-		GRAVITITE_HELMET = null,
-		GRAVITITE_CHESTPLATE = null,
-		GRAVITITE_LEGGINGS = null,
-		GRAVITITE_BOOTS = null,
-		NEPTUNE_HELMET = null,
-		NEPTUNE_CHESTPLATE = null,
-		NEPTUNE_LEGGINGS = null,
-		NEPTUNE_BOOTS = null,
-		PHOENIX_HELMET = null,
-		PHOENIX_CHESTPLATE = null,
-		PHOENIX_LEGGINGS = null,
-		PHOENIX_BOOTS = null,
-		OBSIDIAN_HELMET = null,
-		OBSIDIAN_CHESTPLATE = null,
-		OBSIDIAN_LEGGINGS = null,
-		OBSIDIAN_BOOTS = null,
-		VALKYRIE_HELMET = null,
-		VALKYRIE_CHESTPLATE = null,
-		VALKYRIE_LEGGINGS = null,
-		VALKYRIE_BOOTS = null,
-		BLUEBERRY = null,
-		BLUE_GUMMY_SWET = null,
-		GOLDEN_GUMMY_SWET = null,
-		HEALING_STONE = null,
-		WHITE_APPLE = null,
-		GINGERBREAD_MAN = null,
-		CANDY_CANE = null,
-		ENCHANTED_BLUEBERRY = null,
-		SKYROOT_STICK = null,
-		VICTORY_MEDAL = null,
-		BRONZE_DUNGEON_KEY = null,
-		SILVER_DUNGEON_KEY = null,
-		GOLD_DUNGEON_KEY = null,
-		SKYROOT_BUCKET = null,
-		SKYROOT_WATER_BUCKET = null,
-		SKYROOT_POISON_BUCKET = null,
-		SKYROOT_REMEDY_BUCKET = null,
-		SKYROOT_MILK_BUCKET = null,
-		CLOUD_PARACHUTE = null,
-		GOLDEN_PARACHUTE = null,
-		NATURE_STAFF = null,
-		CLOUD_STAFF = null,
-		MOA_EGG = null,
-		DART_SHOOTER = null,
-		PHOENIX_BOX = null,
-		GOLDEN_DART = null,
-		POISON_DART = null,
-		ENCHANTED_DART = null,
-		FLAMING_SWORD = null,
-		LIGHTNING_SWORD = null,
-		HOLY_SWORD = null,
-		VAMPIRE_BLADE = null,
-		PIG_SLAYER = null,
-		CANDY_CANE_SWORD = null,
-		NOTCH_HAMMER = null,
-		VALKYRIE_LANCE = null,
-		LEATHER_GLOVES = null,
-		IRON_GLOVES = null,
-		GOLDEN_GLOVES = null,
-		CHAINMAIL_GLOVES = null,
-		DIAMOND_GLOVES = null,
-		ZANITE_GLOVES = null,
-		GRAVITITE_GLOVES = null,
-		NEPTUNE_GLOVES = null,
-		PHOENIX_GLOVES = null,
-		OBSIDIAN_GLOVES = null,
-		VALKYRIE_GLOVES = null,
-		IRON_RING = null,
-		GOLDEN_RING = null,
-		ZANITE_RING = null,
-		ICE_RING = null,
-		IRON_PENDANT = null,
-		GOLDEN_PENDANT = null,
-		ZANITE_PENDANT = null,
-		ICE_PENDANT = null,
-		RED_CAPE = null,
-		BLUE_CAPE = null,
-		YELLOW_CAPE = null,
-		WHITE_CAPE = null,
-		SWET_CAPE = null,
-		INVISIBILITY_CAPE = null,
-		AGILITY_CAPE = null,
-		VALKYRIE_CAPE = null,
-		GOLDEN_FEATHER = null,
-		REGENERATION_STONE = null,
-		IRON_BUBBLE = null,
-		LIFE_SHARD = null,
-		SENTRY_BOOTS = null,
-		LIGHTNING_KNIFE = null,
-		MUSIC_DISC_AETHER_TUNE = null,
-		MUSIC_DISC_ASCENDING_DAWN = null,
-		MUSIC_DISC_WELCOMING_SKIES = null,
-		MUSIC_DISC_LEGACY = null,
-		REPULSION_SHIELD = null,
-		LORE_BOOK = null,
-		DEVELOPER_STICK = null;
+	public static final Item ZANITE_GEMSTONE = null;
+	public static final Item AMBROSIUM_SHARD = null;
+	public static final Item GOLDEN_AMBER = null;
+	public static final Item AECHOR_PETAL = null;
+	public static final Item SWETTY_BALL = null;
+	public static final Item SKYROOT_PICKAXE = null;
+	public static final Item SKYROOT_AXE = null;
+	public static final Item SKYROOT_SHOVEL = null;
+	public static final Item SKYROOT_SWORD = null;
+	public static final Item HOLYSTONE_PICKAXE = null;
+	public static final Item HOLYSTONE_AXE = null;
+	public static final Item HOLYSTONE_SHOVEL = null;
+	public static final Item HOLYSTONE_SWORD = null;
+	public static final Item ZANITE_PICKAXE = null;
+	public static final Item ZANITE_AXE = null;
+	public static final Item ZANITE_SHOVEL = null;
+	public static final Item ZANITE_SWORD = null;
+	public static final Item GRAVITITE_PICKAXE = null;
+	public static final Item GRAVITITE_AXE = null;
+	public static final Item GRAVITITE_SHOVEL = null;
+	public static final Item GRAVITITE_SWORD = null;
+	public static final Item VALKYRIE_PICKAXE = null;
+	public static final Item VALKYRIE_AXE = null;
+	public static final Item VALKYRIE_SHOVEL = null;
+	public static final Item VALKYRIE_SWORD = null;
+	public static final Item ZANITE_HELMET = null;
+	public static final Item ZANITE_CHESTPLATE = null;
+	public static final Item ZANITE_LEGGINGS = null;
+	public static final Item ZANITE_BOOTS = null;
+	public static final Item GRAVITITE_HELMET = null;
+	public static final Item GRAVITITE_CHESTPLATE = null;
+	public static final Item GRAVITITE_LEGGINGS = null;
+	public static final Item GRAVITITE_BOOTS = null;
+	public static final Item NEPTUNE_HELMET = null;
+	public static final Item NEPTUNE_CHESTPLATE = null;
+	public static final Item NEPTUNE_LEGGINGS = null;
+	public static final Item NEPTUNE_BOOTS = null;
+	public static final Item PHOENIX_HELMET = null;
+	public static final Item PHOENIX_CHESTPLATE = null;
+	public static final Item PHOENIX_LEGGINGS = null;
+	public static final Item PHOENIX_BOOTS = null;
+	public static final Item OBSIDIAN_HELMET = null;
+	public static final Item OBSIDIAN_CHESTPLATE = null;
+	public static final Item OBSIDIAN_LEGGINGS = null;
+	public static final Item OBSIDIAN_BOOTS = null;
+	public static final Item VALKYRIE_HELMET = null;
+	public static final Item VALKYRIE_CHESTPLATE = null;
+	public static final Item VALKYRIE_LEGGINGS = null;
+	public static final Item VALKYRIE_BOOTS = null;
+	public static final Item BLUEBERRY = null;
+	public static final Item BLUE_GUMMY_SWET = null;
+	public static final Item GOLDEN_GUMMY_SWET = null;
+	public static final Item HEALING_STONE = null;
+	public static final Item WHITE_APPLE = null;
+	public static final Item GINGERBREAD_MAN = null;
+	public static final Item CANDY_CANE = null;
+	public static final Item ENCHANTED_BLUEBERRY = null;
+	public static final Item SKYROOT_STICK = null;
+	public static final Item VICTORY_MEDAL = null;
+	public static final Item BRONZE_DUNGEON_KEY = null;
+	public static final Item SILVER_DUNGEON_KEY = null;
+	public static final Item GOLD_DUNGEON_KEY = null;
+	public static final Item SKYROOT_BUCKET = null;
+	public static final Item SKYROOT_WATER_BUCKET = null;
+	public static final Item SKYROOT_POISON_BUCKET = null;
+	public static final Item SKYROOT_REMEDY_BUCKET = null;
+	public static final Item SKYROOT_MILK_BUCKET = null;
+	public static final Item CLOUD_PARACHUTE = null;
+	public static final Item GOLDEN_PARACHUTE = null;
+	public static final Item NATURE_STAFF = null;
+	public static final Item CLOUD_STAFF = null;
+	public static final Item MOA_EGG = null;
+	public static final Item DART_SHOOTER = null;
+	public static final Item PHOENIX_BOX = null;
+	public static final Item GOLDEN_DART = null;
+	public static final Item POISON_DART = null;
+	public static final Item ENCHANTED_DART = null;
+	public static final Item FLAMING_SWORD = null;
+	public static final Item LIGHTNING_SWORD = null;
+	public static final Item HOLY_SWORD = null;
+	public static final Item VAMPIRE_BLADE = null;
+	public static final Item PIG_SLAYER = null;
+	public static final Item CANDY_CANE_SWORD = null;
+	public static final Item NOTCH_HAMMER = null;
+	public static final Item VALKYRIE_LANCE = null;
+	public static final Item LEATHER_GLOVES = null;
+	public static final Item IRON_GLOVES = null;
+	public static final Item GOLDEN_GLOVES = null;
+	public static final Item CHAINMAIL_GLOVES = null;
+	public static final Item DIAMOND_GLOVES = null;
+	public static final Item ZANITE_GLOVES = null;
+	public static final Item GRAVITITE_GLOVES = null;
+	public static final Item NEPTUNE_GLOVES = null;
+	public static final Item PHOENIX_GLOVES = null;
+	public static final Item OBSIDIAN_GLOVES = null;
+	public static final Item VALKYRIE_GLOVES = null;
+	public static final Item IRON_RING = null;
+	public static final Item GOLDEN_RING = null;
+	public static final Item ZANITE_RING = null;
+	public static final Item ICE_RING = null;
+	public static final Item IRON_PENDANT = null;
+	public static final Item GOLDEN_PENDANT = null;
+	public static final Item ZANITE_PENDANT = null;
+	public static final Item ICE_PENDANT = null;
+	public static final Item RED_CAPE = null;
+	public static final Item BLUE_CAPE = null;
+	public static final Item YELLOW_CAPE = null;
+	public static final Item WHITE_CAPE = null;
+	public static final Item SWET_CAPE = null;
+	public static final Item INVISIBILITY_CAPE = null;
+	public static final Item AGILITY_CAPE = null;
+	public static final Item VALKYRIE_CAPE = null;
+	public static final Item GOLDEN_FEATHER = null;
+	public static final Item REGENERATION_STONE = null;
+	public static final Item IRON_BUBBLE = null;
+	public static final Item LIFE_SHARD = null;
+	public static final Item SENTRY_BOOTS = null;
+	public static final Item LIGHTNING_KNIFE = null;
+	public static final Item MUSIC_DISC_AETHER_TUNE = null;
+	public static final Item MUSIC_DISC_ASCENDING_DAWN = null;
+	public static final Item MUSIC_DISC_WELCOMING_SKIES = null;
+	public static final Item MUSIC_DISC_LEGACY = null;
+	public static final Item REPULSION_SHIELD = null;
+	public static final Item LORE_BOOK = null;
+	public static final Item DEVELOPER_STICK = null;
+	public static final SpawnEggItem PHYG_SPAWN_EGG = null;
+	public static final SpawnEggItem FLYING_COW_SPAWN_EGG = null;
+	public static final SpawnEggItem SHEEPUFF_SPAWN_EGG = null;
+	public static final SpawnEggItem AERBUNNY_SPAWN_EGG = null;
+	public static final SpawnEggItem AERWHALE_SPAWN_EGG = null;
+	public static final SpawnEggItem BLUE_SWET_SPAWN_EGG = null;
+	public static final SpawnEggItem GOLDEN_SWET_SPAWN_EGG = null;
+	public static final SpawnEggItem COCKATRICE_SPAWN_EGG = null;
+	public static final SpawnEggItem SENTRY_SPAWN_EGG = null;
+	public static final SpawnEggItem ZEPHYR_SPAWN_EGG = null;
+	public static final SpawnEggItem AECHOR_PLANT_SPAWN_EGG = null;
+	public static final SpawnEggItem MIMIC_SPAWN_EGG = null;
+	public static final SpawnEggItem VALKYRIE_SPAWN_EGG = null;
+	public static final SpawnEggItem FIRE_MINION_SPAWN_EGG = null;
 	
+	@SuppressWarnings("unused")
 	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
 	public static final class Registration {
 		
-		private static IForgeRegistry<Item> registry;
-		
 		@SubscribeEvent
 		public static void registerItems(RegistryEvent.Register<Item> event) {
-			registry = event.getRegistry();
+			registerBlockItems(event);
+			event.getRegistry().registerAll(new Item[] {
+							
+				item("mimic_spawn_egg", new SpawnEggItem(EntityType.Builder.create(MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"), 0xB18132, 0x605A4E, new Item.Properties().group(ItemGroup.MISC)))
 			
-			register(AetherBlocks.AETHER_GRASS_BLOCK, AetherItemGroups.AETHER_BLOCKS);
-			register(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK, AetherItemGroups.AETHER_BLOCKS);
-			register(AetherBlocks.AETHER_DIRT, AetherItemGroups.AETHER_BLOCKS);
-			register(AetherBlocks.HOLYSTONE, AetherItemGroups.AETHER_BLOCKS);
-			register(AetherBlocks.MOSSY_HOLYSTONE, AetherItemGroups.AETHER_BLOCKS);
-			register(AetherBlocks.HOLYSTONE_BRICKS, AetherItemGroups.AETHER_BLOCKS);
-			register(AetherBlocks.COLD_AERCLOUD, AetherItemGroups.AETHER_BLOCKS);
-			registerTintedAercloud(AetherBlocks.BLUE_AERCLOUD, AetherItemGroups.AETHER_BLOCKS);
-			registerTintedAercloud(AetherBlocks.GOLDEN_AERCLOUD, AetherItemGroups.AETHER_BLOCKS);
-			register(AetherBlocks.PINK_AERCLOUD, AetherItemGroups.AETHER_BLOCKS);
-			
-			registry = null;
+			});
 		}
 		
-		private static TintedBlockItem registerTintedAercloud(Block block, ItemGroup itemGroup) {
-			return registerTintedAercloud(block, new Item.Properties().group(itemGroup));
+		@SuppressWarnings("deprecation")
+		private static void registerBlockItems(RegistryEvent.Register<Item> event) {
+			Item.Properties properties = new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS);
+			for (Block block : AetherBlocks.Registration.blocks) {
+				Item item;
+				if (block instanceof IAetherBlockColor) {
+					IAetherBlockColor iaetherblockcolor = (IAetherBlockColor) block;
+					item = new TintedBlockItem(iaetherblockcolor.getColor(false), iaetherblockcolor.getColor(true), block, properties);
+				}
+				else {
+					item = new BlockItem(block, properties);
+				}
+				item.setRegistryName(block.getRegistryName());
+				event.getRegistry().register(item);
+			}
 		}
 		
-		private static TintedBlockItem registerTintedAercloud(Block block, Item.Properties properties) {
-			TintedAercloudBlock aercloud = (TintedAercloudBlock) block;
-			return (TintedBlockItem) register(block.getRegistryName().getPath(), new TintedBlockItem(aercloud.getColor(false), aercloud.getColor(true), block, properties));
+		private static BlockItem block(Block block) {
+			return block(block, AetherItemGroups.AETHER_BLOCKS);
 		}
 		
-		private static BlockItem register(Block block) {
-			return register(block, new Item.Properties());
+		private static BlockItem block(Block block, ItemGroup itemGroup) {
+			return block(block, new Item.Properties().group(itemGroup));
 		}
 		
-		private static BlockItem register(Block block, ItemGroup itemGroup) {
-			return register(block, new Item.Properties().group(itemGroup));
+		private static BlockItem block(Block block, Item.Properties properties) {
+			if (block instanceof IAetherBlockColor) {
+				IAetherBlockColor iaetherblockcolor = (IAetherBlockColor) block;
+				return item(block.getRegistryName().toString(), new TintedBlockItem(iaetherblockcolor.getColor(false), iaetherblockcolor.getColor(true), block, properties));
+			}
+			return item(block.getRegistryName().toString(), new BlockItem(block, properties));
 		}
 		
-		private static BlockItem register(Block block, Item.Properties properties) {
-			return (BlockItem) register(block.getRegistryName().getPath(), new BlockItem(block, properties));
-		}
-		
-		private static Item register(String name, Item item) {
-			item.setRegistryName(Aether.MODID, name);
-			
-			registry.register(item);
-			
+		private static <I extends Item> I item(String name, I item) {
+			item.setRegistryName(name);
 			return item;
 		}
 		

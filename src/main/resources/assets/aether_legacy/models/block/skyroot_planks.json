@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "aether_legacy:block/skyroot_plank"
+		"all": "aether_legacy:block/skyroot_planks"
 	}
 }

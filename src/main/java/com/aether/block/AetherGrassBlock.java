@@ -54,7 +54,7 @@ public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlo
 	@Override
 	public void grow(final World worldIn, final Random rand, final BlockPos pos, final BlockState state) {
 		final BlockPos posUp = pos.up();
-		final BlockState tallGrassState = AetherBlocks.Decorations.getTallGrass().getDefaultState();
+		final BlockState tallGrassState = Blocks.GRASS.getDefaultState();
 
 		for (int i = 0; i < 128; ++i) {
 			BlockPos blockpos1 = posUp;

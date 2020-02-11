@@ -5,11 +5,11 @@
 	"textures": 
 	{
         
-		"bottom": "aether_legacy:block/skyroot_plank",
+		"bottom": "aether_legacy:block/skyroot_planks",
         
-		"top": "aether_legacy:block/skyroot_plank",
+		"top": "aether_legacy:block/skyroot_planks",
         
-		"side": "aether_legacy:block/skyroot_plank"
+		"side": "aether_legacy:block/skyroot_planks"
     
 	}
 

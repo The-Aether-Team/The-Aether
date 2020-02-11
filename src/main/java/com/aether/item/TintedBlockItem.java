@@ -1,12 +1,12 @@
 package com.aether.item;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class TintedBlockItem extends BlockItem implements IItemColor {
+public class TintedBlockItem extends BlockItem implements IAetherItemColor {
 
 	private final int hexColor, updatedHexColor;
 	
@@ -17,10 +17,7 @@ public class TintedBlockItem extends BlockItem implements IItemColor {
 	}
 
 	@Override
-	public int getColor(ItemStack p_getColor_1_, int p_getColor_2_) {
-		return hexColor;
-	}
-	
+	@OnlyIn(Dist.CLIENT)
 	public final int getColor(boolean updatedVersion) {
 		return updatedVersion? updatedHexColor : hexColor;
 	}
