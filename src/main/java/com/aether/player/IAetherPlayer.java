@@ -1,29 +1,28 @@
-package com.aether.api.player;
+package com.aether.player;
 
 import java.util.ArrayList;
 
-import com.aether.api.player.util.IAccessoryInventory;
-import com.aether.api.player.util.IAetherAbility;
-import com.aether.api.player.util.IAetherBoss;
+import com.aether.inventory.IAccessoryInventory;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.INBTSerializable;
 
-public interface IPlayerAether {
+public interface IAetherPlayer extends INBTSerializable<CompoundNBT> {
+	
+	PlayerEntity getPlayerEntity();
 	
 	void onUpdate();
 	
 	void setInPortal();
 	
-	void saveNBTData(CompoundNBT compound);
-	
-	void loadNBTData(CompoundNBT compound);
-	
 	void setFocusedBoss(IAetherBoss boss);
 	
 	IAetherBoss getFocusedBoss();
 	
-	void setAccessoryInventory(IAccessoryInventory inventory);
+//	void setAccessoryInventory(IAccessoryInventory inventory);
 	
 	IAccessoryInventory getAccessoryInventory();
 	
@@ -54,5 +53,14 @@ public interface IPlayerAether {
 	void updateShardCount(int amount);
 	
 	int getShardsUsed();
+	
+	@OnlyIn(Dist.CLIENT)
+	float getWingSinage();
+	
+	@OnlyIn(Dist.CLIENT)
+	float getPreviousPortalAnimationTime();
+	
+	@OnlyIn(Dist.CLIENT)
+	float getPortalAnimationTime();
 	
 }

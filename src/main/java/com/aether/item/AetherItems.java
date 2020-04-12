@@ -1,6 +1,8 @@
 package com.aether.item;
 
 import com.aether.Aether;
+import com.aether.api.enchantments.AetherEnchantmentFuel;
+import com.aether.api.freezables.AetherFreezableFuel;
 import com.aether.block.AetherBlocks;
 import com.aether.block.IAetherBlockColor;
 import com.aether.entity.monster.MimicEntity;
@@ -9,9 +11,12 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -20,96 +25,6 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(Aether.MODID)
 public class AetherItems {
 	
-	// Items for blocks
-	public static final BlockItem AETHER_GRASS_BLOCK = null;
-	public static final BlockItem ENCHANTED_AETHER_GRASS_BLOCK = null;
-	public static final BlockItem AETHER_DIRT = null;
-	public static final BlockItem HOLYSTONE = null;
-	public static final BlockItem MOSSY_HOLYSTONE = null;
-	public static final BlockItem HOLYSTONE_BRICKS = null;
-	public static final BlockItem COLD_AERCLOUD = null;
-	public static final TintedBlockItem BLUE_AERCLOUD = null;
-	public static final TintedBlockItem GOLDEN_AERCLOUD = null;
-	public static final BlockItem PINK_AERCLOUD = null;
-	public static final BlockItem QUICKSOIL = null;
-	public static final BlockItem ICESTONE = null;
-	public static final BlockItem AMBROSIUM_ORE = null;
-	public static final BlockItem ZANITE_ORE = null;
-	public static final BlockItem GRAVITITE_ORE = null;
-	public static final BlockItem SKYROOT_LEAVES = null;
-	public static final BlockItem GOLDEN_OAK_LEAVES = null;
-	public static final BlockItem CRYSTAL_LEAVES = null;
-	public static final BlockItem HOLIDAY_LEAVES = null;
-	public static final BlockItem SKYROOT_LOG = null;
-	public static final BlockItem GOLDEN_OAK_LOG = null;
-	public static final BlockItem SKYROOT_PLANKS = null;
-	public static final BlockItem QUICKSOIL_GLASS = null;
-	public static final BlockItem AEROGEL = null;
-	public static final BlockItem ENCHANTED_GRAVITITE = null;
-	public static final BlockItem ZANITE_BLOCK = null;
-	public static final BlockItem BERRY_BUSH = null;
-	public static final BlockItem BERRY_BUSH_STEM = null;
-	public static final BlockItem ENCHANTER = null;
-	public static final BlockItem FREEZER = null;
-	public static final BlockItem INCUBATOR = null;
-	public static final BlockItem AMBROSIUM_TORCH = null;
-	public static final BlockItem CHEST_MIMIC = null;
-	public static final BlockItem TREASURE_CHEST = null;
-	public static final BlockItem CARVED_STONE = null;
-	public static final BlockItem SENTRY_STONE = null;
-	public static final BlockItem ANGELIC_STONE = null;
-	public static final BlockItem LIGHT_ANGELIC_STONE = null;
-	public static final BlockItem HELLFIRE_STONE = null;
-	public static final BlockItem LIGHT_HELLFIRE_STONE = null;
-	public static final BlockItem LOCKED_CARVED_STONE = null;
-	public static final BlockItem LOCKED_SENTRY_STONE = null;
-	public static final BlockItem LOCKED_ANGELIC_STONE = null;
-	public static final BlockItem LOCKED_LIGHT_ANGELIC_STONE = null;
-	public static final BlockItem LOCKED_HELLFIRE_STONE = null;
-	public static final BlockItem LOCKED_LIGHT_HELLFIRE_STONE = null;
-	public static final BlockItem TRAPPED_CARVED_STONE = null;
-	public static final BlockItem TRAPPED_SENTRY_STONE = null;
-	public static final BlockItem TRAPPED_ANGELIC_STONE = null;
-	public static final BlockItem TRAPPED_LIGHT_ANGELIC_STONE = null;
-	public static final BlockItem TRAPPED_HELLFIRE_STONE = null;
-	public static final BlockItem TRAPPED_LIGHT_HELLFIRE_STONE = null;
-	public static final BlockItem PURPLE_FLOWER = null;
-	public static final BlockItem WHITE_FLOWER = null;
-	public static final BlockItem SKYROOT_SAPLING = null;
-	public static final BlockItem GOLDEN_OAK_SAPLING = null;
-	public static final BlockItem CRYSTAL_SAPLING = null;
-	public static final BlockItem PILLAR = null;
-	public static final BlockItem PILLAR_TOP = null;
-	public static final BlockItem SKYROOT_FENCE = null;
-	public static final BlockItem SKYROOT_FENCE_GATE = null;
-	public static final BlockItem CARVED_STAIRS = null;
-	public static final BlockItem ANGELIC_STAIRS = null;
-	public static final BlockItem HELLFIRE_STAIRS = null;
-	public static final BlockItem SKYROOT_STAIRS = null;
-	public static final BlockItem HOLYSTONE_STAIRS = null;
-	public static final BlockItem MOSSY_HOLYSTONE_STAIRS = null;
-	public static final BlockItem HOLYSTONE_BRICK_STAIRS = null;
-	public static final BlockItem AEROGEL_STAIRS = null;
-	public static final BlockItem CARVED_SLAB = null;
-	public static final BlockItem ANGELIC_SLAB = null;
-	public static final BlockItem HELLFIRE_SLAB = null;
-	public static final BlockItem SKYROOT_SLAB = null;
-	public static final BlockItem HOLYSTONE_SLAB = null;
-	public static final BlockItem MOSSY_HOLYSTONE_SLAB = null;
-	public static final BlockItem HOLYSTONE_BRICK_SLAB = null;
-	public static final BlockItem AEROGEL_SLAB = null;
-	public static final BlockItem CARVED_WALL = null;
-	public static final BlockItem ANGELIC_WALL = null;
-	public static final BlockItem HELLFIRE_WALL = null;
-	public static final BlockItem HOLYSTONE_WALL = null;
-	public static final BlockItem MOSSY_HOLYSTONE_WALL = null;
-	public static final BlockItem HOLYSTONE_BRICK_WALL = null;
-	public static final BlockItem AEROGEL_WALL = null;
-	public static final BlockItem PRESENT = null;
-	public static final BlockItem SUN_ALTAR = null;
-	public static final BlockItem SKYROOT_BOOKSHELF = null;
-	
-	// Items
 	public static final Item ZANITE_GEMSTONE = null;
 	public static final Item AMBROSIUM_SHARD = null;
 	public static final Item GOLDEN_AMBER = null;
@@ -259,6 +174,7 @@ public class AetherItems {
 			registerBlockItems(event);
 			event.getRegistry().registerAll(new Item[] {
 							
+				item("ambrosium_shard", new AmbrosiumShardItem(new Item.Properties().food(new Food.Builder().setAlwaysEdible().fastToEat().effect(new EffectInstance(Effects.INSTANT_HEALTH), 1.0f).build()).group(AetherItemGroups.AETHER_MATERIALS))),
 				item("mimic_spawn_egg", new SpawnEggItem(EntityType.Builder.create(MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"), 0xB18132, 0x605A4E, new Item.Properties().group(ItemGroup.MISC)))
 			
 			});
@@ -300,6 +216,24 @@ public class AetherItems {
 		private static <I extends Item> I item(String name, I item) {
 			item.setRegistryName(name);
 			return item;
+		}
+		
+		@SubscribeEvent
+		public static void registerEnchantmentFuels(RegistryEvent.Register<AetherEnchantmentFuel> event) {
+			event.getRegistry().register(
+				
+				new AetherEnchantmentFuel(AetherItems.AMBROSIUM_SHARD, 500)
+				
+			);
+		}
+		
+		@SubscribeEvent
+		public static void registerFreezableFuels(RegistryEvent.Register<AetherFreezableFuel> event) {
+			event.getRegistry().registerAll(
+				
+				new AetherFreezableFuel(AetherBlocks.ICESTONE.asItem(), 500)
+				
+			);
 		}
 		
 	}

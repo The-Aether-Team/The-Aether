@@ -5,7 +5,7 @@ public enum AccessoryType {
 	PENDANT("Pendant", 16, 7),
 	CAPE("Cape", 15, 5),
 	SHIELD("Shield", 13, 0),
-	GLOVE("Gloves", 10, 0),
+	GLOVES("Gloves", 10, 0),
 	MISC("Miscellaneous", 10, 0);
 
 	private final String displayName;

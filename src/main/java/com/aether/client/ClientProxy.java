@@ -2,14 +2,17 @@ package com.aether.client;
 
 import com.aether.CommonProxy;
 import com.aether.block.AetherBlocks;
+import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.renderer.entity.FloatingBlockRenderer;
 import com.aether.client.renderer.entity.MimicRenderer;
 import com.aether.entity.item.FloatingBlockEntity;
 import com.aether.entity.monster.MimicEntity;
-import com.aether.item.AetherItems;
+import com.aether.inventory.container.AetherContainerTypes;
+import com.aether.item.TintedBlockItem;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
@@ -28,14 +31,20 @@ public class ClientProxy extends CommonProxy {
 		registerColors();
 	}
 	
+	@Override
 	public void clientSetup(FMLClientSetupEvent event) {
 		super.clientSetup(event);
 		registerEntityRenderers();
+		registerGuiFactories();
 	}
 	
 	private void registerEntityRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(FloatingBlockEntity.class, FloatingBlockRenderer::new);	
 		RenderingRegistry.registerEntityRenderingHandler(MimicEntity.class, MimicRenderer::new);
+	}
+	
+	private void registerGuiFactories() {
+		ScreenManager.registerFactory(AetherContainerTypes.ENCHANTER, EnchanterScreen::new);
 	}
 	
 	private void registerColors() {
@@ -44,8 +53,8 @@ public class ClientProxy extends CommonProxy {
 		registerColor(AetherBlocks.GOLDEN_AERCLOUD);
 		
 		// Item colors
-		registerColor(AetherItems.BLUE_AERCLOUD);
-		registerColor(AetherItems.GOLDEN_AERCLOUD);
+		registerColor((TintedBlockItem) AetherBlocks.BLUE_AERCLOUD.asItem());
+		registerColor((TintedBlockItem) AetherBlocks.GOLDEN_AERCLOUD.asItem());
 	}
 	
 	private static <B extends Block & IBlockColor> void registerColor(B block) {

@@ -1,4 +1,4 @@
-package com.aether.api.player.util;
+package com.aether.player;
 
 public interface IAetherBoss {
 
