@@ -1,0 +1,45 @@
+{
+	"type": "chest",
+	"pools": [
+		{
+			"name": "main",
+			"rolls":1,
+			"entries": [
+				{
+					"type": "item",
+					"weight": 200,
+					"name": "aether:zanite_boots"
+				},
+				{
+					"type": "item",
+					"weight": 100,
+					"name": "aether:zanite_helmet"
+				},
+				{
+					"type": "item",
+					"weight": 50,
+					"name": "aether:zanite_leggings"
+				},
+				{
+					"type": "item",
+					"weight": 25,
+					"name": "aether:zanite_chestplate"
+				},
+				{
+					"type": "item",
+					"weight": 25,
+					"name": "aether:ambrosium_torch",
+					"functions": [
+						{
+							"function": "set_count",
+							"count": {
+								"min": 1,
+								"max": 4
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

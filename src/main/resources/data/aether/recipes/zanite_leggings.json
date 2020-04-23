@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "aether:zanite_gemstone"
+    }
+  },
+  "result": {
+    "item": "aether:zanite_leggings"
+  }
+}

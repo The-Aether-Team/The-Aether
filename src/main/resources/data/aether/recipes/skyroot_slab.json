@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "aether:skyroot_planks"
+    }
+  },
+  "result": {
+    "item": "aether:skyroot_slab",
+    "data": 0,
+    "count": 6
+  }
+}

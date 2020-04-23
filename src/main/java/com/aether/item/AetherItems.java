@@ -14,9 +14,11 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Rarity;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -24,6 +26,8 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(Aether.MODID)
 public class AetherItems {
+	
+	public static final Rarity AETHER_LOOT = Rarity.create("AETHER_LOOT", TextFormatting.GREEN);
 	
 	public static final Item ZANITE_GEMSTONE = null;
 	public static final Item AMBROSIUM_SHARD = null;
@@ -174,8 +178,36 @@ public class AetherItems {
 			registerBlockItems(event);
 			event.getRegistry().registerAll(new Item[] {
 							
-				item("ambrosium_shard", new AmbrosiumShardItem(new Item.Properties().food(new Food.Builder().setAlwaysEdible().fastToEat().effect(new EffectInstance(Effects.INSTANT_HEALTH), 1.0f).build()).group(AetherItemGroups.AETHER_MATERIALS))),
-				item("mimic_spawn_egg", new SpawnEggItem(EntityType.Builder.create(MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"), 0xB18132, 0x605A4E, new Item.Properties().group(ItemGroup.MISC)))
+				item("zanite_gemstone", new Item(
+					new Item.Properties()
+						.group(AetherItemGroups.AETHER_MATERIALS)
+				)),
+				item("ambrosium_shard", new AmbrosiumShardItem(
+					new Item.Properties()
+						.food(new Food.Builder()
+							.setAlwaysEdible()
+							.fastToEat()
+							.effect(new EffectInstance(Effects.INSTANT_HEALTH), 1.0f)
+							.build())
+						.group(AetherItemGroups.AETHER_MATERIALS)
+				)),
+				item("golden_amber", new Item(
+					new Item.Properties()
+						.group(AetherItemGroups.AETHER_MATERIALS)
+				)),
+				item("aechor_petal", new Item(
+					new Item.Properties()
+						.group(AetherItemGroups.AETHER_MATERIALS)
+				)),
+				item("mimic_spawn_egg", new SpawnEggItem(
+					EntityType.Builder.create(MimicEntity::new, EntityClassification.MONSTER)
+						.size(1.0f, 2.0f)
+						.build("mimic"),
+					/*primary color:*/   0xB18132,
+					/*secondary color:*/ 0x605A4E,
+					new Item.Properties()
+						.group(ItemGroup.MISC)
+				)),
 			
 			});
 		}

@@ -1,0 +1,23 @@
+{
+  	"display": {
+	  	"icon": {
+			"item": "aether:dungeon_key",
+			"data": 2
+		},
+		"title": {
+			"translate": "advancement.aether.gold_dungeon"
+		},
+		"description": {
+			"translate": "advancement.aether.gold_dungeon.desc"
+		},
+		"frame": "challenge"
+	},
+  	"parent": "aether:dethroned",
+	"criteria": {
+		"enter_aether": {
+			"trigger": "aether:defeat_sun_spirit",
+			"conditions": {
+			}
+		}
+	}
+}

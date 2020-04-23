@@ -1,0 +1,21 @@
+{
+	"type": "chest",
+	"pools": [
+		{
+			"name": "main",
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:phoenix_leggings"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:chain_gloves"
+				}
+			]
+		}
+	]
+}

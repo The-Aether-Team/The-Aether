@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": [
+      {
+        "item": "aether:aercloud",
+        "data": 2
+      }
+    ]
+  },
+  "result": {
+    "item": "aether:golden_parachute"
+  }
+}

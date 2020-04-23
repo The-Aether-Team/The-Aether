@@ -1,0 +1,118 @@
+{
+	"type": "chest",
+	"pools": [
+		{
+			"name": "main",
+			"rolls": {
+				"min": 5,
+				"max": 6
+			},
+			"entries": [
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:blue_gummy_swet",
+					"functions": [
+						{
+							"function": "set_count",
+							"count": {
+								"min": 1,
+								"max": 15
+							}
+						}
+					]
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:lightning_sword"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:valkyrie_axe"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:valkyrie_shovel"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:valkyrie_pickaxe"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:holy_sword"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:valkyrie_helmet"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:regeneration_stone"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:neptune_helmet"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:neptune_leggings"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:neptune_chestplate"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:neptune_boots"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:neptune_gloves"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:invisibility_cape"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:valkyrie_boots"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:valkyrie_gloves"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:valkyrie_leggings"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:valkyrie_chestplate"
+				},
+				{
+					"type": "loot_table",
+					"weight": 1,
+					"name": "aether:chests/silver_dungeon_reward_sub0"
+				}
+			]
+		}
+	]
+}

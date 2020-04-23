@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XX",
+    "X#",
+    " #"
+  ],
+  "key": {
+    "#": {
+      "item": "aether:skyroot_stick"
+    },
+    "X": {
+      "item": "aether:enchanted_gravitite"
+    }
+  },
+  "result": {
+    "item": "aether:gravitite_axe"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "aether:golden_amber"
+    }
+  },
+  "result": {
+    "item": "aether:dart",
+    "data": 0
+  }
+}

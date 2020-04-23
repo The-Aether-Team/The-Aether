@@ -1,0 +1,26 @@
+{
+  	"display": {
+	  	"icon": {
+			"item": "minecraft:glowstone"
+		},
+		"title": {
+			"translate": "advancement.aether.enter_aether"
+		},
+		"description": {
+			"translate": "advancement.aether.enter_aether.desc"
+		},
+		"background": "aether:textures/blocks/carved_stone.png"
+	},
+	"rewards": {
+		"loot": [ "aether:travel/enter_aether" ]
+	},
+	"criteria": {
+		"enter_aether": {
+			"trigger": "minecraft:changed_dimension",
+			"conditions": {
+				"to": "AetherI",
+				"from": "overworld"
+			}
+		}
+	}
+}

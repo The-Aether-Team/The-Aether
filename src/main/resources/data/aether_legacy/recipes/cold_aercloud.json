@@ -1,9 +1,0 @@
-{
-    "type": "aether_legacy:enchanting",
-    "ingredient": {
-        "item": "aether_legacy:cold_aercloud"
-    },
-    "result": "aether_legacy:blue_aercloud",
-    "experience": 0.15,
-    "cookingtime": 100
-}

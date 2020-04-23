@@ -1,0 +1,24 @@
+{
+  	"display": {
+	  	"icon": {
+			"item": "aether:incubator"
+		},
+		"title": {
+			"translate": "advancement.aether.incubator"
+		},
+		"description": {
+			"translate": "advancement.aether.incubator.desc"
+		}
+	},
+  	"parent": "aether:enter_aether",
+	"criteria": {
+		"enter_aether": {
+			"trigger": "aether:craft_item",
+			"conditions": {
+				"item": {
+					"item": "aether:incubator"
+				}
+			}
+		}
+	}
+}

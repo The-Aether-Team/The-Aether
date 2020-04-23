@@ -1,0 +1,59 @@
+{
+	"type": "chest",
+	"pools": [
+		{
+			"name": "main",
+			"rolls": {
+				"min": 5,
+				"max": 6
+			},
+			"entries": [
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:iron_bubble"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:vampire_blade"
+				},
+				{
+					"type": "loot_table",
+					"weight": 1,
+					"name": "aether:chests/gold_dungeon_reward_sub0"
+				},
+				{
+					"type": "loot_table",
+					"weight": 1,
+					"name": "aether:chests/gold_dungeon_reward_sub1"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:life_shard"
+				},
+				{
+					"type": "loot_table",
+					"weight": 1,
+					"name": "aether:chests/gold_dungeon_reward_sub2"
+				},
+				{
+					"type": "loot_table",
+					"weight": 1,
+					"name": "aether:chests/gold_dungeon_reward_sub3"
+				},
+				{
+					"type": "loot_table",
+					"weight": 1,
+					"name": "aether:chests/gold_dungeon_reward_sub4"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:obsidian_chestplate"
+				}
+			]
+		}
+	]
+}

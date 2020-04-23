@@ -1,6 +1,6 @@
 {
     "values": [
-        "aether_legacy:enchanted_gravitite",
-        "aether_legacy:zanite_block"
+        "aether:enchanted_gravitite",
+        "aether:zanite_block"
     ]
 }

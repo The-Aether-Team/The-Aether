@@ -1,0 +1,22 @@
+{
+  	"display": {
+	  	"icon": {
+			"item": "aether:gravitite_pickaxe"
+		},
+		"title": {
+			"translate": "advancement.aether.gravitite_tools"
+		},
+		"description": {
+			"translate": "advancement.aether.gravitite_tools.desc"
+		},
+		"frame": "goal"
+	},
+  	"parent": "aether:craft_altar",
+	"criteria": {
+		"enter_aether": {
+			"trigger": "aether:gravitite_toolset",
+			"conditions": {
+			}
+		}
+	}
+}

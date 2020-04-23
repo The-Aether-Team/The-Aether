@@ -1,0 +1,27 @@
+{
+    "type": "entity",
+    "pools": [
+        {
+            "name": "wool",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:lime_wool",
+                    "weight": 1
+                }
+            ]
+        },
+        {
+            "name": "universal_drops",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "aether:entities/sheepuff",
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}

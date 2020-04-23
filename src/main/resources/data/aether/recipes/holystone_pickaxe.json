@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    " # ",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "aether:skyroot_stick"
+    },
+    "X": {
+      "item": "aether:holystone"
+    }
+  },
+  "result": {
+    "item": "aether:holystone_pickaxe"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  	"display": {
+	  	"icon": {
+			"item": "aether:enchanter"
+		},
+		"title": {
+			"translate": "advancement.aether.enchanter"
+		},
+		"description": {
+			"translate": "advancement.aether.enchanter.desc"
+		}
+	},
+  	"parent": "aether:enter_aether",
+	"criteria": {
+		"enter_aether": {
+			"trigger": "aether:craft_item",
+			"conditions": {
+				"item": {
+					"item": "aether:enchanter"
+				}
+			}
+		}
+	}
+}

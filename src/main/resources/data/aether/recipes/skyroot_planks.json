@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "planks",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+
+    "#": [{
+      "item": "aether:aether_log",
+      "data": 0
+    },
+
+    {
+      "item": "aether:aether_log",
+      "data": 1
+    }]
+  },
+  "result": {
+    "item": "aether:skyroot_planks",
+    "count": 4
+  }
+}

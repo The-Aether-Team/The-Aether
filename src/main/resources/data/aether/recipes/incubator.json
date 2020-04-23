@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "HHH",
+    "HAH",
+    "HHH"
+  ],
+  "key": {
+    "A": {
+      "item": "aether:ambrosium_torch"
+    },
+    "H": {
+      "item": "aether:holystone"
+    }
+  },
+  "result": {
+    "item": "aether:incubator"
+  }
+}

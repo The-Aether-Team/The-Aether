@@ -1,0 +1,21 @@
+{
+	"type": "chest",
+	"pools": [
+		{
+			"name": "main",
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether:golden_ring"
+				},
+				{
+					"type": "item",
+					"weight": 9,
+					"name": "aether:ambrosium_torch"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "aether:dungeon_block",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "aether:carved_wall",
+    "count": 6
+  }
+}

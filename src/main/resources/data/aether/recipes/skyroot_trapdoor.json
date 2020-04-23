@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": [
+      {
+        "item": "aether:skyroot_planks"
+      }
+    ]
+  },
+  "result": {
+    "item": "minecraft:trapdoor",
+    "count": 2
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X",
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "aether:skyroot_stick"
+    },
+    "X": {
+      "item": "aether:skyroot_planks"
+    }
+  },
+  "result": {
+    "item": "aether:skyroot_shovel"
+  }
+}
