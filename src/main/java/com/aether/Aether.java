@@ -11,9 +11,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod(Aether.MODID)
 public class Aether {
 
-	public static final String MODID = "aether_legacy";
+	public static final String MODID = "aether";
 	
-	public static final CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);;
+	private static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);;
 	
 	public Aether() {	
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
