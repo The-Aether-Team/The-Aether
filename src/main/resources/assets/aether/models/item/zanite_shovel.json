@@ -1,6 +1,6 @@
 {
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "aether_legacy:item/tools/zanite_shovel"
+		"layer0": "aether:item/tools/zanite_shovel"
 	}
 }

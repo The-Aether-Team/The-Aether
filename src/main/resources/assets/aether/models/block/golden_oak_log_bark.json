@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "aether_legacy:block/golden_oak_log_side"
+		"all": "aether:block/golden_oak_log_side"
 	}
 }

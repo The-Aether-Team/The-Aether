@@ -1,6 +1,6 @@
 {
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "aether_legacy:item/staff/nature_staff"
+		"layer0": "aether:item/staff/nature_staff"
 	}
 }

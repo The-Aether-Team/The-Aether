@@ -1,6 +1,6 @@
 {
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "aether_legacy:item/weapons/candy_cane_sword"
+		"layer0": "aether:item/weapons/candy_cane_sword"
 	}
 }

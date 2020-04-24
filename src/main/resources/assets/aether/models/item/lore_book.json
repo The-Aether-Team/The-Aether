@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:item/misc/lore_book"
+		"layer0": "aether:item/misc/lore_book"
 	}
 }

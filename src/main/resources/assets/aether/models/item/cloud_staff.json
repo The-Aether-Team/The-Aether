@@ -1,7 +1,7 @@
 {
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "aether_legacy:item/staff/cloud_staff"
+		"layer0": "aether:item/staff/cloud_staff"
 	},
 	"//display": {
 		"thirdperson_righthand": {

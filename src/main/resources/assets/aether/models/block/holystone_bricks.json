@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "aether_legacy:block/holystone_bricks"
+		"all": "aether:block/holystone_bricks"
 	}
 }

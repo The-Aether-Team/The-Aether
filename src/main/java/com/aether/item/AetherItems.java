@@ -10,15 +10,19 @@ import com.aether.entity.monster.MimicEntity;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.Rarity;
+import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.item.SwordItem;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -26,9 +30,7 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(Aether.MODID)
 public class AetherItems {
-	
-	public static final Rarity AETHER_LOOT = Rarity.create("AETHER_LOOT", TextFormatting.GREEN);
-	
+
 	public static final Item ZANITE_GEMSTONE = null;
 	public static final Item AMBROSIUM_SHARD = null;
 	public static final Item GOLDEN_AMBER = null;
@@ -168,50 +170,99 @@ public class AetherItems {
 	public static final SpawnEggItem MIMIC_SPAWN_EGG = null;
 	public static final SpawnEggItem VALKYRIE_SPAWN_EGG = null;
 	public static final SpawnEggItem FIRE_MINION_SPAWN_EGG = null;
-	
+
 	@SuppressWarnings("unused")
 	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
 	public static final class Registration {
-		
+
 		@SubscribeEvent
 		public static void registerItems(RegistryEvent.Register<Item> event) {
 			registerBlockItems(event);
 			event.getRegistry().registerAll(new Item[] {
-							
-				item("zanite_gemstone", new Item(
-					new Item.Properties()
-						.group(AetherItemGroups.AETHER_MATERIALS)
-				)),
-				item("ambrosium_shard", new AmbrosiumShardItem(
-					new Item.Properties()
-						.food(new Food.Builder()
-							.setAlwaysEdible()
-							.fastToEat()
-							.effect(new EffectInstance(Effects.INSTANT_HEALTH), 1.0f)
-							.build())
-						.group(AetherItemGroups.AETHER_MATERIALS)
-				)),
-				item("golden_amber", new Item(
-					new Item.Properties()
-						.group(AetherItemGroups.AETHER_MATERIALS)
-				)),
-				item("aechor_petal", new Item(
-					new Item.Properties()
-						.group(AetherItemGroups.AETHER_MATERIALS)
-				)),
+
+				item("zanite_gemstone", new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
+				item("ambrosium_shard", new AmbrosiumShardItem(new Item.Properties()
+						.food(new Food.Builder().setAlwaysEdible().fastToEat()
+							.effect(new EffectInstance(Effects.INSTANT_HEALTH), 1.0f).build())
+						.group(AetherItemGroups.AETHER_MATERIALS))),
+				item("golden_amber", new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
+				item("aechor_petal", new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
+				item("swetty_ball", new SwettyBallItem(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
+				item("skyroot_shovel", new ShovelItem(AetherItemTier.SKYROOT, 1.5f, -3.0f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
+				item("skyroot_pickaxe", new PickaxeItem(AetherItemTier.SKYROOT, 1, -2.8f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
+				item("skyroot_axe", new AxeItem(AetherItemTier.SKYROOT, 6.0f, -3.2f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
+				item("holystone_shovel", new HolystoneShovelItem(AetherItemTier.HOLYSTONE, 1.5f, -3.0f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
+				item("holystone_pickaxe", new HolystonePickaxeItem(AetherItemTier.HOLYSTONE, 1, -2.8f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
+				item("holystone_axe", new HolystoneAxeItem(AetherItemTier.HOLYSTONE, 8.0f, -3.2f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
+				item("zanite_shovel", new ZaniteShovelItem(AetherItemTier.ZANITE, 1.5f, -3.0f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
+				item("zanite_pickaxe", new ZanitePickaxeItem(AetherItemTier.ZANITE, 1, -2.8f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
+				item("zanite_axe", new ZaniteAxeItem(AetherItemTier.ZANITE, 8.0f, -3.1f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
+				item("gravitite_shovel", new GravititeShovelItem(AetherItemTier.GRAVITITE, 1.5f, -3.0f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
+				item("gravitite_pickaxe", new GravititePickaxeItem(AetherItemTier.GRAVITITE, 1, -2.8f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
+				item("gravitite_axe", new GravititeAxeItem(AetherItemTier.GRAVITITE, 5.0f, -3.0f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
+				item("valkyrie_shovel", new ShovelItem(AetherItemTier.VALKYRIE, 1.5f, -3.0f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_TOOLS))),
+				item("valkyrie_pickaxe", new PickaxeItem(AetherItemTier.VALKYRIE, 1, -2.8f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_TOOLS))),
+				item("valkyrie_axe", new AxeItem(AetherItemTier.VALKYRIE, 5.0f, -3.0f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_TOOLS))),
+				item("zanite_helmet", new ArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.HEAD, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("zanite_chestplate", new ArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.CHEST, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("zanite_leggings", new ArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.LEGS, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("zanite_boots", new ArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.FEET, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("gravitite_helmet", new ArmorItem(AetherArmorMaterial.GRAVITITE, EquipmentSlotType.HEAD, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("gravitite_chestplate", new ArmorItem(AetherArmorMaterial.GRAVITITE, EquipmentSlotType.CHEST, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("gravitite_leggings", new ArmorItem(AetherArmorMaterial.GRAVITITE, EquipmentSlotType.LEGS, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("gravitite_boots", new ArmorItem(AetherArmorMaterial.GRAVITITE, EquipmentSlotType.FEET, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("neptune_helmet", new ArmorItem(AetherArmorMaterial.NEPTUNE, EquipmentSlotType.HEAD, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("neptune_chestplate", new ArmorItem(AetherArmorMaterial.NEPTUNE, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("neptune_leggings", new ArmorItem(AetherArmorMaterial.NEPTUNE, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("neptune_boots", new ArmorItem(AetherArmorMaterial.NEPTUNE, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("phoenix_helmet", new ArmorItem(AetherArmorMaterial.PHOENIX, EquipmentSlotType.HEAD, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("phoenix_chestplate", new ArmorItem(AetherArmorMaterial.PHOENIX, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("phoenix_leggings", new ArmorItem(AetherArmorMaterial.PHOENIX, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("phoenix_boots", new ArmorItem(AetherArmorMaterial.PHOENIX, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("obsidian_helmet", new ArmorItem(AetherArmorMaterial.OBSIDIAN, EquipmentSlotType.HEAD, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("obsidian_chestplate", new ArmorItem(AetherArmorMaterial.OBSIDIAN, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("obsidian_leggings", new ArmorItem(AetherArmorMaterial.OBSIDIAN, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("obsidian_boots", new ArmorItem(AetherArmorMaterial.OBSIDIAN, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("valkyrie_helmet", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.HEAD, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("valkyrie_chestplate", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("valkyrie_leggings", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("valkyrie_boots", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("blueberry", new Item(new Item.Properties()
+					.food(new Food.Builder().fastToEat().hunger(2).build())
+					.group(AetherItemGroups.AETHER_FOOD))),
+				item("white_apple", new Item(new Item.Properties()
+					.food(new Food.Builder().setAlwaysEdible().fastToEat().hunger(0).build())
+					.group(AetherItemGroups.AETHER_FOOD))),
+				item("blue_gummy_swet", new GummySwetItem(new Item.Properties()
+					.food(new Food.Builder().hunger(20).build())
+					.group(AetherItemGroups.AETHER_FOOD))),
+				item("golden_gummy_swet", new GummySwetItem(new Item.Properties()
+					.food(new Food.Builder().hunger(20).build())
+					.group(AetherItemGroups.AETHER_FOOD))),
+				item("healing_stone", new Item(new Item.Properties()
+					.food(new Food.Builder().setAlwaysEdible().hunger(0)
+						.effect(new EffectInstance(Effects.INSTANT_HEALTH, 610, 0), 1.0f).build())
+					.group(AetherItemGroups.AETHER_FOOD))),
+				item("candy_cane", new Item(new Item.Properties()
+					.food(new Food.Builder().hunger(2).build())
+					.group(AetherItemGroups.AETHER_FOOD))),
+				item("gingerbread_man", new Item(new Item.Properties()
+					.food(new Food.Builder().hunger(2).build())
+					.group(AetherItemGroups.AETHER_FOOD))),
+				item("skyroot_stick", new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
+				
+				item("skyroot_sword", new SwordItem(AetherItemTier.SKYROOT, 3, -2.4f, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("holystone_sword", new SwordItem(AetherItemTier.HOLYSTONE, 3, -2.4f, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("zanite_sword", new SwordItem(AetherItemTier.ZANITE, 3, -2.4f, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("gravitite_sword", new SwordItem(AetherItemTier.GRAVITITE, 3, -2.4f, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 				item("mimic_spawn_egg", new SpawnEggItem(
-					EntityType.Builder.create(MimicEntity::new, EntityClassification.MONSTER)
-						.size(1.0f, 2.0f)
-						.build("mimic"),
-					/*primary color:*/   0xB18132,
-					/*secondary color:*/ 0x605A4E,
-					new Item.Properties()
-						.group(ItemGroup.MISC)
-				)),
-			
+						EntityType.Builder.create(MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"),
+						/*primary color:*/ 0xB18132, /*secondary color:*/ 0x605A4E,
+						new Item.Properties().group(ItemGroup.MISC))),
+				
 			});
 		}
-		
+
 		@SuppressWarnings("deprecation")
 		private static void registerBlockItems(RegistryEvent.Register<Item> event) {
 			Item.Properties properties = new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS);
@@ -219,7 +270,8 @@ public class AetherItems {
 				Item item;
 				if (block instanceof IAetherBlockColor) {
 					IAetherBlockColor iaetherblockcolor = (IAetherBlockColor) block;
-					item = new TintedBlockItem(iaetherblockcolor.getColor(false), iaetherblockcolor.getColor(true), block, properties);
+					item = new TintedBlockItem(iaetherblockcolor.getColor(false), iaetherblockcolor.getColor(true),
+						block, properties);
 				}
 				else {
 					item = new BlockItem(block, properties);
@@ -228,46 +280,47 @@ public class AetherItems {
 				event.getRegistry().register(item);
 			}
 		}
-		
+
 		private static BlockItem block(Block block) {
 			return block(block, AetherItemGroups.AETHER_BLOCKS);
 		}
-		
+
 		private static BlockItem block(Block block, ItemGroup itemGroup) {
 			return block(block, new Item.Properties().group(itemGroup));
 		}
-		
+
 		private static BlockItem block(Block block, Item.Properties properties) {
 			if (block instanceof IAetherBlockColor) {
 				IAetherBlockColor iaetherblockcolor = (IAetherBlockColor) block;
-				return item(block.getRegistryName().toString(), new TintedBlockItem(iaetherblockcolor.getColor(false), iaetherblockcolor.getColor(true), block, properties));
+				return item(block.getRegistryName().toString(), new TintedBlockItem(iaetherblockcolor.getColor(false),
+					iaetherblockcolor.getColor(true), block, properties));
 			}
 			return item(block.getRegistryName().toString(), new BlockItem(block, properties));
 		}
-		
+
 		private static <I extends Item> I item(String name, I item) {
 			item.setRegistryName(name);
 			return item;
 		}
-		
+
 		@SubscribeEvent
 		public static void registerEnchantmentFuels(RegistryEvent.Register<AetherEnchantmentFuel> event) {
 			event.getRegistry().register(
-				
+
 				new AetherEnchantmentFuel(AetherItems.AMBROSIUM_SHARD, 500)
-				
+
 			);
 		}
-		
+
 		@SubscribeEvent
 		public static void registerFreezableFuels(RegistryEvent.Register<AetherFreezableFuel> event) {
 			event.getRegistry().registerAll(
-				
+
 				new AetherFreezableFuel(AetherBlocks.ICESTONE.asItem(), 500)
-				
+
 			);
 		}
-		
+
 	}
-	
+
 }

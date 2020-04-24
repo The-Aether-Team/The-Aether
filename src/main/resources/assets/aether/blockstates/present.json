@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "aether_legacy:block/present"
+			"model": "aether:block/present"
 		}
 	}
 }

@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "aether_legacy:block/incubator"
+			"model": "aether:block/incubator"
 		}
 	}
 }

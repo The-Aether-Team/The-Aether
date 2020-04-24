@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:item/accessories/solid_gloves"
+		"layer0": "aether:item/accessories/solid_gloves"
 	}
 }

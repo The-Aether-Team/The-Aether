@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "aether_legacy:block/enchanted_gravitite"
+			"model": "aether:block/enchanted_gravitite"
 		}
 	}
 }

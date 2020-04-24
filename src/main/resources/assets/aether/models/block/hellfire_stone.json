@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "aether_legacy:block/hellfire_stone"
+		"all": "aether:block/hellfire_stone"
 	}
 }

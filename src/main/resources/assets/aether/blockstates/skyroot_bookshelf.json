@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "aether_legacy:block/skyroot_bookshelf"
+			"model": "aether:block/skyroot_bookshelf"
 		}
 	}
 }

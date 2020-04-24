@@ -2,6 +2,8 @@ package com.aether;
 
 import com.aether.client.ClientProxy;
 
+import net.minecraft.item.Rarity;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -19,6 +21,8 @@ public class Aether {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
 	}
+	
+	public static final Rarity AETHER_LOOT = Rarity.create("AETHER_LOOT", TextFormatting.GREEN);
 	
 	private void commonSetup(FMLCommonSetupEvent event) {
 		proxy.commonSetup(event);

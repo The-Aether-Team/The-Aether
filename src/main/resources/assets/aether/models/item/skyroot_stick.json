@@ -1,6 +1,6 @@
 {
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "aether_legacy:item/skyroot_stick"
+		"layer0": "aether:item/skyroot_stick"
 	}
 }

@@ -1,6 +1,6 @@
 {
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "aether_legacy:item/weapons/vampire_blade"
+		"layer0": "aether:item/weapons/vampire_blade"
 	}
 }

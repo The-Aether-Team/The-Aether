@@ -1,5 +1,5 @@
 {
 	"variants": {
-		"": { "model": "aether_legacy:block/crystal_leaves" }
+		"": { "model": "aether:block/crystal_leaves" }
 	}
 }

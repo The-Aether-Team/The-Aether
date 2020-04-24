@@ -1,6 +1,17 @@
 package com.aether.world.storage.loot.functions;
 
+import com.aether.Aether;
+import com.aether.AetherTags;
+import com.aether.block.IAetherDoubleDropBlock;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootFunction;
 import net.minecraft.world.storage.loot.LootParameters;
@@ -15,9 +26,34 @@ public class DoubleDrops extends LootFunction {
 	@Override
 	protected ItemStack doApply(ItemStack stack, LootContext context) {
 		ItemStack tool = context.get(LootParameters.TOOL);
-		if (tool != null) {
-			
+		if (tool != null && tool.getItem().isIn(AetherTags.Items.SKYROOT_TOOLS) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool) == 0) {
+			BlockState state = context.get(LootParameters.BLOCK_STATE);
+			if (state == null || !(state.getBlock() instanceof IAetherDoubleDropBlock) || state.get(IAetherDoubleDropBlock.DOUBLE_DROPS)) {
+				stack.setCount(2 * stack.getCount());
+			}
 		}
+		return stack;
+	}
+	
+	public static LootFunction.Builder<?> builder() {
+		return LootFunction.builder(DoubleDrops::new);
+	}
+	
+	public static class Serializer extends LootFunction.Serializer<DoubleDrops> {
+		public Serializer() {
+			super(new ResourceLocation(Aether.MODID, "double_drops"), DoubleDrops.class);
+		}
+		
+		@Override
+		public void serialize(JsonObject object, DoubleDrops functionClazz, JsonSerializationContext serializationContext) {
+			super.serialize(object, functionClazz, serializationContext);
+		}
+		
+		@Override
+		public DoubleDrops deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditionsIn) {
+			return new DoubleDrops(conditionsIn);
+		}
+		
 	}
 
 }

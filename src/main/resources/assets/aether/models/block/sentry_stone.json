@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "aether_legacy:block/sentry_stone"
+		"all": "aether:block/sentry_stone"
 	}
 }

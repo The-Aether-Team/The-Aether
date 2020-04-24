@@ -5,7 +5,7 @@
 	"textures": 
 	{
         
-		"texture": "aether_legacy:block/skyroot_planks"
+		"texture": "aether:block/skyroot_planks"
     
 	}
 }

@@ -1,9 +1,9 @@
 {
-	"parent": "aether_legacy:block/multi_texture_base",
+	"parent": "aether:block/multi_texture_base",
 	"textures": {
-		"particle": "aether_legacy:block/pillar_top",
-		"bottom": "aether_legacy:block/pillar_top",
-		"top": "aether_legacy:block/pillar_top",
-		"side": "aether_legacy:block/pillar_side"
+		"particle": "aether:block/pillar_top",
+		"bottom": "aether:block/pillar_top",
+		"top": "aether:block/pillar_top",
+		"side": "aether:block/pillar_side"
 	}
 }

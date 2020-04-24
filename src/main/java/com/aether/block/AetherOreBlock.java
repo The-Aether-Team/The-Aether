@@ -16,6 +16,7 @@ public class AetherOreBlock extends OreBlock implements IAetherDoubleDropBlock {
 		super(properties);
 		this.minExpDropped = minExpDropped;
 		this.maxExpDropped = maxExpDropped;
+		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
 	}
 	
 	@Override

@@ -1,102 +1,82 @@
 {
-    "type": "minecraft:block",
-    "pools": [
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
         {
-            "name": "blueberry",
-            "rolls": 1,
-            "entries": [
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "aether:berry_bush",
+              "conditions": [
                 {
-                    "type": "minecraft:item",
-                    "name": "aether:blueberry",
-                    "functions": [
-                        {
-                            "function": "minecraft:set_count",
-                            "count": {
-                                "min": 1,
-                                "max": 3
-                            },
-                            "conditions": [
-                                {
-                                    "condition": "minecraft:location_check",
-                                    "offsetY": -1,
-                                    "predicate": {
-                                        "block": {
-                                            "block": "aether:enchanted_aether_grass_block"
-                                        }
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "function": "minecraft:set_count",
-                            "count": {
-                                "min": 1,
-                                "max": 4 
-                            },
-                            "conditions": [
-                                {
-                                    "condition": "minecraft:inverted",
-                                    "term": {
-                                        "condition": "minecraft:location_check",
-                                        "offsetY": -1,
-                                        "predicate": {
-                                            "block": {
-                                                "block": "aether:enchanted_aether_grass_block"
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "function": "minecraft:explosion_decay"
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
                         }
+                      }
                     ]
+                  }
                 }
-            ],
-            "conditions": [
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "aether:blueberry",
+              "functions": [
                 {
-                    "condition": "minecraft:inverted",
-                    "term": {
-                        "condition": "minecraft:match_tool",
-                        "predicate": {
-                            "enchantments": [
-                                {
-                                    "enchantment": "minecraft:silk_touch",
-                                    "levels": {
-                                        "min": 1
-                                    }
-                                }
-                            ]
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 4
+                  },
+                  "conditions": [
+                    {
+                      "condition": "aether:location_check",
+                      "offsetY": -1,
+                      "predicate": {
+                        "block": {
+                          "block": "aether:enchanted_aether_grass_block"
                         }
+                      }
                     }
-                }
-            ]
-        },
-        {
-            "name": "silk_touch_block",
-            "rolls": 1,
-            "entries": [
+                  ]
+                },
                 {
-                    "type": "minecraft:item",
-                    "name": "aether:berry_bush"
-                }
-            ],
-            "conditions": [
-                {
-                    "condition": "minecraft:match_tool",
-                    "predicate": {
-                        "enchantments": [
-                            {
-                                "enchantment": "minecraft:silk_touch",
-                                "levels": {
-                                    "min": 1
-                                }
-                            }
-                        ]
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 3
+                  },
+                  "conditions": [
+                    {
+                      "condition": "minecraft:inverted",
+                      "term": {
+                        "condition": "aether:location_check",
+                        "offsetY": -1,
+                        "predicate": {
+                          "block": {
+                            "block": "aether:enchanted_aether_grass_block"
+                          }
+                        }
+                      }
                     }
+                  ]
+                },
+                {
+                  "function": "minecraft:explosion_decay"
                 }
-            ]
+              ]
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }

@@ -1,5 +1,5 @@
 {
-	"parent": "aether_legacy:block/freezer",
+	"parent": "aether:block/freezer",
 	"display": {
 		"thirdperson": {
 			"rotation": [ 10, -45, 170 ],

@@ -3,8 +3,8 @@
 	"variants": 
 	{
         
-		"half=bottom": { "model": "aether_legacy:block/skyroot_planks" },
-        			"half=top": { "model": "aether_legacy:block/skyroot_planks" }
+		"half=bottom": { "model": "aether:block/skyroot_planks" },
+        			"half=top": { "model": "aether:block/skyroot_planks" }
     
 	}
 

@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:item/food/white_apple"
+		"layer0": "aether:item/food/white_apple"
 	}
 }

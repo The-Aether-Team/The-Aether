@@ -5,11 +5,11 @@
 	"textures": 
 	{
         
-		"bottom": "aether_legacy:block/hellfire_stone",
+		"bottom": "aether:block/hellfire_stone",
         
-		"top": "aether_legacy:block/hellfire_stone",
+		"top": "aether:block/hellfire_stone",
         
-		"side": "aether_legacy:block/hellfire_stone"
+		"side": "aether:block/hellfire_stone"
     
 	}
 

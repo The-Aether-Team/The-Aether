@@ -15,13 +15,13 @@ Aether Legacy, a port of Aether I which has been updated to the latest version o
 This version of the Aether includes multiplayer support to play with friends and others alike.
 '''
 
-[[dependencies.aether_legacy]]
+[[dependencies.aether]]
     modId = "forge"
     mandatory = true
     versionRange = "[28,)"
     ordering = "NONE"
     side = "BOTH"
-[[dependencies.aether_legacy]]
+[[dependencies.aether]]
     modId = "minecraft"
     mandatory = true
     versionRange = "[1.14.4]"

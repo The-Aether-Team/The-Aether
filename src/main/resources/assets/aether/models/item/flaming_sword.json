@@ -1,6 +1,6 @@
 {
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "aether_legacy:item/weapons/flaming_sword"
+		"layer0": "aether:item/weapons/flaming_sword"
 	}
 }

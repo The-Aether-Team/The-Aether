@@ -4,7 +4,7 @@
     
 	"textures": {
         
-		"wall": "aether_legacy:block/mossy_holystone"
+		"wall": "aether:block/mossy_holystone"
     
 	}
 

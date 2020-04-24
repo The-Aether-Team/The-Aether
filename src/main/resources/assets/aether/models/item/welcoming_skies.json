@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:item/music/welcoming_skies"
+		"layer0": "aether:item/music/welcoming_skies"
 	}
 }

@@ -3,6 +3,7 @@ package com.aether.client.gui.recipebook;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.aether.Aether;
 import com.aether.api.AetherAPI;
 import com.aether.api.enchantments.AetherEnchantmentFuel;
 
@@ -30,10 +31,12 @@ public class EnchanterRecipeGui extends AbstractRecipeBookGui {
 	protected void func_212957_c(boolean p_212957_1_) {
 		this.recipeBook.setFurnaceGuiOpen(p_212957_1_);
 	}
+	
+	private static final String TOGGLE_RECIPE_TRANSLATION_KEY = "gui.recipebook.toggleRecipes." + Aether.MODID + ".enchantable";
 
 	@Override
 	protected String func_212960_g() {
-		return "gui.recipebook.toggleRecipes.aether_legacy.enchantable";
+		return TOGGLE_RECIPE_TRANSLATION_KEY;
 	}
 
 	@Override

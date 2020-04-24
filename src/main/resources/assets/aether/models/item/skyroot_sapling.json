@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:block/skyroot_sapling"
+		"layer0": "aether:block/skyroot_sapling"
 	}
 }

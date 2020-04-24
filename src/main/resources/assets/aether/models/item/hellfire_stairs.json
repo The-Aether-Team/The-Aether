@@ -1,4 +1,4 @@
 {
     
-	"parent": "aether_legacy:block/hellfire_stairs"
+	"parent": "aether:block/hellfire_stairs"
 }

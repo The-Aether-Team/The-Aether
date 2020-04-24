@@ -1,6 +1,6 @@
 {
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "aether_legacy:item/tools/gravitite_axe"
+		"layer0": "aether:item/tools/gravitite_axe"
 	}
 }

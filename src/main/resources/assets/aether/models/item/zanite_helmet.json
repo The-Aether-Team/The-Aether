@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:item/armor/zanite_helmet"
+		"layer0": "aether:item/armor/zanite_helmet"
 	}
 }

@@ -1,7 +1,7 @@
 {
     "parent": "block/cube_column",
     "textures": {
-        "end": "aether_legacy:block/skyroot_planks",
-        "side": "aether_legacy:block/skyroot_bookshelf"
+        "end": "aether:block/skyroot_planks",
+        "side": "aether:block/skyroot_bookshelf"
     }
 }

@@ -1,5 +1,5 @@
 {
-	"parent": "aether_legacy:block/holiday_leaves",
+	"parent": "aether:block/holiday_leaves",
 	"display": {
 		"thirdperson": {
 			"rotation": [ 10, -45, 170 ],

@@ -1,10 +1,10 @@
 {
 	"variants": {
 		"": [
-			{ "model": "aether_legacy:block/aether_dirt" },
-			{ "model": "aether_legacy:block/aether_dirt", "y": 90 },
-			{ "model": "aether_legacy:block/aether_dirt", "y": 180 },
-			{ "model": "aether_legacy:block/aether_dirt", "y": 270 }
+			{ "model": "aether:block/aether_dirt" },
+			{ "model": "aether:block/aether_dirt", "y": 90 },
+			{ "model": "aether:block/aether_dirt", "y": 180 },
+			{ "model": "aether:block/aether_dirt", "y": 270 }
 		]
 	}
 }

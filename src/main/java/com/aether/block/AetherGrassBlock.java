@@ -24,6 +24,7 @@ public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlo
 
 	public AetherGrassBlock(Block.Properties properties) {
 		super(properties);
+		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:block/white_flower"
+		"layer0": "aether:block/white_flower"
 	}
 }

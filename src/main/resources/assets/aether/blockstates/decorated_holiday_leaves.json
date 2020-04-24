@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "aether_legacy:block/decorated_holiday_leaves" }
+        "": { "model": "aether:block/decorated_holiday_leaves" }
     }
 }

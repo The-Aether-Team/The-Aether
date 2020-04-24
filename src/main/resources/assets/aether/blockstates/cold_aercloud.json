@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "aether_legacy:block/cold_aercloud" }
+        "": { "model": "aether:block/cold_aercloud" }
     }
 }

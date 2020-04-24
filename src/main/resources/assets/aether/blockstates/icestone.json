@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "aether_legacy:block/icestone"
+			"model": "aether:block/icestone"
 		}
 	}
 }

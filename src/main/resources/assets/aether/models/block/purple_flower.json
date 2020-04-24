@@ -1,6 +1,6 @@
 {
 	"parent": "block/cross",
 	"textures": {
-		"cross": "aether_legacy:block/purple_flower"
+		"cross": "aether:block/purple_flower"
 	}
 }

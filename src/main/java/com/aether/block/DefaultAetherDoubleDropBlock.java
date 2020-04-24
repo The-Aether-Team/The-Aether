@@ -8,6 +8,7 @@ public class DefaultAetherDoubleDropBlock extends Block implements IAetherDouble
 
 	public DefaultAetherDoubleDropBlock(Block.Properties properties) {
 		super(properties);
+		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
 	}
 	
 	@Override

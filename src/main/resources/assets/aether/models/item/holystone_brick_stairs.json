@@ -1,4 +1,4 @@
 {
     
-	"parent": "aether_legacy:block/holystone_brick_stairs"
+	"parent": "aether:block/holystone_brick_stairs"
 }

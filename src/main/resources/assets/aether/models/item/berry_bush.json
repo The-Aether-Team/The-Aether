@@ -1,5 +1,5 @@
 {
-	"parent": "aether_legacy:block/berry_bush",
+	"parent": "aether:block/berry_bush",
 	"display": {
 		"thirdperson": {
 			"rotation": [ 10, -45, 170 ],

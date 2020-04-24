@@ -1,9 +1,9 @@
 {
-	"parent": "aether_legacy:block/multi_texture_base",
+	"parent": "aether:block/multi_texture_base",
 	"textures": {
-		"particle": "aether_legacy:block/sun_altar_top",
-		"bottom": "aether_legacy:block/hellfire_stone",
-		"top": "aether_legacy:block/sun_altar_top",
-		"side": "aether_legacy:block/sun_altar_side"
+		"particle": "aether:block/sun_altar_top",
+		"bottom": "aether:block/hellfire_stone",
+		"top": "aether:block/sun_altar_top",
+		"side": "aether:block/sun_altar_side"
 	}
 }

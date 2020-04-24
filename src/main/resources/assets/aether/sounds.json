@@ -3,7 +3,7 @@
 	"category": "music",
 	"sounds":[
 	  {
-	    "name": "aether_legacy:record/aether_tune",
+	    "name": "aether:record/aether_tune",
 	    "stream": true
 	  }
 	]
@@ -12,7 +12,7 @@
 	"category": "music",
 	"sounds": [
 	  {
-	    "name": "aether_legacy:record/ascending_dawn",
+	    "name": "aether:record/ascending_dawn",
 	    "stream": true
 	  }
 	]
@@ -21,7 +21,7 @@
   	"category": "music",
 	"sounds": [
 	  {
-	    "name": "aether_legacy:record/welcoming_skies",
+	    "name": "aether:record/welcoming_skies",
 	    "stream": true
 	  }
 	]
@@ -30,7 +30,7 @@
   	"category": "music",
 	"sounds": [
 	  {
-	    "name": "aether_legacy:record/legacy",
+	    "name": "aether:record/legacy",
 	    "stream": true
 	  }
 	]
@@ -39,7 +39,7 @@
 	"category": "music",
 	"sounds": [
 	  {
-	    "name": "aether_legacy:music/menu",
+	    "name": "aether:music/menu",
 	    "stream": true
 	  }
 	]
@@ -48,7 +48,7 @@
 	"category": "music",
 	"sounds": [
 	  {
-	    "name": "aether_legacy:music/aether1",
+	    "name": "aether:music/aether1",
 	    "stream": true
 	  }
 	]
@@ -57,7 +57,7 @@
 	"category": "music",
 	"sounds": [
 	  {
-	    "name": "aether_legacy:music/aether2",
+	    "name": "aether:music/aether2",
 	    "stream": true
 	  }
 	]
@@ -66,7 +66,7 @@
 	"category": "music",
 	"sounds": [
 	  {
-	    "name": "aether_legacy:music/aether3",
+	    "name": "aether:music/aether3",
 	    "stream": true
 	  }
 	]
@@ -75,7 +75,7 @@
 	"category": "music",
 	"sounds": [
 	  {
-	    "name": "aether_legacy:music/aether4",
+	    "name": "aether:music/aether4",
 	    "stream": true
 	  }
 	]
@@ -84,7 +84,7 @@
   	"category": "player",
 	"sounds": [
 	  {
-	    "name": "aether_legacy:achievement/achievement_gen",
+	    "name": "aether:achievement/achievement_gen",
 	    "stream": true
 	  }
 	]
@@ -93,7 +93,7 @@
   	"category": "player",
 	"sounds": [
 	  {
-	    "name": "aether_legacy:achievement/achievement_silver",
+	    "name": "aether:achievement/achievement_silver",
 	    "stream": true
 	  }
 	]
@@ -102,7 +102,7 @@
   	"category": "player",
 	"sounds": [
 	  {
-	    "name": "aether_legacy:achievement/achievement_bronze",
+	    "name": "aether:achievement/achievement_bronze",
 	    "stream": true
 	  }
 	]
@@ -126,7 +126,7 @@
   	"category": "neutral",
 	"subtitle": "subtitles.aemob.moa.say",
 	"sounds": [
-	    "aether_legacy:aemob/moa/say"
+	    "aether:aemob/moa/say"
 	]
   },
   "aemob.moa.flap": {
@@ -220,91 +220,91 @@
   	"category": "neutral",
 	"subtitle": "subtitles.aemob.aerbunny.hurt",
 	"sounds": [
-	    "aether_legacy:aemob/aerbunny/hurt"
+	    "aether:aemob/aerbunny/hurt"
 	]
   },
   "aemob.aerbunny.death": {
   	"category": "neutral",
 	"subtitle": "subtitles.aemob.aerbunny.death",
 	"sounds": [
-	    "aether_legacy:aemob/aerbunny/death"
+	    "aether:aemob/aerbunny/death"
 	]
   },
   "aemob.aerbunny.lift": {
   	"category": "neutral",
 	"subtitle": "subtitles.aemob.aerbunny.lift",
 	"sounds": [
-	    "aether_legacy:aemob/aerbunny/lift"
+	    "aether:aemob/aerbunny/lift"
 	]
   },
   "aemob.zephyr.call": {
   	"category": "hostile",
 	"subtitle": "subtitles.aemob.zephyr.say",
 	"sounds": [
-	    "aether_legacy:aemob/zephyr/call"
+	    "aether:aemob/zephyr/call"
 	]
   },
   "aemob.zephyr.shoot": {
   	"category": "hostile",
 	"subtitle": "subtitles.aemob.zephyr.shoot",
 	"sounds": [
-	    "aether_legacy:aemob/zephyr/shoot"
+	    "aether:aemob/zephyr/shoot"
 	]
   },
   "aemob.aerwhale.call": {
   	"category": "neutral",
 	"subtitle": "subtitles.aemob.aerwhale.say",
 	"sounds": [
-	    "aether_legacy:aemob/aerwhale/call"
+	    "aether:aemob/aerwhale/call"
 	]
   },
   "aemob.aerwhale.death": {
   	"category": "neutral",
 	"subtitle": "subtitles.aemob.aerwhale.death",
 	"sounds": [
-	    "aether_legacy:aemob/aerwhale/death"
+	    "aether:aemob/aerwhale/death"
 	]
   },
   "projectile.shoot": {
 	"category": "player",
 	"subtitle": "subtitles.aemisc.projectile.shoot",
 	"sounds": [
-	    "aether_legacy:projectile/shoot"
+	    "aether:projectile/shoot"
 	]
   },
   "projectile.dart_shooter.shoot": {
 	"category": "player",
 	"subtitle": "subtitles.aemisc.dart_shooter.shoot",
 	"sounds": [
-	    "aether_legacy:projectile/dart_shooter/shoot"
+	    "aether:projectile/dart_shooter/shoot"
 	]
   },
   "aeboss.slider.awaken": {
 	"category": "hostile",
 	"subtitle": "subtitles.aeboss.slider.awaken",
 	"sounds": [
-	    "aether_legacy:aeboss/slider/awaken"
+	    "aether:aeboss/slider/awaken"
 	]
   },
   "aeboss.slider.collide": {
 	"category": "hostile",
 	"subtitle": "subtitles.aeboss.slider.collide",
 	"sounds": [
-	    "aether_legacy:aeboss/slider/collide"
+	    "aether:aeboss/slider/collide"
 	]
   },
   "aeboss.slider.move": {
 	"category": "hostile",
 	"subtitle": "subtitles.aeboss.slider.move",
 	"sounds": [
-	    "aether_legacy:aeboss/slider/move"
+	    "aether:aeboss/slider/move"
 	]
   },
   "aeboss.slider.death": {
 	"category": "hostile",
 	"subtitle": "subtitles.aeboss.slider.death",
 	"sounds": [
-	    "aether_legacy:aeboss/slider/death"
+	    "aether:aeboss/slider/death"
 	]
    },
   "aeboss.sun_spirit.shoot": {

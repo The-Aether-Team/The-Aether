@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "aether_legacy:block/zanite_block"
+			"model": "aether:block/zanite_block"
 		}
 	}
 }

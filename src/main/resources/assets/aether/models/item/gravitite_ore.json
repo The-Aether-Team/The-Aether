@@ -1,5 +1,5 @@
 {
-	"parent": "aether_legacy:block/gravitite_ore",
+	"parent": "aether:block/gravitite_ore",
 	"display": {
 		"thirdperson": {
 			"rotation": [ 10, -45, 170 ],

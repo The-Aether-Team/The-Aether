@@ -1,10 +1,10 @@
 {
 	"variants": {
 		"": [
-			{ "model": "aether_legacy:block/holystone" },
-			{ "model": "aether_legacy:block/holystone", "y": 90 },
-			{ "model": "aether_legacy:block/holystone", "y": 180 },
-			{ "model": "aether_legacy:block/holystone", "y": 270 }
+			{ "model": "aether:block/holystone" },
+			{ "model": "aether:block/holystone", "y": 90 },
+			{ "model": "aether:block/holystone", "y": 180 },
+			{ "model": "aether:block/holystone", "y": 270 }
 		]
 	}
 }

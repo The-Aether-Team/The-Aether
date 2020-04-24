@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "aether_legacy:block/zanite_ore"
+		"all": "aether:block/zanite_ore"
 	}
 }

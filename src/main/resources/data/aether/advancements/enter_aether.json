@@ -18,8 +18,8 @@
 		"enter_aether": {
 			"trigger": "minecraft:changed_dimension",
 			"conditions": {
-				"to": "AetherI",
-				"from": "overworld"
+				"to": "aether:aether",
+				"from": "minecraft:overworld"
 			}
 		}
 	}

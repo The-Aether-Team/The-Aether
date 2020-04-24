@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether_legacy:item/projectile/golden_dart"
+		"layer0": "aether:item/projectile/golden_dart"
 	}
 }

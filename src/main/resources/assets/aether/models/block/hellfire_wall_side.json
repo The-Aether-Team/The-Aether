@@ -4,7 +4,7 @@
     
 	"textures": {
         
-		"wall": "aether_legacy:block/hellfire_stone"
+		"wall": "aether:block/hellfire_stone"
     
 	}
 

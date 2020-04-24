@@ -1,6 +1,6 @@
 {
 	"parent": "block/cross",
 	"textures": {
-		"cross": "aether_legacy:block/skyroot_sapling"
+		"cross": "aether:block/skyroot_sapling"
 	}
 }

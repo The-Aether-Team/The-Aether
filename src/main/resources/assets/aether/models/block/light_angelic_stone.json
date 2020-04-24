@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "aether_legacy:block/light_angelic_stone"
+		"all": "aether:block/light_angelic_stone"
 	}
 }

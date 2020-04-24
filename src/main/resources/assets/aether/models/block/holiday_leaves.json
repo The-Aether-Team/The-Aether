@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "aether_legacy:block/holiday_leaves"
+		"all": "aether:block/holiday_leaves"
 	}
 }

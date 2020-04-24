@@ -1,8 +1,8 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "aether_legacy:block/ambrosium_torch",
-        "torch": "aether_legacy:block/ambrosium_torch"
+        "particle": "aether:block/ambrosium_torch",
+        "torch": "aether:block/ambrosium_torch"
     },
     "elements": [
         {   "from": [ 7, 0, 7 ],

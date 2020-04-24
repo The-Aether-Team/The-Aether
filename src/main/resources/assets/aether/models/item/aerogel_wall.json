@@ -1,5 +1,5 @@
 {
     
-	"parent": "aether_legacy:block/aerogel_wall_inventory"
+	"parent": "aether:block/aerogel_wall_inventory"
 
 }

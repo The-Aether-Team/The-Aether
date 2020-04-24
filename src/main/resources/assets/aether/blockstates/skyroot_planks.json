@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "aether_legacy:block/skyroot_planks"
+			"model": "aether:block/skyroot_planks"
 		}
 	}
 }

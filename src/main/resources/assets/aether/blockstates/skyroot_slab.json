@@ -3,8 +3,8 @@
 	"variants": 
 	{
         
-		"half=bottom": { "model": "aether_legacy:block/skyroot_half_slab" },
-        			"half=top": { "model": "aether_legacy:block/skyroot_upper_slab" }
+		"half=bottom": { "model": "aether:block/skyroot_half_slab" },
+        			"half=top": { "model": "aether:block/skyroot_upper_slab" }
     
 	}
 

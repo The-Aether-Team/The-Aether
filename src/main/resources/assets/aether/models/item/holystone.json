@@ -1,5 +1,5 @@
 {
-	"parent": "aether_legacy:block/holystone",
+	"parent": "aether:block/holystone",
 	"display": {
 		"thirdperson": {
 			"rotation": [ 10, -45, 170 ],

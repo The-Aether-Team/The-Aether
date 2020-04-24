@@ -10,6 +10,7 @@ public class AetherLogBlock extends LogBlock implements IAetherDoubleDropBlock {
 
 	public AetherLogBlock(MaterialColor verticalColor, Block.Properties properties) {
 		super(verticalColor, properties);
+		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
 	}
 	
 	@Override

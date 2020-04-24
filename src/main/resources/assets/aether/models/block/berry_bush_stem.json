@@ -1,8 +1,8 @@
 {
     "ambientocclusion": false,
     "textures": {
-	"stem": "aether_legacy:block/berry_bush_stem",
-        "particle": "aether_legacy:block/berry_bush_stem"
+	"stem": "aether:block/berry_bush_stem",
+        "particle": "aether:block/berry_bush_stem"
     },
     "elements": [
         {   "from": [ 0.8, 0, 8 ],

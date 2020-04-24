@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "aether_legacy:block/quicksoil_glass"
+			"model": "aether:block/quicksoil_glass"
 		}
 	}
 }

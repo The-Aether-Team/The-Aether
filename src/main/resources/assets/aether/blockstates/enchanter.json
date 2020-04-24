@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "aether_legacy:block/enchanter"
+			"model": "aether:block/enchanter"
 		}
 	}
 }

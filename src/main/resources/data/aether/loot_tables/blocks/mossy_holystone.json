@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:mossy_holystone",
+          "functions": [
+            {
+              "function": "minecraft:explosion_decay"
+            },
+            {
+              "function": "aether:double_drops"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

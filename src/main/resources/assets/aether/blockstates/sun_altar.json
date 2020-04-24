@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "aether_legacy:block/sun_altar"
+			"model": "aether:block/sun_altar"
 		}
 	}
 }

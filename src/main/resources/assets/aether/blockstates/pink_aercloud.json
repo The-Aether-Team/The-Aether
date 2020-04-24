@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "aether_legacy:block/pink_aercloud" }
+        "": { "model": "aether:block/pink_aercloud" }
     }
 }

@@ -8,6 +8,7 @@ import com.aether.client.renderer.entity.MimicRenderer;
 import com.aether.entity.item.FloatingBlockEntity;
 import com.aether.entity.monster.MimicEntity;
 import com.aether.inventory.container.AetherContainerTypes;
+import com.aether.item.AetherItems;
 import com.aether.item.TintedBlockItem;
 
 import net.minecraft.block.Block;
@@ -16,6 +17,7 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -55,6 +57,7 @@ public class ClientProxy extends CommonProxy {
 		// Item colors
 		registerColor((TintedBlockItem) AetherBlocks.BLUE_AERCLOUD.asItem());
 		registerColor((TintedBlockItem) AetherBlocks.GOLDEN_AERCLOUD.asItem());
+		registerColor(AetherItems.MIMIC_SPAWN_EGG);
 	}
 	
 	private static <B extends Block & IBlockColor> void registerColor(B block) {
@@ -63,6 +66,14 @@ public class ClientProxy extends CommonProxy {
 	
 	private static <I extends Item & IItemColor> void registerColor(I item) {
 		Minecraft.getInstance().getItemColors().register(item, item);
+	}
+	
+	private static void registerColor(Item item, IItemColor colorProvider) {
+		Minecraft.getInstance().getItemColors().register(colorProvider, item);
+	}
+	
+	private static void registerColor(SpawnEggItem spawneggitem) {
+		Minecraft.getInstance().getItemColors().register((itemStack, tintIndex) -> spawneggitem.getColor(tintIndex), spawneggitem);
 	}
 	
 }
