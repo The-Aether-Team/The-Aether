@@ -2,6 +2,7 @@ package com.aether.item;
 
 import java.util.function.Supplier;
 
+import com.aether.Aether;
 import com.aether.block.AetherBlocks;
 
 import net.minecraft.block.Blocks;
@@ -47,7 +48,7 @@ public enum AetherArmorMaterial implements IArmorMaterial {
 
 	private AetherArmorMaterial(String nameIn, int maxDamageFactorIn, int[] damageReductionAmountsIn,
 		int enchantabilityIn, SoundEvent equipSoundIn, float p_i48533_8_, Supplier<Ingredient> repairMaterialSupplier) {
-		this.name = nameIn;
+		this.name = Aether.MODID + ':' + nameIn;
 		this.maxDamageFactor = maxDamageFactorIn;
 		this.damageReductionAmountArray = damageReductionAmountsIn;
 		this.enchantability = enchantabilityIn;
