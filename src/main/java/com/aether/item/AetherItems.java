@@ -286,6 +286,9 @@ public class AetherItems {
 				//item("cold_parachute", new ColdParachuteItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
 				//item("golden_parachute", new GoldenParachuteItem(new Item.Properties().maxDamage(20).maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
 				
+				//item("nature_staff", new NatureStaffItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_TOOLS))),
+				//item("cloud_staff", new CloudStaffItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_TOOLS))),
+				
 				//item("moa_egg", new MoaEggItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
 				
 				//item("golden_dart_shooter", new DartShooterItem(() -> GOLDEN_DART, new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_COMBAT))),
@@ -303,6 +306,57 @@ public class AetherItems {
 				//item("holy_sword", new HolySwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				//item("vampire_blade", new VampireBladeItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("pig_slayer", new PigSlayerItem(ItemTier.IRON, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))), 
+				//item("candy_cane_sword", new CandyCaneSwordItem(ItemTier.GOLD, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				//item("notch_hammer", new NotchHammerItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				//item("valkyrie_lance", new ValkyrieLanceItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				
+				//item("leather_gloves", new DyeableGlovesItem(ArmorMaterial.LEATHER, new Item.Properties().group(ItemGroup.COMBAT))),
+				//item("chainmail_gloves", new GlovesItem(ArmorMaterial.CHAIN, new Item.Properties().group(ItemGroup.COMBAT))),
+				//item("iron_gloves", new GlovesItem(ArmorMaterial.IRON, new Item.Properties().group(ItemGroup.COMBAT))),
+				//item("diamond_gloves", new GlovesItem(ArmorMaterial.DIAMOND, new Item.Properties().group(ItemGroup.COMBAT))),
+				//item("golden_gloves", new GlovesItem(ArmorMaterial.GOLD, new Item.Properties().group(ItemGroup.COMBAT))),
+				
+				//item("zanite_gloves", new GlovesItem(AetherArmorMaterial.ZANITE, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				//item("gravitite_gloves", new GlovesItem(AetherArmorMaterial.GRAVITITE, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				//item("neptune_gloves", new GlovesItem(AetherArmorMaterial.NEPTUNE, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				//item("phoenix_gloves", new GlovesItem(AetherArmorMaterial.PHOENIX, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				//item("obsidian_gloves", new GlovesItem(AetherArmorMaterial.OBSIDIAN, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				//item("valkyrie_gloves", new GlovesItem(AetherArmorMaterial.VALKYRIE, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				
+				//item("iron_ring", new RingItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("golden_ring", new RingItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("zanite_ring", new RingItem(new Item.Properties().maxDamage(49).maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("ice_ring", new RingItem(new Item.Properties().maxDamage(125).maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				
+				//item("iron_pendant", new PendantItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("golden_pendant", new PendantItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("zanite_pendant", new PendantItem(new Item.Properties().maxDamage(98).maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("ice_pendant", new PendantItem(new Item.Properties().maxDamage(250).maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				
+				//item("red_cape", new CapeItem(???, new Item.Properties().group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("blue_cape", new CapeItem(???, new Item.Properties().group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("yellow_cape", new CapeItem(???, new Item.Properties().group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("white_cape", new CapeItem(???, new Item.Properties().group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("swet_cape", new CapeItem(???, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("invisibility_cape", new CapeItem(???, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("agility_cape", new CapeItem(???, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("valkyrie_cape", new CapeItem(???, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				
+				//item("golden_feather", new AccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("regeneration_stone", new AccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("iron_bubble", new AccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				
+				//item("life_shard", new LifeShardItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				item("sentry_boots", new ArmorItem(AetherArmorMaterial.SENTRY, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				//item("lightning_knife", new LightningKnifeItem(new Item.Properties().rarity(Aether.AETHER_LOOT).maxStackSize(16).group(AetherItemGroups.AETHER_COMBAT))),
+				
+				//item("music_disc_aether_tune", new MusicDiscItem(1, AetherSoundEvents.MUSIC_DISC_AETHER_TUNE, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),
+				//item("music_disc_ascending_dawn", new MusicDiscItem(2, AetherSoundEvents.MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),
+				//item("music_disc_welcoming_skies", new MusicDiscItem(3, AetherSoundEvents.MUSIC_DISC_WELCOMING_SKIES, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),
+				//item("music_disc_legacy", new MusicDiscItem(4, AetherSoundEvents.MUSIC_DISC_LEGACY, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),
+				
+				//item("repulsion_shield", new ShieldAccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).maxDamage(512).group(AetherItemGroups.AETHER_ACCESSORIES))),
+				//item("lore_book", new LoreBookItem(new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
 				
 				item("mimic_spawn_egg", new SpawnEggItem(
 						EntityType.Builder.create(MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"),
@@ -319,8 +373,9 @@ public class AetherItems {
 				Item item;
 				if (block instanceof IAetherBlockColor) {
 					IAetherBlockColor iaetherblockcolor = (IAetherBlockColor) block;
-					item = new TintedBlockItem(iaetherblockcolor.getColor(false), iaetherblockcolor.getColor(true),
-						block, properties);
+					int hexColor = iaetherblockcolor.getColor(false);
+					int updatedHexColor = iaetherblockcolor.getColor(true);
+					item = new TintedBlockItem(hexColor, updatedHexColor, block, properties);
 				}
 				else {
 					item = new BlockItem(block, properties);
