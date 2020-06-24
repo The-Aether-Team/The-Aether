@@ -3,7 +3,6 @@ package com.aether.advancements.criterion;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
@@ -37,31 +36,33 @@ public class BlockPredicate {
 	private final Tag<Block> tag;
 	@Nullable
 	private final Block block;
-	private final Map<?, ?> properties;
+	private final Map<String, String> stringProperties;
+	private final Map<IProperty<?>, Object> objectProperties;
 	private final Predicate<BlockState> predicate;
 	private final NBTPredicate nbt;
 
-	public BlockPredicate() {
+	private BlockPredicate() {
 		this.tag = null;
 		this.block = null;
-		this.properties = Collections.emptyMap();
+		this.stringProperties = null;
+		this.objectProperties = null;
 		this.predicate = (_unused) -> true;
 		this.nbt = NBTPredicate.ANY;
 	}
 
-	@SuppressWarnings("unchecked")
-	public BlockPredicate(@Nullable Tag<Block> tag, @Nullable Block block, Map<?, ?> properties, NBTPredicate nbt) {
+	public BlockPredicate(@Nullable Tag<Block> tag, @Nullable Block block, Map<String, String> stringProperties, Map<IProperty<?>, Object> objectProperties, NBTPredicate nbt) {
 		this.tag = tag;
 		this.block = block;
-		this.properties = properties;
+		this.stringProperties = (stringProperties == null)? Collections.emptyMap() : stringProperties;
+		this.objectProperties = (objectProperties == null)? Collections.emptyMap() : objectProperties;
 		if (block != null) {
-			this.predicate = BlockStateProperty.buildPredicate(block, (Map<IProperty<?>, Object>) properties);
+			this.predicate = BlockStateProperty.buildPredicate(block, objectProperties);
 		}
 		else if (tag != null) {
-			this.predicate = BlockPredicate.buildPredicate(tag, (Map<String, String>) properties);
+			this.predicate = BlockPredicate.buildPredicate(tag, stringProperties);
 		}
 		else {
-			this.predicate = BlockPredicate.buildPredicate((Map<String, String>) properties);
+			this.predicate = BlockPredicate.buildPredicate(stringProperties);
 		}
 		this.nbt = nbt;
 	}
@@ -194,39 +195,31 @@ public class BlockPredicate {
 			if (tag != null) {
 				jsonobject.addProperty("tag", tag.getId().toString());
 			}
-
-			if (!properties.isEmpty()) {
-				if (block != null) {
-					@SuppressWarnings("unchecked")
-					Set<? extends Map.Entry<IProperty<?>, Object>> entrySet = (Set<? extends Map.Entry<IProperty<?>, Object>>) properties
-						.entrySet();
-					entrySet.forEach((entry) -> {
-						Object value = entry.getValue();
-						if (value instanceof IStringSerializable) {
-							value = ((IStringSerializable) value).getName();
-						}
-						if (value == null || value instanceof Number) {
-							jsonobject.addProperty(entry.getKey().getName(), (Number) value);
-						}
-						else if (value instanceof Boolean) {
-							jsonobject.addProperty(entry.getKey().getName(), (Boolean) value);
-						}
-						else if (value instanceof String) {
-							jsonobject.addProperty(entry.getKey().getName(), (String) value);
-						}
-						else {
-							jsonobject.addProperty(entry.getKey().getName(), String.valueOf(value));
-						}
-					});
-				}
-				else {
-					@SuppressWarnings("unchecked")
-					Set<? extends Map.Entry<String, String>> entrySet = (Set<? extends Map.Entry<String, String>>) properties
-						.entrySet();
-					entrySet.forEach((entry) -> {
-						jsonobject.addProperty(entry.getKey(), entry.getValue());
-					});
-				}
+			
+			if (!objectProperties.isEmpty()) {
+				objectProperties.entrySet().forEach((entry) -> {
+					Object value = entry.getValue();
+					if (value instanceof IStringSerializable) {
+						value = ((IStringSerializable) value).getName();
+					}
+					if (value == null || value instanceof Number) {
+						jsonobject.addProperty(entry.getKey().getName(), (Number) value);
+					}
+					else if (value instanceof Boolean) {
+						jsonobject.addProperty(entry.getKey().getName(), (Boolean) value);
+					}
+					else if (value instanceof String) {
+						jsonobject.addProperty(entry.getKey().getName(), (String) value);
+					}
+					else {
+						jsonobject.addProperty(entry.getKey().getName(), String.valueOf(value));
+					}
+				});
+			}
+			else if (!stringProperties.isEmpty()) {
+				stringProperties.entrySet().forEach((entry) -> {
+					jsonobject.addProperty(entry.getKey(), entry.getValue());
+				});
 			}
 
 			jsonobject.add("nbt", nbt.serialize());
@@ -250,11 +243,15 @@ public class BlockPredicate {
 				}
 			}
 
-			Map<Object, Object> map = Maps.newHashMap();
+//			Map<Object, Object> map = Maps.newHashMap();
+			Map<IProperty<?>, Object> objectProperties;
+			Map<String, String> stringProperties;
 			if (jsonobject.has("state")) {
 				JsonObject jsonobject1 = JSONUtils.getJsonObject(jsonobject, "state");
 				if (block != null) {
 					StateContainer<Block, BlockState> statecontainer = block.getStateContainer();
+					objectProperties = Maps.newHashMap();
+					stringProperties = null;
 					jsonobject1.entrySet().forEach((entry) -> {
 						String key = entry.getKey();
 						IProperty<?> iproperty = statecontainer.getProperty(key);
@@ -268,20 +265,25 @@ public class BlockPredicate {
 								return new JsonSyntaxException("Block " + block.getRegistryName() + " property '" + key
 									+ "' does not have value '" + value + "'");
 							});
-							map.put(iproperty, object);
+							objectProperties.put(iproperty, object);
 						}
 					});
 				}
 				else {
+					stringProperties = Maps.newHashMap();
+					objectProperties = null;
 					jsonobject1.entrySet().forEach((entry) -> {
 						String key = entry.getKey();
 						String value = JSONUtils.getString(entry.getValue(), "value");
-						map.put(key, value);
+						stringProperties.put(key, value);
 					});
 				}
+			} else {
+				stringProperties = null;
+				objectProperties = null;
 			}
 
-			return new BlockPredicate(tag, block, map, nbt);
+			return new BlockPredicate(tag, block, stringProperties, objectProperties, nbt);
 		}
 		else {
 			return ANY;
