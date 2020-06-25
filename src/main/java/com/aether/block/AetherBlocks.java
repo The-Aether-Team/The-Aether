@@ -152,6 +152,20 @@ public class AetherBlocks {
 				block("berry_bush", new BerryBushBlock(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.2f).sound(SoundType.PLANT))),
 				block("berry_bush_stem", new BerryBushStemBlock(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.2f).sound(SoundType.PLANT))),
 				block("enchanter", new EnchanterBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f).sound(SoundType.STONE))),
+				//block("freezer", new FreezerBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f).sound(SoundType.STONE))),
+				//block("incubator", new IncubatorBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f).sound(SoundType.STONE))),
+				//block("ambrosium_torch", new TorchBlock(Block.Properties.from(Blocks.TORCH))),
+				//block("chest_mimic", new ChestMimicBlock(Block.Properties.from(Blocks.CHEST))),
+				//block("treasure_chest", new TreasureChestBlock(???)),
+				
+				
+			});
+			
+			// for blocks that don't have corresponding items
+			event.getRegistry().registerAll(new Block[] {
+				
+				//block("ambrosium_wall_torch", new WallTorchBlock(Block.Properties.from(Blocks.WALL_TORCH))),
+				//block("aether_portal", new AetherPortalBlock(Block.Properties.from(Blocks.NETHER_PORTAL))),
 				
 			});
 		}
