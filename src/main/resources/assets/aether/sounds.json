@@ -1,36 +1,36 @@
 {
-  "records.aether_tune": {
-	"category": "music",
-	"sounds":[
-	  {
-	    "name": "aether:record/aether_tune",
-	    "stream": true
-	  }
-	]
-  },
-  "records.ascending_dawn": {
+  "music_disc.aether_tune": {
 	"category": "music",
 	"sounds": [
 	  {
-	    "name": "aether:record/ascending_dawn",
+	    "name": "aether:records/aether_tune",
 	    "stream": true
 	  }
 	]
   },
-  "records.welcoming_skies": {
-  	"category": "music",
+  "music_disc.ascending_dawn": {
+	"category": "music",
 	"sounds": [
 	  {
-	    "name": "aether:record/welcoming_skies",
+	    "name": "aether:records/ascending_dawn",
 	    "stream": true
 	  }
 	]
   },
-  "records.legacy": {
+  "music_disc.welcoming_skies": {
   	"category": "music",
 	"sounds": [
 	  {
-	    "name": "aether:record/legacy",
+	    "name": "aether:records/welcoming_skies",
+	    "stream": true
+	  }
+	]
+  },
+  "music_disc.legacy": {
+  	"category": "music",
+	"sounds": [
+	  {
+	    "name": "aether:records/legacy",
 	    "stream": true
 	  }
 	]
@@ -80,7 +80,7 @@
 	  }
 	]
   },
-  "achievement": {
+  "ui.toast.aether_general": {
   	"category": "player",
 	"sounds": [
 	  {
@@ -89,7 +89,7 @@
 	  }
 	]
   },
-  "achievement_silver": {
+  "ui.toast.aether_silver": {
   	"category": "player",
 	"sounds": [
 	  {
@@ -98,7 +98,7 @@
 	  }
 	]
   },
-  "achievement_bronze": {
+  "ui.toast.aether_bronze": {
   	"category": "player",
 	"sounds": [
 	  {
@@ -107,211 +107,221 @@
 	  }
 	]
   },
-  "aemisc.aether_portal.idle": {
-  	"category": "neutral",
-	"subtitle": "subtitles.aemisc.portal.idle",
-	"sounds": [
-	    "portal/portal"
-	]
-  },
-  "aemisc.dungeon_trap.trigger": {
+  "block.aether_portal.ambient": {
   	"category": "block",
-	"subtitle": "subtitles.aemisc.dungeon_trap.trigger",
+	"subtitle": "subtitles.block.aether_portal.ambient",
 	"sounds": [
-	    "block/fence_gate/open1",
-		"block/fence_gate/open2"
+	  {
+	    "attenuation_distance": 10,
+        "name": "minecraft:portal/portal"
+	  }
 	]
   },
-  "aemob.moa.say": {
+  "block.dungeon_trap.trigger": {
+  	"category": "block",
+	"subtitle": "subtitles.block.dungeon_trap.trigger",
+	"sounds": [
+	    "minecraft:block/fence_gate/open1",
+		"minecraft:block/fence_gate/open2"
+	]
+  },
+  "entity.moa.ambient": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.moa.say",
+	"subtitle": "subtitles.entity.moa.ambient",
 	"sounds": [
-	    "aether:aemob/moa/say"
+	    "aether:entity/moa/say"
 	]
   },
-  "aemob.moa.flap": {
+  "entity.moa.flap": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.moa.flap",
+	"subtitle": "subtitles.entity.moa.flap",
 	"sounds": [
-	    "mob/bat/takeoff"
+	    "minecraft:mob/bat/takeoff"
 	]
   },
-  "aemob.sheepuff.say": {
+  "entity.sheepuff.ambient": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.sheepuff.say",
+	"subtitle": "subtitles.entity.sheepuff.ambient",
 	"sounds": [
-	    "mob/sheep/say1",
-		"mob/sheep/say2",
-		"mob/sheep/say3"
+	    "minecraft:mob/sheep/say1",
+		"minecraft:mob/sheep/say2",
+		"minecraft:mob/sheep/say3"
 	]
   },
-  "aemob.sheepuff.hurt": {
+  "entity.sheepuff.hurt": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.sheepuff.hurt",
+	"subtitle": "subtitles.entity.sheepuff.hurt",
 	"sounds": [
-	    "mob/sheep/say1",
-		"mob/sheep/say2",
-		"mob/sheep/say3"
+	    "minecraft:mob/sheep/say1",
+		"minecraft:mob/sheep/say2",
+		"minecraft:mob/sheep/say3"
 	]
   },
-  "aemob.sheepuff.death": {
+  "entity.sheepuff.death": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.sheepuff.death",
+	"subtitle": "subtitles.entity.sheepuff.death",
 	"sounds": [
-	    "mob/sheep/say1",
-		"mob/sheep/say2",
-		"mob/sheep/say3"
+	    "minecraft:mob/sheep/say1",
+		"minecraft:mob/sheep/say2",
+		"minecraft:mob/sheep/say3"
 	]
   },
-  "aemob.flyingcow.say": {
+  "entity.sheepuff.shear": {
+    "category": "neutral",
+    "subtitle": "subtitles.item.shears.shear",
+    "sounds": [
+      "minecraft:mob/sheep/shear"
+    ]
+  },
+  "entity.flying_cow.ambient": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.flyingcow.say",
+	"subtitle": "subtitles.entity.flying_cow.ambient",
 	"sounds": [
-	    "mob/cow/say1",
-		"mob/cow/say2",
-		"mob/cow/say3",
-		"mob/cow/say4"
+	    "minecraft:mob/cow/say1",
+		"minecraft:mob/cow/say2",
+		"minecraft:mob/cow/say3",
+		"minecraft:mob/cow/say4"
 	]
   },
-  "aemob.flyingcow.hurt": {
+  "entity.flying_cow.hurt": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.flyingcow.hurt",
+	"subtitle": "subtitles.entity.flying_cow.hurt",
 	"sounds": [
-	    "mob/cow/hurt1",
-		"mob/cow/hurt2",
-		"mob/cow/hurt3"
+	    "minecraft:mob/cow/hurt1",
+		"minecraft:mob/cow/hurt2",
+		"minecraft:mob/cow/hurt3"
 	]
   },
-  "aemob.flyingcow.death": {
+  "entity.flying_cow.death": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.flyingcow.death",
+	"subtitle": "subtitles.entity.flying_cow.death",
 	"sounds": [
-	    "mob/cow/hurt1",
-		"mob/cow/hurt2",
-		"mob/cow/hurt3"
+	    "minecraft:mob/cow/hurt1",
+		"minecraft:mob/cow/hurt2",
+		"minecraft:mob/cow/hurt3"
 	]
   },
-  "aemob.phyg.say": {
+  "entity.phyg.ambient": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.phyg.say",
+	"subtitle": "subtitles.entity.phyg.ambient",
 	"sounds": [
-	    "mob/pig/say1",
-		"mob/pig/say2",
-		"mob/pig/say3"
+	    "minecraft:mob/pig/say1",
+		"minecraft:mob/pig/say2",
+		"minecraft:mob/pig/say3"
 	]
   },
-  "aemob.phyg.hurt": {
+  "entity.phyg.hurt": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.phyg.hurt",
+	"subtitle": "subtitles.entity.phyg.hurt",
 	"sounds": [
-	    "mob/pig/say1",
-		"mob/pig/say2",
-		"mob/pig/say3"
+	    "minecraft:mob/pig/say1",
+		"minecraft:mob/pig/say2",
+		"minecraft:mob/pig/say3"
 	]
   },
-  "aemob.phyg.death": {
+  "entity.phyg.death": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.phyg.death",
+	"subtitle": "subtitles.entity.phyg.death",
 	"sounds": [
-	    "mob/pig/death"
+	    "minecraft:mob/pig/death"
 	]
   },
-  "aemob.aerbunny.hurt": {
+  "entity.aerbunny.hurt": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.aerbunny.hurt",
+	"subtitle": "subtitles.entity.aerbunny.hurt",
 	"sounds": [
-	    "aether:aemob/aerbunny/hurt"
+	    "aether:entity/aerbunny/hurt"
 	]
   },
-  "aemob.aerbunny.death": {
+  "entity.aerbunny.death": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.aerbunny.death",
+	"subtitle": "subtitles.entity.aerbunny.death",
 	"sounds": [
-	    "aether:aemob/aerbunny/death"
+	    "aether:entity/aerbunny/death"
 	]
   },
-  "aemob.aerbunny.lift": {
+  "entity.aerbunny.lift": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.aerbunny.lift",
+	"subtitle": "subtitles.entity.aerbunny.lift",
 	"sounds": [
-	    "aether:aemob/aerbunny/lift"
+	    "aether:entity/aerbunny/lift"
 	]
   },
-  "aemob.zephyr.call": {
+  "entity.zephyr.ambient": {
   	"category": "hostile",
-	"subtitle": "subtitles.aemob.zephyr.say",
+	"subtitle": "subtitles.entity.zephyr.ambient",
 	"sounds": [
-	    "aether:aemob/zephyr/call"
+	    "aether:entity/zephyr/call"
 	]
   },
-  "aemob.zephyr.shoot": {
+  "entity.zephyr.shoot": {
   	"category": "hostile",
-	"subtitle": "subtitles.aemob.zephyr.shoot",
+	"subtitle": "subtitles.entity.zephyr.shoot",
 	"sounds": [
-	    "aether:aemob/zephyr/shoot"
+	    "aether:entity/zephyr/shoot"
 	]
   },
-  "aemob.aerwhale.call": {
+  "entity.aerwhale.ambient": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.aerwhale.say",
+	"subtitle": "subtitles.entity.aerwhale.ambient",
 	"sounds": [
-	    "aether:aemob/aerwhale/call"
+	    "aether:entity/aerwhale/call"
 	]
   },
-  "aemob.aerwhale.death": {
+  "entity.aerwhale.death": {
   	"category": "neutral",
-	"subtitle": "subtitles.aemob.aerwhale.death",
+	"subtitle": "subtitles.entity.aerwhale.death",
 	"sounds": [
-	    "aether:aemob/aerwhale/death"
+	    "aether:entity/aerwhale/death"
 	]
   },
-  "projectile.shoot": {
+  "entity.projectile.shoot": {
 	"category": "player",
-	"subtitle": "subtitles.aemisc.projectile.shoot",
+	"subtitle": "subtitles.entity.projectile.shoot",
 	"sounds": [
 	    "aether:projectile/shoot"
 	]
   },
-  "projectile.dart_shooter.shoot": {
+  "entity.dart_shooter.shoot": {
 	"category": "player",
-	"subtitle": "subtitles.aemisc.dart_shooter.shoot",
+	"subtitle": "subtitles.entity.dart_shooter.shoot",
 	"sounds": [
 	    "aether:projectile/dart_shooter/shoot"
 	]
   },
-  "aeboss.slider.awaken": {
+  "entity.slider.awaken": {
 	"category": "hostile",
-	"subtitle": "subtitles.aeboss.slider.awaken",
+	"subtitle": "subtitles.entity.slider.awaken",
 	"sounds": [
-	    "aether:aeboss/slider/awaken"
+	    "aether:entity/slider/awaken"
 	]
   },
-  "aeboss.slider.collide": {
+  "entity.slider.collide": {
 	"category": "hostile",
-	"subtitle": "subtitles.aeboss.slider.collide",
+	"subtitle": "subtitles.entity.slider.collide",
 	"sounds": [
-	    "aether:aeboss/slider/collide"
+	    "aether:entity/slider/collide"
 	]
   },
-  "aeboss.slider.move": {
+  "entity.slider.move": {
 	"category": "hostile",
-	"subtitle": "subtitles.aeboss.slider.move",
+	"subtitle": "subtitles.entity.slider.move",
 	"sounds": [
-	    "aether:aeboss/slider/move"
+	    "aether:entity/slider/move"
 	]
   },
-  "aeboss.slider.death": {
+  "entity.slider.death": {
 	"category": "hostile",
-	"subtitle": "subtitles.aeboss.slider.death",
+	"subtitle": "subtitles.entity.slider.death",
 	"sounds": [
-	    "aether:aeboss/slider/death"
+	    "aether:entity/slider/death"
 	]
    },
-  "aeboss.sun_spirit.shoot": {
+  "entity.sun_spirit.shoot": {
 	"category": "hostile",
-	"subtitle": "subtitles.aeboss.sun_spirit.shoot",
+	"subtitle": "subtitles.entity.sun_spirit.shoot",
 	"sounds": [
-	    "mob/ghast/fireball4"
+	    "minecraft:mob/ghast/fireball4"
 	]
 	}
 }
