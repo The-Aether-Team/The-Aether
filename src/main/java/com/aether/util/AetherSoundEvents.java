@@ -112,7 +112,9 @@ public class AetherSoundEvents {
 		}
 		
 		private static SoundEvent sound(String name) {
-			return new SoundEvent(new ResourceLocation(Aether.MODID, name));
+			SoundEvent sound = new SoundEvent(new ResourceLocation(Aether.MODID, name));
+			sound.setRegistryName(sound.getName());
+			return sound;
 		}
 		
 	}
