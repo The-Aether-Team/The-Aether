@@ -5,11 +5,12 @@ import com.aether.block.AetherBlocks;
 import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.renderer.entity.FloatingBlockRenderer;
 import com.aether.client.renderer.entity.MimicRenderer;
+import com.aether.client.renderer.entity.SentryRenderer;
 import com.aether.entity.item.FloatingBlockEntity;
 import com.aether.entity.monster.MimicEntity;
+import com.aether.entity.monster.SentryEntity;
 import com.aether.inventory.container.AetherContainerTypes;
 import com.aether.item.AetherItems;
-import com.aether.item.TintedBlockItem;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -43,6 +44,7 @@ public class ClientProxy extends CommonProxy {
 	private void registerEntityRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(FloatingBlockEntity.class, FloatingBlockRenderer::new);	
 		RenderingRegistry.registerEntityRenderingHandler(MimicEntity.class, MimicRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(SentryEntity.class, SentryRenderer::new);
 	}
 	
 	private void registerGuiFactories() {
@@ -55,9 +57,10 @@ public class ClientProxy extends CommonProxy {
 		registerColor(AetherBlocks.GOLDEN_AERCLOUD);
 		
 		// Item colors
-		registerColor((TintedBlockItem) AetherBlocks.BLUE_AERCLOUD.asItem());
-		registerColor((TintedBlockItem) AetherBlocks.GOLDEN_AERCLOUD.asItem());
+		registerColor(AetherBlocks.BLUE_AERCLOUD.asItem());
+		registerColor(AetherBlocks.GOLDEN_AERCLOUD.asItem());
 		registerColor(AetherItems.MIMIC_SPAWN_EGG);
+		registerColor(AetherItems.SENTRY_SPAWN_EGG);
 	}
 	
 	private static <B extends Block & IBlockColor> void registerColor(B block) {

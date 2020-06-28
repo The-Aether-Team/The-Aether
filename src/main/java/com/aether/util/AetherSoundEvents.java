@@ -112,13 +112,9 @@ public class AetherSoundEvents {
 		}
 		
 		private static SoundEvent sound(String name) {
-<<<<<<< HEAD
 			SoundEvent sound = new SoundEvent(new ResourceLocation(Aether.MODID, name));
 			sound.setRegistryName(sound.getName());
 			return sound;
-=======
-			return new SoundEvent(new ResourceLocation(Aether.MODID, name));
->>>>>>> parent of ee7cccb... lakes & fixed sound registry, pls dont kill me raptor
 		}
 		
 	}

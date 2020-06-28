@@ -1,5 +1,7 @@
 package com.aether.block;
 
+import com.aether.item.TintedBlockItem;
+
 import net.minecraft.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -25,6 +27,11 @@ public class TintedAercloudBlock extends AercloudBlock implements IAetherBlockCo
 	@OnlyIn(Dist.CLIENT)
 	public final int getColor(boolean updatedVersion) {
 		return updatedVersion? updatedHexColor : hexColor;
+	}
+	
+	@Override
+	public TintedBlockItem asItem() {
+		return (TintedBlockItem)super.asItem();
 	}
 	
 }

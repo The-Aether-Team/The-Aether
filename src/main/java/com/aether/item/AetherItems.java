@@ -6,6 +6,7 @@ import com.aether.api.freezables.AetherFreezableFuel;
 import com.aether.block.AetherBlocks;
 import com.aether.block.IAetherBlockColor;
 import com.aether.entity.monster.MimicEntity;
+import com.aether.entity.monster.SentryEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityClassification;
@@ -358,10 +359,14 @@ public class AetherItems {
 				//item("repulsion_shield", new ShieldAccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).maxDamage(512).group(AetherItemGroups.AETHER_ACCESSORIES))),
 				//item("lore_book", new LoreBookItem(new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
 				
+				item("sentry_spawn_egg", new SpawnEggItem(
+					EntityType.Builder.create(SentryEntity::new, EntityClassification.MONSTER).size(1.0f, 1.0f).build("sentry"),
+					/*primary color:*/ 0x808080, /*secondary color:*/ 0x3A8AEC,
+					new Item.Properties().group(ItemGroup.MISC))),
 				item("mimic_spawn_egg", new SpawnEggItem(
-						EntityType.Builder.create(MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"),
-						/*primary color:*/ 0xB18132, /*secondary color:*/ 0x605A4E,
-						new Item.Properties().group(ItemGroup.MISC))),
+					EntityType.Builder.create(MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"),
+					/*primary color:*/ 0xB18132, /*secondary color:*/ 0x605A4E,
+					new Item.Properties().group(ItemGroup.MISC))),
 				
 			});
 		}

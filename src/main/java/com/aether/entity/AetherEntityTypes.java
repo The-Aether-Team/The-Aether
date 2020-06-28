@@ -3,6 +3,7 @@ package com.aether.entity;
 import com.aether.Aether;
 import com.aether.entity.item.FloatingBlockEntity;
 import com.aether.entity.monster.MimicEntity;
+import com.aether.entity.monster.SentryEntity;
 import com.aether.item.AetherItems;
 
 import net.minecraft.entity.Entity;
@@ -17,7 +18,7 @@ import net.minecraftforge.registries.ObjectHolder;
 public class AetherEntityTypes {
 
 	public static final EntityType<MimicEntity> MIMIC = null;
-	//public static final EntityType<SentryEntity> SENTRY = null;
+	public static final EntityType<SentryEntity> SENTRY = null;
 	//public static final EntityType<ValkyrieEntity> VALKYRIE = null;
 	//public static final EntityType<FireMinionEntity> FIRE_MINION = null;
 	public static final EntityType<FloatingBlockEntity> FLOATING_BLOCK = null;
@@ -30,7 +31,7 @@ public class AetherEntityTypes {
 			event.getRegistry().registerAll(new EntityType<?>[] {
 				
 				entity("mimic", AetherItems.MIMIC_SPAWN_EGG.getType(null)),
-				//entity("sentry", AetherItems.SENTRY_SPAWN_EGG.getType(null)),
+				entity("sentry", AetherItems.SENTRY_SPAWN_EGG.getType(null)),
 				//entity("valkyrie", AetherItems.VALKYRIE_SPAWN_EGG.getType(null)),
 				//entity("fire_minion", AetherItems.FIRE_MINION_SPAWN_EGG.getType(null)),
 				entity("floating_block", EntityType.Builder.<FloatingBlockEntity>create(FloatingBlockEntity::new, EntityClassification.MISC).size(0.98F, 0.98F).setCustomClientFactory((spawnEntity, world) -> new FloatingBlockEntity(world))),
