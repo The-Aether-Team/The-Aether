@@ -1,19 +1,23 @@
 package com.aether.world;
 
+import javax.annotation.Nullable;
+
+import com.aether.biome.AetherBiomes;
 import com.aether.world.gen.AetherChunkGenerator;
 import com.aether.world.gen.AetherGenSettings;
+
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.provider.BiomeProvider;
+import net.minecraft.world.biome.provider.SingleBiomeProvider;
+import net.minecraft.world.biome.provider.SingleBiomeProviderSettings;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import javax.annotation.Nullable;
 
 public class AetherDimension extends Dimension {
 
@@ -24,12 +28,13 @@ public class AetherDimension extends Dimension {
     @Override
     public ChunkGenerator<?> createChunkGenerator() {
         AetherGenSettings aetherGen = new AetherGenSettings();
-        AetherBiomeProviderSettings providerSettings = new AetherBiomeProviderSettings();
-        AetherBiomeProvider provider = new AetherBiomeProvider(providerSettings);
+        SingleBiomeProviderSettings providerSettings = new SingleBiomeProviderSettings().setBiome(AetherBiomes.AETHER_VOID.get());
+        BiomeProvider provider = new SingleBiomeProvider(providerSettings);
         return new AetherChunkGenerator(world, provider, aetherGen);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Override
+	@OnlyIn(Dist.CLIENT)
     public float getCloudHeight() {
         return 1F;
     }

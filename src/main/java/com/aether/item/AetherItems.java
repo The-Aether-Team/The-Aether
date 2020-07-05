@@ -177,11 +177,10 @@ public class AetherItems {
 
 	@SuppressWarnings("unused")
 	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
-	public static final class Registration {
+	public static class Registration {
 
 		@SubscribeEvent
 		public static void registerItems(RegistryEvent.Register<Item> event) {
-			registerBlockItems(event);
 			Item skyroot_bucket;
 			event.getRegistry().registerAll(new Item[] {
 
@@ -371,34 +370,15 @@ public class AetherItems {
 			});
 		}
 
-		@SuppressWarnings("deprecation")
-		private static void registerBlockItems(RegistryEvent.Register<Item> event) {
-			Item.Properties properties = new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS);
-			for (Block block : AetherBlocks.Registration.blocks) {
-				Item item;
-				if (block instanceof IAetherBlockColor) {
-					IAetherBlockColor iaetherblockcolor = (IAetherBlockColor) block;
-					int hexColor = iaetherblockcolor.getColor(false);
-					int updatedHexColor = iaetherblockcolor.getColor(true);
-					item = new TintedBlockItem(hexColor, updatedHexColor, block, properties);
-				}
-				else {
-					item = new BlockItem(block, properties);
-				}
-				item.setRegistryName(block.getRegistryName());
-				event.getRegistry().register(item);
-			}
-		}
-
-		private static BlockItem block(Block block) {
+		public static BlockItem block(Block block) {
 			return block(block, AetherItemGroups.AETHER_BLOCKS);
 		}
 
-		private static BlockItem block(Block block, ItemGroup itemGroup) {
+		public static BlockItem block(Block block, ItemGroup itemGroup) {
 			return block(block, new Item.Properties().group(itemGroup));
 		}
 
-		private static BlockItem block(Block block, Item.Properties properties) {
+		public static BlockItem block(Block block, Item.Properties properties) {
 			if (block instanceof IAetherBlockColor) {
 				IAetherBlockColor iaetherblockcolor = (IAetherBlockColor) block;
 				return item(block.getRegistryName().toString(), new TintedBlockItem(iaetherblockcolor.getColor(false),
@@ -407,7 +387,7 @@ public class AetherItems {
 			return item(block.getRegistryName().toString(), new BlockItem(block, properties));
 		}
 
-		private static <I extends Item> I item(String name, I item) {
+		public static <I extends Item> I item(String name, I item) {
 			item.setRegistryName(name);
 			return item;
 		}

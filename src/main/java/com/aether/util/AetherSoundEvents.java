@@ -65,19 +65,22 @@ public class AetherSoundEvents {
 	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
 	public static class Registration {
 		
-		private static final LinkedList<SoundEvent> SOUNDS = new LinkedList<>();
+		private static LinkedList<SoundEvent> sounds = new LinkedList<>();
 		
 		@SubscribeEvent
 		public static void registerSoundEvents(RegistryEvent.Register<SoundEvent> event) {
-			for (SoundEvent sound : SOUNDS) {
+			for (SoundEvent sound : sounds) {
 				event.getRegistry().register(sound);
 			}
+			
+			sounds.clear();
+			sounds = null;
 		}
 		
 		public static SoundEvent sound(String name) {
 			SoundEvent sound = new SoundEvent(new ResourceLocation(Aether.MODID, name));
 			sound.setRegistryName(sound.getName());
-			SOUNDS.add(sound);
+			sounds.add(sound);
 			return sound;
 		}
 		

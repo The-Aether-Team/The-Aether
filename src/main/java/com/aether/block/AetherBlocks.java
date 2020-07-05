@@ -1,6 +1,11 @@
 package com.aether.block;
 
+import static net.minecraftforge.eventbus.api.EventPriority.HIGH;
+
 import com.aether.Aether;
+import com.aether.entity.AetherEntityTypes;
+import com.aether.item.AetherItemGroups;
+import com.aether.item.TintedBlockItem;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -8,6 +13,8 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -50,7 +57,7 @@ public class AetherBlocks {
 	public static final Block INCUBATOR = null;
 	public static final Block AMBROSIUM_TORCH = null;
 	public static final Block AMBROSIUM_WALL_TORCH = null;
-	public static final Block AETHER_PORTAL = null;
+	public static final AetherPortalBlock AETHER_PORTAL = null;
 	public static final Block CHEST_MIMIC = null;
 	public static final Block TREASURE_CHEST = null;
 	public static final Block CARVED_STONE = null;
@@ -108,13 +115,13 @@ public class AetherBlocks {
 	public static final Block SKYROOT_BOOKSHELF = null;
 	
 	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
-	public static final class Registration {
+	public static class Registration {
 		
 		/**
 		 * @deprecated Modders should never access this, it is only used to automatically register items for blocks.
 		 */
 		@Deprecated
-		public static Block[] blocks;
+		private static Block[] blocks;
 		
 		@SubscribeEvent
 		public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -170,12 +177,12 @@ public class AetherBlocks {
 				block("locked_light_angelic_stone", new Block(temp1)),
 				block("locked_hellfire_stone", new Block(temp0)),
 				block("locked_light_hellfire_stone", new Block(temp1)),
-				//block("trapped_carved_stone", new TrappedBlock(() -> AetherEntityTypes.SENTRY, () -> LOCKED_CARVED_STONE, temp0)),
-				//block("trapped_sentry_stone", new TrappedBlock(() -> AetherEntityTypes.SENTRY, () -> LOCKED_SENTRY_STONE, temp1)),
-				//block("trapped_angelic_stone", new TrappedBlock(() -> AetherEntityTypes.VALKYRIE, () -> LOCKED_ANGELIC_STONE, temp0)),
-				//block("trapped_light_angelic_stone", new TrappedBlock(() -> AetherEntityTypes.VALKYRIE, () -> LOCKED_LIGHT_ANGELIC_STONE, temp1)),
-				//block("trapped_hellfire_stone", new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_HELLFIRE_STONE, temp0)),
-				//block("trapped_light_hellfire_stone", new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_LIGHT_HELLFIRE_STONE, temp1)),
+				block("trapped_carved_stone", new TrappedBlock(() -> AetherEntityTypes.SENTRY, () -> LOCKED_CARVED_STONE.getDefaultState(), temp0)),
+				block("trapped_sentry_stone", new TrappedBlock(() -> AetherEntityTypes.SENTRY, () -> LOCKED_SENTRY_STONE.getDefaultState(), temp1)),
+				//block("trapped_angelic_stone", new TrappedBlock(() -> AetherEntityTypes.VALKYRIE, () -> LOCKED_ANGELIC_STONE.getDefaultState(), temp0)),
+				//block("trapped_light_angelic_stone", new TrappedBlock(() -> AetherEntityTypes.VALKYRIE, () -> LOCKED_LIGHT_ANGELIC_STONE.getDefaultState(), temp1)),
+				//block("trapped_hellfire_stone", new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_HELLFIRE_STONE.getDefaultState(), temp0)),
+				//block("trapped_light_hellfire_stone", new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_LIGHT_HELLFIRE_STONE.getDefaultState(), temp1)),
 				
 			});
 			
@@ -183,12 +190,31 @@ public class AetherBlocks {
 			event.getRegistry().registerAll(new Block[] {
 				
 				//block("ambrosium_wall_torch", new WallTorchBlock(Block.Properties.from(Blocks.WALL_TORCH))),
-				//block("aether_portal", new AetherPortalBlock(Block.Properties.from(Blocks.NETHER_PORTAL))),
+				block("aether_portal", new AetherPortalBlock(Block.Properties.from(Blocks.NETHER_PORTAL))),
 				
 			});
 		}
+		
+		@SubscribeEvent(priority = HIGH)
+		public static void registerBlockItems(RegistryEvent.Register<Item> event) {
+			Item.Properties properties = new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS);
+			for (Block block : blocks) {
+				Item item;
+				if (block instanceof IAetherBlockColor) {
+					IAetherBlockColor iaetherblockcolor = (IAetherBlockColor) block;
+					int hexColor = iaetherblockcolor.getColor(false);
+					int updatedHexColor = iaetherblockcolor.getColor(true);
+					item = new TintedBlockItem(hexColor, updatedHexColor, block, properties);
+				}
+				else {
+					item = new BlockItem(block, properties);
+				}
+				item.setRegistryName(block.getRegistryName());
+				event.getRegistry().register(item);
+			}
+		}
 	
-		private static <B extends Block> B block(String name, B block) {
+		public static <B extends Block> B block(String name, B block) {
 			block.setRegistryName(name);
 			return block;
 		}

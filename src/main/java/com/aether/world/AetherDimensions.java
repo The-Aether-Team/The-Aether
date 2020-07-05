@@ -23,7 +23,7 @@ public class AetherDimensions {
 
 	public static final DeferredRegister<ModDimension> DIMENSIONS = new DeferredRegister<>(ForgeRegistries.MOD_DIMENSIONS, Aether.MODID);
 
-	private static final RegistryObject<ModDimension> AETHER_DIMENSION_REGISTRY_OBJECT = DIMENSIONS.register("aether",
+	private static final RegistryObject<ModDimension> AETHER_DIMENSION_REGISTRY_OBJECT = DIMENSIONS.register("the_aether",
 		() -> new ModDimension() {
 			@Override
 			public BiFunction<World, DimensionType, ? extends Dimension> getFactory() {
@@ -32,12 +32,12 @@ public class AetherDimensions {
 		}
 	);
 
-	public static final DimensionType AETHER = null;
+	public static final DimensionType THE_AETHER = null;
 
 	@EventBusSubscriber(modid = Aether.MODID)
 	public static final class Registration {
 
-		private static final ResourceLocation AETHER_ID = new ResourceLocation(Aether.MODID, "aether");
+		private static final ResourceLocation AETHER_ID = new ResourceLocation(Aether.MODID, "the_aether");
 
 		@SubscribeEvent
 		public static void registerDimensions(RegisterDimensionsEvent event) {
@@ -67,7 +67,7 @@ public class AetherDimensions {
 				// Change it to public
 				field_modifiers.setAccessible(true);
 				// Get the Field instance for the final field AetherDimensions.AETHER
-				field_AETHER = AetherDimensions.class.getDeclaredField("AETHER");
+				field_AETHER = AetherDimensions.class.getDeclaredField("THE_AETHER");
 				// Change it to public
 				field_AETHER.setAccessible(true);
 				// Get its current modifiers bit field

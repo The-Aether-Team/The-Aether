@@ -1,9 +1,15 @@
 package com.aether.world;
 
 import com.aether.biome.AetherBiomes;
+
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.provider.IBiomeProviderSettings;
+import net.minecraft.world.biome.provider.SingleBiomeProviderSettings;
 
+/**
+ * @deprecated Use {@linkplain SingleBiomeProviderSettings}
+ */
+@Deprecated
 public class AetherBiomeProviderSettings implements IBiomeProviderSettings {
     private Biome biome;
 
