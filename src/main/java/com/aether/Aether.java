@@ -20,8 +20,7 @@ public class Aether {
 	
 	public Aether() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		modEventBus.addListener(proxy::commonSetup);
-		modEventBus.addListener(proxy::clientSetup);
+		modEventBus.register(proxy);
 		AetherDimensions.DIMENSIONS.register(modEventBus);
 		AetherBiomes.BIOMES.register(modEventBus);		
 	}

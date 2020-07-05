@@ -21,6 +21,7 @@ import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.Explosion;
@@ -57,12 +58,14 @@ public class SentryEntity extends SlimeEntity {
 	
 	@Override
 	public void onCollideWithPlayer(PlayerEntity entityIn) {
-		this.explodeAt(entityIn);
+		if (EntityPredicates.CAN_AI_TARGET.test(entityIn)) {
+			this.explodeAt(entityIn);
+		}
 	}
 	
 	@Override
 	public void tick() {
-		if (this.world.getClosestPlayer(this, 8.0) != null) {
+		if (this.world.getClosestPlayer(this.posX, this.posY, this.posZ, 8.0, EntityPredicates.CAN_AI_TARGET) != null) {
 			if (!this.isAwake()) {
 				if (this.timeSpotted >= 24) {
 					this.setAwake(true);

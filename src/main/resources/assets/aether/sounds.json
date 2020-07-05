@@ -121,8 +121,12 @@
   	"category": "block",
 	"subtitle": "subtitles.block.dungeon_trap.trigger",
 	"sounds": [
-	    "minecraft:block/fence_gate/open1",
-		"minecraft:block/fence_gate/open2"
+		"aether:block/dungeon_trap/trigger",
+		"aether:block/dungeon_trap/trigger2",
+		"aether:block/dungeon_trap/trigger3",
+		"aether:block/dungeon_trap/trigger4",
+		"aether:block/dungeon_trap/trigger5",
+		"aether:block/dungeon_trap/trigger6"
 	]
   },
   "entity.moa.ambient": {

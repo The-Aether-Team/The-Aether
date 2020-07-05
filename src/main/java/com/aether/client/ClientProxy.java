@@ -21,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -28,12 +29,14 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 @OnlyIn(Dist.CLIENT)
 public class ClientProxy extends CommonProxy {
 	
+	@SubscribeEvent
 	@Override
 	public void commonSetup(FMLCommonSetupEvent event) {
 		super.commonSetup(event);
 		registerColors();
 	}
 	
+	@SubscribeEvent
 	@Override
 	public void clientSetup(FMLClientSetupEvent event) {
 		super.clientSetup(event);

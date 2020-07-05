@@ -1,0 +1,62 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/cube",
+	"textures": {
+		"overlay": "aether:block/lock"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#face", "cullface": "north"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#face", "cullface": "east"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#face", "cullface": "south"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#face", "cullface": "west"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#face", "cullface": "up"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#face", "cullface": "down"}
+			}
+		},
+		{
+			"name": "overlay_north",
+			"from": [0, 0, -0.1],
+			"to": [16, 16, -0.1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 6.9]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#overlay"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [-90, -180, -45],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-90, -180, -45],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"rotation": [90, 0, 0],
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 135, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

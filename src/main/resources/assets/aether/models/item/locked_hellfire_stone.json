@@ -1,10 +1,7 @@
 {
-	"parent": "aether:block/hellfire_stone",
-	"display": {
-		"thirdperson": {
-			"rotation": [ 10, -45, 170 ],
-			"translation": [ 0, 1.5, -2.75 ],
-			"scale": [ 0.375, 0.375, 0.375 ]
-		}
+	"parent": "aether:item/cube_all_with_overlay",
+	"textures": {
+		"overlay": "aether:block/lock",
+		"face": "aether:block/hellfire_stone"
 	}
 }

@@ -39,7 +39,7 @@ public class TrappedBlock extends Block {
 				world.addEntity(entity);
 			}
 			
-			world.playSound(null, pos, AetherSoundEvents.BLOCK_DUNGEON_TRAP_TRIGGER, SoundCategory.BLOCKS, 1.0f, 1.5f);
+			world.playSound(null, pos, AetherSoundEvents.BLOCK_DUNGEON_TRAP_TRIGGER, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
 		}
 	}
 
