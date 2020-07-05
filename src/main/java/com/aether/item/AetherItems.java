@@ -28,6 +28,7 @@ import net.minecraft.potion.Effects;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(Aether.MODID)
@@ -176,7 +177,7 @@ public class AetherItems {
 	public static final SpawnEggItem FIRE_MINION_SPAWN_EGG = null;
 
 	@SuppressWarnings("unused")
-	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
+	@EventBusSubscriber(modid = Aether.MODID, bus = Bus.MOD)
 	public static class Registration {
 
 		@SubscribeEvent

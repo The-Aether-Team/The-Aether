@@ -18,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(Aether.MODID)
@@ -114,7 +115,7 @@ public class AetherBlocks {
 	public static final Block SUN_ALTAR = null;
 	public static final Block SKYROOT_BOOKSHELF = null;
 	
-	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
+	@EventBusSubscriber(modid = Aether.MODID, bus = Bus.MOD)
 	public static class Registration {
 		
 		/**

@@ -11,10 +11,13 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(Aether.MODID)
 public class AetherSoundEvents {
+	
+	private static LinkedList<SoundEvent> sounds = new LinkedList<>();
 
 	public static final SoundEvent MUSIC_DISC_AETHER_TUNE = sound("music_disc.aether_tune");
 	public static final SoundEvent MUSIC_DISC_ASCENDING_DAWN = sound("music_disc.ascending_dawn");
@@ -62,10 +65,8 @@ public class AetherSoundEvents {
 	public static final SoundEvent ENTITY_SUN_SPIRIT_SHOOT = sound("entity.sun_spirit.shoot");
 	
 	
-	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
+	@EventBusSubscriber(modid = Aether.MODID, bus = Bus.MOD)
 	public static class Registration {
-		
-		private static LinkedList<SoundEvent> sounds = new LinkedList<>();
 		
 		@SubscribeEvent
 		public static void registerSoundEvents(RegistryEvent.Register<SoundEvent> event) {
