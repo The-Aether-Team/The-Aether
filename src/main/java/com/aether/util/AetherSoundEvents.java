@@ -64,8 +64,7 @@ public class AetherSoundEvents {
 	public static final SoundEvent ENTITY_SLIDER_DEATH = sound("entity.slider.death");
 	public static final SoundEvent ENTITY_SUN_SPIRIT_SHOOT = sound("entity.sun_spirit.shoot");
 	
-	
-	@EventBusSubscriber(modid = Aether.MODID, bus = Bus.MOD)
+
 	public static class Registration {
 		
 		@SubscribeEvent
