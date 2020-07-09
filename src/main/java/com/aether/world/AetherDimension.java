@@ -8,6 +8,7 @@ import com.aether.world.gen.AetherGenSettings;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.provider.BiomeProvider;
@@ -61,9 +62,12 @@ public class AetherDimension extends Dimension {
         return null;
     }
 
+    //TODO: implement the eternal day thing
     @Override
     public float calculateCelestialAngle(long worldTime, float partialTicks) {
-        return 1F;
+        double d0 = MathHelper.frac((double)worldTime / 24000.0D - 0.25D);
+        double d1 = 0.5D - Math.cos(d0 * Math.PI) / 2.0D;
+        return (float)(d0 * 2.0D + d1) / 3.0F;
     }
 
     @Override
