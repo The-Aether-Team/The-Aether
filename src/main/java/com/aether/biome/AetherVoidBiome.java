@@ -3,7 +3,9 @@ package com.aether.biome;
 import com.aether.block.AetherBlocks;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.pattern.BlockMatcher;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.DefaultBiomeFeatures;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.LakesConfig;
@@ -13,6 +15,8 @@ import net.minecraft.world.gen.placement.LakeChanceConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.DefaultSurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class AetherVoidBiome extends Biome {
 
@@ -39,6 +43,14 @@ public class AetherVoidBiome extends Biome {
         this.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Biome.createDecoratedFeature(Feature.ORE, new OreFeatureConfig(HOLYSTONE_FILLER, AetherBlocks.ZANITE_ORE.getDefaultState(), 8), Placement.COUNT_RANGE, new CountRangeConfig(10, 0, 0, 128)));
         this.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Biome.createDecoratedFeature(Feature.ORE, new OreFeatureConfig(HOLYSTONE_FILLER, AetherBlocks.GRAVITITE_ORE.getDefaultState(), 6), Placement.COUNT_RANGE, new CountRangeConfig(10, 0, 0, 128)));
 
+        //TODO: make this toggleable with config like in 1.12
+        DefaultBiomeFeatures.addGrass(this);
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public int getGrassColor(BlockPos pos) {
+        return 0xb1ffcb;
     }
 
 }
