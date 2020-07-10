@@ -29,7 +29,7 @@ public class MimicRenderer extends MobRenderer<MimicEntity, MimicModel> {
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(MimicEntity entity) {
+	public ResourceLocation getEntityTexture(MimicEntity entity) {
 		return isChristmas? XMAS_TEXTURE : TEXTURE;
 	}
 	

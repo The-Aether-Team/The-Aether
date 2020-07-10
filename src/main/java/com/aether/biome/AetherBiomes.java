@@ -9,7 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class AetherBiomes {
 
-    public static final DeferredRegister<Biome> BIOMES = new DeferredRegister<>(ForgeRegistries.BIOMES, Aether.MODID);
+    public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, Aether.MODID);
 
     public static final RegistryObject<Biome> AETHER_VOID = BIOMES.register("aether_void", AetherVoidBiome::new);
     

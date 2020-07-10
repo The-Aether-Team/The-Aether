@@ -11,13 +11,13 @@ public class AetherChunkGenerator extends NoiseChunkGenerator<AetherGenSettings>
     }
 
     @Override
-    protected void func_222548_a(double[] p_222548_1_, int p_222548_2_, int p_222548_3_) {
-        this.func_222546_a(p_222548_1_, p_222548_2_, p_222548_3_, 1368.824D, 684.412D, 17.110300000000002D, 4.277575000000001D, 64, -3000);
+    protected void fillNoiseColumn(double[] p_222548_1_, int p_222548_2_, int p_222548_3_) {
+        this.calcNoiseColumn(p_222548_1_, p_222548_2_, p_222548_3_, 1368.824D, 684.412D, 17.110300000000002D, 4.277575000000001D, 64, -3000);
     }
 
     @Override
-    protected double[] func_222549_a(int p_222549_1_, int p_222549_2_) {
-        return new double[]{(double)this.biomeProvider.func_222365_c(p_222549_1_, p_222549_2_), 0.0D};
+    protected double[] getBiomeNoiseColumn(int noiseX, int noiseZ) {
+        return new double[]{(double)this.biomeProvider.func_222365_c(noiseX, noiseZ), 0.0D};
     }
 
     @Override

@@ -45,7 +45,7 @@ public class SentryEntity extends SlimeEntity {
 		this.goalSelector.addGoal(5, new SentryEntity.HopGoal(this));
 		this.targetSelector.addGoal(1,
 			new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213811_1_) -> {
-				return Math.abs(p_213811_1_.posY - this.posY) <= 4.0D;
+				return Math.abs(p_213811_1_.getPosY() - this.getPosY()) <= 4.0D;
 			}));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
@@ -65,7 +65,7 @@ public class SentryEntity extends SlimeEntity {
 	
 	@Override
 	public void tick() {
-		if (this.world.getClosestPlayer(this.posX, this.posY, this.posZ, 8.0, EntityPredicates.CAN_AI_TARGET) != null) {
+		if (this.world.getClosestPlayer(this.getPosX(), this.getPosY(), this.getPosZ(), 8.0, EntityPredicates.CAN_AI_TARGET) != null) {
 			if (!this.isAwake()) {
 				if (this.timeSpotted >= 24) {
 					this.setAwake(true);
@@ -103,7 +103,7 @@ public class SentryEntity extends SlimeEntity {
 		if (this.isAwake() && this.canEntityBeSeen(entityIn) && entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), 1.0f) && this.ticksExisted > 20) {
 			entityIn.addVelocity(0.5, 0.5, 0.5);
 			
-			this.world.createExplosion(this, this.posX, this.posY, this.posZ, 0.1f, Explosion.Mode.DESTROY);
+			this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), 0.1f, Explosion.Mode.DESTROY);
 			this.setHealth(0.0f);
 			this.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1.0f, 0.2f*(this.rand.nextFloat() - this.rand.nextFloat()) + 1);
 			this.applyEnchantments(this, entityIn);

@@ -71,7 +71,7 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(FloatingBlockEntity entity) {
+	public ResourceLocation getEntityTexture(FloatingBlockEntity entity) {
 		return AtlasTexture.LOCATION_BLOCKS_TEXTURE;
 	}
 

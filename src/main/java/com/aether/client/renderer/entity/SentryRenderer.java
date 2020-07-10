@@ -24,7 +24,7 @@ public class SentryRenderer extends MobRenderer<SentryEntity, SlimeModel<SentryE
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(SentryEntity entity) {
+	public ResourceLocation getEntityTexture(SentryEntity entity) {
 		return entity.isAwake()? TEXTURE_LIT : TEXTURE;
 	}
 	

@@ -23,13 +23,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AetherDimension extends Dimension {
 
     public AetherDimension(World world, DimensionType type) {
-        super(world, type);
+        super(world, type, 0);
     }
 
     @Override
     public ChunkGenerator<?> createChunkGenerator() {
         AetherGenSettings aetherGen = new AetherGenSettings();
-        SingleBiomeProviderSettings providerSettings = new SingleBiomeProviderSettings().setBiome(AetherBiomes.AETHER_VOID.get());
+        SingleBiomeProviderSettings providerSettings = new SingleBiomeProviderSettings(world.getWorldInfo()).setBiome(AetherBiomes.AETHER_VOID.get());
         BiomeProvider provider = new SingleBiomeProvider(providerSettings);
         return new AetherChunkGenerator(world, provider, aetherGen);
     }
@@ -38,11 +38,6 @@ public class AetherDimension extends Dimension {
 	@OnlyIn(Dist.CLIENT)
     public float getCloudHeight() {
         return 1F;
-    }
-
-    @Override
-    public double getHorizon() {
-        return 0;
     }
 
     @Override
@@ -73,12 +68,6 @@ public class AetherDimension extends Dimension {
     @Override
     public boolean isSurfaceWorld() {
         return true;
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public Vec3d getSkyColor(BlockPos p_217382_1_, float p_217382_2_) {
-        return new Vec3d(0.74, 0.74, 0.98);
     }
 
     @Override

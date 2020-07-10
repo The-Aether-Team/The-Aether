@@ -114,9 +114,9 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 			this.remove();
 		}
 		else {
-			this.prevPosX = this.posX;
-			this.prevPosY = this.posY;
-			this.prevPosZ = this.posZ;
+			this.prevPosX = this.getPosX();
+			this.prevPosY = this.getPosY();
+			this.prevPosZ = this.getPosZ();
 			Block block = this.floatTile.getBlock();
 			if (this.floatTime++ == 0) {
 				BlockPos blockpos = new BlockPos(this);
@@ -142,7 +142,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 				if (flag && d0 > 1.0D) {
 					BlockRayTraceResult blockraytraceresult = this.world
 						.rayTraceBlocks(new RayTraceContext(new Vec3d(this.prevPosX, this.prevPosY, this.prevPosZ),
-							new Vec3d(this.posX, this.posY, this.posZ), RayTraceContext.BlockMode.COLLIDER,
+							new Vec3d(this.getPosX(), this.getPosY(), this.getPosZ()), RayTraceContext.BlockMode.COLLIDER,
 							RayTraceContext.FluidMode.SOURCE_ONLY, this));
 					if (blockraytraceresult.getType() != RayTraceResult.Type.MISS
 						&& this.world.getFluidState(blockraytraceresult.getPos()).isTagged(FluidTags.WATER)) {
@@ -215,7 +215,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 	}
 	
 	@Override
-	public void fall(float distance, float damageMultiplier) {
+	public boolean onLivingFall(float distance, float damageMultiplier) {
 		if (this.hurtEntities) {
 			int i = MathHelper.ceil(distance - 1.0f);
 			if (i > 0) {
@@ -238,6 +238,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 				}
 			}
 		}
+		return false;
 	}
 
 	@Override

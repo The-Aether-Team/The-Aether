@@ -62,7 +62,7 @@ public class MimicEntity extends CreatureEntity {
 		}
 		if (source.getImmediateSource() instanceof LivingEntity && this.hurtTime == 0) {
 			if (this.world instanceof ServerWorld) {
-				((ServerWorld) this.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, AetherDungeonFeature.Decorations.CHEST.getDefaultState()), this.posX, this.posY + this.getHeight() / 1.5, this.posZ, 20, this.getWidth() / 4.0, this.getHeight() / 4.0, this.getWidth() / 4.0, 0.05);
+				((ServerWorld) this.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, AetherDungeonFeature.Decorations.CHEST.getDefaultState()), this.getPosX(), this.getPosY() + this.getHeight() / 1.5, this.getPosZ(), 20, this.getWidth() / 4.0, this.getHeight() / 4.0, this.getWidth() / 4.0, 0.05);
 			}
 			
 			LivingEntity attacker = (LivingEntity) source.getImmediateSource();

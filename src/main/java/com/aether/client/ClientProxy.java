@@ -6,6 +6,7 @@ import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.renderer.entity.FloatingBlockRenderer;
 import com.aether.client.renderer.entity.MimicRenderer;
 import com.aether.client.renderer.entity.SentryRenderer;
+import com.aether.entity.AetherEntityTypes;
 import com.aether.entity.item.FloatingBlockEntity;
 import com.aether.entity.monster.MimicEntity;
 import com.aether.entity.monster.SentryEntity;
@@ -45,9 +46,9 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	private void registerEntityRenderers() {
-		RenderingRegistry.registerEntityRenderingHandler(FloatingBlockEntity.class, FloatingBlockRenderer::new);	
-		RenderingRegistry.registerEntityRenderingHandler(MimicEntity.class, MimicRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(SentryEntity.class, SentryRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLOATING_BLOCK, FloatingBlockRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC, MimicRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY, SentryRenderer::new);
 	}
 	
 	private void registerGuiFactories() {

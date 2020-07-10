@@ -21,7 +21,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class AetherDimensions {
 
-	public static final DeferredRegister<ModDimension> DIMENSIONS = new DeferredRegister<>(ForgeRegistries.MOD_DIMENSIONS, Aether.MODID);
+	public static final DeferredRegister<ModDimension> DIMENSIONS = DeferredRegister.create(ForgeRegistries.MOD_DIMENSIONS, Aether.MODID);
 
 	private static final RegistryObject<ModDimension> AETHER_DIMENSION_REGISTRY_OBJECT = DIMENSIONS.register("the_aether",
 		() -> new ModDimension() {
