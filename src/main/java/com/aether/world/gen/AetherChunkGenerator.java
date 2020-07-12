@@ -7,7 +7,7 @@ import net.minecraft.world.gen.NoiseChunkGenerator;
 public class AetherChunkGenerator extends NoiseChunkGenerator<AetherGenSettings> {
 
     public AetherChunkGenerator(IWorld world, BiomeProvider biomeProvider, AetherGenSettings gen) {
-        super(world, biomeProvider, 8, 4, 128, gen, true);
+        super(world, biomeProvider, 4, 8, 128, gen, true);
     }
 
     @Override
@@ -27,12 +27,12 @@ public class AetherChunkGenerator extends NoiseChunkGenerator<AetherGenSettings>
 
     @Override
     protected double func_222551_g() {
-        return (double)((int)super.func_222551_g() / 4);
+        return (double)((int)super.func_222551_g() / 2);
     }
 
     @Override
     protected double func_222553_h() {
-        return 4.0D;
+        return 8.0D;
     }
 
     @Override
