@@ -9,7 +9,7 @@
 		"description": {
 			"translate": "advancement.aether.enter_aether.desc"
 		},
-		"background": "aether:textures/blocks/carved_stone.png"
+		"background": "aether:textures/block/carved_stone.png"
 	},
 	"rewards": {
 		"loot": [ "aether:travel/enter_aether" ]
@@ -18,7 +18,7 @@
 		"enter_aether": {
 			"trigger": "minecraft:changed_dimension",
 			"conditions": {
-				"to": "aether:aether",
+				"to": "aether:the_aether",
 				"from": "minecraft:overworld"
 			}
 		}
