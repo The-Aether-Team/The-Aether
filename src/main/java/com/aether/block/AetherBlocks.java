@@ -9,6 +9,7 @@ import com.aether.item.TintedBlockItem;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.GlassBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -154,7 +155,7 @@ public class AetherBlocks {
 				block("skyroot_log", new AetherLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_LOG))),
 				block("golden_oak_log", new AetherLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_LOG))),
 				block("skyroot_planks", new Block(Block.Properties.from(Blocks.OAK_PLANKS))),
-				block("quicksoil_glass", new QuicksoilGlassBlock(Block.Properties.from(Blocks.GLASS).slipperiness(1.1f).lightValue(11))),
+				block("quicksoil_glass", new GlassBlock(Block.Properties.from(Blocks.GLASS).slipperiness(1.1f).lightValue(11))),
 				block("aerogel", new AerogelBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0f, 2000.0f).sound(SoundType.METAL))),
 				block("zanite_block", new Block(Block.Properties.from(Blocks.IRON_BLOCK))),
 				block("enchanted_gravitite", new FloatingBlock(true, Block.Properties.from(Blocks.IRON_BLOCK))),
@@ -164,6 +165,7 @@ public class AetherBlocks {
 				//block("freezer", new FreezerBlock(temp0)),
 				//block("incubator", new IncubatorBlock(temp0)),
 				//block("ambrosium_torch", new TorchBlock(Block.Properties.from(Blocks.TORCH))),
+				//block("ambrosium_wall_torch", new WallTorchBlock(Block.Properties.from(Blocks.WALL_TORCH))),
 				//block("chest_mimic", new ChestMimicBlock(Block.Properties.from(Blocks.CHEST))),
 				//block("treasure_chest", new TreasureChestBlock(???)),
 				block("carved_stone", new Block(temp0 = Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).sound(SoundType.STONE))),
@@ -184,6 +186,41 @@ public class AetherBlocks {
 				//block("trapped_light_angelic_stone", new TrappedBlock(() -> AetherEntityTypes.VALKYRIE, () -> LOCKED_LIGHT_ANGELIC_STONE.getDefaultState(), temp1)),
 				//block("trapped_hellfire_stone", new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_HELLFIRE_STONE.getDefaultState(), temp0)),
 				//block("trapped_light_hellfire_stone", new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_LIGHT_HELLFIRE_STONE.getDefaultState(), temp1)),
+				//block("purple_flower", new ??????),
+				//block("white_flower", new ???????),
+				//block("skyroot_sapling", new ??????),
+				//block("golden_oak_sapling", new ??????),
+				//block("crystal_sapling", new ??????),
+				//block("pillar", new ???????),
+				//block("pillar_top", new ??????),
+				//block("skyroot_fence", new ??????),
+				//block("skyroot_fence_gate", new ??????),
+				//block("carved_stairs", new ??????),
+				//block("angelic_stairs", new ???????),
+				//block("hellfire_stairs", new ???????),
+				//block("skyroot_stairs", new ???????),
+				//block("holystone_stairs", new ???????),
+				//block("mossy_holystone_stairs", new ??????),
+				//block("holystone_brick_stairs", new ???????),
+				//block("aerogel_stairs", new ???????),
+				//block("carved_slab", new ???????),
+				//block("angelic_slab", new ???????),
+				//block("hellfire_slab", new ???????),
+				//block("skyroot_slab", new ???????),
+				//block("holystone_slab", new ????????),
+				//block("mossy_holystone_slab", new ??????),
+				//block("holystone_brick_slab", new ??????),
+				//block("aerogel_slab", new ????????),
+				//block("carved_wall", new ???????),
+				//block("angelic_wall", new ???????),
+				//block("hellfire_wall", new ??????),
+				//block("holystone_wall", new ???????),
+				//block("mossy_holystone_wall", new ???????),
+				//block("holystone_brick_wall", new ??????),
+				//block("aerogel_wall", new ??????),
+				//block("present", new ???????),
+				//block("sun_altar", new ???????),
+				//block("skyroot_bookshelf", new ??????),
 				
 			});
 			

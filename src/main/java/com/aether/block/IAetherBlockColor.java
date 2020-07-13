@@ -3,7 +3,7 @@ package com.aether.block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IEnviromentBlockReader;
+import net.minecraft.world.ILightReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -13,7 +13,7 @@ public interface IAetherBlockColor extends IBlockColor {
 	
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	default int getColor(BlockState state, IEnviromentBlockReader world, BlockPos pos, int p_getColor_4_) {
+	default int getColor(BlockState state, ILightReader world, BlockPos pos, int p_getColor_4_) {
 		return this.getColor(false);
 	}
 	

@@ -1,10 +1,8 @@
 package com.aether;
 
 import com.aether.capability.AetherCapabilities;
-import com.aether.world.storage.loot.conditions.LocationCheck;
 import com.aether.world.storage.loot.functions.DoubleDrops;
 
-import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -29,7 +27,7 @@ public class CommonProxy {
 	}
 	
 	protected void registerLootTableConditions() {
-		LootConditionManager.registerCondition(new LocationCheck.Serializer());
+//		LootConditionManager.registerCondition(new ######.Serializer());
 	}
 	
 }

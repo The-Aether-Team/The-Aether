@@ -13,10 +13,10 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.DecoratedFeatureConfig;
 import net.minecraft.world.gen.feature.FlowersFeature;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 
@@ -52,8 +52,9 @@ public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlo
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void grow(final World worldIn, final Random rand, final BlockPos pos, final BlockState state) {
+	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
 		final BlockPos posUp = pos.up();
 		final BlockState tallGrassState = Blocks.GRASS.getDefaultState();
 
@@ -74,12 +75,13 @@ public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlo
 
 					BlockState blockstate1;
 					if (rand.nextInt(8) == 0) {
-						List<ConfiguredFeature<?>> list = worldIn.getBiome(blockpos1).getFlowers();
-						if (list.isEmpty()) {
-							break;
-						}
+						List<ConfiguredFeature<?, ?>> list = worldIn.getBiome(blockpos1).getFlowers();
+		                  if (list.isEmpty()) {
+		                     break;
+		                  }
 
-						blockstate1 = ((FlowersFeature) ((DecoratedFeatureConfig) list.get(0).config).feature.feature).getRandomFlower(rand, blockpos1);
+		                  ConfiguredFeature<?, ?> configuredfeature = ((DecoratedFeatureConfig)(list.get(0)).config).feature;
+		                  blockstate1 = ((FlowersFeature)configuredfeature.feature).getFlowerToPlace(rand, blockpos1, configuredfeature.config);
 					}
 					else {
 						blockstate1 = tallGrassState;
@@ -105,40 +107,25 @@ public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlo
 	}
 
 	@Override
-	public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
-		if (!worldIn.isRemote) {
+	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+		if (!func_220257_b(state, worldIn, pos)) {
 			if (!worldIn.isAreaLoaded(pos, 3)) {
 				return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
 			}
+			worldIn.setBlockState(pos, AetherBlocks.AETHER_DIRT.getDefaultState());
+		}
+		else {
+			if (worldIn.getLight(pos.up()) >= 9) {
+				BlockState blockstate = this.getDefaultState();
 
-			if (!func_220257_b(state, worldIn, pos)) {
-				worldIn.setBlockState(pos, AetherBlocks.AETHER_DIRT.getDefaultState().with(DOUBLE_DROPS, state.get(DOUBLE_DROPS)));
-			}
-			else {
-				if (worldIn.getLight(pos.up()) >= 9) {
-					BlockState blockstate = this.getDefaultState();
-
-					for (int i = 0; i < 4; ++i) {
-						BlockPos blockpos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
-						BlockState blockstate2 = worldIn.getBlockState(blockpos);
-						if (blockstate2.getBlock() == AetherBlocks.AETHER_DIRT
-								&& func_220256_c(blockstate, worldIn, blockpos)) {
-							worldIn.setBlockState(blockpos, blockstate.with(SNOWY, worldIn.getBlockState(blockpos.up()).getBlock() == Blocks.SNOW).with(DOUBLE_DROPS, blockstate2.get(DOUBLE_DROPS)));
-						}
+				for (int i = 0; i < 4; ++i) {
+					BlockPos blockpos = pos.add(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+					if (worldIn.getBlockState(blockpos).getBlock() == AetherBlocks.AETHER_DIRT && func_220256_c(blockstate, worldIn, blockpos)) {
+						worldIn.setBlockState(blockpos, blockstate.with(SNOWY, worldIn.getBlockState(blockpos.up()).getBlock() == Blocks.SNOW));
 					}
 				}
 			}
 		}
-	}
-
-	@Override
-	public boolean canUseBonemeal(World world, Random rand, BlockPos pos, BlockState state) {
-		return true;
-	}
-
-	@Override
-	public boolean canGrow(IBlockReader world, BlockPos pos, BlockState state, boolean isClient) {
-		return true;
 	}
 
 }

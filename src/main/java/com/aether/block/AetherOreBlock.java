@@ -20,7 +20,7 @@ public class AetherOreBlock extends OreBlock implements IAetherDoubleDropBlock {
 	}
 	
 	@Override
-	protected int func_220281_a(Random rand) {
+	protected int getExperience(Random rand) {
 		return MathHelper.nextInt(rand, minExpDropped, maxExpDropped);
 	}
 	

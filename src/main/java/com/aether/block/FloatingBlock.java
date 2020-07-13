@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class FloatingBlock extends Block {
 	private final boolean powered;
@@ -38,10 +39,8 @@ public class FloatingBlock extends Block {
 	}
 	
 	@Override
-	public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
-		if (!worldIn.isRemote) {
-			this.checkFloatable(worldIn, pos);
-		}
+	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+		this.checkFloatable(worldIn, pos);
 	}
 	
 	private void checkFloatable(World worldIn, BlockPos pos) {

@@ -38,7 +38,7 @@
                   },
                   "conditions": [
                     {
-                      "condition": "aether:location_check",
+                      "condition": "minecraft:location_check",
                       "offsetY": -1,
                       "predicate": {
                         "block": {

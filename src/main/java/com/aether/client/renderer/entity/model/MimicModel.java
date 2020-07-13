@@ -1,59 +1,61 @@
 package com.aether.client.renderer.entity.model;
 
 import com.aether.entity.monster.MimicEntity;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 
 public class MimicModel extends EntityModel<MimicEntity> {
-	private final RendererModel upperBody;
-	private final RendererModel lowerBody;
-	private final RendererModel leftLeg;
-	private final RendererModel rightLeg;
-	private final RendererModel knob;
+	private final ModelRenderer upperBody;
+	private final ModelRenderer lowerBody;
+	private final ModelRenderer leftLeg;
+	private final ModelRenderer rightLeg;
+	private final ModelRenderer knob;
 	
 	public MimicModel() {
 		this.textureWidth = 128;
 		this.textureHeight = 64;
 		
-		this.upperBody = new RendererModel(this, 0, 10);
+		this.upperBody = new ModelRenderer(this, 0, 10);
 		this.upperBody.setRotationPoint(-8.0f, 0.0f, 8.0f);
 		this.upperBody.addBox(0.0f, 0.0f, 0.0f, 16, 6, 16);
 		this.upperBody.rotateAngleX = (float) Math.PI;
 		
-		this.lowerBody = new RendererModel(this, 0, 38);
+		this.lowerBody = new ModelRenderer(this, 0, 38);
 		this.lowerBody.setRotationPoint(-8.0f, 0.0f, -8.0f);
 		this.lowerBody.addBox(0.0f, 0.0f, 0.0f, 16, 10, 16);
 		
-		this.leftLeg = new RendererModel(this, 64, 0);
+		this.leftLeg = new ModelRenderer(this, 64, 0);
 		this.leftLeg.setRotationPoint(1.5f, 9.0f, 0.0f);
 		this.leftLeg.addBox(0.0f, 0.0f, -3.0f, 6, 15, 6);
 		
-		this.rightLeg = new RendererModel(this, 64, 0);
+		this.rightLeg = new ModelRenderer(this, 64, 0);
 		this.rightLeg.mirror = true;
 		this.rightLeg.setRotationPoint(-2.5f, 9.0f, 0.0f);
 		this.rightLeg.addBox(-5.1f, 0.0f, -3.0f, 6, 15, 6);
 		
-		this.knob = new RendererModel(this, 0, 0);
-		this.	knob.setRotationPoint(0.0f, 0.0f, 0.0f);
-		this.	knob.addBox(-1.0f, -2.0f, 16.0f, 2, 4, 1);
+		this.knob = new ModelRenderer(this, 0, 0);
+		this.knob.setRotationPoint(0.0f, 0.0f, 0.0f);
+		this.knob.addBox(-1.0f, -2.0f, 16.0f, 2, 4, 1);
 		this.upperBody.addChild(knob);
 	}
 	
 	@Override
-	public void render(MimicEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-		this.knob.offsetX = 0.5f;
-		this.knob.offsetY = 0.0f;
+	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+//		this.knob.offsetX = 0.5f;
+//		this.knob.offsetY = 0.0f;
 		
-		this.upperBody.render(scale);
-		this.lowerBody.render(scale);
-		this.leftLeg.render(scale);
-		this.rightLeg.render(scale);
+		this.upperBody.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
+		this.lowerBody.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
+		this.leftLeg.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
+		this.rightLeg.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
 	}
 	
 	@Override
-	public void setRotationAngles(MimicEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+	public void setRotationAngles(MimicEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.upperBody.rotateAngleX = (float) Math.PI - 0.6f * (1.0f + MathHelper.cos(ageInTicks / 10.0f * (float) Math.PI));
 		
 		if (this.isSitting) {

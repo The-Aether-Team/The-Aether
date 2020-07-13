@@ -1,8 +1,7 @@
 package com.aether.util;
 
 import static com.aether.util.AetherSoundEvents.Registration.sound;
-
-import java.util.LinkedList;
+import static com.aether.util.AetherUtils.*;
 
 import com.aether.Aether;
 
@@ -16,8 +15,6 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(Aether.MODID)
 public class AetherSoundEvents {
-	
-	private static LinkedList<SoundEvent> sounds = new LinkedList<>();
 
 	public static final SoundEvent MUSIC_DISC_AETHER_TUNE = sound("music_disc.aether_tune");
 	public static final SoundEvent MUSIC_DISC_ASCENDING_DAWN = sound("music_disc.ascending_dawn");
@@ -64,23 +61,21 @@ public class AetherSoundEvents {
 	public static final SoundEvent ENTITY_SLIDER_DEATH = sound("entity.slider.death");
 	public static final SoundEvent ENTITY_SUN_SPIRIT_SHOOT = sound("entity.sun_spirit.shoot");
 	
-
+	@EventBusSubscriber(modid = Aether.MODID, bus = Bus.MOD)
 	public static class Registration {
 		
 		@SubscribeEvent
 		public static void registerSoundEvents(RegistryEvent.Register<SoundEvent> event) {
-			for (SoundEvent sound : sounds) {
+			evaluate(AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT); // this is to ensure that AetherSoundEvents class is loaded and initialized
+			
+			for (SoundEvent sound : getListOfPublicStaticFieldValuesIn(AetherSoundEvents.class, SoundEvent.class)) {
 				event.getRegistry().register(sound);
 			}
-			
-			sounds.clear();
-			sounds = null;
 		}
 		
 		public static SoundEvent sound(String name) {
 			SoundEvent sound = new SoundEvent(new ResourceLocation(Aether.MODID, name));
 			sound.setRegistryName(sound.getName());
-			sounds.add(sound);
 			return sound;
 		}
 		

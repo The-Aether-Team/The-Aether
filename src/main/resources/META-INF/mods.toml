@@ -1,29 +1,28 @@
 modLoader = "javafml"
-loaderVersion = "[28,)"
+loaderVersion = "[31,)"
 
 [[mods]]
 
 modId = "aether"
-version = "1.14.4-v1.5.0"
+version = "1.15.2-v1.5.0"
 displayName = "The Aether"
-displayURL = "https://www.moddinglegacy.com/"
+displayURL = "https://gildedgames.com/"
 logoFile = "aether.png"
-credits = "Gilded Games for allowing us permission to do this project, and InsomniaKitten for providing the inventory texture."
-authors="115kino, Raptor4694"
-description='''
-Aether Legacy, a port of Aether I which has been updated to the latest version of Minecraft. 
-This version of the Aether includes multiplayer support to play with friends and others alike.
+credits = "Gilded Games; also InsomniaKitten for providing the inventory texture."
+authors = "Raptor4694, quek, bconlon"
+description = '''
+The Aether, a hostile paradise in the skies.
 '''
 
 [[dependencies.aether]]
     modId = "forge"
     mandatory = true
-    versionRange = "[28,)"
+    versionRange = "[31,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.aether]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "[1.14.4]"
+    versionRange = "[1.15.2]"
     ordering = "NONE"
     side = "BOTH"

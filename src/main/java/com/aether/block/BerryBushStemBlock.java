@@ -10,6 +10,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class BerryBushStemBlock extends AetherBushBlock implements IGrowable {
 	protected static final VoxelShape SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
@@ -24,7 +25,7 @@ public class BerryBushStemBlock extends AetherBushBlock implements IGrowable {
 	}
 
 	@Override
-	public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
+	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
 		if (!worldIn.isAreaLoaded(pos, 1)) {
 			return;
 		}
@@ -45,7 +46,7 @@ public class BerryBushStemBlock extends AetherBushBlock implements IGrowable {
 	}
 
 	@Override
-	public void grow(World worldIn, Random rand, BlockPos pos, BlockState state) {
+	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
 		worldIn.setBlockState(pos, AetherBlocks.BERRY_BUSH.getDefaultState());
 	}
 

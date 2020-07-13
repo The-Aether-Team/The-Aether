@@ -188,7 +188,7 @@ public class AetherItems {
 				item("zanite_gemstone", new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
 				item("ambrosium_shard", new AmbrosiumShardItem(new Item.Properties()
 						.food(new Food.Builder().setAlwaysEdible().fastToEat()
-							.effect(new EffectInstance(Effects.INSTANT_HEALTH), 1.0f).build())
+							.effect(() -> new EffectInstance(Effects.INSTANT_HEALTH), 1.0f).build())
 						.group(AetherItemGroups.AETHER_MATERIALS))),
 				item("golden_amber", new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
 				item("aechor_petal", new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
@@ -262,7 +262,7 @@ public class AetherItems {
 					.group(AetherItemGroups.AETHER_FOOD))),
 				item("healing_stone", new Item(new Item.Properties()
 					.food(new Food.Builder().setAlwaysEdible().hunger(0)
-						.effect(new EffectInstance(Effects.INSTANT_HEALTH, 610, 0), 1.0f).build())
+						.effect(() -> new EffectInstance(Effects.INSTANT_HEALTH, 610, 0), 1.0f).build())
 					.group(AetherItemGroups.AETHER_FOOD))),
 				item("candy_cane", new Item(new Item.Properties()
 					.food(new Food.Builder().hunger(2).build())

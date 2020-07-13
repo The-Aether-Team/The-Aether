@@ -7,8 +7,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
 import net.minecraft.world.lighting.LightEngine;
+import net.minecraft.world.server.ServerWorld;
 
 public class EnchantedAetherGrassBlock extends Block {
 
@@ -25,11 +25,9 @@ public class EnchantedAetherGrassBlock extends Block {
 	}
 
 	@Override
-	public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
-		if (!worldIn.isRemote) {
-			if (!canBlockStay(state, worldIn, pos)) {
-				worldIn.setBlockState(pos, AetherBlocks.AETHER_DIRT.getDefaultState());
-			}
+	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+		if (!canBlockStay(state, worldIn, pos)) {
+			worldIn.setBlockState(pos, AetherBlocks.AETHER_DIRT.getDefaultState());
 		}
 	}
 	

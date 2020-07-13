@@ -3,7 +3,6 @@ package com.aether.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -32,11 +31,6 @@ public class AercloudBlock extends Block {
 		if (entity.getMotion().y < 0) {
 			entity.setMotion(entity.getMotion().mul(1.0, 0.005, 1.0));
 		}
-	}
-	
-	@Override
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.TRANSLUCENT;
 	}
 	
 	@Override

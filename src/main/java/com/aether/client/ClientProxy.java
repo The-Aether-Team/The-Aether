@@ -7,15 +7,14 @@ import com.aether.client.renderer.entity.FloatingBlockRenderer;
 import com.aether.client.renderer.entity.MimicRenderer;
 import com.aether.client.renderer.entity.SentryRenderer;
 import com.aether.entity.AetherEntityTypes;
-import com.aether.entity.item.FloatingBlockEntity;
-import com.aether.entity.monster.MimicEntity;
-import com.aether.entity.monster.SentryEntity;
 import com.aether.inventory.container.AetherContainerTypes;
 import com.aether.item.AetherItems;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
@@ -43,19 +42,20 @@ public class ClientProxy extends CommonProxy {
 		super.clientSetup(event);
 		registerEntityRenderers();
 		registerGuiFactories();
+		registerBlockRenderLayers();
 	}
 	
-	private void registerEntityRenderers() {
+	protected void registerEntityRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLOATING_BLOCK, FloatingBlockRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC, MimicRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY, SentryRenderer::new);
 	}
 	
-	private void registerGuiFactories() {
+	protected void registerGuiFactories() {
 		ScreenManager.registerFactory(AetherContainerTypes.ENCHANTER, EnchanterScreen::new);
 	}
 	
-	private void registerColors() {
+	protected void registerColors() {
 		// Block colors
 		registerColor(AetherBlocks.BLUE_AERCLOUD);
 		registerColor(AetherBlocks.GOLDEN_AERCLOUD);
@@ -67,20 +67,55 @@ public class ClientProxy extends CommonProxy {
 		registerColor(AetherItems.SENTRY_SPAWN_EGG);
 	}
 	
-	private static <B extends Block & IBlockColor> void registerColor(B block) {
+	public static <B extends Block & IBlockColor> void registerColor(B block) {
 		Minecraft.getInstance().getBlockColors().register(block, block);
 	}
 	
-	private static <I extends Item & IItemColor> void registerColor(I item) {
+	public static <I extends Item & IItemColor> void registerColor(I item) {
 		Minecraft.getInstance().getItemColors().register(item, item);
 	}
 	
-	private static void registerColor(Item item, IItemColor colorProvider) {
+	public static void registerColor(Item item, IItemColor colorProvider) {
 		Minecraft.getInstance().getItemColors().register(colorProvider, item);
 	}
 	
-	private static void registerColor(SpawnEggItem spawneggitem) {
+	public static void registerColor(SpawnEggItem spawneggitem) {
 		Minecraft.getInstance().getItemColors().register((itemStack, tintIndex) -> spawneggitem.getColor(tintIndex), spawneggitem);
+	}
+	
+	protected void registerBlockRenderLayers() {
+		setTranslucentRenderLayer(AetherBlocks.COLD_AERCLOUD);
+		setTranslucentRenderLayer(AetherBlocks.BLUE_AERCLOUD);
+		setTranslucentRenderLayer(AetherBlocks.GOLDEN_AERCLOUD);
+		setTranslucentRenderLayer(AetherBlocks.PINK_AERCLOUD);
+		setTranslucentRenderLayer(AetherBlocks.AEROGEL);
+		//setTranslucentRenderLayer(AetherBlocks.AEROGEL_SLAB);
+		//setTranslucentRenderLayer(AetherBlocks.AEROGEL_STAIRS);
+		//setTranslucentRenderLayer(AetherBlocks.AEROGEL_WALL);
+		setTranslucentRenderLayer(AetherBlocks.QUICKSOIL_GLASS);
+		setTranslucentRenderLayer(AetherBlocks.AETHER_PORTAL);
+		setCutoutRenderLayer(AetherBlocks.BERRY_BUSH);
+		setCutoutRenderLayer(AetherBlocks.BERRY_BUSH_STEM);
+	}
+	
+	public static void setSolidRenderLayer(Block block) {
+		RenderTypeLookup.setRenderLayer(block, RenderType.getSolid());
+	}
+	
+	public static void setCutoutRenderLayer(Block block) {
+		RenderTypeLookup.setRenderLayer(block, RenderType.getCutout());
+	}
+	
+	public static void setCutoutMippedRenderLayer(Block block) {
+		RenderTypeLookup.setRenderLayer(block, RenderType.getCutoutMipped());
+	}
+	
+	public static void setTranslucentRenderLayer(Block block) {
+		RenderTypeLookup.setRenderLayer(block, RenderType.getTranslucent());
+	}
+	
+	public static void setTranslucentNoCrumblingRenderLayer(Block block) {
+		RenderTypeLookup.setRenderLayer(block, RenderType.getTranslucentNoCrumbling());
 	}
 	
 }
