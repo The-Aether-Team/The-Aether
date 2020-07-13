@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=east": { "model": "aether:block/ambrosium_wall_torch" },
+        "facing=south": { "model": "aether:block/ambrosium_wall_torch", "y": 90 },
+        "facing=west": { "model": "aether:block/ambrosium_wall_torch", "y": 180 },
+        "facing=north": { "model": "aether:block/ambrosium_wall_torch", "y": 270 }
+    }
+}

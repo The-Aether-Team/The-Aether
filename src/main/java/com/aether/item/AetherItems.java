@@ -349,7 +349,7 @@ public class AetherItems {
 				
 				//item("life_shard", new LifeShardItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
 				item("sentry_boots", new ArmorItem(AetherArmorMaterial.SENTRY, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("lightning_knife", new LightningKnifeItem(new Item.Properties().rarity(Aether.AETHER_LOOT).maxStackSize(16).group(AetherItemGroups.AETHER_COMBAT))),
+				item("lightning_knife", new LightningKnifeItem(new Item.Properties().rarity(Aether.AETHER_LOOT).maxStackSize(16).group(AetherItemGroups.AETHER_COMBAT))),
 				
 				//item("music_disc_aether_tune", new MusicDiscItem(1, AetherSoundEvents.MUSIC_DISC_AETHER_TUNE, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),
 				//item("music_disc_ascending_dawn", new MusicDiscItem(2, AetherSoundEvents.MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),

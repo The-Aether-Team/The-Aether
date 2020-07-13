@@ -4,6 +4,7 @@ import com.aether.CommonProxy;
 import com.aether.block.AetherBlocks;
 import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.renderer.entity.FloatingBlockRenderer;
+import com.aether.client.renderer.entity.LightningKnifeRenderer;
 import com.aether.client.renderer.entity.MimicRenderer;
 import com.aether.client.renderer.entity.SentryRenderer;
 import com.aether.entity.AetherEntityTypes;
@@ -46,6 +47,7 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	protected void registerEntityRenderers() {
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.LIGHTNING_KNIFE, LightningKnifeRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLOATING_BLOCK, FloatingBlockRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC, MimicRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY, SentryRenderer::new);
@@ -96,6 +98,9 @@ public class ClientProxy extends CommonProxy {
 		setTranslucentRenderLayer(AetherBlocks.AETHER_PORTAL);
 		setCutoutRenderLayer(AetherBlocks.BERRY_BUSH);
 		setCutoutRenderLayer(AetherBlocks.BERRY_BUSH_STEM);
+		setCutoutRenderLayer(AetherBlocks.AMBROSIUM_TORCH);
+		setCutoutRenderLayer(AetherBlocks.AMBROSIUM_WALL_TORCH);
+		
 	}
 	
 	public static void setSolidRenderLayer(Block block) {

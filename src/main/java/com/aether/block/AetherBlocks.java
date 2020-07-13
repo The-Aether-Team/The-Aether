@@ -12,10 +12,13 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.GlassBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.TorchBlock;
+import net.minecraft.block.WallTorchBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.WallOrFloorItem;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -164,8 +167,7 @@ public class AetherBlocks {
 				block("enchanter", new EnchanterBlock(temp0 = Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f).sound(SoundType.STONE))),
 				//block("freezer", new FreezerBlock(temp0)),
 				//block("incubator", new IncubatorBlock(temp0)),
-				//block("ambrosium_torch", new TorchBlock(Block.Properties.from(Blocks.TORCH))),
-				//block("ambrosium_wall_torch", new WallTorchBlock(Block.Properties.from(Blocks.WALL_TORCH))),
+				block("ambrosium_torch", new TorchBlock(Block.Properties.from(Blocks.TORCH))),
 				//block("chest_mimic", new ChestMimicBlock(Block.Properties.from(Blocks.CHEST))),
 				//block("treasure_chest", new TreasureChestBlock(???)),
 				block("carved_stone", new Block(temp0 = Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).sound(SoundType.STONE))),
@@ -227,7 +229,7 @@ public class AetherBlocks {
 			// for blocks that don't have corresponding items
 			event.getRegistry().registerAll(new Block[] {
 				
-				//block("ambrosium_wall_torch", new WallTorchBlock(Block.Properties.from(Blocks.WALL_TORCH))),
+				block("ambrosium_wall_torch", new WallTorchBlock(Block.Properties.from(Blocks.WALL_TORCH))),
 				block("aether_portal", new AetherPortalBlock(Block.Properties.from(Blocks.NETHER_PORTAL))),
 				
 			});
@@ -243,6 +245,9 @@ public class AetherBlocks {
 					int hexColor = iaetherblockcolor.getColor(false);
 					int updatedHexColor = iaetherblockcolor.getColor(true);
 					item = new TintedBlockItem(hexColor, updatedHexColor, block, properties);
+				}
+				else if (block == AMBROSIUM_TORCH) {
+					item = new WallOrFloorItem(AMBROSIUM_TORCH, AMBROSIUM_WALL_TORCH, properties);
 				}
 				else {
 					item = new BlockItem(block, properties);
