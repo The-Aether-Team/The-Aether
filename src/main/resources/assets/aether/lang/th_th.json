@@ -138,6 +138,6 @@
 	"carved_slab.name": "แผ่นแกะสลัก",
 	"block.aether.carved_double_slab": "แผ่นพื้นเตียงแกะสลัก",
 	"block.aether.skyroot_fence_gate": "ประตูรั้วสกายรูท",
-	"entity.valkyrie_queen.name": "ราชินีวาลคิรี",
-	"entity.sun_spirit.name": "ดวงอาทิตย์วิญญาณ"
+	"entity.aether.valkyrie_queen": "ราชินีวาลคิรี",
+	"entity.aether.sun_spirit": "ดวงอาทิตย์วิญญาณ"
 }

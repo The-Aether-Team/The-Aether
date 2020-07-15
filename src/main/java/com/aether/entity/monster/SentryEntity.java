@@ -1,6 +1,7 @@
 package com.aether.entity.monster;
 
 import com.aether.block.AetherBlocks;
+import com.aether.entity.AetherEntityTypes;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -35,6 +36,10 @@ public class SentryEntity extends SlimeEntity {
 	
 	public SentryEntity(EntityType<? extends SentryEntity> type, World worldIn) {
 		super(type, worldIn);
+	}
+	
+	public SentryEntity(World worldIn) {
+		super(AetherEntityTypes.SENTRY, worldIn);
 	}
 	
 	@Override

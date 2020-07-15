@@ -1,9 +1,6 @@
 package com.aether.api.moa;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.Validate;
 
 import net.minecraft.util.ResourceLocation;
 
@@ -11,18 +8,13 @@ public class MoaProperties {
 	private final int maxJumps;
 	private final float moaSpeed;
 	private ResourceLocation customTexture = null;
+	private ResourceLocation customSaddleTexture = null;
 	
-	public MoaProperties(int maxJumps, float moaSpeed) {
+	private MoaProperties(int maxJumps, float moaSpeed, ResourceLocation customTexture, ResourceLocation customSaddleTexture) {
 		this.maxJumps = maxJumps;
 		this.moaSpeed = moaSpeed;
-	}
-	
-	public MoaProperties(int maxJumps, float moaSpeed, @Nonnull ResourceLocation customTexture) {
-		this(maxJumps, moaSpeed);
-		
-		Validate.notNull(customTexture, "custom texture was null");
-		
 		this.customTexture = customTexture;
+		this.customSaddleTexture = customSaddleTexture;
 	}
 	
 	public int getMaxJumps() {
@@ -37,8 +29,16 @@ public class MoaProperties {
 		return customTexture != null;
 	}
 	
-	public @Nullable ResourceLocation getCustomTexture(boolean isSaddled) {
+	public @Nullable ResourceLocation getCustomTexture() {
 		return customTexture;
+	}
+	
+	public boolean hasCustomSaddleTexture() {
+		return customSaddleTexture != null;
+	}
+	
+	public @Nullable ResourceLocation getCustomSaddleTexture() {
+		return customSaddleTexture;
 	}
 	
 	protected boolean canEqual(Object obj) {
@@ -53,10 +53,51 @@ public class MoaProperties {
 			MoaProperties properties = (MoaProperties) obj;
 			
 			return this.getMaxJumps() == properties.getMaxJumps() && this.getMoaSpeed() == properties.getMoaSpeed()
-					&& (this.hasCustomTexture()? properties.hasCustomTexture() && this.getCustomTexture(false).equals(properties.getCustomTexture(false)) && this.getCustomTexture(true).equals(properties.getCustomTexture(true)) : !properties.hasCustomTexture());
+					&& (this.hasCustomTexture()? properties.hasCustomTexture() && this.getCustomTexture().equals(properties.getCustomTexture()) : !properties.hasCustomTexture())
+					&& (this.hasCustomSaddleTexture()? properties.hasCustomSaddleTexture() && this.getCustomSaddleTexture().equals(properties.getCustomSaddleTexture()) : !properties.hasCustomSaddleTexture());
 		} else {
 			return false;
 		}
+	}
+	
+	public static class Builder {
+		private int maxJumps = 3;
+		private float moaSpeed = 0.3F;
+		private ResourceLocation texture;
+		private ResourceLocation saddleTexture;
+		
+		public MoaProperties.Builder maxJumps(int maxJumps) {
+			this.maxJumps = maxJumps;
+			return this;
+		}
+		
+		public MoaProperties.Builder speed(float speed) {
+			this.moaSpeed = speed;
+			return this;
+		}
+		
+		public MoaProperties.Builder texture(ResourceLocation texture) {
+			this.texture = texture;
+			return this;
+		}
+		
+		public MoaProperties.Builder texture(String texture) {
+			return this.texture(new ResourceLocation(texture));
+		}
+		
+		public MoaProperties.Builder saddleTexture(ResourceLocation saddleTexture) {
+			this.saddleTexture = saddleTexture;
+			return this;
+		}
+		
+		public MoaProperties.Builder saddleTexture(String name) {
+			return this.saddleTexture(new ResourceLocation(name));
+		}
+		
+		public MoaProperties build() {
+			return new MoaProperties(maxJumps, moaSpeed, texture, saddleTexture);
+		}
+		
 	}
 	
 }
