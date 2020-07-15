@@ -357,11 +357,11 @@ public class AetherItems {
 				//item("lore_book", new LoreBookItem(new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
 				
 				item("sentry_spawn_egg", new SpawnEggItem(
-					EntityType.Builder.create(SentryEntity::new, EntityClassification.MONSTER).size(2.0F, 2.0F).build("sentry"),
+					EntityType.Builder.<SentryEntity>create(SentryEntity::new, EntityClassification.MONSTER).size(2.0F, 2.0F).build("sentry"),
 					/*primary color:*/ 0x808080, /*secondary color:*/ 0x3A8AEC,
 					new Item.Properties().group(ItemGroup.MISC))),
 				item("mimic_spawn_egg", new SpawnEggItem(
-					EntityType.Builder.create((EntityType.IFactory<MimicEntity>)MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"),
+					EntityType.Builder.<MimicEntity>create(MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"),
 					/*primary color:*/ 0xB18132, /*secondary color:*/ 0x605A4E,
 					new Item.Properties().group(ItemGroup.MISC))),
 				
