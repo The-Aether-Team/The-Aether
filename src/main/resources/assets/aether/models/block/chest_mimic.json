@@ -1,6 +1,3 @@
 {
-	"parent": "block/cube_all",
-	"textures": {
-		"all": "blocks/planks_oak"
-	}
+	"parent": "block/chest"
 }

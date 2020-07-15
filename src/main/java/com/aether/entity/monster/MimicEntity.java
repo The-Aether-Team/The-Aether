@@ -1,5 +1,6 @@
 package com.aether.entity.monster;
 
+import com.aether.entity.AetherEntityTypes;
 import com.aether.world.gen.feature.AetherDungeonFeature;
 
 import net.minecraft.entity.CreatureEntity;
@@ -25,6 +26,10 @@ public class MimicEntity extends CreatureEntity {
 
 	public MimicEntity(EntityType<? extends MimicEntity> type, World worldIn) {
 		super(type, worldIn);
+	}
+	
+	public MimicEntity(World worldIn) {
+		super(AetherEntityTypes.MIMIC, worldIn);
 	}
 	
 	@Override

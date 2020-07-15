@@ -3,6 +3,7 @@ package com.aether.block;
 import static net.minecraftforge.eventbus.api.EventPriority.HIGH;
 
 import com.aether.Aether;
+import com.aether.client.renderer.tileentity.ChestMimicItemStackTileEntityRenderer;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.item.AetherItemGroups;
 import com.aether.item.TintedBlockItem;
@@ -168,7 +169,7 @@ public class AetherBlocks {
 				//block("freezer", new FreezerBlock(temp0)),
 				//block("incubator", new IncubatorBlock(temp0)),
 				block("ambrosium_torch", new TorchBlock(Block.Properties.from(Blocks.TORCH))),
-				//block("chest_mimic", new ChestMimicBlock(Block.Properties.from(Blocks.CHEST))),
+				block("chest_mimic", new ChestMimicBlock(Block.Properties.from(Blocks.CHEST))),
 				//block("treasure_chest", new TreasureChestBlock(???)),
 				block("carved_stone", new Block(temp0 = Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).sound(SoundType.STONE))),
 				block("sentry_stone", new Block(temp1 = Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).lightValue(11).sound(SoundType.STONE))),
@@ -248,6 +249,9 @@ public class AetherBlocks {
 				}
 				else if (block == AMBROSIUM_TORCH) {
 					item = new WallOrFloorItem(AMBROSIUM_TORCH, AMBROSIUM_WALL_TORCH, properties);
+				}
+				else if (block == CHEST_MIMIC) {
+					item = new BlockItem(block, properties.setISTER(() -> ChestMimicItemStackTileEntityRenderer::new));
 				}
 				else {
 					item = new BlockItem(block, properties);

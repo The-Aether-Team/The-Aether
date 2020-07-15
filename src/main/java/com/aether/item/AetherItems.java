@@ -4,17 +4,14 @@ import com.aether.Aether;
 import com.aether.api.enchantments.AetherEnchantmentFuel;
 import com.aether.api.freezables.AetherFreezableFuel;
 import com.aether.block.AetherBlocks;
-import com.aether.block.IAetherBlockColor;
 import com.aether.entity.monster.MimicEntity;
 import com.aether.entity.monster.SentryEntity;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.AxeItem;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -364,28 +361,11 @@ public class AetherItems {
 					/*primary color:*/ 0x808080, /*secondary color:*/ 0x3A8AEC,
 					new Item.Properties().group(ItemGroup.MISC))),
 				item("mimic_spawn_egg", new SpawnEggItem(
-					EntityType.Builder.create(MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"),
+					EntityType.Builder.create((EntityType.IFactory<MimicEntity>)MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"),
 					/*primary color:*/ 0xB18132, /*secondary color:*/ 0x605A4E,
 					new Item.Properties().group(ItemGroup.MISC))),
 				
 			});
-		}
-
-		public static BlockItem block(Block block) {
-			return block(block, AetherItemGroups.AETHER_BLOCKS);
-		}
-
-		public static BlockItem block(Block block, ItemGroup itemGroup) {
-			return block(block, new Item.Properties().group(itemGroup));
-		}
-
-		public static BlockItem block(Block block, Item.Properties properties) {
-			if (block instanceof IAetherBlockColor) {
-				IAetherBlockColor iaetherblockcolor = (IAetherBlockColor) block;
-				return item(block.getRegistryName().toString(), new TintedBlockItem(iaetherblockcolor.getColor(false),
-					iaetherblockcolor.getColor(true), block, properties));
-			}
-			return item(block.getRegistryName().toString(), new BlockItem(block, properties));
 		}
 
 		public static <I extends Item> I item(String name, I item) {

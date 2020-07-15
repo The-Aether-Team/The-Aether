@@ -7,9 +7,11 @@ import com.aether.client.renderer.entity.FloatingBlockRenderer;
 import com.aether.client.renderer.entity.LightningKnifeRenderer;
 import com.aether.client.renderer.entity.MimicRenderer;
 import com.aether.client.renderer.entity.SentryRenderer;
+import com.aether.client.renderer.tileentity.ChestMimicTileEntityRenderer;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.inventory.container.AetherContainerTypes;
 import com.aether.item.AetherItems;
+import com.aether.tileentity.AetherTileEntityTypes;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -23,6 +25,7 @@ import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -42,6 +45,7 @@ public class ClientProxy extends CommonProxy {
 	public void clientSetup(FMLClientSetupEvent event) {
 		super.clientSetup(event);
 		registerEntityRenderers();
+		registerTileEntityRenderers();
 		registerGuiFactories();
 		registerBlockRenderLayers();
 	}
@@ -51,6 +55,10 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLOATING_BLOCK, FloatingBlockRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC, MimicRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY, SentryRenderer::new);
+	}
+	
+	protected void registerTileEntityRenderers() {
+		ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.CHEST_MIMIC, ChestMimicTileEntityRenderer::new);
 	}
 	
 	protected void registerGuiFactories() {

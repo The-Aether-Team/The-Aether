@@ -39,7 +39,7 @@ public class MimicModel extends EntityModel<MimicEntity> {
 		
 		this.knob = new ModelRenderer(this, 0, 0);
 		this.knob.setRotationPoint(0.0f, 0.0f, 0.0f);
-		this.knob.addBox(-1.0f, -2.0f, 16.0f, 2, 4, 1);
+		this.knob.addBox(7.0f, -2.0f, 16.0f, 2, 4, 1);
 		this.upperBody.addChild(knob);
 	}
 	

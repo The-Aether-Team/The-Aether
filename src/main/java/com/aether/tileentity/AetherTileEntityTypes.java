@@ -8,14 +8,16 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(Aether.MODID)
 public class AetherTileEntityTypes {
 
 	public static final TileEntityType<EnchanterTileEntity> ENCHANTER = null;
+	public static final TileEntityType<ChestMimicTileEntity> CHEST_MIMIC = null;
 	
-	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
+	@EventBusSubscriber(modid = Aether.MODID, bus = Bus.MOD)
 	public static class Registration {
 		
 		@SubscribeEvent
@@ -23,6 +25,7 @@ public class AetherTileEntityTypes {
 			event.getRegistry().registerAll(new TileEntityType[] {
 				
 				tileEntity("enchanter", TileEntityType.Builder.<EnchanterTileEntity>create(EnchanterTileEntity::new, AetherBlocks.ENCHANTER)),
+				tileEntity("chest_mimic", TileEntityType.Builder.<ChestMimicTileEntity>create(ChestMimicTileEntity::new, AetherBlocks.CHEST_MIMIC)),
 				
 			});
 		}
