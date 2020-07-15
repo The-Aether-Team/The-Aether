@@ -3,11 +3,14 @@ package com.aether.block;
 import java.util.List;
 import java.util.Random;
 
+import com.aether.block.state.properties.AetherBlockStateProperties;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.GrassBlock;
 import net.minecraft.block.IGrowable;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
@@ -21,6 +24,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 
 public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlock {
+	public static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
 
 	public AetherGrassBlock(Block.Properties properties) {
 		super(properties);
@@ -112,16 +116,17 @@ public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlo
 			if (!worldIn.isAreaLoaded(pos, 3)) {
 				return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
 			}
-			worldIn.setBlockState(pos, AetherBlocks.AETHER_DIRT.getDefaultState());
+			worldIn.setBlockState(pos, AetherBlocks.AETHER_DIRT.getDefaultState().with(DOUBLE_DROPS, state.get(DOUBLE_DROPS)));
 		}
 		else {
 			if (worldIn.getLight(pos.up()) >= 9) {
 				BlockState blockstate = this.getDefaultState();
-
+				
 				for (int i = 0; i < 4; ++i) {
 					BlockPos blockpos = pos.add(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+					BlockState blockstate2 = worldIn.getBlockState(blockpos);
 					if (worldIn.getBlockState(blockpos).getBlock() == AetherBlocks.AETHER_DIRT && func_220256_c(blockstate, worldIn, blockpos)) {
-						worldIn.setBlockState(blockpos, blockstate.with(SNOWY, worldIn.getBlockState(blockpos.up()).getBlock() == Blocks.SNOW));
+						worldIn.setBlockState(blockpos, blockstate.with(SNOWY, worldIn.getBlockState(blockpos.up()).getBlock() == Blocks.SNOW).with(DOUBLE_DROPS, blockstate2.get(DOUBLE_DROPS)));
 					}
 				}
 			}

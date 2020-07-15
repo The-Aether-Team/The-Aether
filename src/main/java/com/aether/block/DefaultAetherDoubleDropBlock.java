@@ -1,10 +1,14 @@
 package com.aether.block;
 
+import com.aether.block.state.properties.AetherBlockStateProperties;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 
 public class DefaultAetherDoubleDropBlock extends Block implements IAetherDoubleDropBlock {
+	public static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
 
 	public DefaultAetherDoubleDropBlock(Block.Properties properties) {
 		super(properties);
@@ -13,7 +17,6 @@ public class DefaultAetherDoubleDropBlock extends Block implements IAetherDouble
 	
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		super.fillStateContainer(builder);
 		builder.add(DOUBLE_DROPS);
 	}
 

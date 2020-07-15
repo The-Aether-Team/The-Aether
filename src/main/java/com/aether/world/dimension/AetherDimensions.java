@@ -1,4 +1,4 @@
-package com.aether.world;
+package com.aether.world.dimension;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

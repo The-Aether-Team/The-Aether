@@ -1,8 +1,8 @@
 package com.aether.entity.monster;
 
 import com.aether.entity.AetherEntityTypes;
-import com.aether.world.gen.feature.AetherDungeonFeature;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -67,7 +67,7 @@ public class MimicEntity extends CreatureEntity {
 		}
 		if (source.getImmediateSource() instanceof LivingEntity && this.hurtTime == 0) {
 			if (this.world instanceof ServerWorld) {
-				((ServerWorld) this.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, AetherDungeonFeature.Decorations.CHEST.getDefaultState()), this.getPosX(), this.getPosY() + this.getHeight() / 1.5, this.getPosZ(), 20, this.getWidth() / 4.0, this.getHeight() / 4.0, this.getWidth() / 4.0, 0.05);
+				((ServerWorld) this.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, Blocks.CHEST.getDefaultState()), this.getPosX(), this.getPosY() + this.getHeight() / 1.5, this.getPosZ(), 20, this.getWidth() / 4.0, this.getHeight() / 4.0, this.getWidth() / 4.0, 0.05);
 			}
 			
 			LivingEntity attacker = (LivingEntity) source.getImmediateSource();

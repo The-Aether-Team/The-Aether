@@ -7,8 +7,8 @@ import javax.annotation.Nullable;
 import com.aether.Aether;
 import com.aether.particles.AetherParticleTypes;
 import com.aether.util.AetherSoundEvents;
-import com.aether.world.AetherDimensions;
 import com.aether.world.AetherTeleporter;
+import com.aether.world.dimension.AetherDimensions;
 import com.google.common.cache.LoadingCache;
 
 import net.minecraft.block.Block;

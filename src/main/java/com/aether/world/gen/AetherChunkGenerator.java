@@ -4,9 +4,9 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.gen.NoiseChunkGenerator;
 
-public class AetherChunkGenerator extends NoiseChunkGenerator<AetherGenSettings> {
+public class AetherChunkGenerator extends NoiseChunkGenerator<AetherGenerationSettings> {
 
-    public AetherChunkGenerator(IWorld world, BiomeProvider biomeProvider, AetherGenSettings gen) {
+    public AetherChunkGenerator(IWorld world, BiomeProvider biomeProvider, AetherGenerationSettings gen) {
         super(world, biomeProvider, 4, 8, 128, gen, true);
     }
 
@@ -17,7 +17,7 @@ public class AetherChunkGenerator extends NoiseChunkGenerator<AetherGenSettings>
 
     @Override
     protected double[] getBiomeNoiseColumn(int noiseX, int noiseZ) {
-        return new double[]{(double)this.biomeProvider.func_222365_c(noiseX, noiseZ), 0.0D};
+        return new double[]{this.biomeProvider.func_222365_c(noiseX, noiseZ), 0.0D};
     }
 
     @Override
@@ -27,7 +27,7 @@ public class AetherChunkGenerator extends NoiseChunkGenerator<AetherGenSettings>
 
     @Override
     protected double func_222551_g() {
-        return (double)((int)super.func_222551_g() / 2);
+        return (int)super.func_222551_g() / 2;
     }
 
     @Override

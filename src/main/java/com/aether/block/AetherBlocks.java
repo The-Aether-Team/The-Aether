@@ -20,6 +20,7 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.WallOrFloorItem;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -29,11 +30,11 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(Aether.MODID)
 public class AetherBlocks {
 
-	public static final Block AETHER_GRASS_BLOCK = null;
+	public static final AetherGrassBlock AETHER_GRASS_BLOCK = null;
 	public static final Block ENCHANTED_AETHER_GRASS_BLOCK = null;
-	public static final Block AETHER_DIRT = null;
-	public static final Block HOLYSTONE = null;
-	public static final Block MOSSY_HOLYSTONE = null;
+	public static final DefaultAetherDoubleDropBlock AETHER_DIRT = null;
+	public static final DefaultAetherDoubleDropBlock HOLYSTONE = null;
+	public static final DefaultAetherDoubleDropBlock MOSSY_HOLYSTONE = null;
 	public static final Block HOLYSTONE_BRICKS = null;
 	public static final AercloudBlock COLD_AERCLOUD = null;
 	public static final TintedAercloudBlock BLUE_AERCLOUD = null;
@@ -41,7 +42,7 @@ public class AetherBlocks {
 	public static final AercloudBlock PINK_AERCLOUD = null;
 	public static final Block QUICKSOIL = null;
 	public static final Block ICESTONE = null;
-	public static final Block AMBROSIUM_ORE = null;
+	public static final AetherDoubleDropsOreBlock AMBROSIUM_ORE = null;
 	public static final Block ZANITE_ORE = null;
 	public static final Block GRAVITITE_ORE = null;
 	public static final Block SKYROOT_LEAVES = null;
@@ -49,8 +50,8 @@ public class AetherBlocks {
 	public static final Block CRYSTAL_LEAVES = null;
 	public static final Block CRYSTAL_FRUIT_LEAVES = null;
 	public static final Block HOLIDAY_LEAVES = null;
-	public static final Block SKYROOT_LOG = null;
-	public static final Block GOLDEN_OAK_LOG = null;
+	public static final AetherLogBlock SKYROOT_LOG = null;
+	public static final AetherLogBlock GOLDEN_OAK_LOG = null;
 	public static final Block SKYROOT_PLANKS = null;
 	public static final Block QUICKSOIL_GLASS = null;
 	public static final Block AEROGEL = null;
@@ -147,9 +148,9 @@ public class AetherBlocks {
 				block("pink_aercloud", new HealingAercloudBlock(Block.Properties.create(Material.ICE).hardnessAndResistance(0.2f).sound(SoundType.CLOTH))),
 				block("quicksoil", new DefaultAetherDoubleDropBlock(Block.Properties.from(Blocks.SAND).slipperiness(1.1f))),
 				block("icestone", new IcestoneBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f).tickRandomly().sound(SoundType.GLASS))),
-				block("ambrosium_ore", new AetherOreBlock(0, 2, temp0 = Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f).sound(SoundType.STONE))),
-				block("zanite_ore", new AetherOreBlock(3, 5, temp0)),
-				block("gravitite_ore", new FloatingBlock(false, Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f).sound(SoundType.STONE))),
+				block("ambrosium_ore", new AetherDoubleDropsOreBlock(0, 2, temp0 = Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(0))),
+				block("zanite_ore", new AetherOreBlock(3, 5, temp0.harvestLevel(1))),
+				block("gravitite_ore", new FloatingBlock(false, Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2))),
 				block("skyroot_leaves", new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES))),
 				block("golden_oak_leaves", new LeavesWithParticlesBlock(0.976f, 0.7450980392156863f, 0.0f, Block.Properties.from(Blocks.OAK_LEAVES))),
 				block("crystal_leaves", new LeavesWithParticlesBlock(0.0f, 0.6450980392156863f, 0.7450980392156863f, Block.Properties.from(Blocks.OAK_LEAVES))),

@@ -1,4 +1,4 @@
-package com.aether.biome;
+package com.aether.world.biome;
 
 import com.aether.Aether;
 

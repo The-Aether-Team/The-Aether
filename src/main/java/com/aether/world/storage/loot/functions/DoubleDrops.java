@@ -3,6 +3,7 @@ package com.aether.world.storage.loot.functions;
 import com.aether.Aether;
 import com.aether.AetherTags;
 import com.aether.block.IAetherDoubleDropBlock;
+import com.aether.block.state.properties.AetherBlockStateProperties;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -28,7 +29,7 @@ public class DoubleDrops extends LootFunction {
 		ItemStack tool = context.get(LootParameters.TOOL);
 		if (tool != null && tool.getItem().isIn(AetherTags.Items.SKYROOT_TOOLS) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool) == 0) {
 			BlockState state = context.get(LootParameters.BLOCK_STATE);
-			if (state == null || !(state.getBlock() instanceof IAetherDoubleDropBlock) || state.get(IAetherDoubleDropBlock.DOUBLE_DROPS)) {
+			if (state == null || !(state.getBlock() instanceof IAetherDoubleDropBlock) || state.get(AetherBlockStateProperties.DOUBLE_DROPS) == true) {
 				stack.setCount(2 * stack.getCount());
 			}
 		}

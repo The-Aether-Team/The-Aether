@@ -1,8 +1,8 @@
 package com.aether;
 
-import com.aether.biome.AetherBiomes;
 import com.aether.client.ClientProxy;
-import com.aether.world.AetherDimensions;
+import com.aether.world.biome.AetherBiomes;
+import com.aether.world.dimension.AetherDimensions;
 
 import net.minecraft.item.Rarity;
 import net.minecraft.util.text.TextFormatting;
