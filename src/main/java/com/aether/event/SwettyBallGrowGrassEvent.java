@@ -7,7 +7,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.Cancelable;
 
+@Cancelable
 public class SwettyBallGrowGrassEvent extends PlayerEvent {
 	@Nonnull
 	private final BlockState oldBlockState;
@@ -48,11 +50,6 @@ public class SwettyBallGrowGrassEvent extends PlayerEvent {
 	
 	public void setNewBlockState(@Nonnull BlockState newBlockState) {
 		this.newBlockState = newBlockState;
-	}
-	
-	@Override
-	public boolean isCancelable() {
-		return true;
 	}
 	
 }
