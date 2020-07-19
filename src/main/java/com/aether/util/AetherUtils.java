@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.function.Predicate;
 
+import com.aether.Aether;
+
+import net.minecraftforge.fml.ModLoadingContext;
+
 public class AetherUtils {
 
 	@SuppressWarnings("unchecked")
@@ -115,6 +119,10 @@ public class AetherUtils {
 		}
 	}
 	
+	public static String defaultAetherNamespace() {
+		ModLoadingContext ctxt = ModLoadingContext.get();
+		return (ctxt.getActiveContainer() == null)? Aether.MODID : ctxt.getActiveNamespace();
+	}
 	
 	/**
 	 * Does nothing.

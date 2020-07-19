@@ -31,7 +31,7 @@ public class AetherDimension extends Dimension {
 	@Override
 	public ChunkGenerator<?> createChunkGenerator() {
 		AetherGenerationSettings aetherGen = new AetherGenerationSettings();
-		SingleBiomeProviderSettings providerSettings = new SingleBiomeProviderSettings(this.world.getWorldInfo()).setBiome(AetherBiomes.AETHER_VOID.get());
+		SingleBiomeProviderSettings providerSettings = new SingleBiomeProviderSettings(this.world.getWorldInfo()).setBiome(AetherBiomes.AETHER_SKYLANDS.get());
 		BiomeProvider provider = new SingleBiomeProvider(providerSettings);
 		return new AetherChunkGenerator(this.world, provider, aetherGen);
 	}

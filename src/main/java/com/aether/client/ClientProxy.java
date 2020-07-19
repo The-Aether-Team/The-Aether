@@ -2,6 +2,7 @@ package com.aether.client;
 
 import com.aether.CommonProxy;
 import com.aether.block.AetherBlocks;
+import com.aether.capability.AetherCapabilities;
 import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.renderer.entity.FloatingBlockRenderer;
 import com.aether.client.renderer.entity.LightningKnifeRenderer;
@@ -12,6 +13,8 @@ import com.aether.client.renderer.tileentity.ChestMimicTileEntityRenderer;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.inventory.container.AetherContainerTypes;
 import com.aether.item.AetherItems;
+import com.aether.network.AetherPacketHandler;
+import com.aether.network.JumpPacket;
 import com.aether.tileentity.AetherTileEntityTypes;
 
 import net.minecraft.block.Block;
@@ -25,6 +28,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -131,6 +135,18 @@ public class ClientProxy extends CommonProxy {
 	
 	public static void setTranslucentNoCrumblingRenderLayer(Block block) {
 		RenderTypeLookup.setRenderLayer(block, RenderType.getTranslucentNoCrumbling());
+	}
+	
+	@SubscribeEvent
+	public void onJump(InputUpdateEvent event) {
+		event.getPlayer().getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY).ifPresent((player) -> {
+			boolean isJumping = event.getMovementInput().jump;
+			if (isJumping != player.isJumping()) {
+				AetherPacketHandler.INSTANCE.sendToServer(new JumpPacket(event.getPlayer().getUniqueID(), isJumping));
+				
+				player.setJumping(isJumping);
+			}
+		});
 	}
 	
 }

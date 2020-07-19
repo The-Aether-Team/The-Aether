@@ -12,7 +12,7 @@ import com.aether.Aether;
 import com.aether.api.accessories.AetherAccessory;
 import com.aether.api.enchantments.AetherEnchantmentFuel;
 import com.aether.api.freezables.AetherFreezableFuel;
-import com.aether.api.moa.AetherMoaType;
+import com.aether.api.moa.MoaType;
 import com.aether.capability.AetherCapabilities;
 import com.aether.player.IAetherPlayer;
 
@@ -39,14 +39,14 @@ public class AetherAPI {
 	
 	private static IForgeRegistry<AetherFreezableFuel> freezableFuelRegistry;
 	
-	private static IForgeRegistry<AetherMoaType> moaTypeRegistry;
+	private static IForgeRegistry<MoaType> moaTypeRegistry;
 	
 	@SubscribeEvent
 	public static void makeRegistries(RegistryEvent.NewRegistry event) {
 		accessoryRegistry = makeRegistry("accessories", AetherAccessory.class);
 		enchantmentFuelRegistry = makeRegistry("enchantment_fuels", AetherEnchantmentFuel.class);
 		freezableFuelRegistry = makeRegistry("freezable_fuel", AetherFreezableFuel.class);
-		moaTypeRegistry = makeRegistry("moa_types", AetherMoaType.class);
+		moaTypeRegistry = makeRegistry("moa_types", MoaType.class);
 //		LogManager.getLogger(AetherAPI.class).debug("registered aetherapi registries");
 	}
 	
@@ -142,16 +142,16 @@ public class AetherAPI {
 		return moaTypeRegistry.containsKey(Validate.notNull(id, "id was null"));
 	}
 	
-	public static @Nullable AetherMoaType getMoaType(@Nonnull ResourceLocation id) {
+	public static @Nullable MoaType getMoaType(@Nonnull ResourceLocation id) {
 		return moaTypeRegistry.getValue(Validate.notNull(id, "id was null"));
 	}
 	
-	public static @Nonnull Collection<AetherMoaType> getMoaTypes() {
+	public static @Nonnull Collection<MoaType> getMoaTypes() {
 		return moaTypeRegistry.getValues();
 	}
 	
-	public static @Nonnull AetherMoaType getRandomMoaType() {
-		Collection<AetherMoaType> types = moaTypeRegistry.getValues();
+	public static @Nonnull MoaType getRandomMoaType() {
+		Collection<MoaType> types = moaTypeRegistry.getValues();
 		return types.stream().skip(new Random().nextInt(types.size())).findAny().orElseThrow(() -> new IllegalStateException("no moa types were registered"));
 	}
 	

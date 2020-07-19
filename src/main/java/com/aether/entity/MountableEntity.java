@@ -2,12 +2,11 @@ package com.aether.entity;
 
 import java.util.Optional;
 
-import com.aether.api.AetherAPI;
 import com.aether.entity.passive.MoaEntity;
-import com.aether.player.IAetherPlayer;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.IJumpingMount;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,7 +18,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public abstract class MountableEntity extends AetherAnimalEntity {
+public abstract class MountableEntity extends AetherAnimalEntity implements IJumpingMount {
 	public static final DataParameter<Boolean> RIDER_SNEAKING = EntityDataManager.createKey(MoaEntity.class, DataSerializers.BOOLEAN);
 	
 	protected float jumpPower;
@@ -133,9 +132,9 @@ public abstract class MountableEntity extends AetherAnimalEntity {
 				this.rotationYaw = this.updateRotation(this.rotationYaw, f, 40.0F);
 			}
 			
-			if (AetherAPI.get(player).map(IAetherPlayer::isJumping).orElse(false)) {
-				this.onMountedJump(strafe, forward);
-			}
+//			if (AetherAPI.get(player).map(IAetherPlayer::isJumping).orElse(false)) {
+//				this.onMountedJump(strafe, forward);
+//			}
 			
 			if (this.jumpPower > 0.0F && !this.isMountJumping() && (this.onGround || this.canJumpMidAir)) {
 				this.setMotion(this.getMotion().getX(), this.getMountJumpStrength() * this.jumpPower, this.getMotion().getZ());
@@ -199,8 +198,26 @@ public abstract class MountableEntity extends AetherAnimalEntity {
 		return 1.0;
 	}
 	
-	public void onMountedJump(float par1, float par2) {
-		this.jumpPower = 0.4F;
+	@Override
+	public void setJumpPower(int jumpPowerIn) {
+		if (jumpPowerIn < 0) {
+			jumpPowerIn = 0;
+		}
+		
+		if (jumpPowerIn >= 90) {
+			this.jumpPower = 1.0F;
+		}
+		else {
+			this.jumpPower = 0.4F + 0.4F * jumpPowerIn / 90.0F;
+		}
 	}
+	
+	@Override
+	public void handleStartJump(int p_184775_1_) {
+		this.setMountJumping(true);
+	}
+	
+	@Override
+	public void handleStopJump() {}
 	
 }

@@ -1,66 +1,101 @@
 package com.aether.player;
 
-import java.util.ArrayList;
+import java.util.UUID;
+
+import javax.annotation.Nullable;
 
 import com.aether.inventory.IAccessoryInventory;
 
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public interface IAetherPlayer extends INBTSerializable<CompoundNBT> {
 	
-	PlayerEntity getPlayerEntity();
+	PlayerEntity getPlayer();
+	
+	default UUID getUniqueID() { return this.getPlayer().getUniqueID(); }
+	
+	AttributeModifier getHealthModifier();
+	
+	AttributeModifier getReachModifier();
 	
 	void onUpdate();
 	
-	void setInPortal();
-	
-	void setFocusedBoss(IAetherBoss boss);
+//	void setInPortal();
 	
 	IAetherBoss getFocusedBoss();
+	
+	void setFocusedBoss(IAetherBoss boss);
 	
 //	void setAccessoryInventory(IAccessoryInventory inventory);
 	
 	IAccessoryInventory getAccessoryInventory();
 	
-	ArrayList<IAetherAbility> getAbilities();
+	NonNullList<IAetherAbility> getAbilities();
 	
-	PlayerEntity getEntity();
+//	void inflictPoison(int ticks);
 	
-	void inflictPoison(int ticks);
+//	boolean isPoisoned();
 	
-	boolean isPoisoned();
+//	void inflictCure(int ticks);
 	
-	void inflictCure(int ticks);
+//	boolean isCured();
 	
-	boolean isCured();
+	@Nullable
+	String getHammerName();
 	
-	boolean setHammerCooldown(int cooldown, String hammerName);
-	
-	String getNammerName();
+	/**
+	 * Set the name of the Hammer of Notch the player is using
+	 * @param hammerName The hammer name, {@code null} or empty for no hammer name
+	 */
+	void setHammerName(@Nullable String hammerName);
 	
 	int getHammerCooldown();
 	
 	int getHammerMaxCooldown();
 	
-	void setJumping(boolean isJumping);
+	/**
+	 * @param cooldown The hammer cooldown
+	 * @return {@code true} if the cooldown was set, {@code false} if the current cooldown hasn't expired yet
+	 */
+	boolean setHammerCooldown(int cooldown);
+	
+	boolean shouldRenderGlow();
+	
+	void setShouldRenderGlow(boolean shouldRenderGlow);
+	
+	boolean shouldRenderHalo();
+	
+	void setShouldRenderHalo(boolean shouldRenderHalo);
+	
+	boolean hasSeenSunSpiritDialogue();
+	
+	void setHasSeenSunSpiritDialogue(boolean hasSeenSunSpiritDialogue);
 	
 	boolean isJumping();
 	
-	void updateShardCount(int amount);
+	void setJumping(boolean isJumping);
 	
-	int getShardsUsed();
+	int getLifeShardsUsed();
+	
+	void setLifeShardsUsed(int lifeShardsUsed);
+	
+	default void incrementLifeShardsUsed(int amount) { this.setLifeShardsUsed(this.getLifeShardsUsed() + amount); }
 	
 	@OnlyIn(Dist.CLIENT)
 	float getWingSinage();
 	
-	@OnlyIn(Dist.CLIENT)
-	float getPreviousPortalAnimationTime();
+//	@OnlyIn(Dist.CLIENT)
+//	float getPreviousPortalAnimationTime();
 	
-	@OnlyIn(Dist.CLIENT)
-	float getPortalAnimationTime();
+//	@OnlyIn(Dist.CLIENT)
+//	float getPortalAnimationTime();
+	
+	void copyFrom(IAetherPlayer other);
 	
 }

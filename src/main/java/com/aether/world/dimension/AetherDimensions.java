@@ -43,8 +43,7 @@ public class AetherDimensions {
 		public static void registerDimensions(RegisterDimensionsEvent event) {
 			DimensionType dimensiontype = DimensionType.byName(AETHER_ID);
 			if (dimensiontype == null) {
-				dimensiontype = DimensionManager.registerDimension(AETHER_ID, AETHER_DIMENSION_REGISTRY_OBJECT.get(),
-					null, true);
+				dimensiontype = DimensionManager.registerDimension(AETHER_ID, AetherDimensions.AETHER_DIMENSION_REGISTRY_OBJECT.get(), null, true);
 				DimensionManager.keepLoaded(dimensiontype, false);
 			}
 			// Use reflection to set the final field AetherDimensions.AETHER = dimensiontype

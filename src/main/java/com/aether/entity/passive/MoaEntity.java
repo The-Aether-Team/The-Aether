@@ -6,9 +6,11 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+
 import com.aether.api.AetherAPI;
-import com.aether.api.moa.AetherMoaType;
-import com.aether.api.moa.AetherMoaTypes;
+import com.aether.api.moa.MoaType;
+import com.aether.api.moa.MoaTypes;
 import com.aether.block.AetherBlocks;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.item.AetherItems;
@@ -22,13 +24,12 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.PanicGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -46,6 +47,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 
 public class MoaEntity extends SaddleableEntity {	
@@ -59,6 +62,8 @@ public class MoaEntity extends SaddleableEntity {
 
 	protected final Random rand = new Random();
 	
+	private MoaType moaType;
+	
 	protected float jumpPower;
 	protected boolean mountJumping;
 
@@ -67,6 +72,7 @@ public class MoaEntity extends SaddleableEntity {
 
 	{
 		this.stepHeight = 1.0F;
+		this.canJumpMidAir = true;
 	}
 
 	public MoaEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
@@ -81,7 +87,7 @@ public class MoaEntity extends SaddleableEntity {
 		this.secsUntilEgg = this.getRandomEggTime();
 	}
 
-	public MoaEntity(World worldIn, AetherMoaType moaType) {
+	public MoaEntity(World worldIn, MoaType moaType) {
 		this(worldIn);
 
 		this.setMoaType(moaType);
@@ -101,21 +107,23 @@ public class MoaEntity extends SaddleableEntity {
 		super.registerGoals();
 
 		this.goalSelector.addGoal(0, new SwimGoal(this));
+		this.goalSelector.addGoal(1, new PanicGoal(this, 1.4));
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.30F));
-		this.goalSelector.addGoal(2, new TemptGoal(this, 1.25, Ingredient.fromItems(AetherItems.NATURE_STAFF), false));
+		//TODO this.goalSelector.addGoal(2, new TemptGoal(this, 1.25, Ingredient.fromItems(AetherItems.NATURE_STAFF), false));
 		this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-		this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
-		this.goalSelector.addGoal(6, new BreedGoal(this, 0.25F));
+		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 6.0F));
+		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(7, new BreedGoal(this, 0.25F));
 	}
 
 	@Override
 	protected void registerData() {
 		super.registerData();
 
-		AetherMoaType moaType = AetherAPI.getRandomMoaType();
+		MoaType moaType = AetherAPI.getRandomMoaType();
 
 		this.dataManager.register(MOA_TYPE, moaType.getRegistryName().toString());
-		this.dataManager.register(REMAINING_JUMPS, moaType.getMoaProperties().getMaxJumps());
+		this.dataManager.register(REMAINING_JUMPS, moaType.getMaxJumps());
 
 		this.dataManager.register(PLAYER_GROWN, false);
 		this.dataManager.register(OWNER_UUID, Optional.empty());
@@ -189,7 +197,7 @@ public class MoaEntity extends SaddleableEntity {
 	}
 	
 	public int getMaxJumps() {
-		return this.getMoaType().getMoaProperties().getMaxJumps();
+		return this.getMoaType().getMaxJumps();
 	}
 	
 	public int getRemainingJumps() {
@@ -200,16 +208,16 @@ public class MoaEntity extends SaddleableEntity {
 		this.dataManager.set(REMAINING_JUMPS, remainingJumps);
 	}
 	
-	public AetherMoaType getMoaType() {
-		return AetherAPI.getMoaType(new ResourceLocation(this.dataManager.get(MOA_TYPE)));
+	public MoaType getMoaType() {
+		MoaType moaType = this.moaType;
+		return (moaType == null)? this.moaType = AetherAPI.getMoaType(new ResourceLocation(this.dataManager.get(MOA_TYPE))) : moaType;
 	}
 	
-	public void setMoaType(AetherMoaType moaType) {
-		this.setAIMoveSpeed(moaType.getMoaProperties().getMoaSpeed());
+	public void setMoaType(MoaType moaType) {
+		this.setAIMoveSpeed(moaType.getMoaSpeed());
 		this.dataManager.set(MOA_TYPE, moaType.getRegistryName().toString());
+		this.moaType = moaType;
 	}
-	
-	
 	
 	@Override
 	public void move(MoverType typeIn, Vec3d pos) {
@@ -256,14 +264,14 @@ public class MoaEntity extends SaddleableEntity {
 		}
 		
 		fall: {
-			boolean blockBeneath = !this.world.isAirBlock(this.getPositionUnderneath());
+//			boolean blockBeneath = !this.world.isAirBlock(this.getPositionUnderneath());
 			
-			double motionY = this.getMotion().getY(); 
-			if (motionY < 0.0 && !this.isRiderSneaking()) {
-				this.addVelocity(0.0, motionY * 0.6, 0.0);
+			Vec3d vec3d = this.getMotion();
+			if (!this.onGround && vec3d.y < 0.0) {
+				this.setMotion(vec3d.mul(1.0, 0.6, 1.0));
 			}
 			
-			if (blockBeneath) {
+			if (this.onGround) {
 				this.setRemainingJumps(this.getMaxJumps());
 			}
 		}
@@ -300,6 +308,11 @@ public class MoaEntity extends SaddleableEntity {
 		this.fallDistance = 0.0F;
 	}
 	
+	@Override
+	public boolean onLivingFall(float distance, float damageMultiplier) {
+		return false;
+	}
+	
 	public void resetHunger() {
 		if (!this.world.isRemote) {
 			this.setHungry(false);
@@ -308,11 +321,14 @@ public class MoaEntity extends SaddleableEntity {
 		this.secsUntilHungry = 40 + this.rand.nextInt(40);
 	}
 	
-	@Override
-	public void onMountedJump(float par1, float par2) {
+	public void onMountedJump() {
 		if (this.getRemainingJumps() > 0 && this.getMotion().getY() < 0.0) {
 			if (!this.onGround) {
-				this.setMotion(this.getMotion().getX(), 0.7, this.getMotion().getZ());
+				float jumpPower = this.jumpPower;
+				if (jumpPower < 0.7F) {
+					jumpPower = 0.7F;
+				}
+				this.setMotion(this.getMotion().getX(), jumpPower, this.getMotion().getZ());
 				this.world.playSound(null, this.getPosX(), this.getPosY(), this.getPosZ(), AetherSoundEvents.ENTITY_MOA_FLAP, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
 				
 				if (!this.world.isRemote) {
@@ -329,11 +345,11 @@ public class MoaEntity extends SaddleableEntity {
 	
 	@Override
 	public float getAIMoveSpeed() {
-		return this.getMoaType().getMoaProperties().getMoaSpeed();
+		return 0.6F;//this.getMoaType().getMoaSpeed();
 	}
 	
 	@Override
-	public boolean processInteract(PlayerEntity player, Hand hand) {
+	public boolean processInteract(PlayerEntity player, Hand hand) {		
 		ItemStack stack = player.getHeldItem(hand);
 		
 		if (!stack.isEmpty() && this.isPlayerGrown()) {
@@ -354,16 +370,16 @@ public class MoaEntity extends SaddleableEntity {
 				}
 			}
 			
-			if (stack.getItem() == AetherItems.NATURE_STAFF) {
-				stack.damageItem(2, player, p -> p.sendBreakAnimation(hand));
-				
-				this.setSitting(!this.isSitting());
-				if (!this.world.isRemote) {
-					this.spawnExplosionParticle();
-				}
-				
-				return true;
-			}
+//			if (stack.getItem() == AetherItems.NATURE_STAFF) {
+//				stack.damageItem(2, player, p -> p.sendBreakAnimation(hand));
+//				
+//				this.setSitting(!this.isSitting());
+//				if (!this.world.isRemote) {
+//					this.spawnExplosionParticle();
+//				}
+//				
+//				return true;
+//			}
 		}
 		
 		return super.processInteract(player, hand);
@@ -379,17 +395,12 @@ public class MoaEntity extends SaddleableEntity {
 		super.readAdditional(compound);
 		
 		this.setPlayerGrown(compound.getBoolean("PlayerGrown"));
-		String ownerUUIDstr = compound.getString("OwnerUUID");
-		if (ownerUUIDstr == null || ownerUUIDstr.isEmpty()) {
-			this.setOwnerUUID(null);
+		UUID uuid = compound.getUniqueId("OwnerUUID");
+		if (uuid.getMostSignificantBits() != 0L || uuid.getLeastSignificantBits() != 0L) {
+			this.setOwnerUUID(uuid);
 		}
 		else {
-			try {
-				this.setOwnerUUID(UUID.fromString(ownerUUIDstr));
-			}
-			catch (IllegalArgumentException e) {
-				this.setOwnerUUID(null);
-			}
+			this.setOwnerUUID(null);
 		}
 		this.setSitting(compound.getBoolean("Sitting"));
 		this.setRemainingJumps(compound.getInt("RemainingJumps"));
@@ -404,7 +415,7 @@ public class MoaEntity extends SaddleableEntity {
 				this.setMoaType(AetherAPI.getMoaType(new ResourceLocation(compound.getString("MoaType"))));
 			}
 			catch (ResourceLocationException e) {
-				this.setMoaType(AetherMoaTypes.BLUE);
+				this.setMoaType(MoaTypes.BLUE);
 			}
 		}
 	}
@@ -414,11 +425,8 @@ public class MoaEntity extends SaddleableEntity {
 		super.writeAdditional(compound);
 		
 		compound.putBoolean("PlayerGrown", this.isPlayerGrown());
-		if (this.getOwnerID() == null) {
-			compound.putString("OwnerUUID", "");
-		}
-		else {
-			compound.putString("OwnerUUID", this.getOwnerID().toString());
+		if (this.getOwnerID() != null) {
+			compound.putUniqueId("OwnerUUID", this.getOwnerID());
 		}
 		compound.putBoolean("Sitting", this.isSitting());
 		compound.putInt("RemainingJumps", this.getRemainingJumps());
@@ -457,6 +465,40 @@ public class MoaEntity extends SaddleableEntity {
 	@Override
 	public double getMountedYOffset() {
 		return this.isSitting()? 0.25 : 1.25;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public void setJumpPower(int jumpPowerIn) {
+		if (this.getRemainingJumps() > 0) {
+			LogManager.getLogger(MoaEntity.class).debug("Set moa jump power to {}", jumpPowerIn);
+			if (jumpPowerIn < 0) {
+				jumpPowerIn = 0;
+			}
+			
+			if (jumpPowerIn >= 90) {
+				this.jumpPower = 1.0F;
+			}
+			else {
+				this.jumpPower = 0.7F + 0.3F * jumpPowerIn / 90.0F;
+			}
+		}
+	}
+
+	@Override
+	public boolean canJump() {
+		return this.getRemainingJumps() > 0 && super.canJump();
+	}
+	
+	@Override
+	public void handleStartJump(int p_184775_1_) {
+		super.handleStartJump(p_184775_1_);
+		this.onMountedJump();
+	}
+	
+	@Override
+	public void handleStopJump() {
+		super.handleStopJump();
 	}
 	
 }

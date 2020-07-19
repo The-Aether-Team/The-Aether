@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:ender_dragon",
+    "minecraft:player",
+    "minecraft:wither"
+  ],
+  "optional": [
+    "aether:valkyrie"
+  ]
+}

@@ -23,7 +23,7 @@ public class MoaSaddleLayer extends LayerRenderer<MoaEntity, MoaModel> {
 
 	@Override
 	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, MoaEntity moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-		if (moa.getSaddled()) {
+		if (moa.isSaddled()) {
 			this.getEntityModel().copyModelAttributesTo(this.moaModel);
 			this.moaModel.setLivingAnimations(moa, limbSwing, limbSwingAmount, partialTicks);
 			this.moaModel.setRotationAngles(moa, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);

@@ -3,7 +3,7 @@ package com.aether.client.renderer.entity;
 import java.util.UUID;
 
 import com.aether.Aether;
-import com.aether.api.moa.AetherMoaTypes;
+import com.aether.api.moa.MoaTypes;
 import com.aether.client.renderer.entity.layers.MoaSaddleLayer;
 import com.aether.client.renderer.entity.model.MoaModel;
 import com.aether.entity.passive.MoaEntity;
@@ -46,24 +46,24 @@ public class MoaRenderer extends MobRenderer<MoaEntity, MoaModel>{
 			String entityName = entity.getCustomName().getUnformattedComponentText();
 			switch (entityName) {
 				case "Mos":
-					if (entity.getMoaType() == AetherMoaTypes.ORANGE) {
+					if (entity.getMoaType() == MoaTypes.ORANGE) {
 						return MOS_TEXTURE;
 					}
 					break;
 				case "Raptor__":
-					if (entity.getMoaType() == AetherMoaTypes.BLUE) {
+					if (entity.getMoaType() == MoaTypes.BLUE) {
 						return RAPTOR_TEXTURE;
 					}
 					break;
 			}
 		}
-		else if (entity.getMoaType() == AetherMoaTypes.BLUE) {
+		if (entity.getMoaType() == MoaTypes.BLUE) {
 			UUID ownerID = entity.getOwnerID();
 			if (ownerID != null && ownerID.getMostSignificantBits() == -4330625426362709750L && ownerID.getLeastSignificantBits() == -8463060028814977532L) {
 				return RAPTOR_TEXTURE;
 			}
 		}
-		return entity.getMoaType().getTexture();
+		return entity.getMoaType().getMoaTexture();
 	}
 
 }

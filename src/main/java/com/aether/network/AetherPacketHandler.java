@@ -17,10 +17,17 @@ public class AetherPacketHandler {
 		PROTOCOL_VERSION::equals
 	);
 	
-	static {
-		int id = 0;
+	private static boolean initialized = false;
+	
+	public static synchronized void register() {
+		if (initialized) {
+			return;
+		}
 		
-		//INSTANCE.registerMessage();
+		int id = 0;
+		INSTANCE.registerMessage(id++, JumpPacket.class, JumpPacket::encode, JumpPacket::decode, JumpPacket::handlePacket);
+		
+		initialized = true;
 	}
 	
 }

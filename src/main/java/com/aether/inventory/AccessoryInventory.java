@@ -4,7 +4,6 @@ import static com.aether.api.accessories.AccessoryType.*;
 
 import com.aether.api.accessories.AccessoryType;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -50,15 +49,15 @@ public class AccessoryInventory extends Inventory implements IAccessoryInventory
 		ItemStackHelper.loadAllItems(compound, this.inventoryContents);
 	}
 
-	@Override
-	public void writeData(ByteBuf buf) {
-		
-	}
+//	@Override
+//	public void writeData(ByteBuf buf) {
+//		
+//	}
 
-	@Override
-	public void readData(ByteBuf buf) {
-		
-	}
+//	@Override
+//	public void readData(ByteBuf buf) {
+//		
+//	}
 	
 	private boolean isWearingArmor(Item head, Item chest, Item legs, Item boots) {
 		PlayerInventory inv = player.inventory;

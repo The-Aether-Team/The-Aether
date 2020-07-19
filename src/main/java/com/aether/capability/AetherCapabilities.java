@@ -23,7 +23,7 @@ public class AetherCapabilities {
 		CapabilityManager.INSTANCE.register(IAetherPlayer.class, new AetherPlayerStorage(), () -> null);
 	}
 	
-	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
+	@EventBusSubscriber(modid = Aether.MODID)
 	public static class Registration {
 		
 		@SubscribeEvent

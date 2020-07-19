@@ -26,7 +26,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.IPlantable;
 
-public class AetherVoidBiome extends Biome {
+public class AetherSkylandsBiome extends Biome {
 
     public static final OreFeatureConfig.FillerBlockType HOLYSTONE_FILLER = OreFeatureConfig.FillerBlockType.create("HOLYSTONE", "holystone", new BlockMatcher(AetherBlocks.HOLYSTONE));
     
@@ -56,7 +56,7 @@ public class AetherVoidBiome extends Biome {
 																	/*holeAmount:*/ 1,
 																	/*acceptedBlocks:*/ ImmutableSet.of(AetherBlocks.AETHER_DIRT, AetherBlocks.HOLYSTONE));
 
-	public AetherVoidBiome() {
+	public AetherSkylandsBiome() {
 		super(new Biome.Builder()
 			.surfaceBuilder(new DefaultSurfaceBuilder(SurfaceBuilderConfig::deserialize),
 				new SurfaceBuilderConfig(

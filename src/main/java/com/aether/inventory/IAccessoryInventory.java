@@ -1,6 +1,5 @@
 package com.aether.inventory;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -16,9 +15,9 @@ public interface IAccessoryInventory extends IInventory {
 	
 	void readFromNBT(CompoundNBT compound);
 	
-	void writeData(ByteBuf buf);
+	//void writeData(ByteBuf buf);
 	
-	void readData(ByteBuf buf);
+	//void readData(ByteBuf buf);
 	
 	boolean isWearingZaniteSet();
 	
