@@ -1,11 +1,6 @@
 {
-    
-	"parent": "block/fence_inventory",
-    
-	"textures": 
-	{
-        
-		"texture": "aether:block/skyroot_planks"
-    
-	}
+  "parent": "block/fence_inventory",
+  "textures": {
+    "texture": "aether:block/skyroot_planks"
+  }
 }

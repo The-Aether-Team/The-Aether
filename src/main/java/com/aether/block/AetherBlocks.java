@@ -10,6 +10,8 @@ import com.aether.item.TintedBlockItem;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FenceBlock;
+import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.GlassBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.SoundType;
@@ -197,8 +199,8 @@ public class AetherBlocks {
 				//block("crystal_sapling", new ??????),
 				//block("pillar", new ???????),
 				//block("pillar_top", new ??????),
-				//block("skyroot_fence", new ??????),
-				//block("skyroot_fence_gate", new ??????),
+				block("skyroot_fence", new FenceBlock(Block.Properties.from(Blocks.OAK_FENCE))),
+				block("skyroot_fence_gate", new FenceGateBlock(Block.Properties.from(Blocks.OAK_FENCE_GATE))),
 				//block("carved_stairs", new ??????),
 				//block("angelic_stairs", new ???????),
 				//block("hellfire_stairs", new ???????),
