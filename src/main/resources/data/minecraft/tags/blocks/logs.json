@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "aether:skyroot_log",
-    "aether:golden_oak_log"
+    "#aether:skyroot_logs",
+    "#aether:golden_oak_logs"
   ]
 }

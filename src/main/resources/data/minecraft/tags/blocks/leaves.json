@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "aether:skyroot_leaves",
-    "aether:golden_oak_leaves"
+    "aether:golden_oak_leaves",
+    "aether:crystal_leaves",
+    "aether:crystal_fruit_leaves"
   ]
 }

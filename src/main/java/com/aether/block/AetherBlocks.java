@@ -132,6 +132,7 @@ public class AetherBlocks {
 		@Deprecated
 		private static Block[] blocks;
 		
+		
 		@SubscribeEvent
 		public static void registerBlocks(RegistryEvent.Register<Block> event) {
 			Block.Properties temp0, temp1;
@@ -188,10 +189,10 @@ public class AetherBlocks {
 				block("locked_light_hellfire_stone", new Block(temp1)),
 				block("trapped_carved_stone", new TrappedBlock(() -> AetherEntityTypes.SENTRY, () -> LOCKED_CARVED_STONE.getDefaultState(), temp0)),
 				block("trapped_sentry_stone", new TrappedBlock(() -> AetherEntityTypes.SENTRY, () -> LOCKED_SENTRY_STONE.getDefaultState(), temp1)),
-				//block("trapped_angelic_stone", new TrappedBlock(() -> AetherEntityTypes.VALKYRIE, () -> LOCKED_ANGELIC_STONE.getDefaultState(), temp0)),
-				//block("trapped_light_angelic_stone", new TrappedBlock(() -> AetherEntityTypes.VALKYRIE, () -> LOCKED_LIGHT_ANGELIC_STONE.getDefaultState(), temp1)),
-				//block("trapped_hellfire_stone", new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_HELLFIRE_STONE.getDefaultState(), temp0)),
-				//block("trapped_light_hellfire_stone", new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_LIGHT_HELLFIRE_STONE.getDefaultState(), temp1)),
+				block("trapped_angelic_stone", new Block(temp0)),//new TrappedBlock(() -> AetherEntityTypes.VALKYRIE, () -> LOCKED_ANGELIC_STONE.getDefaultState(), temp0)),
+				block("trapped_light_angelic_stone", new Block(temp1)),//new TrappedBlock(() -> AetherEntityTypes.VALKYRIE, () -> LOCKED_LIGHT_ANGELIC_STONE.getDefaultState(), temp1)),
+				block("trapped_hellfire_stone", new Block(temp0)),//new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_HELLFIRE_STONE.getDefaultState(), temp0)),
+				block("trapped_light_hellfire_stone", new Block(temp1)),//new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_LIGHT_HELLFIRE_STONE.getDefaultState(), temp1)),
 				//block("purple_flower", new ??????),
 				//block("white_flower", new ???????),
 				//block("skyroot_sapling", new ??????),
