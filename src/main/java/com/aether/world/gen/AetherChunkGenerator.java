@@ -4,15 +4,17 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.gen.NoiseChunkGenerator;
 
+import java.util.Random;
+
 public class AetherChunkGenerator extends NoiseChunkGenerator<AetherGenerationSettings> {
 
     public AetherChunkGenerator(IWorld world, BiomeProvider biomeProvider, AetherGenerationSettings gen) {
-        super(world, biomeProvider, 4, 8, 128, gen, true);
+        super(world, biomeProvider, 4, 8, 192, gen, true);
     }
 
     @Override
-    protected void fillNoiseColumn(double[] p_222548_1_, int p_222548_2_, int p_222548_3_) {
-        this.calcNoiseColumn(p_222548_1_, p_222548_2_, p_222548_3_, 1368.824D, 684.412D, 17.110300000000002D, 4.277575000000001D, 64, -3000);
+    protected void fillNoiseColumn(double[] noiseColumn, int noiseX, int noiseZ) {
+        this.calcNoiseColumn(noiseColumn, noiseX, noiseZ, 684.412F, 684.412F, 8.555149841308594D, 4.277574920654297D, 3, -10);
     }
 
     @Override
@@ -22,7 +24,7 @@ public class AetherChunkGenerator extends NoiseChunkGenerator<AetherGenerationSe
 
     @Override
     protected double func_222545_a(double p_222545_1_, double p_222545_3_, int p_222545_5_) {
-        return 8.0D - p_222545_1_;
+        return 8.0D;
     }
 
     @Override
