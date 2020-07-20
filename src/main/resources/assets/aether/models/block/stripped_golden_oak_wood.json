@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+      "end": "aether:block/stripped_golden_oak_log",
+      "side": "aether:block/stripped_golden_oak_log"
+  }
+}

@@ -114,7 +114,8 @@ public class ClientProxy extends CommonProxy {
 		setCutoutRenderLayer(AetherBlocks.BERRY_BUSH_STEM);
 		setCutoutRenderLayer(AetherBlocks.AMBROSIUM_TORCH);
 		setCutoutRenderLayer(AetherBlocks.AMBROSIUM_WALL_TORCH);
-		
+		setCutoutRenderLayer(AetherBlocks.SKYROOT_SAPLING);
+		setCutoutRenderLayer(AetherBlocks.GOLDEN_OAK_SAPLING);
 	}
 	
 	public static void setSolidRenderLayer(Block block) {

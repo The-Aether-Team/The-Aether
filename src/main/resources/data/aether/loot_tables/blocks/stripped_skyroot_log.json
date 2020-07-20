@@ -11,12 +11,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "aether:holystone",
-          "functions": [
-            {
-              "function": "aether:double_drops"
-            }
-          ]
+          "name": "aether:stripped_skyroot_log"
+        }
+      ],
+      "functions": [
+        {
+          "function": "aether:double_drops"
         }
       ]
     }

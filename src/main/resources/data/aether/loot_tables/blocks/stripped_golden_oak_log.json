@@ -14,7 +14,7 @@
           "children": [
             {
               "type": "minecraft:item",
-              "name": "aether:golden_oak_log",
+              "name": "aether:stripped_golden_oak_log",
               "conditions": [
                 {
                   "condition": "minecraft:match_tool",
@@ -54,7 +54,7 @@
             },
             {
               "type": "minecraft:item",
-              "name": "aether:skyroot_log"
+              "name": "aether:stripped_skyroot_log"
             }
           ]
         }

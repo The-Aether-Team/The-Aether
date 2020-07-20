@@ -1,7 +1,7 @@
 {
 	"variants": {
-		"": {
-			"model": "aether:block/pillar"
-		}
+			"axis=y":  { "model": "aether:block/pillar" },
+			"axis=z":   { "model": "aether:block/pillar", "x": 90 },
+			"axis=x":   { "model": "aether:block/pillar", "x": 90, "y": 90 }
 	}
 }

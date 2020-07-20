@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.aether.block.state.properties.AetherBlockStateProperties;
+import com.aether.tags.AetherBlockTags;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -16,6 +17,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.DecoratedFeatureConfig;
 import net.minecraft.world.gen.feature.FlowersFeature;
@@ -35,6 +37,13 @@ public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlo
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 		super.fillStateContainer(builder);
 		builder.add(DOUBLE_DROPS);
+	}
+	
+	@Override
+	public void onPlantGrow(BlockState state, IWorld world, BlockPos pos, BlockPos source) {
+		if (state.isIn(AetherBlockTags.AETHER_DIRT)) {
+			world.setBlockState(pos, state.has(AetherBlockStateProperties.DOUBLE_DROPS)? AetherBlocks.AETHER_DIRT.getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, state.get(AetherBlockStateProperties.DOUBLE_DROPS)) : AetherBlocks.AETHER_DIRT.getDefaultState(), 2);
+		}
 	}
 
 	@Override

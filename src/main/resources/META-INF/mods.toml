@@ -8,7 +8,7 @@ version = "1.15.2-v1.5.0"
 displayName = "The Aether"
 displayURL = "https://gildedgames.com/"
 logoFile = "aether.png"
-credits = "Gilded Games; also InsomniaKitten for providing the inventory texture."
+credits = "Gilded Games; Modding Legacy for the original Aether Legacy port"
 authors = "Raptor4694, quek, bconlon"
 description = '''
 The Aether, a hostile paradise in the skies.

@@ -3,6 +3,7 @@ package com.aether;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.aether.block.AetherBlocks;
 import com.aether.capability.AetherCapabilities;
 import com.aether.event.AetherBannedItemEvent;
 import com.aether.hooks.AetherEventHooks;
@@ -13,7 +14,9 @@ import com.aether.tags.AetherEntityTypeTags;
 import com.aether.tags.AetherItemTags;
 import com.aether.world.dimension.AetherDimensions;
 import com.aether.world.storage.loot.functions.DoubleDrops;
+import com.google.common.collect.ImmutableMap;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
@@ -30,6 +33,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -65,6 +69,7 @@ public class CommonProxy {
 		registerLootTableFunctions();
 		registerLootTableConditions();
 		registerDispenserBehaviors();
+		registerAxeStrippingBlocks();
 	}
 	
 	@SubscribeEvent
@@ -185,6 +190,16 @@ public class CommonProxy {
 		});
 	}
 	
+	protected void registerAxeStrippingBlocks() {
+		AxeItem.BLOCK_STRIPPING_MAP = ImmutableMap.<Block, Block>builder()
+			.putAll(AxeItem.BLOCK_STRIPPING_MAP)
+			.put(AetherBlocks.SKYROOT_LOG, AetherBlocks.STRIPPED_SKYROOT_LOG)
+			.put(AetherBlocks.GOLDEN_OAK_LOG, AetherBlocks.STRIPPED_GOLDEN_OAK_LOG)
+			.put(AetherBlocks.SKYROOT_WOOD, AetherBlocks.STRIPPED_SKYROOT_WOOD)
+			.put(AetherBlocks.GOLDEN_OAK_WOOD, AetherBlocks.STRIPPED_GOLDEN_OAK_WOOD)
+			.build();
+	}
+	
 	@SubscribeEvent
 	public void checkBlockBanned(PlayerInteractEvent.RightClickBlock event) {
 		PlayerEntity player = event.getPlayer();
@@ -256,5 +271,23 @@ public class CommonProxy {
 		
 		newPlayer.copyFrom(original);
 	}
+	
+//	@SubscribeEvent
+//	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+//		PlayerEntity player = event.getPlayer();
+//		ItemStack itemStack = event.getItemStack();
+//		BlockPos pos = event.getPos();
+//		World world = event.getWorld();
+//		BlockState blockstate = world.getBlockState(pos);
+//		Block block = blockstate.getBlock();
+//		
+//		if (itemStack.getItem() instanceof AxeItem) {
+//			if (block == AetherBlocks.SKYROOT_LOG) {
+//				
+//				event.setCanceled(true);
+//				event.setCancellationResult(ActionResultType.SUCCESS);
+//			}
+//		}
+//	}
 	
 }
