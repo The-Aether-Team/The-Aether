@@ -1,0 +1,35 @@
+{
+  "precipitation": "rain",
+  "category": "none",
+  "depth": 0.125,
+  "scale": 0.05,
+  "temperature": 0.8,
+  "temperature_modifier": "none",
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 9671612,
+    "sky_color": 12369146,
+    "water_color": 4159204,
+    "water_fog_color": 329011,
+    "grass_color_modifier": "none"
+  },
+  "surface_builder": "minecraft:stone",
+  "carvers": {
+    "air": "minecraft:cave",
+    "liquid": "minecraft:underwater_cave"
+  },
+  "features": {
+
+  },
+  "starts": {
+
+  },
+  "spawners": {
+
+  },
+  "player_spawn_friendly": true,
+  "creature_spawn_probability": 1,
+  "spawn_costs": {
+
+  }
+}

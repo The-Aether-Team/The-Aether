@@ -5,14 +5,14 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import org.apache.logging.log4j.util.Strings;
 
 import com.aether.inventory.AccessoryInventory;
 import com.aether.inventory.IAccessoryInventory;
 
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
@@ -240,12 +240,12 @@ public class AetherPlayer implements IAetherPlayer {
 	public void setLifeShardsUsed(int lifeShardsUsed) {
 		this.lifeShardsUsed = lifeShardsUsed;
 		
-		IAttributeInstance attribute = this.player.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
+		ModifiableAttributeInstance attribute = this.player.getAttribute(Attributes.MAX_HEALTH);
 		attribute.removeModifier(HEALTH_UUID);
 		
 		if (lifeShardsUsed != 0) {
 			this.healthModifier = new AttributeModifier(HEALTH_UUID, "Aether Health Modifier", 2 * lifeShardsUsed, AttributeModifier.Operation.ADDITION);
-			attribute.applyModifier(this.healthModifier);
+			//attribute.applyModifier(this.healthModifier);
 		}
 	}
 	

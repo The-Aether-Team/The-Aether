@@ -52,6 +52,11 @@
         "island_noise_override": false,
         "amplified": false
       }
+    },
+    "biome_source": {
+      "seed": 0,
+      "type": "fixed",
+      "biome": "aether:aether_skylands"
     }
   }
 }

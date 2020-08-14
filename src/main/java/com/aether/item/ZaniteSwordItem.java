@@ -1,11 +1,11 @@
 package com.aether.item;
 
-import java.util.Collections;
-
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
@@ -16,16 +16,16 @@ public class ZaniteSwordItem extends SwordItem {
 	public ZaniteSwordItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
 		super(tier, attackDamageIn, attackSpeedIn, builder);
 	}
-	
+
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot, stack);
-		
-		if (slot == EquipmentSlotType.MAINHAND) {
-			multimap.replaceValues(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), Collections.singleton(new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", calculateIncrease(stack), AttributeModifier.Operation.ADDITION)));
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+		if (equipmentSlot == EquipmentSlotType.MAINHAND) {
+			return ImmutableMultimap.of(
+					Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", calculateIncrease(stack), AttributeModifier.Operation.ADDITION),
+					Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.4f, AttributeModifier.Operation.ADDITION)
+			);
 		}
-		
-		return multimap;
+		return super.getAttributeModifiers(equipmentSlot, stack);
 	}
 	
 	public float calculateIncrease(ItemStack tool) {
