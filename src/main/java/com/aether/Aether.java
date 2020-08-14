@@ -23,8 +23,8 @@ public class Aether {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.register(proxy);
 		MinecraftForge.EVENT_BUS.register(proxy);
-		AetherDimensions.DIMENSIONS.register(modEventBus);
-		AetherBiomes.BIOMES.register(modEventBus);
+		//AetherDimensions.DIMENSIONS.register(modEventBus);
+		//AetherBiomes.BIOMES.register(modEventBus);
 	}
 	
 	public static final Rarity AETHER_LOOT = Rarity.create("AETHER_LOOT", TextFormatting.GREEN);

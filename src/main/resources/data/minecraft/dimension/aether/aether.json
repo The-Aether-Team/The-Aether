@@ -1,0 +1,57 @@
+{
+  "type": "aether:aether",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": 0,
+    "settings": {
+      "bedrock_roof_position": -10,
+      "bedrock_floor_position": -10,
+      "sea_level": 0,
+      "disable_mob_generation": false,
+      "default_block": {
+        "Name": "aether:holystone"
+      },
+      "default_fluid": {
+        "Name": "minecraft:water",
+        "Properties": {
+          "level": "0"
+        }
+      },
+      "structures": {
+        "stronghold": {
+          "distance": 0,
+          "count": 0,
+          "spread": 0
+        },
+        "structures": {}
+      },
+      "noise": {
+        "top_slide": {
+          "target": -3000,
+          "size": 64,
+          "offset": -46
+        },
+        "bottom_slide": {
+          "target": -30,
+          "size": 7,
+          "offset": 1
+        },
+        "sampling": {
+          "xz_scale": 2,
+          "xz_factor": 80,
+          "y_scale": 1,
+          "y_factor": 160
+        },
+        "size_vertical": 1,
+        "size_horizontal": 2,
+        "height": 128,
+        "density_factor": 0,
+        "density_offset": 0,
+        "random_density_offset": false,
+        "simplex_surface_noise": true,
+        "island_noise_override": false,
+        "amplified": false
+      }
+    }
+  }
+}
