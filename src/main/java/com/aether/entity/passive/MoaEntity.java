@@ -6,6 +6,10 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.server.ServerWorld;
 import org.apache.logging.log4j.LogManager;
 
 import com.aether.api.AetherAPI;
@@ -20,7 +24,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
@@ -44,7 +47,6 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -93,8 +95,9 @@ public class MoaEntity extends SaddleableEntity {
 		this.setMoaType(moaType);
 	}
 
+	@Nullable
 	@Override
-	public AgeableEntity createChild(AgeableEntity ageable) {
+	public AgeableEntity func_241840_a(ServerWorld serverWorld, AgeableEntity ageableEntity) {
 		return new MoaEntity(this.world, this.getMoaType());
 	}
 
@@ -132,12 +135,10 @@ public class MoaEntity extends SaddleableEntity {
 		this.dataManager.register(SITTING, false);
 	}
 
-	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(35.0);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.0);
+	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+		return AnimalEntity.func_233666_p_()
+				.func_233815_a_(Attributes.MAX_HEALTH, 35.0D)
+				.func_233815_a_(Attributes.MOVEMENT_SPEED, 1.0D);
 	}
 
 	@Override
@@ -220,12 +221,12 @@ public class MoaEntity extends SaddleableEntity {
 	}
 	
 	@Override
-	public void move(MoverType typeIn, Vec3d pos) {
+	public void move(MoverType typeIn, Vector3d pos) {
 		if (!this.isSitting()) {
 			super.move(typeIn, pos);
 		}
 		else {
-			super.move(typeIn, new Vec3d(0, pos.getY(), 0));
+			super.move(typeIn, new Vector3d(0, pos.getY(), 0));
 		}
 	}
 	
@@ -265,8 +266,8 @@ public class MoaEntity extends SaddleableEntity {
 		
 		fall: {
 //			boolean blockBeneath = !this.world.isAirBlock(this.getPositionUnderneath());
-			
-			Vec3d vec3d = this.getMotion();
+
+			Vector3d vec3d = this.getMotion();
 			if (!this.onGround && vec3d.y < 0.0) {
 				this.setMotion(vec3d.mul(1.0, 0.6, 1.0));
 			}

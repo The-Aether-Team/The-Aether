@@ -7,9 +7,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
@@ -120,19 +120,6 @@ public class SentryEntity extends SlimeEntity {
 		if (this.isAwake()) {
 			super.jump();
 		}
-	}
-	
-	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).applyModifier(new AttributeModifier("Random spawn bonus", this.rand.nextGaussian() * 0.05D, AttributeModifier.Operation.MULTIPLY_BASE));
-		if (this.rand.nextFloat() < 0.05F) {
-			this.setLeftHanded(true);
-		}
-		else {
-			this.setLeftHanded(false);
-		}
-
-		return spawnDataIn;
 	}
 	
 	public void setAwake(boolean isAwake) {

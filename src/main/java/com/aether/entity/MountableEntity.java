@@ -15,7 +15,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public abstract class MountableEntity extends AetherAnimalEntity implements IJumpingMount {
@@ -100,7 +100,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 	}
 	
 	@Override
-	public void travel(Vec3d positionIn) {
+	public void travel(Vector3d positionIn) {
 		Optional<PlayerEntity> optionalEntity = this.getPassengers().stream().filter(entity -> entity instanceof PlayerEntity).map(PlayerEntity.class::cast).findFirst();
 		
 		if (optionalEntity.isPresent()) {
@@ -158,7 +158,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 			
 			if (!this.world.isRemote) {
 				this.jumpMovementFactor = this.getAIMoveSpeed() * 0.6F;
-				super.travel(new Vec3d(strafe, vertical, forward));
+				super.travel(new Vector3d(strafe, vertical, forward));
 			}
 			
 			if (this.onGround) {

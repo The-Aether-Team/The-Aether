@@ -38,7 +38,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -70,11 +70,11 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 		this.floatTile = floatingBlockState;
 		this.preventEntitySpawning = true;
 		this.setPosition(x, y + (1.0f - this.getHeight()) / 2.0f, z);
-		this.setMotion(Vec3d.ZERO);
+		this.setMotion(Vector3d.ZERO);
 		this.prevPosX = x;
 		this.prevPosY = y;
 		this.prevPosZ = z;
-		this.setOrigin(new BlockPos(this));
+		this.setOrigin(new BlockPos(this.field_242271_ac));
 	}
 	
 	@Override
@@ -119,7 +119,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 			this.prevPosZ = this.getPosZ();
 			Block block = this.floatTile.getBlock();
 			if (this.floatTime++ == 0) {
-				BlockPos blockpos = new BlockPos(this);
+				BlockPos blockpos = new BlockPos(this.field_242271_ac);
 				if (this.world.getBlockState(blockpos).getBlock() == block) {
 					this.world.removeBlock(blockpos, false);
 				}
@@ -135,14 +135,14 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 
 			this.move(MoverType.SELF, this.getMotion());
 			if (!this.world.isRemote) {
-				BlockPos blockpos1 = new BlockPos(this);
+				BlockPos blockpos1 = new BlockPos(this.field_242271_ac);
 				boolean flag = this.floatTile.getBlock() instanceof ConcretePowderBlock;
 				boolean flag1 = flag && this.world.getFluidState(blockpos1).isTagged(FluidTags.WATER);
 				double d0 = this.getMotion().lengthSquared();
 				if (flag && d0 > 1.0D) {
 					BlockRayTraceResult blockraytraceresult = this.world
-						.rayTraceBlocks(new RayTraceContext(new Vec3d(this.prevPosX, this.prevPosY, this.prevPosZ),
-							new Vec3d(this.getPosX(), this.getPosY(), this.getPosZ()), RayTraceContext.BlockMode.COLLIDER,
+						.rayTraceBlocks(new RayTraceContext(new Vector3d(this.prevPosX, this.prevPosY, this.prevPosZ),
+							new Vector3d(this.getPosX(), this.getPosY(), this.getPosZ()), RayTraceContext.BlockMode.COLLIDER,
 							RayTraceContext.FluidMode.SOURCE_ONLY, this));
 					if (blockraytraceresult.getType() != RayTraceResult.Type.MISS
 						&& this.world.getFluidState(blockraytraceresult.getPos()).isTagged(FluidTags.WATER)) {
@@ -169,7 +169,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 							boolean flag2 = blockstate.isReplaceable(new DirectionalPlaceContext(this.world, blockpos1, Direction.UP, ItemStack.EMPTY, Direction.DOWN));
 							boolean flag3 = this.floatTile.isValidPosition(this.world, blockpos1);
 							if (flag2 && flag3) {
-								if (this.floatTile.has(BlockStateProperties.WATERLOGGED) && this.world.getFluidState(blockpos1).getFluid() == Fluids.WATER) {
+								if (this.floatTile.func_235901_b_(BlockStateProperties.WATERLOGGED) && this.world.getFluidState(blockpos1).getFluid() == Fluids.WATER) {
 									this.floatTile = this.floatTile.with(BlockStateProperties.WATERLOGGED, true);
 								}
 
@@ -190,7 +190,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 												}
 											}
 
-											tileentity.read(compoundnbt);
+											tileentity.read(blockstate, compoundnbt);
 											tileentity.markDirty();
 										}
 									}

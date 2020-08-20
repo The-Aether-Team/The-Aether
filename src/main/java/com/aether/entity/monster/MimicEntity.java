@@ -7,7 +7,8 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -40,14 +41,13 @@ public class MimicEntity extends CreatureEntity {
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 	}
-	
-	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(8.0);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.28000000417232513);
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0);
-		this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0);
+
+	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+		return CreatureEntity.func_233666_p_()
+				.func_233815_a_(Attributes.MAX_HEALTH, 40.0D)
+				.func_233815_a_(Attributes.ATTACK_DAMAGE, 3.0D)
+				.func_233815_a_(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
+				.func_233815_a_(Attributes.FOLLOW_RANGE, 8.0D);
 	}
 	
 	@Override

@@ -10,6 +10,7 @@ import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.FMLPlayMessages;
@@ -44,7 +45,9 @@ public class LightningKnifeEntity extends ProjectileItemEntity {
 		}
 		
 		if (result.getType() != RayTraceResult.Type.MISS && this.world instanceof ServerWorld) {
-			((ServerWorld)this.world).addLightningBolt(new LightningBoltEntity(this.world, result.getHitVec().x, result.getHitVec().y, result.getHitVec().z, false));
+			//((ServerWorld)this.world).addLightningBolt(new LightningBoltEntity(this.world, result.getHitVec().x, result.getHitVec().y, result.getHitVec().z, false));
+			LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(this.world);
+			lightningboltentity.func_233576_c_(new Vector3d(result.getHitVec().x, result.getHitVec().y, result.getHitVec().z));
 		}
 		
 		this.remove();
