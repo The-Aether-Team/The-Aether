@@ -1,5 +1,5 @@
 package com.aether.world;
-/*
+/* //TODO 1.16.2 broke teleporters entirely lol /forge setdimension just hangs the game
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
