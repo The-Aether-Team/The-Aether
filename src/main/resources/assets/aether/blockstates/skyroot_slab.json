@@ -1,11 +1,13 @@
 {
-    
-	"variants": 
-	{
-        
-		"half=bottom": { "model": "aether:block/skyroot_half_slab" },
-        			"half=top": { "model": "aether:block/skyroot_upper_slab" }
-    
-	}
-
+  "variants": {
+    "type=bottom": {
+      "model": "aether:block/skyroot_slab"
+    },
+    "type=top": {
+      "model": "aether:block/skyroot_slab_top"
+    },
+    "type=double": {
+      "model": "aether:block/skyroot_planks"
+    }
+  }
 }

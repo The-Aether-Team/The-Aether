@@ -1,5 +1,3 @@
 {
-    
-	"parent": "aether:block/angelic_half_slab"
-
+  "parent": "aether:block/angelic_slab"
 }

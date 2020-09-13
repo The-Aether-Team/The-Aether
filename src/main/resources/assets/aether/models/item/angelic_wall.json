@@ -1,5 +1,3 @@
 {
-    
-	"parent": "aether:block/angelic_wall_inventory"
-
+  "parent": "aether:block/angelic_wall_inventory"
 }

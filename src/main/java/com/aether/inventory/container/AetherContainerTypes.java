@@ -13,6 +13,8 @@ import net.minecraftforge.registries.ObjectHolder;
 public class AetherContainerTypes {
 
 	public static final ContainerType<EnchanterContainer> ENCHANTER = null;
+	public static final ContainerType<FreezerContainer> FREEZER = null;
+	public static final ContainerType<IncubatorContainer> INCUBATOR = null;
 	
 	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
 	public static class Registration {
@@ -22,6 +24,8 @@ public class AetherContainerTypes {
 			event.getRegistry().registerAll(new ContainerType[] {
 				
 				containerType("enchanter", EnchanterContainer::new),
+				containerType("freezer", FreezerContainer::new),
+				containerType("incubator", IncubatorContainer::new),
 				
 			});			
 		}

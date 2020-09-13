@@ -1,12 +1,13 @@
 {
-    
-	"variants": 
-	{
-        
-		"half=bottom": { "model": "aether:block/angelic_half_slab" },
-        	
-		"half=top": { "model": "aether:block/angelic_upper_slab" }
-    
-	}
-
+  "variants": {
+    "type=bottom": {
+      "model": "aether:block/angelic_slab"
+    },
+    "type=top": {
+      "model": "aether:block/angelic_slab_top"
+    },
+    "type=double": {
+      "model": "aether:block/angelic_stone"
+    }
+  }
 }

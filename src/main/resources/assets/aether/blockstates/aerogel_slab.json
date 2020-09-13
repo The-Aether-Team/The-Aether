@@ -1,11 +1,13 @@
 {
-    
-	"variants": 
-	{
-        
-		"half=bottom": { "model": "aether:block/aerogel_half_slab" },
-        			"half=top": { "model": "aether:block/aerogel_upper_slab" }
-    
-	}
-
+  "variants": {
+    "type=bottom": {
+      "model": "aether:block/aerogel_slab"
+    },
+    "type=top": {
+      "model": "aether:block/aerogel_slab_top"
+    },
+    "type=double": {
+      "model": "aether:block/aerogel"
+    }
+  }
 }

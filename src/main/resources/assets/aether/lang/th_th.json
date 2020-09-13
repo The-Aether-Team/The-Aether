@@ -135,7 +135,7 @@
 	"block.aether.carved_wall": "กำแพงแกะสลัก",
 	"block.aether.angelic_wall": "กำแพงเทวทูต",
 	"block.aether.hellfire_wall": "กำแพงไฟนรก",
-	"carved_slab.name": "แผ่นแกะสลัก",
+	"block.aether.carved_slab": "แผ่นแกะสลัก",
 	"block.aether.carved_double_slab": "แผ่นพื้นเตียงแกะสลัก",
 	"block.aether.skyroot_fence_gate": "ประตูรั้วสกายรูท",
 	"entity.aether.valkyrie_queen": "ราชินีวาลคิรี",

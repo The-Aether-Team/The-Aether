@@ -1,6 +1,9 @@
 package com.aether;
 
+import static net.minecraft.tileentity.AbstractFurnaceTileEntity.addItemBurnTime;
+
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 import com.aether.block.AetherBlocks;
@@ -55,6 +58,7 @@ import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -270,6 +274,33 @@ public class CommonProxy {
 		IAetherPlayer newPlayer = event.getPlayer().getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY).orElseThrow(() -> new IllegalStateException("Player " + event.getOriginal().getName().getUnformattedComponentText() + " has no AetherPlayer capability!"));
 		
 		newPlayer.copyFrom(original);
+	}
+	
+	private Map<Item, Integer> burnTimes = null;
+	
+	protected Map<Item, Integer> getBurnTimes() {
+		Map<Item, Integer> map = this.burnTimes;
+		if (map != null) {
+			return map;
+		}
+		addItemBurnTime(map, AetherBlocks.SKYROOT_BOOKSHELF, 300);
+		addItemBurnTime(map, AetherItems.SKYROOT_SHOVEL, 200);
+		addItemBurnTime(map, AetherItems.SKYROOT_SWORD, 200);
+		addItemBurnTime(map, AetherItems.SKYROOT_AXE, 200);
+		addItemBurnTime(map, AetherItems.SKYROOT_PICKAXE, 200);
+		addItemBurnTime(map, AetherItems.SKYROOT_STICK, 100);
+		addItemBurnTime(map, AetherItems.SKYROOT_BUCKET, 100);
+		addItemBurnTime(map, AetherBlocks.BERRY_BUSH_STEM, 100);
+		return this.burnTimes = map;
+	}
+	
+	@SubscribeEvent
+	public void onGetItemBurnTime(FurnaceFuelBurnTimeEvent event) {
+		Item item = event.getItemStack().getItem();
+		Integer burnTime = getBurnTimes().get(item);
+		if (burnTime != null) {
+			event.setBurnTime(burnTime);
+		}
 	}
 	
 //	@SubscribeEvent

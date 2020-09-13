@@ -2,8 +2,8 @@ package com.aether.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BreakableBlock;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -11,10 +11,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class AercloudBlock extends Block {
+public class AercloudBlock extends BreakableBlock {
 
 	protected VoxelShape shape;
 	
@@ -30,17 +28,6 @@ public class AercloudBlock extends Block {
 		
 		if (entity.getMotion().y < 0) {
 			entity.setMotion(entity.getMotion().mul(1.0, 0.005, 1.0));
-		}
-	}
-	
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
-		if (state == adjacentBlockState) {
-			return true;
-		}
-		else {
-			return false;
 		}
 	}
 	

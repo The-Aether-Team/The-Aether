@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab",
+  "textures": {
+    "bottom": "aether:block/angelic_stone",
+    "top": "aether:block/angelic_stone",
+    "side": "aether:block/angelic_stone"
+  }
+}

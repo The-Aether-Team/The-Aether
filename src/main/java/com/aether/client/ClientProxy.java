@@ -4,6 +4,8 @@ import com.aether.CommonProxy;
 import com.aether.block.AetherBlocks;
 import com.aether.capability.AetherCapabilities;
 import com.aether.client.gui.screen.inventory.EnchanterScreen;
+import com.aether.client.gui.screen.inventory.FreezerScreen;
+import com.aether.client.gui.screen.inventory.IncubatorScreen;
 import com.aether.client.renderer.entity.FloatingBlockRenderer;
 import com.aether.client.renderer.entity.LightningKnifeRenderer;
 import com.aether.client.renderer.entity.MimicRenderer;
@@ -69,6 +71,8 @@ public class ClientProxy extends CommonProxy {
 	
 	protected void registerGuiFactories() {
 		ScreenManager.registerFactory(AetherContainerTypes.ENCHANTER, EnchanterScreen::new);
+		ScreenManager.registerFactory(AetherContainerTypes.FREEZER, FreezerScreen::new);
+		ScreenManager.registerFactory(AetherContainerTypes.INCUBATOR, IncubatorScreen::new);
 	}
 	
 	protected void registerColors() {
@@ -105,9 +109,9 @@ public class ClientProxy extends CommonProxy {
 		setTranslucentRenderLayer(AetherBlocks.GOLDEN_AERCLOUD);
 		setTranslucentRenderLayer(AetherBlocks.PINK_AERCLOUD);
 		setTranslucentRenderLayer(AetherBlocks.AEROGEL);
-		//setTranslucentRenderLayer(AetherBlocks.AEROGEL_SLAB);
-		//setTranslucentRenderLayer(AetherBlocks.AEROGEL_STAIRS);
-		//setTranslucentRenderLayer(AetherBlocks.AEROGEL_WALL);
+		setTranslucentRenderLayer(AetherBlocks.AEROGEL_SLAB);
+		setTranslucentRenderLayer(AetherBlocks.AEROGEL_STAIRS);
+		setTranslucentRenderLayer(AetherBlocks.AEROGEL_WALL);
 		setTranslucentRenderLayer(AetherBlocks.QUICKSOIL_GLASS);
 		setTranslucentRenderLayer(AetherBlocks.AETHER_PORTAL);
 		setCutoutRenderLayer(AetherBlocks.BERRY_BUSH);
