@@ -5,6 +5,7 @@ import com.aether.entity.item.FloatingBlockEntity;
 import com.aether.entity.monster.MimicEntity;
 import com.aether.entity.monster.SentryEntity;
 import com.aether.entity.passive.MoaEntity;
+import com.aether.entity.monster.CockatriceEntity;
 import com.aether.entity.projectile.LightningKnifeEntity;
 import com.aether.item.AetherItems;
 
@@ -25,6 +26,7 @@ public class AetherEntityTypes {
 	//public static final EntityType<FireMinionEntity> FIRE_MINION = null;
 	public static final EntityType<FloatingBlockEntity> FLOATING_BLOCK = null;
 	public static final EntityType<LightningKnifeEntity> LIGHTNING_KNIFE = null;
+	public static final EntityType<CockatriceEntity> COCKATRICE = null;
 	public static final EntityType<MoaEntity> MOA = null;
 	
 	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
@@ -38,10 +40,10 @@ public class AetherEntityTypes {
 				entity("sentry", AetherItems.SENTRY_SPAWN_EGG.getType(null)),
 				//entity("valkyrie", AetherItems.VALKYRIE_SPAWN_EGG.getType(null)),
 				//entity("fire_minion", AetherItems.FIRE_MINION_SPAWN_EGG.getType(null)),
-				entity("moa", EntityType.Builder.<MoaEntity>create(MoaEntity::new, EntityClassification.CREATURE).size(1.0F,  2.0F)),
-				entity("floating_block", EntityType.Builder.<FloatingBlockEntity>create(FloatingBlockEntity::new, EntityClassification.MISC).size(0.98F, 0.98F).setCustomClientFactory((spawnEntity, world) -> new FloatingBlockEntity(world))),
+				entity("cockatrice", AetherItems.COCKATRICE_SPAWN_EGG.getType(null)),
+				entity("moa", AetherItems.MOA_SPAWN_EGG.getType(null)),
+				entity("floating_block", EntityType.Builder.<FloatingBlockEntity>create(FloatingBlockEntity::new, EntityClassification.MISC).size(1.0F, 2.0F).setCustomClientFactory((spawnEntity, world) -> new FloatingBlockEntity(world))),
 				entity("lightning_knife", EntityType.Builder.<LightningKnifeEntity>create(LightningKnifeEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).setCustomClientFactory((spawnEntity, world) -> new LightningKnifeEntity(world))),
-				
 			});
 		}
 		

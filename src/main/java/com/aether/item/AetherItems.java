@@ -6,6 +6,8 @@ import com.aether.api.freezables.AetherFreezableFuel;
 import com.aether.block.AetherBlocks;
 import com.aether.entity.monster.MimicEntity;
 import com.aether.entity.monster.SentryEntity;
+import com.aether.entity.passive.MoaEntity;
+import com.aether.entity.monster.CockatriceEntity;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -172,6 +174,7 @@ public class AetherItems {
 	public static final SpawnEggItem MIMIC_SPAWN_EGG = null;
 	public static final SpawnEggItem VALKYRIE_SPAWN_EGG = null;
 	public static final SpawnEggItem FIRE_MINION_SPAWN_EGG = null;
+	public static final SpawnEggItem MOA_SPAWN_EGG = null;
 
 	@SuppressWarnings("unused")
 	@EventBusSubscriber(modid = Aether.MODID, bus = Bus.MOD)
@@ -190,7 +193,9 @@ public class AetherItems {
 				item("golden_amber", new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
 				item("aechor_petal", new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
 				item("swetty_ball", new SwettyBallItem(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
-				
+				/*
+				ARMOR, TOOLS, AND WEAPONS
+				 */
 				item("skyroot_shovel", new ShovelItem(AetherItemTier.SKYROOT, 1.5f, -3.0f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
 				item("skyroot_pickaxe", new PickaxeItem(AetherItemTier.SKYROOT, 1, -2.8f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
 				item("skyroot_axe", new AxeItem(AetherItemTier.SKYROOT, 6.0f, -3.2f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
@@ -244,7 +249,7 @@ public class AetherItems {
 				item("valkyrie_chestplate", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("valkyrie_leggings", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("valkyrie_boots", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				
+
 				item("blueberry", new Item(new Item.Properties()
 					.food(new Food.Builder().fastToEat().hunger(2).build())
 					.group(AetherItemGroups.AETHER_FOOD))),
@@ -355,7 +360,7 @@ public class AetherItems {
 				
 				//item("repulsion_shield", new ShieldAccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).maxDamage(512).group(AetherItemGroups.AETHER_ACCESSORIES))),
 				//item("lore_book", new LoreBookItem(new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
-				
+
 				item("sentry_spawn_egg", new SpawnEggItem(
 					EntityType.Builder.<SentryEntity>create(SentryEntity::new, EntityClassification.MONSTER).size(2.0F, 2.0F).build("sentry"),
 					/*primary color:*/ 0x808080, /*secondary color:*/ 0x3A8AEC,
@@ -363,6 +368,14 @@ public class AetherItems {
 				item("mimic_spawn_egg", new SpawnEggItem(
 					EntityType.Builder.<MimicEntity>create(MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"),
 					/*primary color:*/ 0xB18132, /*secondary color:*/ 0x605A4E,
+					new Item.Properties().group(ItemGroup.MISC))),
+				item("moa_spawn_egg", new SpawnEggItem(
+					EntityType.Builder.<MoaEntity>create(MoaEntity::new, EntityClassification.CREATURE).size(1.0f, 2.0f).build("moa"),
+					/*primary color:*/0x87BFEF, /*secondary color:*/0x7A7A7A,
+					new Item.Properties().group(ItemGroup.MISC))),
+				item("cockatrice_spawn_egg", new SpawnEggItem(
+					EntityType.Builder.<CockatriceEntity>create(CockatriceEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("cockatrice"),
+					/*primary color:*/0x6CB15C, /*secondary color:*/0x6C579D,
 					new Item.Properties().group(ItemGroup.MISC))),
 				
 			});

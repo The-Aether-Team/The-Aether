@@ -6,11 +6,7 @@ import com.aether.capability.AetherCapabilities;
 import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.gui.screen.inventory.FreezerScreen;
 import com.aether.client.gui.screen.inventory.IncubatorScreen;
-import com.aether.client.renderer.entity.FloatingBlockRenderer;
-import com.aether.client.renderer.entity.LightningKnifeRenderer;
-import com.aether.client.renderer.entity.MimicRenderer;
-import com.aether.client.renderer.entity.MoaRenderer;
-import com.aether.client.renderer.entity.SentryRenderer;
+import com.aether.client.renderer.entity.*;
 import com.aether.client.renderer.tileentity.ChestMimicTileEntityRenderer;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.inventory.container.AetherContainerTypes;
@@ -63,6 +59,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC, MimicRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY, SentryRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MOA, MoaRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.COCKATRICE, CockatriceRenderer::new);
 	}
 	
 	protected void registerTileEntityRenderers() {
