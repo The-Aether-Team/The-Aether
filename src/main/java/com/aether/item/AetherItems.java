@@ -305,7 +305,7 @@ public class AetherItems {
 				//item("phoenix_bow", new PhoenixBowItem(new Item.Properties().maxDamage(384).group(AetherItemGroups.AETHER_COMBAT))),
 				
 				item("flaming_sword", new FlamingSwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("lightning_sword", new LightningSwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("lightning_sword", new LightningSwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				//item("holy_sword", new HolySwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				//item("vampire_blade", new VampireBladeItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("pig_slayer", new PigSlayerItem(ItemTier.IRON, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))), 
