@@ -31,7 +31,7 @@ public class LightningKnifeItem extends Item {
 		
 		if (!worldIn.isRemote) {
 			LightningKnifeEntity lightningKnife = new LightningKnifeEntity(playerIn, worldIn);
-			lightningKnife.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0f, 0.5f, 1.0f);
+			lightningKnife.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0f, 0.75f, 1.0f);
 			worldIn.addEntity(lightningKnife);
 		}
 		
