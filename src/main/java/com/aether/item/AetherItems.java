@@ -4,9 +4,14 @@ import com.aether.Aether;
 import com.aether.api.enchantments.AetherEnchantmentFuel;
 import com.aether.api.freezables.AetherFreezableFuel;
 import com.aether.block.AetherBlocks;
+import com.aether.entity.AetherEntityTypes;
 import com.aether.entity.monster.MimicEntity;
 import com.aether.entity.monster.SentryEntity;
 
+import com.aether.entity.monster.ZephyrEntity;
+import com.aether.entity.passive.FlyingCowEntity;
+import com.aether.entity.passive.PhygEntity;
+import com.aether.entity.passive.SheepuffEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -364,7 +369,22 @@ public class AetherItems {
 					EntityType.Builder.<MimicEntity>create(MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"),
 					/*primary color:*/ 0xB18132, /*secondary color:*/ 0x605A4E,
 					new Item.Properties().group(ItemGroup.MISC))),
-				
+				item("zephyr_spawn_egg", new SpawnEggItem(
+						AetherEntityTypes.ZEPHYR,
+						/*primary color:*/ 0xdfdfdf, /*secondary color:*/ 0x99cfe8,
+						new Item.Properties().group(ItemGroup.MISC))),
+				item("phyg_spawn_egg", new SpawnEggItem(
+						AetherEntityTypes.PHYG,
+						/*primary color:*/ 0xffc1d0, /*secondary color:*/ 0xffd939,
+						new Item.Properties().group(ItemGroup.MISC))),
+				item("flying_cow_spawn_egg", new SpawnEggItem(
+						AetherEntityTypes.FLYING_COW,
+						/*primary color:*/ 0xd8d8d8, /*secondary color:*/ 0xffd939,
+						new Item.Properties().group(ItemGroup.MISC))),
+				item("sheepuff_spawn_egg", new SpawnEggItem(
+						AetherEntityTypes.SHEEPUFF,
+						/*primary color:*/ 0xe2fcff,  /*secondary color:*/ 0xcb9090,
+						new Item.Properties().group(ItemGroup.MISC))),
 			});
 		}
 

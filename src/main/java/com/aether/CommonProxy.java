@@ -8,6 +8,7 @@ import java.util.Random;
 
 import com.aether.block.AetherBlocks;
 import com.aether.capability.AetherCapabilities;
+import com.aether.entity.AetherEntityTypes;
 import com.aether.event.AetherBannedItemEvent;
 import com.aether.hooks.AetherEventHooks;
 import com.aether.item.AetherItems;
@@ -70,6 +71,7 @@ public class CommonProxy {
 	public void commonSetup(FMLCommonSetupEvent event) {
 		AetherPacketHandler.register();
 		AetherCapabilities.register();
+		AetherEntityTypes.registerSpawnPlacements();
 		registerLootTableFunctions();
 		registerLootTableConditions();
 		registerDispenserBehaviors();
@@ -103,16 +105,16 @@ public class CommonProxy {
 				return stack;
 			}
 		};
-		//DispenserBlock.registerDispenseBehavior(AetherItems.PHYG_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.FLYING_COW_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.SHEEPUFF_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.PHYG_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.FLYING_COW_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.SHEEPUFF_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.AERBUNNY_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.AERWHALE_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.BLUE_SWET_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.GOLDEN_SWET_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.COCKATRICE_SPAWN_EGG, dispenseSpawnEgg);
 		DispenserBlock.registerDispenseBehavior(AetherItems.SENTRY_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.ZEPHYR_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.ZEPHYR_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.AECHOR_PLANT_SPAWN_EGG, dispenseSpawnEgg);
 		DispenserBlock.registerDispenseBehavior(AetherItems.MIMIC_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.VALKYRIE_SPAWN_EGG, dispenseSpawnEgg);

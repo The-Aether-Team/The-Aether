@@ -20,7 +20,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
 public abstract class SaddleableEntity extends MountableEntity {
-	public static final DataParameter<Boolean> SADDLED = EntityDataManager.createKey(SaddleableEntity.class, DataSerializers.BOOLEAN);
+	public static final DataParameter<Boolean> SADDLE = EntityDataManager.createKey(SaddleableEntity.class, DataSerializers.BOOLEAN);
 	
 	protected SaddleableEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -29,14 +29,16 @@ public abstract class SaddleableEntity extends MountableEntity {
 	@Override
 	protected void registerData() {
 		super.registerData();
+
+		this.dataManager.register(SADDLE, false);
 	}
 	
 	public boolean isSaddled() {
-		return this.dataManager.get(SADDLED);
+		return this.dataManager.get(SADDLE);
 	}
 	
 	public void setSaddled(boolean isSaddled) {
-		this.dataManager.set(SADDLED, isSaddled);
+		this.dataManager.set(SADDLE, isSaddled);
 	}
 	
 	@Override
