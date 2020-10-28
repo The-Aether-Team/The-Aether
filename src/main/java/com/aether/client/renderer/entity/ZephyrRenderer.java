@@ -18,8 +18,7 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, ZephyrModel> {
 
     @Override
     protected void preRenderCallback(ZephyrEntity zephyr, MatrixStack matrixStackIn, float partialTickTime) {
-        float f1 = ((float)zephyr.shootingGoal.prevAttackCounter + (float)(zephyr.shootingGoal.attackCounter - zephyr.shootingGoal.prevAttackCounter) * partialTickTime) / 20.0F;
-
+        float f1 = ((float) zephyr.getAttackCharge() + partialTickTime) / 20.0F;
         if (f1 < 0.0F)
         {
             f1 = 0.0F;

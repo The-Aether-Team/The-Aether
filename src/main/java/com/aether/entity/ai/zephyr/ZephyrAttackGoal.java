@@ -11,16 +11,15 @@ import net.minecraft.world.World;
 
 public class ZephyrAttackGoal extends Goal {
     private final ZephyrEntity zephyr;
-    public int attackCounter;
-    private World worldObj;
-    public int prevAttackCounter;
+    public int attackTimer;
+    private final World worldObj;
     private final float base;
 
 
     public ZephyrAttackGoal(ZephyrEntity zephyr) {
         this.zephyr = zephyr;
         this.worldObj = zephyr.world;
-        this.attackCounter = 0;
+        this.attackTimer = 0;
         this.base = (this.zephyr.getRNG().nextFloat() - this.zephyr.getRNG().nextFloat()) * 0.2F + 1.0F;
     }
 
@@ -31,16 +30,15 @@ public class ZephyrAttackGoal extends Goal {
 
     @Override
     public void startExecuting() {
-        this.attackCounter = 0;
+        this.attackTimer = 0;
     }
 
     @Override
     public void tick() {
-        this.prevAttackCounter = this.attackCounter;
         LivingEntity target = zephyr.getAttackTarget();
         if (target == null) {
-            if (this.attackCounter > 0) {
-                this.attackCounter--;
+            if (this.attackTimer > 0) {
+                this.attackTimer--;
             }
 
             this.zephyr.setAttackTarget(this.worldObj.getClosestPlayer(this.zephyr, 100D));
@@ -57,11 +55,11 @@ public class ZephyrAttackGoal extends Goal {
 
                 this.zephyr.rotationYaw = (-(float) Math.atan2(x, z) * 180F) / 3.141593F;
 
-                ++this.attackCounter;
+                ++this.attackTimer;
 
-                if (this.attackCounter == 10) {
+                if (this.attackTimer == 10) {
                     this.zephyr.playSound(AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT, 3F, this.base);
-                } else if (this.attackCounter == 20) {
+                } else if (this.attackTimer == 20) {
                     this.zephyr.playSound(AetherSoundEvents.ENTITY_ZEPHYR_SHOOT, 3F, this.base);
 
                     ZephyrSnowballEntity projectile = new ZephyrSnowballEntity(this.worldObj, this.zephyr);
@@ -74,11 +72,14 @@ public class ZephyrAttackGoal extends Goal {
                         this.worldObj.addEntity(projectile);
                     }
 
-                    this.attackCounter = -40;
+                    this.attackTimer = -40;
+
                 }
-            } else if (this.attackCounter > 0) {
-                this.attackCounter--;
+            } else if (this.attackTimer > 0) {
+                this.attackTimer--;
+
             }
         }
+        zephyr.setAttackCharge(attackTimer);
     }
 }
