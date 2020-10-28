@@ -1,12 +1,22 @@
 package com.aether.entity.passive;
 
+import javax.annotation.Nullable;
+
 import com.aether.entity.AetherEntityTypes;
 import com.aether.item.AetherItems;
 import com.aether.util.AetherSoundEvents;
+
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.BreedGoal;
+import net.minecraft.entity.ai.goal.FollowParentGoal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.PanicGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.TemptGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.crafting.Ingredient;
@@ -14,14 +24,17 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-
 public class FlyingCowEntity extends SaddleableEntity {
     public float wingFold;
     public float wingAngle;
-    public int ticks;
+    protected int ticks;
+    
     public FlyingCowEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
         super(type, worldIn);
+    }
+    
+    public FlyingCowEntity(World worldIn) {
+    	this(AetherEntityTypes.FLYING_COW, worldIn);
     }
 
     @Override

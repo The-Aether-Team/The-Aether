@@ -1,26 +1,48 @@
 package com.aether.entity.passive;
 
+import java.util.Map;
+import java.util.Random;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.aether.entity.AetherAnimalEntity;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.entity.ai.EatAetherGrassGoal;
 import com.aether.util.AetherSoundEvents;
 import com.google.common.collect.Maps;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.BreedGoal;
+import net.minecraft.entity.ai.goal.FollowParentGoal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.PanicGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.TemptGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.DyeColor;
+import net.minecraft.item.DyeItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
+import net.minecraft.util.IItemProvider;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
@@ -30,11 +52,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.IShearable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Random;
-
+@SuppressWarnings("deprecation")
 public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     public static final DataParameter<Byte> FLEECE_COLOR = EntityDataManager.createKey(SheepuffEntity.class, DataSerializers.BYTE);
     public static final DataParameter<Boolean> SHEARED = EntityDataManager.<Boolean>createKey(SheepuffEntity.class, DataSerializers.BOOLEAN);
@@ -64,6 +82,10 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
 
     public SheepuffEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
         super(type, worldIn);
+    }
+    
+    public SheepuffEntity(World worldIn) {
+    	this(AetherEntityTypes.SHEEPUFF, worldIn);
     }
 
     @Override
@@ -126,14 +148,14 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
         } else if (this.sheepTimer >= 4 && this.sheepTimer <= 36) {
             return 1.0F;
         } else {
-            return this.sheepTimer < 4 ? ((float)this.sheepTimer - p_70894_1_) / 4.0F : -((float)(this.sheepTimer - 40) - p_70894_1_) / 4.0F;
+            return this.sheepTimer < 4 ? (this.sheepTimer - p_70894_1_) / 4.0F : -(this.sheepTimer - 40 - p_70894_1_) / 4.0F;
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     public float getHeadRotationAngleX(float p_70890_1_) {
         if (this.sheepTimer > 4 && this.sheepTimer <= 36) {
-            float f = ((float)(this.sheepTimer - 4) - p_70890_1_) / 32.0F;
+            float f = (this.sheepTimer - 4 - p_70890_1_) / 32.0F;
             return ((float)Math.PI / 5F) + 0.21991149F * MathHelper.sin(f * 28.7F);
         } else {
             return this.sheepTimer > 0 ? ((float)Math.PI / 5F) : this.rotationPitch * ((float)Math.PI / 180F);
@@ -242,7 +264,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
         this.setPuffed(false);
         int i = 1 + this.rand.nextInt(3);
 
-        java.util.List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
+        java.util.List<ItemStack> ret = new java.util.ArrayList<>();
         for(int j = 0; j < i; ++j) {
             ret.add(new ItemStack(WOOL_BY_COLOR.get(this.getFleeceColor()), 1));
         }

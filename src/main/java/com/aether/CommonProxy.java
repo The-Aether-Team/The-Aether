@@ -8,7 +8,7 @@ import java.util.Random;
 
 import com.aether.block.AetherBlocks;
 import com.aether.capability.AetherCapabilities;
-import com.aether.entity.AetherEntityTypes;
+import com.aether.entity.AetherEntityTypes.Registration;
 import com.aether.event.AetherBannedItemEvent;
 import com.aether.hooks.AetherEventHooks;
 import com.aether.item.AetherItems;
@@ -71,7 +71,7 @@ public class CommonProxy {
 	public void commonSetup(FMLCommonSetupEvent event) {
 		AetherPacketHandler.register();
 		AetherCapabilities.register();
-		AetherEntityTypes.registerSpawnPlacements();
+		Registration.registerSpawnPlacements();
 		registerLootTableFunctions();
 		registerLootTableConditions();
 		registerDispenserBehaviors();

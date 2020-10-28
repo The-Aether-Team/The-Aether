@@ -5,26 +5,9 @@ import com.aether.api.enchantments.AetherEnchantmentFuel;
 import com.aether.api.freezables.AetherFreezableFuel;
 import com.aether.block.AetherBlocks;
 import com.aether.entity.AetherEntityTypes;
-import com.aether.entity.monster.MimicEntity;
-import com.aether.entity.monster.SentryEntity;
 
-import com.aether.entity.monster.ZephyrEntity;
-import com.aether.entity.passive.FlyingCowEntity;
-import com.aether.entity.passive.PhygEntity;
-import com.aether.entity.passive.SheepuffEntity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemTier;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.*;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.event.RegistryEvent;
@@ -362,29 +345,29 @@ public class AetherItems {
 				//item("lore_book", new LoreBookItem(new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
 				
 				item("sentry_spawn_egg", new SpawnEggItem(
-					EntityType.Builder.<SentryEntity>create(SentryEntity::new, EntityClassification.MONSTER).size(2.0F, 2.0F).build("sentry"),
+					AetherEntityTypes.SENTRY,
 					/*primary color:*/ 0x808080, /*secondary color:*/ 0x3A8AEC,
 					new Item.Properties().group(ItemGroup.MISC))),
 				item("mimic_spawn_egg", new SpawnEggItem(
-					EntityType.Builder.<MimicEntity>create(MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic"),
+					AetherEntityTypes.MIMIC,
 					/*primary color:*/ 0xB18132, /*secondary color:*/ 0x605A4E,
 					new Item.Properties().group(ItemGroup.MISC))),
 				item("zephyr_spawn_egg", new SpawnEggItem(
-						AetherEntityTypes.ZEPHYR,
-						/*primary color:*/ 0xdfdfdf, /*secondary color:*/ 0x99cfe8,
-						new Item.Properties().group(ItemGroup.MISC))),
+					AetherEntityTypes.ZEPHYR,
+					/*primary color:*/ 0xdfdfdf, /*secondary color:*/ 0x99cfe8,
+					new Item.Properties().group(ItemGroup.MISC))),
 				item("phyg_spawn_egg", new SpawnEggItem(
-						AetherEntityTypes.PHYG,
-						/*primary color:*/ 0xffc1d0, /*secondary color:*/ 0xffd939,
-						new Item.Properties().group(ItemGroup.MISC))),
+					AetherEntityTypes.PHYG,
+					/*primary color:*/ 0xffc1d0, /*secondary color:*/ 0xffd939,
+					new Item.Properties().group(ItemGroup.MISC))),
 				item("flying_cow_spawn_egg", new SpawnEggItem(
-						AetherEntityTypes.FLYING_COW,
-						/*primary color:*/ 0xd8d8d8, /*secondary color:*/ 0xffd939,
-						new Item.Properties().group(ItemGroup.MISC))),
+					AetherEntityTypes.FLYING_COW,
+					/*primary color:*/ 0xd8d8d8, /*secondary color:*/ 0xffd939,
+					new Item.Properties().group(ItemGroup.MISC))),
 				item("sheepuff_spawn_egg", new SpawnEggItem(
-						AetherEntityTypes.SHEEPUFF,
-						/*primary color:*/ 0xe2fcff,  /*secondary color:*/ 0xcb9090,
-						new Item.Properties().group(ItemGroup.MISC))),
+					AetherEntityTypes.SHEEPUFF,
+					/*primary color:*/ 0xe2fcff,  /*secondary color:*/ 0xcb9090,
+					new Item.Properties().group(ItemGroup.MISC))),
 			});
 		}
 

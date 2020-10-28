@@ -1,9 +1,10 @@
 package com.aether.entity;
 
+import java.util.Random;
+
 import com.aether.block.AetherBlocks;
 import com.aether.item.AetherItems;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -12,8 +13,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-
-import java.util.Random;
 
 public abstract class AetherAnimalEntity extends AnimalEntity {
 
