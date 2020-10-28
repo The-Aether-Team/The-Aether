@@ -1,9 +1,6 @@
 package com.aether.client.renderer.entity;
 
-import java.util.UUID;
-
 import com.aether.Aether;
-import com.aether.client.renderer.entity.layers.SentryLayer;
 import com.aether.client.renderer.entity.model.CockatriceModel;
 import com.aether.entity.monster.CockatriceEntity;
 import com.aether.client.renderer.entity.layers.CockatriceLayer;
