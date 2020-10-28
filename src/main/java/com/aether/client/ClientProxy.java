@@ -6,11 +6,7 @@ import com.aether.capability.AetherCapabilities;
 import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.gui.screen.inventory.FreezerScreen;
 import com.aether.client.gui.screen.inventory.IncubatorScreen;
-import com.aether.client.renderer.entity.FloatingBlockRenderer;
-import com.aether.client.renderer.entity.LightningKnifeRenderer;
-import com.aether.client.renderer.entity.MimicRenderer;
-import com.aether.client.renderer.entity.MoaRenderer;
-import com.aether.client.renderer.entity.SentryRenderer;
+import com.aether.client.renderer.entity.*;
 import com.aether.client.renderer.tileentity.ChestMimicTileEntityRenderer;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.inventory.container.AetherContainerTypes;
@@ -26,6 +22,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
@@ -51,18 +48,23 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void clientSetup(FMLClientSetupEvent event) {
 		super.clientSetup(event);
-		registerEntityRenderers();
+		registerEntityRenderers(event);
 		registerTileEntityRenderers();
 		registerGuiFactories();
 		registerBlockRenderLayers();
 	}
 	
-	protected void registerEntityRenderers() {
+	protected void registerEntityRenderers(FMLClientSetupEvent event) {
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.LIGHTNING_KNIFE, LightningKnifeRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR_SNOWBALL, m -> new SpriteRenderer<>(m, event.getMinecraftSupplier().get().getItemRenderer()));
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLOATING_BLOCK, FloatingBlockRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC, MimicRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY, SentryRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR, ZephyrRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MOA, MoaRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.PHYG, PhygRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLYING_COW, FlyingCowRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SHEEPUFF, SheepuffRenderer::new);
 	}
 	
 	protected void registerTileEntityRenderers() {
