@@ -1,11 +1,12 @@
 package com.aether.client.renderer.entity.layers;
 
 import com.aether.Aether;
-import com.aether.client.renderer.entity.model.SheepuffWoolModel;
 import com.aether.client.renderer.entity.model.SheepuffModel;
+import com.aether.client.renderer.entity.model.SheepuffWoolModel;
 import com.aether.client.renderer.entity.model.SheepuffedModel;
 import com.aether.entity.passive.SheepuffEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
@@ -14,7 +15,7 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.util.ResourceLocation;
 
 public class SheepuffCoatLayer extends LayerRenderer<SheepuffEntity, SheepuffModel> {
-    private static final ResourceLocation FUR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/sheepuff/fur.png");
+    private static final ResourceLocation FUR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/sheepuff/sheepuff_fur.png");
 
     private SheepuffWoolModel woolModel = new SheepuffWoolModel();
     private SheepuffedModel puffedModel = new SheepuffedModel();
@@ -35,7 +36,7 @@ public class SheepuffCoatLayer extends LayerRenderer<SheepuffEntity, SheepuffMod
                 int j1 = DyeColor.values().length;
                 int k = i % j1;
                 int l = (i + 1) % j1;
-                float f3 = ((float)(sheepuff.ticksExisted % 25) + partialTicks) / 25.0F;
+                float f3 = (sheepuff.ticksExisted % 25 + partialTicks) / 25.0F;
                 float[] afloat1 = SheepEntity.getDyeRgb(DyeColor.byId(k));
                 float[] afloat2 = SheepEntity.getDyeRgb(DyeColor.byId(l));
                 f = afloat1[0] * (1.0F - f3) + afloat2[0] * f3;

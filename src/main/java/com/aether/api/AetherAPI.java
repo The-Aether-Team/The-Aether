@@ -10,6 +10,7 @@ import org.apache.commons.lang3.Validate;
 
 import com.aether.Aether;
 import com.aether.api.accessories.AetherAccessory;
+import com.aether.api.dungeon.DungeonType;
 import com.aether.api.enchantments.AetherEnchantmentFuel;
 import com.aether.api.freezables.AetherFreezableFuel;
 import com.aether.api.moa.MoaType;
@@ -41,13 +42,15 @@ public class AetherAPI {
 	
 	private static IForgeRegistry<MoaType> moaTypeRegistry;
 	
+	private static IForgeRegistry<DungeonType> dungeonTypeRegistry;
+	
 	@SubscribeEvent
 	public static void makeRegistries(RegistryEvent.NewRegistry event) {
 		accessoryRegistry = makeRegistry("accessories", AetherAccessory.class);
 		enchantmentFuelRegistry = makeRegistry("enchantment_fuels", AetherEnchantmentFuel.class);
 		freezableFuelRegistry = makeRegistry("freezable_fuel", AetherFreezableFuel.class);
 		moaTypeRegistry = makeRegistry("moa_types", MoaType.class);
-//		LogManager.getLogger(AetherAPI.class).debug("registered aetherapi registries");
+		dungeonTypeRegistry = makeRegistry("dungeon_types", DungeonType.class);
 	}
 	
 	private static <T extends IForgeRegistryEntry<T>> IForgeRegistry<T> makeRegistry(String name, Class<T> type) {
@@ -153,6 +156,14 @@ public class AetherAPI {
 	public static @Nonnull MoaType getRandomMoaType() {
 		Collection<MoaType> types = moaTypeRegistry.getValues();
 		return types.stream().skip(new Random().nextInt(types.size())).findAny().orElseThrow(() -> new IllegalStateException("no moa types were registered"));
+	}
+	
+	public static @Nullable DungeonType getDungeonType(@Nonnull ResourceLocation id) {
+		return dungeonTypeRegistry.getValue(Validate.notNull(id, "id was null"));
+	}
+	
+	public static @Nonnull Collection<DungeonType> getDungeonTypes() {
+		return dungeonTypeRegistry.getValues();
 	}
 	
 }
