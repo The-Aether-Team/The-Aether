@@ -17,15 +17,15 @@ public enum AetherArmorMaterial implements IArmorMaterial {
 		Ingredient.fromItems(AetherItems.ZANITE_GEMSTONE)),
 	GRAVITITE("gravitite", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F,
 		Ingredient.fromItems(AetherBlocks.ENCHANTED_GRAVITITE)),
-	VALKYRIE("valkyrie", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0f,
+	VALKYRIE("valkyrie", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F,
 		Ingredient.EMPTY),
-	NEPTUNE("neptune", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 0.0f,
+	NEPTUNE("neptune", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 0.0F,
 		Ingredient.EMPTY),
-	PHOENIX("phoenix", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.0f,
+	PHOENIX("phoenix", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.0F,
 		Ingredient.EMPTY),
-	OBSIDIAN("obsidian", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f,
+	OBSIDIAN("obsidian", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F,
 		Ingredient.fromItems(Blocks.OBSIDIAN)),
-	SENTRY("sentry", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f,
+	SENTRY("sentry", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F,
 		Ingredient.EMPTY);
 
 	private static final int[] MAX_DAMAGE_ARRAY = new int[] { 13, 15, 16, 11 };

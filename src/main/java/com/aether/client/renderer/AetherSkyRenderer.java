@@ -91,33 +91,33 @@ public class AetherSkyRenderer implements SkyRenderHandler {
 			double d2 = random.nextFloat() * 2.0F - 1.0F;
 			double d3 = 0.15F + random.nextFloat() * 0.1F;
 			double d4 = d0 * d0 + d1 * d1 + d2 * d2;
-			if (d4 < 1.0D && d4 > 0.01D) {
-				d4 = 1.0D / Math.sqrt(d4);
+			if (d4 < 1.0 && d4 > 0.01) {
+				d4 = 1.0 / Math.sqrt(d4);
 				d0 = d0 * d4;
 				d1 = d1 * d4;
 				d2 = d2 * d4;
-				double d5 = d0 * 100.0D;
-				double d6 = d1 * 100.0D;
-				double d7 = d2 * 100.0D;
+				double d5 = d0 * 100.0;
+				double d6 = d1 * 100.0;
+				double d7 = d2 * 100.0;
 				double d8 = Math.atan2(d0, d2);
 				double d9 = Math.sin(d8);
 				double d10 = Math.cos(d8);
 				double d11 = Math.atan2(Math.sqrt(d0 * d0 + d2 * d2), d1);
 				double d12 = Math.sin(d11);
 				double d13 = Math.cos(d11);
-				double d14 = random.nextDouble() * Math.PI * 2.0D;
+				double d14 = random.nextDouble() * Math.PI * 2.0;
 				double d15 = Math.sin(d14);
 				double d16 = Math.cos(d14);
 
 				for (int j = 0; j < 4; ++j) {
-					double d17 = 0.0D;
+					double d17 = 0.0;
 					double d18 = ((j & 2) - 1) * d3;
 					double d19 = ((j + 1 & 2) - 1) * d3;
-					double d20 = 0.0D;
+					double d20 = 0.0;
 					double d21 = d18 * d16 - d19 * d15;
 					double d22 = d19 * d16 + d18 * d15;
-					double d23 = d21 * d12 + 0.0D * d13;
-					double d24 = 0.0D * d12 - d21 * d13;
+					double d23 = d21 * d12 + 0.0 * d13;
+					double d24 = 0.0 * d12 - d21 * d13;
 					double d25 = d24 * d9 - d22 * d10;
 					double d26 = d22 * d9 + d24 * d10;
 					bufferBuilderIn.pos(d5 + d25, d6 + d23, d7 + d26).endVertex();
@@ -192,7 +192,7 @@ public class AetherSkyRenderer implements SkyRenderHandler {
 			int i = 16;
 
 			for (int j = 0; j <= 16; ++j) {
-				float f7 = j * ((float)Math.PI * 2F) / 16.0F;
+				float f7 = j * ((float)Math.PI * 2.0F) / 16.0F;
 				float f8 = MathHelper.sin(f7);
 				float f9 = MathHelper.cos(f7);
 				bufferbuilder.pos(matrix4f, f8 * 120.0F, f9 * 120.0F, -f9 * 40.0F * afloat[3])

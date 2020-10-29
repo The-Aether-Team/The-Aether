@@ -2,6 +2,8 @@ package com.aether.world.biome;
 
 import com.aether.block.AetherBlocks;
 
+import com.aether.entity.AetherEntityTypes;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.DefaultBiomeFeatures;
 import net.minecraft.world.gen.surfacebuilders.DefaultSurfaceBuilder;
@@ -43,6 +45,8 @@ public class AetherSkylandsBiome extends Biome {
 		
 		// TODO: make this toggleable with config like in 1.12
 		DefaultBiomeFeatures.addGrass(this);
+		this.addCreatureSpawns();
+		this.addMobSpawns();
 	}
 
 	@Override
@@ -55,6 +59,17 @@ public class AetherSkylandsBiome extends Biome {
 	@OnlyIn(Dist.CLIENT)
 	public int getGrassColor(double x, double z) {
 		return 0xB1FFCB;
+	}
+
+	protected void addCreatureSpawns() {
+		this.addSpawn(EntityClassification.CREATURE, new SpawnListEntry(AetherEntityTypes.PHYG, 12, 4, 4));
+		this.addSpawn(EntityClassification.CREATURE, new SpawnListEntry(AetherEntityTypes.FLYING_COW, 12, 4, 4));
+		this.addSpawn(EntityClassification.CREATURE, new SpawnListEntry(AetherEntityTypes.SHEEPUFF, 12, 4, 4));
+		this.addSpawn(EntityClassification.CREATURE, new SpawnListEntry(AetherEntityTypes.MOA, 10, 3, 3));
+	}
+
+	protected void addMobSpawns() {
+		this.addSpawn(EntityClassification.MONSTER, new SpawnListEntry(AetherEntityTypes.ZEPHYR, 2, 1, 1));
 	}
 
 }

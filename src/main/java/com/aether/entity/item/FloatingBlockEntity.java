@@ -53,7 +53,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 	private boolean dontSetBlock;
 	private boolean hurtEntities;
 	private int floatHurtMax = 40;
-	private float floatHurtAmount = 2.0f;
+	private float floatHurtAmount = 2.0F;
 	public CompoundNBT tileEntityData;
 	protected static final DataParameter<BlockPos> ORIGIN = EntityDataManager.createKey(FloatingBlockEntity.class, DataSerializers.BLOCK_POS);
 	
@@ -69,7 +69,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 		this(AetherEntityTypes.FLOATING_BLOCK, worldIn);
 		this.floatTile = floatingBlockState;
 		this.preventEntitySpawning = true;
-		this.setPosition(x, y + (1.0f - this.getHeight()) / 2.0f, z);
+		this.setPosition(x, y + (1.0F - this.getHeight()) / 2.0F, z);
 		this.setMotion(Vec3d.ZERO);
 		this.prevPosX = x;
 		this.prevPosY = y;
@@ -130,7 +130,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 			}
 
 			if (!this.hasNoGravity()) {
-				this.setMotion(this.getMotion().add(0.0D, 0.04D, 0.0D));
+				this.setMotion(this.getMotion().add(0.0, 0.04, 0.0));
 			}
 
 			this.move(MoverType.SELF, this.getMotion());
@@ -139,7 +139,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 				boolean flag = this.floatTile.getBlock() instanceof ConcretePowderBlock;
 				boolean flag1 = flag && this.world.getFluidState(blockpos1).isTagged(FluidTags.WATER);
 				double d0 = this.getMotion().lengthSquared();
-				if (flag && d0 > 1.0D) {
+				if (flag && d0 > 1.0) {
 					BlockRayTraceResult blockraytraceresult = this.world
 						.rayTraceBlocks(new RayTraceContext(new Vec3d(this.prevPosX, this.prevPosY, this.prevPosZ),
 							new Vec3d(this.getPosX(), this.getPosY(), this.getPosZ()), RayTraceContext.BlockMode.COLLIDER,
@@ -162,7 +162,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 				}
 				else {
 					BlockState blockstate = this.world.getBlockState(blockpos1);
-					this.setMotion(this.getMotion().mul(0.7D, 1.5D, 0.7D));
+					this.setMotion(this.getMotion().mul(0.7, 1.5, 0.7));
 					if (blockstate.getBlock() != Blocks.MOVING_PISTON) {
 						this.remove();
 						if (!this.dontSetBlock) {
@@ -210,14 +210,14 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 				}
 			}
 
-			this.setMotion(this.getMotion().scale(0.98D));
+			this.setMotion(this.getMotion().scale(0.98));
 		}
 	}
 	
 	@Override
 	public boolean onLivingFall(float distance, float damageMultiplier) {
 		if (this.hurtEntities) {
-			int i = MathHelper.ceil(distance - 1.0f);
+			int i = MathHelper.ceil(distance - 1.0F);
 			if (i > 0) {
 				List<Entity> list = Lists.newArrayList(this.world.getEntitiesWithinAABBExcludingEntity(this, this.getBoundingBox()));
 				boolean flag = this.floatTile.isIn(BlockTags.ANVIL);
@@ -227,7 +227,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 					entity.attackEntityFrom(damagesource, Math.min(MathHelper.floor(i * this.floatHurtAmount), this.floatHurtMax));
 				}
 				
-				if (flag && this.rand.nextFloat() < 0.05f + i * 0.05f) {
+				if (flag && this.rand.nextFloat() < 0.05F + i * 0.05F) {
 					BlockState blockstate = AnvilBlock.damage(this.floatTile);
 					if (blockstate == null) {
 						this.dontSetBlock = true;

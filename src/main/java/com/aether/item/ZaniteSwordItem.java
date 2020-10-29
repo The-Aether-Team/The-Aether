@@ -33,19 +33,19 @@ public class ZaniteSwordItem extends SwordItem {
 		int maxDamage = tool.getMaxDamage();
 		
 		if (maxDamage - 50 <= current) {
-			return 7.0f;
+			return 7.0F;
 		}
 		else if (maxDamage - 110 <= current) {
-			return 6.0f;
+			return 6.0F;
 		}
 		else if (maxDamage - 200 <= current) {
-			return 5.0f;
+			return 5.0F;
 		}
 		else if (maxDamage - 239 <= current) {
-			return 4.0f;
+			return 4.0F;
 		}
 		else {
-			return 3.0f;
+			return 3.0F;
 		}
 	}
 

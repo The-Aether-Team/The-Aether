@@ -8,6 +8,7 @@ import java.util.Random;
 
 import com.aether.block.AetherBlocks;
 import com.aether.capability.AetherCapabilities;
+import com.aether.entity.AetherEntityTypes.Registration;
 import com.aether.event.AetherBannedItemEvent;
 import com.aether.hooks.AetherEventHooks;
 import com.aether.item.AetherItems;
@@ -70,6 +71,7 @@ public class CommonProxy {
 	public void commonSetup(FMLCommonSetupEvent event) {
 		AetherPacketHandler.register();
 		AetherCapabilities.register();
+		Registration.registerSpawnPlacements();
 		registerLootTableFunctions();
 		registerLootTableConditions();
 		registerDispenserBehaviors();
@@ -103,16 +105,16 @@ public class CommonProxy {
 				return stack;
 			}
 		};
-		//DispenserBlock.registerDispenseBehavior(AetherItems.PHYG_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.FLYING_COW_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.SHEEPUFF_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.PHYG_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.FLYING_COW_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.SHEEPUFF_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.AERBUNNY_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.AERWHALE_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.BLUE_SWET_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.GOLDEN_SWET_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.COCKATRICE_SPAWN_EGG, dispenseSpawnEgg);
 		DispenserBlock.registerDispenseBehavior(AetherItems.SENTRY_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.ZEPHYR_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.ZEPHYR_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.AECHOR_PLANT_SPAWN_EGG, dispenseSpawnEgg);
 		DispenserBlock.registerDispenseBehavior(AetherItems.MIMIC_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.VALKYRIE_SPAWN_EGG, dispenseSpawnEgg);
@@ -136,9 +138,9 @@ public class CommonProxy {
 					double d1 = iposition.getY() + direction.getYOffset() * 0.3F;
 					double d2 = iposition.getZ() + direction.getZOffset() * 0.3F;
 					Random random = world.rand;
-					double d3 = random.nextGaussian() * 0.05D + direction.getXOffset();
-					double d4 = random.nextGaussian() * 0.05D + direction.getYOffset();
-					double d5 = random.nextGaussian() * 0.05D + direction.getZOffset();
+					double d3 = random.nextGaussian() * 0.05 + direction.getXOffset();
+					double d4 = random.nextGaussian() * 0.05 + direction.getYOffset();
+					double d5 = random.nextGaussian() * 0.05 + direction.getZOffset();
 					world.addEntity(Util.make(new SmallFireballEntity(world, d0, d1, d2, d3, d4, d5), (entity) -> entity.setStack(stack)));
 					stack.shrink(1);
 				}

@@ -91,14 +91,14 @@ public class ChestMimicBlock extends Block implements IWaterLoggable {
 			float angle = facing.getHorizontalAngle();
 
 			MimicEntity mimic = new MimicEntity(worldIn);
-			mimic.setPositionAndRotation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, angle, 0.0f);
+			mimic.setPositionAndRotation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, angle, 0.0F);
 //			mimic.rotationYaw = angle;
 			mimic.setRotationYawHead(angle);
 //			mimic.setHeadRotation(angle, 0);
 			LogManager.getLogger(ChestMimicBlock.class).debug("mimic rotation {} {}", facing, angle);
 			worldIn.addEntity(mimic);
 			worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
-			worldIn.playSound(null, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5f, worldIn.rand.nextFloat() * 0.1f + 0.9f);
+			worldIn.playSound(null, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
 
 			return ActionResultType.SUCCESS;
 		}

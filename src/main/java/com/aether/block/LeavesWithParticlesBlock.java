@@ -18,7 +18,7 @@ public class LeavesWithParticlesBlock extends LeavesBlock {
 	private final IParticleData particle;
 	
 	public LeavesWithParticlesBlock(float particleRed, float particleGreen, float particleBlue, Block.Properties properties) {
-		this(particleRed, particleGreen, particleBlue, 1.0f, properties);
+		this(particleRed, particleGreen, particleBlue, 1.0F, properties);
 	}
 	
 	public LeavesWithParticlesBlock(float particleRed, float particleGreen, float particleBlue, float particleAlpha, Block.Properties properties) {

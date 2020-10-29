@@ -21,7 +21,7 @@ public class MimicRenderer extends MobRenderer<MimicEntity, MimicModel> {
 	private boolean isChristmas;
 	
 	public MimicRenderer(EntityRendererManager rendererManager) {
-		super(rendererManager, new MimicModel(), 1.0f);
+		super(rendererManager, new MimicModel(), 1.0F);
 		Calendar calendar = Calendar.getInstance();
 		if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DAY_OF_MONTH) >= 24 && calendar.get(Calendar.DAY_OF_MONTH) <= 26) {
 			this.isChristmas = true;
