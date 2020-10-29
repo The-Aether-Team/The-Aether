@@ -24,7 +24,7 @@ public class AercloudBlock extends BreakableBlock {
 	
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		entity.fallDistance = 0.0f;
+		entity.fallDistance = 0.0F;
 		
 		if (entity.getMotion().y < 0) {
 			entity.setMotion(entity.getMotion().mul(1.0, 0.005, 1.0));

@@ -47,8 +47,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 @EventBusSubscriber(modid = Aether.MODID)
 public class AetherPortalBlock extends Block {
 	public static final EnumProperty<Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
-	protected static final VoxelShape X_AABB = Block.makeCuboidShape(0.0D, 0.0D, 6.0D, 16.0D, 16.0D, 10.0D);
-	protected static final VoxelShape Z_AABB = Block.makeCuboidShape(6.0D, 0.0D, 0.0D, 10.0D, 16.0D, 16.0D);
+	protected static final VoxelShape X_AABB = Block.makeCuboidShape(0.0, 0.0, 6.0, 16.0, 16.0, 10.0);
+	protected static final VoxelShape Z_AABB = Block.makeCuboidShape(6.0, 0.0, 0.0, 10.0, 16.0, 16.0);
 
 	public AetherPortalBlock(Block.Properties properties) {
 		super(properties);
@@ -132,7 +132,7 @@ public class AetherPortalBlock extends Block {
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if (rand.nextInt(100) == 0) {
-			worldIn.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.4f + 0.8f, false);
+			worldIn.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
 		}
 
 		for (int i = 0; i < 4; ++i) {
@@ -146,11 +146,11 @@ public class AetherPortalBlock extends Block {
 
 			if (worldIn.getBlockState(pos.west()).getBlock() != this && worldIn.getBlockState(pos.east()).getBlock() != this) {
 				x = pos.getX() + 0.5 + 0.25 * mul;
-				sX = rand.nextFloat() * 2.0f * mul;
+				sX = rand.nextFloat() * 2.0F * mul;
 			}
 			else {
 				z = pos.getZ() + 0.5 + 0.25 * mul;
-				sZ = rand.nextFloat() * 2.0f * mul;
+				sZ = rand.nextFloat() * 2.0F * mul;
 			}
 
 			worldIn.addParticle(AetherParticleTypes.AETHER_PORTAL, x, y, z, sX, sY, sZ);

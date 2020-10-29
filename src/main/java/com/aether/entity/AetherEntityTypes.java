@@ -25,7 +25,7 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(Aether.MODID)
 public class AetherEntityTypes {
 
-	public static final EntityType<MimicEntity> MIMIC = EntityType.Builder.<MimicEntity>create(MimicEntity::new, EntityClassification.MONSTER).size(1.0f, 2.0f).build("mimic");
+	public static final EntityType<MimicEntity> MIMIC = EntityType.Builder.<MimicEntity>create(MimicEntity::new, EntityClassification.MONSTER).size(1.0F, 2.0F).build("mimic");
 	public static final EntityType<SentryEntity> SENTRY = EntityType.Builder.<SentryEntity>create(SentryEntity::new, EntityClassification.MONSTER).size(2.0F, 2.0F).build("sentry");
 	public static final EntityType<ZephyrEntity> ZEPHYR = EntityType.Builder.<ZephyrEntity>create(ZephyrEntity::new, EntityClassification.MONSTER).size(4.0F, 4.0F).build("zephyr");
 	//public static final EntityType<ValkyrieEntity> VALKYRIE = null;

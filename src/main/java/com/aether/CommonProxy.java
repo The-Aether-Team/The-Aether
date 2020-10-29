@@ -138,9 +138,9 @@ public class CommonProxy {
 					double d1 = iposition.getY() + direction.getYOffset() * 0.3F;
 					double d2 = iposition.getZ() + direction.getZOffset() * 0.3F;
 					Random random = world.rand;
-					double d3 = random.nextGaussian() * 0.05D + direction.getXOffset();
-					double d4 = random.nextGaussian() * 0.05D + direction.getYOffset();
-					double d5 = random.nextGaussian() * 0.05D + direction.getZOffset();
+					double d3 = random.nextGaussian() * 0.05 + direction.getXOffset();
+					double d4 = random.nextGaussian() * 0.05 + direction.getYOffset();
+					double d5 = random.nextGaussian() * 0.05 + direction.getZOffset();
 					world.addEntity(Util.make(new SmallFireballEntity(world, d0, d1, d2, d3, d4, d5), (entity) -> entity.setStack(stack)));
 					stack.shrink(1);
 				}

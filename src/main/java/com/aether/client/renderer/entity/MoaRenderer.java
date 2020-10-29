@@ -36,7 +36,7 @@ public class MoaRenderer extends MobRenderer<MoaEntity, MoaModel>{
 	
 	@Override
 	protected void preRenderCallback(MoaEntity moa, MatrixStack matrixStackIn, float partialTickTime) {
-		float moaScale = moa.isChild()? 1.0f : 1.8f;
+		float moaScale = moa.isChild()? 1.0F : 1.8F;
 		matrixStackIn.scale(moaScale, moaScale, moaScale);
 	}
 

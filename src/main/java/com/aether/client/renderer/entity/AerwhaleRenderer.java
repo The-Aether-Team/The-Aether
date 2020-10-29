@@ -18,7 +18,7 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, AerwhaleModel>
 
     @Override
     protected void preRenderCallback(AerwhaleEntity aerwhale, MatrixStack matrixStackIn, float partialTickTime) {
-        matrixStackIn.translate(0, 1.2D, 0);
+        matrixStackIn.translate(0, 1.2, 0);
         matrixStackIn.rotate(new Quaternion(-90.0F, 0.0F, 1.0F, 0.0F));
         matrixStackIn.scale(2.0F, 2.0F, 2.0F);
 

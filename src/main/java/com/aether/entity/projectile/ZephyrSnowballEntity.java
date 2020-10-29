@@ -50,7 +50,7 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 					}
 
 					if (!livingEntity.isActiveItemStackBlocking()) {
-						entity.setMotion(entity.getMotion().x, entity.getMotion().y + 0.5D, entity.getMotion().z);
+						entity.setMotion(entity.getMotion().x, entity.getMotion().y + 0.5, entity.getMotion().z);
 					}
 					else {
 						ItemStack activeItemStack = livingEntity.getActiveItemStack();

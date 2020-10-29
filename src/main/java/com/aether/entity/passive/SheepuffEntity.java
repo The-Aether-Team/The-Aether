@@ -100,12 +100,12 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     protected void registerGoals() {
         this.eatGrassGoal = new EatAetherGrassGoal(this);
         this.goalSelector.addGoal(0, new SwimGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
-        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, Ingredient.fromItems(Items.WHEAT), false));
-        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
+        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.fromItems(Items.WHEAT), false));
+        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1));
         this.goalSelector.addGoal(5, this.eatGrassGoal);
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+        this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1.0));
         this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
     }
@@ -120,8 +120,8 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     protected void registerAttributes()
     {
         super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8.0D);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23000000417232513D);
+        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8.0);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23000000417232513);
     }
 
 
@@ -156,9 +156,9 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     public float getHeadRotationAngleX(float p_70890_1_) {
         if (this.sheepTimer > 4 && this.sheepTimer <= 36) {
             float f = (this.sheepTimer - 4 - p_70890_1_) / 32.0F;
-            return ((float)Math.PI / 5F) + 0.21991149F * MathHelper.sin(f * 28.7F);
+            return ((float)Math.PI / 5.0F) + 0.21991149F * MathHelper.sin(f * 28.7F);
         } else {
-            return this.sheepTimer > 0 ? ((float)Math.PI / 5F) : this.rotationPitch * ((float)Math.PI / 180F);
+            return this.sheepTimer > 0 ? ((float)Math.PI / 5.0F) : this.rotationPitch * ((float)Math.PI / 180.0F);
         }
     }
 
@@ -278,11 +278,11 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     {
         if(this.getPuffed())
         {
-            this.setMotion(getMotion().x + this.rand.nextGaussian() * 0.5D, 1.8D,  getMotion().z + rand.nextGaussian() * 0.5D);
+            this.setMotion(getMotion().x + this.rand.nextGaussian() * 0.5, 1.8,  getMotion().z + rand.nextGaussian() * 0.5);
         }
         else
         {
-            this.setMotion(getMotion().x, 0.41999998688697815D, getMotion().z);
+            this.setMotion(getMotion().x, 0.41999998688697815, getMotion().z);
         }
     }
 
@@ -294,9 +294,9 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
         {
             this.fallDistance = 0;
 
-            if(this.getMotion().y < -0.05D)
+            if(this.getMotion().y < -0.05)
             {
-                this.setMotion(getMotion().x, -0.05D, getMotion().z);
+                this.setMotion(getMotion().x, -0.05, getMotion().z);
             }
         }
 

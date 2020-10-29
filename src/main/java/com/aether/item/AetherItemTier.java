@@ -7,11 +7,11 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 
 public enum AetherItemTier implements IItemTier {
-	SKYROOT(0, 59, 2.0f, 0.0f, 15, Ingredient.fromTag(ItemTags.PLANKS)),
-	HOLYSTONE(1, 131, 4.0f, 1.0f, 5, Ingredient.fromItems(AetherBlocks.HOLYSTONE)),
-	ZANITE(2, 250, 6.0f, 2.0f, 14, Ingredient.fromItems(AetherItems.ZANITE_GEMSTONE)),
-	GRAVITITE(3, 1561, 8.0f, 3.0f, 10, Ingredient.fromItems(AetherBlocks.ENCHANTED_GRAVITITE)),
-	VALKYRIE(3, 1561, 8.0f, 3.0f, 22, Ingredient.EMPTY);
+	SKYROOT(0, 59, 2.0F, 0.0F, 15, Ingredient.fromTag(ItemTags.PLANKS)),
+	HOLYSTONE(1, 131, 4.0F, 1.0F, 5, Ingredient.fromItems(AetherBlocks.HOLYSTONE)),
+	ZANITE(2, 250, 6.0F, 2.0F, 14, Ingredient.fromItems(AetherItems.ZANITE_GEMSTONE)),
+	GRAVITITE(3, 1561, 8.0F, 3.0F, 10, Ingredient.fromItems(AetherBlocks.ENCHANTED_GRAVITITE)),
+	VALKYRIE(3, 1561, 8.0F, 3.0F, 22, Ingredient.EMPTY);
 
 	private final int harvestLevel;
 	private final int maxUses;
