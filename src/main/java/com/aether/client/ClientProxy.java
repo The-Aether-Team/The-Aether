@@ -6,6 +6,7 @@ import com.aether.capability.AetherCapabilities;
 import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.gui.screen.inventory.FreezerScreen;
 import com.aether.client.gui.screen.inventory.IncubatorScreen;
+import com.aether.client.renderer.entity.CockatriceRenderer;
 import com.aether.client.renderer.entity.FloatingBlockRenderer;
 import com.aether.client.renderer.entity.FlyingCowRenderer;
 import com.aether.client.renderer.entity.LightningKnifeRenderer;
