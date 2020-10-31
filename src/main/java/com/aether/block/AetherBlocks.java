@@ -5,10 +5,12 @@ import static net.minecraftforge.eventbus.api.EventPriority.HIGH;
 import com.aether.Aether;
 import com.aether.block.trees.GoldenOakTree;
 import com.aether.block.trees.SkyrootTree;
-import com.aether.client.renderer.tileentity.ChestMimicItemStackTileEntityRenderer;
+import com.aether.client.renderer.tileentity.CustomItemStackTileEntityRenderer;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.item.AetherItemGroups;
 import com.aether.item.TintedBlockItem;
+import com.aether.tileentity.ChestMimicTileEntity;
+import com.aether.tileentity.TreasureChestTileEntity;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -178,7 +180,7 @@ public class AetherBlocks {
 				block("incubator", new IncubatorBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0F).sound(SoundType.STONE))),
 				block("ambrosium_torch", new TorchBlock(Block.Properties.from(Blocks.TORCH))),
 				block("chest_mimic", new ChestMimicBlock(Block.Properties.from(Blocks.CHEST))),
-				//block("treasure_chest", new TreasureChestBlock(???)),
+				block("treasure_chest", new TreasureChestBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F))),
 				block("carved_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).sound(SoundType.STONE))),
 				block("sentry_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).lightValue(11).sound(SoundType.STONE))),
 				block("angelic_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).sound(SoundType.STONE))),
@@ -258,7 +260,10 @@ public class AetherBlocks {
 					item = new WallOrFloorItem(AMBROSIUM_TORCH, AMBROSIUM_WALL_TORCH, properties);
 				}
 				else if (block == CHEST_MIMIC) {
-					item = new BlockItem(block, properties.setISTER(() -> ChestMimicItemStackTileEntityRenderer::new));
+					item = new BlockItem(block, properties.setISTER(() -> () -> new CustomItemStackTileEntityRenderer(ChestMimicTileEntity::new)));
+				}
+				else if (block == TREASURE_CHEST) {
+					item = new BlockItem(block, properties.setISTER(() -> () -> new CustomItemStackTileEntityRenderer(TreasureChestTileEntity::new)));
 				}
 				else {
 					item = new BlockItem(block, properties);

@@ -1,6 +1,7 @@
 package com.aether.item;
 
 import com.aether.Aether;
+import com.aether.api.dungeon.DungeonTypes;
 import com.aether.api.enchantments.AetherEnchantmentFuel;
 import com.aether.api.freezables.AetherFreezableFuel;
 import com.aether.block.AetherBlocks;
@@ -264,9 +265,9 @@ public class AetherItems {
 				item("skyroot_stick", new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
 				item("victory_medal", new Item(new Item.Properties().maxStackSize(10).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
 				
-				item("bronze_dungeon_key", new Item(new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
-				item("silver_dungeon_key", new Item(new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
-				item("gold_dungeon_key", new Item(new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
+				item("bronze_dungeon_key", new DungeonKeyItem(() -> DungeonTypes.BRONZE, new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
+				item("silver_dungeon_key", new DungeonKeyItem(() -> DungeonTypes.SILVER, new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
+				item("gold_dungeon_key", new DungeonKeyItem(() -> DungeonTypes.GOLD, new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
 				
 				//skyroot_bucket = item("skyroot_bucket", new SkyrootBucketItem(new Item.Properties().maxStackSize(16).group(AetherItemGroups.MISC))),
 				//item("skyroot_water_bucket", new SkyrootWaterBucketItem(new Item.Properties().containerItem(skyroot_bucket).maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
