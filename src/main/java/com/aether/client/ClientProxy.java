@@ -2,6 +2,7 @@ package com.aether.client;
 
 import com.aether.CommonProxy;
 import com.aether.block.AetherBlocks;
+import com.aether.block.IAetherBlockColor;
 import com.aether.capability.AetherCapabilities;
 import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.gui.screen.inventory.FreezerScreen;
@@ -11,6 +12,7 @@ import com.aether.client.renderer.tileentity.ChestMimicTileEntityRenderer;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.inventory.container.AetherContainerTypes;
 import com.aether.item.AetherItems;
+import com.aether.item.IAetherItemColor;
 import com.aether.network.AetherPacketHandler;
 import com.aether.network.JumpPacket;
 import com.aether.tileentity.AetherTileEntityTypes;
@@ -23,6 +25,7 @@ import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
+import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
@@ -89,12 +92,17 @@ public class ClientProxy extends CommonProxy {
 		registerColor(AetherItems.SENTRY_SPAWN_EGG);
 	}
 	
-	public static <B extends Block & IBlockColor> void registerColor(B block) {
-		Minecraft.getInstance().getBlockColors().register(block, block);
+	public static <B extends Block & IAetherBlockColor> void registerColor(B block) {
+//		Minecraft.getInstance().getBlockColors().register(block, block);
+		Minecraft.getInstance().getBlockColors().register((blockState, lightReader, blockPos, color) -> block.getColor(false), block);
 	}
 	
-	public static <I extends Item & IItemColor> void registerColor(I item) {
-		Minecraft.getInstance().getItemColors().register(item, item);
+	public static <I extends Item & IAetherItemColor> void registerColor(I item) {
+//		Minecraft.getInstance().getItemColors().register(item, item);
+		Minecraft.getInstance().getItemColors().register((itemStack, color) -> {
+					return color > 0 ? -1 : ((IAetherItemColor) itemStack.getItem()).getColor(false);
+				}, item
+				);
 	}
 	
 	public static void registerColor(Item item, IItemColor colorProvider) {

@@ -43,8 +43,7 @@ public final class AetherParticleTypes {
 		
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	@EventBusSubscriber(modid = Aether.MODID, bus = Bus.MOD)
+	@EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Bus.MOD)
 	public static final class ClientRegistration {
 		
 		@SubscribeEvent

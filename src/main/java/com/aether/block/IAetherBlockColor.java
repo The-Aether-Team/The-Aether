@@ -7,11 +7,11 @@ import net.minecraft.world.ILightReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public interface IAetherBlockColor extends IBlockColor {
+public interface IAetherBlockColor /*extends IBlockColor*/ {
 
 	int getColor(boolean updatedVersion);
 	
-	@Override
+//	@Override
 	@OnlyIn(Dist.CLIENT)
 	default int getColor(BlockState state, ILightReader world, BlockPos pos, int p_getColor_4_) {
 		return this.getColor(false);

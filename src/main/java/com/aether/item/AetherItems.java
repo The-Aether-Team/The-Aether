@@ -199,9 +199,9 @@ public class AetherItems {
 				item("gravitite_axe", new GravititeAxeItem(AetherItemTier.GRAVITITE, 5.0f, -3.0f, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS))),
 				item("gravitite_sword", new GravititeSwordItem(AetherItemTier.GRAVITITE, 3, -2.4f, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 				
-				item("valkyrie_shovel", new ShovelItem(AetherItemTier.VALKYRIE, 1.5f, -3.0f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_TOOLS))),
-				item("valkyrie_pickaxe", new PickaxeItem(AetherItemTier.VALKYRIE, 1, -2.8f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_TOOLS))),
-				item("valkyrie_axe", new AxeItem(AetherItemTier.VALKYRIE, 5.0f, -3.0f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_TOOLS))),
+				item("valkyrie_shovel", new ValkyrieShovelItem(AetherItemTier.VALKYRIE, 1.5f, -3.0f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_TOOLS))),
+				item("valkyrie_pickaxe", new ValkyriePickaxeItem(AetherItemTier.VALKYRIE, 1, -2.8f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_TOOLS))),
+				item("valkyrie_axe", new ValkyrieAxeItem(AetherItemTier.VALKYRIE, 5.0f, -3.0f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_TOOLS))),
 				
 				item("zanite_helmet", new ArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.HEAD, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 				item("zanite_chestplate", new ArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.CHEST, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),

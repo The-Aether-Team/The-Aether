@@ -24,7 +24,6 @@ public class TintedAercloudBlock extends AercloudBlock implements IAetherBlockCo
 	}
 	
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public final int getColor(boolean updatedVersion) {
 		return updatedVersion? updatedHexColor : hexColor;
 	}
