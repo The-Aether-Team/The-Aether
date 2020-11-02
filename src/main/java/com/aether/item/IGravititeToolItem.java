@@ -29,7 +29,7 @@ public interface IGravititeToolItem {
 		ItemStack heldItem = context.getItem();
 		
 		if ((this.getDestroySpeed(heldItem, state) == this.getTier().getEfficiency() || ForgeHooks.isToolEffective(world, pos, heldItem)) && world.isAirBlock(pos.up())) {
-			if (world.getTileEntity(pos) != null || state.getBlockHardness(world, pos) == -1.0f) {
+			if (world.getTileEntity(pos) != null || state.getBlockHardness(world, pos) == -1.0F) {
 				return ActionResultType.FAIL;
 			}
 			

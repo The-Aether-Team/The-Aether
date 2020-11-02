@@ -7,8 +7,18 @@ import com.aether.capability.AetherCapabilities;
 import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.gui.screen.inventory.FreezerScreen;
 import com.aether.client.gui.screen.inventory.IncubatorScreen;
-import com.aether.client.renderer.entity.*;
+import com.aether.client.renderer.entity.CockatriceRenderer;
+import com.aether.client.renderer.entity.FloatingBlockRenderer;
+import com.aether.client.renderer.entity.FlyingCowRenderer;
+import com.aether.client.renderer.entity.LightningKnifeRenderer;
+import com.aether.client.renderer.entity.MimicRenderer;
+import com.aether.client.renderer.entity.MoaRenderer;
+import com.aether.client.renderer.entity.PhygRenderer;
+import com.aether.client.renderer.entity.SentryRenderer;
+import com.aether.client.renderer.entity.SheepuffRenderer;
+import com.aether.client.renderer.entity.ZephyrRenderer;
 import com.aether.client.renderer.tileentity.ChestMimicTileEntityRenderer;
+import com.aether.client.renderer.tileentity.TreasureChestTileEntityRenderer;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.inventory.container.AetherContainerTypes;
 import com.aether.item.AetherItems;
@@ -63,6 +73,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY, SentryRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR, ZephyrRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MOA, MoaRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.COCKATRICE, CockatriceRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.PHYG, PhygRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLYING_COW, FlyingCowRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SHEEPUFF, SheepuffRenderer::new);
@@ -70,6 +81,7 @@ public class ClientProxy extends CommonProxy {
 	
 	protected void registerTileEntityRenderers() {
 		ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.CHEST_MIMIC, ChestMimicTileEntityRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.TREASURE_CHEST, TreasureChestTileEntityRenderer::new);
 	}
 	
 	protected void registerGuiFactories() {
@@ -95,8 +107,7 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	public static <I extends Item & IAetherItemColor> void registerColor(I item) {
-		Minecraft.getInstance().getItemColors().register((itemStack, color) -> item.getColor(false), item
-				);
+		Minecraft.getInstance().getItemColors().register((itemStack, color) -> item.getColor(false), item);
 	}
 	
 	public static void registerColor(Item item, IItemColor colorProvider) {

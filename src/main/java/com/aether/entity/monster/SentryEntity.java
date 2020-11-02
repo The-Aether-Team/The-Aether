@@ -32,7 +32,7 @@ import net.minecraft.world.World;
 public class SentryEntity extends SlimeEntity {
 	public static final DataParameter<Boolean> SENTRY_AWAKE = EntityDataManager.createKey(SentryEntity.class, DataSerializers.BOOLEAN);
 	
-	public float timeSpotted = 0.0f;
+	public float timeSpotted = 0.0F;
 	
 	public SentryEntity(EntityType<? extends SentryEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -50,7 +50,7 @@ public class SentryEntity extends SlimeEntity {
 		this.goalSelector.addGoal(5, new SentryEntity.HopGoal(this));
 		this.targetSelector.addGoal(1,
 			new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213811_1_) -> {
-				return Math.abs(p_213811_1_.getPosY() - this.getPosY()) <= 4.0D;
+				return Math.abs(p_213811_1_.getPosY() - this.getPosY()) <= 4.0;
 			}));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
@@ -105,12 +105,12 @@ public class SentryEntity extends SlimeEntity {
 	}
 	
 	protected void explodeAt(LivingEntity entityIn) {
-		if (this.isAwake() && this.canEntityBeSeen(entityIn) && entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), 1.0f) && this.ticksExisted > 20) {
+		if (this.isAwake() && this.canEntityBeSeen(entityIn) && entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), 1.0F) && this.ticksExisted > 20) {
 			entityIn.addVelocity(0.5, 0.5, 0.5);
 			
-			this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), 0.1f, Explosion.Mode.DESTROY);
-			this.setHealth(0.0f);
-			this.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1.0f, 0.2f*(this.rand.nextFloat() - this.rand.nextFloat()) + 1);
+			this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), 0.1F, Explosion.Mode.DESTROY);
+			this.setHealth(0.0F);
+			this.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1.0F, 0.2F*(this.rand.nextFloat() - this.rand.nextFloat()) + 1);
 			this.applyEnchantments(this, entityIn);
 		}
 	}
@@ -124,7 +124,7 @@ public class SentryEntity extends SlimeEntity {
 	
 	@Override
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).applyModifier(new AttributeModifier("Random spawn bonus", this.rand.nextGaussian() * 0.05D, AttributeModifier.Operation.MULTIPLY_BASE));
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).applyModifier(new AttributeModifier("Random spawn bonus", this.rand.nextGaussian() * 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
 		if (this.rand.nextFloat() < 0.05F) {
 			this.setLeftHanded(true);
 		}

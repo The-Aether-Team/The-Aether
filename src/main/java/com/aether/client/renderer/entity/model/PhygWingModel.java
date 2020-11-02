@@ -51,10 +51,10 @@ public class PhygWingModel extends EntityModel<PhygEntity> {
             this.leftWingOuter.setRotationPoint(4.0F + y2, y21 + 12.0F, x2);
             this.rightWingOuter.setRotationPoint(-4.0F - y2, y21 + 12.0F, x2);
 
-            this.leftWingInner.rotateAngleZ = phyg.wingAngle + wingBend + ((float) Math.PI / 2F);
-            this.leftWingOuter.rotateAngleZ = phyg.wingAngle - wingBend + ((float) Math.PI / 2F);
-            this.rightWingInner.rotateAngleZ = -(phyg.wingAngle + wingBend - ((float) Math.PI / 2F));
-            this.rightWingOuter.rotateAngleZ = -(phyg.wingAngle - wingBend + ((float) Math.PI / 2F));
+            this.leftWingInner.rotateAngleZ = phyg.wingAngle + wingBend + ((float) Math.PI / 2.0F);
+            this.leftWingOuter.rotateAngleZ = phyg.wingAngle - wingBend + ((float) Math.PI / 2.0F);
+            this.rightWingInner.rotateAngleZ = -(phyg.wingAngle + wingBend - ((float) Math.PI / 2.0F));
+            this.rightWingOuter.rotateAngleZ = -(phyg.wingAngle - wingBend + ((float) Math.PI / 2.0F));
         }
         else {
             wingBend = -((float)Math.acos((double)phyg.wingFold));
@@ -74,10 +74,10 @@ public class PhygWingModel extends EntityModel<PhygEntity> {
             this.leftWingOuter.setRotationPoint(4.0F + x2, y2 + 12.0F, z);
             this.rightWingOuter.setRotationPoint(-4.0F - x2, y2 + 12.0F, z);
 
-            this.leftWingInner.rotateAngleZ = phyg.wingAngle + wingBend + ((float)Math.PI / 2F);
-            this.leftWingOuter.rotateAngleZ = phyg.wingAngle - wingBend + ((float)Math.PI / 2F);
-            this.rightWingInner.rotateAngleZ = -(phyg.wingAngle + wingBend - ((float)Math.PI / 2F));
-            this.rightWingOuter.rotateAngleZ = -(phyg.wingAngle - wingBend + ((float)Math.PI / 2F));
+            this.leftWingInner.rotateAngleZ = phyg.wingAngle + wingBend + ((float)Math.PI / 2.0F);
+            this.leftWingOuter.rotateAngleZ = phyg.wingAngle - wingBend + ((float)Math.PI / 2.0F);
+            this.rightWingInner.rotateAngleZ = -(phyg.wingAngle + wingBend - ((float)Math.PI / 2.0F));
+            this.rightWingOuter.rotateAngleZ = -(phyg.wingAngle - wingBend + ((float)Math.PI / 2.0F));
 
         }
     }

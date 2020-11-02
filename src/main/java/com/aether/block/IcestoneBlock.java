@@ -38,7 +38,7 @@ public class IcestoneBlock extends Block {
 						}
 						else if (fluidState.isTagged(FluidTags.LAVA)) {
 							worldIn.setBlockState(newPos, Blocks.OBSIDIAN.getDefaultState());
-							worldIn.playSound(null, newPos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1.0f, 1.0f);
+							worldIn.playSound(null, newPos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
 						}
 					}
 				}

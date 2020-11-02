@@ -5,10 +5,12 @@ import static net.minecraftforge.eventbus.api.EventPriority.HIGH;
 import com.aether.Aether;
 import com.aether.block.trees.GoldenOakTree;
 import com.aether.block.trees.SkyrootTree;
-import com.aether.client.renderer.tileentity.ChestMimicItemStackTileEntityRenderer;
+import com.aether.client.renderer.tileentity.CustomItemStackTileEntityRenderer;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.item.AetherItemGroups;
 import com.aether.item.TintedBlockItem;
+import com.aether.tileentity.ChestMimicTileEntity;
+import com.aether.tileentity.TreasureChestTileEntity;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -140,24 +142,24 @@ public class AetherBlocks {
 				block("aether_grass_block", new AetherGrassBlock(Block.Properties.from(Blocks.GRASS_BLOCK))),
 				block("enchanted_aether_grass_block", new EnchantedAetherGrassBlock(Block.Properties.from(Blocks.GRASS_BLOCK))),
 				block("aether_dirt", new DefaultAetherDoubleDropBlock(Block.Properties.from(Blocks.DIRT))),
-				block("holystone", new DefaultAetherDoubleDropBlock(Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5f))),
-				block("mossy_holystone", new DefaultAetherDoubleDropBlock(Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5f))),
-				block("holystone_bricks", new Block(Block.Properties.from(Blocks.STONE_BRICKS).hardnessAndResistance(0.5f, 10.0f))),
-				block("cold_aercloud", new AercloudBlock(Block.Properties.create(Material.ICE).hardnessAndResistance(0.2f).sound(SoundType.CLOTH).notSolid())),
-				block("blue_aercloud", new BouncyAercloudBlock(TintedAercloudBlock.COLOR_BLUE_OLD, TintedAercloudBlock.COLOR_BLUE_NEW, Block.Properties.create(Material.ICE).hardnessAndResistance(0.2f).sound(SoundType.CLOTH).notSolid())),
-				block("golden_aercloud", new TintedAercloudBlock(TintedAercloudBlock.COLOR_GOLDEN_OLD, TintedAercloudBlock.COLOR_GOLDEN_NEW, Block.Properties.create(Material.ICE).hardnessAndResistance(0.2f).sound(SoundType.CLOTH).notSolid())),
-				block("pink_aercloud", new HealingAercloudBlock(Block.Properties.create(Material.ICE).hardnessAndResistance(0.2f).sound(SoundType.CLOTH).notSolid())),
-				block("quicksoil", new DefaultAetherDoubleDropBlock(Block.Properties.from(Blocks.SAND).slipperiness(1.1f))),
-				block("icestone", new IcestoneBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f).tickRandomly().sound(SoundType.GLASS))),
-				block("ambrosium_ore", new AetherDoubleDropsOreBlock(0, 2, Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(0))),
-				block("zanite_ore", new AetherOreBlock(3, 5, Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(1))),
-				block("gravitite_ore", new FloatingBlock(false, Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2))),
+				block("holystone", new DefaultAetherDoubleDropBlock(Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5F))),
+				block("mossy_holystone", new DefaultAetherDoubleDropBlock(Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5F))),
+				block("holystone_bricks", new Block(Block.Properties.from(Blocks.STONE_BRICKS).hardnessAndResistance(0.5F, 10.0F))),
+				block("cold_aercloud", new AercloudBlock(Block.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).notSolid())),
+				block("blue_aercloud", new BouncyAercloudBlock(TintedAercloudBlock.COLOR_BLUE_OLD, TintedAercloudBlock.COLOR_BLUE_NEW, Block.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).notSolid())),
+				block("golden_aercloud", new TintedAercloudBlock(TintedAercloudBlock.COLOR_GOLDEN_OLD, TintedAercloudBlock.COLOR_GOLDEN_NEW, Block.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).notSolid())),
+				block("pink_aercloud", new HealingAercloudBlock(Block.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).notSolid())),
+				block("quicksoil", new DefaultAetherDoubleDropBlock(Block.Properties.from(Blocks.SAND).slipperiness(1.1F))),
+				block("icestone", new IcestoneBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F).tickRandomly().sound(SoundType.GLASS))),
+				block("ambrosium_ore", new AetherDoubleDropsOreBlock(0, 2, Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(0))),
+				block("zanite_ore", new AetherOreBlock(3, 5, Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(1))),
+				block("gravitite_ore", new FloatingBlock(false, Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2))),
 				block("skyroot_leaves", new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES))),
-				block("golden_oak_leaves", new LeavesWithParticlesBlock(0.976f, 0.7450980392156863f, 0.0f, Block.Properties.from(Blocks.OAK_LEAVES))),
-				block("crystal_leaves", new LeavesWithParticlesBlock(0.0f, 0.6450980392156863f, 0.7450980392156863f, Block.Properties.from(Blocks.OAK_LEAVES))),
-				block("crystal_fruit_leaves", new LeavesWithParticlesBlock(0.0f, 0.6450980392156863f, 0.7450980392156863f, Block.Properties.from(Blocks.OAK_LEAVES))),
-				block("holiday_leaves", new LeavesWithParticlesBlock(1.0f, 1.0f, 1.0f, Block.Properties.from(Blocks.OAK_LEAVES))),
-				block("decorated_holiday_leaves", new LeavesWithParticlesBlock(1.0f, 1.0f, 1.0f, Block.Properties.from(Blocks.OAK_LEAVES))),
+				block("golden_oak_leaves", new LeavesWithParticlesBlock(0.976F, 0.7450980392156863F, 0.0F, Block.Properties.from(Blocks.OAK_LEAVES))),
+				block("crystal_leaves", new LeavesWithParticlesBlock(0.0F, 0.6450980392156863F, 0.7450980392156863F, Block.Properties.from(Blocks.OAK_LEAVES))),
+				block("crystal_fruit_leaves", new LeavesWithParticlesBlock(0.0F, 0.6450980392156863F, 0.7450980392156863F, Block.Properties.from(Blocks.OAK_LEAVES))),
+				block("holiday_leaves", new LeavesWithParticlesBlock(1.0F, 1.0F, 1.0F, Block.Properties.from(Blocks.OAK_LEAVES))),
+				block("decorated_holiday_leaves", new LeavesWithParticlesBlock(1.0F, 1.0F, 1.0F, Block.Properties.from(Blocks.OAK_LEAVES))),
 				block("skyroot_log", new AetherLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_LOG))),
 				block("golden_oak_log", new AetherLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_LOG))),
 				block("stripped_skyroot_log", new AetherLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.STRIPPED_OAK_LOG))),
@@ -167,24 +169,24 @@ public class AetherBlocks {
 				block("stripped_skyroot_wood", new AetherDoubleDropsRotatedPillarBlock(Block.Properties.from(Blocks.STRIPPED_OAK_WOOD))),
 				block("stripped_golden_oak_wood", new AetherDoubleDropsRotatedPillarBlock(Block.Properties.from(Blocks.STRIPPED_OAK_WOOD))),
 				block("skyroot_planks", new Block(Block.Properties.from(Blocks.OAK_PLANKS))),
-				block("quicksoil_glass", new GlassBlock(Block.Properties.from(Blocks.GLASS).slipperiness(1.1f).lightValue(11))),
-				block("aerogel", new AerogelBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0f, 2000.0f).sound(SoundType.METAL).notSolid())),
+				block("quicksoil_glass", new GlassBlock(Block.Properties.from(Blocks.GLASS).slipperiness(1.1F).lightValue(11))),
+				block("aerogel", new AerogelBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F, 2000.0F).sound(SoundType.METAL).notSolid())),
 				block("zanite_block", new Block(Block.Properties.from(Blocks.IRON_BLOCK))),
 				block("enchanted_gravitite", new FloatingBlock(true, Block.Properties.from(Blocks.IRON_BLOCK))),
-				block("berry_bush", new BerryBushBlock(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.2f).sound(SoundType.PLANT))),
-				block("berry_bush_stem", new BerryBushStemBlock(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.2f).sound(SoundType.PLANT))),
-				block("enchanter", new EnchanterBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f).sound(SoundType.STONE))),
-				block("freezer", new FreezerBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f).sound(SoundType.STONE))),
-				block("incubator", new IncubatorBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f).sound(SoundType.STONE))),
+				block("berry_bush", new BerryBushBlock(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.2F).sound(SoundType.PLANT))),
+				block("berry_bush_stem", new BerryBushStemBlock(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.2F).sound(SoundType.PLANT))),
+				block("enchanter", new EnchanterBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0F).sound(SoundType.STONE))),
+				block("freezer", new FreezerBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0F).sound(SoundType.STONE))),
+				block("incubator", new IncubatorBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0F).sound(SoundType.STONE))),
 				block("ambrosium_torch", new TorchBlock(Block.Properties.from(Blocks.TORCH))),
 				block("chest_mimic", new ChestMimicBlock(Block.Properties.from(Blocks.CHEST))),
-				//block("treasure_chest", new TreasureChestBlock(???)),
-				block("carved_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).sound(SoundType.STONE))),
-				block("sentry_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).lightValue(11).sound(SoundType.STONE))),
-				block("angelic_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).sound(SoundType.STONE))),
-				block("light_angelic_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).lightValue(11).sound(SoundType.STONE))),
-				block("hellfire_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).sound(SoundType.STONE))),
-				block("light_hellfire_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).lightValue(11).sound(SoundType.STONE))),
+				block("treasure_chest", new TreasureChestBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F))),
+				block("carved_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).sound(SoundType.STONE))),
+				block("sentry_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).lightValue(11).sound(SoundType.STONE))),
+				block("angelic_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).sound(SoundType.STONE))),
+				block("light_angelic_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).lightValue(11).sound(SoundType.STONE))),
+				block("hellfire_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).sound(SoundType.STONE))),
+				block("light_hellfire_stone", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).lightValue(11).sound(SoundType.STONE))),
 				block("locked_carved_stone", new Block(Block.Properties.from(Blocks.BEDROCK))),
 				block("locked_sentry_stone", new Block(Block.Properties.from(Blocks.BEDROCK).lightValue(11))),
 				block("locked_angelic_stone", new Block(Block.Properties.from(Blocks.BEDROCK))),
@@ -205,14 +207,14 @@ public class AetherBlocks {
 				block("pillar_top", new RotatedPillarBlock(Block.Properties.from(Blocks.QUARTZ_PILLAR).hardnessAndResistance(0.5F).sound(SoundType.METAL))),
 				block("skyroot_fence", new FenceBlock(Block.Properties.from(Blocks.OAK_FENCE))),
 				block("skyroot_fence_gate", new FenceGateBlock(Block.Properties.from(Blocks.OAK_FENCE_GATE))),
-				block("carved_stairs", new StairsBlock(() -> AetherBlocks.CARVED_STONE.getDefaultState(), Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).sound(SoundType.STONE))),
-				block("angelic_stairs", new StairsBlock(() -> AetherBlocks.ANGELIC_STONE.getDefaultState(), Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).sound(SoundType.STONE))),
-				block("hellfire_stairs", new StairsBlock(() -> AetherBlocks.HELLFIRE_STONE.getDefaultState(), Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).sound(SoundType.STONE))),
+				block("carved_stairs", new StairsBlock(() -> AetherBlocks.CARVED_STONE.getDefaultState(), Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).sound(SoundType.STONE))),
+				block("angelic_stairs", new StairsBlock(() -> AetherBlocks.ANGELIC_STONE.getDefaultState(), Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).sound(SoundType.STONE))),
+				block("hellfire_stairs", new StairsBlock(() -> AetherBlocks.HELLFIRE_STONE.getDefaultState(), Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).sound(SoundType.STONE))),
 				block("skyroot_stairs", new StairsBlock(() -> AetherBlocks.SKYROOT_PLANKS.getDefaultState(), Block.Properties.from(Blocks.OAK_PLANKS))),
-				block("holystone_stairs", new StairsBlock(() -> AetherBlocks.HOLYSTONE.getDefaultState(), Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5f))),
-				block("mossy_holystone_stairs", new StairsBlock(() -> AetherBlocks.MOSSY_HOLYSTONE.getDefaultState(), Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5f))),
-				block("holystone_brick_stairs", new StairsBlock(() -> AetherBlocks.HOLYSTONE_BRICKS.getDefaultState(), Block.Properties.from(Blocks.STONE_BRICKS).hardnessAndResistance(0.5f, 10.0f))),
-				block("aerogel_stairs", new AerogelStairsBlock(() -> AetherBlocks.AEROGEL.getDefaultState(), Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0f, 2000.0f).sound(SoundType.METAL).notSolid())),
+				block("holystone_stairs", new StairsBlock(() -> AetherBlocks.HOLYSTONE.getDefaultState(), Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5F))),
+				block("mossy_holystone_stairs", new StairsBlock(() -> AetherBlocks.MOSSY_HOLYSTONE.getDefaultState(), Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5F))),
+				block("holystone_brick_stairs", new StairsBlock(() -> AetherBlocks.HOLYSTONE_BRICKS.getDefaultState(), Block.Properties.from(Blocks.STONE_BRICKS).hardnessAndResistance(0.5F, 10.0F))),
+				block("aerogel_stairs", new AerogelStairsBlock(() -> AetherBlocks.AEROGEL.getDefaultState(), Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F, 2000.0F).sound(SoundType.METAL).notSolid())),
 				block("carved_slab", new SlabBlock(Block.Properties.create(Material.ROCK, MaterialColor.STONE).hardnessAndResistance(2.0F, 5.0F))),
 				block("angelic_slab", new SlabBlock(Block.Properties.create(Material.ROCK, MaterialColor.STONE).hardnessAndResistance(2.0F, 5.0F))),
 				block("hellfire_slab", new SlabBlock(Block.Properties.create(Material.ROCK, MaterialColor.STONE).hardnessAndResistance(2.0F, 5.0F))),
@@ -221,13 +223,13 @@ public class AetherBlocks {
 				block("mossy_holystone_slab", new SlabBlock(Block.Properties.create(Material.ROCK, MaterialColor.STONE).hardnessAndResistance(2.0F, 5.0F))),
 				block("holystone_brick_slab", new SlabBlock(Block.Properties.create(Material.ROCK, MaterialColor.STONE).hardnessAndResistance(2.0F, 5.0F))),
 				block("aerogel_slab", new AerogelSlabBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F, 2000.0F).sound(SoundType.METAL).notSolid())),
-				block("carved_wall", new WallBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).sound(SoundType.STONE))),
-				block("angelic_wall", new WallBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).sound(SoundType.STONE))),
-				block("hellfire_wall", new WallBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5f).sound(SoundType.STONE))),
-				block("holystone_wall", new WallBlock(Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5f))),
-				block("mossy_holystone_wall", new WallBlock(Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5f))),
-				block("holystone_brick_wall", new WallBlock(Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5f))),
-				block("aerogel_wall", new AerogelWallBlock(Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5f, 2000.0F).notSolid())),
+				block("carved_wall", new WallBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).sound(SoundType.STONE))),
+				block("angelic_wall", new WallBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).sound(SoundType.STONE))),
+				block("hellfire_wall", new WallBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).sound(SoundType.STONE))),
+				block("holystone_wall", new WallBlock(Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5F))),
+				block("mossy_holystone_wall", new WallBlock(Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5F))),
+				block("holystone_brick_wall", new WallBlock(Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5F))),
+				block("aerogel_wall", new AerogelWallBlock(Block.Properties.from(Blocks.STONE).hardnessAndResistance(0.5F, 2000.0F).notSolid())),
 				block("present", new PresentBlock(Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.6F).sound(SoundType.PLANT))),
 				block("sun_altar", new SunAltarBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.5F).sound(SoundType.METAL))),
 				block("skyroot_bookshelf", new BookshelfBlock(Block.Properties.from(Blocks.BOOKSHELF))),
@@ -258,7 +260,10 @@ public class AetherBlocks {
 					item = new WallOrFloorItem(AMBROSIUM_TORCH, AMBROSIUM_WALL_TORCH, properties);
 				}
 				else if (block == CHEST_MIMIC) {
-					item = new BlockItem(block, properties.setISTER(() -> ChestMimicItemStackTileEntityRenderer::new));
+					item = new BlockItem(block, properties.setISTER(() -> () -> new CustomItemStackTileEntityRenderer(ChestMimicTileEntity::new)));
+				}
+				else if (block == TREASURE_CHEST) {
+					item = new BlockItem(block, properties.setISTER(() -> () -> new CustomItemStackTileEntityRenderer(TreasureChestTileEntity::new)));
 				}
 				else {
 					item = new BlockItem(block, properties);

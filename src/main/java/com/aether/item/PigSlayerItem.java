@@ -29,7 +29,7 @@ public class PigSlayerItem extends SwordItem {
 		}
 
 		if (isEffectiveAgainst(target)) {
-			if (target.getHealth() > 0.0f) {
+			if (target.getHealth() > 0.0F) {
 				target.attackEntityFrom(DamageSource.causeMobDamage(attacker), 9999);
 			}
 
@@ -39,9 +39,9 @@ public class PigSlayerItem extends SwordItem {
 				double d2 = rand.nextGaussian() * 0.02;
 				double d3 = 5.0;
 				target.world.addParticle(ParticleTypes.FLAME,
-					target.getPosX() + (rand.nextFloat() * target.getWidth() * 2.0f) - target.getWidth() - d0 * d3,
+					target.getPosX() + (rand.nextFloat() * target.getWidth() * 2.0F) - target.getWidth() - d0 * d3,
 					target.getPosY() + (rand.nextFloat() * target.getHeight()) - d1 * d3,
-					target.getPosZ() + (rand.nextFloat() * target.getWidth() * 2.0f) - target.getWidth() - d2 * d3,
+					target.getPosZ() + (rand.nextFloat() * target.getWidth() * 2.0F) - target.getWidth() - d2 * d3,
 					d0, d1, d2);
 			}
 		}

@@ -71,7 +71,7 @@ public class ZephyrModel extends EntityModel<ZephyrEntity> {
         Tail2.setRotationPoint(0.0F, 0.0F, 6.0F);
         Tail1.addChild(Tail2);
         Tail2.setTextureOffset(80, 24);
-        Tail2.addBox(-2F, -2F, -1.966667F, 4, 4, 4, 0.0F, false);
+        Tail2.addBox(-2.0F, -2.0F, -1.966667F, 4, 4, 4, 0.0F, false);
 
         Tail3 = new ModelRenderer(this);
         Tail3.setRotationPoint(0.0F, 0.0F, 5.0F);
@@ -82,7 +82,7 @@ public class ZephyrModel extends EntityModel<ZephyrEntity> {
 
     @Override
     public void setRotationAngles(ZephyrEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        float motion = (float)(Math.sin(limbSwing * 20 / 57.2957795) * limbSwingAmount * .5F);
+        float motion = (float)(Math.sin(limbSwing * 20 / 57.2957795) * limbSwingAmount * 0.5F);
 
         this.LeftFace.rotationPointY = motion + 8;
         this.LeftFace.rotationPointX = motion * 0.5F;

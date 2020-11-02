@@ -28,11 +28,11 @@ public class PhygEntity extends SaddleableEntity {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new SwimGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
-        this.goalSelector.addGoal(3, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2D, Ingredient.fromItems(AetherItems.BLUEBERRY), false));
-        this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1D));
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
+        this.goalSelector.addGoal(3, new BreedGoal(this, 1.0));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2, Ingredient.fromItems(AetherItems.BLUEBERRY), false));
+        this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1));
+        this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1.0));
         this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
     }
@@ -40,12 +40,12 @@ public class PhygEntity extends SaddleableEntity {
     @Override
     protected void registerAttributes() {
         super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
         if (!this.isSaddled()) {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
+            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0);
         }
         else {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
+            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0);
         }
     }
 
@@ -62,11 +62,11 @@ public class PhygEntity extends SaddleableEntity {
         }
         ticks++;
         this.wingAngle = this.wingFold * (float) Math.sin(this.ticks / 31.83098862F);
-        this.wingFold += (aimingForFold - this.wingFold) / 5F;
+        this.wingFold += (aimingForFold - this.wingFold) / 5.0F;
 
         this.fallDistance = 0.0F;
-        if (this.getMotion().y < -0.1D && !this.isRiderSneaking()) {
-            this.setMotion(getMotion().x, -0.1D, getMotion().z);
+        if (this.getMotion().y < -0.1 && !this.isRiderSneaking()) {
+            this.setMotion(getMotion().x, -0.1, getMotion().z);
         }
     }
 
@@ -114,11 +114,11 @@ public class PhygEntity extends SaddleableEntity {
     public void setSaddled(boolean flag) {
         super.setSaddled(flag);
         if(flag) {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
+            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0);
             this.setHealth(20.0F);
         }
         else {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
+            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0);
             this.setHealth(10.0F);
         }
     }

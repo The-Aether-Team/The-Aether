@@ -136,6 +136,7 @@
 	"item.aether.blue_swet_spawn_egg": "Blue Swet Spawn Egg",
 	"item.aether.golden_swet_spawn_egg": "Golden Swet Spawn Egg",
 	"item.aether.cockatrice_spawn_egg": "Cockatrice Spawn Egg",
+	"item.aether.moa_spawn_egg": "Moa Spawn Egg",
 	"item.aether.sentry_spawn_egg": "Sentry Spawn Egg",
 	"item.aether.zephyr_spawn_egg": "Zephyr Spawn Egg",
 	"item.aether.aechor_plant_spawn_egg": "Aechor Plant Spawn Egg",
@@ -419,10 +420,7 @@
 	"gui.spirit.dead": "Such bitter cold... is this the feeling... of pain?",
 	"gui.spirit.playerdied": "Such is the fate of a being who opposes the might of the sun.",
 
-	"gui.treasure_chest.bronze": "Bronze Treasure Chest",
-	"gui.treasure_chest.silver": "Silver Treasure Chest",
-	"gui.treasure_chest.gold": "Gold Treasure Chest",
-	"gui.treasure_chest.platinum": "Platinum Treasure Chest",
+	"gui.treasure_chest": "%s %s",
 
 	"gui.sun_altar.time": "Select Time",
 
@@ -444,8 +442,16 @@
 	"death.attack.icey_ball": "%1$s was chilled by %2$s's Icey Ball",
 	"death.attack.lightning_ball": "%1$s was zapped by %2$s's Thunder Ball",
 
+	"_comment": "Notifications",
+	"container.cannotUnlockWithKey": "%s Dungeon chest cannot be unlocked with %s",
+
+	"_comment": "Dungeon Names",
+	"dungeon.aether.bronze": "Bronze",
+	"dungeon.aether.silver": "Silver",
+	"dungeon.aether.gold": "Gold",
+
 	"_comment": "Config",
-	"aether.config.title": "Aether Legacy Configuration",
+	"aether.config.title": "Aether Configuration",
 	"aether.general.dimension": "Dimension Settings",
 	"aether.general.gameplay_changes": "Gameplay Changes",
 	"aether.general.gameplay_changes.tooltip": "These options affect gameplay, and how some of the content works.",
@@ -467,8 +473,6 @@
 
 	"aether.general.world_gen.christmas_time": "Holiday Generation",
 	"aether.general.world_gen.pink_aerclouds": "Pink Aercloud Generation",
-	"aether.general.world_gen.tallgrass_enabled": "Tall Grass Generation",
+	"aether.general.world_gen.tallgrass_enabled": "Tall Grass Generation"
 
-	"aether.general.dimension.aether_dimension_id": "Aether Dimension ID",
-	"aether.general.dimension.aether_dimension_id.tooltip": "Set the Dimension ID for the Aether."
 }

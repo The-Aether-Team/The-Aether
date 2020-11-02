@@ -15,9 +15,9 @@ public class HolidayLeavesParticle extends PortalParticle {
 	protected HolidayLeavesParticle(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
 
-		this.particleRed = 1.0f;
-		this.particleGreen = 1.0f;
-		this.particleBlue = 1.0f;
+		this.particleRed = 1.0F;
+		this.particleGreen = 1.0F;
+		this.particleBlue = 1.0F;
 	}
 
 	@OnlyIn(Dist.CLIENT)

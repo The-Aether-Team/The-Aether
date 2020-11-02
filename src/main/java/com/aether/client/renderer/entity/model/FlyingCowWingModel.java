@@ -42,10 +42,10 @@ public class FlyingCowWingModel extends EntityModel<FlyingCowEntity> {
         this.leftWingOuter.setRotationPoint(4.0F + x2, y2 + 12.0F, 0.0F);
         this.rightWingOuter.setRotationPoint(-4.0F - x2, y2 + 12.0F, 0.0F);
 
-        this.leftWingInner.rotateAngleZ = flyingCow.wingAngle + wingBend + ((float)Math.PI / 2F);
-        this.leftWingOuter.rotateAngleZ = flyingCow.wingAngle - wingBend + ((float)Math.PI / 2F);
-        this.rightWingInner.rotateAngleZ = -(flyingCow.wingAngle + wingBend - ((float)Math.PI / 2F));
-        this.rightWingOuter.rotateAngleZ = -(flyingCow.wingAngle - wingBend + ((float)Math.PI / 2F));
+        this.leftWingInner.rotateAngleZ = flyingCow.wingAngle + wingBend + ((float)Math.PI / 2.0F);
+        this.leftWingOuter.rotateAngleZ = flyingCow.wingAngle - wingBend + ((float)Math.PI / 2.0F);
+        this.rightWingInner.rotateAngleZ = -(flyingCow.wingAngle + wingBend - ((float)Math.PI / 2.0F));
+        this.rightWingOuter.rotateAngleZ = -(flyingCow.wingAngle - wingBend + ((float)Math.PI / 2.0F));
     }
 
     @Override

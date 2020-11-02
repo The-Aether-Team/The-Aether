@@ -85,7 +85,7 @@ public class MimicEntity extends CreatureEntity {
 		if (entityIn instanceof LivingEntity) {
 			// If the entity died as a result of this attack, then play the burp sound. Otherwise, play the eating sound.
 			SoundEvent sound = (((LivingEntity) entityIn).getHealth() <= 0.0)? SoundEvents.ENTITY_PLAYER_BURP : SoundEvents.ENTITY_GENERIC_EAT;
-			this.playSound(sound, 1.0f, this.getSoundPitch());
+			this.playSound(sound, 1.0F, this.getSoundPitch());
 		}
 		
 		return result;

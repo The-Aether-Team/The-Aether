@@ -19,7 +19,7 @@ public class BouncyAercloudBlock extends TintedAercloudBlock {
 	
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		entity.fallDistance = 0.0f;
+		entity.fallDistance = 0.0F;
 		
 		Vec3d motion = entity.getMotion();
 		

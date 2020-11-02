@@ -29,12 +29,12 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, ZephyrModel> {
         float f2 = (8.0F + f1) / 2.0F;
         float f3 = (8.0F + 1.0F / f1) / 2.0F;
         matrixStackIn.scale(f3, f2, f3);
-        matrixStackIn.translate(0, 0.5D, 0);
+        matrixStackIn.translate(0, 0.5, 0);
 
         /*if (AetherConfig.visual_options.legacy_models) TODO: Re-enable this when the config is put back in.
         {
             matrixStackIn.scale(0.8F, 0.8F, 0.8F);
-            matrixStackIn.translate(0, -0.1D, 0);
+            matrixStackIn.translate(0, -0.1, 0);
         }*/
 
     }

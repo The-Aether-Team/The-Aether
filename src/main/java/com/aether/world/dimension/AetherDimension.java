@@ -39,7 +39,7 @@ public class AetherDimension extends Dimension {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public float getCloudHeight() {
-		return 1F;
+		return 1.0F;
 	}
 
 	@Override
@@ -62,9 +62,9 @@ public class AetherDimension extends Dimension {
 	// TODO: implement the eternal day thing
 	@Override
 	public float calculateCelestialAngle(long worldTime, float partialTicks) {
-		double d0 = MathHelper.frac(worldTime / 24000.0D - 0.25D);
-		double d1 = 0.5D - Math.cos(d0 * Math.PI) / 2.0D;
-		return (float)(d0 * 2.0D + d1) / 3.0F;
+		double d0 = MathHelper.frac(worldTime / 24000.0 - 0.25);
+		double d1 = 0.5 - Math.cos(d0 * Math.PI) / 2.0;
+		return (float)(d0 * 2.0 + d1) / 3.0F;
 	}
 
 	@Override
