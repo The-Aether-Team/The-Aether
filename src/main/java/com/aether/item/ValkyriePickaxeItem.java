@@ -7,8 +7,6 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.PickaxeItem;
 
-import java.util.UUID;
-
 public class ValkyriePickaxeItem extends PickaxeItem implements IValkyrieToolItem {
     public ValkyriePickaxeItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
         super(tier, attackDamageIn, attackSpeedIn, builder);

@@ -250,11 +250,9 @@ public class AetherBlocks {
 				Item item;
 				if (block instanceof IAetherBlockColor) {
 					IAetherBlockColor iaetherblockcolor = (IAetherBlockColor) block;
-					System.out.println("Start!");
 					int hexColor = iaetherblockcolor.getColor(false);
 					int updatedHexColor = iaetherblockcolor.getColor(true);
 					item = new TintedBlockItem(hexColor, updatedHexColor, block, properties);
-					System.out.println("Stop!");
 				}
 				else if (block == AMBROSIUM_TORCH) {
 					item = new WallOrFloorItem(AMBROSIUM_TORCH, AMBROSIUM_WALL_TORCH, properties);

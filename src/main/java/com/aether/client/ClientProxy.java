@@ -22,10 +22,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
-import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
@@ -93,15 +91,11 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	public static <B extends Block & IAetherBlockColor> void registerColor(B block) {
-//		Minecraft.getInstance().getBlockColors().register(block, block);
 		Minecraft.getInstance().getBlockColors().register((blockState, lightReader, blockPos, color) -> block.getColor(false), block);
 	}
 	
 	public static <I extends Item & IAetherItemColor> void registerColor(I item) {
-//		Minecraft.getInstance().getItemColors().register(item, item);
-		Minecraft.getInstance().getItemColors().register((itemStack, color) -> {
-					return color > 0 ? -1 : ((IAetherItemColor) itemStack.getItem()).getColor(false);
-				}, item
+		Minecraft.getInstance().getItemColors().register((itemStack, color) -> item.getColor(false), item
 				);
 	}
 	
