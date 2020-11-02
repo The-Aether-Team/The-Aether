@@ -27,34 +27,34 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ZephyrSnowballEntity extends AbstractFireballEntity {
-    private int ticksInAir;
-    public ZephyrSnowballEntity(EntityType<? extends ZephyrSnowballEntity> type, World worldIn) {
-        super(type, worldIn);
-    }
+	private int ticksInAir;
+	public ZephyrSnowballEntity(EntityType<? extends ZephyrSnowballEntity> type, World worldIn) {
+		super(type, worldIn);
+	}
 
-    @OnlyIn(Dist.CLIENT)
-    public ZephyrSnowballEntity(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
-        super(AetherEntityTypes.ZEPHYR_SNOWBALL, x, y, z, accelX, accelY, accelZ, worldIn);
-    }
-    
-    public ZephyrSnowballEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
-        super(AetherEntityTypes.ZEPHYR_SNOWBALL, shooter, accelX, accelY, accelZ, worldIn);
-    }
-    
-    @Override
-    protected boolean isFireballFiery() {
-    	return false;
-    }
+	@OnlyIn(Dist.CLIENT)
+	public ZephyrSnowballEntity(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
+		super(AetherEntityTypes.ZEPHYR_SNOWBALL, x, y, z, accelX, accelY, accelZ, worldIn);
+	}
 
-    @Override
-    protected void onImpact(RayTraceResult result) {
-    	super.onImpact(result);
-    	if (!this.world.isRemote) {
-    		if (result.getType() == RayTraceResult.Type.ENTITY) {
-    			Entity entity = ((EntityRayTraceResult)result).getEntity();
-    			if (entity instanceof LivingEntity) {
-    				LivingEntity livingEntity = (LivingEntity)entity;
-    				boolean isPlayer = livingEntity instanceof PlayerEntity;
+	public ZephyrSnowballEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
+		super(AetherEntityTypes.ZEPHYR_SNOWBALL, shooter, accelX, accelY, accelZ, worldIn);
+	}
+
+	@Override
+	protected boolean isFireballFiery() {
+		return false;
+	}
+
+	@Override
+	protected void onImpact(RayTraceResult result) {
+		super.onImpact(result);
+		if (!this.world.isRemote) {
+			if (result.getType() == RayTraceResult.Type.ENTITY) {
+				Entity entity = ((EntityRayTraceResult)result).getEntity();
+				if (entity instanceof LivingEntity) {
+					LivingEntity livingEntity = (LivingEntity)entity;
+					boolean isPlayer = livingEntity instanceof PlayerEntity;
 
 					if (isPlayer && ((PlayerEntity)entity).inventory.armorInventory.get(0).getItem() == AetherItems.SENTRY_BOOTS) {
 						return;
@@ -76,15 +76,15 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 					}
 
 					entity.setMotion(entity.getMotion().x + (this.getMotion().x * 1.5F), entity.getMotion().y, entity.getMotion().z + (this.getMotion().z * 1.5F));
-    			}
-    		}
-            this.remove();
-    	}
-    }
+				}
+			}
+			this.remove();
+		}
+	}
 
-    @Override
-    protected void registerData() {
-        this.setNoGravity(true);
+	@Override
+	protected void registerData() {
+		this.setNoGravity(true);
 	}
 
 	/**
@@ -101,9 +101,9 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 
 			++this.ticksInAir;
 			RayTraceResult raytraceresult = ProjectileHelper.rayTrace(this, true, this.ticksInAir >= 25,
-				this.shootingEntity, RayTraceContext.BlockMode.COLLIDER);
+					this.shootingEntity, RayTraceContext.BlockMode.COLLIDER);
 			if (raytraceresult.getType() != RayTraceResult.Type.MISS
-				&& !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
+					&& !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
 				this.onImpact(raytraceresult);
 			}
 
@@ -141,7 +141,7 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 			this.remove();
 		}
 	}
-	
+
 	@Override
 	protected IParticleData getParticle() {
 		return null;
@@ -150,12 +150,12 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public ItemStack getItem() {
-        ItemStack itemstack = this.getStack();
-        return itemstack.isEmpty()? new ItemStack(Items.SNOWBALL) : itemstack;
-    }
+		ItemStack itemstack = this.getStack();
+		return itemstack.isEmpty()? new ItemStack(Items.SNOWBALL) : itemstack;
+	}
 
-    @Override
-    public IPacket<?> createSpawnPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+	@Override
+	public IPacket<?> createSpawnPacket() {
+		return NetworkHooks.getEntitySpawningPacket(this);
+	}
 }

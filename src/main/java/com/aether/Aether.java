@@ -17,7 +17,7 @@ public class Aether {
 
 	public static final String MODID = "aether";
 	
-	private static CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);;
+	private static CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	
 	public Aether() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

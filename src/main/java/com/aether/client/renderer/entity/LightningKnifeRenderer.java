@@ -17,7 +17,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.IRendersAsItem;
 import net.minecraft.util.ResourceLocation;
 
-//TODO: Fix rotation
 public class LightningKnifeRenderer extends EntityRenderer<LightningKnifeEntity> {
 
 	public LightningKnifeRenderer(EntityRendererManager renderManager) {
@@ -33,10 +32,9 @@ public class LightningKnifeRenderer extends EntityRenderer<LightningKnifeEntity>
 		Quaternion base;
 		
 		base = Vector3f.YP.rotationDegrees(entityIn.rotationYaw);
-		
-		base.multiply(Vector3f.XP.rotationDegrees((-(entityIn.prevRotationPitch + (entityIn.rotationPitch - entityIn.prevRotationPitch) * partialTicks))-90.0f)); // thank you Reetam
-		base.multiply(Vector3f.ZP.rotationDegrees(-135.0f));		
-	
+		base.multiply(Vector3f.XP.rotationDegrees((-(entityIn.prevRotationPitch + (entityIn.rotationPitch - entityIn.prevRotationPitch) * partialTicks))-90.0f));
+		base.multiply(Vector3f.ZP.rotationDegrees(-135.0f));
+
 		matrix.rotate(base);
 		
 //		matrix.rotate(Vector3f.YP.rotationDegrees(entityIn.rotationYaw));

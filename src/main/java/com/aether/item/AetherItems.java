@@ -5,6 +5,10 @@ import com.aether.api.dungeon.DungeonTypes;
 import com.aether.api.enchantments.AetherEnchantmentFuel;
 import com.aether.api.freezables.AetherFreezableFuel;
 import com.aether.block.AetherBlocks;
+import com.aether.entity.monster.MimicEntity;
+import com.aether.entity.monster.SentryEntity;
+import com.aether.entity.passive.MoaEntity;
+import com.aether.entity.monster.CockatriceEntity;
 import com.aether.entity.AetherEntityTypes;
 
 import net.minecraft.inventory.EquipmentSlotType;
@@ -161,6 +165,7 @@ public class AetherItems {
 	public static final SpawnEggItem MIMIC_SPAWN_EGG = null;
 	public static final SpawnEggItem VALKYRIE_SPAWN_EGG = null;
 	public static final SpawnEggItem FIRE_MINION_SPAWN_EGG = null;
+	public static final SpawnEggItem MOA_SPAWN_EGG = null;
 
 	@SuppressWarnings("unused")
 	@EventBusSubscriber(modid = Aether.MODID, bus = Bus.MOD)
@@ -233,7 +238,7 @@ public class AetherItems {
 				item("valkyrie_chestplate", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("valkyrie_leggings", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("valkyrie_boots", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				
+
 				item("blueberry", new Item(new Item.Properties()
 					.food(new Food.Builder().fastToEat().hunger(2).build())
 					.group(AetherItemGroups.AETHER_FOOD))),
@@ -287,12 +292,12 @@ public class AetherItems {
 				item("enchanted_dart", new Item(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
 				//item("phoenix_bow", new PhoenixBowItem(new Item.Properties().maxDamage(384).group(AetherItemGroups.AETHER_COMBAT))),
-				
-				item("flaming_sword", new FlamingSwordItem(ItemTier.DIAMOND, 3, -2.4F, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("lightning_sword", new LightningSwordItem(ItemTier.DIAMOND, 3, -2.4F, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("holy_sword", new HolySwordItem(ItemTier.DIAMOND, 3, -2.4F, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("vampire_blade", new VampireBladeItem(ItemTier.DIAMOND, 3, -2.4F, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				item("pig_slayer", new PigSlayerItem(ItemTier.IRON, 3, -2.4F, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))), 
+
+				item("flaming_sword", new FlamingSwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("lightning_sword", new LightningSwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				//item("holy_sword", new HolySwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				//item("vampire_blade", new VampireBladeItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("pig_slayer", new PigSlayerItem(ItemTier.IRON, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				//item("candy_cane_sword", new CandyCaneSwordItem(ItemTier.GOLD, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 				//item("notch_hammer", new NotchHammerItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 				//item("valkyrie_lance", new ValkyrieLanceItem(ItemTier.DIAMOND, 3, -2.4F, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
@@ -344,7 +349,7 @@ public class AetherItems {
 				
 				//item("repulsion_shield", new ShieldAccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).maxDamage(512).group(AetherItemGroups.AETHER_ACCESSORIES))),
 				//item("lore_book", new LoreBookItem(new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
-				
+
 				item("sentry_spawn_egg", new SpawnEggItem(
 					AetherEntityTypes.SENTRY,
 					/*primary color:*/ 0x808080, /*secondary color:*/ 0x3A8AEC,
@@ -352,6 +357,14 @@ public class AetherItems {
 				item("mimic_spawn_egg", new SpawnEggItem(
 					AetherEntityTypes.MIMIC,
 					/*primary color:*/ 0xB18132, /*secondary color:*/ 0x605A4E,
+					new Item.Properties().group(ItemGroup.MISC))),
+				item("moa_spawn_egg", new SpawnEggItem(
+					AetherEntityTypes.MOA,
+					/*primary color:*/0x87BFEF, /*secondary color:*/0x7A7A7A,
+					new Item.Properties().group(ItemGroup.MISC))),
+				item("cockatrice_spawn_egg", new SpawnEggItem(
+					AetherEntityTypes.COCKATRICE,
+					/*primary color:*/0x6CB15C, /*secondary color:*/0x6C579D,
 					new Item.Properties().group(ItemGroup.MISC))),
 				item("zephyr_spawn_egg", new SpawnEggItem(
 					AetherEntityTypes.ZEPHYR,

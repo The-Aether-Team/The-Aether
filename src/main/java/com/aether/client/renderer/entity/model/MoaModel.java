@@ -40,11 +40,11 @@ public class MoaModel extends EntityModel<MoaEntity> {
 		this.legs2.setRotationPoint(2.0F, 0 + 16, 1.0F);
 
 		this.wings = new ModelRenderer(this, 52, 0);
-		this.wings.addBox(-1.0F, -0.0F, -1.0F, 1, 8, 4);
+		this.wings.addBox(-1.01F, -0.0F, -1.0F, 1, 8, 4);
 		this.wings.setRotationPoint(-3.0F, (16), 2.0F);
 
 		this.wings2 = new ModelRenderer(this, 52, 0);
-		this.wings2.addBox(0.0F, -0.0F, -1.0F, 1, 8, 4);
+		this.wings2.addBox(0.01F, -0.0F, -1.0F, 1, 8, 4);
 		this.wings2.setRotationPoint(3.0F, -4 + 16, 0.0F);
 
 		this.neck = new ModelRenderer(this, 44, 0);

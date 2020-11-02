@@ -7,6 +7,7 @@ import com.aether.entity.item.FloatingBlockEntity;
 import com.aether.entity.monster.MimicEntity;
 import com.aether.entity.monster.SentryEntity;
 import com.aether.entity.monster.ZephyrEntity;
+import com.aether.entity.monster.CockatriceEntity;
 import com.aether.entity.passive.FlyingCowEntity;
 import com.aether.entity.passive.MoaEntity;
 import com.aether.entity.passive.PhygEntity;
@@ -28,6 +29,7 @@ public class AetherEntityTypes {
 	public static final EntityType<MimicEntity> MIMIC = entity("mimic", EntityType.Builder.<MimicEntity>create(MimicEntity::new, EntityClassification.MONSTER).size(1.0F, 2.0F));
 	public static final EntityType<SentryEntity> SENTRY = entity("sentry", EntityType.Builder.<SentryEntity>create(SentryEntity::new, EntityClassification.MONSTER).size(2.0F, 2.0F));
 	public static final EntityType<ZephyrEntity> ZEPHYR = entity("zephyr", EntityType.Builder.<ZephyrEntity>create(ZephyrEntity::new, EntityClassification.MONSTER).size(4.0F, 4.0F));
+	public static final EntityType<CockatriceEntity> COCKATRICE = entity("cockatrice", EntityType.Builder.<CockatriceEntity>create(CockatriceEntity::new, EntityClassification.MONSTER).size(1.0F, 2.0F));
 	//public static final EntityType<ValkyrieEntity> VALKYRIE = entity("valkyrie", EntityType.Builder.<ValkyrieEntity>create(ValkyrieEntity::new, EntityClassification.MONSTER).size(??????));
 	//public static final EntityType<FireMinionEntity> FIRE_MINION = entity("fire_minion", EntityType.Builder.<FireMinionEntity>create(FireMinionEntity::new, EntityClassification.MONSTER).size(??????));
 	public static final EntityType<FloatingBlockEntity> FLOATING_BLOCK = entity("floating_block", EntityType.Builder.<FloatingBlockEntity>create(FloatingBlockEntity::new, EntityClassification.MISC).size(0.98F, 0.98F).setCustomClientFactory((spawnEntity, world) -> new FloatingBlockEntity(world)));
@@ -38,38 +40,39 @@ public class AetherEntityTypes {
 	public static final EntityType<FlyingCowEntity> FLYING_COW = entity("flying_cow", EntityType.Builder.<FlyingCowEntity>create(FlyingCowEntity::new, EntityClassification.CREATURE).size(0.9F, 1.4F));
 	public static final EntityType<SheepuffEntity> SHEEPUFF = entity("sheepuff", EntityType.Builder.<SheepuffEntity>create(SheepuffEntity::new, EntityClassification.CREATURE).size(0.9F, 1.4F));
 
-	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
+	@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
 	public static class Registration {
-		
+
 		@SubscribeEvent
 		public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event) {
 			event.getRegistry().registerAll(new EntityType<?>[] {
-				
-				MIMIC,
-				SENTRY,
-				ZEPHYR,
-				//VALKYRIE,
-				//FIRE_MINION,
-				PHYG,
-				FLYING_COW,
-				SHEEPUFF,
-				MOA,
-				FLOATING_BLOCK,
-				LIGHTNING_KNIFE,
-				ZEPHYR_SNOWBALL,
-				
+
+					MIMIC,
+					SENTRY,
+					ZEPHYR,
+					COCKATRICE,
+					//VALKYRIE,
+					//FIRE_MINION,
+					PHYG,
+					FLYING_COW,
+					SHEEPUFF,
+					MOA,
+					FLOATING_BLOCK,
+					LIGHTNING_KNIFE,
+					ZEPHYR_SNOWBALL,
+
 			});
 		}
-		
+
 		public static <E extends Entity> EntityType<E> entity(String name, EntityType.Builder<E> entityTypeBuilder) {
 			return entity(name, entityTypeBuilder.build(name));
 		}
-		
-		public static <E extends Entity> EntityType<E> entity(String name, EntityType<E> entityType) {			
-			entityType.setRegistryName(name);	
+
+		public static <E extends Entity> EntityType<E> entity(String name, EntityType<E> entityType) {
+			entityType.setRegistryName(name);
 			return entityType;
 		}
-		
+
 	}
-	
+
 }
