@@ -4,10 +4,11 @@ import static com.aether.entity.AetherEntityTypes.Registration.entity;
 
 import com.aether.Aether;
 import com.aether.entity.item.FloatingBlockEntity;
+import com.aether.entity.monster.CockatriceEntity;
 import com.aether.entity.monster.MimicEntity;
 import com.aether.entity.monster.SentryEntity;
 import com.aether.entity.monster.ZephyrEntity;
-import com.aether.entity.monster.CockatriceEntity;
+import com.aether.entity.passive.AerwhaleEntity;
 import com.aether.entity.passive.FlyingCowEntity;
 import com.aether.entity.passive.MoaEntity;
 import com.aether.entity.passive.PhygEntity;
@@ -39,6 +40,7 @@ public class AetherEntityTypes {
 	public static final EntityType<PhygEntity> PHYG = entity("phyg", EntityType.Builder.create(PhygEntity::new, EntityClassification.CREATURE).size(0.9F, 0.9F));
 	public static final EntityType<FlyingCowEntity> FLYING_COW = entity("flying_cow", EntityType.Builder.<FlyingCowEntity>create(FlyingCowEntity::new, EntityClassification.CREATURE).size(0.9F, 1.4F));
 	public static final EntityType<SheepuffEntity> SHEEPUFF = entity("sheepuff", EntityType.Builder.<SheepuffEntity>create(SheepuffEntity::new, EntityClassification.CREATURE).size(0.9F, 1.4F));
+	public static final EntityType<AerwhaleEntity> AERWHALE = entity("aerwhale", EntityType.Builder.<AerwhaleEntity>create(AerwhaleEntity::new, EntityClassification.CREATURE).size(3.0F, 3.0F).immuneToFire());
 
 	@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
 	public static class Registration {
@@ -60,6 +62,7 @@ public class AetherEntityTypes {
 					FLOATING_BLOCK,
 					LIGHTNING_KNIFE,
 					ZEPHYR_SNOWBALL,
+					AERWHALE,
 
 			});
 		}

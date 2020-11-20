@@ -1,9 +1,9 @@
 package com.aether.client.renderer.entity;
 
 import com.aether.Aether;
+import com.aether.client.renderer.entity.layers.CockatriceLayer;
 import com.aether.client.renderer.entity.model.CockatriceModel;
 import com.aether.entity.monster.CockatriceEntity;
-import com.aether.client.renderer.entity.layers.CockatriceLayer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class CockatriceRenderer extends MobRenderer<CockatriceEntity, CockatriceModel<CockatriceEntity>>{
+public class CockatriceRenderer extends MobRenderer<CockatriceEntity, CockatriceModel>{
     private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/cockatrice/cockatrice.png");
 
     public CockatriceRenderer(EntityRendererManager rendererManager) {
@@ -22,7 +22,8 @@ public class CockatriceRenderer extends MobRenderer<CockatriceEntity, Cockatrice
         this.addLayer(new CockatriceLayer<>(this));
     }
 
-    protected void preRenderCallback(CockatriceEntity cockatrice, MatrixStack matrixStackIn, float partialTickTime) {
+    @Override
+	protected void preRenderCallback(CockatriceEntity cockatrice, MatrixStack matrixStackIn, float partialTickTime) {
         matrixStackIn.scale(1.8F, 1.8F, 1.8F);
     }
 

@@ -2,14 +2,11 @@ package com.aether.client.renderer.entity.layers;
 
 import com.aether.Aether;
 import com.aether.entity.monster.CockatriceEntity;
-import com.aether.client.renderer.entity.model.CockatriceModel;
 
-import com.aether.entity.monster.SentryEntity;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.AbstractEyesLayer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.model.SlimeModel;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

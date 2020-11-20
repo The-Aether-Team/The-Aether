@@ -14,13 +14,11 @@ import com.aether.tileentity.AetherTileEntityTypes;
 import com.aether.tileentity.TreasureChestTileEntity;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.DoubleSidedInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ChestContainer;
@@ -95,54 +93,6 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 	public TreasureChestBlock(Block.Properties properties) {
 		this(properties, () -> AetherTileEntityTypes.TREASURE_CHEST);
 	}
-
-	/**
-	 * The type of render function called. MODEL for mixed tesr and static model, MODELBLOCK_ANIMATED for TESR-only,
-	 * LIQUID for vanilla liquids, INVISIBLE to skip all rendering
-	 */
-	@Override
-	public BlockRenderType getRenderType(BlockState state) {
-		return BlockRenderType.ENTITYBLOCK_ANIMATED;
-	}
-
-	/**
-	 * Update the provided state given the provided neighbor facing and neighbor state, returning a new state. For
-	 * example, fences make their connections to the passed in state if possible, and wet concrete powder immediately
-	 * returns its solidified counterpart. Note that this method should ideally consider only the specific face passed
-	 * in.
-	 */
-	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
-		BlockPos currentPos, BlockPos facingPos) {
-		if (stateIn.get(WATERLOGGED)) {
-			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
-		}
-
-		if (facingState.getBlock() == this && facing.getAxis().isHorizontal()) {
-			ChestType chesttype = facingState.get(TYPE);
-			if (stateIn.get(TYPE) == ChestType.SINGLE && chesttype != ChestType.SINGLE
-				&& stateIn.get(FACING) == facingState.get(FACING)
-				&& getDirectionToAttached(facingState) == facing.getOpposite()) {
-				return stateIn.with(TYPE, chesttype.opposite());
-			}
-		}
-		else if (getDirectionToAttached(stateIn) == facing) {
-			return stateIn.with(TYPE, ChestType.SINGLE);
-		}
-
-		return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
-	}
-	
-//	@SuppressWarnings("serial")
-//	private static void playLocalLockedSound(BlockPos pos) {
-//		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> new SafeRunnable() {
-//			@Override
-//			public void run() {
-//				Minecraft.getInstance().getConnection().getWorld().playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
-//				//Minecraft.getInstance().getSoundHandler().play(new SimpleSound(SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F, chest1.getPos().getX(), chest1.getPos().getY(), chest1.getPos().getZ()));
-//			}
-//		});
-//	}
 	
 	private static final TileEntityMerger.ICallback<TreasureChestTileEntity, BiFunction<PlayerEntity, Hand, ActionResultType>> unlock = new TileEntityMerger.ICallback<TreasureChestTileEntity, BiFunction<PlayerEntity, Hand, ActionResultType>>() {
 

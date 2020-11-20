@@ -9,10 +9,9 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraft.entity.Entity;
 
 @OnlyIn(Dist.CLIENT)
-public class CockatriceModel<T extends Entity> extends EntityModel<CockatriceEntity> {
+public class CockatriceModel extends EntityModel<CockatriceEntity> {
     private final ModelRenderer head, body;
     private final ModelRenderer legs, legs2;
     private final ModelRenderer wings, wings2;

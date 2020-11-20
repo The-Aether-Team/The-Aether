@@ -7,16 +7,7 @@ import com.aether.capability.AetherCapabilities;
 import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.gui.screen.inventory.FreezerScreen;
 import com.aether.client.gui.screen.inventory.IncubatorScreen;
-import com.aether.client.renderer.entity.CockatriceRenderer;
-import com.aether.client.renderer.entity.FloatingBlockRenderer;
-import com.aether.client.renderer.entity.FlyingCowRenderer;
-import com.aether.client.renderer.entity.LightningKnifeRenderer;
-import com.aether.client.renderer.entity.MimicRenderer;
-import com.aether.client.renderer.entity.MoaRenderer;
-import com.aether.client.renderer.entity.PhygRenderer;
-import com.aether.client.renderer.entity.SentryRenderer;
-import com.aether.client.renderer.entity.SheepuffRenderer;
-import com.aether.client.renderer.entity.ZephyrRenderer;
+import com.aether.client.renderer.entity.*;
 import com.aether.client.renderer.tileentity.ChestMimicTileEntityRenderer;
 import com.aether.client.renderer.tileentity.TreasureChestTileEntityRenderer;
 import com.aether.entity.AetherEntityTypes;
@@ -77,6 +68,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.PHYG, PhygRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLYING_COW, FlyingCowRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SHEEPUFF, SheepuffRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.AERWHALE, AerwhaleRenderer::new);
 	}
 	
 	protected void registerTileEntityRenderers() {

@@ -5,11 +5,8 @@ import com.aether.api.dungeon.DungeonTypes;
 import com.aether.api.enchantments.AetherEnchantmentFuel;
 import com.aether.api.freezables.AetherFreezableFuel;
 import com.aether.block.AetherBlocks;
-import com.aether.entity.monster.MimicEntity;
-import com.aether.entity.monster.SentryEntity;
-import com.aether.entity.passive.MoaEntity;
-import com.aether.entity.monster.CockatriceEntity;
 import com.aether.entity.AetherEntityTypes;
+import com.aether.util.AetherSoundEvents;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -342,46 +339,22 @@ public class AetherItems {
 				item("sentry_boots", new ArmorItem(AetherArmorMaterial.SENTRY, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("lightning_knife", new LightningKnifeItem(new Item.Properties().rarity(Aether.AETHER_LOOT).maxStackSize(16).group(AetherItemGroups.AETHER_COMBAT))),
 				
-				//item("music_disc_aether_tune", new MusicDiscItem(1, AetherSoundEvents.MUSIC_DISC_AETHER_TUNE, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),
-				//item("music_disc_ascending_dawn", new MusicDiscItem(2, AetherSoundEvents.MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),
-				//item("music_disc_welcoming_skies", new MusicDiscItem(3, AetherSoundEvents.MUSIC_DISC_WELCOMING_SKIES, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),
-				//item("music_disc_legacy", new MusicDiscItem(4, AetherSoundEvents.MUSIC_DISC_LEGACY, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),
+				item("music_disc_aether_tune", new MusicDiscItem(1, () -> AetherSoundEvents.MUSIC_DISC_AETHER_TUNE, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),
+				item("music_disc_ascending_dawn", new MusicDiscItem(2, () -> AetherSoundEvents.MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),
+				item("music_disc_welcoming_skies", new MusicDiscItem(3, () -> AetherSoundEvents.MUSIC_DISC_WELCOMING_SKIES, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),
+				item("music_disc_legacy", new MusicDiscItem(4, () -> AetherSoundEvents.MUSIC_DISC_LEGACY, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC))),
 				
 				//item("repulsion_shield", new ShieldAccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).maxDamage(512).group(AetherItemGroups.AETHER_ACCESSORIES))),
 				//item("lore_book", new LoreBookItem(new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
 
-				item("sentry_spawn_egg", new SpawnEggItem(
-					AetherEntityTypes.SENTRY,
-					/*primary color:*/ 0x808080, /*secondary color:*/ 0x3A8AEC,
-					new Item.Properties().group(ItemGroup.MISC))),
-				item("mimic_spawn_egg", new SpawnEggItem(
-					AetherEntityTypes.MIMIC,
-					/*primary color:*/ 0xB18132, /*secondary color:*/ 0x605A4E,
-					new Item.Properties().group(ItemGroup.MISC))),
-				item("moa_spawn_egg", new SpawnEggItem(
-					AetherEntityTypes.MOA,
-					/*primary color:*/0x87BFEF, /*secondary color:*/0x7A7A7A,
-					new Item.Properties().group(ItemGroup.MISC))),
-				item("cockatrice_spawn_egg", new SpawnEggItem(
-					AetherEntityTypes.COCKATRICE,
-					/*primary color:*/0x6CB15C, /*secondary color:*/0x6C579D,
-					new Item.Properties().group(ItemGroup.MISC))),
-				item("zephyr_spawn_egg", new SpawnEggItem(
-					AetherEntityTypes.ZEPHYR,
-					/*primary color:*/ 0xDFDFDF, /*secondary color:*/ 0x99CFE8,
-					new Item.Properties().group(ItemGroup.MISC))),
-				item("phyg_spawn_egg", new SpawnEggItem(
-					AetherEntityTypes.PHYG,
-					/*primary color:*/ 0xFFC1D0, /*secondary color:*/ 0xFFD939,
-					new Item.Properties().group(ItemGroup.MISC))),
-				item("flying_cow_spawn_egg", new SpawnEggItem(
-					AetherEntityTypes.FLYING_COW,
-					/*primary color:*/ 0xD8D8D8, /*secondary color:*/ 0xFFD939,
-					new Item.Properties().group(ItemGroup.MISC))),
-				item("sheepuff_spawn_egg", new SpawnEggItem(
-					AetherEntityTypes.SHEEPUFF,
-					/*primary color:*/ 0xE2FCFF,  /*secondary color:*/ 0xCB9090,
-					new Item.Properties().group(ItemGroup.MISC))),
+				item("sentry_spawn_egg", new SpawnEggItem(AetherEntityTypes.SENTRY, /*primary color:*/ 0x808080, /*secondary color:*/ 0x3A8AEC, new Item.Properties().group(ItemGroup.MISC))),
+				item("mimic_spawn_egg", new SpawnEggItem(AetherEntityTypes.MIMIC, /*primary color:*/ 0xB18132, /*secondary color:*/ 0x605A4E, new Item.Properties().group(ItemGroup.MISC))),
+				item("moa_spawn_egg", new SpawnEggItem(AetherEntityTypes.MOA, /*primary color:*/0x87BFEF, /*secondary color:*/0x7A7A7A, new Item.Properties().group(ItemGroup.MISC))),
+				item("cockatrice_spawn_egg", new SpawnEggItem(AetherEntityTypes.COCKATRICE, /*primary color:*/0x6CB15C, /*secondary color:*/0x6C579D, new Item.Properties().group(ItemGroup.MISC))),
+				item("zephyr_spawn_egg", new SpawnEggItem(AetherEntityTypes.ZEPHYR, /*primary color:*/ 0xDFDFDF, /*secondary color:*/ 0x99CFE8, new Item.Properties().group(ItemGroup.MISC))),
+				item("phyg_spawn_egg", new SpawnEggItem(AetherEntityTypes.PHYG, /*primary color:*/ 0xFFC1D0, /*secondary color:*/ 0xFFD939, new Item.Properties().group(ItemGroup.MISC))),
+				item("flying_cow_spawn_egg", new SpawnEggItem(AetherEntityTypes.FLYING_COW, /*primary color:*/ 0xD8D8D8, /*secondary color:*/ 0xFFD939, new Item.Properties().group(ItemGroup.MISC))),
+				item("sheepuff_spawn_egg", new SpawnEggItem(AetherEntityTypes.SHEEPUFF, /*primary color:*/ 0xE2FCFF,  /*secondary color:*/ 0xCB9090, new Item.Properties().group(ItemGroup.MISC))),
 			});
 		}
 

@@ -3,9 +3,13 @@ package com.aether.client.renderer.entity.model;
 import com.aether.entity.passive.FlyingCowEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class FlyingCowWingModel extends EntityModel<FlyingCowEntity> {
     private ModelRenderer leftWingInner = new ModelRenderer(this, 0, 0);
     private ModelRenderer leftWingOuter = new ModelRenderer(this, 20, 0);
@@ -24,20 +28,20 @@ public class FlyingCowWingModel extends EntityModel<FlyingCowEntity> {
 
     @Override
     public void setRotationAngles(FlyingCowEntity flyingCow, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        float wingBend = -((float)Math.acos((double)flyingCow.wingFold));
+        float wingBend = -((float)Math.acos(flyingCow.wingFold));
 
         float x = 32.0F * flyingCow.wingFold / 4.0F;
-        float y = -32.0F * (float)Math.sqrt((double)(1.0F - flyingCow.wingFold * flyingCow.wingFold)) / 4.0F;
+        float y = -32.0F * (float)Math.sqrt(1.0F - flyingCow.wingFold * flyingCow.wingFold) / 4.0F;
 
-        float x2 = x * (float)Math.cos((double)flyingCow.wingAngle) - y * (float)Math.sin((double)flyingCow.wingAngle);
-        float y2 = x * (float)Math.sin((double)flyingCow.wingAngle) + y * (float)Math.cos((double)flyingCow.wingAngle);
+        float x2 = x * (float)Math.cos(flyingCow.wingAngle) - y * (float)Math.sin(flyingCow.wingAngle);
+        float y2 = x * (float)Math.sin(flyingCow.wingAngle) + y * (float)Math.cos(flyingCow.wingAngle);
 
         this.leftWingInner.setRotationPoint(4.0F + x2, y2 + 12.0F, 0.0F);
         this.rightWingInner.setRotationPoint(-4.0F - x2, y2 + 12.0F, 0.0F);
 
         x *= 3.0F;
-        x2 = x * (float)Math.cos((double)flyingCow.wingAngle) - y * (float)Math.sin((double)flyingCow.wingAngle);
-        y2 = x * (float)Math.sin((double)flyingCow.wingAngle) + y * (float)Math.cos((double)flyingCow.wingAngle);
+        x2 = x * (float)Math.cos(flyingCow.wingAngle) - y * (float)Math.sin(flyingCow.wingAngle);
+        y2 = x * (float)Math.sin(flyingCow.wingAngle) + y * (float)Math.cos(flyingCow.wingAngle);
 
         this.leftWingOuter.setRotationPoint(4.0F + x2, y2 + 12.0F, 0.0F);
         this.rightWingOuter.setRotationPoint(-4.0F - x2, y2 + 12.0F, 0.0F);

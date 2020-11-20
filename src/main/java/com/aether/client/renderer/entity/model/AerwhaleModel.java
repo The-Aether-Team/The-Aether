@@ -1,96 +1,101 @@
-/*
 package com.aether.client.renderer.entity.model;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
 
-public class AerwhaleModel extends EntityModel<AerwhaleEntity> {
-	private final ModelRenderer FrontBody;
-	private final ModelRenderer RightFin;
-	private final ModelRenderer BottomPartHead;
-	private final ModelRenderer LeftFin;
-	private final ModelRenderer BottomPartMiddlebody;
-	private final ModelRenderer Head;
-	private final ModelRenderer MiddleFin;
-	private final ModelRenderer BackfinRight;
-	private final ModelRenderer BackBody;
-	private final ModelRenderer BackfinLeft;
-	private final ModelRenderer Middlebody;
+import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+@OnlyIn(Dist.CLIENT)
+public class AerwhaleModel extends BaseAerwhaleModel {
+	private final ModelRenderer frontBody;
+	private final ModelRenderer rightFin;
+	private final ModelRenderer bottomPartHead;
+	private final ModelRenderer leftFin;
+	private final ModelRenderer bottomPartMiddlebody;
+	private final ModelRenderer head;
+	private final ModelRenderer middleFin;
+	private final ModelRenderer backFinRight;
+	private final ModelRenderer backBody;
+	private final ModelRenderer backFinLeft;
+	private final ModelRenderer middleBody;
 
 	public AerwhaleModel() {
-		textureWidth = 512;
-		textureHeight = 64;
+		this.textureWidth = 512;
+		this.textureHeight = 64;
 
-		FrontBody = new ModelRenderer(this);
-		FrontBody.setRotationPoint(2.0F, 6.0F, 38.0F);
-		FrontBody.setTextureOffset(0, 0).addBox(-11.5F, -1.0F, -0.5F, 19.0F, 5.0F, 21.0F, 0.0F, true);
+		this.frontBody = new ModelRenderer(this, 0, 0);
+		this.frontBody.setRotationPoint(2.0F, 6.0F, 38.0F);
+		this.frontBody.addBox(-11.5F, -1.0F, -0.5F, 19.0F, 5.0F, 21.0F, true);
+		this.frontBody.rotateAngleX = -0.1047198F;
 
-		RightFin = new ModelRenderer(this);
-		RightFin.setRotationPoint(-10.0F, 4.0F, 10.0F);
-		RightFin.setTextureOffset(446, 1).addBox(-20.0F, -2.0F, -6.0F, 19.0F, 3.0F, 14.0F, 0.0F, false);
+		this.rightFin = new ModelRenderer(this, 446, 1);
+		this.rightFin.setRotationPoint(-10.0F, 4.0F, 10.0F);
+		this.rightFin.addBox(-20.0F, -2.0F, -6.0F, 19.0F, 3.0F, 14.0F, false);
+		this.rightFin.rotateAngleX = -0.148353F;
+		this.rightFin.rotateAngleY = 0.2094395F;		
 
-		BottomPartHead = new ModelRenderer(this);
-		BottomPartHead.setRotationPoint(0.0F, 0.0F, 0.0F);
-		BottomPartHead.setTextureOffset(116, 28).addBox(-13.0F, 4.0F, -15.0F, 26.0F, 6.0F, 30.0F, 0.0F, true);
+		this.bottomPartHead = new ModelRenderer(this, 116, 28);
+		this.bottomPartHead.setRotationPoint(0.0F, 0.0F, 0.0F);
+		this.bottomPartHead.addBox(-13.0F, 4.0F, -15.0F, 26.0F, 6.0F, 30.0F, true);
 
-		LeftFin = new ModelRenderer(this);
-		LeftFin.setRotationPoint(10.0F, 4.0F, 10.0F);
-		LeftFin.setTextureOffset(446, 1).addBox(1.0F, -2.0F, -6.0F, 19.0F, 3.0F, 14.0F, 0.0F, true);
+		this.leftFin = new ModelRenderer(this, 446, 1);
+		this.leftFin.setRotationPoint(10.0F, 4.0F, 10.0F);
+		this.leftFin.addBox(1.0F, -2.0F, -6.0F, 19.0F, 3.0F, 14.0F, true);
+		this.leftFin.rotateAngleX = -0.148353F;
+		this.leftFin.rotateAngleY = -0.2094395F;
 
-		BottomPartMiddlebody = new ModelRenderer(this);
-		BottomPartMiddlebody.setRotationPoint(0.0F, -1.0F, 14.0F);
-		BottomPartMiddlebody.setTextureOffset(16, 32).addBox(-12.0F, 5.0F, -1.0F, 24.0F, 6.0F, 26.0F, 0.0F, true);
+		this.bottomPartMiddlebody = new ModelRenderer(this, 16, 32);
+		this.bottomPartMiddlebody.setRotationPoint(0.0F, -1.0F, 14.0F);
+		this.bottomPartMiddlebody.addBox(-12.0F, 5.0F, -1.0F, 24.0F, 6.0F, 26.0F, true);
 
-		Head = new ModelRenderer(this);
-		Head.setRotationPoint(0.0F, 0.0F, 0.0F);
-		Head.setTextureOffset(408, 18).addBox(-12.0F, -9.0F, -14.0F, 24.0F, 18.0F, 28.0F, 0.0F, true);
+		this.head = new ModelRenderer(this, 408, 18);
+		this.head.setRotationPoint(0.0F, 0.0F, 0.0F);
+		this.head.addBox(-12.0F, -9.0F, -14.0F, 24.0F, 18.0F, 28.0F, true);
 
-		MiddleFin = new ModelRenderer(this);
-		MiddleFin.setRotationPoint(0.0F, -1.0F, 14.0F);
-		MiddleFin.setTextureOffset(318, 35).addBox(-1.0F, -11.0F, 7.0F, 2.0F, 7.0F, 8.0F, 0.0F, true);
+		this.middleFin = new ModelRenderer(this, 318, 35);
+		this.middleFin.setRotationPoint(0.0F, -1.0F, 14.0F);
+		this.middleFin.addBox(-1.0F, -11.0F, 7.0F, 2.0F, 7.0F, 8.0F, true);
+		this.middleFin.rotateAngleX = -0.1441704F;
 
-		BackfinRight = new ModelRenderer(this);
-		BackfinRight.setRotationPoint(-4.0F, 5.0F, 59.0F);
-		BackfinRight.setTextureOffset(261, 5).addBox(-11.0F, 0.0F, -6.0F, 15.0F, 3.0F, 24.0F, 0.0F, false);
+		this.backFinRight = new ModelRenderer(this, 261, 5);
+		this.backFinRight.setRotationPoint(-4.0F, 5.0F, 59.0F);
+		this.backFinRight.addBox(-11.0F, 0.0F, -6.0F, 15.0F, 3.0F, 24.0F, false);
+		this.backFinRight.rotateAngleX = -0.1047198F;
+		this.backFinRight.rotateAngleY = -0.7330383F;
 
-		BackBody = new ModelRenderer(this);
-		BackBody.setRotationPoint(2.0F, 5.0F, 38.0F);
-		BackBody.setTextureOffset(228, 32).addBox(-10.5F, -9.0F, -2.0F, 17.0F, 10.0F, 22.0F, 0.0F, true);
+		this.backBody = new ModelRenderer(this, 228, 32);
+		this.backBody.setRotationPoint(2.0F, 5.0F, 38.0F);
+		this.backBody.addBox(-10.5F, -9.0F, -2.0F, 17.0F, 10.0F, 22.0F, true);
+		this.backBody.rotateAngleX = -0.1047198F;
 
-		BackfinLeft = new ModelRenderer(this);
-		BackfinLeft.setRotationPoint(5.0F, 5.0F, 59.0F);
-		BackfinLeft.setTextureOffset(261, 5).addBox(-4.0F, 0.0F, -6.0F, 13.0F, 3.0F, 24.0F, 0.0F, true);
-
-		Middlebody = new ModelRenderer(this);
-		Middlebody.setRotationPoint(0.0F, -1.0F, 14.0F);
-		Middlebody.setTextureOffset(314, 25).addBox(-11.0F, -5.0F, -1.0F, 22.0F, 14.0F, 25.0F, 0.0F, true);
-	}
-
-	@Override
-	public void setRotationAngles(AerwhaleEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+		this.backFinLeft = new ModelRenderer(this, 261, 5);
+		this.backFinLeft.setRotationPoint(5.0F, 5.0F, 59.0F);
+		this.backFinLeft.addBox(-4.0F, 0.0F, -6.0F, 13.0F, 3.0F, 24.0F, true);
+		this.backFinLeft.rotateAngleX = -0.1047198F;
+		this.backFinLeft.rotateAngleY = 0.7330383F;
+		
+		this.middleBody = new ModelRenderer(this, 314, 25);
+		this.middleBody.setRotationPoint(0.0F, -1.0F, 14.0F);
+		this.middleBody.addBox(-11.0F, -5.0F, -1.0F, 22.0F, 14.0F, 25.0F, true);
+		this.middleBody.rotateAngleX = -0.0698132F;
 	}
 
 	@Override
 	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		FrontBody.render(matrixStack, buffer, packedLight, packedOverlay);
-		RightFin.render(matrixStack, buffer, packedLight, packedOverlay);
-		BottomPartHead.render(matrixStack, buffer, packedLight, packedOverlay);
-		LeftFin.render(matrixStack, buffer, packedLight, packedOverlay);
-		BottomPartMiddlebody.render(matrixStack, buffer, packedLight, packedOverlay);
-		Head.render(matrixStack, buffer, packedLight, packedOverlay);
-		MiddleFin.render(matrixStack, buffer, packedLight, packedOverlay);
-		BackfinRight.render(matrixStack, buffer, packedLight, packedOverlay);
-		BackBody.render(matrixStack, buffer, packedLight, packedOverlay);
-		BackfinLeft.render(matrixStack, buffer, packedLight, packedOverlay);
-		Middlebody.render(matrixStack, buffer, packedLight, packedOverlay);
+		//System.out.println("Aerwhale render");
+		this.frontBody.render(matrixStack, buffer, packedLight, packedOverlay);
+		this.rightFin.render(matrixStack, buffer, packedLight, packedOverlay);
+		this.bottomPartHead.render(matrixStack, buffer, packedLight, packedOverlay);
+		this.leftFin.render(matrixStack, buffer, packedLight, packedOverlay);
+		this.bottomPartMiddlebody.render(matrixStack, buffer, packedLight, packedOverlay);
+		this.head.render(matrixStack, buffer, packedLight, packedOverlay);
+		this.middleFin.render(matrixStack, buffer, packedLight, packedOverlay);
+		this.backFinRight.render(matrixStack, buffer, packedLight, packedOverlay);
+		this.backBody.render(matrixStack, buffer, packedLight, packedOverlay);
+		this.backFinLeft.render(matrixStack, buffer, packedLight, packedOverlay);
+		this.middleBody.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
-
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
-	}
-}*/
+	
+}
