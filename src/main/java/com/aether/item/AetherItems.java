@@ -5,7 +5,6 @@ import com.aether.api.enchantments.AetherEnchantmentFuel;
 import com.aether.api.freezables.AetherFreezableFuel;
 import com.aether.block.AetherBlocks;
 import com.aether.entity.monster.MimicEntity;
-import com.aether.entity.monster.SentryEntity;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;

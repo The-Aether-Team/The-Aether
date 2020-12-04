@@ -4,8 +4,6 @@ import static net.minecraft.block.FallingBlock.canFallThrough;
 
 import java.util.Random;
 
-import com.aether.entity.item.FloatingBlockEntity;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;

@@ -2,7 +2,6 @@ package com.aether.client.renderer.entity;
 
 import java.util.Random;
 
-import com.aether.entity.item.FloatingBlockEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.block.BlockRenderType;

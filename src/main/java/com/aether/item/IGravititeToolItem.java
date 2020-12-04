@@ -3,8 +3,6 @@ package com.aether.item;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.aether.entity.item.FloatingBlockEntity;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;

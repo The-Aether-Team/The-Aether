@@ -1,9 +1,7 @@
 package com.aether.entity;
 
 import com.aether.Aether;
-import com.aether.entity.item.FloatingBlockEntity;
 import com.aether.entity.monster.MimicEntity;
-import com.aether.entity.monster.SentryEntity;
 import com.aether.entity.passive.MoaEntity;
 import com.aether.entity.projectile.LightningKnifeEntity;
 import com.aether.item.AetherItems;
