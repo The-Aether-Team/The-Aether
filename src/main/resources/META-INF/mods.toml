@@ -1,10 +1,10 @@
 modLoader = "javafml"
-loaderVersion = "[31,)"
-
+loaderVersion = "[35,)"
+license = "I don't know the license"
 [[mods]]
 
 modId = "aether"
-version = "1.15.2-v1.5.0"
+version = "${file.jarVersion}"
 displayName = "The Aether"
 displayURL = "https://gildedgames.com/"
 logoFile = "aether.png"
@@ -17,12 +17,12 @@ The Aether, a hostile paradise in the skies.
 [[dependencies.aether]]
     modId = "forge"
     mandatory = true
-    versionRange = "[31,)"
+    versionRange = "[35,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.aether]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "[1.15.2]"
+    versionRange = "[1.16.4]"
     ordering = "NONE"
     side = "BOTH"
