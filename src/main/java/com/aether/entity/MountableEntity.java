@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.aether.entity.passive.MoaEntity;
 
+import com.aether.entity.passive.PhygEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IJumpingMount;
@@ -19,7 +20,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public abstract class MountableEntity extends AetherAnimalEntity implements IJumpingMount {
-	public static final DataParameter<Boolean> RIDER_SNEAKING = EntityDataManager.createKey(MoaEntity.class, DataSerializers.BOOLEAN);
+	public static final DataParameter<Boolean> RIDER_SNEAKING = EntityDataManager.createKey(MountableEntity.class, DataSerializers.BOOLEAN);
 	
 	protected float jumpPower;
 	protected boolean mountJumping;
@@ -33,7 +34,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 	@Override
 	protected void registerData() {
 		super.registerData();
-		
+
 		this.dataManager.register(RIDER_SNEAKING, false);
 	}
 	
@@ -96,6 +97,9 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 			else {
 				this.setRiderSneaking(false);
 			}
+		}
+		else {
+			this.setRiderSneaking(false);
 		}
 	}
 	

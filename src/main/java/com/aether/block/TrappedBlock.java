@@ -35,7 +35,7 @@ public class TrappedBlock extends Block {
 			if (!world.isRemote) {
 				EntityType<?> entityType = entityTypeSupplier.get();
 				Entity entity = entityType.create(world);
-				entity.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, rand.nextFloat() * 360.0f, 0.0f);
+				entity.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
 				world.addEntity(entity);
 			}
 			

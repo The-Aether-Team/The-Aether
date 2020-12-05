@@ -40,11 +40,11 @@ public class MoaModel extends EntityModel<MoaEntity> {
 		this.legs2.setRotationPoint(2.0F, 0 + 16, 1.0F);
 
 		this.wings = new ModelRenderer(this, 52, 0);
-		this.wings.addBox(-1.0F, -0.0F, -1.0F, 1, 8, 4);
+		this.wings.addBox(-1.01F, -0.0F, -1.0F, 1, 8, 4);
 		this.wings.setRotationPoint(-3.0F, (16), 2.0F);
 
 		this.wings2 = new ModelRenderer(this, 52, 0);
-		this.wings2.addBox(0.0F, -0.0F, -1.0F, 1, 8, 4);
+		this.wings2.addBox(0.01F, -0.0F, -1.0F, 1, 8, 4);
 		this.wings2.setRotationPoint(3.0F, -4 + 16, 0.0F);
 
 		this.neck = new ModelRenderer(this, 44, 0);
@@ -81,10 +81,10 @@ public class MoaModel extends EntityModel<MoaEntity> {
 		this.legs2.rotateAngleX = MathHelper.cos((float)(limbSwing * 0.6662F + Math.PI)) * 1.4F * limbSwingAmount;
 
 		if (ageInTicks > 0.001F) {
-			this.wings.rotationPointZ = -1F;
-			this.wings2.rotationPointZ = -1F;
-			this.wings.rotationPointY = 12F;
-			this.wings2.rotationPointY = 12F;
+			this.wings.rotationPointZ = -1.0F;
+			this.wings2.rotationPointZ = -1.0F;
+			this.wings.rotationPointY = 12.0F;
+			this.wings2.rotationPointY = 12.0F;
 			this.wings.rotateAngleX = 0.0F;
 			this.wings2.rotateAngleX = 0.0F;
 			this.wings.rotateAngleZ = ageInTicks;
@@ -93,10 +93,10 @@ public class MoaModel extends EntityModel<MoaEntity> {
 			this.legs2.rotateAngleX = 0.6F;
 		}
 		else {
-			this.wings.rotationPointZ = -3F;
-			this.wings2.rotationPointZ = -3F;
-			this.wings.rotationPointY = 14F;
-			this.wings2.rotationPointY = 14F;
+			this.wings.rotationPointZ = -3.0F;
+			this.wings2.rotationPointZ = -3.0F;
+			this.wings.rotationPointY = 14.0F;
+			this.wings2.rotationPointY = 14.0F;
 			this.wings.rotateAngleX = (float)(Math.PI / 2.0F);
 			this.wings2.rotateAngleX = (float)(Math.PI / 2.0F);
 			this.wings.rotateAngleZ = 0.0F;
@@ -115,10 +115,10 @@ public class MoaModel extends EntityModel<MoaEntity> {
 			this.feather3.setRotationPoint(0.0F, 1 + 24, 1.0F);
 
 			this.jaw.rotateAngleX = -0.3F;
-			this.head.rotateAngleX = 0F;
+			this.head.rotateAngleX = 0.0F;
 
-			this.wings.rotationPointY = 22F;
-			this.wings2.rotationPointY = 22F;
+			this.wings.rotationPointY = 22.0F;
+			this.wings2.rotationPointY = 22.0F;
 		}
 		else {
 			this.head.setRotationPoint(0.0F, -8 + 16, -4.0F);

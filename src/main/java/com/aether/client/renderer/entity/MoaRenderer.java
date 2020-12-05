@@ -36,25 +36,18 @@ public class MoaRenderer extends MobRenderer<MoaEntity, MoaModel>{
 	
 	@Override
 	protected void preRenderCallback(MoaEntity moa, MatrixStack matrixStackIn, float partialTickTime) {
-		float moaScale = moa.isChild()? 1.0f : 1.8f;
+		float moaScale = moa.isChild()? 1.0F : 1.8F;
 		matrixStackIn.scale(moaScale, moaScale, moaScale);
 	}
 
 	@Override
 	public ResourceLocation getEntityTexture(MoaEntity entity) {
 		if (entity.hasCustomName()) {
-			String entityName = entity.getCustomName().getUnformattedComponentText();
-			switch (entityName) {
-				case "Mos":
-					if (entity.getMoaType() == MoaTypes.ORANGE) {
-						return MOS_TEXTURE;
-					}
-					break;
-				case "Raptor__":
-					if (entity.getMoaType() == MoaTypes.BLUE) {
-						return RAPTOR_TEXTURE;
-					}
-					break;
+			if (entity.getMoaType() == MoaTypes.ORANGE && "Mos".equals(entity.getCustomName().getUnformattedComponentText())) {
+				return MOS_TEXTURE;
+			}
+			if (entity.getMoaType() == MoaTypes.BLUE && "Raptor__".equals(entity.getCustomName().getUnformattedComponentText())) {
+				return RAPTOR_TEXTURE;
 			}
 		}
 		if (entity.getMoaType() == MoaTypes.BLUE) {

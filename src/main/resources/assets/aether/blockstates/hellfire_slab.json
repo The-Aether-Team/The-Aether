@@ -1,11 +1,13 @@
 {
-    
-	"variants": 
-	{
-        
-		"half=bottom": { "model": "aether:block/hellfire_half_slab" },
-        			"half=top": { "model": "aether:block/hellfire_upper_slab" }
-    
-	}
-
+  "variants": {
+    "type=bottom": {
+      "model": "aether:block/hellfire_slab"
+    },
+    "type=top": {
+      "model": "aether:block/hellfire_slab_top"
+    },
+    "type=double": {
+      "model": "aether:block/hellfire_stone"
+    }
+  }
 }

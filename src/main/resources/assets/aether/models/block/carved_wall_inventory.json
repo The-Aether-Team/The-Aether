@@ -1,11 +1,6 @@
 {
-    
-	"parent": "block/wall_inventory",
-    
-	"textures": {
-        
-		"wall": "aether:block/carved_stone"
-    
-	}
-
+  "parent": "block/wall_inventory",
+  "textures": {
+    "wall": "aether:block/carved_stone"
+  }
 }

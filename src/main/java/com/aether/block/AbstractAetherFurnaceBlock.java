@@ -33,12 +33,14 @@ public abstract class AbstractAetherFurnaceBlock extends ContainerBlock {
 		super.fillStateContainer(builder);
 		builder.add(LIT);
 	}
-	
+
+	/* I don't know if this is needed so I'll just comment it out
 	@SuppressWarnings("deprecation")
 	@Override
 	public int getLightValue(BlockState state) {
 		return state.get(LIT)? super.getLightValue(state) : 0;
 	}
+	*/
 	
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {

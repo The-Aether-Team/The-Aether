@@ -15,11 +15,11 @@ public class AetherPortalParticle extends PortalParticle {
 	protected AetherPortalParticle(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
 		
-		float f = this.rand.nextFloat() * 0.6f + 0.4f;
+		float f = this.rand.nextFloat() * 0.6F + 0.4F;
 		
-		this.particleRed = this.particleGreen = this.particleBlue = 1.0f * f;
-		this.particleRed *= 0.2f;
-		this.particleGreen *= 0.2f;
+		this.particleRed = this.particleGreen = this.particleBlue = 1.0F * f;
+		this.particleRed *= 0.2F;
+		this.particleGreen *= 0.2F;
 	}
 	
 	@OnlyIn(Dist.CLIENT)

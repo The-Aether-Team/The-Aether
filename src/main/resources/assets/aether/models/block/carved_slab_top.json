@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab_top",
+  "textures": {
+    "bottom": "aether:block/carved_stone",
+    "top": "aether:block/carved_stone",
+    "side": "aether:block/carved_stone"
+  }
+}

@@ -15,7 +15,10 @@ import net.minecraftforge.registries.ObjectHolder;
 public class AetherTileEntityTypes {
 
 	public static final TileEntityType<EnchanterTileEntity> ENCHANTER = null;
+	public static final TileEntityType<FreezerTileEntity> FREEZER = null;
+	public static final TileEntityType<IncubatorTileEntity> INCUBATOR = null;
 	public static final TileEntityType<ChestMimicTileEntity> CHEST_MIMIC = null;
+	public static final TileEntityType<TreasureChestTileEntity> TREASURE_CHEST = null;
 	
 	@EventBusSubscriber(modid = Aether.MODID, bus = Bus.MOD)
 	public static class Registration {
@@ -25,7 +28,10 @@ public class AetherTileEntityTypes {
 			event.getRegistry().registerAll(new TileEntityType[] {
 				
 				tileEntity("enchanter", TileEntityType.Builder.<EnchanterTileEntity>create(EnchanterTileEntity::new, AetherBlocks.ENCHANTER)),
+				tileEntity("freezer", TileEntityType.Builder.<FreezerTileEntity>create(FreezerTileEntity::new, AetherBlocks.FREEZER)),
+				tileEntity("incubator", TileEntityType.Builder.<IncubatorTileEntity>create(IncubatorTileEntity::new, AetherBlocks.INCUBATOR)),
 				tileEntity("chest_mimic", TileEntityType.Builder.<ChestMimicTileEntity>create(ChestMimicTileEntity::new, AetherBlocks.CHEST_MIMIC)),
+				tileEntity("treasure_chest", TileEntityType.Builder.<TreasureChestTileEntity>create(TreasureChestTileEntity::new, AetherBlocks.TREASURE_CHEST)),
 				
 			});
 		}

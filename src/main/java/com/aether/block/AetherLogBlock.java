@@ -4,14 +4,13 @@ import com.aether.block.state.properties.AetherBlockStateProperties;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.LogBlock;
-import net.minecraft.block.material.MaterialColor;
+import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.state.StateContainer;
 
-public class AetherLogBlock extends LogBlock implements IAetherDoubleDropBlock {
+public class AetherLogBlock extends RotatedPillarBlock implements IAetherDoubleDropBlock {
 
-	public AetherLogBlock(MaterialColor verticalColor, Block.Properties properties) {
-		super(verticalColor, properties);
+	public AetherLogBlock(Block.Properties properties) {
+		super(properties);
 		this.setDefaultState(this.getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, false));
 	}
 	

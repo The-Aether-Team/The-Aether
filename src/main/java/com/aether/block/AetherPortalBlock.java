@@ -1,23 +1,16 @@
 package com.aether.block;
 
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import com.aether.Aether;
 import com.aether.particles.AetherParticleTypes;
 import com.aether.util.AetherSoundEvents;
-import com.aether.world.AetherTeleporter;
-import com.aether.world.dimension.AetherDimensions;
 import com.google.common.cache.LoadingCache;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.pattern.BlockPattern;
 import net.minecraft.entity.Entity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
@@ -29,26 +22,25 @@ import net.minecraft.util.Direction.AxisDirection;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
+import javax.annotation.Nullable;
+import java.util.Random;
+
 @EventBusSubscriber(modid = Aether.MODID)
 public class AetherPortalBlock extends Block {
 	public static final EnumProperty<Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
-	protected static final VoxelShape X_AABB = Block.makeCuboidShape(0.0D, 0.0D, 6.0D, 16.0D, 16.0D, 10.0D);
-	protected static final VoxelShape Z_AABB = Block.makeCuboidShape(6.0D, 0.0D, 0.0D, 10.0D, 16.0D, 16.0D);
+	protected static final VoxelShape X_AABB = Block.makeCuboidShape(0.0, 0.0, 6.0, 16.0, 16.0, 10.0);
+	protected static final VoxelShape Z_AABB = Block.makeCuboidShape(6.0, 0.0, 0.0, 10.0, 16.0, 16.0);
 
 	public AetherPortalBlock(Block.Properties properties) {
 		super(properties);
@@ -102,6 +94,7 @@ public class AetherPortalBlock extends Block {
 	@Override
 	@Deprecated
 	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
+		/*
 		if (!entity.isPassenger() && !entity.isBeingRidden() && entity.isNonBoss()) {
 			if (entity.timeUntilPortal > 0) {
 				entity.timeUntilPortal = entity.getPortalCooldown();
@@ -126,13 +119,14 @@ public class AetherPortalBlock extends Block {
 				}
 			}
 		}
+		*/
 	}
 	
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if (rand.nextInt(100) == 0) {
-			worldIn.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.4f + 0.8f, false);
+			worldIn.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
 		}
 
 		for (int i = 0; i < 4; ++i) {
@@ -146,11 +140,11 @@ public class AetherPortalBlock extends Block {
 
 			if (worldIn.getBlockState(pos.west()).getBlock() != this && worldIn.getBlockState(pos.east()).getBlock() != this) {
 				x = pos.getX() + 0.5 + 0.25 * mul;
-				sX = rand.nextFloat() * 2.0f * mul;
+				sX = rand.nextFloat() * 2.0F * mul;
 			}
 			else {
 				z = pos.getZ() + 0.5 + 0.25 * mul;
-				sZ = rand.nextFloat() * 2.0f * mul;
+				sZ = rand.nextFloat() * 2.0F * mul;
 			}
 
 			worldIn.addParticle(AetherParticleTypes.AETHER_PORTAL, x, y, z, sX, sY, sZ);
@@ -192,15 +186,17 @@ public class AetherPortalBlock extends Block {
 		IWorld world = event.getWorld();
 		
 		BlockState blockstate = world.getBlockState(pos);
-		IFluidState fluidstate = world.getFluidState(pos);
+		FluidState fluidstate = world.getFluidState(pos);
 		if (fluidstate.getFluid() != Fluids.WATER || blockstate.isAir(world, pos)) {
 			return;
 		}
-		
+
+		/* idk what to do with this
 		DimensionType dimension = world.getDimension().getType();
 		if (dimension != DimensionType.OVERWORLD && dimension != AetherDimensions.THE_AETHER) {
 			return;
 		}
+		*/
 		
 		boolean tryPortal = false;
 		for (Direction direction : Direction.values()) {

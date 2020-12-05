@@ -1,5 +1,3 @@
 {
-    
-	"parent": "aether:block/holystone_brick_half_slab"
-
+  "parent": "aether:block/holystone_brick_slab"
 }

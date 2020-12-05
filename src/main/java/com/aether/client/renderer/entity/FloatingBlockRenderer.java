@@ -25,7 +25,7 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 
 	public FloatingBlockRenderer(EntityRendererManager renderManager) {
 		super(renderManager);
-		this.shadowSize = 0.5f;
+		this.shadowSize = 0.5F;
 	}
 
 	@SuppressWarnings("deprecation")

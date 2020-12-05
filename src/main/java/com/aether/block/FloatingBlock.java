@@ -4,6 +4,7 @@ import static net.minecraft.block.FallingBlock.canFallThrough;
 
 import java.util.Random;
 
+import com.aether.entity.item.FloatingBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
@@ -20,19 +21,16 @@ public class FloatingBlock extends Block {
 		super(properties);
 		this.powered = powered;
 	}
-	@Override
-	public boolean isBeaconBase(BlockState state, IWorldReader world, BlockPos pos, BlockPos beacon) {
-		return super.isBeaconBase(state, world, pos, beacon);
-	}
+
 	@Override
 	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-		worldIn.getPendingBlockTicks().scheduleTick(pos, this, this.tickRate(worldIn));
+		worldIn.getPendingBlockTicks().scheduleTick(pos, this, 2);
 	}
 	
 	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-		worldIn.getPendingBlockTicks().scheduleTick(currentPos, this, this.tickRate(worldIn));
+		worldIn.getPendingBlockTicks().scheduleTick(currentPos, this, 2);
 		return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 	
@@ -56,10 +54,4 @@ public class FloatingBlock extends Block {
 	public void onEndFloating(World worldIn, BlockPos pos, BlockState floatingState, BlockState hitState) {}
 	
 	public void onBroken(World worldIn, BlockPos pos) {}
-	
-	@Override
-	public int tickRate(IWorldReader worldIn) {
-		return 2;
-	}
-	
 }

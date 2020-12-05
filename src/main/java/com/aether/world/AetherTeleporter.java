@@ -86,7 +86,7 @@ public class AetherTeleporter implements ITeleporter {
 								}
 
 								double distance = blockpos1.distanceSq(pos);
-								if (d0 < 0.0D || distance < d0) {
+								if (d0 < 0.0 || distance < d0) {
 									d0 = distance;
 									blockpos = blockpos1;
 								}
@@ -293,10 +293,10 @@ public class AetherTeleporter implements ITeleporter {
 			player.setLocationAndAngles(d0, d1, d2, f1, f);
 			currentWorld.getProfiler().endSection();
 			currentWorld.getProfiler().startSection("placing");
-			double d7 = Math.min(-2.9999872E7D, destWorld.getWorldBorder().minX() + 16.0D);
-			double d4 = Math.min(-2.9999872E7D, destWorld.getWorldBorder().minZ() + 16.0D);
-			double d5 = Math.min(2.9999872E7D, destWorld.getWorldBorder().maxX() - 16.0D);
-			double d6 = Math.min(2.9999872E7D, destWorld.getWorldBorder().maxZ() - 16.0D);
+			double d7 = Math.min(-2.9999872E7, destWorld.getWorldBorder().minX() + 16.0);
+			double d4 = Math.min(-2.9999872E7, destWorld.getWorldBorder().minZ() + 16.0);
+			double d5 = Math.min(2.9999872E7, destWorld.getWorldBorder().maxX() - 16.0);
+			double d6 = Math.min(2.9999872E7, destWorld.getWorldBorder().maxZ() - 16.0);
 			d0 = MathHelper.clamp(d0, d7, d5);
 			d2 = MathHelper.clamp(d2, d4, d6);
 			player.setLocationAndAngles(d0, d1, d2, f1, f);
@@ -322,10 +322,10 @@ public class AetherTeleporter implements ITeleporter {
 			double d0 = entity.getPosX() * movementFactor;
 			double d1 = entity.getPosZ() * movementFactor;
 	
-			double d3 = Math.min(-2.9999872E7D, destWorld.getWorldBorder().minX() + 16.0D);
-			double d4 = Math.min(-2.9999872E7D, destWorld.getWorldBorder().minZ() + 16.0D);
-			double d5 = Math.min(2.9999872E7D, destWorld.getWorldBorder().maxX() - 16.0D);
-			double d6 = Math.min(2.9999872E7D, destWorld.getWorldBorder().maxZ() - 16.0D);
+			double d3 = Math.min(-2.9999872E7, destWorld.getWorldBorder().minX() + 16.0);
+			double d4 = Math.min(-2.9999872E7, destWorld.getWorldBorder().minZ() + 16.0);
+			double d5 = Math.min(2.9999872E7, destWorld.getWorldBorder().maxX() - 16.0);
+			double d6 = Math.min(2.9999872E7, destWorld.getWorldBorder().maxZ() - 16.0);
 			d0 = MathHelper.clamp(d0, d3, d5);
 			d1 = MathHelper.clamp(d1, d4, d6);
 			Vec3d vec3d1 = entity.getLastPortalVec();

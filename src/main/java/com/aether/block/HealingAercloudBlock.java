@@ -18,7 +18,7 @@ public class HealingAercloudBlock extends AercloudBlock {
 		super.onEntityCollision(state, world, pos, entity);
 		
 		if (entity.ticksExisted % 20 == 0 && entity instanceof LivingEntity) {
-			((LivingEntity) entity).heal(1.0f);
+			((LivingEntity) entity).heal(1.0F);
 		}
 	}
 	

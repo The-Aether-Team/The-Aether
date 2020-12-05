@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -32,13 +32,13 @@ public class IcestoneBlock extends Block {
 //						}
 //					}	
 					if (block instanceof FlowingFluidBlock) {
-						IFluidState fluidState = state2.getFluidState();
+						FluidState fluidState = state2.getFluidState();
 						if (fluidState.isTagged(FluidTags.WATER)) { // TODO configuration value or registry for custom liquids?
 							worldIn.setBlockState(newPos, Blocks.ICE.getDefaultState());
 						}
 						else if (fluidState.isTagged(FluidTags.LAVA)) {
 							worldIn.setBlockState(newPos, Blocks.OBSIDIAN.getDefaultState());
-							worldIn.playSound(null, newPos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1.0f, 1.0f);
+							worldIn.playSound(null, newPos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
 						}
 					}
 				}

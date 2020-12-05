@@ -41,15 +41,15 @@ public class EnchanterBlock extends AbstractAetherFurnaceBlock {
 	@Override
 	public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
 		if (state.get(LIT)) {
-			float x = pos.getX() + 0.5f;
-			float y = pos.getY() + 1.0f + (rand.nextFloat() * 6.0f) / 16.0f;
-			float z = pos.getZ() + 0.5f;
+			float x = pos.getX() + 0.5F;
+			float y = pos.getY() + 1.0F + (rand.nextFloat() * 6.0F) / 16.0F;
+			float z = pos.getZ() + 0.5F;
 			
 			world.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
 			world.addParticle(ParticleTypes.FLAME, x, y, z, 0.0, 0.0, 0.0);
 			
 			if (rand.nextDouble() < 0.1) {
-				world.playSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0f, 1.0f, false);
+				world.playSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 			}
 		}
 	}	

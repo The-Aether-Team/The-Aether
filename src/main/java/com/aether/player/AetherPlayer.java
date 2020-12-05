@@ -22,7 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AetherPlayer implements IAetherPlayer {
 
 	private static final UUID HEALTH_UUID = new UUID(-2346749345421374890L, -8027384656528210170L);
-	private static final UUID EXTENDED_REACH_UUID = new UUID(-2346749345421374890L, -8027384656528210169L);
+	private static final UUID EXTENDED_REACH_UUID = new UUID(-2346749345421374890L, -8027384656528210169L); //TODO: What do we do with this? Keep it, or put it in Item.getAttributeModifiers?
 	
 	private final PlayerEntity player;
 	private AttributeModifier healthModifier, reachModifier;

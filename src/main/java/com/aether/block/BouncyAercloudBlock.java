@@ -5,8 +5,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class BouncyAercloudBlock extends TintedAercloudBlock {
@@ -19,9 +19,9 @@ public class BouncyAercloudBlock extends TintedAercloudBlock {
 	
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		entity.fallDistance = 0.0f;
+		entity.fallDistance = 0.0F;
 		
-		Vec3d motion = entity.getMotion();
+		Vector3d motion = entity.getMotion();
 		
 		if (entity.isSneaking()) {
 			if (motion.y < 0) {
@@ -30,7 +30,7 @@ public class BouncyAercloudBlock extends TintedAercloudBlock {
 			return;
 		}
 		
-		entity.setMotion(new Vec3d(motion.x, 2.0, motion.y));
+		entity.setMotion(new Vector3d(motion.x, 2.0, motion.y));
 		
 		if (world.isRemote) {
 			for (int count = 0; count < 50; count++) {

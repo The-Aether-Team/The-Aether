@@ -1,11 +1,6 @@
 {
-   
- 	"parent": "block/wall_side",
-    
-	"textures": {
-        
-		"wall": "aether:block/carved_stone"
-    
-	}
-
+  "parent": "block/template_wall_side",
+  "textures": {
+    "wall": "aether:block/carved_stone"
+  }
 }

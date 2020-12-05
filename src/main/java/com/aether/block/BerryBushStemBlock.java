@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 public class BerryBushStemBlock extends AetherBushBlock implements IGrowable {
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
+	protected static final VoxelShape SHAPE = Block.makeCuboidShape(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
 
 	public BerryBushStemBlock(Block.Properties properties) {
 		super(properties);
@@ -42,7 +42,7 @@ public class BerryBushStemBlock extends AetherBushBlock implements IGrowable {
 
 	@Override
 	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-		return rand.nextFloat() < 0.45f;
+		return rand.nextFloat() < 0.45F;
 	}
 
 	@Override

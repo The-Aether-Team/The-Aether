@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab",
+  "textures": {
+    "bottom": "aether:block/aerogel",
+    "top": "aether:block/aerogel",
+    "side": "aether:block/aerogel"
+  }
+}

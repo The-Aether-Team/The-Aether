@@ -1,11 +1,6 @@
 {
-   
- 	"parent": "block/wall_side",
-    
-	"textures": {
-        
-		"wall": "aether:block/holystone_brick"
-    
-	}
-
+  "parent": "block/template_wall_side",
+  "textures": {
+    "wall": "aether:block/holystone_bricks"
+  }
 }

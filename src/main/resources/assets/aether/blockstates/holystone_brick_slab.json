@@ -1,11 +1,13 @@
 {
-    
-	"variants": 
-	{
-        
-		"half=bottom": { "model": "aether:block/holystone_brick_half_slab" },
-        		"half=top": { "model": "aether:block/holystone_brick_upper_slab" }
-    
-	}
-
+  "variants": {
+    "type=bottom": {
+      "model": "aether:block/holystone_brick_slab"
+    },
+    "type=top": {
+      "model": "aether:block/holystone_brick_slab_top"
+    },
+    "type=double": {
+      "model": "aether:block/holystone_bricks"
+    }
+  }
 }

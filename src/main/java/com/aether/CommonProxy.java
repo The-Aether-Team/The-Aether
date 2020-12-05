@@ -1,10 +1,16 @@
 package com.aether;
 
+import static net.minecraft.tileentity.AbstractFurnaceTileEntity.addItemBurnTime;
+
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 import com.aether.block.AetherBlocks;
 import com.aether.capability.AetherCapabilities;
+import com.aether.entity.AetherAnimalEntity;
+import com.aether.entity.AetherEntityTypes;
+import com.aether.entity.monster.ZephyrEntity;
 import com.aether.event.AetherBannedItemEvent;
 import com.aether.hooks.AetherEventHooks;
 import com.aether.item.AetherItems;
@@ -15,6 +21,7 @@ import com.aether.tags.AetherItemTags;
 import com.aether.world.dimension.AetherDimensions;
 import com.aether.world.storage.loot.functions.DoubleDrops;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -26,6 +33,7 @@ import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IDispenseItemBehavior;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.OptionalDispenseBehavior;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
@@ -51,10 +59,12 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -66,6 +76,7 @@ public class CommonProxy {
 	public void commonSetup(FMLCommonSetupEvent event) {
 		AetherPacketHandler.register();
 		AetherCapabilities.register();
+		registerSpawnPlacements();
 		registerLootTableFunctions();
 		registerLootTableConditions();
 		registerDispenserBehaviors();
@@ -75,6 +86,14 @@ public class CommonProxy {
 	@SubscribeEvent
 	public void clientSetup(FMLClientSetupEvent event) {
 		
+	}
+	
+	protected void registerSpawnPlacements() {
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.PHYG, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.FLYING_COW, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.SHEEPUFF, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.MOA, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.ZEPHYR, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ZephyrEntity::canZephyrSpawn);
 	}
 	
 	protected void registerLootTableFunctions() {
@@ -99,16 +118,16 @@ public class CommonProxy {
 				return stack;
 			}
 		};
-		//DispenserBlock.registerDispenseBehavior(AetherItems.PHYG_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.FLYING_COW_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.SHEEPUFF_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.PHYG_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.FLYING_COW_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.SHEEPUFF_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.AERBUNNY_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.AERWHALE_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.BLUE_SWET_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.GOLDEN_SWET_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.COCKATRICE_SPAWN_EGG, dispenseSpawnEgg);
 		DispenserBlock.registerDispenseBehavior(AetherItems.SENTRY_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.ZEPHYR_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.ZEPHYR_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.AECHOR_PLANT_SPAWN_EGG, dispenseSpawnEgg);
 		DispenserBlock.registerDispenseBehavior(AetherItems.MIMIC_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.VALKYRIE_SPAWN_EGG, dispenseSpawnEgg);
@@ -132,9 +151,9 @@ public class CommonProxy {
 					double d1 = iposition.getY() + direction.getYOffset() * 0.3F;
 					double d2 = iposition.getZ() + direction.getZOffset() * 0.3F;
 					Random random = world.rand;
-					double d3 = random.nextGaussian() * 0.05D + direction.getXOffset();
-					double d4 = random.nextGaussian() * 0.05D + direction.getYOffset();
-					double d5 = random.nextGaussian() * 0.05D + direction.getZOffset();
+					double d3 = random.nextGaussian() * 0.05 + direction.getXOffset();
+					double d4 = random.nextGaussian() * 0.05 + direction.getYOffset();
+					double d5 = random.nextGaussian() * 0.05 + direction.getZOffset();
 					world.addEntity(Util.make(new SmallFireballEntity(world, d0, d1, d2, d3, d4, d5), (entity) -> entity.setStack(stack)));
 					stack.shrink(1);
 				}
@@ -270,6 +289,34 @@ public class CommonProxy {
 		IAetherPlayer newPlayer = event.getPlayer().getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY).orElseThrow(() -> new IllegalStateException("Player " + event.getOriginal().getName().getUnformattedComponentText() + " has no AetherPlayer capability!"));
 		
 		newPlayer.copyFrom(original);
+	}
+	
+	private Map<Item, Integer> burnTimes = null;
+	
+	protected Map<Item, Integer> getBurnTimes() {
+		Map<Item, Integer> map = this.burnTimes;
+		if (map != null) {
+			return map;
+		}
+		map = Maps.newLinkedHashMap();
+		addItemBurnTime(map, AetherBlocks.SKYROOT_BOOKSHELF, 300);
+		addItemBurnTime(map, AetherItems.SKYROOT_SHOVEL, 200);
+		addItemBurnTime(map, AetherItems.SKYROOT_SWORD, 200);
+		addItemBurnTime(map, AetherItems.SKYROOT_AXE, 200);
+		addItemBurnTime(map, AetherItems.SKYROOT_PICKAXE, 200);
+		addItemBurnTime(map, AetherItems.SKYROOT_STICK, 100);
+		addItemBurnTime(map, AetherItems.SKYROOT_BUCKET, 100);
+		addItemBurnTime(map, AetherBlocks.BERRY_BUSH_STEM, 100);
+		return this.burnTimes = map;
+	}
+	
+	@SubscribeEvent
+	public void onGetItemBurnTime(FurnaceFuelBurnTimeEvent event) {
+		Item item = event.getItemStack().getItem();
+		Integer burnTime = getBurnTimes().get(item);
+		if (burnTime != null) {
+			event.setBurnTime(burnTime);
+		}
 	}
 	
 //	@SubscribeEvent

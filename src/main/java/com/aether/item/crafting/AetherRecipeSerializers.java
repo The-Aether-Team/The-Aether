@@ -15,6 +15,7 @@ import net.minecraftforge.registries.ObjectHolder;
 public class AetherRecipeSerializers {
 
 	public static final IRecipeSerializer<EnchantingRecipe> ENCHANTING = null;
+	public static final IRecipeSerializer<FreezingRecipe> FREEZING = null;
 	
 	@EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
 	public static class Registration {
@@ -24,6 +25,7 @@ public class AetherRecipeSerializers {
 			event.getRegistry().registerAll(new IRecipeSerializer[] {
 				
 				recipeSerializer("enchanting", new CookingRecipeSerializer<>(EnchantingRecipe::new, 200)),
+				recipeSerializer("freezing", new CookingRecipeSerializer<>(FreezingRecipe::new, 200)),
 				
 			});
 		}

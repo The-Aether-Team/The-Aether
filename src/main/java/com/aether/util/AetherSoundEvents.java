@@ -7,6 +7,7 @@ import com.aether.Aether;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -74,8 +75,8 @@ public class AetherSoundEvents {
 		}
 		
 		public static SoundEvent sound(String name) {
-			SoundEvent sound = new SoundEvent(new ResourceLocation(Aether.MODID, name));
-			sound.setRegistryName(sound.getName());
+			ResourceLocation id = new ResourceLocation(Aether.MODID, name);
+			SoundEvent sound = new SoundEvent(id).setRegistryName(id);
 			return sound;
 		}
 		
