@@ -1,8 +1,7 @@
 package com.aether.client.renderer.tileentity;
 
 import com.aether.client.renderer.AetherAtlases;
-
-import net.minecraft.client.renderer.model.Material;
+import net.minecraft.client.renderer.model.RenderMaterial;
 import net.minecraft.client.renderer.tileentity.ChestTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.state.properties.ChestType;
@@ -19,7 +18,7 @@ public class TreasureChestTileEntityRenderer<T extends TileEntity & IChestLid> e
 	}
 
 	@Override
-	protected Material getMaterial(T tileEntity, ChestType chestType) {
+	protected RenderMaterial getMaterial(T tileEntity, ChestType chestType) {
 		switch (chestType) {
 		case LEFT:
 			return AetherAtlases.TREASURE_CHEST_LEFT_MATERIAL;
