@@ -5,13 +5,15 @@ import com.aether.item.AetherItems;
 import com.aether.util.AetherSoundEvents;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 
@@ -37,16 +39,10 @@ public class PhygEntity extends SaddleableEntity {
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
     }
 
-    @Override
-    protected void registerAttributes() {
-        super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
-        if (!this.isSaddled()) {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0);
-        }
-        else {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0);
-        }
+    public static AttributeModifierMap.MutableAttribute registerAttributes() {
+        return SaddleableEntity.func_233666_p_()
+                .createMutableAttribute(Attributes.MAX_HEALTH, 20.0D)
+                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
     }
 
     @Override
@@ -84,7 +80,7 @@ public class PhygEntity extends SaddleableEntity {
 
     @Nullable
     @Override
-    public AgeableEntity createChild(AgeableEntity ageable) {
+    public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
         return AetherEntityTypes.PHYG.create(this.world);
     }
 
@@ -104,22 +100,5 @@ public class PhygEntity extends SaddleableEntity {
     @Override
     protected SoundEvent getAmbientSound() {
         return AetherSoundEvents.ENTITY_PHYG_AMBIENT;
-    }
-
-    /**
-     * Override to handle the change in health when applying a saddle to the entity.
-     * @param flag - Value for whether its saddled or not
-     */
-    @Override
-    public void setSaddled(boolean flag) {
-        super.setSaddled(flag);
-        if(flag) {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0);
-            this.setHealth(20.0F);
-        }
-        else {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0);
-            this.setHealth(10.0F);
-        }
     }
 }

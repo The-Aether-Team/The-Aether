@@ -1,34 +1,35 @@
 package com.aether.entity.passive;
 
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Random;
-
 import com.aether.api.AetherAPI;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.util.AetherSoundEvents;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FlyingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.monster.GhastEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextComponent;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Random;
 
 public class AerwhaleEntity extends FlyingEntity implements IMob {
 	public float motionYaw, motionPitch;
@@ -52,12 +53,11 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 //		this.goalSelector.addGoal(1, new AerwhaleEntity.UnstuckGoal(this));
 //		this.goalSelector.addGoal(5, new AerwhaleEntity.TravelCourseGoal(this));
 	}
-	
-	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.0);
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0);
+
+	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+		return FlyingEntity.func_233666_p_()
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, 20.0D);
 	}
 	
 	@Override
@@ -85,7 +85,7 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 	}
 	
 	@Override
-	public void travel(Vec3d positionIn) {
+	public void travel(Vector3d positionIn) {
 		List<Entity> passengers = this.getPassengers();
 		if (!passengers.isEmpty()) {
 			Entity entity = passengers.get(0);
@@ -97,10 +97,10 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 				
 				this.motionYaw = this.rotationYawHead = player.rotationYawHead;
 				
-				positionIn = new Vec3d(player.moveStrafing, 0.0, (player.moveForward <= 0.0F)? player.moveForward * 0.25F : player.moveForward);
+				positionIn = new Vector3d(player.moveStrafing, 0.0, (player.moveForward <= 0.0F)? player.moveForward * 0.25F : player.moveForward);
 				
 				if (AetherAPI.get(player).map(p -> p.isJumping()).orElse(false)) {
-					this.setMotion(new Vec3d(0.0, 0.0, 0.0));
+					this.setMotion(new Vector3d(0.0, 0.0, 0.0));
 				} else {
 					double d0 = Math.toRadians(player.rotationYaw - 90.0);
 					double d1 = Math.toRadians(-player.rotationPitch);
@@ -139,16 +139,16 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 	}
 	
 	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
+	protected ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
 		if (player.getUniqueID().getMostSignificantBits() == 220717875589366683L && player.getUniqueID().getLeastSignificantBits() == -7181826737698904209L) {
 			player.startRiding(this);
 			if (!this.world.isRemote) {
 				TextComponent msg = new StringTextComponent("Serenity is the queen of W(h)ales!!");
-				player.world.getPlayers().forEach(p -> p.sendMessage(msg));
+				player.world.getPlayers().forEach(p -> p.sendMessage(msg, player.getUniqueID()));
 			}
-			return true;
+			return ActionResultType.func_233537_a_(this.world.isRemote);
 		}
-		return super.processInteract(player, hand);
+		return super.func_230254_b_(player, hand);
 	}
 	
 	@Override
@@ -193,11 +193,11 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 			if (this.action == MovementController.Action.MOVE_TO) {
 				if (this.courseChangeCooldown-- <= 0) {
 					this.courseChangeCooldown += this.parentEntity.getRNG().nextInt(5) + 2;
-					Vec3d vec3d = new Vec3d(this.posX - this.parentEntity.getPosX(), this.posY - this.parentEntity.getPosY(), this.posZ - this.parentEntity.getPosZ());
-					double d0 = vec3d.length();
-					vec3d = vec3d.normalize();
-					if (this.func_220673_a(vec3d, MathHelper.ceil(d0))) {
-						this.parentEntity.setMotion(this.parentEntity.getMotion().add(vec3d.scale(0.1D)));
+					Vector3d Vector3d = new Vector3d(this.posX - this.parentEntity.getPosX(), this.posY - this.parentEntity.getPosY(), this.posZ - this.parentEntity.getPosZ());
+					double d0 = Vector3d.length();
+					Vector3d = Vector3d.normalize();
+					if (this.func_220673_a(Vector3d, MathHelper.ceil(d0))) {
+						this.parentEntity.setMotion(this.parentEntity.getMotion().add(Vector3d.scale(0.1D)));
 						double dx = this.posX - this.mob.getPosX();
 						double dz = this.posZ - this.mob.getPosZ();
 						double dy = this.posY - this.mob.getPosY();
@@ -218,7 +218,7 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 			}
 		}
 
-		private boolean func_220673_a(Vec3d p_220673_1_, int p_220673_2_) {
+		private boolean func_220673_a(Vector3d p_220673_1_, int p_220673_2_) {
 			AxisAlignedBB axisalignedbb = this.parentEntity.getBoundingBox();
 
 			for (int i = 1; i < p_220673_2_; ++i) {
@@ -538,10 +538,10 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 			float f8 = f6;
 			float f9 = f3 * f5;
 
-			Vec3d vec3d = new Vec3d(this.aerwhale.getPosX(), this.aerwhale.getBoundingBox().minY, this.aerwhale.getPosZ());
-			Vec3d vec3d1 = vec3d.add(f7 * standard, f8 * standard, f9 * standard);
+			Vector3d Vector3d = new Vector3d(this.aerwhale.getPosX(), this.aerwhale.getBoundingBox().minY, this.aerwhale.getPosZ());
+			Vector3d Vector3d1 = Vector3d.add(f7 * standard, f8 * standard, f9 * standard);
 
-			RayTraceResult movingobjectposition = this.aerwhale.world.rayTraceBlocks(new RayTraceContext(vec3d, vec3d1, BlockMode.COLLIDER, FluidMode.NONE, this.aerwhale));
+			RayTraceResult movingobjectposition = this.aerwhale.world.rayTraceBlocks(new RayTraceContext(Vector3d, Vector3d1, BlockMode.COLLIDER, FluidMode.NONE, this.aerwhale));
 
 			if (movingobjectposition == null) {
 				return standard;

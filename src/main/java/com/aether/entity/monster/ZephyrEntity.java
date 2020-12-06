@@ -1,17 +1,14 @@
 package com.aether.entity.monster;
 
-import java.util.EnumSet;
-import java.util.Random;
-
 import com.aether.entity.AetherEntityTypes;
 import com.aether.entity.projectile.ZephyrSnowballEntity;
 import com.aether.util.AetherSoundEvents;
-
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -26,10 +23,13 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+
+import java.util.EnumSet;
+import java.util.Random;
 
 public class ZephyrEntity extends FlyingEntity implements IMob {
 	public static final DataParameter<Integer> ATTACK_CHARGE = EntityDataManager.createKey(ZephyrEntity.class, DataSerializers.VARINT);
@@ -45,18 +45,17 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 	}
 
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(5.0);
-		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(100.0);
-	}
-
-	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(5, new ZephyrEntity.RandomFlyGoal(this));
 		this.goalSelector.addGoal(7, new ZephyrEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(7, new ZephyrEntity.SnowballAttackGoal(this));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true, false));
+	}
+
+	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+		return FlyingEntity.func_233666_p_()
+				.createMutableAttribute(Attributes.MAX_HEALTH, 5.0D)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 100.0D);
 	}
 
 	@Override
@@ -192,7 +191,7 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 					this.parentEntity.playSound(this.parentEntity.getAmbientSound(), 3.0F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
 				}
 				else if (this.attackTimer == 20) {
-					Vec3d look = this.parentEntity.getLook(1.0F);
+					Vector3d look = this.parentEntity.getLook(1.0F);
 					double accelX = target.getPosX() - (this.parentEntity.getPosX() + look.x * 4.0);
 					double accelY = target.getPosYHeight(0.5)  - (0.5 + this.parentEntity.getPosYHeight(0.5));
 					double accelZ = target.getPosZ() - (this.parentEntity.getPosZ() + look.z * 4.0);
@@ -279,7 +278,7 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 			if (this.action == MovementController.Action.MOVE_TO) {
 				if (this.courseChangeCooldown-- <= 0) {
 					this.courseChangeCooldown += this.parentEntity.getRNG().nextInt(5) + 2;
-					Vec3d vec3d = new Vec3d(this.posX - this.parentEntity.getPosX(), this.posY - this.parentEntity.getPosY(), this.posZ - this.parentEntity.getPosZ());
+					Vector3d vec3d = new Vector3d(this.posX - this.parentEntity.getPosX(), this.posY - this.parentEntity.getPosY(), this.posZ - this.parentEntity.getPosZ());
 					double d0 = vec3d.length();
 					vec3d = vec3d.normalize();
 					if (this.isNotColliding(vec3d, MathHelper.ceil(d0))) {
@@ -296,7 +295,7 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 		/**
 		 * Checks if entity bounding box is not colliding with terrain
 		 */
-		private boolean isNotColliding(Vec3d pos, int distance) {
+		private boolean isNotColliding(Vector3d pos, int distance) {
 			AxisAlignedBB axisalignedbb = this.parentEntity.getBoundingBox();
 
 			for (int i = 1; i < distance; ++i) {
@@ -337,7 +336,7 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 		@Override
 		public void tick() {
 			if (this.parentEntity.getAttackTarget() == null) {
-				Vec3d vec3d = this.parentEntity.getMotion();
+				Vector3d vec3d = this.parentEntity.getMotion();
 				this.parentEntity.rotationYaw = -((float)MathHelper.atan2(vec3d.x, vec3d.z)) * (180.0F / (float)Math.PI);
 				this.parentEntity.renderYawOffset = this.parentEntity.rotationYaw;
 			}

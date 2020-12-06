@@ -44,10 +44,10 @@ public class MimicEntity extends CreatureEntity {
 
 	public static AttributeModifierMap.MutableAttribute registerAttributes() {
 		return CreatureEntity.func_233666_p_()
-				.func_233815_a_(Attributes.MAX_HEALTH, 40.0D)
-				.func_233815_a_(Attributes.ATTACK_DAMAGE, 3.0D)
-				.func_233815_a_(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
-				.func_233815_a_(Attributes.FOLLOW_RANGE, 8.0D);
+				.createMutableAttribute(Attributes.MAX_HEALTH, 40.0D)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3.0D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 8.0D);
 	}
 	
 	@Override

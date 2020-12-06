@@ -1,5 +1,6 @@
 package com.aether.entity.passive;
 
+import net.minecraft.util.*;
 import org.apache.logging.log4j.LogManager;
 
 import com.aether.entity.MountableEntity;
@@ -13,10 +14,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
 public abstract class SaddleableEntity extends MountableEntity {
@@ -74,11 +71,11 @@ public abstract class SaddleableEntity extends MountableEntity {
 	}
 	
 	@Override
-	public boolean processInteract(PlayerEntity player, Hand hand) { //idk what to do here
+	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) { //idk what to do here
 		LogManager.getLogger(this.getClass()).debug("SaddleableEntity processInteract");
 		if (!this.canBeSaddled()) {
 			LogManager.getLogger(this.getClass()).debug("Couldn't be saddled");
-			return super.processInteract(player, hand);
+			return super.func_230254_b_(player, hand);
 		}
 		
 		ItemStack heldItem = player.getHeldItem(hand);
@@ -94,7 +91,7 @@ public abstract class SaddleableEntity extends MountableEntity {
 				
 				this.setSaddled(true);
 				
-				return true;
+				return super.func_230254_b_(player, hand);
 			}
 		}
 		else {
@@ -106,11 +103,11 @@ public abstract class SaddleableEntity extends MountableEntity {
 					player.prevRotationYaw = player.rotationYaw = this.rotationYaw;
 				}
 				
-				return true;
+				return super.func_230254_b_(player, hand);
 			}
 		}
 		
-		return super.processInteract(player, hand);
+		return super.func_230254_b_(player, hand);
 	}
 	
 	@Override

@@ -20,7 +20,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -68,10 +69,10 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 						activeItemStack.damageItem(1, livingEntity, p -> p.sendBreakAnimation(activeItemStack.getEquipmentSlot()));
 
 						if (activeItemStack.getCount() <= 0) {
-							world.playSound((PlayerEntity)null, entity.getPosition(), SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1.0F, 0.8F + this.world.rand.nextFloat() * 0.4F);
+							world.playSound(null, entity.getPosition(), SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1.0F, 0.8F + this.world.rand.nextFloat() * 0.4F);
 						}
 						else {
-							world.playSound((PlayerEntity)null, entity.getPosition(), SoundEvents.ITEM_SHIELD_BLOCK, SoundCategory.PLAYERS, 1.0F, 0.8F + this.world.rand.nextFloat() * 0.4F);
+							world.playSound(null, entity.getPosition(), SoundEvents.ITEM_SHIELD_BLOCK, SoundCategory.PLAYERS, 1.0F, 0.8F + this.world.rand.nextFloat() * 0.4F);
 						}
 					}
 
@@ -93,35 +94,34 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void tick() {
-		if (this.world.isRemote || (this.shootingEntity == null || !this.shootingEntity.isAlive()) && this.world.isBlockLoaded(new BlockPos(this))) {
+		if (this.world.isRemote || (this.func_234616_v_() == null || !this.func_234616_v_().isAlive()) && this.world.isBlockLoaded(new BlockPos(this.getPosition()))) {
 			super.tick();
 			if (this.isFireballFiery()) {
 				this.setFire(1);
 			}
 
 			++this.ticksInAir;
-			RayTraceResult raytraceresult = ProjectileHelper.rayTrace(this, true, this.ticksInAir >= 25,
-					this.shootingEntity, RayTraceContext.BlockMode.COLLIDER);
+			RayTraceResult raytraceresult = ProjectileHelper.func_234618_a_(this, this::func_230298_a_);
 			if (raytraceresult.getType() != RayTraceResult.Type.MISS
 					&& !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
 				this.onImpact(raytraceresult);
 			}
 
-			Vec3d vec3d = this.getMotion();
-			double d0 = this.getPosX() + vec3d.x;
-			double d1 = this.getPosY() + vec3d.y;
-			double d2 = this.getPosZ() + vec3d.z;
+			Vector3d Vector3d = this.getMotion();
+			double d0 = this.getPosX() + Vector3d.x;
+			double d1 = this.getPosY() + Vector3d.y;
+			double d2 = this.getPosZ() + Vector3d.z;
 			ProjectileHelper.rotateTowardsMovement(this, 0.2F);
 			float f = this.getMotionFactor();
 			if (this.isInWater()) {
 				for (int i = 0; i < 4; ++i) {
-					this.world.addParticle(ParticleTypes.BUBBLE, d0 - vec3d.x * 0.25D, d1 - vec3d.y * 0.25D, d2 - vec3d.z * 0.25D, vec3d.x, vec3d.y, vec3d.z);
+					this.world.addParticle(ParticleTypes.BUBBLE, d0 - Vector3d.x * 0.25D, d1 - Vector3d.y * 0.25D, d2 - Vector3d.z * 0.25D, Vector3d.x, Vector3d.y, Vector3d.z);
 				}
 
 				f = 0.8F;
 			}
 
-			this.setMotion(vec3d.add(this.accelerationX, this.accelerationY, this.accelerationZ).scale(f));
+			this.setMotion(Vector3d.add(this.accelerationX, this.accelerationY, this.accelerationZ).scale(f));
 			IParticleData particle = this.getParticle();
 			if (particle != null) {
 				this.world.addParticle(this.getParticle(), d0, d1 + 0.5D, d2, 0.0D, 0.0D, 0.0D);

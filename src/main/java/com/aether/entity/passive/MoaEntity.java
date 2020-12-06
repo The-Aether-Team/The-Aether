@@ -137,8 +137,8 @@ public class MoaEntity extends SaddleableEntity {
 
 	public static AttributeModifierMap.MutableAttribute registerAttributes() {
 		return AnimalEntity.func_233666_p_()
-				.func_233815_a_(Attributes.MAX_HEALTH, 35.0D)
-				.func_233815_a_(Attributes.MOVEMENT_SPEED, 1.0D);
+				.createMutableAttribute(Attributes.MAX_HEALTH, 35.0D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.0D);
 	}
 
 	@Override

@@ -1,16 +1,13 @@
 package com.aether;
 
-import static net.minecraft.tileentity.AbstractFurnaceTileEntity.addItemBurnTime;
-
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Random;
-
 import com.aether.block.AetherBlocks;
 import com.aether.capability.AetherCapabilities;
 import com.aether.entity.AetherAnimalEntity;
 import com.aether.entity.AetherEntityTypes;
+import com.aether.entity.monster.CockatriceEntity;
+import com.aether.entity.monster.MimicEntity;
 import com.aether.entity.monster.ZephyrEntity;
+import com.aether.entity.passive.*;
 import com.aether.event.AetherBannedItemEvent;
 import com.aether.hooks.AetherEventHooks;
 import com.aether.item.AetherItems;
@@ -19,48 +16,28 @@ import com.aether.player.IAetherPlayer;
 import com.aether.tags.AetherEntityTypeTags;
 import com.aether.tags.AetherItemTags;
 import com.aether.world.dimension.AetherDimensions;
-import com.aether.world.storage.loot.functions.DoubleDrops;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.TNTBlock;
-import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.dispenser.IDispenseItemBehavior;
-import net.minecraft.dispenser.IPosition;
-import net.minecraft.dispenser.OptionalDispenseBehavior;
+import net.minecraft.block.*;
+import net.minecraft.dispenser.*;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.FlintAndSteelItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.SpawnEggItem;
+import net.minecraft.item.*;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.Util;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -70,12 +47,19 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Random;
+
+import static net.minecraft.tileentity.AbstractFurnaceTileEntity.addItemBurnTime;
+
 public class CommonProxy {
 
 	@SubscribeEvent
 	public void commonSetup(FMLCommonSetupEvent event) {
 		AetherPacketHandler.register();
 		AetherCapabilities.register();
+		registerEntityAttributes();
 		registerSpawnPlacements();
 		registerLootTableFunctions();
 		registerLootTableConditions();
@@ -95,9 +79,21 @@ public class CommonProxy {
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.MOA, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.ZEPHYR, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ZephyrEntity::canZephyrSpawn);
 	}
+
+	protected void registerEntityAttributes() {
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.MIMIC, MimicEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.SENTRY, SlimeEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.ZEPHYR, ZephyrEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.COCKATRICE, CockatriceEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.MOA, MoaEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.PHYG, PhygEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.FLYING_COW, FlyingCowEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.SHEEPUFF, SheepuffEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.AERWHALE, AerwhaleEntity.registerAttributes().create());
+	}
 	
 	protected void registerLootTableFunctions() {
-		LootFunctionManager.registerFunction(new DoubleDrops.Serializer());
+//		LootFunctionManager.registerFunction(new DoubleDrops.Serializer());
 	}
 	
 	protected void registerLootTableConditions() {
@@ -113,7 +109,7 @@ public class CommonProxy {
 			public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
 				Direction direction = source.getBlockState().get(DispenserBlock.FACING);
 				EntityType<?> entitytype = ((SpawnEggItem)stack.getItem()).getType(stack.getTag());
-				entitytype.spawn(source.getWorld(), stack, (PlayerEntity)null, source.getBlockPos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
+				entitytype.spawn(source.getWorld(), stack, null, source.getBlockPos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
 				stack.shrink(1);
 				return stack;
 			}
@@ -140,11 +136,11 @@ public class CommonProxy {
 			@Override
 			public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
 				World world = source.getWorld();
-				if (world.getDimension().getType() == AetherDimensions.THE_AETHER) {
-					this.successful = false;
+				if (world.getDimensionKey() == AetherDimensions.AETHER_WORLD) {
+					this.setSuccessful(false);
 				}
 				else {
-					this.successful = true;
+					this.setSuccessful(true);
 					Direction direction = source.getBlockState().get(DispenserBlock.FACING);
 					IPosition iposition = DispenserBlock.getDispensePosition(source);
 					double d0 = iposition.getX() + direction.getXOffset() * 0.3F;
@@ -165,7 +161,7 @@ public class CommonProxy {
 			 */
 			@Override
 			protected void playDispenseSound(IBlockSource source) {
-				source.getWorld().playEvent(this.successful? 1018 : 1001, source.getBlockPos(), 0);
+				source.getWorld().playEvent(this.isSuccessful()? 1018 : 1001, source.getBlockPos(), 0);
 			}
 		});
 		DispenserBlock.registerDispenseBehavior(Items.FLINT_AND_STEEL, new OptionalDispenseBehavior() {
@@ -176,18 +172,19 @@ public class CommonProxy {
 			@Override
 			protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
 				World world = source.getWorld();
-				if (world.getDimension().getType() == AetherDimensions.THE_AETHER) {
-					this.successful = false;
+				if (world.getDimensionKey() == AetherDimensions.AETHER_WORLD) {
+					this.setSuccessful(false);
 				}
 				else {
-					this.successful = true;
+					this.setSuccessful(true);
 					BlockPos blockpos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
 					BlockState blockstate = world.getBlockState(blockpos);
-					if (FlintAndSteelItem.canSetFire(blockstate, world, blockpos)) {
+					Direction direction = source.getBlockState().get(DispenserBlock.FACING);
+					if (AbstractFireBlock.canLightBlock(world, blockpos, direction)) {
 						world.setBlockState(blockpos, Blocks.FIRE.getDefaultState());
 					}
-					else if (FlintAndSteelItem.isUnlitCampfire(blockstate)) {
-						world.setBlockState(blockpos, blockstate.with(BlockStateProperties.LIT, Boolean.valueOf(true)));
+					else if (CampfireBlock.canBeLit(blockstate)) {
+						world.setBlockState(blockpos, blockstate.with(BlockStateProperties.LIT, true));
 					}
 					else if (blockstate.isFlammable(world, blockpos, source.getBlockState().get(DispenserBlock.FACING).getOpposite())) {
 						blockstate.catchFire(world, blockpos, source.getBlockState().get(DispenserBlock.FACING).getOpposite(), null);
@@ -196,10 +193,10 @@ public class CommonProxy {
 						}
 					}
 					else {
-						this.successful = false;
+						this.setSuccessful(false);
 					}
 
-					if (this.successful && stack.attemptDamageItem(1, world.rand, (ServerPlayerEntity)null)) {
+					if (this.isSuccessful() && stack.attemptDamageItem(1, world.rand, null)) {
 						stack.setCount(0);
 					}
 				}
@@ -223,7 +220,7 @@ public class CommonProxy {
 	public void checkBlockBanned(PlayerInteractEvent.RightClickBlock event) {
 		PlayerEntity player = event.getPlayer();
 		
-		if (player.dimension != AetherDimensions.THE_AETHER) {
+		if (player.world.getDimensionKey() == AetherDimensions.AETHER_WORLD) {
 			return;
 		}
 		

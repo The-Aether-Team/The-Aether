@@ -1,25 +1,28 @@
 package com.aether.entity.monster;
 
-import java.util.Random;
-
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
-
 import com.aether.block.AetherBlocks;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.util.AetherSoundEvents;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IRangedAttackMob;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class CockatriceEntity extends CreatureEntity implements IRangedAttackMob {
 
@@ -27,9 +30,6 @@ public class CockatriceEntity extends CreatureEntity implements IRangedAttackMob
 
     public float wingRotation, prevWingRotation, destPos, prevDestPos;
     protected int ticksOffGround, ticksUntilFlap, secsUntilFlying;
-
-    {
-    }
 
     public CockatriceEntity(EntityType<? extends CockatriceEntity> type, World worldIn) {
         super(type, worldIn);
@@ -41,8 +41,6 @@ public class CockatriceEntity extends CreatureEntity implements IRangedAttackMob
 
     @Override
     protected void registerGoals() {
-        super.registerGoals();
-
         this.goalSelector.addGoal(0, new SwimGoal(this));
         this.goalSelector.addGoal(2,  new RangedAttackGoal(this, 1.0, 60, 5));
         this.goalSelector.addGoal(4, new MoveTowardsRestrictionGoal(this, 1.0));
@@ -51,13 +49,11 @@ public class CockatriceEntity extends CreatureEntity implements IRangedAttackMob
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
     }
 
-    @Override
-    protected void registerAttributes() {
-        super.registerAttributes();
-
-        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(16.0);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.28000000417232513);
-        this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(10);
+    public static AttributeModifierMap.MutableAttribute registerAttributes() {
+        return CreatureEntity.func_233666_p_()
+                .createMutableAttribute(Attributes.MAX_HEALTH, 16.0D)
+                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
+                .createMutableAttribute(Attributes.FOLLOW_RANGE, 10.0D);
     }
 
     @SuppressWarnings("deprecation")
@@ -71,7 +67,8 @@ public class CockatriceEntity extends CreatureEntity implements IRangedAttackMob
         //super.move(typeIn, new Vec3d(0, pos.getY(), 0));
     //}
 
-    public void attackEntityWithRangedAttack (LivingEntity target, float distanceFactor) {
+    @Override
+    public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
         ArrowEntity arrow = new ArrowEntity(this.world, this);
         double d0 = target.getPosX() - this.getPosX();
         double d1 = target.getBoundingBox().minY + (double)(target.getHeight() / 3.0F) - arrow.getPosY();
@@ -118,7 +115,7 @@ public class CockatriceEntity extends CreatureEntity implements IRangedAttackMob
         fall: {
 //			boolean blockBeneath = !this.world.isAirBlock(this.getPositionUnderneath());
 
-            Vec3d vec3d = this.getMotion();
+            Vector3d vec3d = this.getMotion();
             if (!this.onGround && vec3d.y < 0.0) {
                 this.setMotion(vec3d.mul(1.0, 0.6, 1.0));
             }

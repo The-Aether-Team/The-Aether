@@ -1,28 +1,22 @@
 package com.aether.entity.passive;
 
-import javax.annotation.Nullable;
-
 import com.aether.entity.AetherEntityTypes;
 import com.aether.item.AetherItems;
 import com.aether.util.AetherSoundEvents;
-
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+
+import javax.annotation.Nullable;
 
 public class FlyingCowEntity extends SaddleableEntity {
     public float wingFold;
@@ -38,18 +32,6 @@ public class FlyingCowEntity extends SaddleableEntity {
     }
 
     @Override
-    protected void registerAttributes() {
-        super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.20000000298023224);
-        if (!this.isSaddled()) {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0);
-        }
-        else {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0);
-        }
-    }
-
-    @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new SwimGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 2.0));
@@ -59,6 +41,12 @@ public class FlyingCowEntity extends SaddleableEntity {
         this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0));
         this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.addGoal(7, new LookRandomlyGoal(this));
+    }
+
+    public static AttributeModifierMap.MutableAttribute registerAttributes() {
+        return SaddleableEntity.func_233666_p_()
+                .createMutableAttribute(Attributes.MAX_HEALTH, 20.0D)
+                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.20000000298023224D);
     }
 
     @Override
@@ -98,7 +86,7 @@ public class FlyingCowEntity extends SaddleableEntity {
 
     @Nullable
     @Override
-    public AgeableEntity createChild(AgeableEntity ageable) {
+    public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
         return AetherEntityTypes.FLYING_COW.create(this.world);
     }
 
@@ -118,22 +106,5 @@ public class FlyingCowEntity extends SaddleableEntity {
     @Override
     protected SoundEvent getAmbientSound() {
         return AetherSoundEvents.ENTITY_FLYING_COW_AMBIENT;
-    }
-
-    /**
-     * Override to handle the change in health when applying a saddle to the entity.
-     * @param flag - Value for whether its saddled or not
-     */
-    @Override
-    public void setSaddled(boolean flag) {
-        super.setSaddled(flag);
-        if(flag) {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0);
-            this.setHealth(20.0F);
-        }
-        else {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0);
-            this.setHealth(10.0F);
-        }
     }
 }

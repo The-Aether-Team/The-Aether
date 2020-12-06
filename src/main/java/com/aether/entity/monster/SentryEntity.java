@@ -2,19 +2,13 @@ package com.aether.entity.monster;
 
 import com.aether.block.AetherBlocks;
 import com.aether.entity.AetherEntityTypes;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -24,9 +18,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.Explosion;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 public class SentryEntity extends SlimeEntity {
@@ -48,10 +40,7 @@ public class SentryEntity extends SlimeEntity {
 		this.goalSelector.addGoal(2, new SentryEntity.AttackGoal(this));
 		this.goalSelector.addGoal(3, new SentryEntity.FaceRandomGoal(this));
 		this.goalSelector.addGoal(5, new SentryEntity.HopGoal(this));
-		this.targetSelector.addGoal(1,
-			new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213811_1_) -> {
-				return Math.abs(p_213811_1_.getPosY() - this.getPosY()) <= 4.0;
-			}));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (entity) -> Math.abs(entity.getPosY() - this.getPosY()) <= 4.0));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 	
@@ -103,7 +92,7 @@ public class SentryEntity extends SlimeEntity {
 			this.explodeAt((LivingEntity)entityIn);
 		}
 	}
-	
+
 	protected void explodeAt(LivingEntity entityIn) {
 		if (this.isAwake() && this.canEntityBeSeen(entityIn) && entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), 1.0F) && this.ticksExisted > 20) {
 			entityIn.addVelocity(0.5, 0.5, 0.5);
@@ -121,10 +110,11 @@ public class SentryEntity extends SlimeEntity {
 			super.jump();
 		}
 	}
-	
+
+	/* Do we need this..?
 	@Override
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).applyModifier(new AttributeModifier("Random spawn bonus", this.rand.nextGaussian() * 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
+		this.getAttribute(Attributes.FOLLOW_RANGE).applyModifier(new AttributeModifier("Random spawn bonus", this.rand.nextGaussian() * 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
 		if (this.rand.nextFloat() < 0.05F) {
 			this.setLeftHanded(true);
 		}
@@ -134,6 +124,7 @@ public class SentryEntity extends SlimeEntity {
 
 		return spawnDataIn;
 	}
+	*/
 	
 	public void setAwake(boolean isAwake) {
 		this.dataManager.set(SENTRY_AWAKE, isAwake);

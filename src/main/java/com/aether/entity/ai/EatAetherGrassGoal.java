@@ -40,7 +40,7 @@ public class EatAetherGrassGoal extends Goal {
         if (this.grassEaterEntity.getRNG().nextInt(this.grassEaterEntity.isChild() ? 50 : 1000) != 0) {
             return false;
         } else {
-            BlockPos blockpos = new BlockPos(this.grassEaterEntity);
+            BlockPos blockpos = new BlockPos(this.grassEaterEntity.getPosition());
             if (IS_GRASS.test(this.entityWorld.getBlockState(blockpos))) {
                 return true;
             } else {
@@ -85,7 +85,7 @@ public class EatAetherGrassGoal extends Goal {
     public void tick() {
         this.eatingGrassTimer = Math.max(0, this.eatingGrassTimer - 1);
         if (this.eatingGrassTimer == 4) {
-            BlockPos blockpos = new BlockPos(this.grassEaterEntity);
+            BlockPos blockpos = new BlockPos(this.grassEaterEntity.getPosition());
             if (IS_GRASS.test(this.entityWorld.getBlockState(blockpos))) {
                 if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.entityWorld, this.grassEaterEntity)) {
                     this.entityWorld.destroyBlock(blockpos, false);

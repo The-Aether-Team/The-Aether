@@ -1,30 +1,19 @@
 package com.aether.entity.passive;
 
-import java.util.Map;
-import java.util.Random;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.aether.entity.AetherAnimalEntity;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.entity.ai.EatAetherGrassGoal;
 import com.aether.util.AetherSoundEvents;
 import com.google.common.collect.Maps;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.IShearable;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
@@ -36,21 +25,20 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.Util;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.IShearable;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Map;
+import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
@@ -116,18 +104,15 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
         super.updateAITasks();
     }
 
-    @Override
-    protected void registerAttributes()
-    {
-        super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8.0);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23000000417232513);
+    public static AttributeModifierMap.MutableAttribute registerAttributes() {
+        return AetherAnimalEntity.func_233666_p_()
+                .createMutableAttribute(Attributes.MAX_HEALTH, 8.0D)
+                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.23000000417232513D);
     }
-
 
     @Nullable
     @Override
-    public AgeableEntity createChild(AgeableEntity ageable) {
+    public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
         return AetherEntityTypes.SHEEPUFF.create(this.world);
     }
 
@@ -166,7 +151,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
      * Handles the functionality for when the player attempts to right click the sheepuff. Dyes are handled here, shearing is done in the setSheared method.
      */
     @Override
-    public boolean processInteract(PlayerEntity player, Hand hand) {
+    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
         if (itemstack.getItem() instanceof DyeItem && !this.getSheared())
         {
@@ -187,8 +172,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
             }
         }
 
-
-        return super.processInteract(player, hand);
+        return super.func_230254_b_(player, hand);
     }
 
     @Override
@@ -209,7 +193,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     @Override
     protected void playStepSound(BlockPos pos, BlockState par4)
     {
-        this.world.playSound((PlayerEntity) null, this.getPosX(), this.getPosY(), this.getPosZ(), SoundEvents.ENTITY_SHEEP_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
+        this.world.playSound(null, this.getPosX(), this.getPosY(), this.getPosZ(), SoundEvents.ENTITY_SHEEP_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
     }
 
     @Override
@@ -250,27 +234,6 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
 
     public void setSheared(boolean flag) {
         this.dataManager.set(SHEARED, flag);
-    }
-
-    @Override
-    public boolean isShearable(@Nonnull ItemStack item, IWorldReader world, BlockPos pos) {
-        return !this.dataManager.get(SHEARED);
-    }
-
-    @Override
-    public java.util.List<ItemStack> onSheared(@Nonnull ItemStack item, IWorld world, BlockPos pos, int fortune)
-    {
-        this.setSheared(true);
-        this.setPuffed(false);
-        int i = 1 + this.rand.nextInt(3);
-
-        java.util.List<ItemStack> ret = new java.util.ArrayList<>();
-        for(int j = 0; j < i; ++j) {
-            ret.add(new ItemStack(WOOL_BY_COLOR.get(this.getFleeceColor()), 1));
-        }
-
-        this.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1.0F, 1.0F);
-        return ret;
     }
 
     @Override
@@ -347,6 +310,26 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
         } else {
             return random.nextInt(500) == 0 ? DyeColor.WHITE : DyeColor.PURPLE;
         }
+    }
+
+    @Override
+    public void shear(SoundCategory category) {
+        this.world.playMovingSound(null, this, SoundEvents.ENTITY_SHEEP_SHEAR, category, 1.0F, 1.0F);
+        this.setSheared(true);
+        int i = 1 + this.rand.nextInt(3);
+
+        for(int j = 0; j < i; ++j) {
+            ItemEntity itementity = this.entityDropItem(WOOL_BY_COLOR.get(this.getFleeceColor()), 1);
+            if (itementity != null) {
+                itementity.setMotion(itementity.getMotion().add((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F, (this.rand.nextFloat() * 0.05F), ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F)));
+            }
+        }
+
+    }
+
+    @Override
+    public boolean isShearable() {
+        return this.isAlive() && !this.getSheared() && !this.isChild();
     }
 
     /*@Override
