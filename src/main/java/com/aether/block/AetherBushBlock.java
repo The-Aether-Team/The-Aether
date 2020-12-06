@@ -6,9 +6,11 @@ import net.minecraft.block.BushBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
+import net.minecraft.block.AbstractBlock;
+
 public class AetherBushBlock extends BushBlock {
 
-	public AetherBushBlock(Block.Properties properties) {
+	public AetherBushBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 	

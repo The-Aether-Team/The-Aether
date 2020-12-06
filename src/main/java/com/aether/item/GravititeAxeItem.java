@@ -5,6 +5,8 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 
+import net.minecraft.item.Item.Properties;
+
 public class GravititeAxeItem extends AxeItem implements IGravititeToolItem {
 
 	public GravititeAxeItem(IItemTier tier, float attackDamageIn, float attackSpeedIn, Properties builder) {

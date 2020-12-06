@@ -42,6 +42,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock;
+
 public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 	private static final TileEntityMerger.ICallback<TreasureChestTileEntity, Optional<INamedContainerProvider>> getContainerProvider = new TileEntityMerger.ICallback<TreasureChestTileEntity, Optional<INamedContainerProvider>>() {
 		@Override
@@ -85,12 +87,12 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 	};
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	protected TreasureChestBlock(Block.Properties properties, Supplier<TileEntityType<? extends TreasureChestTileEntity>> tileEntityTypeIn) {
+	protected TreasureChestBlock(AbstractBlock.Properties properties, Supplier<TileEntityType<? extends TreasureChestTileEntity>> tileEntityTypeIn) {
 		super(properties, (Supplier) tileEntityTypeIn);
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(TYPE, ChestType.SINGLE).with(WATERLOGGED, false));
 	}
 	
-	public TreasureChestBlock(Block.Properties properties) {
+	public TreasureChestBlock(AbstractBlock.Properties properties) {
 		this(properties, () -> AetherTileEntityTypes.TREASURE_CHEST);
 	}
 	
@@ -207,7 +209,7 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public TileEntityMerger.ICallbackWrapper<? extends TreasureChestTileEntity> combine(BlockState state, World worldIn, BlockPos pos, boolean p_225536_4_) {
+	public TileEntityMerger.ICallbackWrapper<? extends TreasureChestTileEntity> combine(BlockState state, World worldIn, BlockPos pos, boolean override) {
 		BiPredicate<IWorld, BlockPos> bipredicate;
 		TileEntity tileentity = worldIn.getTileEntity(pos);
 		DungeonType dungeonType;
@@ -216,7 +218,7 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 		} else {
 			dungeonType = null;
 		}
-		if (p_225536_4_) {
+		if (override) {
 			bipredicate = (_world, _pos) -> {
 				TileEntity tileentity2 = _world.getTileEntity(_pos);
 				DungeonType dungeonType2;

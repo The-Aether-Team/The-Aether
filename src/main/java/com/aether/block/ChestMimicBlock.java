@@ -28,7 +28,7 @@ public class ChestMimicBlock extends Block implements IWaterLoggable {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.makeCuboidShape(1.0, 0.0, 1.0, 15.0, 14.0, 15.0);
 
-	public ChestMimicBlock(Block.Properties properties) {
+	public ChestMimicBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 

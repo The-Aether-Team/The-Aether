@@ -17,9 +17,11 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import net.minecraft.block.AbstractBlock;
+
 public class FreezerBlock extends AbstractAetherFurnaceBlock {
 
-	public FreezerBlock(Block.Properties properties) {
+	public FreezerBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 	

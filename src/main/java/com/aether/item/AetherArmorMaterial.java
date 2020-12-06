@@ -38,13 +38,13 @@ public enum AetherArmorMaterial implements IArmorMaterial {
 	private final Ingredient repairMaterial;
 
 	private AetherArmorMaterial(String nameIn, int maxDamageFactorIn, int[] damageReductionAmountsIn,
-		int enchantabilityIn, SoundEvent equipSoundIn, float p_i48533_8_, Ingredient repairMaterialSupplier) {
+		int enchantabilityIn, SoundEvent equipSoundIn, float toughnessIn, Ingredient repairMaterialSupplier) {
 		this.name = Aether.MODID + ':' + nameIn;
 		this.maxDamageFactor = maxDamageFactorIn;
 		this.damageReductionAmountArray = damageReductionAmountsIn;
 		this.enchantability = enchantabilityIn;
 		this.soundEvent = equipSoundIn;
-		this.toughness = p_i48533_8_;
+		this.toughness = toughnessIn;
 		this.repairMaterial = repairMaterialSupplier;
 	}
 

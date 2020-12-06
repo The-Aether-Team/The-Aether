@@ -16,8 +16,8 @@ import net.minecraft.util.IntArray;
 
 public class FreezerContainer extends CustomSmeltingContainer {
 
-	public FreezerContainer(int id, PlayerInventory playerInventoryIn, IInventory furnaceInventoryIn, IIntArray p_i50104_6_) {
-		super(AetherContainerTypes.ENCHANTER, AetherRecipeTypes.ENCHANTING, id, playerInventoryIn, furnaceInventoryIn, p_i50104_6_);
+	public FreezerContainer(int id, PlayerInventory playerInventoryIn, IInventory furnaceInventoryIn, IIntArray furnaceDataIn) {
+		super(AetherContainerTypes.ENCHANTER, AetherRecipeTypes.ENCHANTING, id, playerInventoryIn, furnaceInventoryIn, furnaceDataIn);
 		replaceSlot(1, new CustomSmeltingFuelSlot(this, furnaceInventoryIn, 1, 56, 53));
 		replaceSlot(2, new CustomSmeltingResultSlot(playerInventoryIn.player, furnaceInventoryIn, 2, 116, 35));
 	}

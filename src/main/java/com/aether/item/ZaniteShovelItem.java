@@ -5,6 +5,8 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
 
+import net.minecraft.item.Item.Properties;
+
 public class ZaniteShovelItem extends ShovelItem implements IZaniteToolItem {
 
 	public ZaniteShovelItem(IItemTier tier, float attackDamageIn, float attackSpeedIn, Properties builder) {

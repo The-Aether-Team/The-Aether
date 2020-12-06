@@ -7,9 +7,11 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock;
+
 public class HealingAercloudBlock extends AercloudBlock {
 
-	public HealingAercloudBlock(Block.Properties properties) {
+	public HealingAercloudBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 	

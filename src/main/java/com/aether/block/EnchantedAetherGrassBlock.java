@@ -10,9 +10,11 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.lighting.LightEngine;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock;
+
 public class EnchantedAetherGrassBlock extends Block {
 
-	public EnchantedAetherGrassBlock(Block.Properties properties) {
+	public EnchantedAetherGrassBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 	

@@ -73,7 +73,7 @@ public class FlyingCowEntity extends SaddleableEntity {
     }
 
     @Override
-    public void handleStartJump(int p_184775_1_) {
+    public void handleStartJump(int jumpPower) {
         this.setMountJumping(true);
         this.onMountedJump();
     }

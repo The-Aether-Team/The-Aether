@@ -31,7 +31,7 @@ public class AetherLootTables {
 		}
 	}
 
-	public static Set<ResourceLocation> func_215796_a() {
+	public static Set<ResourceLocation> getReadOnlyLootTables() {
 		return READ_ONLY_LOOT_TABLES;
 	}
 

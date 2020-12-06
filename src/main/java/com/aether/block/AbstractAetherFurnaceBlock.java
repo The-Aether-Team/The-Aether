@@ -20,10 +20,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock;
+
 public abstract class AbstractAetherFurnaceBlock extends ContainerBlock {
 	public static final BooleanProperty LIT = AbstractFurnaceBlock.LIT;
 	
-	protected AbstractAetherFurnaceBlock(Block.Properties properties) {
+	protected AbstractAetherFurnaceBlock(AbstractBlock.Properties properties) {
 		super(properties);
 		this.setDefaultState(this.getDefaultState().with(LIT, false));
 	}

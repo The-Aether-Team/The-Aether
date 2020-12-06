@@ -5,6 +5,8 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
 
+import net.minecraft.item.Item.Properties;
+
 public class ZanitePickaxeItem extends PickaxeItem implements IZaniteToolItem {
 
 	public ZanitePickaxeItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {

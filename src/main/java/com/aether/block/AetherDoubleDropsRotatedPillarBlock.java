@@ -7,6 +7,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.state.StateContainer;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class AetherDoubleDropsRotatedPillarBlock extends RotatedPillarBlock {
 
 	public AetherDoubleDropsRotatedPillarBlock(Properties properties) {

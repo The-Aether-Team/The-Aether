@@ -5,6 +5,8 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.util.ActionResultType;
 
+import net.minecraft.item.Item.Properties;
+
 public class GravititePickaxeItem extends PickaxeItem implements IGravititeToolItem {
 
 	public GravititePickaxeItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {

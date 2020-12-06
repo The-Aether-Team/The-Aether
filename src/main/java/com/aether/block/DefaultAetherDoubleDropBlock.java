@@ -7,10 +7,12 @@ import net.minecraft.block.BlockState;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 
+import net.minecraft.block.AbstractBlock;
+
 public class DefaultAetherDoubleDropBlock extends Block implements IAetherDoubleDropBlock {
 	public static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
 
-	public DefaultAetherDoubleDropBlock(Block.Properties properties) {
+	public DefaultAetherDoubleDropBlock(AbstractBlock.Properties properties) {
 		super(properties);
 		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
 	}

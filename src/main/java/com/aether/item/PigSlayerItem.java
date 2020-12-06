@@ -14,6 +14,8 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 
+import net.minecraft.item.Item.Properties;
+
 public class PigSlayerItem extends SwordItem {
 	
 	private final Random rand = new Random();

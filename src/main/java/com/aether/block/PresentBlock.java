@@ -2,9 +2,11 @@ package com.aether.block;
 
 import net.minecraft.block.Block;
 
+import net.minecraft.block.AbstractBlock;
+
 public class PresentBlock extends Block {
 	
-	public PresentBlock(Block.Properties properties) {
+	public PresentBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 

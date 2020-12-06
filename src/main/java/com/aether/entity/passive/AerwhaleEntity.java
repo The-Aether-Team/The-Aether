@@ -31,6 +31,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.entity.ai.goal.Goal.Flag;
+
 public class AerwhaleEntity extends FlyingEntity implements IMob {
 	public float motionYaw, motionPitch;
 	

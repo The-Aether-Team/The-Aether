@@ -11,9 +11,11 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock;
+
 public class IcestoneBlock extends Block {
 
-	public IcestoneBlock(Block.Properties properties) {
+	public IcestoneBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 	

@@ -8,6 +8,8 @@ import net.minecraft.item.PickaxeItem;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public class HolystonePickaxeItem extends PickaxeItem implements IHolystoneToolItem {
 
 	public HolystonePickaxeItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {

@@ -24,10 +24,12 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import net.minecraft.block.AbstractBlock;
+
 public class IncubatorBlock extends ContainerBlock {
 	public static final BooleanProperty LIT = AbstractFurnaceBlock.LIT;
 
-	protected IncubatorBlock(Block.Properties builder) {
+	protected IncubatorBlock(AbstractBlock.Properties builder) {
 		super(builder);
 		this.setDefaultState(this.stateContainer.getBaseState().with(LIT, false));
 	}

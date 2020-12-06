@@ -5,6 +5,8 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 
+import net.minecraft.item.Item.Properties;
+
 public class FlamingSwordItem extends SwordItem {
 
 	public FlamingSwordItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {

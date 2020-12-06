@@ -6,6 +6,8 @@ import net.minecraft.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import net.minecraft.block.AbstractBlock;
+
 public class TintedAercloudBlock extends AercloudBlock implements IAetherBlockColor {
 	
 	public static final int
@@ -17,7 +19,7 @@ public class TintedAercloudBlock extends AercloudBlock implements IAetherBlockCo
 
 	private final int hexColor, updatedHexColor;
 	
-	public TintedAercloudBlock(int hexColor, int updatedHexColor, Block.Properties properties) {
+	public TintedAercloudBlock(int hexColor, int updatedHexColor, AbstractBlock.Properties properties) {
 		super(properties);
 		this.hexColor = hexColor;
 		this.updatedHexColor = updatedHexColor;

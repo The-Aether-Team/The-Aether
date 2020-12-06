@@ -5,6 +5,8 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.util.ActionResultType;
 
+import net.minecraft.item.Item.Properties;
+
 public class GravititeShovelItem extends ShovelItem implements IGravititeToolItem {
 
 	public GravititeShovelItem(IItemTier tier, float attackDamageIn, float attackSpeedIn, Properties builder) {

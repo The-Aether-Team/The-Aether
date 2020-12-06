@@ -14,18 +14,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import net.minecraft.block.AbstractBlock;
+
 public class LeavesWithParticlesBlock extends LeavesBlock {
 	private final IParticleData particle;
 	
-	public LeavesWithParticlesBlock(float particleRed, float particleGreen, float particleBlue, Block.Properties properties) {
+	public LeavesWithParticlesBlock(float particleRed, float particleGreen, float particleBlue, AbstractBlock.Properties properties) {
 		this(particleRed, particleGreen, particleBlue, 1.0F, properties);
 	}
 	
-	public LeavesWithParticlesBlock(float particleRed, float particleGreen, float particleBlue, float particleAlpha, Block.Properties properties) {
+	public LeavesWithParticlesBlock(float particleRed, float particleGreen, float particleBlue, float particleAlpha, AbstractBlock.Properties properties) {
 		this(new RedstoneParticleData(particleRed, particleGreen, particleBlue, particleAlpha), properties);
 	}
 	
-	public LeavesWithParticlesBlock(IParticleData particle, Block.Properties properties) {
+	public LeavesWithParticlesBlock(IParticleData particle, AbstractBlock.Properties properties) {
 		super(properties);
 		this.particle = particle;
 	}

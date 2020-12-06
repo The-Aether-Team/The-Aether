@@ -11,8 +11,8 @@ import net.minecraft.util.IIntArray;
 
 public abstract class CustomSmeltingContainer extends AbstractFurnaceContainer {
 	
-	protected CustomSmeltingContainer(ContainerType<? extends AbstractFurnaceContainer> containerTypeIn, IRecipeType<? extends AbstractCookingRecipe> recipeTypeIn, int id, PlayerInventory playerInventoryIn, IInventory furnaceInventoryIn, IIntArray p_i50104_6_) {
-		super(containerTypeIn, recipeTypeIn, id, playerInventoryIn, furnaceInventoryIn, p_i50104_6_);
+	protected CustomSmeltingContainer(ContainerType<? extends AbstractFurnaceContainer> containerTypeIn, IRecipeType<? extends AbstractCookingRecipe> recipeTypeIn, int id, PlayerInventory playerInventoryIn, IInventory furnaceInventoryIn, IIntArray furnaceDataIn) {
+		super(containerTypeIn, recipeTypeIn, id, playerInventoryIn, furnaceInventoryIn, furnaceDataIn);
 	}
 
 	protected CustomSmeltingContainer(ContainerType<? extends AbstractFurnaceContainer> containerTypeIn, IRecipeType<? extends AbstractCookingRecipe> recipeTypeIn, int id, PlayerInventory playerInventoryIn) {

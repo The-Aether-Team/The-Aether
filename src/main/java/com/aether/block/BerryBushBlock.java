@@ -5,9 +5,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 
+import net.minecraft.block.AbstractBlock;
+
 public class BerryBushBlock extends AetherBushBlock {
 	
-	public BerryBushBlock(Block.Properties properties) {
+	public BerryBushBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 	

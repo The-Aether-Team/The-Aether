@@ -5,6 +5,8 @@ import net.minecraft.item.AxeItem;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 
+import net.minecraft.item.Item.Properties;
+
 public class ZaniteAxeItem extends AxeItem implements IZaniteToolItem {
 
 	public ZaniteAxeItem(IItemTier tier, float attackDamageIn, float attackSpeedIn, Properties builder) {

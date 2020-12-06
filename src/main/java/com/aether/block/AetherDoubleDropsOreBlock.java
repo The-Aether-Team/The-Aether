@@ -6,9 +6,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.StateContainer;
 
+import net.minecraft.block.AbstractBlock;
+
 public class AetherDoubleDropsOreBlock extends AetherOreBlock implements IAetherDoubleDropBlock {
 	
-	public AetherDoubleDropsOreBlock(int minExpDropped, int maxExpDropped, Block.Properties properties) {
+	public AetherDoubleDropsOreBlock(int minExpDropped, int maxExpDropped, AbstractBlock.Properties properties) {
 		super(minExpDropped, maxExpDropped, properties);
 		this.setDefaultState(this.getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, false));
 	}

@@ -14,10 +14,12 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock;
+
 public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlock {
 	public static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
 
-	public AetherGrassBlock(Block.Properties properties) {
+	public AetherGrassBlock(AbstractBlock.Properties properties) {
 		super(properties);
 		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
 	}

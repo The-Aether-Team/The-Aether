@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.item.Item.Properties;
+
 public class LightningSwordItem extends SwordItem {
 
     public LightningSwordItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {

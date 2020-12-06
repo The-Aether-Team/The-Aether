@@ -16,7 +16,7 @@ public class AetherEntityTypeTags {
 	public static final ITag.INamedTag<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 
 	private static ITag.INamedTag<EntityType<?>> tag(String name) {
-		return EntityTypeTags.func_232896_a_(new ResourceLocation(Aether.MODID, name).toString());
+		return EntityTypeTags.getTagById(new ResourceLocation(Aether.MODID, name).toString());
 	}
 	
 }

@@ -217,7 +217,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 	}
 	
 	@Override
-	public void handleStartJump(int p_184775_1_) {
+	public void handleStartJump(int jumpPower) {
 		this.setMountJumping(true);
 	}
 	

@@ -9,9 +9,11 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock;
+
 public class BouncyAercloudBlock extends TintedAercloudBlock {
 
-	public BouncyAercloudBlock(int hexColor, int updatedHexColor, Block.Properties properties) {
+	public BouncyAercloudBlock(int hexColor, int updatedHexColor, AbstractBlock.Properties properties) {
 		super(hexColor, updatedHexColor, properties);
 		
 		shape = VoxelShapes.empty();

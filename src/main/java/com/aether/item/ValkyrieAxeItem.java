@@ -7,6 +7,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.IItemTier;
 
+import net.minecraft.item.Item.Properties;
+
 public class ValkyrieAxeItem extends AxeItem implements IValkyrieToolItem {
     public ValkyrieAxeItem(IItemTier tier, float attackDamageIn, float attackSpeedIn, Properties builder) {
         super(tier, attackDamageIn, attackSpeedIn, builder);

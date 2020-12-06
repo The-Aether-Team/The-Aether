@@ -17,9 +17,11 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import net.minecraft.block.AbstractBlock;
+
 public class EnchanterBlock extends AbstractAetherFurnaceBlock {
 
-	public EnchanterBlock(Block.Properties properties) {
+	public EnchanterBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 	

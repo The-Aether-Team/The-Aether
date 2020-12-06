@@ -6,7 +6,7 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 public abstract class AetherDungeonFeature extends Feature<NoFeatureConfig> {
 
-	public AetherDungeonFeature(Codec<NoFeatureConfig> p_i231953_1_) {
-		super(p_i231953_1_);
+	public AetherDungeonFeature(Codec<NoFeatureConfig> codec) {
+		super(codec);
 	}
 }

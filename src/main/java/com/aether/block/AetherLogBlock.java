@@ -7,9 +7,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.state.StateContainer;
 
+import net.minecraft.block.AbstractBlock;
+
 public class AetherLogBlock extends RotatedPillarBlock implements IAetherDoubleDropBlock {
 
-	public AetherLogBlock(Block.Properties properties) {
+	public AetherLogBlock(AbstractBlock.Properties properties) {
 		super(properties);
 		this.setDefaultState(this.getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, false));
 	}

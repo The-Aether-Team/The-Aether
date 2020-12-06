@@ -8,6 +8,8 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 
+import net.minecraft.item.Item.Properties;
+
 public class HolystoneSwordItem extends SwordItem {
 
 	protected final Random rand = new Random();

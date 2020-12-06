@@ -492,8 +492,8 @@ public class MoaEntity extends SaddleableEntity {
 	}
 	
 	@Override
-	public void handleStartJump(int p_184775_1_) {
-		super.handleStartJump(p_184775_1_);
+	public void handleStartJump(int jumpPower) {
+		super.handleStartJump(jumpPower);
 		this.onMountedJump();
 	}
 	

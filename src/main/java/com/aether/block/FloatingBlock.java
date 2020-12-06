@@ -14,10 +14,12 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock;
+
 public class FloatingBlock extends Block {
 	private final boolean powered;
 	
-	public FloatingBlock(boolean powered, Block.Properties properties) {
+	public FloatingBlock(boolean powered, AbstractBlock.Properties properties) {
 		super(properties);
 		this.powered = powered;
 	}

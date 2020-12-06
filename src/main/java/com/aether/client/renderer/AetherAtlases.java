@@ -18,8 +18,8 @@ public class AetherAtlases {
 	public static final RenderMaterial TREASURE_CHEST_LEFT_MATERIAL = getChestMaterial("treasure_left");
 	public static final RenderMaterial TREASURE_CHEST_RIGHT_MATERIAL = getChestMaterial("treasure_right");
 
-	public static RenderMaterial getChestMaterial(String p_228774_0_) {
-		return new RenderMaterial(Atlases.CHEST_ATLAS, new ResourceLocation(Aether.MODID, "entity/chest/" + p_228774_0_));
+	public static RenderMaterial getChestMaterial(String chestName) {
+		return new RenderMaterial(Atlases.CHEST_ATLAS, new ResourceLocation(Aether.MODID, "entity/chest/" + chestName));
 	}
 	
 	@SubscribeEvent

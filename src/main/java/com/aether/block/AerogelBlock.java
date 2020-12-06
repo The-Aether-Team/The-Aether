@@ -5,9 +5,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
+import net.minecraft.block.AbstractBlock;
+
 public class AerogelBlock extends /*Breakable*/Block {
 
-	public AerogelBlock(Block.Properties properties) {
+	public AerogelBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 	

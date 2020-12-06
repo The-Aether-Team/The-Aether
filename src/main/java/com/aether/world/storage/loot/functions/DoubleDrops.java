@@ -1,5 +1,5 @@
 package com.aether.world.storage.loot.functions;
-
+/*
 import com.aether.Aether;
 import com.aether.AetherTags;
 import com.aether.block.IAetherDoubleDropBlock;
@@ -39,7 +39,7 @@ public class DoubleDrops extends LootFunction {
 	public static LootFunction.Builder<?> builder() {
 		return LootFunction.builder(DoubleDrops::new);
 	}
-	
+
 	public static class Serializer extends LootFunction.Serializer<DoubleDrops> {
 		public Serializer() {
 			super(new ResourceLocation(Aether.MODID, "double_drops"), DoubleDrops.class);
@@ -58,3 +58,5 @@ public class DoubleDrops extends LootFunction {
 	}
 
 }
+
+ */

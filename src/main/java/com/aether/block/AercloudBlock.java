@@ -12,11 +12,13 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock;
+
 public class AercloudBlock extends BreakableBlock {
 
 	protected VoxelShape shape;
 	
-	public AercloudBlock(Block.Properties properties) {
+	public AercloudBlock(AbstractBlock.Properties properties) {
 		super(properties);
 		
 		shape = VoxelShapes.create(new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.01, 1.0));

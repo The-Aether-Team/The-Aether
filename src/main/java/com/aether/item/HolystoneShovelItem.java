@@ -8,6 +8,8 @@ import net.minecraft.item.ShovelItem;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public class HolystoneShovelItem extends ShovelItem implements IHolystoneToolItem {
 
 	public HolystoneShovelItem(IItemTier tier, float attackDamageIn, float attackSpeedIn, Properties builder) {

@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public class HolystoneAxeItem extends AxeItem implements IHolystoneToolItem {
 
 	public HolystoneAxeItem(IItemTier tier, float attackDamageIn, float attackSpeedIn, Properties builder) {

@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.network.play.server.SEntityVelocityPacket;
 
+import net.minecraft.item.Item.Properties;
+
 public class GravititeSwordItem extends SwordItem {
 
 	public GravititeSwordItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
