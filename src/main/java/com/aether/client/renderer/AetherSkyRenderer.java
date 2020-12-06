@@ -1,22 +1,12 @@
 package com.aether.client.renderer;
-
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+/* //TODO: Do we need this class anymore in 1.16?
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.FogRenderer;
-import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.WorldVertexBufferUploader;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -25,10 +15,17 @@ import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.client.SkyRenderHandler;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.client.ISkyRenderHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class AetherSkyRenderer implements SkyRenderHandler {
+import javax.annotation.Nullable;
+import java.util.Random;
+
+public class AetherSkyRenderer implements ISkyRenderHandler {
 	private static final ResourceLocation MOON_PHASES_TEXTURES = new ResourceLocation("textures/environment/moon_phases.png");
 	private static final ResourceLocation SUN_TEXTURES = new ResourceLocation("textures/environment/sun.png");
 
@@ -156,7 +153,7 @@ public class AetherSkyRenderer implements SkyRenderHandler {
 	public void render(int ticks, float partialTicks, MatrixStack matrixStackIn, ClientWorld world, Minecraft mc) {
 		TextureManager textureManager = mc.getTextureManager();
 		RenderSystem.disableTexture();
-		Vec3d vec3d = world.getSkyColor(mc.gameRenderer.getActiveRenderInfo().getBlockPos(), partialTicks);
+		Vector3d vec3d = world.getSkyColor(mc.gameRenderer.getActiveRenderInfo().getBlockPos(), partialTicks);
 		float f = (float)vec3d.x;
 		float f1 = (float)vec3d.y;
 		float f2 = (float)vec3d.z;
@@ -174,7 +171,7 @@ public class AetherSkyRenderer implements SkyRenderHandler {
 		RenderSystem.disableAlphaTest();
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-		float[] afloat = world.dimension.calcSunriseSunsetColors(world.getCelestialAngle(partialTicks), partialTicks);
+		float[] afloat = world.getDimensionType().calcSunriseSunsetColors(world.getCelestialAngleRadians(partialTicks), partialTicks);
 		if (afloat != null) {
 			RenderSystem.disableTexture();
 			RenderSystem.shadeModel(7425);
@@ -189,7 +186,6 @@ public class AetherSkyRenderer implements SkyRenderHandler {
 			Matrix4f matrix4f = matrixStackIn.getLast().getMatrix();
 			bufferbuilder.begin(6, DefaultVertexFormats.POSITION_COLOR);
 			bufferbuilder.pos(matrix4f, 0.0F, 100.0F, 0.0F).color(f4, f5, f6, afloat[3]).endVertex();
-			int i = 16;
 
 			for (int j = 0; j <= 16; ++j) {
 				float f7 = j * ((float)Math.PI * 2.0F) / 16.0F;
@@ -211,7 +207,7 @@ public class AetherSkyRenderer implements SkyRenderHandler {
 		float f11 = 1.0F - world.getRainStrength(partialTicks);
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, f11);
 		matrixStackIn.rotate(Vector3f.YP.rotationDegrees(-90.0F));
-		matrixStackIn.rotate(Vector3f.XP.rotationDegrees(world.getCelestialAngle(partialTicks) * 360.0F));
+		matrixStackIn.rotate(Vector3f.XP.rotationDegrees(world.getCelestialAngleRadians(partialTicks) * 360.0F));
 		Matrix4f matrix4f1 = matrixStackIn.getLast().getMatrix();
 		float f12 = 30.0F;
 		textureManager.bindTexture(SUN_TEXTURES);
@@ -277,3 +273,4 @@ public class AetherSkyRenderer implements SkyRenderHandler {
 	}
 
 }
+*/

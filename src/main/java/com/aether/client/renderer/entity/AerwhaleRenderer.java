@@ -6,14 +6,13 @@ import com.aether.client.renderer.entity.model.BaseAerwhaleModel;
 import com.aether.client.renderer.entity.model.OldAerwhaleModel;
 import com.aether.entity.passive.AerwhaleEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -44,7 +43,7 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
 //        float prevRotationYaw = prevRotations[0];
 //        float prevRotationPitch = prevRotations[1];
         
-        Vec3d look = aerwhale.getMotion().normalize();//getLook(partialTickTime);
+        Vector3d look = aerwhale.getMotion().normalize();//getLook(partialTickTime);
         
         float yaw = (float)(MathHelper.atan2(look.z, look.x) * 180.0 / Math.PI);
         float pitch = -(float)(Math.atan(look.y) * 73.0);

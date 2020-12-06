@@ -1,9 +1,7 @@
 package com.aether.client.renderer.entity;
 
-import java.util.Random;
-
+import com.aether.entity.item.FloatingBlockEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -20,6 +18,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.Random;
+
 @OnlyIn(Dist.CLIENT)
 public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 
@@ -34,7 +34,7 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 		BlockState blockstate = entityIn.getBlockState();
 	      if (blockstate.getRenderType() == BlockRenderType.MODEL) {
 	         World world = entityIn.getWorldObj();
-	         if (blockstate != world.getBlockState(new BlockPos(entityIn)) && blockstate.getRenderType() != BlockRenderType.INVISIBLE) {
+	         if (blockstate != world.getBlockState(new BlockPos(entityIn.getPosition())) && blockstate.getRenderType() != BlockRenderType.INVISIBLE) {
 	            matrixStackIn.push();
 	            BlockPos blockpos = new BlockPos(entityIn.getPosX(), entityIn.getBoundingBox().maxY, entityIn.getPosZ());
 	            matrixStackIn.translate(-0.5, 0.0, -0.5);
