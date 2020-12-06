@@ -8,6 +8,7 @@ import com.aether.Aether;
 import com.aether.inventory.container.IncubatorContainer;
 import com.aether.item.AetherItems;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -212,8 +213,8 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	}
 	
 	@Override
-	public void read(CompoundNBT compound) {
-		super.read(compound);
+	public void read(BlockState state, CompoundNBT compound) {
+		super.read(state, compound);
 		this.items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 		ItemStackHelper.loadAllItems(compound, this.items);
 		this.powerRemaining = compound.getInt("BurnTime");

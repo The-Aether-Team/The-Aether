@@ -1,5 +1,6 @@
 package com.aether.tileentity;
 
+import net.minecraft.block.BlockState;
 import org.apache.commons.lang3.Validate;
 
 import com.aether.api.AetherAPI;
@@ -41,8 +42,8 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 	}
 	
 	@Override
-	public void read(CompoundNBT compound) {
-		super.read(compound);
+	public void read(BlockState state, CompoundNBT compound) {
+		super.read(state, compound);
 		this.kind = DungeonTypes.BRONZE;
 		if (compound.contains("Kind", 8)) {
 			String kind = compound.getString("Kind");
@@ -102,11 +103,13 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 		this.write(compound);
 		return new SUpdateTileEntityPacket(this.getPos(), 191, compound);
 	}
-	
+
+	/* I don't know if this is needed
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
 		this.read(pkt.getNbtCompound());
 	}
+	*/
 	
 	public boolean isLocked() {
 		return locked;
