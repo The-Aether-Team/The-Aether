@@ -11,6 +11,8 @@
     "sky_color": 12369146,
     "water_color": 4159204,
     "water_fog_color": 329011,
+    "grass_color": 11665355,
+    "foliage_color": 11665355,
     "grass_color_modifier": "none"
   },
   "surface_builder": "aether:aether_grass",
