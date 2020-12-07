@@ -65,6 +65,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR, ZephyrRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MOA, MoaRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.COCKATRICE, CockatriceRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.AECHOR_PLANT, AechorPlantRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.PHYG, PhygRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLYING_COW, FlyingCowRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SHEEPUFF, SheepuffRenderer::new);

@@ -4,10 +4,7 @@ import static com.aether.entity.AetherEntityTypes.Registration.entity;
 
 import com.aether.Aether;
 import com.aether.entity.item.FloatingBlockEntity;
-import com.aether.entity.monster.CockatriceEntity;
-import com.aether.entity.monster.MimicEntity;
-import com.aether.entity.monster.SentryEntity;
-import com.aether.entity.monster.ZephyrEntity;
+import com.aether.entity.monster.*;
 import com.aether.entity.passive.AerwhaleEntity;
 import com.aether.entity.passive.FlyingCowEntity;
 import com.aether.entity.passive.MoaEntity;
@@ -33,6 +30,7 @@ public class AetherEntityTypes {
 	public static final EntityType<SentryEntity> SENTRY = entity("sentry", EntityType.Builder.<SentryEntity>create(SentryEntity::new, EntityClassification.MONSTER).size(2.0F, 2.0F));
 	public static final EntityType<ZephyrEntity> ZEPHYR = entity("zephyr", EntityType.Builder.<ZephyrEntity>create(ZephyrEntity::new, EntityClassification.MONSTER).size(4.0F, 4.0F));
 	public static final EntityType<CockatriceEntity> COCKATRICE = entity("cockatrice", EntityType.Builder.<CockatriceEntity>create(CockatriceEntity::new, EntityClassification.MONSTER).size(1.0F, 2.0F));
+	public static final EntityType<AechorPlantEntity> AECHOR_PLANT = entity("aechor_plant", EntityType.Builder.<AechorPlantEntity>create(AechorPlantEntity::new, EntityClassification.MONSTER).size(1.0F, 1.0F));
 	//public static final EntityType<ValkyrieEntity> VALKYRIE = entity("valkyrie", EntityType.Builder.<ValkyrieEntity>create(ValkyrieEntity::new, EntityClassification.MONSTER).size(??????));
 	//public static final EntityType<FireMinionEntity> FIRE_MINION = entity("fire_minion", EntityType.Builder.<FireMinionEntity>create(FireMinionEntity::new, EntityClassification.MONSTER).size(??????));
 	public static final EntityType<FloatingBlockEntity> FLOATING_BLOCK = entity("floating_block", EntityType.Builder.<FloatingBlockEntity>create(FloatingBlockEntity::new, EntityClassification.MISC).size(0.98F, 0.98F).setCustomClientFactory((spawnEntity, world) -> new FloatingBlockEntity(world)));
@@ -55,6 +53,7 @@ public class AetherEntityTypes {
 					SENTRY,
 					ZEPHYR,
 					COCKATRICE,
+					AECHOR_PLANT,
 					//VALKYRIE,
 					//FIRE_MINION,
 					PHYG,
