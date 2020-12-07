@@ -45,9 +45,9 @@ public class LightningKnifeEntity extends ProjectileItemEntity {
 		}
 		
 		if (result.getType() != RayTraceResult.Type.MISS && this.world instanceof ServerWorld) {
-			//((ServerWorld)this.world).addLightningBolt(new LightningBoltEntity(this.world, result.getHitVec().x, result.getHitVec().y, result.getHitVec().z, false));
-			LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(this.world);
-			lightningboltentity.moveForced(new Vector3d(result.getHitVec().x, result.getHitVec().y, result.getHitVec().z));
+			LightningBoltEntity lightningBolt = EntityType.LIGHTNING_BOLT.create(this.world);
+			lightningBolt.setPosition(this.getPosX(), this.getPosY(), this.getPosZ());
+			this.world.addEntity(lightningBolt);
 		}
 		
 		this.remove();
