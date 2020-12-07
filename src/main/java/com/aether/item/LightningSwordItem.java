@@ -19,8 +19,9 @@ public class LightningSwordItem extends SwordItem {
 
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        LightningBoltEntity lightningBolt = new LightningBoltEntity(EntityType.LIGHTNING_BOLT, target.world);
-        lightningBolt.moveForced(new Vector3d(target.getPosX(), target.getPosY(), target.getPosZ()));
+        LightningBoltEntity lightningBolt = EntityType.LIGHTNING_BOLT.create(attacker.world);
+        lightningBolt.setPosition(target.getPosX(), target.getPosY(), target.getPosZ());
+        attacker.world.addEntity(lightningBolt);
         return super.hitEntity(stack, target, attacker);
     }
 
