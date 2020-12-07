@@ -9,7 +9,10 @@
       "sea_level": 0,
       "disable_mob_generation": false,
       "default_block": {
-        "Name": "aether:holystone"
+        "Name": "aether:holystone",
+        "Properties": {
+          "double_drops": "false"
+        }
       },
       "default_fluid": {
         "Name": "minecraft:water",
