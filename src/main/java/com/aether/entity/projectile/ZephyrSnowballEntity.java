@@ -94,8 +94,8 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void tick() {
+		//super.tick();
 		if (this.world.isRemote || (this.func_234616_v_() == null || !this.func_234616_v_().isAlive()) && this.world.isBlockLoaded(new BlockPos(this.getPosition()))) {
-			super.tick();
 			if (this.isFireballFiery()) {
 				this.setFire(1);
 			}
@@ -150,8 +150,7 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public ItemStack getItem() {
-		ItemStack itemstack = this.getStack();
-		return itemstack.isEmpty()? new ItemStack(Items.SNOWBALL) : itemstack;
+		return new ItemStack(Items.SNOWBALL);
 	}
 
 	@Override
