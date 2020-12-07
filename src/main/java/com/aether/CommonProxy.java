@@ -16,6 +16,7 @@ import com.aether.player.IAetherPlayer;
 import com.aether.tags.AetherEntityTypeTags;
 import com.aether.tags.AetherItemTags;
 import com.aether.world.dimension.AetherDimensions;
+import com.aether.world.storage.loot.functions.DoubleDrops;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import net.minecraft.block.*;
@@ -30,6 +31,7 @@ import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.item.*;
+import net.minecraft.loot.functions.LootFunctionManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
@@ -93,7 +95,7 @@ public class CommonProxy {
 	}
 	
 	protected void registerLootTableFunctions() {
-//		LootFunctionManager.registerFunction(new DoubleDrops.Serializer());
+		LootFunctionManager.func_237451_a_(new ResourceLocation(Aether.MODID, "double_drops").toString(), new DoubleDrops.Serializer());
 	}
 	
 	protected void registerLootTableConditions() {
