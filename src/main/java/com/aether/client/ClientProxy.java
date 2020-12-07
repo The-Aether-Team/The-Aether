@@ -18,6 +18,7 @@ import com.aether.network.AetherPacketHandler;
 import com.aether.network.JumpPacket;
 import com.aether.tileentity.AetherTileEntityTypes;
 
+import com.aether.world.dimension.AetherDimensions;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
@@ -25,8 +26,10 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
+import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputUpdateEvent;
@@ -54,6 +57,17 @@ public class ClientProxy extends CommonProxy {
 		registerTileEntityRenderers();
 		registerGuiFactories();
 		registerBlockRenderLayers();
+		DimensionRenderInfo.field_239208_a_.put(AetherDimensions.AETHER_DIMENSION.getLocation(), new DimensionRenderInfo(-5.0F, true, DimensionRenderInfo.FogType.NORMAL, false, false) {
+			@Override
+			public Vector3d func_230494_a_(Vector3d color, float p_230494_2_) {
+				return color.mul((p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.91F + 0.09F));
+			}
+
+			@Override
+			public boolean func_230493_a_(int x, int z) {
+				return false;
+			}
+		});
 	}
 	
 	protected void registerEntityRenderers(FMLClientSetupEvent event) {
