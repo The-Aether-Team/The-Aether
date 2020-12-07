@@ -4,6 +4,7 @@ import com.aether.block.AetherBlocks;
 import com.aether.capability.AetherCapabilities;
 import com.aether.entity.AetherAnimalEntity;
 import com.aether.entity.AetherEntityTypes;
+import com.aether.entity.monster.AechorPlantEntity;
 import com.aether.entity.monster.CockatriceEntity;
 import com.aether.entity.monster.MimicEntity;
 import com.aether.entity.monster.ZephyrEntity;
@@ -87,6 +88,7 @@ public class CommonProxy {
 		GlobalEntityTypeAttributes.put(AetherEntityTypes.SENTRY, SlimeEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(AetherEntityTypes.ZEPHYR, ZephyrEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(AetherEntityTypes.COCKATRICE, CockatriceEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.AECHOR_PLANT, AechorPlantEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(AetherEntityTypes.MOA, MoaEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(AetherEntityTypes.PHYG, PhygEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(AetherEntityTypes.FLYING_COW, FlyingCowEntity.registerAttributes().create());

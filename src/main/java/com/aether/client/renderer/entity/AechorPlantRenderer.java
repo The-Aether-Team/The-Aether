@@ -37,7 +37,7 @@ public class AechorPlantRenderer extends MobRenderer<AechorPlantEntity, AechorPl
         this.getEntityModel().size = f2;
         this.shadowSize = f2 - 0.25F;
 
-        matrixStackIn.translate(0.0D, 1.0D, 0.0D);
+        matrixStackIn.translate(0.0D, 1.2D, 0.0D);
         matrixStackIn.scale(0.75F + ((float) aechorPlant.size * 0.125F), 1.0F, 0.75F + ((float) aechorPlant.size * 0.125F));
     }
 

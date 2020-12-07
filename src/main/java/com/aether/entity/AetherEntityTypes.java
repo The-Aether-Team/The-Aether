@@ -48,7 +48,6 @@ public class AetherEntityTypes {
 		@SubscribeEvent
 		public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event) {
 			event.getRegistry().registerAll(new EntityType<?>[] {
-
 					MIMIC,
 					SENTRY,
 					ZEPHYR,
