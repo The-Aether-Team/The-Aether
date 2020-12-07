@@ -16,7 +16,7 @@ public class CustomSmeltingResultSlot extends FurnaceResultSlot {
 	protected void onCrafting(ItemStack stack) {
 		stack.onCrafting(this.player.world, this.player, this.removeCount);
 		if (!this.player.world.isRemote && this.inventory instanceof AbstractFurnaceTileEntity) {
-			((AbstractFurnaceTileEntity) this.inventory).func_213995_d(this.player);
+			((AbstractFurnaceTileEntity) this.inventory).onCrafting(this.player);
 		}
 
 		this.removeCount = 0;

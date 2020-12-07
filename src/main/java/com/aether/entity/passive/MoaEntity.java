@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.util.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import org.apache.logging.log4j.LogManager;
@@ -38,13 +39,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.ResourceLocationException;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorldReader;
@@ -348,9 +342,9 @@ public class MoaEntity extends SaddleableEntity {
 	public float getAIMoveSpeed() {
 		return 0.6F;//this.getMoaType().getMoaSpeed();
 	}
-	
+
 	@Override
-	public boolean processInteract(PlayerEntity player, Hand hand) {		
+	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
 		ItemStack stack = player.getHeldItem(hand);
 		
 		if (!stack.isEmpty() && this.isPlayerGrown()) {
@@ -383,7 +377,7 @@ public class MoaEntity extends SaddleableEntity {
 //			}
 		}
 		
-		return super.processInteract(player, hand);
+		return super.func_230254_b_(player, hand);
 	}
 	
 	@Override

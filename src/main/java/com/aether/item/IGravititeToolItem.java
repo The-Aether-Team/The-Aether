@@ -1,5 +1,6 @@
 package com.aether.item;
 
+import com.aether.entity.item.FloatingBlockEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

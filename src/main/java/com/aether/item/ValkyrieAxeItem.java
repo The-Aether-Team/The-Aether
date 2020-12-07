@@ -1,17 +1,22 @@
 package com.aether.item;
 
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.IItemTier;
-
-import net.minecraft.item.Item.Properties;
+import net.minecraftforge.common.ForgeMod;
 
 public class ValkyrieAxeItem extends AxeItem implements IValkyrieToolItem {
-    public ValkyrieAxeItem(IItemTier tier, float attackDamageIn, float attackSpeedIn, Properties builder) {
-        super(tier, attackDamageIn, attackSpeedIn, builder);
+
+    private Multimap<Attribute, AttributeModifier> axeAttributes;
+
+    public ValkyrieAxeItem(IItemTier tier, float attackDamageIn, float attackSpeedIn, Properties properties) {
+        super(tier, attackDamageIn, attackSpeedIn, properties);
     }
 
     /**
@@ -19,11 +24,10 @@ public class ValkyrieAxeItem extends AxeItem implements IValkyrieToolItem {
      * It's important to note that this attribute only works when targetting blocks.
      */
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
-        if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-            multimap.put(PlayerEntity.REACH_DISTANCE.getName(), new AttributeModifier(reachModifierUUID, "Tool modifier", this.getReachDistanceModifier(), AttributeModifier.Operation.ADDITION));
-        }
-        return multimap;
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(reachModifierUUID, "Tool modifier", this.getReachDistanceModifier(), AttributeModifier.Operation.ADDITION));
+        this.axeAttributes = builder.build();
+        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.axeAttributes : super.getAttributeModifiers(equipmentSlot);
     }
 }

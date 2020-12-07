@@ -33,7 +33,7 @@ public class AetherPlayerProvider implements ICapabilityProvider, INBTSerializab
 		if (cap == AetherCapabilities.AETHER_PLAYER_CAPABILITY) {
 			return LazyOptional.of(() -> (T) this.aetherPlayer);
 		}
-		return null;
+		return LazyOptional.empty();
 	}
 
 }

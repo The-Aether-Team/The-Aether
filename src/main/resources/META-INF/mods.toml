@@ -23,7 +23,7 @@ The Aether, a hostile paradise in the skies.
 [[dependencies.aether]]
     modId = "curios"
     mandatory = true
-    versionRange = "[4,)"
+    versionRange = "[1.16.4-,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.aether]]

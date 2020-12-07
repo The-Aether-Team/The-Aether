@@ -150,7 +150,7 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	@SubscribeEvent
-	public void onJump(InputUpdateEvent event) {
+	public static void onJump(InputUpdateEvent event) {
 		event.getPlayer().getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY).ifPresent((player) -> {
 			boolean isJumping = event.getMovementInput().jump;
 			if (isJumping != player.isJumping()) {

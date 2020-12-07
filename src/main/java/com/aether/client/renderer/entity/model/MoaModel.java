@@ -143,7 +143,7 @@ public class MoaModel extends EntityModel<MoaEntity> {
 		this.neck.rotateAngleY = head.rotateAngleY;
 		this.jaw.rotateAngleX += 0.35F;
 		
-		this.renderLegs = !moa.isSitting() || (!moa.onGround && moa.isSitting());
+		this.renderLegs = !moa.isSitting() || (!moa.isOnGround() && moa.isSitting());
 	}
 
 	@Override

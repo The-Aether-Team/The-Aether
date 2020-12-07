@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 
 public class FreezerRecipeGui extends AbstractRecipeBookGui {
 
+	/* TODO: I don't know what to do with these!
 	@Override
 	protected boolean func_212962_b() {
 		return this.recipeBook.isFurnaceFilteringCraftable();
@@ -38,6 +39,7 @@ public class FreezerRecipeGui extends AbstractRecipeBookGui {
 	protected String func_212960_g() {
 		return TOGGLE_RECIPE_TRANSLATION_KEY;
 	}
+	*/
 
 	@Override
 	protected Set<Item> func_212958_h() {

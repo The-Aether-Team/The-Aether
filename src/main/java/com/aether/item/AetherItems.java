@@ -365,9 +365,9 @@ public class AetherItems {
 
 		@SubscribeEvent
 		public static void registerEnchantmentFuels(RegistryEvent.Register<AetherEnchantmentFuel> event) {
-			event.getRegistry().register(
+			event.getRegistry().registerAll(
 
-				new AetherEnchantmentFuel(AetherItems.AMBROSIUM_SHARD, 500)
+				//new AetherEnchantmentFuel(AetherItems.AMBROSIUM_SHARD, 500) TODO: this causes a crash
 
 			);
 		}

@@ -219,7 +219,7 @@ public class CommonProxy {
 	}
 	
 	@SubscribeEvent
-	public void checkBlockBanned(PlayerInteractEvent.RightClickBlock event) {
+	public static void checkBlockBanned(PlayerInteractEvent.RightClickBlock event) {
 		PlayerEntity player = event.getPlayer();
 		
 		if (player.world.getDimensionKey() == AetherDimensions.AETHER_WORLD) {
@@ -241,7 +241,7 @@ public class CommonProxy {
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onBlockBanned(AetherBannedItemEvent.SpawnParticles event) {
+	public static void onBlockBanned(AetherBannedItemEvent.SpawnParticles event) {
 		IWorld world = event.getWorld();
 		double x, y, z;
 		x = event.getPos().getX() + 0.5;
@@ -254,7 +254,7 @@ public class CommonProxy {
 	}
 	
 	@SubscribeEvent
-	public void doSkyrootDoubleDrops(LivingDropsEvent event) {
+	public static void doSkyrootDoubleDrops(LivingDropsEvent event) {
 		if (!(event.getSource() instanceof EntityDamageSource)) {
 			return;
 		}
@@ -283,17 +283,18 @@ public class CommonProxy {
 	}
 	
 	@SubscribeEvent
-	public void onPlayerClone(PlayerEvent.Clone event) {
+	public static void onPlayerClone(PlayerEvent.Clone event) {
 		IAetherPlayer original = event.getOriginal().getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY).orElseThrow(() -> new IllegalStateException("Player " + event.getOriginal().getName().getUnformattedComponentText() + " has no AetherPlayer capability!"));
 		IAetherPlayer newPlayer = event.getPlayer().getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY).orElseThrow(() -> new IllegalStateException("Player " + event.getOriginal().getName().getUnformattedComponentText() + " has no AetherPlayer capability!"));
 		
 		newPlayer.copyFrom(original);
 	}
+
+	/*
+	private static Map<Item, Integer> burnTimes;
 	
-	private Map<Item, Integer> burnTimes = null;
-	
-	protected Map<Item, Integer> getBurnTimes() {
-		Map<Item, Integer> map = this.burnTimes;
+	protected static Map<Item, Integer> getBurnTimes() {
+		Map<Item, Integer> map = burnTimes;
 		if (map != null) {
 			return map;
 		}
@@ -306,17 +307,18 @@ public class CommonProxy {
 		addItemBurnTime(map, AetherItems.SKYROOT_STICK, 100);
 		addItemBurnTime(map, AetherItems.SKYROOT_BUCKET, 100);
 		addItemBurnTime(map, AetherBlocks.BERRY_BUSH_STEM, 100);
-		return this.burnTimes = map;
+		return burnTimes = map;
 	}
 	
 	@SubscribeEvent
-	public void onGetItemBurnTime(FurnaceFuelBurnTimeEvent event) {
+	public static void onGetItemBurnTime(FurnaceFuelBurnTimeEvent event) {
 		Item item = event.getItemStack().getItem();
 		Integer burnTime = getBurnTimes().get(item);
 		if (burnTime != null) {
 			event.setBurnTime(burnTime);
 		}
 	}
+	*/
 	
 //	@SubscribeEvent
 //	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {

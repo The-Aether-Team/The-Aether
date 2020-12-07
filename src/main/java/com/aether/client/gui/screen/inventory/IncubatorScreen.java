@@ -2,6 +2,7 @@ package com.aether.client.gui.screen.inventory;
 
 import com.aether.Aether;
 import com.aether.inventory.container.IncubatorContainer;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -20,18 +21,18 @@ public class IncubatorScreen extends ContainerScreen<IncubatorContainer> {
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-	      this.minecraft.getTextureManager().bindTexture(INCUBATOR_GUI_TEXTURES);
-	      int i = this.guiLeft;
-	      int j = this.guiTop;
-	      this.blit(i, j, 0, 0, this.xSize, this.ySize);
-	      if (this.container.isIncubating()) {
-	         int k = this.container.getFreezingTimeRemaining();
-	         this.blit(i + 56, j + 36 + 12 - k, 176, 12 - k, 14, k + 2);
-	      }
+		this.minecraft.getTextureManager().bindTexture(INCUBATOR_GUI_TEXTURES);
+		int guiLeft = this.guiLeft;
+		int guiTop = this.guiTop;
+		this.blit(matrixStack, guiLeft, guiTop, 0, 0, this.xSize, this.ySize);
+		if (this.container.isIncubating()) {
+			int freezingTimeRemaining = this.container.getFreezingTimeRemaining();
+			this.blit(matrixStack, guiLeft + 56, guiTop + 36 + 12 - freezingTimeRemaining, 176, 12 - freezingTimeRemaining, 14, freezingTimeRemaining + 2);
+		}
 
-	      int l = this.container.getProgressionScaled();
-	      this.blit(i + 79, j + 34, 176, 14, l + 1, 16);
+		int progressionScaled = this.container.getProgressionScaled();
+		this.blit(matrixStack, guiLeft + 79, guiTop + 34, 176, 14, progressionScaled + 1, 16);
 	}
 }
