@@ -17,6 +17,7 @@ import com.aether.player.IAetherPlayer;
 import com.aether.tags.AetherEntityTypeTags;
 import com.aether.tags.AetherItemTags;
 import com.aether.world.dimension.AetherDimensions;
+import com.aether.world.gen.feature.AetherFeatures;
 import com.aether.world.storage.loot.functions.DoubleDrops;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -68,6 +69,7 @@ public class CommonProxy {
 		registerLootTableConditions();
 		registerDispenserBehaviors();
 		registerAxeStrippingBlocks();
+		AetherFeatures.registerConfiguredFeatures();
 	}
 	
 	@SubscribeEvent
