@@ -169,7 +169,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 							boolean flag2 = blockstate.isReplaceable(new DirectionalPlaceContext(this.world, blockpos1, Direction.UP, ItemStack.EMPTY, Direction.DOWN));
 							boolean flag3 = this.floatTile.isValidPosition(this.world, blockpos1);
 							if (flag2 && flag3) {
-								if (this.floatTile.get(BlockStateProperties.WATERLOGGED) && this.world.getFluidState(blockpos1).getFluid() == Fluids.WATER) {
+								if (this.floatTile.hasProperty(BlockStateProperties.WATERLOGGED) && this.world.getFluidState(blockpos1).getFluid() == Fluids.WATER) {
 									this.floatTile = this.floatTile.with(BlockStateProperties.WATERLOGGED, true);
 								}
 
