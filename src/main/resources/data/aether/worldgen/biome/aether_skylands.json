@@ -126,8 +126,7 @@
     "water_ambient": [],
     "misc": []
   },
-  "player_spawn_friendly": true,
-  "creature_spawn_probability": 1,
+  "player_spawn_friendly": false,
   "spawn_costs": {
 
   }
