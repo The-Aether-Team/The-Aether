@@ -1,17 +1,20 @@
 package com.aether.entity.monster;
 
+import com.aether.block.AetherBlocks;
+import com.aether.entity.AetherEntityTypes;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
-
-import com.aether.block.AetherBlocks;
-import com.aether.entity.AetherEntityTypes;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class AechorPlantEntity extends CreatureEntity implements IRangedAttackMob {
 
@@ -38,6 +41,10 @@ public class AechorPlantEntity extends CreatureEntity implements IRangedAttackMo
                 .createMutableAttribute(Attributes.MAX_HEALTH, 15.0F)
                 .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.0F)
                 .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 1.0F);
+    }
+
+    public static boolean canAechorSpawn(EntityType<? extends AechorPlantEntity> animal, IWorld worldIn, SpawnReason reason, BlockPos pos, Random random) {
+        return worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK && worldIn.getLightSubtracted(pos, 0) > 8;
     }
 
     public void attackEntityWithRangedAttack (LivingEntity target, float distanceFactor) {
