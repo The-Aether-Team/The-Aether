@@ -69,12 +69,6 @@
         "weight": 2,
         "minCount": 1,
         "maxCount": 1
-      },
-      {
-        "type": "aether:aerwhale",
-        "weight": 2,
-        "minCount": 1,
-        "maxCount": 1
       }
     ],
     "creature": [
@@ -119,6 +113,12 @@
         "weight": 10,
         "minCount": 4,
         "maxCount": 4
+      },
+      {
+        "type": "aether:aerwhale",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 1
       }
     ],
     "ambient": [],
