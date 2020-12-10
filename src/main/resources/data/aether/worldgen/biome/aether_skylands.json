@@ -31,8 +31,14 @@
     [],
     [],
     [
-      "aether:skyroot_tree",
-      "aether:golden_oak_tree"
+      "aether:tree_skyroot",
+      "aether:tree_golden_oak",
+      "aether:ore_aether_dirt",
+      "aether:ore_icestone",
+      "aether:ore_ambrosium",
+      "aether:ore_zanite",
+      "aether:ore_gravitite",
+      "aether:spring_water"
     ],
     [],
     [
