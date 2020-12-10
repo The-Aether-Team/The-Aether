@@ -3,7 +3,6 @@ package com.aether.world.gen.feature;
 import com.aether.Aether;
 import com.aether.block.AetherBlocks;
 import com.google.common.collect.ImmutableSet;
-import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
