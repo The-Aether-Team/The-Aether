@@ -2,6 +2,7 @@ package com.aether;
 
 import com.aether.client.ClientProxy;
 
+import com.aether.world.gen.feature.AetherFeatures;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
@@ -21,6 +22,7 @@ public class Aether {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.register(proxy);
 		MinecraftForge.EVENT_BUS.register(proxy);
+		AetherFeatures.FEATURES.register(modEventBus);
 	}
 	
 	public static final Rarity AETHER_LOOT = Rarity.create("AETHER_LOOT", TextFormatting.GREEN);

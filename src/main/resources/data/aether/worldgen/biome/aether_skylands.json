@@ -1,11 +1,11 @@
 {
-  "precipitation": "rain",
+  "precipitation": "none",
   "category": "none",
   "depth": 0.125,
   "scale": 0.05,
   "temperature": 0.8,
   "temperature_modifier": "none",
-  "downfall": 0.5,
+  "downfall": 0.0,
   "effects": {
     "fog_color": 9671612,
     "sky_color": 12369146,
@@ -31,6 +31,7 @@
     [],
     [],
     [
+      "aether:quicksoil",
       "aether:tree_skyroot",
       "aether:tree_golden_oak",
       "aether:ore_aether_dirt",
