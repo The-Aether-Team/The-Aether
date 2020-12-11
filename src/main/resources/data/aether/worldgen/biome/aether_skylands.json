@@ -22,7 +22,9 @@
     ]
   },
   "features": [
-    [],
+    [
+      "aether:quicksoil"
+    ],
     [
       "minecraft:lake_water"
     ],
@@ -31,7 +33,6 @@
     [],
     [],
     [
-      "aether:quicksoil",
       "aether:tree_skyroot",
       "aether:tree_golden_oak",
       "aether:ore_aether_dirt",
