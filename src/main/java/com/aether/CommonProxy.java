@@ -265,7 +265,6 @@ public class CommonProxy {
 	
 	@SubscribeEvent
 	public static void doSkyrootDoubleDrops(LivingDropsEvent event) {
-		System.out.println("Double drops!");
 		if (!(event.getSource() instanceof EntityDamageSource)) {
 			return;
 		}
@@ -303,11 +302,9 @@ public class CommonProxy {
 
 	@SubscribeEvent
 	public static void onMountEntity(EntityMountEvent event) {
-		System.out.println("Event fired!");
 		Entity rider = event.getEntityMounting();
 		Entity mount = event.getEntityBeingMounted();
 		if(event.getEntityBeingMounted() != null && rider instanceof ServerPlayerEntity) {
-			System.out.println("Trigger!");
 			AetherAdvancements.MOUNT_ENTITY.trigger((ServerPlayerEntity) rider, mount);
 		}
 	}
