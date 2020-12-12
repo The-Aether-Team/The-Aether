@@ -50,41 +50,39 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 	@Override
 	protected void onImpact(RayTraceResult result) {
 		super.onImpact(result);
-		if (!this.world.isRemote) {
-			if (result.getType() == RayTraceResult.Type.ENTITY) {
-				Entity entity = ((EntityRayTraceResult)result).getEntity();
-				if (entity instanceof LivingEntity) {
-					LivingEntity livingEntity = (LivingEntity)entity;
-					boolean isPlayer = livingEntity instanceof PlayerEntity;
+		if (result.getType() == RayTraceResult.Type.ENTITY) {
+			Entity entity = ((EntityRayTraceResult)result).getEntity();
+			if (entity instanceof LivingEntity) {
+				LivingEntity livingEntity = (LivingEntity)entity;
+				boolean isPlayer = livingEntity instanceof PlayerEntity;
 
-					if (isPlayer && ((PlayerEntity)entity).inventory.armorInventory.get(0).getItem() == AetherItems.SENTRY_BOOTS) {
-						return;
-					}
+				if (isPlayer && ((PlayerEntity)entity).inventory.armorInventory.get(0).getItem() == AetherItems.SENTRY_BOOTS) {
+					return;
+				}
 
-					if (!livingEntity.isActiveItemStackBlocking()) {
-						entity.setMotion(entity.getMotion().x, entity.getMotion().y + 0.5, entity.getMotion().z);
+				if (!livingEntity.isActiveItemStackBlocking()) {
+					entity.setMotion(entity.getMotion().x, entity.getMotion().y + 0.5, entity.getMotion().z);
+				}
+				else {
+					ItemStack activeItemStack = livingEntity.getActiveItemStack();
+					activeItemStack.damageItem(1, livingEntity, p -> p.sendBreakAnimation(activeItemStack.getEquipmentSlot()));
+
+					if (activeItemStack.getCount() <= 0) {
+						world.playSound((PlayerEntity)null, entity.getPosition(), SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1.0F, 0.8F + this.world.rand.nextFloat() * 0.4F);
 					}
 					else {
-						ItemStack activeItemStack = livingEntity.getActiveItemStack();
-						activeItemStack.damageItem(1, livingEntity, p -> p.sendBreakAnimation(activeItemStack.getEquipmentSlot()));
-
-						if (activeItemStack.getCount() <= 0) {
-							world.playSound(null, entity.getPosition(), SoundEvents.ITEM_SHIELD_BREAK, SoundCategory.PLAYERS, 1.0F, 0.8F + this.world.rand.nextFloat() * 0.4F);
-						}
-						else {
-							world.playSound(null, entity.getPosition(), SoundEvents.ITEM_SHIELD_BLOCK, SoundCategory.PLAYERS, 1.0F, 0.8F + this.world.rand.nextFloat() * 0.4F);
-						}
+						world.playSound((PlayerEntity)null, entity.getPosition(), SoundEvents.ITEM_SHIELD_BLOCK, SoundCategory.PLAYERS, 1.0F, 0.8F + this.world.rand.nextFloat() * 0.4F);
 					}
-
-					entity.setMotion(entity.getMotion().x + (this.getMotion().x * 1.5F), entity.getMotion().y, entity.getMotion().z + (this.getMotion().z * 1.5F));
 				}
+				entity.setMotion(entity.getMotion().x + (this.getMotion().x * 1.5F), entity.getMotion().y, entity.getMotion().z + (this.getMotion().z * 1.5F));
 			}
-			this.remove();
 		}
+		this.remove();
 	}
 
 	@Override
 	protected void registerData() {
+		super.registerData();
 		this.setNoGravity(true);
 	}
 
@@ -95,7 +93,7 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 	@Override
 	public void tick() {
 		//super.tick();
-		if (this.world.isRemote || (this.func_234616_v_() == null || !this.func_234616_v_().isAlive()) && this.world.isBlockLoaded(new BlockPos(this.getPosition()))) {
+		if (this.world.isRemote || (this.func_234616_v_() == null || this.func_234616_v_().isAlive()) && this.world.isBlockLoaded(new BlockPos(this.getPosition()))) {
 			if (this.isFireballFiery()) {
 				this.setFire(1);
 			}

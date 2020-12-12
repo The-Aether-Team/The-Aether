@@ -9,6 +9,7 @@ import com.aether.client.gui.screen.inventory.FreezerScreen;
 import com.aether.client.gui.screen.inventory.IncubatorScreen;
 import com.aether.client.renderer.entity.*;
 import com.aether.client.renderer.tileentity.ChestMimicTileEntityRenderer;
+import com.aether.client.renderer.tileentity.CustomItemStackTileEntityRenderer;
 import com.aether.client.renderer.tileentity.TreasureChestTileEntityRenderer;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.inventory.container.AetherContainerTypes;
@@ -18,6 +19,8 @@ import com.aether.network.AetherPacketHandler;
 import com.aether.network.JumpPacket;
 import com.aether.tileentity.AetherTileEntityTypes;
 
+import com.aether.tileentity.ChestMimicTileEntity;
+import com.aether.tileentity.TreasureChestTileEntity;
 import com.aether.world.dimension.AetherDimensions;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -162,6 +165,14 @@ public class ClientProxy extends CommonProxy {
 	
 	public static void setTranslucentNoCrumblingRenderLayer(Block block) {
 		RenderTypeLookup.setRenderLayer(block, RenderType.getTranslucentNoCrumbling());
+	}
+
+	public static CustomItemStackTileEntityRenderer chestMimicRenderer() {
+		return new CustomItemStackTileEntityRenderer(ChestMimicTileEntity::new);
+	}
+
+	public static CustomItemStackTileEntityRenderer treasureChestRenderer() {
+		return new CustomItemStackTileEntityRenderer(TreasureChestTileEntity::new);
 	}
 	
 	@SubscribeEvent
