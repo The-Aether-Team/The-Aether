@@ -9,6 +9,10 @@
 		"description": {
 			"translate": "advancement.aether.enter_aether.desc"
 		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false,
 		"background": "aether:textures/block/carved_stone.png"
 	},
 	"rewards": {
@@ -18,9 +22,13 @@
 		"enter_aether": {
 			"trigger": "minecraft:changed_dimension",
 			"conditions": {
-				"to": "aether:the_aether",
-				"from": "minecraft:overworld"
+				"to": "aether:aether"
 			}
 		}
-	}
+	},
+	"requirements": [
+		[
+			"enter_aether"
+		]
+	]
 }

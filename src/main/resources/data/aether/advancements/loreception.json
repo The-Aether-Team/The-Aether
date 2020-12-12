@@ -9,11 +9,14 @@
 		"description": {
 			"translate": "advancement.aether.loreception.desc"
 		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
 		"hidden": true
 	},
   	"parent": "aether:enter_aether",
 	"criteria": {
-		"enter_aether": {
+		"loreception": {
 			"trigger": "aether:lore_item",
 			"conditions": {
 				"item": {
@@ -21,5 +24,10 @@
 				}
 			}
 		}
-	}
+	},
+	"requirements": [
+		[
+			"loreception"
+		]
+	]
 }

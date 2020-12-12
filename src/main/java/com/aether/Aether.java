@@ -4,6 +4,7 @@ import com.aether.client.ClientProxy;
 
 import net.minecraft.item.Rarity;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -20,7 +21,7 @@ public class Aether {
 	public Aether() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.register(proxy);
-		MinecraftForge.EVENT_BUS.register(proxy);
+		MinecraftForge.EVENT_BUS.register(CommonProxy.class);
 	}
 	
 	public static final Rarity AETHER_LOOT = Rarity.create("AETHER_LOOT", TextFormatting.GREEN);

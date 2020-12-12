@@ -1,8 +1,7 @@
 {
   	"display": {
 	  	"icon": {
-			"item": "aether:dungeon_key",
-			"data": 1
+			"item": "aether:silver_dungeon_key"
 		},
 		"title": {
 			"translate": "advancement.aether.silver_dungeon"
@@ -10,11 +9,14 @@
 		"description": {
 			"translate": "advancement.aether.silver_dungeon.desc"
 		},
-		"frame": "challenge"
+		"frame": "challenge",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
 	},
   	"parent": "aether:like_a_bossaru",
 	"criteria": {
-		"enter_aether": {
+		"dethroned": {
 			"trigger": "minecraft:player_killed_entity",
 			"conditions": {
 				"entity": {
@@ -22,5 +24,10 @@
 				}
 			}
 		}
-	}
+	},
+	"requirements": [
+		[
+			"dethroned"
+		]
+	]
 }

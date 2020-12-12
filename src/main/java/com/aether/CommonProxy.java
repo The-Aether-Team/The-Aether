@@ -1,5 +1,6 @@
 package com.aether;
 
+import com.aether.advancement.AetherAdvancements;
 import com.aether.block.AetherBlocks;
 import com.aether.capability.AetherCapabilities;
 import com.aether.entity.AetherAnimalEntity;
@@ -23,14 +24,12 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import net.minecraft.block.*;
 import net.minecraft.dispenser.*;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.item.*;
 import net.minecraft.loot.functions.LootFunctionManager;
@@ -42,6 +41,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -50,6 +50,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import org.apache.logging.log4j.core.jmx.Server;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -70,6 +71,7 @@ public class CommonProxy {
 		registerDispenserBehaviors();
 		registerAxeStrippingBlocks();
 		AetherFeatures.registerConfiguredFeatures();
+		AetherAdvancements.init();
 	}
 	
 	@SubscribeEvent
@@ -259,6 +261,7 @@ public class CommonProxy {
 	
 	@SubscribeEvent
 	public static void doSkyrootDoubleDrops(LivingDropsEvent event) {
+		System.out.println("Double drops!");
 		if (!(event.getSource() instanceof EntityDamageSource)) {
 			return;
 		}
@@ -292,6 +295,17 @@ public class CommonProxy {
 		IAetherPlayer newPlayer = event.getPlayer().getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY).orElseThrow(() -> new IllegalStateException("Player " + event.getOriginal().getName().getUnformattedComponentText() + " has no AetherPlayer capability!"));
 		
 		newPlayer.copyFrom(original);
+	}
+
+	@SubscribeEvent
+	public static void onMountEntity(EntityMountEvent event) {
+		System.out.println("Event fired!");
+		Entity rider = event.getEntityMounting();
+		Entity mount = event.getEntityBeingMounted();
+		if(event.getEntityBeingMounted() != null && rider instanceof ServerPlayerEntity) {
+			System.out.println("Trigger!");
+			AetherAdvancements.MOUNT_ENTITY.trigger((ServerPlayerEntity) rider, mount);
+		}
 	}
 
 	/*

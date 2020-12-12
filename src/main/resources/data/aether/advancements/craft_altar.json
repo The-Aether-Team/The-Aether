@@ -8,17 +8,28 @@
 		},
 		"description": {
 			"translate": "advancement.aether.enchanter.desc"
-		}
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
 	},
   	"parent": "aether:enter_aether",
 	"criteria": {
-		"enter_aether": {
-			"trigger": "aether:craft_item",
+		"craft_altar": {
+			"trigger": "minecraft:inventory_changed",
 			"conditions": {
-				"item": {
-					"item": "aether:enchanter"
-				}
+				"items": [
+					{
+						"item": "aether:enchanter"
+					}
+				]
 			}
 		}
-	}
+	},
+	"requirements": [
+		[
+			"craft_altar"
+		]
+	]
 }
