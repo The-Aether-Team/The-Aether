@@ -18,7 +18,7 @@
 		"enter_aether": {
 			"trigger": "minecraft:changed_dimension",
 			"conditions": {
-				"to": "aether:the_aether",
+				"to": "aether:aether",
 				"from": "minecraft:overworld"
 			}
 		}

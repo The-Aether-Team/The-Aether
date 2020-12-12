@@ -11,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.util.DamageSource;
@@ -24,7 +25,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class CockatriceEntity extends CreatureEntity implements IRangedAttackMob {
+public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob {
 
     protected final Random rand = new Random();
 

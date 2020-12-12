@@ -5,6 +5,7 @@ import static net.minecraftforge.eventbus.api.EventPriority.HIGH;
 import com.aether.Aether;
 import com.aether.block.trees.GoldenOakTree;
 import com.aether.block.trees.SkyrootTree;
+import com.aether.client.ClientProxy;
 import com.aether.client.renderer.tileentity.CustomItemStackTileEntityRenderer;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.item.AetherItemGroups;
@@ -261,10 +262,10 @@ public class AetherBlocks {
 					item = new WallOrFloorItem(AMBROSIUM_TORCH, AMBROSIUM_WALL_TORCH, properties);
 				}
 				else if (block == CHEST_MIMIC) {
-					item = new BlockItem(block, properties.setISTER(() -> () -> new CustomItemStackTileEntityRenderer(ChestMimicTileEntity::new)));
+					item = new BlockItem(block, properties.setISTER(() -> ClientProxy::chestMimicRenderer));
 				}
 				else if (block == TREASURE_CHEST) {
-					item = new BlockItem(block, properties.setISTER(() -> () -> new CustomItemStackTileEntityRenderer(TreasureChestTileEntity::new)));
+					item = new BlockItem(block, properties.setISTER(() -> ClientProxy::treasureChestRenderer));
 				}
 				else {
 					item = new BlockItem(block, properties);
