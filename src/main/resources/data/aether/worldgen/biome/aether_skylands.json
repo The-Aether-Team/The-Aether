@@ -33,19 +33,23 @@
     [],
     [],
     [
-      "aether:tree_skyroot",
-      "aether:tree_golden_oak",
       "aether:ore_aether_dirt",
       "aether:ore_icestone",
       "aether:ore_ambrosium",
       "aether:ore_zanite",
-      "aether:ore_gravitite",
-      "aether:spring_water"
+      "aether:ore_gravitite"
     ],
     [],
     [
       "minecraft:patch_tall_grass_2",
-      "minecraft:patch_grass_plain"
+      "minecraft:patch_grass_plain",
+      "aether:tree_skyroot",
+      "aether:tree_golden_oak",
+      "aether:spring_water",
+      "aether:cold_aercloud",
+      "aether:blue_aercloud",
+      "aether:gold_aercloud",
+      "aether:pink_aercloud"
     ],
     []
   ],

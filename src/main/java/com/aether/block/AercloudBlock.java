@@ -1,6 +1,6 @@
 package com.aether.block;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BreakableBlock;
 import net.minecraft.entity.Entity;
@@ -11,8 +11,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-
-import net.minecraft.block.AbstractBlock;
 
 public class AercloudBlock extends BreakableBlock {
 
