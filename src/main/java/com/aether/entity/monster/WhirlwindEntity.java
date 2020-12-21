@@ -1,18 +1,11 @@
 package com.aether.entity.monster;
 
 import com.aether.block.AetherBlocks;
-import com.aether.client.particle.EvilWhirlyParticle;
-import com.aether.client.particle.PassiveWhirlyParticle;
 import com.aether.particles.AetherParticleTypes;
 import com.aether.player.AetherRankings;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.CreeperEntity;
@@ -28,13 +21,11 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.ArrayList;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
@@ -49,16 +40,18 @@ public class WhirlwindEntity extends MobEntity {
 
     public WhirlwindEntity(EntityType<? extends MobEntity> type, World worldIn) {
         super(type, worldIn);
+    }
 
+    @Override
+    public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
         this.movementAngle = this.rand.nextFloat() * 360F;
         this.movementCurve = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F;
-
         this.lifeLeft = this.rand.nextInt(512) + 512;
-
         if(this.rand.nextInt(10) == 0) {
             this.lifeLeft /= 2;
             this.setEvil(true);
         }
+        return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
     @Override
@@ -206,6 +199,9 @@ public class WhirlwindEntity extends MobEntity {
         }
     }
 
+    /**
+     * This method is called when a player right-clicks the entity.
+     */
     @Override
     public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
         ItemStack heldItem = player.getHeldItem(hand);
@@ -306,7 +302,9 @@ public class WhirlwindEntity extends MobEntity {
         super.writeAdditional(nbttagcompound);
         nbttagcompound.putFloat("movementAngle", this.movementAngle);
         nbttagcompound.putFloat("movementCurve", this.movementCurve);
+        nbttagcompound.putInt("lifeLeft", this.lifeLeft);
         nbttagcompound.putBoolean("evil", this.isEvil());
+        nbttagcompound.putInt("color", this.getColorData());
     }
 
     @Override
@@ -314,7 +312,9 @@ public class WhirlwindEntity extends MobEntity {
         super.readAdditional(nbttagcompound);
         this.movementAngle = nbttagcompound.getFloat("movementAngle");
         this.movementCurve = nbttagcompound.getFloat("movementCurve");
+        this.lifeLeft = nbttagcompound.getInt("lifeLeft");
         this.setEvil(nbttagcompound.getBoolean("evil"));
+        this.setColorData(nbttagcompound.getInt("color"));
     }
 
     @Override
