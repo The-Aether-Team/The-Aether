@@ -11,8 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:dungeon_block",
-            "data": 2
+            "item": "aether:angelic_stone"
           }
         ]
       }

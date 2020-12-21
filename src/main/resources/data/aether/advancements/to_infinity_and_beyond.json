@@ -1,26 +1,31 @@
 {
   	"display": {
 	  	"icon": {
-			"item": "aether:aercloud",
-			"data": 1
+			"item": "aether:blue_aercloud"
 		},
 		"title": {
 			"translate": "advancement.aether.blue_aercloud"
 		},
 		"description": {
 			"translate": "advancement.aether.blue_aercloud.desc"
-		}
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
 	},
   	"parent": "aether:enter_aether",
 	"criteria": {
-		"enter_aether": {
+		"to_infinity_and_beyond": {
 			"trigger": "minecraft:enter_block",
 			"conditions": {
-				"block": "aether:aercloud",
-				"state": {
-					"aether_aercloud": "blue_aercloud"
-				}
+				"block": "aether:blue_aercloud"
 			}
 		}
-	}
+	},
+	"requirements": [
+		[
+			"to_infinity_and_beyond"
+		]
+	]
 }

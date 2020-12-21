@@ -8,17 +8,28 @@
 		},
 		"description": {
 			"translate": "advancement.aether.incubator.desc"
-		}
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
 	},
   	"parent": "aether:enter_aether",
 	"criteria": {
-		"enter_aether": {
-			"trigger": "aether:craft_item",
+		"craft_incubator": {
+			"trigger": "minecraft:inventory_changed",
 			"conditions": {
-				"item": {
-					"item": "aether:incubator"
-				}
+				"items": [
+					{
+						"item": "aether:incubator"
+					}
+					]
 			}
 		}
-	}
+	},
+	"requirements": [
+		[
+			"craft_incubator"
+		]
+	]
 }

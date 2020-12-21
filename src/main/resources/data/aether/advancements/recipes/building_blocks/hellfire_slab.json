@@ -17,8 +17,7 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:dungeon_block",
-            "data": 0
+            "item": "aether:hellfire_stone"
           }
         ]
       }

@@ -8,11 +8,15 @@
 		},
 		"description": {
 			"translate": "advancement.aether.mount_phyg.desc"
-		}
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
 	},
   	"parent": "aether:to_infinity_and_beyond",
 	"criteria": {
-		"enter_aether": {
+		"mount_phyg": {
 			"trigger": "aether:mount_entity",
 			"conditions": {
 				"entity": {
@@ -20,5 +24,10 @@
 				}
 			}
 		}
-	}
+	},
+	"requirements": [
+		[
+			"mount_phyg"
+		]
+	]
 }

@@ -11,8 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:dart_shooter",
-            "data": 0
+            "item": "aether:golden_dart_shooter"
           }
         ]
       }

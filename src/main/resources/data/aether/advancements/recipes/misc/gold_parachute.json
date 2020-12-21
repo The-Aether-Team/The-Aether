@@ -11,8 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:aercloud",
-            "data": 2
+            "item": "aether:golden_aercloud"
           }
         ]
       }
