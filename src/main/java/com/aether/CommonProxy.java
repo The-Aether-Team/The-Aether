@@ -4,10 +4,7 @@ import com.aether.block.AetherBlocks;
 import com.aether.capability.AetherCapabilities;
 import com.aether.entity.AetherAnimalEntity;
 import com.aether.entity.AetherEntityTypes;
-import com.aether.entity.monster.AechorPlantEntity;
-import com.aether.entity.monster.CockatriceEntity;
-import com.aether.entity.monster.MimicEntity;
-import com.aether.entity.monster.ZephyrEntity;
+import com.aether.entity.monster.*;
 import com.aether.entity.passive.*;
 import com.aether.event.AetherBannedItemEvent;
 import com.aether.hooks.AetherEventHooks;
@@ -82,6 +79,7 @@ public class CommonProxy {
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.ZEPHYR, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ZephyrEntity::canZephyrSpawn);
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.COCKATRICE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.AECHOR_PLANT, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AechorPlantEntity::canAechorSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.WHIRLWIND, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WhirlwindEntity::canWhirlwindSpawn);
 
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.MOA, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.PHYG, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
@@ -100,6 +98,7 @@ public class CommonProxy {
 		GlobalEntityTypeAttributes.put(AetherEntityTypes.FLYING_COW, FlyingCowEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(AetherEntityTypes.SHEEPUFF, SheepuffEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(AetherEntityTypes.AERWHALE, AerwhaleEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.WHIRLWIND, WhirlwindEntity.registerAttributes().create());
 	}
 	
 	protected void registerLootTableFunctions() {

@@ -2,8 +2,10 @@ package com.aether.particles;
 
 import com.aether.Aether;
 import com.aether.client.particle.AetherPortalParticle;
+import com.aether.client.particle.EvilWhirlyParticle;
 import com.aether.client.particle.HolidayLeavesParticle;
 
+import com.aether.client.particle.PassiveWhirlyParticle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.particles.BasicParticleType;
@@ -22,6 +24,8 @@ public final class AetherParticleTypes {
 
 	public static final BasicParticleType AETHER_PORTAL = null;
 	public static final BasicParticleType HOLIDAY_LEAVES = null;
+	public static final BasicParticleType PASSIVE_WHIRLWIND = null;
+	public static final BasicParticleType EVIL_WHIRLWIND = null;
 	
 	@EventBusSubscriber(modid = Aether.MODID, bus = Bus.MOD)
 	public static final class Registration {
@@ -32,6 +36,8 @@ public final class AetherParticleTypes {
 				
 				particle("aether_portal", new BasicParticleType(false)),
 				particle("holiday_leaves", new BasicParticleType(false)),
+				particle("passive_whirlwind", new BasicParticleType(false)),
+				particle("evil_whirlwind", new BasicParticleType(false))
 				
 			});
 		}
@@ -53,6 +59,8 @@ public final class AetherParticleTypes {
 			
 			mgr.registerFactory(AETHER_PORTAL, AetherPortalParticle.Factory::new);
 			mgr.registerFactory(HOLIDAY_LEAVES, HolidayLeavesParticle.Factory::new);
+			mgr.registerFactory(PASSIVE_WHIRLWIND, PassiveWhirlyParticle.Factory::new);
+			mgr.registerFactory(EVIL_WHIRLWIND, EvilWhirlyParticle.Factory::new);
 		}
 		
 	}

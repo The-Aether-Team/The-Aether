@@ -41,6 +41,7 @@ public class AetherEntityTypes {
 	public static final EntityType<FlyingCowEntity> FLYING_COW = entity("flying_cow", EntityType.Builder.<FlyingCowEntity>create(FlyingCowEntity::new, EntityClassification.CREATURE).size(0.9F, 1.4F));
 	public static final EntityType<SheepuffEntity> SHEEPUFF = entity("sheepuff", EntityType.Builder.<SheepuffEntity>create(SheepuffEntity::new, EntityClassification.CREATURE).size(0.9F, 1.4F));
 	public static final EntityType<AerwhaleEntity> AERWHALE = entity("aerwhale", EntityType.Builder.<AerwhaleEntity>create(AerwhaleEntity::new, EntityClassification.CREATURE).size(3.0F, 3.0F).immuneToFire());
+	public static final EntityType<WhirlwindEntity> WHIRLWIND = entity("whirlwind", EntityType.Builder.create(WhirlwindEntity::new, EntityClassification.MONSTER).size(0.6F, 0.8F));
 
 	@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = Aether.MODID, bus = EventBusSubscriber.Bus.MOD)
 	public static class Registration {
@@ -63,6 +64,7 @@ public class AetherEntityTypes {
 					LIGHTNING_KNIFE,
 					ZEPHYR_SNOWBALL,
 					AERWHALE,
+					WHIRLWIND
 
 			});
 		}

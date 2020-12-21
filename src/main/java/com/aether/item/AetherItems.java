@@ -356,7 +356,8 @@ public class AetherItems {
 				item("phyg_spawn_egg", new SpawnEggItem(AetherEntityTypes.PHYG, /*primary color:*/ 0xFFC1D0, /*secondary color:*/ 0xFFD939, new Item.Properties().group(ItemGroup.MISC))),
 				item("flying_cow_spawn_egg", new SpawnEggItem(AetherEntityTypes.FLYING_COW, /*primary color:*/ 0xD8D8D8, /*secondary color:*/ 0xFFD939, new Item.Properties().group(ItemGroup.MISC))),
 				item("sheepuff_spawn_egg", new SpawnEggItem(AetherEntityTypes.SHEEPUFF, /*primary color:*/ 0xE2FCFF,  /*secondary color:*/ 0xCB9090, new Item.Properties().group(ItemGroup.MISC))),
-				item("aerwhale_spawn_egg", new SpawnEggItem(AetherEntityTypes.AERWHALE, /*primary color:*/ 0x79B7D1,  /*secondary color:*/ 0xE0D25C, new Item.Properties().group(ItemGroup.MISC)))
+				item("aerwhale_spawn_egg", new SpawnEggItem(AetherEntityTypes.AERWHALE, /*primary color:*/ 0x79B7D1,  /*secondary color:*/ 0xE0D25C, new Item.Properties().group(ItemGroup.MISC))),
+				item("whirlwind_spawn_egg", new SpawnEggItem(AetherEntityTypes.WHIRLWIND, /*primary color:*/ 0x9fc3f7,  /*secondary color:*/ 0xffffff, new Item.Properties().group(ItemGroup.MISC)))
 			});
 		}
 
