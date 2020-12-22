@@ -193,7 +193,6 @@ public class WhirlwindEntity extends MobEntity {
 
                 if(this.world.getBlockState(new BlockPos.Mutable().setPos(i2, j2, k2)).getBlock() instanceof LeavesBlock) {
                     this.world.destroyBlock(new BlockPos(i2, j2, k2), false);
-                    //this.world.setBlockState(new BlockPos(i2, j2, k2), Blocks.AIR.getDefaultState());
                 }
             }
         }
@@ -321,7 +320,6 @@ public class WhirlwindEntity extends MobEntity {
     public boolean attackEntityFrom(DamageSource source, float damage) {
         return false;
     }
-
 
     @Override
     public int getMaxSpawnedInChunk() {

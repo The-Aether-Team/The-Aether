@@ -163,6 +163,7 @@ public class AetherItems {
 	public static final SpawnEggItem VALKYRIE_SPAWN_EGG = null;
 	public static final SpawnEggItem FIRE_MINION_SPAWN_EGG = null;
 	public static final SpawnEggItem MOA_SPAWN_EGG = null;
+	public static final SpawnEggItem WHIRLWIND_SPAWN_EGG = null;
 
 	@SuppressWarnings("unused")
 	@EventBusSubscriber(modid = Aether.MODID, bus = Bus.MOD)

@@ -137,6 +137,7 @@ public class CommonProxy {
 		DispenserBlock.registerDispenseBehavior(AetherItems.MIMIC_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.VALKYRIE_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.FIRE_MINION_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.WHIRLWIND_SPAWN_EGG, dispenseSpawnEgg);
 		DispenserBlock.registerDispenseBehavior(Items.FIRE_CHARGE, new OptionalDispenseBehavior() {
 			/**
 			 * Dispense the specified stack, play the dispense sound and spawn
