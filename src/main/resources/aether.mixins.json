@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "com.aether.mixin",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "aether.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "client.WorldRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
