@@ -5,11 +5,11 @@
 	"textures": 
 	{
         
-		"bottom": "aether:block/holystone_brick",
+		"bottom": "aether:block/holystone_bricks",
         
-		"top": "aether:block/holystone_brick",
+		"top": "aether:block/holystone_bricks",
         
-		"side": "aether:block/holystone_brick"
+		"side": "aether:block/holystone_bricks"
     
 	}
 

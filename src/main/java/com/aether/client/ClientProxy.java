@@ -79,6 +79,9 @@ public class ClientProxy extends CommonProxy {
 	protected void registerEntityRenderers(FMLClientSetupEvent event) {
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.LIGHTNING_KNIFE, LightningKnifeRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR_SNOWBALL, m -> new SpriteRenderer<>(m, event.getMinecraftSupplier().get().getItemRenderer()));
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.GOLDEN_DART, DartRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ENCHANTED_DART, DartRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.POISON_DART, DartRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLOATING_BLOCK, FloatingBlockRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC, MimicRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY, SentryRenderer::new);

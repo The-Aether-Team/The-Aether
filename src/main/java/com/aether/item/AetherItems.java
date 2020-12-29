@@ -281,13 +281,13 @@ public class AetherItems {
 				
 				//item("moa_egg", new MoaEggItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
 				
-				//item("golden_dart_shooter", new DartShooterItem(() -> GOLDEN_DART, new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("poison_dart_shooter", new DartShooterItem(() -> POISON_DART, new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("enchanted_dart_shooter", new DartShooterItem(() -> ENCHANTED_DART, new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("golden_dart_shooter", new DartShooterItem(() -> GOLDEN_DART, new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_COMBAT))),
+				item("poison_dart_shooter", new DartShooterItem(() -> POISON_DART, new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_COMBAT))),
+				item("enchanted_dart_shooter", new DartShooterItem(() -> ENCHANTED_DART, new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
-				item("golden_dart", new Item(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				item("poison_dart", new Item(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				item("enchanted_dart", new Item(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("golden_dart", new DartItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("poison_dart", new DartItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("enchanted_dart", new DartItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
 				//item("phoenix_bow", new PhoenixBowItem(new Item.Properties().maxDamage(384).group(AetherItemGroups.AETHER_COMBAT))),
 
