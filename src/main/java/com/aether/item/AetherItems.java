@@ -298,7 +298,7 @@ public class AetherItems {
 				item("pig_slayer", new PigSlayerItem(ItemTier.IRON, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				//item("candy_cane_sword", new CandyCaneSwordItem(ItemTier.GOLD, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 				//item("notch_hammer", new NotchHammerItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				//item("valkyrie_lance", new ValkyrieLanceItem(ItemTier.DIAMOND, 3, -2.4F, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("valkyrie_lance", new ValkyrieLanceItem(ItemTier.DIAMOND, 3, -2.4F, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
 				//item("leather_gloves", new DyeableGlovesItem(ArmorMaterial.LEATHER, new Item.Properties().group(ItemGroup.COMBAT))),
 				//item("chainmail_gloves", new GlovesItem(ArmorMaterial.CHAIN, new Item.Properties().group(ItemGroup.COMBAT))),
