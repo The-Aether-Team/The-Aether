@@ -289,14 +289,14 @@ public class AetherItems {
 				item("poison_dart", new DartItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 				item("enchanted_dart", new DartItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
-				//item("phoenix_bow", new PhoenixBowItem(new Item.Properties().maxDamage(384).group(AetherItemGroups.AETHER_COMBAT))),
+//				item("phoenix_bow", new PhoenixBowItem(new Item.Properties().maxDamage(384).rarity(AetherRarity.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 
 				item("flaming_sword", new FlamingSwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("lightning_sword", new LightningSwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("holy_sword", new HolySwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("vampire_blade", new VampireBladeItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("holy_sword", new HolySwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("vampire_blade", new VampireBladeItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("pig_slayer", new PigSlayerItem(ItemTier.IRON, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("candy_cane_sword", new CandyCaneSwordItem(ItemTier.GOLD, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("candy_cane_sword", new CandyCaneSwordItem(ItemTier.GOLD, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 				//item("notch_hammer", new NotchHammerItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 				item("valkyrie_lance", new ValkyrieLanceItem(ItemTier.DIAMOND, 3, -2.4F, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
