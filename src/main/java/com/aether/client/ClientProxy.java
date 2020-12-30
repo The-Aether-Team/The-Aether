@@ -37,7 +37,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
@@ -72,6 +75,7 @@ public class ClientProxy extends CommonProxy {
 		registerTileEntityRenderers();
 		registerGuiFactories();
 		registerBlockRenderLayers();
+		registerItemModelProperties();
 		DimensionRenderInfo.field_239208_a_.put(AetherDimensions.AETHER_DIMENSION.getLocation(), new DimensionRenderInfo(-5.0F, true, DimensionRenderInfo.FogType.NORMAL, false, false) {
 			@Override
 			public Vector3d func_230494_a_(Vector3d color, float p_230494_2_) {
@@ -91,6 +95,8 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.GOLDEN_DART, DartRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ENCHANTED_DART, DartRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.POISON_DART, DartRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.PHOENIX_ARROW, PhoenixArrowRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW, PhoenixArrowRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLOATING_BLOCK, FloatingBlockRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC, MimicRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY, SentryRenderer::new);
@@ -181,6 +187,19 @@ public class ClientProxy extends CommonProxy {
 	
 	public static void setTranslucentNoCrumblingRenderLayer(Block block) {
 		RenderTypeLookup.setRenderLayer(block, RenderType.getTranslucentNoCrumbling());
+	}
+
+	protected void registerItemModelProperties() {
+		ItemModelsProperties.registerProperty(AetherItems.PHOENIX_BOW, new ResourceLocation("pulling"), (stack, world, living) -> {
+			return living != null && living.isHandActive() && living.getActiveItemStack() == stack ? 1.0F : 0.0F;
+		});
+		ItemModelsProperties.registerProperty(AetherItems.PHOENIX_BOW, new ResourceLocation("pull"), (stack, world, living) -> {
+			if (living == null) {
+				return 0.0F;
+			} else {
+				return living.getActiveItemStack() != stack ? 0.0F : (float)(stack.getUseDuration() - living.getItemInUseCount()) / 20.0F;
+			}
+		});
 	}
 
 	public static CustomItemStackTileEntityRenderer chestMimicRenderer() {

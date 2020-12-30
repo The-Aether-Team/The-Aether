@@ -99,7 +99,7 @@ public class AetherItems {
 	public static final Item GOLDEN_DART = null;
 	public static final Item POISON_DART = null;
 	public static final Item ENCHANTED_DART = null;
-	public static final Item PHOENIX_BOX = null;
+	public static final Item PHOENIX_BOW = null;
 	public static final Item FLAMING_SWORD = null;
 	public static final Item LIGHTNING_SWORD = null;
 	public static final Item HOLY_SWORD = null;
@@ -289,7 +289,7 @@ public class AetherItems {
 				item("poison_dart", new DartItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 				item("enchanted_dart", new DartItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
-//				item("phoenix_bow", new PhoenixBowItem(new Item.Properties().maxDamage(384).rarity(AetherRarity.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("phoenix_bow", new PhoenixBowItem(new Item.Properties().maxDamage(384).rarity(AetherRarity.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 
 				item("flaming_sword", new FlamingSwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("lightning_sword", new LightningSwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
