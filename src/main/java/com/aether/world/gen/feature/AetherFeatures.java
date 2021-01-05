@@ -3,6 +3,7 @@ package com.aether.world.gen.feature;
 import com.aether.Aether;
 import com.aether.block.AetherBlocks;
 import com.google.common.collect.ImmutableSet;
+import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
@@ -15,6 +16,7 @@ import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraft.world.gen.foliageplacer.BlobFoliagePlacer;
 import net.minecraft.world.gen.foliageplacer.FancyFoliagePlacer;
 import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
+import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraft.world.gen.trunkplacer.FancyTrunkPlacer;
@@ -38,8 +40,11 @@ public class AetherFeatures {
 
     public static final RegistryObject<Feature<NoFeatureConfig>> CRYSTAL_TREE = FEATURES.register("crystal_tree", () -> new CrystalTreeFeature(NoFeatureConfig.field_236558_a_));
 
+    public static final RegistryObject<Feature<NoFeatureConfig>> HOLYSTONE_SPHERE = FEATURES.register("holystone_sphere", () -> new HolystoneSphereFeature(NoFeatureConfig.field_236558_a_));
+
     public static void registerConfiguredFeatures() {
         RuleTest HOLYSTONE = new BlockMatchRuleTest(AetherBlocks.HOLYSTONE);
+        RuleTest CRYSTAL_LEAVES = new BlockMatchRuleTest(AetherBlocks.CRYSTAL_LEAVES);
 
         register("quicksoil", QUICKSOIL.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(256).square().func_242731_b(10));
 
@@ -49,6 +54,7 @@ public class AetherFeatures {
         register("pink_aercloud", PINK_AERCLOUD.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(160).square().chance(7));
 
         register("crystal_tree", CRYSTAL_TREE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).square().chance(15));
+        register("crystal_fruit_leaves", Feature.ORE.withConfiguration(new OreFeatureConfig(HOLYSTONE, AetherBlocks.CRYSTAL_FRUIT_LEAVES.getDefaultState(), 4)).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(64, 0, 128)).square().func_242731_b(240)));
 
         register("tree_skyroot", Feature.TREE.withConfiguration((new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(AetherBlocks.SKYROOT_LOG.getDefaultState()), new SimpleBlockStateProvider(AetherBlocks.SKYROOT_LEAVES.getDefaultState()), new BlobFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(0), 3), new StraightTrunkPlacer(4, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT));
         register("tree_golden_oak", Feature.TREE.withConfiguration((new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(AetherBlocks.GOLDEN_OAK_LOG.getDefaultState()), new SimpleBlockStateProvider(AetherBlocks.GOLDEN_OAK_LEAVES.getDefaultState()), new FancyFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(4), 4), new FancyTrunkPlacer(3, 11, 0), new TwoLayerFeature(0, 0, 0, OptionalInt.of(4)))).setIgnoreVines().func_236702_a_(Heightmap.Type.MOTION_BLOCKING).build()).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, 0.03F, 1))));

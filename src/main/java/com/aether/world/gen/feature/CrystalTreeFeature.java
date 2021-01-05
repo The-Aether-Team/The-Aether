@@ -2,6 +2,7 @@ package com.aether.world.gen.feature;
 
 import com.aether.Aether;
 import com.mojang.serialization.Codec;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
@@ -37,7 +38,7 @@ public class CrystalTreeFeature extends Feature<NoFeatureConfig> {
         BlockPos blockpos = tree.transformedSize(rotation);
         int x = rand.nextInt(16 - blockpos.getX());
         int z = rand.nextInt(16 - blockpos.getZ());
-        int y = 150 + rand.nextInt(100);
+        int y = 75 + rand.nextInt(50);
 
         /*
         for(int i1 = 0; i1 < blockpos.getX(); ++i1) {
@@ -51,8 +52,8 @@ public class CrystalTreeFeature extends Feature<NoFeatureConfig> {
 
         BlockPos blockpos1 = tree.getZeroPositionWithTransform(pos.add(x, y, z), Mirror.NONE, rotation);
 
-        //IntegrityProcessor integrityprocessor = new IntegrityProcessor(0.9F);
-        //placementsettings.clearProcessors().addProcessor(integrityprocessor);
+//        IntegrityProcessor integrityprocessor = new IntegrityProcessor(0.9F);
+//        placementsettings.clearProcessors().addProcessor(integrityprocessor);
         tree.func_237146_a_(reader, blockpos1, blockpos1, placementsettings, rand, 4);
         //placementsettings.removeProcessor(integrityprocessor);
 
