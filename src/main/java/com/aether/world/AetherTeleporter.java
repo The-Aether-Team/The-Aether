@@ -36,19 +36,13 @@ public class AetherTeleporter implements ITeleporter {
     }
 
     public Optional<TeleportationRepositioner.Result> getExistingPortal(BlockPos pos) {
-        PointOfInterestManager pointofinterestmanager = this.world.getPointOfInterestManager();
-
-        pointofinterestmanager.ensureLoadedAndValid(this.world, pos, 128);
-        Optional<PointOfInterest> optional = pointofinterestmanager.getInSquare(
-                (poiType) -> poiType == AetherPOI.AETHER_PORTAL.get(), pos, 128, PointOfInterestManager.Status.ANY)
-                .sorted(
-                        Comparator.<PointOfInterest>comparingDouble(
-                                (poi) -> poi.getPos().distanceSq(pos))
-                                .thenComparingInt(
-                                        (poi) -> poi.getPos().getY()))
-                .filter(
-                        (poi) -> this.world.getBlockState(poi.getPos()).hasProperty(BlockStateProperties.HORIZONTAL_AXIS))
-                .findFirst();
+        PointOfInterestManager poiManager = this.world.getPointOfInterestManager();
+        poiManager.ensureLoadedAndValid(this.world, pos, 128);
+        Optional<PointOfInterest> optional = poiManager.getInSquare((poiType) ->
+                poiType == AetherPOI.AETHER_PORTAL.get(), pos, 128, PointOfInterestManager.Status.ANY).sorted(Comparator.<PointOfInterest>comparingDouble((poi) ->
+                poi.getPos().distanceSq(pos)).thenComparingInt((poi) ->
+                poi.getPos().getY())).filter((poi) ->
+                this.world.getBlockState(poi.getPos()).hasProperty(BlockStateProperties.HORIZONTAL_AXIS)).findFirst();
         return optional.map((poi) -> {
             BlockPos blockpos = poi.getPos();
             this.world.getChunkProvider().registerTicket(TicketType.PORTAL, new ChunkPos(blockpos), 3, blockpos);
@@ -207,7 +201,9 @@ public class AetherTeleporter implements ITeleporter {
         else {
             Direction.Axis portalAxis = this.world.getBlockState(entity.field_242271_ac).func_235903_d_(AetherPortalBlock.AXIS).orElse(Direction.Axis.X);
             Optional<TeleportationRepositioner.Result> makePortal = this.makePortal(pos, portalAxis);
-            if (!makePortal.isPresent()) { }
+            if (!makePortal.isPresent()) {
+                //Uh oh!
+            }
 
             return makePortal;
         }
