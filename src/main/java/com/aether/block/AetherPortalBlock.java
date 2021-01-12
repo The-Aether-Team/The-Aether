@@ -3,6 +3,8 @@ package com.aether.block;
 import com.aether.Aether;
 import com.aether.particles.AetherParticleTypes;
 import com.aether.util.AetherSoundEvents;
+import com.aether.world.AetherTeleporter;
+import com.aether.world.dimension.AetherDimensions;
 import com.google.common.cache.LoadingCache;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,21 +14,20 @@ import net.minecraft.entity.Entity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.CachedBlockInfo;
-import net.minecraft.util.Direction;
+import net.minecraft.util.*;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Direction.AxisDirection;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
@@ -92,36 +93,33 @@ public class AetherPortalBlock extends Block {
 		boolean flag = stateAxis != directionAxis && directionAxis.isHorizontal();
 		return (!flag && facingState.getBlock() != this && !(new AetherPortalBlock.Size(worldIn, currentPos, stateAxis)).canCreatePortal())? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos); 
 	}
-	
+
 	@Override
-	@Deprecated
 	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
-		/*
-		if (!entity.isPassenger() && !entity.isBeingRidden() && entity.isNonBoss()) {
-			if (entity.timeUntilPortal > 0) {
-				entity.timeUntilPortal = entity.getPortalCooldown();
+		if(!entity.isPassenger() && !entity.isBeingRidden() && entity.isNonBoss()) {
+			if(entity.func_242280_ah()) {
+				entity.func_242279_ag();
 			}
 			else {
-				if (!entity.world.isRemote && !pos.equals(entity.lastPortalPos)) {
-					entity.lastPortalPos = new BlockPos(pos);
-					BlockPattern.PatternHelper helper = createPatternHelper(entity.world, entity.lastPortalPos);
-					double axis = (helper.getForwards().getAxis() == Direction.Axis.X)? (double)helper.getFrontTopLeft().getZ() : (double)helper.getFrontTopLeft().getX();
-					double x = Math.abs(MathHelper.pct((helper.getForwards().getAxis() == Direction.Axis.X? entity.getPosZ() : entity.getPosX()) - (helper.getForwards().rotateY().getAxisDirection() == Direction.AxisDirection.NEGATIVE? 1 : 0), axis, axis - helper.getWidth()));
-					double y = MathHelper.pct(entity.getPosY() - 1.0, helper.getFrontTopLeft().getY(), helper.getFrontTopLeft().getY() - helper.getHeight());
-					entity.lastPortalVec = new Vec3d(x, y, 0.0);
-					entity.teleportDirection = helper.getForwards();
+				if(!entity.world.isRemote && !pos.equals(entity.field_242271_ac)) {
+					entity.field_242271_ac = pos.toImmutable();
 				}
-
-				if (entity.world instanceof ServerWorld) {
-					if (entity.world.getServer().getAllowNether() && !entity.isPassenger()) {
-						entity.timeUntilPortal = entity.getPortalCooldown();
-						DimensionType type = (worldIn.dimension.getType() == AetherDimensions.THE_AETHER)? DimensionType.OVERWORLD : AetherDimensions.THE_AETHER;
-						entity.changeDimension(type, new AetherTeleporter());
+				World serverworld = entity.world;
+				if(serverworld != null) {
+					MinecraftServer minecraftserver = serverworld.getServer();
+					RegistryKey<World> where2go = entity.world.getDimensionKey() == AetherDimensions.AETHER_WORLD ? World.OVERWORLD : AetherDimensions.AETHER_WORLD;
+					if(minecraftserver != null) {
+						ServerWorld destination = minecraftserver.getWorld(where2go);
+						if(destination != null && minecraftserver.getAllowNether() && !entity.isPassenger()) {
+							entity.world.getProfiler().startSection("aether_portal");
+							entity.func_242279_ag();
+							entity.changeDimension(destination, new AetherTeleporter(destination));
+							entity.world.getProfiler().endSection();
+						}
 					}
 				}
 			}
 		}
-		*/
 	}
 	
 	@Override

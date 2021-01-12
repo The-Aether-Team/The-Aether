@@ -4,10 +4,7 @@ import com.aether.block.AetherBlocks;
 import com.aether.block.AetherPortalBlock;
 import com.aether.poi.AetherPOI;
 import com.aether.world.dimension.AetherDimensions;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.PortalInfo;
-import net.minecraft.block.PortalSize;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
@@ -133,7 +130,7 @@ public class AetherTeleporter implements ITeleporter {
             for(int i2 = -1; i2 < 4; ++i2) {
                 if (k1 == -1 || k1 == 2 || i2 == -1 || i2 == 3) {
                     mutablePos.setAndOffset(blockpos, k1 * direction.getXOffset(), i2, k1 * direction.getZOffset());
-                    this.world.setBlockState(mutablePos, Blocks.STONE_BRICKS.getDefaultState(), 3);
+                    this.world.setBlockState(mutablePos, Blocks.GLOWSTONE.getDefaultState(), 3);
                 }
             }
         }
@@ -169,11 +166,6 @@ public class AetherTeleporter implements ITeleporter {
         return true;
     }
 
-    @Override
-    public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
-        return repositionEntity.apply(false);
-    }
-
     @Nullable
     @Override
     public PortalInfo getPortalInfo(Entity entity, ServerWorld destWorld, Function<ServerWorld, PortalInfo> defaultPortalInfo) {
@@ -189,7 +181,7 @@ public class AetherTeleporter implements ITeleporter {
             double maxZ = Math.min(2.9999872E7D, border.maxZ() - 16.0D);
             double coordinateDifference = DimensionType.getCoordinateDifference(entity.world.getDimensionType(), destWorld.getDimensionType());
             BlockPos blockpos = new BlockPos(MathHelper.clamp(entity.getPosX() * coordinateDifference, minX, maxX), entity.getPosY(), MathHelper.clamp(entity.getPosZ() * coordinateDifference, minZ, maxZ));
-            return this.func_241830_a(entity, blockpos).map((result) -> {
+            return this.getOrMakePortal(entity, blockpos).map((result) -> {
                 BlockState blockstate = entity.world.getBlockState(entity.field_242271_ac);
                 Direction.Axis axis;
                 Vector3d vector3d;
@@ -207,13 +199,17 @@ public class AetherTeleporter implements ITeleporter {
         }
     }
 
-    protected Optional<TeleportationRepositioner.Result> func_241830_a(Entity entity, BlockPos pos) {
-        Optional<TeleportationRepositioner.Result> optional = this.getExistingPortal(pos);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            Direction.Axis direction$axis = this.world.getBlockState(entity.field_242271_ac).func_235903_d_(AetherPortalBlock.AXIS).orElse(Direction.Axis.X);
-            return this.makePortal(pos, direction$axis);
+    protected Optional<TeleportationRepositioner.Result> getOrMakePortal(Entity entity, BlockPos pos) {
+        Optional<TeleportationRepositioner.Result> existingPortal = this.getExistingPortal(pos);
+        if(existingPortal.isPresent()) {
+            return existingPortal;
+        }
+        else {
+            Direction.Axis portalAxis = this.world.getBlockState(entity.field_242271_ac).func_235903_d_(AetherPortalBlock.AXIS).orElse(Direction.Axis.X);
+            Optional<TeleportationRepositioner.Result> makePortal = this.makePortal(pos, portalAxis);
+            if (!makePortal.isPresent()) { }
+
+            return makePortal;
         }
     }
 }
