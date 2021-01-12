@@ -26,16 +26,21 @@ import com.aether.world.dimension.AetherDimensions;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.client.world.DimensionRenderInfo;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -190,5 +195,30 @@ public class ClientProxy extends CommonProxy {
 			}
 		});
 	}
-	
+
+	/**
+	 * The purpose of this event handler is to prevent the fog from turning black near the void in the Aether.
+	 */
+	@SubscribeEvent
+	public static void onRenderFogColor(EntityViewRenderEvent.FogColors event) {
+		ActiveRenderInfo renderInfo = event.getInfo();
+		ClientWorld world = (ClientWorld) renderInfo.getRenderViewEntity().world;
+		if(world.getDimensionKey() == AetherDimensions.AETHER_WORLD) {
+			double height = renderInfo.getProjectedView().y;
+			ClientWorld.ClientWorldInfo worldInfo = world.getWorldInfo();
+			double d0 = height * worldInfo.getFogDistance();
+			FluidState fluidState = renderInfo.getFluidState();
+			if(d0 < 1.0D && !fluidState.isTagged(FluidTags.LAVA)) { // Reverse implementation of FogRenderer.updateFogColor.
+				if (d0 < 0.0D) {
+					d0 = 0.0D;
+				}
+				d0 = d0 * d0;
+				if(d0 != 0.0D) {
+					event.setRed((float) ((double) event.getRed() / d0));
+					event.setGreen((float) ((double) event.getGreen() / d0));
+					event.setBlue((float) ((double) event.getBlue() / d0));
+				}
+			}
+		}
+	}
 }
