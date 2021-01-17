@@ -30,7 +30,7 @@ public abstract class AbstractDartEntity extends AbstractArrowEntity {
         super.tick();
         if (this.ticksInAir == 500)
         {
-            this.setDead();
+            this.remove();
         }
 
         if (!this.onGround)

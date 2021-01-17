@@ -28,7 +28,13 @@ public class DartShooterItem extends Item {
         }
 
         if (!worldIn.isRemote) {
-            DartItem dartItem = (DartItem) ammo.getItem();
+            DartItem dartItem;
+            if(flag && ammo.isEmpty()) {
+                dartItem = (DartItem) ammoType.get();
+            }
+            else {
+                dartItem = (DartItem) ammo.getItem();
+            }
             AbstractDartEntity dart = dartItem.createDart(worldIn, ammo, playerIn);
             dart.setNoGravity(true);
             dart.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.0F, 1.0F);
