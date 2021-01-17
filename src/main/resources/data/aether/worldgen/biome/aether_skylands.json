@@ -23,7 +23,8 @@
   },
   "features": [
     [
-      "aether:quicksoil"
+      "aether:quicksoil",
+      "aether:crystal_tree"
     ],
     [
       "minecraft:lake_water"
