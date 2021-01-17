@@ -38,6 +38,7 @@ public class AetherEntityTypes {
 	public static final EntityType<PoisonDartEntity> POISON_DART = entity("poison_dart", EntityType.Builder.<PoisonDartEntity>create(PoisonDartEntity::new, EntityClassification.MISC).size(0.5F, 0.5F));
 	public static final EntityType<PhoenixArrowEntity> PHOENIX_ARROW = entity("phoenix_arrow", EntityType.Builder.<PhoenixArrowEntity>create(PhoenixArrowEntity::new, EntityClassification.MISC).size(0.5F, 0.5F));
 	public static final EntityType<SpectralPhoenixArrowEntity> SPECTRAL_PHOENIX_ARROW = entity("spectral_phoenix_arrow", EntityType.Builder.<SpectralPhoenixArrowEntity>create(SpectralPhoenixArrowEntity::new, EntityClassification.MISC).size(0.5F, 0.5F));
+	public static final EntityType<HammerProjectileEntity> HAMMER_PROJECTILE = entity("hammer_projectile", EntityType.Builder.<HammerProjectileEntity>create(HammerProjectileEntity::new, EntityClassification.MISC).size(0.25F, 0.25F));
 	public static final EntityType<MoaEntity> MOA = entity("moa", EntityType.Builder.<MoaEntity>create(MoaEntity::new, EntityClassification.CREATURE).size(1.0F,  2.0F));
 	public static final EntityType<PhygEntity> PHYG = entity("phyg", EntityType.Builder.create(PhygEntity::new, EntityClassification.CREATURE).size(0.9F, 0.9F));
 	public static final EntityType<FlyingCowEntity> FLYING_COW = entity("flying_cow", EntityType.Builder.<FlyingCowEntity>create(FlyingCowEntity::new, EntityClassification.CREATURE).size(0.9F, 1.4F));
@@ -70,6 +71,7 @@ public class AetherEntityTypes {
 					POISON_DART,
 					PHOENIX_ARROW,
 					SPECTRAL_PHOENIX_ARROW,
+					HAMMER_PROJECTILE,
 					AERWHALE,
 					WHIRLWIND
 			});

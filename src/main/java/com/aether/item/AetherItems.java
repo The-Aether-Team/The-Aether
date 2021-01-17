@@ -240,6 +240,9 @@ public class AetherItems {
 				item("blueberry", new Item(new Item.Properties()
 					.food(new Food.Builder().fastToEat().hunger(2).build())
 					.group(AetherItemGroups.AETHER_FOOD))),
+				item("enchanted_blueberry", new Item(new Item.Properties()
+					.food(new Food.Builder().fastToEat().hunger(8).build())
+					.group(AetherItemGroups.AETHER_FOOD))),
 				item("white_apple", new Item(new Item.Properties()
 					.food(new Food.Builder().setAlwaysEdible().fastToEat().hunger(0).build())
 					.group(AetherItemGroups.AETHER_FOOD))),
@@ -297,7 +300,7 @@ public class AetherItems {
 				item("vampire_blade", new VampireBladeItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("pig_slayer", new PigSlayerItem(ItemTier.IRON, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("candy_cane_sword", new CandyCaneSwordItem(ItemTier.GOLD, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				//item("notch_hammer", new NotchHammerItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("notch_hammer", new NotchHammerItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 				item("valkyrie_lance", new ValkyrieLanceItem(ItemTier.DIAMOND, 3, -2.4F, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
 				//item("leather_gloves", new DyeableGlovesItem(ArmorMaterial.LEATHER, new Item.Properties().group(ItemGroup.COMBAT))),
