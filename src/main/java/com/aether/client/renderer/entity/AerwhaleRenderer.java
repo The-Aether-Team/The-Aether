@@ -1,6 +1,7 @@
 package com.aether.client.renderer.entity;
 
 import com.aether.Aether;
+import com.aether.AetherConfig;
 import com.aether.client.renderer.entity.model.AerwhaleModel;
 import com.aether.client.renderer.entity.model.BaseAerwhaleModel;
 import com.aether.client.renderer.entity.model.OldAerwhaleModel;
@@ -35,6 +36,7 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
 
     @Override
     protected void preRenderCallback(AerwhaleEntity aerwhale, MatrixStack matrixStackIn, float partialTickTime) {
+        this.entityModel = AetherConfig.CLIENT.legacyModels.get() ? oldModel : regularModel;
         matrixStackIn.translate(0, 1.2, 0);
 //        if (_staticData == null) {
 //        	_staticData = new float[] {aerwhale.rotationYaw, aerwhale.rotationPitch};
@@ -64,19 +66,11 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
 //        }
     }
     
-    @Override
-    public void render(AerwhaleEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
-    	super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-    }
-    
-    @Override	//TODO: Configurable old aerwhale model
-    public BaseAerwhaleModel getEntityModel() {
-    	return regularModel;
-    }
 
-    @Override   //TODO: Configurable old aerwhale texture
+
+    @Override
     public ResourceLocation getEntityTexture(AerwhaleEntity entity) {
-        return AERWHALE_TEXTURE;
+        return AetherConfig.CLIENT.legacyModels.get() ? OLD_AERWHALE_TEXTURE : AERWHALE_TEXTURE;
     }
 }
 

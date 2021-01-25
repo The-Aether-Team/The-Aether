@@ -1,6 +1,8 @@
 package com.aether.client.renderer.entity;
 
 import com.aether.Aether;
+import com.aether.AetherConfig;
+import com.aether.client.renderer.entity.layers.ZephyrOldModelLayer;
 import com.aether.client.renderer.entity.layers.ZephyrTransparencyLayer;
 import com.aether.client.renderer.entity.model.ZephyrModel;
 import com.aether.entity.monster.ZephyrEntity;
@@ -14,13 +16,13 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, ZephyrModel> {
     public ZephyrRenderer(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new ZephyrModel(), 0.5F);
         addLayer(new ZephyrTransparencyLayer(this));
+        addLayer(new ZephyrOldModelLayer(this));
     }
 
     @Override
     protected void preRenderCallback(ZephyrEntity zephyr, MatrixStack matrixStackIn, float partialTickTime) {
         float f1 = ((float) zephyr.getAttackCharge() + partialTickTime) / 20.0F;
-        if (f1 < 0.0F)
-        {
+        if (f1 < 0.0F) {
             f1 = 0.0F;
         }
 
@@ -31,11 +33,10 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, ZephyrModel> {
         matrixStackIn.scale(f3, f2, f3);
         matrixStackIn.translate(0, 0.5, 0);
 
-        /*if (AetherConfig.visual_options.legacy_models) TODO: Re-enable this when the config is put back in.
-        {
+        if (AetherConfig.CLIENT.legacyModels.get()) {
             matrixStackIn.scale(0.8F, 0.8F, 0.8F);
             matrixStackIn.translate(0, -0.1, 0);
-        }*/
+        }
 
     }
 
