@@ -1,10 +1,12 @@
 package com.aether.client;
 
 import com.aether.Aether;
+import com.aether.AetherConfig;
 import com.aether.CommonProxy;
 import com.aether.block.AetherBlocks;
 import com.aether.block.IAetherBlockColor;
 import com.aether.capability.AetherCapabilities;
+import com.aether.client.gui.screen.config.AetherConfigScreen;
 import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.gui.screen.inventory.FreezerScreen;
 import com.aether.client.gui.screen.inventory.IncubatorScreen;
@@ -43,6 +45,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -79,6 +83,7 @@ public class ClientProxy extends CommonProxy {
 				return false;
 			}
 		});
+		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> (mc, screen) -> new AetherConfigScreen(screen));
 	}
 	
 	protected void registerEntityRenderers(FMLClientSetupEvent event) {

@@ -27,7 +27,7 @@ public class ZephyrOldModelLayer extends LayerRenderer<ZephyrEntity, ZephyrModel
 
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, ZephyrEntity zephyr, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (!zephyr.isInvisible() && AetherConfig.CLIENT.legacyModels.get()) {
+        if (!zephyr.isInvisible() && AetherConfig.CLIENT.visual.legacyModels.get()) {
             IVertexBuilder vertexBuilder = bufferIn.getBuffer(RenderType.getEntityCutoutNoCull(OLD_ZEPHYR));
 //            vertexBuilder.color(1.0F, 1.0F, 1.0F, 1.0F);
             super.getEntityModel().copyModelAttributesTo(zephyrModel);

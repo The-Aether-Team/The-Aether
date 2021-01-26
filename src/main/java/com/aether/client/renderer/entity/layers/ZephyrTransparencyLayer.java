@@ -30,7 +30,7 @@ public class ZephyrTransparencyLayer extends LayerRenderer<ZephyrEntity, ZephyrM
 
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, ZephyrEntity zephyr, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (!zephyr.isInvisible() && !AetherConfig.CLIENT.legacyModels.get()) {
+        if (!zephyr.isInvisible() && !AetherConfig.CLIENT.visual.legacyModels.get()) {
             this.zephyrRenderer.getEntityModel().copyModelAttributesTo(this.zephyrModel);
             this.zephyrModel.setRotationAngles(zephyr, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
             IVertexBuilder vertexBuilder = bufferIn.getBuffer(RenderType.getEntityTranslucent(LAYER_TEXTURE));

@@ -60,28 +60,30 @@ public class AetherConfig {
     }
 
     public static class ClientConfig {
+        public final Visual visual = new Visual();
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.comment("These options do not affect gameplay, and are purely visual.").push("Visual Options");
             {
-                installResourcePack = builder.comment("Determines whether the Aether b1.7.3 resource pack should be generated.").define("install_resourcepack", true);
-                legacyAltarName = builder.comment("Changes whether the Altar should be named Enchanter or not.").define("legacy_altar_name", false);
-                legacyModels = builder.comment("Changes Aether mobs to use their old models, if applicable.").define("legacy_models", false);
-                menuButton = builder.comment("Enables the Aether Menu toggle button.").define("menu_button", true);
-                menuEnabled = builder.comment("Enables the Aether Menu.").define("menu_enabled", false);
-                triviaDisabled = builder.comment("Disables the random trivia/tips you see during loading screens.").define("trivia_disabled", false);
-                updatedAercloudColors = builder.comment("Aerclouds will use their more saturated colors from later updates.").define("updated_aercloud_colors", false);
-
+                visual.installResourcePack = builder.comment("Determines whether the Aether b1.7.3 resource pack should be generated.").define("install_resourcepack", true);
+                visual.legacyAltarName = builder.comment("Changes whether the Altar should be named Enchanter or not.").define("legacy_altar_name", false);
+                visual.legacyModels = builder.comment("Changes Aether mobs to use their old models, if applicable.").define("legacy_models", false);
+                visual.menuButton = builder.comment("Enables the Aether Menu toggle button.").define("menu_button", true);
+                visual.menuEnabled = builder.comment("Enables the Aether Menu.").define("menu_enabled", false);
+                visual.triviaDisabled = builder.comment("Disables the random trivia/tips you see during loading screens.").define("trivia_disabled", false);
+                visual.updatedAercloudColors = builder.comment("Aerclouds will use their more saturated colors from later updates.").define("updated_aercloud_colors", false);
             }
             builder.pop();
         }
 
-        public ForgeConfigSpec.BooleanValue installResourcePack;
-        public ForgeConfigSpec.BooleanValue legacyAltarName;
-        public ForgeConfigSpec.BooleanValue legacyModels;
-        public ForgeConfigSpec.BooleanValue menuButton;
-        public ForgeConfigSpec.BooleanValue menuEnabled;
-        public ForgeConfigSpec.BooleanValue triviaDisabled;
-        public ForgeConfigSpec.BooleanValue updatedAercloudColors;
+        public static class Visual {
+            public ForgeConfigSpec.BooleanValue installResourcePack;
+            public ForgeConfigSpec.BooleanValue legacyAltarName;
+            public ForgeConfigSpec.BooleanValue legacyModels;
+            public ForgeConfigSpec.BooleanValue menuButton;
+            public ForgeConfigSpec.BooleanValue menuEnabled;
+            public ForgeConfigSpec.BooleanValue triviaDisabled;
+            public ForgeConfigSpec.BooleanValue updatedAercloudColors;
+        }
     }
 }

@@ -33,7 +33,7 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, ZephyrModel> {
         matrixStackIn.scale(f3, f2, f3);
         matrixStackIn.translate(0, 0.5, 0);
 
-        if (AetherConfig.CLIENT.legacyModels.get()) {
+        if (AetherConfig.CLIENT.visual.legacyModels.get()) {
             matrixStackIn.scale(0.8F, 0.8F, 0.8F);
             matrixStackIn.translate(0, -0.1, 0);
         }

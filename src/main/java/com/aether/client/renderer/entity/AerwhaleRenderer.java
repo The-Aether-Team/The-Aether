@@ -36,7 +36,7 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
 
     @Override
     protected void preRenderCallback(AerwhaleEntity aerwhale, MatrixStack matrixStackIn, float partialTickTime) {
-        this.entityModel = AetherConfig.CLIENT.legacyModels.get() ? oldModel : regularModel;
+        this.entityModel = AetherConfig.CLIENT.visual.legacyModels.get() ? oldModel : regularModel;
         matrixStackIn.translate(0, 1.2, 0);
 //        if (_staticData == null) {
 //        	_staticData = new float[] {aerwhale.rotationYaw, aerwhale.rotationPitch};
@@ -70,7 +70,7 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
 
     @Override
     public ResourceLocation getEntityTexture(AerwhaleEntity entity) {
-        return AetherConfig.CLIENT.legacyModels.get() ? OLD_AERWHALE_TEXTURE : AERWHALE_TEXTURE;
+        return AetherConfig.CLIENT.visual.legacyModels.get() ? OLD_AERWHALE_TEXTURE : AERWHALE_TEXTURE;
     }
 }
 
