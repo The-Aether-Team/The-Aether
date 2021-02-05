@@ -4,10 +4,7 @@ import com.aether.block.AetherBlocks;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.util.AetherSoundEvents;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
@@ -20,6 +17,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
@@ -57,16 +56,15 @@ public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob 
                 .createMutableAttribute(Attributes.FOLLOW_RANGE, 10.0D);
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public float getBlockPathWeight(BlockPos pos, IWorldReader worldIn) {
-        return worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK? 10.0F : worldIn.getBrightness(pos) - 0.5F;
-    }
-
     //@Override
     //public void move(MoverType typeIn, Vec3d pos) {
         //super.move(typeIn, new Vec3d(0, pos.getY(), 0));
     //}
+
+
+    public static boolean canCockatriceSpawn(EntityType<? extends CockatriceEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
+        return randomIn.nextInt(45) == 0 && canMonsterSpawnInLight(type, worldIn, reason, pos, randomIn); //TODO: change the bounds of nextInt to a config value.
+    }
 
     @Override
     public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {

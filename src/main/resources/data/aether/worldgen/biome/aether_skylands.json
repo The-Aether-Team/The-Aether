@@ -61,19 +61,19 @@
     "monster": [
       {
         "type": "aether:whirlwind",
-        "weight": 8,
+        "weight": 10,
         "minCount": 2,
         "maxCount": 2
       },
       {
         "type": "aether:cockatrice",
-        "weight": 4,
+        "weight": 100,
         "minCount": 4,
         "maxCount": 4
       },
       {
         "type": "aether:zephyr",
-        "weight": 2,
+        "weight": 50,
         "minCount": 1,
         "maxCount": 1
       }
