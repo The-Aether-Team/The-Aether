@@ -1,6 +1,5 @@
 package com.aether.entity.monster;
 
-import com.aether.block.AetherBlocks;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.util.AetherSoundEvents;
 import net.minecraft.block.BlockState;
