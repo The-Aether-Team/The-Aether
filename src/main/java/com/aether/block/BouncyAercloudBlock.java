@@ -1,6 +1,6 @@
 package com.aether.block;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.particles.ParticleTypes;
@@ -8,8 +8,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-
-import net.minecraft.block.AbstractBlock;
 
 public class BouncyAercloudBlock extends TintedAercloudBlock {
 
@@ -32,7 +30,7 @@ public class BouncyAercloudBlock extends TintedAercloudBlock {
 			return;
 		}
 		
-		entity.setMotion(new Vector3d(motion.x, 2.0, motion.y));
+		entity.setMotion(new Vector3d(motion.x, 2.0, motion.z));
 		
 		if (world.isRemote) {
 			for (int count = 0; count < 50; count++) {
