@@ -135,7 +135,7 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 	public static boolean canZephyrSpawn(EntityType<? extends ZephyrEntity> zephyr, IWorld worldIn, SpawnReason reason,
 		BlockPos pos, Random random) {
 		AxisAlignedBB boundingBox = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 4, pos.getY() + 4, pos.getZ() + 4);
-		return worldIn.getDifficulty() != Difficulty.PEACEFUL && random.nextInt(85) == 0
+		return worldIn.getDifficulty() != Difficulty.PEACEFUL && random.nextInt(65) == 0 //TODO: change the bounds of nextInt to a config value.
 			&& worldIn.getEntitiesWithinAABB(ZephyrEntity.class, boundingBox).size() == 0
 			&& !worldIn.containsAnyLiquid(boundingBox) && worldIn.getLight(pos) > 8
 			&& canSpawnOn(zephyr, worldIn, reason, pos, random);
