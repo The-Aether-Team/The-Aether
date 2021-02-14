@@ -16,6 +16,7 @@ import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraft.world.gen.foliageplacer.BlobFoliagePlacer;
 import net.minecraft.world.gen.foliageplacer.FancyFoliagePlacer;
 import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
+import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.ChanceConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
@@ -40,6 +41,8 @@ public class AetherFeatures {
 
     public static final RegistryObject<Feature<NoFeatureConfig>> CRYSTAL_TREE = FEATURES.register("crystal_tree", () -> new CrystalTreeFeature(NoFeatureConfig.field_236558_a_));
 
+    public static final RegistryObject<Feature<NoFeatureConfig>> HOLYSTONE_SPHERE = FEATURES.register("holystone_sphere", () -> new HolystoneSphereFeature(NoFeatureConfig.field_236558_a_));
+    
     public static final RegistryObject<Feature<BlockStateFeatureConfig>> LAKE = FEATURES.register("lake", () -> new AetherLakeFeature(BlockStateFeatureConfig.field_236455_a_));
 
     public static void registerConfiguredFeatures() {
