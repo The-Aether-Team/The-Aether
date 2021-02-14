@@ -177,7 +177,7 @@ public class AetherItems {
 				item("zanite_gemstone", new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
 				item("ambrosium_shard", new AmbrosiumShardItem(new Item.Properties()
 						.food(new Food.Builder().setAlwaysEdible().fastToEat()
-							.effect(() -> new EffectInstance(Effects.INSTANT_HEALTH), 1.0F).build())
+							.effect(() -> new EffectInstance(Effects.INSTANT_HEALTH, 1), 1.0F).build())
 						.group(AetherItemGroups.AETHER_MATERIALS))),
 				item("golden_amber", new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),
 				item("aechor_petal", new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS))),

@@ -28,23 +28,23 @@ public class CockatriceModel extends EntityModel<CockatriceEntity> {
         this.jaw.setRotationPoint(0.0F, -8 + 16, -4.0F);
 
         this.body = new ModelRenderer(this, 0, 0);
-        this.body.addBox(-3.0F, -3.0F, 0.0F, 6, 8, 5, 1.0F);
+        this.body.addBox(-3.0F, -3.0F, 0.0F, 6, 8, 5, 0.0F);
         this.body.setRotationPoint(0.0F, 16, 0.0F);
 
         this.legs = new ModelRenderer(this, 22, 0);
-        this.legs.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2, 0.0F);
+        this.legs.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2);
         this.legs.setRotationPoint(-2.0F, 16, 1.0F);
 
         this.legs2 = new ModelRenderer(this, 22, 0);
-        this.legs2.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2, 0.0F);
+        this.legs2.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2);
         this.legs2.setRotationPoint(2.0F, 16, 1.0F);
 
         this.wings = new ModelRenderer(this, 52, 0);
-        this.wings.addBox(-2.01F, -0.0F, -1.0F, 1, 8, 4);
+        this.wings.addBox(-1.0F, -0.0F, -1.0F, 1, 8, 4);
         this.wings.setRotationPoint(-3.0F, (16), 2.0F);
 
         this.wings2 = new ModelRenderer(this, 52, 0);
-        this.wings2.addBox(1.01F, -0.0F, -1.0F, 1, 8, 4);
+        this.wings2.addBox(0.0F, -0.0F, -1.0F, 1, 8, 4);
         this.wings2.setRotationPoint(3.0F, -4 + 16, 0.0F);
 
         this.neck = new ModelRenderer(this, 44, 0);

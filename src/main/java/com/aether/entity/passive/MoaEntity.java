@@ -390,12 +390,8 @@ public class MoaEntity extends SaddleableEntity {
 		super.readAdditional(compound);
 		
 		this.setPlayerGrown(compound.getBoolean("PlayerGrown"));
-		UUID uuid = compound.getUniqueId("OwnerUUID");
-		if (uuid.getMostSignificantBits() != 0L || uuid.getLeastSignificantBits() != 0L) {
-			this.setOwnerUUID(uuid);
-		}
-		else {
-			this.setOwnerUUID(null);
+		if(compound.hasUniqueId("OwnerUUID")) {
+			this.setOwnerUUID(compound.getUniqueId("OwnerUUID"));
 		}
 		this.setSitting(compound.getBoolean("Sitting"));
 		this.setRemainingJumps(compound.getInt("RemainingJumps"));
