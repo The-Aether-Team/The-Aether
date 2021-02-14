@@ -99,7 +99,7 @@ public class AetherItems {
 	public static final Item GOLDEN_DART = null;
 	public static final Item POISON_DART = null;
 	public static final Item ENCHANTED_DART = null;
-	public static final Item PHOENIX_BOX = null;
+	public static final Item PHOENIX_BOW = null;
 	public static final Item FLAMING_SWORD = null;
 	public static final Item LIGHTNING_SWORD = null;
 	public static final Item HOLY_SWORD = null;
@@ -207,38 +207,41 @@ public class AetherItems {
 				item("valkyrie_pickaxe", new ValkyriePickaxeItem(AetherItemTier.VALKYRIE, 1, -2.8f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_TOOLS))),
 				item("valkyrie_axe", new ValkyrieAxeItem(AetherItemTier.VALKYRIE, 5.0f, -3.0f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_TOOLS))),
 				
-				item("zanite_helmet", new ArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.HEAD, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				item("zanite_chestplate", new ArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.CHEST, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				item("zanite_leggings", new ArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.LEGS, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				item("zanite_boots", new ArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.FEET, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("zanite_helmet", new AetherArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.HEAD, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("zanite_chestplate", new AetherArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.CHEST, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("zanite_leggings", new AetherArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.LEGS, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("zanite_boots", new AetherArmorItem(AetherArmorMaterial.ZANITE, EquipmentSlotType.FEET, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 				
-				item("gravitite_helmet", new ArmorItem(AetherArmorMaterial.GRAVITITE, EquipmentSlotType.HEAD, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				item("gravitite_chestplate", new ArmorItem(AetherArmorMaterial.GRAVITITE, EquipmentSlotType.CHEST, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				item("gravitite_leggings", new ArmorItem(AetherArmorMaterial.GRAVITITE, EquipmentSlotType.LEGS, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				item("gravitite_boots", new ArmorItem(AetherArmorMaterial.GRAVITITE, EquipmentSlotType.FEET, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("gravitite_helmet", new AetherArmorItem(AetherArmorMaterial.GRAVITITE, EquipmentSlotType.HEAD, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("gravitite_chestplate", new AetherArmorItem(AetherArmorMaterial.GRAVITITE, EquipmentSlotType.CHEST, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("gravitite_leggings", new AetherArmorItem(AetherArmorMaterial.GRAVITITE, EquipmentSlotType.LEGS, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("gravitite_boots", new AetherArmorItem(AetherArmorMaterial.GRAVITITE, EquipmentSlotType.FEET, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 				
-				item("neptune_helmet", new ArmorItem(AetherArmorMaterial.NEPTUNE, EquipmentSlotType.HEAD, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				item("neptune_chestplate", new ArmorItem(AetherArmorMaterial.NEPTUNE, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				item("neptune_leggings", new ArmorItem(AetherArmorMaterial.NEPTUNE, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				item("neptune_boots", new ArmorItem(AetherArmorMaterial.NEPTUNE, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("neptune_helmet", new AetherArmorItem(AetherArmorMaterial.NEPTUNE, EquipmentSlotType.HEAD, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("neptune_chestplate", new AetherArmorItem(AetherArmorMaterial.NEPTUNE, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("neptune_leggings", new AetherArmorItem(AetherArmorMaterial.NEPTUNE, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("neptune_boots", new AetherArmorItem(AetherArmorMaterial.NEPTUNE, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
-				item("phoenix_helmet", new ArmorItem(AetherArmorMaterial.PHOENIX, EquipmentSlotType.HEAD, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				item("phoenix_chestplate", new ArmorItem(AetherArmorMaterial.PHOENIX, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				item("phoenix_leggings", new ArmorItem(AetherArmorMaterial.PHOENIX, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				item("phoenix_boots", new ArmorItem(AetherArmorMaterial.PHOENIX, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("phoenix_helmet", new AetherArmorItem(AetherArmorMaterial.PHOENIX, EquipmentSlotType.HEAD, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("phoenix_chestplate", new AetherArmorItem(AetherArmorMaterial.PHOENIX, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("phoenix_leggings", new AetherArmorItem(AetherArmorMaterial.PHOENIX, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("phoenix_boots", new AetherArmorItem(AetherArmorMaterial.PHOENIX, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
-				item("obsidian_helmet", new ArmorItem(AetherArmorMaterial.OBSIDIAN, EquipmentSlotType.HEAD, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				item("obsidian_chestplate", new ArmorItem(AetherArmorMaterial.OBSIDIAN, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				item("obsidian_leggings", new ArmorItem(AetherArmorMaterial.OBSIDIAN, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				item("obsidian_boots", new ArmorItem(AetherArmorMaterial.OBSIDIAN, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("obsidian_helmet", new AetherArmorItem(AetherArmorMaterial.OBSIDIAN, EquipmentSlotType.HEAD, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("obsidian_chestplate", new AetherArmorItem(AetherArmorMaterial.OBSIDIAN, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("obsidian_leggings", new AetherArmorItem(AetherArmorMaterial.OBSIDIAN, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("obsidian_boots", new AetherArmorItem(AetherArmorMaterial.OBSIDIAN, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
-				item("valkyrie_helmet", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.HEAD, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				item("valkyrie_chestplate", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				item("valkyrie_leggings", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				item("valkyrie_boots", new ArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("valkyrie_helmet", new AetherArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.HEAD, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("valkyrie_chestplate", new AetherArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.CHEST, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("valkyrie_leggings", new AetherArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.LEGS, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("valkyrie_boots", new AetherArmorItem(AetherArmorMaterial.VALKYRIE, EquipmentSlotType.FEET, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 
 				item("blueberry", new Item(new Item.Properties()
 					.food(new Food.Builder().fastToEat().hunger(2).build())
+					.group(AetherItemGroups.AETHER_FOOD))),
+				item("enchanted_blueberry", new Item(new Item.Properties()
+					.food(new Food.Builder().fastToEat().hunger(8).build())
 					.group(AetherItemGroups.AETHER_FOOD))),
 				item("white_apple", new Item(new Item.Properties()
 					.food(new Food.Builder().setAlwaysEdible().fastToEat().hunger(0).build())
@@ -281,24 +284,24 @@ public class AetherItems {
 				
 				//item("moa_egg", new MoaEggItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
 				
-				//item("golden_dart_shooter", new DartShooterItem(() -> GOLDEN_DART, new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("poison_dart_shooter", new DartShooterItem(() -> POISON_DART, new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("enchanted_dart_shooter", new DartShooterItem(() -> ENCHANTED_DART, new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("golden_dart_shooter", new DartShooterItem(() -> GOLDEN_DART, new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_COMBAT))),
+				item("poison_dart_shooter", new DartShooterItem(() -> POISON_DART, new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_COMBAT))),
+				item("enchanted_dart_shooter", new DartShooterItem(() -> ENCHANTED_DART, new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
-				item("golden_dart", new Item(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				item("poison_dart", new Item(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				item("enchanted_dart", new Item(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("golden_dart", new DartItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("poison_dart", new DartItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("enchanted_dart", new DartItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
-				//item("phoenix_bow", new PhoenixBowItem(new Item.Properties().maxDamage(384).group(AetherItemGroups.AETHER_COMBAT))),
+				item("phoenix_bow", new PhoenixBowItem(new Item.Properties().maxDamage(384).rarity(AetherRarity.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 
 				item("flaming_sword", new FlamingSwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("lightning_sword", new LightningSwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("holy_sword", new HolySwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("vampire_blade", new VampireBladeItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("holy_sword", new HolySwordItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("vampire_blade", new VampireBladeItem(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				item("pig_slayer", new PigSlayerItem(ItemTier.IRON, 3, -2.4f, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
-				//item("candy_cane_sword", new CandyCaneSwordItem(ItemTier.GOLD, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				//item("notch_hammer", new NotchHammerItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-				//item("valkyrie_lance", new ValkyrieLanceItem(ItemTier.DIAMOND, 3, -2.4F, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
+				item("candy_cane_sword", new CandyCaneSwordItem(ItemTier.GOLD, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("notch_hammer", new NotchHammerItem(new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+				item("valkyrie_lance", new ValkyrieLanceItem(ItemTier.DIAMOND, 3, -2.4F, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT))),
 				
 				//item("leather_gloves", new DyeableGlovesItem(ArmorMaterial.LEATHER, new Item.Properties().group(ItemGroup.COMBAT))),
 				//item("chainmail_gloves", new GlovesItem(ArmorMaterial.CHAIN, new Item.Properties().group(ItemGroup.COMBAT))),

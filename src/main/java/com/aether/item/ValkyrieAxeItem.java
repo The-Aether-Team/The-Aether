@@ -12,11 +12,15 @@ import net.minecraft.item.IItemTier;
 import net.minecraftforge.common.ForgeMod;
 
 public class ValkyrieAxeItem extends AxeItem implements IValkyrieToolItem {
+    private final float attackDamage;
+    private final float attackSpeed;
 
     private Multimap<Attribute, AttributeModifier> axeAttributes;
 
     public ValkyrieAxeItem(IItemTier tier, float attackDamageIn, float attackSpeedIn, Properties properties) {
         super(tier, attackDamageIn, attackSpeedIn, properties);
+        this.attackDamage = attackDamageIn;
+        this.attackSpeed = attackSpeedIn;
     }
 
     /**
@@ -26,6 +30,8 @@ public class ValkyrieAxeItem extends AxeItem implements IValkyrieToolItem {
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", this.attackSpeed, AttributeModifier.Operation.ADDITION));
         builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(reachModifierUUID, "Tool modifier", this.getReachDistanceModifier(), AttributeModifier.Operation.ADDITION));
         this.axeAttributes = builder.build();
         return equipmentSlot == EquipmentSlotType.MAINHAND ? this.axeAttributes : super.getAttributeModifiers(equipmentSlot);

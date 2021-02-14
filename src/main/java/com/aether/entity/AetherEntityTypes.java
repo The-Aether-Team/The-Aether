@@ -10,14 +10,11 @@ import com.aether.entity.passive.FlyingCowEntity;
 import com.aether.entity.passive.MoaEntity;
 import com.aether.entity.passive.PhygEntity;
 import com.aether.entity.passive.SheepuffEntity;
-import com.aether.entity.projectile.LightningKnifeEntity;
-import com.aether.entity.projectile.ZephyrSnowballEntity;
+import com.aether.entity.projectile.*;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -36,6 +33,12 @@ public class AetherEntityTypes {
 	public static final EntityType<FloatingBlockEntity> FLOATING_BLOCK = entity("floating_block", EntityType.Builder.<FloatingBlockEntity>create(FloatingBlockEntity::new, EntityClassification.MISC).size(0.98F, 0.98F).setCustomClientFactory((spawnEntity, world) -> new FloatingBlockEntity(world)));
 	public static final EntityType<LightningKnifeEntity> LIGHTNING_KNIFE = entity("lightning_knife", EntityType.Builder.<LightningKnifeEntity>create(LightningKnifeEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).setCustomClientFactory((spawnEntity, world) -> new LightningKnifeEntity(world)));
 	public static final EntityType<ZephyrSnowballEntity> ZEPHYR_SNOWBALL = entity("zephyr_snowball", EntityType.Builder.<ZephyrSnowballEntity>create(ZephyrSnowballEntity::new, EntityClassification.MISC).size(1.0F, 1.0F));
+	public static final EntityType<GoldenDartEntity> GOLDEN_DART = entity("golden_dart", EntityType.Builder.<GoldenDartEntity>create(GoldenDartEntity::new, EntityClassification.MISC).size(0.5F, 0.5F));
+	public static final EntityType<EnchantedDartEntity> ENCHANTED_DART = entity("enchanted_dart", EntityType.Builder.<EnchantedDartEntity>create(EnchantedDartEntity::new, EntityClassification.MISC).size(0.5F, 0.5F));
+	public static final EntityType<PoisonDartEntity> POISON_DART = entity("poison_dart", EntityType.Builder.<PoisonDartEntity>create(PoisonDartEntity::new, EntityClassification.MISC).size(0.5F, 0.5F));
+	public static final EntityType<PhoenixArrowEntity> PHOENIX_ARROW = entity("phoenix_arrow", EntityType.Builder.<PhoenixArrowEntity>create(PhoenixArrowEntity::new, EntityClassification.MISC).size(0.5F, 0.5F));
+	public static final EntityType<SpectralPhoenixArrowEntity> SPECTRAL_PHOENIX_ARROW = entity("spectral_phoenix_arrow", EntityType.Builder.<SpectralPhoenixArrowEntity>create(SpectralPhoenixArrowEntity::new, EntityClassification.MISC).size(0.5F, 0.5F));
+	public static final EntityType<HammerProjectileEntity> HAMMER_PROJECTILE = entity("hammer_projectile", EntityType.Builder.<HammerProjectileEntity>create(HammerProjectileEntity::new, EntityClassification.MISC).size(0.25F, 0.25F));
 	public static final EntityType<MoaEntity> MOA = entity("moa", EntityType.Builder.<MoaEntity>create(MoaEntity::new, EntityClassification.CREATURE).size(1.0F,  2.0F));
 	public static final EntityType<PhygEntity> PHYG = entity("phyg", EntityType.Builder.create(PhygEntity::new, EntityClassification.CREATURE).size(0.9F, 0.9F));
 	public static final EntityType<FlyingCowEntity> FLYING_COW = entity("flying_cow", EntityType.Builder.<FlyingCowEntity>create(FlyingCowEntity::new, EntityClassification.CREATURE).size(0.9F, 1.4F));
@@ -63,9 +66,14 @@ public class AetherEntityTypes {
 					FLOATING_BLOCK,
 					LIGHTNING_KNIFE,
 					ZEPHYR_SNOWBALL,
+					GOLDEN_DART,
+					ENCHANTED_DART,
+					POISON_DART,
+					PHOENIX_ARROW,
+					SPECTRAL_PHOENIX_ARROW,
+					HAMMER_PROJECTILE,
 					AERWHALE,
 					WHIRLWIND
-
 			});
 		}
 

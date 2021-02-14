@@ -26,6 +26,7 @@ public class AetherPacketHandler {
 		
 		int id = 0;
 		INSTANCE.registerMessage(id++, JumpPacket.class, JumpPacket::encode, JumpPacket::decode, JumpPacket::handlePacket);
+		INSTANCE.registerMessage(id++, ExtendedAttackPacket.class, ExtendedAttackPacket::encode, ExtendedAttackPacket::decode, ExtendedAttackPacket::handlePacket);
 		
 		initialized = true;
 	}
