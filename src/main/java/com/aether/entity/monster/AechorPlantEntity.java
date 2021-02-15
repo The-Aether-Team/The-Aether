@@ -26,10 +26,6 @@ public class AechorPlantEntity extends CreatureEntity implements IRangedAttackMo
         super(type, worldIn);
     }
 
-    public AechorPlantEntity(World worldIn) {
-        this(AetherEntityTypes.AECHOR_PLANT, worldIn);
-    }
-
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(2,  new RangedAttackGoal(this, 1.0, 60, 5));

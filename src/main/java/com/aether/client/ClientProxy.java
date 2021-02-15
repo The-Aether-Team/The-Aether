@@ -22,8 +22,8 @@ import com.aether.network.ExtendedAttackPacket;
 import com.aether.network.JumpPacket;
 import com.aether.registry.AetherTileEntityTypes;
 
-import com.aether.tileentity.ChestMimicTileEntity;
-import com.aether.tileentity.TreasureChestTileEntity;
+import com.aether.entity.tile.ChestMimicTileEntity;
+import com.aether.entity.tile.TreasureChestTileEntity;
 import com.aether.world.dimension.AetherDimensions;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -94,26 +94,26 @@ public class ClientProxy extends CommonProxy
 	}
 	
 	protected void registerEntityRenderers(FMLClientSetupEvent event) {
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.LIGHTNING_KNIFE, LightningKnifeRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR_SNOWBALL, m -> new SpriteRenderer<>(m, event.getMinecraftSupplier().get().getItemRenderer()));
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.GOLDEN_DART, DartRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ENCHANTED_DART, DartRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.POISON_DART, DartRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.PHOENIX_ARROW, PhoenixArrowRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW, PhoenixArrowRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.HAMMER_PROJECTILE, HammerProjectileRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLOATING_BLOCK, FloatingBlockRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC, MimicRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY, SentryRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR, ZephyrRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MOA, MoaRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.COCKATRICE, CockatriceRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.AECHOR_PLANT, AechorPlantRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.PHYG, PhygRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLYING_COW, FlyingCowRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SHEEPUFF, SheepuffRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.AERWHALE, AerwhaleRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.WHIRLWIND, WhirlwindRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.LIGHTNING_KNIFE.get(), LightningKnifeRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), m -> new SpriteRenderer<>(m, event.getMinecraftSupplier().get().getItemRenderer()));
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.GOLDEN_DART.get(), DartRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ENCHANTED_DART.get(), DartRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.POISON_DART.get(), DartRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.PHOENIX_ARROW.get(), PhoenixArrowRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW.get(), PhoenixArrowRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.HAMMER_PROJECTILE.get(), HammerProjectileRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLOATING_BLOCK.get(), FloatingBlockRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC.get(), MimicRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY.get(), SentryRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR.get(), ZephyrRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MOA.get(), MoaRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.COCKATRICE.get(), CockatriceRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.PHYG.get(), PhygRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLYING_COW.get(), FlyingCowRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SHEEPUFF.get(), SheepuffRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.AERWHALE.get(), AerwhaleRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.WHIRLWIND.get(), WhirlwindRenderer::new);
 	}
 	
 	protected void registerTileEntityRenderers() {
@@ -133,9 +133,8 @@ public class ClientProxy extends CommonProxy
 		registerColor(AetherBlocks.GOLDEN_AERCLOUD.get());
 		
 		// Item colors
-		//TODO: These crash the game because for some reason .asItem() from TintedAercloudBlock doesn't return anything.
-		//registerColor(AetherBlocks.BLUE_AERCLOUD.get().asItem());
-		//registerColor(AetherBlocks.GOLDEN_AERCLOUD.get().asItem());
+		registerColor(AetherBlocks.BLUE_AERCLOUD.get().asItem());
+		registerColor(AetherBlocks.GOLDEN_AERCLOUD.get().asItem());
 		registerColor(AetherItems.MIMIC_SPAWN_EGG.get());
 		registerColor(AetherItems.SENTRY_SPAWN_EGG.get());
 	}
@@ -175,6 +174,8 @@ public class ClientProxy extends CommonProxy
 		setCutoutRenderLayer(AetherBlocks.GOLDEN_OAK_SAPLING.get());
 		setCutoutRenderLayer(AetherBlocks.PURPLE_FLOWER.get());
 		setCutoutRenderLayer(AetherBlocks.WHITE_FLOWER.get());
+		setCutoutRenderLayer(AetherBlocks.POTTED_PURPLE_FLOWER.get());
+		setCutoutRenderLayer(AetherBlocks.POTTED_WHITE_FLOWER.get());
 	}
 	
 	public static void setSolidRenderLayer(Block block) {

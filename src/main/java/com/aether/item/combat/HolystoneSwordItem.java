@@ -16,7 +16,7 @@ public class HolystoneSwordItem extends SwordItem
 	protected final Random rand = new Random();
 	
 	public HolystoneSwordItem() {
-		super(AetherItemTier.HOLYSTONE, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT));
+		super(AetherItemTier.HOLYSTONE, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_WEAPONS));
 	}
 	
 	@Override

@@ -12,7 +12,7 @@ import net.minecraft.network.play.server.SEntityVelocityPacket;
 public class GravititeSwordItem extends SwordItem
 {
 	public GravititeSwordItem() {
-		super(AetherItemTier.GRAVITITE, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT));
+		super(AetherItemTier.GRAVITITE, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_WEAPONS));
 	}
 	
 	@Override

@@ -19,7 +19,7 @@ public class PigSlayerItem extends SwordItem {
 	private final Random rand = new Random();
 
 	public PigSlayerItem() {
-		super(ItemTier.IRON, 3, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT));
+		super(ItemTier.IRON, 3, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_WEAPONS));
 	}
 
 	@Override

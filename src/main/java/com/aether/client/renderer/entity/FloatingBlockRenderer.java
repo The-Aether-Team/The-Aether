@@ -1,6 +1,6 @@
 package com.aether.client.renderer.entity;
 
-import com.aether.entity.item.FloatingBlockEntity;
+import com.aether.entity.block.FloatingBlockEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;

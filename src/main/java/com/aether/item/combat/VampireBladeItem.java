@@ -8,7 +8,7 @@ import net.minecraft.item.*;
 public class VampireBladeItem extends SwordItem
 {
     public VampireBladeItem() {
-        super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT));
+        super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override

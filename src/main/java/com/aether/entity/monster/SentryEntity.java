@@ -30,10 +30,6 @@ public class SentryEntity extends SlimeEntity {
 		super(type, worldIn);
 	}
 	
-	public SentryEntity(World worldIn) {
-		super(AetherEntityTypes.SENTRY, worldIn);
-	}
-	
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new SentryEntity.FloatGoal(this));

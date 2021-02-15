@@ -7,20 +7,25 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class GoldenDartEntity extends AbstractDartEntity {
+public class GoldenDartEntity extends AbstractDartEntity
+{
     public GoldenDartEntity(EntityType<? extends GoldenDartEntity> type, World worldIn) {
         super(type, worldIn);
         this.setDamage(4.0D);
     }
 
-    public GoldenDartEntity(World worldIn, double x, double y, double z) {
-        super(AetherEntityTypes.GOLDEN_DART, x, y, z, worldIn);
+    public GoldenDartEntity construct(World worldIn, double x, double y, double z)
+    {
         this.setDamage(4.0D);
+        this.setPosition(x, y, z);
+        return new GoldenDartEntity(AetherEntityTypes.GOLDEN_DART.get(), worldIn);
     }
 
-    public GoldenDartEntity(World worldIn, LivingEntity shooter) {
-        super(AetherEntityTypes.GOLDEN_DART, shooter, worldIn);
+    public GoldenDartEntity construct(World worldIn, LivingEntity shooter)
+    {
         this.setDamage(4.0D);
+        this.setShooter(shooter);
+        return new GoldenDartEntity(AetherEntityTypes.GOLDEN_DART.get(), worldIn);
     }
 
     @Override

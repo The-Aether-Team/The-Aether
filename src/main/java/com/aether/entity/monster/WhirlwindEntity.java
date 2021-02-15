@@ -1,7 +1,7 @@
 package com.aether.entity.monster;
 
 import com.aether.registry.AetherBlocks;
-import com.aether.particles.AetherParticleTypes;
+import com.aether.registry.AetherParticleTypes;
 import com.aether.player.AetherRankings;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
@@ -225,7 +225,7 @@ public class WhirlwindEntity extends MobEntity {
                 double d4 = (float)getPosY() + getHeight() + 0.125F;
                 double d7 = (float)this.getPosZ() + rand.nextFloat() * 0.25F;
                 float f = rand.nextFloat() * 360F;
-                this.world.addParticle(AetherParticleTypes.PASSIVE_WHIRLWIND, d1, d4 - 0.25D, d7, -Math.sin(0.01745329F * f) * 0.75D, 0.125D, Math.cos(0.01745329F * f) * 0.75D);
+                this.world.addParticle(AetherParticleTypes.PASSIVE_WHIRLWIND.get(), d1, d4 - 0.25D, d7, -Math.sin(0.01745329F * f) * 0.75D, 0.125D, Math.cos(0.01745329F * f) * 0.75D);
 
             }
         }
@@ -235,7 +235,7 @@ public class WhirlwindEntity extends MobEntity {
                 double d5 = (float)getPosY() + getHeight() + 0.125F;
                 double d8 = (float)getPosZ() + rand.nextFloat() * 0.25F;
                 float f1 = rand.nextFloat() * 360F;
-                this.world.addParticle(AetherParticleTypes.EVIL_WHIRLWIND, d2, d5 - 0.25D, d8, -Math.sin(0.01745329F * f1) * 0.75D, 0.125D, Math.cos(0.01745329F * f1) * 0.75D);
+                this.world.addParticle(AetherParticleTypes.EVIL_WHIRLWIND.get(), d2, d5 - 0.25D, d8, -Math.sin(0.01745329F * f1) * 0.75D, 0.125D, Math.cos(0.01745329F * f1) * 0.75D);
             }
         }
     }

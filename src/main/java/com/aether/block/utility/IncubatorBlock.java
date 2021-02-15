@@ -1,6 +1,6 @@
 package com.aether.block.utility;
 
-import com.aether.tileentity.IncubatorTileEntity;
+import com.aether.entity.tile.IncubatorTileEntity;
 
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.Block;

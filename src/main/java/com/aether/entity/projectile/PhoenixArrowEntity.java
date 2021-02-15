@@ -42,12 +42,16 @@ public class PhoenixArrowEntity extends AbstractArrowEntity {
         super(type, worldIn);
     }
 
-    public PhoenixArrowEntity(World worldIn, double x, double y, double z) {
-        super(AetherEntityTypes.PHOENIX_ARROW, x, y, z, worldIn);
+    public PhoenixArrowEntity construct(World worldIn, double x, double y, double z)
+    {
+        this.setPosition(x, y, z);
+        return new PhoenixArrowEntity(AetherEntityTypes.PHOENIX_ARROW.get(), worldIn);
     }
 
-    public PhoenixArrowEntity(World worldIn, LivingEntity shooter) {
-        super(AetherEntityTypes.PHOENIX_ARROW, shooter, worldIn);
+    public PhoenixArrowEntity construct(World worldIn, LivingEntity shooter)
+    {
+        this.setShooter(shooter);
+        return new PhoenixArrowEntity(AetherEntityTypes.PHOENIX_ARROW.get(), worldIn);
     }
 
     @Override

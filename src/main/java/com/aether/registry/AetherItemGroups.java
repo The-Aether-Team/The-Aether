@@ -22,11 +22,18 @@ public class AetherItemGroups
 			return new ItemStack(AetherItems.GRAVITITE_PICKAXE.get());
 		}
 	};
-	public static final ItemGroup AETHER_COMBAT = new ItemGroup("aether_combat") {
+	public static final ItemGroup AETHER_WEAPONS = new ItemGroup("aether_weapons") {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack createIcon() {
 			return new ItemStack(AetherItems.GRAVITITE_SWORD.get());
+		}
+	};
+	public static final ItemGroup AETHER_ARMOR = new ItemGroup("aether_armor") {
+		@Override
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon() {
+			return new ItemStack(AetherItems.GRAVITITE_HELMET.get());
 		}
 	};
 	public static final ItemGroup AETHER_FOOD = new ItemGroup("aether_food") {

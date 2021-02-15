@@ -54,6 +54,7 @@ public class CommonProxy
 	public void commonSetup(FMLCommonSetupEvent event) {
 		AetherPacketHandler.register();
 		AetherCapabilities.register();
+		registerPots();
 		registerEntityAttributes();
 		registerSpawnPlacements();
 		registerLootTableFunctions();
@@ -68,31 +69,38 @@ public class CommonProxy
 	public void clientSetup(FMLClientSetupEvent event) {
 		
 	}
+
+	protected void registerPots() {
+		FlowerPotBlock pot = (FlowerPotBlock) Blocks.FLOWER_POT;
+
+		pot.addPlant(AetherBlocks.PURPLE_FLOWER.getId(), AetherBlocks.POTTED_PURPLE_FLOWER);
+		pot.addPlant(AetherBlocks.WHITE_FLOWER.getId(), AetherBlocks.POTTED_WHITE_FLOWER);
+	}
 	
 	protected void registerSpawnPlacements() {
-		EntitySpawnPlacementRegistry.register(AetherEntityTypes.ZEPHYR, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ZephyrEntity::canZephyrSpawn);
-		EntitySpawnPlacementRegistry.register(AetherEntityTypes.COCKATRICE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CockatriceEntity::canCockatriceSpawn);
-		EntitySpawnPlacementRegistry.register(AetherEntityTypes.AECHOR_PLANT, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AechorPlantEntity::canAechorSpawn);
-		EntitySpawnPlacementRegistry.register(AetherEntityTypes.WHIRLWIND, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WhirlwindEntity::canWhirlwindSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.ZEPHYR.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ZephyrEntity::canZephyrSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.COCKATRICE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CockatriceEntity::canCockatriceSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.AECHOR_PLANT.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AechorPlantEntity::canAechorSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.WHIRLWIND.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WhirlwindEntity::canWhirlwindSpawn);
 
-		EntitySpawnPlacementRegistry.register(AetherEntityTypes.MOA, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
-		EntitySpawnPlacementRegistry.register(AetherEntityTypes.PHYG, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
-		EntitySpawnPlacementRegistry.register(AetherEntityTypes.FLYING_COW, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
-		EntitySpawnPlacementRegistry.register(AetherEntityTypes.SHEEPUFF, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.MOA.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.PHYG.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.FLYING_COW.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.SHEEPUFF.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
 	}
 
 	protected void registerEntityAttributes() {
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.MIMIC, MimicEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.SENTRY, SlimeEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.ZEPHYR, ZephyrEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.COCKATRICE, CockatriceEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.AECHOR_PLANT, AechorPlantEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.MOA, MoaEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.PHYG, PhygEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.FLYING_COW, FlyingCowEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.SHEEPUFF, SheepuffEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.AERWHALE, AerwhaleEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.WHIRLWIND, WhirlwindEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.MIMIC.get(), MimicEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.SENTRY.get(), SlimeEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.ZEPHYR.get(), ZephyrEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.COCKATRICE.get(), CockatriceEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.MOA.get(), MoaEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.PHYG.get(), PhygEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.FLYING_COW.get(), FlyingCowEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.SHEEPUFF.get(), SheepuffEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.WHIRLWIND.get(), WhirlwindEntity.registerAttributes().create());
 	}
 	
 	protected void registerLootTableFunctions() {

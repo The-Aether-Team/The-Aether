@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.util.*;
@@ -19,7 +20,7 @@ import com.aether.api.moa.MoaTypes;
 import com.aether.registry.AetherBlocks;
 import com.aether.registry.AetherEntityTypes;
 import com.aether.registry.AetherItems;
-import com.aether.util.AetherSoundEvents;
+import com.aether.registry.AetherSoundEvents;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
@@ -77,22 +78,15 @@ public class MoaEntity extends SaddleableEntity {
 		this.secsUntilEgg = this.getRandomEggTime();
 	}
 
-	public MoaEntity(World worldIn) {
-		super(AetherEntityTypes.MOA, worldIn);
-
-		this.secsUntilEgg = this.getRandomEggTime();
-	}
-
-	public MoaEntity(World worldIn, MoaType moaType) {
-		this(worldIn);
-
+	public MoaEntity setType(MoaType moaType) {
 		this.setMoaType(moaType);
+		return new MoaEntity(AetherEntityTypes.MOA.get(), this.world);
 	}
 
 	@Nullable
 	@Override
 	public AgeableEntity func_241840_a(ServerWorld serverWorld, AgeableEntity ageableEntity) {
-		return new MoaEntity(this.world, this.getMoaType());
+		return new MoaEntity(AetherEntityTypes.MOA.get(), this.world).setType(this.getMoaType());
 	}
 
 	protected int getRandomEggTime() {
@@ -236,7 +230,7 @@ public class MoaEntity extends SaddleableEntity {
 		updateWingRotation: {
 			if (!this.onGround) {
 				if (this.ticksUntilFlap == 0) {
-					this.world.playSound(null, this.getPosX(), this.getPosY(), this.getPosZ(), AetherSoundEvents.ENTITY_MOA_FLAP, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
+					this.world.playSound(null, this.getPosX(), this.getPosY(), this.getPosZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
 					this.ticksUntilFlap = 8;
 				}
 				else {
@@ -324,7 +318,7 @@ public class MoaEntity extends SaddleableEntity {
 					jumpPower = 0.7F;
 				}
 				this.setMotion(this.getMotion().getX(), jumpPower, this.getMotion().getZ());
-				this.world.playSound(null, this.getPosX(), this.getPosY(), this.getPosZ(), AetherSoundEvents.ENTITY_MOA_FLAP, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
+				this.world.playSound(null, this.getPosX(), this.getPosY(), this.getPosZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
 				
 				if (!this.world.isRemote) {
 					this.setRemainingJumps(this.getRemainingJumps() - 1);
@@ -428,17 +422,17 @@ public class MoaEntity extends SaddleableEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return AetherSoundEvents.ENTITY_MOA_AMBIENT;
+		return AetherSoundEvents.ENTITY_MOA_AMBIENT.get();
 	}
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return AetherSoundEvents.ENTITY_MOA_AMBIENT;
+		return AetherSoundEvents.ENTITY_MOA_AMBIENT.get();
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AetherSoundEvents.ENTITY_MOA_AMBIENT;
+		return AetherSoundEvents.ENTITY_MOA_AMBIENT.get();
 	}
 	
 	@Override

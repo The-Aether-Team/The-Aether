@@ -2,7 +2,7 @@ package com.aether.entity.passive;
 
 import com.aether.registry.AetherEntityTypes;
 import com.aether.registry.AetherItems;
-import com.aether.util.AetherSoundEvents;
+import com.aether.registry.AetherSoundEvents;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -81,24 +81,24 @@ public class PhygEntity extends SaddleableEntity {
     @Nullable
     @Override
     public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
-        return AetherEntityTypes.PHYG.create(this.world);
+        return AetherEntityTypes.PHYG.get().create(this.world);
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return AetherSoundEvents.ENTITY_PHYG_HURT;
+        return AetherSoundEvents.ENTITY_PHYG_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherSoundEvents.ENTITY_PHYG_DEATH;
+        return AetherSoundEvents.ENTITY_PHYG_DEATH.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherSoundEvents.ENTITY_PHYG_AMBIENT;
+        return AetherSoundEvents.ENTITY_PHYG_AMBIENT.get();
     }
 }

@@ -3,8 +3,7 @@ package com.aether.inventory.container;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import com.aether.registry.AetherItems;
-import com.aether.tileentity.IncubatorTileEntity;
+import com.aether.entity.tile.IncubatorTileEntity;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

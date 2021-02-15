@@ -28,7 +28,7 @@ public class ValkyrieLanceItem extends TieredItem implements IValkyrieToolItem
     private Multimap<Attribute, AttributeModifier> attributeModifiers;
 
     public ValkyrieLanceItem(IItemTier tier, int attackDamageIn, float attackSpeedIn) {
-        super(tier, new Item.Properties().rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT));
+        super(tier, new Item.Properties().rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_WEAPONS));
         this.attackDamage = (int) (attackDamageIn + tier.getAttackDamage());
         this.attackSpeed = attackSpeedIn;
         ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();

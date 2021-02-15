@@ -29,8 +29,11 @@ public class Aether
 		DeferredRegister<?>[] registers = {
 				AetherBlocks.BLOCKS,
 				AetherFeatures.FEATURES,
+				AetherEntityTypes.ENTITIES,
 				AetherItems.ITEMS,
+				AetherParticleTypes.PARTICLES,
 				AetherPOI.POI,
+				AetherSoundEvents.SOUNDS,
 				AetherTileEntityTypes.TILE_ENTITIES,
 		};
 

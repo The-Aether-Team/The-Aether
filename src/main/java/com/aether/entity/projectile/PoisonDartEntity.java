@@ -15,14 +15,18 @@ public class PoisonDartEntity extends AbstractDartEntity {
         this.setDamage(0.0D);
     }
 
-    public PoisonDartEntity(World worldIn, double x, double y, double z) {
-        super(AetherEntityTypes.POISON_DART, x, y, z, worldIn);
+    public PoisonDartEntity construct(World worldIn, double x, double y, double z)
+    {
         this.setDamage(0.0D);
+        this.setPosition(x, y, z);
+        return new PoisonDartEntity(AetherEntityTypes.POISON_DART.get(), worldIn);
     }
 
-    public PoisonDartEntity(World worldIn, LivingEntity shooter) {
-        super(AetherEntityTypes.POISON_DART, shooter, worldIn);
+    public PoisonDartEntity construct(World worldIn, LivingEntity shooter)
+    {
         this.setDamage(0.0D);
+        this.setShooter(shooter);
+        return new PoisonDartEntity(AetherEntityTypes.POISON_DART.get(), worldIn);
     }
 
     @Override

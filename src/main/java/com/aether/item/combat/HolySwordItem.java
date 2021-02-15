@@ -13,7 +13,7 @@ import net.minecraft.util.DamageSource;
 public class HolySwordItem extends SwordItem
 {
     public HolySwordItem() {
-        super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT));
+        super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override

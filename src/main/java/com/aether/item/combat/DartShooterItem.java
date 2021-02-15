@@ -1,7 +1,7 @@
 package com.aether.item.combat;
 
 import com.aether.entity.projectile.AbstractDartEntity;
-import com.aether.util.AetherSoundEvents;
+import com.aether.registry.AetherSoundEvents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.IInventory;
@@ -47,7 +47,7 @@ public class DartShooterItem extends Item
             }
             worldIn.addEntity(dart);
         }
-        worldIn.playSound(playerIn, playerIn.getPosition(), AetherSoundEvents.ENTITY_DART_SHOOTER_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
+        worldIn.playSound(playerIn, playerIn.getPosition(), AetherSoundEvents.ENTITY_DART_SHOOTER_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
         if (!flag) {
             ammo.shrink(1);
             if (ammo.isEmpty()) {

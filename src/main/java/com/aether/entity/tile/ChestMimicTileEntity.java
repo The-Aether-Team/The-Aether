@@ -1,4 +1,4 @@
-package com.aether.tileentity;
+package com.aether.entity.tile;
 
 import com.aether.registry.AetherTileEntityTypes;
 import net.minecraft.tileentity.TileEntity;

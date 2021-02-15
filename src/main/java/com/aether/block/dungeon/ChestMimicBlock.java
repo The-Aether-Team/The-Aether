@@ -1,7 +1,8 @@
 package com.aether.block.dungeon;
 
 import com.aether.entity.monster.MimicEntity;
-import com.aether.tileentity.ChestMimicTileEntity;
+import com.aether.entity.tile.ChestMimicTileEntity;
+import com.aether.registry.AetherEntityTypes;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -77,7 +78,7 @@ public class ChestMimicBlock extends Block implements IWaterLoggable {
 			Direction facing = state.get(FACING);
 			float angle = facing.getHorizontalAngle();
 
-			MimicEntity mimic = new MimicEntity(worldIn);
+			MimicEntity mimic = new MimicEntity(AetherEntityTypes.MIMIC.get(), worldIn);
 			mimic.setPositionAndRotation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, angle, 0.0F);
 //			mimic.rotationYaw = angle;
 			mimic.setRotationYawHead(angle);

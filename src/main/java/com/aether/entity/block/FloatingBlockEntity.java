@@ -1,4 +1,4 @@
-package com.aether.entity.item;
+package com.aether.entity.block;
 
 import java.util.List;
 
@@ -60,13 +60,9 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 	public FloatingBlockEntity(EntityType<? extends FloatingBlockEntity> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
 	}
-	
-	public FloatingBlockEntity(World worldIn) {
-		this(AetherEntityTypes.FLOATING_BLOCK, worldIn);
-	}
-	
-	public FloatingBlockEntity(World worldIn, double x, double y, double z, BlockState floatingBlockState) {
-		this(AetherEntityTypes.FLOATING_BLOCK, worldIn);
+
+	public FloatingBlockEntity setupEntity(World worldIn, double x, double y, double z, BlockState floatingBlockState)
+	{
 		this.floatTile = floatingBlockState;
 		this.preventEntitySpawning = true;
 		this.setPosition(x, y + (1.0F - this.getHeight()) / 2.0F, z);
@@ -75,6 +71,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 		this.prevPosY = y;
 		this.prevPosZ = z;
 		this.setOrigin(new BlockPos(this.getPosition()));
+		return new FloatingBlockEntity(AetherEntityTypes.FLOATING_BLOCK.get(), this.world);
 	}
 	
 	@Override

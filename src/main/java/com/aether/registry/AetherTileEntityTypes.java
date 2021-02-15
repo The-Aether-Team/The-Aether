@@ -1,20 +1,13 @@
 package com.aether.registry;
 
 import com.aether.Aether;
-import com.aether.registry.AetherBlocks;
+import com.aether.entity.tile.*;
 
-import com.aether.tileentity.*;
 import com.google.common.collect.Sets;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class AetherTileEntityTypes
 {

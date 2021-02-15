@@ -2,6 +2,7 @@ package com.aether.item.combat;
 
 import com.aether.entity.projectile.PhoenixArrowEntity;
 import com.aether.entity.projectile.SpectralPhoenixArrowEntity;
+import com.aether.registry.AetherEntityTypes;
 import com.aether.registry.AetherItemGroups;
 import com.aether.registry.AetherItems;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -18,7 +19,7 @@ import net.minecraft.world.World;
 public class PhoenixBowItem extends BowItem
 {
     public PhoenixBowItem() {
-        super(new Item.Properties().maxDamage(384).rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT));
+        super(new Item.Properties().maxDamage(384).rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_WEAPONS));
     }
 
     /**
@@ -92,10 +93,10 @@ public class PhoenixBowItem extends BowItem
 
     public AbstractArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
         if(stack.getItem() instanceof SpectralArrowItem) {
-            return new SpectralPhoenixArrowEntity(worldIn, shooter);
+            return new SpectralPhoenixArrowEntity(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW.get(), worldIn).construct(worldIn, shooter);
         }
         else {
-            PhoenixArrowEntity arrowEntity = new PhoenixArrowEntity(worldIn, shooter);
+            PhoenixArrowEntity arrowEntity = new PhoenixArrowEntity(AetherEntityTypes.PHOENIX_ARROW.get(), worldIn).construct(worldIn, shooter);
             arrowEntity.setPotionEffect(stack);
             return arrowEntity;
         }

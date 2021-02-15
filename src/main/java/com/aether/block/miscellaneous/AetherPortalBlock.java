@@ -1,9 +1,9 @@
 package com.aether.block.miscellaneous;
 
 import com.aether.Aether;
-import com.aether.particles.AetherParticleTypes;
+import com.aether.registry.AetherParticleTypes;
 import com.aether.registry.AetherBlocks;
-import com.aether.util.AetherSoundEvents;
+import com.aether.registry.AetherSoundEvents;
 import com.aether.world.AetherTeleporter;
 import com.aether.world.dimension.AetherDimensions;
 import com.google.common.cache.LoadingCache;
@@ -127,7 +127,7 @@ public class AetherPortalBlock extends Block {
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if (rand.nextInt(100) == 0) {
-			worldIn.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
+			worldIn.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT.get(), SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
 		}
 
 		for (int i = 0; i < 4; ++i) {
@@ -148,7 +148,7 @@ public class AetherPortalBlock extends Block {
 				sZ = rand.nextFloat() * 2.0F * mul;
 			}
 
-			worldIn.addParticle(AetherParticleTypes.AETHER_PORTAL, x, y, z, sX, sY, sZ);
+			worldIn.addParticle(AetherParticleTypes.AETHER_PORTAL.get(), x, y, z, sX, sY, sZ);
 		}
 	}
 	

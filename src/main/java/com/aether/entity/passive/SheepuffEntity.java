@@ -3,7 +3,7 @@ package com.aether.entity.passive;
 import com.aether.entity.AetherAnimalEntity;
 import com.aether.registry.AetherEntityTypes;
 import com.aether.entity.ai.EatAetherGrassGoal;
-import com.aether.util.AetherSoundEvents;
+import com.aether.registry.AetherSoundEvents;
 import com.google.common.collect.Maps;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -68,10 +68,6 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     public SheepuffEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
         super(type, worldIn);
     }
-    
-    public SheepuffEntity(World worldIn) {
-    	this(AetherEntityTypes.SHEEPUFF, worldIn);
-    }
 
     @Override
     protected void registerData() {
@@ -110,7 +106,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     @Nullable
     @Override
     public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
-        return AetherEntityTypes.SHEEPUFF.create(this.world);
+        return AetherEntityTypes.SHEEPUFF.get().create(this.world);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -174,17 +170,17 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherSoundEvents.ENTITY_SHEEPUFF_AMBIENT;
+        return AetherSoundEvents.ENTITY_SHEEPUFF_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return AetherSoundEvents.ENTITY_SHEEPUFF_HURT;
+        return AetherSoundEvents.ENTITY_SHEEPUFF_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherSoundEvents.ENTITY_SHEEPUFF_DEATH;
+        return AetherSoundEvents.ENTITY_SHEEPUFF_DEATH.get();
     }
 
     @Override

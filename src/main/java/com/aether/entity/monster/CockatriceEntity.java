@@ -1,7 +1,7 @@
 package com.aether.entity.monster;
 
 import com.aether.registry.AetherEntityTypes;
-import com.aether.util.AetherSoundEvents;
+import com.aether.registry.AetherSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -30,10 +30,6 @@ public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob 
 
     public CockatriceEntity(EntityType<? extends CockatriceEntity> type, World worldIn) {
         super(type, worldIn);
-    }
-
-    public CockatriceEntity(World worldIn) {
-        this(AetherEntityTypes.COCKATRICE, worldIn);
     }
 
     @Override
@@ -86,7 +82,7 @@ public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob 
         updateWingRotation: {
             if (!this.onGround) {
                 if (this.ticksUntilFlap == 0) {
-                    this.world.playSound(null, this.getPosX(), this.getPosY(), this.getPosZ(), AetherSoundEvents.ENTITY_MOA_FLAP, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
+                    this.world.playSound(null, this.getPosX(), this.getPosY(), this.getPosZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
                     this.ticksUntilFlap = 8;
                 }
                 else {
@@ -127,17 +123,17 @@ public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob 
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherSoundEvents.ENTITY_MOA_AMBIENT;
+        return AetherSoundEvents.ENTITY_MOA_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return AetherSoundEvents.ENTITY_MOA_AMBIENT;
+        return AetherSoundEvents.ENTITY_MOA_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherSoundEvents.ENTITY_MOA_AMBIENT;
+        return AetherSoundEvents.ENTITY_MOA_AMBIENT.get();
     }
 
     @Override

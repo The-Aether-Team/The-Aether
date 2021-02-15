@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 import com.aether.api.dungeon.DungeonType;
 import com.aether.item.misc.DungeonKeyItem;
 import com.aether.registry.AetherTileEntityTypes;
-import com.aether.tileentity.TreasureChestTileEntity;
+import com.aether.entity.tile.TreasureChestTileEntity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;

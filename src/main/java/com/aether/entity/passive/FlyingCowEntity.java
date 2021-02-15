@@ -2,8 +2,9 @@ package com.aether.entity.passive;
 
 import com.aether.registry.AetherEntityTypes;
 import com.aether.registry.AetherItems;
-import com.aether.util.AetherSoundEvents;
+import com.aether.registry.AetherSoundEvents;
 import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -22,13 +23,9 @@ public class FlyingCowEntity extends SaddleableEntity {
     public float wingFold;
     public float wingAngle;
     protected int ticks;
-    
-    public FlyingCowEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
+
+    public FlyingCowEntity(EntityType<? extends FlyingCowEntity> type, World worldIn) {
         super(type, worldIn);
-    }
-    
-    public FlyingCowEntity(World worldIn) {
-    	this(AetherEntityTypes.FLYING_COW, worldIn);
     }
 
     @Override
@@ -87,24 +84,24 @@ public class FlyingCowEntity extends SaddleableEntity {
     @Nullable
     @Override
     public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
-        return AetherEntityTypes.FLYING_COW.create(this.world);
+        return AetherEntityTypes.FLYING_COW.get().create(this.world);
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return AetherSoundEvents.ENTITY_FLYING_COW_HURT;
+        return AetherSoundEvents.ENTITY_FLYING_COW_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherSoundEvents.ENTITY_FLYING_COW_DEATH;
+        return AetherSoundEvents.ENTITY_FLYING_COW_DEATH.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherSoundEvents.ENTITY_FLYING_COW_AMBIENT;
+        return AetherSoundEvents.ENTITY_FLYING_COW_AMBIENT.get();
     }
 }

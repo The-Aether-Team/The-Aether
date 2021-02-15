@@ -2,7 +2,7 @@ package com.aether.entity.monster;
 
 import com.aether.registry.AetherEntityTypes;
 import com.aether.entity.projectile.ZephyrSnowballEntity;
-import com.aether.util.AetherSoundEvents;
+import com.aether.registry.AetherSoundEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
@@ -38,10 +38,6 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 	public ZephyrEntity(EntityType<? extends FlyingEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.moveController = new ZephyrEntity.MoveHelperController(this);
-	}
-	
-	public ZephyrEntity(World worldIn) {
-		this(AetherEntityTypes.ZEPHYR, worldIn);
 	}
 
 	@Override
@@ -119,17 +115,17 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT;
+		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT;
+		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT;
+		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT.get();
 	}
 
 	public static boolean canZephyrSpawn(EntityType<? extends ZephyrEntity> zephyr, IWorld worldIn, SpawnReason reason,
@@ -195,8 +191,8 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 					double accelX = target.getPosX() - (this.parentEntity.getPosX() + look.x * 4.0);
 					double accelY = target.getPosYHeight(0.5)  - (0.5 + this.parentEntity.getPosYHeight(0.5));
 					double accelZ = target.getPosZ() - (this.parentEntity.getPosZ() + look.z * 4.0);
-					this.parentEntity.playSound(AetherSoundEvents.ENTITY_ZEPHYR_SHOOT, 3.0F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
-					ZephyrSnowballEntity snowballentity = new ZephyrSnowballEntity(world, this.parentEntity, accelX, accelY, accelZ);
+					this.parentEntity.playSound(AetherSoundEvents.ENTITY_ZEPHYR_SHOOT.get(), 3.0F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
+					ZephyrSnowballEntity snowballentity = new ZephyrSnowballEntity(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), world).construct(world, this.parentEntity, accelX, accelY, accelZ);
 					snowballentity.setPosition(this.parentEntity.getPosX() + look.x * 4.0, this.parentEntity.getPosYHeight(0.5) + 0.5, this.parentEntity.getPosZ() + look.z * 4.0);
 					world.addEntity(snowballentity);
 					this.attackTimer = -40;

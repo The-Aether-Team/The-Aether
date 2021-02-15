@@ -20,21 +20,17 @@ public class LightningKnifeEntity extends ProjectileItemEntity {
 	public LightningKnifeEntity(EntityType<? extends LightningKnifeEntity> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
 	}
-	
-	public LightningKnifeEntity(double x, double y, double z, World worldIn) {
-		super(AetherEntityTypes.LIGHTNING_KNIFE, x, y, z, worldIn);
+
+	public LightningKnifeEntity constructOwner(LivingEntity owner)
+	{
+		this.setShooter(owner);
+		return new LightningKnifeEntity(AetherEntityTypes.LIGHTNING_KNIFE.get(), this.world);
 	}
 
-	public LightningKnifeEntity(LivingEntity owner, World worldIn) {
-		super(AetherEntityTypes.LIGHTNING_KNIFE, owner, worldIn);
-	}
-
-	public LightningKnifeEntity(World worldIn) {
-		super(AetherEntityTypes.LIGHTNING_KNIFE, worldIn);
-	}
-	
-	public LightningKnifeEntity(FMLPlayMessages.SpawnEntity packet, World worldIn) {
-		super(AetherEntityTypes.LIGHTNING_KNIFE, worldIn);
+	public LightningKnifeEntity constructPosition(double x, double y, double z)
+	{
+		this.setPosition(x, y, z);
+		return new LightningKnifeEntity(AetherEntityTypes.LIGHTNING_KNIFE.get(), this.world);
 	}
 
 	@Override

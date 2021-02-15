@@ -13,14 +13,18 @@ public class EnchantedDartEntity extends AbstractDartEntity {
         this.setDamage(6.0D);
     }
 
-    public EnchantedDartEntity(World worldIn, double x, double y, double z) {
-        super(AetherEntityTypes.ENCHANTED_DART, x, y, z, worldIn);
+    public EnchantedDartEntity construct(World worldIn, double x, double y, double z)
+    {
         this.setDamage(6.0D);
+        this.setPosition(x, y, z);
+        return new EnchantedDartEntity(AetherEntityTypes.ENCHANTED_DART.get(), worldIn);
     }
 
-    public EnchantedDartEntity(World worldIn, LivingEntity shooter) {
-        super(AetherEntityTypes.ENCHANTED_DART, shooter, worldIn);
+    public EnchantedDartEntity construct(World worldIn, LivingEntity shooter)
+    {
         this.setDamage(6.0D);
+        this.setShooter(shooter);
+        return new EnchantedDartEntity(AetherEntityTypes.ENCHANTED_DART.get(), worldIn);
     }
 
     @Override

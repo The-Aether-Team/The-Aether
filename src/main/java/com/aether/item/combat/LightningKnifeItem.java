@@ -1,9 +1,10 @@
 package com.aether.item.combat;
 
 import com.aether.entity.projectile.LightningKnifeEntity;
+import com.aether.registry.AetherEntityTypes;
 import com.aether.registry.AetherItemGroups;
 import com.aether.registry.AetherItems;
-import com.aether.util.AetherSoundEvents;
+import com.aether.registry.AetherSoundEvents;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -18,7 +19,7 @@ import net.minecraft.world.World;
 public class LightningKnifeItem extends Item
 {
 	public LightningKnifeItem() {
-		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).maxStackSize(16).group(AetherItemGroups.AETHER_COMBAT));
+		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).maxStackSize(16).group(AetherItemGroups.AETHER_WEAPONS));
 	}
 	
 	@Override
@@ -29,10 +30,10 @@ public class LightningKnifeItem extends Item
 			heldItem.shrink(1);
 		}
 		
-		worldIn.playSound(null, playerIn.getPosition(), AetherSoundEvents.ENTITY_PROJECTILE_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
+		worldIn.playSound(null, playerIn.getPosition(), AetherSoundEvents.ENTITY_PROJECTILE_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
 		
 		if (!worldIn.isRemote) {
-			LightningKnifeEntity lightningKnife = new LightningKnifeEntity(playerIn, worldIn);
+			LightningKnifeEntity lightningKnife = new LightningKnifeEntity(AetherEntityTypes.LIGHTNING_KNIFE.get(), worldIn).constructOwner(playerIn);
 			lightningKnife.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 0.8F, 1.0F);
 			worldIn.addEntity(lightningKnife);
 		}

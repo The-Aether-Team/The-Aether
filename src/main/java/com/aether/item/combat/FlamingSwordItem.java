@@ -11,7 +11,7 @@ import net.minecraft.item.Item.Properties;
 public class FlamingSwordItem extends SwordItem
 {
 	public FlamingSwordItem() {
-		super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT));
+		super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_WEAPONS));
 	}
 
 	@Override

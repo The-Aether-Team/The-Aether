@@ -3,7 +3,7 @@ package com.aether.block.dungeon;
 import java.util.Random;
 import java.util.function.Supplier;
 
-import com.aether.util.AetherSoundEvents;
+import com.aether.registry.AetherSoundEvents;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -13,8 +13,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import net.minecraft.block.AbstractBlock.Properties;
 
 public class TrappedBlock extends Block {
 	
@@ -41,7 +39,7 @@ public class TrappedBlock extends Block {
 				world.addEntity(entity);
 			}
 			
-			world.playSound(null, pos, AetherSoundEvents.BLOCK_DUNGEON_TRAP_TRIGGER, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+			world.playSound(null, pos, AetherSoundEvents.BLOCK_DUNGEON_TRAP_TRIGGER.get(), SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
 		}
 	}
 

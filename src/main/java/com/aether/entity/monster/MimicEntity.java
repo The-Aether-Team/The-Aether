@@ -29,10 +29,6 @@ public class MimicEntity extends CreatureEntity {
 		super(type, worldIn);
 	}
 	
-	public MimicEntity(World worldIn) {
-		super(AetherEntityTypes.MIMIC, worldIn);
-	}
-	
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new SwimGoal(this));

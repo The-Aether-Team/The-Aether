@@ -1,4 +1,4 @@
-package com.aether.tileentity;
+package com.aether.entity.tile;
 
 import java.util.UUID;
 

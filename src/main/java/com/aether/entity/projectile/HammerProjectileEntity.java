@@ -22,12 +22,11 @@ public class HammerProjectileEntity extends ThrowableEntity {
         super(type, worldIn);
     }
 
-    public HammerProjectileEntity(World world, LivingEntity player) {
-        super(AetherEntityTypes.HAMMER_PROJECTILE, player, world);
-        this.setShooter(player);
+    public HammerProjectileEntity constructOwner(LivingEntity owner)
+    {
+        this.setShooter(owner);
+        return new HammerProjectileEntity(AetherEntityTypes.HAMMER_PROJECTILE.get(), this.world);
     }
-
-
 
     @Override
     public IPacket<?> createSpawnPacket() {

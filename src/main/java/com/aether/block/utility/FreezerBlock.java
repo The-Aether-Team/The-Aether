@@ -2,8 +2,7 @@ package com.aether.block.utility;
 
 import java.util.Random;
 
-import com.aether.block.utility.AbstractAetherFurnaceBlock;
-import com.aether.tileentity.FreezerTileEntity;
+import com.aether.entity.tile.FreezerTileEntity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

@@ -10,7 +10,7 @@ import net.minecraft.item.*;
 public class LightningSwordItem extends SwordItem
 {
     public LightningSwordItem() {
-        super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_COMBAT));
+        super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override

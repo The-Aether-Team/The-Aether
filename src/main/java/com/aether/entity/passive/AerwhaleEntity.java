@@ -2,7 +2,7 @@ package com.aether.entity.passive;
 
 import com.aether.api.AetherAPI;
 import com.aether.registry.AetherEntityTypes;
-import com.aether.util.AetherSoundEvents;
+import com.aether.registry.AetherSoundEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FlyingEntity;
@@ -37,13 +37,9 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 	public AerwhaleEntity(EntityType<? extends FlyingEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.ignoreFrustumCheck = true;
-		this.moveController = new AerwhaleEntity.MoveHelperController(this);
-	}
-	
-	public AerwhaleEntity(World worldIn) {
-		this(AetherEntityTypes.AERWHALE, worldIn);
 		this.rotationYaw = 360.0F * this.rand.nextFloat();
 		this.rotationPitch = 90.0F * this.rand.nextFloat() - 45.0F;
+		this.moveController = new AerwhaleEntity.MoveHelperController(this);
 	}
 	
 	@Override
@@ -153,17 +149,17 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return AetherSoundEvents.ENTITY_AERWHALE_AMBIENT;
+		return AetherSoundEvents.ENTITY_AERWHALE_AMBIENT.get();
 	}
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return AetherSoundEvents.ENTITY_AERWHALE_DEATH;
+		return AetherSoundEvents.ENTITY_AERWHALE_DEATH.get();
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AetherSoundEvents.ENTITY_AERWHALE_DEATH;
+		return AetherSoundEvents.ENTITY_AERWHALE_DEATH.get();
 	}
 	
 	@Override

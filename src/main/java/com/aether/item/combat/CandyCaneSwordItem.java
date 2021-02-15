@@ -9,7 +9,7 @@ import net.minecraft.item.*;
 public class CandyCaneSwordItem extends SwordItem
 {
     public CandyCaneSwordItem() {
-        super(ItemTier.GOLD, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT));
+        super(ItemTier.GOLD, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override
