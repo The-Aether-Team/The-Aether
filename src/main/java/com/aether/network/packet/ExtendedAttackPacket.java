@@ -1,4 +1,4 @@
-package com.aether.network;
+package com.aether.network.packet;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;

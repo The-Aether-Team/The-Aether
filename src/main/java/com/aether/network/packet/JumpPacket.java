@@ -1,4 +1,4 @@
-package com.aether.network;
+package com.aether.network.packet;
 
 import java.util.UUID;
 import java.util.function.Supplier;

@@ -18,8 +18,8 @@ import com.aether.registry.AetherItems;
 import com.aether.item.IAetherItemColor;
 import com.aether.item.tools.abilities.IValkyrieToolItem;
 import com.aether.network.AetherPacketHandler;
-import com.aether.network.ExtendedAttackPacket;
-import com.aether.network.JumpPacket;
+import com.aether.network.packet.ExtendedAttackPacket;
+import com.aether.network.packet.JumpPacket;
 import com.aether.registry.AetherTileEntityTypes;
 
 import com.aether.entity.tile.ChestMimicTileEntity;

@@ -2,6 +2,8 @@ package com.aether.network;
 
 import com.aether.Aether;
 
+import com.aether.network.packet.ExtendedAttackPacket;
+import com.aether.network.packet.JumpPacket;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
