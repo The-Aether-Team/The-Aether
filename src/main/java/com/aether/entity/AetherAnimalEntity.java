@@ -2,8 +2,8 @@ package com.aether.entity;
 
 import java.util.Random;
 
-import com.aether.block.AetherBlocks;
-import com.aether.item.AetherItems;
+import com.aether.registry.AetherBlocks;
+import com.aether.registry.AetherItems;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -22,17 +22,17 @@ public abstract class AetherAnimalEntity extends AnimalEntity {
 	
 	@Override
 	public float getBlockPathWeight(BlockPos pos, IWorldReader worldIn) {
-		return worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK? 10.0F : worldIn.getLight(pos) - 0.5F;
+		return worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get() ? 10.0F : worldIn.getLight(pos) - 0.5F;
 	}
 	
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
-		return stack.getItem() == AetherItems.BLUEBERRY;
+		return stack.getItem() == AetherItems.BLUEBERRY.get();
 	}
 
 	//Copied from AnimalEntity, changed to check for Aether grass.
 	public static boolean canAetherAnimalSpawn(EntityType<? extends AetherAnimalEntity> animal, IWorld worldIn, SpawnReason reason, BlockPos pos, Random random) {
-		return worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK && worldIn.getLightSubtracted(pos, 0) > 8;
+		return worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get() && worldIn.getLightSubtracted(pos, 0) > 8;
 	}
 
 }

@@ -1,7 +1,7 @@
 package com.aether.client.renderer.tileentity;
 
-import com.aether.block.AetherBlocks;
-import com.aether.block.ChestMimicBlock;
+import com.aether.registry.AetherBlocks;
+import com.aether.block.dungeon.ChestMimicBlock;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.block.Block;
@@ -51,7 +51,7 @@ public class ChestMimicTileEntityRenderer<T extends TileEntity> extends TileEnti
 	@Override
 	public void render(T tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		World world = tileEntityIn.getWorld();
-		BlockState blockstate = (world != null)? tileEntityIn.getBlockState() : AetherBlocks.CHEST_MIMIC.getDefaultState().with(ChestMimicBlock.FACING, Direction.SOUTH);
+		BlockState blockstate = (world != null)? tileEntityIn.getBlockState() : AetherBlocks.CHEST_MIMIC.get().getDefaultState().with(ChestMimicBlock.FACING, Direction.SOUTH);
 		Block block = blockstate.getBlock();
 		if (block instanceof ChestMimicBlock) {
 			matrixStackIn.push();

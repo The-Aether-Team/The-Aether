@@ -1,8 +1,8 @@
 package com.aether.world;
 
-import com.aether.block.AetherBlocks;
-import com.aether.block.AetherPortalBlock;
-import com.aether.poi.AetherPOI;
+import com.aether.registry.AetherBlocks;
+import com.aether.block.miscellaneous.AetherPortalBlock;
+import com.aether.registry.AetherPOI;
 import com.aether.world.dimension.AetherDimensions;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
@@ -129,7 +129,7 @@ public class AetherTeleporter implements ITeleporter {
             }
         }
 
-        BlockState aetherPortal = AetherBlocks.AETHER_PORTAL.getDefaultState().with(AetherPortalBlock.AXIS, axis);
+        BlockState aetherPortal = AetherBlocks.AETHER_PORTAL.get().getDefaultState().with(AetherPortalBlock.AXIS, axis);
 
         for(int j2 = 0; j2 < 2; ++j2) {
             for(int l2 = 0; l2 < 3; ++l2) {

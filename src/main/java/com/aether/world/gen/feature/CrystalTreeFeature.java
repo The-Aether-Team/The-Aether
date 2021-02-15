@@ -1,7 +1,7 @@
 package com.aether.world.gen.feature;
 
 import com.aether.Aether;
-import com.aether.block.AetherBlocks;
+import com.aether.registry.AetherBlocks;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
@@ -49,8 +49,8 @@ public class CrystalTreeFeature extends Feature<NoFeatureConfig> {
             for (int y1 = blockpos1.getY(); y1 < blockpos1.add(blockpos).getY(); y1++) {
                 for (int z1 = blockpos1.getZ(); z1 < blockpos1.add(blockpos).getZ(); z1++) {
                     BlockPos blockpos2 = new BlockPos(x1, y1, z1);
-                    if (reader.getBlockState(blockpos2).getBlock() == AetherBlocks.CRYSTAL_LEAVES.getBlock() && rand.nextInt(5) == 2) {
-                        reader.setBlockState(blockpos2, AetherBlocks.CRYSTAL_FRUIT_LEAVES.getDefaultState(), 19);
+                    if (reader.getBlockState(blockpos2).getBlock() == AetherBlocks.CRYSTAL_LEAVES.get().getBlock() && rand.nextInt(5) == 2) {
+                        reader.setBlockState(blockpos2, AetherBlocks.CRYSTAL_FRUIT_LEAVES.get().getDefaultState(), 19);
                     }
                 }
             }

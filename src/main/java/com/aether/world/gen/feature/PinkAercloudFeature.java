@@ -1,6 +1,6 @@
 package com.aether.world.gen.feature;
 
-import com.aether.block.AetherBlocks;
+import com.aether.registry.AetherBlocks;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
@@ -36,7 +36,7 @@ public class PinkAercloudFeature extends Feature<NoFeatureConfig> {
 
                             if (reader.isAirBlock(newPosition)) {
                                 if (Math.abs(x - position.getX()) + Math.abs(y - position.getY()) + Math.abs(z - position.getZ()) < 4 + rand.nextInt(2)) {
-                                    this.setBlockState(reader, newPosition, AetherBlocks.PINK_AERCLOUD.getDefaultState());
+                                    this.setBlockState(reader, newPosition, AetherBlocks.PINK_AERCLOUD.get().getDefaultState());
                                 }
                             }
                         }

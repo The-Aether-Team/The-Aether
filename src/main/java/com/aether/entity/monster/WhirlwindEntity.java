@@ -1,6 +1,6 @@
 package com.aether.entity.monster;
 
-import com.aether.block.AetherBlocks;
+import com.aether.registry.AetherBlocks;
 import com.aether.particles.AetherParticleTypes;
 import com.aether.player.AetherRankings;
 import net.minecraft.block.Blocks;
@@ -63,7 +63,7 @@ public class WhirlwindEntity extends MobEntity {
 
     public static boolean canWhirlwindSpawn(EntityType<? extends WhirlwindEntity> typeIn, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
         return randomIn.nextInt(450) == 0
-                && worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK
+                && worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get()
                 && worldIn.getLight(pos) > 8
                 && MobEntity.canSpawnOn(typeIn, worldIn, reason, pos, randomIn);
     }

@@ -1,7 +1,7 @@
 package com.aether.entity.monster;
 
-import com.aether.block.AetherBlocks;
-import com.aether.entity.AetherEntityTypes;
+import com.aether.registry.AetherBlocks;
+import com.aether.registry.AetherEntityTypes;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -44,7 +44,7 @@ public class AechorPlantEntity extends CreatureEntity implements IRangedAttackMo
     }
 
     public static boolean canAechorSpawn(EntityType<? extends AechorPlantEntity> animal, IWorld worldIn, SpawnReason reason, BlockPos pos, Random random) {
-        return worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK && worldIn.getLightSubtracted(pos, 0) > 8;
+        return worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get() && worldIn.getLightSubtracted(pos, 0) > 8;
     }
 
     public void attackEntityWithRangedAttack (LivingEntity target, float distanceFactor) {
@@ -62,7 +62,7 @@ public class AechorPlantEntity extends CreatureEntity implements IRangedAttackMo
     public void tick() {
         super.tick();
 
-        if (this.world.getBlockState(this.getPosition().down()).getBlock() != AetherBlocks.AETHER_GRASS_BLOCK) {
+        if (this.world.getBlockState(this.getPosition().down()).getBlock() != AetherBlocks.AETHER_GRASS_BLOCK.get()) {
             this.setHealth(0.0F);
         }
 

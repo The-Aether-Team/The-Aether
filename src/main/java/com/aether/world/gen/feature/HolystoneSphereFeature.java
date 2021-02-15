@@ -1,6 +1,6 @@
 package com.aether.world.gen.feature;
 
-import com.aether.block.AetherBlocks;
+import com.aether.registry.AetherBlocks;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
@@ -26,7 +26,7 @@ public class HolystoneSphereFeature extends Feature<NoFeatureConfig> {
                     float formula = (float) (Math.pow(x - pos.getX(), 2) + Math.pow(y - pos.getY(), 2) + Math.pow(z - pos.getZ(), 2));
 
                     if (formula <= Math.pow(radius, 2)) {
-                        reader.setBlockState(new BlockPos(x, y, z), AetherBlocks.HOLYSTONE.getDefaultState(), 2 | 16);
+                        reader.setBlockState(new BlockPos(x, y, z), AetherBlocks.HOLYSTONE.get().getDefaultState(), 2 | 16);
                     }
                 }
             }

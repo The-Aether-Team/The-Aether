@@ -2,8 +2,8 @@ package com.aether.client;
 
 import com.aether.Aether;
 import com.aether.CommonProxy;
-import com.aether.block.AetherBlocks;
-import com.aether.block.IAetherBlockColor;
+import com.aether.registry.AetherBlocks;
+import com.aether.block.util.IAetherBlockColor;
 import com.aether.capability.AetherCapabilities;
 import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.gui.screen.inventory.FreezerScreen;
@@ -12,15 +12,15 @@ import com.aether.client.renderer.entity.*;
 import com.aether.client.renderer.tileentity.ChestMimicTileEntityRenderer;
 import com.aether.client.renderer.tileentity.CustomItemStackTileEntityRenderer;
 import com.aether.client.renderer.tileentity.TreasureChestTileEntityRenderer;
-import com.aether.entity.AetherEntityTypes;
+import com.aether.registry.AetherEntityTypes;
 import com.aether.inventory.container.AetherContainerTypes;
-import com.aether.item.AetherItems;
+import com.aether.registry.AetherItems;
 import com.aether.item.IAetherItemColor;
-import com.aether.item.IValkyrieToolItem;
+import com.aether.item.tools.abilities.IValkyrieToolItem;
 import com.aether.network.AetherPacketHandler;
 import com.aether.network.ExtendedAttackPacket;
 import com.aether.network.JumpPacket;
-import com.aether.tileentity.AetherTileEntityTypes;
+import com.aether.registry.AetherTileEntityTypes;
 
 import com.aether.tileentity.ChestMimicTileEntity;
 import com.aether.tileentity.TreasureChestTileEntity;
@@ -41,7 +41,6 @@ import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -63,8 +62,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 @OnlyIn(Dist.CLIENT)
-public class ClientProxy extends CommonProxy {
-	
+public class ClientProxy extends CommonProxy
+{
 	@SubscribeEvent
 	@Override
 	public void commonSetup(FMLCommonSetupEvent event) {
@@ -118,8 +117,8 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	protected void registerTileEntityRenderers() {
-		ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.CHEST_MIMIC, ChestMimicTileEntityRenderer::new);
-		ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.TREASURE_CHEST, TreasureChestTileEntityRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.CHEST_MIMIC.get(), ChestMimicTileEntityRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.TREASURE_CHEST.get(), TreasureChestTileEntityRenderer::new);
 	}
 	
 	protected void registerGuiFactories() {
@@ -130,16 +129,17 @@ public class ClientProxy extends CommonProxy {
 	
 	protected void registerColors() {
 		// Block colors
-		registerColor(AetherBlocks.BLUE_AERCLOUD);
-		registerColor(AetherBlocks.GOLDEN_AERCLOUD);
+		registerColor(AetherBlocks.BLUE_AERCLOUD.get());
+		registerColor(AetherBlocks.GOLDEN_AERCLOUD.get());
 		
 		// Item colors
-		registerColor(AetherBlocks.BLUE_AERCLOUD.asItem());
-		registerColor(AetherBlocks.GOLDEN_AERCLOUD.asItem());
-		registerColor(AetherItems.MIMIC_SPAWN_EGG);
-		registerColor(AetherItems.SENTRY_SPAWN_EGG);
+		//TODO: These crash the game because for some reason .asItem() from TintedAercloudBlock doesn't return anything.
+		//registerColor(AetherBlocks.BLUE_AERCLOUD.get().asItem());
+		//registerColor(AetherBlocks.GOLDEN_AERCLOUD.get().asItem());
+		registerColor(AetherItems.MIMIC_SPAWN_EGG.get());
+		registerColor(AetherItems.SENTRY_SPAWN_EGG.get());
 	}
-	
+
 	public static <B extends Block & IAetherBlockColor> void registerColor(B block) {
 		Minecraft.getInstance().getBlockColors().register((blockState, lightReader, blockPos, color) -> block.getColor(false), block);
 	}
@@ -157,22 +157,24 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	protected void registerBlockRenderLayers() {
-		setTranslucentRenderLayer(AetherBlocks.COLD_AERCLOUD);
-		setTranslucentRenderLayer(AetherBlocks.BLUE_AERCLOUD);
-		setTranslucentRenderLayer(AetherBlocks.GOLDEN_AERCLOUD);
-		setTranslucentRenderLayer(AetherBlocks.PINK_AERCLOUD);
-		setTranslucentRenderLayer(AetherBlocks.AEROGEL);
-		setTranslucentRenderLayer(AetherBlocks.AEROGEL_SLAB);
-		setTranslucentRenderLayer(AetherBlocks.AEROGEL_STAIRS);
-		setTranslucentRenderLayer(AetherBlocks.AEROGEL_WALL);
-		setTranslucentRenderLayer(AetherBlocks.QUICKSOIL_GLASS);
-		setTranslucentRenderLayer(AetherBlocks.AETHER_PORTAL);
-		setCutoutRenderLayer(AetherBlocks.BERRY_BUSH);
-		setCutoutRenderLayer(AetherBlocks.BERRY_BUSH_STEM);
-		setCutoutRenderLayer(AetherBlocks.AMBROSIUM_TORCH);
-		setCutoutRenderLayer(AetherBlocks.AMBROSIUM_WALL_TORCH);
-		setCutoutRenderLayer(AetherBlocks.SKYROOT_SAPLING);
-		setCutoutRenderLayer(AetherBlocks.GOLDEN_OAK_SAPLING);
+		setTranslucentRenderLayer(AetherBlocks.COLD_AERCLOUD.get());
+		setTranslucentRenderLayer(AetherBlocks.BLUE_AERCLOUD.get());
+		setTranslucentRenderLayer(AetherBlocks.GOLDEN_AERCLOUD.get());
+		setTranslucentRenderLayer(AetherBlocks.PINK_AERCLOUD.get());
+		setTranslucentRenderLayer(AetherBlocks.AEROGEL.get());
+		setTranslucentRenderLayer(AetherBlocks.AEROGEL_SLAB.get());
+		setTranslucentRenderLayer(AetherBlocks.AEROGEL_STAIRS.get());
+		setTranslucentRenderLayer(AetherBlocks.AEROGEL_WALL.get());
+		setTranslucentRenderLayer(AetherBlocks.QUICKSOIL_GLASS.get());
+		setTranslucentRenderLayer(AetherBlocks.AETHER_PORTAL.get());
+		setCutoutRenderLayer(AetherBlocks.BERRY_BUSH.get());
+		setCutoutRenderLayer(AetherBlocks.BERRY_BUSH_STEM.get());
+		setCutoutRenderLayer(AetherBlocks.AMBROSIUM_TORCH.get());
+		setCutoutRenderLayer(AetherBlocks.AMBROSIUM_WALL_TORCH.get());
+		setCutoutRenderLayer(AetherBlocks.SKYROOT_SAPLING.get());
+		setCutoutRenderLayer(AetherBlocks.GOLDEN_OAK_SAPLING.get());
+		setCutoutRenderLayer(AetherBlocks.PURPLE_FLOWER.get());
+		setCutoutRenderLayer(AetherBlocks.WHITE_FLOWER.get());
 	}
 	
 	public static void setSolidRenderLayer(Block block) {
@@ -196,10 +198,10 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	protected void registerItemModelProperties() {
-		ItemModelsProperties.registerProperty(AetherItems.PHOENIX_BOW, new ResourceLocation("pulling"), (stack, world, living) -> {
+		ItemModelsProperties.registerProperty(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pulling"), (stack, world, living) -> {
 			return living != null && living.isHandActive() && living.getActiveItemStack() == stack ? 1.0F : 0.0F;
 		});
-		ItemModelsProperties.registerProperty(AetherItems.PHOENIX_BOW, new ResourceLocation("pull"), (stack, world, living) -> {
+		ItemModelsProperties.registerProperty(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pull"), (stack, world, living) -> {
 			if (living == null) {
 				return 0.0F;
 			} else {

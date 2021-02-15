@@ -1,7 +1,7 @@
 package com.aether.entity.monster;
 
-import com.aether.block.AetherBlocks;
-import com.aether.entity.AetherEntityTypes;
+import com.aether.registry.AetherBlocks;
+import com.aether.registry.AetherEntityTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -81,7 +81,7 @@ public class SentryEntity extends SlimeEntity {
 	
 	@Override
 	protected IParticleData getSquishParticle() {
-		return new BlockParticleData(ParticleTypes.BLOCK, AetherBlocks.SENTRY_STONE.getDefaultState());
+		return new BlockParticleData(ParticleTypes.BLOCK, AetherBlocks.SENTRY_STONE.get().getDefaultState());
 	}
 	
 	@Override

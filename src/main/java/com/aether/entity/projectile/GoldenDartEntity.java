@@ -1,7 +1,7 @@
 package com.aether.entity.projectile;
 
-import com.aether.entity.AetherEntityTypes;
-import com.aether.item.AetherItems;
+import com.aether.registry.AetherEntityTypes;
+import com.aether.registry.AetherItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -25,6 +25,6 @@ public class GoldenDartEntity extends AbstractDartEntity {
 
     @Override
     protected ItemStack getArrowStack() {
-        return new ItemStack(AetherItems.GOLDEN_DART);
+        return new ItemStack(AetherItems.GOLDEN_DART.get());
     }
 }

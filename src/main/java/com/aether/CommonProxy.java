@@ -1,30 +1,27 @@
 package com.aether;
 
 import com.aether.advancement.AetherAdvancements;
-import com.aether.block.AetherBlocks;
+import com.aether.registry.AetherBlocks;
 import com.aether.capability.AetherCapabilities;
 import com.aether.entity.AetherAnimalEntity;
-import com.aether.entity.AetherEntityTypes;
+import com.aether.registry.AetherEntityTypes;
 import com.aether.entity.monster.*;
 import com.aether.entity.passive.*;
 import com.aether.event.AetherBannedItemEvent;
-import com.aether.hooks.AetherEventHooks;
-import com.aether.item.AetherItems;
+import com.aether.event.hooks.AetherEventHooks;
+import com.aether.registry.AetherItems;
 import com.aether.network.AetherPacketHandler;
 import com.aether.player.IAetherPlayer;
-import com.aether.tags.AetherEntityTypeTags;
-import com.aether.tags.AetherItemTags;
+import com.aether.registry.AetherTags;
 import com.aether.world.dimension.AetherDimensions;
 import com.aether.world.gen.feature.AetherFeatures;
 import com.aether.world.storage.loot.functions.DoubleDrops;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import net.minecraft.block.*;
 import net.minecraft.dispenser.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -43,21 +40,16 @@ import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import org.apache.logging.log4j.core.jmx.Server;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Random;
 
-import static net.minecraft.tileentity.AbstractFurnaceTileEntity.addItemBurnTime;
-
-public class CommonProxy {
-
+public class CommonProxy
+{
 	@SubscribeEvent
 	public void commonSetup(FMLCommonSetupEvent event) {
 		AetherPacketHandler.register();
@@ -125,21 +117,21 @@ public class CommonProxy {
 				return stack;
 			}
 		};
-		DispenserBlock.registerDispenseBehavior(AetherItems.PHYG_SPAWN_EGG, dispenseSpawnEgg);
-		DispenserBlock.registerDispenseBehavior(AetherItems.FLYING_COW_SPAWN_EGG, dispenseSpawnEgg);
-		DispenserBlock.registerDispenseBehavior(AetherItems.SHEEPUFF_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.PHYG_SPAWN_EGG.get(), dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.FLYING_COW_SPAWN_EGG.get(), dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.SHEEPUFF_SPAWN_EGG.get(), dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.AERBUNNY_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.AERWHALE_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.BLUE_SWET_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.GOLDEN_SWET_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.COCKATRICE_SPAWN_EGG, dispenseSpawnEgg);
-		DispenserBlock.registerDispenseBehavior(AetherItems.SENTRY_SPAWN_EGG, dispenseSpawnEgg);
-		DispenserBlock.registerDispenseBehavior(AetherItems.ZEPHYR_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.SENTRY_SPAWN_EGG.get(), dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.ZEPHYR_SPAWN_EGG.get(), dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.AECHOR_PLANT_SPAWN_EGG, dispenseSpawnEgg);
-		DispenserBlock.registerDispenseBehavior(AetherItems.MIMIC_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.MIMIC_SPAWN_EGG.get(), dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.VALKYRIE_SPAWN_EGG, dispenseSpawnEgg);
 		//DispenserBlock.registerDispenseBehavior(AetherItems.FIRE_MINION_SPAWN_EGG, dispenseSpawnEgg);
-		DispenserBlock.registerDispenseBehavior(AetherItems.WHIRLWIND_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.WHIRLWIND_SPAWN_EGG.get(), dispenseSpawnEgg);
 		DispenserBlock.registerDispenseBehavior(Items.FIRE_CHARGE, new OptionalDispenseBehavior() {
 			/**
 			 * Dispense the specified stack, play the dispense sound and spawn
@@ -221,10 +213,10 @@ public class CommonProxy {
 	protected void registerAxeStrippingBlocks() {
 		AxeItem.BLOCK_STRIPPING_MAP = ImmutableMap.<Block, Block>builder()
 			.putAll(AxeItem.BLOCK_STRIPPING_MAP)
-			.put(AetherBlocks.SKYROOT_LOG, AetherBlocks.STRIPPED_SKYROOT_LOG)
-			.put(AetherBlocks.GOLDEN_OAK_LOG, AetherBlocks.STRIPPED_SKYROOT_LOG)
-			.put(AetherBlocks.SKYROOT_WOOD, AetherBlocks.STRIPPED_SKYROOT_WOOD)
-			.put(AetherBlocks.GOLDEN_OAK_WOOD, AetherBlocks.STRIPPED_SKYROOT_WOOD)
+			.put(AetherBlocks.SKYROOT_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
+			.put(AetherBlocks.GOLDEN_OAK_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
+			.put(AetherBlocks.SKYROOT_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
+			.put(AetherBlocks.GOLDEN_OAK_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
 			.build();
 	}
 	
@@ -241,7 +233,7 @@ public class CommonProxy {
 			return;
 		}
 
-		if (event.getItemStack().getItem().isIn(AetherItemTags.BANNED_IN_AETHER)) {
+		if (event.getItemStack().getItem().isIn(AetherTags.Items.BANNED_IN_AETHER)) {
 			if (AetherEventHooks.isItemBanned(event.getItemStack())) {
 				AetherEventHooks.onItemBanned(event.getWorld(), event.getPos(), event.getFace(), event.getItemStack());			
 				event.setCanceled(true);
@@ -262,7 +254,7 @@ public class CommonProxy {
 		}
 		world.playSound(null, event.getPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1.0F, 1.0F);
 	}
-	
+
 	@SubscribeEvent
 	public static void doSkyrootDoubleDrops(LivingDropsEvent event) {
 		if (!(event.getSource() instanceof EntityDamageSource)) {
@@ -280,11 +272,11 @@ public class CommonProxy {
 		ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
 		Item item = stack.getItem();
 		
-		if (item == AetherItems.SKYROOT_SWORD && !entity.getType().isContained(AetherEntityTypeTags.NO_SKYROOT_DOUBLE_DROPS)) {
+		if (item == AetherItems.SKYROOT_SWORD.get() && !entity.getType().isContained(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
 			ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
 			for (ItemEntity drop : event.getDrops()) {
 				ItemStack droppedStack = drop.getItem();
-				if (!droppedStack.getItem().isIn(AetherItemTags.NO_SKYROOT_DOUBLE_DROPS)) {
+				if (!droppedStack.getItem().isIn(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS)) {
 					newDrops.add(new ItemEntity(entity.world, drop.getPosX(), drop.getPosY(), drop.getPosZ(), droppedStack.copy()));
 				}
 			}

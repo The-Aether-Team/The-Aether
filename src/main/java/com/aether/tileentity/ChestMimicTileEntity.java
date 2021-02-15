@@ -1,5 +1,6 @@
 package com.aether.tileentity;
 
+import com.aether.registry.AetherTileEntityTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
@@ -10,7 +11,7 @@ public class ChestMimicTileEntity extends TileEntity {
 	}
 	
 	public ChestMimicTileEntity() {
-		super(AetherTileEntityTypes.CHEST_MIMIC);
+		super(AetherTileEntityTypes.CHEST_MIMIC.get());
 	}
 	
 //	@Override

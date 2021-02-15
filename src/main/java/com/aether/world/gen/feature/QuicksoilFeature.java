@@ -1,6 +1,6 @@
 package com.aether.world.gen.feature;
 
-import com.aether.block.AetherBlocks;
+import com.aether.registry.AetherBlocks;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -25,7 +25,7 @@ public class QuicksoilFeature extends Feature<NoFeatureConfig> {
                     BlockPos newPos = new BlockPos(x, pos.getY(), z);
 
                     if(!reader.getBlockState(pos).isAir() && (x - pos.getX()) * (x - pos.getX()) + (z - pos.getZ()) * (z - pos.getZ()) < 12) {
-                        reader.setBlockState(newPos, AetherBlocks.QUICKSOIL.getDefaultState(), 0);
+                        reader.setBlockState(newPos, AetherBlocks.QUICKSOIL.get().getDefaultState(), 0);
                     }
                 }
             }

@@ -1,6 +1,6 @@
 package com.aether.entity.monster;
 
-import com.aether.entity.AetherEntityTypes;
+import com.aether.registry.AetherEntityTypes;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureEntity;

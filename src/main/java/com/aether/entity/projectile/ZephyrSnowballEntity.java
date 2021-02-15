@@ -1,7 +1,7 @@
 package com.aether.entity.projectile;
 
-import com.aether.entity.AetherEntityTypes;
-import com.aether.item.AetherItems;
+import com.aether.registry.AetherEntityTypes;
+import com.aether.registry.AetherItems;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -18,7 +18,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 
 import net.minecraft.util.math.vector.Vector3d;
@@ -56,7 +55,7 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 				LivingEntity livingEntity = (LivingEntity)entity;
 				boolean isPlayer = livingEntity instanceof PlayerEntity;
 
-				if (isPlayer && ((PlayerEntity)entity).inventory.armorInventory.get(0).getItem() == AetherItems.SENTRY_BOOTS) {
+				if (isPlayer && ((PlayerEntity)entity).inventory.armorInventory.get(0).getItem() == AetherItems.SENTRY_BOOTS.get()) {
 					return;
 				}
 

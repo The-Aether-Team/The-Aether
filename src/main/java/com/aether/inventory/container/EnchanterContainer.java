@@ -3,7 +3,7 @@ package com.aether.inventory.container;
 import java.util.List;
 
 import com.aether.api.AetherAPI;
-import com.aether.item.crafting.AetherRecipeTypes;
+import com.aether.crafting.AetherRecipeTypes;
 import com.google.common.collect.Lists;
 
 import net.minecraft.client.util.RecipeBookCategories;

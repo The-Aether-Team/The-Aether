@@ -2,9 +2,9 @@ package com.aether.entity.item;
 
 import java.util.List;
 
-import com.aether.block.AetherBlocks;
-import com.aether.block.FloatingBlock;
-import com.aether.entity.AetherEntityTypes;
+import com.aether.registry.AetherBlocks;
+import com.aether.block.util.FloatingBlock;
+import com.aether.registry.AetherEntityTypes;
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.AnvilBlock;
@@ -47,7 +47,7 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpawnData {
-	private BlockState floatTile = AetherBlocks.GRAVITITE_ORE.getDefaultState();
+	private BlockState floatTile = AetherBlocks.GRAVITITE_ORE.get().getDefaultState();
 	public int floatTime;
 	public boolean shouldDropItem = true;
 	private boolean dontSetBlock;
@@ -278,7 +278,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 		}
 
 		if (this.floatTile.isAir()) {
-			this.floatTile = AetherBlocks.GRAVITITE_ORE.getDefaultState();
+			this.floatTile = AetherBlocks.GRAVITITE_ORE.get().getDefaultState();
 		}
 		
 	}

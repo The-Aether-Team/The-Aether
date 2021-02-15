@@ -3,8 +3,9 @@ package com.aether.tileentity;
 import com.aether.Aether;
 import com.aether.api.AetherAPI;
 import com.aether.inventory.container.FreezerContainer;
-import com.aether.item.crafting.AetherRecipeTypes;
+import com.aether.crafting.AetherRecipeTypes;
 
+import com.aether.registry.AetherTileEntityTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
@@ -22,7 +23,7 @@ public class FreezerTileEntity extends AbstractFurnaceTileEntity {
 	}
 	
 	public FreezerTileEntity() {
-		super(AetherTileEntityTypes.FREEZER, AetherRecipeTypes.FREEZING);
+		super(AetherTileEntityTypes.FREEZER.get(), AetherRecipeTypes.FREEZING);
 	}
 	
 	@Override

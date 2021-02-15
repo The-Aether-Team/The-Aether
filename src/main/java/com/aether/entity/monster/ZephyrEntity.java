@@ -1,6 +1,6 @@
 package com.aether.entity.monster;
 
-import com.aether.entity.AetherEntityTypes;
+import com.aether.registry.AetherEntityTypes;
 import com.aether.entity.projectile.ZephyrSnowballEntity;
 import com.aether.util.AetherSoundEvents;
 import net.minecraft.entity.EntityType;

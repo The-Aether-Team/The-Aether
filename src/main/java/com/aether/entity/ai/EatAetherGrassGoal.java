@@ -1,6 +1,6 @@
 package com.aether.entity.ai;
 
-import com.aether.block.AetherBlocks;
+import com.aether.registry.AetherBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.pattern.BlockStateMatcher;
@@ -18,7 +18,7 @@ import java.util.function.Predicate;
  *  @see net.minecraft.entity.ai.goal.EatGrassGoal
  **/
 public class EatAetherGrassGoal extends Goal {
-    private static final Predicate<BlockState> IS_GRASS = BlockStateMatcher.forBlock(AetherBlocks.AETHER_GRASS_BLOCK);
+    private static final Predicate<BlockState> IS_GRASS = BlockStateMatcher.forBlock(AetherBlocks.AETHER_GRASS_BLOCK.get());
     /** The entity owner of this AITask */
     private final MobEntity grassEaterEntity;
     /** The world the grass eater entity is eating from */
@@ -44,7 +44,7 @@ public class EatAetherGrassGoal extends Goal {
             if (IS_GRASS.test(this.entityWorld.getBlockState(blockpos))) {
                 return true;
             } else {
-                return this.entityWorld.getBlockState(blockpos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK;
+                return this.entityWorld.getBlockState(blockpos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get();
             }
         }
     }
@@ -94,10 +94,10 @@ public class EatAetherGrassGoal extends Goal {
                 this.grassEaterEntity.eatGrassBonus();
             } else {
                 BlockPos blockpos1 = blockpos.down();
-                if (this.entityWorld.getBlockState(blockpos1).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK) {
+                if (this.entityWorld.getBlockState(blockpos1).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get()) {
                     if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.entityWorld, this.grassEaterEntity)) {
-                        this.entityWorld.playEvent(2001, blockpos1, Block.getStateId(AetherBlocks.AETHER_GRASS_BLOCK.getDefaultState()));
-                        this.entityWorld.setBlockState(blockpos1, AetherBlocks.AETHER_DIRT.getDefaultState(), 2);
+                        this.entityWorld.playEvent(2001, blockpos1, Block.getStateId(AetherBlocks.AETHER_GRASS_BLOCK.get().getDefaultState()));
+                        this.entityWorld.setBlockState(blockpos1, AetherBlocks.AETHER_DIRT.get().getDefaultState(), 2);
                     }
 
                     this.grassEaterEntity.eatGrassBonus();

@@ -1,7 +1,7 @@
 package com.aether.entity.passive;
 
 import com.aether.api.AetherAPI;
-import com.aether.entity.AetherEntityTypes;
+import com.aether.registry.AetherEntityTypes;
 import com.aether.util.AetherSoundEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -30,8 +30,6 @@ import net.minecraft.world.World;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
-
-import net.minecraft.entity.ai.goal.Goal.Flag;
 
 public class AerwhaleEntity extends FlyingEntity implements IMob {
 	public float motionYaw, motionPitch;

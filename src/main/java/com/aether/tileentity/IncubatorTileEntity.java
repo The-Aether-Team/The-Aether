@@ -6,8 +6,9 @@ import javax.annotation.Nullable;
 
 import com.aether.Aether;
 import com.aether.inventory.container.IncubatorContainer;
-import com.aether.item.AetherItems;
+import com.aether.registry.AetherItems;
 
+import com.aether.registry.AetherTileEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -74,7 +75,7 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	}
 
 	public IncubatorTileEntity() {
-		super(AetherTileEntityTypes.INCUBATOR);
+		super(AetherTileEntityTypes.INCUBATOR.get());
 	}
 	
 	public UUID getOwnerUniqueId() {
@@ -116,14 +117,15 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		if (index == 0) {
-			return stack.getItem() == AetherItems.MOA_EGG;
+			//return stack.getItem() == AetherItems.MOA_EGG;
+			return true;
 		} else /* index == 1 */ {
 			return isFuel(stack);
 		}
 	}
 	
 	public static boolean isFuel(ItemStack itemStack) {
-		return itemStack.getItem() == AetherItems.AMBROSIUM_SHARD;
+		return itemStack.getItem() == AetherItems.AMBROSIUM_SHARD.get();
 	}
 	
 	@Override

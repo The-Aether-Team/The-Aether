@@ -1,7 +1,7 @@
 package com.aether.entity.projectile;
 
-import com.aether.entity.AetherEntityTypes;
-import com.aether.item.AetherItems;
+import com.aether.registry.AetherEntityTypes;
+import com.aether.registry.AetherItems;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -10,7 +10,6 @@ import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.FMLPlayMessages;
@@ -55,7 +54,7 @@ public class LightningKnifeEntity extends ProjectileItemEntity {
 
 	@Override
 	protected Item getDefaultItem() {
-		return AetherItems.LIGHTNING_KNIFE;
+		return AetherItems.LIGHTNING_KNIFE.get();
 	}	
 	
 	@Override

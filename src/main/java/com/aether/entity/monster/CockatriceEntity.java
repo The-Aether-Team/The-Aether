@@ -1,6 +1,6 @@
 package com.aether.entity.monster;
 
-import com.aether.entity.AetherEntityTypes;
+import com.aether.registry.AetherEntityTypes;
 import com.aether.util.AetherSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -16,9 +16,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 import java.util.Random;

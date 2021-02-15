@@ -1,10 +1,11 @@
 package com.aether.tileentity;
 
 import com.aether.Aether;
+import com.aether.crafting.AetherRecipeTypes;
 import com.aether.api.AetherAPI;
 import com.aether.inventory.container.EnchanterContainer;
-import com.aether.item.crafting.AetherRecipeTypes;
 
+import com.aether.registry.AetherTileEntityTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
@@ -15,14 +16,14 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class EnchanterTileEntity extends AbstractFurnaceTileEntity {
-
+public class EnchanterTileEntity extends AbstractFurnaceTileEntity
+{
 	protected EnchanterTileEntity(TileEntityType<?> tileTypeIn, IRecipeType<? extends AbstractCookingRecipe> recipeTypeIn) {
 		super(tileTypeIn, recipeTypeIn);
 	}
 	
 	public EnchanterTileEntity() {
-		super(AetherTileEntityTypes.ENCHANTER, AetherRecipeTypes.ENCHANTING);
+		super(AetherTileEntityTypes.ENCHANTER.get(), AetherRecipeTypes.ENCHANTING);
 	}
 
 	@Override

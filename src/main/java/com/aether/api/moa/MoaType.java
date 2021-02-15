@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.aether.Aether;
-import com.aether.item.AetherItemGroups;
+import com.aether.registry.AetherItemGroups;
 import com.aether.util.AetherUtils;
 
 import net.minecraft.item.ItemGroup;

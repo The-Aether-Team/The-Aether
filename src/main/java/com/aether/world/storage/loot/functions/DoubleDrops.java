@@ -1,7 +1,7 @@
 package com.aether.world.storage.loot.functions;
 
-import com.aether.AetherTags;
-import com.aether.block.IAetherDoubleDropBlock;
+import com.aether.registry.AetherTags;
+import com.aether.block.util.IAetherDoubleDropBlock;
 import com.aether.block.state.properties.AetherBlockStateProperties;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;

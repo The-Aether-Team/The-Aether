@@ -1,0 +1,30 @@
+package com.aether.item.combat;
+
+import java.util.Random;
+
+import com.aether.registry.AetherItemGroups;
+import com.aether.registry.AetherItemTier;
+import com.aether.registry.AetherItems;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
+
+public class HolystoneSwordItem extends SwordItem
+{
+	protected final Random rand = new Random();
+	
+	public HolystoneSwordItem() {
+		super(AetherItemTier.HOLYSTONE, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT));
+	}
+	
+	@Override
+	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+		if (!target.world.isRemote && rand.nextInt(20) == 0 && attacker instanceof PlayerEntity && target.hurtTime > 0 && target.deathTime > 0) {
+			target.entityDropItem(AetherItems.AMBROSIUM_SHARD.get());
+		}
+		
+		return super.hitEntity(stack, target, attacker);
+	}
+}

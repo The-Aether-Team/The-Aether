@@ -1,16 +1,16 @@
 package com.aether.tileentity;
 
+import com.aether.registry.AetherTileEntityTypes;
 import net.minecraft.block.BlockState;
 import org.apache.commons.lang3.Validate;
 
 import com.aether.api.AetherAPI;
 import com.aether.api.dungeon.DungeonType;
 import com.aether.api.dungeon.DungeonTypes;
-import com.aether.block.AetherBlocks;
+import com.aether.registry.AetherBlocks;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -27,18 +27,18 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 	}
 	
 	public TreasureChestTileEntity() {
-		this(AetherTileEntityTypes.TREASURE_CHEST);
+		this(AetherTileEntityTypes.TREASURE_CHEST.get());
 	}
 	
 	public TreasureChestTileEntity(DungeonType type) {
-		this(AetherTileEntityTypes.TREASURE_CHEST);
+		this(AetherTileEntityTypes.TREASURE_CHEST.get());
 		this.kind = type;
 		this.locked = (type != null);
 	}
 	
 	@Override
 	protected ITextComponent getDefaultName() {
-		return new TranslationTextComponent("gui.treasure_chest", new TranslationTextComponent(this.getKind().getTranslationKey()), new TranslationTextComponent(AetherBlocks.TREASURE_CHEST.getTranslationKey()));
+		return new TranslationTextComponent("gui.treasure_chest", new TranslationTextComponent(this.getKind().getTranslationKey()), new TranslationTextComponent(AetherBlocks.TREASURE_CHEST.get().getTranslationKey()));
 	}
 	
 	@Override

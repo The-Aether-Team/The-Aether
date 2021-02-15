@@ -3,7 +3,7 @@ package com.aether.inventory.container;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import com.aether.item.AetherItems;
+import com.aether.registry.AetherItems;
 import com.aether.tileentity.IncubatorTileEntity;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -67,7 +67,8 @@ public class IncubatorContainer extends Container {
 	}
 	
 	public boolean isEgg(ItemStack stack) {
-		return stack.getItem() == AetherItems.MOA_EGG;
+		return true;
+		//return stack.getItem() == AetherItems.MOA_EGG;
 	}
 
 	@Override

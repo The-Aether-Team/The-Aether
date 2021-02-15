@@ -16,9 +16,9 @@ import org.apache.logging.log4j.LogManager;
 import com.aether.api.AetherAPI;
 import com.aether.api.moa.MoaType;
 import com.aether.api.moa.MoaTypes;
-import com.aether.block.AetherBlocks;
-import com.aether.entity.AetherEntityTypes;
-import com.aether.item.AetherItems;
+import com.aether.registry.AetherBlocks;
+import com.aether.registry.AetherEntityTypes;
+import com.aether.registry.AetherItems;
 import com.aether.util.AetherSoundEvents;
 
 import net.minecraft.block.BlockState;
@@ -143,7 +143,7 @@ public class MoaEntity extends SaddleableEntity {
 	@SuppressWarnings("deprecation")
 	@Override
 	public float getBlockPathWeight(BlockPos pos, IWorldReader worldIn) {
-		return worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK? 10.0F : worldIn.getBrightness(pos) - 0.5F;
+		return worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get() ? 10.0F : worldIn.getBrightness(pos) - 0.5F;
 	}
 	
 	public boolean isSitting() {
@@ -349,7 +349,7 @@ public class MoaEntity extends SaddleableEntity {
 		
 		if (!stack.isEmpty() && this.isPlayerGrown()) {
 			if (this.isChild() && this.isHungry()) {
-				if (this.getAmountFed() < 3 && stack.getItem() == AetherItems.AECHOR_PETAL) {
+				if (this.getAmountFed() < 3 && stack.getItem() == AetherItems.AECHOR_PETAL.get()) {
 					if (!player.isCreative()) {
 						stack.shrink(1);
 					}
