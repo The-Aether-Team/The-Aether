@@ -1,4 +1,4 @@
-package com.aether.block.trees;
+package com.aether.world.gen.feature.tree;
 
 import com.aether.block.AetherBlocks;
 import net.minecraft.block.trees.Tree;
