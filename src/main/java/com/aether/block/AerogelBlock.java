@@ -7,7 +7,7 @@ import net.minecraft.world.IBlockReader;
 
 import net.minecraft.block.AbstractBlock;
 
-public class AerogelBlock extends /*Breakable*/Block {
+public class AerogelBlock extends Block {
 
 	public AerogelBlock(AbstractBlock.Properties properties) {
 		super(properties);

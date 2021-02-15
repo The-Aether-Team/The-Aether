@@ -15,6 +15,7 @@ public class AetherItemTags {
 	public static final ITag.INamedTag<Item> GRAVITITE_TOOLS = tag("gravitite_tools");
 	public static final ITag.INamedTag<Item> SKYROOT_TOOLS = tag("skyroot_tools");
 	public static final ITag.INamedTag<Item> VALKYRIE_TOOLS = tag("valkyrie_tools");
+	public static final ITag.INamedTag<Item> ZANITE_TOOLS = tag("zanite_tools");
 	public static final ITag.INamedTag<Item> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 	public static final ITag.INamedTag<Item> DUNGEON_KEYS = tag("dungeon_keys");
 

@@ -3,20 +3,20 @@
   "pools": [
     {
       "rolls": 1,
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aether:aether_dirt",
-          "functions": [
+          "conditions": [
             {
-              "function": "aether:double_drops"
+              "condition": "minecraft:survives_explosion"
             }
           ]
+        }
+      ],
+      "functions": [
+        {
+          "function": "aether:double_drops"
         }
       ]
     }

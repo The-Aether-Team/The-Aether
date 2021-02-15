@@ -37,13 +37,15 @@
                 },
                 {
                   "function": "minecraft:explosion_decay"
-                },
-                {
-                  "function": "aether:double_drops"
                 }
               ]
             }
           ]
+        }
+      ],
+      "functions": [
+        {
+          "function": "aether:double_drops"
         }
       ]
     }

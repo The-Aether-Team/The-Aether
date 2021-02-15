@@ -3,15 +3,12 @@ package com.aether.block;
 import static net.minecraftforge.eventbus.api.EventPriority.HIGH;
 
 import com.aether.Aether;
-import com.aether.block.trees.GoldenOakTree;
-import com.aether.block.trees.SkyrootTree;
+import com.aether.world.gen.feature.tree.GoldenOakTree;
+import com.aether.world.gen.feature.tree.SkyrootTree;
 import com.aether.client.ClientProxy;
-import com.aether.client.renderer.tileentity.CustomItemStackTileEntityRenderer;
 import com.aether.entity.AetherEntityTypes;
 import com.aether.item.AetherItemGroups;
 import com.aether.item.TintedBlockItem;
-import com.aether.tileentity.ChestMimicTileEntity;
-import com.aether.tileentity.TreasureChestTileEntity;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -54,11 +51,9 @@ public class AetherBlocks {
 	public static final AetherLogBlock SKYROOT_LOG = null;
 	public static final AetherLogBlock GOLDEN_OAK_LOG = null;
 	public static final AetherLogBlock STRIPPED_SKYROOT_LOG = null;
-	public static final AetherLogBlock STRIPPED_GOLDEN_OAK_LOG = null;
 	public static final AetherDoubleDropsRotatedPillarBlock SKYROOT_WOOD = null;
 	public static final AetherDoubleDropsRotatedPillarBlock GOLDEN_OAK_WOOD = null;
 	public static final AetherDoubleDropsRotatedPillarBlock STRIPPED_SKYROOT_WOOD = null;
-	public static final AetherDoubleDropsRotatedPillarBlock STRIPPED_GOLDEN_OAK_WOOD = null;
 	public static final Block SKYROOT_PLANKS = null;
 	public static final Block QUICKSOIL_GLASS = null;
 	public static final Block AEROGEL = null;
@@ -165,11 +160,9 @@ public class AetherBlocks {
 				block("skyroot_log", new AetherLogBlock(AbstractBlock.Properties.from(Blocks.OAK_LOG))),
 				block("golden_oak_log", new AetherLogBlock(AbstractBlock.Properties.from(Blocks.OAK_LOG))),
 				block("stripped_skyroot_log", new AetherLogBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_LOG))),
-				block("stripped_golden_oak_log", new AetherLogBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_LOG))),
 				block("skyroot_wood", new AetherDoubleDropsRotatedPillarBlock(AbstractBlock.Properties.from(Blocks.OAK_WOOD))),
 				block("golden_oak_wood", new AetherDoubleDropsRotatedPillarBlock(AbstractBlock.Properties.from(Blocks.OAK_WOOD))),
 				block("stripped_skyroot_wood", new AetherDoubleDropsRotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_WOOD))),
-				block("stripped_golden_oak_wood", new AetherDoubleDropsRotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_WOOD))),
 				block("skyroot_planks", new Block(AbstractBlock.Properties.from(Blocks.OAK_PLANKS))),
 				block("quicksoil_glass", new GlassBlock(AbstractBlock.Properties.from(Blocks.GLASS).slipperiness(1.1F).setLightLevel((state) -> 11))),
 				block("aerogel", new AerogelBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.0F, 2000.0F).sound(SoundType.METAL).notSolid())),

@@ -11,6 +11,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class AercloudBlock extends BreakableBlock {
 
@@ -29,6 +31,15 @@ public class AercloudBlock extends BreakableBlock {
 		if (entity.getMotion().y < 0) {
 			entity.setMotion(entity.getMotion().mul(1.0, 0.005, 1.0));
 		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
+		return 1.0F;
+	}
+
+	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+		return true;
 	}
 	
 	@Override

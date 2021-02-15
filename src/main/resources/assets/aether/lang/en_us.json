@@ -248,8 +248,6 @@
 	"block.aether.stripped_golden_oak_log": "Stripped Golden Oak Log",
 	"block.aether.skyroot_wood": "Skyroot Wood",
 	"block.aether.golden_oak_wood": "Golden Oak Wood",
-	"block.aether.stripped_skyroot_wood": "Stripped Skyroot Wood",
-	"block.aether.stripped_golden_oak_wood": "Stripped Golden Oak Wood",
 
 	"_comment": "Entities",
 	"entity.aether.aechor_plant": "Aechor Plant",

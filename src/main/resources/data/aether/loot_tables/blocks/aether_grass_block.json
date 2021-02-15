@@ -37,12 +37,12 @@
             }
           ]
         }
+      ],
+      "functions": [
+        {
+          "function": "aether:double_drops"
+        }
       ]
-    }
-  ],
-  "functions": [
-    {
-      "function": "aether:double_drops"
     }
   ]
 }

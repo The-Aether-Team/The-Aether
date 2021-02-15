@@ -222,9 +222,9 @@ public class CommonProxy {
 		AxeItem.BLOCK_STRIPPING_MAP = ImmutableMap.<Block, Block>builder()
 			.putAll(AxeItem.BLOCK_STRIPPING_MAP)
 			.put(AetherBlocks.SKYROOT_LOG, AetherBlocks.STRIPPED_SKYROOT_LOG)
-			.put(AetherBlocks.GOLDEN_OAK_LOG, AetherBlocks.STRIPPED_GOLDEN_OAK_LOG)
+			.put(AetherBlocks.GOLDEN_OAK_LOG, AetherBlocks.STRIPPED_SKYROOT_LOG)
 			.put(AetherBlocks.SKYROOT_WOOD, AetherBlocks.STRIPPED_SKYROOT_WOOD)
-			.put(AetherBlocks.GOLDEN_OAK_WOOD, AetherBlocks.STRIPPED_GOLDEN_OAK_WOOD)
+			.put(AetherBlocks.GOLDEN_OAK_WOOD, AetherBlocks.STRIPPED_SKYROOT_WOOD)
 			.build();
 	}
 	
@@ -338,23 +338,4 @@ public class CommonProxy {
 		}
 	}
 	*/
-	
-//	@SubscribeEvent
-//	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-//		PlayerEntity player = event.getPlayer();
-//		ItemStack itemStack = event.getItemStack();
-//		BlockPos pos = event.getPos();
-//		World world = event.getWorld();
-//		BlockState blockstate = world.getBlockState(pos);
-//		Block block = blockstate.getBlock();
-//		
-//		if (itemStack.getItem() instanceof AxeItem) {
-//			if (block == AetherBlocks.SKYROOT_LOG) {
-//				
-//				event.setCanceled(true);
-//				event.setCancellationResult(ActionResultType.SUCCESS);
-//			}
-//		}
-//	}
-	
 }

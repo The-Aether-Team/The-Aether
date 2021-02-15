@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "#aether:zanite_tools",
     "#aether:gravitite_tools",
     "#aether:valkyrie_tools"
   ]

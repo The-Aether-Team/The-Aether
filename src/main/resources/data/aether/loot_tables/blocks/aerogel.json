@@ -3,15 +3,15 @@
   "pools": [
     {
       "rolls": 1,
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "aether:aerogel"
+          "name": "aether:aerogel",
+          "conditions": [
+            {
+              "condition": "minecraft:survives_explosion"
+            }
+          ]
         }
       ]
     }

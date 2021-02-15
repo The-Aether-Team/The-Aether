@@ -2,8 +2,6 @@
   "replace": false,
   "values": [
     "aether:golden_oak_log",
-    "aether:golden_oak_wood",
-    "aether:stripped_golden_oak_log",
-    "aether:stripped_golden_oak_wood"
+    "aether:golden_oak_wood"
   ]
 }
