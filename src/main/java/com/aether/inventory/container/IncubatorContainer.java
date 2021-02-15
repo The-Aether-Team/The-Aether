@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import com.aether.entity.tile.IncubatorTileEntity;
 
+import com.aether.registry.AetherContainerTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -29,7 +30,7 @@ public class IncubatorContainer extends Container {
 	}
 	
 	public IncubatorContainer(int id, PlayerInventory playerInventoryIn, IInventory incubatorInventoryIn, IIntArray incubatorDataIn, Consumer<UUID> playerUUIDConsumerIn) {
-		super(AetherContainerTypes.INCUBATOR, id);
+		super(AetherContainerTypes.INCUBATOR.get(), id);
 		assertInventorySize(incubatorInventoryIn, 2);
 		assertIntArraySize(incubatorDataIn, 3);
 		this.incubatorInventory = incubatorInventoryIn;

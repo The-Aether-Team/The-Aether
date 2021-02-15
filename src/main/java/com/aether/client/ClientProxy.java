@@ -13,7 +13,7 @@ import com.aether.client.renderer.tileentity.ChestMimicTileEntityRenderer;
 import com.aether.client.renderer.tileentity.CustomItemStackTileEntityRenderer;
 import com.aether.client.renderer.tileentity.TreasureChestTileEntityRenderer;
 import com.aether.registry.AetherEntityTypes;
-import com.aether.inventory.container.AetherContainerTypes;
+import com.aether.registry.AetherContainerTypes;
 import com.aether.registry.AetherItems;
 import com.aether.item.IAetherItemColor;
 import com.aether.item.tools.abilities.IValkyrieToolItem;
@@ -122,9 +122,9 @@ public class ClientProxy extends CommonProxy
 	}
 	
 	protected void registerGuiFactories() {
-		ScreenManager.registerFactory(AetherContainerTypes.ENCHANTER, EnchanterScreen::new);
-		ScreenManager.registerFactory(AetherContainerTypes.FREEZER, FreezerScreen::new);
-		ScreenManager.registerFactory(AetherContainerTypes.INCUBATOR, IncubatorScreen::new);
+		ScreenManager.registerFactory(AetherContainerTypes.ENCHANTER.get(), EnchanterScreen::new);
+		ScreenManager.registerFactory(AetherContainerTypes.FREEZER.get(), FreezerScreen::new);
+		ScreenManager.registerFactory(AetherContainerTypes.INCUBATOR.get(), IncubatorScreen::new);
 	}
 	
 	protected void registerColors() {

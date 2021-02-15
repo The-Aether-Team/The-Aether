@@ -34,6 +34,7 @@ public class Aether
 				AetherParticleTypes.PARTICLES,
 				AetherPOI.POI,
 				AetherSoundEvents.SOUNDS,
+				AetherContainerTypes.CONTAINERS,
 				AetherTileEntityTypes.TILE_ENTITIES,
 		};
 
