@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "aether:item/accessories/ring_base"
+		"layer0": "aether:item/accessories/golden_ring"
 	}
 }
