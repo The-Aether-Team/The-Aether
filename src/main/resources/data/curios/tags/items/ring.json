@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "aether:zanite_ring"
+    "aether:iron_ring",
+    "aether:golden_ring",
+    "aether:zanite_ring",
+    "aether:ice_ring"
   ]
 }
