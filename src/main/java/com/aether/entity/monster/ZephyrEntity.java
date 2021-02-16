@@ -35,9 +35,13 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 	public static final DataParameter<Integer> ATTACK_CHARGE = EntityDataManager.createKey(ZephyrEntity.class, DataSerializers.VARINT);
 	public static final DataParameter<Boolean> IS_ATTACKING = EntityDataManager.createKey(ZephyrEntity.class, DataSerializers.BOOLEAN);
 
-	public ZephyrEntity(EntityType<? extends FlyingEntity> type, World worldIn) {
+	public ZephyrEntity(EntityType<? extends ZephyrEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.moveController = new ZephyrEntity.MoveHelperController(this);
+	}
+
+	public ZephyrEntity(World worldIn) {
+		this(AetherEntityTypes.ZEPHYR.get(), worldIn);
 	}
 
 	@Override
@@ -192,7 +196,7 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 					double accelY = target.getPosYHeight(0.5)  - (0.5 + this.parentEntity.getPosYHeight(0.5));
 					double accelZ = target.getPosZ() - (this.parentEntity.getPosZ() + look.z * 4.0);
 					this.parentEntity.playSound(AetherSoundEvents.ENTITY_ZEPHYR_SHOOT.get(), 3.0F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
-					ZephyrSnowballEntity snowballentity = new ZephyrSnowballEntity(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), world).construct(world, this.parentEntity, accelX, accelY, accelZ);
+					ZephyrSnowballEntity snowballentity = new ZephyrSnowballEntity(world, this.parentEntity, accelX, accelY, accelZ);
 					snowballentity.setPosition(this.parentEntity.getPosX() + look.x * 4.0, this.parentEntity.getPosYHeight(0.5) + 0.5, this.parentEntity.getPosZ() + look.z * 4.0);
 					world.addEntity(snowballentity);
 					this.attackTimer = -40;

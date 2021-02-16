@@ -93,10 +93,10 @@ public class PhoenixBowItem extends BowItem
 
     public AbstractArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
         if(stack.getItem() instanceof SpectralArrowItem) {
-            return new SpectralPhoenixArrowEntity(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW.get(), worldIn).construct(worldIn, shooter);
+            return new SpectralPhoenixArrowEntity(worldIn, shooter);
         }
         else {
-            PhoenixArrowEntity arrowEntity = new PhoenixArrowEntity(AetherEntityTypes.PHOENIX_ARROW.get(), worldIn).construct(worldIn, shooter);
+            PhoenixArrowEntity arrowEntity = new PhoenixArrowEntity(worldIn, shooter);
             arrowEntity.setPotionEffect(stack);
             return arrowEntity;
         }

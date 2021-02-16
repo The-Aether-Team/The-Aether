@@ -15,6 +15,7 @@ import net.minecraft.block.ConcretePowderBlock;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.DirectionalPlaceContext;
@@ -61,8 +62,13 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 		super(entityTypeIn, worldIn);
 	}
 
-	public FloatingBlockEntity setupEntity(World worldIn, double x, double y, double z, BlockState floatingBlockState)
-	{
+	public FloatingBlockEntity(World worldIn) {
+		this(AetherEntityTypes.FLOATING_BLOCK.get(), worldIn);
+	}
+
+	public FloatingBlockEntity(World worldIn, double x, double y, double z, BlockState floatingBlockState) {
+		super(AetherEntityTypes.FLOATING_BLOCK.get(), worldIn);
+
 		this.floatTile = floatingBlockState;
 		this.preventEntitySpawning = true;
 		this.setPosition(x, y + (1.0F - this.getHeight()) / 2.0F, z);
@@ -71,7 +77,6 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 		this.prevPosY = y;
 		this.prevPosZ = z;
 		this.setOrigin(new BlockPos(this.getPosition()));
-		return new FloatingBlockEntity(AetherEntityTypes.FLOATING_BLOCK.get(), this.world);
 	}
 	
 	@Override

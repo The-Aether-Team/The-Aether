@@ -16,16 +16,17 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class HammerProjectileEntity extends ThrowableEntity {
+public class HammerProjectileEntity extends ThrowableEntity
+{
     private int ticksInAir = 0;
-    public HammerProjectileEntity(EntityType<? extends ThrowableEntity> type, World worldIn) {
+
+    public HammerProjectileEntity(EntityType<? extends HammerProjectileEntity> type, World worldIn) {
         super(type, worldIn);
     }
 
-    public HammerProjectileEntity constructOwner(LivingEntity owner)
-    {
-        this.setShooter(owner);
-        return new HammerProjectileEntity(AetherEntityTypes.HAMMER_PROJECTILE.get(), this.world);
+    public HammerProjectileEntity(World world, LivingEntity player) {
+        super(AetherEntityTypes.HAMMER_PROJECTILE.get(), player, world);
+        this.setShooter(player);
     }
 
     @Override

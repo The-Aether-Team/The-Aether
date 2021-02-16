@@ -65,8 +65,12 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
         map.put(DyeColor.BLACK, Blocks.BLACK_WOOL);
     });
 
-    public SheepuffEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
+    public SheepuffEntity(EntityType<? extends SheepuffEntity> type, World worldIn) {
         super(type, worldIn);
+    }
+
+    public SheepuffEntity(World worldIn) {
+        this(AetherEntityTypes.SHEEPUFF.get(), worldIn);
     }
 
     @Override

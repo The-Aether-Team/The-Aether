@@ -28,6 +28,10 @@ public class FlyingCowEntity extends SaddleableEntity {
         super(type, worldIn);
     }
 
+    public FlyingCowEntity(World worldIn) {
+        this(AetherEntityTypes.FLYING_COW.get(), worldIn);
+    }
+
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new SwimGoal(this));

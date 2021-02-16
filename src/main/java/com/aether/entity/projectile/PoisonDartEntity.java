@@ -9,24 +9,21 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
 
-public class PoisonDartEntity extends AbstractDartEntity {
+public class PoisonDartEntity extends AbstractDartEntity
+{
     public PoisonDartEntity(EntityType<? extends PoisonDartEntity> type, World worldIn) {
         super(type, worldIn);
         this.setDamage(0.0D);
     }
 
-    public PoisonDartEntity construct(World worldIn, double x, double y, double z)
-    {
+    public PoisonDartEntity(World worldIn, double x, double y, double z) {
+        super(AetherEntityTypes.POISON_DART.get(), x, y, z, worldIn);
         this.setDamage(0.0D);
-        this.setPosition(x, y, z);
-        return new PoisonDartEntity(AetherEntityTypes.POISON_DART.get(), worldIn);
     }
 
-    public PoisonDartEntity construct(World worldIn, LivingEntity shooter)
-    {
+    public PoisonDartEntity(World worldIn, LivingEntity shooter) {
+        super(AetherEntityTypes.POISON_DART.get(), shooter, worldIn);
         this.setDamage(0.0D);
-        this.setShooter(shooter);
-        return new PoisonDartEntity(AetherEntityTypes.POISON_DART.get(), worldIn);
     }
 
     @Override

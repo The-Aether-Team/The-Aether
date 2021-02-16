@@ -33,10 +33,15 @@ import java.util.Random;
 
 public class AerwhaleEntity extends FlyingEntity implements IMob {
 	public float motionYaw, motionPitch;
-	
-	public AerwhaleEntity(EntityType<? extends FlyingEntity> type, World worldIn) {
+
+	public AerwhaleEntity(EntityType<? extends AerwhaleEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.ignoreFrustumCheck = true;
+		this.moveController = new AerwhaleEntity.MoveHelperController(this);
+	}
+
+	public AerwhaleEntity(World worldIn) {
+		this(AetherEntityTypes.AERWHALE.get(), worldIn);
 		this.rotationYaw = 360.0F * this.rand.nextFloat();
 		this.rotationPitch = 90.0F * this.rand.nextFloat() - 45.0F;
 		this.moveController = new AerwhaleEntity.MoveHelperController(this);

@@ -29,39 +29,18 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ZephyrSnowballEntity extends AbstractFireballEntity {
 	private int ticksInAir;
+
 	public ZephyrSnowballEntity(EntityType<? extends ZephyrSnowballEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 
-
 	@OnlyIn(Dist.CLIENT)
-	public ZephyrSnowballEntity construct(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
-		this.setLocationAndAngles(x, y, z, this.rotationYaw, this.rotationPitch);
-		this.recenterBoundingBox();
-		double d0 = MathHelper.sqrt(accelX * accelX + accelY * accelY + accelZ * accelZ);
-		if (d0 != 0.0D) {
-			this.accelerationX = accelX / d0 * 0.1D;
-			this.accelerationY = accelY / d0 * 0.1D;
-			this.accelerationZ = accelZ / d0 * 0.1D;
-		}
-
-		return new ZephyrSnowballEntity(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), this.world);
+	public ZephyrSnowballEntity(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
+		super(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), x, y, z, accelX, accelY, accelZ, worldIn);
 	}
 
-	public ZephyrSnowballEntity construct(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
-		this.setLocationAndAngles(shooter.getPosX(), shooter.getPosY(), shooter.getPosZ(), this.rotationYaw, this.rotationPitch);
-		this.recenterBoundingBox();
-		double d0 = MathHelper.sqrt(accelX * accelX + accelY * accelY + accelZ * accelZ);
-		if (d0 != 0.0D) {
-			this.accelerationX = accelX / d0 * 0.1D;
-			this.accelerationY = accelY / d0 * 0.1D;
-			this.accelerationZ = accelZ / d0 * 0.1D;
-		}
-
-		this.setShooter(shooter);
-		this.setRotation(shooter.rotationYaw, shooter.rotationPitch);
-
-		return new ZephyrSnowballEntity(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), this.world);
+	public ZephyrSnowballEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
+		super(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), shooter, accelX, accelY, accelZ, worldIn);
 	}
 
 	@Override

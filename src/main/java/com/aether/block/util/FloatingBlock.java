@@ -44,8 +44,7 @@ public class FloatingBlock extends Block {
 	private void checkFloatable(World worldIn, BlockPos pos) {
 		if ((worldIn.isAirBlock(pos.up()) || canFallThrough(worldIn.getBlockState(pos.up()))) && (!this.powered || worldIn.isBlockPowered(pos))) {
 			if (!worldIn.isRemote) {
-				FloatingBlockEntity floatingblockentity = new FloatingBlockEntity(AetherEntityTypes.FLOATING_BLOCK.get(), worldIn)
-						.setupEntity(worldIn, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, worldIn.getBlockState(pos));
+				FloatingBlockEntity floatingblockentity = new FloatingBlockEntity(worldIn, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, worldIn.getBlockState(pos));
 				this.onStartFloating(floatingblockentity);
 				worldIn.addEntity(floatingblockentity);
 			}

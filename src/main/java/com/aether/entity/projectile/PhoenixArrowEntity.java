@@ -32,7 +32,8 @@ import java.util.Set;
  * @see net.minecraft.entity.projectile.ArrowEntity
  * This is basically a copy of ArrowEntity, since it needs to be able to drop tipped arrows if that's what the player uses in the phoenix bow.
  */
-public class PhoenixArrowEntity extends AbstractArrowEntity {
+public class PhoenixArrowEntity extends AbstractArrowEntity
+{
     private static final DataParameter<Integer> COLOR = EntityDataManager.createKey(PhoenixArrowEntity.class, DataSerializers.VARINT);
     private Potion potion = Potions.EMPTY;
     private final Set<EffectInstance> customPotionEffects = Sets.newHashSet();
@@ -42,16 +43,12 @@ public class PhoenixArrowEntity extends AbstractArrowEntity {
         super(type, worldIn);
     }
 
-    public PhoenixArrowEntity construct(World worldIn, double x, double y, double z)
-    {
-        this.setPosition(x, y, z);
-        return new PhoenixArrowEntity(AetherEntityTypes.PHOENIX_ARROW.get(), worldIn);
+    public PhoenixArrowEntity(World worldIn, double x, double y, double z) {
+        super(AetherEntityTypes.PHOENIX_ARROW.get(), x, y, z, worldIn);
     }
 
-    public PhoenixArrowEntity construct(World worldIn, LivingEntity shooter)
-    {
-        this.setShooter(shooter);
-        return new PhoenixArrowEntity(AetherEntityTypes.PHOENIX_ARROW.get(), worldIn);
+    public PhoenixArrowEntity(World worldIn, LivingEntity shooter) {
+        super(AetherEntityTypes.PHOENIX_ARROW.get(), shooter, worldIn);
     }
 
     @Override

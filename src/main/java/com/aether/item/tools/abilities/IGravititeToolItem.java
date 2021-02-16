@@ -34,7 +34,7 @@ public interface IGravititeToolItem {
 			}
 			
 			if (!world.isRemote) {
-				FloatingBlockEntity entity = new FloatingBlockEntity(AetherEntityTypes.FLOATING_BLOCK.get(), world).setupEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, state);
+				FloatingBlockEntity entity = new FloatingBlockEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, state);
 				entity.floatTime = 0;
 				world.addEntity(entity);
 			}

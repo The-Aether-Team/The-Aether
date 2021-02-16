@@ -72,21 +72,25 @@ public class MoaEntity extends SaddleableEntity {
 		this.canJumpMidAir = true;
 	}
 
-	public MoaEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
+	public MoaEntity(EntityType<? extends MoaEntity> type, World worldIn) {
 		super(type, worldIn);
+	}
+
+	public MoaEntity(World worldIn) {
+		super(AetherEntityTypes.MOA.get(), worldIn);
 
 		this.secsUntilEgg = this.getRandomEggTime();
 	}
 
-	public MoaEntity setType(MoaType moaType) {
+	public MoaEntity(World worldIn, MoaType moaType) {
+		this(worldIn);
 		this.setMoaType(moaType);
-		return new MoaEntity(AetherEntityTypes.MOA.get(), this.world);
 	}
 
 	@Nullable
 	@Override
 	public AgeableEntity func_241840_a(ServerWorld serverWorld, AgeableEntity ageableEntity) {
-		return new MoaEntity(AetherEntityTypes.MOA.get(), this.world).setType(this.getMoaType());
+		return new MoaEntity(this.world, this.getMoaType());
 	}
 
 	protected int getRandomEggTime() {

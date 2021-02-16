@@ -32,6 +32,10 @@ public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob 
         super(type, worldIn);
     }
 
+    public CockatriceEntity(World worldIn) {
+        this(AetherEntityTypes.COCKATRICE.get(), worldIn);
+    }
+
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new SwimGoal(this));

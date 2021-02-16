@@ -14,18 +14,14 @@ public class GoldenDartEntity extends AbstractDartEntity
         this.setDamage(4.0D);
     }
 
-    public GoldenDartEntity construct(World worldIn, double x, double y, double z)
-    {
+    public GoldenDartEntity(World worldIn, double x, double y, double z) {
+        super(AetherEntityTypes.GOLDEN_DART.get(), x, y, z, worldIn);
         this.setDamage(4.0D);
-        this.setPosition(x, y, z);
-        return new GoldenDartEntity(AetherEntityTypes.GOLDEN_DART.get(), worldIn);
     }
 
-    public GoldenDartEntity construct(World worldIn, LivingEntity shooter)
-    {
+    public GoldenDartEntity(World worldIn, LivingEntity shooter) {
+        super(AetherEntityTypes.GOLDEN_DART.get(), shooter, worldIn);
         this.setDamage(4.0D);
-        this.setShooter(shooter);
-        return new GoldenDartEntity(AetherEntityTypes.GOLDEN_DART.get(), worldIn);
     }
 
     @Override

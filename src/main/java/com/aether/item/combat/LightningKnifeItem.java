@@ -33,7 +33,7 @@ public class LightningKnifeItem extends Item
 		worldIn.playSound(null, playerIn.getPosition(), AetherSoundEvents.ENTITY_PROJECTILE_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
 		
 		if (!worldIn.isRemote) {
-			LightningKnifeEntity lightningKnife = new LightningKnifeEntity(AetherEntityTypes.LIGHTNING_KNIFE.get(), worldIn).constructOwner(playerIn);
+			LightningKnifeEntity lightningKnife = new LightningKnifeEntity(playerIn, worldIn);
 			lightningKnife.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 0.8F, 1.0F);
 			worldIn.addEntity(lightningKnife);
 		}

@@ -22,16 +22,12 @@ public class SpectralPhoenixArrowEntity extends AbstractArrowEntity {
         super(type, world);
     }
 
-    public SpectralPhoenixArrowEntity construct(World worldIn, double x, double y, double z)
-    {
-        this.setPosition(x, y, z);
-        return new SpectralPhoenixArrowEntity(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW.get(), worldIn);
+    public SpectralPhoenixArrowEntity(World worldIn, double x, double y, double z) {
+        super(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW.get(), x, y, z, worldIn);
     }
 
-    public SpectralPhoenixArrowEntity construct(World worldIn, LivingEntity shooter)
-    {
-        this.setShooter(shooter);
-        return new SpectralPhoenixArrowEntity(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW.get(), worldIn);
+    public SpectralPhoenixArrowEntity(World worldIn, LivingEntity shooter) {
+        super(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW.get(), shooter, worldIn);
     }
 
     @Override

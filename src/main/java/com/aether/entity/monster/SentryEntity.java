@@ -29,7 +29,11 @@ public class SentryEntity extends SlimeEntity {
 	public SentryEntity(EntityType<? extends SentryEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
-	
+
+	public SentryEntity(World worldIn) {
+		super(AetherEntityTypes.SENTRY.get(), worldIn);
+	}
+
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new SentryEntity.FloatGoal(this));
