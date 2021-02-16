@@ -39,13 +39,7 @@ import java.util.function.Supplier;
 @OnlyIn(Dist.CLIENT)
 public class AetherRendering
 {
-    @SubscribeEvent
-    public static void commonSetup(FMLCommonSetupEvent event)
-    {
-        registerColors();
-    }
-
-    private static void registerColors() {
+    public static void registerColors() {
         registerColor(AetherBlocks.BLUE_AERCLOUD.get());
         registerColor(AetherBlocks.GOLDEN_AERCLOUD.get());
 

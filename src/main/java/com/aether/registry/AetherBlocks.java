@@ -48,13 +48,13 @@ public class AetherBlocks
 	public static final RegistryObject<Block> MOSSY_HOLYSTONE = register("mossy_holystone", () -> new DefaultAetherDoubleDropBlock(AbstractBlock.Properties.from(Blocks.STONE).hardnessAndResistance(0.5F)));
 
 	public static final RegistryObject<Block> COLD_AERCLOUD = register("cold_aercloud",
-			() -> new AercloudBlock(AbstractBlock.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).notSolid()));
+			() -> new AercloudBlock(AbstractBlock.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).harvestTool(ToolType.HOE).notSolid()));
 	public static final RegistryObject<TintedAercloudBlock> BLUE_AERCLOUD = register("blue_aercloud",
-			() -> new BouncyAercloudBlock(TintedAercloudBlock.COLOR_BLUE_OLD, TintedAercloudBlock.COLOR_BLUE_NEW, AbstractBlock.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).notSolid()));
+			() -> new BouncyAercloudBlock(TintedAercloudBlock.COLOR_BLUE_OLD, TintedAercloudBlock.COLOR_BLUE_NEW, AbstractBlock.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).harvestTool(ToolType.HOE).notSolid()));
 	public static final RegistryObject<TintedAercloudBlock> GOLDEN_AERCLOUD = register("golden_aercloud",
-			() -> new TintedAercloudBlock(TintedAercloudBlock.COLOR_GOLDEN_OLD, TintedAercloudBlock.COLOR_GOLDEN_NEW, AbstractBlock.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).notSolid()));
+			() -> new TintedAercloudBlock(TintedAercloudBlock.COLOR_GOLDEN_OLD, TintedAercloudBlock.COLOR_GOLDEN_NEW, AbstractBlock.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).harvestTool(ToolType.HOE).notSolid()));
 	public static final RegistryObject<Block> PINK_AERCLOUD = register("pink_aercloud",
-			() -> new HealingAercloudBlock(AbstractBlock.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).notSolid()));
+			() -> new HealingAercloudBlock(AbstractBlock.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).harvestTool(ToolType.HOE).notSolid()));
 
 	public static final RegistryObject<Block> ICESTONE = register("icestone",
 			() -> new IcestoneBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0F).tickRandomly().sound(SoundType.GLASS)));
@@ -65,17 +65,17 @@ public class AetherBlocks
 	public static final RegistryObject<Block> GRAVITITE_ORE = register("gravitite_ore",
 			() -> new FloatingBlock(false, AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2)));
 
-	public static final RegistryObject<Block> SKYROOT_LEAVES = register("skyroot_leaves", () -> new LeavesBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES)));
+	public static final RegistryObject<Block> SKYROOT_LEAVES = register("skyroot_leaves", () -> new LeavesBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
 	public static final RegistryObject<Block> GOLDEN_OAK_LEAVES = register("golden_oak_leaves",
-			() -> new LeavesWithParticlesBlock(0.976F, 0.7450980392156863F, 0.0F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES)));
+			() -> new LeavesWithParticlesBlock(0.976F, 0.7450980392156863F, 0.0F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
 	public static final RegistryObject<Block> CRYSTAL_LEAVES = register("crystal_leaves",
-			() -> new LeavesWithParticlesBlock(0.0F, 0.6450980392156863F, 0.7450980392156863F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES)));
+			() -> new LeavesWithParticlesBlock(0.0F, 0.6450980392156863F, 0.7450980392156863F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
 	public static final RegistryObject<Block> CRYSTAL_FRUIT_LEAVES = register("crystal_fruit_leaves",
-			() -> new LeavesWithParticlesBlock(0.0F, 0.6450980392156863F, 0.7450980392156863F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES)));
+			() -> new LeavesWithParticlesBlock(0.0F, 0.6450980392156863F, 0.7450980392156863F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
 	public static final RegistryObject<Block> HOLIDAY_LEAVES = register("holiday_leaves",
-			() -> new LeavesWithParticlesBlock(1.0F, 1.0F, 1.0F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES)));
+			() -> new LeavesWithParticlesBlock(1.0F, 1.0F, 1.0F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
 	public static final RegistryObject<Block> DECORATED_HOLIDAY_LEAVES = register("decorated_holiday_leaves",
-			() -> new LeavesWithParticlesBlock(1.0F, 1.0F, 1.0F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES)));
+			() -> new LeavesWithParticlesBlock(1.0F, 1.0F, 1.0F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
 
 	public static final RegistryObject<RotatedPillarBlock> SKYROOT_LOG = register("skyroot_log", () -> new AetherLogBlock(AbstractBlock.Properties.from(Blocks.OAK_LOG)));
 	public static final RegistryObject<RotatedPillarBlock> GOLDEN_OAK_LOG = register("golden_oak_log", () -> new AetherLogBlock(AbstractBlock.Properties.from(Blocks.OAK_LOG)));
@@ -102,7 +102,7 @@ public class AetherBlocks
 	public static final RegistryObject<Block> AMBROSIUM_WALL_TORCH = BLOCKS.register("ambrosium_wall_torch", () -> new WallTorchBlock(AbstractBlock.Properties.from(Blocks.WALL_TORCH), ParticleTypes.FLAME));
 	public static final RegistryObject<Block> AMBROSIUM_TORCH = register("ambrosium_torch", () -> new TorchBlock(AbstractBlock.Properties.from(Blocks.TORCH), ParticleTypes.FLAME));
 
-	public static final RegistryObject<Block> BERRY_BUSH = register("berry_bush", () -> new BerryBushBlock(AbstractBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.2F).sound(SoundType.PLANT).notSolid()));
+	public static final RegistryObject<Block> BERRY_BUSH = register("berry_bush", () -> new BerryBushBlock(AbstractBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.2F).sound(SoundType.PLANT).harvestTool(ToolType.HOE).notSolid()));
 	public static final RegistryObject<Block> BERRY_BUSH_STEM = register("berry_bush_stem", () -> new BerryBushStemBlock(AbstractBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.2F).sound(SoundType.PLANT)));
 
 	public static final RegistryObject<Block> PURPLE_FLOWER = register("purple_flower", () -> new FlowerBlock(Effects.SATURATION, 7, AbstractBlock.Properties.from(Blocks.DANDELION)));
