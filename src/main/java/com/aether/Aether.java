@@ -15,6 +15,7 @@ import net.minecraft.dispenser.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.projectile.SmallFireballEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
@@ -29,6 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -146,21 +148,15 @@ public class Aether
 				return stack;
 			}
 		};
-		DispenserBlock.registerDispenseBehavior(AetherItems.PHYG_SPAWN_EGG.get(), dispenseSpawnEgg);
-		DispenserBlock.registerDispenseBehavior(AetherItems.FLYING_COW_SPAWN_EGG.get(), dispenseSpawnEgg);
-		DispenserBlock.registerDispenseBehavior(AetherItems.SHEEPUFF_SPAWN_EGG.get(), dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.AERBUNNY_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.AERWHALE_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.BLUE_SWET_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.GOLDEN_SWET_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.COCKATRICE_SPAWN_EGG, dispenseSpawnEgg);
-		DispenserBlock.registerDispenseBehavior(AetherItems.SENTRY_SPAWN_EGG.get(), dispenseSpawnEgg);
-		DispenserBlock.registerDispenseBehavior(AetherItems.ZEPHYR_SPAWN_EGG.get(), dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.AECHOR_PLANT_SPAWN_EGG, dispenseSpawnEgg);
-		DispenserBlock.registerDispenseBehavior(AetherItems.MIMIC_SPAWN_EGG.get(), dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.VALKYRIE_SPAWN_EGG, dispenseSpawnEgg);
-		//DispenserBlock.registerDispenseBehavior(AetherItems.FIRE_MINION_SPAWN_EGG, dispenseSpawnEgg);
-		DispenserBlock.registerDispenseBehavior(AetherItems.WHIRLWIND_SPAWN_EGG.get(), dispenseSpawnEgg);
+
+		for (RegistryObject<Item> item : AetherItems.ITEMS.getEntries())
+		{
+			if (item.get() instanceof SpawnEggItem)
+			{
+				DispenserBlock.registerDispenseBehavior(item.get(), dispenseSpawnEgg);
+			}
+		}
+
 		DispenserBlock.registerDispenseBehavior(Items.FIRE_CHARGE, new OptionalDispenseBehavior() {
 			/**
 			 * Dispense the specified stack, play the dispense sound and spawn
