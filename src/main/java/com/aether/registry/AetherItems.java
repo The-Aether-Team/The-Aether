@@ -155,7 +155,7 @@ public class AetherItems
 
 	// Accessories
 	public static final RegistryObject<Item> ZANITE_RING = ITEMS.register("zanite_ring",
-			() -> new Item(new Item.Properties().maxDamage(49).maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new Item(new Item.Properties().maxStackSize(1).defaultMaxDamage(49).group(AetherItemGroups.AETHER_ACCESSORIES)));
 	//item("", new RingItem(new Item.Properties().maxDamage(49).maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
 
 	//item("leather_gloves", new DyeableGlovesItem(ArmorMaterial.LEATHER, new Item.Properties().group(ItemGroup.COMBAT))),
