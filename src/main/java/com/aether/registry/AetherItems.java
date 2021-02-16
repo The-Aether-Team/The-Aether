@@ -154,8 +154,14 @@ public class AetherItems
 			() -> new Item(new Item.Properties().food(new Food.Builder().fastToEat().hunger(2).build()).group(AetherItemGroups.AETHER_FOOD)));
 
 	// Accessories
+	public static final RegistryObject<Item> IRON_RING = ITEMS.register("iron_ring",
+			() -> new AccessoryItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> GOLD_RING = ITEMS.register("golden_ring",
+			() -> new AccessoryItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> ZANITE_RING = ITEMS.register("zanite_ring",
 			() -> new AccessoryItem(new Item.Properties().maxStackSize(1).defaultMaxDamage(49).group(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> ICE_RING = ITEMS.register("ice_ring",
+			() -> new AccessoryItem(new Item.Properties().maxStackSize(1).defaultMaxDamage(125).group(AetherItemGroups.AETHER_ACCESSORIES)));
 
 	//item("leather_gloves", new DyeableGlovesItem(ArmorMaterial.LEATHER, new Item.Properties().group(ItemGroup.COMBAT))),
 	//item("chainmail_gloves", new GlovesItem(ArmorMaterial.CHAIN, new Item.Properties().group(ItemGroup.COMBAT))),
@@ -169,11 +175,6 @@ public class AetherItems
 	//item("phoenix_gloves", new GlovesItem(AetherArmorMaterial.PHOENIX, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 	//item("obsidian_gloves", new GlovesItem(AetherArmorMaterial.OBSIDIAN, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
 	//item("valkyrie_gloves", new GlovesItem(AetherArmorMaterial.VALKYRIE, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-
-	//item("iron_ring", new RingItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("golden_ring", new RingItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("zanite_ring", new RingItem(new Item.Properties().maxDamage(49).maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("ice_ring", new RingItem(new Item.Properties().maxDamage(125).maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
 
 	//item("iron_pendant", new PendantItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
 	//item("golden_pendant", new PendantItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
