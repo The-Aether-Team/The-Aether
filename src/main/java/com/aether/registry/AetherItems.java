@@ -2,6 +2,7 @@ package com.aether.registry;
 
 import com.aether.Aether;
 import com.aether.api.dungeon.DungeonTypes;
+import com.aether.item.accessories.AccessoryItem;
 import com.aether.item.misc.DungeonKeyItem;
 import com.aether.item.food.GummySwetItem;
 import com.aether.item.combat.*;
@@ -155,7 +156,7 @@ public class AetherItems
 
 	// Accessories
 	public static final RegistryObject<Item> ZANITE_RING = ITEMS.register("zanite_ring",
-			() -> new Item(new Item.Properties().maxStackSize(1).defaultMaxDamage(49).group(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new AccessoryItem(new Item.Properties().maxStackSize(1).defaultMaxDamage(49).group(AetherItemGroups.AETHER_ACCESSORIES)));
 	//item("", new RingItem(new Item.Properties().maxDamage(49).maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
 
 	//item("leather_gloves", new DyeableGlovesItem(ArmorMaterial.LEATHER, new Item.Properties().group(ItemGroup.COMBAT))),
