@@ -32,6 +32,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import org.apache.logging.log4j.LogManager;
@@ -50,6 +51,7 @@ public class Aether
 
 		modEventBus.addListener(this::commonSetup);
 		modEventBus.addListener(this::clientSetup);
+		modEventBus.addListener(this::curiosSetup);
 
 		DeferredRegister<?>[] registers = {
 				AetherBlocks.BLOCKS,
@@ -108,6 +110,16 @@ public class Aether
 				return false;
 			}
 		});
+	}
+
+	public void curiosSetup(InterModEnqueueEvent event)
+	{
+//		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.NECKLACE.getMessageBuilder().build());
+//		//InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("cape").build());
+//		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.RING.getMessageBuilder().size(2).build());
+//		//InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("shield").build());
+//		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.HANDS.getMessageBuilder().build());
+//		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.CHARM.getMessageBuilder().size(2).build());
 	}
 
 	private static void registerLoot()

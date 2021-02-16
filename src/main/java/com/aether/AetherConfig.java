@@ -10,12 +10,8 @@ public class AetherConfig
         public final ConfigValue<Boolean> testCommon;
 
         public Common(ForgeConfigSpec.Builder builder) {
-            builder.push("category");
-
             builder.push("test");
-            this.testCommon = builder.define("This is a test config value.", true);
-            builder.pop();
-
+            testCommon = builder.define("This is a test config value", true);
             builder.pop();
         }
     }
@@ -24,12 +20,8 @@ public class AetherConfig
         public final ConfigValue<Boolean> testClient;
 
         public Client(ForgeConfigSpec.Builder builder) {
-            builder.push("categoryClient");
-
             builder.push("testClient");
-            this.testClient = builder.define("This is a test config value, but for client.", true);
-            builder.pop();
-
+            testClient = builder.define("This is a test config value, but for client", true);
             builder.pop();
         }
     }
@@ -41,11 +33,11 @@ public class AetherConfig
     public static final Client CLIENT;
 
     static {
-        Pair<Common, ForgeConfigSpec> commonSpecPair = new ForgeConfigSpec.Builder().configure(Common::new);
+        final Pair<Common, ForgeConfigSpec> commonSpecPair = new ForgeConfigSpec.Builder().configure(Common::new);
         COMMON_SPEC = commonSpecPair.getRight();
         COMMON = commonSpecPair.getLeft();
 
-        Pair<Client, ForgeConfigSpec> clientSpecPair = new ForgeConfigSpec.Builder().configure(Client::new);
+        final Pair<Client, ForgeConfigSpec> clientSpecPair = new ForgeConfigSpec.Builder().configure(Client::new);
         CLIENT_SPEC = clientSpecPair.getRight();
         CLIENT = clientSpecPair.getLeft();
     }
