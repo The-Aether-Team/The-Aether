@@ -1,4 +1,4 @@
-package com.aether.world.storage.loot.functions;
+package com.aether.loot.functions;
 
 import com.aether.registry.AetherTags;
 import com.aether.block.util.IAetherDoubleDropBlock;

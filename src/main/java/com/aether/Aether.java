@@ -1,17 +1,41 @@
 package com.aether;
 
-import com.aether.client.ClientProxy;
+import com.aether.advancement.AetherAdvancements;
+import com.aether.capability.AetherCapabilities;
+import com.aether.client.AetherRendering;
 
+import com.aether.loot.functions.DoubleDrops;
+import com.aether.network.AetherPacketHandler;
 import com.aether.registry.*;
+import com.aether.world.dimension.AetherDimensions;
 import com.aether.world.gen.feature.AetherFeatures;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.block.*;
+import net.minecraft.client.world.DimensionRenderInfo;
+import net.minecraft.dispenser.*;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.projectile.SmallFireballEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.SpawnEggItem;
+import net.minecraft.loot.functions.LootFunctionManager;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Random;
 
 @Mod(Aether.MODID)
 public class Aether
@@ -19,12 +43,11 @@ public class Aether
 	public static final String MODID = "aether";
 	public static final Logger LOGGER = LogManager.getLogger();
 	
-	private static CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
-	
 	public Aether() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		modEventBus.register(proxy);
-		MinecraftForge.EVENT_BUS.register(CommonProxy.class);
+
+		modEventBus.addListener(this::commonSetup);
+		modEventBus.addListener(this::clientSetup);
 
 		DeferredRegister<?>[] registers = {
 				AetherBlocks.BLOCKS,
@@ -41,5 +64,158 @@ public class Aether
 		for (DeferredRegister<?> register : registers) {
 			register.register(modEventBus);
 		}
+	}
+
+	public void commonSetup(FMLCommonSetupEvent event) {
+		event.enqueueWork(() -> {
+			AetherPacketHandler.register();
+			AetherCapabilities.register();
+
+			AetherBlocks.registerPots();
+			AetherBlocks.registerAxeStrippingBlocks();
+
+			AetherEntityTypes.registerSpawnPlacements();
+			AetherEntityTypes.registerEntityAttributes();
+
+			registerLoot();
+			registerDispenserBehaviors();
+
+			AetherFeatures.registerConfiguredFeatures();
+			AetherAdvancements.init();
+		});
+	}
+
+	public void clientSetup(FMLClientSetupEvent event) {
+		AetherRendering.registerBlockRenderLayers();
+		AetherRendering.registerEntityRenderers(event);
+		AetherRendering.registerTileEntityRenderers();
+		AetherRendering.registerGuiFactories();
+		AetherRendering.registerItemModelProperties();
+
+		DimensionRenderInfo.field_239208_a_.put(AetherDimensions.AETHER_DIMENSION.getLocation(), new DimensionRenderInfo(-5.0F, true, DimensionRenderInfo.FogType.NORMAL, false, false) {
+			@Override
+			public Vector3d func_230494_a_(Vector3d color, float p_230494_2_) {
+				return color.mul((p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.91F + 0.09F));
+			}
+
+			@Override
+			public boolean func_230493_a_(int x, int z) {
+				return false;
+			}
+		});
+	}
+
+	private static void registerLoot()
+	{
+		LootFunctionManager.func_237451_a_(new ResourceLocation(Aether.MODID, "double_drops").toString(), new DoubleDrops.Serializer());
+
+		//LootConditionManager.registerCondition(new ######.Serializer());
+	}
+
+	private void registerDispenserBehaviors() {
+		IDispenseItemBehavior dispenseSpawnEgg = new DefaultDispenseItemBehavior() {
+			/**
+			 * Dispense the specified stack, play the dispense sound and spawn particles.
+			 */
+			@Override
+			public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
+				Direction direction = source.getBlockState().get(DispenserBlock.FACING);
+				EntityType<?> entitytype = ((SpawnEggItem)stack.getItem()).getType(stack.getTag());
+				entitytype.spawn(source.getWorld(), stack, null, source.getBlockPos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
+				stack.shrink(1);
+				return stack;
+			}
+		};
+		DispenserBlock.registerDispenseBehavior(AetherItems.PHYG_SPAWN_EGG.get(), dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.FLYING_COW_SPAWN_EGG.get(), dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.SHEEPUFF_SPAWN_EGG.get(), dispenseSpawnEgg);
+		//DispenserBlock.registerDispenseBehavior(AetherItems.AERBUNNY_SPAWN_EGG, dispenseSpawnEgg);
+		//DispenserBlock.registerDispenseBehavior(AetherItems.AERWHALE_SPAWN_EGG, dispenseSpawnEgg);
+		//DispenserBlock.registerDispenseBehavior(AetherItems.BLUE_SWET_SPAWN_EGG, dispenseSpawnEgg);
+		//DispenserBlock.registerDispenseBehavior(AetherItems.GOLDEN_SWET_SPAWN_EGG, dispenseSpawnEgg);
+		//DispenserBlock.registerDispenseBehavior(AetherItems.COCKATRICE_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.SENTRY_SPAWN_EGG.get(), dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.ZEPHYR_SPAWN_EGG.get(), dispenseSpawnEgg);
+		//DispenserBlock.registerDispenseBehavior(AetherItems.AECHOR_PLANT_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.MIMIC_SPAWN_EGG.get(), dispenseSpawnEgg);
+		//DispenserBlock.registerDispenseBehavior(AetherItems.VALKYRIE_SPAWN_EGG, dispenseSpawnEgg);
+		//DispenserBlock.registerDispenseBehavior(AetherItems.FIRE_MINION_SPAWN_EGG, dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(AetherItems.WHIRLWIND_SPAWN_EGG.get(), dispenseSpawnEgg);
+		DispenserBlock.registerDispenseBehavior(Items.FIRE_CHARGE, new OptionalDispenseBehavior() {
+			/**
+			 * Dispense the specified stack, play the dispense sound and spawn
+			 * particles.
+			 */
+			@Override
+			public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
+				World world = source.getWorld();
+				if (world.getDimensionKey() == AetherDimensions.AETHER_WORLD) {
+					this.setSuccessful(false);
+				}
+				else {
+					this.setSuccessful(true);
+					Direction direction = source.getBlockState().get(DispenserBlock.FACING);
+					IPosition iposition = DispenserBlock.getDispensePosition(source);
+					double d0 = iposition.getX() + direction.getXOffset() * 0.3F;
+					double d1 = iposition.getY() + direction.getYOffset() * 0.3F;
+					double d2 = iposition.getZ() + direction.getZOffset() * 0.3F;
+					Random random = world.rand;
+					double d3 = random.nextGaussian() * 0.05 + direction.getXOffset();
+					double d4 = random.nextGaussian() * 0.05 + direction.getYOffset();
+					double d5 = random.nextGaussian() * 0.05 + direction.getZOffset();
+					world.addEntity(Util.make(new SmallFireballEntity(world, d0, d1, d2, d3, d4, d5), (entity) -> entity.setStack(stack)));
+					stack.shrink(1);
+				}
+				return stack;
+			}
+
+			/**
+			 * Play the dispense sound from the specified block.
+			 */
+			@Override
+			protected void playDispenseSound(IBlockSource source) {
+				source.getWorld().playEvent(this.isSuccessful()? 1018 : 1001, source.getBlockPos(), 0);
+			}
+		});
+		DispenserBlock.registerDispenseBehavior(Items.FLINT_AND_STEEL, new OptionalDispenseBehavior() {
+			/**
+			 * Dispense the specified stack, play the dispense sound and spawn
+			 * particles.
+			 */
+			@Override
+			protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
+				World world = source.getWorld();
+				if (world.getDimensionKey() == AetherDimensions.AETHER_WORLD) {
+					this.setSuccessful(false);
+				}
+				else {
+					this.setSuccessful(true);
+					BlockPos blockpos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
+					BlockState blockstate = world.getBlockState(blockpos);
+					Direction direction = source.getBlockState().get(DispenserBlock.FACING);
+					if (AbstractFireBlock.canLightBlock(world, blockpos, direction)) {
+						world.setBlockState(blockpos, Blocks.FIRE.getDefaultState());
+					}
+					else if (CampfireBlock.canBeLit(blockstate)) {
+						world.setBlockState(blockpos, blockstate.with(BlockStateProperties.LIT, true));
+					}
+					else if (blockstate.isFlammable(world, blockpos, source.getBlockState().get(DispenserBlock.FACING).getOpposite())) {
+						blockstate.catchFire(world, blockpos, source.getBlockState().get(DispenserBlock.FACING).getOpposite(), null);
+						if (blockstate.getBlock() instanceof TNTBlock) {
+							world.removeBlock(blockpos, false);
+						}
+					}
+					else {
+						this.setSuccessful(false);
+					}
+
+					if (this.isSuccessful() && stack.attemptDamageItem(1, world.rand, null)) {
+						stack.setCount(0);
+					}
+				}
+
+				return stack;
+			}
+		});
 	}
 }

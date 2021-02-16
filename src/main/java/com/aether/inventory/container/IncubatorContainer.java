@@ -5,6 +5,8 @@ import java.util.function.Consumer;
 
 import com.aether.entity.tile.IncubatorTileEntity;
 
+import com.aether.inventory.container.slot.IncubatorEggSlot;
+import com.aether.inventory.container.slot.IncubatorFuelSlot;
 import com.aether.registry.AetherContainerTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -20,10 +22,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class IncubatorContainer extends Container {
-	protected final IInventory incubatorInventory;
-	protected final IIntArray incubatorData;
-	protected final Consumer<UUID> playerUUIDAcceptor;
-	protected final World world;
+	public final IInventory incubatorInventory;
+	public final IIntArray incubatorData;
+	public final Consumer<UUID> playerUUIDAcceptor;
+	public final World world;
 
 	public IncubatorContainer(int id, PlayerInventory playerInventoryIn) {
 		this(id, playerInventoryIn, new Inventory(2), new IntArray(3), (uuid) -> {});

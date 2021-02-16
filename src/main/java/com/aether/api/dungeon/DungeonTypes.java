@@ -1,14 +1,15 @@
 package com.aether.api.dungeon;
 
 import com.aether.Aether;
-import com.aether.world.storage.loot.AetherLootTables;
 
+import com.aether.registry.AetherLootTables;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ObjectHolder;
 
+//TODO: Convert to DeferredRegister
 @ObjectHolder(Aether.MODID)
 public class DungeonTypes {
 

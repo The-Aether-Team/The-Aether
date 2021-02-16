@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.aether.api.AetherAPI;
 import com.aether.crafting.AetherRecipeTypes;
+import com.aether.inventory.container.slot.CustomSmeltingFuelSlot;
+import com.aether.inventory.container.slot.CustomSmeltingResultSlot;
 import com.aether.registry.AetherContainerTypes;
 import com.google.common.collect.Lists;
 

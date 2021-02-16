@@ -1,4 +1,4 @@
-package com.aether.inventory.container;
+package com.aether.inventory.container.slot;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.AbstractFurnaceContainer;

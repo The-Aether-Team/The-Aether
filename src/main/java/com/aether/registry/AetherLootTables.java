@@ -1,4 +1,4 @@
-package com.aether.world.storage.loot;
+package com.aether.registry;
 
 import java.util.Collections;
 import java.util.Set;
@@ -8,7 +8,8 @@ import com.google.common.collect.Sets;
 
 import net.minecraft.util.ResourceLocation;
 
-public class AetherLootTables {
+public class AetherLootTables
+{
 	private static final Set<ResourceLocation> LOOT_TABLES = Sets.newHashSet();
 	private static final Set<ResourceLocation> READ_ONLY_LOOT_TABLES = Collections.unmodifiableSet(LOOT_TABLES);
 
@@ -34,5 +35,4 @@ public class AetherLootTables {
 	public static Set<ResourceLocation> getReadOnlyLootTables() {
 		return READ_ONLY_LOOT_TABLES;
 	}
-
 }

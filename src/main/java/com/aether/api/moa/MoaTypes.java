@@ -8,9 +8,10 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ObjectHolder;
 
+//TODO: Switch to DeferredRegister
 @ObjectHolder(Aether.MODID)
-public class MoaTypes {
-
+public class MoaTypes
+{
 	public static final MoaType BLUE = null;
 	public static final MoaType WHITE = null;
 	public static final MoaType BLACK = null;

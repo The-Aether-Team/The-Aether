@@ -14,13 +14,15 @@ import com.aether.block.utility.EnchanterBlock;
 import com.aether.block.utility.FreezerBlock;
 import com.aether.block.utility.IncubatorBlock;
 import com.aether.block.utility.SunAltarBlock;
-import com.aether.client.ClientProxy;
+import com.aether.client.AetherRendering;
 import com.aether.item.block.TintedBlockItem;
 import com.aether.world.gen.tree.GoldenOakTree;
 import com.aether.world.gen.tree.SkyrootTree;
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.WallOrFloorItem;
@@ -115,6 +117,8 @@ public class AetherBlocks
 			() -> new SaplingBlock(new SkyrootTree(), AbstractBlock.Properties.from(Blocks.OAK_SAPLING)));
 	public static final RegistryObject<SaplingBlock> GOLDEN_OAK_SAPLING = register("golden_oak_sapling",
 			() -> new SaplingBlock(new GoldenOakTree(), AbstractBlock.Properties.from(Blocks.OAK_SAPLING)));
+	public static final RegistryObject<FlowerPotBlock> POTTED_SKYROOT_SAPLING = BLOCKS.register("potted_skyroot_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, SKYROOT_SAPLING, AbstractBlock.Properties.from(Blocks.FLOWER_POT)));
+	public static final RegistryObject<FlowerPotBlock> POTTED_GOLDEN_OAK_SAPLING = BLOCKS.register("potted_golden_oak_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, GOLDEN_OAK_SAPLING, AbstractBlock.Properties.from(Blocks.FLOWER_POT)));
 
 	public static final RegistryObject<Block> CARVED_STONE = register("carved_stone",
 			() -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(0.5F).sound(SoundType.STONE)));
@@ -221,6 +225,27 @@ public class AetherBlocks
 
 	public static final RegistryObject<Block> SKYROOT_BOOKSHELF = register("skyroot_bookshelf", () -> new BookshelfBlock(AbstractBlock.Properties.from(Blocks.BOOKSHELF)));
 
+
+	public static void registerPots() {
+		FlowerPotBlock pot = (FlowerPotBlock) Blocks.FLOWER_POT;
+
+		pot.addPlant(AetherBlocks.PURPLE_FLOWER.getId(), AetherBlocks.POTTED_PURPLE_FLOWER);
+		pot.addPlant(AetherBlocks.WHITE_FLOWER.getId(), AetherBlocks.POTTED_WHITE_FLOWER);
+		pot.addPlant(AetherBlocks.SKYROOT_SAPLING.getId(), AetherBlocks.POTTED_SKYROOT_SAPLING);
+		pot.addPlant(AetherBlocks.GOLDEN_OAK_SAPLING.getId(), AetherBlocks.POTTED_GOLDEN_OAK_SAPLING);
+	}
+
+	public static void registerAxeStrippingBlocks() {
+		AxeItem.BLOCK_STRIPPING_MAP = ImmutableMap.<Block, Block>builder()
+				.putAll(AxeItem.BLOCK_STRIPPING_MAP)
+				.put(AetherBlocks.SKYROOT_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
+				.put(AetherBlocks.GOLDEN_OAK_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
+				.put(AetherBlocks.SKYROOT_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
+				.put(AetherBlocks.GOLDEN_OAK_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
+				.build();
+	}
+
+
 	private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {
 		RegistryObject<T> register = BLOCKS.register(name, block);
 		AetherItems.ITEMS.register(name, item.apply(register));
@@ -244,10 +269,10 @@ public class AetherBlocks
 				return new WallOrFloorItem(AMBROSIUM_TORCH.get(), AMBROSIUM_WALL_TORCH.get(), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS));
 			}
 			else if (Objects.requireNonNull(block.get()) == CHEST_MIMIC.get()) {
-				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS).setISTER(() -> ClientProxy::chestMimicRenderer));
+				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS).setISTER(() -> AetherRendering::chestMimicRenderer));
 			}
 			else if (Objects.requireNonNull(block.get()) == TREASURE_CHEST.get()) {
-				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS).setISTER(() -> ClientProxy::treasureChestRenderer));
+				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS).setISTER(() -> AetherRendering::treasureChestRenderer));
 			}
 			else {
 				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS));

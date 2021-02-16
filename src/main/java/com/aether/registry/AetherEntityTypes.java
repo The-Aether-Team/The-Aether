@@ -1,6 +1,7 @@
 package com.aether.registry;
 
 import com.aether.Aether;
+import com.aether.entity.AetherAnimalEntity;
 import com.aether.entity.block.FloatingBlockEntity;
 import com.aether.entity.monster.*;
 import com.aether.entity.passive.AerwhaleEntity;
@@ -11,7 +12,11 @@ import com.aether.entity.passive.SheepuffEntity;
 import com.aether.entity.projectile.*;
 
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import net.minecraft.entity.monster.SlimeEntity;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -56,6 +61,8 @@ public class AetherEntityTypes
 	//public static final EntityType<ValkyrieEntity> VALKYRIE = entity("valkyrie", EntityType.Builder.<ValkyrieEntity>create(ValkyrieEntity::new, EntityClassification.MONSTER).size(??????));
 	//public static final EntityType<FireMinionEntity> FIRE_MINION = entity("fire_minion", EntityType.Builder.<FireMinionEntity>create(FireMinionEntity::new, EntityClassification.MONSTER).size(??????));
 
+	//TODO: Most of the projectile-related entities are now broken.
+
 	public static final EntityType<FloatingBlockEntity> FLOATING_BLOCK_TYPE = EntityType.Builder.create(FloatingBlockEntity::new, EntityClassification.MISC).size(0.98F, 0.98F).build("floating_block");
 	public static final RegistryObject<EntityType<FloatingBlockEntity>> FLOATING_BLOCK = ENTITIES.register("floating_block", () -> FLOATING_BLOCK_TYPE);
 	//.setCustomClientFactory((spawnEntity, world) -> new FloatingBlockEntity(world))
@@ -84,4 +91,33 @@ public class AetherEntityTypes
 
 	public static final EntityType<HammerProjectileEntity> HAMMER_PROJECTILE_TYPE = EntityType.Builder.create(HammerProjectileEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).build("hammer_projectile");
 	public static final RegistryObject<EntityType<HammerProjectileEntity>> HAMMER_PROJECTILE = ENTITIES.register("hammer_projectile", () -> HAMMER_PROJECTILE_TYPE);
+
+
+	public static void registerSpawnPlacements() {
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.PHYG.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.FLYING_COW.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.SHEEPUFF.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.MOA.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.WHIRLWIND.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WhirlwindEntity::canWhirlwindSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.AECHOR_PLANT.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AechorPlantEntity::canAechorSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.COCKATRICE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CockatriceEntity::canCockatriceSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.ZEPHYR.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ZephyrEntity::canZephyrSpawn);
+	}
+
+	public static void registerEntityAttributes() {
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.PHYG.get(), PhygEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.FLYING_COW.get(), FlyingCowEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.SHEEPUFF.get(), SheepuffEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.MOA.get(), MoaEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.registerAttributes().create());
+
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.WHIRLWIND.get(), WhirlwindEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.COCKATRICE.get(), CockatriceEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.ZEPHYR.get(), ZephyrEntity.registerAttributes().create());
+
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.SENTRY.get(), SlimeEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(AetherEntityTypes.MIMIC.get(), MimicEntity.registerAttributes().create());
+	}
 }

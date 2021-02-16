@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.ObjectHolder;
 
+//TODO: Convert to DeferredRegister
 @ObjectHolder(Aether.MODID)
 public class AetherRecipeSerializers {
 

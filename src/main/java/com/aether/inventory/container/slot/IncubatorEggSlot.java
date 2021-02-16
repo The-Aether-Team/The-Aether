@@ -1,5 +1,6 @@
-package com.aether.inventory.container;
+package com.aether.inventory.container.slot;
 
+import com.aether.inventory.container.IncubatorContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;

@@ -1,4 +1,4 @@
-package com.aether.inventory.container;
+package com.aether.inventory.container.slot;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
