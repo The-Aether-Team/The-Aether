@@ -93,6 +93,7 @@ public class Aether
 
 			registerLoot();
 			registerDispenserBehaviors();
+			registerComposting();
 
 			AetherFeatures.registerConfiguredFeatures();
 			AetherAdvancements.init();
@@ -223,5 +224,23 @@ public class Aether
 				return stack;
 			}
 		});
+	}
+
+	private void registerComposting() {
+		ComposterBlock.registerCompostable(0.3F, AetherBlocks.SKYROOT_LEAVES.get());
+		ComposterBlock.registerCompostable(0.3F, AetherBlocks.SKYROOT_SAPLING.get());
+		ComposterBlock.registerCompostable(0.3F, AetherBlocks.GOLDEN_OAK_LEAVES.get());
+		ComposterBlock.registerCompostable(0.3F, AetherBlocks.GOLDEN_OAK_SAPLING.get());
+		ComposterBlock.registerCompostable(0.3F, AetherBlocks.CRYSTAL_LEAVES.get());
+		ComposterBlock.registerCompostable(0.3F, AetherBlocks.CRYSTAL_FRUIT_LEAVES.get());
+		ComposterBlock.registerCompostable(0.3F, AetherBlocks.HOLIDAY_LEAVES.get());
+		ComposterBlock.registerCompostable(0.3F, AetherBlocks.DECORATED_HOLIDAY_LEAVES.get());
+		ComposterBlock.registerCompostable(0.3F, AetherItems.BLUEBERRY.get());
+		ComposterBlock.registerCompostable(0.5F, AetherItems.ENCHANTED_BLUEBERRY.get());
+		ComposterBlock.registerCompostable(0.5F, AetherBlocks.BERRY_BUSH.get());
+		ComposterBlock.registerCompostable(0.5F, AetherBlocks.BERRY_BUSH_STEM.get());
+		ComposterBlock.registerCompostable(0.65F, AetherBlocks.WHITE_FLOWER.get());
+		ComposterBlock.registerCompostable(0.65F, AetherBlocks.PURPLE_FLOWER.get());
+		ComposterBlock.registerCompostable(0.65F, AetherItems.WHITE_APPLE.get());
 	}
 }
