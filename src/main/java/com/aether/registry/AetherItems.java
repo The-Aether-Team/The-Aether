@@ -208,11 +208,11 @@ public class AetherItems
 			() -> new Item(new Item.Properties().maxStackSize(10).rarity(AETHER_LOOT).group(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<Item> BRONZE_DUNGEON_KEY = ITEMS.register("bronze_dungeon_key",
-			() -> new DungeonKeyItem(() -> DungeonTypes.BRONZE, new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).group(AetherItemGroups.AETHER_MISC)));
+			() -> new DungeonKeyItem(() -> DungeonTypes.BRONZE, new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).isImmuneToFire().group(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> SILVER_DUNGEON_KEY = ITEMS.register("silver_dungeon_key",
-			() -> new DungeonKeyItem(() -> DungeonTypes.SILVER, new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).group(AetherItemGroups.AETHER_MISC)));
+			() -> new DungeonKeyItem(() -> DungeonTypes.SILVER, new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).isImmuneToFire().group(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> GOLD_DUNGEON_KEY = ITEMS.register("gold_dungeon_key",
-			() -> new DungeonKeyItem(() -> DungeonTypes.GOLD, new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).group(AetherItemGroups.AETHER_MISC)));
+			() -> new DungeonKeyItem(() -> DungeonTypes.GOLD, new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).isImmuneToFire().group(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune",
 			() -> new MusicDiscItem(1, AetherSoundEvents.MUSIC_DISC_AETHER_TUNE, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC)));

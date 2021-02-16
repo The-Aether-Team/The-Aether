@@ -136,9 +136,6 @@ public class Aether
 
 	private void registerDispenserBehaviors() {
 		IDispenseItemBehavior dispenseSpawnEgg = new DefaultDispenseItemBehavior() {
-			/**
-			 * Dispense the specified stack, play the dispense sound and spawn particles.
-			 */
 			@Override
 			public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
 				Direction direction = source.getBlockState().get(DispenserBlock.FACING);
@@ -158,10 +155,6 @@ public class Aether
 		}
 
 		DispenserBlock.registerDispenseBehavior(Items.FIRE_CHARGE, new OptionalDispenseBehavior() {
-			/**
-			 * Dispense the specified stack, play the dispense sound and spawn
-			 * particles.
-			 */
 			@Override
 			public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
 				World world = source.getWorld();
@@ -185,19 +178,12 @@ public class Aether
 				return stack;
 			}
 
-			/**
-			 * Play the dispense sound from the specified block.
-			 */
 			@Override
 			protected void playDispenseSound(IBlockSource source) {
 				source.getWorld().playEvent(this.isSuccessful()? 1018 : 1001, source.getBlockPos(), 0);
 			}
 		});
 		DispenserBlock.registerDispenseBehavior(Items.FLINT_AND_STEEL, new OptionalDispenseBehavior() {
-			/**
-			 * Dispense the specified stack, play the dispense sound and spawn
-			 * particles.
-			 */
 			@Override
 			protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
 				World world = source.getWorld();
