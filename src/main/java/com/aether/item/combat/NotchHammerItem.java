@@ -3,6 +3,7 @@ package com.aether.item.combat;
 import com.aether.entity.projectile.HammerProjectileEntity;
 import com.aether.registry.AetherEntityTypes;
 import com.aether.registry.AetherItemGroups;
+import com.aether.registry.AetherItems;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,7 +18,7 @@ import net.minecraft.world.World;;
 public class NotchHammerItem extends SwordItem
 {
     public NotchHammerItem() {
-        super(ItemTier.IRON, 2, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_WEAPONS));
+        super(ItemTier.IRON, 2, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override

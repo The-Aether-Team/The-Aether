@@ -22,10 +22,7 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.WallOrFloorItem;
+import net.minecraft.item.*;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.common.ToolType;
@@ -264,6 +261,17 @@ public class AetherBlocks
 				int hexColor = iaetherblockcolor.getColor(false);
 				int updatedHexColor = iaetherblockcolor.getColor(true);
 				return new TintedBlockItem(hexColor, updatedHexColor, Objects.requireNonNull(block.get()), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS));
+			}
+			else if (Objects.requireNonNull(block.get()) == ENCHANTED_AETHER_GRASS_BLOCK.get()
+					|| Objects.requireNonNull(block.get()) == QUICKSOIL_GLASS.get()
+					|| Objects.requireNonNull(block.get()) == ENCHANTED_GRAVITITE.get()) {
+				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().rarity(Rarity.RARE).group(AetherItemGroups.AETHER_BLOCKS));
+			}
+			else if (Objects.requireNonNull(block.get()) == AEROGEL.get()
+					|| Objects.requireNonNull(block.get()) == AEROGEL_WALL.get()
+					|| Objects.requireNonNull(block.get()) == AEROGEL_STAIRS.get()
+					|| Objects.requireNonNull(block.get()) == AEROGEL_SLAB.get()) {
+				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_BLOCKS));
 			}
 			else if (Objects.requireNonNull(block.get()) == AMBROSIUM_TORCH.get()) {
 				return new WallOrFloorItem(AMBROSIUM_TORCH.get(), AMBROSIUM_WALL_TORCH.get(), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS));

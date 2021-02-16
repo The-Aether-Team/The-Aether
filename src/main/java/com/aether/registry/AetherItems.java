@@ -3,6 +3,7 @@ package com.aether.registry;
 import com.aether.Aether;
 import com.aether.api.dungeon.DungeonTypes;
 import com.aether.item.accessories.AccessoryItem;
+import com.aether.item.food.HealingStoneItem;
 import com.aether.item.misc.DungeonKeyItem;
 import com.aether.item.food.GummySwetItem;
 import com.aether.item.combat.*;
@@ -139,16 +140,14 @@ public class AetherItems
 	public static final RegistryObject<Item> BLUEBERRY = ITEMS.register("blueberry",
 			() -> new Item(new Item.Properties().food(new Food.Builder().fastToEat().hunger(2).build()).group(AetherItemGroups.AETHER_FOOD)));
 	public static final RegistryObject<Item> ENCHANTED_BLUEBERRY = ITEMS.register("enchanted_blueberry",
-			() -> new Item(new Item.Properties().food(new Food.Builder().fastToEat().hunger(8).build()).group(AetherItemGroups.AETHER_FOOD)));
+			() -> new Item(new Item.Properties().rarity(Rarity.RARE).food(new Food.Builder().fastToEat().hunger(8).build()).group(AetherItemGroups.AETHER_FOOD)));
 	public static final RegistryObject<Item> WHITE_APPLE = ITEMS.register("white_apple",
 			() -> new Item(new Item.Properties().food(new Food.Builder().fastToEat().hunger(0).build()).group(AetherItemGroups.AETHER_FOOD)));
 	public static final RegistryObject<Item> BLUE_GUMMY_SWET = ITEMS.register("blue_gummy_swet",
 			() -> new GummySwetItem(new Item.Properties().food(new Food.Builder().fastToEat().hunger(20).build()).group(AetherItemGroups.AETHER_FOOD)));
 	public static final RegistryObject<Item> GOLDEN_GUMMY_SWET = ITEMS.register("golden_gummy_swet",
 			() -> new GummySwetItem(new Item.Properties().food(new Food.Builder().fastToEat().hunger(20).build()).group(AetherItemGroups.AETHER_FOOD)));
-	public static final RegistryObject<Item> HEALING_STONE = ITEMS.register("healing_stone",
-			() -> new Item(new Item.Properties().food(new Food.Builder().setAlwaysEdible().hunger(0).effect(
-					() -> new EffectInstance(Effects.INSTANT_HEALTH, 610, 0), 1.0F).build()).group(AetherItemGroups.AETHER_FOOD)));
+	public static final RegistryObject<Item> HEALING_STONE = ITEMS.register("healing_stone", HealingStoneItem::new);
 	public static final RegistryObject<Item> CANDY_CANE = ITEMS.register("candy_cane",
 			() -> new Item(new Item.Properties().food(new Food.Builder().fastToEat().hunger(2).build()).group(AetherItemGroups.AETHER_FOOD)));
 	public static final RegistryObject<Item> GINGERBREAD_MAN = ITEMS.register("gingerbread_man",
@@ -157,7 +156,6 @@ public class AetherItems
 	// Accessories
 	public static final RegistryObject<Item> ZANITE_RING = ITEMS.register("zanite_ring",
 			() -> new AccessoryItem(new Item.Properties().maxStackSize(1).defaultMaxDamage(49).group(AetherItemGroups.AETHER_ACCESSORIES)));
-	//item("", new RingItem(new Item.Properties().maxDamage(49).maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
 
 	//item("leather_gloves", new DyeableGlovesItem(ArmorMaterial.LEATHER, new Item.Properties().group(ItemGroup.COMBAT))),
 	//item("chainmail_gloves", new GlovesItem(ArmorMaterial.CHAIN, new Item.Properties().group(ItemGroup.COMBAT))),
