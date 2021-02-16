@@ -19,19 +19,24 @@ public class QuicksoilFeature extends Feature<NoFeatureConfig> {
 
     @Override
     public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
-        for(int x = pos.getX() - 3; x < pos.getX() + 4; x++) {
-            if(reader.getBlockState(pos).isSolidSide(reader, pos, Direction.getRandomDirection(rand))) {
+        boolean doesProtrude = (
+                reader.getBlockState(pos.west(3)).isAir() ||
+                        reader.getBlockState(pos.north(3)).isAir() ||
+                        reader.getBlockState(pos.south(3)).isAir() ||
+                        reader.getBlockState(pos.east(3)).isAir()) &&
+                !reader.getBlockState(pos).isAir();
+        if (doesProtrude) {
+            for(int x = pos.getX() - 3; x < pos.getX() + 4; x++) {
                 for(int z = pos.getZ() - 3; z < pos.getZ() + 4; z++) {
                     BlockPos newPos = new BlockPos(x, pos.getY(), z);
 
-                    if(!reader.getBlockState(pos).isAir() && (x - pos.getX()) * (x - pos.getX()) + (z - pos.getZ()) * (z - pos.getZ()) < 12) {
+                    if((x - pos.getX()) * (x - pos.getX()) + (z - pos.getZ()) * (z - pos.getZ()) < 12) {
                         reader.setBlockState(newPos, AetherBlocks.QUICKSOIL.get().getDefaultState(), 0);
                     }
                 }
+
             }
-
         }
-
         return false;
     }
 }
