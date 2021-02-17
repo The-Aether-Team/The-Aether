@@ -1,13 +1,11 @@
 package com.aether.event.handlers;
 
-import com.aether.Aether;
 import com.aether.event.AetherBannedItemEvent;
 import com.aether.event.hooks.AetherEventHooks;
 import com.aether.registry.AetherTags;
 import com.aether.world.dimension.AetherDimensions;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.IWorld;
@@ -22,22 +20,13 @@ public class AetherDimensionHandler
     @SubscribeEvent
     public static void checkBlockBanned(PlayerInteractEvent.RightClickBlock event) {
         PlayerEntity player = event.getPlayer();
-
-        if (player.world.getDimensionKey() != AetherDimensions.AETHER_WORLD) {
-            return;
-        }
-
-        if (event.getWorld().getBlockState(event.getPos()).isIn(BlockTags.BEDS)) {
-            event.setCanceled(true);
-            return;
-        }
-
-        if (event.getItemStack().getItem().isIn(AetherTags.Items.BANNED_IN_AETHER)) {
-            if (AetherEventHooks.isItemBanned(event.getItemStack())) {
-                AetherEventHooks.onItemBanned(event.getWorld(), event.getPos(), event.getFace(), event.getItemStack());
-                event.setCanceled(true);
+        if (player.world.getDimensionKey() == AetherDimensions.AETHER_WORLD) {
+            if (event.getItemStack().getItem().isIn(AetherTags.Items.BANNED_IN_AETHER)) {
+                if (AetherEventHooks.isItemBanned(event.getItemStack())) {
+                    AetherEventHooks.onItemBanned(event.getWorld(), event.getPos(), event.getFace(), event.getItemStack());
+                    event.setCanceled(true);
+                }
             }
-            return;
         }
     }
 
