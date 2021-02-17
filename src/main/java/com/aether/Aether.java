@@ -132,7 +132,7 @@ public class Aether
 		//InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("misc").size(2).build());
 	}
 
-	private static void registerLoot()
+	private void registerLoot()
 	{
 		LootFunctionManager.func_237451_a_(new ResourceLocation(Aether.MODID, "double_drops").toString(), new DoubleDrops.Serializer());
 

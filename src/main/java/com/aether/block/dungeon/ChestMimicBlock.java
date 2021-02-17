@@ -75,23 +75,37 @@ public class ChestMimicBlock extends Block implements IWaterLoggable {
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 		Hand handIn, BlockRayTraceResult hit) {
 		if (!worldIn.isRemote && !ChestBlock.isBlocked(worldIn, pos)) {
-			Direction facing = state.get(FACING);
-			float angle = facing.getHorizontalAngle();
-
-			MimicEntity mimic = new MimicEntity(AetherEntityTypes.MIMIC.get(), worldIn);
-			mimic.setPositionAndRotation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, angle, 0.0F);
-//			mimic.rotationYaw = angle;
-			mimic.setRotationYawHead(angle);
-//			mimic.setHeadRotation(angle, 0);
-			LogManager.getLogger(ChestMimicBlock.class).debug("mimic rotation {} {}", facing, angle);
-			worldIn.addEntity(mimic);
-			worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
-			worldIn.playSound(null, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
+			spawnMimic(state, worldIn, pos);
 
 			return ActionResultType.SUCCESS;
 		}
 
 		return ActionResultType.SUCCESS;
+	}
+
+	@Override
+	public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+		super.onBlockHarvested(worldIn, pos, state, player);
+
+		if (!worldIn.isRemote)
+		{
+			spawnMimic(state, worldIn, pos);
+		}
+	}
+
+	private void spawnMimic(BlockState state, World worldIn, BlockPos pos) {
+		Direction facing = state.get(FACING);
+		float angle = facing.getHorizontalAngle();
+
+		MimicEntity mimic = new MimicEntity(AetherEntityTypes.MIMIC.get(), worldIn);
+		mimic.setPositionAndRotation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, angle, 0.0F);
+//			mimic.rotationYaw = angle;
+		mimic.setRotationYawHead(angle);
+//			mimic.setHeadRotation(angle, 0);
+		LogManager.getLogger(ChestMimicBlock.class).debug("mimic rotation {} {}", facing, angle);
+		worldIn.addEntity(mimic);
+		worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+		worldIn.playSound(null, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
 	}
 
 	@Override
