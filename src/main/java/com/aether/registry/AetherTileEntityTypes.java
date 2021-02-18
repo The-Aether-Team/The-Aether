@@ -23,4 +23,6 @@ public class AetherTileEntityTypes
 			new TileEntityType<>(ChestMimicTileEntity::new, Sets.newHashSet(AetherBlocks.CHEST_MIMIC.get()), null));
 	public static final RegistryObject<TileEntityType<TreasureChestTileEntity>> TREASURE_CHEST = TILE_ENTITIES.register("treasure_chest", () ->
 			new TileEntityType<>(TreasureChestTileEntity::new, Sets.newHashSet(AetherBlocks.TREASURE_CHEST.get()), null));
+	public static final RegistryObject<TileEntityType<SkyrootBedTileEntity>> SKYROOT_BED = TILE_ENTITIES.register("skyroot_bed", () ->
+			new TileEntityType<>(SkyrootBedTileEntity::new, Sets.newHashSet(AetherBlocks.SKYROOT_BED.get()), null));
 }

@@ -1,4 +1,4 @@
-package com.aether.client.renderer.tileentity;
+package com.aether.client.renderer.tile;
 
 import com.aether.registry.AetherBlocks;
 import com.aether.block.dungeon.ChestMimicBlock;

@@ -6,10 +6,12 @@ import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.gui.screen.inventory.FreezerScreen;
 import com.aether.client.gui.screen.inventory.IncubatorScreen;
 import com.aether.client.renderer.entity.*;
-import com.aether.client.renderer.tileentity.ChestMimicTileEntityRenderer;
-import com.aether.client.renderer.tileentity.CustomItemStackTileEntityRenderer;
-import com.aether.client.renderer.tileentity.TreasureChestTileEntityRenderer;
+import com.aether.client.renderer.tile.ChestMimicTileEntityRenderer;
+import com.aether.client.renderer.tile.CustomItemStackTileEntityRenderer;
+import com.aether.client.renderer.tile.SkyrootBedTileEntityRenderer;
+import com.aether.client.renderer.tile.TreasureChestTileEntityRenderer;
 import com.aether.entity.tile.ChestMimicTileEntity;
+import com.aether.entity.tile.SkyrootBedTileEntity;
 import com.aether.entity.tile.TreasureChestTileEntity;
 import com.aether.item.IAetherItemColor;
 import com.aether.registry.*;
@@ -26,12 +28,10 @@ import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.function.Supplier;
 
@@ -104,6 +104,7 @@ public class AetherRendering
     public static void registerTileEntityRenderers() {
         ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.CHEST_MIMIC.get(), ChestMimicTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.TREASURE_CHEST.get(), TreasureChestTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.SKYROOT_BED.get(), SkyrootBedTileEntityRenderer::new);
     }
 
     public static CustomItemStackTileEntityRenderer chestMimicRenderer() {
@@ -112,6 +113,10 @@ public class AetherRendering
 
     public static CustomItemStackTileEntityRenderer treasureChestRenderer() {
         return new CustomItemStackTileEntityRenderer(TreasureChestTileEntity::new);
+    }
+
+    public static CustomItemStackTileEntityRenderer skyrootBedRenderer() {
+        return new CustomItemStackTileEntityRenderer(SkyrootBedTileEntity::new);
     }
 
     public static void registerGuiFactories() {

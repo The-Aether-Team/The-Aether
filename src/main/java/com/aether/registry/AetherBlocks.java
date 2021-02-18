@@ -10,10 +10,7 @@ import com.aether.block.miscellaneous.AetherPortalBlock;
 import com.aether.block.miscellaneous.PresentBlock;
 import com.aether.block.natural.*;
 import com.aether.block.util.*;
-import com.aether.block.utility.EnchanterBlock;
-import com.aether.block.utility.FreezerBlock;
-import com.aether.block.utility.IncubatorBlock;
-import com.aether.block.utility.SunAltarBlock;
+import com.aether.block.utility.*;
 import com.aether.client.AetherRendering;
 import com.aether.item.block.TintedBlockItem;
 import com.aether.world.gen.tree.GoldenOakTree;
@@ -211,6 +208,8 @@ public class AetherBlocks
 
 	public static final RegistryObject<Block> SKYROOT_BOOKSHELF = register("skyroot_bookshelf", () -> new BookshelfBlock(AbstractBlock.Properties.from(Blocks.BOOKSHELF)));
 
+	public static final RegistryObject<Block> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(AbstractBlock.Properties.from(Blocks.WHITE_BED)));
+
 
 	public static void registerPots() {
 		FlowerPotBlock pot = (FlowerPotBlock) Blocks.FLOWER_POT;
@@ -238,6 +237,7 @@ public class AetherBlocks
 		return register;
 	}
 
+	@SuppressWarnings("unchecked")
 	private static <B extends Block> RegistryObject<B> register(String name, Supplier<? extends Block> block) {
 		return (RegistryObject<B>) baseRegister(name, block, AetherBlocks::registerBlockItem);
 	}
@@ -270,6 +270,9 @@ public class AetherBlocks
 			}
 			else if (Objects.requireNonNull(block.get()) == TREASURE_CHEST.get()) {
 				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS).setISTER(() -> AetherRendering::treasureChestRenderer));
+			}
+			else if (Objects.requireNonNull(block.get()) == SKYROOT_BED.get()) {
+				return new BedItem(Objects.requireNonNull(block.get()), new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_BLOCKS).setISTER(() -> AetherRendering::skyrootBedRenderer));
 			}
 			else {
 				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS));
