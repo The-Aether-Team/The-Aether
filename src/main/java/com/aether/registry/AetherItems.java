@@ -3,6 +3,7 @@ package com.aether.registry;
 import com.aether.Aether;
 import com.aether.api.dungeon.DungeonTypes;
 import com.aether.item.accessories.AccessoryItem;
+import com.aether.item.accessories.ring.ZaniteRingItem;
 import com.aether.item.food.HealingStoneItem;
 import com.aether.item.misc.DungeonKeyItem;
 import com.aether.item.food.GummySwetItem;
@@ -159,7 +160,7 @@ public class AetherItems
 	public static final RegistryObject<Item> GOLD_RING = ITEMS.register("golden_ring",
 			() -> new AccessoryItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> ZANITE_RING = ITEMS.register("zanite_ring",
-			() -> new AccessoryItem(new Item.Properties().maxStackSize(1).defaultMaxDamage(49).group(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new ZaniteRingItem(new Item.Properties().maxStackSize(1).defaultMaxDamage(49).group(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> ICE_RING = ITEMS.register("ice_ring",
 			() -> new AccessoryItem(new Item.Properties().maxStackSize(1).defaultMaxDamage(125).group(AetherItemGroups.AETHER_ACCESSORIES)));
 
