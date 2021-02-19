@@ -91,4 +91,17 @@ public class MimicEntity extends CreatureEntity {
 		return result;
 	}
 
+	@Override
+	public void spawnExplosionParticle() {
+		if (this.world.isRemote) {
+			for(int i = 0; i < 20; ++i) {
+				double d0 = this.rand.nextGaussian() * 0.02D;
+				double d1 = this.rand.nextGaussian() * 0.02D;
+				double d2 = this.rand.nextGaussian() * 0.02D;
+				this.world.addParticle(ParticleTypes.POOF, this.getPosXWidth(0.0D) - d0 * 10.0D, this.getPosYRandom() - d1 * 10.0D, this.getPosZRandom(1.0D) - d2 * 10.0D, d0, d1, d2);
+			}
+		} else {
+			this.world.setEntityState(this, (byte)20);
+		}
+	}
 }

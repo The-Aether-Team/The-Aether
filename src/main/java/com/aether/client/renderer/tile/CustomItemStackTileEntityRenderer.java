@@ -1,4 +1,4 @@
-package com.aether.client.renderer.tileentity;
+package com.aether.client.renderer.tile;
 
 import java.util.function.Supplier;
 

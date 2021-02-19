@@ -41,16 +41,17 @@ public class CrystalTreeFeature extends Feature<NoFeatureConfig> {
         int z = rand.nextInt(16 - blockpos.getZ());
         int y = 75 + rand.nextInt(50);
 
-
         BlockPos blockpos1 = tree.getZeroPositionWithTransform(pos.add(x, y, z), Mirror.NONE, Rotation.NONE);
+        if (reader.getBlockState(blockpos1.down(10)).isAir()) {
+            tree.func_237146_a_(reader, blockpos1, blockpos1, placementsettings, rand, 4);
 
-        tree.func_237146_a_(reader, blockpos1, blockpos1, placementsettings, rand, 4);
-        for (int x1 = blockpos1.getX(); x1 < blockpos1.add(blockpos).getX(); x1++) {
-            for (int y1 = blockpos1.getY(); y1 < blockpos1.add(blockpos).getY(); y1++) {
-                for (int z1 = blockpos1.getZ(); z1 < blockpos1.add(blockpos).getZ(); z1++) {
-                    BlockPos blockpos2 = new BlockPos(x1, y1, z1);
-                    if (reader.getBlockState(blockpos2).getBlock() == AetherBlocks.CRYSTAL_LEAVES.get().getBlock() && rand.nextInt(5) == 2) {
-                        reader.setBlockState(blockpos2, AetherBlocks.CRYSTAL_FRUIT_LEAVES.get().getDefaultState(), 19);
+            for (int x1 = blockpos1.getX(); x1 < blockpos1.add(blockpos).getX(); x1++) {
+                for (int y1 = blockpos1.getY(); y1 < blockpos1.add(blockpos).getY(); y1++) {
+                    for (int z1 = blockpos1.getZ(); z1 < blockpos1.add(blockpos).getZ(); z1++) {
+                        BlockPos blockpos2 = new BlockPos(x1, y1, z1);
+                        if (reader.getBlockState(blockpos2).getBlock() == AetherBlocks.CRYSTAL_LEAVES.get().getBlock() && rand.nextInt(5) == 2) {
+                            reader.setBlockState(blockpos2, AetherBlocks.CRYSTAL_FRUIT_LEAVES.get().getDefaultState(), 19);
+                        }
                     }
                 }
             }

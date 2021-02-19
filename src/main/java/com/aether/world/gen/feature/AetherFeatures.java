@@ -54,7 +54,7 @@ public class AetherFeatures {
         register("gold_aercloud", GOLD_AERCLOUD.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(160).square().chance(5));
         register("pink_aercloud", PINK_AERCLOUD.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(160).square().chance(7));
 
-        register("crystal_tree", CRYSTAL_TREE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).square().chance(15));
+        register("crystal_tree", CRYSTAL_TREE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).chance(15));
         register("water_lake", LAKE.get().withConfiguration(new BlockStateFeatureConfig(Blocks.WATER.getDefaultState())).withPlacement(Placement.WATER_LAKE.configure(new ChanceConfig(4))));
 
         register("tree_skyroot", Feature.TREE.withConfiguration((new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(AetherBlocks.SKYROOT_LOG.get().getDefaultState()), new SimpleBlockStateProvider(AetherBlocks.SKYROOT_LEAVES.get().getDefaultState()), new BlobFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(0), 3), new StraightTrunkPlacer(4, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT));

@@ -7,8 +7,8 @@ import net.minecraft.world.IWorldReader;
 
 import net.minecraft.block.AbstractBlock.Properties;
 
-public class BookshelfBlock extends Block {
-
+public class BookshelfBlock extends Block
+{
 	public BookshelfBlock(Properties properties) {
 		super(properties);
 	}
@@ -17,5 +17,4 @@ public class BookshelfBlock extends Block {
 	public float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos) {
 		return 1;
 	}
-
 }

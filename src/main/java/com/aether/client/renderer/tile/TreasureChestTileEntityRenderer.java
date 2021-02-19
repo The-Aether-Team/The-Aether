@@ -1,4 +1,4 @@
-package com.aether.client.renderer.tileentity;
+package com.aether.client.renderer.tile;
 
 import com.aether.client.renderer.AetherAtlases;
 import net.minecraft.client.renderer.model.RenderMaterial;

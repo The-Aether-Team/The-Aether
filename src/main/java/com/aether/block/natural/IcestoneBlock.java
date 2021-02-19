@@ -1,5 +1,6 @@
 package com.aether.block.natural;
 
+import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -13,11 +14,20 @@ import net.minecraft.world.World;
 
 import net.minecraft.block.AbstractBlock;
 
-public class IcestoneBlock extends Block {
+import java.util.Map;
+import java.util.function.Supplier;
+
+public class IcestoneBlock extends Block
+{
+//	public static final Map<FluidState, Block> FREEZABLES = Maps.newHashMap();
 
 	public IcestoneBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
+
+//	public static void registerFreezableFluid(Supplier<FluidState> fluid, Supplier<Block> block) {
+//		FREEZABLES.put(fluid.get(), block.get());
+//	}
 	
 	@Override
 	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
@@ -27,12 +37,6 @@ public class IcestoneBlock extends Block {
 					BlockPos newPos = pos.add(x, y, z);
 					BlockState state2 = worldIn.getBlockState(newPos);
 					Block block = state2.getBlock();
-//					if (state2.getBlock() instanceof FlowingFluidBlock) {
-//						IFluidState fluidState = state2.getFluidState();
-//						if (!fluidState.isEmpty() && fluidState.getFluid().getAttributes().getTemperature() <= Fluids.WATER.getAttributes().getTemperature()) {
-//							
-//						}
-//					}	
 					if (block instanceof FlowingFluidBlock) {
 						FluidState fluidState = state2.getFluidState();
 						if (fluidState.isTagged(FluidTags.WATER)) { // TODO configuration value or registry for custom liquids?
