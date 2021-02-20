@@ -116,9 +116,8 @@ public class AetherRendering
     }
 
     public static void registerItemModelProperties() {
-        ItemModelsProperties.registerProperty(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pulling"), (stack, world, living) -> {
-            return living != null && living.isHandActive() && living.getActiveItemStack() == stack ? 1.0F : 0.0F;
-        });
+        ItemModelsProperties.registerProperty(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pulling"), (stack, world, living)
+                -> living != null && living.isHandActive() && living.getActiveItemStack() == stack ? 1.0F : 0.0F);
         ItemModelsProperties.registerProperty(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pull"), (stack, world, living) -> {
             if (living == null) {
                 return 0.0F;
@@ -126,23 +125,6 @@ public class AetherRendering
                 return living.getActiveItemStack() != stack ? 0.0F : (float)(stack.getUseDuration() - living.getItemInUseCount()) / 20.0F;
             }
         });
-    }
-
-
-    public static <B extends Block & IAetherBlockColor> void registerColor(B block) {
-        Minecraft.getInstance().getBlockColors().register((blockState, lightReader, blockPos, color) -> block.getColor(false), block);
-    }
-
-    public static <I extends Item & IAetherItemColor> void registerColor(I item) {
-        Minecraft.getInstance().getItemColors().register((itemStack, color) -> item.getColor(false), item);
-    }
-
-    public static void registerColor(Item item, IItemColor colorProvider) {
-        Minecraft.getInstance().getItemColors().register(colorProvider, item);
-    }
-
-    public static void registerColor(SpawnEggItem spawneggitem) {
-        Minecraft.getInstance().getItemColors().register((itemStack, tintIndex) -> spawneggitem.getColor(tintIndex), spawneggitem);
     }
 
     private static void render(Supplier<? extends Block> block, RenderType render) {
