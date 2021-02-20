@@ -1,6 +1,6 @@
 {
   "parent": "block/flower_pot_cross",
   "textures": {
-    "plant": "aether:block/purple_flower"
+    "plant": "aether:block/natural/purple_flower"
   }
 }

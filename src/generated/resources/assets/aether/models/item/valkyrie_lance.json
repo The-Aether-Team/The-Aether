@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "aether:item/weapons/valkyrie_lance"
+  }
+}

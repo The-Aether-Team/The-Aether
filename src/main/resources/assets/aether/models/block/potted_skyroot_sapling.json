@@ -1,6 +1,6 @@
 {
   "parent": "block/flower_pot_cross",
   "textures": {
-    "plant": "aether:block/skyroot_sapling"
+    "plant": "aether:block/natural/skyroot_sapling"
   }
 }

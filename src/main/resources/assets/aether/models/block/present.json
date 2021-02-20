@@ -1,9 +1,0 @@
-{
-	"parent": "aether:block/multi_texture_base",
-	"textures": {
-		"particle": "aether:block/present_top",
-		"bottom": "aether:block/present_top",
-		"top": "aether:block/present_top",
-		"side": "aether:block/present_side"
-	}
-}

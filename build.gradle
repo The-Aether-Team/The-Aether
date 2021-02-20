@@ -64,7 +64,9 @@ minecraft {
             //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             //property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'aether', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'aether', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources/')
+
+            environment 'target', 'fmluserdevdata'
 
             mods {
                 aether {
@@ -73,6 +75,10 @@ minecraft {
             }
         }
     }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
 }
 
 dependencies {

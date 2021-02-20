@@ -18,7 +18,6 @@ import com.aether.world.gen.tree.SkyrootTree;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.*;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
@@ -46,11 +45,9 @@ public class AetherBlocks
 
 	public static final RegistryObject<Block> COLD_AERCLOUD = register("cold_aercloud",
 			() -> new AercloudBlock(AbstractBlock.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).harvestTool(ToolType.HOE).notSolid()));
-	public static final RegistryObject<TintedAercloudBlock> BLUE_AERCLOUD = register("blue_aercloud",
-			() -> new BouncyAercloudBlock(TintedAercloudBlock.COLOR_BLUE_OLD, TintedAercloudBlock.COLOR_BLUE_NEW, AbstractBlock.Properties.from(AetherBlocks.COLD_AERCLOUD.get())));
-	public static final RegistryObject<TintedAercloudBlock> GOLDEN_AERCLOUD = register("golden_aercloud",
-			() -> new TintedAercloudBlock(TintedAercloudBlock.COLOR_GOLDEN_OLD, TintedAercloudBlock.COLOR_GOLDEN_NEW, AbstractBlock.Properties.from(AetherBlocks.COLD_AERCLOUD.get())));
-	public static final RegistryObject<Block> PINK_AERCLOUD = register("pink_aercloud", () -> new HealingAercloudBlock(AbstractBlock.Properties.from(AetherBlocks.COLD_AERCLOUD.get())));
+	public static final RegistryObject<Block> BLUE_AERCLOUD = register("blue_aercloud", () -> new BlueAercloudBlock(AbstractBlock.Properties.from(AetherBlocks.COLD_AERCLOUD.get())));
+	public static final RegistryObject<Block> GOLDEN_AERCLOUD = register("golden_aercloud", () -> new AercloudBlock(AbstractBlock.Properties.from(AetherBlocks.COLD_AERCLOUD.get())));
+	public static final RegistryObject<Block> PINK_AERCLOUD = register("pink_aercloud", () -> new PinkAercloudBlock(AbstractBlock.Properties.from(AetherBlocks.COLD_AERCLOUD.get())));
 
 	public static final RegistryObject<Block> ICESTONE = register("icestone",
 			() -> new IcestoneBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0F).tickRandomly().sound(SoundType.GLASS).harvestTool(ToolType.PICKAXE).harvestLevel(0).setRequiresTool()));
@@ -150,9 +147,9 @@ public class AetherBlocks
 	public static final RegistryObject<Block> CHEST_MIMIC = register("chest_mimic", () -> new ChestMimicBlock(AbstractBlock.Properties.from(Blocks.CHEST)));
 	public static final RegistryObject<Block> TREASURE_CHEST = register("treasure_chest", () -> new TreasureChestBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F)));
 
-	public static final RegistryObject<Block> PILLAR = register("pillar",
+	public static final RegistryObject<RotatedPillarBlock> PILLAR = register("pillar",
 			() -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.QUARTZ_PILLAR).hardnessAndResistance(0.5F).sound(SoundType.METAL)));
-	public static final RegistryObject<Block> PILLAR_TOP = register("pillar_top",
+	public static final RegistryObject<RotatedPillarBlock> PILLAR_TOP = register("pillar_top",
 			() -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.QUARTZ_PILLAR).hardnessAndResistance(0.5F).sound(SoundType.METAL)));
 
 	public static final RegistryObject<Block> PRESENT = register("present",
@@ -208,7 +205,7 @@ public class AetherBlocks
 
 	public static final RegistryObject<Block> SKYROOT_BOOKSHELF = register("skyroot_bookshelf", () -> new BookshelfBlock(AbstractBlock.Properties.from(Blocks.BOOKSHELF)));
 
-	public static final RegistryObject<Block> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(AbstractBlock.Properties.from(Blocks.WHITE_BED)));
+	public static final RegistryObject<BedBlock> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(AbstractBlock.Properties.from(Blocks.WHITE_BED)));
 
 
 	public static void registerPots() {

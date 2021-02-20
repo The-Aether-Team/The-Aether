@@ -1,9 +1,0 @@
-{
-	"parent": "aether:block/multi_texture_base",
-	"textures": {
-		"particle": "aether:block/enchanter_bottom",
-		"bottom": "aether:block/enchanter_bottom",
-		"top": "aether:block/incubator_top",
-		"side": "aether:block/incubator_side"
-	}
-}

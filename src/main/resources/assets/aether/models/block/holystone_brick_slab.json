@@ -1,8 +1,0 @@
-{
-  "parent": "block/slab",
-  "textures": {
-    "bottom": "aether:block/holystone_bricks",
-    "top": "aether:block/holystone_bricks",
-    "side": "aether:block/holystone_bricks"
-  }
-}

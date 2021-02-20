@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "side": "aether:block/construction/aerogel",
+    "bottom": "aether:block/construction/aerogel",
+    "top": "aether:block/construction/aerogel"
+  }
+}

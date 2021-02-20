@@ -1,7 +1,7 @@
 {
     "textures": {
-        "particle": "aether:block/aether_portal",
-        "portal": "aether:block/aether_portal"
+        "particle": "aether:block/miscellaneous/aether_portal",
+        "portal": "aether:block/miscellaneous/aether_portal"
     },
     "elements": [
         {   "from": [ 6, 0, 0 ],

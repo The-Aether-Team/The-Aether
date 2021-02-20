@@ -42,6 +42,7 @@ public class CrystalTreeFeature extends Feature<NoFeatureConfig> {
         int y = 75 + rand.nextInt(50);
 
         BlockPos blockpos1 = tree.getZeroPositionWithTransform(pos.add(x, y, z), Mirror.NONE, Rotation.NONE);
+        //TODO: find a way to make this work without checks by always generating at a position offset from whatever the y level of an island's surface is.
         if (reader.getBlockState(blockpos1.down(10)).isAir()) {
             tree.func_237146_a_(reader, blockpos1, blockpos1, placementsettings, rand, 4);
 

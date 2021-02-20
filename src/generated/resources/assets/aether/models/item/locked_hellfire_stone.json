@@ -1,0 +1,7 @@
+{
+  "parent": "aether:item/cube_all_with_overlay",
+  "textures": {
+    "overlay": "aether:block/dungeon/lock",
+    "face": "aether:block/dungeon/hellfire_stone"
+  }
+}

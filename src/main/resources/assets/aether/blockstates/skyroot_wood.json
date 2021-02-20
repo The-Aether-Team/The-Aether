@@ -1,7 +1,0 @@
-{
-  "variants": {
-      "axis=y": { "model": "aether:block/skyroot_wood" },
-      "axis=z": { "model": "aether:block/skyroot_wood", "x": 90 },
-      "axis=x": { "model": "aether:block/skyroot_wood", "x": 90, "y": 90 }
-  }
-}

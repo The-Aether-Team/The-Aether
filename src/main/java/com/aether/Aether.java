@@ -4,6 +4,8 @@ import com.aether.advancement.AetherAdvancements;
 import com.aether.capability.AetherCapabilities;
 import com.aether.client.AetherRendering;
 
+import com.aether.data.AetherBlockStates;
+import com.aether.data.AetherItemModels;
 import com.aether.loot.functions.DoubleDrops;
 import com.aether.network.AetherPacketHandler;
 import com.aether.registry.*;
@@ -11,6 +13,7 @@ import com.aether.world.dimension.AetherDimensions;
 import com.aether.world.gen.feature.AetherFeatures;
 import net.minecraft.block.*;
 import net.minecraft.client.world.DimensionRenderInfo;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.dispenser.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -28,6 +31,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
@@ -37,6 +41,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -59,6 +64,7 @@ public class Aether
 		modEventBus.addListener(this::commonSetup);
 		modEventBus.addListener(this::clientSetup);
 		modEventBus.addListener(this::curiosSetup);
+		modEventBus.addListener(this::dataSetup);
 
 		DeferredRegister<?>[] registers = {
 				AetherBlocks.BLOCKS,
@@ -97,8 +103,6 @@ public class Aether
 
 			AetherFeatures.registerConfiguredFeatures();
 			AetherAdvancements.init();
-
-			DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> AetherRendering::registerColors);
 		});
 	}
 
@@ -131,6 +135,18 @@ public class Aether
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.HANDS.getMessageBuilder().build());
 		//InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("misc").size(2).build());
 		//.setIcon(Resource Location(MODID, "textures/slots/pendant.png
+	}
+
+	public void dataSetup(GatherDataEvent event) {
+		DataGenerator generator = event.getGenerator();
+		ExistingFileHelper helper = event.getExistingFileHelper();
+		if (event.includeClient()) {
+			generator.addProvider(new AetherBlockStates(generator, helper));
+			generator.addProvider(new AetherItemModels(generator, helper));
+		}
+		else if (event.includeServer()) {
+			//more
+		}
 	}
 
 	private void registerLoot()

@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "aether:block/aether_portal"
+		"all": "aether:block/miscellaneous/aether_portal"
 	}
 }

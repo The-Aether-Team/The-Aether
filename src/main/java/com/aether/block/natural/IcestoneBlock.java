@@ -28,6 +28,8 @@ public class IcestoneBlock extends Block
 //	public static void registerFreezableFluid(Supplier<FluidState> fluid, Supplier<Block> block) {
 //		FREEZABLES.put(fluid.get(), block.get());
 //	}
+
+	//TODO: implement the above commented out code to the modpack config.
 	
 	@Override
 	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {

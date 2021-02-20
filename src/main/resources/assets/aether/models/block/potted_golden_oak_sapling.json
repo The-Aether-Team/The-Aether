@@ -1,6 +1,6 @@
 {
   "parent": "block/flower_pot_cross",
   "textures": {
-    "plant": "aether:block/golden_oak_sapling"
+    "plant": "aether:block/natural/golden_oak_sapling"
   }
 }

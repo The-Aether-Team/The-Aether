@@ -5,6 +5,7 @@ import java.util.Random;
 import com.aether.registry.AetherBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SnowyDirtBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
@@ -13,7 +14,7 @@ import net.minecraft.world.server.ServerWorld;
 
 import net.minecraft.block.AbstractBlock;
 
-public class EnchantedAetherGrassBlock extends Block {
+public class EnchantedAetherGrassBlock extends SnowyDirtBlock {
 
 	public EnchantedAetherGrassBlock(AbstractBlock.Properties properties) {
 		super(properties);

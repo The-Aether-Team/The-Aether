@@ -2,9 +2,9 @@
     "ambientocclusion": true,
     "parent": "block/block",
     "textures": {
-	"stem": "aether:block/berry_bush_stem",
-	"bush": "aether:block/berry_bush",
-        "particle": "aether:block/berry_bush"
+        "particle": "aether:block/natural/berry_bush",
+	    "stem": "aether:block/natural/berry_bush_stem",
+	    "bush": "aether:block/natural/berry_bush"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

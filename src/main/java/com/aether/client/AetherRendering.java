@@ -39,16 +39,6 @@ import java.util.function.Supplier;
 @OnlyIn(Dist.CLIENT)
 public class AetherRendering
 {
-    public static void registerColors() {
-        registerColor(AetherBlocks.BLUE_AERCLOUD.get());
-        registerColor(AetherBlocks.GOLDEN_AERCLOUD.get());
-
-        registerColor(AetherBlocks.BLUE_AERCLOUD.get().asItem());
-        registerColor(AetherBlocks.GOLDEN_AERCLOUD.get().asItem());
-        registerColor(AetherItems.MIMIC_SPAWN_EGG.get());
-        registerColor(AetherItems.SENTRY_SPAWN_EGG.get());
-    }
-
     public static void registerBlockRenderLayers() {
         RenderType cutout = RenderType.getCutout();
         RenderType mipped = RenderType.getCutoutMipped();
