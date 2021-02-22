@@ -29,7 +29,7 @@ public class AetherEntityTags extends EntityTypeTagsProvider
         //aether
         tag(AetherTags.Entities.PIGS)
                 .add(EntityType.PIG)
-                .add(AetherEntityTypes.PHYG_TYPE)
+                .add(AetherEntityTypes.PHYG.get())
                 .add(EntityType.PIGLIN)
                 .add(EntityType.field_242287_aj) //PIGLIN BRUTE
                 .add(EntityType.ZOMBIFIED_PIGLIN)
@@ -42,14 +42,14 @@ public class AetherEntityTags extends EntityTypeTagsProvider
 
         //vanilla
         tag(EntityTypeTags.ARROWS)
-                .add(AetherEntityTypes.PHOENIX_ARROW_TYPE)
-                .add(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW_TYPE);
+                .add(AetherEntityTypes.PHOENIX_ARROW.get())
+                .add(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW.get());
         tag(EntityTypeTags.IMPACT_PROJECTILES)
-                .add(AetherEntityTypes.GOLDEN_DART_TYPE)
-                .add(AetherEntityTypes.POISON_DART_TYPE)
-                .add(AetherEntityTypes.ENCHANTED_DART_TYPE)
-                .add(AetherEntityTypes.LIGHTNING_KNIFE_TYPE) //TODO: Lightning knife doesnt work with this.
-                .add(AetherEntityTypes.HAMMER_PROJECTILE_TYPE);
+                .add(AetherEntityTypes.GOLDEN_DART.get())
+                .add(AetherEntityTypes.POISON_DART.get())
+                .add(AetherEntityTypes.ENCHANTED_DART.get())
+                .add(AetherEntityTypes.LIGHTNING_KNIFE.get()) //TODO: Lightning knife doesnt work with this.
+                .add(AetherEntityTypes.HAMMER_PROJECTILE.get());
     }
 
     private TagsProvider.Builder<EntityType<?>> tag(ITag.INamedTag<EntityType<?>> tag) {

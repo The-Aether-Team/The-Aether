@@ -5,6 +5,7 @@ import com.aether.capability.AetherCapabilities;
 import com.aether.client.AetherRendering;
 
 import com.aether.data.*;
+import com.aether.data.AetherLootTables;
 import com.aether.loot.functions.DoubleDrops;
 import com.aether.network.AetherPacketHandler;
 import com.aether.registry.*;
@@ -143,7 +144,7 @@ public class Aether
 		}
 		if (event.includeServer()) {
 			generator.addProvider(new AetherRecipes(generator));
-			//loot tables
+			generator.addProvider(new AetherLootTables(generator));
 			AetherBlockTags blockTags = new AetherBlockTags(generator, helper);
 			generator.addProvider(blockTags);
 			generator.addProvider(new AetherItemTags(generator, blockTags, helper));
