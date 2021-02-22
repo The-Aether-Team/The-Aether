@@ -58,7 +58,7 @@ public class AetherRecipesProvider extends RecipeProvider
                 .patternLine("M/M")
                 .patternLine("M/M")
                 .key('M', materialIn.get())
-                .key('/', AetherTags.Items.SKYROOT_STICK)
+                .key('/', AetherTags.Items.SKYROOT_STICKS)
                 .addCriterion("has_" + materialIn.get().getRegistryName().getPath(), hasItem(materialIn.get()));
     }
 
@@ -67,7 +67,7 @@ public class AetherRecipesProvider extends RecipeProvider
                 .patternLine("/M/")
                 .patternLine("/M/")
                 .key('M', materialIn.get())
-                .key('/', AetherTags.Items.SKYROOT_STICK)
+                .key('/', AetherTags.Items.SKYROOT_STICKS)
                 .addCriterion("has_" + materialIn.get().getRegistryName().getPath(), hasItem(materialIn.get()));
     }
 
@@ -101,7 +101,7 @@ public class AetherRecipesProvider extends RecipeProvider
                 .patternLine(" / ")
                 .patternLine(" / ")
                 .key('#', materialIn.get())
-                .key('/', AetherTags.Items.SKYROOT_STICK)
+                .key('/', AetherTags.Items.SKYROOT_STICKS)
                 .addCriterion("has_" + materialIn.get().getRegistryName().getPath(), hasItem(materialIn.get()));
     }
 
@@ -111,7 +111,7 @@ public class AetherRecipesProvider extends RecipeProvider
                 .patternLine("#/")
                 .patternLine(" /")
                 .key('#', materialIn.get())
-                .key('/', AetherTags.Items.SKYROOT_STICK)
+                .key('/', AetherTags.Items.SKYROOT_STICKS)
                 .addCriterion("has_" + materialIn.get().getRegistryName().getPath(), hasItem(materialIn.get()));
     }
 
@@ -121,7 +121,7 @@ public class AetherRecipesProvider extends RecipeProvider
                 .patternLine("/")
                 .patternLine("/")
                 .key('#', materialIn.get())
-                .key('/', AetherTags.Items.SKYROOT_STICK)
+                .key('/', AetherTags.Items.SKYROOT_STICKS)
                 .addCriterion("has_" + materialIn.get().getRegistryName().getPath(), hasItem(materialIn.get()));
     }
 
@@ -131,7 +131,7 @@ public class AetherRecipesProvider extends RecipeProvider
                 .patternLine("#")
                 .patternLine("/")
                 .key('#', materialIn.get())
-                .key('/', AetherTags.Items.SKYROOT_STICK)
+                .key('/', AetherTags.Items.SKYROOT_STICKS)
                 .addCriterion("has_" + materialIn.get().getRegistryName().getPath(), hasItem(materialIn.get()));
     }
 
@@ -141,7 +141,7 @@ public class AetherRecipesProvider extends RecipeProvider
                 .patternLine(" / ")
                 .patternLine(" / ")
                 .key('#', materialIn.get())
-                .key('/', AetherTags.Items.SKYROOT_STICK)
+                .key('/', AetherTags.Items.SKYROOT_STICKS)
                 .addCriterion("has_" + materialIn.get().getRegistryName().getPath(), hasItem(materialIn.get()));
     }
 
@@ -151,7 +151,7 @@ public class AetherRecipesProvider extends RecipeProvider
                 .patternLine("#/")
                 .patternLine(" /")
                 .key('#', materialIn.get())
-                .key('/', AetherTags.Items.SKYROOT_STICK)
+                .key('/', AetherTags.Items.SKYROOT_STICKS)
                 .addCriterion("has_" + materialIn.get().getRegistryName().getPath(), hasItem(materialIn.get()));
     }
 
@@ -161,7 +161,7 @@ public class AetherRecipesProvider extends RecipeProvider
                 .patternLine("/")
                 .patternLine("/")
                 .key('#', materialIn.get())
-                .key('/', AetherTags.Items.SKYROOT_STICK)
+                .key('/', AetherTags.Items.SKYROOT_STICKS)
                 .addCriterion("has_" + materialIn.get().getRegistryName().getPath(), hasItem(materialIn.get()));
     }
 
@@ -171,7 +171,7 @@ public class AetherRecipesProvider extends RecipeProvider
                 .patternLine("#")
                 .patternLine("/")
                 .key('#', materialIn.get())
-                .key('/', AetherTags.Items.SKYROOT_STICK)
+                .key('/', AetherTags.Items.SKYROOT_STICKS)
                 .addCriterion("has_" + materialIn.get().getRegistryName().getPath(), hasItem(materialIn.get()));
     }
 

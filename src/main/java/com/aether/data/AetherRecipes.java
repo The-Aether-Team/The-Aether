@@ -75,7 +75,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("A")
                 .patternLine("S")
                 .key('A', AetherItems.AMBROSIUM_SHARD.get())
-                .key('S', AetherTags.Items.SKYROOT_STICK)
+                .key('S', AetherTags.Items.SKYROOT_STICKS)
                 .addCriterion("has_holystone_pickaxe", hasItem(AetherItems.HOLYSTONE_PICKAXE.get()))
                 .build(consumer);
 
@@ -167,7 +167,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("S")
                 .patternLine("G")
                 .key('F', Tags.Items.FEATHERS)
-                .key('S', AetherTags.Items.SKYROOT_STICK)
+                .key('S', AetherTags.Items.SKYROOT_STICKS)
                 .key('G', AetherItems.GOLDEN_AMBER.get())
                 .addCriterion("has_feather", hasItem(Tags.Items.FEATHERS))
                 .addCriterion("has_amber", hasItem(AetherItems.GOLDEN_AMBER.get()))

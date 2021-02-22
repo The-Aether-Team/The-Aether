@@ -4,9 +4,7 @@ import com.aether.advancement.AetherAdvancements;
 import com.aether.capability.AetherCapabilities;
 import com.aether.client.AetherRendering;
 
-import com.aether.data.AetherBlockStates;
-import com.aether.data.AetherItemModels;
-import com.aether.data.AetherRecipes;
+import com.aether.data.*;
 import com.aether.loot.functions.DoubleDrops;
 import com.aether.network.AetherPacketHandler;
 import com.aether.registry.*;
@@ -145,7 +143,11 @@ public class Aether
 		}
 		if (event.includeServer()) {
 			generator.addProvider(new AetherRecipes(generator));
-			//more
+			//loot tables
+			AetherBlockTags blockTags = new AetherBlockTags(generator, helper);
+			generator.addProvider(blockTags);
+			generator.addProvider(new AetherItemTags(generator, blockTags, helper));
+			generator.addProvider(new AetherEntityTags(generator, helper));
 		}
 	}
 

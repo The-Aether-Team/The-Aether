@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "aether:music_disc_aether_tune",
+    "aether:music_disc_ascending_dawn",
+    "aether:music_disc_welcoming_skies",
+    "aether:music_disc_legacy"
+  ]
+}
