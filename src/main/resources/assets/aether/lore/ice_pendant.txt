@@ -1,1 +1,0 @@
-A pendant which allows you to freeze water, and lava when walked on.

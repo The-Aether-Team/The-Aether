@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "brewing_stand",
+  "pattern": [
+    " B ",
+    "HHH"
+  ],
+  "key": {
+    "B": {
+      "tag": "forge:rods/blaze"
+    },
+    "H": {
+      "item": "aether:holystone"
+    }
+  },
+  "result": {
+    "item": "minecraft:brewing_stand"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "loom",
+  "pattern": [
+    "TT",
+    "SS"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:string"
+    },
+    "S": {
+      "item": "aether:skyroot_planks"
+    }
+  },
+  "result": {
+    "item": "minecraft:loom"
+  }
+}

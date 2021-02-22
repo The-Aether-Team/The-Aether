@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "bowl",
+  "pattern": [
+    "S S",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "aether:skyroot_planks"
+    }
+  },
+  "result": {
+    "item": "minecraft:bowl",
+    "count": 4
+  }
+}

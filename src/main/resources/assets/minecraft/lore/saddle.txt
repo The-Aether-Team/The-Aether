@@ -1,1 +1,0 @@
-An item used to mount on specific mobs. Allows for proper control on a mount.

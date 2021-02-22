@@ -1,1 +1,0 @@
-A ranged weapon which can be used to attack enemies from a safe distance.

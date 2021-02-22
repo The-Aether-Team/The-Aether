@@ -1,1 +1,0 @@
-Can be used to send messages to players or keep records of events.

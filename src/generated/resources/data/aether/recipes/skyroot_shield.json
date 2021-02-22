@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "shield",
+  "pattern": [
+    "SIS",
+    "SSS",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "aether:skyroot_planks"
+    },
+    "I": {
+      "tag": "forge:ingots/iron"
+    }
+  },
+  "result": {
+    "item": "minecraft:shield"
+  }
+}

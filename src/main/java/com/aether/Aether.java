@@ -6,6 +6,7 @@ import com.aether.client.AetherRendering;
 
 import com.aether.data.AetherBlockStates;
 import com.aether.data.AetherItemModels;
+import com.aether.data.AetherRecipes;
 import com.aether.loot.functions.DoubleDrops;
 import com.aether.network.AetherPacketHandler;
 import com.aether.registry.*;
@@ -30,10 +31,8 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.RegistryObject;
@@ -144,7 +143,8 @@ public class Aether
 			generator.addProvider(new AetherBlockStates(generator, helper));
 			generator.addProvider(new AetherItemModels(generator, helper));
 		}
-		else if (event.includeServer()) {
+		if (event.includeServer()) {
+			generator.addProvider(new AetherRecipes(generator));
 			//more
 		}
 	}

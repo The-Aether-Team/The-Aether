@@ -27,6 +27,7 @@ public class AetherTags
 	
 	public static class Items
 	{
+		public static final ITag.INamedTag<Item> SKYROOT_STICK = tag("skyroot_stick");
 		public static final ITag.INamedTag<Item> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 		public static final ITag.INamedTag<Item> SKYROOT_TOOLS = tag("skyroot_tools");
 		public static final ITag.INamedTag<Item> ZANITE_TOOLS = tag("zanite_tools");

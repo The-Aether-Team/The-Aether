@@ -1,1 +1,0 @@
-Crafted with wool and planks. You can only sleep at night and skip night time. Cannot sleep while mobs are closeby.

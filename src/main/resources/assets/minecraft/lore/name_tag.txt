@@ -1,1 +1,0 @@
-Used to name mobs to what the name tag is named. Can be changed using an anvil.

@@ -1,1 +1,0 @@
-A shield that protects the user from incoming projectile attacks.

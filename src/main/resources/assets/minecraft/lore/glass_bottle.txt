@@ -1,1 +1,0 @@
-A bottle which can carry water and be used for potions.

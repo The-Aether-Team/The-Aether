@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MMM",
+    "M M",
+    "M M"
+  ],
+  "key": {
+    "M": {
+      "item": "aether:enchanted_gravitite"
+    }
+  },
+  "result": {
+    "item": "aether:gravitite_leggings"
+  }
+}

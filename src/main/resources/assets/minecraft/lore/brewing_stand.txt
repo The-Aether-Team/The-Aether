@@ -1,1 +1,0 @@
-The workstation of potion making. Can make up to three potions at a time.
