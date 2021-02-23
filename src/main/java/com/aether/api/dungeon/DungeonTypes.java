@@ -2,7 +2,7 @@ package com.aether.api.dungeon;
 
 import com.aether.Aether;
 
-import com.aether.registry.AetherLootTables;
+import com.aether.registry.AetherLoot;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -24,9 +24,9 @@ public class DungeonTypes {
 		public static void registerAetherDungeonTypes(RegistryEvent.Register<DungeonType> event) {
 			event.getRegistry().registerAll(new DungeonType[] {
 				
-				dungeonType("bronze", new DungeonType(AetherLootTables.CHESTS_BRONZE_DUNGEON_REWARD)),
-				dungeonType("silver", new DungeonType(AetherLootTables.CHESTS_SILVER_DUNGEON_REWARD)),
-				dungeonType("gold", new DungeonType(AetherLootTables.CHESTS_GOLD_DUNGEON_REWARD)),
+				dungeonType("bronze", new DungeonType(AetherLoot.CHESTS_BRONZE_DUNGEON_REWARD)),
+				dungeonType("silver", new DungeonType(AetherLoot.CHESTS_SILVER_DUNGEON_REWARD)),
+				dungeonType("gold", new DungeonType(AetherLoot.CHESTS_GOLD_DUNGEON_REWARD)),
 				
 			});
 		}

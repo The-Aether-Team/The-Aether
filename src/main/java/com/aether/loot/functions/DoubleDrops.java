@@ -1,5 +1,6 @@
 package com.aether.loot.functions;
 
+import com.aether.registry.AetherLoot;
 import com.aether.registry.AetherTags;
 import com.aether.block.util.IAetherDoubleDropBlock;
 import com.aether.block.state.properties.AetherBlockStateProperties;
@@ -16,8 +17,8 @@ import net.minecraft.loot.LootFunctionType;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.conditions.ILootCondition;
 
-public class DoubleDrops extends LootFunction {
-
+public class DoubleDrops extends LootFunction
+{
 	protected DoubleDrops(ILootCondition[] conditionsIn) {
 		super(conditionsIn);
 	}
@@ -40,11 +41,11 @@ public class DoubleDrops extends LootFunction {
 
     @Override
     public LootFunctionType getFunctionType() {
-        return new LootFunctionType(new DoubleDrops.Serializer());
+        return AetherLoot.DOUBLE_DROPS;
     }
 
-    public static class Serializer extends LootFunction.Serializer<DoubleDrops> {
-
+    public static class Serializer extends LootFunction.Serializer<DoubleDrops>
+	{
 		@Override
 		public void serialize(JsonObject object, DoubleDrops functionClazz, JsonSerializationContext serializationContext) {
 			super.serialize(object, functionClazz, serializationContext);
@@ -54,7 +55,5 @@ public class DoubleDrops extends LootFunction {
 		public DoubleDrops deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditionsIn) {
 			return new DoubleDrops(conditionsIn);
 		}
-
 	}
-
 }

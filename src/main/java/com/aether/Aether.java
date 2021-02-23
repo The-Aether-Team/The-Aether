@@ -95,7 +95,6 @@ public class Aether
 			AetherEntityTypes.registerSpawnPlacements();
 			AetherEntityTypes.registerEntityAttributes();
 
-			registerLoot();
 			registerDispenserBehaviors();
 			registerComposting();
 
@@ -150,13 +149,6 @@ public class Aether
 			generator.addProvider(new AetherItemTags(generator, blockTags, helper));
 			generator.addProvider(new AetherEntityTags(generator, helper));
 		}
-	}
-
-	private void registerLoot()
-	{
-		LootFunctionManager.func_237451_a_(new ResourceLocation(Aether.MODID, "double_drops").toString(), new DoubleDrops.Serializer());
-
-		//LootConditionManager.registerCondition(new ######.Serializer());
 	}
 
 	private void registerDispenserBehaviors() {
