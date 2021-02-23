@@ -30,22 +30,22 @@ public class CrystalTreeFeature extends Feature<NoFeatureConfig> {
     @Override
     public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
         Rotation rotation = Rotation.randomRotation(rand);
-
         TemplateManager templatemanager = reader.getWorld().getServer().getTemplateManager();
         Template tree = templatemanager.getTemplateDefaulted(TREE);
         Template fruit = templatemanager.getTemplateDefaulted(FRUIT);
         ChunkPos chunkpos = new ChunkPos(pos);
         MutableBoundingBox mutableboundingbox = new MutableBoundingBox(chunkpos.getXStart(), 0, chunkpos.getZStart(), chunkpos.getXEnd(), 256, chunkpos.getZEnd());
-        PlacementSettings placementsettings = (new PlacementSettings()).setBoundingBox(mutableboundingbox).setRandom(rand).addProcessor(BlockIgnoreStructureProcessor.AIR_AND_STRUCTURE_BLOCK);
+        PlacementSettings placementsettings = (new PlacementSettings()).setRotation(rotation).setBoundingBox(mutableboundingbox).setRandom(rand).addProcessor(BlockIgnoreStructureProcessor.AIR_AND_STRUCTURE_BLOCK);
         BlockPos blockpos = tree.transformedSize(rotation);
         int x = rand.nextInt(16 - blockpos.getX());
         int z = rand.nextInt(16 - blockpos.getZ());
+
         int y = Math.max(Math.min(reader.getHeight(Heightmap.Type.OCEAN_FLOOR_WG, pos.getX() + x, pos.getZ() + z) + rand.nextInt(20)+40, 200), 100);
 
         BlockPos blockpos1 = tree.getZeroPositionWithTransform(pos.add(x, y, z), Mirror.NONE, rotation);
-        //TODO: find a way to make this work without checks by always generating at a position offset from whatever the y level of an island's surface is.
         tree.func_237146_a_(reader, blockpos1, blockpos1, placementsettings, rand, 4);
-        placementsettings.addProcessor(new IntegrityProcessor(0.2F));
+        IntegrityProcessor integrityprocessor = new IntegrityProcessor(0.2F);
+        placementsettings.clearProcessors().addProcessor(integrityprocessor);
         fruit.func_237146_a_(reader, blockpos1, blockpos1, placementsettings, rand, 4);
         return true;
     }
