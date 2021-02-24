@@ -97,7 +97,7 @@ public class AetherBlocks
 	public static final RegistryObject<Block> AMBROSIUM_TORCH = register("ambrosium_torch", () -> new TorchBlock(AbstractBlock.Properties.from(Blocks.TORCH), ParticleTypes.FLAME));
 
 	public static final RegistryObject<Block> BERRY_BUSH = register("berry_bush", () -> new BerryBushBlock(AbstractBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.2F).sound(SoundType.PLANT).harvestTool(ToolType.HOE).notSolid()));
-	public static final RegistryObject<Block> BERRY_BUSH_STEM = register("berry_bush_stem", () -> new BerryBushStemBlock(AbstractBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.2F).harvestTool(ToolType.AXE).sound(SoundType.PLANT)));
+	public static final RegistryObject<Block> BERRY_BUSH_STEM = register("berry_bush_stem", () -> new BerryBushStemBlock(AbstractBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.2F).harvestTool(ToolType.AXE).sound(SoundType.PLANT).doesNotBlockMovement()));
 
 	public static final RegistryObject<Block> PURPLE_FLOWER = register("purple_flower", () -> new FlowerBlock(Effects.SATURATION, 7, AbstractBlock.Properties.from(Blocks.DANDELION)));
 	public static final RegistryObject<Block> WHITE_FLOWER = register("white_flower", () -> new FlowerBlock(Effects.SATURATION, 7, AbstractBlock.Properties.from(Blocks.DANDELION)));
