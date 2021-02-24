@@ -269,6 +269,9 @@ public class AetherBlocks
 			else if (Objects.requireNonNull(block.get()) == TREASURE_CHEST.get()) {
 				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS).setISTER(() -> AetherRendering::treasureChestRenderer));
 			}
+			else if (Objects.requireNonNull(block.get()) == SUN_ALTAR.get()) {
+				return new BedItem(Objects.requireNonNull(block.get()), new Item.Properties().isImmuneToFire().group(AetherItemGroups.AETHER_BLOCKS));
+			}
 			else if (Objects.requireNonNull(block.get()) == SKYROOT_BED.get()) {
 				return new BedItem(Objects.requireNonNull(block.get()), new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_BLOCKS).setISTER(() -> AetherRendering::skyrootBedRenderer));
 			}
