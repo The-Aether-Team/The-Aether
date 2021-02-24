@@ -9,10 +9,11 @@ import net.minecraft.state.StateContainer;
 
 import net.minecraft.block.AbstractBlock;
 
-public class DefaultAetherDoubleDropBlock extends Block implements IAetherDoubleDropBlock {
+public class AetherDoubleDropBlock extends Block implements IAetherDoubleDropBlock
+{
 	public static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
 
-	public DefaultAetherDoubleDropBlock(AbstractBlock.Properties properties) {
+	public AetherDoubleDropBlock(AbstractBlock.Properties properties) {
 		super(properties);
 		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
 	}
@@ -21,5 +22,4 @@ public class DefaultAetherDoubleDropBlock extends Block implements IAetherDouble
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(DOUBLE_DROPS);
 	}
-
 }

@@ -1,5 +1,6 @@
 package com.aether.loot.functions;
 
+import com.aether.Aether;
 import com.aether.registry.AetherLoot;
 import com.aether.registry.AetherTags;
 import com.aether.block.util.IAetherDoubleDropBlock;
@@ -26,10 +27,12 @@ public class DoubleDrops extends LootFunction
 	@Override
 	protected ItemStack doApply(ItemStack stack, LootContext context) {
 		ItemStack tool = context.get(LootParameters.TOOL);
-		if (tool != null && tool.getItem().isIn(AetherTags.Items.SKYROOT_TOOLS) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool) == 0) {
+		if (tool != null && tool.getItem().isIn(AetherTags.Items.SKYROOT_TOOLS) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool) == 0 && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool) == 0) {
 			BlockState state = context.get(LootParameters.BLOCK_STATE);
-			if (state == null || !(state.getBlock() instanceof IAetherDoubleDropBlock) || state.get(AetherBlockStateProperties.DOUBLE_DROPS) == true) {
-				stack.setCount(2 * stack.getCount());
+			if (state != null && (!(state.getBlock() instanceof IAetherDoubleDropBlock) || state.get(AetherBlockStateProperties.DOUBLE_DROPS))) {
+				if (tool.getToolTypes().contains(state.getHarvestTool())) {
+					stack.setCount(2 * stack.getCount());
+				}
 			}
 		}
 		return stack;

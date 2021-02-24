@@ -71,5 +71,10 @@
         }
       ]
     }
+  ],
+  "functions": [
+    {
+      "function": "aether:double_drops"
+    }
   ]
 }

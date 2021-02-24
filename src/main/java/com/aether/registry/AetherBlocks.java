@@ -39,10 +39,10 @@ public class AetherBlocks
 
 	public static final RegistryObject<Block> AETHER_GRASS_BLOCK = register("aether_grass_block", () -> new AetherGrassBlock(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK).harvestTool(ToolType.SHOVEL)));
 	public static final RegistryObject<Block> ENCHANTED_AETHER_GRASS_BLOCK  = register("enchanted_aether_grass_block", () -> new EnchantedAetherGrassBlock(AbstractBlock.Properties.from(Blocks.GRASS_BLOCK).harvestTool(ToolType.SHOVEL)));
-	public static final RegistryObject<Block> AETHER_DIRT = register("aether_dirt", () -> new DefaultAetherDoubleDropBlock(AbstractBlock.Properties.from(Blocks.DIRT).harvestTool(ToolType.SHOVEL)));
-	public static final RegistryObject<Block> QUICKSOIL = register("quicksoil", () -> new DefaultAetherDoubleDropBlock(AbstractBlock.Properties.from(Blocks.SAND).harvestTool(ToolType.SHOVEL).slipperiness(1.1F)));
-	public static final RegistryObject<Block> HOLYSTONE = register("holystone", () -> new DefaultAetherDoubleDropBlock(AbstractBlock.Properties.from(Blocks.STONE).hardnessAndResistance(0.5F, 6.0f)));
-	public static final RegistryObject<Block> MOSSY_HOLYSTONE = register("mossy_holystone", () -> new DefaultAetherDoubleDropBlock(AbstractBlock.Properties.from(AetherBlocks.HOLYSTONE.get())));
+	public static final RegistryObject<Block> AETHER_DIRT = register("aether_dirt", () -> new AetherDoubleDropBlock(AbstractBlock.Properties.from(Blocks.DIRT).harvestTool(ToolType.SHOVEL)));
+	public static final RegistryObject<Block> QUICKSOIL = register("quicksoil", () -> new AetherDoubleDropBlock(AbstractBlock.Properties.from(Blocks.SAND).harvestTool(ToolType.SHOVEL).slipperiness(1.1F)));
+	public static final RegistryObject<Block> HOLYSTONE = register("holystone", () -> new AetherDoubleDropBlock(AbstractBlock.Properties.from(Blocks.STONE).hardnessAndResistance(0.5F, 6.0f).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> MOSSY_HOLYSTONE = register("mossy_holystone", () -> new AetherDoubleDropBlock(AbstractBlock.Properties.from(AetherBlocks.HOLYSTONE.get())));
 
 	public static final RegistryObject<Block> COLD_AERCLOUD = register("cold_aercloud",
 			() -> new AercloudBlock(AbstractBlock.Properties.create(Material.ICE).hardnessAndResistance(0.2F).sound(SoundType.CLOTH).harvestTool(ToolType.HOE).notSolid()));
@@ -71,15 +71,15 @@ public class AetherBlocks
 	public static final RegistryObject<Block> DECORATED_HOLIDAY_LEAVES = register("decorated_holiday_leaves",
 			() -> new LeavesWithParticlesBlock(1.0F, 1.0F, 1.0F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
 
-	public static final RegistryObject<RotatedPillarBlock> SKYROOT_LOG = register("skyroot_log", () -> new AetherLogBlock(AbstractBlock.Properties.from(Blocks.OAK_LOG)));
-	public static final RegistryObject<RotatedPillarBlock> GOLDEN_OAK_LOG = register("golden_oak_log", () -> new AetherLogBlock(AbstractBlock.Properties.from(Blocks.OAK_LOG)));
-	public static final RegistryObject<RotatedPillarBlock> STRIPPED_SKYROOT_LOG = register("stripped_skyroot_log", () -> new AetherLogBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_LOG)));
-	public static final RegistryObject<RotatedPillarBlock> SKYROOT_WOOD = register("skyroot_wood", () -> new AetherDoubleDropsRotatedPillarBlock(AbstractBlock.Properties.from(Blocks.OAK_WOOD)));
-	public static final RegistryObject<RotatedPillarBlock> GOLDEN_OAK_WOOD = register("golden_oak_wood", () -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.OAK_WOOD)));
-	public static final RegistryObject<RotatedPillarBlock> STRIPPED_SKYROOT_WOOD = register("stripped_skyroot_wood", () -> new AetherDoubleDropsRotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_WOOD)));
+	public static final RegistryObject<RotatedPillarBlock> SKYROOT_LOG = register("skyroot_log", () -> new AetherLogBlock(AbstractBlock.Properties.from(Blocks.OAK_LOG).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<RotatedPillarBlock> GOLDEN_OAK_LOG = register("golden_oak_log", () -> new AetherLogBlock(AbstractBlock.Properties.from(Blocks.OAK_LOG).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<RotatedPillarBlock> STRIPPED_SKYROOT_LOG = register("stripped_skyroot_log", () -> new AetherLogBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_LOG).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<RotatedPillarBlock> SKYROOT_WOOD = register("skyroot_wood", () -> new AetherDoubleDropsRotatedPillarBlock(AbstractBlock.Properties.from(Blocks.OAK_WOOD).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<RotatedPillarBlock> GOLDEN_OAK_WOOD = register("golden_oak_wood", () -> new AetherDoubleDropsRotatedPillarBlock(AbstractBlock.Properties.from(Blocks.OAK_WOOD).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<RotatedPillarBlock> STRIPPED_SKYROOT_WOOD = register("stripped_skyroot_wood", () -> new AetherDoubleDropsRotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_WOOD).harvestTool(ToolType.AXE)));
 
-	public static final RegistryObject<Block> SKYROOT_PLANKS = register("skyroot_planks", () -> new Block(AbstractBlock.Properties.from(Blocks.OAK_PLANKS)));
-	public static final RegistryObject<Block> HOLYSTONE_BRICKS = register("holystone_bricks", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE_BRICKS).hardnessAndResistance(0.5F, 10.0F)));
+	public static final RegistryObject<Block> SKYROOT_PLANKS = register("skyroot_planks", () -> new Block(AbstractBlock.Properties.from(Blocks.OAK_PLANKS).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<Block> HOLYSTONE_BRICKS = register("holystone_bricks", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE_BRICKS).hardnessAndResistance(0.5F, 10.0F).harvestTool(ToolType.PICKAXE)));
 	public static final RegistryObject<Block> QUICKSOIL_GLASS = register("quicksoil_glass", () -> new GlassBlock(AbstractBlock.Properties.from(Blocks.GLASS).slipperiness(1.1F).setLightLevel((state) -> 11)));
 	public static final RegistryObject<Block> AEROGEL = register("aerogel", () -> new AerogelBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.0F, 2000.0F).sound(SoundType.METAL).notSolid().harvestTool(ToolType.PICKAXE).harvestLevel(3).setRequiresTool()));
 
@@ -87,11 +87,11 @@ public class AetherBlocks
 	public static final RegistryObject<Block> ENCHANTED_GRAVITITE = register("enchanted_gravitite", () -> new FloatingBlock(true, AbstractBlock.Properties.from(Blocks.IRON_BLOCK).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
 
 	public static final RegistryObject<Block> ENCHANTER = register("enchanter",
-			() -> new EnchanterBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F).sound(SoundType.STONE)));
+			() -> new EnchanterBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
 	public static final RegistryObject<Block> FREEZER = register("freezer",
-			() -> new FreezerBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F).sound(SoundType.STONE)));
+			() -> new FreezerBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
 	public static final RegistryObject<Block> INCUBATOR = register("incubator",
-			() -> new IncubatorBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F).sound(SoundType.STONE)));
+			() -> new IncubatorBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
 
 	public static final RegistryObject<Block> AMBROSIUM_WALL_TORCH = BLOCKS.register("ambrosium_wall_torch", () -> new WallTorchBlock(AbstractBlock.Properties.from(Blocks.WALL_TORCH), ParticleTypes.FLAME));
 	public static final RegistryObject<Block> AMBROSIUM_TORCH = register("ambrosium_torch", () -> new TorchBlock(AbstractBlock.Properties.from(Blocks.TORCH), ParticleTypes.FLAME));
@@ -145,7 +145,7 @@ public class AetherBlocks
 			() -> new Block(AbstractBlock.Properties.from(Blocks.BEDROCK).setLightLevel((state) -> 11)));
 	//new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_LIGHT_HELLFIRE_STONE.getDefaultState(), Block.Properties.from(Blocks.BEDROCK).setLightLevel((state) -> 11)));
 
-	public static final RegistryObject<Block> CHEST_MIMIC = register("chest_mimic", () -> new ChestMimicBlock(AbstractBlock.Properties.from(Blocks.CHEST)));
+	public static final RegistryObject<Block> CHEST_MIMIC = register("chest_mimic", () -> new ChestMimicBlock(AbstractBlock.Properties.from(Blocks.CHEST).harvestTool(ToolType.AXE)));
 	public static final RegistryObject<Block> TREASURE_CHEST = register("treasure_chest", () -> new TreasureChestBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F)));
 
 	public static final RegistryObject<RotatedPillarBlock> PILLAR = register("pillar",
@@ -156,8 +156,8 @@ public class AetherBlocks
 	public static final RegistryObject<Block> PRESENT = register("present",
 			() -> new PresentBlock(AbstractBlock.Properties.create(Material.ORGANIC).hardnessAndResistance(0.6F).sound(SoundType.PLANT)));
 
-	public static final RegistryObject<FenceBlock> SKYROOT_FENCE = register("skyroot_fence", () -> new FenceBlock(AbstractBlock.Properties.from(Blocks.OAK_FENCE)));
-	public static final RegistryObject<FenceGateBlock> SKYROOT_FENCE_GATE = register("skyroot_fence_gate", () -> new FenceGateBlock(AbstractBlock.Properties.from(Blocks.OAK_FENCE_GATE)));
+	public static final RegistryObject<FenceBlock> SKYROOT_FENCE = register("skyroot_fence", () -> new FenceBlock(AbstractBlock.Properties.from(Blocks.OAK_FENCE).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<FenceGateBlock> SKYROOT_FENCE_GATE = register("skyroot_fence_gate", () -> new FenceGateBlock(AbstractBlock.Properties.from(Blocks.OAK_FENCE_GATE).harvestTool(ToolType.AXE)));
 
 	public static final RegistryObject<WallBlock> CARVED_WALL = register("carved_wall", () -> new WallBlock(AbstractBlock.Properties.from(AetherBlocks.CARVED_STONE.get())));
 	public static final RegistryObject<WallBlock> ANGELIC_WALL = register("angelic_wall", () -> new WallBlock(AbstractBlock.Properties.from(AetherBlocks.ANGELIC_STONE.get())));
@@ -202,11 +202,11 @@ public class AetherBlocks
 			() -> new AerogelSlabBlock(AbstractBlock.Properties.from(AetherBlocks.AEROGEL.get()).hardnessAndResistance(1.5F, 2000.0F)));
 
 	public static final RegistryObject<Block> SUN_ALTAR = register("sun_altar",
-			() -> new SunAltarBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.5F).sound(SoundType.METAL)));
+			() -> new SunAltarBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE)));
 
-	public static final RegistryObject<Block> SKYROOT_BOOKSHELF = register("skyroot_bookshelf", () -> new BookshelfBlock(AbstractBlock.Properties.from(Blocks.BOOKSHELF)));
+	public static final RegistryObject<Block> SKYROOT_BOOKSHELF = register("skyroot_bookshelf", () -> new BookshelfBlock(AbstractBlock.Properties.from(Blocks.BOOKSHELF).harvestTool(ToolType.AXE)));
 
-	public static final RegistryObject<BedBlock> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(AbstractBlock.Properties.from(Blocks.WHITE_BED)));
+	public static final RegistryObject<BedBlock> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(AbstractBlock.Properties.from(Blocks.WHITE_BED).harvestTool(ToolType.AXE)));
 
 
 	public static void registerPots() {

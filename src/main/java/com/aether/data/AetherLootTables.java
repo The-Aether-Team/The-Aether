@@ -36,7 +36,6 @@ public class AetherLootTables extends AetherLootTableProvider
     {
         @Override
         protected void addTables() {
-            //TODO: Entries will likely have to be updated as more blocks are given double drop compat.
             dropNone(AetherBlocks.AETHER_PORTAL);
 
             dropDoubleWithSilk(AetherBlocks.AETHER_GRASS_BLOCK, AetherBlocks.AETHER_DIRT);
@@ -46,10 +45,10 @@ public class AetherLootTables extends AetherLootTableProvider
             dropSelfDouble(AetherBlocks.HOLYSTONE);
             dropSelfDouble(AetherBlocks.MOSSY_HOLYSTONE);
 
-            dropSelf(AetherBlocks.COLD_AERCLOUD);
-            dropSelf(AetherBlocks.BLUE_AERCLOUD);
-            dropSelf(AetherBlocks.GOLDEN_AERCLOUD);
-            dropSelf(AetherBlocks.PINK_AERCLOUD);
+            dropSelfDouble(AetherBlocks.COLD_AERCLOUD);
+            dropSelfDouble(AetherBlocks.BLUE_AERCLOUD);
+            dropSelfDouble(AetherBlocks.GOLDEN_AERCLOUD);
+            dropSelfDouble(AetherBlocks.PINK_AERCLOUD);
 
             dropSelf(AetherBlocks.ICESTONE);
             dropDoubleWithFortune(AetherBlocks.AMBROSIUM_ORE, AetherItems.AMBROSIUM_SHARD);
@@ -73,11 +72,11 @@ public class AetherLootTables extends AetherLootTableProvider
             dropSelfDouble(AetherBlocks.SKYROOT_LOG);
             this.registerLootTable(AetherBlocks.GOLDEN_OAK_LOG.get(),
                     (log) -> droppingDoubleGoldenOak(log, AetherItems.GOLDEN_AMBER.get()));
-            dropSelf(AetherBlocks.STRIPPED_SKYROOT_LOG);
-            dropSelf(AetherBlocks.SKYROOT_WOOD);
+            dropSelfDouble(AetherBlocks.STRIPPED_SKYROOT_LOG);
+            dropSelfDouble(AetherBlocks.SKYROOT_WOOD);
             this.registerLootTable(AetherBlocks.GOLDEN_OAK_WOOD.get(),
-                    (wood) -> droppingGoldenOak(wood, AetherItems.GOLDEN_AMBER.get()));
-            dropSelf(AetherBlocks.STRIPPED_SKYROOT_WOOD);
+                    (wood) -> droppingDoubleGoldenOak(wood, AetherItems.GOLDEN_AMBER.get()));
+            dropSelfDouble(AetherBlocks.STRIPPED_SKYROOT_WOOD);
 
             dropSelf(AetherBlocks.SKYROOT_PLANKS);
             dropSelf(AetherBlocks.HOLYSTONE_BRICKS);

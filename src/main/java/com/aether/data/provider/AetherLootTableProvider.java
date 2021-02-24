@@ -110,7 +110,8 @@ public class AetherLootTableProvider extends LootTableProvider
                     .addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).acceptCondition(SILK_TOUCH_OR_SHEARS.inverted())
                             .addEntry(withExplosionDecay(block,
                                     ItemLootEntry.builder(AetherItems.SKYROOT_STICK.get()).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F))))
-                                    .acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))));
+                                    .acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
+                    .acceptFunction(DoubleDrops.builder());
         }
 
         protected static LootTable.Builder droppingDoubleItemsWithFortune(Block block, Item item) {
@@ -122,7 +123,8 @@ public class AetherLootTableProvider extends LootTableProvider
         protected static LootTable.Builder droppingWithSkyrootSticks(Block block) {
             return droppingWithSilkTouchOrShears(block, withExplosionDecay(block,
                     ItemLootEntry.builder(AetherItems.SKYROOT_STICK.get()).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F))))
-                    .acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F)));
+                    .acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F)))
+                    .acceptFunction(DoubleDrops.builder());
         }
 
         protected static LootTable.Builder droppingWithFruitAndSkyrootSticks(Block block, Item fruit) {
