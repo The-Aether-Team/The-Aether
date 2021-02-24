@@ -27,7 +27,7 @@ public abstract class AetherAnimalEntity extends AnimalEntity {
 	
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
-		return stack.getItem() == AetherItems.BLUEBERRY.get();
+		return stack.getItem() == AetherItems.BLUE_BERRY.get();
 	}
 
 	//Copied from AnimalEntity, changed to check for Aether grass.

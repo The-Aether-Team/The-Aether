@@ -95,7 +95,7 @@ public class AetherLootTables extends AetherLootTableProvider
             dropSelf(AetherBlocks.AMBROSIUM_TORCH);
 
             this.registerLootTable(AetherBlocks.BERRY_BUSH.get(),
-                    (bush) -> droppingBerryBush(bush, AetherItems.BLUEBERRY.get()));
+                    (bush) -> droppingBerryBush(bush, AetherItems.BLUE_BERRY.get()));
             dropSelf(AetherBlocks.BERRY_BUSH_STEM);
 
             dropSelf(AetherBlocks.PURPLE_FLOWER);

@@ -138,9 +138,9 @@ public class AetherItems
 			() -> new AetherArmorItem(AetherArmorMaterial.SENTRY, EquipmentSlotType.FEET, new Item.Properties().rarity(AETHER_LOOT).group(AetherItemGroups.AETHER_ARMOR)));
 
 	// Food
-	public static final RegistryObject<Item> BLUEBERRY = ITEMS.register("blueberry",
+	public static final RegistryObject<Item> BLUE_BERRY = ITEMS.register("blue_berry",
 			() -> new Item(new Item.Properties().food(new Food.Builder().fastToEat().hunger(2).build()).group(AetherItemGroups.AETHER_FOOD)));
-	public static final RegistryObject<Item> ENCHANTED_BLUEBERRY = ITEMS.register("enchanted_blueberry",
+	public static final RegistryObject<Item> ENCHANTED_BERRY = ITEMS.register("enchanted_berry",
 			() -> new Item(new Item.Properties().rarity(Rarity.RARE).food(new Food.Builder().fastToEat().hunger(8).build()).group(AetherItemGroups.AETHER_FOOD)));
 	public static final RegistryObject<Item> WHITE_APPLE = ITEMS.register("white_apple",
 			() -> new Item(new Item.Properties().food(new Food.Builder().fastToEat().hunger(0).build()).group(AetherItemGroups.AETHER_FOOD)));

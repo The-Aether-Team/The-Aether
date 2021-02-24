@@ -40,7 +40,7 @@ public class AetherItemGroups
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack createIcon() {
-			return new ItemStack(AetherItems.BLUEBERRY.get());
+			return new ItemStack(AetherItems.BLUE_BERRY.get());
 		}
 	};
 	public static final ItemGroup AETHER_ACCESSORIES = new ItemGroup("aether_accessories") {

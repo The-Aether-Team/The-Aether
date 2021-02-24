@@ -247,8 +247,8 @@ public class Aether
 		ComposterBlock.registerCompostable(0.3F, AetherBlocks.CRYSTAL_FRUIT_LEAVES.get());
 		ComposterBlock.registerCompostable(0.3F, AetherBlocks.HOLIDAY_LEAVES.get());
 		ComposterBlock.registerCompostable(0.3F, AetherBlocks.DECORATED_HOLIDAY_LEAVES.get());
-		ComposterBlock.registerCompostable(0.3F, AetherItems.BLUEBERRY.get());
-		ComposterBlock.registerCompostable(0.5F, AetherItems.ENCHANTED_BLUEBERRY.get());
+		ComposterBlock.registerCompostable(0.3F, AetherItems.BLUE_BERRY.get());
+		ComposterBlock.registerCompostable(0.5F, AetherItems.ENCHANTED_BERRY.get());
 		ComposterBlock.registerCompostable(0.5F, AetherBlocks.BERRY_BUSH.get());
 		ComposterBlock.registerCompostable(0.5F, AetherBlocks.BERRY_BUSH_STEM.get());
 		ComposterBlock.registerCompostable(0.65F, AetherBlocks.WHITE_FLOWER.get());

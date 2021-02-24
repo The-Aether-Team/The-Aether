@@ -97,8 +97,8 @@ public class AetherItemModels extends AetherItemModelsProvider
 
         item(AetherItems.SENTRY_BOOTS, "armor/");
 
-        item(AetherItems.BLUEBERRY, "food/");
-        item(AetherItems.ENCHANTED_BLUEBERRY, "food/");
+        item(AetherItems.BLUE_BERRY, "food/");
+        item(AetherItems.ENCHANTED_BERRY, "food/");
         item(AetherItems.WHITE_APPLE, "food/");
         item(AetherItems.BLUE_GUMMY_SWET, "food/");
         item(AetherItems.GOLDEN_GUMMY_SWET, "food/");
