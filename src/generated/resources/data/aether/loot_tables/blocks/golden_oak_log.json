@@ -6,12 +6,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "aether:golden_oak_log"
+          "name": "aether:skyroot_log"
         }
       ],
-      "conditions": [
+      "functions": [
         {
-          "condition": "minecraft:survives_explosion"
+          "function": "minecraft:explosion_decay"
         }
       ]
     },

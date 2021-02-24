@@ -68,14 +68,13 @@ public class AetherLootTables extends AetherLootTableProvider
             this.registerLootTable(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get(),
                     AetherBlockLootTableProvider::droppingWithSkyrootSticks);
 
-            //TODO: Golden Oak currently uses the ore math for fortune drops, check for balancing.
             dropSelfDouble(AetherBlocks.SKYROOT_LOG);
             this.registerLootTable(AetherBlocks.GOLDEN_OAK_LOG.get(),
-                    (log) -> droppingDoubleGoldenOak(log, AetherItems.GOLDEN_AMBER.get()));
+                    (log) -> droppingDoubleGoldenOak(AetherBlocks.SKYROOT_LOG.get(), AetherItems.GOLDEN_AMBER.get()));
             dropSelfDouble(AetherBlocks.STRIPPED_SKYROOT_LOG);
             dropSelfDouble(AetherBlocks.SKYROOT_WOOD);
             this.registerLootTable(AetherBlocks.GOLDEN_OAK_WOOD.get(),
-                    (wood) -> droppingDoubleGoldenOak(wood, AetherItems.GOLDEN_AMBER.get()));
+                    (wood) -> droppingDoubleGoldenOak(AetherBlocks.SKYROOT_WOOD.get(), AetherItems.GOLDEN_AMBER.get()));
             dropSelfDouble(AetherBlocks.STRIPPED_SKYROOT_WOOD);
 
             dropSelf(AetherBlocks.SKYROOT_PLANKS);

@@ -137,23 +137,13 @@ public class AetherLootTableProvider extends LootTableProvider
 
         protected static LootTable.Builder droppingDoubleGoldenOak(Block block, Item item) {
             return LootTable.builder()
-                    .addLootPool(withSurvivesExplosion(block, LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block))))
+                    .addLootPool(withExplosionDecay(block, LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block))))
                     .addLootPool(withExplosionDecay(item, LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(item)
                             .acceptCondition(MatchTool.builder(ItemPredicate.Builder.create().tag(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
                             .acceptCondition(SILK_TOUCH.inverted())
                             .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F)))
                             .acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE)))))
                     .acceptFunction(DoubleDrops.builder());
-        }
-
-        protected static LootTable.Builder droppingGoldenOak(Block block, Item item) {
-            return LootTable.builder()
-                    .addLootPool(withSurvivesExplosion(block, LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block))))
-                    .addLootPool(withExplosionDecay(item, LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(item)
-                            .acceptCondition(MatchTool.builder(ItemPredicate.Builder.create().tag(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
-                            .acceptCondition(SILK_TOUCH.inverted())
-                            .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F)))
-                            .acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE)))));
         }
 
         protected static LootTable.Builder droppingBerryBush(Block block, Item drop) {
