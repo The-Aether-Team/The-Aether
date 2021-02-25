@@ -133,11 +133,8 @@ public class AetherLootTables extends AetherLootTableProvider
             dropSelf(AetherBlocks.PILLAR);
             dropSelf(AetherBlocks.PILLAR_TOP);
 
-            //TODO: handle the loot for this since that requires some extra stuff.
-            // might need to make a loot condition that spawns an entity, if it doesnt already exist.
-            // if i do make a loot condition that spawns an entity i could also probably use that for the chest mimic
-            // although thats not completely necessary.
-            dropSelf(AetherBlocks.PRESENT);
+            this.registerLootTable(AetherBlocks.PRESENT.get(),
+                    AetherBlockLootTableProvider::droppingPresentLoot);
 
             dropSelf(AetherBlocks.SKYROOT_FENCE);
             dropSelf(AetherBlocks.SKYROOT_FENCE_GATE);
@@ -285,7 +282,7 @@ public class AetherLootTables extends AetherLootTableProvider
 
             this.registerLootTable(AetherEntityTypes.SENTRY.get(), LootTable.builder()
                     .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-                            .addEntry(ItemLootEntry.builder(AetherBlocks.CARVED_STONE.get()).weight(5)
+                            .addEntry(ItemLootEntry.builder(AetherBlocks.CARVED_STONE.get()).weight(4)
                                     .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 1.0F)))
                                     .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))
                             )

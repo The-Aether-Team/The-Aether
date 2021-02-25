@@ -5,11 +5,12 @@ import java.util.Set;
 
 import com.aether.Aether;
 import com.aether.loot.functions.DoubleDrops;
+import com.aether.loot.functions.SpawnTNT;
+import com.aether.loot.functions.SpawnXP;
 import com.google.common.collect.Sets;
 
 import net.minecraft.loot.LootFunctionType;
 import net.minecraft.loot.functions.LootFunctionManager;
-import net.minecraft.loot.functions.SetCount;
 import net.minecraft.util.ResourceLocation;
 
 public class AetherLoot
@@ -18,6 +19,8 @@ public class AetherLoot
 	private static final Set<ResourceLocation> READ_ONLY_LOOT_TABLES = Collections.unmodifiableSet(LOOT_TABLES);
 
 	public static final LootFunctionType DOUBLE_DROPS = LootFunctionManager.func_237451_a_(new ResourceLocation(Aether.MODID, "double_drops").toString(), new DoubleDrops.Serializer());
+	public static final LootFunctionType SPAWN_ENTITY = LootFunctionManager.func_237451_a_(new ResourceLocation(Aether.MODID, "spawn_entity").toString(), new SpawnTNT.Serializer());
+	public static final LootFunctionType SPAWN_XP = LootFunctionManager.func_237451_a_(new ResourceLocation(Aether.MODID, "spawn_xp").toString(), new SpawnXP.Serializer());
 
 	public static final ResourceLocation ENTITIES_SHEEPUFF_WHITE = register("entities/sheepuff/white");
 	public static final ResourceLocation ENTITIES_SHEEPUFF_ORANGE = register("entities/sheepuff/orange");

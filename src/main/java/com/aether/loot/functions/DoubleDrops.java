@@ -1,6 +1,5 @@
 package com.aether.loot.functions;
 
-import com.aether.Aether;
 import com.aether.registry.AetherLoot;
 import com.aether.registry.AetherTags;
 import com.aether.block.util.IAetherDoubleDropBlock;

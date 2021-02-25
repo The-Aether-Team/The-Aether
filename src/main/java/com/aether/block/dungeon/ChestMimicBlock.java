@@ -26,6 +26,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 import java.util.function.BiPredicate;
@@ -134,11 +135,9 @@ public class ChestMimicBlock extends Block implements IWaterLoggable
 	}
 
 	@Override
-	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
-		super.harvestBlock(worldIn, player, pos, state, te, stack);
-		if (!worldIn.isRemote) {
-			spawnMimic(state, worldIn, pos);
-		}
+	public void spawnAdditionalDrops(BlockState state, ServerWorld worldIn, BlockPos pos, ItemStack stack) {
+		super.spawnAdditionalDrops(state, worldIn, pos, stack);
+		spawnMimic(state, worldIn, pos);
 	}
 
 	private void spawnMimic(BlockState state, World worldIn, BlockPos pos) {

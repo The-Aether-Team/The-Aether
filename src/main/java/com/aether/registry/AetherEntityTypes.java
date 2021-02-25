@@ -3,6 +3,7 @@ package com.aether.registry;
 import com.aether.Aether;
 import com.aether.entity.AetherAnimalEntity;
 import com.aether.entity.block.FloatingBlockEntity;
+import com.aether.entity.block.TNTPresentEntity;
 import com.aether.entity.monster.*;
 import com.aether.entity.passive.AerwhaleEntity;
 import com.aether.entity.passive.FlyingCowEntity;
@@ -64,6 +65,9 @@ public class AetherEntityTypes
 	public static final EntityType<FloatingBlockEntity> FLOATING_BLOCK_TYPE = EntityType.Builder.<FloatingBlockEntity>create(FloatingBlockEntity::new, EntityClassification.MISC).size(0.98F, 0.98F).build("floating_block");
 	public static final RegistryObject<EntityType<FloatingBlockEntity>> FLOATING_BLOCK = ENTITIES.register("floating_block", () -> FLOATING_BLOCK_TYPE);
 	//.setCustomClientFactory((spawnEntity, world) -> new FloatingBlockEntity(world))
+
+	public static final EntityType<TNTPresentEntity> TNT_PRESENT_TYPE = EntityType.Builder.<TNTPresentEntity>create(TNTPresentEntity::new, EntityClassification.MISC).size(0.98F, 0.98F).build("tnt_present");
+	public static final RegistryObject<EntityType<TNTPresentEntity>> TNT_PRESENT = ENTITIES.register("tnt_present", () -> TNT_PRESENT_TYPE);
 
 	public static final EntityType<LightningKnifeEntity> LIGHTNING_KNIFE_TYPE = EntityType.Builder.<LightningKnifeEntity>create(LightningKnifeEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).build("lightning_knife");
 	public static final RegistryObject<EntityType<LightningKnifeEntity>> LIGHTNING_KNIFE = ENTITIES.register("lightning_knife", () -> LIGHTNING_KNIFE_TYPE);

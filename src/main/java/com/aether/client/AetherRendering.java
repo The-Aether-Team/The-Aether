@@ -1,7 +1,6 @@
 package com.aether.client;
 
 import com.aether.Aether;
-import com.aether.block.util.IAetherBlockColor;
 import com.aether.client.gui.screen.inventory.EnchanterScreen;
 import com.aether.client.gui.screen.inventory.FreezerScreen;
 import com.aether.client.gui.screen.inventory.IncubatorScreen;
@@ -13,18 +12,13 @@ import com.aether.client.renderer.tile.TreasureChestTileEntityRenderer;
 import com.aether.entity.tile.ChestMimicTileEntity;
 import com.aether.entity.tile.SkyrootBedTileEntity;
 import com.aether.entity.tile.TreasureChestTileEntity;
-import com.aether.item.IAetherItemColor;
 import com.aether.registry.*;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -78,6 +72,7 @@ public class AetherRendering
         RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW.get(), PhoenixArrowRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.HAMMER_PROJECTILE.get(), HammerProjectileRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLOATING_BLOCK.get(), FloatingBlockRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.TNT_PRESENT.get(), TNTPresentRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC.get(), MimicRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY.get(), SentryRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR.get(), ZephyrRenderer::new);

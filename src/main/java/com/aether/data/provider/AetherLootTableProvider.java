@@ -2,6 +2,8 @@ package com.aether.data.provider;
 
 import com.aether.data.AetherLootTables;
 import com.aether.loot.functions.DoubleDrops;
+import com.aether.loot.functions.SpawnTNT;
+import com.aether.loot.functions.SpawnXP;
 import com.aether.registry.AetherBlocks;
 import com.aether.registry.AetherItems;
 import com.aether.registry.AetherTags;
@@ -16,6 +18,7 @@ import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.loot.*;
 import net.minecraft.loot.conditions.*;
 import net.minecraft.loot.functions.ApplyBonus;
@@ -161,6 +164,18 @@ public class AetherLootTableProvider extends LootTableProvider
                                     new BlockPos(0, -1, 0))))
                             )
                     )
+            );
+        }
+
+        protected static LootTable.Builder droppingPresentLoot(Block block) {
+            return LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
+                    .addEntry(ItemLootEntry.builder(Items.AIR).weight(18)
+                            .acceptFunction(SpawnTNT.builder()))
+                    .addEntry(ItemLootEntry.builder(Items.AIR).weight(9)
+                            .acceptFunction(SpawnXP.builder()))
+                    .addEntry((withExplosionDecay(block, ItemLootEntry.builder(AetherItems.GINGERBREAD_MAN.get()).weight(8)
+                            .acceptFunction(SetCount.builder(RandomValueRange.of(5.0F, 6.0F))))))
+                    .addEntry((withExplosionDecay(block, ItemLootEntry.builder(AetherItems.CANDY_CANE_SWORD.get()).weight(1))))
             );
         }
     }

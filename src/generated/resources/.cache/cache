@@ -598,7 +598,7 @@ c72d94ac48c70b2fe11aafcdd631682eb660e1d6 data/aether/loot_tables/blocks/mossy_ho
 632b7deeb453a373ea6c43c0c072fafb6c4b10ea data/aether/loot_tables/blocks/potted_purple_flower.json
 0822202631e4fa09234275e21a6745ba281371b9 data/aether/loot_tables/blocks/potted_skyroot_sapling.json
 c13b027a4ef919ab73cb59a5563513dcdcb7e068 data/aether/loot_tables/blocks/potted_white_flower.json
-169e071b4b21df5a36fd5fc5981bc7be0bba3d19 data/aether/loot_tables/blocks/present.json
+ce6e1c45ce8dd88783f2e568799e57b7361e6c67 data/aether/loot_tables/blocks/present.json
 346eba431da26906b5811b478e94922679e74223 data/aether/loot_tables/blocks/purple_flower.json
 56afefaf50256221123ab31ecb866d03c3870db5 data/aether/loot_tables/blocks/quicksoil.json
 328ceb9f97addc45dbe1b6c275730e287717a5da data/aether/loot_tables/blocks/quicksoil_glass.json
@@ -634,7 +634,7 @@ e0c556ac048d3ba95c3c83867f1ae5395b3a09c4 data/aether/loot_tables/entities/flying
 a0588ad8d9377761c317e46e9f972df65f98add5 data/aether/loot_tables/entities/mimic.json
 976cd1e21d02e900c4b9ffb6b40c1179c4c7cef2 data/aether/loot_tables/entities/moa.json
 5bb6095514ae46ff808b6d8445f0fb6d14706f95 data/aether/loot_tables/entities/phyg.json
-7e59513e2bbf189c483cb917dd9c6d4410359ced data/aether/loot_tables/entities/sentry.json
+f1e7ee7476658a8eb2d7b75a027890371d064ee8 data/aether/loot_tables/entities/sentry.json
 29c3da84ad3adf509202ae3e16adac3a94ee5f2b data/aether/loot_tables/entities/sheepuff.json
 28f95af8a50c41e4f60d98e25ba36f9bc8b54927 data/aether/loot_tables/entities/sheepuff/black.json
 f64d383b9ce075067d4ee0e19838db8a0c082297 data/aether/loot_tables/entities/sheepuff/blue.json
