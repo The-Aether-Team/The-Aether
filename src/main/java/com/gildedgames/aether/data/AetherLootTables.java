@@ -1,23 +1,27 @@
 package com.gildedgames.aether.data;
 
 import com.gildedgames.aether.data.provider.AetherLootTableProvider;
-import com.gildedgames.aether.registry.AetherBlocks;
-import com.gildedgames.aether.registry.AetherEntityTypes;
-import com.gildedgames.aether.registry.AetherItems;
-import com.gildedgames.aether.registry.AetherLoot;
+import com.gildedgames.aether.registry.*;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.EntityLootTables;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 import net.minecraft.loot.*;
 import net.minecraft.loot.conditions.EntityHasProperty;
+import net.minecraft.loot.conditions.MatchTool;
+import net.minecraft.loot.functions.ApplyBonus;
 import net.minecraft.loot.functions.LootingEnchantBonus;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.loot.functions.Smelt;
 import net.minecraft.util.IItemProvider;
+import net.minecraft.util.ResourceLocation;
 
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -312,6 +316,17 @@ public class AetherLootTables extends AetherLootTableProvider
         @Override
         protected Iterable<EntityType<?>> getKnownEntities() {
             return AetherEntityTypes.ENTITIES.getEntries().stream().map(Supplier::get).collect(Collectors.toList());
+        }
+    }
+
+    public static class RegisterStripping implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>
+    {
+        public void accept(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
+            builder.accept(AetherLoot.STRIP_GOLDEN_OAK, LootTable.builder()
+                    .addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(AetherItems.GOLDEN_AMBER.get())
+                            .acceptCondition(MatchTool.builder(ItemPredicate.Builder.create().tag(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
+                            .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F)))
+                            .acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE)))));
         }
     }
 }

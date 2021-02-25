@@ -6,6 +6,7 @@ import com.gildedgames.aether.loot.functions.SpawnTNT;
 import com.gildedgames.aether.loot.functions.SpawnXP;
 import com.gildedgames.aether.registry.AetherBlocks;
 import com.gildedgames.aether.registry.AetherItems;
+import com.gildedgames.aether.registry.AetherLoot;
 import com.gildedgames.aether.registry.AetherTags;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
@@ -43,7 +44,8 @@ public class AetherLootTableProvider extends LootTableProvider
     protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> getTables() {
         return ImmutableList.of(
                 Pair.of(AetherLootTables.RegisterBlocks::new, LootParameterSets.BLOCK),
-                Pair.of(AetherLootTables.RegisterEntities::new, LootParameterSets.ENTITY));
+                Pair.of(AetherLootTables.RegisterEntities::new, LootParameterSets.ENTITY),
+                Pair.of(AetherLootTables.RegisterStripping::new, AetherLoot.STRIPPING));
     }
 
     @Override
