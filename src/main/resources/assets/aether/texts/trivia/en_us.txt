@@ -6,7 +6,7 @@ Enchanted Gravitite can be crafted into armour and tools.
 Gravitite Armour grants you higher jumps and no fall damage.
 Gravitite Tools can levitate blocks when right-clicking.
 Baby Moas will stay put when right clicking them with a nature staff.
-Golden Oak trees yeild valuable Golden Amber in their logs.
+Golden Oak trees yield valuable Golden Amber in their logs.
 Enchanters can repair damaged items and enhance existing items.
 Skyroot tools gain double drops from blocks.
 Place water into a Glowstone frame for a Hostile Paradise.
