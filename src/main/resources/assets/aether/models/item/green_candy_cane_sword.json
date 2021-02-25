@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "aether:item/weapons/candy_cane_sword"
+    "layer0": "aether:item/weapons/green_candy_cane_sword"
   }
 }

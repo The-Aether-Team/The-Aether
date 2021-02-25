@@ -51,9 +51,6 @@ public class AetherItemModels extends AetherItemModelsProvider
         handheldItem(AetherItems.HOLY_SWORD, "weapons/");
         handheldItem(AetherItems.VAMPIRE_BLADE, "weapons/");
         handheldItem(AetherItems.PIG_SLAYER, "weapons/");
-        handheldItem(AetherItems.CANDY_CANE_SWORD, "weapons/");
-
-        handheldItem(AetherItems.NOTCH_HAMMER, "weapons/");
 
         handheldItem(AetherItems.LIGHTNING_KNIFE, "weapons/");
 

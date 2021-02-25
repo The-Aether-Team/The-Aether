@@ -120,6 +120,12 @@ public class AetherRendering
                 return living.getActiveItemStack() != stack ? 0.0F : (float)(stack.getUseDuration() - living.getItemInUseCount()) / 20.0F;
             }
         });
+
+        ItemModelsProperties.registerProperty(AetherItems.CANDY_CANE_SWORD.get(), new ResourceLocation("named"), (stack, world, living)
+                -> stack.getDisplayName().getString().toLowerCase().equals("green candy cane sword") ? 1.0F : 0.0F);
+
+        ItemModelsProperties.registerProperty(AetherItems.NOTCH_HAMMER.get(), new ResourceLocation("named"), (stack, world, living)
+                -> stack.getDisplayName().getString().toLowerCase().equals("hammer of jeb") ? 1.0F : 0.0F);
     }
 
     private static void render(Supplier<? extends Block> block, RenderType render) {

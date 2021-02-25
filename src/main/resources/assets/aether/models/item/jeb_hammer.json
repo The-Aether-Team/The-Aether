@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "aether:item/weapons/notch_hammer"
+    "layer0": "aether:item/weapons/jeb_hammer"
   }
 }

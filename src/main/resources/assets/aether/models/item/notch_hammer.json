@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "aether:item/weapons/notch_hammer"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "named": 1
+      }, "model": "aether:item/jeb_hammer"
+    }
+  ]
+}
