@@ -1,8 +1,9 @@
-package com.aether.advancement;
+package com.aether.registry;
 
+import com.aether.advancement.MountTrigger;
 import net.minecraft.advancements.CriteriaTriggers;
 
-public class AetherAdvancements {
+public class AetherAdvancement {
     public static final MountTrigger MOUNT_ENTITY = CriteriaTriggers.register(new MountTrigger());
 
     public static void init() {

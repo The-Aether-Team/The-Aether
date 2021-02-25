@@ -1,6 +1,6 @@
 package com.aether.client.handlers;
 
-import com.aether.world.dimension.AetherDimensions;
+import com.aether.registry.AetherDimensions;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.fluid.FluidState;

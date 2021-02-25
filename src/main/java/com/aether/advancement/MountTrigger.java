@@ -8,7 +8,10 @@ import com.google.gson.JsonObject;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.advancements.criterion.EnterBlockTrigger;
 import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.loot.ConditionArrayParser;
@@ -75,6 +78,10 @@ public class MountTrigger implements ICriterionTrigger<MountTrigger.Instance> {
             super(ID, playerPredicate);
 
             this.entity = entity;
+        }
+
+        public static MountTrigger.Instance forEntity(EntityPredicate.Builder entity) {
+            return new MountTrigger.Instance(EntityPredicate.AndPredicate.ANY_AND, entity.build());
         }
 
         public boolean test(ServerPlayerEntity player, Entity entity) {

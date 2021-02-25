@@ -1,0 +1,31 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:glowstone"
+    },
+    "title": {
+      "translate": "advancement.aether.enter_aether"
+    },
+    "description": {
+      "translate": "advancement.aether.enter_aether.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "aether:textures/block/dungeon/carved_stone.png"
+  },
+  "criteria": {
+    "enter_aether": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "aether:aether"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "enter_aether"
+    ]
+  ]
+}

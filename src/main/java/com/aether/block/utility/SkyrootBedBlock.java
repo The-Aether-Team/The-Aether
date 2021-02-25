@@ -2,7 +2,7 @@ package com.aether.block.utility;
 
 import com.aether.Aether;
 import com.aether.entity.tile.SkyrootBedTileEntity;
-import com.aether.world.dimension.AetherDimensions;
+import com.aether.registry.AetherDimensions;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;

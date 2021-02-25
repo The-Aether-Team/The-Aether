@@ -5,7 +5,7 @@ import com.aether.registry.AetherParticleTypes;
 import com.aether.registry.AetherBlocks;
 import com.aether.registry.AetherSoundEvents;
 import com.aether.world.AetherTeleporter;
-import com.aether.world.dimension.AetherDimensions;
+import com.aether.registry.AetherDimensions;
 import com.google.common.cache.LoadingCache;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

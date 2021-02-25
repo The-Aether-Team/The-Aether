@@ -1,15 +1,14 @@
 package com.aether;
 
-import com.aether.advancement.AetherAdvancements;
+import com.aether.registry.AetherAdvancement;
 import com.aether.capability.AetherCapabilities;
 import com.aether.client.AetherRendering;
 
 import com.aether.data.*;
 import com.aether.data.AetherLootTables;
-import com.aether.loot.functions.DoubleDrops;
 import com.aether.network.AetherPacketHandler;
 import com.aether.registry.*;
-import com.aether.world.dimension.AetherDimensions;
+import com.aether.registry.AetherDimensions;
 import com.aether.world.gen.feature.AetherFeatures;
 import net.minecraft.block.*;
 import net.minecraft.client.world.DimensionRenderInfo;
@@ -22,10 +21,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
-import net.minecraft.loot.functions.LootFunctionManager;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
@@ -99,7 +96,7 @@ public class Aether
 			registerComposting();
 
 			AetherFeatures.registerConfiguredFeatures();
-			AetherAdvancements.init();
+			AetherAdvancement.init();
 		});
 	}
 
@@ -148,6 +145,7 @@ public class Aether
 			generator.addProvider(blockTags);
 			generator.addProvider(new AetherItemTags(generator, blockTags, helper));
 			generator.addProvider(new AetherEntityTags(generator, helper));
+			generator.addProvider(new AetherAdvancements(generator));
 		}
 	}
 

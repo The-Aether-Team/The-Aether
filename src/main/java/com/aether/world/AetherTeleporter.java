@@ -3,7 +3,7 @@ package com.aether.world;
 import com.aether.registry.AetherBlocks;
 import com.aether.block.miscellaneous.AetherPortalBlock;
 import com.aether.registry.AetherPOI;
-import com.aether.world.dimension.AetherDimensions;
+import com.aether.registry.AetherDimensions;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.state.properties.BlockStateProperties;

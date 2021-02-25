@@ -1,6 +1,6 @@
 package com.aether.mixin.client;
 
-import com.aether.world.dimension.AetherDimensions;
+import com.aether.registry.AetherDimensions;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;

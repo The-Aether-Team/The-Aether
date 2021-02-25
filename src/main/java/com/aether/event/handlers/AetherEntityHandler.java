@@ -1,6 +1,6 @@
 package com.aether.event.handlers;
 
-import com.aether.advancement.AetherAdvancements;
+import com.aether.registry.AetherAdvancement;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.entity.EntityMountEvent;
@@ -15,7 +15,7 @@ public class AetherEntityHandler
         Entity rider = event.getEntityMounting();
         Entity mount = event.getEntityBeingMounted();
         if(event.getEntityBeingMounted() != null && rider instanceof ServerPlayerEntity) {
-            AetherAdvancements.MOUNT_ENTITY.trigger((ServerPlayerEntity) rider, mount);
+            AetherAdvancement.MOUNT_ENTITY.trigger((ServerPlayerEntity) rider, mount);
         }
     }
 }

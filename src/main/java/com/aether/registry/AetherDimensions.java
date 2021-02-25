@@ -1,4 +1,4 @@
-package com.aether.world.dimension;
+package com.aether.registry;
 
 import com.aether.Aether;
 import net.minecraft.util.RegistryKey;
