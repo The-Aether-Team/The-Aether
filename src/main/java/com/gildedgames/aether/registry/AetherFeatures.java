@@ -1,7 +1,8 @@
-package com.gildedgames.aether.world.gen.feature;
+package com.gildedgames.aether.registry;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.registry.AetherBlocks;
+import com.gildedgames.aether.world.gen.feature.*;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
@@ -9,7 +10,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.template.BlockMatchRuleTest;
 import net.minecraft.world.gen.feature.template.RuleTest;
@@ -67,6 +70,16 @@ public class AetherFeatures {
         register("ore_gravitite", Feature.ORE.withConfiguration(new OreFeatureConfig(HOLYSTONE, AetherBlocks.ICESTONE.get().getDefaultState(), 6)).range(256).square().func_242731_b(10));
 
         register("spring_water", Feature.SPRING_FEATURE.withConfiguration(new LiquidsConfig(Fluids.WATER.getDefaultState(), true, 4, 1, ImmutableSet.of(AetherBlocks.HOLYSTONE.get(), AetherBlocks.AETHER_DIRT.get()))).withPlacement(Placement.RANGE_BIASED.configure(new TopSolidRangeConfig(8, 8, 256))).square().func_242731_b(50));
+
+        register("aether_skylands_flowers", Feature.FLOWER.withConfiguration(
+                (new BlockClusterFeatureConfig.Builder(
+                        (new WeightedBlockStateProvider())
+                                .addWeightedBlockstate(AetherBlocks.PURPLE_FLOWER.get().getDefaultState(), 1)
+                                .addWeightedBlockstate(AetherBlocks.WHITE_FLOWER.get().getDefaultState(), 1)
+                                .addWeightedBlockstate(AetherBlocks.BERRY_BUSH.get().getDefaultState(), 1), SimpleBlockPlacer.PLACER))
+                        .tries(64).whitelist(ImmutableSet.of(AetherBlocks.AETHER_GRASS_BLOCK.get())).build())
+                .withPlacement(Features.Placements.VEGETATION_PLACEMENT)
+                .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242731_b(2));
     }
 
     private static <FC extends IFeatureConfig> void register(String name, ConfiguredFeature<FC, ?> feature) {
