@@ -49,7 +49,7 @@ public class AetherClientAbilityHandler
             Vector3d hitVec = traceResult.getHitVec();
             double distance = eyePos.squareDistanceTo(hitVec);
             if (distance < reach * reach) {
-                AetherPacketHandler.INSTANCE.sendToServer(new ExtendedAttackPacket(target.getEntityId()));
+                AetherPacketHandler.sendToServer(new ExtendedAttackPacket(target.getEntityId()));
                 return true;
             }
         }
