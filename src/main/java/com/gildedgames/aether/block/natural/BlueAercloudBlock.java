@@ -1,19 +1,24 @@
 package com.gildedgames.aether.block.natural;
 
 import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class BlueAercloudBlock extends AercloudBlock
 {
+	protected static VoxelShape SHAPE = VoxelShapes.empty();
+
 	public BlueAercloudBlock(AbstractBlock.Properties properties) {
 		super(properties);
-		SHAPE = VoxelShapes.empty();
 	}
 	
 	@Override
@@ -39,5 +44,10 @@ public class BlueAercloudBlock extends AercloudBlock
 				world.addParticle(ParticleTypes.SPLASH, xOffset, yOffset, zOffset, 0.0, 0.0, 0.0);
 			}
 		}
+	}
+
+	@Override
+	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		return SHAPE;
 	}
 }

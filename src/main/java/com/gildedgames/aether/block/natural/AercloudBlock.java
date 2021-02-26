@@ -22,7 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AercloudBlock extends BreakableBlock implements IAetherDoubleDropBlock
 {
 	private static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
-	protected static VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.01, 1.0));
+	protected static VoxelShape SHAPE = Block.makeCuboidShape(0.0, 0.0, 0.0, 16.0, 0.01, 16.0);
 	
 	public AercloudBlock(AbstractBlock.Properties properties) {
 		super(properties);
@@ -54,12 +54,7 @@ public class AercloudBlock extends BreakableBlock implements IAetherDoubleDropBl
 	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
 		return true;
 	}
-	
-	@Override
-	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return SHAPE;
-	}
-	
+
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		return SHAPE;
