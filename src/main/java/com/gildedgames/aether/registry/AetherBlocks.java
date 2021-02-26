@@ -10,7 +10,7 @@ import com.gildedgames.aether.block.miscellaneous.AetherPortalBlock;
 import com.gildedgames.aether.block.miscellaneous.PresentBlock;
 import com.gildedgames.aether.block.util.*;
 import com.gildedgames.aether.client.AetherRendering;
-import com.gildedgames.aether.item.block.TintedBlockItem;
+import com.gildedgames.aether.item.block.BurnableBlockItem;
 import com.gildedgames.aether.world.gen.tree.GoldenOakTree;
 import com.gildedgames.aether.world.gen.tree.SkyrootTree;
 import com.gildedgames.aether.block.natural.*;
@@ -228,6 +228,32 @@ public class AetherBlocks
 				.build();
 	}
 
+	public static void registerFlammability() {
+		FireBlock fireblock = (FireBlock) Blocks.FIRE;
+		fireblock.setFireInfo(AetherBlocks.SKYROOT_LEAVES.get(), 30, 60);
+		fireblock.setFireInfo(AetherBlocks.GOLDEN_OAK_LEAVES.get(), 30, 60);
+		fireblock.setFireInfo(AetherBlocks.CRYSTAL_LEAVES.get(), 30, 60);
+		fireblock.setFireInfo(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get(), 30, 60);
+		fireblock.setFireInfo(AetherBlocks.HOLIDAY_LEAVES.get(), 30, 60);
+		fireblock.setFireInfo(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get(), 30, 60);
+		fireblock.setFireInfo(AetherBlocks.SKYROOT_LOG.get(), 5, 5);
+		fireblock.setFireInfo(AetherBlocks.GOLDEN_OAK_LOG.get(), 5, 5);
+		fireblock.setFireInfo(AetherBlocks.STRIPPED_SKYROOT_LOG.get(), 5, 5);
+		fireblock.setFireInfo(AetherBlocks.SKYROOT_WOOD.get(), 5, 5);
+		fireblock.setFireInfo(AetherBlocks.GOLDEN_OAK_WOOD.get(), 5, 5);
+		fireblock.setFireInfo(AetherBlocks.STRIPPED_SKYROOT_WOOD.get(), 5, 5);
+		fireblock.setFireInfo(AetherBlocks.SKYROOT_PLANKS.get(), 5, 20);
+		fireblock.setFireInfo(AetherBlocks.BERRY_BUSH.get(), 30, 60);
+		fireblock.setFireInfo(AetherBlocks.BERRY_BUSH_STEM.get(), 60, 100);
+		fireblock.setFireInfo(AetherBlocks.PURPLE_FLOWER.get(), 60, 100);
+		fireblock.setFireInfo(AetherBlocks.WHITE_FLOWER.get(), 60, 100);
+		fireblock.setFireInfo(AetherBlocks.SKYROOT_FENCE_GATE.get(), 5, 20);
+		fireblock.setFireInfo(AetherBlocks.SKYROOT_FENCE.get(), 5, 20);
+		fireblock.setFireInfo(AetherBlocks.SKYROOT_STAIRS.get(), 5, 20);
+		fireblock.setFireInfo(AetherBlocks.SKYROOT_SLAB.get(), 5, 20);
+		fireblock.setFireInfo(AetherBlocks.SKYROOT_BOOKSHELF.get(), 30, 20);
+	}
+
 
 	private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {
 		RegistryObject<T> register = BLOCKS.register(name, block);
@@ -243,13 +269,7 @@ public class AetherBlocks
 	private static <T extends Block> Supplier<BlockItem> registerBlockItem(final RegistryObject<T> block) {
 		return () ->
 		{
-			if (Objects.requireNonNull(block.get()) instanceof IAetherBlockColor) {
-				IAetherBlockColor iaetherblockcolor = (IAetherBlockColor) Objects.requireNonNull(block.get());
-				int hexColor = iaetherblockcolor.getColor(false);
-				int updatedHexColor = iaetherblockcolor.getColor(true);
-				return new TintedBlockItem(hexColor, updatedHexColor, Objects.requireNonNull(block.get()), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS));
-			}
-			else if (Objects.requireNonNull(block.get()) == ENCHANTED_AETHER_GRASS_BLOCK.get()
+			if (Objects.requireNonNull(block.get()) == ENCHANTED_AETHER_GRASS_BLOCK.get()
 					|| Objects.requireNonNull(block.get()) == QUICKSOIL_GLASS.get()
 					|| Objects.requireNonNull(block.get()) == ENCHANTED_GRAVITITE.get()) {
 				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().rarity(Rarity.RARE).group(AetherItemGroups.AETHER_BLOCKS));
@@ -268,6 +288,12 @@ public class AetherBlocks
 			}
 			else if (Objects.requireNonNull(block.get()) == TREASURE_CHEST.get()) {
 				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS).setISTER(() -> AetherRendering::treasureChestRenderer));
+			}
+			else if (Objects.requireNonNull(block.get()) == SKYROOT_PLANKS.get()
+					|| Objects.requireNonNull(block.get()) == SKYROOT_FENCE_GATE.get()
+					|| Objects.requireNonNull(block.get()) == SKYROOT_FENCE.get()
+					|| Objects.requireNonNull(block.get()) == SKYROOT_BOOKSHELF.get()) {
+				return new BurnableBlockItem(Objects.requireNonNull(block.get()), new Item.Properties().group(AetherItemGroups.AETHER_BLOCKS));
 			}
 			else if (Objects.requireNonNull(block.get()) == SUN_ALTAR.get()) {
 				return new BedItem(Objects.requireNonNull(block.get()), new Item.Properties().isImmuneToFire().group(AetherItemGroups.AETHER_BLOCKS));

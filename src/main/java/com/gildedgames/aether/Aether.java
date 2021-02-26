@@ -88,15 +88,16 @@ public class Aether
 
 			AetherBlocks.registerPots();
 			AetherBlocks.registerAxeStrippingBlocks();
+			AetherBlocks.registerFlammability();
 
 			AetherEntityTypes.registerSpawnPlacements();
 			AetherEntityTypes.registerEntityAttributes();
 
-			registerDispenserBehaviors();
-			registerComposting();
-
 			AetherFeatures.registerConfiguredFeatures();
 			AetherAdvancement.init();
+
+			registerDispenserBehaviors();
+			registerComposting();
 		});
 	}
 

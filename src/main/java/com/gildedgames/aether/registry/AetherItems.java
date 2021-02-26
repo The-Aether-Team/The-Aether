@@ -5,6 +5,7 @@ import com.gildedgames.aether.api.dungeon.DungeonTypes;
 import com.gildedgames.aether.item.accessories.AccessoryItem;
 import com.gildedgames.aether.item.accessories.ring.ZaniteRingItem;
 import com.gildedgames.aether.item.food.HealingStoneItem;
+import com.gildedgames.aether.item.materials.SkyrootStickItem;
 import com.gildedgames.aether.item.misc.DungeonKeyItem;
 import com.gildedgames.aether.item.food.GummySwetItem;
 import com.gildedgames.aether.item.materials.SwetBallItem;
@@ -197,7 +198,7 @@ public class AetherItems
 	//item("repulsion_shield", new ShieldAccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).maxDamage(512).group(AetherItemGroups.AETHER_ACCESSORIES))),
 
 	// Materials
-	public static final RegistryObject<Item> SKYROOT_STICK = ITEMS.register("skyroot_stick", () -> new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS)));
+	public static final RegistryObject<Item> SKYROOT_STICK = ITEMS.register("skyroot_stick", () -> new SkyrootStickItem(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS)));
 	public static final RegistryObject<Item> GOLDEN_AMBER = ITEMS.register("golden_amber", () -> new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS)));
 	public static final RegistryObject<Item> SWET_BALL = ITEMS.register("swet_ball", () -> new SwetBallItem(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS)));
 	public static final RegistryObject<Item> AECHOR_PETAL = ITEMS.register("aechor_petal", () -> new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS)));
