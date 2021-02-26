@@ -40,6 +40,8 @@ public class AetherTags
 		public static final ITag.INamedTag<Item> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final ITag.INamedTag<Item> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final ITag.INamedTag<Item> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final ITag.INamedTag<Item> PLANKS_CRAFTING = tag("planks_crafting");
+		public static final ITag.INamedTag<Item> STONE_CRAFTING = tag("stone_crafting");
 
 		//TODO: Make sure these are all in use. Tool tags can potentially be used for abilities.
 		public static final ITag.INamedTag<Item> SKYROOT_STICKS = tag("skyroot_stick");

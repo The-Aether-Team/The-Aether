@@ -10,6 +10,7 @@ import net.minecraft.data.ItemTagsProvider;
 import net.minecraft.data.TagsProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
@@ -40,6 +41,12 @@ public class AetherItemTags extends ItemTagsProvider
         copy(AetherTags.Blocks.DUNGEON_BLOCKS, AetherTags.Items.DUNGEON_BLOCKS);
         copy(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS, AetherTags.Items.LOCKED_DUNGEON_BLOCKS);
         copy(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS, AetherTags.Items.TRAPPED_DUNGEON_BLOCKS);
+        tag(AetherTags.Items.PLANKS_CRAFTING)
+                .addTag(ItemTags.PLANKS)
+                .add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
+        tag(AetherTags.Items.STONE_CRAFTING)
+                .addTag(ItemTags.STONE_CRAFTING_MATERIALS)
+                .add(AetherBlocks.HOLYSTONE.get().asItem());
         tag(AetherTags.Items.SKYROOT_STICKS)
                 .add(AetherItems.SKYROOT_STICK.get());
         tag(AetherTags.Items.SKYROOT_TOOLS)
