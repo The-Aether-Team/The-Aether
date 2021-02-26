@@ -8,7 +8,7 @@ import com.gildedgames.aether.client.AetherRendering;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.registry.*;
 import com.gildedgames.aether.registry.AetherDimensions;
-import com.gildedgames.aether.world.gen.feature.AetherFeatures;
+import com.gildedgames.aether.registry.AetherFeatures;
 import com.gildedgames.aether.data.AetherLootTables;
 import net.minecraft.block.*;
 import net.minecraft.client.world.DimensionRenderInfo;
@@ -63,9 +63,9 @@ public class Aether
 
 		DeferredRegister<?>[] registers = {
 				AetherBlocks.BLOCKS,
-				AetherFeatures.FEATURES,
 				AetherEntityTypes.ENTITIES,
 				AetherItems.ITEMS,
+				AetherFeatures.FEATURES,
 				AetherParticleTypes.PARTICLES,
 				AetherPOI.POI,
 				AetherSoundEvents.SOUNDS,
