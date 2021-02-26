@@ -1,14 +1,18 @@
 package com.gildedgames.aether.block.natural;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.block.util.IAetherDoubleDropBlock;
+import com.gildedgames.aether.registry.AetherParticleTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.ParticleStatus;
+import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.state.BooleanProperty;
@@ -23,19 +27,11 @@ import net.minecraft.block.AbstractBlock;
 public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoubleDropBlock
 {
 	private static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
-	private final IParticleData particle;
-	
-	public LeavesWithParticlesBlock(float particleRed, float particleGreen, float particleBlue, AbstractBlock.Properties properties) {
-		this(particleRed, particleGreen, particleBlue, 1.0F, properties);
-		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
-	}
-	
-	public LeavesWithParticlesBlock(float particleRed, float particleGreen, float particleBlue, float particleAlpha, AbstractBlock.Properties properties) {
-		this(new RedstoneParticleData(particleRed, particleGreen, particleBlue, particleAlpha), properties);
-	}
-	
-	public LeavesWithParticlesBlock(IParticleData particle, AbstractBlock.Properties properties) {
+	private final Supplier<BasicParticleType> particle;
+
+	public LeavesWithParticlesBlock(Supplier<BasicParticleType> particle, AbstractBlock.Properties properties) {
 		super(properties);
+		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
 		this.particle = particle;
 	}
 
@@ -61,7 +57,7 @@ public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoub
 						double dy = (rand.nextFloat() - 0.5) * 0.5;
 						double dz = (rand.nextFloat() - 0.5) * 0.5;
 
-						Minecraft.getInstance().worldRenderer.addParticle(this.particle, false, x, y, z, dx, dy, dz);
+						worldIn.addParticle(this.particle.get(), x, y, z, dx, dy, dz);
 					}
 				}
 			}

@@ -60,15 +60,15 @@ public class AetherBlocks
 
 	public static final RegistryObject<Block> SKYROOT_LEAVES = register("skyroot_leaves", () -> new LeavesBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
 	public static final RegistryObject<Block> GOLDEN_OAK_LEAVES = register("golden_oak_leaves",
-			() -> new LeavesWithParticlesBlock(0.976F, 0.7450980392156863F, 0.0F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
+			() -> new LeavesWithParticlesBlock(AetherParticleTypes.GOLDEN_OAK_LEAVES, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
 	public static final RegistryObject<Block> CRYSTAL_LEAVES = register("crystal_leaves",
-			() -> new LeavesWithParticlesBlock(0.0F, 0.6450980392156863F, 0.7450980392156863F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
+			() -> new LeavesWithParticlesBlock(AetherParticleTypes.CRYSTAL_LEAVES, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
 	public static final RegistryObject<Block> CRYSTAL_FRUIT_LEAVES = register("crystal_fruit_leaves",
-			() -> new LeavesWithParticlesBlock(0.0F, 0.6450980392156863F, 0.7450980392156863F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
+			() -> new LeavesWithParticlesBlock(AetherParticleTypes.CRYSTAL_LEAVES, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
 	public static final RegistryObject<Block> HOLIDAY_LEAVES = register("holiday_leaves",
-			() -> new LeavesWithParticlesBlock(1.0F, 1.0F, 1.0F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
+			() -> new LeavesWithParticlesBlock(AetherParticleTypes.HOLIDAY_LEAVES, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
 	public static final RegistryObject<Block> DECORATED_HOLIDAY_LEAVES = register("decorated_holiday_leaves",
-			() -> new LeavesWithParticlesBlock(1.0F, 1.0F, 1.0F, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
+			() -> new LeavesWithParticlesBlock(AetherParticleTypes.HOLIDAY_LEAVES, AbstractBlock.Properties.from(Blocks.OAK_LEAVES).harvestTool(ToolType.HOE)));
 
 	public static final RegistryObject<RotatedPillarBlock> SKYROOT_LOG = register("skyroot_log", () -> new AetherLogBlock(AbstractBlock.Properties.from(Blocks.OAK_LOG).harvestTool(ToolType.AXE)));
 	public static final RegistryObject<RotatedPillarBlock> GOLDEN_OAK_LOG = register("golden_oak_log", () -> new AetherLogBlock(AbstractBlock.Properties.from(Blocks.OAK_LOG).harvestTool(ToolType.AXE)));
