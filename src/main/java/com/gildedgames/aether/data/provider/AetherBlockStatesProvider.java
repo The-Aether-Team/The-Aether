@@ -130,18 +130,18 @@ public abstract class AetherBlockStatesProvider extends BlockStateProvider
         getVariantBuilder(block.get()).partialState().setModels(wood);
     }
 
-    public void enchanter(Supplier<? extends Block> block) {
-        ModelFile enchanter = cubeBottomTop(name(block), extend(texture(name(block), "utility/"), "_side"), extend(texture(name(block), "utility/"), "_bottom"), extend(texture(name(block), "utility/"), "_bottom"));
-        getVariantBuilder(block.get()).partialState().addModels(new ConfiguredModel(enchanter));
+    public void altar(Supplier<? extends Block> block) {
+        ModelFile altar = cubeBottomTop(name(block), extend(texture(name(block), "utility/"), "_side"), extend(texture(name(block), "utility/"), "_bottom"), extend(texture(name(block), "utility/"), "_bottom"));
+        getVariantBuilder(block.get()).partialState().addModels(new ConfiguredModel(altar));
     }
 
     public void freezer(Supplier<? extends Block> block) {
-        ModelFile freezer = cubeBottomTop(name(block), extend(texture(name(block), "utility/"), "_side"), extend(texture("enchanter", "utility/"), "_bottom"), extend(texture(name(block), "utility/"), "_top"));
+        ModelFile freezer = cubeBottomTop(name(block), extend(texture(name(block), "utility/"), "_side"), extend(texture("altar", "utility/"), "_bottom"), extend(texture(name(block), "utility/"), "_top"));
         getVariantBuilder(block.get()).partialState().addModels(new ConfiguredModel(freezer));
     }
 
     public void incubator(Supplier<? extends Block> block) {
-        ModelFile incubator = cubeBottomTop(name(block), extend(texture(name(block), "utility/"), "_side"), extend(texture("enchanter", "utility/"), "_bottom"), extend(texture(name(block), "utility/"), "_top"));
+        ModelFile incubator = cubeBottomTop(name(block), extend(texture(name(block), "utility/"), "_side"), extend(texture("altar", "utility/"), "_bottom"), extend(texture(name(block), "utility/"), "_top"));
         getVariantBuilder(block.get()).partialState().addModels(new ConfiguredModel(incubator));
     }
 

@@ -2,7 +2,7 @@
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
     "side": "aether:block/utility/freezer_side",
-    "bottom": "aether:block/utility/enchanter_bottom",
+    "bottom": "aether:block/utility/altar_bottom",
     "top": "aether:block/utility/freezer_top"
   }
 }

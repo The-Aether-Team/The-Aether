@@ -43,7 +43,7 @@ public class AetherRecipes extends AetherRecipesProvider
 
         makeOreToBlock(AetherBlocks.ZANITE_BLOCK, AetherItems.ZANITE_GEMSTONE).build(consumer);
 
-        ShapedRecipeBuilder.shapedRecipe(AetherBlocks.ENCHANTER.get(), 1)
+        ShapedRecipeBuilder.shapedRecipe(AetherBlocks.ALTAR.get(), 1)
                 .patternLine("HHH")
                 .patternLine("HZH")
                 .patternLine("HHH")

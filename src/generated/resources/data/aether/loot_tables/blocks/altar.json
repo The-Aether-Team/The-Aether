@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "aether:enchanter"
+          "name": "aether:altar"
         }
       ],
       "conditions": [

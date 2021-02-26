@@ -9,7 +9,7 @@ import com.gildedgames.aether.api.enchantments.AetherEnchantmentFuel;
 import net.minecraft.client.gui.recipebook.AbstractRecipeBookGui;
 import net.minecraft.item.Item;
 
-public class EnchanterRecipeGui extends AbstractRecipeBookGui {
+public class AltarRecipeGui extends AbstractRecipeBookGui {
 
 	/* TODO: I don't know what to do with these!
 	@Override

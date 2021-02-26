@@ -86,8 +86,8 @@ public class AetherBlocks
 	public static final RegistryObject<Block> ZANITE_BLOCK = register("zanite_block", () -> new Block(AbstractBlock.Properties.from(Blocks.IRON_BLOCK).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
 	public static final RegistryObject<Block> ENCHANTED_GRAVITITE = register("enchanted_gravitite", () -> new FloatingBlock(true, AbstractBlock.Properties.from(Blocks.IRON_BLOCK).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
 
-	public static final RegistryObject<Block> ENCHANTER = register("enchanter",
-			() -> new EnchanterBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> ALTAR = register("altar",
+			() -> new AltarBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
 	public static final RegistryObject<Block> FREEZER = register("freezer",
 			() -> new FreezerBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
 	public static final RegistryObject<Block> INCUBATOR = register("incubator",

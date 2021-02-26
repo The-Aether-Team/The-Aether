@@ -177,7 +177,7 @@ public class AetherItemModels extends AetherItemModelsProvider
         itemBlock(AetherBlocks.ZANITE_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_GRAVITITE);
 
-        itemBlock(AetherBlocks.ENCHANTER);
+        itemBlock(AetherBlocks.ALTAR);
         itemBlock(AetherBlocks.FREEZER);
         itemBlock(AetherBlocks.INCUBATOR);
 

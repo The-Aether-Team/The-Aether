@@ -3,7 +3,7 @@ package com.gildedgames.aether.entity.tile;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.crafting.AetherRecipeTypes;
 import com.gildedgames.aether.api.AetherAPI;
-import com.gildedgames.aether.inventory.container.EnchanterContainer;
+import com.gildedgames.aether.inventory.container.AltarContainer;
 
 import com.gildedgames.aether.registry.AetherTileEntityTypes;
 import net.minecraft.entity.player.PlayerInventory;
@@ -16,24 +16,24 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class EnchanterTileEntity extends AbstractFurnaceTileEntity
+public class AltarTileEntity extends AbstractFurnaceTileEntity
 {
-	protected EnchanterTileEntity(TileEntityType<?> tileTypeIn, IRecipeType<? extends AbstractCookingRecipe> recipeTypeIn) {
+	protected AltarTileEntity(TileEntityType<?> tileTypeIn, IRecipeType<? extends AbstractCookingRecipe> recipeTypeIn) {
 		super(tileTypeIn, recipeTypeIn);
 	}
 	
-	public EnchanterTileEntity() {
-		super(AetherTileEntityTypes.ENCHANTER.get(), AetherRecipeTypes.ENCHANTING);
+	public AltarTileEntity() {
+		super(AetherTileEntityTypes.ALTAR.get(), AetherRecipeTypes.ENCHANTING);
 	}
 
 	@Override
 	protected ITextComponent getDefaultName() {
-		return new TranslationTextComponent("container." + Aether.MODID + ".enchanter");
+		return new TranslationTextComponent("container." + Aether.MODID + ".altar");
 	}
 
 	@Override
 	protected Container createMenu(int id, PlayerInventory player) {
-		return new EnchanterContainer(id, player, this, this.furnaceData);
+		return new AltarContainer(id, player, this, this.furnaceData);
 	}
 	
 	@Override

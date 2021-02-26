@@ -2,7 +2,7 @@ package com.gildedgames.aether.block.utility;
 
 import java.util.Random;
 
-import com.gildedgames.aether.entity.tile.EnchanterTileEntity;
+import com.gildedgames.aether.entity.tile.AltarTileEntity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,23 +18,23 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import net.minecraft.block.AbstractBlock;
 
-public class EnchanterBlock extends AbstractAetherFurnaceBlock {
+public class AltarBlock extends AbstractAetherFurnaceBlock {
 
-	public EnchanterBlock(AbstractBlock.Properties properties) {
+	public AltarBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 	
 	@Override
 	public TileEntity createNewTileEntity(IBlockReader worldIn) {
-		return new EnchanterTileEntity();
+		return new AltarTileEntity();
 	}
 	
 	@Override
 	protected void interactWith(World worldIn, BlockPos pos, PlayerEntity player) {
 		if (!worldIn.isRemote) { 
 			TileEntity tileentity = worldIn.getTileEntity(pos);
-			if (tileentity instanceof EnchanterTileEntity) {
-				NetworkHooks.openGui((ServerPlayerEntity) player, (EnchanterTileEntity) tileentity);
+			if (tileentity instanceof AltarTileEntity) {
+				NetworkHooks.openGui((ServerPlayerEntity) player, (AltarTileEntity) tileentity);
 			}
 		}
 	}

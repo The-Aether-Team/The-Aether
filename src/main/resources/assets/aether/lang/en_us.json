@@ -40,13 +40,13 @@
   "block.aether.zanite_block": "Zanite Block",
   "block.aether.enchanted_gravitite": "Enchanted Gravitite",
 
-  "block.aether.enchanter": "Enchanter",
+  "block.aether.altar": "Altar",
   "block.aether.freezer": "Freezer",
   "block.aether.incubator": "Incubator",
 
   "block.aether.ambrosium_torch": "Ambrosium Torch",
 
-  "block.aether.berry_bush_stem": "Berry Bush Stem",
+  "block.aether.berry_bush_stem": "Bush Stem",
   "block.aether.berry_bush": "Berry Bush",
 
   "block.aether.purple_flower": "Purple Flower",
@@ -276,7 +276,7 @@
 
   "_comment": "Containers",
   "container.aether.incubator": "Incubator",
-  "container.aether.enchanter": "Enchanter",
+  "container.aether.altar": "Altar",
   "container.aether.freezer": "Freezer",
 
 
@@ -295,7 +295,7 @@
   "advancement.aether.enter_aether": "Hostile Paradise",
   "advancement.aether.blue_aercloud": "To infinity and beyond!",
   "advancement.aether.incubator": "Now you're family",
-  "advancement.aether.enchanter": "Do you believe in magic?",
+  "advancement.aether.altar": "Do you believe in magic?",
   "advancement.aether.gravitite_tools": "Pink is the new blue",
   "advancement.aether.mount_phyg": "When Phygs fly",
   "advancement.aether.bronze_dungeon": "Like a Bossaru!",
@@ -308,7 +308,7 @@
   "advancement.aether.enter_aether.desc": "Enter the Aether",
   "advancement.aether.blue_aercloud.desc": "Bounce on a Blue Aercloud",
   "advancement.aether.incubator.desc": "Incubate a Moa",
-  "advancement.aether.enchanter.desc": "Craft an Enchanter",
+  "advancement.aether.altar.desc": "Craft an Altar",
   "advancement.aether.gravitite_tools.desc": "Craft a Gravitite tool",
   "advancement.aether.mount_phyg.desc": "Fly on a Phyg",
   "advancement.aether.bronze_dungeon.desc": "Defeat the bronze dungeon boss",

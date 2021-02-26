@@ -2,13 +2,13 @@
   "parent": "aether:enter_aether",
   "display": {
     "icon": {
-      "item": "aether:enchanter"
+      "item": "aether:altar"
     },
     "title": {
-      "translate": "advancement.aether.enchanter"
+      "translate": "advancement.aether.altar"
     },
     "description": {
-      "translate": "advancement.aether.enchanter.desc"
+      "translate": "advancement.aether.altar.desc"
     },
     "frame": "task",
     "show_toast": true,
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:enchanter"
+            "item": "aether:altar"
           }
         ]
       }

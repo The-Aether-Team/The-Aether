@@ -89,7 +89,7 @@ public class AetherLootTables extends AetherLootTableProvider
             dropSelf(AetherBlocks.ZANITE_BLOCK);
             dropSelf(AetherBlocks.ENCHANTED_GRAVITITE);
 
-            dropSelf(AetherBlocks.ENCHANTER);
+            dropSelf(AetherBlocks.ALTAR);
             dropSelf(AetherBlocks.FREEZER);
             dropSelf(AetherBlocks.INCUBATOR);
 

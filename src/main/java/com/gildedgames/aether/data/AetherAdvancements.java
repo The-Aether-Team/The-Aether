@@ -122,12 +122,12 @@ public class AetherAdvancements extends AdvancementProvider
 
             Advancement craftAltar = Advancement.Builder.builder()
                     .withParent(enterAether)
-                    .withDisplay(AetherBlocks.ENCHANTER.get(),
-                            new TranslationTextComponent("advancement.aether.enchanter"),
-                            new TranslationTextComponent("advancement.aether.enchanter.desc"),
+                    .withDisplay(AetherBlocks.ALTAR.get(),
+                            new TranslationTextComponent("advancement.aether.altar"),
+                            new TranslationTextComponent("advancement.aether.altar.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .withCriterion("craft_altar", InventoryChangeTrigger.Instance.forItems(AetherBlocks.ENCHANTER.get()))
+                    .withCriterion("craft_altar", InventoryChangeTrigger.Instance.forItems(AetherBlocks.ALTAR.get()))
                     .register(consumer, "aether:craft_altar");
             Advancement gravititeTools = Advancement.Builder.builder()
                     .withParent(craftAltar)

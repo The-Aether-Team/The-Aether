@@ -18,15 +18,15 @@ import net.minecraft.item.crafting.RecipeBookCategory;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 
-public class EnchanterContainer extends CustomSmeltingContainer {
+public class AltarContainer extends CustomSmeltingContainer {
 
-	public EnchanterContainer(int id, PlayerInventory playerInventoryIn, IInventory furnaceInventoryIn, IIntArray furnaceDataIn) {
-		super(AetherContainerTypes.ENCHANTER.get(), AetherRecipeTypes.ENCHANTING, RecipeBookCategory.CRAFTING, id, playerInventoryIn, furnaceInventoryIn, furnaceDataIn);
+	public AltarContainer(int id, PlayerInventory playerInventoryIn, IInventory furnaceInventoryIn, IIntArray furnaceDataIn) {
+		super(AetherContainerTypes.ALTAR.get(), AetherRecipeTypes.ENCHANTING, RecipeBookCategory.CRAFTING, id, playerInventoryIn, furnaceInventoryIn, furnaceDataIn);
 		replaceSlot(1, new CustomSmeltingFuelSlot(this, furnaceInventoryIn, 1, 56, 53));
 		replaceSlot(2, new CustomSmeltingResultSlot(playerInventoryIn.player, furnaceInventoryIn, 2, 116, 35));
 	}
 
-	public EnchanterContainer(int id, PlayerInventory playerInventoryIn) {
+	public AltarContainer(int id, PlayerInventory playerInventoryIn) {
 		this(id, playerInventoryIn, new Inventory(3), new IntArray(4));
 	}
 
