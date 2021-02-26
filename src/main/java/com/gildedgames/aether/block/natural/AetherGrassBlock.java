@@ -13,8 +13,9 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlock {
-	public static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
+public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlock
+{
+	private static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
 
 	public AetherGrassBlock(AbstractBlock.Properties properties) {
 		super(properties);
@@ -30,7 +31,7 @@ public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlo
 	@Override
 	public void onPlantGrow(BlockState state, IWorld world, BlockPos pos, BlockPos source) {
 		if (state.isIn(AetherTags.Blocks.AETHER_DIRT)) {
-			world.setBlockState(pos, state.get(AetherBlockStateProperties.DOUBLE_DROPS)? AetherBlocks.AETHER_DIRT.get().getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, state.get(AetherBlockStateProperties.DOUBLE_DROPS)) : AetherBlocks.AETHER_DIRT.get().getDefaultState(), 2);
+			world.setBlockState(pos, state.get(AetherBlockStateProperties.DOUBLE_DROPS) ? AetherBlocks.AETHER_DIRT.get().getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, state.get(AetherBlockStateProperties.DOUBLE_DROPS)) : AetherBlocks.AETHER_DIRT.get().getDefaultState(), 2);
 		}
 	}
 
@@ -42,7 +43,6 @@ public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlo
 		} else {
 			if (worldIn.getLight(pos.up()) >= 9) {
 				BlockState blockstate = this.getDefaultState();
-
 				for(int i = 0; i < 4; ++i) {
 					BlockPos blockpos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
 					if (worldIn.getBlockState(blockpos).isIn(AetherBlocks.AETHER_DIRT.get()) && isSnowyAndNotUnderwater(blockstate, worldIn, blockpos)) {
@@ -50,8 +50,6 @@ public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlo
 					}
 				}
 			}
-
 		}
 	}
-
 }

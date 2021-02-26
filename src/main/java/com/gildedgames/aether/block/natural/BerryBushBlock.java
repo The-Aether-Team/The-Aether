@@ -7,8 +7,8 @@ import net.minecraft.world.IWorld;
 
 import net.minecraft.block.AbstractBlock;
 
-public class BerryBushBlock extends AetherBushBlock {
-	
+public class BerryBushBlock extends AetherBushBlock
+{
 	public BerryBushBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
@@ -18,5 +18,4 @@ public class BerryBushBlock extends AetherBushBlock {
 		super.onPlayerDestroy(worldIn, pos, state);
 		worldIn.setBlockState(pos, AetherBlocks.BERRY_BUSH_STEM.get().getDefaultState(), 3);
 	}
-	
 }

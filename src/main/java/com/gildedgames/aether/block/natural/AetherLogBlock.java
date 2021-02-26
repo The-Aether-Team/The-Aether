@@ -10,8 +10,8 @@ import net.minecraft.state.StateContainer;
 
 import net.minecraft.block.AbstractBlock;
 
-public class AetherLogBlock extends RotatedPillarBlock implements IAetherDoubleDropBlock {
-
+public class AetherLogBlock extends RotatedPillarBlock implements IAetherDoubleDropBlock
+{
 	public AetherLogBlock(AbstractBlock.Properties properties) {
 		super(properties);
 		this.setDefaultState(this.getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, false));
@@ -22,5 +22,4 @@ public class AetherLogBlock extends RotatedPillarBlock implements IAetherDoubleD
 		super.fillStateContainer(builder);
 		builder.add(AetherBlockStateProperties.DOUBLE_DROPS);
 	}
-	
 }

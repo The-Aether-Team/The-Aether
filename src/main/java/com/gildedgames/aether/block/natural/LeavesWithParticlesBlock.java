@@ -20,9 +20,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import net.minecraft.block.AbstractBlock;
 
-public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoubleDropBlock {
+public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoubleDropBlock
+{
+	private static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
 	private final IParticleData particle;
-	public static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
 	
 	public LeavesWithParticlesBlock(float particleRed, float particleGreen, float particleBlue, AbstractBlock.Properties properties) {
 		this(particleRed, particleGreen, particleBlue, 1.0F, properties);
@@ -49,24 +50,21 @@ public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoub
 	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		super.animateTick(stateIn, worldIn, pos, rand);
 		
-		if (!worldIn.isRemote) {
-			return;
-		}
-		
-		if (Minecraft.getInstance().gameSettings.particles != ParticleStatus.MINIMAL) {
-			if (rand.nextInt(10) == 0) {
-				for (int i = 0; i < 15; i++) {
-					double x = pos.getX() + (rand.nextFloat() - 0.5) * 8.0;
-					double y = pos.getY() + (rand.nextFloat() - 0.5) * 8.0;
-					double z = pos.getZ() + (rand.nextFloat() - 0.5) * 8.0;
-					double dx = (rand.nextFloat() - 0.5) * 0.5;
-					double dy = (rand.nextFloat() - 0.5) * 0.5;
-					double dz = (rand.nextFloat() - 0.5) * 0.5;
-										
-					Minecraft.getInstance().worldRenderer.addParticle(this.particle, false, x, y, z, dx, dy, dz);
+		if (worldIn.isRemote) {
+			if (Minecraft.getInstance().gameSettings.particles != ParticleStatus.MINIMAL) {
+				if (rand.nextInt(10) == 0) {
+					for (int i = 0; i < 15; i++) {
+						double x = pos.getX() + (rand.nextFloat() - 0.5) * 8.0;
+						double y = pos.getY() + (rand.nextFloat() - 0.5) * 8.0;
+						double z = pos.getZ() + (rand.nextFloat() - 0.5) * 8.0;
+						double dx = (rand.nextFloat() - 0.5) * 0.5;
+						double dy = (rand.nextFloat() - 0.5) * 0.5;
+						double dz = (rand.nextFloat() - 0.5) * 0.5;
+
+						Minecraft.getInstance().worldRenderer.addParticle(this.particle, false, x, y, z, dx, dy, dz);
+					}
 				}
 			}
-		}		
+		}
 	}
-	
 }

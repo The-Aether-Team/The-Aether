@@ -15,7 +15,8 @@ import net.minecraft.world.server.ServerWorld;
 
 import net.minecraft.block.AbstractBlock;
 
-public class FloatingBlock extends Block {
+public class FloatingBlock extends Block
+{
 	private final boolean powered;
 	
 	public FloatingBlock(boolean powered, AbstractBlock.Properties properties) {

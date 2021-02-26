@@ -11,7 +11,7 @@ import net.minecraft.block.AbstractBlock;
 
 public class AetherDoubleDropBlock extends Block implements IAetherDoubleDropBlock
 {
-	public static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
+	private static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
 
 	public AetherDoubleDropBlock(AbstractBlock.Properties properties) {
 		super(properties);

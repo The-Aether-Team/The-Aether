@@ -13,16 +13,15 @@ import net.minecraft.world.server.ServerWorld;
 
 import net.minecraft.block.AbstractBlock;
 
-public class EnchantedAetherGrassBlock extends SnowyDirtBlock {
-
+public class EnchantedAetherGrassBlock extends SnowyDirtBlock
+{
 	public EnchantedAetherGrassBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 	
 	 protected static boolean canBlockStay(BlockState state, IWorldReader world, BlockPos pos) {
-	      BlockPos posUp = pos.up();
+		BlockPos posUp = pos.up();
 		BlockState stateUp = world.getBlockState(posUp);
-
 		int i = LightEngine.func_215613_a(world, state, pos, stateUp, posUp, Direction.UP, stateUp.getOpacity(world, posUp));
 		return i < world.getMaxLightLevel();
 	}
@@ -33,5 +32,4 @@ public class EnchantedAetherGrassBlock extends SnowyDirtBlock {
 			worldIn.setBlockState(pos, AetherBlocks.AETHER_DIRT.get().getDefaultState());
 		}
 	}
-	
 }

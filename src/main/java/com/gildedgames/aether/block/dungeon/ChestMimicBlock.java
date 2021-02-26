@@ -47,10 +47,12 @@ public class ChestMimicBlock extends Block implements IWaterLoggable
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(TYPE, ChestType.SINGLE).with(WATERLOGGED, Boolean.valueOf(false)));
 	}
 
+	@Override
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.ENTITYBLOCK_ANIMATED;
 	}
 
+	@Override
 	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
 		if (stateIn.get(WATERLOGGED)) {
 			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
@@ -68,6 +70,7 @@ public class ChestMimicBlock extends Block implements IWaterLoggable
 		return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
+	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		if (state.get(TYPE) == ChestType.SINGLE) {
 			return SHAPE_SINGLE;
@@ -91,6 +94,7 @@ public class ChestMimicBlock extends Block implements IWaterLoggable
 		return state.get(TYPE) == ChestType.LEFT ? direction.rotateY() : direction.rotateYCCW();
 	}
 
+	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		ChestType chesttype = ChestType.SINGLE;
 		Direction direction = context.getPlacementHorizontalFacing().getOpposite();
@@ -116,6 +120,7 @@ public class ChestMimicBlock extends Block implements IWaterLoggable
 		return this.getDefaultState().with(FACING, direction).with(TYPE, chesttype).with(WATERLOGGED, Boolean.valueOf(fluidstate.getFluid() == Fluids.WATER));
 	}
 
+	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
 	}
@@ -126,6 +131,7 @@ public class ChestMimicBlock extends Block implements IWaterLoggable
 		return blockstate.isIn(this) && blockstate.get(TYPE) == ChestType.SINGLE ? blockstate.get(FACING) : null;
 	}
 
+	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if (!ChestBlock.isBlocked(worldIn, pos) && !worldIn.isRemote) {
 			spawnMimic(state, worldIn, pos);
@@ -173,18 +179,22 @@ public class ChestMimicBlock extends Block implements IWaterLoggable
 		return new ChestMimicTileEntity();
 	}
 
+	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
 		return state.with(FACING, rot.rotate(state.get(FACING)));
 	}
 
+	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn) {
 		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
 	}
 
+	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(FACING, TYPE, WATERLOGGED);
 	}
 
+	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
 		return false;
 	}

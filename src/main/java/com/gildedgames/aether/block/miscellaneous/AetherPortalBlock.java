@@ -41,7 +41,8 @@ import java.util.Random;
 import net.minecraft.block.AbstractBlock;
 
 @EventBusSubscriber(modid = Aether.MODID)
-public class AetherPortalBlock extends Block {
+public class AetherPortalBlock extends Block
+{
 	public static final EnumProperty<Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 	protected static final VoxelShape X_AABB = Block.makeCuboidShape(0.0, 0.0, 6.0, 16.0, 16.0, 10.0);
 	protected static final VoxelShape Z_AABB = Block.makeCuboidShape(6.0, 0.0, 0.0, 10.0, 16.0, 16.0);
@@ -405,5 +406,4 @@ public class AetherPortalBlock extends Block {
 			return this.isValid() && this.isLargeEnough();
 		}
 	}
-
 }

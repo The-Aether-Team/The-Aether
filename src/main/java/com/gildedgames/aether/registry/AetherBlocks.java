@@ -7,7 +7,6 @@ import com.gildedgames.aether.block.dungeon.ChestMimicBlock;
 import com.gildedgames.aether.block.dungeon.TrappedBlock;
 import com.gildedgames.aether.block.dungeon.TreasureChestBlock;
 import com.gildedgames.aether.block.miscellaneous.AetherPortalBlock;
-import com.gildedgames.aether.block.miscellaneous.PresentBlock;
 import com.gildedgames.aether.block.util.*;
 import com.gildedgames.aether.client.AetherRendering;
 import com.gildedgames.aether.item.block.BurnableBlockItem;
@@ -154,7 +153,7 @@ public class AetherBlocks
 			() -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.QUARTZ).hardnessAndResistance(0.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
 
 	public static final RegistryObject<Block> PRESENT = register("present",
-			() -> new PresentBlock(AbstractBlock.Properties.create(Material.ORGANIC).hardnessAndResistance(0.6F).sound(SoundType.PLANT)));
+			() -> new Block(AbstractBlock.Properties.create(Material.ORGANIC).hardnessAndResistance(0.6F).sound(SoundType.PLANT)));
 
 	public static final RegistryObject<FenceBlock> SKYROOT_FENCE = register("skyroot_fence", () -> new FenceBlock(AbstractBlock.Properties.from(Blocks.OAK_FENCE).harvestTool(ToolType.AXE)));
 	public static final RegistryObject<FenceGateBlock> SKYROOT_FENCE_GATE = register("skyroot_fence_gate", () -> new FenceGateBlock(AbstractBlock.Properties.from(Blocks.OAK_FENCE_GATE).harvestTool(ToolType.AXE)));

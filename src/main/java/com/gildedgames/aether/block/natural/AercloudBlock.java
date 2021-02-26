@@ -19,16 +19,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class AercloudBlock extends BreakableBlock implements IAetherDoubleDropBlock {
-	public static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
-
-	protected VoxelShape shape;
+public class AercloudBlock extends BreakableBlock implements IAetherDoubleDropBlock
+{
+	private static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
+	protected static VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.01, 1.0));
 	
 	public AercloudBlock(AbstractBlock.Properties properties) {
 		super(properties);
 		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
-		
-		shape = VoxelShapes.create(new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.01, 1.0));
 	}
 
 	@Override
@@ -40,29 +38,30 @@ public class AercloudBlock extends BreakableBlock implements IAetherDoubleDropBl
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		entity.fallDistance = 0.0F;
-		
-		if (entity.getMotion().y < 0) {
+
+		if (entity.getMotion().y < 0.0) {
 			entity.setMotion(entity.getMotion().mul(1.0, 0.005, 1.0));
 		}
 	}
 
+	@Override
 	@OnlyIn(Dist.CLIENT)
 	public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
 		return 1.0F;
 	}
 
+	@Override
 	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
 		return true;
 	}
 	
 	@Override
 	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return shape;
+		return SHAPE;
 	}
 	
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return shape;
+		return SHAPE;
 	}
-	
 }
