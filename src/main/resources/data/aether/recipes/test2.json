@@ -1,9 +1,0 @@
-{
-  "type": "aether:freezing",
-  "ingredient": {
-    "item": "aether:holystone"
-  },
-  "result": "aether:icestone",
-  "experience": 0.1,
-  "cookingtime": 100
-}

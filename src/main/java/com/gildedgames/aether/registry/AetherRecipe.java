@@ -4,6 +4,7 @@ import com.gildedgames.aether.Aether;
 
 import com.gildedgames.aether.crafting.EnchantingRecipe;
 import com.gildedgames.aether.crafting.FreezingRecipe;
+import net.minecraft.item.crafting.CookingRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraftforge.fml.RegistryObject;
@@ -14,8 +15,8 @@ public class AetherRecipe
 {
 	public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Aether.MODID);
 
-	public static final RegistryObject<IRecipeSerializer<EnchantingRecipe>> ENCHANTING = RECIPE_SERIALIZERS.register("enchanting", EnchantingRecipe.Serializer::new);
-	public static final RegistryObject<IRecipeSerializer<FreezingRecipe>> FREEZING = RECIPE_SERIALIZERS.register("freezing", FreezingRecipe.Serializer::new);
+	public static final RegistryObject<CookingRecipeSerializer<EnchantingRecipe>> ENCHANTING = RECIPE_SERIALIZERS.register("enchanting", EnchantingRecipe.Serializer::new);
+	public static final RegistryObject<CookingRecipeSerializer<FreezingRecipe>> FREEZING = RECIPE_SERIALIZERS.register("freezing", FreezingRecipe.Serializer::new);
 
 	public static class RecipeTypes
 	{

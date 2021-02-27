@@ -431,8 +431,10 @@ public class AetherRecipes extends AetherRecipesProvider
         stonecuttingRecipe(AetherBlocks.AEROGEL, AetherBlocks.AEROGEL_SLAB.get(), 2).build(consumer, name("aerogel_slab_stonecutting"));
 
         //TODO: Enchanting recipes.
-        //smelting recipes for ambrosium ore and zanite ore -> materials. also for blast furnace.
-        //stonecutter recipes
+        enchantingRecipe(AetherItems.HEALING_STONE.get(), AetherBlocks.HOLYSTONE.get(), 750).build(consumer, name("healing_stone_enchanting"));
+
+        freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.IRON_RING.get(), 2500).build(consumer, name("ice_ring_from_iron_freezing"));
+        freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.GOLD_RING.get(), 2500).build(consumer, name("ice_ring_from_gold_freezing"));
     }
 
     private ResourceLocation name(String name) {

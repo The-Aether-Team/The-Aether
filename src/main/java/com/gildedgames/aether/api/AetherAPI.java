@@ -8,8 +8,6 @@ import javax.annotation.Nullable;
 
 import com.gildedgames.aether.api.accessories.AetherAccessory;
 import com.gildedgames.aether.api.dungeon.DungeonType;
-import com.gildedgames.aether.api.enchantments.AetherEnchantmentFuel;
-import com.gildedgames.aether.api.freezables.AetherFreezableFuel;
 import com.gildedgames.aether.api.moa.MoaType;
 import com.gildedgames.aether.capability.AetherCapabilities;
 import com.gildedgames.aether.player.IAetherPlayer;
@@ -36,10 +34,6 @@ public class AetherAPI {
 	
 	private static IForgeRegistry<AetherAccessory> accessoryRegistry;
 	
-	private static IForgeRegistry<AetherEnchantmentFuel> enchantmentFuelRegistry;
-	
-	private static IForgeRegistry<AetherFreezableFuel> freezableFuelRegistry;
-	
 	private static IForgeRegistry<MoaType> moaTypeRegistry;
 	
 	private static IForgeRegistry<DungeonType> dungeonTypeRegistry;
@@ -47,8 +41,6 @@ public class AetherAPI {
 	@SubscribeEvent
 	public static void makeRegistries(RegistryEvent.NewRegistry event) {
 		accessoryRegistry = makeRegistry("accessories", AetherAccessory.class);
-		enchantmentFuelRegistry = makeRegistry("enchantment_fuels", AetherEnchantmentFuel.class);
-		freezableFuelRegistry = makeRegistry("freezable_fuel", AetherFreezableFuel.class);
 		moaTypeRegistry = makeRegistry("moa_types", MoaType.class);
 		dungeonTypeRegistry = makeRegistry("dungeon_types", DungeonType.class);
 	}
@@ -89,50 +81,6 @@ public class AetherAPI {
 		return accessoryRegistry.getValue(block.getRegistryName());
 	}
 
-	public static boolean isEnchantmentFuel(@Nonnull Item item) {
-		return enchantmentFuelRegistry.containsKey(item.getRegistryName());
-	}	
-	
-	public static @Nullable AetherEnchantmentFuel getEnchantmentFuel(@Nonnull Item item) {
-		return enchantmentFuelRegistry.getValue(item.getRegistryName());
-	}
-	
-	public static  int getEnchantmentFuelTime(@Nonnull Item item) {
-		AetherEnchantmentFuel fuel = getEnchantmentFuel(item);
-		if (fuel == null) {
-			return 0;
-		}
-		else {
-			return fuel.getTimeGiven();
-		}
-	}
-	
-	public static Collection<AetherEnchantmentFuel> getEnchantmentFuelSet() {
-		return enchantmentFuelRegistry.getValues();
-	}
-	
-	public static boolean isFreezableFuel(@Nonnull Item item) {
-		return freezableFuelRegistry.containsKey(item.getRegistryName());
-	}
-	
-	public static @Nullable AetherFreezableFuel getFreezableFuel(@Nonnull Item item) {
-		return freezableFuelRegistry.getValue(item.getRegistryName());
-	}
-	
-	public static int getFreezableFuelTime(@Nonnull Item item) {
-		AetherFreezableFuel fuel = getFreezableFuel(item);
-		if (fuel == null) {
-			return 0;
-		}
-		else {
-			return fuel.getTimeGiven();
-		}
-	}
-	
-	public static Collection<AetherFreezableFuel> getFreezableFuelSet() {
-		return freezableFuelRegistry.getValues();
-	}
-	
 //	public @Nonnull Collection<AetherEnchantmentRecipe> getEnchantmentRecipes() {
 //		return iEnchantmentRegistry.getValues();
 //	}
