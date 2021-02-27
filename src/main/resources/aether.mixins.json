@@ -7,7 +7,8 @@
   "mixins": [
   ],
   "client": [
-    "client.WorldRendererMixin"
+    "client.WorldRendererMixin",
+    "client.ClientRecipeBookMixin"
   ],
   "injectors": {
     "defaultRequire": 1

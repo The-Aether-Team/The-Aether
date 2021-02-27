@@ -4,6 +4,7 @@ import com.gildedgames.aether.registry.AetherRecipe.RecipeTypes;
 import com.gildedgames.aether.entity.tile.AltarTileEntity;
 import com.gildedgames.aether.registry.AetherContainerTypes;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import net.minecraft.client.util.RecipeBookCategories;
 import net.minecraft.entity.player.PlayerInventory;
@@ -18,18 +19,12 @@ import java.util.List;
 public class AltarContainer extends AbstractFurnaceContainer
 {
 	//TODO: Recipe Book
-	//TODO: Correct warning in log for unknown recipe category; see Environmental's mixin for this.
 	public AltarContainer(int windowId, PlayerInventory playerInventory) {
-		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING, RecipeBookCategory.CRAFTING, windowId, playerInventory);
+		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING, RecipeBookCategory.FURNACE, windowId, playerInventory);
 	}
 
 	public AltarContainer(int windowId, PlayerInventory playerInventory, IInventory enchantingInventory, IIntArray furnaceData) {
-		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING, RecipeBookCategory.CRAFTING, windowId, playerInventory, enchantingInventory, furnaceData);
-	}
-
-	@Override
-	public List<RecipeBookCategories> getRecipeBookCategories() {
-		return Lists.newArrayList(RecipeBookCategories.CRAFTING_SEARCH, RecipeBookCategories.CRAFTING_BUILDING_BLOCKS, RecipeBookCategories.CRAFTING_MISC);
+		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING, RecipeBookCategory.FURNACE, windowId, playerInventory, enchantingInventory, furnaceData);
 	}
 
 	@Override
