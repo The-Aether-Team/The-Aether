@@ -4,9 +4,10 @@ import java.util.Random;
 
 import com.gildedgames.aether.entity.tile.AltarTileEntity;
 
+import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
@@ -14,12 +15,11 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import net.minecraft.block.AbstractBlock;
 
-public class AltarBlock extends AbstractAetherFurnaceBlock {
-
+public class AltarBlock extends AbstractFurnaceBlock
+{
 	public AltarBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
@@ -34,7 +34,7 @@ public class AltarBlock extends AbstractAetherFurnaceBlock {
 		if (!worldIn.isRemote) { 
 			TileEntity tileentity = worldIn.getTileEntity(pos);
 			if (tileentity instanceof AltarTileEntity) {
-				NetworkHooks.openGui((ServerPlayerEntity) player, (AltarTileEntity) tileentity);
+				player.openContainer((INamedContainerProvider) tileentity);
 			}
 		}
 	}
@@ -53,6 +53,5 @@ public class AltarBlock extends AbstractAetherFurnaceBlock {
 				world.playSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 			}
 		}
-	}	
-	
+	}
 }

@@ -1,50 +1,26 @@
 package com.gildedgames.aether.client.gui.recipebook;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import com.gildedgames.aether.api.AetherAPI;
-import com.gildedgames.aether.api.freezables.AetherFreezableFuel;
+import com.gildedgames.aether.Aether;
 
+import com.gildedgames.aether.entity.tile.FreezerTileEntity;
 import net.minecraft.client.gui.recipebook.AbstractRecipeBookGui;
 import net.minecraft.item.Item;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class FreezerRecipeGui extends AbstractRecipeBookGui {
+    private static final ITextComponent field_243415_i = new TranslationTextComponent("gui.recipebook.toggleRecipes." + Aether.MODID + ".freezable");
 
-	/* TODO: I don't know what to do with these!
-	@Override
-	protected boolean func_212962_b() {
-		return this.recipeBook.isFurnaceFilteringCraftable();
-	}
+    protected ITextComponent func_230479_g_() {
+        return field_243415_i;
+    }
 
-	@Override
-	protected void func_212959_a(boolean p_212959_1_) {
-		this.recipeBook.setFurnaceFilteringCraftable(p_212959_1_);
-	}
-
-	@Override
-	protected boolean func_212963_d() {
-		return this.recipeBook.isFurnaceGuiOpen();
-	}
-
-	@Override
-	protected void func_212957_c(boolean p_212957_1_) {
-		this.recipeBook.setFurnaceGuiOpen(p_212957_1_);
-	}
-	
-	private static final String TOGGLE_RECIPE_TRANSLATION_KEY = "gui.recipebook.toggleRecipes." + Aether.MODID + ".freezable";
-
-	@Override
-	protected String func_212960_g() {
-		return TOGGLE_RECIPE_TRANSLATION_KEY;
-	}
-	*/
-
-	@Override
-	protected Set<Item> func_212958_h() {
-		return AetherAPI.getFreezableFuelSet().stream()
-			.map(AetherFreezableFuel::getFuelItem)
-			.collect(Collectors.toSet());
-	}
-
+    protected Set<Item> func_212958_h() {
+        return FreezerTileEntity.getFreezingMap().keySet();
+    }
 }

@@ -1,29 +1,29 @@
 package com.gildedgames.aether.entity.tile;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.crafting.AetherRecipeTypes;
-import com.gildedgames.aether.api.AetherAPI;
+import com.gildedgames.aether.registry.AetherRecipe.RecipeTypes;
 import com.gildedgames.aether.inventory.container.AltarContainer;
 
 import com.gildedgames.aether.registry.AetherTileEntityTypes;
+import com.google.common.collect.Maps;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.AbstractCookingRecipe;
-import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.tags.ITag;
 import net.minecraft.tileentity.AbstractFurnaceTileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import java.util.Map;
+
 public class AltarTileEntity extends AbstractFurnaceTileEntity
 {
-	protected AltarTileEntity(TileEntityType<?> tileTypeIn, IRecipeType<? extends AbstractCookingRecipe> recipeTypeIn) {
-		super(tileTypeIn, recipeTypeIn);
-	}
-	
+	private static final Map<Item, Integer> enchantingMap = Maps.newLinkedHashMap();
+
 	public AltarTileEntity() {
-		super(AetherTileEntityTypes.ALTAR.get(), AetherRecipeTypes.ENCHANTING);
+		super(AetherTileEntityTypes.ALTAR.get(), RecipeTypes.ENCHANTING);
 	}
 
 	@Override
@@ -35,10 +35,28 @@ public class AltarTileEntity extends AbstractFurnaceTileEntity
 	protected Container createMenu(int id, PlayerInventory player) {
 		return new AltarContainer(id, player, this, this.furnaceData);
 	}
-	
-	@Override
-	protected int getBurnTime(ItemStack stack) {
-		return !stack.isEmpty()? AetherAPI.getEnchantmentFuelTime(stack.getItem()) : 0;
+
+	public static Map<Item, Integer> getEnchantingMap() {
+		return enchantingMap;
 	}
 
+	private static void addItemTagEnchantingTime(ITag<Item> itemTag, int burnTimeIn) {
+		for (Item item : itemTag.getAllElements()) {
+			enchantingMap.put(item, burnTimeIn);
+		}
+	}
+
+	public static void addItemEnchantingTime(IItemProvider itemProvider, int burnTimeIn) {
+		Item item = itemProvider.asItem();
+		enchantingMap.put(item, burnTimeIn);
+	}
+
+	@Override
+	protected int getBurnTime(ItemStack fuel) {
+		if (fuel.isEmpty() || !getEnchantingMap().containsKey(fuel.getItem())) {
+			return 0;
+		} else {
+			return getEnchantingMap().get(fuel.getItem());
+		}
+	}
 }

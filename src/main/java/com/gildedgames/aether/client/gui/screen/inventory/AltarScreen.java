@@ -12,11 +12,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class AltarScreen extends AbstractFurnaceScreen<AltarContainer> {
+public class AltarScreen extends AbstractFurnaceScreen<AltarContainer>
+{
 	private static final ResourceLocation ALTAR_GUI_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/container/altar.png");
 	
 	public AltarScreen(AltarContainer container, PlayerInventory inventory, ITextComponent name) {
 		super(container, new AltarRecipeGui(), inventory, name, ALTAR_GUI_TEXTURES);
 	}
-
 }

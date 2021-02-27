@@ -1,43 +1,39 @@
 package com.gildedgames.aether.inventory.container;
 
-import java.util.List;
-
-import com.gildedgames.aether.api.AetherAPI;
-import com.gildedgames.aether.crafting.AetherRecipeTypes;
-import com.gildedgames.aether.inventory.container.slot.CustomSmeltingFuelSlot;
-import com.gildedgames.aether.inventory.container.slot.CustomSmeltingResultSlot;
+import com.gildedgames.aether.registry.AetherRecipe.RecipeTypes;
+import com.gildedgames.aether.entity.tile.AltarTileEntity;
 import com.gildedgames.aether.registry.AetherContainerTypes;
-import com.google.common.collect.Lists;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.util.RecipeBookCategories;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.container.AbstractFurnaceContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.RecipeBookCategory;
 import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
 
-public class AltarContainer extends CustomSmeltingContainer {
+import java.util.List;
 
-	public AltarContainer(int id, PlayerInventory playerInventoryIn, IInventory furnaceInventoryIn, IIntArray furnaceDataIn) {
-		super(AetherContainerTypes.ALTAR.get(), AetherRecipeTypes.ENCHANTING, RecipeBookCategory.CRAFTING, id, playerInventoryIn, furnaceInventoryIn, furnaceDataIn);
-		replaceSlot(1, new CustomSmeltingFuelSlot(this, furnaceInventoryIn, 1, 56, 53));
-		replaceSlot(2, new CustomSmeltingResultSlot(playerInventoryIn.player, furnaceInventoryIn, 2, 116, 35));
+public class AltarContainer extends AbstractFurnaceContainer
+{
+	//TODO: Recipe Book
+	//TODO: Correct warning in log for unknown recipe category; see Environmental's mixin for this.
+	public AltarContainer(int windowId, PlayerInventory playerInventory) {
+		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING, RecipeBookCategory.CRAFTING, windowId, playerInventory);
 	}
 
-	public AltarContainer(int id, PlayerInventory playerInventoryIn) {
-		this(id, playerInventoryIn, new Inventory(3), new IntArray(4));
+	public AltarContainer(int windowId, PlayerInventory playerInventory, IInventory enchantingInventory, IIntArray furnaceData) {
+		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING, RecipeBookCategory.CRAFTING, windowId, playerInventory, enchantingInventory, furnaceData);
 	}
 
 	@Override
 	public List<RecipeBookCategories> getRecipeBookCategories() {
 		return Lists.newArrayList(RecipeBookCategories.CRAFTING_SEARCH, RecipeBookCategories.CRAFTING_BUILDING_BLOCKS, RecipeBookCategories.CRAFTING_MISC);
 	}
-	
+
 	@Override
 	public boolean isFuel(ItemStack stack) {
-		return AetherAPI.isEnchantmentFuel(stack.getItem());
+		return AltarTileEntity.getEnchantingMap().containsKey(stack.getItem());
 	}
-	
 }

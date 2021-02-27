@@ -1,6 +1,9 @@
 package com.gildedgames.aether;
 
+import com.gildedgames.aether.registry.AetherRecipe;
 import com.gildedgames.aether.data.*;
+import com.gildedgames.aether.entity.tile.AltarTileEntity;
+import com.gildedgames.aether.entity.tile.FreezerTileEntity;
 import com.gildedgames.aether.registry.AetherAdvancement;
 import com.gildedgames.aether.capability.AetherCapabilities;
 import com.gildedgames.aether.client.AetherRendering;
@@ -71,6 +74,7 @@ public class Aether
 				AetherSoundEvents.SOUNDS,
 				AetherContainerTypes.CONTAINERS,
 				AetherTileEntityTypes.TILE_ENTITIES,
+				AetherRecipe.RECIPE_SERIALIZERS
 		};
 
 		for (DeferredRegister<?> register : registers) {
@@ -98,6 +102,7 @@ public class Aether
 
 			registerDispenserBehaviors();
 			registerComposting();
+			registerFuels();
 		});
 	}
 
@@ -253,5 +258,11 @@ public class Aether
 		ComposterBlock.registerCompostable(0.65F, AetherBlocks.WHITE_FLOWER.get());
 		ComposterBlock.registerCompostable(0.65F, AetherBlocks.PURPLE_FLOWER.get());
 		ComposterBlock.registerCompostable(0.65F, AetherItems.WHITE_APPLE.get());
+	}
+
+	private void registerFuels() {
+		AltarTileEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 500);
+
+		FreezerTileEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 500);
 	}
 }

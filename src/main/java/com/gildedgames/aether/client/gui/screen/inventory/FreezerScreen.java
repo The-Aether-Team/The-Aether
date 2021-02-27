@@ -12,11 +12,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class FreezerScreen extends AbstractFurnaceScreen<FreezerContainer> {
+public class FreezerScreen extends AbstractFurnaceScreen<FreezerContainer>
+{
 	private static final ResourceLocation FREEZER_GUI_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/container/freezer.png");
 	
 	public FreezerScreen(FreezerContainer container, PlayerInventory inventory, ITextComponent name) {
 		super(container, new FreezerRecipeGui(), inventory, name, FREEZER_GUI_TEXTURES);
 	}
-
 }
