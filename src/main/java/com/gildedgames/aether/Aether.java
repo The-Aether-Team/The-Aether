@@ -1,5 +1,6 @@
 package com.gildedgames.aether;
 
+import com.gildedgames.aether.api.dungeon.DungeonTypes;
 import com.gildedgames.aether.registry.AetherRecipe;
 import com.gildedgames.aether.data.*;
 import com.gildedgames.aether.entity.tile.AltarTileEntity;
@@ -43,6 +44,7 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
@@ -64,6 +66,8 @@ public class Aether
 		modEventBus.addListener(this::curiosSetup);
 		modEventBus.addListener(this::dataSetup);
 
+		DungeonTypes.DUNGEON_TYPES.makeRegistry("dungeon_types", RegistryBuilder::new);
+		
 		DeferredRegister<?>[] registers = {
 				AetherBlocks.BLOCKS,
 				AetherEntityTypes.ENTITIES,
@@ -74,7 +78,8 @@ public class Aether
 				AetherSoundEvents.SOUNDS,
 				AetherContainerTypes.CONTAINERS,
 				AetherTileEntityTypes.TILE_ENTITIES,
-				AetherRecipe.RECIPE_SERIALIZERS
+				AetherRecipe.RECIPE_SERIALIZERS,
+				DungeonTypes.DUNGEON_TYPES
 		};
 
 		for (DeferredRegister<?> register : registers) {

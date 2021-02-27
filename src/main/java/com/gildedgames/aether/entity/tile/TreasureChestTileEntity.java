@@ -44,16 +44,16 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 	@Override
 	public void read(BlockState state, CompoundNBT compound) {
 		super.read(state, compound);
-		this.kind = DungeonTypes.BRONZE;
-		if (compound.contains("Kind", 8)) {
-			String kind = compound.getString("Kind");
-			if (!kind.isEmpty()) {
-				this.kind = AetherAPI.getDungeonType(new ResourceLocation(kind));
-				if (this.kind == null) {
-					this.kind = DungeonTypes.BRONZE;
-				}
-			}
-		}
+//		this.kind = DungeonTypes.BRONZE.get();
+//		if (compound.contains("Kind", 8)) {
+//			String kind = compound.getString("Kind");
+//			if (!kind.isEmpty()) {
+//				this.kind = AetherAPI.getDungeonType(new ResourceLocation(kind));
+//				if (this.kind == null) {
+//					this.kind = DungeonTypes.BRONZE.get();
+//				}
+//			}
+//		}
 	}
 	
 	@Override
@@ -65,10 +65,10 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
 		super.write(compound);
-		
-		compound.putBoolean("Locked", this.locked);
-		compound.putString("Kind", this.getKind().getRegistryName().toString());
-		
+//
+//		compound.putBoolean("Locked", this.locked);
+//		compound.putString("Kind", this.getKind().getRegistryName().toString());
+//
 		return compound;
 	}
 	
@@ -83,7 +83,7 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 	
 	public DungeonType getKind() {
 		DungeonType kind = this.kind;
-		return (kind == null)? DungeonTypes.BRONZE : kind;
+		return (kind == null)? DungeonTypes.BRONZE.get() : kind;
 	}
 	
 	public void unlock() {
