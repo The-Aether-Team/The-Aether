@@ -7,6 +7,8 @@ import net.minecraft.data.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 
 import java.util.function.Supplier;
@@ -276,6 +278,11 @@ public class AetherRecipesProvider extends RecipeProvider
     public CookingRecipeBuilder enchantingRecipe(IItemProvider result, IItemProvider ingredient, int duration) {
         return CookingRecipeBuilder.cookingRecipe(Ingredient.fromStacks(new ItemStack(ingredient, 1)), result, 0.0F, duration, AetherRecipe.ENCHANTING.get())
                 .addCriterion("has_" + ingredient.asItem().getRegistryName(), hasItem(ingredient));
+    }
+
+    public CookingRecipeBuilder enchantingRecipe(IItemProvider result, ITag.INamedTag<Item> ingredient, int duration) {
+        return CookingRecipeBuilder.cookingRecipe(Ingredient.fromTag(ingredient), result, 0.0F, duration, AetherRecipe.ENCHANTING.get())
+                .addCriterion("has_disc", hasItem(ingredient));
     }
 
     public CookingRecipeBuilder freezingRecipe(IItemProvider result, IItemProvider ingredient, int duration) {

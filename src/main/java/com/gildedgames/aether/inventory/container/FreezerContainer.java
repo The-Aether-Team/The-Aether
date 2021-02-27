@@ -23,8 +23,8 @@ public class FreezerContainer extends AbstractFurnaceContainer
 		super(AetherContainerTypes.FREEZER.get(), RecipeTypes.FREEZING, RecipeBookCategory.CRAFTING, windowId, playerInventory);
 	}
 
-	public FreezerContainer(int windowId, PlayerInventory playerInventory, IInventory enchantingInventory, IIntArray furnaceData) {
-		super(AetherContainerTypes.FREEZER.get(), RecipeTypes.FREEZING, RecipeBookCategory.CRAFTING, windowId, playerInventory, enchantingInventory, furnaceData);
+	public FreezerContainer(int windowId, PlayerInventory playerInventory, IInventory freezingInventory, IIntArray furnaceData) {
+		super(AetherContainerTypes.FREEZER.get(), RecipeTypes.FREEZING, RecipeBookCategory.CRAFTING, windowId, playerInventory, freezingInventory, furnaceData);
 	}
 
 	@Override

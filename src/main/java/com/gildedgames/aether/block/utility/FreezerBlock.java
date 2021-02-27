@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.gildedgames.aether.entity.tile.FreezerTileEntity;
 
+import com.gildedgames.aether.registry.AetherParticleTypes;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,13 +46,14 @@ public class FreezerBlock extends AbstractFurnaceBlock
 			float x = pos.getX() + 0.5F;
 			float y = pos.getY() + 1.0F + (rand.nextFloat() * 6.0F) / 16.0F;
 			float z = pos.getZ() + 0.5F;
-			
+
 			world.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
-			world.addParticle(ParticleTypes.FLAME, x, y, z, 0.0, 0.0, 0.0);
-			
-			if (rand.nextDouble() < 0.1) {
-				world.playSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+
+			for (int i = 0; i < 10; ++i) {
+				world.addParticle(AetherParticleTypes.FREEZER.get(), x, y, z, 0.0, 0.0, 0.0);
 			}
+
+			world.playSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 		}
 	}
 }

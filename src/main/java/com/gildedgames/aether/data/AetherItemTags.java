@@ -92,6 +92,17 @@ public class AetherItemTags extends ItemTagsProvider
                 .add(Items.WITHER_SKELETON_SKULL)
                 .add(Items.DRAGON_HEAD)
                 .add(Items.NETHER_STAR);
+        tag(AetherTags.Items.ACCEPTED_MUSIC_DISCS)
+                .add(Items.MUSIC_DISC_11)
+                .add(Items.MUSIC_DISC_13)
+                .add(Items.MUSIC_DISC_BLOCKS)
+                .add(Items.MUSIC_DISC_FAR)
+                .add(Items.MUSIC_DISC_MALL)
+                .add(Items.MUSIC_DISC_MELLOHI)
+                .add(Items.MUSIC_DISC_STAL)
+                .add(Items.MUSIC_DISC_STRAD)
+                .add(Items.MUSIC_DISC_WAIT)
+                .add(Items.MUSIC_DISC_WARD);
 
         //vanilla
         tag(ItemTags.STONE_BRICKS)

@@ -430,8 +430,26 @@ public class AetherRecipes extends AetherRecipesProvider
         stonecuttingRecipe(AetherBlocks.AEROGEL, AetherBlocks.AEROGEL_STAIRS.get()).build(consumer, name("aerogel_stairs_stonecutting"));
         stonecuttingRecipe(AetherBlocks.AEROGEL, AetherBlocks.AEROGEL_SLAB.get(), 2).build(consumer, name("aerogel_slab_stonecutting"));
 
-        //TODO: Enchanting recipes.
+        enchantingRecipe(AetherItems.ENCHANTED_DART.get(), AetherItems.GOLDEN_DART.get(), 250).build(consumer, name("enchanted_dart_enchanting"));
+        enchantingRecipe(AetherItems.ENCHANTED_DART_SHOOTER.get(), AetherItems.GOLDEN_DART_SHOOTER.get(), 500).build(consumer, name("enchanted_dart_shooter_enchanting"));
+
         enchantingRecipe(AetherItems.HEALING_STONE.get(), AetherBlocks.HOLYSTONE.get(), 750).build(consumer, name("healing_stone_enchanting"));
+        enchantingRecipe(AetherBlocks.ENCHANTED_GRAVITITE.get(), AetherBlocks.GRAVITITE_ORE.get(), 1000).build(consumer, name("enchanted_gravitite_enchanting"));
+        enchantingRecipe(AetherBlocks.QUICKSOIL_GLASS.get(), AetherBlocks.QUICKSOIL.get(), 250).build(consumer, name("quicksoil_glass_enchanting"));
+
+        enchantingRecipe(AetherItems.ENCHANTED_BERRY.get(), AetherItems.BLUE_BERRY.get(), 300).build(consumer, name("enchanted_berry_enchanting"));
+
+        enchantingRecipe(AetherItems.MUSIC_DISC_AETHER_TUNE.get(), AetherTags.Items.ACCEPTED_MUSIC_DISCS, 2500).build(consumer, name("aether_tune_enchanting"));
+        enchantingRecipe(AetherItems.MUSIC_DISC_LEGACY.get(), Items.MUSIC_DISC_CAT, 2500).build(consumer, name("legacy_enchanting"));
+
+        freezingRecipe(AetherBlocks.BLUE_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 100).build(consumer, name("blue_aercloud_freezing"));
+        freezingRecipe(AetherBlocks.CRYSTAL_LEAVES.get(), AetherBlocks.SKYROOT_LEAVES.get(), 150).build(consumer, name("crystal_leaves_freezing"));
+
+        freezingRecipe(AetherItems.MUSIC_DISC_WELCOMING_SKIES.get(), AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(), 800).build(consumer, name("welcoming_skies_freezing"));
+
+        freezingRecipe(Blocks.ICE, Blocks.PACKED_ICE, 750).build(consumer, name("packed_ice_freezing"));
+        freezingRecipe(Items.WATER_BUCKET, Blocks.ICE, 500).build(consumer, name("ice_from_bucket_freezing"));
+        freezingRecipe(Items.LAVA_BUCKET, Blocks.OBSIDIAN, 500).build(consumer, name("obsidian_from_bucket_freezing"));
 
         freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.IRON_RING.get(), 2500).build(consumer, name("ice_ring_from_iron_freezing"));
         freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.GOLD_RING.get(), 2500).build(consumer, name("ice_ring_from_gold_freezing"));
