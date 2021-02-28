@@ -55,6 +55,7 @@ public class AetherTags
 		public static final ITag.INamedTag<Item> DUNGEON_KEYS = tag("dungeon_keys");
 		public static final ITag.INamedTag<Item> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 		public static final ITag.INamedTag<Item> ACCEPTED_MUSIC_DISCS = tag("accepted_music_discs");
+		public static final ITag.INamedTag<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 
 		private static ITag.INamedTag<Item> tag(String name) {
 			return ItemTags.makeWrapperTag(new ResourceLocation(Aether.MODID, name).toString());

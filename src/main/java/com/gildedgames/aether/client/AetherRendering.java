@@ -4,6 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.inventory.AltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.FreezerScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.IncubatorScreen;
+import com.gildedgames.aether.client.gui.screen.inventory.LoreBookScreen;
 import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicTileEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.CustomItemStackTileEntityRenderer;
@@ -105,6 +106,7 @@ public class AetherRendering
     }
 
     public static void registerGuiFactories() {
+        ScreenManager.registerFactory(AetherContainerTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
         ScreenManager.registerFactory(AetherContainerTypes.ALTAR.get(), AltarScreen::new);
         ScreenManager.registerFactory(AetherContainerTypes.FREEZER.get(), FreezerScreen::new);
         ScreenManager.registerFactory(AetherContainerTypes.INCUBATOR.get(), IncubatorScreen::new);

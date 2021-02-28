@@ -103,6 +103,10 @@ public class AetherItemTags extends ItemTagsProvider
                 .add(Items.MUSIC_DISC_STRAD)
                 .add(Items.MUSIC_DISC_WAIT)
                 .add(Items.MUSIC_DISC_WARD);
+        tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS)
+                .add(Items.FLINT)
+                .addTag(Tags.Items.DUSTS_GLOWSTONE)
+                .add(AetherItems.AMBROSIUM_SHARD.get());
 
         //vanilla
         tag(ItemTags.STONE_BRICKS)

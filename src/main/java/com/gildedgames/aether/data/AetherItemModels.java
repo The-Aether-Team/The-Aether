@@ -126,6 +126,8 @@ public class AetherItemModels extends AetherItemModelsProvider
         item(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "miscellaneous/");
         item(AetherItems.MUSIC_DISC_LEGACY, "miscellaneous/");
 
+        item(AetherItems.BOOK_OF_LORE, "miscellaneous/");
+
         eggItem(AetherItems.PHYG_SPAWN_EGG);
         eggItem(AetherItems.FLYING_COW_SPAWN_EGG);
         eggItem(AetherItems.SHEEPUFF_SPAWN_EGG);

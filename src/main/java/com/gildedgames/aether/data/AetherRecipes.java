@@ -203,6 +203,13 @@ public class AetherRecipes extends AetherRecipesProvider
                 .addCriterion("has_skyroot", hasItem(AetherBlocks.SKYROOT_PLANKS.get()))
                 .build(consumer);
 
+        ShapelessRecipeBuilder.shapelessRecipe(AetherItems.BOOK_OF_LORE.get())
+                .addIngredient(Items.BOOK)
+                .addIngredient(AetherTags.Items.BOOK_OF_LORE_MATERIALS)
+                .addCriterion("has_book", hasItem(Items.BOOK))
+                .setGroup("book_of_lore")
+                .build(consumer);
+
 
         ShapedRecipeBuilder.shapedRecipe(Items.SADDLE, 1)
                 .patternLine("LLL")

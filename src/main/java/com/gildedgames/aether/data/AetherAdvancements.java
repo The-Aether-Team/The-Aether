@@ -1,6 +1,7 @@
 package com.gildedgames.aether.data;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.advancement.LoreTrigger;
 import com.gildedgames.aether.advancement.MountTrigger;
 import com.gildedgames.aether.registry.AetherBlocks;
 import com.gildedgames.aether.registry.AetherDimensions;
@@ -90,6 +91,16 @@ public class AetherAdvancements extends AdvancementProvider
                     .withCriterion("enter_aether", ChangeDimensionTrigger.Instance.toWorld(AetherDimensions.AETHER_WORLD))
                     .register(consumer, "aether:enter_aether");
             //TODO: add enter_aether loot.
+
+            Advancement loreception = Advancement.Builder.builder()
+                    .withParent(enterAether)
+                    .withDisplay(AetherItems.BOOK_OF_LORE.get(),
+                            new TranslationTextComponent("advancement.aether.loreception"),
+                            new TranslationTextComponent("advancement.aether.loreception.desc"),
+                            null,
+                            FrameType.TASK, true, true, true)
+                    .withCriterion("lore_book_entry", LoreTrigger.Instance.forItem(AetherItems.BOOK_OF_LORE.get()))
+                    .register(consumer, "aether:loreception");
 
             Advancement toInfinityAndBeyond = Advancement.Builder.builder()
                     .withParent(enterAether)

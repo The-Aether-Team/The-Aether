@@ -10,6 +10,7 @@ import com.gildedgames.aether.item.misc.DungeonKeyItem;
 import com.gildedgames.aether.item.food.GummySwetItem;
 import com.gildedgames.aether.item.materials.SwetBallItem;
 import com.gildedgames.aether.item.combat.*;
+import com.gildedgames.aether.item.misc.LoreBookItem;
 import com.gildedgames.aether.item.tools.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -242,7 +243,8 @@ public class AetherItems
 
 	//item("life_shard", new LifeShardItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
 
-	//item("lore_book", new LoreBookItem(new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
+	public static final RegistryObject<Item> BOOK_OF_LORE = ITEMS.register("book_of_lore",
+			() -> new LoreBookItem(new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).group(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<SpawnEggItem> AECHOR_PLANT_SPAWN_EGG = ITEMS.register("aechor_plant_spawn_egg",
 			() -> new SpawnEggItem(AetherEntityTypes.AECHOR_PLANT_TYPE,0x076178, 0x4BC69E, new Item.Properties().group(ItemGroup.MISC)));
