@@ -118,7 +118,7 @@ public class AetherAdvancements extends AdvancementProvider
                             new TranslationTextComponent("advancement.aether.mount_phyg.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .withCriterion("mount_phyg", MountTrigger.Instance.forEntity(EntityPredicate.Builder.create().type((AetherEntityTypes.PHYG.get()))))
+                    .withCriterion("mount_phyg", MountTrigger.Instance.forEntity(EntityPredicate.Builder.create().type(AetherEntityTypes.PHYG.get())))
                     .register(consumer, "aether:mount_phyg");
 
             Advancement craftIncubator = Advancement.Builder.builder()

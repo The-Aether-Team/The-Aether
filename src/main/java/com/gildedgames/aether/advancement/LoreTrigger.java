@@ -18,6 +18,7 @@ public class LoreTrigger extends AbstractCriterionTrigger<LoreTrigger.Instance>
         return ID;
     }
 
+    @Override
     public LoreTrigger.Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
         ItemPredicate itemPredicate = ItemPredicate.deserialize(json.get("item"));
         return new LoreTrigger.Instance(entityPredicate, itemPredicate);
@@ -36,17 +37,12 @@ public class LoreTrigger extends AbstractCriterionTrigger<LoreTrigger.Instance>
             this.item = item;
         }
 
-        public static LoreTrigger.Instance create(EntityPredicate.AndPredicate player, ItemPredicate item) {
-            return new LoreTrigger.Instance(player, item);
-        }
-
         public static LoreTrigger.Instance forItem(ItemPredicate itemConditions) {
             return new LoreTrigger.Instance(EntityPredicate.AndPredicate.ANY_AND, itemConditions);
         }
 
         public static LoreTrigger.Instance forItem(IItemProvider item) {
             ItemPredicate predicate = new ItemPredicate(null, item.asItem(), MinMaxBounds.IntBound.UNBOUNDED, MinMaxBounds.IntBound.UNBOUNDED, EnchantmentPredicate.enchantments, EnchantmentPredicate.enchantments, null, NBTPredicate.ANY);
-
             return forItem(predicate);
         }
 
@@ -54,6 +50,7 @@ public class LoreTrigger extends AbstractCriterionTrigger<LoreTrigger.Instance>
             return this.item.test(stack);
         }
 
+        @Override
         public JsonObject serialize(ConditionArraySerializer conditions) {
             JsonObject jsonobject = super.serialize(conditions);
             jsonobject.add("item", this.item.serialize());
