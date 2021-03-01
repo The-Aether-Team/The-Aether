@@ -223,7 +223,7 @@ public class AetherItems
 	public static final RegistryObject<Item> MUSIC_DISC_ASCENDING_DAWN  = ITEMS.register("music_disc_ascending_dawn",
 			() -> new MusicDiscItem(2, AetherSoundEvents.MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> MUSIC_DISC_WELCOMING_SKIES  = ITEMS.register("music_disc_welcoming_skies",
-			() -> new MusicDiscItem(3, AetherSoundEvents.MUSIC_DISC_LEGACY, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC)));
+			() -> new MusicDiscItem(3, AetherSoundEvents.MUSIC_DISC_WELCOMING_SKIES, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> MUSIC_DISC_LEGACY  = ITEMS.register("music_disc_legacy",
 			() -> new MusicDiscItem(4, AetherSoundEvents.MUSIC_DISC_LEGACY, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC)));
 
