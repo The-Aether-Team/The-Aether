@@ -18,7 +18,6 @@ import java.util.List;
 
 public class AltarContainer extends AbstractFurnaceContainer
 {
-	//TODO: Recipe Book
 	public AltarContainer(int windowId, PlayerInventory playerInventory) {
 		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING, RecipeBookCategory.FURNACE, windowId, playerInventory);
 	}

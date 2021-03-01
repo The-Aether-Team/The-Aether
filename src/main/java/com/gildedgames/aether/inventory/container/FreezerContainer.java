@@ -18,7 +18,6 @@ import java.util.List;
 
 public class FreezerContainer extends AbstractFurnaceContainer
 {
-	//TODO: Recipe Book
 	public FreezerContainer(int windowId, PlayerInventory playerInventory) {
 		super(AetherContainerTypes.FREEZER.get(), RecipeTypes.FREEZING, RecipeBookCategory.FURNACE, windowId, playerInventory);
 	}
