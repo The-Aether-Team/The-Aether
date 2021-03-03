@@ -23,6 +23,7 @@ public class AetherTags
 		public static final ITag.INamedTag<Block> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final ITag.INamedTag<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final ITag.INamedTag<Block> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final ITag.INamedTag<Block> AETHER_ISLAND_BLOCKS = tag("aether_island_blocks");
 
 		private static ITag.INamedTag<Block> tag(String name) {
 			return BlockTags.makeWrapperTag(new ResourceLocation(Aether.MODID, name).toString());
