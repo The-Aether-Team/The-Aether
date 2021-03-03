@@ -20,11 +20,12 @@ public class QuicksoilFeature extends Feature<NoFeatureConfig> {
     @Override
     public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
         boolean doesProtrude = (
-                reader.getBlockState(pos.west(3)).isAir() ||
+                (reader.getBlockState(pos.west(3)).isAir() ||
                         reader.getBlockState(pos.north(3)).isAir() ||
                         reader.getBlockState(pos.south(3)).isAir() ||
-                        reader.getBlockState(pos.east(3)).isAir() &&
-                !reader.getBlockState(pos).isIn(AetherTags.Blocks.HOLYSTONE));
+                        reader.getBlockState(pos.east(3)).isAir()) &&
+                (reader.getBlockState(pos).isIn(AetherTags.Blocks.HOLYSTONE) ||
+                        reader.getBlockState(pos).getBlock() == AetherBlocks.AETHER_DIRT.get()));
         if (doesProtrude) {
             for(int x = pos.getX() - 3; x < pos.getX() + 4; x++) {
                 for(int z = pos.getZ() - 3; z < pos.getZ() + 4; z++) {
