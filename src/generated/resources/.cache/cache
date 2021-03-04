@@ -821,6 +821,7 @@ b3c3c4c26d613d9bb8bbed04b46bd8c8fd5f4acf data/aether/recipes/zanite_leggings.jso
 8d6c9296865148dd7bd9a1a7bd93162b92f9573c data/aether/tags/blocks/aerclouds.json
 36c4998736ba1b2f6f0dd59363b4fd9f1977f8cf data/aether/tags/blocks/aerogel.json
 c6ee5014148eca27283bde75333809c4f2d13051 data/aether/tags/blocks/aether_dirt.json
+23c9f09c73c054385b299813a55bf68fda32cdac data/aether/tags/blocks/aether_island_blocks.json
 1bf5110a1d632a35e62cd092d74ddb31b9c649d7 data/aether/tags/blocks/dungeon_blocks.json
 cc50f220643304a9a55bf762f391dc67d087ab9d data/aether/tags/blocks/golden_oak_logs.json
 bcc812fe8c9cd1c675cd91f170cad804bc8da32a data/aether/tags/blocks/holystone.json

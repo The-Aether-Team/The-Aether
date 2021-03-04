@@ -41,6 +41,7 @@ public class AetherItemTags extends ItemTagsProvider
         copy(AetherTags.Blocks.DUNGEON_BLOCKS, AetherTags.Items.DUNGEON_BLOCKS);
         copy(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS, AetherTags.Items.LOCKED_DUNGEON_BLOCKS);
         copy(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS, AetherTags.Items.TRAPPED_DUNGEON_BLOCKS);
+
         tag(AetherTags.Items.PLANKS_CRAFTING)
                 .addTag(ItemTags.PLANKS)
                 .add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
