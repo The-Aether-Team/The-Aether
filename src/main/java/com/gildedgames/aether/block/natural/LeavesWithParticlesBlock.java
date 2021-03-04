@@ -12,17 +12,22 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.ParticleStatus;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
+import net.minecraft.entity.EntityType;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import net.minecraft.block.AbstractBlock;
+
+import javax.annotation.Nullable;
 
 public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoubleDropBlock
 {
@@ -30,7 +35,7 @@ public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoub
 	private final Supplier<BasicParticleType> particle;
 
 	public LeavesWithParticlesBlock(Supplier<BasicParticleType> particle, AbstractBlock.Properties properties) {
-		super(properties);
+		super(properties.setAllowsSpawn((state, reader, pos, entity) -> (entity == EntityType.OCELOT || entity == EntityType.PARROT)).setSuffocates((state, reader, pos) -> false).setBlocksVision((state, reader, pos) -> false));
 		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
 		this.particle = particle;
 	}
