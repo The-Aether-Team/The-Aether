@@ -1,6 +1,7 @@
 package com.gildedgames.aether.registry;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.registry.AetherBlocks;
 import com.gildedgames.aether.world.gen.feature.*;
 import com.google.common.collect.ImmutableSet;
@@ -60,12 +61,27 @@ public class AetherFeatures {
         register("crystal_tree", CRYSTAL_TREE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).chance(15));
         register("water_lake", LAKE.get().withConfiguration(new BlockStateFeatureConfig(Blocks.WATER.getDefaultState())).withPlacement(Placement.WATER_LAKE.configure(new ChanceConfig(4))));
 
-        register("tree_skyroot", Feature.TREE.withConfiguration((new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(AetherBlocks.SKYROOT_LOG.get().getDefaultState()), new SimpleBlockStateProvider(AetherBlocks.SKYROOT_LEAVES.get().getDefaultState()), new BlobFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(0), 3), new StraightTrunkPlacer(4, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT));
-        register("tree_golden_oak", Feature.TREE.withConfiguration((new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(AetherBlocks.GOLDEN_OAK_LOG.get().getDefaultState()), new SimpleBlockStateProvider(AetherBlocks.GOLDEN_OAK_LEAVES.get().getDefaultState()), new FancyFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(4), 4), new FancyTrunkPlacer(3, 11, 0), new TwoLayerFeature(0, 0, 0, OptionalInt.of(4)))).setIgnoreVines().func_236702_a_(Heightmap.Type.MOTION_BLOCKING).build()).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, 0.03F, 1))));
+        register("tree_skyroot", Feature.TREE.withConfiguration(
+                (new BaseTreeFeatureConfig.Builder(
+                        new SimpleBlockStateProvider(AetherBlocks.SKYROOT_LOG.get().getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, true)),
+                        new SimpleBlockStateProvider(AetherBlocks.SKYROOT_LEAVES.get().getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, true)),
+                        new BlobFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(0), 3),
+                        new StraightTrunkPlacer(4, 2, 0),
+                        new TwoLayerFeature(1, 0, 1)))
+                        .setIgnoreVines().build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT));
+        register("tree_golden_oak", Feature.TREE.withConfiguration(
+                (new BaseTreeFeatureConfig.Builder(
+                        new SimpleBlockStateProvider(AetherBlocks.GOLDEN_OAK_LOG.get().getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, true)),
+                        new SimpleBlockStateProvider(AetherBlocks.GOLDEN_OAK_LEAVES.get().getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, true)),
+                        new FancyFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(4), 4),
+                        new FancyTrunkPlacer(3, 11, 0),
+                        new TwoLayerFeature(0, 0, 0, OptionalInt.of(4))))
+                        .setIgnoreVines().func_236702_a_(Heightmap.Type.MOTION_BLOCKING).build())
+                .withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, 0.03F, 1))));
 
         register("ore_aether_dirt", Feature.ORE.withConfiguration(new OreFeatureConfig(HOLYSTONE, AetherBlocks.AETHER_DIRT.get().getDefaultState(), 33)).range(256).square().func_242731_b(10));
         register("ore_icestone", Feature.ORE.withConfiguration(new OreFeatureConfig(HOLYSTONE, AetherBlocks.ICESTONE.get().getDefaultState(), 16)).range(256).square().func_242731_b(10));
-        register("ore_ambrosium", Feature.ORE.withConfiguration(new OreFeatureConfig(HOLYSTONE, AetherBlocks.AMBROSIUM_ORE.get().getDefaultState(), 16)).range(256).square().func_242731_b(10));
+        register("ore_ambrosium", Feature.ORE.withConfiguration(new OreFeatureConfig(HOLYSTONE, AetherBlocks.AMBROSIUM_ORE.get().getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, true), 16)).range(256).square().func_242731_b(10));
         register("ore_zanite", Feature.ORE.withConfiguration(new OreFeatureConfig(HOLYSTONE, AetherBlocks.ZANITE_ORE.get().getDefaultState(), 8)).range(256).square().func_242731_b(10));
         register("ore_gravitite", Feature.ORE.withConfiguration(new OreFeatureConfig(HOLYSTONE, AetherBlocks.ICESTONE.get().getDefaultState(), 6)).range(256).square().func_242731_b(10));
 

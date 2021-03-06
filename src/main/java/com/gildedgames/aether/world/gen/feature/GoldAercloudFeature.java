@@ -1,5 +1,6 @@
 package com.gildedgames.aether.world.gen.feature;
 
+import com.gildedgames.aether.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.registry.AetherBlocks;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.math.BlockPos;
@@ -35,7 +36,7 @@ public class GoldAercloudFeature extends Feature<NoFeatureConfig> {
 
                         if (reader.isAirBlock(newPosition)) {
                             if (Math.abs(x - position.getX()) + Math.abs(y - position.getY()) + Math.abs(z - position.getZ()) < 4 + rand.nextInt(2)) {
-                                this.setBlockState(reader, newPosition, AetherBlocks.GOLDEN_AERCLOUD.get().getDefaultState());
+                                this.setBlockState(reader, newPosition, AetherBlocks.GOLDEN_AERCLOUD.get().getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, true));
                             }
                         }
                     }

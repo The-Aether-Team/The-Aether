@@ -11,7 +11,7 @@
       "default_block": {
         "Name": "aether:holystone",
         "Properties": {
-          "double_drops": "false"
+          "double_drops": "true"
         }
       },
       "default_fluid": {
