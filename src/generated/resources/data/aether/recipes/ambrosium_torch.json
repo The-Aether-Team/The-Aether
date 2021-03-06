@@ -13,6 +13,7 @@
     }
   },
   "result": {
-    "item": "aether:ambrosium_torch"
+    "item": "aether:ambrosium_torch",
+    "count": 4
   }
 }

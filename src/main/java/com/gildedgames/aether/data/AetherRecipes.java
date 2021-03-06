@@ -71,12 +71,27 @@ public class AetherRecipes extends AetherRecipesProvider
                 .addCriterion("has_holystone", hasItem(AetherBlocks.HOLYSTONE.get()))
                 .build(consumer);
 
-        ShapedRecipeBuilder.shapedRecipe(AetherBlocks.AMBROSIUM_TORCH.get(), 1)
+        ShapedRecipeBuilder.shapedRecipe(AetherBlocks.AMBROSIUM_TORCH.get(), 4)
                 .patternLine("A")
                 .patternLine("S")
                 .key('A', AetherItems.AMBROSIUM_SHARD.get())
                 .key('S', AetherTags.Items.SKYROOT_STICKS)
                 .addCriterion("has_holystone_pickaxe", hasItem(AetherItems.HOLYSTONE_PICKAXE.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(Blocks.OAK_DOOR, 3)
+                .patternLine("SS")
+                .patternLine("SS")
+                .patternLine("SS")
+                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .addCriterion("has_skyroot", hasItem(AetherBlocks.SKYROOT_PLANKS.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(Blocks.OAK_TRAPDOOR, 2)
+                .patternLine("SSS")
+                .patternLine("SSS")
+                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .addCriterion("has_skyroot", hasItem(AetherBlocks.SKYROOT_PLANKS.get()))
                 .build(consumer);
 
         makeFence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS).build(consumer);
@@ -196,7 +211,7 @@ public class AetherRecipes extends AetherRecipesProvider
         makeRing(AetherItems.GOLD_RING, Items.GOLD_INGOT).build(consumer);
         makeRing(AetherItems.ZANITE_RING, AetherItems.ZANITE_GEMSTONE.get()).build(consumer);
 
-        ShapedRecipeBuilder.shapedRecipe(AetherItems.SKYROOT_STICK.get(), 1)
+        ShapedRecipeBuilder.shapedRecipe(AetherItems.SKYROOT_STICK.get(), 4)
                 .patternLine("S")
                 .patternLine("S")
                 .key('S', AetherBlocks.SKYROOT_PLANKS.get())

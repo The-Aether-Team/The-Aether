@@ -5,19 +5,19 @@
       "Name": "aether:aether_grass_block",
       "Properties": {
         "snowy": "false",
-        "double_drops": "false"
+        "double_drops": "true"
       }
     },
     "under_material": {
       "Name": "aether:aether_dirt",
       "Properties": {
-        "double_drops": "false"
+        "double_drops": "true"
       }
     },
     "underwater_material": {
       "Name": "aether:aether_dirt",
       "Properties": {
-        "double_drops": "false"
+        "double_drops": "true"
       }
     }
   }

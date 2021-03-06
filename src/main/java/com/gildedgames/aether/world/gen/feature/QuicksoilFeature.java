@@ -1,5 +1,6 @@
 package com.gildedgames.aether.world.gen.feature;
 
+import com.gildedgames.aether.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.registry.AetherBlocks;
 import com.gildedgames.aether.registry.AetherTags;
 import com.mojang.serialization.Codec;
@@ -32,7 +33,7 @@ public class QuicksoilFeature extends Feature<NoFeatureConfig> {
                     BlockPos newPos = new BlockPos(x, pos.getY(), z);
 
                     if((x - pos.getX()) * (x - pos.getX()) + (z - pos.getZ()) * (z - pos.getZ()) < 12) {
-                        reader.setBlockState(newPos, AetherBlocks.QUICKSOIL.get().getDefaultState(), 0);
+                        reader.setBlockState(newPos, AetherBlocks.QUICKSOIL.get().getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, true), 0);
                     }
                 }
 
