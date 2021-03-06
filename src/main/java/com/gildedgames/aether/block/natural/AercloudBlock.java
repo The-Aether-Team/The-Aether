@@ -25,7 +25,7 @@ public class AercloudBlock extends BreakableBlock implements IAetherDoubleDropBl
 	protected static VoxelShape SHAPE = Block.makeCuboidShape(0.0, 0.0, 0.0, 16.0, 0.01, 16.0);
 	
 	public AercloudBlock(AbstractBlock.Properties properties) {
-		super(properties);
+		super(properties.setOpaque((state, reader, pos) -> false).setSuffocates((state, reader, pos) -> false).setBlocksVision((state, reader, pos) -> false));
 		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
 	}
 
