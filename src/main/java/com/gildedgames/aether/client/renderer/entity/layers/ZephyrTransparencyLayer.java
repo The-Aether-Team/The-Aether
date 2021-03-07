@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.renderer.entity.layers;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.ZephyrRenderer;
 import com.gildedgames.aether.client.renderer.entity.model.ZephyrModel;
-import com.gildedgames.aether.entity.monster.ZephyrEntity;
+import com.gildedgames.aether.common.entity.monster.ZephyrEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

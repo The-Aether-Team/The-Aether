@@ -1,9 +1,9 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.entity.projectile.AbstractDartEntity;
-import com.gildedgames.aether.entity.projectile.EnchantedDartEntity;
-import com.gildedgames.aether.entity.projectile.GoldenDartEntity;
+import com.gildedgames.aether.common.entity.projectile.AbstractDartEntity;
+import com.gildedgames.aether.common.entity.projectile.EnchantedDartEntity;
+import com.gildedgames.aether.common.entity.projectile.GoldenDartEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

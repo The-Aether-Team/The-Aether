@@ -3,10 +3,10 @@ package com.gildedgames.aether.client.renderer.entity;
 import java.util.UUID;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.api.moa.MoaTypes;
+import com.gildedgames.aether.core.api.MoaTypes;
 import com.gildedgames.aether.client.renderer.entity.layers.MoaSaddleLayer;
 import com.gildedgames.aether.client.renderer.entity.model.MoaModel;
-import com.gildedgames.aether.entity.passive.MoaEntity;
+import com.gildedgames.aether.common.entity.passive.MoaEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
-import com.gildedgames.aether.entity.passive.AerwhaleEntity;
+import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraftforge.api.distmarker.Dist;

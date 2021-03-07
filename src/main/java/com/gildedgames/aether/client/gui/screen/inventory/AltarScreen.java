@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.gui.screen.inventory;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.inventory.container.AltarContainer;
+import com.gildedgames.aether.common.inventory.container.AltarContainer;
 
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;

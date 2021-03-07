@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import com.gildedgames.aether.entity.block.FloatingBlockEntity;
+import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;

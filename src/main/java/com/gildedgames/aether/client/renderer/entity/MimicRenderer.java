@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.model.MimicModel;
-import com.gildedgames.aether.entity.monster.MimicEntity;
+import com.gildedgames.aether.common.entity.monster.MimicEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;

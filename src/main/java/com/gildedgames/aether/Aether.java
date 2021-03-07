@@ -1,19 +1,22 @@
 package com.gildedgames.aether;
 
-import com.gildedgames.aether.api.dungeon.DungeonTypes;
-import com.gildedgames.aether.registry.AetherRecipe;
-import com.gildedgames.aether.data.*;
-import com.gildedgames.aether.entity.tile.AltarTileEntity;
-import com.gildedgames.aether.entity.tile.FreezerTileEntity;
-import com.gildedgames.aether.registry.AetherAdvancement;
-import com.gildedgames.aether.capability.AetherCapabilities;
+import com.gildedgames.aether.client.registry.AetherParticleTypes;
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.core.AetherConfig;
+import com.gildedgames.aether.core.registry.AetherDungeonTypes;
+import com.gildedgames.aether.common.registry.AetherRecipes;
+import com.gildedgames.aether.core.data.*;
+import com.gildedgames.aether.common.entity.tile.AltarTileEntity;
+import com.gildedgames.aether.common.entity.tile.FreezerTileEntity;
+import com.gildedgames.aether.common.registry.AetherAdvancements;
+import com.gildedgames.aether.core.capability.AetherCapabilities;
 import com.gildedgames.aether.client.AetherRendering;
 
-import com.gildedgames.aether.network.AetherPacketHandler;
-import com.gildedgames.aether.registry.*;
-import com.gildedgames.aether.registry.AetherDimensions;
-import com.gildedgames.aether.registry.AetherFeatures;
-import com.gildedgames.aether.data.AetherLootTables;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.common.registry.*;
+import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.common.registry.AetherFeatures;
+import com.gildedgames.aether.core.data.AetherLootTableData;
 import net.minecraft.block.*;
 import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.data.DataGenerator;
@@ -66,7 +69,7 @@ public class Aether
 		modEventBus.addListener(this::curiosSetup);
 		modEventBus.addListener(this::dataSetup);
 
-		DungeonTypes.DUNGEON_TYPES.makeRegistry("dungeon_types", RegistryBuilder::new);
+		AetherDungeonTypes.DUNGEON_TYPES.makeRegistry("dungeon_types", RegistryBuilder::new);
 		
 		DeferredRegister<?>[] registers = {
 				AetherBlocks.BLOCKS,
@@ -79,8 +82,8 @@ public class Aether
 				AetherContainerTypes.CONTAINERS,
 				AetherTileEntityTypes.TILE_ENTITIES,
 				AetherPotionEffects.EFFECTS,
-				AetherRecipe.RECIPE_SERIALIZERS,
-				DungeonTypes.DUNGEON_TYPES
+				AetherRecipes.RECIPE_SERIALIZERS,
+				AetherDungeonTypes.DUNGEON_TYPES
 		};
 
 		for (DeferredRegister<?> register : registers) {
@@ -104,7 +107,7 @@ public class Aether
 			AetherEntityTypes.registerEntityAttributes();
 
 			AetherFeatures.registerConfiguredFeatures();
-			AetherAdvancement.init();
+			AetherAdvancements.init();
 
 			registerDispenserBehaviors();
 			registerComposting();
@@ -147,17 +150,17 @@ public class Aether
 		DataGenerator generator = event.getGenerator();
 		ExistingFileHelper helper = event.getExistingFileHelper();
 		if (event.includeClient()) {
-			generator.addProvider(new AetherBlockStates(generator, helper));
-			generator.addProvider(new AetherItemModels(generator, helper));
+			generator.addProvider(new AetherBlockStateData(generator, helper));
+			generator.addProvider(new AetherItemModelData(generator, helper));
 		}
 		if (event.includeServer()) {
-			generator.addProvider(new AetherRecipes(generator));
-			generator.addProvider(new AetherLootTables(generator));
-			AetherBlockTags blockTags = new AetherBlockTags(generator, helper);
+			generator.addProvider(new AetherRecipeData(generator));
+			generator.addProvider(new AetherLootTableData(generator));
+			AetherBlockTagData blockTags = new AetherBlockTagData(generator, helper);
 			generator.addProvider(blockTags);
-			generator.addProvider(new AetherItemTags(generator, blockTags, helper));
-			generator.addProvider(new AetherEntityTags(generator, helper));
-			generator.addProvider(new AetherAdvancements(generator));
+			generator.addProvider(new AetherItemTagData(generator, blockTags, helper));
+			generator.addProvider(new AetherEntityTagData(generator, helper));
+			generator.addProvider(new AetherAdvancementData(generator));
 		}
 	}
 

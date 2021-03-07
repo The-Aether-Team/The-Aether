@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.particle;
 
-import com.gildedgames.aether.entity.monster.WhirlwindEntity;
+import com.gildedgames.aether.common.entity.monster.WhirlwindEntity;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.EntityPredicate;

@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.renderer.entity;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.layers.SheepuffCoatLayer;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffModel;
-import com.gildedgames.aether.entity.passive.SheepuffEntity;
+import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;

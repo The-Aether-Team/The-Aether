@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffModel;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffWoolModel;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffedModel;
-import com.gildedgames.aether.entity.passive.SheepuffEntity;
+import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.IRenderTypeBuffer;

@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import com.gildedgames.aether.entity.block.TNTPresentEntity;
-import com.gildedgames.aether.registry.AetherBlocks;
+import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
+import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRenderer;

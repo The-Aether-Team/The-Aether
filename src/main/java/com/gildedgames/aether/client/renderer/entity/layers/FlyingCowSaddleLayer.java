@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity.layers;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.entity.passive.FlyingCowEntity;
+import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

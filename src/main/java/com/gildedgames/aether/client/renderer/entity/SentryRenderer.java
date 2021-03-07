@@ -2,7 +2,7 @@ package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.layers.SentryLayer;
-import com.gildedgames.aether.entity.monster.SentryEntity;
+import com.gildedgames.aether.common.entity.monster.SentryEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;

@@ -1,7 +1,6 @@
 package com.gildedgames.aether.client.gui.button;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.gui.screen.inventory.LoreBookScreen;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;

@@ -1,9 +1,9 @@
 package com.gildedgames.aether.client.renderer.tile;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.block.utility.SkyrootBedBlock;
-import com.gildedgames.aether.entity.tile.SkyrootBedTileEntity;
-import com.gildedgames.aether.registry.AetherTileEntityTypes;
+import com.gildedgames.aether.common.block.utility.SkyrootBedBlock;
+import com.gildedgames.aether.common.entity.tile.SkyrootBedTileEntity;
+import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.block.BedBlock;

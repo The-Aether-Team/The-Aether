@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.particle;
 
-import com.gildedgames.aether.entity.monster.WhirlwindEntity;
+import com.gildedgames.aether.common.entity.monster.WhirlwindEntity;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.ActiveRenderInfo;

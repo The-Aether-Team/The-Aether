@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.renderer.entity;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.layers.FlyingCowSaddleLayer;
 import com.gildedgames.aether.client.renderer.entity.layers.FlyingCowWingsLayer;
-import com.gildedgames.aether.entity.passive.FlyingCowEntity;
+import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;

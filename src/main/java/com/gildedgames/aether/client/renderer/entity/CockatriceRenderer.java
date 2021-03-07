@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.renderer.entity;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.layers.CockatriceLayer;
 import com.gildedgames.aether.client.renderer.entity.model.CockatriceModel;
-import com.gildedgames.aether.entity.monster.CockatriceEntity;
+import com.gildedgames.aether.common.entity.monster.CockatriceEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;

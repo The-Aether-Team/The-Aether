@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity.layers;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.entity.monster.CockatriceEntity;
+import com.gildedgames.aether.common.entity.monster.CockatriceEntity;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.IEntityRenderer;

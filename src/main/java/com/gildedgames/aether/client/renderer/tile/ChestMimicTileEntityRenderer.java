@@ -1,8 +1,8 @@
 package com.gildedgames.aether.client.renderer.tile;
 
-import com.gildedgames.aether.entity.tile.ChestMimicTileEntity;
-import com.gildedgames.aether.registry.AetherBlocks;
-import com.gildedgames.aether.block.dungeon.ChestMimicBlock;
+import com.gildedgames.aether.common.entity.tile.ChestMimicTileEntity;
+import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.common.block.dungeon.ChestMimicBlock;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.block.Block;

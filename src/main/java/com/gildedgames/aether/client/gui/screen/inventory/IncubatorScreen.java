@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.gui.screen.inventory;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.inventory.container.IncubatorContainer;
+import com.gildedgames.aether.common.inventory.container.IncubatorContainer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
