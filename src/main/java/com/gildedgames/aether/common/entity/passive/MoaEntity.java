@@ -15,7 +15,7 @@ import org.apache.logging.log4j.LogManager;
 
 import com.gildedgames.aether.core.api.AetherAPI;
 import com.gildedgames.aether.core.api.MoaType;
-import com.gildedgames.aether.core.api.MoaTypes;
+import com.gildedgames.aether.core.api.AetherMoaTypes;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -403,7 +403,7 @@ public class MoaEntity extends SaddleableEntity {
 				this.setMoaType(AetherAPI.getMoaType(new ResourceLocation(compound.getString("MoaType"))));
 			}
 			catch (ResourceLocationException e) {
-				this.setMoaType(MoaTypes.BLUE);
+				this.setMoaType(AetherMoaTypes.BLUE);
 			}
 		}
 	}

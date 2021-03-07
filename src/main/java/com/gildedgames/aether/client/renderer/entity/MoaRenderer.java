@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.renderer.entity;
 import java.util.UUID;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.core.api.MoaTypes;
+import com.gildedgames.aether.core.api.AetherMoaTypes;
 import com.gildedgames.aether.client.renderer.entity.layers.MoaSaddleLayer;
 import com.gildedgames.aether.client.renderer.entity.model.MoaModel;
 import com.gildedgames.aether.common.entity.passive.MoaEntity;
@@ -43,14 +43,14 @@ public class MoaRenderer extends MobRenderer<MoaEntity, MoaModel>{
 	@Override
 	public ResourceLocation getEntityTexture(MoaEntity entity) {
 		if (entity.hasCustomName()) {
-			if (entity.getMoaType() == MoaTypes.ORANGE && "Mos".equals(entity.getCustomName().getUnformattedComponentText())) {
+			if (entity.getMoaType() == AetherMoaTypes.ORANGE && "Mos".equals(entity.getCustomName().getUnformattedComponentText())) {
 				return MOS_TEXTURE;
 			}
-			if (entity.getMoaType() == MoaTypes.BLUE && "Raptor__".equals(entity.getCustomName().getUnformattedComponentText())) {
+			if (entity.getMoaType() == AetherMoaTypes.BLUE && "Raptor__".equals(entity.getCustomName().getUnformattedComponentText())) {
 				return RAPTOR_TEXTURE;
 			}
 		}
-		if (entity.getMoaType() == MoaTypes.BLUE) {
+		if (entity.getMoaType() == AetherMoaTypes.BLUE) {
 			UUID ownerID = entity.getOwnerID();
 			if (ownerID != null && ownerID.getMostSignificantBits() == -4330625426362709750L && ownerID.getLeastSignificantBits() == -8463060028814977532L) {
 				return RAPTOR_TEXTURE;

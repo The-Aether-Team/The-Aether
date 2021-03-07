@@ -43,9 +43,9 @@ public class AetherLootTableProvider extends LootTableProvider
     @Override
     protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> getTables() {
         return ImmutableList.of(
-                Pair.of(AetherLootTableData.RegisterBlocks::new, LootParameterSets.BLOCK),
-                Pair.of(AetherLootTableData.RegisterEntities::new, LootParameterSets.ENTITY),
-                Pair.of(AetherLootTableData.RegisterStripping::new, AetherLoot.STRIPPING));
+                Pair.of(AetherLootTableData.RegisterBlockLoot::new, LootParameterSets.BLOCK),
+                Pair.of(AetherLootTableData.RegisterEntityLoot::new, LootParameterSets.ENTITY),
+                Pair.of(AetherLootTableData.RegisterStrippingLoot::new, AetherLoot.STRIPPING));
     }
 
     @Override

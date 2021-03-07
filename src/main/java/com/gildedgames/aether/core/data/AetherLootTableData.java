@@ -36,7 +36,7 @@ public class AetherLootTableData extends AetherLootTableProvider
         return "Aether Loot Tables";
     }
 
-    public static class RegisterBlocks extends AetherBlockLootTableProvider
+    public static class RegisterBlockLoot extends AetherBlockLootTableProvider
     {
         @Override
         protected void addTables() {
@@ -183,7 +183,7 @@ public class AetherLootTableData extends AetherLootTableProvider
         }
     }
 
-    public static class RegisterEntities extends EntityLootTables
+    public static class RegisterEntityLoot extends EntityLootTables
     {
         @Override
         protected void addTables() {
@@ -319,7 +319,7 @@ public class AetherLootTableData extends AetherLootTableProvider
         }
     }
 
-    public static class RegisterStripping implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>
+    public static class RegisterStrippingLoot implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>
     {
         public void accept(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
             builder.accept(AetherLoot.STRIP_GOLDEN_OAK, LootTable.builder()

@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ObjectHolder;
 
 //TODO: Switch to DeferredRegister
 @ObjectHolder(Aether.MODID)
-public class MoaTypes
+public class AetherMoaTypes
 {
 	public static final MoaType BLUE = null;
 	public static final MoaType WHITE = null;
