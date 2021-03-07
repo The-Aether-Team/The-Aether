@@ -2,11 +2,11 @@ package com.gildedgames.aether.entity.projectile;
 
 import com.gildedgames.aether.registry.AetherEntityTypes;
 import com.gildedgames.aether.registry.AetherItems;
+import com.gildedgames.aether.registry.AetherPotionEffects;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
 
 public class PoisonDartEntity extends AbstractDartEntity
@@ -27,13 +27,11 @@ public class PoisonDartEntity extends AbstractDartEntity
     }
 
     @Override
-    protected void arrowHit(LivingEntity living)
-    {
+    protected void arrowHit(LivingEntity living) {
         super.arrowHit(living);
 
-        if (!world.isRemote)
-        {
-            living.addPotionEffect(new EffectInstance(Effects.POISON, 500, 0, false, false)); //TODO: Replace with inebriation.
+        if (!world.isRemote) {
+            living.addPotionEffect(new EffectInstance(AetherPotionEffects.INEBRIATION.get(), 500, 0, false, false));
         }
     }
 

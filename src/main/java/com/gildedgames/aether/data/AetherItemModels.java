@@ -121,6 +121,12 @@ public class AetherItemModels extends AetherItemModelsProvider
         item(AetherItems.SILVER_DUNGEON_KEY, "miscellaneous/");
         item(AetherItems.GOLD_DUNGEON_KEY, "miscellaneous/");
 
+        item(AetherItems.SKYROOT_BUCKET, "miscellaneous/");
+        item(AetherItems.SKYROOT_WATER_BUCKET, "miscellaneous/");
+        item(AetherItems.SKYROOT_POISON_BUCKET, "miscellaneous/");
+        item(AetherItems.SKYROOT_REMEDY_BUCKET, "miscellaneous/");
+        item(AetherItems.SKYROOT_MILK_BUCKET, "miscellaneous/");
+
         item(AetherItems.MUSIC_DISC_AETHER_TUNE, "miscellaneous/");
         item(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "miscellaneous/");
         item(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "miscellaneous/");

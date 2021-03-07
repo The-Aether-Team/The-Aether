@@ -71,6 +71,7 @@ public class Aether
 				AetherSoundEvents.SOUNDS,
 				AetherContainerTypes.CONTAINERS,
 				AetherTileEntityTypes.TILE_ENTITIES,
+				AetherPotionEffects.EFFECTS
 		};
 
 		for (DeferredRegister<?> register : registers) {
