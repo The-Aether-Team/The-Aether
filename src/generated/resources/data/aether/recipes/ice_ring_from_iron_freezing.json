@@ -1,0 +1,9 @@
+{
+  "type": "aether:freezing",
+  "ingredient": {
+    "item": "aether:iron_ring"
+  },
+  "result": "aether:ice_ring",
+  "experience": 0.0,
+  "cookingtime": 2500
+}

@@ -23,6 +23,7 @@ public class AetherTags
 		public static final ITag.INamedTag<Block> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final ITag.INamedTag<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final ITag.INamedTag<Block> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final ITag.INamedTag<Block> AETHER_ISLAND_BLOCKS = tag("aether_island_blocks");
 
 		private static ITag.INamedTag<Block> tag(String name) {
 			return BlockTags.makeWrapperTag(new ResourceLocation(Aether.MODID, name).toString());
@@ -40,6 +41,8 @@ public class AetherTags
 		public static final ITag.INamedTag<Item> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final ITag.INamedTag<Item> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final ITag.INamedTag<Item> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final ITag.INamedTag<Item> PLANKS_CRAFTING = tag("planks_crafting");
+		public static final ITag.INamedTag<Item> STONE_CRAFTING = tag("stone_crafting");
 
 		//TODO: Make sure these are all in use. Tool tags can potentially be used for abilities.
 		public static final ITag.INamedTag<Item> SKYROOT_STICKS = tag("skyroot_stick");
@@ -52,6 +55,8 @@ public class AetherTags
 		public static final ITag.INamedTag<Item> BANNED_IN_AETHER = tag("banned_in_aether");
 		public static final ITag.INamedTag<Item> DUNGEON_KEYS = tag("dungeon_keys");
 		public static final ITag.INamedTag<Item> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
+		public static final ITag.INamedTag<Item> ACCEPTED_MUSIC_DISCS = tag("accepted_music_discs");
+		public static final ITag.INamedTag<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 
 		private static ITag.INamedTag<Item> tag(String name) {
 			return ItemTags.makeWrapperTag(new ResourceLocation(Aether.MODID, name).toString());

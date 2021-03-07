@@ -5,11 +5,12 @@ import org.apache.commons.lang3.Validate;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class DungeonType extends ForgeRegistryEntry<DungeonType> {
-	private ResourceLocation lootTable;
+public class DungeonType extends ForgeRegistryEntry<DungeonType>
+{
+	private final ResourceLocation lootTable;
 	
 	public DungeonType(ResourceLocation lootTable) {
-		this.lootTable= Validate.notNull(lootTable, "Loot table was null");
+		this.lootTable = Validate.notNull(lootTable, "A dungeon's loot table was null.");
 	}
 	
 	public ResourceLocation getLootTable() {
@@ -19,5 +20,4 @@ public class DungeonType extends ForgeRegistryEntry<DungeonType> {
 	public String getTranslationKey() {
 		return "dungeon." + this.getRegistryName().getNamespace() + "." + this.getRegistryName().getPath();
 	}
-	
 }

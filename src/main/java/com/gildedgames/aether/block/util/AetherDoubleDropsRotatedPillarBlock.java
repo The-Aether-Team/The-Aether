@@ -7,8 +7,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.state.StateContainer;
 
-public class AetherDoubleDropsRotatedPillarBlock extends RotatedPillarBlock {
-
+public class AetherDoubleDropsRotatedPillarBlock extends RotatedPillarBlock
+{
 	public AetherDoubleDropsRotatedPillarBlock(Properties properties) {
 		super(properties);
 		this.setDefaultState(this.getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, false));
@@ -19,5 +19,4 @@ public class AetherDoubleDropsRotatedPillarBlock extends RotatedPillarBlock {
 		super.fillStateContainer(builder);
 		builder.add(AetherBlockStateProperties.DOUBLE_DROPS);
 	}
-
 }

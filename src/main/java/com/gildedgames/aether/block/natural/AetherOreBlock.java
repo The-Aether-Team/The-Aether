@@ -8,7 +8,8 @@ import net.minecraft.util.math.MathHelper;
 
 import net.minecraft.block.AbstractBlock;
 
-public class AetherOreBlock extends OreBlock implements IAetherDoubleDropBlock {
+public class AetherOreBlock extends OreBlock implements IAetherDoubleDropBlock
+{
 	private final int minExpDropped;
 	private final int maxExpDropped;
 	
@@ -22,5 +23,4 @@ public class AetherOreBlock extends OreBlock implements IAetherDoubleDropBlock {
 	protected int getExperience(Random rand) {
 		return MathHelper.nextInt(rand, minExpDropped, maxExpDropped);
 	}
-	
 }

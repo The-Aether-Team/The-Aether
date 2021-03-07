@@ -25,7 +25,7 @@ public class SpawnXP extends LootFunction
         ServerWorld world = context.getWorld();
         Vector3d vector3d = context.get(LootParameters.field_237457_g_);
         if (vector3d != null) {
-            int randomNumber = (int) (((9 - 6 + 1) * world.rand.nextDouble()) + 6);
+            int randomNumber = (int) ((4 * world.rand.nextDouble()) + 6);
             while(randomNumber > 0) {
                 int i = ExperienceOrbEntity.getXPSplit(randomNumber);
                 randomNumber -= i;

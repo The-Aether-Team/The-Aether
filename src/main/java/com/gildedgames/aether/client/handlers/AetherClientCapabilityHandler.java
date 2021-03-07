@@ -17,7 +17,7 @@ public class AetherClientCapabilityHandler
         event.getPlayer().getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY).ifPresent((player) -> {
             boolean isJumping = event.getMovementInput().jump;
             if (isJumping != player.isJumping()) {
-                AetherPacketHandler.INSTANCE.sendToServer(new JumpPacket(event.getPlayer().getUniqueID(), isJumping));
+                AetherPacketHandler.sendToServer(new JumpPacket(event.getPlayer().getUniqueID(), isJumping));
 
                 player.setJumping(isJumping);
             }

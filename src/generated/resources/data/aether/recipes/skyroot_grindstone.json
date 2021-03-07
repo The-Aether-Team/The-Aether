@@ -13,7 +13,7 @@
       "item": "minecraft:stone_slab"
     },
     "S": {
-      "item": "aether:skyroot_planks"
+      "tag": "aether:planks_crafting"
     }
   },
   "result": {

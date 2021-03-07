@@ -1,6 +1,10 @@
 package com.gildedgames.aether;
 
+import com.gildedgames.aether.api.dungeon.DungeonTypes;
+import com.gildedgames.aether.registry.AetherRecipe;
 import com.gildedgames.aether.data.*;
+import com.gildedgames.aether.entity.tile.AltarTileEntity;
+import com.gildedgames.aether.entity.tile.FreezerTileEntity;
 import com.gildedgames.aether.registry.AetherAdvancement;
 import com.gildedgames.aether.capability.AetherCapabilities;
 import com.gildedgames.aether.client.AetherRendering;
@@ -8,7 +12,7 @@ import com.gildedgames.aether.client.AetherRendering;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.registry.*;
 import com.gildedgames.aether.registry.AetherDimensions;
-import com.gildedgames.aether.world.gen.feature.AetherFeatures;
+import com.gildedgames.aether.registry.AetherFeatures;
 import com.gildedgames.aether.data.AetherLootTables;
 import net.minecraft.block.*;
 import net.minecraft.client.world.DimensionRenderInfo;
@@ -40,6 +44,7 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
@@ -61,17 +66,21 @@ public class Aether
 		modEventBus.addListener(this::curiosSetup);
 		modEventBus.addListener(this::dataSetup);
 
+		DungeonTypes.DUNGEON_TYPES.makeRegistry("dungeon_types", RegistryBuilder::new);
+		
 		DeferredRegister<?>[] registers = {
 				AetherBlocks.BLOCKS,
-				AetherFeatures.FEATURES,
 				AetherEntityTypes.ENTITIES,
 				AetherItems.ITEMS,
+				AetherFeatures.FEATURES,
 				AetherParticleTypes.PARTICLES,
 				AetherPOI.POI,
 				AetherSoundEvents.SOUNDS,
 				AetherContainerTypes.CONTAINERS,
 				AetherTileEntityTypes.TILE_ENTITIES,
 				AetherPotionEffects.EFFECTS
+				AetherRecipe.RECIPE_SERIALIZERS,
+				DungeonTypes.DUNGEON_TYPES
 		};
 
 		for (DeferredRegister<?> register : registers) {
@@ -89,15 +98,17 @@ public class Aether
 
 			AetherBlocks.registerPots();
 			AetherBlocks.registerAxeStrippingBlocks();
+			AetherBlocks.registerFlammability();
 
 			AetherEntityTypes.registerSpawnPlacements();
 			AetherEntityTypes.registerEntityAttributes();
 
-			registerDispenserBehaviors();
-			registerComposting();
-
 			AetherFeatures.registerConfiguredFeatures();
 			AetherAdvancement.init();
+
+			registerDispenserBehaviors();
+			registerComposting();
+			registerFuels();
 		});
 	}
 
@@ -253,5 +264,11 @@ public class Aether
 		ComposterBlock.registerCompostable(0.65F, AetherBlocks.WHITE_FLOWER.get());
 		ComposterBlock.registerCompostable(0.65F, AetherBlocks.PURPLE_FLOWER.get());
 		ComposterBlock.registerCompostable(0.65F, AetherItems.WHITE_APPLE.get());
+	}
+
+	private void registerFuels() {
+		AltarTileEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 500);
+
+		FreezerTileEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 500);
 	}
 }

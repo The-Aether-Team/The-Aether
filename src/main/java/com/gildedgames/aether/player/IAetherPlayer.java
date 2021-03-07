@@ -34,7 +34,7 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT> {
 	
 //	void setAccessoryInventory(IAccessoryInventory inventory);
 	
-	IAccessoryInventory getAccessoryInventory();
+	//IAccessoryInventory getAccessoryInventory();
 	
 	NonNullList<IAetherAbility> getAbilities();
 	

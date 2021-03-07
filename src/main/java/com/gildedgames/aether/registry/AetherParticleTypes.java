@@ -1,11 +1,8 @@
 package com.gildedgames.aether.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.particle.AetherPortalParticle;
-import com.gildedgames.aether.client.particle.EvilWhirlyParticle;
-import com.gildedgames.aether.client.particle.HolidayLeavesParticle;
+import com.gildedgames.aether.client.particle.*;
 
-import com.gildedgames.aether.client.particle.PassiveWhirlyParticle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.particles.BasicParticleType;
@@ -25,7 +22,10 @@ public class AetherParticleTypes
 	public static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Aether.MODID);
 
 	public static final RegistryObject<BasicParticleType> AETHER_PORTAL = PARTICLES.register("aether_portal", () -> new BasicParticleType(false));
+	public static final RegistryObject<BasicParticleType> GOLDEN_OAK_LEAVES = PARTICLES.register("golden_oak_leaves", () -> new BasicParticleType(false));
+	public static final RegistryObject<BasicParticleType> CRYSTAL_LEAVES = PARTICLES.register("crystal_leaves", () -> new BasicParticleType(false));
 	public static final RegistryObject<BasicParticleType> HOLIDAY_LEAVES = PARTICLES.register("holiday_leaves", () -> new BasicParticleType(false));
+	public static final RegistryObject<BasicParticleType> FREEZER = PARTICLES.register("freezer", () -> new BasicParticleType(false));
 	public static final RegistryObject<BasicParticleType> PASSIVE_WHIRLWIND = PARTICLES.register("passive_whirlwind", () -> new BasicParticleType(false));
 	public static final RegistryObject<BasicParticleType> EVIL_WHIRLWIND = PARTICLES.register("evil_whirlwind", () -> new BasicParticleType(false));
 
@@ -35,7 +35,10 @@ public class AetherParticleTypes
 		ParticleManager particleManager = Minecraft.getInstance().particles;
 
 		particleManager.registerFactory(AETHER_PORTAL.get(), AetherPortalParticle.Factory::new);
+		particleManager.registerFactory(GOLDEN_OAK_LEAVES.get(), GoldenOakLeavesParticle.Factory::new);
+		particleManager.registerFactory(CRYSTAL_LEAVES.get(), CrystalLeavesParticle.Factory::new);
 		particleManager.registerFactory(HOLIDAY_LEAVES.get(), HolidayLeavesParticle.Factory::new);
+		particleManager.registerFactory(FREEZER.get(), FreezerParticle.Factory::new);
 		particleManager.registerFactory(PASSIVE_WHIRLWIND.get(), PassiveWhirlyParticle.Factory::new);
 		particleManager.registerFactory(EVIL_WHIRLWIND.get(), EvilWhirlyParticle.Factory::new);
 	}

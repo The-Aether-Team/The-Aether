@@ -18,7 +18,17 @@
   "criteria": {
     "mount_phyg": {
       "trigger": "aether:mount_entity",
-      "conditions": {}
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "aether:phyg"
+            },
+            "entity": "this"
+          }
+        ]
+      }
     }
   },
   "requirements": [

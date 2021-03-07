@@ -1,6 +1,7 @@
 package com.gildedgames.aether.data;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.advancement.LoreTrigger;
 import com.gildedgames.aether.advancement.MountTrigger;
 import com.gildedgames.aether.registry.AetherBlocks;
 import com.gildedgames.aether.registry.AetherDimensions;
@@ -91,6 +92,16 @@ public class AetherAdvancements extends AdvancementProvider
                     .register(consumer, "aether:enter_aether");
             //TODO: add enter_aether loot.
 
+            Advancement loreception = Advancement.Builder.builder()
+                    .withParent(enterAether)
+                    .withDisplay(AetherItems.BOOK_OF_LORE.get(),
+                            new TranslationTextComponent("advancement.aether.loreception"),
+                            new TranslationTextComponent("advancement.aether.loreception.desc"),
+                            null,
+                            FrameType.TASK, true, true, true)
+                    .withCriterion("lore_book_entry", LoreTrigger.Instance.forItem(AetherItems.BOOK_OF_LORE.get()))
+                    .register(consumer, "aether:loreception");
+
             Advancement toInfinityAndBeyond = Advancement.Builder.builder()
                     .withParent(enterAether)
                     .withDisplay(AetherBlocks.BLUE_AERCLOUD.get(),
@@ -107,7 +118,7 @@ public class AetherAdvancements extends AdvancementProvider
                             new TranslationTextComponent("advancement.aether.mount_phyg.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .withCriterion("mount_phyg", MountTrigger.Instance.forEntity(EntityPredicate.Builder.create().type((AetherEntityTypes.PHYG.get()))))
+                    .withCriterion("mount_phyg", MountTrigger.Instance.forEntity(EntityPredicate.Builder.create().type(AetherEntityTypes.PHYG.get())))
                     .register(consumer, "aether:mount_phyg");
 
             Advancement craftIncubator = Advancement.Builder.builder()
@@ -122,12 +133,12 @@ public class AetherAdvancements extends AdvancementProvider
 
             Advancement craftAltar = Advancement.Builder.builder()
                     .withParent(enterAether)
-                    .withDisplay(AetherBlocks.ENCHANTER.get(),
-                            new TranslationTextComponent("advancement.aether.enchanter"),
-                            new TranslationTextComponent("advancement.aether.enchanter.desc"),
+                    .withDisplay(AetherBlocks.ALTAR.get(),
+                            new TranslationTextComponent("advancement.aether.altar"),
+                            new TranslationTextComponent("advancement.aether.altar.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .withCriterion("craft_altar", InventoryChangeTrigger.Instance.forItems(AetherBlocks.ENCHANTER.get()))
+                    .withCriterion("craft_altar", InventoryChangeTrigger.Instance.forItems(AetherBlocks.ALTAR.get()))
                     .register(consumer, "aether:craft_altar");
             Advancement gravititeTools = Advancement.Builder.builder()
                     .withParent(craftAltar)

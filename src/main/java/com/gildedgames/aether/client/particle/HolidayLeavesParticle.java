@@ -10,8 +10,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class HolidayLeavesParticle extends PortalParticle {
-
+public class HolidayLeavesParticle extends PortalParticle
+{
 	protected HolidayLeavesParticle(ClientWorld worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
 
@@ -21,7 +21,8 @@ public class HolidayLeavesParticle extends PortalParticle {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static class Factory implements IParticleFactory<BasicParticleType> {
+	public static class Factory implements IParticleFactory<BasicParticleType>
+	{
 		private final IAnimatedSprite spriteSet;
 
 		public Factory(IAnimatedSprite spriteSetIn) {
@@ -30,11 +31,9 @@ public class HolidayLeavesParticle extends PortalParticle {
 
 		@Override
 		public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-			HolidayLeavesParticle portalparticle = new HolidayLeavesParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
-			portalparticle.selectSpriteRandomly(this.spriteSet);
-			return portalparticle;
+			HolidayLeavesParticle leavesParticle = new HolidayLeavesParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
+			leavesParticle.selectSpriteRandomly(this.spriteSet);
+			return leavesParticle;
 		}
-
 	}
-
 }

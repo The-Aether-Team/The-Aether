@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import com.gildedgames.aether.inventory.AccessoryInventory;
 import com.gildedgames.aether.inventory.IAccessoryInventory;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
@@ -25,7 +24,7 @@ public class AetherPlayer implements IAetherPlayer {
 	
 	private final PlayerEntity player;
 	private AttributeModifier healthModifier, reachModifier;
-	private AccessoryInventory accessories;
+	//private AccessoryInventory accessories;
 	private float wingSinage;
 	private IAetherBoss focusedBoss;
 	private int lifeShardsUsed;
@@ -43,7 +42,7 @@ public class AetherPlayer implements IAetherPlayer {
 	
 	public AetherPlayer(PlayerEntity player) {
 		this.player = player;
-		this.accessories = new AccessoryInventory(player);
+		//this.accessories = new AccessoryInventory(player);
 	}
 	
 	@Override
@@ -71,7 +70,7 @@ public class AetherPlayer implements IAetherPlayer {
 		if (this.hammerName != null) {
 			nbt.putString("HammerName", this.hammerName);
 		}
-		this.accessories.writeToNBT(nbt);
+		//this.accessories.writeToNBT(nbt);
 		return nbt;
 	}
 
@@ -85,14 +84,14 @@ public class AetherPlayer implements IAetherPlayer {
 		String hammerName = nbt.getString("HammerName");
 		this.hammerName = hammerName.isEmpty()? null : hammerName;
 		this.lifeShardsUsed = nbt.getInt("LifeShardCount");
-		this.accessories.readFromNBT(nbt);
+		//this.accessories.readFromNBT(nbt);
 	}
 	
 	@Override
 	public void copyFrom(IAetherPlayer other) {
 		CompoundNBT nbt = new CompoundNBT();
-		other.getAccessoryInventory().writeToNBT(nbt);
-		this.accessories.readFromNBT(nbt);
+		//other.getAccessoryInventory().writeToNBT(nbt);
+		//this.accessories.readFromNBT(nbt);
 		this.shouldRenderGlow = other.shouldRenderGlow();
 		this.shouldRenderHalo = other.shouldRenderHalo();
 		this.seenSpiritDialog = other.hasSeenSunSpiritDialogue();
@@ -130,10 +129,10 @@ public class AetherPlayer implements IAetherPlayer {
 		return this.focusedBoss;
 	}
 
-	@Override
-	public IAccessoryInventory getAccessoryInventory() {
-		return this.accessories;
-	}
+//	@Override
+//	public IAccessoryInventory getAccessoryInventory() {
+//		return this.accessories;
+//	}
 
 	@Override
 	public NonNullList<IAetherAbility> getAbilities() {

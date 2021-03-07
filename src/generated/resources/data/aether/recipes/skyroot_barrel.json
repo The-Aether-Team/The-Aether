@@ -8,10 +8,10 @@
   ],
   "key": {
     "S": {
-      "item": "aether:skyroot_planks"
+      "tag": "aether:planks_crafting"
     },
     "H": {
-      "item": "aether:skyroot_slab"
+      "tag": "minecraft:wooden_slabs"
     }
   },
   "result": {

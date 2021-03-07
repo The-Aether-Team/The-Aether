@@ -1,5 +1,6 @@
 package com.gildedgames.aether.network.packet;
 
+import com.gildedgames.aether.network.IAetherPacket.AetherPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -10,12 +11,15 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import java.util.function.Supplier;
 
 
-public class ExtendedAttackPacket {
+public class ExtendedAttackPacket extends AetherPacket
+{
     private int targetEntityID;
+
     public ExtendedAttackPacket(int target) {
         this.targetEntityID = target;
     }
 
+    @Override
     public void encode(PacketBuffer buf) {
         buf.writeVarInt(targetEntityID);
     }

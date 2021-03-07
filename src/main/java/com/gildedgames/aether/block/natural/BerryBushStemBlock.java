@@ -15,7 +15,8 @@ import net.minecraft.world.server.ServerWorld;
 
 import net.minecraft.block.AbstractBlock;
 
-public class BerryBushStemBlock extends AetherBushBlock implements IGrowable {
+public class BerryBushStemBlock extends AetherBushBlock implements IGrowable
+{
 	protected static final VoxelShape SHAPE = Block.makeCuboidShape(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
 
 	public BerryBushStemBlock(AbstractBlock.Properties properties) {
@@ -52,5 +53,4 @@ public class BerryBushStemBlock extends AetherBushBlock implements IGrowable {
 	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
 		worldIn.setBlockState(pos, AetherBlocks.BERRY_BUSH.get().getDefaultState());
 	}
-
 }

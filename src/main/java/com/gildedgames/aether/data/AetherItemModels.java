@@ -132,6 +132,8 @@ public class AetherItemModels extends AetherItemModelsProvider
         item(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "miscellaneous/");
         item(AetherItems.MUSIC_DISC_LEGACY, "miscellaneous/");
 
+        item(AetherItems.BOOK_OF_LORE, "miscellaneous/");
+
         eggItem(AetherItems.PHYG_SPAWN_EGG);
         eggItem(AetherItems.FLYING_COW_SPAWN_EGG);
         eggItem(AetherItems.SHEEPUFF_SPAWN_EGG);
@@ -183,7 +185,7 @@ public class AetherItemModels extends AetherItemModelsProvider
         itemBlock(AetherBlocks.ZANITE_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_GRAVITITE);
 
-        itemBlock(AetherBlocks.ENCHANTER);
+        itemBlock(AetherBlocks.ALTAR);
         itemBlock(AetherBlocks.FREEZER);
         itemBlock(AetherBlocks.INCUBATOR);
 

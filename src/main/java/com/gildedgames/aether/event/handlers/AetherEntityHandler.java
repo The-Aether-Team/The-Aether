@@ -14,7 +14,7 @@ public class AetherEntityHandler
     public static void onMountEntity(EntityMountEvent event) {
         Entity rider = event.getEntityMounting();
         Entity mount = event.getEntityBeingMounted();
-        if(event.getEntityBeingMounted() != null && rider instanceof ServerPlayerEntity) {
+        if (event.getEntityBeingMounted() != null && rider instanceof ServerPlayerEntity) {
             AetherAdvancement.MOUNT_ENTITY.trigger((ServerPlayerEntity) rider, mount);
         }
     }

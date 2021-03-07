@@ -43,7 +43,7 @@ public class AetherRecipes extends AetherRecipesProvider
 
         makeOreToBlock(AetherBlocks.ZANITE_BLOCK, AetherItems.ZANITE_GEMSTONE).build(consumer);
 
-        ShapedRecipeBuilder.shapedRecipe(AetherBlocks.ENCHANTER.get(), 1)
+        ShapedRecipeBuilder.shapedRecipe(AetherBlocks.ALTAR.get(), 1)
                 .patternLine("HHH")
                 .patternLine("HZH")
                 .patternLine("HHH")
@@ -71,12 +71,27 @@ public class AetherRecipes extends AetherRecipesProvider
                 .addCriterion("has_holystone", hasItem(AetherBlocks.HOLYSTONE.get()))
                 .build(consumer);
 
-        ShapedRecipeBuilder.shapedRecipe(AetherBlocks.AMBROSIUM_TORCH.get(), 1)
+        ShapedRecipeBuilder.shapedRecipe(AetherBlocks.AMBROSIUM_TORCH.get(), 4)
                 .patternLine("A")
                 .patternLine("S")
                 .key('A', AetherItems.AMBROSIUM_SHARD.get())
                 .key('S', AetherTags.Items.SKYROOT_STICKS)
                 .addCriterion("has_holystone_pickaxe", hasItem(AetherItems.HOLYSTONE_PICKAXE.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(Blocks.OAK_DOOR, 3)
+                .patternLine("SS")
+                .patternLine("SS")
+                .patternLine("SS")
+                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .addCriterion("has_skyroot", hasItem(AetherBlocks.SKYROOT_PLANKS.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(Blocks.OAK_TRAPDOOR, 2)
+                .patternLine("SSS")
+                .patternLine("SSS")
+                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .addCriterion("has_skyroot", hasItem(AetherBlocks.SKYROOT_PLANKS.get()))
                 .build(consumer);
 
         makeFence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS).build(consumer);
@@ -196,11 +211,18 @@ public class AetherRecipes extends AetherRecipesProvider
         makeRing(AetherItems.GOLD_RING, Items.GOLD_INGOT).build(consumer);
         makeRing(AetherItems.ZANITE_RING, AetherItems.ZANITE_GEMSTONE.get()).build(consumer);
 
-        ShapedRecipeBuilder.shapedRecipe(AetherItems.SKYROOT_STICK.get(), 1)
+        ShapedRecipeBuilder.shapedRecipe(AetherItems.SKYROOT_STICK.get(), 4)
                 .patternLine("S")
                 .patternLine("S")
                 .key('S', AetherBlocks.SKYROOT_PLANKS.get())
                 .addCriterion("has_skyroot", hasItem(AetherBlocks.SKYROOT_PLANKS.get()))
+                .build(consumer);
+
+        ShapelessRecipeBuilder.shapelessRecipe(AetherItems.BOOK_OF_LORE.get())
+                .addIngredient(Items.BOOK)
+                .addIngredient(AetherTags.Items.BOOK_OF_LORE_MATERIALS)
+                .addCriterion("has_book", hasItem(Items.BOOK))
+                .setGroup("book_of_lore")
                 .build(consumer);
 
 
@@ -227,8 +249,8 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("SHS")
                 .patternLine("S S")
                 .patternLine("SHS")
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
-                .key('H', AetherBlocks.SKYROOT_SLAB.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
+                .key('H', ItemTags.WOODEN_SLABS)
                 .addCriterion("has_skyroot", hasItem(AetherBlocks.SKYROOT_PLANKS.get()))
                 .addCriterion("has_skyroot_slab", hasItem(AetherBlocks.SKYROOT_SLAB.get()))
                 .setGroup("barrel")
@@ -238,7 +260,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("SSS")
                 .patternLine("CCC")
                 .patternLine("SSS")
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .key('C', Items.HONEYCOMB)
                 .addCriterion("has_honeycomb", hasItem(Items.HONEYCOMB))
                 .setGroup("beehive")
@@ -247,7 +269,7 @@ public class AetherRecipes extends AetherRecipesProvider
         ShapedRecipeBuilder.shapedRecipe(Items.BOWL, 4)
                 .patternLine("S S")
                 .patternLine(" S ")
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .addCriterion("has_brown_mushroom", hasItem(Blocks.BROWN_MUSHROOM))
                 .addCriterion("has_red_mushroom", hasItem(Blocks.RED_MUSHROOM))
                 .addCriterion("has_mushroom_stew", hasItem(Items.MUSHROOM_STEW))
@@ -259,7 +281,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("SS")
                 .patternLine("SS")
                 .key('P', Items.PAPER)
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .addCriterion("has_paper", hasItem(Items.PAPER))
                 .setGroup("cartography_table")
                 .build(consumer, name("skyroot_cartography_table"));
@@ -268,7 +290,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("SSS")
                 .patternLine("S S")
                 .patternLine("SSS")
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .addCriterion("has_lots_of_items", new InventoryChangeTrigger.Instance(EntityPredicate.AndPredicate.ANY_AND, MinMaxBounds.IntBound.atLeast(10), MinMaxBounds.IntBound.UNBOUNDED, MinMaxBounds.IntBound.UNBOUNDED, new ItemPredicate[0]))
                 .setGroup("chest")
                 .build(consumer, name("skyroot_chest"));
@@ -276,7 +298,7 @@ public class AetherRecipes extends AetherRecipesProvider
         ShapedRecipeBuilder.shapedRecipe(Blocks.CRAFTING_TABLE, 1)
                 .patternLine("SS")
                 .patternLine("SS")
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .addCriterion("has_skyroot", hasItem(AetherBlocks.SKYROOT_PLANKS.get()))
                 .setGroup("crafting_table")
                 .build(consumer, name("skyroot_crafting_table"));
@@ -286,7 +308,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("SS")
                 .patternLine("SS")
                 .key('F', Items.FLINT)
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .addCriterion("has_flint", hasItem(Items.FLINT))
                 .setGroup("fletching_table")
                 .build(consumer, name("skyroot_fletching_table"));
@@ -296,7 +318,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("S S")
                 .key('T', Tags.Items.RODS_WOODEN)
                 .key('H', Blocks.STONE_SLAB)
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .addCriterion("has_stone_slab", hasItem(Blocks.STONE_SLAB))
                 .setGroup("grindstone")
                 .build(consumer, name("skyroot_grindstone"));
@@ -305,7 +327,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("SSS")
                 .patternLine("SDS")
                 .patternLine("SSS")
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .key('D', Tags.Items.GEMS_DIAMOND)
                 .addCriterion("has_diamond", hasItem(Tags.Items.GEMS_DIAMOND))
                 .setGroup("jukebox")
@@ -315,7 +337,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("TT")
                 .patternLine("SS")
                 .key('T', Tags.Items.STRING)
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .addCriterion("has_string", hasItem(Tags.Items.STRING))
                 .setGroup("loom")
                 .build(consumer, name("skyroot_loom"));
@@ -324,7 +346,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("SSS")
                 .patternLine("SRS")
                 .patternLine("SSS")
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .key('R', Tags.Items.DUSTS_REDSTONE)
                 .addCriterion("has_redstone", hasItem(Tags.Items.DUSTS_REDSTONE))
                 .setGroup("note_block")
@@ -334,7 +356,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("SSS")
                 .patternLine("CIC")
                 .patternLine("CRC")
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .key('C', Blocks.COBBLESTONE)
                 .key('I', Tags.Items.INGOTS_IRON)
                 .key('R', Tags.Items.DUSTS_REDSTONE)
@@ -346,7 +368,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("SIS")
                 .patternLine("SSS")
                 .patternLine(" S ")
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .key('I', Tags.Items.INGOTS_IRON)
                 .addCriterion("has_iron_ingot", hasItem(Tags.Items.INGOTS_IRON))
                 .setGroup("shield")
@@ -357,7 +379,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("SS")
                 .patternLine("SS")
                 .key('I', Tags.Items.INGOTS_IRON)
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .addCriterion("has_iron_ingot", hasItem(Tags.Items.INGOTS_IRON))
                 .setGroup("smithing_table")
                 .build(consumer, name("skyroot_smithing_table"));
@@ -368,7 +390,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("S")
                 .key('I', Tags.Items.INGOTS_IRON)
                 .key('T', Tags.Items.RODS_WOODEN)
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .key('S', AetherTags.Items.PLANKS_CRAFTING)
                 .addCriterion("has_string", hasItem(Tags.Items.STRING))
                 .setGroup("tripwire_hook")
                 .build(consumer, name("skyroot_tripwire_hook"));
@@ -377,7 +399,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine(" B ")
                 .patternLine("HHH")
                 .key('B', Tags.Items.RODS_BLAZE)
-                .key('H', AetherBlocks.HOLYSTONE.get())
+                .key('H', AetherTags.Items.STONE_CRAFTING)
                 .addCriterion("has_blaze_rod", hasItem(Items.BLAZE_ROD))
                 .setGroup("brewing_stand")
                 .build(consumer, name("holystone_brewing_stand"));
@@ -386,7 +408,7 @@ public class AetherRecipes extends AetherRecipesProvider
                 .patternLine("HHH")
                 .patternLine("H H")
                 .patternLine("HHH")
-                .key('H', AetherBlocks.HOLYSTONE.get())
+                .key('H', AetherTags.Items.STONE_CRAFTING)
                 .addCriterion("has_holystone", hasItem(AetherBlocks.HOLYSTONE.get()))
                 .setGroup("furnace")
                 .build(consumer, name("holystone_furnace"));
@@ -430,9 +452,29 @@ public class AetherRecipes extends AetherRecipesProvider
         stonecuttingRecipe(AetherBlocks.AEROGEL, AetherBlocks.AEROGEL_STAIRS.get()).build(consumer, name("aerogel_stairs_stonecutting"));
         stonecuttingRecipe(AetherBlocks.AEROGEL, AetherBlocks.AEROGEL_SLAB.get(), 2).build(consumer, name("aerogel_slab_stonecutting"));
 
-        //TODO: Enchanting recipes.
-        //smelting recipes for ambrosium ore and zanite ore -> materials. also for blast furnace.
-        //stonecutter recipes
+        enchantingRecipe(AetherItems.ENCHANTED_DART.get(), AetherItems.GOLDEN_DART.get(), 250).build(consumer, name("enchanted_dart_enchanting"));
+        enchantingRecipe(AetherItems.ENCHANTED_DART_SHOOTER.get(), AetherItems.GOLDEN_DART_SHOOTER.get(), 500).build(consumer, name("enchanted_dart_shooter_enchanting"));
+
+        enchantingRecipe(AetherItems.HEALING_STONE.get(), AetherBlocks.HOLYSTONE.get(), 750).build(consumer, name("healing_stone_enchanting"));
+        enchantingRecipe(AetherBlocks.ENCHANTED_GRAVITITE.get(), AetherBlocks.GRAVITITE_ORE.get(), 1000).build(consumer, name("enchanted_gravitite_enchanting"));
+        enchantingRecipe(AetherBlocks.QUICKSOIL_GLASS.get(), AetherBlocks.QUICKSOIL.get(), 250).build(consumer, name("quicksoil_glass_enchanting"));
+
+        enchantingRecipe(AetherItems.ENCHANTED_BERRY.get(), AetherItems.BLUE_BERRY.get(), 300).build(consumer, name("enchanted_berry_enchanting"));
+
+        enchantingRecipe(AetherItems.MUSIC_DISC_AETHER_TUNE.get(), AetherTags.Items.ACCEPTED_MUSIC_DISCS, 2500).build(consumer, name("aether_tune_enchanting"));
+        enchantingRecipe(AetherItems.MUSIC_DISC_LEGACY.get(), Items.MUSIC_DISC_CAT, 2500).build(consumer, name("legacy_enchanting"));
+
+        freezingRecipe(AetherBlocks.BLUE_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 100).build(consumer, name("blue_aercloud_freezing"));
+        freezingRecipe(AetherBlocks.CRYSTAL_LEAVES.get(), AetherBlocks.SKYROOT_LEAVES.get(), 150).build(consumer, name("crystal_leaves_freezing"));
+
+        freezingRecipe(AetherItems.MUSIC_DISC_WELCOMING_SKIES.get(), AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(), 800).build(consumer, name("welcoming_skies_freezing"));
+
+        freezingRecipe(Blocks.ICE, Blocks.PACKED_ICE, 750).build(consumer, name("packed_ice_freezing"));
+        freezingRecipe(Items.WATER_BUCKET, Blocks.ICE, 500).build(consumer, name("ice_from_bucket_freezing"));
+        freezingRecipe(Items.LAVA_BUCKET, Blocks.OBSIDIAN, 500).build(consumer, name("obsidian_from_bucket_freezing"));
+
+        freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.IRON_RING.get(), 2500).build(consumer, name("ice_ring_from_iron_freezing"));
+        freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.GOLD_RING.get(), 2500).build(consumer, name("ice_ring_from_gold_freezing"));
     }
 
     private ResourceLocation name(String name) {

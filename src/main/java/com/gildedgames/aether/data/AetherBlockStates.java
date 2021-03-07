@@ -58,7 +58,7 @@ public class AetherBlockStates extends AetherBlockStatesProvider
         block(AetherBlocks.ZANITE_BLOCK, "construction/");
         block(AetherBlocks.ENCHANTED_GRAVITITE, "construction/");
 
-        enchanter(AetherBlocks.ENCHANTER);
+        altar(AetherBlocks.ALTAR);
         freezer(AetherBlocks.FREEZER);
         incubator(AetherBlocks.INCUBATOR);
 

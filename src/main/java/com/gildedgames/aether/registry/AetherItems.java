@@ -6,9 +6,11 @@ import com.gildedgames.aether.item.accessories.AccessoryItem;
 import com.gildedgames.aether.item.accessories.ring.ZaniteRingItem;
 import com.gildedgames.aether.item.food.HealingStoneItem;
 import com.gildedgames.aether.item.misc.*;
+import com.gildedgames.aether.item.materials.SkyrootStickItem;
 import com.gildedgames.aether.item.food.GummySwetItem;
 import com.gildedgames.aether.item.materials.SwetBallItem;
 import com.gildedgames.aether.item.combat.*;
+import com.gildedgames.aether.item.misc.LoreBookItem;
 import com.gildedgames.aether.item.tools.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -197,7 +199,7 @@ public class AetherItems
 	//item("repulsion_shield", new ShieldAccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).maxDamage(512).group(AetherItemGroups.AETHER_ACCESSORIES))),
 
 	// Materials
-	public static final RegistryObject<Item> SKYROOT_STICK = ITEMS.register("skyroot_stick", () -> new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS)));
+	public static final RegistryObject<Item> SKYROOT_STICK = ITEMS.register("skyroot_stick", () -> new SkyrootStickItem(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS)));
 	public static final RegistryObject<Item> GOLDEN_AMBER = ITEMS.register("golden_amber", () -> new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS)));
 	public static final RegistryObject<Item> SWET_BALL = ITEMS.register("swet_ball", () -> new SwetBallItem(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS)));
 	public static final RegistryObject<Item> AECHOR_PETAL = ITEMS.register("aechor_petal", () -> new Item(new Item.Properties().group(AetherItemGroups.AETHER_MATERIALS)));
@@ -210,18 +212,18 @@ public class AetherItems
 			() -> new Item(new Item.Properties().maxStackSize(10).rarity(AETHER_LOOT).group(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<Item> BRONZE_DUNGEON_KEY = ITEMS.register("bronze_dungeon_key",
-			() -> new DungeonKeyItem(() -> DungeonTypes.BRONZE, new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).isImmuneToFire().group(AetherItemGroups.AETHER_MISC)));
+			() -> new DungeonKeyItem(DungeonTypes.BRONZE, new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).isImmuneToFire().group(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> SILVER_DUNGEON_KEY = ITEMS.register("silver_dungeon_key",
-			() -> new DungeonKeyItem(() -> DungeonTypes.SILVER, new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).isImmuneToFire().group(AetherItemGroups.AETHER_MISC)));
+			() -> new DungeonKeyItem(DungeonTypes.SILVER, new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).isImmuneToFire().group(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> GOLD_DUNGEON_KEY = ITEMS.register("gold_dungeon_key",
-			() -> new DungeonKeyItem(() -> DungeonTypes.GOLD, new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).isImmuneToFire().group(AetherItemGroups.AETHER_MISC)));
+			() -> new DungeonKeyItem(DungeonTypes.GOLD, new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).isImmuneToFire().group(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune",
 			() -> new MusicDiscItem(1, AetherSoundEvents.MUSIC_DISC_AETHER_TUNE, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> MUSIC_DISC_ASCENDING_DAWN  = ITEMS.register("music_disc_ascending_dawn",
 			() -> new MusicDiscItem(2, AetherSoundEvents.MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> MUSIC_DISC_WELCOMING_SKIES  = ITEMS.register("music_disc_welcoming_skies",
-			() -> new MusicDiscItem(3, AetherSoundEvents.MUSIC_DISC_LEGACY, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC)));
+			() -> new MusicDiscItem(3, AetherSoundEvents.MUSIC_DISC_WELCOMING_SKIES, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> MUSIC_DISC_LEGACY  = ITEMS.register("music_disc_legacy",
 			() -> new MusicDiscItem(4, AetherSoundEvents.MUSIC_DISC_LEGACY, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC)));
 
@@ -241,7 +243,8 @@ public class AetherItems
 
 	//item("life_shard", new LifeShardItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
 
-	//item("lore_book", new LoreBookItem(new Item.Properties().maxStackSize(1).rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
+	public static final RegistryObject<Item> BOOK_OF_LORE = ITEMS.register("book_of_lore",
+			() -> new LoreBookItem(new Item.Properties().maxStackSize(1).rarity(AETHER_LOOT).group(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<SpawnEggItem> AECHOR_PLANT_SPAWN_EGG = ITEMS.register("aechor_plant_spawn_egg",
 			() -> new SpawnEggItem(AetherEntityTypes.AECHOR_PLANT_TYPE,0x076178, 0x4BC69E, new Item.Properties().group(ItemGroup.MISC)));

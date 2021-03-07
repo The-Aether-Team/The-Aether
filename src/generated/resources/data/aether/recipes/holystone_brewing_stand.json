@@ -10,7 +10,7 @@
       "tag": "forge:rods/blaze"
     },
     "H": {
-      "item": "aether:holystone"
+      "tag": "aether:stone_crafting"
     }
   },
   "result": {

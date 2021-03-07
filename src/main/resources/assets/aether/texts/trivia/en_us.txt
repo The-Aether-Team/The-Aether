@@ -7,12 +7,12 @@ Gravitite Armour grants you higher jumps and no fall damage.
 Gravitite Tools can levitate blocks when right-clicking.
 Baby Moas will stay put when right clicking them with a nature staff.
 Golden Oak trees yield valuable Golden Amber in their logs.
-Enchanters can repair damaged items and enhance existing items.
+Altars can repair damaged items and enhance existing items.
 Skyroot tools gain double drops from blocks.
 Place water into a Glowstone frame for a Hostile Paradise.
 The Champs and Champettes are pretty baller.
 Zanite Tools gain strength the more they are used.
-Ambrosium Shards are great for fueling Enchanters and food.
+Ambrosium Shards are great for fueling Altars and food.
 Icestone freezes water into ice and lava into obsidian.
 Some dungeons in the Aether contain chests which are Mimics.
 White Aerclouds prevent fall damage when landed upon.

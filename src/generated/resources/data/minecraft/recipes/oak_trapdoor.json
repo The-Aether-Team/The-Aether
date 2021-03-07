@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "aether:skyroot_planks"
+    }
+  },
+  "result": {
+    "item": "minecraft:oak_trapdoor",
+    "count": 2
+  }
+}

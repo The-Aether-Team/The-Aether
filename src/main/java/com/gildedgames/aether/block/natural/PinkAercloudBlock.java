@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 
 import net.minecraft.block.AbstractBlock;
 
-public class PinkAercloudBlock extends AercloudBlock {
-
+public class PinkAercloudBlock extends AercloudBlock
+{
 	public PinkAercloudBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
@@ -22,5 +22,4 @@ public class PinkAercloudBlock extends AercloudBlock {
 			((LivingEntity) entity).heal(1.0F);
 		}
 	}
-	
 }

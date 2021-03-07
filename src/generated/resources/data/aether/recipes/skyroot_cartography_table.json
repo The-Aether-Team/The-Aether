@@ -11,7 +11,7 @@
       "item": "minecraft:paper"
     },
     "S": {
-      "item": "aether:skyroot_planks"
+      "tag": "aether:planks_crafting"
     }
   },
   "result": {
