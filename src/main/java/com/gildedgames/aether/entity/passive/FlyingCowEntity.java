@@ -9,9 +9,10 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -80,6 +81,19 @@ public class FlyingCowEntity extends SaddleableEntity {
     public void onMountedJump() {
         if(this.onGround) {
             this.setMotion(this.getMotion().getX(), 2.0F, this.getMotion().getZ());
+        }
+    }
+
+    @Override
+    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
+        ItemStack itemstack = player.getHeldItem(hand);
+        if (itemstack.getItem() == Items.BUCKET && !this.isChild()) {
+            player.playSound(SoundEvents.ENTITY_COW_MILK, 1.0F, 1.0F);
+            ItemStack itemstack1 = DrinkHelper.fill(itemstack, player, Items.MILK_BUCKET.getDefaultInstance());
+            player.setHeldItem(hand, itemstack1);
+            return ActionResultType.func_233537_a_(this.world.isRemote);
+        } else {
+            return super.func_230254_b_(player, hand);
         }
     }
 

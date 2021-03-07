@@ -5,8 +5,8 @@ import com.gildedgames.aether.api.dungeon.DungeonTypes;
 import com.gildedgames.aether.item.accessories.AccessoryItem;
 import com.gildedgames.aether.item.accessories.ring.ZaniteRingItem;
 import com.gildedgames.aether.item.food.HealingStoneItem;
+import com.gildedgames.aether.item.misc.*;
 import com.gildedgames.aether.item.materials.SkyrootStickItem;
-import com.gildedgames.aether.item.misc.DungeonKeyItem;
 import com.gildedgames.aether.item.food.GummySwetItem;
 import com.gildedgames.aether.item.materials.SwetBallItem;
 import com.gildedgames.aether.item.combat.*;
@@ -227,11 +227,11 @@ public class AetherItems
 	public static final RegistryObject<Item> MUSIC_DISC_LEGACY  = ITEMS.register("music_disc_legacy",
 			() -> new MusicDiscItem(4, AetherSoundEvents.MUSIC_DISC_LEGACY, new Item.Properties().maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC)));
 
-	//skyroot_bucket = item("skyroot_bucket", new SkyrootBucketItem(new Item.Properties().maxStackSize(16).group(AetherItemGroups.MISC))),
-	//item("skyroot_water_bucket", new SkyrootWaterBucketItem(new Item.Properties().containerItem(skyroot_bucket).maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
-	//item("skyroot_poison_bucket", new SkyrootPoisonBucketItem(new Item.Properties().containerItem(skyroot_bucket).maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
-	//item("skyroot_remedy_bucket", new SkyrootRemedyBucketItem(new Item.Properties().containerItem(skyroot_bucket).maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
-	//item("skyroot_milk_bucket", new SkyrootMilkBucketItem(new Item.Properties().containerItem(skyroot_bucket).maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
+	public static final RegistryObject<Item> SKYROOT_BUCKET = ITEMS.register("skyroot_bucket", () -> new SkyrootBucketItem(new Item.Properties().maxStackSize(16).group(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> SKYROOT_WATER_BUCKET = ITEMS.register("skyroot_water_bucket", () -> new SkyrootWaterBucketItem(new Item.Properties().containerItem(SKYROOT_BUCKET.get()).maxStackSize(1).group(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> SKYROOT_POISON_BUCKET = ITEMS.register("skyroot_poison_bucket", () -> new SkyrootPoisonBucketItem(new Item.Properties().containerItem(SKYROOT_BUCKET.get()).maxStackSize(1).group(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> SKYROOT_REMEDY_BUCKET = ITEMS.register("skyroot_remedy_bucket", () -> new SkyrootRemedyBucketItem(new Item.Properties().containerItem(SKYROOT_BUCKET.get()).maxStackSize(1).rarity(Rarity.RARE).group(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> SKYROOT_MILK_BUCKET = ITEMS.register("skyroot_milk_bucket", () -> new SkyrootMilkBucketItem(new Item.Properties().containerItem(SKYROOT_BUCKET.get()).maxStackSize(1).group(AetherItemGroups.AETHER_MISC)));
 
 	//item("cold_parachute", new ColdParachuteItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
 	//item("golden_parachute", new GoldenParachuteItem(new Item.Properties().maxDamage(20).maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
