@@ -78,7 +78,7 @@ public class Aether
 				AetherSoundEvents.SOUNDS,
 				AetherContainerTypes.CONTAINERS,
 				AetherTileEntityTypes.TILE_ENTITIES,
-				AetherPotionEffects.EFFECTS
+				AetherPotionEffects.EFFECTS,
 				AetherRecipe.RECIPE_SERIALIZERS,
 				DungeonTypes.DUNGEON_TYPES
 		};
