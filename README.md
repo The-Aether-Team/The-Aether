@@ -1,4 +1,4 @@
-![Banner image](https://gitea.gildedgames.com/GildedGames/The-Aether/raw/branch/1.12.2/doc/banner.webp)
+![Banner image](https://github.com/Gilded-Games/The-Aether/tree/1.16/doc/banner.png)
 # The Aether
 [![Code license (GNU GPL 3.0)](https://img.shields.io/badge/code%20license-GNU%20GPLv3-green.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://creativecommons.org/licenses/by-sa/4.0/)
