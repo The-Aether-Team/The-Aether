@@ -40,7 +40,7 @@ public class HammerProjectileEntity extends ThrowableEntity
 
     @Override
     public void tick() {
-        this.world.addParticle(ParticleTypes.CLOUD, this.getPosX(), this.getPosY() + 0.2f, this.getPosZ(), 0.0D, 0.0D, 0.0D);
+        this.world.addParticle(ParticleTypes.CLOUD, this.getPosX(), this.getPosY() + 0.2, this.getPosZ(), 0.0, 0.0, 0.0);
         super.tick();
         if (!this.onGround) {
             ++this.ticksInAir;
@@ -54,11 +54,11 @@ public class HammerProjectileEntity extends ThrowableEntity
     @Override
     protected void onImpact(RayTraceResult result) {
         for(int j = 0; j < 8; j++) {
-            this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
-            this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
-            this.world.addParticle(ParticleTypes.SMOKE, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
-            this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
-            this.world.addParticle(ParticleTypes.FLAME, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
+            this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0, 0.0, 0.0);
+            this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0, 0.0, 0.0);
+            this.world.addParticle(ParticleTypes.SMOKE, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0, 0.0, 0.0);
+            this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0, 0.0, 0.0);
+            this.world.addParticle(ParticleTypes.FLAME, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0, 0.0, 0.0);
         }
         super.onImpact(result);
         if (!this.world.isRemote) {

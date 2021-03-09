@@ -132,9 +132,9 @@ public class AetherPortalBlock extends Block
 		}
 
 		for (int i = 0; i < 4; ++i) {
-			double x = pos.getX() + rand.nextFloat();
-			double y = pos.getY() + rand.nextFloat();
-			double z = pos.getZ() + rand.nextFloat();
+			double x = pos.getX() + rand.nextDouble();
+			double y = pos.getY() + rand.nextDouble();
+			double z = pos.getZ() + rand.nextDouble();
 			double sX = (rand.nextFloat() - 0.5) * 0.5;
 			double sY = (rand.nextFloat() - 0.5) * 0.5;
 			double sZ = (rand.nextFloat() - 0.5) * 0.5;
@@ -142,11 +142,11 @@ public class AetherPortalBlock extends Block
 
 			if (worldIn.getBlockState(pos.west()).getBlock() != this && worldIn.getBlockState(pos.east()).getBlock() != this) {
 				x = pos.getX() + 0.5 + 0.25 * mul;
-				sX = rand.nextFloat() * 2.0F * mul;
+				sX = rand.nextFloat() * 2.0 * mul;
 			}
 			else {
 				z = pos.getZ() + 0.5 + 0.25 * mul;
-				sZ = rand.nextFloat() * 2.0F * mul;
+				sZ = rand.nextFloat() * 2.0 * mul;
 			}
 
 			worldIn.addParticle(AetherParticleTypes.AETHER_PORTAL.get(), x, y, z, sX, sY, sZ);

@@ -120,7 +120,7 @@ public class PhoenixArrowEntity extends AbstractArrowEntity
 
     private void spawnPotionParticles(int particleCount) {
         for (int j = 0; j < particleCount; ++j) {
-            this.world.addParticle(ParticleTypes.FLAME, this.getPosX() + (this.rand.nextGaussian() / 5D), this.getPosY() + (this.rand.nextGaussian() / 5D), this.getPosZ() + (this.rand.nextGaussian() / 3D), 0.0D, 0.0D, 0.0D);
+            this.world.addParticle(ParticleTypes.FLAME, this.getPosX() + (this.rand.nextGaussian() / 5.0), this.getPosY() + (this.rand.nextGaussian() / 5.0), this.getPosZ() + (this.rand.nextGaussian() / 3.0), 0.0, 0.0, 0.0);
         }
     }
 

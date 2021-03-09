@@ -66,10 +66,9 @@ public class AetherDimensionHandler
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onBlockBanned(AetherBannedItemEvent.SpawnParticles event) {
         IWorld world = event.getWorld();
-        double x, y, z;
-        x = event.getPos().getX() + 0.5;
-        y = event.getPos().getY() + 1;
-        z = event.getPos().getZ() + 0.5;
+        double x = event.getPos().getX() + 0.5;
+        double y = event.getPos().getY() + 1;
+        double z = event.getPos().getZ() + 0.5;
         for (int i = 0; i < 10; i++) {
             world.addParticle(ParticleTypes.LARGE_SMOKE, x, y, z, 0.0, 0.0, 0.0);
         }

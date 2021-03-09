@@ -43,9 +43,9 @@ public class FreezerBlock extends AbstractFurnaceBlock
 	@Override
 	public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
 		if (state.get(LIT)) {
-			float x = pos.getX() + 0.5F;
-			float y = pos.getY() + 1.0F + (rand.nextFloat() * 6.0F) / 16.0F;
-			float z = pos.getZ() + 0.5F;
+			double x = pos.getX() + 0.5;
+			double y = pos.getY() + 1.0 + (rand.nextFloat() * 6.0) / 16.0;
+			double z = pos.getZ() + 0.5;
 
 			world.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
 

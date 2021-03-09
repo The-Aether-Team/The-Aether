@@ -221,21 +221,21 @@ public class WhirlwindEntity extends MobEntity {
     public void updateParticles() {
         if(!this.isEvil()) {
             for(int k = 0; k < 2; k++) {
-                double d1 = (float)this.getPosX() + rand.nextFloat() * 0.25F;
-                double d4 = (float)getPosY() + getHeight() + 0.125F;
-                double d7 = (float)this.getPosZ() + rand.nextFloat() * 0.25F;
-                float f = rand.nextFloat() * 360F;
-                this.world.addParticle(AetherParticleTypes.PASSIVE_WHIRLWIND.get(), d1, d4 - 0.25D, d7, -Math.sin(0.01745329F * f) * 0.75D, 0.125D, Math.cos(0.01745329F * f) * 0.75D);
+                double d1 = this.getPosX() + this.rand.nextDouble() * 0.25;
+                double d4 = getPosY() + getHeight() + 0.125;
+                double d7 = this.getPosZ() + this.rand.nextDouble() * 0.25;
+                float f = this.rand.nextFloat() * 360;
+                this.world.addParticle(AetherParticleTypes.PASSIVE_WHIRLWIND.get(), d1, d4 - 0.25, d7, -Math.sin(0.01745329F * f) * 0.75, 0.125, Math.cos(0.01745329F * f) * 0.75);
 
             }
         }
         else {
             for(int k = 0; k < 3; k++) {
-                double d2 = (float)getPosX() + rand.nextFloat() * 0.25F;
-                double d5 = (float)getPosY() + getHeight() + 0.125F;
-                double d8 = (float)getPosZ() + rand.nextFloat() * 0.25F;
-                float f1 = rand.nextFloat() * 360F;
-                this.world.addParticle(AetherParticleTypes.EVIL_WHIRLWIND.get(), d2, d5 - 0.25D, d8, -Math.sin(0.01745329F * f1) * 0.75D, 0.125D, Math.cos(0.01745329F * f1) * 0.75D);
+                double d2 = getPosX() + this.rand.nextDouble() * 0.25;
+                double d5 = getPosY() + getHeight() + 0.125;
+                double d8 = getPosZ() + this.rand.nextDouble() * 0.25;
+                float f1 = this.rand.nextFloat() * 360;
+                this.world.addParticle(AetherParticleTypes.EVIL_WHIRLWIND.get(), d2, d5 - 0.25, d8, -Math.sin(0.01745329F * f1) * 0.75, 0.125, Math.cos(0.01745329F * f1) * 0.75);
             }
         }
     }

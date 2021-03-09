@@ -30,14 +30,14 @@ public class PigSlayerItem extends SwordItem {
 			}
 
 			for (int i = 0; i < 20; i++) {
-				double d0 = rand.nextGaussian() * 0.02;
-				double d1 = rand.nextGaussian() * 0.02;
-				double d2 = rand.nextGaussian() * 0.02;
+				double d0 = this.rand.nextGaussian() * 0.02;
+				double d1 = this.rand.nextGaussian() * 0.02;
+				double d2 = this.rand.nextGaussian() * 0.02;
 				double d3 = 5.0;
 				target.world.addParticle(ParticleTypes.FLAME,
-					target.getPosX() + (rand.nextFloat() * target.getWidth() * 2.0F) - target.getWidth() - d0 * d3,
-					target.getPosY() + (rand.nextFloat() * target.getHeight()) - d1 * d3,
-					target.getPosZ() + (rand.nextFloat() * target.getWidth() * 2.0F) - target.getWidth() - d2 * d3,
+					target.getPosX() + (this.rand.nextFloat() * target.getWidth() * 2.0) - target.getWidth() - d0 * d3,
+					target.getPosY() + (this.rand.nextFloat() * target.getHeight()) - d1 * d3,
+					target.getPosZ() + (this.rand.nextFloat() * target.getWidth() * 2.0) - target.getWidth() - d2 * d3,
 					d0, d1, d2);
 			}
 		}

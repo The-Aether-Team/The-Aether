@@ -50,7 +50,7 @@ public class AetherPlayer implements IAetherPlayer
 	// TODO
 	@Override
 	public void onUpdate() {
-		Aether.LOGGER.info(true);
+
 	}
 
 	@Override
