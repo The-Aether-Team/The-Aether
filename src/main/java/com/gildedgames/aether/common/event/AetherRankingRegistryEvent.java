@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import com.gildedgames.aether.core.capability.player.AetherRank;
+import com.gildedgames.aether.core.api.AetherRank;
 
 import net.minecraftforge.eventbus.api.Event;
 

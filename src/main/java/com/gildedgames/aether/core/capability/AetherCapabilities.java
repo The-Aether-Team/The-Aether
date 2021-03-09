@@ -2,7 +2,9 @@ package com.gildedgames.aether.core.capability;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
-import com.gildedgames.aether.core.capability.player.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayerProvider;
+import com.gildedgames.aether.core.capability.player.AetherPlayerStorage;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,8 +16,8 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-public class AetherCapabilities {
-
+public class AetherCapabilities
+{
 	@CapabilityInject(IAetherPlayer.class)
 	public static final Capability<IAetherPlayer> AETHER_PLAYER_CAPABILITY = null;
 	
@@ -24,15 +26,13 @@ public class AetherCapabilities {
 	}
 	
 	@EventBusSubscriber(modid = Aether.MODID)
-	public static class Registration {
-		
+	public static class Registration
+	{
 		@SubscribeEvent
 		public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
 			if (event.getObject() instanceof PlayerEntity) {
 				event.addCapability(new ResourceLocation(Aether.MODID, "aether_player"), new AetherPlayerProvider(new AetherPlayer((PlayerEntity) event.getObject())));
 			}
 		}
-		
 	}
-	
 }

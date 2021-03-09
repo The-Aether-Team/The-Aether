@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import com.gildedgames.aether.core.api.AetherAPI;
 
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -42,7 +43,7 @@ public class JumpPacket extends AetherPacket
 			ServerPlayerEntity player = ctxt.get().getSender();
 			ServerPlayerEntity target = player.getServer().getPlayerList().getPlayerByUUID(this.playerUUID);
 			if (target != null) {
-				AetherAPI.get(target).ifPresent(aetherPlayer -> aetherPlayer.setJumping(this.isJumping));
+				IAetherPlayer.get(target).ifPresent(aetherPlayer -> aetherPlayer.setJumping(this.isJumping));
 			}
 		});
 	}

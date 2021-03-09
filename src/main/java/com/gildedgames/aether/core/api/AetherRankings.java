@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.capability.player;
+package com.gildedgames.aether.core.api;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.event.AetherRankingRegistryEvent;
+import com.gildedgames.aether.core.api.AetherRank;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;

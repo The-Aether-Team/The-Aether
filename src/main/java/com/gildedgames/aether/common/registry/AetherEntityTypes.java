@@ -18,10 +18,14 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+@Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherEntityTypes
 {
 	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, Aether.MODID);
@@ -107,19 +111,20 @@ public class AetherEntityTypes
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.ZEPHYR.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ZephyrEntity::canZephyrSpawn);
 	}
 
-	public static void registerEntityAttributes() {
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.PHYG.get(), PhygEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.FLYING_COW.get(), FlyingCowEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.SHEEPUFF.get(), SheepuffEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.MOA.get(), MoaEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.registerAttributes().create());
+	@SubscribeEvent
+	public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
+		event.put(AetherEntityTypes.PHYG.get(), PhygEntity.registerAttributes().create());
+		event.put(AetherEntityTypes.FLYING_COW.get(), FlyingCowEntity.registerAttributes().create());
+		event.put(AetherEntityTypes.SHEEPUFF.get(), SheepuffEntity.registerAttributes().create());
+		event.put(AetherEntityTypes.MOA.get(), MoaEntity.registerAttributes().create());
+		event.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.registerAttributes().create());
 
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.WHIRLWIND.get(), WhirlwindEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.COCKATRICE.get(), CockatriceEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.ZEPHYR.get(), ZephyrEntity.registerAttributes().create());
+		event.put(AetherEntityTypes.WHIRLWIND.get(), WhirlwindEntity.registerAttributes().create());
+		event.put(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantEntity.registerAttributes().create());
+		event.put(AetherEntityTypes.COCKATRICE.get(), CockatriceEntity.registerAttributes().create());
+		event.put(AetherEntityTypes.ZEPHYR.get(), ZephyrEntity.registerAttributes().create());
 
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.SENTRY.get(), SlimeEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(AetherEntityTypes.MIMIC.get(), MimicEntity.registerAttributes().create());
+		event.put(AetherEntityTypes.SENTRY.get(), SlimeEntity.registerAttributes().create());
+		event.put(AetherEntityTypes.MIMIC.get(), MimicEntity.registerAttributes().create());
 	}
 }

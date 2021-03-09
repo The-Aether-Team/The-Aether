@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.entity.passive;
 import com.gildedgames.aether.core.api.AetherAPI;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FlyingEntity;
@@ -100,7 +101,7 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 				
 				positionIn = new Vector3d(player.moveStrafing, 0.0, (player.moveForward <= 0.0F)? player.moveForward * 0.25F : player.moveForward);
 				
-				if (AetherAPI.get(player).map(p -> p.isJumping()).orElse(false)) {
+				if (IAetherPlayer.get(player).map(IAetherPlayer::isJumping).orElse(false)) {
 					this.setMotion(new Vector3d(0.0, 0.0, 0.0));
 				} else {
 					double d0 = Math.toRadians(player.rotationYaw - 90.0);

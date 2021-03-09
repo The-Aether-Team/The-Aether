@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.player.IAetherPlayer;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import org.apache.commons.lang3.Validate;
 
 import com.gildedgames.aether.Aether;
@@ -39,10 +39,6 @@ public class AetherAPI {
 				.setType(type)
 				.setIDRange(0, 32766)
 				.create();
-	}
-	
-	public static LazyOptional<IAetherPlayer> get(PlayerEntity player) {
-		return player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY, null);
 	}
 
 	public static boolean hasMoaType(@Nonnull ResourceLocation id) {

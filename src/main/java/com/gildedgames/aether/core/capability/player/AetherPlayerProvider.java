@@ -1,6 +1,7 @@
-package com.gildedgames.aether.core.capability;
+package com.gildedgames.aether.core.capability.player;
 
-import com.gildedgames.aether.core.capability.player.IAetherPlayer;
+import com.gildedgames.aether.core.capability.AetherCapabilities;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -9,8 +10,8 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class AetherPlayerProvider implements ICapabilityProvider, INBTSerializable<CompoundNBT> {
-	
+public class AetherPlayerProvider implements ICapabilityProvider, INBTSerializable<CompoundNBT>
+{
 	private final IAetherPlayer aetherPlayer;
 	
 	public AetherPlayerProvider(IAetherPlayer aetherPlayer) {
@@ -35,5 +36,4 @@ public class AetherPlayerProvider implements ICapabilityProvider, INBTSerializab
 		}
 		return LazyOptional.empty();
 	}
-
 }

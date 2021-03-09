@@ -2,7 +2,7 @@ package com.gildedgames.aether.common.entity.monster;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
-import com.gildedgames.aether.core.capability.player.AetherRankings;
+import com.gildedgames.aether.core.api.AetherRankings;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.entity.*;

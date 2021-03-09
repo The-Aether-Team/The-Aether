@@ -104,7 +104,6 @@ public class Aether
 			AetherBlocks.registerFlammability();
 
 			AetherEntityTypes.registerSpawnPlacements();
-			AetherEntityTypes.registerEntityAttributes();
 
 			AetherFeatures.registerConfiguredFeatures();
 			AetherAdvancements.init();

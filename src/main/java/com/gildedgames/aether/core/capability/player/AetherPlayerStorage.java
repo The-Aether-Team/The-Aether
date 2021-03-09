@@ -1,6 +1,6 @@
-package com.gildedgames.aether.core.capability;
+package com.gildedgames.aether.core.capability.player;
 
-import com.gildedgames.aether.core.capability.player.IAetherPlayer;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -8,8 +8,8 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 
-public class AetherPlayerStorage implements IStorage<IAetherPlayer> {
-
+public class AetherPlayerStorage implements IStorage<IAetherPlayer>
+{
 	@Override
 	public INBT writeNBT(Capability<IAetherPlayer> capability, IAetherPlayer instance, Direction side) {
 		return instance.serializeNBT();
@@ -21,5 +21,4 @@ public class AetherPlayerStorage implements IStorage<IAetherPlayer> {
 			instance.deserializeNBT((CompoundNBT) nbt);
 		}
 	}
-	
 }

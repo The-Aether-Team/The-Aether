@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.capability.player;
+package com.gildedgames.aether.core.capability.interfaces;
 
 public interface IAetherBoss {
 
