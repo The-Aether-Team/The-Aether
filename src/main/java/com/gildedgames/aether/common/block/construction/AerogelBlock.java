@@ -1,13 +1,13 @@
 package com.gildedgames.aether.common.block.construction;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BreakableBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
 import net.minecraft.block.AbstractBlock;
 
-public class AerogelBlock extends Block
+public class AerogelBlock extends BreakableBlock
 {
 	public AerogelBlock(AbstractBlock.Properties properties) {
 		super(properties);
