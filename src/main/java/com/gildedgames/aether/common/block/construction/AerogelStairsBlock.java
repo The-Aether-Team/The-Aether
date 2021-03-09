@@ -5,11 +5,14 @@ import java.util.function.Supplier;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.StairsBlock;
 
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class AerogelStairsBlock extends StairsBlock
 {
@@ -25,6 +28,11 @@ public class AerogelStairsBlock extends StairsBlock
 	@Override
 	public boolean isTransparent(BlockState state) {
 		return true;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
+		return adjacentBlockState.isIn(this) || super.isSideInvisible(state, adjacentBlockState, side);
 	}
 
 	@Override

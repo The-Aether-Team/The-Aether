@@ -1,4 +1,5 @@
 {
+
   "variants": {
     "facing=north,half=top,shape=straight": {
       "model": "aether:block/aerogel_stairs",
