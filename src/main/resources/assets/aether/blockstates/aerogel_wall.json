@@ -2,7 +2,11 @@
   "multipart": [
     {
       "when": {
-        "up": "true"
+        "up": "true",
+        "north": "none",
+        "south": "none",
+        "west": "none",
+        "east": "none"
       },
       "apply": {
         "model": "aether:block/aerogel_wall_post"

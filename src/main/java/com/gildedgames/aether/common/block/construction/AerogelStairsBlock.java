@@ -30,10 +30,10 @@ public class AerogelStairsBlock extends StairsBlock
 		return true;
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
-		return adjacentBlockState.isIn(this) || super.isSideInvisible(state, adjacentBlockState, side);
-	}
+//	@OnlyIn(Dist.CLIENT)
+//	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
+//		return adjacentBlockState.isIn(this) || super.isSideInvisible(state, adjacentBlockState, side);
+//	}
 
 	@Override
 	public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
