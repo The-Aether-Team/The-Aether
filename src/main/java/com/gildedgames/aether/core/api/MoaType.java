@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
-import com.gildedgames.aether.core.util.AetherUtils;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -121,7 +120,7 @@ public class MoaType extends ForgeRegistryEntry<MoaType> {
 		public MoaType.Properties texture(String texture) {
 			int i = texture.indexOf(':');
 			if (i == -1) {
-				this.texture = new ResourceLocation(AetherUtils.defaultAetherNamespace(), texture);
+				this.texture = new ResourceLocation(Aether.MODID, texture);
 			}
 			else {
 				this.texture = new ResourceLocation(texture);
@@ -137,7 +136,7 @@ public class MoaType extends ForgeRegistryEntry<MoaType> {
 		public MoaType.Properties saddleTexture(String saddleTexture) {
 			int i = saddleTexture.indexOf(':');
 			if (i == -1) {
-				this.saddleTexture = new ResourceLocation(AetherUtils.defaultAetherNamespace(), saddleTexture);
+				this.saddleTexture = new ResourceLocation(Aether.MODID, saddleTexture);
 			}
 			else {
 				this.saddleTexture = new ResourceLocation(saddleTexture);

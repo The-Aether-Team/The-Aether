@@ -79,21 +79,6 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .addCriterion("has_holystone_pickaxe", hasItem(AetherItems.HOLYSTONE_PICKAXE.get()))
                 .build(consumer);
 
-        ShapedRecipeBuilder.shapedRecipe(Blocks.OAK_DOOR, 3)
-                .patternLine("SS")
-                .patternLine("SS")
-                .patternLine("SS")
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
-                .addCriterion("has_skyroot", hasItem(AetherBlocks.SKYROOT_PLANKS.get()))
-                .build(consumer);
-
-        ShapedRecipeBuilder.shapedRecipe(Blocks.OAK_TRAPDOOR, 2)
-                .patternLine("SSS")
-                .patternLine("SSS")
-                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
-                .addCriterion("has_skyroot", hasItem(AetherBlocks.SKYROOT_PLANKS.get()))
-                .build(consumer);
-
         makeFence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS).build(consumer);
         makeFenceGate(AetherBlocks.SKYROOT_FENCE_GATE, AetherBlocks.SKYROOT_PLANKS).build(consumer);
 
@@ -244,6 +229,23 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .setGroup("lead")
                 .build(consumer, name("swet_lead"));
 
+
+        ShapedRecipeBuilder.shapedRecipe(Blocks.OAK_DOOR, 3)
+                .patternLine("SS")
+                .patternLine("SS")
+                .patternLine("SS")
+                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .addCriterion("has_skyroot", hasItem(AetherBlocks.SKYROOT_PLANKS.get()))
+                .setGroup("wooden_door")
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(Blocks.OAK_TRAPDOOR, 2)
+                .patternLine("SSS")
+                .patternLine("SSS")
+                .key('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .addCriterion("has_skyroot", hasItem(AetherBlocks.SKYROOT_PLANKS.get()))
+                .setGroup("wooden_trapdoor")
+                .build(consumer);
 
         ShapedRecipeBuilder.shapedRecipe(Blocks.BARREL, 1)
                 .patternLine("SHS")

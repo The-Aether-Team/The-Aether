@@ -876,8 +876,8 @@ ef1688d8839282e91b8aa07f3029cefcf02df64e data/forge/tags/items/rods/wooden.json
 1ea00a2a136c31f18e9a99db9584fac2c6e42aa6 data/forge/tags/items/storage_blocks.json
 d53f2476bc4d068ad39644fca997b1325d94b22b data/minecraft/advancements/recipes/redstone/oak_door.json
 f59f888babf750d2e0159c309fd902d5ab150b54 data/minecraft/advancements/recipes/redstone/oak_trapdoor.json
-ef62b5e27e8d34f156dab1942207835d2fe9e961 data/minecraft/recipes/oak_door.json
-395ffc347980c1168724bd4c08585474faac8581 data/minecraft/recipes/oak_trapdoor.json
+3389e1e6f6470195fde052a241c90df37ce43aa9 data/minecraft/recipes/oak_door.json
+9d0bc16ac652114a1718e0e84fc36e6d67500a9b data/minecraft/recipes/oak_trapdoor.json
 ffb3efebcf83f36c1a2e4fec38ab8785be9b8770 data/minecraft/tags/blocks/beacon_base_blocks.json
 d3815d5fe2d05fce780751f7c4231401f3f16a78 data/minecraft/tags/blocks/beds.json
 358c356a1cb8b96cf2001f9a544dd0d9341a1f9a data/minecraft/tags/blocks/dragon_immune.json
