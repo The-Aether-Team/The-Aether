@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class AetherEntityHandler
+public class EntityHandler
 {
     @SubscribeEvent
     public static void onMountEntity(EntityMountEvent event) {

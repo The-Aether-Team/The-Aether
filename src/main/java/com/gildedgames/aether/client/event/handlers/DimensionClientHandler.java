@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public class AetherClientDimensionHandler
+public class DimensionClientHandler
 {
     @SubscribeEvent
     public static void onRenderFogColor(EntityViewRenderEvent.FogColors event) {

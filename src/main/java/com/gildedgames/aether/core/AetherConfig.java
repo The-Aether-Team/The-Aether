@@ -30,7 +30,6 @@ public class AetherConfig
 
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("Gameplay");
-            new TranslationTextComponent("test");
             start_with_portal = builder
                     .comment("On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with")
                     .define("Gives player Aether Portal Frame item", false);

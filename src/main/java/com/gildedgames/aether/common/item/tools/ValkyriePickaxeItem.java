@@ -28,16 +28,12 @@ public class ValkyriePickaxeItem extends PickaxeItem implements IValkyrieToolIte
         this.attackSpeed = attackSpeedIn;
     }
 
-    /**
-     * Adds the REACH_DISTANCE AttributeModifier to the entity using the item.
-     * It's important to note that this attribute only works when targetting blocks.
-     */
     @Override
     public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", this.attackSpeed, AttributeModifier.Operation.ADDITION));
-        builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(reachModifierUUID, "Tool modifier", this.getReachDistanceModifier(), AttributeModifier.Operation.ADDITION));
+        builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(REACH_MODIFIER_UUID, "Tool modifier", this.getReachDistanceModifier(), AttributeModifier.Operation.ADDITION));
         this.pickaxeAttributes = builder.build();
         return equipmentSlot == EquipmentSlotType.MAINHAND ? this.pickaxeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
     }

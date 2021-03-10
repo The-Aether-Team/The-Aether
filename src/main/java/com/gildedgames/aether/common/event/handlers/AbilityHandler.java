@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber
-public class AetherAbilityHandler
+public class AbilityHandler
 {
     @SubscribeEvent
     public static void doSkyrootDoubleDrops(LivingDropsEvent event) {

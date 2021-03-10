@@ -7,6 +7,7 @@ import com.gildedgames.aether.core.api.AetherAPI;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -14,8 +15,8 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 public class JumpPacket extends AetherPacket
 {
-	private UUID playerUUID;
-	private boolean isJumping;
+	private final UUID playerUUID;
+	private final boolean isJumping;
 	
 	public JumpPacket(UUID uuid, boolean isJumping) {
 		this.playerUUID = uuid;
@@ -35,16 +36,13 @@ public class JumpPacket extends AetherPacket
 		return new JumpPacket(uuid, jumping);
 	}
 
-	public void handlePacket(Supplier<NetworkEvent.Context> ctxt) {
-		if (ctxt.get().getDirection() != NetworkDirection.PLAY_TO_SERVER) {
-			return;
-		}
-		ctxt.get().enqueueWork(() -> {
-			ServerPlayerEntity player = ctxt.get().getSender();
-			ServerPlayerEntity target = player.getServer().getPlayerList().getPlayer(this.playerUUID);
-			if (target != null) {
-				IAetherPlayer.get(target).ifPresent(aetherPlayer -> aetherPlayer.setJumping(this.isJumping));
+	@Override
+	public void execute(PlayerEntity playerEntity) {
+		if (playerEntity != null && playerEntity.level != null && playerEntity.getServer() != null) {
+			ServerPlayerEntity player = playerEntity.getServer().getPlayerList().getPlayer(this.playerUUID);
+			if (player != null) {
+				IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setJumping(this.isJumping));
 			}
-		});
+		}
 	}
 }

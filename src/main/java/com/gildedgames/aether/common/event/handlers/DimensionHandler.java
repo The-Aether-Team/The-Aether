@@ -26,7 +26,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class AetherDimensionHandler
+public class DimensionHandler
 {
     @SubscribeEvent
     public static void checkBlockBanned(PlayerInteractEvent.RightClickBlock event) {

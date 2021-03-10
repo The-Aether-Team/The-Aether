@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class AetherCapabilityHandler
+public class AetherPlayerHandler
 {
     @SubscribeEvent
     public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
@@ -17,7 +17,6 @@ public class AetherCapabilityHandler
         }
     }
 
-    //TODO: Figure out how to @SuppressWarnings away the NullPointerException issue since it isn't actually an issue I believe, considering the .orElseThrow().
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event) {
         IAetherPlayer original = IAetherPlayer.get(event.getOriginal()).orElseThrow(

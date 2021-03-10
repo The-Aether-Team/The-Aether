@@ -28,16 +28,12 @@ public class ValkyrieShovelItem extends ShovelItem implements IValkyrieToolItem
         this.attackSpeed = attackSpeedIn;
     }
 
-    /**
-     * Adds the REACH_DISTANCE AttributeModifier to the entity using the item.
-     * It's important to note that this attribute only works when targetting blocks.
-     */
     @Override
     public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
-        builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(reachModifierUUID, "Tool modifier", this.getReachDistanceModifier(), AttributeModifier.Operation.ADDITION));
+        builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(REACH_MODIFIER_UUID, "Tool modifier", this.getReachDistanceModifier(), AttributeModifier.Operation.ADDITION));
         this.shovelAttributes = builder.build();
         return equipmentSlot == EquipmentSlotType.MAINHAND ? this.shovelAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
     }

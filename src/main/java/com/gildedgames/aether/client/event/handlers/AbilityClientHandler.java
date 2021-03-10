@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public class AetherClientAbilityHandler
+public class AbilityClientHandler
 {
     @SubscribeEvent
     public static void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
@@ -34,21 +34,20 @@ public class AetherClientAbilityHandler
         }
     }
 
+    //TODO: Verify this is up-to-date.
     private static boolean handleExtendedReach(PlayerEntity player) {
         double reach = player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue();
         Vector3d eyePos = player.getEyePosition(1.0F);
         Vector3d lookVec = player.getLookAngle();
         Vector3d reachVec = eyePos.add(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
         AxisAlignedBB playerBox = player.getBoundingBox().expandTowards(lookVec.scale(reach)).inflate(1.0D, 1.0D, 1.0D);
-        EntityRayTraceResult traceResult = ProjectileHelper.getEntityHitResult(player, eyePos, reachVec, playerBox, (target) -> {
-            return !target.isSpectator() && target.isPickable();
-        }, reach * reach);
+        EntityRayTraceResult traceResult = ProjectileHelper.getEntityHitResult(player, eyePos, reachVec, playerBox, (target) -> !target.isSpectator() && target.isPickable(), reach * reach);
         if (traceResult != null) {
             Entity target = traceResult.getEntity();
             Vector3d hitVec = traceResult.getLocation();
             double distance = eyePos.distanceToSqr(hitVec);
             if (distance < reach * reach) {
-                AetherPacketHandler.sendToServer(new ExtendedAttackPacket(target.getId()));
+                AetherPacketHandler.sendToServer(new ExtendedAttackPacket(player.getUUID(), target.getId()));
                 return true;
             }
         }
