@@ -3,15 +3,13 @@ package com.gildedgames.aether.core.data;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.advancement.LoreTrigger;
 import com.gildedgames.aether.common.advancement.MountTrigger;
-import com.gildedgames.aether.common.registry.AetherBlocks;
-import com.gildedgames.aether.common.registry.AetherDimensions;
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.common.registry.*;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.IRequirementsStrategy;
 import net.minecraft.advancements.criterion.ChangeDimensionTrigger;
@@ -19,6 +17,7 @@ import net.minecraft.advancements.criterion.EnterBlockTrigger;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.block.Blocks;
+import net.minecraft.command.FunctionObject;
 import net.minecraft.data.AdvancementProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
@@ -89,8 +88,8 @@ public class AetherAdvancementData extends AdvancementProvider
                             new ResourceLocation(Aether.MODID, "textures/block/dungeon/carved_stone.png"),
                             FrameType.TASK, true, true, false)
                     .addCriterion("enter_aether", ChangeDimensionTrigger.Instance.changedDimensionTo(AetherDimensions.AETHER_WORLD))
+                    .rewards(new AdvancementRewards(0, new ResourceLocation[]{AetherLoot.ENTER_AETHER}, new ResourceLocation[0], FunctionObject.CacheableFunction.NONE))
                     .save(consumer, "aether:enter_aether");
-            //TODO: add enter_aether loot.
 
             Advancement loreception = Advancement.Builder.advancement()
                     .parent(enterAether)

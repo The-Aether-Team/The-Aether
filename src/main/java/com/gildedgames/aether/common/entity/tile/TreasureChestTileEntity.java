@@ -4,7 +4,7 @@ import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import net.minecraft.block.BlockState;
 import org.apache.commons.lang3.Validate;
 
-import com.gildedgames.aether.core.api.DungeonType;
+import com.gildedgames.aether.core.api.registers.DungeonType;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 

@@ -3,7 +3,7 @@ package com.gildedgames.aether.core.registry;
 import com.gildedgames.aether.Aether;
 
 import com.gildedgames.aether.common.registry.AetherLoot;
-import com.gildedgames.aether.core.api.DungeonType;
+import com.gildedgames.aether.core.api.registers.DungeonType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 

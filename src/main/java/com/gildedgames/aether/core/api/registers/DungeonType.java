@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.api;
+package com.gildedgames.aether.core.api.registers;
 
 import org.apache.commons.lang3.Validate;
 

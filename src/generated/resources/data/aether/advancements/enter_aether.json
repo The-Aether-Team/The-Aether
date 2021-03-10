@@ -15,6 +15,11 @@
     "hidden": false,
     "background": "aether:textures/block/dungeon/carved_stone.png"
   },
+  "rewards": {
+    "loot": [
+      "aether:advancements/enter_aether"
+    ]
+  },
   "criteria": {
     "enter_aether": {
       "trigger": "minecraft:changed_dimension",

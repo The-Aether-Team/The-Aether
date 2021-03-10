@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import com.gildedgames.aether.core.api.DungeonType;
+import com.gildedgames.aether.core.api.registers.DungeonType;
 import com.gildedgames.aether.common.item.misc.DungeonKeyItem;
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import com.gildedgames.aether.common.entity.tile.TreasureChestTileEntity;

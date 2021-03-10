@@ -2,7 +2,9 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.AetherAnimalEntity;
+import com.gildedgames.aether.common.entity.block.ColdParachuteEntity;
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
+import com.gildedgames.aether.common.entity.block.GoldenParachuteEntity;
 import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
 import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
 import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
@@ -65,6 +67,12 @@ public class AetherEntityTypes
 
 	//public static final EntityType<ValkyrieEntity> VALKYRIE = entity("valkyrie", EntityType.Builder.<ValkyrieEntity>create(ValkyrieEntity::new, EntityClassification.MONSTER).size(??????));
 	//public static final EntityType<FireMinionEntity> FIRE_MINION = entity("fire_minion", EntityType.Builder.<FireMinionEntity>create(FireMinionEntity::new, EntityClassification.MONSTER).size(??????));
+
+	public static final EntityType<ColdParachuteEntity> COLD_PARACHUTE_TYPE = EntityType.Builder.<ColdParachuteEntity>of(ColdParachuteEntity::new, EntityClassification.MISC).sized(0.98F, 0.98F).build("cold_parachute");
+	public static final RegistryObject<EntityType<ColdParachuteEntity>> COLD_PARACHUTE = ENTITIES.register("cold_parachute", () -> COLD_PARACHUTE_TYPE);
+
+	public static final EntityType<GoldenParachuteEntity> GOLDEN_PARACHUTE_TYPE = EntityType.Builder.<GoldenParachuteEntity>of(GoldenParachuteEntity::new, EntityClassification.MISC).sized(0.98F, 0.98F).build("golden_parachute");
+	public static final RegistryObject<EntityType<GoldenParachuteEntity>> GOLDEN_PARACHUTE = ENTITIES.register("golden_parachute", () -> GOLDEN_PARACHUTE_TYPE);
 
 	public static final EntityType<FloatingBlockEntity> FLOATING_BLOCK_TYPE = EntityType.Builder.<FloatingBlockEntity>of(FloatingBlockEntity::new, EntityClassification.MISC).sized(0.98F, 0.98F).build("floating_block");
 	public static final RegistryObject<EntityType<FloatingBlockEntity>> FLOATING_BLOCK = ENTITIES.register("floating_block", () -> FLOATING_BLOCK_TYPE);

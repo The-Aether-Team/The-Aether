@@ -321,6 +321,16 @@ public class AetherLootTableData extends AetherLootTableProvider
         }
     }
 
+    public static class RegisterAdvancementLoot implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>
+    {
+        public void accept(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
+            builder.accept(AetherLoot.ENTER_AETHER, LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(AetherItems.GOLDEN_PARACHUTE.get())))
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(AetherItems.BOOK_OF_LORE.get())))
+            );
+        }
+    }
+
     public static class RegisterStrippingLoot implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>
     {
         public void accept(BiConsumer<ResourceLocation, LootTable.Builder> builder) {

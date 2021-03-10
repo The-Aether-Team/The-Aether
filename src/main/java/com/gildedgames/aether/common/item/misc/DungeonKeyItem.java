@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import org.apache.commons.lang3.Validate;
 
-import com.gildedgames.aether.core.api.DungeonType;
+import com.gildedgames.aether.core.api.registers.DungeonType;
 
 import net.minecraft.item.Item;
 

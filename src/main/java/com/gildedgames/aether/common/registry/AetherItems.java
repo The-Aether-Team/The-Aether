@@ -234,8 +234,8 @@ public class AetherItems
 	public static final RegistryObject<Item> SKYROOT_REMEDY_BUCKET = ITEMS.register("skyroot_remedy_bucket", () -> new SkyrootRemedyBucketItem(new Item.Properties().craftRemainder(SKYROOT_BUCKET.get()).stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> SKYROOT_MILK_BUCKET = ITEMS.register("skyroot_milk_bucket", () -> new SkyrootMilkBucketItem(new Item.Properties().craftRemainder(SKYROOT_BUCKET.get()).stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
 
-	//item("cold_parachute", new ColdParachuteItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
-	//item("golden_parachute", new GoldenParachuteItem(new Item.Properties().maxDamage(20).maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
+	public static final RegistryObject<Item> COLD_PARACHUTE = ITEMS.register("cold_parachute", () -> new ParachuteItem(AetherEntityTypes.COLD_PARACHUTE_TYPE, new Item.Properties().stacksTo(1).durability(1).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> GOLDEN_PARACHUTE = ITEMS.register("golden_parachute", () -> new ParachuteItem(AetherEntityTypes.GOLDEN_PARACHUTE_TYPE, new Item.Properties().stacksTo(1).durability(20).tab(AetherItemGroups.AETHER_MISC)));
 
 	//item("nature_staff", new NatureStaffItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_TOOLS))),
 	//item("cloud_staff", new CloudStaffItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_TOOLS))),
