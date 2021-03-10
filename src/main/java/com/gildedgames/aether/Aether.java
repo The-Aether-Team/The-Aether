@@ -74,6 +74,7 @@ public class Aether
 		DeferredRegister<?>[] registers = {
 				AetherBlocks.BLOCKS,
 				AetherEntityTypes.ENTITIES,
+				AetherEffects.EFFECTS,
 				AetherItems.ITEMS,
 				AetherFeatures.FEATURES,
 				AetherParticleTypes.PARTICLES,
@@ -81,7 +82,6 @@ public class Aether
 				AetherSoundEvents.SOUNDS,
 				AetherContainerTypes.CONTAINERS,
 				AetherTileEntityTypes.TILE_ENTITIES,
-				AetherPotionEffects.EFFECTS,
 				AetherRecipes.RECIPE_SERIALIZERS,
 				AetherDungeonTypes.DUNGEON_TYPES
 		};

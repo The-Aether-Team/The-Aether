@@ -276,6 +276,10 @@
   "entity.aether.hammer_projectile": "Hammer Projectile",
 
 
+  "_comment": "Effects",
+  "effect.aether.inebriation": "Inebriation",
+
+
   "_comment": "Containers",
   "container.aether.book_of_lore": "Book of Lore",
   "container.aether.altar": "Altar",

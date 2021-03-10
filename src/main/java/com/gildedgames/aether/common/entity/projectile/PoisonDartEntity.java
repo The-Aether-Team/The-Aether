@@ -2,7 +2,7 @@ package com.gildedgames.aether.common.entity.projectile;
 
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.common.registry.AetherPotionEffects;
+import com.gildedgames.aether.common.registry.AetherEffects;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -31,7 +31,7 @@ public class PoisonDartEntity extends AbstractDartEntity
         super.doPostHurtEffects(living);
 
         if (!level.isClientSide) {
-            living.addEffect(new EffectInstance(AetherPotionEffects.INEBRIATION.get(), 500, 0, false, false));
+            living.addEffect(new EffectInstance(AetherEffects.INEBRIATION.get(), 500, 0, false, false));
         }
     }
 

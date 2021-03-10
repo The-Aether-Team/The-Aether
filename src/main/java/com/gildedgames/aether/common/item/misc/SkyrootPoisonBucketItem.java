@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.item.misc;
 
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.common.registry.AetherPotionEffects;
+import com.gildedgames.aether.common.registry.AetherEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -13,8 +13,6 @@ import net.minecraft.util.DrinkHelper;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
-
 public class SkyrootPoisonBucketItem extends Item {
     public SkyrootPoisonBucketItem(Properties properties) {
         super(properties);
@@ -22,7 +20,7 @@ public class SkyrootPoisonBucketItem extends Item {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-        if (!worldIn.isClientSide) entityLiving.addEffect(new EffectInstance(AetherPotionEffects.INEBRIATION.get(), 500, 0, false, false));
+        if (!worldIn.isClientSide) entityLiving.addEffect(new EffectInstance(AetherEffects.INEBRIATION.get(), 500, 0, false, false));
         if (entityLiving instanceof PlayerEntity && !((PlayerEntity)entityLiving).abilities.instabuild) {
             stack.shrink(1);
         }

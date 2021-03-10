@@ -2,7 +2,11 @@ package com.gildedgames.aether.common.effect;
 
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.particles.ItemParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 import net.minecraft.util.DamageSource;
@@ -10,65 +14,43 @@ import net.minecraft.util.DamageSource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InebriationEffect extends Effect {
-    private int duration;
+public class InebriationEffect extends Effect
+{
+    private int effectDuration;
 
-    public double rotD, motD;
+    private double rotationDirection, motionDirection;
 
-    public InebriationEffect(EffectType typeIn, int liquidColorIn) {
-        super(typeIn, liquidColorIn);
+    public InebriationEffect() {
+        super(EffectType.HARMFUL, 5319035);
     }
 
     @Override
     public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
-        this.distractEntity(entityLivingBaseIn);
-
-        if (this.duration % 50 == 0) {
+        if (this.effectDuration % 50 == 0) {
             entityLivingBaseIn.hurt(new DamageSource("inebriation").bypassArmor(), 1.0F);
         }
-
-        /*if (entityLivingBaseIn instanceof PlayerEntity)
-        {
-            if (this.duration >= 500)
-            {
-                PlayerEntity player = (PlayerEntity) entityLivingBaseIn;
-                IAetherPlayer iPlayerAether = AetherAPI.getInstance().get(player);
-
-                if (iPlayerAether != null)
-                {
-                    AetherPlayer playerAether = (AetherPlayer) iPlayerAether;
-
-                    if (!player.world.isRemote)
-                    {
-                        playerAether.setPoisoned();
-                        AetherNetworkingManager.sendToAll(new PacketSendPoison(player));
-                    }
-                }
-            }
-        }*/
+        this.distractEntity(entityLivingBaseIn);
     }
 
-    public void distractEntity(LivingEntity entityLivingBaseIn) {
+    private void distractEntity(LivingEntity entityLivingBaseIn) {
         double gaussian = entityLivingBaseIn.level.random.nextGaussian();
         double newMotD = 0.1D * gaussian;
         double newRotD = (Math.PI / 4D) * gaussian;
 
-        this.motD = 0.2D * newMotD + (0.8D) * this.motD;
+        this.motionDirection = 0.2D * newMotD + (0.8D) * this.motionDirection;
 
-        entityLivingBaseIn.setDeltaMovement(entityLivingBaseIn.getDeltaMovement().add(this.motD, 0, this.motD));
-        this.rotD = 0.125D * newRotD + (1.0D - 0.125D) * this.rotD;
+        entityLivingBaseIn.setDeltaMovement(entityLivingBaseIn.getDeltaMovement().add(this.motionDirection, 0, this.motionDirection));
+        this.rotationDirection = 0.125D * newRotD + (1.0D - 0.125D) * this.rotationDirection;
 
-        entityLivingBaseIn.yRot = (float)((double)entityLivingBaseIn.yRot + rotD);
-        entityLivingBaseIn.xRot = (float)((double)entityLivingBaseIn.xRot + rotD);
-        
-        /*if (entityLivingBaseIn.world instanceof ServerWorld) {
-            ((ServerWorld)entityLivingBaseIn.world).spawnParticle(ParticleTypes.ITEM, entityLivingBaseIn.getPosX(), entityLivingBaseIn.getBoundingBox().minY + entityLivingBaseIn.getHeight() * 0.8D, entityLivingBaseIn.getPosZ(), 2, 0.0D, 1, 0.0D, 0.0625D, 0.0D, 1);
-        }*/
+        entityLivingBaseIn.yRot = (float)((double)entityLivingBaseIn.yRot + rotationDirection);
+        entityLivingBaseIn.xRot = (float)((double)entityLivingBaseIn.xRot + rotationDirection);
+
+        entityLivingBaseIn.level.addParticle(new ItemParticleData(ParticleTypes.ITEM, Items.RED_DYE.getDefaultInstance()), entityLivingBaseIn.getX(), entityLivingBaseIn.getY() + entityLivingBaseIn.getBbHeight() * 0.8, entityLivingBaseIn.getZ(), 0.0, 0.0, 0.0);
     }
 
     @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
-        this.duration = duration;
+        this.effectDuration = duration;
         return true;
     }
 
@@ -79,8 +61,9 @@ public class InebriationEffect extends Effect {
 
     @Override
     public List<ItemStack> getCurativeItems() {
-        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
-        ret.add(new ItemStack(AetherItems.SKYROOT_REMEDY_BUCKET.get()));
-        return ret;
+        ArrayList<ItemStack> curatives = new ArrayList<>();
+        curatives.add(new ItemStack(AetherItems.SKYROOT_REMEDY_BUCKET.get()));
+        curatives.add(new ItemStack(AetherItems.WHITE_APPLE.get()));
+        return curatives;
     }
 }
