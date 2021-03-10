@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(WorldRenderer.class)
 public abstract class WorldRendererMixin {
     
-    @Shadow private ClientWorld world;
+    @Shadow private ClientWorld level;
 
     /**
      * {@link net.minecraft.client.renderer.WorldRenderer#renderSky(MatrixStack, float)}
@@ -25,7 +25,7 @@ public abstract class WorldRendererMixin {
             ordinal = 0
     )
     private double onRenderSky(double d0) {
-        if(world.dimension() == AetherDimensions.AETHER_WORLD) {
+        if(level.dimension() == AetherDimensions.AETHER_WORLD) {
             return 1.0D;
         }
         return d0;

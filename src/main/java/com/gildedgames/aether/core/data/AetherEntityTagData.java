@@ -52,7 +52,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 .add(AetherEntityTypes.HAMMER_PROJECTILE.get());
     }
 
-    private TagsProvider.Builder<EntityType<?>> tag(ITag.INamedTag<EntityType<?>> tag) {
-        return this.tag(tag);
+    protected TagsProvider.Builder<EntityType<?>> tag(ITag.INamedTag<EntityType<?>> tag) {
+        return super.tag(tag);
     }
 }

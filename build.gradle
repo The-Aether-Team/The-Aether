@@ -25,7 +25,7 @@ version = project.mc_version + '-v' +project.aether_version
 group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'aether'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
 minecraft {
     mappings channel: 'official', version: project.mappings

@@ -193,7 +193,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.ZANITE_BLOCK.get().asItem());
     }
 
-    private TagsProvider.Builder<Item> tag(ITag.INamedTag<Item> tag) {
-        return this.tag(tag);
+    protected TagsProvider.Builder<Item> tag(ITag.INamedTag<Item> tag) {
+        return super.tag(tag);
     }
 }
