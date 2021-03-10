@@ -15,9 +15,9 @@ public class HolidayLeavesParticle extends PortalParticle
 	protected HolidayLeavesParticle(ClientWorld worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
 
-		this.particleRed = 1.0F;
-		this.particleGreen = 1.0F;
-		this.particleBlue = 1.0F;
+		this.rCol = 1.0F;
+		this.gCol = 1.0F;
+		this.bCol = 1.0F;
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -30,9 +30,9 @@ public class HolidayLeavesParticle extends PortalParticle
 		}
 
 		@Override
-		public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+		public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 			HolidayLeavesParticle leavesParticle = new HolidayLeavesParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
-			leavesParticle.selectSpriteRandomly(this.spriteSet);
+			leavesParticle.pickSprite(this.spriteSet);
 			return leavesParticle;
 		}
 	}

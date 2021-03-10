@@ -28,23 +28,23 @@ public class EatAetherGrassGoal extends Goal {
 
     public EatAetherGrassGoal(MobEntity grassEaterEntityIn) {
         this.grassEaterEntity = grassEaterEntityIn;
-        this.entityWorld = grassEaterEntityIn.world;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
+        this.entityWorld = grassEaterEntityIn.level;
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
     }
 
     /**
      * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
      * method as well.
      */
-    public boolean shouldExecute() {
-        if (this.grassEaterEntity.getRNG().nextInt(this.grassEaterEntity.isChild() ? 50 : 1000) != 0) {
+    public boolean canUse() {
+        if (this.grassEaterEntity.getRandom().nextInt(this.grassEaterEntity.isBaby() ? 50 : 1000) != 0) {
             return false;
         } else {
-            BlockPos blockpos = new BlockPos(this.grassEaterEntity.getPosition());
+            BlockPos blockpos = new BlockPos(this.grassEaterEntity.blockPosition());
             if (IS_GRASS.test(this.entityWorld.getBlockState(blockpos))) {
                 return true;
             } else {
-                return this.entityWorld.getBlockState(blockpos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get();
+                return this.entityWorld.getBlockState(blockpos.below()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get();
             }
         }
     }
@@ -52,23 +52,23 @@ public class EatAetherGrassGoal extends Goal {
     /**
      * Execute a one shot task or start executing a continuous task
      */
-    public void startExecuting() {
+    public void start() {
         this.eatingGrassTimer = 40;
-        this.entityWorld.setEntityState(this.grassEaterEntity, (byte)10);
-        this.grassEaterEntity.getNavigator().clearPath();
+        this.entityWorld.broadcastEntityEvent(this.grassEaterEntity, (byte)10);
+        this.grassEaterEntity.getNavigation().stop();
     }
 
     /**
      * Reset the task's internal state. Called when this task is interrupted by another one
      */
-    public void resetTask() {
+    public void stop() {
         this.eatingGrassTimer = 0;
     }
 
     /**
      * Returns whether an in-progress EntityAIBase should continue executing
      */
-    public boolean shouldContinueExecuting() {
+    public boolean canContinueToUse() {
         return this.eatingGrassTimer > 0;
     }
 
@@ -85,22 +85,22 @@ public class EatAetherGrassGoal extends Goal {
     public void tick() {
         this.eatingGrassTimer = Math.max(0, this.eatingGrassTimer - 1);
         if (this.eatingGrassTimer == 4) {
-            BlockPos blockpos = new BlockPos(this.grassEaterEntity.getPosition());
+            BlockPos blockpos = new BlockPos(this.grassEaterEntity.blockPosition());
             if (IS_GRASS.test(this.entityWorld.getBlockState(blockpos))) {
                 if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.entityWorld, this.grassEaterEntity)) {
                     this.entityWorld.destroyBlock(blockpos, false);
                 }
 
-                this.grassEaterEntity.eatGrassBonus();
+                this.grassEaterEntity.ate();
             } else {
-                BlockPos blockpos1 = blockpos.down();
+                BlockPos blockpos1 = blockpos.below();
                 if (this.entityWorld.getBlockState(blockpos1).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get()) {
                     if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.entityWorld, this.grassEaterEntity)) {
-                        this.entityWorld.playEvent(2001, blockpos1, Block.getStateId(AetherBlocks.AETHER_GRASS_BLOCK.get().getDefaultState()));
-                        this.entityWorld.setBlockState(blockpos1, AetherBlocks.AETHER_DIRT.get().getDefaultState(), 2);
+                        this.entityWorld.levelEvent(2001, blockpos1, Block.getId(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState()));
+                        this.entityWorld.setBlock(blockpos1, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), 2);
                     }
 
-                    this.grassEaterEntity.eatGrassBonus();
+                    this.grassEaterEntity.ate();
                 }
             }
 

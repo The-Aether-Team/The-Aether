@@ -34,7 +34,7 @@ import java.util.Set;
  */
 public class PhoenixArrowEntity extends AbstractArrowEntity
 {
-    private static final DataParameter<Integer> COLOR = EntityDataManager.createKey(PhoenixArrowEntity.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> COLOR = EntityDataManager.defineId(PhoenixArrowEntity.class, DataSerializers.INT);
     private Potion potion = Potions.EMPTY;
     private final Set<EffectInstance> customPotionEffects = Sets.newHashSet();
     private boolean fixedColor;
@@ -52,20 +52,20 @@ public class PhoenixArrowEntity extends AbstractArrowEntity
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    protected void registerData() {
-        super.registerData();
-        this.dataManager.register(COLOR, -1);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(COLOR, -1);
     }
 
     public void setPotionEffect(ItemStack stack) {
         if (stack.getItem() == Items.TIPPED_ARROW) {
-            this.potion = PotionUtils.getPotionFromItem(stack);
-            Collection<EffectInstance> collection = PotionUtils.getFullEffectsFromItem(stack);
+            this.potion = PotionUtils.getPotion(stack);
+            Collection<EffectInstance> collection = PotionUtils.getCustomEffects(stack);
             if (!collection.isEmpty()) {
                 for(EffectInstance effectinstance : collection) {
                     this.customPotionEffects.add(new EffectInstance(effectinstance));
@@ -91,9 +91,9 @@ public class PhoenixArrowEntity extends AbstractArrowEntity
     private void refreshColor() {
         this.fixedColor = false;
         if (this.potion == Potions.EMPTY && this.customPotionEffects.isEmpty()) {
-            this.dataManager.set(COLOR, -1);
+            this.entityData.set(COLOR, -1);
         } else {
-            this.dataManager.set(COLOR, PotionUtils.getPotionColorFromEffectList(PotionUtils.mergeEffects(this.potion, this.customPotionEffects)));
+            this.entityData.set(COLOR, PotionUtils.getColor(PotionUtils.getAllEffects(this.potion, this.customPotionEffects)));
         }
 
     }
@@ -101,36 +101,36 @@ public class PhoenixArrowEntity extends AbstractArrowEntity
     @Override
     public void tick() {
         super.tick();
-        if (this.world.isRemote) {
+        if (this.level.isClientSide) {
             if (this.inGround) {
-                if (this.timeInGround % 5 == 0) {
+                if (this.inGroundTime % 5 == 0) {
                     this.spawnPotionParticles(1);
                 }
             }
             else {
                 this.spawnPotionParticles(2);
             }
-        } else if (this.inGround && this.timeInGround != 0 && !this.customPotionEffects.isEmpty() && this.timeInGround >= 600) {
-            this.world.setEntityState(this, (byte)0);
+        } else if (this.inGround && this.inGroundTime != 0 && !this.customPotionEffects.isEmpty() && this.inGroundTime >= 600) {
+            this.level.broadcastEntityEvent(this, (byte)0);
             this.potion = Potions.EMPTY;
             this.customPotionEffects.clear();
-            this.dataManager.set(COLOR, -1);
+            this.entityData.set(COLOR, -1);
         }
     }
 
     private void spawnPotionParticles(int particleCount) {
         for (int j = 0; j < particleCount; ++j) {
-            this.world.addParticle(ParticleTypes.FLAME, this.getPosX() + (this.rand.nextGaussian() / 5.0), this.getPosY() + (this.rand.nextGaussian() / 5.0), this.getPosZ() + (this.rand.nextGaussian() / 3.0), 0.0, 0.0, 0.0);
+            this.level.addParticle(ParticleTypes.FLAME, this.getX() + (this.random.nextGaussian() / 5.0), this.getY() + (this.random.nextGaussian() / 5.0), this.getZ() + (this.random.nextGaussian() / 3.0), 0.0, 0.0, 0.0);
         }
     }
 
     public int getColor() {
-        return this.dataManager.get(COLOR);
+        return this.entityData.get(COLOR);
     }
 
     private void setFixedColor(int p_191507_1_) {
         this.fixedColor = true;
-        this.dataManager.set(COLOR, p_191507_1_);
+        this.entityData.set(COLOR, p_191507_1_);
     }
 
     public void addEffect(EffectInstance effect) {
@@ -138,13 +138,13 @@ public class PhoenixArrowEntity extends AbstractArrowEntity
     }
 
     @Override
-    protected ItemStack getArrowStack() {
+    protected ItemStack getPickupItem() {
         if (this.customPotionEffects.isEmpty() && this.potion == Potions.EMPTY) {
             return new ItemStack(Items.ARROW);
         } else {
             ItemStack itemstack = new ItemStack(Items.TIPPED_ARROW);
-            PotionUtils.addPotionToItemStack(itemstack, this.potion);
-            PotionUtils.appendEffects(itemstack, this.customPotionEffects);
+            PotionUtils.setPotion(itemstack, this.potion);
+            PotionUtils.setCustomEffects(itemstack, this.customPotionEffects);
             if (this.fixedColor) {
                 itemstack.getOrCreateTag().putInt("CustomPotionColor", this.getColor());
             }
@@ -153,8 +153,8 @@ public class PhoenixArrowEntity extends AbstractArrowEntity
         }
     }
 
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
+    public void addAdditionalSaveData(CompoundNBT compound) {
+        super.addAdditionalSaveData(compound);
         if (this.potion != Potions.EMPTY && this.potion != null) {
             compound.putString("Potion", Registry.POTION.getKey(this.potion).toString());
         }
@@ -167,7 +167,7 @@ public class PhoenixArrowEntity extends AbstractArrowEntity
             ListNBT listnbt = new ListNBT();
 
             for(EffectInstance effectinstance : this.customPotionEffects) {
-                listnbt.add(effectinstance.write(new CompoundNBT()));
+                listnbt.add(effectinstance.save(new CompoundNBT()));
             }
 
             compound.put("CustomPotionEffects", listnbt);
@@ -175,13 +175,13 @@ public class PhoenixArrowEntity extends AbstractArrowEntity
 
     }
 
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
+    public void readAdditionalSaveData(CompoundNBT compound) {
+        super.readAdditionalSaveData(compound);
         if (compound.contains("Potion", 8)) {
-            this.potion = PotionUtils.getPotionTypeFromNBT(compound);
+            this.potion = PotionUtils.getPotion(compound);
         }
 
-        for(EffectInstance effectinstance : PotionUtils.getFullEffectsFromTag(compound)) {
+        for(EffectInstance effectinstance : PotionUtils.getCustomEffects(compound)) {
             this.addEffect(effectinstance);
         }
 
@@ -194,26 +194,26 @@ public class PhoenixArrowEntity extends AbstractArrowEntity
     }
 
     @Override
-    protected void arrowHit(LivingEntity entity) {
+    protected void doPostHurtEffects(LivingEntity entity) {
         for(EffectInstance effectInstance : this.potion.getEffects()) {
-            entity.addPotionEffect(new EffectInstance(effectInstance.getPotion(), Math.max(effectInstance.getDuration() / 8, 1), effectInstance.getAmplifier(), effectInstance.isAmbient(), effectInstance.doesShowParticles()));
+            entity.addEffect(new EffectInstance(effectInstance.getEffect(), Math.max(effectInstance.getDuration() / 8, 1), effectInstance.getAmplifier(), effectInstance.isAmbient(), effectInstance.isVisible()));
         }
 
         if (!this.customPotionEffects.isEmpty()) {
             for(EffectInstance effectInstance : this.customPotionEffects) {
-                entity.addPotionEffect(effectInstance);
+                entity.addEffect(effectInstance);
             }
         }
         if (!(entity instanceof EndermanEntity)) {
-            entity.setFire(5);
-            if (this.isBurning()) {
-                entity.setFire(10);
+            entity.setSecondsOnFire(5);
+            if (this.isOnFire()) {
+                entity.setSecondsOnFire(10);
             }
         }
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void handleStatusUpdate(byte id) {
+    public void handleEntityEvent(byte id) {
         if (id == 0) {
             int i = this.getColor();
             if (i != -1) {
@@ -222,11 +222,11 @@ public class PhoenixArrowEntity extends AbstractArrowEntity
                 double d2 = (double)(i >> 0 & 255) / 255.0D;
 
                 for(int j = 0; j < 20; ++j) {
-                    this.world.addParticle(ParticleTypes.ENTITY_EFFECT, this.getPosXRandom(0.5D), this.getPosYRandom(), this.getPosZRandom(0.5D), d0, d1, d2);
+                    this.level.addParticle(ParticleTypes.ENTITY_EFFECT, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), d0, d1, d2);
                 }
             }
         } else {
-            super.handleStatusUpdate(id);
+            super.handleEntityEvent(id);
         }
 
     }

@@ -21,18 +21,18 @@ public abstract class AetherAnimalEntity extends AnimalEntity {
 	}
 	
 	@Override
-	public float getBlockPathWeight(BlockPos pos, IWorldReader worldIn) {
-		return worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get() ? 10.0F : worldIn.getLight(pos) - 0.5F;
+	public float getWalkTargetValue(BlockPos pos, IWorldReader worldIn) {
+		return worldIn.getBlockState(pos.below()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get() ? 10.0F : worldIn.getMaxLocalRawBrightness(pos) - 0.5F;
 	}
 	
 	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return stack.getItem() == AetherItems.BLUE_BERRY.get();
 	}
 
 	//Copied from AnimalEntity, changed to check for Aether grass.
 	public static boolean canAetherAnimalSpawn(EntityType<? extends AetherAnimalEntity> animal, IWorld worldIn, SpawnReason reason, BlockPos pos, Random random) {
-		return worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get() && worldIn.getLightSubtracted(pos, 0) > 8;
+		return worldIn.getBlockState(pos.below()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get() && worldIn.getRawBrightness(pos, 0) > 8;
 	}
 
 }

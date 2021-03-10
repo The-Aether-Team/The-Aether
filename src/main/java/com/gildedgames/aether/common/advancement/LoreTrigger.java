@@ -19,13 +19,13 @@ public class LoreTrigger extends AbstractCriterionTrigger<LoreTrigger.Instance>
     }
 
     @Override
-    public LoreTrigger.Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
-        ItemPredicate itemPredicate = ItemPredicate.deserialize(json.get("item"));
+    public LoreTrigger.Instance createInstance(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+        ItemPredicate itemPredicate = ItemPredicate.fromJson(json.get("item"));
         return new LoreTrigger.Instance(entityPredicate, itemPredicate);
     }
 
     public void trigger(ServerPlayerEntity player, ItemStack stack) {
-        this.triggerListeners(player, (instance) -> instance.test(stack));
+        this.trigger(player, (instance) -> instance.test(stack));
     }
 
     public static class Instance extends CriterionInstance
@@ -38,22 +38,22 @@ public class LoreTrigger extends AbstractCriterionTrigger<LoreTrigger.Instance>
         }
 
         public static LoreTrigger.Instance forItem(ItemPredicate itemConditions) {
-            return new LoreTrigger.Instance(EntityPredicate.AndPredicate.ANY_AND, itemConditions);
+            return new LoreTrigger.Instance(EntityPredicate.AndPredicate.ANY, itemConditions);
         }
 
         public static LoreTrigger.Instance forItem(IItemProvider item) {
-            ItemPredicate predicate = new ItemPredicate(null, item.asItem(), MinMaxBounds.IntBound.UNBOUNDED, MinMaxBounds.IntBound.UNBOUNDED, EnchantmentPredicate.enchantments, EnchantmentPredicate.enchantments, null, NBTPredicate.ANY);
+            ItemPredicate predicate = new ItemPredicate(null, item.asItem(), MinMaxBounds.IntBound.ANY, MinMaxBounds.IntBound.ANY, EnchantmentPredicate.NONE, EnchantmentPredicate.NONE, null, NBTPredicate.ANY);
             return forItem(predicate);
         }
 
         public boolean test(ItemStack stack) {
-            return this.item.test(stack);
+            return this.item.matches(stack);
         }
 
         @Override
-        public JsonObject serialize(ConditionArraySerializer conditions) {
-            JsonObject jsonobject = super.serialize(conditions);
-            jsonobject.add("item", this.item.serialize());
+        public JsonObject serializeToJson(ConditionArraySerializer conditions) {
+            JsonObject jsonobject = super.serializeToJson(conditions);
+            jsonobject.add("item", this.item.serializeToJson());
             return jsonobject;
         }
     }

@@ -17,52 +17,52 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 
 public abstract class SaddleableEntity extends MountableEntity {
-	public static final DataParameter<Boolean> SADDLE = EntityDataManager.createKey(SaddleableEntity.class, DataSerializers.BOOLEAN);
+	public static final DataParameter<Boolean> SADDLE = EntityDataManager.defineId(SaddleableEntity.class, DataSerializers.BOOLEAN);
 	
 	protected SaddleableEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		this.dataManager.register(SADDLE, false);
+		this.entityData.define(SADDLE, false);
 	}
 	
 	public boolean isSaddled() {
-		return this.dataManager.get(SADDLE);
+		return this.entityData.get(SADDLE);
 	}
 	
 	public void setSaddled(boolean isSaddled) {
-		this.dataManager.set(SADDLE, isSaddled);
+		this.entityData.set(SADDLE, isSaddled);
 	}
 	
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source.getImmediateSource() instanceof PlayerEntity && !this.getPassengers().isEmpty() && this.getPassengers().get(0) == source.getImmediateSource()) {
+	public boolean hurt(DamageSource source, float amount) {
+		if (source.getDirectEntity() instanceof PlayerEntity && !this.getPassengers().isEmpty() && this.getPassengers().get(0) == source.getDirectEntity()) {
 			return false;
 		}
 		
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 	
 	@Override
-	public boolean canBeSteered() {
+	public boolean canBeControlledByRider() {
 		return true;
 	}
 	
 	@Override
-	protected boolean canTriggerWalking() {
+	protected boolean isMovementNoisy() {
 		return this.onGround;
 	}
 	
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 		
-		if (!this.world.isRemote && this.isSaddled()) {
-			this.entityDropItem(Items.SADDLE);
+		if (!this.level.isClientSide && this.isSaddled()) {
+			this.spawnAtLocation(Items.SADDLE);
 		}
 	}
 	
@@ -71,62 +71,62 @@ public abstract class SaddleableEntity extends MountableEntity {
 	}
 	
 	@Override
-	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) { //idk what to do here
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) { //idk what to do here
 		LogManager.getLogger(this.getClass()).debug("SaddleableEntity processInteract");
 		if (!this.canBeSaddled()) {
 			LogManager.getLogger(this.getClass()).debug("Couldn't be saddled");
-			return super.func_230254_b_(player, hand);
+			return super.mobInteract(player, hand);
 		}
 		
-		ItemStack heldItem = player.getHeldItem(hand);
+		ItemStack heldItem = player.getItemInHand(hand);
 		if (!this.isSaddled()) {
-			if (heldItem.getItem() == Items.SADDLE && !this.isChild()) {
+			if (heldItem.getItem() == Items.SADDLE && !this.isBaby()) {
 				if (!player.isCreative()) {
 					heldItem.shrink(1);
 				}
 				
-				if (player.world.isRemote) {
-					player.world.playSound(player, player.getPosition(), SoundEvents.ENTITY_PIG_SADDLE, SoundCategory.AMBIENT, 1.0F, 1.0F);
+				if (player.level.isClientSide) {
+					player.level.playSound(player, player.blockPosition(), SoundEvents.PIG_SADDLE, SoundCategory.AMBIENT, 1.0F, 1.0F);
 				}
 				
 				this.setSaddled(true);
 				
-				return super.func_230254_b_(player, hand);
+				return super.mobInteract(player, hand);
 			}
 		}
 		else {
 			LogManager.getLogger(this.getClass()).debug("Not Saddled");
-			if (!this.isBeingRidden() && this.getRidingEntity() == null) {
+			if (!this.isVehicle() && this.getVehicle() == null) {
 				LogManager.getLogger(this.getClass()).debug("Try riding entity");
-				if (!player.world.isRemote) {
+				if (!player.level.isClientSide) {
 					player.startRiding(this);
-					player.prevRotationYaw = player.rotationYaw = this.rotationYaw;
+					player.yRotO = player.yRot = this.yRot;
 				}
 				
-				return super.func_230254_b_(player, hand);
+				return super.mobInteract(player, hand);
 			}
 		}
 		
-		return super.func_230254_b_(player, hand);
+		return super.mobInteract(player, hand);
 	}
 	
 	@Override
-	public boolean isEntityInsideOpaqueBlock() {
+	public boolean isInWall() {
 		if (!this.getPassengers().isEmpty()) {
 			return false;
 		}
-		return super.isEntityInsideOpaqueBlock();
+		return super.isInWall();
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		this.setSaddled(compound.getBoolean("Saddled"));
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("Saddled", this.isSaddled());
 	}
 	
@@ -141,9 +141,9 @@ public abstract class SaddleableEntity extends MountableEntity {
 	}
 	
 	@Override
-	public void setJumpPower(int jumpPowerIn) {
+	public void onPlayerJump(int jumpPowerIn) {
 		if (this.isSaddled()) {
-			super.setJumpPower(jumpPowerIn);
+			super.onPlayerJump(jumpPowerIn);
 		}
 	}
 	

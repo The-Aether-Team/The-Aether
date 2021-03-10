@@ -20,9 +20,9 @@ public class LoreBookContainer extends Container
 
     public LoreBookContainer(int id, PlayerInventory playerInventory, IInventory bookInventory) {
         super(AetherContainerTypes.BOOK_OF_LORE.get(), id);
-        assertInventorySize(bookInventory, 1);
+        checkContainerSize(bookInventory, 1);
         this.bookInventory = bookInventory;
-        bookInventory.openInventory(playerInventory.player);
+        bookInventory.startOpen(playerInventory.player);
 
         this.addSlot(new Slot(bookInventory, 0, 83, 63));
 
@@ -42,29 +42,29 @@ public class LoreBookContainer extends Container
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return this.bookInventory.isUsableByPlayer(playerIn);
+    public boolean stillValid(PlayerEntity playerIn) {
+        return this.bookInventory.stillValid(playerIn);
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack1 = slot.getStack();
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
             if (index < 1) {
-                if (!this.mergeItemStack(itemstack1, 1, 37, true)) {
+                if (!this.moveItemStackTo(itemstack1, 1, 37, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+            } else if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
                 return ItemStack.EMPTY;
             }
 
             if (itemstack1.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
 
             if (itemstack1.getCount() == itemstack.getCount()) {
@@ -78,15 +78,15 @@ public class LoreBookContainer extends Container
     }
 
     @Override
-    public void onContainerClosed(PlayerEntity playerIn) {
-        playerIn.dropItem(this.bookInventory.getStackInSlot(0), false);
-        super.onContainerClosed(playerIn);
-        this.bookInventory.closeInventory(playerIn);
+    public void removed(PlayerEntity playerIn) {
+        playerIn.drop(this.bookInventory.getItem(0), false);
+        super.removed(playerIn);
+        this.bookInventory.stopOpen(playerIn);
     }
 
     @OnlyIn(Dist.CLIENT)
     public String getLoreEntryKey(ItemStack stack) {
-        return "lore." + stack.getItem().getRegistryName().getNamespace() + "." + stack.getTranslationKey()
+        return "lore." + stack.getItem().getRegistryName().getNamespace() + "." + stack.getDescriptionId()
                 .replace(stack.getItem().getRegistryName().getNamespace() + ".", "")
                 .replace("item.", "")
                 .replace("block.", "")

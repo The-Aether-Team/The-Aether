@@ -103,7 +103,7 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider
         ModelFile grass = cubeBottomTop(name(block), extend(texture(name(block), "natural/"), "_side"), texture(name(dirtBlock), "natural/"), extend(texture(name(block), "natural/"), "_top"));
         ModelFile grassSnowed = cubeBottomTop(name(block) + "_snow", extend(texture(name(block), "natural/"), "_snow"), texture(name(dirtBlock), "natural/"), extend(texture(name(block), "natural/"), "_top"));
         getVariantBuilder(block.get()).forAllStatesExcept(state -> {
-            Boolean snowy = state.get(SnowyDirtBlock.SNOWY);
+            Boolean snowy = state.getValue(SnowyDirtBlock.SNOWY);
             return ConfiguredModel.allYRotations(snowy ? grassSnowed : grass, 0, false);
         }, AetherBlockStateProperties.DOUBLE_DROPS);
     }
@@ -112,7 +112,7 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider
         ModelFile grass = cubeBottomTop(name(block), extend(texture(name(block), "natural/"), "_side"), texture(name(dirtBlock), "natural/"), extend(texture(name(block), "natural/"), "_top"));
         ModelFile grassSnowed = cubeBottomTop(name(grassBlock) + "_snow", extend(texture(name(grassBlock), "natural/"), "_snow"), texture(name(dirtBlock), "natural/"), extend(texture(name(block), "natural/"), "_top"));
         getVariantBuilder(block.get()).forAllStatesExcept(state -> {
-            Boolean snowy = state.get(SnowyDirtBlock.SNOWY);
+            Boolean snowy = state.getValue(SnowyDirtBlock.SNOWY);
             return ConfiguredModel.allYRotations(snowy ? grassSnowed : grass, 0, false);
         }, AetherBlockStateProperties.DOUBLE_DROPS);
     }
@@ -152,7 +152,7 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider
         getVariantBuilder(wall.get()).forAllStates(state ->
                 ConfiguredModel.builder()
                         .modelFile(torchwall)
-                        .rotationY(((int) state.get(BlockStateProperties.HORIZONTAL_FACING).getHorizontalAngle() + 90) % 360)
+                        .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)
                         .build());
     }
 
@@ -196,11 +196,11 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider
         ModelFile head = models().cubeAll(name(block) + "_head", texture(name(dummyBlock), "construction/"));
         ModelFile foot = models().cubeAll(name(block) + "_foot", texture(name(dummyBlock), "construction/"));
         getVariantBuilder(block.get()).forAllStatesExcept(state -> {
-            Direction dir = state.get(BlockStateProperties.HORIZONTAL_FACING);
-            BedPart part = state.get(BlockStateProperties.BED_PART);
+            Direction dir = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            BedPart part = state.getValue(BlockStateProperties.BED_PART);
             return ConfiguredModel.builder()
                     .modelFile(part == BedPart.HEAD ? head : foot)
-                    .rotationY((((int) dir.getHorizontalAngle()) + 180) % 360)
+                    .rotationY((((int) dir.toYRot()) + 180) % 360)
                     .build();
         }, BedBlock.OCCUPIED);
     }

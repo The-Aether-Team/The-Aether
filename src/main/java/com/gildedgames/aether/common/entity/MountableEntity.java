@@ -17,7 +17,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public abstract class MountableEntity extends AetherAnimalEntity implements IJumpingMount {
-	public static final DataParameter<Boolean> RIDER_SNEAKING = EntityDataManager.createKey(MountableEntity.class, DataSerializers.BOOLEAN);
+	public static final DataParameter<Boolean> RIDER_SNEAKING = EntityDataManager.defineId(MountableEntity.class, DataSerializers.BOOLEAN);
 	
 	protected float jumpPower;
 	protected boolean mountJumping;
@@ -29,10 +29,10 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		this.dataManager.register(RIDER_SNEAKING, false);
+		this.entityData.define(RIDER_SNEAKING, false);
 	}
 	
 	@Override
@@ -41,21 +41,21 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 	}
 	
 	@Override
-	protected boolean canBeRidden(Entity entityIn) {
+	protected boolean canRide(Entity entityIn) {
 		return true;
 	}
 	
 	@Override
-	public boolean canBeRiddenInWater() {
+	public boolean rideableUnderWater() {
 		return true;
 	}
 	
 	public boolean isRiderSneaking() {
-		return this.dataManager.get(RIDER_SNEAKING);
+		return this.entityData.get(RIDER_SNEAKING);
 	}
 	
 	public void setRiderSneaking(boolean isRiderSneaking) {
-		this.dataManager.set(RIDER_SNEAKING, isRiderSneaking);
+		this.entityData.set(RIDER_SNEAKING, isRiderSneaking);
 	}
 	
 	public boolean isMountJumping() {
@@ -73,23 +73,23 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 	}
 	
 	public void riderTick() {
-		if (this.world.isRemote) {
+		if (this.level.isClientSide) {
 			return;
 		}
 		
-		if (this.isBeingRidden() && this.getRidingEntity() != null) {
+		if (this.isVehicle() && this.getVehicle() != null) {
 			Entity passenger = this.getPassengers().get(0);
 			
-			if (passenger.isSneaking()) {
+			if (passenger.isShiftKeyDown()) {
 				if (this.onGround) {
-					passenger.setSneaking(false);
+					passenger.setShiftKeyDown(false);
 					passenger.stopRiding();
 					
 					return;
 				}
 				
 				this.setRiderSneaking(true);
-				passenger.setSneaking(false);
+				passenger.setShiftKeyDown(false);
 			}
 			else {
 				this.setRiderSneaking(false);
@@ -107,14 +107,14 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 		if (optionalEntity.isPresent()) {
 			PlayerEntity player = optionalEntity.get();
 			
-			this.prevRotationYaw = this.rotationYaw = player.rotationYaw;
-			this.prevRotationPitch = this.rotationPitch = player.rotationPitch;
+			this.yRotO = this.yRot = player.yRot;
+			this.xRotO = this.xRot = player.xRot;
 			
-			this.rotationYawHead = player.rotationYawHead;
+			this.yHeadRot = player.yHeadRot;
 			
-			float strafe = player.moveStrafing;
-			float vertical = player.moveVertical;
-			float forward = player.moveForward;
+			float strafe = player.xxa;
+			float vertical = player.yya;
+			float forward = player.zza;
 			
 			if (forward < 0.0F) {
 				forward *= 0.25F;
@@ -123,14 +123,14 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 			float f;
 			
 			{
-				double d1 = player.getPosX() - this.getPosX();
-				double d2 = player.getPosZ() - this.getPosZ();
+				double d1 = player.getX() - this.getX();
+				double d2 = player.getZ() - this.getZ();
 				
 				f = (float)(MathHelper.atan2(d2, d1) * (180.0 / Math.PI)) - 90.0F;
 			}
 			
-			if (player.moveStrafing != 0.0F && player.world.isRemote) {
-				this.rotationYaw = this.updateRotation(this.rotationYaw, f, 40.0F);
+			if (player.xxa != 0.0F && player.level.isClientSide) {
+				this.yRot = this.updateRotation(this.yRot, f, 40.0F);
 			}
 			
 //			if (AetherAPI.get(player).map(IAetherPlayer::isJumping).orElse(false)) {
@@ -138,27 +138,27 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 //			}
 			
 			if (this.jumpPower > 0.0F && !this.isMountJumping() && (this.onGround || this.canJumpMidAir)) {
-				this.setMotion(this.getMotion().getX(), this.getMountJumpStrength() * this.jumpPower, this.getMotion().getZ());
+				this.setDeltaMovement(this.getDeltaMovement().x(), this.getMountJumpStrength() * this.jumpPower, this.getDeltaMovement().z());
 				
-				if (this.isPotionActive(Effects.JUMP_BOOST)) {
-					this.addVelocity(0.0, 0.1 * (this.getActivePotionEffect(Effects.JUMP_BOOST).getAmplifier() + 1), 0.0);
+				if (this.hasEffect(Effects.JUMP)) {
+					this.push(0.0, 0.1 * (this.getEffect(Effects.JUMP).getAmplifier() + 1), 0.0);
 				}
 				
 				this.setMountJumping(true);
-				this.isAirBorne = true;
+				this.hasImpulse = true;
 				this.jumpPower = 0.0F;
 				
-				if (!this.world.isRemote) {
-					this.move(MoverType.SELF, this.getMotion());
+				if (!this.level.isClientSide) {
+					this.move(MoverType.SELF, this.getDeltaMovement());
 				}
 			}
 			
-			this.setMotion(this.getMotion().getX() * 0.35, this.getMotion().getY(), this.getMotion().getZ() * 0.35F);
+			this.setDeltaMovement(this.getDeltaMovement().x() * 0.35, this.getDeltaMovement().y(), this.getDeltaMovement().z() * 0.35F);
 			
-			this.stepHeight = 1.0F;
+			this.maxUpStep = 1.0F;
 			
-			if (!this.world.isRemote) {
-				this.jumpMovementFactor = this.getAIMoveSpeed() * 0.6F;
+			if (!this.level.isClientSide) {
+				this.flyingSpeed = this.getSpeed() * 0.6F;
 				super.travel(new Vector3d(strafe, vertical, forward));
 			}
 			
@@ -167,21 +167,21 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 				this.setMountJumping(false);
 			}
 			
-			this.prevLimbSwingAmount = this.limbSwingAmount;
-			double d0 = this.getPosX() - this.prevPosX;
-			double d1 = this.getPosZ() - this.prevPosZ;
+			this.animationSpeedOld = this.animationSpeed;
+			double d0 = this.getX() - this.xo;
+			double d1 = this.getZ() - this.zo;
 			float f4 = 4.0F * MathHelper.sqrt(d0 * d0 + d1 * d1);
 			
 			if (f4 > 1.0F) {
 				f4 = 1.0F;
 			}
 			
-			this.limbSwingAmount += (f4 - this.limbSwingAmount) * 0.4F;
-			this.limbSwing += this.limbSwingAmount;
+			this.animationSpeed += (f4 - this.animationSpeed) * 0.4F;
+			this.animationPosition += this.animationSpeed;
 		}
 		else {
-			this.stepHeight = 0.5F;
-			this.jumpMovementFactor = 0.02F;
+			this.maxUpStep = 0.5F;
+			this.flyingSpeed = 0.02F;
 			super.travel(positionIn);
 		}
 		
@@ -200,7 +200,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 	}
 	
 	@Override
-	public void setJumpPower(int jumpPowerIn) {
+	public void onPlayerJump(int jumpPowerIn) {
 		if (jumpPowerIn < 0) {
 			jumpPowerIn = 0;
 		}

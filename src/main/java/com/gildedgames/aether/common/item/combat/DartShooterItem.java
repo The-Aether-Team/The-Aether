@@ -11,6 +11,8 @@ import net.minecraft.world.World;
 
 import java.util.function.Supplier;
 
+import net.minecraft.item.Item.Properties;
+
 public class DartShooterItem extends Item
 {
     protected final Supplier<Item> ammoType;
@@ -20,15 +22,15 @@ public class DartShooterItem extends Item
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        boolean flag = playerIn.abilities.isCreativeMode;
-        ItemStack heldItem = playerIn.getHeldItem(handIn);
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        boolean flag = playerIn.abilities.instabuild;
+        ItemStack heldItem = playerIn.getItemInHand(handIn);
         ItemStack ammo = this.findAmmo(playerIn);
         if(ammo.isEmpty() && !flag) {
-            return ActionResult.resultFail(heldItem);
+            return ActionResult.fail(heldItem);
         }
 
-        if (!worldIn.isRemote) {
+        if (!worldIn.isClientSide) {
             DartItem dartItem;
             if(flag && ammo.isEmpty()) {
                 dartItem = (DartItem) ammoType.get();
@@ -38,29 +40,29 @@ public class DartShooterItem extends Item
             }
             AbstractDartEntity dart = dartItem.createDart(worldIn, ammo, playerIn);
             dart.setNoGravity(true);
-            dart.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.0F, 1.0F);
+            dart.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.0F, 1.0F);
             if (flag) {
-                dart.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+                dart.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
             }
             else {
-                dart.pickupStatus = AbstractArrowEntity.PickupStatus.ALLOWED;
+                dart.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
             }
-            worldIn.addEntity(dart);
+            worldIn.addFreshEntity(dart);
         }
-        worldIn.playSound(playerIn, playerIn.getPosition(), AetherSoundEvents.ENTITY_DART_SHOOTER_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
+        worldIn.playSound(playerIn, playerIn.blockPosition(), AetherSoundEvents.ENTITY_DART_SHOOTER_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
         if (!flag) {
             ammo.shrink(1);
             if (ammo.isEmpty()) {
-                playerIn.inventory.deleteStack(ammo);
+                playerIn.inventory.removeItem(ammo);
             }
         }
-        return ActionResult.resultConsume(heldItem);
+        return ActionResult.consume(heldItem);
     }
 
     private ItemStack findAmmo(PlayerEntity player) {
         IInventory inv = player.inventory;
-        for (int i = 0; i < inv.getSizeInventory(); i++) {
-            ItemStack stack = inv.getStackInSlot(i);
+        for (int i = 0; i < inv.getContainerSize(); i++) {
+            ItemStack stack = inv.getItem(i);
             if (stack == ItemStack.EMPTY) {
                 continue;
             }

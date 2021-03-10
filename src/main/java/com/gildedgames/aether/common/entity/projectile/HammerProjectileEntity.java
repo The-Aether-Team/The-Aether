@@ -26,21 +26,21 @@ public class HammerProjectileEntity extends ThrowableEntity
 
     public HammerProjectileEntity(World world, LivingEntity player) {
         super(AetherEntityTypes.HAMMER_PROJECTILE.get(), player, world);
-        this.setShooter(player);
+        this.setOwner(player);
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    protected void registerData() {
+    protected void defineSynchedData() {
     }
 
     @Override
     public void tick() {
-        this.world.addParticle(ParticleTypes.CLOUD, this.getPosX(), this.getPosY() + 0.2, this.getPosZ(), 0.0, 0.0, 0.0);
+        this.level.addParticle(ParticleTypes.CLOUD, this.getX(), this.getY() + 0.2, this.getZ(), 0.0, 0.0, 0.0);
         super.tick();
         if (!this.onGround) {
             ++this.ticksInAir;
@@ -52,16 +52,16 @@ public class HammerProjectileEntity extends ThrowableEntity
     }
 
     @Override
-    protected void onImpact(RayTraceResult result) {
+    protected void onHit(RayTraceResult result) {
         for(int j = 0; j < 8; j++) {
-            this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0, 0.0, 0.0);
-            this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0, 0.0, 0.0);
-            this.world.addParticle(ParticleTypes.SMOKE, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0, 0.0, 0.0);
-            this.world.addParticle(ParticleTypes.LARGE_SMOKE, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0, 0.0, 0.0);
-            this.world.addParticle(ParticleTypes.FLAME, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0, 0.0, 0.0);
+            this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+            this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+            this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+            this.level.addParticle(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+            this.level.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
         }
-        super.onImpact(result);
-        if (!this.world.isRemote) {
+        super.onHit(result);
+        if (!this.level.isClientSide) {
             this.remove();
         }
     }
@@ -70,10 +70,10 @@ public class HammerProjectileEntity extends ThrowableEntity
      * When an entity is hit, this method makes sure it is not the shooter that gets hit.
      */
     @Override
-    protected void onEntityHit(EntityRayTraceResult result) {
+    protected void onHitEntity(EntityRayTraceResult result) {
         Entity target = result.getEntity();
-        target.attackEntityFrom(DamageSource.causeThrownDamage(this, func_234616_v_()), 5);
-        target.addVelocity(this.getMotion().x, 0.6D, this.getMotion().z);
+        target.hurt(DamageSource.thrown(this, getOwner()), 5);
+        target.push(this.getDeltaMovement().x, 0.6D, this.getDeltaMovement().z);
     }
 
     public void shoot(PlayerEntity player, float rotationPitch, float rotationYaw, float v, float velocity, float inaccuracy) {
@@ -81,8 +81,8 @@ public class HammerProjectileEntity extends ThrowableEntity
         float y = -MathHelper.sin((rotationPitch + v) * ((float)Math.PI / 180F));
         float z = MathHelper.cos(rotationYaw * ((float)Math.PI / 180F)) * MathHelper.cos(rotationPitch * ((float)Math.PI / 180F));
         this.shoot(x, y, z, velocity, inaccuracy);
-        Vector3d playerMotion = player.getMotion();
-        this.setMotion(this.getMotion().add(playerMotion.x, player.isOnGround() ? 0.0D : playerMotion.y, playerMotion.z));
+        Vector3d playerMotion = player.getDeltaMovement();
+        this.setDeltaMovement(this.getDeltaMovement().add(playerMotion.x, player.isOnGround() ? 0.0D : playerMotion.y, playerMotion.z));
     }
 
 
@@ -90,7 +90,7 @@ public class HammerProjectileEntity extends ThrowableEntity
      * Gets the amount of gravity to apply to the thrown entity with each tick.
      */
     @Override
-    protected float getGravityVelocity() {
+    protected float getGravity() {
         return 0.0F;
     }
 }

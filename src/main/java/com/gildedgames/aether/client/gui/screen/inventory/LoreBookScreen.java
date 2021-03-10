@@ -35,15 +35,15 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
     public LoreBookScreen(LoreBookContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
 
-        this.xSize = 256;
-        this.ySize = 199;
+        this.imageWidth = 256;
+        this.imageHeight = 199;
     }
 
     @Override
     protected void init() {
         super.init();
-        int i = (this.width - this.xSize) / 2;
-        int j = (this.height - (this.ySize)) / 2;
+        int i = (this.width - this.imageWidth) / 2;
+        int j = (this.height - (this.imageHeight)) / 2;
 
         this.previousButton = this.addButton(new LorePageButton(i + 14, j + 169, 20, 20, new StringTextComponent("<"), (p_214201_1_) -> {
             if (this.currentPageNumber > 0) currentPageNumber--;
@@ -57,13 +57,13 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
-        this.drawGuiContainerBackgroundLayer(matrixStack, partialTicks, mouseX, mouseY);
+        this.renderBg(matrixStack, partialTicks, mouseX, mouseY);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
+    protected void renderLabels(MatrixStack matrixStack, int x, int y) {
         ITextComponent previous = new TranslationTextComponent("gui.aether.book_of_lore.previous");
         ITextComponent next = new TranslationTextComponent("gui.aether.book_of_lore.next");
         this.drawBookText(matrixStack, this.font, previous, 13, 158);
@@ -77,17 +77,17 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
         ITextComponent item = new TranslationTextComponent("gui.aether.book_of_lore.item");
         this.drawRightBookText(matrixStack, this.font, item, 78, 67);
 
-        ItemStack itemStack = this.container.inventorySlots.get(0).getStack();
+        ItemStack itemStack = this.menu.slots.get(0).getItem();
         if (!itemStack.isEmpty()) {
-            String entryKey = this.container.getLoreEntryKey(itemStack);
+            String entryKey = this.menu.getLoreEntryKey(itemStack);
 
-            if (I18n.hasKey(entryKey)) {
+            if (I18n.exists(entryKey)) {
                 ITextComponent entry = new TranslationTextComponent(entryKey);
                 this.createPages(entry);
 
                 if (this.currentPageNumber == 0) {
-                    ITextComponent title = new TranslationTextComponent(itemStack.getTranslationKey());
-                    createText(matrixStack, this.font.trimStringToWidth(title, 98), 136, 10);
+                    ITextComponent title = new TranslationTextComponent(itemStack.getDescriptionId());
+                    createText(matrixStack, this.font.split(title, 98), 136, 10);
 
                     createText(matrixStack, this.pages.get(0), 136, 32);
                 } else {
@@ -112,7 +112,7 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
     }
 
     private void createPages(ITextComponent entry) {
-        List<IReorderingProcessor> formattedText = new ArrayList<>(this.font.trimStringToWidth(entry, 98));
+        List<IReorderingProcessor> formattedText = new ArrayList<>(this.font.split(entry, 98));
         List<IReorderingProcessor> firstPage;
         if (formattedText.size() < 6) {
             firstPage = formattedText.subList(0, formattedText.size());
@@ -132,34 +132,34 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        int i = (this.width - this.xSize) / 2;
-        int j = (this.height - (this.ySize)) / 2;
+        int i = (this.width - this.imageWidth) / 2;
+        int j = (this.height - (this.imageHeight)) / 2;
 
-        this.getMinecraft().getTextureManager().bindTexture(TEXTURE_LORE_BACKING);
-        blit(matrixStack, i, j - 4, 0, 0, this.xSize, this.ySize + 56, 256, 256);
+        this.getMinecraft().getTextureManager().bind(TEXTURE_LORE_BACKING);
+        blit(matrixStack, i, j - 4, 0, 0, this.imageWidth, this.imageHeight + 56, 256, 256);
 
-        this.getMinecraft().getTextureManager().bindTexture(TEXTURE_LORE_BOOK);
-        blit(matrixStack, i + 12, j + 2, 0, 0, this.xSize, this.ySize + 56, 256, 256);
+        this.getMinecraft().getTextureManager().bind(TEXTURE_LORE_BOOK);
+        blit(matrixStack, i + 12, j + 2, 0, 0, this.imageWidth, this.imageHeight + 56, 256, 256);
     }
 
     private void drawBookText(MatrixStack matrixStack, FontRenderer fontRenderer, IReorderingProcessor font, int x, int y) {
-        fontRenderer.func_238422_b_(matrixStack, font, (float) x, (float) y, 4210752);
+        fontRenderer.draw(matrixStack, font, (float) x, (float) y, 4210752);
     }
 
     private void drawBookText(MatrixStack matrixStack, FontRenderer fontRenderer, ITextComponent font, int x, int y) {
-        IReorderingProcessor text = font.func_241878_f();
-        fontRenderer.func_238422_b_(matrixStack, text, (float) x, (float) y, 4210752);
+        IReorderingProcessor text = font.getVisualOrderText();
+        fontRenderer.draw(matrixStack, text, (float) x, (float) y, 4210752);
     }
 
     private void drawRightBookText(MatrixStack matrixStack, FontRenderer fontRenderer, ITextComponent font, int x, int y) {
-        IReorderingProcessor text = font.func_241878_f();
-        fontRenderer.func_238422_b_(matrixStack, text, (float) (x - fontRenderer.func_243245_a(text)), (float) y, 4210752);
+        IReorderingProcessor text = font.getVisualOrderText();
+        fontRenderer.draw(matrixStack, text, (float) (x - fontRenderer.width(text)), (float) y, 4210752);
     }
 
     private void drawCenteredBookText(MatrixStack matrixStack, FontRenderer fontRenderer, ITextComponent font, int x, int y) {
-        IReorderingProcessor text = font.func_241878_f();
-        fontRenderer.func_238422_b_(matrixStack, text, (float) (x - fontRenderer.func_243245_a(text) / 2), (float) y, 4210752);
+        IReorderingProcessor text = font.getVisualOrderText();
+        fontRenderer.draw(matrixStack, text, (float) (x - fontRenderer.width(text) / 2), (float) y, 4210752);
     }
 }

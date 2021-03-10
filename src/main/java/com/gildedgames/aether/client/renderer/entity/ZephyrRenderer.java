@@ -17,7 +17,7 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, ZephyrModel> {
     }
 
     @Override
-    protected void preRenderCallback(ZephyrEntity zephyr, MatrixStack matrixStackIn, float partialTickTime) {
+    protected void scale(ZephyrEntity zephyr, MatrixStack matrixStackIn, float partialTickTime) {
         float f1 = ((float) zephyr.getAttackCharge() + partialTickTime) / 20.0F;
         if (f1 < 0.0F)
         {
@@ -40,7 +40,7 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, ZephyrModel> {
     }
 
     @Override
-    public ResourceLocation getEntityTexture(ZephyrEntity entity) {
+    public ResourceLocation getTextureLocation(ZephyrEntity entity) {
         return ZEPHYR_TEXTURE;
     }
 }

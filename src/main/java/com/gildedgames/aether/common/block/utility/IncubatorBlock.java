@@ -31,23 +31,23 @@ public class IncubatorBlock extends ContainerBlock {
 
 	public IncubatorBlock(AbstractBlock.Properties builder) {
 		super(builder);
-		this.setDefaultState(this.stateContainer.getBaseState().with(LIT, false));
+		this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false));
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		super.fillStateContainer(builder);
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+		super.createBlockStateDefinition(builder);
 		builder.add(LIT);
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(IBlockReader worldIn) {
+	public TileEntity newBlockEntity(IBlockReader worldIn) {
 		return new IncubatorTileEntity();
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if (worldIn.isRemote) {
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		if (worldIn.isClientSide) {
 			return ActionResultType.SUCCESS;
 		}
 		else {
@@ -57,8 +57,8 @@ public class IncubatorBlock extends ContainerBlock {
 	}
 
 	protected void interactWith(World worldIn, BlockPos pos, PlayerEntity player) {
-		if (!worldIn.isRemote) { 
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+		if (!worldIn.isClientSide) { 
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof IncubatorTileEntity) {
 				NetworkHooks.openGui((ServerPlayerEntity) player, (IncubatorTileEntity) tileentity);
 			}
@@ -74,44 +74,44 @@ public class IncubatorBlock extends ContainerBlock {
 	*/
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-		if (stack.hasDisplayName()) {
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+		if (stack.hasCustomHoverName()) {
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof IncubatorTileEntity) {
-				((IncubatorTileEntity)tileentity).setCustomName(stack.getDisplayName());
+				((IncubatorTileEntity)tileentity).setCustomName(stack.getHoverName());
 			}
 		}
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof IncubatorTileEntity) {
-				InventoryHelper.dropInventoryItems(worldIn, pos, (IncubatorTileEntity)tileentity);
-				worldIn.updateComparatorOutputLevel(pos, this);
+				InventoryHelper.dropContents(worldIn, pos, (IncubatorTileEntity)tileentity);
+				worldIn.updateNeighbourForOutputSignal(pos, this);
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 
 	@Deprecated
 	@Override
-	public boolean hasComparatorInputOverride(BlockState state) {
+	public boolean hasAnalogOutputSignal(BlockState state) {
 		return true;
 	}
 
 	@Deprecated
 	@Override
-	public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-		return Container.calcRedstone(worldIn.getTileEntity(pos));
+	public int getAnalogOutputSignal(BlockState blockState, World worldIn, BlockPos pos) {
+		return Container.getRedstoneSignalFromBlockEntity(worldIn.getBlockEntity(pos));
 	}
 
 	@Deprecated
 	@Override
-	public BlockRenderType getRenderType(BlockState state) {
+	public BlockRenderType getRenderShape(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
 

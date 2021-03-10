@@ -21,9 +21,9 @@ public class AetherCapabilityHandler
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event) {
         IAetherPlayer original = IAetherPlayer.get(event.getOriginal()).orElseThrow(
-                () -> new IllegalStateException("Player " + event.getOriginal().getName().getUnformattedComponentText() + " has no AetherPlayer capability!"));;
+                () -> new IllegalStateException("Player " + event.getOriginal().getName().getContents() + " has no AetherPlayer capability!"));;
         IAetherPlayer newPlayer = IAetherPlayer.get(event.getPlayer()).orElseThrow(
-                () -> new IllegalStateException("Player " + event.getPlayer().getName().getUnformattedComponentText() + " has no AetherPlayer capability!"));;
+                () -> new IllegalStateException("Player " + event.getPlayer().getName().getContents() + " has no AetherPlayer capability!"));;
 
         newPlayer.copyFrom(original);
     }

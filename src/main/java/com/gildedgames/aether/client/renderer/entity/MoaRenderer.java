@@ -28,25 +28,25 @@ public class MoaRenderer extends MobRenderer<MoaEntity, MoaModel>{
 	}
 	
 	@Override
-	protected float handleRotationFloat(MoaEntity moa, float partialTicks) {
+	protected float getBob(MoaEntity moa, float partialTicks) {
 		float f1 = moa.prevWingRotation + (moa.wingRotation - moa.prevWingRotation) * partialTicks;
 		float f2 = moa.prevDestPos + (moa.destPos - moa.prevDestPos) * partialTicks;
 		return (MathHelper.sin(f1) + 1.0F) * f2;
 	}
 	
 	@Override
-	protected void preRenderCallback(MoaEntity moa, MatrixStack matrixStackIn, float partialTickTime) {
-		float moaScale = moa.isChild()? 1.0F : 1.8F;
+	protected void scale(MoaEntity moa, MatrixStack matrixStackIn, float partialTickTime) {
+		float moaScale = moa.isBaby()? 1.0F : 1.8F;
 		matrixStackIn.scale(moaScale, moaScale, moaScale);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(MoaEntity entity) {
+	public ResourceLocation getTextureLocation(MoaEntity entity) {
 		if (entity.hasCustomName()) {
-			if (entity.getMoaType() == AetherMoaTypes.ORANGE && "Mos".equals(entity.getCustomName().getUnformattedComponentText())) {
+			if (entity.getMoaType() == AetherMoaTypes.ORANGE && "Mos".equals(entity.getCustomName().getContents())) {
 				return MOS_TEXTURE;
 			}
-			if (entity.getMoaType() == AetherMoaTypes.BLUE && "Raptor__".equals(entity.getCustomName().getUnformattedComponentText())) {
+			if (entity.getMoaType() == AetherMoaTypes.BLUE && "Raptor__".equals(entity.getCustomName().getContents())) {
 				return RAPTOR_TEXTURE;
 			}
 		}

@@ -24,11 +24,11 @@ public class MoaSaddleLayer extends LayerRenderer<MoaEntity, MoaModel> {
 	@Override
 	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, MoaEntity moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (moa.isSaddled()) {
-			this.getEntityModel().copyModelAttributesTo(this.moaModel);
-			this.moaModel.setLivingAnimations(moa, limbSwing, limbSwingAmount, partialTicks);
-			this.moaModel.setRotationAngles(moa, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntityCutoutNoCull(moa.getMoaType().getSaddleTexture()));
-			this.moaModel.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+			this.getParentModel().copyPropertiesTo(this.moaModel);
+			this.moaModel.prepareMobModel(moa, limbSwing, limbSwingAmount, partialTicks);
+			this.moaModel.setupAnim(moa, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+			IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.entityCutoutNoCull(moa.getMoaType().getSaddleTexture()));
+			this.moaModel.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 		}
 	}
 	

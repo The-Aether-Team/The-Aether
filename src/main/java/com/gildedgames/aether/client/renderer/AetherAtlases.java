@@ -19,15 +19,15 @@ public class AetherAtlases {
 	public static final RenderMaterial TREASURE_CHEST_RIGHT_MATERIAL = getChestMaterial("treasure_right");
 
 	public static RenderMaterial getChestMaterial(String chestName) {
-		return new RenderMaterial(Atlases.CHEST_ATLAS, new ResourceLocation(Aether.MODID, "entity/chest/" + chestName));
+		return new RenderMaterial(Atlases.CHEST_SHEET, new ResourceLocation(Aether.MODID, "entity/chest/" + chestName));
 	}
 	
 	@SubscribeEvent
 	public static void onTextureStitchPre(TextureStitchEvent.Pre event) {
-		if (event.getMap().getTextureLocation().equals(Atlases.CHEST_ATLAS)) {
-			event.addSprite(TREASURE_CHEST_MATERIAL.getTextureLocation());
-			event.addSprite(TREASURE_CHEST_LEFT_MATERIAL.getTextureLocation());
-			event.addSprite(TREASURE_CHEST_RIGHT_MATERIAL.getTextureLocation());
+		if (event.getMap().location().equals(Atlases.CHEST_SHEET)) {
+			event.addSprite(TREASURE_CHEST_MATERIAL.texture());
+			event.addSprite(TREASURE_CHEST_LEFT_MATERIAL.texture());
+			event.addSprite(TREASURE_CHEST_RIGHT_MATERIAL.texture());
 		}
 	}
 

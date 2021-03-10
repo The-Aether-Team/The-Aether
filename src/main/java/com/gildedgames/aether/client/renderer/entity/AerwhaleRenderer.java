@@ -26,7 +26,7 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
     
     public AerwhaleRenderer(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new AerwhaleModel(), 0.5F);
-        this.regularModel = (AerwhaleModel) this.entityModel;
+        this.regularModel = (AerwhaleModel) this.model;
         this.oldModel = new OldAerwhaleModel();
     }
     
@@ -34,7 +34,7 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
     private static Object _staticData;
 
     @Override
-    protected void preRenderCallback(AerwhaleEntity aerwhale, MatrixStack matrixStackIn, float partialTickTime) {
+    protected void scale(AerwhaleEntity aerwhale, MatrixStack matrixStackIn, float partialTickTime) {
         matrixStackIn.translate(0, 1.2, 0);
 //        if (_staticData == null) {
 //        	_staticData = new float[] {aerwhale.rotationYaw, aerwhale.rotationPitch};
@@ -43,15 +43,15 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
 //        float prevRotationYaw = prevRotations[0];
 //        float prevRotationPitch = prevRotations[1];
         
-        Vector3d look = aerwhale.getMotion().normalize();//getLook(partialTickTime);
+        Vector3d look = aerwhale.getDeltaMovement().normalize();//getLook(partialTickTime);
         
         float yaw = (float)(MathHelper.atan2(look.z, look.x) * 180.0 / Math.PI);
         float pitch = -(float)(Math.atan(look.y) * 73.0);
 //        yaw = MathHelper.lerp(partialTickTime, aerwhale.prevRotationYaw, yaw);
 //        float yaw = MathHelper.lerp(partialTickTime, aerwhale.prevRotationYaw, aerwhale.rotationYaw);
 //        float pitch = aerwhale.rotationPitch;
-        matrixStackIn.rotate(Vector3f.YP.rotationDegrees(yaw + 0.0F));
-        matrixStackIn.rotate(Vector3f.XP.rotationDegrees(pitch));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(yaw + 0.0F));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(pitch));
 //        matrixStackIn.rotate(new Quaternion(Vector3f.ZP, 90.0F, true));
         matrixStackIn.scale(2.0F, 2.0F, 2.0F);
         
@@ -70,12 +70,12 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
     }
     
     @Override	//TODO: Configurable old aerwhale model
-    public BaseAerwhaleModel getEntityModel() {
+    public BaseAerwhaleModel getModel() {
     	return regularModel;
     }
 
     @Override   //TODO: Configurable old aerwhale texture
-    public ResourceLocation getEntityTexture(AerwhaleEntity entity) {
+    public ResourceLocation getTextureLocation(AerwhaleEntity entity) {
         return AERWHALE_TEXTURE;
     }
 }

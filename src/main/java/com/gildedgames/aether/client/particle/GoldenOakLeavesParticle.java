@@ -15,9 +15,9 @@ public class GoldenOakLeavesParticle extends PortalParticle
     protected GoldenOakLeavesParticle(ClientWorld worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn) {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
 
-        this.particleRed = 0.976F;
-        this.particleGreen = 0.7450980392156863F;
-        this.particleBlue = 0.0F;
+        this.rCol = 0.976F;
+        this.gCol = 0.7450980392156863F;
+        this.bCol = 0.0F;
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -30,9 +30,9 @@ public class GoldenOakLeavesParticle extends PortalParticle
         }
 
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             GoldenOakLeavesParticle leavesParticle = new GoldenOakLeavesParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
-            leavesParticle.selectSpriteRandomly(this.spriteSet);
+            leavesParticle.pickSprite(this.spriteSet);
             return leavesParticle;
         }
     }

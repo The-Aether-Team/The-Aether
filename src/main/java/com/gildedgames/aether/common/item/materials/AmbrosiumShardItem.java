@@ -19,24 +19,24 @@ public class AmbrosiumShardItem extends Item
 	}
 	
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResultType useOn(ItemUseContext context) {
 		if (context instanceof BlockItemUseContext) {
 			BlockItemUseContext blockcontext = (BlockItemUseContext) context;
-			if (blockcontext.getWorld().getBlockState(blockcontext.getPos()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get()) {
-				blockcontext.getWorld().setBlockState(blockcontext.getPos(), AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get().getDefaultState());
+			if (blockcontext.getLevel().getBlockState(blockcontext.getClickedPos()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get()) {
+				blockcontext.getLevel().setBlockAndUpdate(blockcontext.getClickedPos(), AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get().defaultBlockState());
 				if (context.getPlayer() != null) {
 					if (!context.getPlayer().isCreative()) {
-						context.getItem().shrink(1);
+						context.getItemInHand().shrink(1);
 					}
 					return ActionResultType.SUCCESS;
 				}
 			}
 		}
-		return super.onItemUse(context);
+		return super.useOn(context);
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		return super.onItemRightClick(worldIn, playerIn, handIn);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		return super.use(worldIn, playerIn, handIn);
 	}
 }

@@ -22,11 +22,11 @@ public class FlyingCowSaddleLayer extends LayerRenderer<FlyingCowEntity, CowMode
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, FlyingCowEntity cow, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (cow.isSaddled()) {
-            this.getEntityModel().copyModelAttributesTo(this.cowModel);
-            this.cowModel.setLivingAnimations(cow, limbSwing, limbSwingAmount, partialTicks);
-            this.cowModel.setRotationAngles(cow, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-            IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntityCutoutNoCull(TEXTURE));
-            this.cowModel.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.getParentModel().copyPropertiesTo(this.cowModel);
+            this.cowModel.prepareMobModel(cow, limbSwing, limbSwingAmount, partialTicks);
+            this.cowModel.setupAnim(cow, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
+            this.cowModel.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
 }

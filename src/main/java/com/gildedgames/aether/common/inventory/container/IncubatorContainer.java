@@ -33,12 +33,12 @@ public class IncubatorContainer extends Container {
 	
 	public IncubatorContainer(int id, PlayerInventory playerInventoryIn, IInventory incubatorInventoryIn, IIntArray incubatorDataIn, Consumer<UUID> playerUUIDConsumerIn) {
 		super(AetherContainerTypes.INCUBATOR.get(), id);
-		assertInventorySize(incubatorInventoryIn, 2);
-		assertIntArraySize(incubatorDataIn, 3);
+		checkContainerSize(incubatorInventoryIn, 2);
+		checkContainerDataCount(incubatorDataIn, 3);
 		this.incubatorInventory = incubatorInventoryIn;
 		this.incubatorData = incubatorDataIn;
 		this.playerUUIDAcceptor = playerUUIDConsumerIn;
-		this.world = playerInventoryIn.player.world;
+		this.world = playerInventoryIn.player.level;
 		this.addSlot(new IncubatorEggSlot(this, incubatorInventoryIn, 0, 73, 17, playerInventoryIn.player));
 		this.addSlot(new IncubatorFuelSlot(this, incubatorInventoryIn, 0, 73, 53));
 
@@ -52,16 +52,16 @@ public class IncubatorContainer extends Container {
 			this.addSlot(new Slot(playerInventoryIn, k, 8 + k * 18, 142));
 		}
 
-		this.trackIntArray(incubatorDataIn);
+		this.addDataSlots(incubatorDataIn);
 	}
 	
 	public void clear() {
-		this.incubatorInventory.clear();
+		this.incubatorInventory.clearContent();
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
-		return incubatorInventory.isUsableByPlayer(playerIn);
+	public boolean stillValid(PlayerEntity playerIn) {
+		return incubatorInventory.stillValid(playerIn);
 	}
 	
 	public boolean isFuel(ItemStack stack) {
@@ -74,41 +74,41 @@ public class IncubatorContainer extends Container {
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index != 1 && index != 0) {
 				if (this.isFuel(itemstack1)) {
-					if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
+					if (!this.moveItemStackTo(itemstack1, 1, 2, false)) {
 						return ItemStack.EMPTY;
 					}
 				}
 				else if (this.isEgg(itemstack1)) {
-					if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+					if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
 						return ItemStack.EMPTY;
 					}
 				}
 				else if (index >= 2 && index < 29) {
-					if (!this.mergeItemStack(itemstack1, 29, 38, false)) {
+					if (!this.moveItemStackTo(itemstack1, 29, 38, false)) {
 						return ItemStack.EMPTY;
 					}
 				}
-				else if (index >= 29 && index < 38 && !this.mergeItemStack(itemstack1, 2, 29, false)) {
+				else if (index >= 29 && index < 38 && !this.moveItemStackTo(itemstack1, 2, 29, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
-			else if (!this.mergeItemStack(itemstack1, 2, 38, false)) {
+			else if (!this.moveItemStackTo(itemstack1, 2, 38, false)) {
 				return ItemStack.EMPTY;
 			}
 
 			if (itemstack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			}
 			else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (itemstack1.getCount() == itemstack.getCount()) {

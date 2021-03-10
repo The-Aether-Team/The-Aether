@@ -43,65 +43,65 @@ public class MimicEntity extends CreatureEntity {
 	}
 
 	public static AttributeModifierMap.MutableAttribute registerAttributes() {
-		return CreatureEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MAX_HEALTH, 40.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 8.0D);
+		return CreatureEntity.createMobAttributes()
+				.add(Attributes.MAX_HEALTH, 40.0D)
+				.add(Attributes.ATTACK_DAMAGE, 3.0D)
+				.add(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
+				.add(Attributes.FOLLOW_RANGE, 8.0D);
 	}
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundEvents.BLOCK_WOOD_BREAK;
+		return SoundEvents.WOOD_BREAK;
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.BLOCK_CHEST_CLOSE;
+		return SoundEvents.CHEST_CLOSE;
 	}
 	
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source.getImmediateSource() instanceof MimicEntity) {
+	public boolean hurt(DamageSource source, float amount) {
+		if (source.getDirectEntity() instanceof MimicEntity) {
 			return false;
 		}
-		if (source.getImmediateSource() instanceof LivingEntity && this.hurtTime == 0) {
-			if (this.world instanceof ServerWorld) {
-				((ServerWorld) this.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, Blocks.CHEST.getDefaultState()), this.getPosX(), this.getPosY() + this.getHeight() / 1.5, this.getPosZ(), 20, this.getWidth() / 4.0, this.getHeight() / 4.0, this.getWidth() / 4.0, 0.05);
+		if (source.getDirectEntity() instanceof LivingEntity && this.hurtTime == 0) {
+			if (this.level instanceof ServerWorld) {
+				((ServerWorld) this.level).sendParticles(new BlockParticleData(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState()), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 20, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05);
 			}
 			
-			LivingEntity attacker = (LivingEntity) source.getImmediateSource();
+			LivingEntity attacker = (LivingEntity) source.getDirectEntity();
 			if (!(attacker instanceof PlayerEntity) || !((PlayerEntity) attacker).isCreative()) {
-				this.setAttackTarget(attacker);
+				this.setTarget(attacker);
 			}
 		}
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 	
 	@Override
-	public boolean attackEntityAsMob(Entity entityIn) {
-		boolean result = super.attackEntityAsMob(entityIn);
+	public boolean doHurtTarget(Entity entityIn) {
+		boolean result = super.doHurtTarget(entityIn);
 		
 		if (entityIn instanceof LivingEntity) {
 			// If the entity died as a result of this attack, then play the burp sound. Otherwise, play the eating sound.
-			SoundEvent sound = (((LivingEntity) entityIn).getHealth() <= 0.0)? SoundEvents.ENTITY_PLAYER_BURP : SoundEvents.ENTITY_GENERIC_EAT;
-			this.playSound(sound, 1.0F, this.getSoundPitch());
+			SoundEvent sound = (((LivingEntity) entityIn).getHealth() <= 0.0)? SoundEvents.PLAYER_BURP : SoundEvents.GENERIC_EAT;
+			this.playSound(sound, 1.0F, this.getVoicePitch());
 		}
 		
 		return result;
 	}
 
 	@Override
-	public void spawnExplosionParticle() {
-		if (this.world.isRemote) {
+	public void spawnAnim() {
+		if (this.level.isClientSide) {
 			for(int i = 0; i < 20; ++i) {
-				double d0 = this.rand.nextGaussian() * 0.02D;
-				double d1 = this.rand.nextGaussian() * 0.02D;
-				double d2 = this.rand.nextGaussian() * 0.02D;
-				this.world.addParticle(ParticleTypes.POOF, this.getPosXWidth(0.0D) - d0 * 10.0D, this.getPosYRandom() - d1 * 10.0D, this.getPosZRandom(1.0D) - d2 * 10.0D, d0, d1, d2);
+				double d0 = this.random.nextGaussian() * 0.02D;
+				double d1 = this.random.nextGaussian() * 0.02D;
+				double d2 = this.random.nextGaussian() * 0.02D;
+				this.level.addParticle(ParticleTypes.POOF, this.getX(0.0D) - d0 * 10.0D, this.getRandomY() - d1 * 10.0D, this.getRandomZ(1.0D) - d2 * 10.0D, d0, d1, d2);
 			}
 		} else {
-			this.world.setEntityState(this, (byte)20);
+			this.level.broadcastEntityEvent(this, (byte)20);
 		}
 	}
 }

@@ -32,20 +32,22 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.entity.ai.goal.Goal.Flag;
+
 public class AerwhaleEntity extends FlyingEntity implements IMob {
 	public float motionYaw, motionPitch;
 
 	public AerwhaleEntity(EntityType<? extends AerwhaleEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.ignoreFrustumCheck = true;
-		this.moveController = new AerwhaleEntity.MoveHelperController(this);
+		this.noCulling = true;
+		this.moveControl = new AerwhaleEntity.MoveHelperController(this);
 	}
 
 	public AerwhaleEntity(World worldIn) {
 		this(AetherEntityTypes.AERWHALE.get(), worldIn);
-		this.rotationYaw = 360.0F * this.rand.nextFloat();
-		this.rotationPitch = 90.0F * this.rand.nextFloat() - 45.0F;
-		this.moveController = new AerwhaleEntity.MoveHelperController(this);
+		this.yRot = 360.0F * this.random.nextFloat();
+		this.xRot = 90.0F * this.random.nextFloat() - 45.0F;
+		this.moveControl = new AerwhaleEntity.MoveHelperController(this);
 	}
 	
 	@Override
@@ -57,31 +59,31 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 	}
 
 	public static AttributeModifierMap.MutableAttribute registerAttributes() {
-		return FlyingEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 20.0D);
+		return FlyingEntity.createMobAttributes()
+				.add(Attributes.MOVEMENT_SPEED, 1.0D)
+				.add(Attributes.MAX_HEALTH, 20.0D);
 	}
 	
 	@Override
-	public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
-		BlockPos pos = new BlockPos(MathHelper.floor(this.getPosX()), MathHelper.floor(this.getBoundingBox().minY), MathHelper.floor(this.getPosZ()));
+	public boolean checkSpawnRules(IWorld worldIn, SpawnReason spawnReasonIn) {
+		BlockPos pos = new BlockPos(MathHelper.floor(this.getX()), MathHelper.floor(this.getBoundingBox().minY), MathHelper.floor(this.getZ()));
 		
-		return this.rand.nextInt(65) == 0 && !worldIn.getCollisionShapes(this, this.getBoundingBox()).findAny().isPresent()
-			&& !worldIn.containsAnyLiquid(this.getBoundingBox()) && worldIn.getLight(pos) > 8
-			&& super.canSpawn(worldIn, spawnReasonIn);
+		return this.random.nextInt(65) == 0 && !worldIn.getBlockCollisions(this, this.getBoundingBox()).findAny().isPresent()
+			&& !worldIn.containsAnyLiquid(this.getBoundingBox()) && worldIn.getMaxLocalRawBrightness(pos) > 8
+			&& super.checkSpawnRules(worldIn, spawnReasonIn);
 	}
 	
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return 1;
 	}
 	
 	@Override
 	public void tick() {
 		super.tick();
-		this.extinguish();
+		this.clearFire();
 		
-		if (this.getPosY() < -64) {
+		if (this.getY() < -64) {
 			this.remove();
 		}
 	}
@@ -94,63 +96,63 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 			if (entity instanceof PlayerEntity) {
 				PlayerEntity player = (PlayerEntity)entity;
 				
-				this.motionYaw = this.prevRotationYaw = this.rotationYaw = player.rotationYaw;
-				this.motionPitch = this.prevRotationPitch = this.rotationPitch = player.rotationPitch;
+				this.motionYaw = this.yRotO = this.yRot = player.yRot;
+				this.motionPitch = this.xRotO = this.xRot = player.xRot;
 				
-				this.motionYaw = this.rotationYawHead = player.rotationYawHead;
+				this.motionYaw = this.yHeadRot = player.yHeadRot;
 				
-				positionIn = new Vector3d(player.moveStrafing, 0.0, (player.moveForward <= 0.0F)? player.moveForward * 0.25F : player.moveForward);
+				positionIn = new Vector3d(player.xxa, 0.0, (player.zza <= 0.0F)? player.zza * 0.25F : player.zza);
 				
 				if (IAetherPlayer.get(player).map(IAetherPlayer::isJumping).orElse(false)) {
-					this.setMotion(new Vector3d(0.0, 0.0, 0.0));
+					this.setDeltaMovement(new Vector3d(0.0, 0.0, 0.0));
 				} else {
-					double d0 = Math.toRadians(player.rotationYaw - 90.0);
-					double d1 = Math.toRadians(-player.rotationPitch);
+					double d0 = Math.toRadians(player.yRot - 90.0);
+					double d1 = Math.toRadians(-player.xRot);
 					double d2 = Math.cos(d1);
-					this.setMotion(
-						0.98 * (this.getMotion().x + 0.05 * Math.cos(d0) * d2),
-						0.98 * (this.getMotion().y + 0.02 * Math.sin(d1)),
-						0.98 * (this.getMotion().z + 0.05 * Math.sin(d0) * d2)
+					this.setDeltaMovement(
+						0.98 * (this.getDeltaMovement().x + 0.05 * Math.cos(d0) * d2),
+						0.98 * (this.getDeltaMovement().y + 0.02 * Math.sin(d1)),
+						0.98 * (this.getDeltaMovement().z + 0.05 * Math.sin(d0) * d2)
 					);
 				}
 				
-				this.stepHeight = 1.0F;
+				this.maxUpStep = 1.0F;
 				
-				if (!this.world.isRemote) {
-					this.jumpMovementFactor = this.getAIMoveSpeed() * 0.6F;
+				if (!this.level.isClientSide) {
+					this.flyingSpeed = this.getSpeed() * 0.6F;
 					super.travel(positionIn);
 				}
 				
-				this.prevLimbSwingAmount = this.limbSwingAmount;
-				double d0 = this.getPosX() - this.prevPosX;
-				double d1 = this.getPosZ() - this.prevPosZ;
+				this.animationSpeedOld = this.animationSpeed;
+				double d0 = this.getX() - this.xo;
+				double d1 = this.getZ() - this.zo;
 				float f4 = 4.0F * MathHelper.sqrt(d0*d0 + d1*d1);
 				
 				if (f4 > 1.0F) {
 					f4 = 1.0F;
 				}
 				
-				this.limbSwingAmount += 0.4F * (f4 - this.limbSwingAmount);
-				this.limbSwing += this.limbSwingAmount;
+				this.animationSpeed += 0.4F * (f4 - this.animationSpeed);
+				this.animationPosition += this.animationSpeed;
 			}
 		} else {
-			this.stepHeight = 0.5F;
-			this.jumpMovementFactor = 0.02F;
+			this.maxUpStep = 0.5F;
+			this.flyingSpeed = 0.02F;
 			super.travel(positionIn);
 		}
 	}
 	
 	@Override
-	protected ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-		if (player.getUniqueID().getMostSignificantBits() == 220717875589366683L && player.getUniqueID().getLeastSignificantBits() == -7181826737698904209L) {
+	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		if (player.getUUID().getMostSignificantBits() == 220717875589366683L && player.getUUID().getLeastSignificantBits() == -7181826737698904209L) {
 			player.startRiding(this);
-			if (!this.world.isRemote) {
+			if (!this.level.isClientSide) {
 				TextComponent msg = new StringTextComponent("Serenity is the queen of W(h)ales!!");
-				player.world.getPlayers().forEach(p -> p.sendMessage(msg, player.getUniqueID()));
+				player.level.players().forEach(p -> p.sendMessage(msg, player.getUUID()));
 			}
-			return ActionResultType.func_233537_a_(this.world.isRemote);
+			return ActionResultType.sidedSuccess(this.level.isClientSide);
 		}
-		return super.func_230254_b_(player, hand);
+		return super.mobInteract(player, hand);
 	}
 	
 	@Override
@@ -174,7 +176,7 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 	}
 	
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return true;
 	}
 
@@ -192,40 +194,40 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 
 		@Override
 		public void tick() {
-			if (this.action == MovementController.Action.MOVE_TO) {
+			if (this.operation == MovementController.Action.MOVE_TO) {
 				if (this.courseChangeCooldown-- <= 0) {
-					this.courseChangeCooldown += this.parentEntity.getRNG().nextInt(5) + 2;
-					Vector3d Vector3d = new Vector3d(this.posX - this.parentEntity.getPosX(), this.posY - this.parentEntity.getPosY(), this.posZ - this.parentEntity.getPosZ());
+					this.courseChangeCooldown += this.parentEntity.getRandom().nextInt(5) + 2;
+					Vector3d Vector3d = new Vector3d(this.wantedX - this.parentEntity.getX(), this.wantedY - this.parentEntity.getY(), this.wantedZ - this.parentEntity.getZ());
 					double d0 = Vector3d.length();
 					Vector3d = Vector3d.normalize();
-					if (this.func_220673_a(Vector3d, MathHelper.ceil(d0))) {
-						this.parentEntity.setMotion(this.parentEntity.getMotion().add(Vector3d.scale(0.1D)));
-						double dx = this.posX - this.mob.getPosX();
-						double dz = this.posZ - this.mob.getPosZ();
-						double dy = this.posY - this.mob.getPosY();
+					if (this.canReach(Vector3d, MathHelper.ceil(d0))) {
+						this.parentEntity.setDeltaMovement(this.parentEntity.getDeltaMovement().add(Vector3d.scale(0.1D)));
+						double dx = this.wantedX - this.mob.getX();
+						double dz = this.wantedZ - this.mob.getZ();
+						double dy = this.wantedY - this.mob.getY();
 						double d4 = dx * dx + dy * dy + dz * dz;
 						if (d4 < 2.5000003E-7F) {
-							this.mob.setMoveForward(0.0F);
+							this.mob.setZza(0.0F);
 							return;
 						}
 
-						this.parentEntity.prevRotationYaw = this.parentEntity.rotationYaw;
-						this.parentEntity.rotationYaw = (float)(MathHelper.atan2(dz, dx) * (180F / (float)Math.PI)) - 90.0F;
-						this.parentEntity.rotationPitch = -(float)(Math.atan(dy) * 73.0);
+						this.parentEntity.yRotO = this.parentEntity.yRot;
+						this.parentEntity.yRot = (float)(MathHelper.atan2(dz, dx) * (180F / (float)Math.PI)) - 90.0F;
+						this.parentEntity.xRot = -(float)(Math.atan(dy) * 73.0);
 					}
 					else {
-						this.action = MovementController.Action.WAIT;
+						this.operation = MovementController.Action.WAIT;
 					}
 				}
 			}
 		}
 
-		private boolean func_220673_a(Vector3d p_220673_1_, int p_220673_2_) {
+		private boolean canReach(Vector3d p_220673_1_, int p_220673_2_) {
 			AxisAlignedBB axisalignedbb = this.parentEntity.getBoundingBox();
 
 			for (int i = 1; i < p_220673_2_; ++i) {
-				axisalignedbb = axisalignedbb.offset(p_220673_1_);
-				if (!this.parentEntity.world.hasNoCollisions(this.parentEntity, axisalignedbb)) {
+				axisalignedbb = axisalignedbb.move(p_220673_1_);
+				if (!this.parentEntity.level.noCollision(this.parentEntity, axisalignedbb)) {
 					return false;
 				}
 			}
@@ -239,7 +241,7 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 
 		public RandomFlyGoal(AerwhaleEntity aerwhale) {
 			this.parentEntity = aerwhale;
-			this.setMutexFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+			this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
 		}
 
 		/**
@@ -247,15 +249,15 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 		 * method as well.
 		 */
 		@Override
-		public boolean shouldExecute() {
-			MovementController movementcontroller = this.parentEntity.getMoveHelper();
-			if (!movementcontroller.isUpdating()) {
+		public boolean canUse() {
+			MovementController movementcontroller = this.parentEntity.getMoveControl();
+			if (!movementcontroller.hasWanted()) {
 				return true;
 			}
 			else {
-				double d0 = movementcontroller.getX() - this.parentEntity.getPosX();
-				double d1 = movementcontroller.getY() - this.parentEntity.getPosY();
-				double d2 = movementcontroller.getZ() - this.parentEntity.getPosZ();
+				double d0 = movementcontroller.getWantedX() - this.parentEntity.getX();
+				double d1 = movementcontroller.getWantedY() - this.parentEntity.getY();
+				double d2 = movementcontroller.getWantedZ() - this.parentEntity.getZ();
 				double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 				return d3 < 1.0;
 			}
@@ -265,7 +267,7 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 		 * Returns whether an in-progress EntityAIBase should continue executing
 		 */
 		@Override
-		public boolean shouldContinueExecuting() {
+		public boolean canContinueToUse() {
 			return false;
 		}
 
@@ -273,16 +275,16 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 		 * Execute a one shot task or start executing a continuous task
 		 */
 		@Override
-		public void startExecuting() {
+		public void start() {
 			// Move somewhere within a 16x16x16 box around the entity
-			Random random = this.parentEntity.getRNG();
+			Random random = this.parentEntity.getRandom();
 			float dx = (random.nextFloat() * 2.0F - 1.0F) * 32.0F;
 			float dy = (random.nextFloat() * 2.0F - 1.0F) * 32.0F;
 			float dz = (random.nextFloat() * 2.0F - 1.0F) * 32.0F;
-			double x = this.parentEntity.getPosX() + dx;
-			double y = this.parentEntity.getPosY() + dy;
-			double z = this.parentEntity.getPosZ() + dz;
-			this.parentEntity.getMoveHelper().setMoveTo(x, y, z, 0.5);
+			double x = this.parentEntity.getX() + dx;
+			double y = this.parentEntity.getY() + dy;
+			double z = this.parentEntity.getZ() + dz;
+			this.parentEntity.getMoveControl().setWantedPosition(x, y, z, 0.5);
 //			float pitch = (float)MathHelper.atan2(dx, -dz) * (180.0F / (float)Math.PI);
 //			float yaw = (float)MathHelper.atan2(MathHelper.sqrt(dx*dx + dz*dz), dy) * (180.0F / (float)Math.PI);
 //			this.parentEntity.rotationPitch = pitch;

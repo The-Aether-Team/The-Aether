@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 public class SkyrootAxeItem extends AxeItem
 {
     public SkyrootAxeItem() {
-        super(AetherItemTiers.SKYROOT, 6.0F, -3.2F, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS));
+        super(AetherItemTiers.SKYROOT, 6.0F, -3.2F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
     }
 
     @Override

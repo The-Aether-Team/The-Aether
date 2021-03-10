@@ -13,30 +13,30 @@ public class PoisonDartEntity extends AbstractDartEntity
 {
     public PoisonDartEntity(EntityType<? extends PoisonDartEntity> type, World worldIn) {
         super(type, worldIn);
-        this.setDamage(0.0D);
+        this.setBaseDamage(0.0D);
     }
 
     public PoisonDartEntity(World worldIn, double x, double y, double z) {
         super(AetherEntityTypes.POISON_DART.get(), x, y, z, worldIn);
-        this.setDamage(0.0D);
+        this.setBaseDamage(0.0D);
     }
 
     public PoisonDartEntity(World worldIn, LivingEntity shooter) {
         super(AetherEntityTypes.POISON_DART.get(), shooter, worldIn);
-        this.setDamage(0.0D);
+        this.setBaseDamage(0.0D);
     }
 
     @Override
-    protected void arrowHit(LivingEntity living) {
-        super.arrowHit(living);
+    protected void doPostHurtEffects(LivingEntity living) {
+        super.doPostHurtEffects(living);
 
-        if (!world.isRemote) {
-            living.addPotionEffect(new EffectInstance(AetherPotionEffects.INEBRIATION.get(), 500, 0, false, false));
+        if (!level.isClientSide) {
+            living.addEffect(new EffectInstance(AetherPotionEffects.INEBRIATION.get(), 500, 0, false, false));
         }
     }
 
     @Override
-    protected ItemStack getArrowStack() {
+    protected ItemStack getPickupItem() {
         return new ItemStack(AetherItems.POISON_DART.get());
     }
 }

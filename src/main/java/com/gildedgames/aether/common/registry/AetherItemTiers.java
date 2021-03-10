@@ -9,10 +9,10 @@ import java.util.function.Supplier;
 
 public enum AetherItemTiers implements IItemTier
 {
-	SKYROOT(0, 59, 2.0F, 0.0F, 15, () -> Ingredient.fromTag(ItemTags.PLANKS)),
-	HOLYSTONE(1, 131, 4.0F, 1.0F, 5, () -> Ingredient.fromItems(AetherBlocks.HOLYSTONE.get())),
-	ZANITE(2, 250, 6.0F, 2.0F, 14, () -> Ingredient.fromItems(AetherItems.ZANITE_GEMSTONE.get())),
-	GRAVITITE(3, 1561, 8.0F, 3.0F, 10, () -> Ingredient.fromItems(AetherBlocks.ENCHANTED_GRAVITITE.get())),
+	SKYROOT(0, 59, 2.0F, 0.0F, 15, () -> Ingredient.of(ItemTags.PLANKS)),
+	HOLYSTONE(1, 131, 4.0F, 1.0F, 5, () -> Ingredient.of(AetherBlocks.HOLYSTONE.get())),
+	ZANITE(2, 250, 6.0F, 2.0F, 14, () -> Ingredient.of(AetherItems.ZANITE_GEMSTONE.get())),
+	GRAVITITE(3, 1561, 8.0F, 3.0F, 10, () -> Ingredient.of(AetherBlocks.ENCHANTED_GRAVITITE.get())),
 	VALKYRIE(3, 1561, 8.0F, 3.0F, 22, () -> Ingredient.EMPTY);
 
 	private final int harvestLevel;
@@ -32,32 +32,32 @@ public enum AetherItemTiers implements IItemTier
 	}
 
 	@Override
-	public int getMaxUses() {
+	public int getUses() {
 		return this.maxUses;
 	}
 
 	@Override
-	public float getEfficiency() {
+	public float getSpeed() {
 		return this.efficiency;
 	}
 
 	@Override
-	public float getAttackDamage() {
+	public float getAttackDamageBonus() {
 		return this.attackDamage;
 	}
 
 	@Override
-	public int getHarvestLevel() {
+	public int getLevel() {
 		return this.harvestLevel;
 	}
 
 	@Override
-	public int getEnchantability() {
+	public int getEnchantmentValue() {
 		return this.enchantability;
 	}
 
 	@Override
-	public Ingredient getRepairMaterial() {
-		return this.repairMaterial.getValue();
+	public Ingredient getRepairIngredient() {
+		return this.repairMaterial.get();
 	}
 }

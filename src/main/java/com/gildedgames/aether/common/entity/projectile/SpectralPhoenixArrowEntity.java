@@ -31,16 +31,16 @@ public class SpectralPhoenixArrowEntity extends AbstractArrowEntity {
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (this.world.isRemote) {
+        if (this.level.isClientSide) {
             if (this.inGround) {
-                if (this.timeInGround % 5 == 0) {
+                if (this.inGroundTime % 5 == 0) {
                     this.spawnPotionParticles(1);
                 }
             }
@@ -52,13 +52,13 @@ public class SpectralPhoenixArrowEntity extends AbstractArrowEntity {
 
     private void spawnPotionParticles(int particleCount) {
         for (int j = 0; j < particleCount; ++j) {
-            this.world.addParticle(ParticleTypes.FLAME, this.getPosX() + (this.rand.nextGaussian() / 5.0), this.getPosY() + (this.rand.nextGaussian() / 5.0), this.getPosZ() + (this.rand.nextGaussian() / 3.0), 0.0, 0.0, 0.0);
+            this.level.addParticle(ParticleTypes.FLAME, this.getX() + (this.random.nextGaussian() / 5.0), this.getY() + (this.random.nextGaussian() / 5.0), this.getZ() + (this.random.nextGaussian() / 3.0), 0.0, 0.0, 0.0);
         }
     }
 
     @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
+    public void readAdditionalSaveData(CompoundNBT compound) {
+        super.readAdditionalSaveData(compound);
         if(compound.contains("Duration")) {
             this.duration = compound.getInt("Duration");
         }
@@ -66,24 +66,24 @@ public class SpectralPhoenixArrowEntity extends AbstractArrowEntity {
 
 
     @Override
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
+    public void addAdditionalSaveData(CompoundNBT compound) {
+        super.addAdditionalSaveData(compound);
         compound.putInt("Duration", this.duration);
     }
 
     @Override
-    protected ItemStack getArrowStack() {
+    protected ItemStack getPickupItem() {
         return new ItemStack(Items.SPECTRAL_ARROW);
     }
 
     @Override
-    protected void arrowHit(LivingEntity entity) {
+    protected void doPostHurtEffects(LivingEntity entity) {
         EffectInstance effectinstance = new EffectInstance(Effects.GLOWING, this.duration, 0);
-        entity.addPotionEffect(effectinstance);
+        entity.addEffect(effectinstance);
         if (!(entity instanceof EndermanEntity)) {
-            entity.setFire(5);
-            if (this.isBurning()) {
-                entity.setFire(10);
+            entity.setSecondsOnFire(5);
+            if (this.isOnFire()) {
+                entity.setSecondsOnFire(10);
             }
         }
     }

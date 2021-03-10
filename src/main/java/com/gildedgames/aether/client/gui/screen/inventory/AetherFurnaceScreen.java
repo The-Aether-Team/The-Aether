@@ -22,27 +22,27 @@ public class AetherFurnaceScreen<T extends AbstractFurnaceContainer> extends Con
 
     public void init() {
         super.init();
-        this.titleX = (this.xSize - this.font.getStringPropertyWidth(this.title)) / 2;
+        this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
     }
 
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bindTexture(this.guiTexture);
-        int i = this.guiLeft;
-        int j = this.guiTop;
-        this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
-        if (this.container.isBurning()) {
-            int k = this.container.getBurnLeftScaled();
+        this.minecraft.getTextureManager().bind(this.guiTexture);
+        int i = this.leftPos;
+        int j = this.topPos;
+        this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        if (this.menu.isLit()) {
+            int k = this.menu.getLitProgress();
             this.blit(matrixStack, i + 56, j + 36 + 12 - k, 176, 12 - k, 14, k + 1);
         }
 
-        int l = this.container.getCookProgressionScaled();
+        int l = this.menu.getBurnProgress();
         this.blit(matrixStack, i + 79, j + 34, 176, 14, l + 1, 16);
     }
 }

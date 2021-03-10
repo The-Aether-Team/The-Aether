@@ -16,13 +16,13 @@ public class AetherClientDimensionHandler
     @SubscribeEvent
     public static void onRenderFogColor(EntityViewRenderEvent.FogColors event) {
         ActiveRenderInfo renderInfo = event.getInfo();
-        ClientWorld world = (ClientWorld) renderInfo.getRenderViewEntity().world;
-        if(world.getDimensionKey() == AetherDimensions.AETHER_WORLD) {
-            double height = renderInfo.getProjectedView().y;
-            ClientWorld.ClientWorldInfo worldInfo = world.getWorldInfo();
-            double d0 = height * worldInfo.getFogDistance();
-            FluidState fluidState = renderInfo.getFluidState();
-            if(d0 < 1.0D && !fluidState.isTagged(FluidTags.LAVA)) { // Reverse implementation of FogRenderer.updateFogColor.
+        ClientWorld world = (ClientWorld) renderInfo.getEntity().level;
+        if(world.dimension() == AetherDimensions.AETHER_WORLD) {
+            double height = renderInfo.getPosition().y;
+            ClientWorld.ClientWorldInfo worldInfo = world.getLevelData();
+            double d0 = height * worldInfo.getClearColorScale();
+            FluidState fluidState = renderInfo.getFluidInCamera();
+            if(d0 < 1.0D && !fluidState.is(FluidTags.LAVA)) { // Reverse implementation of FogRenderer.updateFogColor.
                 if (d0 < 0.0D) {
                     d0 = 0.0D;
                 }

@@ -17,7 +17,7 @@ public class EnchantingRecipe extends AbstractCookingRecipe
 	}
 
 	@Override
-	public ItemStack getIcon() {
+	public ItemStack getToastSymbol() {
 		return new ItemStack(AetherBlocks.ALTAR.get());
 	}
 

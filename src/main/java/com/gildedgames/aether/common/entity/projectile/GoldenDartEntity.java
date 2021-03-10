@@ -11,21 +11,21 @@ public class GoldenDartEntity extends AbstractDartEntity
 {
     public GoldenDartEntity(EntityType<? extends GoldenDartEntity> type, World worldIn) {
         super(type, worldIn);
-        this.setDamage(4.0D);
+        this.setBaseDamage(4.0D);
     }
 
     public GoldenDartEntity(World worldIn, double x, double y, double z) {
         super(AetherEntityTypes.GOLDEN_DART.get(), x, y, z, worldIn);
-        this.setDamage(4.0D);
+        this.setBaseDamage(4.0D);
     }
 
     public GoldenDartEntity(World worldIn, LivingEntity shooter) {
         super(AetherEntityTypes.GOLDEN_DART.get(), shooter, worldIn);
-        this.setDamage(4.0D);
+        this.setBaseDamage(4.0D);
     }
 
     @Override
-    protected ItemStack getArrowStack() {
+    protected ItemStack getPickupItem() {
         return new ItemStack(AetherItems.GOLDEN_DART.get());
     }
 }

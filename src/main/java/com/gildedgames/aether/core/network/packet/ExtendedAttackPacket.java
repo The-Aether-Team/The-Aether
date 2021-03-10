@@ -34,11 +34,11 @@ public class ExtendedAttackPacket extends AetherPacket
         }
         context.get().enqueueWork(() -> {
             ServerPlayerEntity player = context.get().getSender();
-            Entity target = player.world.getEntityByID(targetEntityID);
+            Entity target = player.level.getEntity(targetEntityID);
             if(target != null) {
                 double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
-                if(player.getDistanceSq(target) < reach * reach) {
-                    player.attackTargetEntityWithCurrentItem(target);
+                if(player.distanceToSqr(target) < reach * reach) {
+                    player.attack(target);
                 }
             }
         });

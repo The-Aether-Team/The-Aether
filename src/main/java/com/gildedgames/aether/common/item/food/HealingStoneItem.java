@@ -12,12 +12,12 @@ public class HealingStoneItem extends Item
 {
     public HealingStoneItem() {
         super(new Item.Properties().rarity(Rarity.RARE)
-                .food(new Food.Builder().setAlwaysEdible().hunger(0).effect(() -> new EffectInstance(Effects.REGENERATION, 610, 0), 1.0F).build())
-                .group(AetherItemGroups.AETHER_FOOD));
+                .food(new Food.Builder().alwaysEat().nutrition(0).effect(() -> new EffectInstance(Effects.REGENERATION, 610, 0), 1.0F).build())
+                .tab(AetherItemGroups.AETHER_FOOD));
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
         return true;
     }
 }

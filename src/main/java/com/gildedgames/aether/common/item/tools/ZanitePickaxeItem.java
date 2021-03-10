@@ -11,7 +11,7 @@ import net.minecraft.item.PickaxeItem;
 public class ZanitePickaxeItem extends PickaxeItem implements IZaniteToolItem
 {
 	public ZanitePickaxeItem() {
-		super(AetherItemTiers.ZANITE, 1, -2.8F, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS));
+		super(AetherItemTiers.ZANITE, 1, -2.8F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
 	}
 	
 	@Override

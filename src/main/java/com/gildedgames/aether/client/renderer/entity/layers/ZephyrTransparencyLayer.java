@@ -31,11 +31,11 @@ public class ZephyrTransparencyLayer extends LayerRenderer<ZephyrEntity, ZephyrM
 //            RenderSystem.enableRescaleNormal();
 //            RenderSystem.enableBlend();
 //            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            this.zephyrRenderer.getEntityModel().copyModelAttributesTo(this.zephyrModel);
-            this.zephyrModel.setRotationAngles(zephyr, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-            IVertexBuilder vertexBuilder = bufferIn.getBuffer(RenderType.getEntityTranslucent(LAYER_TEXTURE));
+            this.zephyrRenderer.getModel().copyPropertiesTo(this.zephyrModel);
+            this.zephyrModel.setupAnim(zephyr, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            IVertexBuilder vertexBuilder = bufferIn.getBuffer(RenderType.entityTranslucent(LAYER_TEXTURE));
 
-            this.zephyrModel.render(matrixStackIn, vertexBuilder, packedLightIn, LivingRenderer.getPackedOverlay(zephyr, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+            this.zephyrModel.renderToBuffer(matrixStackIn, vertexBuilder, packedLightIn, LivingRenderer.getOverlayCoords(zephyr, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
 //
 //            RenderSystem.disableBlend();
 //            RenderSystem.disableRescaleNormal();

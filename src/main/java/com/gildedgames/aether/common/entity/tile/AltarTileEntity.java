@@ -33,7 +33,7 @@ public class AltarTileEntity extends AbstractFurnaceTileEntity
 
 	@Override
 	protected Container createMenu(int id, PlayerInventory player) {
-		return new AltarContainer(id, player, this, this.furnaceData);
+		return new AltarContainer(id, player, this, this.dataAccess);
 	}
 
 	public static Map<Item, Integer> getEnchantingMap() {
@@ -41,7 +41,7 @@ public class AltarTileEntity extends AbstractFurnaceTileEntity
 	}
 
 	private static void addItemTagEnchantingTime(ITag<Item> itemTag, int burnTimeIn) {
-		for (Item item : itemTag.getAllElements()) {
+		for (Item item : itemTag.getValues()) {
 			enchantingMap.put(item, burnTimeIn);
 		}
 	}
@@ -52,7 +52,7 @@ public class AltarTileEntity extends AbstractFurnaceTileEntity
 	}
 
 	@Override
-	protected int getBurnTime(ItemStack fuel) {
+	protected int getBurnDuration(ItemStack fuel) {
 		if (fuel.isEmpty() || !getEnchantingMap().containsKey(fuel.getItem())) {
 			return 0;
 		} else {

@@ -13,28 +13,28 @@ import net.minecraft.util.DamageSource;
 public class HolySwordItem extends SwordItem
 {
     public HolySwordItem() {
-        super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_WEAPONS));
+        super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().durability(502).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
         return false;
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if ((target.isEntityUndead() || target.getCreatureAttribute() == CreatureAttribute.UNDEAD)) {
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if ((target.isInvertedHealAndHarm() || target.getMobType() == CreatureAttribute.UNDEAD)) {
             float damage = 15.0F;
-            int level = EnchantmentHelper.getEnchantmentLevel(Enchantments.SMITE, stack);
+            int level = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SMITE, stack);
             if (level > 0) {
                 damage += (level * 2.5);
             }
-            target.attackEntityFrom(DamageSource.DROWN, damage);
-            stack.damageItem(10, attacker, (entity) -> {
-                entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+            target.hurt(DamageSource.DROWN, damage);
+            stack.hurtAndBreak(10, attacker, (entity) -> {
+                entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
             });
             return true;
         }
-        return super.hitEntity(stack, target, attacker);
+        return super.hurtEnemy(stack, target, attacker);
     }
 }

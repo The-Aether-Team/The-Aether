@@ -21,24 +21,24 @@ public class BlueAercloudBlock extends AercloudBlock
 	}
 	
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 		entity.fallDistance = 0.0F;
-		Vector3d motion = entity.getMotion();
+		Vector3d motion = entity.getDeltaMovement();
 
-		if (entity.isSneaking()) {
+		if (entity.isShiftKeyDown()) {
 			if (motion.y < 0) {
-				entity.setMotion(motion.mul(1.0, 0.005, 1.0));
+				entity.setDeltaMovement(motion.multiply(1.0, 0.005, 1.0));
 			}
 			return;
 		}
 		
-		entity.setMotion(motion.x, 2.0, motion.z);
+		entity.setDeltaMovement(motion.x, 2.0, motion.z);
 		
-		if (world.isRemote) {
+		if (world.isClientSide) {
 			for (int count = 0; count < 50; count++) {
-				double xOffset = pos.getX() + world.rand.nextDouble();
-				double yOffset = pos.getY() + world.rand.nextDouble();
-				double zOffset = pos.getZ() + world.rand.nextDouble();
+				double xOffset = pos.getX() + world.random.nextDouble();
+				double yOffset = pos.getY() + world.random.nextDouble();
+				double zOffset = pos.getZ() + world.random.nextDouble();
 				
 				world.addParticle(ParticleTypes.SPLASH, xOffset, yOffset, zOffset, 0.0, 0.0, 0.0);
 			}

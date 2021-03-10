@@ -53,53 +53,53 @@ public class ChestMimicTileEntityRenderer<T extends TileEntity> extends TileEnti
 		this.singleBottom.addBox(1.0F, 0.0F, 1.0F, 14.0F, 10.0F, 14.0F, 0.0F);
 		this.singleLid = new ModelRenderer(64, 64, 0, 0);
 		this.singleLid.addBox(1.0F, 0.0F, 0.0F, 14.0F, 5.0F, 14.0F, 0.0F);
-		this.singleLid.rotationPointY = 9.0F;
-		this.singleLid.rotationPointZ = 1.0F;
+		this.singleLid.y = 9.0F;
+		this.singleLid.z = 1.0F;
 		this.singleLatch = new ModelRenderer(64, 64, 0, 0);
 		this.singleLatch.addBox(7.0F, -1.0F, 15.0F, 2.0F, 4.0F, 1.0F, 0.0F);
-		this.singleLatch.rotationPointY = 8.0F;
+		this.singleLatch.y = 8.0F;
 		this.rightBottom = new ModelRenderer(64, 64, 0, 19);
 		this.rightBottom.addBox(1.0F, 0.0F, 1.0F, 15.0F, 10.0F, 14.0F, 0.0F);
 		this.rightLid = new ModelRenderer(64, 64, 0, 0);
 		this.rightLid.addBox(1.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
-		this.rightLid.rotationPointY = 9.0F;
-		this.rightLid.rotationPointZ = 1.0F;
+		this.rightLid.y = 9.0F;
+		this.rightLid.z = 1.0F;
 		this.rightLatch = new ModelRenderer(64, 64, 0, 0);
 		this.rightLatch.addBox(15.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
-		this.rightLatch.rotationPointY = 8.0F;
+		this.rightLatch.y = 8.0F;
 		this.leftBottom = new ModelRenderer(64, 64, 0, 19);
 		this.leftBottom.addBox(0.0F, 0.0F, 1.0F, 15.0F, 10.0F, 14.0F, 0.0F);
 		this.leftLid = new ModelRenderer(64, 64, 0, 0);
 		this.leftLid.addBox(0.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
-		this.leftLid.rotationPointY = 9.0F;
-		this.leftLid.rotationPointZ = 1.0F;
+		this.leftLid.y = 9.0F;
+		this.leftLid.z = 1.0F;
 		this.leftLatch = new ModelRenderer(64, 64, 0, 0);
 		this.leftLatch.addBox(0.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
-		this.leftLatch.rotationPointY = 8.0F;
+		this.leftLatch.y = 8.0F;
 	}
 
 	@Override
 	public void render(T tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
-		World world = tileEntityIn.getWorld();
-		BlockState blockstate = world != null ? tileEntityIn.getBlockState() : AetherBlocks.CHEST_MIMIC.get().getDefaultState().with(ChestMimicBlock.FACING, Direction.SOUTH);
-		ChestType chesttype = blockstate.hasProperty(ChestBlock.TYPE) ? blockstate.get(ChestBlock.TYPE) : ChestType.SINGLE;
+		World world = tileEntityIn.getLevel();
+		BlockState blockstate = world != null ? tileEntityIn.getBlockState() : AetherBlocks.CHEST_MIMIC.get().defaultBlockState().setValue(ChestMimicBlock.FACING, Direction.SOUTH);
+		ChestType chesttype = blockstate.hasProperty(ChestBlock.TYPE) ? blockstate.getValue(ChestBlock.TYPE) : ChestType.SINGLE;
 		Block block = blockstate.getBlock();
 		if (block instanceof ChestMimicBlock) {
 			ChestMimicBlock chestMimicBlock = (ChestMimicBlock) block;
-			matrixStackIn.push();
-			float f = blockstate.get(ChestBlock.FACING).getHorizontalAngle();
+			matrixStackIn.pushPose();
+			float f = blockstate.getValue(ChestBlock.FACING).toYRot();
 			matrixStackIn.translate(0.5D, 0.5D, 0.5D);
-			matrixStackIn.rotate(Vector3f.YP.rotationDegrees(-f));
+			matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(-f));
 			matrixStackIn.translate(-0.5D, -0.5D, -0.5D);
 			TileEntityMerger.ICallbackWrapper<? extends ChestMimicTileEntity> icallbackwrapper;
 			if (world != null) {
-				icallbackwrapper = chestMimicBlock.combine(blockstate, world, tileEntityIn.getPos(), true);
+				icallbackwrapper = chestMimicBlock.combine(blockstate, world, tileEntityIn.getBlockPos(), true);
 			} else {
-				icallbackwrapper = TileEntityMerger.ICallback::func_225537_b_;
+				icallbackwrapper = TileEntityMerger.ICallback::acceptNone;
 			}
 			combinedLightIn = icallbackwrapper.apply(new DualBrightnessCallback<>()).applyAsInt(combinedLightIn);
 			RenderMaterial rendermaterial = this.getMaterial(tileEntityIn, chesttype);
-			IVertexBuilder ivertexbuilder = rendermaterial.getBuffer(bufferIn, RenderType::getEntityCutout);
+			IVertexBuilder ivertexbuilder = rendermaterial.buffer(bufferIn, RenderType::entityCutout);
 			if (chesttype != ChestType.SINGLE) {
 				if (chesttype == ChestType.LEFT) {
 					this.renderModels(matrixStackIn, ivertexbuilder, this.leftLid, this.leftLatch, this.leftBottom, combinedLightIn, combinedOverlayIn);
@@ -109,7 +109,7 @@ public class ChestMimicTileEntityRenderer<T extends TileEntity> extends TileEnti
 			} else {
 				this.renderModels(matrixStackIn, ivertexbuilder, this.singleLid, this.singleLatch, this.singleBottom, combinedLightIn, combinedOverlayIn);
 			}
-			matrixStackIn.pop();
+			matrixStackIn.popPose();
 		} else {
 			LogManager.getLogger(ChestMimicTileEntityRenderer.class).warn("Invalid block used with ChestMimicTileEntityRenderer!");
 		}
@@ -122,6 +122,6 @@ public class ChestMimicTileEntityRenderer<T extends TileEntity> extends TileEnti
 	}
 
 	protected RenderMaterial getMaterial(T tileEntity, ChestType chestType) {
-		return Atlases.getChestMaterial(tileEntity, chestType, this.isChristmas);
+		return Atlases.chooseMaterial(tileEntity, chestType, this.isChristmas);
 	}
 }

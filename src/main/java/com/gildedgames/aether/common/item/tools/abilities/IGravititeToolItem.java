@@ -22,24 +22,24 @@ public interface IGravititeToolItem {
 	Logger log = LogManager.getLogger(IGravititeToolItem.class);
 	
 	default ActionResultType onItemUse(ItemUseContext context) {
-		BlockPos pos = context.getPos();
-		World world = context.getWorld();
+		BlockPos pos = context.getClickedPos();
+		World world = context.getLevel();
 		BlockState state = world.getBlockState(pos);
-		ItemStack heldItem = context.getItem();
+		ItemStack heldItem = context.getItemInHand();
 		
-		if ((this.getDestroySpeed(heldItem, state) == this.getTier().getEfficiency() || ForgeHooks.isToolEffective(world, pos, heldItem)) && world.isAirBlock(pos.up())) {
-			if (world.getTileEntity(pos) != null || state.getBlockHardness(world, pos) == -1.0F) {
+		if ((this.getDestroySpeed(heldItem, state) == this.getTier().getSpeed() || ForgeHooks.isToolEffective(world, pos, heldItem)) && world.isEmptyBlock(pos.above())) {
+			if (world.getBlockEntity(pos) != null || state.getDestroySpeed(world, pos) == -1.0F) {
 				return ActionResultType.FAIL;
 			}
 			
-			if (!world.isRemote) {
+			if (!world.isClientSide) {
 				FloatingBlockEntity entity = new FloatingBlockEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, state);
 				entity.floatTime = 0;
-				world.addEntity(entity);
+				world.addFreshEntity(entity);
 			}
 			
 			if (!context.getPlayer().isCreative()) {
-				heldItem.damageItem(4, context.getPlayer(), (player) -> player.sendBreakAnimation(context.getHand()));
+				heldItem.hurtAndBreak(4, context.getPlayer(), (player) -> player.broadcastBreakEvent(context.getHand()));
 			}
 			
 			return ActionResultType.SUCCESS;

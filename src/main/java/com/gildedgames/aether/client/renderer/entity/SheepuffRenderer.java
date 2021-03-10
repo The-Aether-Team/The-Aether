@@ -18,7 +18,7 @@ public class SheepuffRenderer extends MobRenderer<SheepuffEntity, SheepuffModel>
     }
 
     @Override
-    public ResourceLocation getEntityTexture(SheepuffEntity entity) {
+    public ResourceLocation getTextureLocation(SheepuffEntity entity) {
         return SHEEPUFF_TEXTURE;
     }
 }

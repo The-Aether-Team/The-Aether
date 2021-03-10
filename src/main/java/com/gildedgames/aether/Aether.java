@@ -121,14 +121,14 @@ public class Aether
 		AetherRendering.registerGuiFactories();
 		AetherRendering.registerItemModelProperties();
 
-		DimensionRenderInfo.field_239208_a_.put(AetherDimensions.AETHER_DIMENSION.getLocation(), new DimensionRenderInfo(-5.0F, true, DimensionRenderInfo.FogType.NORMAL, false, false) {
+		DimensionRenderInfo.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), new DimensionRenderInfo(-5.0F, true, DimensionRenderInfo.FogType.NORMAL, false, false) {
 			@Override
-			public Vector3d func_230494_a_(Vector3d color, float p_230494_2_) {
-				return color.mul((p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.91F + 0.09F));
+			public Vector3d getBrightnessDependentFogColor(Vector3d color, float p_230494_2_) {
+				return color.multiply((p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.91F + 0.09F));
 			}
 
 			@Override
-			public boolean func_230493_a_(int x, int z) {
+			public boolean isFoggyAt(int x, int z) {
 				return false;
 			}
 		});
@@ -166,10 +166,10 @@ public class Aether
 	private void registerDispenserBehaviors() {
 		IDispenseItemBehavior dispenseSpawnEgg = new DefaultDispenseItemBehavior() {
 			@Override
-			public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-				Direction direction = source.getBlockState().get(DispenserBlock.FACING);
+			public ItemStack execute(IBlockSource source, ItemStack stack) {
+				Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
 				EntityType<?> entitytype = ((SpawnEggItem)stack.getItem()).getType(stack.getTag());
-				entitytype.spawn(source.getWorld(), stack, null, source.getBlockPos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
+				entitytype.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
 				stack.shrink(1);
 				return stack;
 			}
@@ -179,68 +179,68 @@ public class Aether
 		{
 			if (item.get() instanceof SpawnEggItem)
 			{
-				DispenserBlock.registerDispenseBehavior(item.get(), dispenseSpawnEgg);
+				DispenserBlock.registerBehavior(item.get(), dispenseSpawnEgg);
 			}
 		}
 
-		DispenserBlock.registerDispenseBehavior(Items.FIRE_CHARGE, new OptionalDispenseBehavior() {
+		DispenserBlock.registerBehavior(Items.FIRE_CHARGE, new OptionalDispenseBehavior() {
 			@Override
-			public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-				World world = source.getWorld();
-				if (world.getDimensionKey() == AetherDimensions.AETHER_WORLD) {
-					this.setSuccessful(false);
+			public ItemStack execute(IBlockSource source, ItemStack stack) {
+				World world = source.getLevel();
+				if (world.dimension() == AetherDimensions.AETHER_WORLD) {
+					this.setSuccess(false);
 				}
 				else {
-					this.setSuccessful(true);
-					Direction direction = source.getBlockState().get(DispenserBlock.FACING);
+					this.setSuccess(true);
+					Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
 					IPosition iposition = DispenserBlock.getDispensePosition(source);
-					double d0 = iposition.getX() + direction.getXOffset() * 0.3F;
-					double d1 = iposition.getY() + direction.getYOffset() * 0.3F;
-					double d2 = iposition.getZ() + direction.getZOffset() * 0.3F;
-					Random random = world.rand;
-					double d3 = random.nextGaussian() * 0.05 + direction.getXOffset();
-					double d4 = random.nextGaussian() * 0.05 + direction.getYOffset();
-					double d5 = random.nextGaussian() * 0.05 + direction.getZOffset();
-					world.addEntity(Util.make(new SmallFireballEntity(world, d0, d1, d2, d3, d4, d5), (entity) -> entity.setStack(stack)));
+					double d0 = iposition.x() + direction.getStepX() * 0.3F;
+					double d1 = iposition.y() + direction.getStepY() * 0.3F;
+					double d2 = iposition.z() + direction.getStepZ() * 0.3F;
+					Random random = world.random;
+					double d3 = random.nextGaussian() * 0.05 + direction.getStepX();
+					double d4 = random.nextGaussian() * 0.05 + direction.getStepY();
+					double d5 = random.nextGaussian() * 0.05 + direction.getStepZ();
+					world.addFreshEntity(Util.make(new SmallFireballEntity(world, d0, d1, d2, d3, d4, d5), (entity) -> entity.setItem(stack)));
 					stack.shrink(1);
 				}
 				return stack;
 			}
 
 			@Override
-			protected void playDispenseSound(IBlockSource source) {
-				source.getWorld().playEvent(this.isSuccessful()? 1018 : 1001, source.getBlockPos(), 0);
+			protected void playSound(IBlockSource source) {
+				source.getLevel().levelEvent(this.isSuccess()? 1018 : 1001, source.getPos(), 0);
 			}
 		});
-		DispenserBlock.registerDispenseBehavior(Items.FLINT_AND_STEEL, new OptionalDispenseBehavior() {
+		DispenserBlock.registerBehavior(Items.FLINT_AND_STEEL, new OptionalDispenseBehavior() {
 			@Override
-			protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-				World world = source.getWorld();
-				if (world.getDimensionKey() == AetherDimensions.AETHER_WORLD) {
-					this.setSuccessful(false);
+			protected ItemStack execute(IBlockSource source, ItemStack stack) {
+				World world = source.getLevel();
+				if (world.dimension() == AetherDimensions.AETHER_WORLD) {
+					this.setSuccess(false);
 				}
 				else {
-					this.setSuccessful(true);
-					BlockPos blockpos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
+					this.setSuccess(true);
+					BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
 					BlockState blockstate = world.getBlockState(blockpos);
-					Direction direction = source.getBlockState().get(DispenserBlock.FACING);
-					if (AbstractFireBlock.canLightBlock(world, blockpos, direction)) {
-						world.setBlockState(blockpos, Blocks.FIRE.getDefaultState());
+					Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+					if (AbstractFireBlock.canBePlacedAt(world, blockpos, direction)) {
+						world.setBlockAndUpdate(blockpos, Blocks.FIRE.defaultBlockState());
 					}
-					else if (CampfireBlock.canBeLit(blockstate)) {
-						world.setBlockState(blockpos, blockstate.with(BlockStateProperties.LIT, true));
+					else if (CampfireBlock.canLight(blockstate)) {
+						world.setBlockAndUpdate(blockpos, blockstate.setValue(BlockStateProperties.LIT, true));
 					}
-					else if (blockstate.isFlammable(world, blockpos, source.getBlockState().get(DispenserBlock.FACING).getOpposite())) {
-						blockstate.catchFire(world, blockpos, source.getBlockState().get(DispenserBlock.FACING).getOpposite(), null);
+					else if (blockstate.isFlammable(world, blockpos, source.getBlockState().getValue(DispenserBlock.FACING).getOpposite())) {
+						blockstate.catchFire(world, blockpos, source.getBlockState().getValue(DispenserBlock.FACING).getOpposite(), null);
 						if (blockstate.getBlock() instanceof TNTBlock) {
 							world.removeBlock(blockpos, false);
 						}
 					}
 					else {
-						this.setSuccessful(false);
+						this.setSuccess(false);
 					}
 
-					if (this.isSuccessful() && stack.attemptDamageItem(1, world.rand, null)) {
+					if (this.isSuccess() && stack.hurt(1, world.random, null)) {
 						stack.setCount(0);
 					}
 				}
@@ -251,21 +251,21 @@ public class Aether
 	}
 
 	private void registerComposting() {
-		ComposterBlock.registerCompostable(0.3F, AetherBlocks.SKYROOT_LEAVES.get());
-		ComposterBlock.registerCompostable(0.3F, AetherBlocks.SKYROOT_SAPLING.get());
-		ComposterBlock.registerCompostable(0.3F, AetherBlocks.GOLDEN_OAK_LEAVES.get());
-		ComposterBlock.registerCompostable(0.3F, AetherBlocks.GOLDEN_OAK_SAPLING.get());
-		ComposterBlock.registerCompostable(0.3F, AetherBlocks.CRYSTAL_LEAVES.get());
-		ComposterBlock.registerCompostable(0.3F, AetherBlocks.CRYSTAL_FRUIT_LEAVES.get());
-		ComposterBlock.registerCompostable(0.3F, AetherBlocks.HOLIDAY_LEAVES.get());
-		ComposterBlock.registerCompostable(0.3F, AetherBlocks.DECORATED_HOLIDAY_LEAVES.get());
-		ComposterBlock.registerCompostable(0.3F, AetherItems.BLUE_BERRY.get());
-		ComposterBlock.registerCompostable(0.5F, AetherItems.ENCHANTED_BERRY.get());
-		ComposterBlock.registerCompostable(0.5F, AetherBlocks.BERRY_BUSH.get());
-		ComposterBlock.registerCompostable(0.5F, AetherBlocks.BERRY_BUSH_STEM.get());
-		ComposterBlock.registerCompostable(0.65F, AetherBlocks.WHITE_FLOWER.get());
-		ComposterBlock.registerCompostable(0.65F, AetherBlocks.PURPLE_FLOWER.get());
-		ComposterBlock.registerCompostable(0.65F, AetherItems.WHITE_APPLE.get());
+		ComposterBlock.add(0.3F, AetherBlocks.SKYROOT_LEAVES.get());
+		ComposterBlock.add(0.3F, AetherBlocks.SKYROOT_SAPLING.get());
+		ComposterBlock.add(0.3F, AetherBlocks.GOLDEN_OAK_LEAVES.get());
+		ComposterBlock.add(0.3F, AetherBlocks.GOLDEN_OAK_SAPLING.get());
+		ComposterBlock.add(0.3F, AetherBlocks.CRYSTAL_LEAVES.get());
+		ComposterBlock.add(0.3F, AetherBlocks.CRYSTAL_FRUIT_LEAVES.get());
+		ComposterBlock.add(0.3F, AetherBlocks.HOLIDAY_LEAVES.get());
+		ComposterBlock.add(0.3F, AetherBlocks.DECORATED_HOLIDAY_LEAVES.get());
+		ComposterBlock.add(0.3F, AetherItems.BLUE_BERRY.get());
+		ComposterBlock.add(0.5F, AetherItems.ENCHANTED_BERRY.get());
+		ComposterBlock.add(0.5F, AetherBlocks.BERRY_BUSH.get());
+		ComposterBlock.add(0.5F, AetherBlocks.BERRY_BUSH_STEM.get());
+		ComposterBlock.add(0.65F, AetherBlocks.WHITE_FLOWER.get());
+		ComposterBlock.add(0.65F, AetherBlocks.PURPLE_FLOWER.get());
+		ComposterBlock.add(0.65F, AetherItems.WHITE_APPLE.get());
 	}
 
 	private void registerFuels() {

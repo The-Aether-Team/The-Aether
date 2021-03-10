@@ -38,15 +38,15 @@ public class LightningKnifeEntity extends ProjectileItemEntity {
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		if (this.world.isRemote) {
+	protected void onHit(RayTraceResult result) {
+		if (this.level.isClientSide) {
 			return;
 		}
 		
-		if (result.getType() != RayTraceResult.Type.MISS && this.world instanceof ServerWorld) {
-			LightningBoltEntity lightningBolt = EntityType.LIGHTNING_BOLT.create(this.world);
-			lightningBolt.setPosition(this.getPosX(), this.getPosY(), this.getPosZ());
-			this.world.addEntity(lightningBolt);
+		if (result.getType() != RayTraceResult.Type.MISS && this.level instanceof ServerWorld) {
+			LightningBoltEntity lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
+			lightningBolt.setPos(this.getX(), this.getY(), this.getZ());
+			this.level.addFreshEntity(lightningBolt);
 		}
 		
 		this.remove();
@@ -58,7 +58,7 @@ public class LightningKnifeEntity extends ProjectileItemEntity {
 	}	
 	
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

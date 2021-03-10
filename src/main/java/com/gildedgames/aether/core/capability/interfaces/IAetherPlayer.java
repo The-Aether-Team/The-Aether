@@ -16,7 +16,7 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 		return player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
 	}
 
-	default UUID getUniqueID() { return this.getPlayer().getUniqueID(); }
+	default UUID getUniqueID() { return this.getPlayer().getUUID(); }
 
 	void onUpdate();
 

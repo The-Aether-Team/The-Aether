@@ -25,14 +25,14 @@ public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoub
 
 	public LeavesWithParticlesBlock(Supplier<BasicParticleType> particle, AbstractBlock.Properties properties) {
 
-		super(properties.setAllowsSpawn((state, reader, pos, entity) -> (entity == EntityType.OCELOT || entity == EntityType.PARROT)).setSuffocates((state, reader, pos) -> false).setBlocksVision((state, reader, pos) -> false));
-		this.setDefaultState(this.getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, false));
+		super(properties.isValidSpawn((state, reader, pos, entity) -> (entity == EntityType.OCELOT || entity == EntityType.PARROT)).isSuffocating((state, reader, pos) -> false).isViewBlocking((state, reader, pos) -> false));
+		this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
 		this.particle = particle;
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		super.fillStateContainer(builder);
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+		super.createBlockStateDefinition(builder);
 		builder.add(AetherBlockStateProperties.DOUBLE_DROPS);
 	}
 	
@@ -41,8 +41,8 @@ public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoub
 	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		super.animateTick(stateIn, worldIn, pos, rand);
 		
-		if (worldIn.isRemote) {
-			if (Minecraft.getInstance().gameSettings.particles != ParticleStatus.MINIMAL) {
+		if (worldIn.isClientSide) {
+			if (Minecraft.getInstance().options.particles != ParticleStatus.MINIMAL) {
 				if (rand.nextInt(10) == 0) {
 					for (int i = 0; i < 15; i++) {
 						double x = pos.getX() + (rand.nextFloat() - 0.5) * 8.0;

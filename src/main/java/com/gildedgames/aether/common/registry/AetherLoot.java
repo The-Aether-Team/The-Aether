@@ -22,12 +22,12 @@ public class AetherLoot
 	private static final Set<ResourceLocation> READ_ONLY_LOOT_TABLES = Collections.unmodifiableSet(LOOT_TABLES);
 
 	public static final LootParameterSet STRIPPING = LootParameterSets.register("aether:stripping", (p_237455_0_) -> {
-		p_237455_0_.required(LootParameters.BLOCK_STATE).required(LootParameters.field_237457_g_).required(LootParameters.TOOL);
+		p_237455_0_.required(LootParameters.BLOCK_STATE).required(LootParameters.ORIGIN).required(LootParameters.TOOL);
 	});
 
-	public static final LootFunctionType DOUBLE_DROPS = LootFunctionManager.func_237451_a_(new ResourceLocation(Aether.MODID, "double_drops").toString(), new DoubleDrops.Serializer());
-	public static final LootFunctionType SPAWN_ENTITY = LootFunctionManager.func_237451_a_(new ResourceLocation(Aether.MODID, "spawn_entity").toString(), new SpawnTNT.Serializer());
-	public static final LootFunctionType SPAWN_XP = LootFunctionManager.func_237451_a_(new ResourceLocation(Aether.MODID, "spawn_xp").toString(), new SpawnXP.Serializer());
+	public static final LootFunctionType DOUBLE_DROPS = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "double_drops").toString(), new DoubleDrops.Serializer());
+	public static final LootFunctionType SPAWN_ENTITY = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "spawn_entity").toString(), new SpawnTNT.Serializer());
+	public static final LootFunctionType SPAWN_XP = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "spawn_xp").toString(), new SpawnXP.Serializer());
 
 	public static final ResourceLocation ENTITIES_SHEEPUFF_WHITE = register("entities/sheepuff/white");
 	public static final ResourceLocation ENTITIES_SHEEPUFF_ORANGE = register("entities/sheepuff/orange");

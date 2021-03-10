@@ -33,7 +33,7 @@ public class FreezerTileEntity extends AbstractFurnaceTileEntity
 
 	@Override
 	protected Container createMenu(int id, PlayerInventory player) {
-		return new FreezerContainer(id, player, this, this.furnaceData);
+		return new FreezerContainer(id, player, this, this.dataAccess);
 	}
 
 	public static Map<Item, Integer> getFreezingMap() {
@@ -41,7 +41,7 @@ public class FreezerTileEntity extends AbstractFurnaceTileEntity
 	}
 
 	private static void addItemTagFreezingTime(ITag<Item> itemTag, int burnTimeIn) {
-		for (Item item : itemTag.getAllElements()) {
+		for (Item item : itemTag.getValues()) {
 			freezingMap.put(item, burnTimeIn);
 		}
 	}
@@ -52,7 +52,7 @@ public class FreezerTileEntity extends AbstractFurnaceTileEntity
 	}
 
 	@Override
-	protected int getBurnTime(ItemStack fuel) {
+	protected int getBurnDuration(ItemStack fuel) {
 		if (fuel.isEmpty() || !getFreezingMap().containsKey(fuel.getItem())) {
 			return 0;
 		} else {

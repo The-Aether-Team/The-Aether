@@ -11,7 +11,7 @@ public class WhirlwindRenderer extends EntityRenderer<WhirlwindEntity> {
     }
 
     @Override
-    public ResourceLocation getEntityTexture(WhirlwindEntity entity) {
+    public ResourceLocation getTextureLocation(WhirlwindEntity entity) {
         return null;
     }
 }

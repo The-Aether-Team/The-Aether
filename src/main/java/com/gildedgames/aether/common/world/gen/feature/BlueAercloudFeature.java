@@ -18,7 +18,7 @@ public class BlueAercloudFeature extends Feature<NoFeatureConfig> {
     }
 
     @Override
-    public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+    public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
         BlockPos origin = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
         BlockPos position = new BlockPos(origin.getX() + 8, origin.getY(), origin.getZ() + 8);
 
@@ -27,16 +27,16 @@ public class BlueAercloudFeature extends Feature<NoFeatureConfig> {
             int yOffset = (rand.nextBoolean() ? rand.nextInt(3) - 1 : 0);
             int zOffset = rand.nextInt(2);
 
-            position = position.add(xOffset, yOffset, zOffset);
+            position = position.offset(xOffset, yOffset, zOffset);
 
             for (int x = position.getX(); x < position.getX() + rand.nextInt(2) + 3; ++x) {
                 for (int y = position.getY(); y < position.getY() + rand.nextInt(1) + 2; ++y) {
                     for (int z = position.getZ(); z < position.getZ() + rand.nextInt(2) + 3; ++z) {
                         BlockPos newPosition = new BlockPos(x, y, z);
 
-                        if (reader.isAirBlock(newPosition)) {
+                        if (reader.isEmptyBlock(newPosition)) {
                             if (Math.abs(x - position.getX()) + Math.abs(y - position.getY()) + Math.abs(z - position.getZ()) < 4 + rand.nextInt(2)) {
-                                this.setBlockState(reader, newPosition, AetherBlocks.BLUE_AERCLOUD.get().getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, true));
+                                this.setBlock(reader, newPosition, AetherBlocks.BLUE_AERCLOUD.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
                             }
                         }
                     }

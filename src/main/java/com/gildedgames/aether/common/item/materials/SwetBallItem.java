@@ -22,10 +22,10 @@ public class SwetBallItem extends Item
 	}
 	
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
-		ItemStack heldItem = context.getItem();
-		World world = context.getWorld();
-		BlockPos pos = context.getPos();
+	public ActionResultType useOn(ItemUseContext context) {
+		ItemStack heldItem = context.getItemInHand();
+		World world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
 		PlayerEntity player = context.getPlayer();
 		
 		BlockState oldBlockState = world.getBlockState(pos);
@@ -33,9 +33,9 @@ public class SwetBallItem extends Item
 		Block block = oldBlockState.getBlock();
 		
 		if (block == AetherBlocks.AETHER_DIRT.get()) {
-			newBlockState = AetherBlocks.AETHER_GRASS_BLOCK.get().getDefaultState();
+			newBlockState = AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState();
 		} else if (block == Blocks.DIRT) {
-			newBlockState = Blocks.GRASS_BLOCK.getDefaultState();
+			newBlockState = Blocks.GRASS_BLOCK.defaultBlockState();
 		}
 		
 		SwettyBallGrowGrassEvent event = new SwettyBallGrowGrassEvent(heldItem, oldBlockState, newBlockState, player, pos);
@@ -46,7 +46,7 @@ public class SwetBallItem extends Item
 			return ActionResultType.FAIL;
 		}
 		
-		world.setBlockState(pos, newBlockState);
+		world.setBlockAndUpdate(pos, newBlockState);
 		
 		if (!player.isCreative()) {
 			heldItem.shrink(1);

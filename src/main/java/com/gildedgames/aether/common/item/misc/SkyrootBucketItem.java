@@ -15,48 +15,50 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public class SkyrootBucketItem extends Item {
     public SkyrootBucketItem(Properties properties) {
         super(properties);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack itemstack = playerIn.getHeldItem(handIn);
-        RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        ItemStack itemstack = playerIn.getItemInHand(handIn);
+        RayTraceResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
         if (raytraceresult.getType() != RayTraceResult.Type.BLOCK) {
-            return ActionResult.resultPass(itemstack);
+            return ActionResult.pass(itemstack);
         } else {
             BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult)raytraceresult;
-            BlockPos blockpos = blockraytraceresult.getPos();
-            Direction direction = blockraytraceresult.getFace();
-            BlockPos blockpos1 = blockpos.offset(direction);
-            if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos1, direction, itemstack)) {
+            BlockPos blockpos = blockraytraceresult.getBlockPos();
+            Direction direction = blockraytraceresult.getDirection();
+            BlockPos blockpos1 = blockpos.relative(direction);
+            if (worldIn.mayInteract(playerIn, blockpos) && playerIn.mayUseItemAt(blockpos1, direction, itemstack)) {
                 BlockState blockstate1 = worldIn.getBlockState(blockpos);
                 if (blockstate1.getBlock() instanceof IBucketPickupHandler) {
-                    Fluid fluid = ((IBucketPickupHandler)blockstate1.getBlock()).pickupFluid(worldIn, blockpos, blockstate1);
+                    Fluid fluid = ((IBucketPickupHandler)blockstate1.getBlock()).takeLiquid(worldIn, blockpos, blockstate1);
                     if (fluid == Fluids.WATER) {
-                        SoundEvent soundevent = SoundEvents.ITEM_BUCKET_FILL;
+                        SoundEvent soundevent = SoundEvents.BUCKET_FILL;
                         playerIn.playSound(soundevent, 1.0F, 1.0F);
-                        ItemStack itemstack1 = DrinkHelper.fill(itemstack, playerIn, new ItemStack(AetherItems.SKYROOT_WATER_BUCKET.get()));
-                        return ActionResult.func_233538_a_(itemstack1, worldIn.isRemote());
+                        ItemStack itemstack1 = DrinkHelper.createFilledResult(itemstack, playerIn, new ItemStack(AetherItems.SKYROOT_WATER_BUCKET.get()));
+                        return ActionResult.sidedSuccess(itemstack1, worldIn.isClientSide());
                     }
                 }
             }
         }
-        return ActionResult.resultFail(itemstack);
+        return ActionResult.fail(itemstack);
     }
 
     /**
      * This method is used to milk a cow.
      */
     @Override
-    public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
-        if((target instanceof FlyingCowEntity || target instanceof CowEntity) && !target.isChild()) {
-            playerIn.playSound(SoundEvents.ENTITY_COW_MILK, 1.0F, 1.0F);
-            ItemStack itemstack1 = DrinkHelper.fill(stack, playerIn, AetherItems.SKYROOT_MILK_BUCKET.get().getDefaultInstance());
-            playerIn.setHeldItem(hand, itemstack1);
-            return ActionResultType.func_233537_a_(target.world.isRemote);
+    public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
+        if((target instanceof FlyingCowEntity || target instanceof CowEntity) && !target.isBaby()) {
+            playerIn.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
+            ItemStack itemstack1 = DrinkHelper.createFilledResult(stack, playerIn, AetherItems.SKYROOT_MILK_BUCKET.get().getDefaultInstance());
+            playerIn.setItemInHand(hand, itemstack1);
+            return ActionResultType.sidedSuccess(target.level.isClientSide);
         }
         return ActionResultType.PASS;
     }

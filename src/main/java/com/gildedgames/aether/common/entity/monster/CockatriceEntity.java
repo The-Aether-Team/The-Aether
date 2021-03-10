@@ -47,10 +47,10 @@ public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob 
     }
 
     public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return CreatureEntity.func_233666_p_()
-                .createMutableAttribute(Attributes.MAX_HEALTH, 16.0D)
-                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
-                .createMutableAttribute(Attributes.FOLLOW_RANGE, 10.0D);
+        return CreatureEntity.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 16.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
+                .add(Attributes.FOLLOW_RANGE, 10.0D);
     }
 
     //@Override
@@ -60,33 +60,33 @@ public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob 
 
 
     public static boolean canCockatriceSpawn(EntityType<? extends CockatriceEntity> type, IServerWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
-        return randomIn.nextInt(45) == 0 && canMonsterSpawnInLight(type, worldIn, reason, pos, randomIn); //TODO: change the bounds of nextInt to a config value.
+        return randomIn.nextInt(45) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, randomIn); //TODO: change the bounds of nextInt to a config value.
     }
 
     @Override
-    public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-        ArrowEntity arrow = new ArrowEntity(this.world, this);
-        double d0 = target.getPosX() - this.getPosX();
-        double d1 = target.getBoundingBox().minY + (double)(target.getHeight() / 3.0F) - arrow.getPosY();
-        double d2 = target.getPosZ() - this.getPosZ();
+    public void performRangedAttack(LivingEntity target, float distanceFactor) {
+        ArrowEntity arrow = new ArrowEntity(this.level, this);
+        double d0 = target.getX() - this.getX();
+        double d1 = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0F) - arrow.getY();
+        double d2 = target.getZ() - this.getZ();
         double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
-        arrow.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.0F, (float)(14 - this.world.getDifficulty().getId() * 4));
+        arrow.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.0F, (float)(14 - this.level.getDifficulty().getId() * 4));
         //this.playSound(SoundsAether.cockatrice_attack, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-        this.world.addEntity(arrow);
+        this.level.addFreshEntity(arrow);
     }
     @SuppressWarnings("unused")
     @Override
     public void tick() {
         super.tick();
 
-        if (this.isJumping) {
-            this.addVelocity(0.0, 0.05, 0.0);
+        if (this.jumping) {
+            this.push(0.0, 0.05, 0.0);
         }
 
         updateWingRotation: {
             if (!this.onGround) {
                 if (this.ticksUntilFlap == 0) {
-                    this.world.playSound(null, this.getPosX(), this.getPosY(), this.getPosZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
+                    this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
                     this.ticksUntilFlap = 8;
                 }
                 else {
@@ -111,9 +111,9 @@ public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob 
         fall: {
 //			boolean blockBeneath = !this.world.isAirBlock(this.getPositionUnderneath());
 
-            Vector3d vec3d = this.getMotion();
+            Vector3d vec3d = this.getDeltaMovement();
             if (!this.onGround && vec3d.y < 0.0) {
-                this.setMotion(vec3d.mul(1.0, 0.6, 1.0));
+                this.setDeltaMovement(vec3d.multiply(1.0, 0.6, 1.0));
             }
         }
 
@@ -121,7 +121,7 @@ public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob 
     }
 
     @Override
-    public boolean onLivingFall(float distance, float damageMultiplier) {
+    public boolean causeFallDamage(float distance, float damageMultiplier) {
         return false;
     }
 

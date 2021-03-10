@@ -14,12 +14,12 @@ import net.minecraft.world.World;
 public class HolystoneAxeItem extends AxeItem implements IHolystoneToolItem
 {
 	public HolystoneAxeItem() {
-		super(AetherItemTiers.HOLYSTONE, 8.0F, -3.2F, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS));
+		super(AetherItemTiers.HOLYSTONE, 8.0F, -3.2F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+	public boolean mineBlock(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 		spawnAmbrosiumDrops(worldIn, pos);
-		return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+		return super.mineBlock(stack, worldIn, state, pos, entityLiving);
 	}
 }

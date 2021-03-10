@@ -9,22 +9,22 @@ import net.minecraft.item.*;
 public class FlamingSwordItem extends SwordItem
 {
 	public FlamingSwordItem() {
-		super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_WEAPONS));
+		super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().durability(502).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return false;
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		int defaultTime = 30;
-		int fireAspectModifier = EnchantmentHelper.getFireAspectModifier(attacker);
+		int fireAspectModifier = EnchantmentHelper.getFireAspect(attacker);
 		if (fireAspectModifier > 0) {
 			defaultTime += (fireAspectModifier * 4);
 		}
-		target.setFire(defaultTime);
-		return super.hitEntity(stack, target, attacker);
+		target.setSecondsOnFire(defaultTime);
+		return super.hurtEnemy(stack, target, attacker);
 	}
 }

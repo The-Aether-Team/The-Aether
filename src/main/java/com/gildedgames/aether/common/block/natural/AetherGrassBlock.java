@@ -19,34 +19,34 @@ public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlo
 
 	public AetherGrassBlock(AbstractBlock.Properties properties) {
 		super(properties);
-		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
+		this.registerDefaultState(this.defaultBlockState().setValue(DOUBLE_DROPS, false));
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		super.fillStateContainer(builder);
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+		super.createBlockStateDefinition(builder);
 		builder.add(DOUBLE_DROPS);
 	}
 	
 	@Override
 	public void onPlantGrow(BlockState state, IWorld world, BlockPos pos, BlockPos source) {
-		if (state.isIn(AetherTags.Blocks.AETHER_DIRT)) {
-			world.setBlockState(pos, state.get(AetherBlockStateProperties.DOUBLE_DROPS) ? AetherBlocks.AETHER_DIRT.get().getDefaultState().with(AetherBlockStateProperties.DOUBLE_DROPS, state.get(AetherBlockStateProperties.DOUBLE_DROPS)) : AetherBlocks.AETHER_DIRT.get().getDefaultState(), 2);
+		if (state.is(AetherTags.Blocks.AETHER_DIRT)) {
+			world.setBlock(pos, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS) ? AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)) : AetherBlocks.AETHER_DIRT.get().defaultBlockState(), 2);
 		}
 	}
 
 	@Override
 	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-		if (!isSnowyConditions(state, worldIn, pos)) {
+		if (!canBeGrass(state, worldIn, pos)) {
 			if (!worldIn.isAreaLoaded(pos, 3)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
-			worldIn.setBlockState(pos, AetherBlocks.AETHER_DIRT.get().getDefaultState());
+			worldIn.setBlockAndUpdate(pos, AetherBlocks.AETHER_DIRT.get().defaultBlockState());
 		} else {
-			if (worldIn.getLight(pos.up()) >= 9) {
-				BlockState blockstate = this.getDefaultState();
+			if (worldIn.getMaxLocalRawBrightness(pos.above()) >= 9) {
+				BlockState blockstate = this.defaultBlockState();
 				for(int i = 0; i < 4; ++i) {
-					BlockPos blockpos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
-					if (worldIn.getBlockState(blockpos).isIn(AetherBlocks.AETHER_DIRT.get()) && isSnowyAndNotUnderwater(blockstate, worldIn, blockpos)) {
-						worldIn.setBlockState(blockpos, blockstate.with(SNOWY, worldIn.getBlockState(blockpos.up()).isIn(Blocks.SNOW)));
+					BlockPos blockpos = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
+					if (worldIn.getBlockState(blockpos).is(AetherBlocks.AETHER_DIRT.get()) && canPropagate(blockstate, worldIn, blockpos)) {
+						worldIn.setBlockAndUpdate(blockpos, blockstate.setValue(SNOWY, worldIn.getBlockState(blockpos.above()).is(Blocks.SNOW)));
 					}
 				}
 			}

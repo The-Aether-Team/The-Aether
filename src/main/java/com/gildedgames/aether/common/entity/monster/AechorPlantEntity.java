@@ -32,39 +32,39 @@ public class AechorPlantEntity extends CreatureEntity implements IRangedAttackMo
     }
 
     public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return CreatureEntity.func_233666_p_()
-                .createMutableAttribute(Attributes.MAX_HEALTH, 15.0F)
-                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.0F)
-                .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 1.0F);
+        return CreatureEntity.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 15.0F)
+                .add(Attributes.MOVEMENT_SPEED, 0.0F)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0F);
     }
 
     public static boolean canAechorSpawn(EntityType<? extends AechorPlantEntity> animal, IWorld worldIn, SpawnReason reason, BlockPos pos, Random random) {
-        return worldIn.getBlockState(pos.down()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get() && worldIn.getLightSubtracted(pos, 0) > 8;
+        return worldIn.getBlockState(pos.below()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get() && worldIn.getRawBrightness(pos, 0) > 8;
     }
 
-    public void attackEntityWithRangedAttack (LivingEntity target, float distanceFactor) {
-        ArrowEntity arrow = new ArrowEntity(this.world, this);
-        double d0 = target.getPosX() - this.getPosX();
-        double d1 = target.getBoundingBox().minY + (double)(target.getHeight() / 3.0F) - arrow.getPosY();
-        double d2 = target.getPosZ() - this.getPosZ();
+    public void performRangedAttack (LivingEntity target, float distanceFactor) {
+        ArrowEntity arrow = new ArrowEntity(this.level, this);
+        double d0 = target.getX() - this.getX();
+        double d1 = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0F) - arrow.getY();
+        double d2 = target.getZ() - this.getZ();
         double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
-        arrow.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.0F, (float)(14 - this.world.getDifficulty().getId() * 4));
+        arrow.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.0F, (float)(14 - this.level.getDifficulty().getId() * 4));
         //this.playSound(SoundsAether.cockatrice_attack, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-        this.world.addEntity(arrow);
+        this.level.addFreshEntity(arrow);
     }
     @SuppressWarnings("unused")
     @Override
     public void tick() {
         super.tick();
 
-        if (this.world.getBlockState(this.getPosition().down()).getBlock() != AetherBlocks.AETHER_GRASS_BLOCK.get()) {
+        if (this.level.getBlockState(this.blockPosition().below()).getBlock() != AetherBlocks.AETHER_GRASS_BLOCK.get()) {
             this.setHealth(0.0F);
         }
 
         if (this.hurtTime > 0) {
             this.sinage += 0.9F;
         } else {
-            if (this.getAttackTarget() != null) {
+            if (this.getTarget() != null) {
                 this.sinage += 0.3F;
             }
             else {
@@ -77,11 +77,11 @@ public class AechorPlantEntity extends CreatureEntity implements IRangedAttackMo
     }
 
     @Override
-    protected void collideWithEntity(Entity entityIn) {
-        if (!entityIn.isRidingSameEntity(this)) {
-            if (!this.noClip && !entityIn.noClip){
-                double d0 = this.getPosX() - entityIn.getPosX();
-                double d1 = this.getPosZ() - entityIn.getPosZ();
+    protected void doPush(Entity entityIn) {
+        if (!entityIn.isPassengerOfSameVehicle(this)) {
+            if (!this.noPhysics && !entityIn.noPhysics){
+                double d0 = this.getX() - entityIn.getX();
+                double d1 = this.getZ() - entityIn.getZ();
                 double d2 = MathHelper.absMax(d0, d1);
 
                 if (d2 >= 0.009999999776482582D) {
@@ -99,11 +99,11 @@ public class AechorPlantEntity extends CreatureEntity implements IRangedAttackMo
                     d1 = d1 * d3;
                     d0 = d0 * 0.05000000074505806D;
                     d1 = d1 * 0.05000000074505806D;
-                    d0 = d0 * (double) (1.0F - entityIn.entityCollisionReduction);
-                    d1 = d1 * (double) (1.0F - entityIn.entityCollisionReduction);
+                    d0 = d0 * (double) (1.0F - entityIn.pushthrough);
+                    d1 = d1 * (double) (1.0F - entityIn.pushthrough);
 
-                    if (!entityIn.isBeingRidden()) {
-                        entityIn.addVelocity(-d0, 0.0D, -d1);
+                    if (!entityIn.isVehicle()) {
+                        entityIn.push(-d0, 0.0D, -d1);
                     }
                 }
             }
@@ -112,7 +112,7 @@ public class AechorPlantEntity extends CreatureEntity implements IRangedAttackMo
 
 
     @Override
-    public boolean canBePushed() {
+    public boolean isPushable() {
         return false;
     }
 }

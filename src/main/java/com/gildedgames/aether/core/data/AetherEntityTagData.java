@@ -25,13 +25,13 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
     }
 
     @Override
-    protected void registerTags() {
+    protected void addTags() {
         //aether
         tag(AetherTags.Entities.PIGS)
                 .add(EntityType.PIG)
                 .add(AetherEntityTypes.PHYG.get())
                 .add(EntityType.PIGLIN)
-                .add(EntityType.field_242287_aj) //PIGLIN BRUTE
+                .add(EntityType.PIGLIN_BRUTE) //PIGLIN BRUTE
                 .add(EntityType.ZOMBIFIED_PIGLIN)
                 .add(EntityType.HOGLIN)
                 .add(EntityType.ZOGLIN);
@@ -53,6 +53,6 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
     }
 
     private TagsProvider.Builder<EntityType<?>> tag(ITag.INamedTag<EntityType<?>> tag) {
-        return this.getOrCreateBuilder(tag);
+        return this.tag(tag);
     }
 }

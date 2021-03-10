@@ -21,33 +21,35 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.item.Item.Properties;
+
 public class SkyrootWaterBucketItem extends Item {
     public SkyrootWaterBucketItem(Properties properties) {
         super(properties);
     }
 
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack itemstack = playerIn.getHeldItem(handIn);
-        RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, RayTraceContext.FluidMode.NONE);
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        ItemStack itemstack = playerIn.getItemInHand(handIn);
+        RayTraceResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, RayTraceContext.FluidMode.NONE);
         if (raytraceresult.getType() == RayTraceResult.Type.MISS) {
-            return ActionResult.resultPass(itemstack);
+            return ActionResult.pass(itemstack);
         } else if (raytraceresult.getType() != RayTraceResult.Type.BLOCK) {
-            return ActionResult.resultPass(itemstack);
+            return ActionResult.pass(itemstack);
         } else {
             BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult)raytraceresult;
-            BlockPos blockpos = blockraytraceresult.getPos();
-            Direction direction = blockraytraceresult.getFace();
-            BlockPos blockpos1 = blockpos.offset(direction);
-            if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos1, direction, itemstack)) {
+            BlockPos blockpos = blockraytraceresult.getBlockPos();
+            Direction direction = blockraytraceresult.getDirection();
+            BlockPos blockpos1 = blockpos.relative(direction);
+            if (worldIn.mayInteract(playerIn, blockpos) && playerIn.mayUseItemAt(blockpos1, direction, itemstack)) {
                 BlockState blockstate = worldIn.getBlockState(blockpos);
                 BlockPos blockpos2 = canBlockContainFluid(worldIn, blockpos, blockstate) ? blockpos : blockpos1;
                 if (this.tryPlaceContainedLiquid(playerIn, worldIn, blockpos2, blockraytraceresult)) {
-                    return ActionResult.func_233538_a_(!playerIn.abilities.isCreativeMode ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : itemstack, worldIn.isRemote());
+                    return ActionResult.sidedSuccess(!playerIn.abilities.instabuild ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : itemstack, worldIn.isClientSide());
                 } else {
-                    return ActionResult.resultFail(itemstack);
+                    return ActionResult.fail(itemstack);
                 }
             } else {
-                return ActionResult.resultFail(itemstack);
+                return ActionResult.fail(itemstack);
             }
         }
     }
@@ -56,31 +58,31 @@ public class SkyrootWaterBucketItem extends Item {
         BlockState blockstate = worldIn.getBlockState(posIn);
         Block block = blockstate.getBlock();
         Material material = blockstate.getMaterial();
-        boolean flag = blockstate.isReplaceable(Fluids.WATER);
-        boolean flag1 = blockstate.isAir() || flag || block instanceof ILiquidContainer && ((ILiquidContainer)block).canContainFluid(worldIn, posIn, blockstate, Fluids.WATER);
+        boolean flag = blockstate.canBeReplaced(Fluids.WATER);
+        boolean flag1 = blockstate.isAir() || flag || block instanceof ILiquidContainer && ((ILiquidContainer)block).canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER);
         if (!flag1) {
-            return rayTrace != null && this.tryPlaceContainedLiquid(player, worldIn, rayTrace.getPos().offset(rayTrace.getFace()), (BlockRayTraceResult)null);
-        } else if (worldIn.getDimensionType().isUltrawarm()) {
+            return rayTrace != null && this.tryPlaceContainedLiquid(player, worldIn, rayTrace.getBlockPos().relative(rayTrace.getDirection()), (BlockRayTraceResult)null);
+        } else if (worldIn.dimensionType().ultraWarm()) {
             int i = posIn.getX();
             int j = posIn.getY();
             int k = posIn.getZ();
-            worldIn.playSound(player, posIn, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F);
+            worldIn.playSound(player, posIn, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.random.nextFloat() - worldIn.random.nextFloat()) * 0.8F);
 
             for(int l = 0; l < 8; ++l) {
                 worldIn.addParticle(ParticleTypes.LARGE_SMOKE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D);
             }
 
             return true;
-        } else if (block instanceof ILiquidContainer && ((ILiquidContainer)block).canContainFluid(worldIn,posIn,blockstate, Fluids.WATER)) {
-            ((ILiquidContainer)block).receiveFluid(worldIn, posIn, blockstate, ((FlowingFluid)Fluids.WATER).getStillFluidState(false));
+        } else if (block instanceof ILiquidContainer && ((ILiquidContainer)block).canPlaceLiquid(worldIn,posIn,blockstate, Fluids.WATER)) {
+            ((ILiquidContainer)block).placeLiquid(worldIn, posIn, blockstate, ((FlowingFluid)Fluids.WATER).getSource(false));
             this.playEmptySound(player, worldIn, posIn);
             return true;
         } else {
-            if (!worldIn.isRemote && flag && !material.isLiquid()) {
+            if (!worldIn.isClientSide && flag && !material.isLiquid()) {
                 worldIn.destroyBlock(posIn, true);
             }
 
-            if (!worldIn.setBlockState(posIn, Fluids.WATER.getDefaultState().getBlockState(), 11) && !blockstate.getFluidState().isSource()) {
+            if (!worldIn.setBlock(posIn, Fluids.WATER.defaultFluidState().createLegacyBlock(), 11) && !blockstate.getFluidState().isSource()) {
                 return false;
             } else {
                 this.playEmptySound(player, worldIn, posIn);
@@ -90,7 +92,7 @@ public class SkyrootWaterBucketItem extends Item {
     }
 
     private boolean canBlockContainFluid(World worldIn, BlockPos posIn, BlockState blockstate) {
-        return blockstate.getBlock() instanceof ILiquidContainer && ((ILiquidContainer)blockstate.getBlock()).canContainFluid(worldIn, posIn, blockstate, Fluids.WATER);
+        return blockstate.getBlock() instanceof ILiquidContainer && ((ILiquidContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER);
     }
 
     protected void playEmptySound(@Nullable PlayerEntity player, IWorld worldIn, BlockPos pos) {

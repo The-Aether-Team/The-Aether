@@ -65,7 +65,7 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 		}
 		
 		@Override
-		public int size() {
+		public int getCount() {
 			return 3;
 		}
 	};
@@ -99,7 +99,7 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	}
 
 	@Override
-	public int getSizeInventory() {
+	public int getContainerSize() {
 		return items.size();
 	}
 
@@ -115,7 +115,7 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int index, ItemStack stack) {
+	public boolean canPlaceItem(int index, ItemStack stack) {
 		if (index == 0) {
 			//return stack.getItem() == AetherItems.MOA_EGG;
 			return true;
@@ -129,46 +129,46 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	}
 	
 	@Override
-	public ItemStack getStackInSlot(int index) {
+	public ItemStack getItem(int index) {
 		return items.get(index);
 	}
 
 	@Override
-	public ItemStack decrStackSize(int index, int count) {
-		return ItemStackHelper.getAndSplit(this.items, index, count);
+	public ItemStack removeItem(int index, int count) {
+		return ItemStackHelper.removeItem(this.items, index, count);
 	}
 
 	@Override
-	public ItemStack removeStackFromSlot(int index) {
-		return ItemStackHelper.getAndRemove(this.items, index);
+	public ItemStack removeItemNoUpdate(int index) {
+		return ItemStackHelper.takeItem(this.items, index);
 	}
 
 	@Override
-	public void setInventorySlotContents(int index, ItemStack stack) {
+	public void setItem(int index, ItemStack stack) {
 		ItemStack itemstack = this.items.get(index);
-		boolean flag = !stack.isEmpty() && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack);
+		boolean flag = !stack.isEmpty() && stack.sameItem(itemstack) && ItemStack.tagMatches(stack, itemstack);
 		this.items.set(index, stack);
-		if (stack.getCount() > this.getInventoryStackLimit()) {
-			stack.setCount(this.getInventoryStackLimit());
+		if (stack.getCount() > this.getMaxStackSize()) {
+			stack.setCount(this.getMaxStackSize());
 		}
 		
 		if (index == 0 && !flag) {
 			this.progress = 0;
-			this.markDirty();
+			this.setChanged();
 		}
 	}
 
 	@Override
-	public boolean isUsableByPlayer(PlayerEntity player) {
-		if (this.world.getTileEntity(this.pos)!= this) {
+	public boolean stillValid(PlayerEntity player) {
+		if (this.level.getBlockEntity(this.worldPosition)!= this) {
 			return false;	
 		} else {
-			return player.getDistanceSq(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5) <= 64.0;
+			return player.distanceToSqr(this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 0.5, this.worldPosition.getZ() + 0.5) <= 64.0;
 		}
 	}
 
 	@Override
-	public void clear() {
+	public void clearContent() {
 		items.clear();
 	}
 
@@ -205,19 +205,19 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	}
 
 	@Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, Direction direction) {
-		return this.isItemValidForSlot(index, itemStackIn);
+	public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
+		return this.canPlaceItem(index, itemStackIn);
 	}
 
 	@Override
-	public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
+	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
 		return false;
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT compound) {
-		super.read(state, compound);
-		this.items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+	public void load(BlockState state, CompoundNBT compound) {
+		super.load(state, compound);
+		this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 		ItemStackHelper.loadAllItems(compound, this.items);
 		this.powerRemaining = compound.getInt("BurnTime");
 		this.progress = compound.getInt("CookTime");
@@ -225,8 +225,8 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	}
 	
 	@Override
-	public CompoundNBT write(CompoundNBT compound) {
-		super.write(compound);
+	public CompoundNBT save(CompoundNBT compound) {
+		super.save(compound);
 		compound.putInt("BurnTime", this.powerRemaining);
 		compound.putInt("CookTime", this.progress);
 		compound.putInt("CookTimeTotal", this.ticksRequired);
@@ -239,7 +239,7 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 
 	@Override
 	public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction facing) {
-		if (!this.removed && facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+		if (!this.remove && facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			if (facing == Direction.UP) {
 				return handlers[0].cast();
 			}
@@ -254,8 +254,8 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	}
 
 	@Override
-	public void remove() {
-		super.remove();
+	public void setRemoved() {
+		super.setRemoved();
 		for (int x = 0; x < handlers.length; x++) {
 			handlers[x].invalidate();
 		}

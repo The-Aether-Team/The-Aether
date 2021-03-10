@@ -24,11 +24,11 @@ public class DoubleDrops extends LootFunction
 	}
 
 	@Override
-	protected ItemStack doApply(ItemStack stack, LootContext context) {
-		ItemStack tool = context.get(LootParameters.TOOL);
-		if (tool != null && tool.getItem().isIn(AetherTags.Items.SKYROOT_TOOLS) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool) == 0 && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool) == 0) {
-			BlockState state = context.get(LootParameters.BLOCK_STATE);
-			if (state != null && (!(state.getBlock() instanceof IAetherDoubleDropBlock) || state.get(AetherBlockStateProperties.DOUBLE_DROPS))) {
+	protected ItemStack run(ItemStack stack, LootContext context) {
+		ItemStack tool = context.getParamOrNull(LootParameters.TOOL);
+		if (tool != null && tool.getItem().is(AetherTags.Items.SKYROOT_TOOLS) && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) == 0) {
+			BlockState state = context.getParamOrNull(LootParameters.BLOCK_STATE);
+			if (state != null && (!(state.getBlock() instanceof IAetherDoubleDropBlock) || state.getValue(AetherBlockStateProperties.DOUBLE_DROPS))) {
 				if (tool.getToolTypes().contains(state.getHarvestTool())) {
 					stack.setCount(2 * stack.getCount());
 				}
@@ -38,11 +38,11 @@ public class DoubleDrops extends LootFunction
 	}
 
 	public static LootFunction.Builder<?> builder() {
-		return LootFunction.builder(DoubleDrops::new);
+		return LootFunction.simpleBuilder(DoubleDrops::new);
 	}
 
     @Override
-    public LootFunctionType getFunctionType() {
+    public LootFunctionType getType() {
         return AetherLoot.DOUBLE_DROPS;
     }
 

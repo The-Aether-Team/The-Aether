@@ -21,14 +21,14 @@ public class MountTrigger extends AbstractCriterionTrigger<MountTrigger.Instance
     }
 
     @Override
-    protected MountTrigger.Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
-        EntityPredicate.AndPredicate predicate = EntityPredicate.AndPredicate.deserializeJSONObject(json, "entity", conditionsParser);
+    protected MountTrigger.Instance createInstance(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+        EntityPredicate.AndPredicate predicate = EntityPredicate.AndPredicate.fromJson(json, "entity", conditionsParser);
         return new MountTrigger.Instance(entityPredicate, predicate);
     }
 
     public void trigger(ServerPlayerEntity player, Entity entity) {
-        LootContext lootcontext = EntityPredicate.getLootContext(player, entity);
-        this.triggerListeners(player, (instance) -> instance.test(lootcontext));
+        LootContext lootcontext = EntityPredicate.createContext(player, entity);
+        this.trigger(player, (instance) -> instance.test(lootcontext));
     }
 
     public static class Instance extends CriterionInstance
@@ -41,17 +41,17 @@ public class MountTrigger extends AbstractCriterionTrigger<MountTrigger.Instance
         }
 
         public static MountTrigger.Instance forEntity(EntityPredicate.Builder entity) {
-            return new MountTrigger.Instance(EntityPredicate.AndPredicate.ANY_AND, EntityPredicate.AndPredicate.createAndFromEntityCondition(entity.build()));
+            return new MountTrigger.Instance(EntityPredicate.AndPredicate.ANY, EntityPredicate.AndPredicate.wrap(entity.build()));
         }
 
         public boolean test(LootContext context) {
-            return this.entity.testContext(context);
+            return this.entity.matches(context);
         }
 
         @Override
-        public JsonObject serialize(ConditionArraySerializer conditions) {
-            JsonObject jsonobject = super.serialize(conditions);
-            jsonobject.add("entity", this.entity.serializeConditions(conditions));
+        public JsonObject serializeToJson(ConditionArraySerializer conditions) {
+            JsonObject jsonobject = super.serializeToJson(conditions);
+            jsonobject.add("entity", this.entity.toJson(conditions));
             return jsonobject;
         }
     }

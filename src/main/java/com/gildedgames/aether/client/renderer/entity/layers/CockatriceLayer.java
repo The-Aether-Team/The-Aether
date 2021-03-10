@@ -13,14 +13,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class CockatriceLayer<T extends CockatriceEntity, M extends EntityModel<T>> extends AbstractEyesLayer<T, M> {
-    private static final RenderType RENDER_TYPE = RenderType.getEyes(new ResourceLocation(Aether.MODID, "textures/entity/cockatrice/cockatrice_emissive.png"));
+    private static final RenderType RENDER_TYPE = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/cockatrice/cockatrice_emissive.png"));
 
     public CockatriceLayer(IEntityRenderer<T, M> entityRenderer) {
         super(entityRenderer);
     }
 
     @Override
-    public RenderType getRenderType() {
+    public RenderType renderType() {
         return RENDER_TYPE;
     }
 

@@ -41,7 +41,7 @@ public class JumpPacket extends AetherPacket
 		}
 		ctxt.get().enqueueWork(() -> {
 			ServerPlayerEntity player = ctxt.get().getSender();
-			ServerPlayerEntity target = player.getServer().getPlayerList().getPlayerByUUID(this.playerUUID);
+			ServerPlayerEntity target = player.getServer().getPlayerList().getPlayer(this.playerUUID);
 			if (target != null) {
 				IAetherPlayer.get(target).ifPresent(aetherPlayer -> aetherPlayer.setJumping(this.isJumping));
 			}

@@ -25,28 +25,28 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 
 	public FloatingBlockRenderer(EntityRendererManager renderManager) {
 		super(renderManager);
-		this.shadowSize = 0.5F;
+		this.shadowRadius = 0.5F;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void render(FloatingBlockEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
 		BlockState blockstate = entityIn.getBlockState();
-	      if (blockstate.getRenderType() == BlockRenderType.MODEL) {
+	      if (blockstate.getRenderShape() == BlockRenderType.MODEL) {
 	         World world = entityIn.getWorldObj();
-	         if (blockstate != world.getBlockState(new BlockPos(entityIn.getPosition())) && blockstate.getRenderType() != BlockRenderType.INVISIBLE) {
-	            matrixStackIn.push();
-	            BlockPos blockpos = new BlockPos(entityIn.getPosX(), entityIn.getBoundingBox().maxY, entityIn.getPosZ());
+	         if (blockstate != world.getBlockState(new BlockPos(entityIn.blockPosition())) && blockstate.getRenderShape() != BlockRenderType.INVISIBLE) {
+	            matrixStackIn.pushPose();
+	            BlockPos blockpos = new BlockPos(entityIn.getX(), entityIn.getBoundingBox().maxY, entityIn.getZ());
 	            matrixStackIn.translate(-0.5, 0.0, -0.5);
-	            BlockRendererDispatcher blockrendererdispatcher = Minecraft.getInstance().getBlockRendererDispatcher();
-	            for (net.minecraft.client.renderer.RenderType type : net.minecraft.client.renderer.RenderType.getBlockRenderTypes()) {
+	            BlockRendererDispatcher blockrendererdispatcher = Minecraft.getInstance().getBlockRenderer();
+	            for (net.minecraft.client.renderer.RenderType type : net.minecraft.client.renderer.RenderType.chunkBufferLayers()) {
 	               if (RenderTypeLookup.canRenderInLayer(blockstate, type)) {
 	                  net.minecraftforge.client.ForgeHooksClient.setRenderLayer(type);
-	                  blockrendererdispatcher.getBlockModelRenderer().renderModel(world, blockrendererdispatcher.getModelForState(blockstate), blockstate, blockpos, matrixStackIn, bufferIn.getBuffer(type), false, new Random(), blockstate.getPositionRandom(entityIn.getOrigin()), OverlayTexture.NO_OVERLAY);
+	                  blockrendererdispatcher.getModelRenderer().tesselateBlock(world, blockrendererdispatcher.getBlockModel(blockstate), blockstate, blockpos, matrixStackIn, bufferIn.getBuffer(type), false, new Random(), blockstate.getSeed(entityIn.getOrigin()), OverlayTexture.NO_OVERLAY);
 	               }
 	            }
 	            net.minecraftforge.client.ForgeHooksClient.setRenderLayer(null);
-	            matrixStackIn.pop();
+	            matrixStackIn.popPose();
 	            super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 	         }
 	      }
@@ -54,8 +54,8 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public ResourceLocation getEntityTexture(FloatingBlockEntity entity) {
-		return AtlasTexture.LOCATION_BLOCKS_TEXTURE;
+	public ResourceLocation getTextureLocation(FloatingBlockEntity entity) {
+		return AtlasTexture.LOCATION_BLOCKS;
 	}
 
 }

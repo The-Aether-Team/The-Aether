@@ -32,14 +32,14 @@ public class AetherParticleTypes
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public static void registerParticleFactories(ParticleFactoryRegisterEvent event) {
-		ParticleManager particleManager = Minecraft.getInstance().particles;
+		ParticleManager particleManager = Minecraft.getInstance().particleEngine;
 
-		particleManager.registerFactory(AETHER_PORTAL.get(), AetherPortalParticle.Factory::new);
-		particleManager.registerFactory(GOLDEN_OAK_LEAVES.get(), GoldenOakLeavesParticle.Factory::new);
-		particleManager.registerFactory(CRYSTAL_LEAVES.get(), CrystalLeavesParticle.Factory::new);
-		particleManager.registerFactory(HOLIDAY_LEAVES.get(), HolidayLeavesParticle.Factory::new);
-		particleManager.registerFactory(FREEZER.get(), FreezerParticle.Factory::new);
-		particleManager.registerFactory(PASSIVE_WHIRLWIND.get(), PassiveWhirlyParticle.Factory::new);
-		particleManager.registerFactory(EVIL_WHIRLWIND.get(), EvilWhirlyParticle.Factory::new);
+		particleManager.register(AETHER_PORTAL.get(), AetherPortalParticle.Factory::new);
+		particleManager.register(GOLDEN_OAK_LEAVES.get(), GoldenOakLeavesParticle.Factory::new);
+		particleManager.register(CRYSTAL_LEAVES.get(), CrystalLeavesParticle.Factory::new);
+		particleManager.register(HOLIDAY_LEAVES.get(), HolidayLeavesParticle.Factory::new);
+		particleManager.register(FREEZER.get(), FreezerParticle.Factory::new);
+		particleManager.register(PASSIVE_WHIRLWIND.get(), PassiveWhirlyParticle.Factory::new);
+		particleManager.register(EVIL_WHIRLWIND.get(), EvilWhirlyParticle.Factory::new);
 	}
 }

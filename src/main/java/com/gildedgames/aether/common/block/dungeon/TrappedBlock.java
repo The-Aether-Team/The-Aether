@@ -14,6 +14,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class TrappedBlock extends Block {
 	
 	private static final Random rand = new Random();
@@ -28,18 +30,18 @@ public class TrappedBlock extends Block {
 	}
 	
 	@Override
-	public void onEntityWalk(World world, BlockPos pos, Entity entityIn) {
+	public void stepOn(World world, BlockPos pos, Entity entityIn) {
 		if (entityIn instanceof PlayerEntity) {
-			world.setBlockState(pos, untrappedVariantSupplier.get());
+			world.setBlockAndUpdate(pos, untrappedVariantSupplier.get());
 			
-			if (!world.isRemote) {
+			if (!world.isClientSide) {
 				EntityType<?> entityType = entityTypeSupplier.get();
 				Entity entity = entityType.create(world);
-				entity.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
-				world.addEntity(entity);
+				entity.absMoveTo(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
+				world.addFreshEntity(entity);
 			}
 			
-			world.playSound(null, pos, AetherSoundEvents.BLOCK_DUNGEON_TRAP_TRIGGER.get(), SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+			world.playSound(null, pos, AetherSoundEvents.BLOCK_DUNGEON_TRAP_TRIGGER.get(), SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
 		}
 	}
 

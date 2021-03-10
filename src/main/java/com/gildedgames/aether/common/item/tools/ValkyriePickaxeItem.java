@@ -23,7 +23,7 @@ public class ValkyriePickaxeItem extends PickaxeItem implements IValkyrieToolIte
     private Multimap<Attribute, AttributeModifier> pickaxeAttributes;
 
     public ValkyriePickaxeItem(int attackDamageIn, float attackSpeedIn) {
-        super(AetherItemTiers.VALKYRIE, attackDamageIn, attackSpeedIn, new Item.Properties().rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_TOOLS));
+        super(AetherItemTiers.VALKYRIE, attackDamageIn, attackSpeedIn, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_TOOLS));
         this.attackDamage = attackDamageIn;
         this.attackSpeed = attackSpeedIn;
     }
@@ -33,12 +33,12 @@ public class ValkyriePickaxeItem extends PickaxeItem implements IValkyrieToolIte
      * It's important to note that this attribute only works when targetting blocks.
      */
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", this.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", this.attackSpeed, AttributeModifier.Operation.ADDITION));
         builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(reachModifierUUID, "Tool modifier", this.getReachDistanceModifier(), AttributeModifier.Operation.ADDITION));
         this.pickaxeAttributes = builder.build();
-        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.pickaxeAttributes : super.getAttributeModifiers(equipmentSlot);
+        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.pickaxeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
     }
 }

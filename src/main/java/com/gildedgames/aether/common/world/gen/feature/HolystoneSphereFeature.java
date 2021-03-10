@@ -17,7 +17,7 @@ public class HolystoneSphereFeature extends Feature<NoFeatureConfig> {
     }
 
     @Override
-    public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+    public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
         int radius = 4;
 
         for (int x = pos.getX() - radius; x < pos.getX() + radius; x++) {
@@ -26,7 +26,7 @@ public class HolystoneSphereFeature extends Feature<NoFeatureConfig> {
                     float formula = (float) (Math.pow(x - pos.getX(), 2) + Math.pow(y - pos.getY(), 2) + Math.pow(z - pos.getZ(), 2));
 
                     if (formula <= Math.pow(radius, 2)) {
-                        reader.setBlockState(new BlockPos(x, y, z), AetherBlocks.HOLYSTONE.get().getDefaultState(), 2 | 16);
+                        reader.setBlock(new BlockPos(x, y, z), AetherBlocks.HOLYSTONE.get().defaultBlockState(), 2 | 16);
                     }
                 }
             }

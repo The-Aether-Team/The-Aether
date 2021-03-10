@@ -20,16 +20,16 @@ public class EnchantedAetherGrassBlock extends SnowyDirtBlock
 	}
 	
 	 protected static boolean canBlockStay(BlockState state, IWorldReader world, BlockPos pos) {
-		BlockPos posUp = pos.up();
+		BlockPos posUp = pos.above();
 		BlockState stateUp = world.getBlockState(posUp);
-		int i = LightEngine.func_215613_a(world, state, pos, stateUp, posUp, Direction.UP, stateUp.getOpacity(world, posUp));
+		int i = LightEngine.getLightBlockInto(world, state, pos, stateUp, posUp, Direction.UP, stateUp.getLightBlock(world, posUp));
 		return i < world.getMaxLightLevel();
 	}
 
 	@Override
 	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
 		if (!canBlockStay(state, worldIn, pos)) {
-			worldIn.setBlockState(pos, AetherBlocks.AETHER_DIRT.get().getDefaultState());
+			worldIn.setBlockAndUpdate(pos, AetherBlocks.AETHER_DIRT.get().defaultBlockState());
 		}
 	}
 }

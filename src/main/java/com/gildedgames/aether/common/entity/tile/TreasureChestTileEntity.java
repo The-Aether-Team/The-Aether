@@ -36,12 +36,12 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 	
 	@Override
 	protected ITextComponent getDefaultName() {
-		return new TranslationTextComponent("gui.treasure_chest", new TranslationTextComponent(this.getKind().getTranslationKey()), new TranslationTextComponent(AetherBlocks.TREASURE_CHEST.get().getTranslationKey()));
+		return new TranslationTextComponent("gui.treasure_chest", new TranslationTextComponent(this.getKind().getTranslationKey()), new TranslationTextComponent(AetherBlocks.TREASURE_CHEST.get().getDescriptionId()));
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT compound) {
-		super.read(state, compound);
+	public void load(BlockState state, CompoundNBT compound) {
+		super.load(state, compound);
 //		this.kind = AetherDungeonTypes.BRONZE.get();
 //		if (compound.contains("Kind", 8)) {
 //			String kind = compound.getString("Kind");
@@ -55,14 +55,14 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 	}
 	
 	@Override
-	protected boolean checkLootAndRead(CompoundNBT compound) {
+	protected boolean tryLoadLootTable(CompoundNBT compound) {
 		this.locked = compound.getBoolean("Locked");
-		return this.locked | super.checkLootAndRead(compound); // intentional | instead of ||
+		return this.locked | super.tryLoadLootTable(compound); // intentional | instead of ||
 	}
 	
 	@Override
-	public CompoundNBT write(CompoundNBT compound) {
-		super.write(compound);
+	public CompoundNBT save(CompoundNBT compound) {
+		super.save(compound);
 //
 //		compound.putBoolean("Locked", this.locked);
 //		compound.putString("Kind", this.getKind().getRegistryName().toString());
@@ -71,8 +71,8 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 	}
 	
 	@Override
-	protected boolean checkLootAndWrite(CompoundNBT compound) {
-		return isLocked() | super.checkLootAndWrite(compound); // intentional | instead of ||
+	protected boolean trySaveLootTable(CompoundNBT compound) {
+		return isLocked() | super.trySaveLootTable(compound); // intentional | instead of ||
 	}
 	
 	public void setKind(DungeonType kind) {
@@ -92,14 +92,14 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 		this.lootTable = this.getKind().getLootTable();
 		this.locked = false;
 		
-		this.markDirty();
+		this.setChanged();
 	}
 	
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket() {
 		CompoundNBT compound = new CompoundNBT();
-		this.write(compound);
-		return new SUpdateTileEntityPacket(this.getPos(), 191, compound);
+		this.save(compound);
+		return new SUpdateTileEntityPacket(this.getBlockPos(), 191, compound);
 	}
 
 	/* I don't know if this is needed
@@ -115,7 +115,7 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 	
 	public void setLocked(boolean locked) {
 		this.locked = locked;
-		this.markDirty();
+		this.setChanged();
 	}
 	
 	@Override

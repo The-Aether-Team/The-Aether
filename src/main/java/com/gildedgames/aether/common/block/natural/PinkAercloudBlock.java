@@ -15,10 +15,10 @@ public class PinkAercloudBlock extends AercloudBlock
 	}
 	
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		super.onEntityCollision(state, world, pos, entity);
+	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+		super.entityInside(state, world, pos, entity);
 		
-		if (entity.ticksExisted % 20 == 0 && entity instanceof LivingEntity) {
+		if (entity.tickCount % 20 == 0 && entity instanceof LivingEntity) {
 			((LivingEntity) entity).heal(1.0F);
 		}
 	}

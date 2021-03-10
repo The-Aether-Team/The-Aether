@@ -10,6 +10,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public abstract class BaseAerwhaleModel extends EntityModel<AerwhaleEntity> {
 
 	@Override
-	public void setRotationAngles(AerwhaleEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
+	public void setupAnim(AerwhaleEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
 
 }

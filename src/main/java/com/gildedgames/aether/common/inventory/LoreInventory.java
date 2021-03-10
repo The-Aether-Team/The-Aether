@@ -16,10 +16,10 @@ public class LoreInventory extends Inventory
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         if (!stack.isEmpty() && this.playerEntity instanceof ServerPlayerEntity) {
             AetherAdvancements.LORE_ENTRY.trigger((ServerPlayerEntity) playerEntity, stack);
         }
-        super.setInventorySlotContents(index, stack);
+        super.setItem(index, stack);
     }
 }

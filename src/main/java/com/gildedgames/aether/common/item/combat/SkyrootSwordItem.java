@@ -9,7 +9,7 @@ import net.minecraft.item.SwordItem;
 public class SkyrootSwordItem extends SwordItem
 {
     public SkyrootSwordItem() {
-        super(AetherItemTiers.SKYROOT, 3, -2.4F, new Item.Properties().group(AetherItemGroups.AETHER_WEAPONS));
+        super(AetherItemTiers.SKYROOT, 3, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override

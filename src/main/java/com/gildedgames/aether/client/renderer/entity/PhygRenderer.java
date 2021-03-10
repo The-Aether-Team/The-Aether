@@ -23,7 +23,7 @@ public class PhygRenderer extends MobRenderer<PhygEntity, PigModel<PhygEntity>> 
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(PhygEntity entity) {
+	public ResourceLocation getTextureLocation(PhygEntity entity) {
 		return PHYG_TEXTURE;
 	}
 }

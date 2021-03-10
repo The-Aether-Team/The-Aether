@@ -21,31 +21,31 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AercloudBlock extends BreakableBlock implements IAetherDoubleDropBlock
 {
 	private static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
-	protected static VoxelShape SHAPE = Block.makeCuboidShape(0.0, 0.0, 0.0, 16.0, 0.01, 16.0);
+	protected static VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 0.01, 16.0);
 	
 	public AercloudBlock(AbstractBlock.Properties properties) {
-		super(properties.setOpaque((state, reader, pos) -> false).setSuffocates((state, reader, pos) -> false).setBlocksVision((state, reader, pos) -> false));
-		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
+		super(properties.isRedstoneConductor((state, reader, pos) -> false).isSuffocating((state, reader, pos) -> false).isViewBlocking((state, reader, pos) -> false));
+		this.registerDefaultState(this.defaultBlockState().setValue(DOUBLE_DROPS, false));
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		super.fillStateContainer(builder);
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+		super.createBlockStateDefinition(builder);
 		builder.add(DOUBLE_DROPS);
 	}
 	
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 		entity.fallDistance = 0.0F;
 
-		if (entity.getMotion().y < 0.0) {
-			entity.setMotion(entity.getMotion().mul(1.0, 0.005, 1.0));
+		if (entity.getDeltaMovement().y < 0.0) {
+			entity.setDeltaMovement(entity.getDeltaMovement().multiply(1.0, 0.005, 1.0));
 		}
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public float getShadeBrightness(BlockState state, IBlockReader worldIn, BlockPos pos) {
 		return 1.0F;
 	}
 
@@ -60,7 +60,7 @@ public class AercloudBlock extends BreakableBlock implements IAetherDoubleDropBl
 	}
 
 	@Override
-	public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getVisualShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
 		return VoxelShapes.empty();
 	}
 }

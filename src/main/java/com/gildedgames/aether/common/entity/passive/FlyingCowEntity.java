@@ -36,7 +36,7 @@ public class FlyingCowEntity extends SaddleableEntity {
         this.goalSelector.addGoal(0, new SwimGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 2.0));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, Ingredient.fromItems(AetherItems.BLUE_BERRY.get()), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, Ingredient.of(AetherItems.BLUE_BERRY.get()), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0));
         this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 6.0F));
@@ -44,9 +44,9 @@ public class FlyingCowEntity extends SaddleableEntity {
     }
 
     public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return SaddleableEntity.func_233666_p_()
-                .createMutableAttribute(Attributes.MAX_HEALTH, 20.0D)
-                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.20000000298023224D);
+        return SaddleableEntity.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 20.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.20000000298023224D);
     }
 
     @Override
@@ -67,8 +67,8 @@ public class FlyingCowEntity extends SaddleableEntity {
         this.fallDistance = 0.0F;
 
         this.fallDistance = 0.0F;
-        if (this.getMotion().y < -0.1 && !this.isRiderSneaking()) {
-            this.setMotion(getMotion().x, -0.1, getMotion().z);
+        if (this.getDeltaMovement().y < -0.1 && !this.isRiderSneaking()) {
+            this.setDeltaMovement(getDeltaMovement().x, -0.1, getDeltaMovement().z);
         }
     }
 
@@ -80,27 +80,27 @@ public class FlyingCowEntity extends SaddleableEntity {
 
     public void onMountedJump() {
         if(this.onGround) {
-            this.setMotion(this.getMotion().getX(), 2.0F, this.getMotion().getZ());
+            this.setDeltaMovement(this.getDeltaMovement().x(), 2.0F, this.getDeltaMovement().z());
         }
     }
 
     @Override
-    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-        ItemStack itemstack = player.getHeldItem(hand);
-        if (itemstack.getItem() == Items.BUCKET && !this.isChild()) {
-            player.playSound(SoundEvents.ENTITY_COW_MILK, 1.0F, 1.0F);
-            ItemStack itemstack1 = DrinkHelper.fill(itemstack, player, Items.MILK_BUCKET.getDefaultInstance());
-            player.setHeldItem(hand, itemstack1);
-            return ActionResultType.func_233537_a_(this.world.isRemote);
+    public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+        ItemStack itemstack = player.getItemInHand(hand);
+        if (itemstack.getItem() == Items.BUCKET && !this.isBaby()) {
+            player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
+            ItemStack itemstack1 = DrinkHelper.createFilledResult(itemstack, player, Items.MILK_BUCKET.getDefaultInstance());
+            player.setItemInHand(hand, itemstack1);
+            return ActionResultType.sidedSuccess(this.level.isClientSide);
         } else {
-            return super.func_230254_b_(player, hand);
+            return super.mobInteract(player, hand);
         }
     }
 
     @Nullable
     @Override
-    public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
-        return AetherEntityTypes.FLYING_COW.get().create(this.world);
+    public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+        return AetherEntityTypes.FLYING_COW.get().create(this.level);
     }
 
     @Nullable

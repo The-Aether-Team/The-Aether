@@ -17,7 +17,7 @@ public class FreezingRecipe extends AbstractCookingRecipe
 	}
 
 	@Override
-	public ItemStack getIcon() {
+	public ItemStack getToastSymbol() {
 		return new ItemStack(AetherBlocks.FREEZER.get());
 	}
 

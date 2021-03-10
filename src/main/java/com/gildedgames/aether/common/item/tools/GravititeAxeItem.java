@@ -11,16 +11,16 @@ import net.minecraft.util.ActionResultType;
 public class GravititeAxeItem extends AxeItem implements IGravititeToolItem
 {
 	public GravititeAxeItem() {
-		super(AetherItemTiers.GRAVITITE, 5.0F, -3.0F, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS));
+		super(AetherItemTiers.GRAVITITE, 5.0F, -3.0F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
 	}
 	
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResultType useOn(ItemUseContext context) {
 		return IGravititeToolItem.super.onItemUse(context);
 	}
 	
 	@Override
 	public ActionResultType defaultItemUse(ItemUseContext context) {
-		return super.onItemUse(context);
+		return super.useOn(context);
 	}
 }

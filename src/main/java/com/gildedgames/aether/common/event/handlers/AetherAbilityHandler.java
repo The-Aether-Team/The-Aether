@@ -36,20 +36,20 @@ public class AetherAbilityHandler
         LivingEntity entity = event.getEntityLiving();
         EntityDamageSource source = (EntityDamageSource) event.getSource();
 
-        if (!(source.getImmediateSource() instanceof PlayerEntity)) {
+        if (!(source.getDirectEntity() instanceof PlayerEntity)) {
             return;
         }
 
-        PlayerEntity player = (PlayerEntity) source.getImmediateSource();
-        ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
+        PlayerEntity player = (PlayerEntity) source.getDirectEntity();
+        ItemStack stack = player.getItemInHand(Hand.MAIN_HAND);
         Item item = stack.getItem();
 
-        if (item == AetherItems.SKYROOT_SWORD.get() && !entity.getType().isContained(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
+        if (item == AetherItems.SKYROOT_SWORD.get() && !entity.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
             ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
             for (ItemEntity drop : event.getDrops()) {
                 ItemStack droppedStack = drop.getItem();
-                if (!droppedStack.getItem().isIn(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS)) {
-                    newDrops.add(new ItemEntity(entity.world, drop.getPosX(), drop.getPosY(), drop.getPosZ(), droppedStack.copy()));
+                if (!droppedStack.getItem().is(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS)) {
+                    newDrops.add(new ItemEntity(entity.level, drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy()));
                 }
             }
             event.getDrops().addAll(newDrops);
@@ -62,19 +62,19 @@ public class AetherAbilityHandler
         ItemStack stack = event.getItemStack();
         if (stack.getItem() instanceof AxeItem) {
             BlockState blockState = world.getBlockState(event.getPos());
-            if (blockState.getBlock().isIn(AetherTags.Blocks.GOLDEN_OAK_LOGS)) {
+            if (blockState.getBlock().is(AetherTags.Blocks.GOLDEN_OAK_LOGS)) {
                 if (world.getServer() != null) {
-                    Vector3d vector = event.getHitVec().getHitVec();
+                    Vector3d vector = event.getHitVec().getLocation();
                     LootContext.Builder lootContext = new LootContext.Builder((ServerWorld) world)
                             .withParameter(LootParameters.BLOCK_STATE, blockState)
-                            .withParameter(LootParameters.field_237457_g_, vector)
+                            .withParameter(LootParameters.ORIGIN, vector)
                             .withParameter(LootParameters.TOOL, stack);
-                    LootTable loottable = world.getServer().getLootTableManager().getLootTableFromLocation(AetherLoot.STRIP_GOLDEN_OAK);
-                    List<ItemStack> list = loottable.generate(lootContext.build(AetherLoot.STRIPPING));
+                    LootTable loottable = world.getServer().getLootTables().get(AetherLoot.STRIP_GOLDEN_OAK);
+                    List<ItemStack> list = loottable.getRandomItems(lootContext.create(AetherLoot.STRIPPING));
 
                     for(ItemStack itemstack : list) {
-                        ItemEntity itementity = new ItemEntity(world, vector.getX(), vector.getY(), vector.getZ(), itemstack);
-                        world.addEntity(itementity);
+                        ItemEntity itementity = new ItemEntity(world, vector.x(), vector.y(), vector.z(), itemstack);
+                        world.addFreshEntity(itementity);
                     }
                 }
             }

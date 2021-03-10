@@ -17,7 +17,7 @@ import net.minecraft.block.AbstractBlock;
 
 public class BerryBushStemBlock extends AetherBushBlock implements IGrowable
 {
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
+	protected static final VoxelShape SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
 
 	public BerryBushStemBlock(AbstractBlock.Properties properties) {
 		super(properties);
@@ -34,23 +34,23 @@ public class BerryBushStemBlock extends AetherBushBlock implements IGrowable
 			return;
 		}
 
-		if (worldIn.getLight(pos.up()) >= 9 && random.nextInt(60) == 0) {
-			this.grow(worldIn, random, pos, state);
+		if (worldIn.getMaxLocalRawBrightness(pos.above()) >= 9 && random.nextInt(60) == 0) {
+			this.performBonemeal(worldIn, random, pos, state);
 		}
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
 		return true;
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) {
 		return rand.nextFloat() < 0.45F;
 	}
 
 	@Override
-	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-		worldIn.setBlockState(pos, AetherBlocks.BERRY_BUSH.get().getDefaultState());
+	public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
+		worldIn.setBlockAndUpdate(pos, AetherBlocks.BERRY_BUSH.get().defaultBlockState());
 	}
 }

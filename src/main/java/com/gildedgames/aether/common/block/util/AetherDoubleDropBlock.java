@@ -15,11 +15,11 @@ public class AetherDoubleDropBlock extends Block implements IAetherDoubleDropBlo
 
 	public AetherDoubleDropBlock(AbstractBlock.Properties properties) {
 		super(properties);
-		this.setDefaultState(this.getDefaultState().with(DOUBLE_DROPS, false));
+		this.registerDefaultState(this.defaultBlockState().setValue(DOUBLE_DROPS, false));
 	}
 	
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(DOUBLE_DROPS);
 	}
 }

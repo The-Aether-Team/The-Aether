@@ -3,6 +3,8 @@ package com.gildedgames.aether.common.item.materials;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import net.minecraft.item.Item.Properties;
+
 public class SkyrootStickItem extends Item
 {
     public SkyrootStickItem(Properties properties) {

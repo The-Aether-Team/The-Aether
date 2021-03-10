@@ -25,7 +25,7 @@ public abstract class WorldRendererMixin {
             ordinal = 0
     )
     private double onRenderSky(double d0) {
-        if(world.getDimensionKey() == AetherDimensions.AETHER_WORLD) {
+        if(world.dimension() == AetherDimensions.AETHER_WORLD) {
             return 1.0D;
         }
         return d0;

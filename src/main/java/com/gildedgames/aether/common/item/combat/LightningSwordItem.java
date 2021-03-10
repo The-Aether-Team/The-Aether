@@ -10,14 +10,14 @@ import net.minecraft.item.*;
 public class LightningSwordItem extends SwordItem
 {
     public LightningSwordItem() {
-        super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().maxDamage(502).rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_WEAPONS));
+        super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().durability(502).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        LightningBoltEntity lightningBolt = EntityType.LIGHTNING_BOLT.create(attacker.world);
-        lightningBolt.setPosition(target.getPosX(), target.getPosY(), target.getPosZ());
-        attacker.world.addEntity(lightningBolt);
-        return super.hitEntity(stack, target, attacker);
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        LightningBoltEntity lightningBolt = EntityType.LIGHTNING_BOLT.create(attacker.level);
+        lightningBolt.setPos(target.getX(), target.getY(), target.getZ());
+        attacker.level.addFreshEntity(lightningBolt);
+        return super.hurtEnemy(stack, target, attacker);
     }
 }

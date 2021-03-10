@@ -20,11 +20,11 @@ public class InebriationEffect extends Effect {
     }
 
     @Override
-    public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
+    public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
         this.distractEntity(entityLivingBaseIn);
 
         if (this.duration % 50 == 0) {
-            entityLivingBaseIn.attackEntityFrom(new DamageSource("inebriation").setDamageBypassesArmor(), 1.0F);
+            entityLivingBaseIn.hurt(new DamageSource("inebriation").bypassArmor(), 1.0F);
         }
 
         /*if (entityLivingBaseIn instanceof PlayerEntity)
@@ -49,17 +49,17 @@ public class InebriationEffect extends Effect {
     }
 
     public void distractEntity(LivingEntity entityLivingBaseIn) {
-        double gaussian = entityLivingBaseIn.world.rand.nextGaussian();
+        double gaussian = entityLivingBaseIn.level.random.nextGaussian();
         double newMotD = 0.1D * gaussian;
         double newRotD = (Math.PI / 4D) * gaussian;
 
         this.motD = 0.2D * newMotD + (0.8D) * this.motD;
 
-        entityLivingBaseIn.setMotion(entityLivingBaseIn.getMotion().add(this.motD, 0, this.motD));
+        entityLivingBaseIn.setDeltaMovement(entityLivingBaseIn.getDeltaMovement().add(this.motD, 0, this.motD));
         this.rotD = 0.125D * newRotD + (1.0D - 0.125D) * this.rotD;
 
-        entityLivingBaseIn.rotationYaw = (float)((double)entityLivingBaseIn.rotationYaw + rotD);
-        entityLivingBaseIn.rotationPitch = (float)((double)entityLivingBaseIn.rotationPitch + rotD);
+        entityLivingBaseIn.yRot = (float)((double)entityLivingBaseIn.yRot + rotD);
+        entityLivingBaseIn.xRot = (float)((double)entityLivingBaseIn.xRot + rotD);
         
         /*if (entityLivingBaseIn.world instanceof ServerWorld) {
             ((ServerWorld)entityLivingBaseIn.world).spawnParticle(ParticleTypes.ITEM, entityLivingBaseIn.getPosX(), entityLivingBaseIn.getBoundingBox().minY + entityLivingBaseIn.getHeight() * 0.8D, entityLivingBaseIn.getPosZ(), 2, 0.0D, 1, 0.0D, 0.0625D, 0.0D, 1);
@@ -67,13 +67,13 @@ public class InebriationEffect extends Effect {
     }
 
     @Override
-    public boolean isReady(int duration, int amplifier) {
+    public boolean isDurationEffectTick(int duration, int amplifier) {
         this.duration = duration;
         return true;
     }
 
     @Override
-    public boolean isInstant() {
+    public boolean isInstantenous() {
         return false;
     }
 

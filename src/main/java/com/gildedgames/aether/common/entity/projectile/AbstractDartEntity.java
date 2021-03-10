@@ -40,13 +40,13 @@ public abstract class AbstractDartEntity extends AbstractArrowEntity {
     }
 
     @Override
-    protected void func_230299_a_(BlockRayTraceResult result) {
-        super.func_230299_a_(result);
+    protected void onHitBlock(BlockRayTraceResult result) {
+        super.onHitBlock(result);
         this.setNoGravity(false);
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

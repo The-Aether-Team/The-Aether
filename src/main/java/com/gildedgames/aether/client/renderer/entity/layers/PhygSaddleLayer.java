@@ -21,11 +21,11 @@ public class PhygSaddleLayer extends LayerRenderer<PhygEntity, PigModel<PhygEnti
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, PhygEntity phyg, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (phyg.isSaddled()) {
-            this.getEntityModel().copyModelAttributesTo(this.pigModel);
-            this.pigModel.setLivingAnimations(phyg, limbSwing, limbSwingAmount, partialTicks);
-            this.pigModel.setRotationAngles(phyg, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-            IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntityCutoutNoCull(TEXTURE));
-            this.pigModel.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.getParentModel().copyPropertiesTo(this.pigModel);
+            this.pigModel.prepareMobModel(phyg, limbSwing, limbSwingAmount, partialTicks);
+            this.pigModel.setupAnim(phyg, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
+            this.pigModel.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
 }

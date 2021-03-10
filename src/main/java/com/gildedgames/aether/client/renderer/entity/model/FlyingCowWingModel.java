@@ -23,11 +23,11 @@ public class FlyingCowWingModel extends EntityModel<FlyingCowEntity> {
         this.rightWingInner.addBox(-1.0F, -8.0F, -4.0F, 2, 16, 8, 0.0F);
         this.rightWingOuter.addBox(-1.0F, -8.0F, -4.0F, 2, 16, 8, 0.0F);
 
-        this.rightWingOuter.rotateAngleY = (float)Math.PI;
+        this.rightWingOuter.yRot = (float)Math.PI;
     }
 
     @Override
-    public void setRotationAngles(FlyingCowEntity flyingCow, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(FlyingCowEntity flyingCow, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float wingBend = -((float)Math.acos(flyingCow.wingFold));
 
         float x = 32.0F * flyingCow.wingFold / 4.0F;
@@ -36,30 +36,30 @@ public class FlyingCowWingModel extends EntityModel<FlyingCowEntity> {
         float x2 = x * (float)Math.cos(flyingCow.wingAngle) - y * (float)Math.sin(flyingCow.wingAngle);
         float y2 = x * (float)Math.sin(flyingCow.wingAngle) + y * (float)Math.cos(flyingCow.wingAngle);
 
-        this.leftWingInner.setRotationPoint(4.0F + x2, y2 + 12.0F, 0.0F);
-        this.rightWingInner.setRotationPoint(-4.0F - x2, y2 + 12.0F, 0.0F);
+        this.leftWingInner.setPos(4.0F + x2, y2 + 12.0F, 0.0F);
+        this.rightWingInner.setPos(-4.0F - x2, y2 + 12.0F, 0.0F);
 
         x *= 3.0F;
         x2 = x * (float)Math.cos(flyingCow.wingAngle) - y * (float)Math.sin(flyingCow.wingAngle);
         y2 = x * (float)Math.sin(flyingCow.wingAngle) + y * (float)Math.cos(flyingCow.wingAngle);
 
-        this.leftWingOuter.setRotationPoint(4.0F + x2, y2 + 12.0F, 0.0F);
-        this.rightWingOuter.setRotationPoint(-4.0F - x2, y2 + 12.0F, 0.0F);
+        this.leftWingOuter.setPos(4.0F + x2, y2 + 12.0F, 0.0F);
+        this.rightWingOuter.setPos(-4.0F - x2, y2 + 12.0F, 0.0F);
 
-        this.leftWingInner.rotateAngleZ = flyingCow.wingAngle + wingBend + ((float)Math.PI / 2.0F);
-        this.leftWingOuter.rotateAngleZ = flyingCow.wingAngle - wingBend + ((float)Math.PI / 2.0F);
-        this.rightWingInner.rotateAngleZ = -(flyingCow.wingAngle + wingBend - ((float)Math.PI / 2.0F));
-        this.rightWingOuter.rotateAngleZ = -(flyingCow.wingAngle - wingBend + ((float)Math.PI / 2.0F));
+        this.leftWingInner.zRot = flyingCow.wingAngle + wingBend + ((float)Math.PI / 2.0F);
+        this.leftWingOuter.zRot = flyingCow.wingAngle - wingBend + ((float)Math.PI / 2.0F);
+        this.rightWingInner.zRot = -(flyingCow.wingAngle + wingBend - ((float)Math.PI / 2.0F));
+        this.rightWingOuter.zRot = -(flyingCow.wingAngle - wingBend + ((float)Math.PI / 2.0F));
     }
 
     @Override
-    public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-        matrixStackIn.push();
+    public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+        matrixStackIn.pushPose();
 //        matrixStackIn.translate(0.0F, -10.0F * scale, 0.0F);
         this.leftWingOuter.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
         this.leftWingInner.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
         this.rightWingOuter.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
         this.rightWingInner.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-        matrixStackIn.pop();
+        matrixStackIn.popPose();
     }
 }

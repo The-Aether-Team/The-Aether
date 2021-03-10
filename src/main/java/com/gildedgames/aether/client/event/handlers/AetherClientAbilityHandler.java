@@ -37,18 +37,18 @@ public class AetherClientAbilityHandler
     private static boolean handleExtendedReach(PlayerEntity player) {
         double reach = player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue();
         Vector3d eyePos = player.getEyePosition(1.0F);
-        Vector3d lookVec = player.getLookVec();
+        Vector3d lookVec = player.getLookAngle();
         Vector3d reachVec = eyePos.add(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
-        AxisAlignedBB playerBox = player.getBoundingBox().expand(lookVec.scale(reach)).grow(1.0D, 1.0D, 1.0D);
-        EntityRayTraceResult traceResult = ProjectileHelper.rayTraceEntities(player, eyePos, reachVec, playerBox, (target) -> {
-            return !target.isSpectator() && target.canBeCollidedWith();
+        AxisAlignedBB playerBox = player.getBoundingBox().expandTowards(lookVec.scale(reach)).inflate(1.0D, 1.0D, 1.0D);
+        EntityRayTraceResult traceResult = ProjectileHelper.getEntityHitResult(player, eyePos, reachVec, playerBox, (target) -> {
+            return !target.isSpectator() && target.isPickable();
         }, reach * reach);
         if (traceResult != null) {
             Entity target = traceResult.getEntity();
-            Vector3d hitVec = traceResult.getHitVec();
-            double distance = eyePos.squareDistanceTo(hitVec);
+            Vector3d hitVec = traceResult.getLocation();
+            double distance = eyePos.distanceToSqr(hitVec);
             if (distance < reach * reach) {
-                AetherPacketHandler.sendToServer(new ExtendedAttackPacket(target.getEntityId()));
+                AetherPacketHandler.sendToServer(new ExtendedAttackPacket(target.getId()));
                 return true;
             }
         }

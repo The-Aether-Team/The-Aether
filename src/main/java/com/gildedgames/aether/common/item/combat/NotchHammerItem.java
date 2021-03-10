@@ -17,23 +17,23 @@ import net.minecraft.world.World;;
 public class NotchHammerItem extends SwordItem
 {
     public NotchHammerItem() {
-        super(ItemTier.IRON, 2, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_WEAPONS));
+        super(ItemTier.IRON, 2, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack hammer = player.getHeldItem(hand);
-        world.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F), false);
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack hammer = player.getItemInHand(hand);
+        world.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.GHAST_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F), false);
 
-        if(!world.isRemote) {
+        if(!world.isClientSide) {
             HammerProjectileEntity hammerProjectile = new HammerProjectileEntity(world, player);
-            hammerProjectile.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
-            world.addEntity(hammerProjectile);
-            if(!player.abilities.isCreativeMode) {
-                player.getCooldownTracker().setCooldown(this, 200);
-                hammer.damageItem(1, player, (p) -> p.sendBreakAnimation(hand));
+            hammerProjectile.shoot(player, player.xRot, player.yRot, 0.0F, 1.5F, 1.0F);
+            world.addFreshEntity(hammerProjectile);
+            if(!player.abilities.instabuild) {
+                player.getCooldowns().addCooldown(this, 200);
+                hammer.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
             }
         }
-        return ActionResult.resultSuccess(hammer);
+        return ActionResult.success(hammer);
     }
 }

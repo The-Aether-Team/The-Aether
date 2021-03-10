@@ -35,9 +35,9 @@ import java.util.function.Supplier;
 public class AetherRendering
 {
     public static void registerBlockRenderLayers() {
-        RenderType cutout = RenderType.getCutout();
-        RenderType mipped = RenderType.getCutoutMipped();
-        RenderType translucent = RenderType.getTranslucent();
+        RenderType cutout = RenderType.cutout();
+        RenderType mipped = RenderType.cutoutMipped();
+        RenderType translucent = RenderType.translucent();
 
         render(AetherBlocks.COLD_AERCLOUD, translucent);
         render(AetherBlocks.BLUE_AERCLOUD, translucent);
@@ -106,28 +106,28 @@ public class AetherRendering
     }
 
     public static void registerGuiFactories() {
-        ScreenManager.registerFactory(AetherContainerTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
-        ScreenManager.registerFactory(AetherContainerTypes.ALTAR.get(), AltarScreen::new);
-        ScreenManager.registerFactory(AetherContainerTypes.FREEZER.get(), FreezerScreen::new);
-        ScreenManager.registerFactory(AetherContainerTypes.INCUBATOR.get(), IncubatorScreen::new);
+        ScreenManager.register(AetherContainerTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
+        ScreenManager.register(AetherContainerTypes.ALTAR.get(), AltarScreen::new);
+        ScreenManager.register(AetherContainerTypes.FREEZER.get(), FreezerScreen::new);
+        ScreenManager.register(AetherContainerTypes.INCUBATOR.get(), IncubatorScreen::new);
     }
 
     public static void registerItemModelProperties() {
-        ItemModelsProperties.registerProperty(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pulling"), (stack, world, living)
-                -> living != null && living.isHandActive() && living.getActiveItemStack() == stack ? 1.0F : 0.0F);
-        ItemModelsProperties.registerProperty(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pull"), (stack, world, living) -> {
+        ItemModelsProperties.register(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pulling"), (stack, world, living)
+                -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F);
+        ItemModelsProperties.register(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pull"), (stack, world, living) -> {
             if (living == null) {
                 return 0.0F;
             } else {
-                return living.getActiveItemStack() != stack ? 0.0F : (float)(stack.getUseDuration() - living.getItemInUseCount()) / 20.0F;
+                return living.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration() - living.getUseItemRemainingTicks()) / 20.0F;
             }
         });
 
-        ItemModelsProperties.registerProperty(AetherItems.CANDY_CANE_SWORD.get(), new ResourceLocation("named"), (stack, world, living)
-                -> stack.getDisplayName().getString().equalsIgnoreCase("green candy cane sword") ? 1.0F : 0.0F);
+        ItemModelsProperties.register(AetherItems.CANDY_CANE_SWORD.get(), new ResourceLocation("named"), (stack, world, living)
+                -> stack.getHoverName().getString().equalsIgnoreCase("green candy cane sword") ? 1.0F : 0.0F);
 
-        ItemModelsProperties.registerProperty(AetherItems.NOTCH_HAMMER.get(), new ResourceLocation("named"), (stack, world, living)
-                -> stack.getDisplayName().getString().equalsIgnoreCase("hammer of jeb") ? 1.0F : 0.0F);
+        ItemModelsProperties.register(AetherItems.NOTCH_HAMMER.get(), new ResourceLocation("named"), (stack, world, living)
+                -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb") ? 1.0F : 0.0F);
     }
 
     private static void render(Supplier<? extends Block> block, RenderType render) {

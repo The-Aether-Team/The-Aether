@@ -32,7 +32,7 @@ public class PhygEntity extends SaddleableEntity {
         this.goalSelector.addGoal(0, new SwimGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(3, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2, Ingredient.fromItems(AetherItems.BLUE_BERRY.get()), false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2, Ingredient.of(AetherItems.BLUE_BERRY.get()), false));
         this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1.0));
         this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
@@ -40,9 +40,9 @@ public class PhygEntity extends SaddleableEntity {
     }
 
     public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return SaddleableEntity.func_233666_p_()
-                .createMutableAttribute(Attributes.MAX_HEALTH, 20.0D)
-                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
+        return SaddleableEntity.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 20.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.25D);
     }
 
     @Override
@@ -61,8 +61,8 @@ public class PhygEntity extends SaddleableEntity {
         this.wingFold += (aimingForFold - this.wingFold) / 5.0F;
 
         this.fallDistance = 0.0F;
-        if (this.getMotion().y < -0.1 && !this.isRiderSneaking()) {
-            this.setMotion(getMotion().x, -0.1, getMotion().z);
+        if (this.getDeltaMovement().y < -0.1 && !this.isRiderSneaking()) {
+            this.setDeltaMovement(getDeltaMovement().x, -0.1, getDeltaMovement().z);
         }
     }
 
@@ -74,14 +74,14 @@ public class PhygEntity extends SaddleableEntity {
 
     public void onMountedJump() {
         if(this.onGround) {
-            this.setMotion(this.getMotion().getX(), 2.0F, this.getMotion().getZ());
+            this.setDeltaMovement(this.getDeltaMovement().x(), 2.0F, this.getDeltaMovement().z());
         }
     }
 
     @Nullable
     @Override
-    public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
-        return AetherEntityTypes.PHYG.get().create(this.world);
+    public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+        return AetherEntityTypes.PHYG.get().create(this.level);
     }
 
     @Nullable

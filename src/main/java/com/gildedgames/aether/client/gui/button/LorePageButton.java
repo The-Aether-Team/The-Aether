@@ -10,6 +10,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 
+import net.minecraft.client.gui.widget.button.Button.IPressable;
+
 public class LorePageButton extends Button
 {
     private static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/lore_widgets.png");
@@ -30,8 +32,8 @@ public class LorePageButton extends Button
     @Override
     public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         Minecraft minecraft = Minecraft.getInstance();
-        FontRenderer fontrenderer = minecraft.fontRenderer;
-        minecraft.getTextureManager().bindTexture(BUTTON_TEXTURES);
+        FontRenderer fontrenderer = minecraft.font;
+        minecraft.getTextureManager().bind(BUTTON_TEXTURES);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
         boolean flag = false;
         if (this.isActive) flag = this.isHovered();

@@ -14,8 +14,8 @@ public class BerryBushBlock extends AetherBushBlock
 	}
 	
 	@Override
-	public void onPlayerDestroy(IWorld worldIn, BlockPos pos, BlockState state) {
-		super.onPlayerDestroy(worldIn, pos, state);
-		worldIn.setBlockState(pos, AetherBlocks.BERRY_BUSH_STEM.get().getDefaultState(), 3);
+	public void destroy(IWorld worldIn, BlockPos pos, BlockState state) {
+		super.destroy(worldIn, pos, state);
+		worldIn.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState(), 3);
 	}
 }

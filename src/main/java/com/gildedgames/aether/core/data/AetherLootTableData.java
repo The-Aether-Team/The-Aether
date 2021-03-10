@@ -25,6 +25,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.gildedgames.aether.core.data.provider.AetherLootTableProvider.AetherBlockLootTableProvider;
+
 public class AetherLootTableData extends AetherLootTableProvider
 {
     public AetherLootTableData(DataGenerator dataGeneratorIn) {
@@ -59,25 +61,25 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropWithFortune(AetherBlocks.ZANITE_ORE, AetherItems.ZANITE_GEMSTONE);
             dropSelf(AetherBlocks.GRAVITITE_ORE);
 
-            this.registerLootTable(AetherBlocks.SKYROOT_LEAVES.get(),
-                    (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.SKYROOT_SAPLING.get(), DEFAULT_SAPLING_DROP_RATES));
-            this.registerLootTable(AetherBlocks.GOLDEN_OAK_LEAVES.get(),
-                    (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), DEFAULT_SAPLING_DROP_RATES));
-            this.registerLootTable(AetherBlocks.CRYSTAL_LEAVES.get(),
+            this.add(AetherBlocks.SKYROOT_LEAVES.get(),
+                    (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.SKYROOT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+            this.add(AetherBlocks.GOLDEN_OAK_LEAVES.get(),
+                    (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+            this.add(AetherBlocks.CRYSTAL_LEAVES.get(),
                     AetherBlockLootTableProvider::droppingWithSkyrootSticks);
-            this.registerLootTable(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get(),
+            this.add(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get(),
                     (leaves) -> droppingWithFruitAndSkyrootSticks(leaves, AetherItems.WHITE_APPLE.get()));
-            this.registerLootTable(AetherBlocks.HOLIDAY_LEAVES.get(),
+            this.add(AetherBlocks.HOLIDAY_LEAVES.get(),
                     AetherBlockLootTableProvider::droppingWithSkyrootSticks);
-            this.registerLootTable(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get(),
+            this.add(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get(),
                     AetherBlockLootTableProvider::droppingWithSkyrootSticks);
 
             dropSelfDouble(AetherBlocks.SKYROOT_LOG);
-            this.registerLootTable(AetherBlocks.GOLDEN_OAK_LOG.get(),
+            this.add(AetherBlocks.GOLDEN_OAK_LOG.get(),
                     (log) -> droppingDoubleGoldenOak(AetherBlocks.SKYROOT_LOG.get(), AetherItems.GOLDEN_AMBER.get()));
             dropSelfDouble(AetherBlocks.STRIPPED_SKYROOT_LOG);
             dropSelfDouble(AetherBlocks.SKYROOT_WOOD);
-            this.registerLootTable(AetherBlocks.GOLDEN_OAK_WOOD.get(),
+            this.add(AetherBlocks.GOLDEN_OAK_WOOD.get(),
                     (wood) -> droppingDoubleGoldenOak(AetherBlocks.SKYROOT_WOOD.get(), AetherItems.GOLDEN_AMBER.get()));
             dropSelfDouble(AetherBlocks.STRIPPED_SKYROOT_WOOD);
 
@@ -96,7 +98,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             drop(AetherBlocks.AMBROSIUM_WALL_TORCH, AetherBlocks.AMBROSIUM_TORCH);
             dropSelf(AetherBlocks.AMBROSIUM_TORCH);
 
-            this.registerLootTable(AetherBlocks.BERRY_BUSH.get(),
+            this.add(AetherBlocks.BERRY_BUSH.get(),
                     (bush) -> droppingBerryBush(bush, AetherItems.BLUE_BERRY.get()));
             dropSelf(AetherBlocks.BERRY_BUSH_STEM);
 
@@ -137,7 +139,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropSelf(AetherBlocks.PILLAR);
             dropSelf(AetherBlocks.PILLAR_TOP);
 
-            this.registerLootTable(AetherBlocks.PRESENT.get(),
+            this.add(AetherBlocks.PRESENT.get(),
                     AetherBlockLootTableProvider::droppingPresentLoot);
 
             dropSelf(AetherBlocks.SKYROOT_FENCE);
@@ -171,8 +173,8 @@ public class AetherLootTableData extends AetherLootTableProvider
 
             dropSelf(AetherBlocks.SUN_ALTAR);
 
-            this.registerLootTable(AetherBlocks.SKYROOT_BOOKSHELF.get(),
-                    (bookshelf) -> droppingWithSilkTouchOrRandomly(bookshelf, Items.BOOK, ConstantRange.of(3)));
+            this.add(AetherBlocks.SKYROOT_BOOKSHELF.get(),
+                    (bookshelf) -> createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ConstantRange.exactly(3)));
 
             dropSelf(AetherBlocks.SKYROOT_BED);
         }
@@ -187,130 +189,130 @@ public class AetherLootTableData extends AetherLootTableProvider
     {
         @Override
         protected void addTables() {
-            this.registerLootTable(AetherEntityTypes.PHYG.get(), LootTable.builder()
-                    .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-                            .addEntry(ItemLootEntry.builder(Items.PORKCHOP)
-                                    .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 3.0F)))
-                                    .acceptFunction(Smelt.func_215953_b().acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS, ON_FIRE)))
-                                    .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))
+            this.add(AetherEntityTypes.PHYG.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(Items.PORKCHOP)
+                                    .apply(SetCount.setCount(RandomValueRange.between(1.0F, 3.0F)))
+                                    .apply(Smelt.smelted().when(EntityHasProperty.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
                             )
                     )
-                    .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-                            .addEntry(ItemLootEntry.builder(Items.FEATHER)
-                                    .acceptFunction(SetCount.builder(RandomValueRange.of(0.0F, 1.0F)))
-                                    .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))
-                            )
-                    )
-            );
-
-            this.registerLootTable(AetherEntityTypes.FLYING_COW.get(), LootTable.builder()
-                    .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-                            .addEntry(ItemLootEntry.builder(Items.LEATHER)
-                                    .acceptFunction(SetCount.builder(RandomValueRange.of(0.0F, 2.0F)))
-                                    .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))
-                            )
-                    )
-                    .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-                            .addEntry(ItemLootEntry.builder(Items.BEEF)
-                                    .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 3.0F)))
-                                    .acceptFunction(Smelt.func_215953_b().acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS, ON_FIRE)))
-                                    .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(Items.FEATHER)
+                                    .apply(SetCount.setCount(RandomValueRange.between(0.0F, 1.0F)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
                             )
                     )
             );
 
-            this.registerLootTable(AetherEntityTypes.SHEEPUFF.get(), LootTable.builder()
-                    .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-                            .addEntry(ItemLootEntry.builder(Items.MUTTON)
-                                    .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F)))
-                                    .acceptFunction(Smelt.func_215953_b().acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS, ON_FIRE)))
-                                    .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))
+            this.add(AetherEntityTypes.FLYING_COW.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(Items.LEATHER)
+                                    .apply(SetCount.setCount(RandomValueRange.between(0.0F, 2.0F)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
                             )
                     )
-            );
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_BLACK, sheepLootTableBuilderWithDrop(Blocks.BLACK_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_BLUE, sheepLootTableBuilderWithDrop(Blocks.BLUE_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_BROWN, sheepLootTableBuilderWithDrop(Blocks.BROWN_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_CYAN, sheepLootTableBuilderWithDrop(Blocks.CYAN_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_GRAY, sheepLootTableBuilderWithDrop(Blocks.GRAY_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_GREEN, sheepLootTableBuilderWithDrop(Blocks.GREEN_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_LIGHT_BLUE, sheepLootTableBuilderWithDrop(Blocks.LIGHT_BLUE_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_LIGHT_GRAY, sheepLootTableBuilderWithDrop(Blocks.LIGHT_GRAY_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_LIME, sheepLootTableBuilderWithDrop(Blocks.LIME_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_MAGENTA, sheepLootTableBuilderWithDrop(Blocks.MAGENTA_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_ORANGE, sheepLootTableBuilderWithDrop(Blocks.ORANGE_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_PINK, sheepLootTableBuilderWithDrop(Blocks.PINK_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_PURPLE, sheepLootTableBuilderWithDrop(Blocks.PURPLE_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_RED, sheepLootTableBuilderWithDrop(Blocks.RED_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_WHITE, sheepLootTableBuilderWithDrop(Blocks.WHITE_WOOL));
-            this.registerLootTable(AetherLoot.ENTITIES_SHEEPUFF_YELLOW, sheepLootTableBuilderWithDrop(Blocks.YELLOW_WOOL));
-
-            this.registerLootTable(AetherEntityTypes.MOA.get(), LootTable.builder()
-                    .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-                            .addEntry(ItemLootEntry.builder(Items.FEATHER)
-                                    .acceptFunction(SetCount.builder(RandomValueRange.of(2.0F, 3.0F)))
-                                    .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 2.0F)))
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(Items.BEEF)
+                                    .apply(SetCount.setCount(RandomValueRange.between(1.0F, 3.0F)))
+                                    .apply(Smelt.smelted().when(EntityHasProperty.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
                             )
                     )
             );
 
-            this.registerLootTable(AetherEntityTypes.AERWHALE.get(), LootTable.builder());
-            this.registerLootTable(AetherEntityTypes.WHIRLWIND.get(), LootTable.builder());
+            this.add(AetherEntityTypes.SHEEPUFF.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(Items.MUTTON)
+                                    .apply(SetCount.setCount(RandomValueRange.between(1.0F, 2.0F)))
+                                    .apply(Smelt.smelted().when(EntityHasProperty.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
+                            )
+                    )
+            );
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_BLACK, sheepLootTableBuilderWithDrop(Blocks.BLACK_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_BLUE, sheepLootTableBuilderWithDrop(Blocks.BLUE_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_BROWN, sheepLootTableBuilderWithDrop(Blocks.BROWN_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_CYAN, sheepLootTableBuilderWithDrop(Blocks.CYAN_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_GRAY, sheepLootTableBuilderWithDrop(Blocks.GRAY_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_GREEN, sheepLootTableBuilderWithDrop(Blocks.GREEN_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_LIGHT_BLUE, sheepLootTableBuilderWithDrop(Blocks.LIGHT_BLUE_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_LIGHT_GRAY, sheepLootTableBuilderWithDrop(Blocks.LIGHT_GRAY_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_LIME, sheepLootTableBuilderWithDrop(Blocks.LIME_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_MAGENTA, sheepLootTableBuilderWithDrop(Blocks.MAGENTA_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_ORANGE, sheepLootTableBuilderWithDrop(Blocks.ORANGE_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_PINK, sheepLootTableBuilderWithDrop(Blocks.PINK_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_PURPLE, sheepLootTableBuilderWithDrop(Blocks.PURPLE_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_RED, sheepLootTableBuilderWithDrop(Blocks.RED_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_WHITE, sheepLootTableBuilderWithDrop(Blocks.WHITE_WOOL));
+            this.add(AetherLoot.ENTITIES_SHEEPUFF_YELLOW, sheepLootTableBuilderWithDrop(Blocks.YELLOW_WOOL));
 
-            this.registerLootTable(AetherEntityTypes.AECHOR_PLANT.get(), LootTable.builder()
-                    .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-                            .addEntry(ItemLootEntry.builder(AetherItems.AECHOR_PETAL.get())
-                                    .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 1.0F)))
-                                    .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))
+            this.add(AetherEntityTypes.MOA.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(Items.FEATHER)
+                                    .apply(SetCount.setCount(RandomValueRange.between(2.0F, 3.0F)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 2.0F)))
                             )
                     )
             );
 
-            this.registerLootTable(AetherEntityTypes.COCKATRICE.get(), LootTable.builder()
-                    .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-                            .addEntry(ItemLootEntry.builder(Items.FEATHER)
-                                    .acceptFunction(SetCount.builder(RandomValueRange.of(2.0F, 3.0F)))
-                                    .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 2.0F)))
+            this.add(AetherEntityTypes.AERWHALE.get(), LootTable.lootTable());
+            this.add(AetherEntityTypes.WHIRLWIND.get(), LootTable.lootTable());
+
+            this.add(AetherEntityTypes.AECHOR_PLANT.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(AetherItems.AECHOR_PETAL.get())
+                                    .apply(SetCount.setCount(RandomValueRange.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
                             )
                     )
             );
 
-            this.registerLootTable(AetherEntityTypes.ZEPHYR.get(), LootTable.builder()
-                    .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-                            .addEntry(ItemLootEntry.builder(AetherBlocks.COLD_AERCLOUD.get())
-                                    .acceptFunction(SetCount.builder(RandomValueRange.of(0.0F, 2.0F)))
-                                    .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))
+            this.add(AetherEntityTypes.COCKATRICE.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(Items.FEATHER)
+                                    .apply(SetCount.setCount(RandomValueRange.between(2.0F, 3.0F)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 2.0F)))
                             )
                     )
             );
 
-            this.registerLootTable(AetherEntityTypes.SENTRY.get(), LootTable.builder()
-                    .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-                            .addEntry(ItemLootEntry.builder(AetherBlocks.CARVED_STONE.get()).weight(4)
-                                    .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 1.0F)))
-                                    .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))
-                            )
-                            .addEntry(ItemLootEntry.builder(AetherBlocks.SENTRY_STONE.get()).weight(1)
-                                    .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 1.0F)))
-                                    .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))
+            this.add(AetherEntityTypes.ZEPHYR.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(AetherBlocks.COLD_AERCLOUD.get())
+                                    .apply(SetCount.setCount(RandomValueRange.between(0.0F, 2.0F)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
                             )
                     )
             );
 
-            this.registerLootTable(AetherEntityTypes.MIMIC.get(), LootTable.builder()
-                    .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-                            .addEntry(ItemLootEntry.builder(Blocks.CHEST)
-                                    .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 1.0F)))
-                                    .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))
+            this.add(AetherEntityTypes.SENTRY.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(AetherBlocks.CARVED_STONE.get()).setWeight(4)
+                                    .apply(SetCount.setCount(RandomValueRange.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
+                            )
+                            .add(ItemLootEntry.lootTableItem(AetherBlocks.SENTRY_STONE.get()).setWeight(1)
+                                    .apply(SetCount.setCount(RandomValueRange.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
+                            )
+                    )
+            );
+
+            this.add(AetherEntityTypes.MIMIC.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(Blocks.CHEST)
+                                    .apply(SetCount.setCount(RandomValueRange.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
                             )
                     )
             );
         }
 
         private static LootTable.Builder sheepLootTableBuilderWithDrop(IItemProvider wool) {
-            return LootTable.builder()
-                    .addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(wool)))
-                    .addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(TableLootEntry.builder(AetherEntityTypes.SHEEPUFF.get().getLootTable())));
+            return LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(wool)))
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(TableLootEntry.lootTableReference(AetherEntityTypes.SHEEPUFF.get().getDefaultLootTable())));
         }
 
         @Override
@@ -322,11 +324,11 @@ public class AetherLootTableData extends AetherLootTableProvider
     public static class RegisterStrippingLoot implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>
     {
         public void accept(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
-            builder.accept(AetherLoot.STRIP_GOLDEN_OAK, LootTable.builder()
-                    .addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(AetherItems.GOLDEN_AMBER.get())
-                            .acceptCondition(MatchTool.builder(ItemPredicate.Builder.create().tag(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
-                            .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F)))
-                            .acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE)))));
+            builder.accept(AetherLoot.STRIP_GOLDEN_OAK, LootTable.lootTable()
+                    .withPool(LootPool.lootPool().add(ItemLootEntry.lootTableItem(AetherItems.GOLDEN_AMBER.get())
+                            .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
+                            .apply(SetCount.setCount(RandomValueRange.between(1.0F, 2.0F)))
+                            .apply(ApplyBonus.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))));
         }
     }
 }

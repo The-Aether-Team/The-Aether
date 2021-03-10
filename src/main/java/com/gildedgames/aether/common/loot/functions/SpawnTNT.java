@@ -24,23 +24,23 @@ public class SpawnTNT extends LootFunction
     }
 
     @Override
-    protected ItemStack doApply(ItemStack stack, LootContext context) {
-        ServerWorld world = context.getWorld();
-        Vector3d vector3d = context.get(LootParameters.field_237457_g_);
+    protected ItemStack run(ItemStack stack, LootContext context) {
+        ServerWorld world = context.getLevel();
+        Vector3d vector3d = context.getParamOrNull(LootParameters.ORIGIN);
         if (vector3d != null) {
-            TNTPresentEntity tnt = new TNTPresentEntity(world, vector3d.getX(), vector3d.getY(), vector3d.getZ());
-            world.addEntity(tnt);
-            world.playSound(null, new BlockPos(vector3d), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            TNTPresentEntity tnt = new TNTPresentEntity(world, vector3d.x(), vector3d.y(), vector3d.z());
+            world.addFreshEntity(tnt);
+            world.playSound(null, new BlockPos(vector3d), SoundEvents.TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
         }
         return stack;
     }
 
     public static LootFunction.Builder<?> builder() {
-        return LootFunction.builder(SpawnTNT::new);
+        return LootFunction.simpleBuilder(SpawnTNT::new);
     }
 
     @Override
-    public LootFunctionType getFunctionType() {
+    public LootFunctionType getType() {
         return AetherLoot.SPAWN_ENTITY;
     }
 

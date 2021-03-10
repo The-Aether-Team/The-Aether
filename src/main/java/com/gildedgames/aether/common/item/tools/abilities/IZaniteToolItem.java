@@ -6,7 +6,7 @@ public interface IZaniteToolItem {
 
 	default float calculateIncrease(ItemStack tool, float original) {		
 		if (original == 4.0F) {
-			int current = tool.getDamage();
+			int current = tool.getDamageValue();
 			int maxDamage = tool.getMaxDamage();
 			
 			if (maxDamage - 50 <= current && current <= maxDamage) {

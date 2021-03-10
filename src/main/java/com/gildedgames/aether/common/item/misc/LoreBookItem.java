@@ -12,6 +12,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import net.minecraft.item.Item.Properties;
+
 public class LoreBookItem extends Item
 {
     public LoreBookItem(Properties properties) {
@@ -19,13 +21,13 @@ public class LoreBookItem extends Item
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (!worldIn.isRemote()) {
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        if (!worldIn.isClientSide()) {
             NetworkHooks.openGui((ServerPlayerEntity) playerIn,
                     new SimpleNamedContainerProvider((id, inventory, player) -> LoreBookContainer.create(id, inventory),
                             new TranslationTextComponent("container.aether.book_of_lore")));
         }
 
-        return super.onItemRightClick(worldIn, playerIn, handIn);
+        return super.use(worldIn, playerIn, handIn);
     }
 }

@@ -26,7 +26,7 @@ public class AetherBlockTagData extends BlockTagsProvider
     }
 
     @Override
-    protected void registerTags() {
+    protected void addTags() {
         //aether
         tag(AetherTags.Blocks.AETHER_DIRT)
                 .add(AetherBlocks.AETHER_GRASS_BLOCK.get())
@@ -184,6 +184,6 @@ public class AetherBlockTagData extends BlockTagsProvider
     }
 
     private TagsProvider.Builder<Block> tag(ITag.INamedTag<Block> tag) {
-        return this.getOrCreateBuilder(tag);
+        return this.tag(tag);
     }
 }

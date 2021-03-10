@@ -44,17 +44,17 @@ import net.minecraft.block.AbstractBlock;
 public class AetherPortalBlock extends Block
 {
 	public static final EnumProperty<Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
-	protected static final VoxelShape X_AABB = Block.makeCuboidShape(0.0, 0.0, 6.0, 16.0, 16.0, 10.0);
-	protected static final VoxelShape Z_AABB = Block.makeCuboidShape(6.0, 0.0, 0.0, 10.0, 16.0, 16.0);
+	protected static final VoxelShape X_AABB = Block.box(0.0, 0.0, 6.0, 16.0, 16.0, 10.0);
+	protected static final VoxelShape Z_AABB = Block.box(6.0, 0.0, 0.0, 10.0, 16.0, 16.0);
 
 	public AetherPortalBlock(AbstractBlock.Properties properties) {
 		super(properties);
-		this.setDefaultState(this.stateContainer.getBaseState().with(AXIS, Axis.X));
+		this.registerDefaultState(this.stateDefinition.any().setValue(AXIS, Axis.X));
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		switch (state.get(AXIS)) {
+		switch (state.getValue(AXIS)) {
 			case Z:
 				return Z_AABB;
 			case X:
@@ -89,34 +89,34 @@ public class AetherPortalBlock extends Block
 	
 	@Override
 	@Deprecated
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
 		Axis directionAxis = facing.getAxis();
-		Axis stateAxis = stateIn.get(AXIS);
+		Axis stateAxis = stateIn.getValue(AXIS);
 		boolean flag = stateAxis != directionAxis && directionAxis.isHorizontal();
-		return (!flag && facingState.getBlock() != this && !(new AetherPortalBlock.Size(worldIn, currentPos, stateAxis)).canCreatePortal())? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos); 
+		return (!flag && facingState.getBlock() != this && !(new AetherPortalBlock.Size(worldIn, currentPos, stateAxis)).canCreatePortal())? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos); 
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
-		if(!entity.isPassenger() && !entity.isBeingRidden() && entity.isNonBoss()) {
-			if(entity.func_242280_ah()) {
-				entity.func_242279_ag();
+	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entity) {
+		if(!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {
+			if(entity.isOnPortalCooldown()) {
+				entity.setPortalCooldown();
 			}
 			else {
-				if(!entity.world.isRemote && !pos.equals(entity.field_242271_ac)) {
-					entity.field_242271_ac = pos.toImmutable();
+				if(!entity.level.isClientSide && !pos.equals(entity.portalEntrancePos)) {
+					entity.portalEntrancePos = pos.immutable();
 				}
-				World serverworld = entity.world;
+				World serverworld = entity.level;
 				if(serverworld != null) {
 					MinecraftServer minecraftserver = serverworld.getServer();
-					RegistryKey<World> where2go = entity.world.getDimensionKey() == AetherDimensions.AETHER_WORLD ? World.OVERWORLD : AetherDimensions.AETHER_WORLD;
+					RegistryKey<World> where2go = entity.level.dimension() == AetherDimensions.AETHER_WORLD ? World.OVERWORLD : AetherDimensions.AETHER_WORLD;
 					if(minecraftserver != null) {
-						ServerWorld destination = minecraftserver.getWorld(where2go);
-						if(destination != null && minecraftserver.getAllowNether() && !entity.isPassenger()) {
-							entity.world.getProfiler().startSection("aether_portal");
-							entity.func_242279_ag();
+						ServerWorld destination = minecraftserver.getLevel(where2go);
+						if(destination != null && minecraftserver.isNetherEnabled() && !entity.isPassenger()) {
+							entity.level.getProfiler().push("aether_portal");
+							entity.setPortalCooldown();
 							entity.changeDimension(destination, new AetherTeleporter(destination));
-							entity.world.getProfiler().endSection();
+							entity.level.getProfiler().pop();
 						}
 					}
 				}
@@ -128,7 +128,7 @@ public class AetherPortalBlock extends Block
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if (rand.nextInt(100) == 0) {
-			worldIn.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT.get(), SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
+			worldIn.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT.get(), SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
 		}
 
 		for (int i = 0; i < 4; ++i) {
@@ -154,7 +154,7 @@ public class AetherPortalBlock extends Block
 	}
 	
 	@Override
-	public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
+	public ItemStack getCloneItemStack(IBlockReader worldIn, BlockPos pos, BlockState state) {
 		return ItemStack.EMPTY;
 	}
 	
@@ -164,11 +164,11 @@ public class AetherPortalBlock extends Block
 		switch (rot) {
 			case COUNTERCLOCKWISE_90:
 			case CLOCKWISE_90:
-				switch (state.get(AXIS)) {
+				switch (state.getValue(AXIS)) {
 					case Z:
-						return state.with(AXIS, Axis.X);
+						return state.setValue(AXIS, Axis.X);
 					case X:
-						return state.with(AXIS, Axis.Z);
+						return state.setValue(AXIS, Axis.Z);
 					default:
 						throw new AssertionError("Invalid value for 'axis'");
 				}
@@ -178,7 +178,7 @@ public class AetherPortalBlock extends Block
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(AXIS);
 	}
 	
@@ -189,7 +189,7 @@ public class AetherPortalBlock extends Block
 		
 		BlockState blockstate = world.getBlockState(pos);
 		FluidState fluidstate = world.getFluidState(pos);
-		if (fluidstate.getFluid() != Fluids.WATER || blockstate.isAir(world, pos)) {
+		if (fluidstate.getType() != Fluids.WATER || blockstate.isAir(world, pos)) {
 			return;
 		}
 
@@ -202,7 +202,7 @@ public class AetherPortalBlock extends Block
 		
 		boolean tryPortal = false;
 		for (Direction direction : Direction.values()) {
-			if (world.getBlockState(pos.offset(direction)).getBlock() == Blocks.GLOWSTONE) {
+			if (world.getBlockState(pos.relative(direction)).getBlock() == Blocks.GLOWSTONE) {
 				if (AetherBlocks.AETHER_PORTAL.get().isPortal(world, pos) != null) {
 					tryPortal = true;
 					break;
@@ -223,7 +223,7 @@ public class AetherPortalBlock extends Block
 	public static BlockPattern.PatternHelper createPatternHelper(IWorld worldIn, BlockPos pos) {
 		Axis axis = Axis.Z;
 		AetherPortalBlock.Size size = new AetherPortalBlock.Size(worldIn, pos, Axis.X);
-		LoadingCache<BlockPos, CachedBlockInfo> cache = BlockPattern.createLoadingCache(worldIn, true);
+		LoadingCache<BlockPos, CachedBlockInfo> cache = BlockPattern.createLevelCache(worldIn, true);
 		if (!size.isValid()) {
 			axis = Axis.X;
 			size = new AetherPortalBlock.Size(worldIn, pos, Axis.Z);
@@ -234,16 +234,16 @@ public class AetherPortalBlock extends Block
 		}
 		else {
 			int[] axes = new int[AxisDirection.values().length];
-			Direction direction = size.rightDir.rotateYCCW();
-			BlockPos blockpos = size.bottomLeft.up(size.getHeight() - 1);
+			Direction direction = size.rightDir.getCounterClockWise();
+			BlockPos blockpos = size.bottomLeft.above(size.getHeight() - 1);
 
 			for (AxisDirection axisDir : AxisDirection.values()) {
-				BlockPattern.PatternHelper helper = new BlockPattern.PatternHelper((direction.getAxisDirection() == axisDir)? blockpos : blockpos.offset(size.rightDir, size.getWidth() - 1), Direction.getFacingFromAxis(axisDir, axis), Direction.UP, cache, size.getWidth(), size.getHeight(), 1);
+				BlockPattern.PatternHelper helper = new BlockPattern.PatternHelper((direction.getAxisDirection() == axisDir)? blockpos : blockpos.relative(size.rightDir, size.getWidth() - 1), Direction.get(axisDir, axis), Direction.UP, cache, size.getWidth(), size.getHeight(), 1);
 
 				for (int i = 0; i < size.getWidth(); ++i) {
 					for (int j = 0; j < size.getHeight(); ++j) {
-						CachedBlockInfo cachedInfo = helper.translateOffset(i, j, 1);
-						if (!cachedInfo.getBlockState().isAir()) {
+						CachedBlockInfo cachedInfo = helper.getBlock(i, j, 1);
+						if (!cachedInfo.getState().isAir()) {
 							++axes[axisDir.ordinal()];
 						}
 					}
@@ -258,7 +258,7 @@ public class AetherPortalBlock extends Block
 				}
 			}
 
-			return new BlockPattern.PatternHelper((direction.getAxisDirection() == axisDirPos)? blockpos : blockpos.offset(size.rightDir, size.getWidth() - 1), Direction.getFacingFromAxis(axisDirPos, axis), Direction.UP, cache, size.getWidth(), size.getHeight(), 1);
+			return new BlockPattern.PatternHelper((direction.getAxisDirection() == axisDirPos)? blockpos : blockpos.relative(size.rightDir, size.getWidth() - 1), Direction.get(axisDirPos, axis), Direction.UP, cache, size.getWidth(), size.getHeight(), 1);
 		}
 	}
 
@@ -286,13 +286,13 @@ public class AetherPortalBlock extends Block
 			}
 
 			for (BlockPos blockpos = pos; pos.getY() > blockpos.getY() - 21 && pos.getY() > 0
-				&& this.isEmptyBlock(worldIn.getBlockState(pos.down())); pos = pos.down()) {
+				&& this.isEmptyBlock(worldIn.getBlockState(pos.below())); pos = pos.below()) {
 				;
 			}
 
 			int i = this.getDistanceUntilEdge(pos, this.leftDir) - 1;
 			if (i >= 0) {
-				this.bottomLeft = pos.offset(this.leftDir, i);
+				this.bottomLeft = pos.relative(this.leftDir, i);
 				this.width = this.getDistanceUntilEdge(this.bottomLeft, this.rightDir);
 				if (this.width < 2 || this.width > 21) {
 					this.bottomLeft = null;
@@ -309,14 +309,14 @@ public class AetherPortalBlock extends Block
 		protected int getDistanceUntilEdge(BlockPos pos, Direction directionIn) {
 			int i;
 			for (i = 0; i < 22; ++i) {
-				BlockPos blockpos = pos.offset(directionIn, i);
+				BlockPos blockpos = pos.relative(directionIn, i);
 				if (!this.isEmptyBlock(this.world.getBlockState(blockpos))
-					|| this.world.getBlockState(blockpos.down()).getBlock() != Blocks.GLOWSTONE) {
+					|| this.world.getBlockState(blockpos.below()).getBlock() != Blocks.GLOWSTONE) {
 					break;
 				}
 			}
 
-			BlockPos framePos = pos.offset(directionIn, i);
+			BlockPos framePos = pos.relative(directionIn, i);
 			return this.world.getBlockState(framePos).getBlock() == Blocks.GLOWSTONE? i : 0;
 		}
 
@@ -332,7 +332,7 @@ public class AetherPortalBlock extends Block
 			outerloop:
 			for (this.height = 0; this.height < 21; ++this.height) {
 				for (int i = 0; i < this.width; ++i) {
-					BlockPos blockpos = this.bottomLeft.offset(this.rightDir, i).up(this.height);
+					BlockPos blockpos = this.bottomLeft.relative(this.rightDir, i).above(this.height);
 					BlockState blockstate = this.world.getBlockState(blockpos);
 					if (!this.isEmptyBlock(blockstate)) {
 						break outerloop;
@@ -344,13 +344,13 @@ public class AetherPortalBlock extends Block
 					}
 
 					if (i == 0) {
-						BlockPos framePos = blockpos.offset(this.leftDir);
+						BlockPos framePos = blockpos.relative(this.leftDir);
 						if (this.world.getBlockState(framePos).getBlock() != Blocks.GLOWSTONE) {
 							break outerloop;
 						}
 					}
 					else if (i == this.width - 1) {
-						BlockPos framePos = blockpos.offset(this.rightDir);
+						BlockPos framePos = blockpos.relative(this.rightDir);
 						if (this.world.getBlockState(framePos).getBlock() != Blocks.GLOWSTONE) {
 							break outerloop;
 						}
@@ -359,7 +359,7 @@ public class AetherPortalBlock extends Block
 			}
 
 			for (int j = 0; j < this.width; ++j) {
-				BlockPos framePos = this.bottomLeft.offset(this.rightDir, j).up(this.height);
+				BlockPos framePos = this.bottomLeft.relative(this.rightDir, j).above(this.height);
 				if (this.world.getBlockState(framePos).getBlock() != Blocks.GLOWSTONE) {
 					this.height = 0;
 					break;
@@ -389,10 +389,10 @@ public class AetherPortalBlock extends Block
 
 		public void placePortalBlocks() {
 			for (int i = 0; i < this.width; ++i) {
-				BlockPos blockpos = this.bottomLeft.offset(this.rightDir, i);
+				BlockPos blockpos = this.bottomLeft.relative(this.rightDir, i);
 
 				for (int j = 0; j < this.height; ++j) {
-					this.world.setBlockState(blockpos.up(j), AetherBlocks.AETHER_PORTAL.get().getDefaultState().with(AetherPortalBlock.AXIS, this.axis), 18);
+					this.world.setBlock(blockpos.above(j), AetherBlocks.AETHER_PORTAL.get().defaultBlockState().setValue(AetherPortalBlock.AXIS, this.axis), 18);
 				}
 			}
 

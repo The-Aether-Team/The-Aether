@@ -29,7 +29,7 @@ public class AetherItemTagData extends ItemTagsProvider
     }
 
     @Override
-    protected void registerTags() {
+    protected void addTags() {
         //aether
         copy(AetherTags.Blocks.AETHER_DIRT, AetherTags.Items.AETHER_DIRT);
         copy(AetherTags.Blocks.HOLYSTONE, AetherTags.Items.HOLYSTONE);
@@ -194,6 +194,6 @@ public class AetherItemTagData extends ItemTagsProvider
     }
 
     private TagsProvider.Builder<Item> tag(ITag.INamedTag<Item> tag) {
-        return this.getOrCreateBuilder(tag);
+        return this.tag(tag);
     }
 }

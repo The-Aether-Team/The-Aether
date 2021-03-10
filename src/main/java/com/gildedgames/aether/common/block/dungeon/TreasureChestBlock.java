@@ -46,16 +46,16 @@ import net.minecraft.block.AbstractBlock;
 public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 	private static final TileEntityMerger.ICallback<TreasureChestTileEntity, Optional<INamedContainerProvider>> getContainerProvider = new TileEntityMerger.ICallback<TreasureChestTileEntity, Optional<INamedContainerProvider>>() {
 		@Override
-		public Optional<INamedContainerProvider> func_225539_a_(TreasureChestTileEntity chest1, TreasureChestTileEntity chest2) {
+		public Optional<INamedContainerProvider> acceptDouble(TreasureChestTileEntity chest1, TreasureChestTileEntity chest2) {
 			final IInventory iinventory = new DoubleSidedInventory(chest1, chest2);
 			return Optional.of(new INamedContainerProvider() {
 				@Override
 				@Nullable
 				public Container createMenu(int id, PlayerInventory inventory, PlayerEntity player) {
 					if (chest1.canOpen(player) && chest2.canOpen(player)) {
-						chest1.fillWithLoot(inventory.player);
-						chest2.fillWithLoot(inventory.player);
-						return ChestContainer.createGeneric9X6(id, inventory, iinventory);
+						chest1.unpackLootTable(inventory.player);
+						chest2.unpackLootTable(inventory.player);
+						return ChestContainer.sixRows(id, inventory, iinventory);
 					}
 					else {
 						return null;
@@ -75,12 +75,12 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 		}
 
 		@Override
-		public Optional<INamedContainerProvider> func_225538_a_(TreasureChestTileEntity chest) {
+		public Optional<INamedContainerProvider> acceptSingle(TreasureChestTileEntity chest) {
 			return Optional.of(chest);
 		}
 
 		@Override
-		public Optional<INamedContainerProvider> func_225537_b_() {
+		public Optional<INamedContainerProvider> acceptNone() {
 			return Optional.empty();
 		}
 	};
@@ -88,7 +88,7 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	protected TreasureChestBlock(AbstractBlock.Properties properties, Supplier<TileEntityType<? extends TreasureChestTileEntity>> tileEntityTypeIn) {
 		super(properties, (Supplier) tileEntityTypeIn);
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(TYPE, ChestType.SINGLE).with(WATERLOGGED, false));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(TYPE, ChestType.SINGLE).setValue(WATERLOGGED, false));
 	}
 	
 	public TreasureChestBlock(AbstractBlock.Properties properties) {
@@ -99,21 +99,21 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 
 		@SuppressWarnings("serial")
 		@Override
-		public BiFunction<PlayerEntity, Hand, ActionResultType> func_225539_a_(TreasureChestTileEntity chest1, TreasureChestTileEntity chest2) {
+		public BiFunction<PlayerEntity, Hand, ActionResultType> acceptDouble(TreasureChestTileEntity chest1, TreasureChestTileEntity chest2) {
 			return (player, hand) -> {
 				if (chest1.getKind() != chest2.getKind()) {
 					return ActionResultType.FAIL;
 				}
 				boolean unlocked = false, messaged = false;
-				ItemStack itemstack = player.getHeldItem(hand);
+				ItemStack itemstack = player.getItemInHand(hand);
 				if (chest1.isLocked() && itemstack.getItem() instanceof DungeonKeyItem) {
 					DungeonKeyItem item = (DungeonKeyItem) itemstack.getItem();
 					if (item.getDungeonType() == chest1.getKind()) {
 						chest1.unlock();
 						unlocked = true;
 					} else {
-						player.sendStatusMessage(new TranslationTextComponent("container.cannotUnlockWithKey", new TranslationTextComponent(chest1.getKind().getTranslationKey()), itemstack.getDisplayName()), true);
-						player.getEntityWorld().playSound(null, chest1.getPos(), SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+						player.displayClientMessage(new TranslationTextComponent("container.cannotUnlockWithKey", new TranslationTextComponent(chest1.getKind().getTranslationKey()), itemstack.getHoverName()), true);
+						player.getCommandSenderWorld().playSound(null, chest1.getBlockPos(), SoundEvents.CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 						//player.getEntityWorld().playSound(chest1.getPos().getX(), chest1.getPos().getY(), chest1.getPos().getZ(), SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 						//playLocalLockedSound(chest1.getPos());
 						messaged = true;
@@ -125,8 +125,8 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 						chest2.unlock();
 						unlocked = true;
 					} else if (!messaged) {
-						player.sendStatusMessage(new TranslationTextComponent("container.cannotUnlockWithKey", new TranslationTextComponent(chest2.getKind().getTranslationKey()), itemstack.getDisplayName()), true);
-						player.getEntityWorld().playSound(null, chest2.getPos(), SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+						player.displayClientMessage(new TranslationTextComponent("container.cannotUnlockWithKey", new TranslationTextComponent(chest2.getKind().getTranslationKey()), itemstack.getHoverName()), true);
+						player.getCommandSenderWorld().playSound(null, chest2.getBlockPos(), SoundEvents.CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 						//player.getEntityWorld().playSound(chest2.getPos().getX(), chest2.getPos().getY(), chest2.getPos().getZ(), SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 						//playLocalLockedSound(chest2.getPos());
 						messaged = true;
@@ -145,10 +145,10 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 		
 		@SuppressWarnings("serial")
 		@Override
-		public BiFunction<PlayerEntity, Hand, ActionResultType> func_225538_a_(TreasureChestTileEntity chest) {
+		public BiFunction<PlayerEntity, Hand, ActionResultType> acceptSingle(TreasureChestTileEntity chest) {
 			return (player, hand) -> {
 				if (chest.isLocked()) {
-					ItemStack itemstack = player.getHeldItem(hand);
+					ItemStack itemstack = player.getItemInHand(hand);
 					if (itemstack.getItem() instanceof DungeonKeyItem) {
 						DungeonKeyItem item = (DungeonKeyItem) itemstack.getItem();
 						if (item.getDungeonType() == chest.getKind()) {
@@ -156,8 +156,8 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 							itemstack.shrink(1);
 							return ActionResultType.SUCCESS;
 						} else {
-							player.sendStatusMessage(new TranslationTextComponent("container.cannotUnlockWithKey", new TranslationTextComponent(chest.getKind().getTranslationKey()), itemstack.getDisplayName()), true);
-							player.getEntityWorld().playSound(null, chest.getPos(), SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+							player.displayClientMessage(new TranslationTextComponent("container.cannotUnlockWithKey", new TranslationTextComponent(chest.getKind().getTranslationKey()), itemstack.getHoverName()), true);
+							player.getCommandSenderWorld().playSound(null, chest.getBlockPos(), SoundEvents.CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 							//player.getEntityWorld().playSound(chest.getPos().getX(), chest.getPos().getY(), chest.getPos().getZ(), SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 							//playLocalLockedSound(chest.getPos());
 							return ActionResultType.PASS;
@@ -169,15 +169,15 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 		}
 
 		@Override
-		public BiFunction<PlayerEntity, Hand, ActionResultType> func_225537_b_() {
+		public BiFunction<PlayerEntity, Hand, ActionResultType> acceptNone() {
 			return (player, hand) -> ActionResultType.FAIL;
 		}
 		
 	};
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if (worldIn.isRemote) {
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		if (worldIn.isClientSide) {
 			return ActionResultType.SUCCESS;
 		}
 		else {
@@ -188,15 +188,15 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 			}
 			INamedContainerProvider inamedcontainerprovider = callbackWrapper.apply(getContainerProvider).orElse(null);
 			if (inamedcontainerprovider != null) {
-				TileEntity tileentity = worldIn.getTileEntity(pos);
+				TileEntity tileentity = worldIn.getBlockEntity(pos);
 				if (tileentity instanceof TreasureChestTileEntity) {
 					//NetworkHooks.openGui((ServerPlayerEntity) player, inamedcontainerprovider);
-					OptionalInt idOpt = player.openContainer(inamedcontainerprovider);
+					OptionalInt idOpt = player.openMenu(inamedcontainerprovider);
 					if (idOpt.isPresent()) {
-						player.addStat(this.getOpenStat());
+						player.awardStat(this.getOpenChestStat());
 					} else {
-						player.sendStatusMessage(new TranslationTextComponent("container.isLocked", new TranslationTextComponent(this.getTranslationKey())), true);
-						player.getEntityWorld().playSound(null, pos, SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+						player.displayClientMessage(new TranslationTextComponent("container.isLocked", new TranslationTextComponent(this.getDescriptionId())), true);
+						player.getCommandSenderWorld().playSound(null, pos, SoundEvents.CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 						//playLocalLockedSound(pos);
 					}
 				}
@@ -210,7 +210,7 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 	@Override
 	public TileEntityMerger.ICallbackWrapper<? extends TreasureChestTileEntity> combine(BlockState state, World worldIn, BlockPos pos, boolean override) {
 		BiPredicate<IWorld, BlockPos> bipredicate;
-		TileEntity tileentity = worldIn.getTileEntity(pos);
+		TileEntity tileentity = worldIn.getBlockEntity(pos);
 		DungeonType dungeonType;
 		if (tileentity instanceof TreasureChestTileEntity) {
 			dungeonType = ((TreasureChestTileEntity)tileentity).getKind();
@@ -219,7 +219,7 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 		}
 		if (override) {
 			bipredicate = (_world, _pos) -> {
-				TileEntity tileentity2 = _world.getTileEntity(_pos);
+				TileEntity tileentity2 = _world.getBlockEntity(_pos);
 				DungeonType dungeonType2;
 				if (tileentity2 instanceof TreasureChestTileEntity) {
 					dungeonType2 = ((TreasureChestTileEntity)tileentity2).getKind();
@@ -231,10 +231,10 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 		}
 		else {
 			bipredicate = (_world, _pos) -> {
-				if (ChestBlock.isBlocked(_world, _pos)) {
+				if (ChestBlock.isChestBlockedAt(_world, _pos)) {
 					return true;
 				}
-				TileEntity tileentity2 = _world.getTileEntity(_pos);
+				TileEntity tileentity2 = _world.getBlockEntity(_pos);
 				DungeonType dungeonType2;
 				if (tileentity2 instanceof TreasureChestTileEntity) {
 					dungeonType2 = ((TreasureChestTileEntity)tileentity2).getKind();
@@ -245,17 +245,17 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 			};
 		}
 
-		return TileEntityMerger.func_226924_a_((TileEntityType<? extends TreasureChestTileEntity>) this.tileEntityType.get(), ChestBlock::getChestMergerType, ChestBlock::getDirectionToAttached, FACING, state, worldIn, pos, bipredicate);
+		return TileEntityMerger.combineWithNeigbour((TileEntityType<? extends TreasureChestTileEntity>) this.blockEntityType.get(), ChestBlock::getBlockType, ChestBlock::getConnectedDirection, FACING, state, worldIn, pos, bipredicate);
 	}
 
 	@Override
 	@Nullable
-	public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
+	public INamedContainerProvider getMenuProvider(BlockState state, World worldIn, BlockPos pos) {
 		return this.combine(state, worldIn, pos, false).apply(getContainerProvider).orElse((INamedContainerProvider)null);
 	}
 	
 	@Override
-	public TileEntity createNewTileEntity(IBlockReader worldIn) {
+	public TileEntity newBlockEntity(IBlockReader worldIn) {
 		return new TreasureChestTileEntity();
 	}
 		

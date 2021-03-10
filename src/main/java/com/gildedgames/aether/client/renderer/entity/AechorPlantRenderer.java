@@ -15,7 +15,7 @@ public class AechorPlantRenderer extends MobRenderer<AechorPlantEntity, AechorPl
         super(renderManager, new AechorPlantModel(), 0.3F);
     }
 
-    protected void preRenderCallback(AechorPlantEntity aechorPlant, MatrixStack matrixStackIn, float partialTickTime) {
+    protected void scale(AechorPlantEntity aechorPlant, MatrixStack matrixStackIn, float partialTickTime) {
         float f1 = (float)Math.sin((double)aechorPlant.sinage);
         float f3;
 
@@ -29,18 +29,18 @@ public class AechorPlantRenderer extends MobRenderer<AechorPlantEntity, AechorPl
             f3 = 1.75F;
         }
 
-        this.getEntityModel().sinage = f1;
-        this.getEntityModel().sinage2 = f3;
+        this.getModel().sinage = f1;
+        this.getModel().sinage2 = f3;
         float f2 = 0.625F + 1.0F / 6.0F;
-        this.getEntityModel().size = f2;
-        this.shadowSize = f2 - 0.25F;
+        this.getModel().size = f2;
+        this.shadowRadius = f2 - 0.25F;
 
         matrixStackIn.translate(0.0D, 1.2D, 0.0D);
         matrixStackIn.scale(0.75F + ((float) aechorPlant.size * 0.125F), 1.0F, 0.75F + ((float) aechorPlant.size * 0.125F));
     }
 
     @Override
-    public ResourceLocation getEntityTexture(AechorPlantEntity entity) {
+    public ResourceLocation getTextureLocation(AechorPlantEntity entity) {
         return TEXTURE;
     }
 

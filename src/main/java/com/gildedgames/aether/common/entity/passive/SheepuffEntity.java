@@ -38,9 +38,9 @@ import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
-    public static final DataParameter<Byte> FLEECE_COLOR = EntityDataManager.createKey(SheepuffEntity.class, DataSerializers.BYTE);
-    public static final DataParameter<Boolean> SHEARED = EntityDataManager.<Boolean>createKey(SheepuffEntity.class, DataSerializers.BOOLEAN);
-    public static final DataParameter<Boolean> PUFFY = EntityDataManager.createKey(SheepuffEntity.class, DataSerializers.BOOLEAN);
+    public static final DataParameter<Byte> FLEECE_COLOR = EntityDataManager.defineId(SheepuffEntity.class, DataSerializers.BYTE);
+    public static final DataParameter<Boolean> SHEARED = EntityDataManager.<Boolean>defineId(SheepuffEntity.class, DataSerializers.BOOLEAN);
+    public static final DataParameter<Boolean> PUFFY = EntityDataManager.defineId(SheepuffEntity.class, DataSerializers.BOOLEAN);
 
     private int sheepTimer, amountEaten;
     private EatAetherGrassGoal eatGrassGoal;
@@ -73,11 +73,11 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     }
 
     @Override
-    protected void registerData() {
-        super.registerData();
-        this.dataManager.register(FLEECE_COLOR, (byte) 0);
-        this.dataManager.register(SHEARED, false);
-        this.dataManager.register(PUFFY, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(FLEECE_COLOR, (byte) 0);
+        this.entityData.define(SHEARED, false);
+        this.entityData.define(PUFFY, false);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
         this.goalSelector.addGoal(0, new SwimGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.fromItems(Items.WHEAT), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.of(Items.WHEAT), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1));
         this.goalSelector.addGoal(5, this.eatGrassGoal);
         this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1.0));
@@ -95,30 +95,30 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     }
 
     @Override
-    protected void updateAITasks() {
+    protected void customServerAiStep() {
         this.sheepTimer = this.eatGrassGoal.getEatingGrassTimer();
-        super.updateAITasks();
+        super.customServerAiStep();
     }
 
     public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return AetherAnimalEntity.func_233666_p_()
-                .createMutableAttribute(Attributes.MAX_HEALTH, 8.0D)
-                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.23000000417232513D);
+        return AetherAnimalEntity.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 8.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.23000000417232513D);
     }
 
     @Nullable
     @Override
-    public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
-        return AetherEntityTypes.SHEEPUFF.get().create(this.world);
+    public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+        return AetherEntityTypes.SHEEPUFF.get().create(this.level);
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void handleStatusUpdate(byte id) {
+    public void handleEntityEvent(byte id) {
         if (id == 10) {
             this.sheepTimer = 40;
         } else {
-            super.handleStatusUpdate(id);
+            super.handleEntityEvent(id);
         }
     }
 
@@ -139,7 +139,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
             float f = (this.sheepTimer - 4 - p_70890_1_) / 32.0F;
             return ((float)Math.PI / 5.0F) + 0.21991149F * MathHelper.sin(f * 28.7F);
         } else {
-            return this.sheepTimer > 0 ? ((float)Math.PI / 5.0F) : this.rotationPitch * ((float)Math.PI / 180.0F);
+            return this.sheepTimer > 0 ? ((float)Math.PI / 5.0F) : this.xRot * ((float)Math.PI / 180.0F);
         }
     }
 
@@ -147,8 +147,8 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
      * Handles the functionality for when the player attempts to right click the sheepuff. Dyes are handled here, shearing is done in the setSheared method.
      */
     @Override
-    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
-        ItemStack itemstack = player.getHeldItem(hand);
+    public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+        ItemStack itemstack = player.getItemInHand(hand);
         if (itemstack.getItem() instanceof DyeItem && !this.getSheared())
         {
             DyeColor color = ((DyeItem) itemstack.getItem()).getDyeColor();
@@ -168,7 +168,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
             }
         }
 
-        return super.func_230254_b_(player, hand);
+        return super.mobInteract(player, hand);
     }
 
     @Override
@@ -189,59 +189,59 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     @Override
     protected void playStepSound(BlockPos pos, BlockState par4)
     {
-        this.world.playSound(null, this.getPosX(), this.getPosY(), this.getPosZ(), SoundEvents.ENTITY_SHEEP_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
+        this.level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.SHEEP_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
     }
 
     @Override
-    public void eatGrassBonus()
+    public void ate()
     {
         ++this.amountEaten;
     }
 
     @Override
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
+    public void addAdditionalSaveData(CompoundNBT compound) {
+        super.addAdditionalSaveData(compound);
         compound.putBoolean("Sheared", this.getSheared());
         compound.putBoolean("Puffed", this.getPuffed());
         compound.putByte("Color", (byte)this.getFleeceColor().getId());
     }
 
     @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
+    public void readAdditionalSaveData(CompoundNBT compound) {
+        super.readAdditionalSaveData(compound);
         this.setSheared(compound.getBoolean("Sheared"));
         this.setPuffed(compound.getBoolean("Puffed"));
         this.setFleeceColor(DyeColor.byId(compound.getByte("Color")));
     }
 
     public DyeColor getFleeceColor() {
-        return DyeColor.byId(this.dataManager.get(FLEECE_COLOR) & 15);
+        return DyeColor.byId(this.entityData.get(FLEECE_COLOR) & 15);
     }
 
 
     public void setFleeceColor(DyeColor color) {
-        byte b0 = this.dataManager.get(FLEECE_COLOR);
-        this.dataManager.set(FLEECE_COLOR, (byte)(b0 & 240 | color.getId() & 15));
+        byte b0 = this.entityData.get(FLEECE_COLOR);
+        this.entityData.set(FLEECE_COLOR, (byte)(b0 & 240 | color.getId() & 15));
     }
 
     public boolean getSheared() {
-        return this.dataManager.get(SHEARED);
+        return this.entityData.get(SHEARED);
     }
 
     public void setSheared(boolean flag) {
-        this.dataManager.set(SHEARED, flag);
+        this.entityData.set(SHEARED, flag);
     }
 
     @Override
-    protected void jump()
+    protected void jumpFromGround()
     {
         if(this.getPuffed())
         {
-            this.setMotion(getMotion().x + this.rand.nextGaussian() * 0.5, 1.8,  getMotion().z + rand.nextGaussian() * 0.5);
+            this.setDeltaMovement(getDeltaMovement().x + this.random.nextGaussian() * 0.5, 1.8,  getDeltaMovement().z + random.nextGaussian() * 0.5);
         }
         else
         {
-            this.setMotion(getMotion().x, 0.41999998688697815, getMotion().z);
+            this.setDeltaMovement(getDeltaMovement().x, 0.41999998688697815, getDeltaMovement().z);
         }
     }
 
@@ -253,9 +253,9 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
         {
             this.fallDistance = 0;
 
-            if(this.getMotion().y < -0.05)
+            if(this.getDeltaMovement().y < -0.05)
             {
-                this.setMotion(getMotion().x, -0.05, getMotion().z);
+                this.setDeltaMovement(getDeltaMovement().x, -0.05, getDeltaMovement().z);
             }
         }
 
@@ -274,20 +274,20 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     }
 
     @Override
-    public void livingTick() {
-        if (this.world.isRemote) {
+    public void aiStep() {
+        if (this.level.isClientSide) {
             this.sheepTimer = Math.max(0, this.sheepTimer - 1);
         }
-        super.livingTick();
+        super.aiStep();
     }
 
 
     public boolean getPuffed() {
-        return this.dataManager.get(PUFFY);
+        return this.entityData.get(PUFFY);
     }
 
     public void setPuffed(boolean flag) {
-        this.dataManager.set(PUFFY, flag);
+        this.entityData.set(PUFFY, flag);
     }
 
     /**
@@ -310,22 +310,22 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
 
     @Override
     public void shear(SoundCategory category) {
-        this.world.playMovingSound(null, this, SoundEvents.ENTITY_SHEEP_SHEAR, category, 1.0F, 1.0F);
+        this.level.playSound(null, this, SoundEvents.SHEEP_SHEAR, category, 1.0F, 1.0F);
         this.setSheared(true);
-        int i = 1 + this.rand.nextInt(3);
+        int i = 1 + this.random.nextInt(3);
 
         for(int j = 0; j < i; ++j) {
-            ItemEntity itementity = this.entityDropItem(WOOL_BY_COLOR.get(this.getFleeceColor()), 1);
+            ItemEntity itementity = this.spawnAtLocation(WOOL_BY_COLOR.get(this.getFleeceColor()), 1);
             if (itementity != null) {
-                itementity.setMotion(itementity.getMotion().add((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F, (this.rand.nextFloat() * 0.05F), ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F)));
+                itementity.setDeltaMovement(itementity.getDeltaMovement().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1F, (this.random.nextFloat() * 0.05F), ((this.random.nextFloat() - this.random.nextFloat()) * 0.1F)));
             }
         }
 
     }
 
     @Override
-    public boolean isShearable() {
-        return this.isAlive() && !this.getSheared() && !this.isChild();
+    public boolean readyForShearing() {
+        return this.isAlive() && !this.getSheared() && !this.isBaby();
     }
 
     /*@Override

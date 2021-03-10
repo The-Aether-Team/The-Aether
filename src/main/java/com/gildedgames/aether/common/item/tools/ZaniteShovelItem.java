@@ -11,7 +11,7 @@ import net.minecraft.item.ShovelItem;
 public class ZaniteShovelItem extends ShovelItem implements IZaniteToolItem
 {
 	public ZaniteShovelItem() {
-		super(AetherItemTiers.ZANITE, 1.5F, -3.0F, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS));
+		super(AetherItemTiers.ZANITE, 1.5F, -3.0F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
 	}
 	
 	@Override

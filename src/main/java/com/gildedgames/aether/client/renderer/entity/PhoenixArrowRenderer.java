@@ -14,7 +14,7 @@ public class PhoenixArrowRenderer<T extends AbstractArrowEntity> extends ArrowRe
     }
 
     @Override
-    public ResourceLocation getEntityTexture(T entity) {
+    public ResourceLocation getTextureLocation(T entity) {
         return PHOENIX_ARROW_TEXTURE;
     }
 }

@@ -23,19 +23,19 @@ public class CockatriceRenderer extends MobRenderer<CockatriceEntity, Cockatrice
     }
 
     @Override
-	protected void preRenderCallback(CockatriceEntity cockatrice, MatrixStack matrixStackIn, float partialTickTime) {
+	protected void scale(CockatriceEntity cockatrice, MatrixStack matrixStackIn, float partialTickTime) {
         matrixStackIn.scale(1.8F, 1.8F, 1.8F);
     }
 
     @Override
-    protected float handleRotationFloat(CockatriceEntity cockatrice, float partialTicks) {
+    protected float getBob(CockatriceEntity cockatrice, float partialTicks) {
         float f1 = cockatrice.prevWingRotation + (cockatrice.wingRotation - cockatrice.prevWingRotation) * partialTicks;
         float f2 = cockatrice.prevDestPos + (cockatrice.destPos - cockatrice.prevDestPos) * partialTicks;
         return (MathHelper.sin(f1) + 1.0F) * f2;
     }
 
     @Override
-    public ResourceLocation getEntityTexture(CockatriceEntity entity) {
+    public ResourceLocation getTextureLocation(CockatriceEntity entity) {
         return TEXTURE;
     }
 

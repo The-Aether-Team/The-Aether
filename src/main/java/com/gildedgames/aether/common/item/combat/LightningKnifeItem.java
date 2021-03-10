@@ -18,25 +18,25 @@ import net.minecraft.world.World;
 public class LightningKnifeItem extends Item
 {
 	public LightningKnifeItem() {
-		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).maxStackSize(16).group(AetherItemGroups.AETHER_WEAPONS));
+		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).stacksTo(16).tab(AetherItemGroups.AETHER_WEAPONS));
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand hand) {
-		ItemStack heldItem = playerIn.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand hand) {
+		ItemStack heldItem = playerIn.getItemInHand(hand);
 		
-		if (!playerIn.isCreative() && EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, heldItem) == 0) {
+		if (!playerIn.isCreative() && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, heldItem) == 0) {
 			heldItem.shrink(1);
 		}
 		
-		worldIn.playSound(null, playerIn.getPosition(), AetherSoundEvents.ENTITY_PROJECTILE_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
+		worldIn.playSound(null, playerIn.blockPosition(), AetherSoundEvents.ENTITY_PROJECTILE_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
 		
-		if (!worldIn.isRemote) {
+		if (!worldIn.isClientSide) {
 			LightningKnifeEntity lightningKnife = new LightningKnifeEntity(playerIn, worldIn);
-			lightningKnife.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 0.8F, 1.0F);
-			worldIn.addEntity(lightningKnife);
+			lightningKnife.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 0.8F, 1.0F);
+			worldIn.addFreshEntity(lightningKnife);
 		}
 		
-		return ActionResult.resultSuccess(heldItem);
+		return ActionResult.success(heldItem);
 	}
 }

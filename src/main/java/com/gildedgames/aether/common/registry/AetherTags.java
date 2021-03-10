@@ -26,7 +26,7 @@ public class AetherTags
 		public static final ITag.INamedTag<Block> AETHER_ISLAND_BLOCKS = tag("aether_island_blocks");
 
 		private static ITag.INamedTag<Block> tag(String name) {
-			return BlockTags.makeWrapperTag(new ResourceLocation(Aether.MODID, name).toString());
+			return BlockTags.bind(new ResourceLocation(Aether.MODID, name).toString());
 		}
 	}
 	
@@ -59,7 +59,7 @@ public class AetherTags
 		public static final ITag.INamedTag<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 
 		private static ITag.INamedTag<Item> tag(String name) {
-			return ItemTags.makeWrapperTag(new ResourceLocation(Aether.MODID, name).toString());
+			return ItemTags.bind(new ResourceLocation(Aether.MODID, name).toString());
 		}
 	}
 
@@ -69,7 +69,7 @@ public class AetherTags
 		public static final ITag.INamedTag<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 
 		private static ITag.INamedTag<EntityType<?>> tag(String name) {
-			return EntityTypeTags.getTagById(new ResourceLocation(Aether.MODID, name).toString());
+			return EntityTypeTags.bind(new ResourceLocation(Aether.MODID, name).toString());
 		}
 	}
 }

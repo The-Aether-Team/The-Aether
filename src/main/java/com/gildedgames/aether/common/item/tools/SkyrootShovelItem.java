@@ -9,7 +9,7 @@ import net.minecraft.item.ShovelItem;
 public class SkyrootShovelItem extends ShovelItem
 {
     public SkyrootShovelItem() {
-        super(AetherItemTiers.SKYROOT, 1.5F, -3.0F, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS));
+        super(AetherItemTiers.SKYROOT, 1.5F, -3.0F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
     }
 
     @Override

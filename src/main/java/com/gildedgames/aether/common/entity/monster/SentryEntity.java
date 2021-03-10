@@ -22,7 +22,7 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class SentryEntity extends SlimeEntity {
-	public static final DataParameter<Boolean> SENTRY_AWAKE = EntityDataManager.createKey(SentryEntity.class, DataSerializers.BOOLEAN);
+	public static final DataParameter<Boolean> SENTRY_AWAKE = EntityDataManager.defineId(SentryEntity.class, DataSerializers.BOOLEAN);
 	
 	public float timeSpotted = 0.0F;
 	
@@ -40,26 +40,26 @@ public class SentryEntity extends SlimeEntity {
 		this.goalSelector.addGoal(2, new SentryEntity.AttackGoal(this));
 		this.goalSelector.addGoal(3, new SentryEntity.FaceRandomGoal(this));
 		this.goalSelector.addGoal(5, new SentryEntity.HopGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (entity) -> Math.abs(entity.getPosY() - this.getPosY()) <= 4.0));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (entity) -> Math.abs(entity.getY() - this.getY()) <= 4.0));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(SENTRY_AWAKE, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(SENTRY_AWAKE, false);
 	}
 	
 	@Override
-	public void onCollideWithPlayer(PlayerEntity entityIn) {
-		if (EntityPredicates.CAN_AI_TARGET.test(entityIn)) {
+	public void playerTouch(PlayerEntity entityIn) {
+		if (EntityPredicates.NO_CREATIVE_OR_SPECTATOR.test(entityIn)) {
 			this.explodeAt(entityIn);
 		}
 	}
 	
 	@Override
 	public void tick() {
-		if (this.world.getClosestPlayer(this.getPosX(), this.getPosY(), this.getPosZ(), 8.0, EntityPredicates.CAN_AI_TARGET) != null) {
+		if (this.level.getNearestPlayer(this.getX(), this.getY(), this.getZ(), 8.0, EntityPredicates.NO_CREATIVE_OR_SPECTATOR) != null) {
 			if (!this.isAwake()) {
 				if (this.timeSpotted >= 24) {
 					this.setAwake(true);
@@ -80,13 +80,13 @@ public class SentryEntity extends SlimeEntity {
 //	}
 	
 	@Override
-	protected IParticleData getSquishParticle() {
-		return new BlockParticleData(ParticleTypes.BLOCK, AetherBlocks.SENTRY_STONE.get().getDefaultState());
+	protected IParticleData getParticleType() {
+		return new BlockParticleData(ParticleTypes.BLOCK, AetherBlocks.SENTRY_STONE.get().defaultBlockState());
 	}
 	
 	@Override
-	public void applyEntityCollision(Entity entityIn) {
-		super.applyEntityCollision(entityIn);
+	public void push(Entity entityIn) {
+		super.push(entityIn);
 		
 		if (!(entityIn instanceof SentryEntity) && entityIn instanceof LivingEntity) {
 			this.explodeAt((LivingEntity)entityIn);
@@ -94,20 +94,20 @@ public class SentryEntity extends SlimeEntity {
 	}
 
 	protected void explodeAt(LivingEntity entityIn) {
-		if (this.isAwake() && this.canEntityBeSeen(entityIn) && entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), 1.0F) && this.ticksExisted > 20) {
-			entityIn.addVelocity(0.5, 0.5, 0.5);
+		if (this.isAwake() && this.canSee(entityIn) && entityIn.hurt(DamageSource.mobAttack(this), 1.0F) && this.tickCount > 20) {
+			entityIn.push(0.5, 0.5, 0.5);
 			
-			this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), 0.1F, Explosion.Mode.DESTROY);
+			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 0.1F, Explosion.Mode.DESTROY);
 			this.setHealth(0.0F);
-			this.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1.0F, 0.2F*(this.rand.nextFloat() - this.rand.nextFloat()) + 1);
-			this.applyEnchantments(this, entityIn);
+			this.playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 0.2F*(this.random.nextFloat() - this.random.nextFloat()) + 1);
+			this.doEnchantDamageEffects(this, entityIn);
 		}
 	}
 	
 	@Override
-	protected void jump() {
+	protected void jumpFromGround() {
 		if (this.isAwake()) {
-			super.jump();
+			super.jumpFromGround();
 		}
 	}
 
@@ -127,11 +127,11 @@ public class SentryEntity extends SlimeEntity {
 	*/
 	
 	public void setAwake(boolean isAwake) {
-		this.dataManager.set(SENTRY_AWAKE, isAwake);
+		this.entityData.set(SENTRY_AWAKE, isAwake);
 	}
 	
 	public boolean isAwake() {
-		return this.dataManager.get(SENTRY_AWAKE);
+		return this.entityData.get(SENTRY_AWAKE);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -159,16 +159,16 @@ public class SentryEntity extends SlimeEntity {
 		 * Returns whether the EntityAIBase should begin execution.
 		 */
 		@Override
-		public boolean shouldExecute() {
-			return this.sentry.isAwake() && super.shouldExecute();
+		public boolean canUse() {
+			return this.sentry.isAwake() && super.canUse();
 		}
 		
 		/**
 		 * Returns whether an in-progress EntityAIBase should continue executing
 		 */
 		@Override
-		public boolean shouldContinueExecuting() {
-			return this.sentry.isAwake() && super.shouldContinueExecuting();
+		public boolean canContinueToUse() {
+			return this.sentry.isAwake() && super.canContinueToUse();
 		}
 		
 	}
@@ -185,16 +185,16 @@ public class SentryEntity extends SlimeEntity {
 		 * Returns whether the EntityAIBase should begin execution.
 		 */
 		@Override
-		public boolean shouldExecute() {
-			return this.sentry.isAwake() && super.shouldExecute();
+		public boolean canUse() {
+			return this.sentry.isAwake() && super.canUse();
 		}
 		
 		/**
 		 * Returns whether an in-progress EntityAIBase should continue executing
 		 */
 		@Override
-		public boolean shouldContinueExecuting() {
-			return this.sentry.isAwake() && super.shouldContinueExecuting();
+		public boolean canContinueToUse() {
+			return this.sentry.isAwake() && super.canContinueToUse();
 		}
 		
 	}
@@ -211,16 +211,16 @@ public class SentryEntity extends SlimeEntity {
 		 * Returns whether the EntityAIBase should begin execution.
 		 */
 		@Override
-		public boolean shouldExecute() {
-			return this.sentry.isAwake() && super.shouldExecute();
+		public boolean canUse() {
+			return this.sentry.isAwake() && super.canUse();
 		}
 		
 		/**
 		 * Returns whether an in-progress EntityAIBase should continue executing
 		 */
 		@Override
-		public boolean shouldContinueExecuting() {
-			return this.sentry.isAwake() && super.shouldContinueExecuting();
+		public boolean canContinueToUse() {
+			return this.sentry.isAwake() && super.canContinueToUse();
 		}
 		
 	}
@@ -237,16 +237,16 @@ public class SentryEntity extends SlimeEntity {
 		 * Returns whether the EntityAIBase should begin execution.
 		 */
 		@Override
-		public boolean shouldExecute() {
-			return this.sentry.isAwake() && super.shouldExecute();
+		public boolean canUse() {
+			return this.sentry.isAwake() && super.canUse();
 		}
 		
 		/**
 		 * Returns whether an in-progress EntityAIBase should continue executing
 		 */
 		@Override
-		public boolean shouldContinueExecuting() {
-			return this.sentry.isAwake() && super.shouldContinueExecuting();
+		public boolean canContinueToUse() {
+			return this.sentry.isAwake() && super.canContinueToUse();
 		}
 		
 	}

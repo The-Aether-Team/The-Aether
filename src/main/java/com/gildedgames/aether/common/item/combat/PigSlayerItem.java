@@ -19,14 +19,14 @@ public class PigSlayerItem extends SwordItem {
 	private final Random rand = new Random();
 
 	public PigSlayerItem() {
-		super(ItemTier.IRON, 3, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).group(AetherItemGroups.AETHER_WEAPONS));
+		super(ItemTier.IRON, 3, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		if (isEffectiveAgainst(target)) {
 			if (target.getHealth() > 0.0F) {
-				target.attackEntityFrom(DamageSource.causeMobDamage(attacker), 9999);
+				target.hurt(DamageSource.mobAttack(attacker), 9999);
 			}
 
 			for (int i = 0; i < 20; i++) {
@@ -34,15 +34,15 @@ public class PigSlayerItem extends SwordItem {
 				double d1 = this.rand.nextGaussian() * 0.02;
 				double d2 = this.rand.nextGaussian() * 0.02;
 				double d3 = 5.0;
-				target.world.addParticle(ParticleTypes.FLAME,
-					target.getPosX() + (this.rand.nextFloat() * target.getWidth() * 2.0) - target.getWidth() - d0 * d3,
-					target.getPosY() + (this.rand.nextFloat() * target.getHeight()) - d1 * d3,
-					target.getPosZ() + (this.rand.nextFloat() * target.getWidth() * 2.0) - target.getWidth() - d2 * d3,
+				target.level.addParticle(ParticleTypes.FLAME,
+					target.getX() + (this.rand.nextFloat() * target.getBbWidth() * 2.0) - target.getBbWidth() - d0 * d3,
+					target.getY() + (this.rand.nextFloat() * target.getBbHeight()) - d1 * d3,
+					target.getZ() + (this.rand.nextFloat() * target.getBbWidth() * 2.0) - target.getBbWidth() - d2 * d3,
 					d0, d1, d2);
 			}
 		}
 
-		return super.hitEntity(stack, target, attacker);
+		return super.hurtEnemy(stack, target, attacker);
 	}
 
 	private static final Pattern PIG_REGEX = Pattern.compile("(?:\\b|_)(?:pig|phyg|hog)|(?:pig|phyg|hog)(?:\\b|_)", Pattern.CASE_INSENSITIVE);
@@ -53,7 +53,7 @@ public class PigSlayerItem extends SwordItem {
 		}
 
 		if (target instanceof PlayerEntity) {
-			if (target.getUniqueID().getMostSignificantBits() == 2118956501704527653L && target.getUniqueID().getLeastSignificantBits() == -4670336513618862743L) {
+			if (target.getUUID().getMostSignificantBits() == 2118956501704527653L && target.getUUID().getLeastSignificantBits() == -4670336513618862743L) {
 				return true;
 			}
 

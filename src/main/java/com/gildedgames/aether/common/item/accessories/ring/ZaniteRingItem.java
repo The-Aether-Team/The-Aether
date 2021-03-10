@@ -6,6 +6,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.CuriosApi;
 
+import net.minecraft.item.Item.Properties;
+
 @Mod.EventBusSubscriber
 public class ZaniteRingItem extends AccessoryItem {
 
@@ -15,8 +17,8 @@ public class ZaniteRingItem extends AccessoryItem {
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        if(livingEntity.ticksExisted % 400 == 0) {
-            stack.damageItem(1, livingEntity, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity));
+        if(livingEntity.tickCount % 400 == 0) {
+            stack.hurtAndBreak(1, livingEntity, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity));
         }
     }
 }

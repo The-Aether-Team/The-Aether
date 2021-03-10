@@ -21,26 +21,26 @@ public class SpawnXP extends LootFunction
     }
 
     @Override
-    protected ItemStack doApply(ItemStack stack, LootContext context) {
-        ServerWorld world = context.getWorld();
-        Vector3d vector3d = context.get(LootParameters.field_237457_g_);
+    protected ItemStack run(ItemStack stack, LootContext context) {
+        ServerWorld world = context.getLevel();
+        Vector3d vector3d = context.getParamOrNull(LootParameters.ORIGIN);
         if (vector3d != null) {
-            int randomNumber = (int) ((4 * world.rand.nextDouble()) + 6);
+            int randomNumber = (int) ((4 * world.random.nextDouble()) + 6);
             while(randomNumber > 0) {
-                int i = ExperienceOrbEntity.getXPSplit(randomNumber);
+                int i = ExperienceOrbEntity.getExperienceValue(randomNumber);
                 randomNumber -= i;
-                world.addEntity(new ExperienceOrbEntity(world, vector3d.getX() + 0.5D, vector3d.getY() + 0.5D, vector3d.getZ() + 0.5D, i));
+                world.addFreshEntity(new ExperienceOrbEntity(world, vector3d.x() + 0.5D, vector3d.y() + 0.5D, vector3d.z() + 0.5D, i));
             }
         }
         return stack;
     }
 
     public static LootFunction.Builder<?> builder() {
-        return LootFunction.builder(SpawnXP::new);
+        return LootFunction.simpleBuilder(SpawnXP::new);
     }
 
     @Override
-    public LootFunctionType getFunctionType() {
+    public LootFunctionType getType() {
         return AetherLoot.SPAWN_XP;
     }
 

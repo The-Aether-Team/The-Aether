@@ -22,7 +22,7 @@ The Aether has no stable builds for 1.16 just yet, but this port is in active de
 ## :bug: Report bugs or other issues
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/Gilded-Games/The-Aether/issues). When doing so, we ask that you provide the following information:
 
-- The exact version of the Aether you are running, such as `1.16.5-1.0.0`, and the version of Forge you are using, such as `36.0.46`. Please do not state "the latest stable release" or "latest Forge".
+- The exact version of the Aether you are running, such as `1.16.5-1.0.0`, and the version of Forge you are using, such as `36.0.48`. Please do not state "the latest stable release" or "latest Forge".
 - If your issue is a bug or otherwise unexpected behavior, state what you expected to happen.
 - If your issue is a crash, attach the latest client or server log and the complete crash report as a file.
 - If your issue only occurs with other mods/plugins installed, list the exact mod/plugin versions installed.

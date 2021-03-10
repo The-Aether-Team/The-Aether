@@ -17,19 +17,19 @@ public class IncubatorEggSlot extends Slot {
 	}
 	
 	@Override
-	public int getSlotStackLimit() {
+	public int getMaxStackSize() {
 		return 1;
 	}
 	
 	@Override
-	public boolean isItemValid(ItemStack stack) {
+	public boolean mayPlace(ItemStack stack) {
 		return container.isEgg(stack);
 	}
 	
 	@Override
-	public void putStack(ItemStack stack) {
-		super.putStack(stack);
-		container.playerUUIDAcceptor.accept(player.getUniqueID());
+	public void set(ItemStack stack) {
+		super.set(stack);
+		container.playerUUIDAcceptor.accept(player.getUUID());
 	}
 
 }

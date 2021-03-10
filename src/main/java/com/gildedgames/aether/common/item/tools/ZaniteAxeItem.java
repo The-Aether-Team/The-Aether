@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 public class ZaniteAxeItem extends AxeItem implements IZaniteToolItem
 {
 	public ZaniteAxeItem() {
-		super(AetherItemTiers.ZANITE, 8.0F, -3.1F, new Item.Properties().group(AetherItemGroups.AETHER_TOOLS));
+		super(AetherItemTiers.ZANITE, 8.0F, -3.1F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
 	}
 	
 	@Override

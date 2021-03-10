@@ -25,23 +25,23 @@ public class AltarBlock extends AbstractFurnaceBlock
 	}
 	
 	@Override
-	public TileEntity createNewTileEntity(IBlockReader worldIn) {
+	public TileEntity newBlockEntity(IBlockReader worldIn) {
 		return new AltarTileEntity();
 	}
 	
 	@Override
-	protected void interactWith(World worldIn, BlockPos pos, PlayerEntity player) {
-		if (!worldIn.isRemote) { 
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+	protected void openContainer(World worldIn, BlockPos pos, PlayerEntity player) {
+		if (!worldIn.isClientSide) { 
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof AltarTileEntity) {
-				player.openContainer((INamedContainerProvider) tileentity);
+				player.openMenu((INamedContainerProvider) tileentity);
 			}
 		}
 	}
 	
 	@Override
 	public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
-		if (state.get(LIT)) {
+		if (state.getValue(LIT)) {
 			double x = pos.getX() + 0.5;
 			double y = pos.getY() + 1.0 + (rand.nextFloat() * 6.0) / 16.0;
 			double z = pos.getZ() + 0.5;
@@ -50,7 +50,7 @@ public class AltarBlock extends AbstractFurnaceBlock
 			world.addParticle(ParticleTypes.FLAME, x, y, z, 0.0, 0.0, 0.0);
 			
 			if (rand.nextDouble() < 0.1) {
-				world.playSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+				world.playLocalSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 			}
 		}
 	}
