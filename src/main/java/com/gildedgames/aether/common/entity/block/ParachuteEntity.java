@@ -1,5 +1,8 @@
 package com.gildedgames.aether.common.entity.block;
 
+import com.gildedgames.aether.core.api.registers.ParachuteType;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.registry.AetherParachuteTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,26 +12,24 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.server.management.PreYggdrasilConverter;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-import javax.annotation.Nullable;
-import java.util.Optional;
-import java.util.UUID;
-
 public class ParachuteEntity extends Entity
 {
-    protected static final DataParameter<Optional<UUID>> DATA_PLAYER_UUID_ID = EntityDataManager.defineId(ParachuteEntity.class, DataSerializers.OPTIONAL_UUID);
-    
+    private static final DataParameter<Integer> DATA_PLAYER_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
+    private static final DataParameter<String> DATA_PARACHUTE_TYPE = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.STRING);
+
     public ParachuteEntity(EntityType<?> entityType, World world) {
         super(entityType, world);
     }
 
     @Override
     protected void defineSynchedData() {
-        this.entityData.define(DATA_PLAYER_UUID_ID, Optional.empty());
+        this.entityData.define(DATA_PLAYER_ID, 0);
+        this.entityData.define(DATA_PARACHUTE_TYPE, "");
     }
 
     @Override
@@ -44,6 +45,8 @@ public class ParachuteEntity extends Entity
 
             this.moveToEntityUsing();
             this.spawnExplosionParticle();
+        } else {
+            this.kill();
         }
     }
 
@@ -61,60 +64,44 @@ public class ParachuteEntity extends Entity
     }
 
     private void moveToEntityUsing() {
-        if (this.getPlayer() != null) {
-            this.setPos(this.getPlayer().getX(), this.getPlayer().getY() - 1.0, this.getPlayer().getZ());
+        this.setPos(this.getPlayer().getX(), this.getPlayer().getY() - 1.0, this.getPlayer().getZ());
 
-            if (isCollided()) {
-                this.die();
-            }
+        if (isCollided()) {
+            this.die();
         }
     }
 
     private boolean isCollided() {
-        if (this.getPlayer() != null) {
-            return this.getPlayer().isOnGround() || this.getPlayer().isInWater();
-        }
-        return true;
+        return this.getPlayer().isOnGround() || this.getPlayer().isInWater();
     }
 
     public void die() {
         this.spawnExplosionParticle();
-        this.ejectPassengers();
         this.kill();
+        IAetherPlayer.get(this.getPlayer()).ifPresent((player) -> player.setParachute(null));
     }
 
-    @Nullable
+    public void setPlayer(int id) {
+        this.entityData.set(DATA_PLAYER_ID, id);
+    }
+
     public PlayerEntity getPlayer() {
-        try {
-            UUID uuid = this.getPlayerUUID();
-            return uuid == null ? null : this.level.getPlayerByUUID(uuid);
-        } catch (IllegalArgumentException illegalargumentexception) {
-            return null;
-        }
+        return (PlayerEntity) this.level.getEntity(this.entityData.get(DATA_PLAYER_ID));
     }
 
-    @Nullable
-    public UUID getPlayerUUID() {
-        return this.entityData.get(DATA_PLAYER_UUID_ID).orElse(null);
+    public void setParachuteType(String type) {
+        this.entityData.set(DATA_PARACHUTE_TYPE, type);
     }
 
-    public void setPlayerUUID(@Nullable UUID p_184754_1_) {
-        this.entityData.set(DATA_PLAYER_UUID_ID, Optional.ofNullable(p_184754_1_));
+    public ParachuteType getParachuteType() {
+        return AetherParachuteTypes.PARACHUTES.get(new ResourceLocation(this.entityData.get(DATA_PARACHUTE_TYPE)));
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundNBT nbt) {
-        if (this.getPlayerUUID() != null) {
-            nbt.putUUID("Player", this.getPlayerUUID());
-        }
-    }
+    protected void addAdditionalSaveData(CompoundNBT nbt) { }
 
     @Override
-    protected void readAdditionalSaveData(CompoundNBT nbt) {
-        if (nbt.hasUUID("Player")) {
-            this.setPlayerUUID(nbt.getUUID("Player"));
-        }
-    }
+    protected void readAdditionalSaveData(CompoundNBT nbt) { }
 
     @Override
     public IPacket<?> getAddEntityPacket() {

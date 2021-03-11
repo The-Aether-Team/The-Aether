@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.capability.interfaces;
 
-import java.util.UUID;
-
+import com.gildedgames.aether.common.entity.block.ParachuteEntity;
+import com.gildedgames.aether.core.api.registers.ParachuteType;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -16,13 +16,13 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 		return player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
 	}
 
-	default UUID getUniqueID() { return this.getPlayer().getUUID(); }
-
 	void onUpdate();
 
 	void copyFrom(IAetherPlayer other);
 
-	void setJumping(boolean isJumping);
+	void setParachute(ParachuteType parachuteType);
+	ParachuteEntity getParachute();
 
+	void setJumping(boolean isJumping);
 	boolean isJumping();
 }
