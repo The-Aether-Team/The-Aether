@@ -185,6 +185,8 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.QUICKSOIL_GLASS);
         itemBlock(AetherBlocks.AEROGEL);
 
+        item(() -> AetherBlocks.SKYROOT_DOOR.get().asItem(), "miscellaneous/");
+
         itemBlock(AetherBlocks.ZANITE_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_GRAVITITE);
 

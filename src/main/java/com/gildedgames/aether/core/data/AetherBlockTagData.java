@@ -89,6 +89,8 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .add(AetherBlocks.SKYROOT_SLAB.get());
         tag(BlockTags.WOODEN_FENCES)
                 .add(AetherBlocks.SKYROOT_FENCE.get());
+        tag(BlockTags.WOODEN_DOORS)
+                .add(AetherBlocks.SKYROOT_DOOR.get());
         tag(BlockTags.SAPLINGS)
                 .add(AetherBlocks.SKYROOT_SAPLING.get())
                 .add(AetherBlocks.GOLDEN_OAK_SAPLING.get());

@@ -230,7 +230,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .save(consumer, name("swet_lead"));
 
 
-        ShapedRecipeBuilder.shaped(Blocks.OAK_DOOR, 3)
+        ShapedRecipeBuilder.shaped(AetherBlocks.SKYROOT_DOOR.get(), 3)
                 .pattern("SS")
                 .pattern("SS")
                 .pattern("SS")

@@ -1,7 +1,8 @@
 package com.gildedgames.aether.core.data;
 
-import com.gildedgames.aether.core.data.provider.AetherBlockStateProvider;
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.core.data.provider.AetherBlockStateProvider;
+import net.minecraft.block.DoorBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -54,6 +55,8 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         block(AetherBlocks.HOLYSTONE_BRICKS, "construction/");
         block(AetherBlocks.QUICKSOIL_GLASS, "construction/");
         block(AetherBlocks.AEROGEL, "construction/");
+
+        doorBlock((DoorBlock) AetherBlocks.SKYROOT_DOOR.get(), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_bottom"), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_top"));
 
         block(AetherBlocks.ZANITE_BLOCK, "construction/");
         block(AetherBlocks.ENCHANTED_GRAVITITE, "construction/");
