@@ -47,6 +47,10 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
         return withExistingParent(blockName(block), texture(blockName(block)));
     }
 
+    public ItemModelBuilder itemBlock(Supplier<? extends Block> block, String suffix) {
+        return withExistingParent(blockName(block), texture(blockName(block) + suffix));
+    }
+
     public ItemModelBuilder itemBlockFlat(Supplier<? extends Block> block, String location) {
         return withExistingParent(blockName(block), mcLoc("item/generated"))
                 .texture("layer0", texture(blockName(block), location));

@@ -88,6 +88,7 @@ public class AetherBlocks
 			.isViewBlocking((state, reader, pos) -> false)));
 
 	public static final RegistryObject<Block> SKYROOT_DOOR = register("skyroot_door", () -> new DoorBlock(AbstractBlock.Properties.copy(Blocks.OAK_DOOR)));
+	public static final RegistryObject<Block> SKYROOT_TRAPDOOR = register("skyroot_trapdoor", () -> new TrapDoorBlock(AbstractBlock.Properties.copy(Blocks.OAK_TRAPDOOR)));
 
 	public static final RegistryObject<Block> ZANITE_BLOCK = register("zanite_block", () -> new Block(AbstractBlock.Properties.copy(Blocks.IRON_BLOCK).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> ENCHANTED_GRAVITITE = register("enchanted_gravitite", () -> new FloatingBlock(true, AbstractBlock.Properties.copy(Blocks.IRON_BLOCK).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));

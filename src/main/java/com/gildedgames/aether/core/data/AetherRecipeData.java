@@ -239,7 +239,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .group("wooden_door")
                 .save(consumer);
 
-        ShapedRecipeBuilder.shaped(Blocks.OAK_TRAPDOOR, 2)
+        ShapedRecipeBuilder.shaped(AetherBlocks.SKYROOT_TRAPDOOR.get(), 2)
                 .pattern("SSS")
                 .pattern("SSS")
                 .define('S', AetherBlocks.SKYROOT_PLANKS.get())

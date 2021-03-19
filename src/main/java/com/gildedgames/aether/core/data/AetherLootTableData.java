@@ -89,6 +89,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropSelf(AetherBlocks.AEROGEL);
 
             this.add(AetherBlocks.SKYROOT_DOOR.get(), createDoorTable(AetherBlocks.SKYROOT_DOOR.get()));
+            dropSelf(AetherBlocks.SKYROOT_TRAPDOOR);
 
             dropSelf(AetherBlocks.ZANITE_BLOCK);
             dropSelf(AetherBlocks.ENCHANTED_GRAVITITE);
