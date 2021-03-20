@@ -39,5 +39,6 @@ jobs:
           key: v2-dependencies-{{ checksum "build.gradle" }}
 
       - run: gradle test
+      - run: gradle build
       - store_artifacts:
               path: ~/repo/build/libs/aether-1.16.5-v1.0.0.jar
