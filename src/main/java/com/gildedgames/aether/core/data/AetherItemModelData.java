@@ -185,9 +185,6 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.QUICKSOIL_GLASS);
         itemBlock(AetherBlocks.AEROGEL);
 
-        item(() -> AetherBlocks.SKYROOT_DOOR.get().asItem(), "miscellaneous/");
-        itemBlock(AetherBlocks.SKYROOT_TRAPDOOR, "_bottom");
-
         itemBlock(AetherBlocks.ZANITE_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_GRAVITITE);
 
@@ -234,6 +231,8 @@ public class AetherItemModelData extends AetherItemModelProvider
 
         itemFence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS, "construction/");
         itemBlock(AetherBlocks.SKYROOT_FENCE_GATE);
+        item(() -> AetherBlocks.SKYROOT_DOOR.get().asItem(), "miscellaneous/");
+        itemBlock(AetherBlocks.SKYROOT_TRAPDOOR, "_bottom");
 
         itemWallBlock(AetherBlocks.CARVED_WALL, AetherBlocks.CARVED_STONE, "dungeon/");
         itemWallBlock(AetherBlocks.ANGELIC_WALL, AetherBlocks.ANGELIC_STONE, "dungeon/");

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "aether:block/skyroot_pressure_plate"
+    },
+    "powered=true": {
+      "model": "aether:block/skyroot_pressure_plate_down"
+    }
+  }
+}

@@ -57,9 +57,6 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         block(AetherBlocks.QUICKSOIL_GLASS, "construction/");
         block(AetherBlocks.AEROGEL, "construction/");
 
-        doorBlock((DoorBlock) AetherBlocks.SKYROOT_DOOR.get(), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_bottom"), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_top"));
-        trapdoorBlock((TrapDoorBlock) AetherBlocks.SKYROOT_TRAPDOOR.get(), texture(name(AetherBlocks.SKYROOT_TRAPDOOR), "construction/"), false);
-
         block(AetherBlocks.ZANITE_BLOCK, "construction/");
         block(AetherBlocks.ENCHANTED_GRAVITITE, "construction/");
 
@@ -107,6 +104,8 @@ public class AetherBlockStateData extends AetherBlockStateProvider
 
         fence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS, "construction/");
         fenceGateBlock(AetherBlocks.SKYROOT_FENCE_GATE, AetherBlocks.SKYROOT_PLANKS, "construction/");
+        doorBlock((DoorBlock) AetherBlocks.SKYROOT_DOOR.get(), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_bottom"), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_top"));
+        trapdoorBlock((TrapDoorBlock) AetherBlocks.SKYROOT_TRAPDOOR.get(), texture(name(AetherBlocks.SKYROOT_TRAPDOOR), "construction/"), false);
 
         wallBlock(AetherBlocks.CARVED_WALL, AetherBlocks.CARVED_STONE, "dungeon/");
         wallBlock(AetherBlocks.ANGELIC_WALL, AetherBlocks.ANGELIC_STONE, "dungeon/");

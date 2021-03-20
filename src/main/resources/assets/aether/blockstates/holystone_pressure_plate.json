@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "aether:block/holystone_pressure_plate"
+    },
+    "powered=true": {
+      "model": "aether:block/holystone_pressure_plate_down"
+    }
+  }
+}

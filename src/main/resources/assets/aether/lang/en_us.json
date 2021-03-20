@@ -37,9 +37,6 @@
   "block.aether.quicksoil_glass": "Quicksoil Glass",
   "block.aether.aerogel": "Aerogel",
 
-  "block.aether.skyroot_door": "Skyroot Door",
-  "block.aether.skyroot_trapdoor": "Skyroot Trapdoor",
-
   "block.aether.zanite_block": "Zanite Block",
   "block.aether.enchanted_gravitite": "Enchanted Gravitite",
 
@@ -89,6 +86,13 @@
 
   "block.aether.skyroot_fence": "Skyroot Fence",
   "block.aether.skyroot_fence_gate": "Skyroot Fence Gate",
+  "block.aether.skyroot_door": "Skyroot Door",
+  "block.aether.skyroot_trapdoor": "Skyroot Trapdoor",
+  "block.aether.skyroot_button": "Skyroot Button",
+  "block.aether.skyroot_pressure_plate": "Skyroot Pressure Plate",
+
+  "block.aether.holystone_button": "Holystone Button",
+  "block.aether.holystone_pressure_plate": "Holystone Pressure Plate",
 
   "block.aether.carved_wall": "Carved Wall",
   "block.aether.angelic_wall": "Angelic Wall",
