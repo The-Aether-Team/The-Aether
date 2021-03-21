@@ -2,6 +2,7 @@
 # The Aether
 [![Code license (GNU GPL 3.0)](https://img.shields.io/badge/code%20license-GNU%20GPLv3-green.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://creativecommons.org/licenses/by-sa/4.0/)
+[![Gilded-Games](https://circleci.com/gh/Gilded-Games/The-Aether/tree/1.16.svg?style=shield)](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether?branch=1.16)
 
 Gilded Games presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer! The Aether is a dimension high in the sky composed of floating islands! Ascend through a Glowstone portal and begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons! All you need to do is build a Glowstone frame and add water to light the mystical portal, step in and you'll be transported immediately to the luscious hostile paradise known as the Aether! Gilded Games has ensured to keep The Aether as close to the original mod from 2011 as possible, while continuing to work on the sequel, Aether II.
 
@@ -20,9 +21,7 @@ You can also support the Aether project and Gilded Games by telling your friends
 The Aether has no stable builds for 1.16 just yet, but this port is in active development so keep an eye out for its eventual release.
 
 ### Bleeding edge builds
-[![Gilded-Games](https://circleci.com/gh/Gilded-Games/The-Aether.svg?style=shield)](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether?branch=1.16)
-
-If you're feeling a bit more adventurous (or a developer has suggested you to do so), we provide **bleeding edge builds** which are produced on [our official CircleCI instance](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether?branch=1.16). These builds are very frequently created by an automatic service and contain the latest available code without undergoing any form of quality control. We do not generally recommend users use these builds as they may contain serious issues and will not generally receive support.
+If you're feeling a bit more adventurous (or a developer has suggested you to do so), we provide **bleeding edge builds** which are produced on [CircleCI](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether). These builds are very frequently created through the continuous integration service and contain the latest available code without undergoing any form of quality control. We do not generally recommend users use these builds as they may contain serious issues and will not generally receive support. Select the "build" job on a recently ran workflow, and find the binary under the artifacts tab.
 
 ## :bug: Report bugs or other issues
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/Gilded-Games/The-Aether/issues). When doing so, we ask that you provide the following information:
