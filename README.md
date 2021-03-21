@@ -8,7 +8,7 @@ Gilded Games presents the original Aether mod! Up to date for modern Minecraft v
 
 ## :heart: Support Gilded Games
 
-[![Patreon pledgers](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.herokuapp.com%2FGildedGames&style=flat-square)](https://patreon.com/GildedGames)
+[![Patreon pledgers](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DGildedGames%26type%3Dpatrons&style=flat-square)](https://patreon.com/GildedGames)
 [![Discord user count](https://img.shields.io/discord/118816101936267265.svg?logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/yrFDeVZEwt)
 [![Twitter followers](https://img.shields.io/twitter/follow/DevAether.svg?logo=twitter&label=twitter&style=flat-square)](https://twitter.com/DevAether)
 
