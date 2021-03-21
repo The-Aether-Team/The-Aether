@@ -21,7 +21,7 @@ You can also support the Aether project and Gilded Games by telling your friends
 The Aether has no stable builds for 1.16 just yet, but this port is in active development so keep an eye out for its eventual release.
 
 ### Bleeding edge builds
-If you're feeling a bit more adventurous (or a developer has suggested you to do so), we provide **bleeding edge builds** which are produced on [CircleCI](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether). These builds are very frequently created through the continuous integration service and contain the latest available code without undergoing any form of quality control. We do not generally recommend users use these builds as they may contain serious issues and will not generally receive support. Select the "build" job on a recently ran workflow, and find the binary under the artifacts tab.
+If you're feeling a bit more adventurous (or a developer has suggested you to do so), we provide **bleeding edge builds** which are produced on [CircleCI](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether?branch=1.16). These builds are very frequently created through the continuous integration service and contain the latest available code without undergoing any form of quality control. We do not generally recommend users use these builds as they may contain serious issues and will not generally receive support. Select the "build" job on a recently ran workflow, and find the binary under the artifacts tab.
 
 ## :bug: Report bugs or other issues
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/Gilded-Games/The-Aether/issues). When doing so, we ask that you provide the following information:
