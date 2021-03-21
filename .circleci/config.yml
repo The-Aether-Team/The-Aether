@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+      - image: cimg/openjdk:8.0.282
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -23,20 +23,22 @@ jobs:
 
     steps:
       - checkout
-
+      - run: pwd
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v2-dependencies-{{ checksum "build.gradle" }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - v2-dependencies-
 
       - run: gradle dependencies
 
       - save_cache:
           paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
+            - ~/repo/.gradle
+          key: v2-dependencies-{{ checksum "build.gradle" }}
 
-      # run tests!
       - run: gradle test
+      - run: gradle build
+      - store_artifacts:
+              path: ~/repo/build/libs/aether-1.16.5-v1.0.0.jar
