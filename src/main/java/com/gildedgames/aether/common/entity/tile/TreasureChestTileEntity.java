@@ -1,48 +1,69 @@
 package com.gildedgames.aether.common.entity.tile;
 
+import com.gildedgames.aether.common.block.util.LockCodeItem;
+import com.gildedgames.aether.common.item.misc.DungeonKeyItem;
+import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
-import net.minecraft.block.BlockState;
-import org.apache.commons.lang3.Validate;
-
 import com.gildedgames.aether.core.api.registers.DungeonType;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
-import com.gildedgames.aether.common.registry.AetherBlocks;
-
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.LockCode;
+import org.apache.commons.lang3.Validate;
+
+import java.util.UUID;
 
 public class TreasureChestTileEntity extends ChestTileEntity {
-	protected boolean locked = false;
 	private DungeonType kind;
-	
+
 	protected TreasureChestTileEntity(TileEntityType<?> typeIn) {
 		super(typeIn);
 	}
 	
 	public TreasureChestTileEntity() {
 		this(AetherTileEntityTypes.TREASURE_CHEST.get());
+		this.kind = AetherDungeonTypes.BRONZE.get();
 	}
 	
 	public TreasureChestTileEntity(DungeonType type) {
 		this(AetherTileEntityTypes.TREASURE_CHEST.get());
 		this.kind = type;
-		this.locked = (type != null);
 	}
 	
 	@Override
 	protected ITextComponent getDefaultName() {
 		return new TranslationTextComponent("gui.treasure_chest", new TranslationTextComponent(this.getKind().getTranslationKey()), new TranslationTextComponent(AetherBlocks.TREASURE_CHEST.get().getDescriptionId()));
 	}
-	
+
+	public String createKey(DungeonType type) {
+		// Only pair with keys that are matching
+		if (this.kind.equals(type) && this.lockKey.equals(LockCode.NO_LOCK)) {
+			String key = UUID.randomUUID().toString();
+
+			this.lockKey = new LockCodeItem(key);
+
+			return key;
+		}
+
+		return null;
+	}
+
 	@Override
 	public void load(BlockState state, CompoundNBT compound) {
 		super.load(state, compound);
-//		this.kind = AetherDungeonTypes.BRONZE.get();
+		this.kind = AetherDungeonTypes.BRONZE.get();
+
+		if (compound.contains("Lock")) {
+			this.lockKey = new LockCodeItem(compound.getString("Lock"));
+		}
+
 //		if (compound.contains("Kind", 8)) {
 //			String kind = compound.getString("Kind");
 //			if (!kind.isEmpty()) {
@@ -55,26 +76,15 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 	}
 	
 	@Override
-	protected boolean tryLoadLootTable(CompoundNBT compound) {
-		this.locked = compound.getBoolean("Locked");
-		return this.locked | super.tryLoadLootTable(compound); // intentional | instead of ||
-	}
-	
-	@Override
 	public CompoundNBT save(CompoundNBT compound) {
 		super.save(compound);
-//
-//		compound.putBoolean("Locked", this.locked);
-//		compound.putString("Kind", this.getKind().getRegistryName().toString());
-//
+
+		this.lockKey.addToTag(compound);
+		compound.putString("Kind", this.getKind().getRegistryName().toString());
+
 		return compound;
 	}
-	
-	@Override
-	protected boolean trySaveLootTable(CompoundNBT compound) {
-		return isLocked() | super.trySaveLootTable(compound); // intentional | instead of ||
-	}
-	
+
 	public void setKind(DungeonType kind) {
 		this.kind = Validate.notNull(kind);
 	}
@@ -84,17 +94,6 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 		return (kind == null)? AetherDungeonTypes.BRONZE.get() : kind;
 	}
 	
-	public void unlock() {
-		if (!this.isLocked()) {
-			return;
-		}
-		
-		this.lootTable = this.getKind().getLootTable();
-		this.locked = false;
-		
-		this.setChanged();
-	}
-	
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket() {
 		CompoundNBT compound = new CompoundNBT();
@@ -102,25 +101,13 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 		return new SUpdateTileEntityPacket(this.getBlockPos(), 191, compound);
 	}
 
-	/* I don't know if this is needed
-	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		this.read(pkt.getNbtCompound());
-	}
-	*/
-	
-	public boolean isLocked() {
-		return locked;
-	}
-	
-	public void setLocked(boolean locked) {
-		this.locked = locked;
-		this.setChanged();
-	}
-	
 	@Override
 	public boolean canOpen(PlayerEntity player) {
-		return !isLocked() && super.canOpen(player);
+		Item item = player.getMainHandItem().getItem();
+
+		if (item instanceof DungeonKeyItem)
+		System.out.println(this.kind.equals(((DungeonKeyItem) item).getDungeonType() ));
+
+		return super.canOpen(player) && item instanceof DungeonKeyItem && this.kind.equals(((DungeonKeyItem) item).getDungeonType());
 	}
-	
 }

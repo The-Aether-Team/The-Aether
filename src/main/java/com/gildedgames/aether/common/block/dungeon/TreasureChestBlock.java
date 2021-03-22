@@ -23,7 +23,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.ChestType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMerger;
@@ -95,115 +97,27 @@ public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
 		this(properties, AetherTileEntityTypes.TREASURE_CHEST::get);
 	}
 	
-	private static final TileEntityMerger.ICallback<TreasureChestTileEntity, BiFunction<PlayerEntity, Hand, ActionResultType>> unlock = new TileEntityMerger.ICallback<TreasureChestTileEntity, BiFunction<PlayerEntity, Hand, ActionResultType>>() {
-
-		@SuppressWarnings("serial")
-		@Override
-		public BiFunction<PlayerEntity, Hand, ActionResultType> acceptDouble(TreasureChestTileEntity chest1, TreasureChestTileEntity chest2) {
-			return (player, hand) -> {
-				if (chest1.getKind() != chest2.getKind()) {
-					return ActionResultType.FAIL;
-				}
-				boolean unlocked = false, messaged = false;
-				ItemStack itemstack = player.getItemInHand(hand);
-				if (chest1.isLocked() && itemstack.getItem() instanceof DungeonKeyItem) {
-					DungeonKeyItem item = (DungeonKeyItem) itemstack.getItem();
-					if (item.getDungeonType() == chest1.getKind()) {
-						chest1.unlock();
-						unlocked = true;
-					} else {
-						player.displayClientMessage(new TranslationTextComponent("container.cannotUnlockWithKey", new TranslationTextComponent(chest1.getKind().getTranslationKey()), itemstack.getHoverName()), true);
-						player.getCommandSenderWorld().playSound(null, chest1.getBlockPos(), SoundEvents.CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
-						//player.getEntityWorld().playSound(chest1.getPos().getX(), chest1.getPos().getY(), chest1.getPos().getZ(), SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
-						//playLocalLockedSound(chest1.getPos());
-						messaged = true;
-					}
-				}
-				if (chest2.isLocked() && (unlocked || itemstack.getItem() instanceof DungeonKeyItem)) {
-					DungeonKeyItem item = (DungeonKeyItem) itemstack.getItem();
-					if (item.getDungeonType() == chest2.getKind()) {
-						chest2.unlock();
-						unlocked = true;
-					} else if (!messaged) {
-						player.displayClientMessage(new TranslationTextComponent("container.cannotUnlockWithKey", new TranslationTextComponent(chest2.getKind().getTranslationKey()), itemstack.getHoverName()), true);
-						player.getCommandSenderWorld().playSound(null, chest2.getBlockPos(), SoundEvents.CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
-						//player.getEntityWorld().playSound(chest2.getPos().getX(), chest2.getPos().getY(), chest2.getPos().getZ(), SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
-						//playLocalLockedSound(chest2.getPos());
-						messaged = true;
-					}
-				}
-				if (messaged) {
-					return ActionResultType.PASS;
-				}
-				if (unlocked) {
-					itemstack.shrink(1);
-					return ActionResultType.SUCCESS;
-				}
-				return ActionResultType.FAIL;
-			};
-		}
-		
-		@SuppressWarnings("serial")
-		@Override
-		public BiFunction<PlayerEntity, Hand, ActionResultType> acceptSingle(TreasureChestTileEntity chest) {
-			return (player, hand) -> {
-				if (chest.isLocked()) {
-					ItemStack itemstack = player.getItemInHand(hand);
-					if (itemstack.getItem() instanceof DungeonKeyItem) {
-						DungeonKeyItem item = (DungeonKeyItem) itemstack.getItem();
-						if (item.getDungeonType() == chest.getKind()) {
-							chest.unlock();
-							itemstack.shrink(1);
-							return ActionResultType.SUCCESS;
-						} else {
-							player.displayClientMessage(new TranslationTextComponent("container.cannotUnlockWithKey", new TranslationTextComponent(chest.getKind().getTranslationKey()), itemstack.getHoverName()), true);
-							player.getCommandSenderWorld().playSound(null, chest.getBlockPos(), SoundEvents.CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
-							//player.getEntityWorld().playSound(chest.getPos().getX(), chest.getPos().getY(), chest.getPos().getZ(), SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
-							//playLocalLockedSound(chest.getPos());
-							return ActionResultType.PASS;
-						}
-					}
-				}
-				return ActionResultType.FAIL;
-			};
-		}
-
-		@Override
-		public BiFunction<PlayerEntity, Hand, ActionResultType> acceptNone() {
-			return (player, hand) -> ActionResultType.FAIL;
-		}
-		
-	};
-
 	@Override
 	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if (worldIn.isClientSide) {
-			return ActionResultType.SUCCESS;
-		}
-		else {
-			TileEntityMerger.ICallbackWrapper<? extends TreasureChestTileEntity> callbackWrapper = this.combine(state, worldIn, pos, false);
-			ActionResultType result = callbackWrapper.apply(unlock).apply(player, handIn);
-			if (result == ActionResultType.SUCCESS || result == ActionResultType.PASS) {
-				return ActionResultType.SUCCESS;
-			}
-			INamedContainerProvider inamedcontainerprovider = callbackWrapper.apply(getContainerProvider).orElse(null);
-			if (inamedcontainerprovider != null) {
-				TileEntity tileentity = worldIn.getBlockEntity(pos);
-				if (tileentity instanceof TreasureChestTileEntity) {
-					//NetworkHooks.openGui((ServerPlayerEntity) player, inamedcontainerprovider);
-					OptionalInt idOpt = player.openMenu(inamedcontainerprovider);
-					if (idOpt.isPresent()) {
-						player.awardStat(this.getOpenChestStat());
-					} else {
-						player.displayClientMessage(new TranslationTextComponent("container.isLocked", new TranslationTextComponent(this.getDescriptionId())), true);
-						player.getCommandSenderWorld().playSound(null, pos, SoundEvents.CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
-						//playLocalLockedSound(pos);
+		if (!worldIn.isClientSide) {
+			ItemStack itemStack = player.getItemInHand(handIn);
+			Item item = itemStack.getItem();
+			CompoundNBT nbt = itemStack.getOrCreateTag();
+
+			if (item instanceof DungeonKeyItem && !nbt.contains("Lock")) {
+				TileEntity tile = worldIn.getBlockEntity(pos);
+
+				if (tile instanceof TreasureChestTileEntity) {
+					String key = ((TreasureChestTileEntity) tile).createKey(((DungeonKeyItem) item).getDungeonType());
+
+					if (key != null) {
+						nbt.putString("Lock", key);
 					}
 				}
 			}
-
-			return ActionResultType.SUCCESS;
 		}
+
+		return super.use(state, worldIn, pos, player, handIn, hit);
 	}
 
 	@SuppressWarnings("unchecked")
