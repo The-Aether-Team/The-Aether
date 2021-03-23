@@ -1,6 +1,5 @@
 package com.gildedgames.aether.core.capability.player;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.block.ParachuteEntity;
 import com.gildedgames.aether.core.api.registers.ParachuteType;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
@@ -9,13 +8,13 @@ import com.gildedgames.aether.core.registry.AetherParachuteTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.server.ServerWorld;
 
-import javax.annotation.Nullable;
 
 public class AetherPlayer implements IAetherPlayer
 {
 	private final PlayerEntity player;
+	private boolean isInAetherPortal = false;
+	private int aetherPortalTimer = 0;
 
 	//STORAGE
 	private ParachuteEntity parachute = null;
@@ -65,7 +64,20 @@ public class AetherPlayer implements IAetherPlayer
 	// TODO
 	@Override
 	public void onUpdate() {
+		handleAetherPortal();
+	}
 
+	/**
+	 * Increments or decrements the Aether portal timer depending on whether or not the player is inside an Aether portal.
+	 */
+	private void handleAetherPortal() {
+		if(this.isInAetherPortal) {
+			++this.aetherPortalTimer;
+			this.isInAetherPortal = false;
+		}
+		else if (this.aetherPortalTimer > 0) {
+			--this.aetherPortalTimer;
+		}
 	}
 
 	@Override
@@ -104,5 +116,30 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public boolean isJumping() {
 		return this.isJumping;
+	}
+
+	@Override
+	public void setInPortal(boolean inPortal) {
+		this.isInAetherPortal = inPortal;
+	}
+
+	@Override
+	public boolean isInPortal() {
+		return this.isInAetherPortal;
+	}
+
+	@Override
+	public void addPortalTime(int time) {
+		this.aetherPortalTimer += time;
+	}
+
+	@Override
+	public void setPortalTimer(int timer) {
+		this.aetherPortalTimer = timer;
+	}
+
+	@Override
+	public int getPortalTimer() {
+		return this.aetherPortalTimer;
 	}
 }

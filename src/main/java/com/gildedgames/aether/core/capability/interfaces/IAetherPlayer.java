@@ -25,4 +25,11 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 
 	void setJumping(boolean isJumping);
 	boolean isJumping();
+
+	void setInPortal(boolean inPortal);
+	boolean isInPortal();
+
+	void addPortalTime(int time);
+	void setPortalTimer(int timer);
+	int getPortalTimer();
 }

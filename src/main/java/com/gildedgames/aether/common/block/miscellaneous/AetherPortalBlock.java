@@ -6,6 +6,8 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.core.capability.AetherCapabilities;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.google.common.cache.LoadingCache;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -31,6 +33,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -106,19 +109,36 @@ public class AetherPortalBlock extends Block
 				if(!entity.level.isClientSide && !pos.equals(entity.portalEntrancePos)) {
 					entity.portalEntrancePos = pos.immutable();
 				}
-				World serverworld = entity.level;
-				if(serverworld != null) {
-					MinecraftServer minecraftserver = serverworld.getServer();
-					RegistryKey<World> where2go = entity.level.dimension() == AetherDimensions.AETHER_WORLD ? World.OVERWORLD : AetherDimensions.AETHER_WORLD;
-					if(minecraftserver != null) {
-						ServerWorld destination = minecraftserver.getLevel(where2go);
-						if(destination != null && minecraftserver.isNetherEnabled() && !entity.isPassenger()) {
-							entity.level.getProfiler().push("aether_portal");
-							entity.setPortalCooldown();
-							entity.changeDimension(destination, new AetherTeleporter(destination));
-							entity.level.getProfiler().pop();
+				LazyOptional<IAetherPlayer> aetherPlayer = entity.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
+				if(!aetherPlayer.isPresent()) {
+					handleTeleportation(entity);
+				}
+				else {
+					aetherPlayer.ifPresent(handler -> {
+						handler.setInPortal(true);
+						int waitTime = handler.getPortalTimer();
+						if(waitTime >= entity.getPortalWaitTime()) {
+							handleTeleportation(entity);
+							handler.setPortalTimer(0);
 						}
-					}
+					});
+				}
+			}
+		}
+	}
+
+	private void handleTeleportation(Entity entity) {
+		World serverworld = entity.level;
+		if(serverworld != null) {
+			MinecraftServer minecraftserver = serverworld.getServer();
+			RegistryKey<World> where2go = entity.level.dimension() == AetherDimensions.AETHER_WORLD ? World.OVERWORLD : AetherDimensions.AETHER_WORLD;
+			if (minecraftserver != null) {
+				ServerWorld destination = minecraftserver.getLevel(where2go);
+				if (destination != null && minecraftserver.isNetherEnabled() && !entity.isPassenger()) {
+					entity.level.getProfiler().push("aether_portal");
+					entity.setPortalCooldown();
+					entity.changeDimension(destination, new AetherTeleporter(destination));
+					entity.level.getProfiler().pop();
 				}
 			}
 		}
