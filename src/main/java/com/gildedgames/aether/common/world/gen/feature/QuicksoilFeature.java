@@ -28,8 +28,8 @@ public class QuicksoilFeature extends Feature<NoFeatureConfig> {
                 (reader.getBlockState(pos).is(AetherTags.Blocks.HOLYSTONE) ||
                         reader.getBlockState(pos).getBlock() == AetherBlocks.AETHER_DIRT.get()));
         if (doesProtrude) {
-            for(int x = pos.getX() - 3; x < pos.getX() + 4; x++) {
-                for(int z = pos.getZ() - 3; z < pos.getZ() + 4; z++) {
+            for(int x = pos.getX() - 4; x < pos.getX() + 5; x++) {
+                for(int z = pos.getZ() - 4; z < pos.getZ() + 5; z++) {
                     BlockPos newPos = new BlockPos(x, pos.getY(), z);
 
                     if((x - pos.getX()) * (x - pos.getX()) + (z - pos.getZ()) * (z - pos.getZ()) < 12) {
