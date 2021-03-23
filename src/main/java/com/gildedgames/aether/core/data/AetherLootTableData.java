@@ -144,6 +144,13 @@ public class AetherLootTableData extends AetherLootTableProvider
 
             dropSelf(AetherBlocks.SKYROOT_FENCE);
             dropSelf(AetherBlocks.SKYROOT_FENCE_GATE);
+            this.add(AetherBlocks.SKYROOT_DOOR.get(), createDoorTable(AetherBlocks.SKYROOT_DOOR.get()));
+            dropSelf(AetherBlocks.SKYROOT_TRAPDOOR);
+            dropSelf(AetherBlocks.SKYROOT_BUTTON);
+            dropSelf(AetherBlocks.SKYROOT_PRESSURE_PLATE);
+
+            dropSelf(AetherBlocks.HOLYSTONE_BUTTON);
+            dropSelf(AetherBlocks.HOLYSTONE_PRESSURE_PLATE);
 
             dropSelf(AetherBlocks.CARVED_WALL);
             dropSelf(AetherBlocks.ANGELIC_WALL);

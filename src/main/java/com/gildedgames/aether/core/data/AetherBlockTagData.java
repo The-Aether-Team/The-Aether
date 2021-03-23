@@ -89,6 +89,20 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .add(AetherBlocks.SKYROOT_SLAB.get());
         tag(BlockTags.WOODEN_FENCES)
                 .add(AetherBlocks.SKYROOT_FENCE.get());
+        tag(BlockTags.WOODEN_DOORS)
+                .add(AetherBlocks.SKYROOT_DOOR.get());
+        tag(BlockTags.WOODEN_TRAPDOORS)
+                .add(AetherBlocks.SKYROOT_TRAPDOOR.get());
+        tag(BlockTags.WOODEN_BUTTONS)
+                .add(AetherBlocks.SKYROOT_BUTTON.get());
+        tag(BlockTags.WOODEN_PRESSURE_PLATES)
+                .add(AetherBlocks.SKYROOT_PRESSURE_PLATE.get());
+        tag(BlockTags.BUTTONS)
+                .add(AetherBlocks.SKYROOT_BUTTON.get())
+                .add(AetherBlocks.HOLYSTONE_BUTTON.get());
+        tag(BlockTags.PRESSURE_PLATES)
+                .add(AetherBlocks.SKYROOT_PRESSURE_PLATE.get())
+                .add(AetherBlocks.HOLYSTONE_PRESSURE_PLATE.get());
         tag(BlockTags.SAPLINGS)
                 .add(AetherBlocks.SKYROOT_SAPLING.get())
                 .add(AetherBlocks.GOLDEN_OAK_SAPLING.get());

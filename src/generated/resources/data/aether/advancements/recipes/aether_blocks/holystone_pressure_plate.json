@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "minecraft:oak_trapdoor"
+      "aether:holystone_pressure_plate"
     ]
   },
   "criteria": {
-    "has_skyroot": {
+    "has_holystone": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "aether:skyroot_planks"
+            "item": "aether:holystone"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "minecraft:oak_trapdoor"
+        "recipe": "aether:holystone_pressure_plate"
       }
     }
   },
   "requirements": [
     [
-      "has_skyroot",
+      "has_holystone",
       "has_the_recipe"
     ]
   ]

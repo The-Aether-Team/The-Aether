@@ -1,7 +1,9 @@
 package com.gildedgames.aether.core.data;
 
-import com.gildedgames.aether.core.data.provider.AetherBlockStateProvider;
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.core.data.provider.AetherBlockStateProvider;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.TrapDoorBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -102,6 +104,8 @@ public class AetherBlockStateData extends AetherBlockStateProvider
 
         fence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS, "construction/");
         fenceGateBlock(AetherBlocks.SKYROOT_FENCE_GATE, AetherBlocks.SKYROOT_PLANKS, "construction/");
+        doorBlock((DoorBlock) AetherBlocks.SKYROOT_DOOR.get(), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_bottom"), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_top"));
+        trapdoorBlock((TrapDoorBlock) AetherBlocks.SKYROOT_TRAPDOOR.get(), texture(name(AetherBlocks.SKYROOT_TRAPDOOR), "construction/"), false);
 
         wallBlock(AetherBlocks.CARVED_WALL, AetherBlocks.CARVED_STONE, "dungeon/");
         wallBlock(AetherBlocks.ANGELIC_WALL, AetherBlocks.ANGELIC_STONE, "dungeon/");

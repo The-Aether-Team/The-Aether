@@ -39,6 +39,8 @@ public class AetherRendering
         RenderType mipped = RenderType.cutoutMipped();
         RenderType translucent = RenderType.translucent();
 
+        render(AetherBlocks.SKYROOT_DOOR, cutout);
+        render(AetherBlocks.SKYROOT_TRAPDOOR, cutout);
         render(AetherBlocks.COLD_AERCLOUD, translucent);
         render(AetherBlocks.BLUE_AERCLOUD, translucent);
         render(AetherBlocks.GOLDEN_AERCLOUD, translucent);

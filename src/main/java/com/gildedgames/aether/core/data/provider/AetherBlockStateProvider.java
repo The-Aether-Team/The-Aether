@@ -29,6 +29,8 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider
         return modLoc("block/" + location + name);
     }
 
+    protected ResourceLocation texture(String name, String location, String suffix) { return modLoc("block/" + location + name + suffix); }
+
     protected String name(Supplier<? extends Block> block) {
         return block.get().getRegistryName().getPath();
     }

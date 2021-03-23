@@ -118,6 +118,10 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.SKYROOT_SLAB.get().asItem());
         tag(ItemTags.WOODEN_FENCES)
                 .add(AetherBlocks.SKYROOT_FENCE.get().asItem());
+        tag(ItemTags.WOODEN_DOORS)
+                .add(AetherBlocks.SKYROOT_DOOR.get().asItem());
+        tag(ItemTags.WOODEN_TRAPDOORS)
+                .add(AetherBlocks.SKYROOT_TRAPDOOR.get().asItem());
         tag(ItemTags.SAPLINGS)
                 .add(AetherBlocks.SKYROOT_SAPLING.get().asItem())
                 .add(AetherBlocks.GOLDEN_OAK_SAPLING.get().asItem());

@@ -182,6 +182,18 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
                 .save(consumer);
 
+        ShapelessRecipeBuilder.shapeless(AetherBlocks.SKYROOT_BUTTON.get(), 1)
+                .requires(AetherBlocks.SKYROOT_PLANKS.get())
+                .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
+                .group("wooden_button")
+                .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(AetherBlocks.HOLYSTONE_BUTTON.get(), 1)
+                .requires(AetherBlocks.HOLYSTONE.get())
+                .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
+                .group("button")
+                .save(consumer);
+
         makeHelmet(AetherItems.ZANITE_HELMET, AetherItems.ZANITE_GEMSTONE).save(consumer);
         makeChestplate(AetherItems.ZANITE_CHESTPLATE, AetherItems.ZANITE_GEMSTONE).save(consumer);
         makeLeggings(AetherItems.ZANITE_LEGGINGS, AetherItems.ZANITE_GEMSTONE).save(consumer);
@@ -229,8 +241,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .group("lead")
                 .save(consumer, name("swet_lead"));
 
-
-        ShapedRecipeBuilder.shaped(Blocks.OAK_DOOR, 3)
+        ShapedRecipeBuilder.shaped(AetherBlocks.SKYROOT_DOOR.get(), 3)
                 .pattern("SS")
                 .pattern("SS")
                 .pattern("SS")
@@ -239,12 +250,26 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .group("wooden_door")
                 .save(consumer);
 
-        ShapedRecipeBuilder.shaped(Blocks.OAK_TRAPDOOR, 2)
+        ShapedRecipeBuilder.shaped(AetherBlocks.SKYROOT_TRAPDOOR.get(), 2)
                 .pattern("SSS")
                 .pattern("SSS")
                 .define('S', AetherBlocks.SKYROOT_PLANKS.get())
                 .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
                 .group("wooden_trapdoor")
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(AetherBlocks.SKYROOT_PRESSURE_PLATE.get(), 1)
+                .pattern("SS")
+                .define('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
+                .group("wooden_pressure_plate")
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(AetherBlocks.HOLYSTONE_PRESSURE_PLATE.get(), 1)
+                .pattern("HH")
+                .define('H', AetherBlocks.HOLYSTONE.get())
+                .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
+                .group("pressure_plate")
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(Blocks.BARREL, 1)

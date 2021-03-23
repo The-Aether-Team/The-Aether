@@ -1,9 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "wooden_trapdoor",
+  "group": "wooden_pressure_plate",
   "pattern": [
-    "SSS",
-    "SSS"
+    "SS"
   ],
   "key": {
     "S": {
@@ -11,7 +10,6 @@
     }
   },
   "result": {
-    "item": "minecraft:oak_trapdoor",
-    "count": 2
+    "item": "aether:skyroot_pressure_plate"
   }
 }
