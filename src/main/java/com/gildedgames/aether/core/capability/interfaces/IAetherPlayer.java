@@ -32,4 +32,7 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 	void addPortalTime(int time);
 	void setPortalTimer(int timer);
 	int getPortalTimer();
+
+	float getPortalAnimTime();
+	float getPrevPortalAnimTime();
 }
