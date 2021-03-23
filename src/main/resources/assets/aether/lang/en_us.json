@@ -342,6 +342,9 @@
   "gui.aether.book_of_lore.of_lore": "Of Lore",
   "gui.aether.book_of_lore.item": "Item:",
 
+  "_comment": "Containers",
+  "gui.aether.dungeon_chest": "Dungeon Chest",
+
   "_comment": "Lore",
   "lore.aether.aechor_petal": "The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.",
   "lore.aether.aerogel": "The result of the Aether's unique climate and lava combining. It can be crafted into various decorative blocks and is blast resistant.",

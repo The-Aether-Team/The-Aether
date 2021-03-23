@@ -15,54 +15,53 @@ import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.LockCode;
 import org.apache.commons.lang3.Validate;
 
 import java.util.UUID;
 
 public class TreasureChestTileEntity extends ChestTileEntity {
-	private DungeonType kind;
+    private DungeonType kind;
 
-	protected TreasureChestTileEntity(TileEntityType<?> typeIn) {
-		super(typeIn);
-	}
-	
-	public TreasureChestTileEntity() {
-		this(AetherTileEntityTypes.TREASURE_CHEST.get());
-		this.kind = AetherDungeonTypes.BRONZE.get();
-	}
-	
-	public TreasureChestTileEntity(DungeonType type) {
-		this(AetherTileEntityTypes.TREASURE_CHEST.get());
-		this.kind = type;
-	}
-	
-	@Override
-	protected ITextComponent getDefaultName() {
-		return new TranslationTextComponent("gui.treasure_chest", new TranslationTextComponent(this.getKind().getTranslationKey()), new TranslationTextComponent(AetherBlocks.TREASURE_CHEST.get().getDescriptionId()));
-	}
+    protected TreasureChestTileEntity(TileEntityType<?> typeIn) {
+        super(typeIn);
+    }
 
-	public String createKey(DungeonType type) {
-		// Only pair with keys that are matching
-		if (this.kind.equals(type) && this.lockKey.equals(LockCode.NO_LOCK)) {
-			String key = UUID.randomUUID().toString();
+    public TreasureChestTileEntity() {
+        this(AetherTileEntityTypes.TREASURE_CHEST.get());
+        this.lockKey = LockCodeItem.UNBOUND_LOCK;
+    }
 
-			this.lockKey = new LockCodeItem(key);
+    public TreasureChestTileEntity(DungeonType type) {
+        this();
+        this.kind = type;
+    }
 
-			return key;
-		}
+    @Override
+    protected ITextComponent getDefaultName() {
+        return new TranslationTextComponent("gui.aether.dungeon_chest", new TranslationTextComponent(this.getKind().getTranslationKey()), new TranslationTextComponent(AetherBlocks.TREASURE_CHEST.get().getDescriptionId()));
+    }
 
-		return null;
-	}
+    public String createKey(DungeonType type) {
+        // Only pair with keys that are matching
+        if (this.getKind().equals(type) && this.lockKey.equals(LockCodeItem.UNBOUND_LOCK)) {
+            String key = UUID.randomUUID().toString();
 
-	@Override
-	public void load(BlockState state, CompoundNBT compound) {
-		super.load(state, compound);
-		this.kind = AetherDungeonTypes.BRONZE.get();
+            this.lockKey = new LockCodeItem(key);
 
-		if (compound.contains("Lock")) {
-			this.lockKey = new LockCodeItem(compound.getString("Lock"));
-		}
+            return key;
+        }
+
+        return null;
+    }
+
+    @Override
+    public void load(BlockState state, CompoundNBT compound) {
+        super.load(state, compound);
+        this.kind = AetherDungeonTypes.BRONZE.get();
+
+        if (compound.contains("Lock")) {
+            this.lockKey = new LockCodeItem(compound.getString("Lock"));
+        }
 
 //		if (compound.contains("Kind", 8)) {
 //			String kind = compound.getString("Kind");
@@ -73,41 +72,38 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 //				}
 //			}
 //		}
-	}
-	
-	@Override
-	public CompoundNBT save(CompoundNBT compound) {
-		super.save(compound);
+    }
 
-		this.lockKey.addToTag(compound);
-		compound.putString("Kind", this.getKind().getRegistryName().toString());
+    @Override
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
 
-		return compound;
-	}
+        this.lockKey.addToTag(compound);
+        compound.putString("Kind", this.getKind().getRegistryName().toString());
 
-	public void setKind(DungeonType kind) {
-		this.kind = Validate.notNull(kind);
-	}
-	
-	public DungeonType getKind() {
-		DungeonType kind = this.kind;
-		return (kind == null)? AetherDungeonTypes.BRONZE.get() : kind;
-	}
-	
-	@Override
-	public SUpdateTileEntityPacket getUpdatePacket() {
-		CompoundNBT compound = new CompoundNBT();
-		this.save(compound);
-		return new SUpdateTileEntityPacket(this.getBlockPos(), 191, compound);
-	}
+        return compound;
+    }
 
-	@Override
-	public boolean canOpen(PlayerEntity player) {
-		Item item = player.getMainHandItem().getItem();
+    public void setKind(DungeonType kind) {
+        this.kind = Validate.notNull(kind);
+    }
 
-		if (item instanceof DungeonKeyItem)
-		System.out.println(this.kind.equals(((DungeonKeyItem) item).getDungeonType() ));
+    public DungeonType getKind() {
+        DungeonType kind = this.kind;
+        return (kind == null) ? AetherDungeonTypes.BRONZE.get() : kind;
+    }
 
-		return super.canOpen(player) && item instanceof DungeonKeyItem && this.kind.equals(((DungeonKeyItem) item).getDungeonType());
-	}
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        CompoundNBT compound = new CompoundNBT();
+        this.save(compound);
+        return new SUpdateTileEntityPacket(this.getBlockPos(), 191, compound);
+    }
+
+    @Override
+    public boolean canOpen(PlayerEntity player) {
+        Item item = player.getMainHandItem().getItem();
+
+        return super.canOpen(player) && item instanceof DungeonKeyItem && this.getKind().equals(((DungeonKeyItem) item).getDungeonType());
+    }
 }

@@ -7,6 +7,8 @@ import net.minecraft.world.LockCode;
 
 public class LockCodeItem extends LockCode {
 
+    public static final LockCodeItem UNBOUND_LOCK = new LockCodeItem("");
+
     public LockCodeItem(String p_i45903_1_) {
         super(p_i45903_1_);
     }
@@ -14,7 +16,7 @@ public class LockCodeItem extends LockCode {
     public boolean unlocksWith(ItemStack itemStack) {
         CompoundNBT itemTag = itemStack.getTag();
 
-        return this.key.isEmpty() || !itemStack.isEmpty() && itemTag != null
+        return !itemStack.isEmpty() && itemTag != null
                 && this.key.equals(itemTag.getString("Lock"));
     }
 
