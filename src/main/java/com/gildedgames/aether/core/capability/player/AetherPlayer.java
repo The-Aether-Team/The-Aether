@@ -1,21 +1,29 @@
 package com.gildedgames.aether.core.capability.player;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.block.ParachuteEntity;
 import com.gildedgames.aether.core.api.registers.ParachuteType;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
 import com.gildedgames.aether.core.registry.AetherParachuteTypes;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SimpleSound;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.util.SoundEvents;
 
-import javax.annotation.Nullable;
+import java.util.Random;
+
 
 public class AetherPlayer implements IAetherPlayer
 {
 	private final PlayerEntity player;
+	private final Random random = new Random();
+	public boolean isInAetherPortal = false;
+	public int aetherPortalTimer = 0;
+	public float prevPortalAnimTime, portalAnimTime = 0.0F;
 
 	//STORAGE
 	private ParachuteEntity parachute = null;
@@ -65,7 +73,58 @@ public class AetherPlayer implements IAetherPlayer
 	// TODO
 	@Override
 	public void onUpdate() {
+		handleAetherPortal();
+	}
 
+	/**
+	 * Increments or decrements the Aether portal timer depending on whether or not the player is inside an Aether portal.
+	 * On the client, this will also help to set the portal overlay.
+	 */
+	private void handleAetherPortal() {
+		if(player.level.isClientSide) {
+			this.prevPortalAnimTime = this.portalAnimTime;
+			Minecraft mc = Minecraft.getInstance();
+			if(this.isInAetherPortal) {
+				if (mc.screen != null && !mc.screen.isPauseScreen()) {
+					if (mc.screen instanceof ContainerScreen) {
+						player.closeContainer();
+					}
+
+					mc.setScreen((Screen) null);
+				}
+
+				if (this.portalAnimTime == 0.0F) {
+					mc.getSoundManager().play(SimpleSound.forLocalAmbience(SoundEvents.PORTAL_TRIGGER, random.nextFloat() * 0.4F + 0.8F, 0.25F));
+				}
+			}
+		}
+
+		if(this.isInAetherPortal) {
+			++this.aetherPortalTimer;
+			if(player.level.isClientSide) {
+				this.portalAnimTime += 0.0125F;
+				if(this.portalAnimTime > 1.0F) {
+					this.portalAnimTime = 1.0F;
+				}
+			}
+			this.isInAetherPortal = false;
+		}
+		else{
+			if(player.level.isClientSide) {
+				if (this.portalAnimTime > 0.0F)
+				{
+					this.portalAnimTime -= 0.05F;
+				}
+
+				if (this.portalAnimTime < 0.0F)
+				{
+					this.portalAnimTime = 0.0F;
+				}
+			}
+			if (this.aetherPortalTimer > 0) {
+				this.aetherPortalTimer -= 4;
+			}
+		}
 	}
 
 	@Override
@@ -104,5 +163,40 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public boolean isJumping() {
 		return this.isJumping;
+	}
+
+	@Override
+	public void setInPortal(boolean inPortal) {
+		this.isInAetherPortal = inPortal;
+	}
+
+	@Override
+	public boolean isInPortal() {
+		return this.isInAetherPortal;
+	}
+
+	@Override
+	public void addPortalTime(int time) {
+		this.aetherPortalTimer += time;
+	}
+
+	@Override
+	public void setPortalTimer(int timer) {
+		this.aetherPortalTimer = timer;
+	}
+
+	@Override
+	public int getPortalTimer() {
+		return this.aetherPortalTimer;
+	}
+
+	@Override
+	public float getPortalAnimTime() {
+		return this.portalAnimTime;
+	}
+
+	@Override
+	public float getPrevPortalAnimTime() {
+		return this.prevPortalAnimTime;
 	}
 }
