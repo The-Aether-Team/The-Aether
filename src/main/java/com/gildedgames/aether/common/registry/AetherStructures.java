@@ -39,8 +39,8 @@ public class AetherStructures {
     }
 
     public static void registerStructures() {
-        setupStructure(BRONZE_DUNGEON.get(), new StructureSeparationSettings(2, 1, 16811681), false);
-        setupStructure(GOLD_DUNGEON.get(), new StructureSeparationSettings(16, 8, 120320420), false);
+        setupStructure(BRONZE_DUNGEON.get(), new StructureSeparationSettings(6, 4, 16811681), false);
+        setupStructure(GOLD_DUNGEON.get(), new StructureSeparationSettings(24, 12, 120320420), false);
     }
 
     public static void registerConfiguredStructures() {
@@ -55,7 +55,7 @@ public class AetherStructures {
         if(event.getWorld() instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)event.getWorld();
 
-            if(serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator && serverWorld.dimension().equals(World.OVERWORLD)) {
+            if (serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator && serverWorld.dimension().equals(World.OVERWORLD)) {
                 return;
             }
 

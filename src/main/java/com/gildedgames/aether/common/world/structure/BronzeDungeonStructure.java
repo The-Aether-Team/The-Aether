@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.world.structure;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.registry.AetherStructures;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedSeedRandom;
@@ -21,6 +22,7 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.structure.VillageConfig;
 import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.gen.settings.StructureSeparationSettings;
 
 public class BronzeDungeonStructure extends Structure<NoFeatureConfig> {
 
