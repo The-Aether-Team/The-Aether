@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.world.structure.BronzeDungeonStructure;
+import com.gildedgames.aether.common.world.structure.GoldDungeonStructure;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.util.ResourceLocation;
@@ -30,19 +31,24 @@ public class AetherStructures {
     public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Aether.MODID);
 
     public static final RegistryObject<Structure<NoFeatureConfig>> BRONZE_DUNGEON = STRUCTURES.register("bronze_dungeon", () -> new BronzeDungeonStructure(NoFeatureConfig.CODEC));
+    public static final RegistryObject<Structure<NoFeatureConfig>> GOLD_DUNGEON = STRUCTURES.register("gold_dungeon", () -> new GoldDungeonStructure(NoFeatureConfig.CODEC));
 
     public static final class ConfiguredStructures {
         public static final StructureFeature<?, ?> BRONZE_DUNGEON = AetherStructures.BRONZE_DUNGEON.get().configured(IFeatureConfig.NONE);
+        public static final StructureFeature<?, ?> GOLD_DUNGEON = AetherStructures.GOLD_DUNGEON.get().configured(IFeatureConfig.NONE);
     }
 
     public static void registerStructures() {
-        setupStructure(BRONZE_DUNGEON.get(), new StructureSeparationSettings(8, 2, 276320045), false);
+        setupStructure(BRONZE_DUNGEON.get(), new StructureSeparationSettings(2, 1, 16811681), false);
+        setupStructure(GOLD_DUNGEON.get(), new StructureSeparationSettings(16, 8, 120320420), false);
     }
 
     public static void registerConfiguredStructures() {
         Registry.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(Aether.MODID, "bronze_dungeon"), BRONZE_DUNGEON.get().configured(IFeatureConfig.NONE));
+        Registry.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(Aether.MODID, "gold_dungeon"), GOLD_DUNGEON.get().configured(IFeatureConfig.NONE));
 
         FlatGenerationSettings.STRUCTURE_FEATURES.put(BRONZE_DUNGEON.get(), ConfiguredStructures.BRONZE_DUNGEON);
+        FlatGenerationSettings.STRUCTURE_FEATURES.put(GOLD_DUNGEON.get(), ConfiguredStructures.GOLD_DUNGEON);
     }
 
     public static void addDimensionalSpacing(final WorldEvent.Load event) {
@@ -55,6 +61,7 @@ public class AetherStructures {
 
             Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
             tempMap.put(AetherStructures.BRONZE_DUNGEON.get(), DimensionStructuresSettings.DEFAULTS.get(AetherStructures.BRONZE_DUNGEON.get()));
+            tempMap.put(AetherStructures.GOLD_DUNGEON.get(), DimensionStructuresSettings.DEFAULTS.get(AetherStructures.GOLD_DUNGEON.get()));
             serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
         }
     }

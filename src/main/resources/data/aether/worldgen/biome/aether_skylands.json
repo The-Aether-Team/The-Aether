@@ -56,7 +56,8 @@
     []
   ],
   "starts": [
-    "aether:bronze_dungeon"
+    "aether:bronze_dungeon",
+    "aether:gold_dungeon"
   ],
   "spawners": {
     "monster": [
