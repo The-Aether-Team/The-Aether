@@ -38,7 +38,7 @@ public class TreasureChestTileEntity extends ChestTileEntity {
 
     @Override
     protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("gui.treasure_chest", new TranslationTextComponent(this.getKind().getTranslationKey()), new TranslationTextComponent(AetherBlocks.TREASURE_CHEST.get().getDescriptionId()));
+        return new TranslationTextComponent("gui.aether.dungeon_chest", new TranslationTextComponent(this.getKind().getTranslationKey()), new TranslationTextComponent(AetherBlocks.TREASURE_CHEST.get().getDescriptionId()));
     }
 
     public String createKey(DungeonType type) {
