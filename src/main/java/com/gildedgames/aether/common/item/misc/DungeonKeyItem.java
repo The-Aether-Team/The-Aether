@@ -23,5 +23,4 @@ public class DungeonKeyItem extends Item {
     public DungeonType getDungeonType() {
         return dungeonTypeGetter.get();
     }
-
 }
