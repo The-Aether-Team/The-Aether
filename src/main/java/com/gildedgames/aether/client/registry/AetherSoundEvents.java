@@ -33,6 +33,8 @@ public class AetherSoundEvents
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_AMBIENT = register("entity.moa.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_FLAP = register("entity.moa.flap");
 
+	public static final RegistryObject<SoundEvent> ENTITY_COCKATRICE_SHOOT = register("entity.cockatrice.shoot");
+
 	public static final RegistryObject<SoundEvent> ENTITY_SHEEPUFF_AMBIENT = register("entity.sheepuff.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_SHEEPUFF_HURT = register("entity.sheepuff.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_SHEEPUFF_DEATH = register("entity.sheepuff.death");
