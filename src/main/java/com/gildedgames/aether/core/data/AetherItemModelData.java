@@ -22,22 +22,27 @@ public class AetherItemModelData extends AetherItemModelProvider
         handheldItem(AetherItems.SKYROOT_PICKAXE, "tools/");
         handheldItem(AetherItems.SKYROOT_AXE, "tools/");
         handheldItem(AetherItems.SKYROOT_SHOVEL, "tools/");
+        handheldItem(AetherItems.SKYROOT_HOE, "tools/");
 
         handheldItem(AetherItems.HOLYSTONE_PICKAXE, "tools/");
         handheldItem(AetherItems.HOLYSTONE_AXE, "tools/");
         handheldItem(AetherItems.HOLYSTONE_SHOVEL, "tools/");
+        handheldItem(AetherItems.HOLYSTONE_HOE, "tools/");
 
         handheldItem(AetherItems.ZANITE_PICKAXE, "tools/");
         handheldItem(AetherItems.ZANITE_AXE, "tools/");
         handheldItem(AetherItems.ZANITE_SHOVEL, "tools/");
+        handheldItem(AetherItems.ZANITE_HOE, "tools/");
 
         handheldItem(AetherItems.GRAVITITE_PICKAXE, "tools/");
         handheldItem(AetherItems.GRAVITITE_AXE, "tools/");
         handheldItem(AetherItems.GRAVITITE_SHOVEL, "tools/");
+        handheldItem(AetherItems.GRAVITITE_HOE, "tools/");
 
         handheldItem(AetherItems.VALKYRIE_PICKAXE, "tools/");
         handheldItem(AetherItems.VALKYRIE_AXE, "tools/");
         handheldItem(AetherItems.VALKYRIE_SHOVEL, "tools/");
+        handheldItem(AetherItems.VALKYRIE_HOE, "tools/");
 
         handheldItem(AetherItems.SKYROOT_SWORD, "weapons/");
         handheldItem(AetherItems.HOLYSTONE_SWORD, "weapons/");

@@ -127,6 +127,16 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
+    public ShapedRecipeBuilder makeHoeWithBlock(Supplier<? extends Item> hoeOut, Supplier<? extends Block> materialIn) {
+        return ShapedRecipeBuilder.shaped(hoeOut.get())
+                .pattern("##")
+                .pattern(" /")
+                .pattern(" /")
+                .define('#', materialIn.get())
+                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
+    }
+
     public ShapedRecipeBuilder makeSwordWithBlock(Supplier<? extends Item> swordOut, Supplier<? extends Block> materialIn) {
         return ShapedRecipeBuilder.shaped(swordOut.get())
                 .pattern("#")
@@ -162,6 +172,16 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern("#")
                 .pattern("/")
                 .pattern("/")
+                .define('#', materialIn.get())
+                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
+    }
+
+    public ShapedRecipeBuilder makeHoe(Supplier<? extends Item> shovelOut, Supplier<? extends Item> materialIn) {
+        return ShapedRecipeBuilder.shaped(shovelOut.get())
+                .pattern("##")
+                .pattern(" /")
+                .pattern(" /")
                 .define('#', materialIn.get())
                 .define('/', AetherTags.Items.SKYROOT_STICKS)
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));

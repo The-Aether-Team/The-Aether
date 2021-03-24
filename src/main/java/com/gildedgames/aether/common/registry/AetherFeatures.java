@@ -50,14 +50,14 @@ public class AetherFeatures {
     public static void registerConfiguredFeatures() {
         RuleTest HOLYSTONE = new BlockMatchRuleTest(AetherBlocks.HOLYSTONE.get());
 
-        register("quicksoil", QUICKSOIL.get().configured(IFeatureConfig.NONE).range(256).squared().count(10));
+        register("quicksoil", QUICKSOIL.get().configured(IFeatureConfig.NONE).decorated(Placement.RANGE_VERY_BIASED.configured(new TopSolidRangeConfig(63, 0, 70))).squared().count(10));
 
         register("cold_aercloud", COLD_AERCLOUD.get().configured(IFeatureConfig.NONE).range(128).squared().chance(5));
         register("blue_aercloud", BLUE_AERCLOUD.get().configured(IFeatureConfig.NONE).range(96).squared().chance(5));
         register("gold_aercloud", GOLD_AERCLOUD.get().configured(IFeatureConfig.NONE).range(160).squared().chance(5));
         register("pink_aercloud", PINK_AERCLOUD.get().configured(IFeatureConfig.NONE).range(160).squared().chance(7));
 
-        register("crystal_tree", CRYSTAL_TREE.get().configured(IFeatureConfig.NONE).chance(15));
+        register("crystal_tree", CRYSTAL_TREE.get().configured(IFeatureConfig.NONE).chance(30));
         register("water_lake", LAKE.get().configured(new BlockStateFeatureConfig(Blocks.WATER.defaultBlockState())).decorated(Placement.WATER_LAKE.configured(new ChanceConfig(4))));
 
         register("tree_skyroot", Feature.TREE.configured(
@@ -82,7 +82,7 @@ public class AetherFeatures {
         register("ore_icestone", Feature.ORE.configured(new OreFeatureConfig(HOLYSTONE, AetherBlocks.ICESTONE.get().defaultBlockState(), 16)).range(256).squared().count(10));
         register("ore_ambrosium", Feature.ORE.configured(new OreFeatureConfig(HOLYSTONE, AetherBlocks.AMBROSIUM_ORE.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true), 16)).range(256).squared().count(10));
         register("ore_zanite", Feature.ORE.configured(new OreFeatureConfig(HOLYSTONE, AetherBlocks.ZANITE_ORE.get().defaultBlockState(), 8)).range(256).squared().count(10));
-        register("ore_gravitite", Feature.ORE.configured(new OreFeatureConfig(HOLYSTONE, AetherBlocks.ICESTONE.get().defaultBlockState(), 6)).range(256).squared().count(10));
+        register("ore_gravitite", Feature.ORE.configured(new OreFeatureConfig(HOLYSTONE, AetherBlocks.GRAVITITE_ORE.get().defaultBlockState(), 6)).range(256).squared().count(10));
 
         register("spring_water", Feature.SPRING.configured(new LiquidsConfig(Fluids.WATER.defaultFluidState(), true, 4, 1, ImmutableSet.of(AetherBlocks.HOLYSTONE.get(), AetherBlocks.AETHER_DIRT.get()))).decorated(Placement.RANGE_BIASED.configured(new TopSolidRangeConfig(8, 8, 256))).squared().count(50));
 

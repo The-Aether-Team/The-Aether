@@ -52,23 +52,28 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.SKYROOT_TOOLS)
                 .add(AetherItems.SKYROOT_PICKAXE.get())
                 .add(AetherItems.SKYROOT_AXE.get())
-                .add(AetherItems.SKYROOT_SHOVEL.get());
+                .add(AetherItems.SKYROOT_SHOVEL.get())
+                .add(AetherItems.SKYROOT_HOE.get());
         tag(AetherTags.Items.HOLYSTONE_TOOLS)
                 .add(AetherItems.HOLYSTONE_PICKAXE.get())
                 .add(AetherItems.HOLYSTONE_AXE.get())
-                .add(AetherItems.HOLYSTONE_SHOVEL.get());
+                .add(AetherItems.HOLYSTONE_SHOVEL.get())
+                .add(AetherItems.HOLYSTONE_HOE.get());
         tag(AetherTags.Items.ZANITE_TOOLS)
                 .add(AetherItems.ZANITE_PICKAXE.get())
                 .add(AetherItems.ZANITE_AXE.get())
-                .add(AetherItems.ZANITE_SHOVEL.get());
+                .add(AetherItems.ZANITE_SHOVEL.get())
+                .add(AetherItems.ZANITE_HOE.get());
         tag(AetherTags.Items.GRAVITITE_TOOLS)
                 .add(AetherItems.GRAVITITE_PICKAXE.get())
                 .add(AetherItems.GRAVITITE_AXE.get())
-                .add(AetherItems.GRAVITITE_SHOVEL.get());
+                .add(AetherItems.GRAVITITE_SHOVEL.get())
+                .add(AetherItems.GRAVITITE_HOE.get());
         tag(AetherTags.Items.VALKYRIE_TOOLS)
                 .add(AetherItems.VALKYRIE_PICKAXE.get())
                 .add(AetherItems.VALKYRIE_AXE.get())
-                .add(AetherItems.VALKYRIE_SHOVEL.get());
+                .add(AetherItems.VALKYRIE_SHOVEL.get())
+                .add(AetherItems.VALKYRIE_HOE.get());
         tag(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)
                 .add(AetherItems.ZANITE_AXE.get())
                 .add(AetherItems.GRAVITITE_AXE.get())

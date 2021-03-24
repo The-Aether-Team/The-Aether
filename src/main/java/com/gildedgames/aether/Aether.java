@@ -17,6 +17,7 @@ import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.common.registry.AetherFeatures;
 import com.gildedgames.aether.core.data.AetherLootTableData;
+import com.mojang.serialization.Codec;
 import net.minecraft.block.*;
 import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.data.DataGenerator;
@@ -30,16 +31,28 @@ import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.FlatChunkGenerator;
+import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraft.world.gen.settings.StructureSeparationSettings;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -53,6 +66,8 @@ import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.SlotTypePreset;
 
+import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Random;
 
 @Mod(Aether.MODID)
@@ -60,7 +75,7 @@ public class Aether
 {
 	public static final String MODID = "aether";
 	public static final Logger LOGGER = LogManager.getLogger();
-	
+
 	public Aether() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -68,6 +83,9 @@ public class Aether
 		modEventBus.addListener(this::clientSetup);
 		modEventBus.addListener(this::curiosSetup);
 		modEventBus.addListener(this::dataSetup);
+
+		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+		forgeBus.addListener(EventPriority.NORMAL, AetherStructures::addDimensionalSpacing);
 
 		AetherDungeonTypes.DUNGEON_TYPES.makeRegistry("dungeon_types", RegistryBuilder::new);
 		
@@ -83,7 +101,8 @@ public class Aether
 				AetherContainerTypes.CONTAINERS,
 				AetherTileEntityTypes.TILE_ENTITIES,
 				AetherRecipes.RECIPE_SERIALIZERS,
-				AetherDungeonTypes.DUNGEON_TYPES
+				AetherDungeonTypes.DUNGEON_TYPES,
+				AetherStructures.STRUCTURES
 		};
 
 		for (DeferredRegister<?> register : registers) {
@@ -107,6 +126,9 @@ public class Aether
 
 			AetherFeatures.registerConfiguredFeatures();
 			AetherAdvancements.init();
+
+			AetherStructures.registerStructures();
+			AetherStructures.registerConfiguredStructures();
 
 			registerDispenserBehaviors();
 			registerComposting();
