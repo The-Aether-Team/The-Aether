@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.event.handlers;
+package com.gildedgames.aether.client.event.listeners;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public class AetherPlayerClientHandler
+public class AetherPlayerClientListener
 {
     @SubscribeEvent
     public static void onJump(InputUpdateEvent event) {

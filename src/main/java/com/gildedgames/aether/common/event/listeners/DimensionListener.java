@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.event.handlers;
+package com.gildedgames.aether.common.event.listeners;
 
 import com.gildedgames.aether.common.event.AetherBannedItemEvent;
 import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
@@ -26,7 +26,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class DimensionHandler
+public class DimensionListener
 {
     @SubscribeEvent
     public static void checkBlockBanned(PlayerInteractEvent.RightClickBlock event) {

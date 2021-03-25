@@ -164,13 +164,12 @@ public class Aether
 
 	public void curiosSetup(InterModEnqueueEvent event)
 	{
-		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.NECKLACE.getMessageBuilder().build());
-		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.BACK.getMessageBuilder().build());
-		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.RING.getMessageBuilder().size(2).build());
-		//InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("shield").build());
-		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.HANDS.getMessageBuilder().build());
-		//InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("misc").size(2).build());
-		//.setIcon(Resource Location(MODID, "textures/slots/pendant.png
+		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.NECKLACE.getMessageBuilder().icon(new ResourceLocation(Aether.MODID, "gui/slots/pendant")).build());
+		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.BACK.getMessageBuilder().icon(new ResourceLocation(Aether.MODID, "gui/slots/cape")).build());
+		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.RING.getMessageBuilder().icon(new ResourceLocation(Aether.MODID, "gui/slots/ring")).size(2).build());
+		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("shield").icon(new ResourceLocation(Aether.MODID, "gui/slots/shield")).build());
+		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.HANDS.getMessageBuilder().icon(new ResourceLocation(Aether.MODID, "gui/slots/gloves")).build());
+		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("misc").icon(new ResourceLocation(Aether.MODID, "gui/slots/misc")).size(2).build());
 	}
 
 	public void dataSetup(GatherDataEvent event) {

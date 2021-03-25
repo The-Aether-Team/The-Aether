@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.event.handlers;
+package com.gildedgames.aether.common.event.listeners;
 
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherLoot;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber
-public class AbilityHandler
+public class AbilityListener
 {
     @SubscribeEvent
     public static void doSkyrootDoubleDrops(LivingDropsEvent event) {

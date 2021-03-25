@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.event.handlers;
+package com.gildedgames.aether.common.event.listeners;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class AetherPlayerHandler
+public class AetherPlayerListener
 {
     @SubscribeEvent
     public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {

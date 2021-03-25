@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.event.handlers;
+package com.gildedgames.aether.common.event.listeners;
 
 import com.gildedgames.aether.common.registry.AetherAdvancements;
 import net.minecraft.entity.Entity;
@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class EntityHandler
+public class EntityListener
 {
     @SubscribeEvent
     public static void onMountEntity(EntityMountEvent event) {

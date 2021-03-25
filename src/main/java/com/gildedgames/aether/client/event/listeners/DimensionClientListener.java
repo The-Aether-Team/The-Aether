@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.event.handlers;
+package com.gildedgames.aether.client.event.listeners;
 
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public class DimensionClientHandler
+public class DimensionClientListener
 {
     @SubscribeEvent
     public static void onRenderFogColor(EntityViewRenderEvent.FogColors event) {

@@ -45,7 +45,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 @OnlyIn(Dist.CLIENT)
 public class AetherRendering
 {
@@ -153,50 +152,5 @@ public class AetherRendering
 
     private static void render(Supplier<? extends Block> block, RenderType render) {
         RenderTypeLookup.setRenderLayer(block.get(), render);
-    }
-
-    @SubscribeEvent
-    public static void onRenderOverlay(RenderGameOverlayEvent.Post event) {
-        Minecraft mc = Minecraft.getInstance();
-        ClientPlayerEntity player = mc.player;
-        MainWindow window = event.getWindow();
-        LazyOptional<IAetherPlayer> aetherPlayer = player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
-        aetherPlayer.ifPresent(handler -> {
-            //Portal overlay
-            if(event.getType() == RenderGameOverlayEvent.ElementType.PORTAL) {
-                float timeInPortal = handler.getPrevPortalAnimTime() + (handler.getPortalAnimTime() - handler.getPrevPortalAnimTime()) * event.getPartialTicks();
-                if (timeInPortal > 0.0F) {
-                    if (timeInPortal < 1.0F) {
-                        timeInPortal = timeInPortal * timeInPortal;
-                        timeInPortal = timeInPortal * timeInPortal;
-                        timeInPortal = timeInPortal * 0.8F + 0.2F;
-                    }
-
-                    RenderSystem.disableAlphaTest();
-                    RenderSystem.disableDepthTest();
-                    RenderSystem.depthMask(false);
-                    RenderSystem.defaultBlendFunc();
-                    RenderSystem.color4f(1.0F, 1.0F, 1.0F, timeInPortal);
-                    mc.getTextureManager().bind(AtlasTexture.LOCATION_BLOCKS);
-                    TextureAtlasSprite textureatlassprite = mc.getBlockRenderer().getBlockModelShaper().getParticleIcon(AetherBlocks.AETHER_PORTAL.get().defaultBlockState());
-                    float f = textureatlassprite.getU0();
-                    float f1 = textureatlassprite.getV0();
-                    float f2 = textureatlassprite.getU1();
-                    float f3 = textureatlassprite.getV1();
-                    Tessellator tessellator = Tessellator.getInstance();
-                    BufferBuilder bufferbuilder = tessellator.getBuilder();
-                    bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-                    bufferbuilder.vertex(0.0D, window.getScreenHeight(), -90.0D).uv(f, f3).endVertex();
-                    bufferbuilder.vertex(window.getScreenWidth(), window.getScreenHeight(), -90.0D).uv(f2, f3).endVertex();
-                    bufferbuilder.vertex(window.getScreenWidth(), 0.0D, -90.0D).uv(f2, f1).endVertex();
-                    bufferbuilder.vertex(0.0D, 0.0D, -90.0D).uv(f, f1).endVertex();
-                    tessellator.end();
-                    RenderSystem.depthMask(true);
-                    RenderSystem.enableDepthTest();
-                    RenderSystem.enableAlphaTest();
-                    RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-                }
-            }
-        });
     }
 }
