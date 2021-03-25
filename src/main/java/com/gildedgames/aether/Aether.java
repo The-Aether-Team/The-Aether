@@ -2,6 +2,7 @@ package com.gildedgames.aether;
 
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.renderer.AetherSkyRenderer;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import com.gildedgames.aether.common.registry.AetherRecipes;
@@ -143,17 +144,22 @@ public class Aether
 		AetherRendering.registerGuiFactories();
 		AetherRendering.registerItemModelProperties();
 
-		DimensionRenderInfo.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), new DimensionRenderInfo(-5.0F, true, DimensionRenderInfo.FogType.NORMAL, false, false) {
-			@Override
-			public Vector3d getBrightnessDependentFogColor(Vector3d color, float p_230494_2_) {
-				return color.multiply((p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.91F + 0.09F));
-			}
+		event.enqueueWork(() -> {
+			DimensionRenderInfo aetherRenderInfo = new DimensionRenderInfo(-5.0F, true, DimensionRenderInfo.FogType.NORMAL, false, false) {
+				@Override
+				public Vector3d getBrightnessDependentFogColor(Vector3d color, float p_230494_2_) {
+					return color.multiply((p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.91F + 0.09F));
+				}
 
-			@Override
-			public boolean isFoggyAt(int x, int z) {
-				return false;
-			}
+				@Override
+				public boolean isFoggyAt(int x, int z) {
+					return false;
+				}
+			};
+			aetherRenderInfo.setSkyRenderHandler(new AetherSkyRenderer());
+			DimensionRenderInfo.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), aetherRenderInfo);
 		});
+
 	}
 
 	public void curiosSetup(InterModEnqueueEvent event)
