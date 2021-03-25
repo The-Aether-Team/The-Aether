@@ -1,5 +1,7 @@
 package com.gildedgames.aether.common.entity.monster;
 
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -7,7 +9,6 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
@@ -43,15 +44,16 @@ public class AechorPlantEntity extends CreatureEntity implements IRangedAttackMo
     }
 
     public void performRangedAttack (LivingEntity target, float distanceFactor) {
-        ArrowEntity arrow = new ArrowEntity(this.level, this);
-        double d0 = target.getX() - this.getX();
-        double d1 = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0F) - arrow.getY();
-        double d2 = target.getZ() - this.getZ();
-        double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
-        arrow.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.0F, (float)(14 - this.level.getDifficulty().getId() * 4));
-        //this.playSound(SoundsAether.cockatrice_attack, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-        this.level.addFreshEntity(arrow);
+        PoisonNeedleEntity needle = new PoisonNeedleEntity(this.level, this);
+        double x = target.getX() - this.getX();
+        double y = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0F) - needle.getY();
+        double z = target.getZ() - this.getZ();
+        double distance = MathHelper.sqrt(x * x + z * z);
+        needle.shoot(x, y + distance * 0.20000000298023224D, z, 1.0F, (float)(14 - this.level.getDifficulty().getId() * 4));
+        this.playSound(AetherSoundEvents.ENTITY_COCKATRICE_SHOOT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+        this.level.addFreshEntity(needle);
     }
+
     @SuppressWarnings("unused")
     @Override
     public void tick() {

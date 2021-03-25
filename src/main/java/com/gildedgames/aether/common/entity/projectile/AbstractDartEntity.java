@@ -1,9 +1,11 @@
 package com.gildedgames.aether.common.entity.projectile;
 
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.network.IPacket;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -43,6 +45,11 @@ public abstract class AbstractDartEntity extends AbstractArrowEntity {
     protected void onHitBlock(BlockRayTraceResult result) {
         super.onHitBlock(result);
         this.setNoGravity(false);
+    }
+
+    @Override
+    protected SoundEvent getDefaultHitGroundSoundEvent() {
+        return AetherSoundEvents.ENTITY_PROJECTILE_SHOOT.get();
     }
 
     @Override

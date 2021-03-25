@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.entity.monster;
 
+import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import net.minecraft.block.BlockState;
@@ -9,7 +10,8 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -22,8 +24,6 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob {
-
-    protected final Random rand = new Random();
 
     public float wingRotation, prevWingRotation, destPos, prevDestPos;
     protected int ticksOffGround, ticksUntilFlap, secsUntilFlying;
@@ -48,9 +48,9 @@ public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob 
 
     public static AttributeModifierMap.MutableAttribute registerAttributes() {
         return CreatureEntity.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 16.0D)
+                .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
-                .add(Attributes.FOLLOW_RANGE, 10.0D);
+                .add(Attributes.FOLLOW_RANGE, 35.0D);
     }
 
     //@Override
@@ -65,15 +65,21 @@ public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob 
 
     @Override
     public void performRangedAttack(LivingEntity target, float distanceFactor) {
-        ArrowEntity arrow = new ArrowEntity(this.level, this);
+        PoisonNeedleEntity needle = new PoisonNeedleEntity(this.level, this);
         double d0 = target.getX() - this.getX();
-        double d1 = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0F) - arrow.getY();
+        double d1 = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0F) - needle.getY();
         double d2 = target.getZ() - this.getZ();
         double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
-        arrow.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.0F, (float)(14 - this.level.getDifficulty().getId() * 4));
-        //this.playSound(SoundsAether.cockatrice_attack, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-        this.level.addFreshEntity(arrow);
+        needle.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.0F, (float)(14 - this.level.getDifficulty().getId() * 4));
+        this.playSound(AetherSoundEvents.ENTITY_COCKATRICE_SHOOT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+        this.level.addFreshEntity(needle);
     }
+
+    @Override
+    public boolean canBeAffected(EffectInstance effect) {
+        return effect.getEffect() != Effects.POISON && super.canBeAffected(effect);
+    }
+
     @SuppressWarnings("unused")
     @Override
     public void tick() {
@@ -86,7 +92,7 @@ public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob 
         updateWingRotation: {
             if (!this.onGround) {
                 if (this.ticksUntilFlap == 0) {
-                    this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
+                    this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.random.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.random.nextFloat(), 0.0F, 0.3F));
                     this.ticksUntilFlap = 8;
                 }
                 else {

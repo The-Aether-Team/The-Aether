@@ -97,6 +97,9 @@ public class AetherEntityTypes
 	public static final EntityType<EnchantedDartEntity> ENCHANTED_DART_TYPE = EntityType.Builder.<EnchantedDartEntity>of(EnchantedDartEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).build("enchanted_dart");
 	public static final RegistryObject<EntityType<EnchantedDartEntity>> ENCHANTED_DART = ENTITIES.register("enchanted_dart", () -> ENCHANTED_DART_TYPE);
 
+	public static final EntityType<PoisonNeedleEntity> POISON_NEEDLE_TYPE = EntityType.Builder.<PoisonNeedleEntity>of(PoisonNeedleEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).build("poison_needle");
+	public static final RegistryObject<EntityType<PoisonNeedleEntity>> POISON_NEEDLE = ENTITIES.register("poison_needle", () -> POISON_NEEDLE_TYPE);
+
 	public static final EntityType<PhoenixArrowEntity> PHOENIX_ARROW_TYPE = EntityType.Builder.<PhoenixArrowEntity>of(PhoenixArrowEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).build("phoenix_arrow");
 	public static final RegistryObject<EntityType<PhoenixArrowEntity>> PHOENIX_ARROW = ENTITIES.register("phoenix_arrow", () -> PHOENIX_ARROW_TYPE);
 

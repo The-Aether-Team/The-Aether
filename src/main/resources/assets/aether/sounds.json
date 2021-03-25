@@ -208,6 +208,10 @@
     "subtitle": "subtitles.entity.aerbunny.lift",
     "sounds": ["aether:entity/aerbunny/lift"]
   },
+  "entity.cockatrice.shoot": {
+    "subtitle": "subtitles.entity.cockatrice.shoot",
+    "sounds": ["minecraft:random/bow"]
+  },
   "entity.zephyr.ambient": {
     "subtitle": "subtitles.entity.zephyr.ambient",
     "sounds": ["aether:entity/zephyr/call"]
