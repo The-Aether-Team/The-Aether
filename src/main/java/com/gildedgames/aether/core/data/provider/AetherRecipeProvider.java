@@ -1,5 +1,6 @@
 package com.gildedgames.aether.core.data.provider;
 
+import com.gildedgames.aether.common.recipe.builder.AltarRepairBuilder;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.block.Block;
@@ -292,6 +293,11 @@ public class AetherRecipeProvider extends RecipeProvider
     public SingleItemRecipeBuilder stonecuttingRecipe(Supplier<Block> input, IItemProvider result, int resultAmount) {
         return SingleItemRecipeBuilder.stonecutting(Ingredient.of(input.get()), result, resultAmount)
                 .unlocks("has_" + input.get().getRegistryName(), has(input.get()));
+    }
+
+    public AltarRepairBuilder repairingRecipe(IItemProvider item, int duration) {
+        return AltarRepairBuilder.repair(Ingredient.of(new ItemStack(item, 1)), duration, AetherRecipes.REPAIRING.get())
+                .unlockedBy("has_" + item.asItem().getRegistryName(), has(item));
     }
 
     public CookingRecipeBuilder enchantingRecipe(IItemProvider result, IItemProvider ingredient, int duration) {

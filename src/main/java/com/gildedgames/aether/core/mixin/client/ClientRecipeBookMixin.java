@@ -14,7 +14,7 @@ public class ClientRecipeBookMixin
 {
     @Inject(at = @At("HEAD"), method = "getCategory", cancellable = true)
     private static void getCategory(IRecipe<?> recipe, CallbackInfoReturnable<RecipeBookCategories> cir) {
-        if (recipe.getType() == RecipeTypes.ENCHANTING || recipe.getType() == RecipeTypes.FREEZING) {
+        if (recipe.getType() == RecipeTypes.ENCHANTING || recipe.getType() == RecipeTypes.FREEZING || recipe.getType() == RecipeTypes.REPAIRING) {
             cir.setReturnValue(RecipeBookCategories.UNKNOWN);
         }
     }
