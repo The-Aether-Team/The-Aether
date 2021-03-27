@@ -1,0 +1,7 @@
+{
+  "type": "aether:repairing",
+  "ingredient": {
+    "item": "minecraft:chainmail_helmet"
+  },
+  "repairTime": 2250
+}

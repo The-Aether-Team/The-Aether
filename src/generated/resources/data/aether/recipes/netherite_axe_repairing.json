@@ -1,0 +1,7 @@
+{
+  "type": "aether:repairing",
+  "ingredient": {
+    "item": "minecraft:netherite_axe"
+  },
+  "repairTime": 15000
+}
