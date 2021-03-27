@@ -4,9 +4,8 @@ import net.minecraft.item.ItemStack;
 
 public interface IZaniteToolItem
 {
-	//TODO: Fix, this is slower than it should be.
-	default float calculateIncrease(ItemStack tool, float original) {		
-		if (original == 4.0F) {
+	default float calculateIncrease(ItemStack tool, float original) {
+		if (original == 6.0F) {
 			int current = tool.getDamageValue();
 			int maxDamage = tool.getMaxDamage();
 			
@@ -30,5 +29,4 @@ public interface IZaniteToolItem
 			return 1.0F;
 		}
 	}
-	
 }
