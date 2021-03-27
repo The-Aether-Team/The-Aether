@@ -1,109 +1,167 @@
 package com.gildedgames.aether.common.block.dungeon;
 
-import java.util.Optional;
-import java.util.OptionalInt;
-import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
-import java.util.function.Supplier;
-
-import javax.annotation.Nullable;
-
-import com.gildedgames.aether.core.api.registers.DungeonType;
-import com.gildedgames.aether.common.item.misc.DungeonKeyItem;
-import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import com.gildedgames.aether.common.entity.tile.TreasureChestTileEntity;
-
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.block.IWaterLoggable;
+import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
+import net.minecraft.block.*;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.monster.piglin.PiglinTasks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.DoubleSidedInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.ChestContainer;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.container.*;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.ChestType;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityMerger;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.pathfinding.PathType;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.stats.Stat;
+import net.minecraft.stats.Stats;
+import net.minecraft.tileentity.*;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-
-import net.minecraft.block.AbstractBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class TreasureChestBlock extends ChestBlock implements IWaterLoggable {
+import java.util.function.Supplier;
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	protected TreasureChestBlock(AbstractBlock.Properties properties, Supplier<TileEntityType<? extends TreasureChestTileEntity>> tileEntityTypeIn) {
-		super(properties, (Supplier) tileEntityTypeIn);
-		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+public class TreasureChestBlock extends AbstractChestBlock<TreasureChestTileEntity> implements IWaterLoggable
+{
+	public static final DirectionProperty FACING = HorizontalBlock.FACING;
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	protected static final VoxelShape AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D);
+
+	public TreasureChestBlock(AbstractBlock.Properties properties, Supplier<TileEntityType<? extends TreasureChestTileEntity>> tileEntityTypeSupplier) {
+		super(properties, tileEntityTypeSupplier);
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE));
 	}
-	
+
 	public TreasureChestBlock(AbstractBlock.Properties properties) {
 		this(properties, AetherTileEntityTypes.TREASURE_CHEST::get);
 	}
 
-//	@OnlyIn(Dist.CLIENT)
-//	public TileEntityMerger.ICallbackWrapper<? extends ChestTileEntity> combine(BlockState p_225536_1_, World p_225536_2_, BlockPos p_225536_3_, boolean p_225536_4_) {
-//
-//
-//		return TileEntityMerger.ICallback::acceptNone;
-//	}
-
-	public BlockState getStateForPlacement(BlockItemUseContext p_196258_1_) {
-		ChestType chesttype = ChestType.SINGLE;
-		Direction direction = p_196258_1_.getHorizontalDirection().getOpposite();
-		FluidState fluidstate = p_196258_1_.getLevel().getFluidState(p_196258_1_.getClickedPos());
-
-		return this.defaultBlockState().setValue(FACING, direction).setValue(TYPE, chesttype).setValue(WATERLOGGED, Boolean.valueOf(fluidstate.getType() == Fluids.WATER));
+	@Override
+	public BlockRenderType getRenderShape(BlockState state) {
+		return BlockRenderType.ENTITYBLOCK_ANIMATED;
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if (!worldIn.isClientSide) {
-			ItemStack itemStack = player.getItemInHand(handIn);
-			Item item = itemStack.getItem();
-			CompoundNBT nbt = itemStack.getOrCreateTag();
-
-			if (item instanceof DungeonKeyItem && !nbt.contains("Lock")) {
-				TileEntity tile = worldIn.getBlockEntity(pos);
-
-				if (tile instanceof TreasureChestTileEntity) {
-					String key = ((TreasureChestTileEntity) tile).createKey(((DungeonKeyItem) item).getDungeonType());
-
-					if (key != null) {
-						nbt.putString("Lock", key);
-					}
-				}
-			}
+	public BlockState updateShape(BlockState state, Direction direction, BlockState stateOther, IWorld world, BlockPos pos, BlockPos posOther) {
+		if (state.getValue(WATERLOGGED)) {
+			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
 
-		return super.use(state, worldIn, pos, player, handIn, hit);
+		return super.updateShape(state, direction, stateOther, world, pos, posOther);
 	}
 
 	@Override
-	public TileEntity newBlockEntity(IBlockReader worldIn) {
+	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
+		return AABB;
+	}
+
+	@Override
+	public BlockState getStateForPlacement(BlockItemUseContext context) {
+		Direction direction = context.getHorizontalDirection().getOpposite();
+		FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
+
+		return this.defaultBlockState().setValue(FACING, direction).setValue(WATERLOGGED, fluidstate.getType() == Fluids.WATER);
+	}
+
+	@Override
+	public FluidState getFluidState(BlockState state) {
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+	}
+
+	@Override
+	public void setPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity livingEntity, ItemStack stack) {
+		if (stack.hasCustomHoverName()) {
+			TileEntity tileentity = world.getBlockEntity(pos);
+			if (tileentity instanceof ChestTileEntity) {
+				((ChestTileEntity)tileentity).setCustomName(stack.getHoverName());
+			}
+		}
+	}
+
+	@Override
+	public void onRemove(BlockState state, World world, BlockPos pos, BlockState stateOther, boolean flag) {
+		if (!state.is(stateOther.getBlock())) {
+			TileEntity tileentity = world.getBlockEntity(pos);
+			if (tileentity instanceof IInventory) {
+				InventoryHelper.dropContents(world, pos, (IInventory)tileentity);
+				world.updateNeighbourForOutputSignal(pos, this);
+			}
+
+			super.onRemove(state, world, pos, stateOther, flag);
+		}
+	}
+
+	@Override
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity entity, Hand hand, BlockRayTraceResult rayTraceResult) {
+		if (world.isClientSide) {
+			return ActionResultType.SUCCESS;
+		} else {
+			INamedContainerProvider inamedcontainerprovider = this.getMenuProvider(state, world, pos);
+			if (inamedcontainerprovider != null) {
+				entity.openMenu(inamedcontainerprovider);
+				entity.awardStat(this.getOpenChestStat());
+				PiglinTasks.angerNearbyPiglins(entity, true);
+			}
+
+			return ActionResultType.CONSUME;
+		}
+	}
+
+	protected Stat<ResourceLocation> getOpenChestStat() {
+		return Stats.CUSTOM.get(Stats.OPEN_CHEST);
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public TileEntityMerger.ICallbackWrapper<? extends ChestTileEntity> combine(BlockState state, World world, BlockPos pos, boolean flag) {
+		return TileEntityMerger.ICallback::acceptNone;
+	}
+
+	@Override
+	public TileEntity newBlockEntity(IBlockReader p_196283_1_) {
 		return new TreasureChestTileEntity();
 	}
-		
+
+	@Override
+	public boolean hasAnalogOutputSignal(BlockState p_149740_1_) {
+		return true;
+	}
+
+	@Override
+	public int getAnalogOutputSignal(BlockState p_180641_1_, World p_180641_2_, BlockPos p_180641_3_) {
+		return Container.getRedstoneSignalFromBlockEntity(p_180641_2_.getBlockEntity(p_180641_3_));
+	}
+
+	@Override
+	public BlockState rotate(BlockState p_185499_1_, Rotation p_185499_2_) {
+		return p_185499_1_.setValue(FACING, p_185499_2_.rotate(p_185499_1_.getValue(FACING)));
+	}
+
+	@Override
+	public BlockState mirror(BlockState p_185471_1_, Mirror p_185471_2_) {
+		return p_185471_1_.rotate(p_185471_2_.getRotation(p_185471_1_.getValue(FACING)));
+	}
+
+	@Override
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> p_206840_1_) {
+		p_206840_1_.add(FACING, WATERLOGGED);
+	}
+
+	@Override
+	public boolean isPathfindable(BlockState p_196266_1_, IBlockReader p_196266_2_, BlockPos p_196266_3_, PathType p_196266_4_) {
+		return false;
+	}
 }

@@ -297,6 +297,9 @@
   "container.aether.altar": "Altar",
   "container.aether.freezer": "Freezer",
   "container.aether.incubator": "Incubator",
+  "container.aether.bronze_dungeon_chest": "Bronze Dungeon Chest",
+  "container.aether.silver_dungeon_chest": "Silver Dungeon Chest",
+  "container.aether.gold_dungeon_chest": "Gold Dungeon Chest",
 
 
   "_comment": "Creative Tabs Names",
@@ -341,9 +344,6 @@
   "gui.aether.book_of_lore.book": "Book",
   "gui.aether.book_of_lore.of_lore": "Of Lore",
   "gui.aether.book_of_lore.item": "Item:",
-
-  "_comment": "Containers",
-  "gui.aether.dungeon_chest": "Dungeon Chest",
 
   "_comment": "Lore",
   "lore.aether.aechor_petal": "The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.",
