@@ -2,8 +2,9 @@ package com.gildedgames.aether.common.item.tools.abilities;
 
 import net.minecraft.item.ItemStack;
 
-public interface IZaniteToolItem {
-
+public interface IZaniteToolItem
+{
+	//TODO: Fix, this is slower than it should be.
 	default float calculateIncrease(ItemStack tool, float original) {		
 		if (original == 4.0F) {
 			int current = tool.getDamageValue();
