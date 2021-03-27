@@ -483,6 +483,8 @@ public class AetherRecipeData extends AetherRecipeProvider
         stonecuttingRecipe(AetherBlocks.AEROGEL, AetherBlocks.AEROGEL_STAIRS.get()).save(consumer, name("aerogel_stairs_stonecutting"));
         stonecuttingRecipe(AetherBlocks.AEROGEL, AetherBlocks.AEROGEL_SLAB.get(), 2).save(consumer, name("aerogel_slab_stonecutting"));
 
+        //repairingRecipe(AetherItems.SKYROOT_AXE.get(), 225).save(consumer, name("skyroot_axe_repairing"));
+
         enchantingRecipe(AetherItems.ENCHANTED_DART.get(), AetherItems.GOLDEN_DART.get(), 250).save(consumer, name("enchanted_dart_enchanting"));
         enchantingRecipe(AetherItems.ENCHANTED_DART_SHOOTER.get(), AetherItems.GOLDEN_DART_SHOOTER.get(), 500).save(consumer, name("enchanted_dart_shooter_enchanting"));
 
@@ -506,8 +508,6 @@ public class AetherRecipeData extends AetherRecipeProvider
 
         freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.IRON_RING.get(), 2500).save(consumer, name("ice_ring_from_iron_freezing"));
         freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.GOLD_RING.get(), 2500).save(consumer, name("ice_ring_from_gold_freezing"));
-
-        //repairingRecipe(AetherItems.SKYROOT_AXE.get(), 100).save(consumer, name("repair_test"));
     }
 
     private ResourceLocation name(String name) {

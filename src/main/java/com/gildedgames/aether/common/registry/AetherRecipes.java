@@ -20,7 +20,6 @@ public class AetherRecipes
 
 	public static class RecipeTypes
 	{
-		public static final IRecipeType<AltarRepairRecipe> REPAIRING = IRecipeType.register(Aether.MODID + ":repairing");
 		public static final IRecipeType<EnchantingRecipe> ENCHANTING = IRecipeType.register(Aether.MODID + ":enchanting");
 		public static final IRecipeType<FreezingRecipe> FREEZING = IRecipeType.register(Aether.MODID + ":freezing");
 	}
