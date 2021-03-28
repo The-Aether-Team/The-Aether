@@ -113,6 +113,38 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.ZANITE_RING, "accessories/");
         item(AetherItems.ICE_RING, "accessories/");
 
+        item(AetherItems.LEATHER_GLOVES, "accessories/");
+        item(AetherItems.CHAINMAIL_GLOVES, "accessories/");
+        item(AetherItems.IRON_GLOVES, "accessories/");
+        item(AetherItems.GOLD_GLOVES, "accessories/");
+        item(AetherItems.DIAMOND_GLOVES, "accessories/");
+        item(AetherItems.NETHERITE_GLOVES, "accessories/");
+        item(AetherItems.ZANITE_GLOVES, "accessories/");
+        item(AetherItems.GRAVITITE_GLOVES, "accessories/");
+        item(AetherItems.NEPTUNE_GLOVES, "accessories/");
+        item(AetherItems.PHOENIX_GLOVES, "accessories/");
+        item(AetherItems.OBSIDIAN_GLOVES, "accessories/");
+        item(AetherItems.VALKYRIE_GLOVES, "accessories/");
+
+        item(AetherItems.IRON_PENDANT, "accessories/");
+        item(AetherItems.GOLD_PENDANT, "accessories/");
+        item(AetherItems.ZANITE_PENDANT, "accessories/");
+        item(AetherItems.ICE_PENDANT, "accessories/");
+
+        item(AetherItems.RED_CAPE, "accessories/");
+        item(AetherItems.BLUE_CAPE, "accessories/");
+        item(AetherItems.YELLOW_CAPE, "accessories/");
+        item(AetherItems.WHITE_CAPE, "accessories/");
+        item(AetherItems.SWET_CAPE, "accessories/");
+        item(AetherItems.INVISIBILITY_CAPE, "accessories/");
+        item(AetherItems.AGILITY_CAPE, "accessories/");
+        item(AetherItems.VALKYRIE_CAPE, "accessories/");
+
+        item(AetherItems.GOLDEN_FEATHER, "accessories/");
+        item(AetherItems.REGENERATION_STONE, "accessories/");
+        item(AetherItems.IRON_BUBBLE, "accessories/");
+        item(AetherItems.REPULSION_SHIELD, "accessories/");
+
         handheldItem(AetherItems.SKYROOT_STICK, "materials/");
         item(AetherItems.GOLDEN_AMBER, "materials/");
         item(AetherItems.SWET_BALL, "materials/");

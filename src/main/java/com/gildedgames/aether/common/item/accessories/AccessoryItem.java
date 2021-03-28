@@ -5,8 +5,6 @@ import net.minecraft.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
-import net.minecraft.item.Item.Properties;
-
 public class AccessoryItem extends Item implements ICurioItem
 {
     public AccessoryItem(Properties properties) {
@@ -18,5 +16,3 @@ public class AccessoryItem extends Item implements ICurioItem
         return true;
     }
 }
-
-

@@ -47,9 +47,8 @@ public class AetherItemGroups
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack makeIcon() {
-			return new ItemStack(Items.AIR);
+			return new ItemStack(AetherItems.GRAVITITE_GLOVES.get());
 		}
-		//ItemsAether.GRAVITITE_GLOVES
 	};
 	public static final ItemGroup AETHER_MATERIALS = new ItemGroup("aether_materials") {
 		@Override

@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.item.accessories.ring;
+package com.gildedgames.aether.common.item.accessories.pendant;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
@@ -11,9 +11,9 @@ import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.CuriosApi;
 
 @Mod.EventBusSubscriber
-public class ZaniteRingItem extends AccessoryItem
+public class ZanitePendantItem extends AccessoryItem
 {
-    public ZaniteRingItem(Properties properties) {
+    public ZanitePendantItem(Properties properties) {
         super(properties);
     }
 
@@ -31,12 +31,12 @@ public class ZaniteRingItem extends AccessoryItem
 
     @SubscribeEvent
     public static void onMiningSpeed(PlayerEvent.BreakSpeed event) {
-        CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.ZANITE_RING.get(), event.getPlayer()).ifPresent((triple) -> {
+        CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.ZANITE_PENDANT.get(), event.getPlayer()).ifPresent((triple) -> {
             float originalSpeed = event.getOriginalSpeed();
             ItemStack stack = triple.getRight();
             float newSpeed = originalSpeed * (1.0F + (((float) stack.getDamageValue()) / (((float) stack.getMaxDamage()) * 3.0F)));
             event.setNewSpeed(newSpeed == originalSpeed ? originalSpeed : newSpeed + originalSpeed);
-            Aether.LOGGER.info("Zanite Ring Speed: " + event.getNewSpeed());
+            Aether.LOGGER.info("Zanite Pendant Speed: " + event.getNewSpeed());
         });
     }
 }

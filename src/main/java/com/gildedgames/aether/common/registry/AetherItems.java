@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.item.accessories.pendant.ZanitePendantItem;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.gildedgames.aether.common.item.accessories.ring.ZaniteRingItem;
@@ -172,37 +173,65 @@ public class AetherItems
 	public static final RegistryObject<Item> ICE_RING = ITEMS.register("ice_ring",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).defaultDurability(125).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
-	//item("leather_gloves", new DyeableGlovesItem(ArmorMaterial.LEATHER, new Item.Properties().group(ItemGroup.COMBAT))),
-	//item("chainmail_gloves", new GlovesItem(ArmorMaterial.CHAIN, new Item.Properties().group(ItemGroup.COMBAT))),
-	//item("iron_gloves", new GlovesItem(ArmorMaterial.IRON, new Item.Properties().group(ItemGroup.COMBAT))),
-	//item("diamond_gloves", new GlovesItem(ArmorMaterial.DIAMOND, new Item.Properties().group(ItemGroup.COMBAT))),
-	//item("golden_gloves", new GlovesItem(ArmorMaterial.GOLD, new Item.Properties().group(ItemGroup.COMBAT))),
+	public static final RegistryObject<Item> LEATHER_GLOVES = ITEMS.register("leather_gloves",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> CHAINMAIL_GLOVES = ITEMS.register("chainmail_gloves",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> IRON_GLOVES = ITEMS.register("iron_gloves",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> GOLD_GLOVES = ITEMS.register("golden_gloves",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> DIAMOND_GLOVES = ITEMS.register("diamond_gloves",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> NETHERITE_GLOVES = ITEMS.register("netherite_gloves",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> ZANITE_GLOVES = ITEMS.register("zanite_gloves",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> GRAVITITE_GLOVES = ITEMS.register("gravitite_gloves",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> NEPTUNE_GLOVES = ITEMS.register("neptune_gloves",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> PHOENIX_GLOVES = ITEMS.register("phoenix_gloves",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> OBSIDIAN_GLOVES = ITEMS.register("obsidian_gloves",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> VALKYRIE_GLOVES = ITEMS.register("valkyrie_gloves",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
-	//item("zanite_gloves", new GlovesItem(AetherArmorMaterials.ZANITE, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-	//item("gravitite_gloves", new GlovesItem(AetherArmorMaterials.GRAVITITE, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-	//item("neptune_gloves", new GlovesItem(AetherArmorMaterials.NEPTUNE, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-	//item("phoenix_gloves", new GlovesItem(AetherArmorMaterials.PHOENIX, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-	//item("obsidian_gloves", new GlovesItem(AetherArmorMaterials.OBSIDIAN, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
-	//item("valkyrie_gloves", new GlovesItem(AetherArmorMaterials.VALKYRIE, new Item.Properties().group(AetherItemGroups.AETHER_COMBAT))),
+	public static final RegistryObject<Item> IRON_PENDANT = ITEMS.register("iron_pendant",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> GOLD_PENDANT = ITEMS.register("golden_pendant",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> ZANITE_PENDANT = ITEMS.register("zanite_pendant",
+			() -> new ZanitePendantItem(new Item.Properties().stacksTo(1).defaultDurability(98).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> ICE_PENDANT = ITEMS.register("ice_pendant",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).defaultDurability(250).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
-	//item("iron_pendant", new PendantItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("golden_pendant", new PendantItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("zanite_pendant", new PendantItem(new Item.Properties().maxDamage(98).maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("ice_pendant", new PendantItem(new Item.Properties().maxDamage(250).maxStackSize(1).group(AetherItemGroups.AETHER_ACCESSORIES))),
+	public static final RegistryObject<Item> RED_CAPE = ITEMS.register("red_cape",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> BLUE_CAPE = ITEMS.register("blue_cape",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> YELLOW_CAPE = ITEMS.register("yellow_cape",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> WHITE_CAPE = ITEMS.register("white_cape",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> SWET_CAPE = ITEMS.register("swet_cape",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> INVISIBILITY_CAPE = ITEMS.register("invisibility_cape",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> AGILITY_CAPE = ITEMS.register("agility_cape",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> VALKYRIE_CAPE = ITEMS.register("valkyrie_cape",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
-	//item("red_cape", new CapeItem(???, new Item.Properties().group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("blue_cape", new CapeItem(???, new Item.Properties().group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("yellow_cape", new CapeItem(???, new Item.Properties().group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("white_cape", new CapeItem(???, new Item.Properties().group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("swet_cape", new CapeItem(???, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("invisibility_cape", new CapeItem(???, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("agility_cape", new CapeItem(???, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("valkyrie_cape", new CapeItem(???, new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
-
-	//item("golden_feather", new AccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("regeneration_stone", new AccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("iron_bubble", new AccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_ACCESSORIES))),
-	//item("repulsion_shield", new ShieldAccessoryItem(new Item.Properties().rarity(Aether.AETHER_LOOT).maxDamage(512).group(AetherItemGroups.AETHER_ACCESSORIES))),
+	public static final RegistryObject<Item> GOLDEN_FEATHER = ITEMS.register("golden_feather",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> REGENERATION_STONE = ITEMS.register("regeneration_stone",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> IRON_BUBBLE = ITEMS.register("iron_bubble",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> REPULSION_SHIELD = ITEMS.register("repulsion_shield",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
 	// Materials
 	public static final RegistryObject<Item> SKYROOT_STICK = ITEMS.register("skyroot_stick", () -> new SkyrootStickItem(new Item.Properties().tab(AetherItemGroups.AETHER_MATERIALS)));
