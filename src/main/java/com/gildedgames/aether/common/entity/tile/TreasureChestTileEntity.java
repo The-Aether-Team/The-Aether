@@ -200,9 +200,14 @@ public class TreasureChestTileEntity extends LockableLootTileEntity implements I
     @Override
     public boolean canOpen(PlayerEntity player) {
         ItemStack stack = player.getMainHandItem();
-        boolean canOpen = super.canOpen(player) && (stack.getItem() instanceof DungeonKeyItem && this.getKind().equals(((DungeonKeyItem) stack.getItem()).getDungeonType().getRegistryName().toString())) || !this.getLocked();
-        if (this.getLocked() && stack.getItem() instanceof DungeonKeyItem) stack.shrink(1);
+        boolean keyMatches = stack.getItem() instanceof DungeonKeyItem && this.getKind().equals(((DungeonKeyItem) stack.getItem()).getDungeonType().getRegistryName().toString());
+        boolean canOpen = super.canOpen(player) && keyMatches || !this.getLocked();
+
+        if (!canOpen) player.displayClientMessage(new TranslationTextComponent(this.getKind().replace(":", ".") + "_dungeon_chest_locked"), true);
+
+        if (this.getLocked() && keyMatches) stack.shrink(1);
         this.setLocked(!canOpen);
+
         return canOpen;
     }
 

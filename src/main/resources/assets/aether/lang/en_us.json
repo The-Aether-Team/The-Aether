@@ -333,10 +333,10 @@
   "advancement.aether.altar.desc": "Craft an Altar",
   "advancement.aether.gravitite_tools.desc": "Craft a Gravitite tool",
   "advancement.aether.mount_phyg.desc": "Fly on a Phyg",
-  "advancement.aether.bronze_dungeon.desc": "Defeat the bronze dungeon boss",
-  "advancement.aether.silver_dungeon.desc": "Defeat the silver dungeon boss",
-  "advancement.aether.gold_dungeon.desc": "Defeat the golden dungeon boss",
-  "advancement.aether.loreception.desc": "Put a book of lore inside a book of lore.",
+  "advancement.aether.bronze_dungeon.desc": "Defeat the Bronze Dungeon boss",
+  "advancement.aether.silver_dungeon.desc": "Defeat the Silver Dungeon boss",
+  "advancement.aether.gold_dungeon.desc": "Defeat the Golden Dungeon boss",
+  "advancement.aether.loreception.desc": "Put a Book of Lore inside a Book of Lore.",
 
   "_comment": "Gui",
   "gui.aether.book_of_lore.previous": "Prev.",
@@ -344,6 +344,11 @@
   "gui.aether.book_of_lore.book": "Book",
   "gui.aether.book_of_lore.of_lore": "Of Lore",
   "gui.aether.book_of_lore.item": "Item:",
+
+  "_comment": "Messages",
+  "aether.bronze_dungeon_chest_locked": "This Treasure Chest must be unlocked with a Bronze Key.",
+  "aether.silver_dungeon_chest_locked": "This Treasure Chest must be unlocked with a Silver Key.",
+  "aether.gold_dungeon_chest_locked": "This Treasure Chest must be unlocked with a Golden Key.",
 
   "_comment": "Lore",
   "lore.aether.aechor_petal": "The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.",
