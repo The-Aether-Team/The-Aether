@@ -26,6 +26,7 @@ public class AetherBlockTagData extends BlockTagsProvider
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void addTags() {
         //aether
         tag(AetherTags.Blocks.AETHER_DIRT)
@@ -161,6 +162,8 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .addTag(AetherTags.Blocks.AETHER_DIRT);
         tag(BlockTags.IMPERMEABLE)
                 .add(AetherBlocks.QUICKSOIL_GLASS.get());
+        tag(BlockTags.BAMBOO_PLANTABLE_ON)
+                .addTags(AetherTags.Blocks.AETHER_DIRT);
         tag(BlockTags.DRAGON_IMMUNE)
                 .addTag(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)
                 .addTag(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS)
