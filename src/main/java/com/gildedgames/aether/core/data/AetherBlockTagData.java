@@ -168,6 +168,8 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(BlockTags.WITHER_IMMUNE)
                 .addTag(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)
                 .addTag(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS);
+        tag(BlockTags.BEE_GROWABLES)
+                .add(AetherBlocks.BERRY_BUSH_STEM.get());
         tag(BlockTags.PORTALS)
                 .add(AetherBlocks.AETHER_PORTAL.get());
         tag(BlockTags.BEACON_BASE_BLOCKS)
