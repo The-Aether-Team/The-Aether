@@ -113,6 +113,8 @@ public class Aether
 
 			AetherEntityTypes.registerSpawnPlacements();
 
+			AetherItems.registerAbilities();
+
 			AetherFeatures.registerConfiguredFeatures();
 			AetherAdvancements.init();
 

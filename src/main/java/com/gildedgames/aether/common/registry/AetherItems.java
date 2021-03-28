@@ -2,8 +2,11 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.item.accessories.abilities.IIceAccessory;
 import com.gildedgames.aether.common.item.accessories.gloves.GoldGlovesItem;
+import com.gildedgames.aether.common.item.accessories.pendant.IcePendantItem;
 import com.gildedgames.aether.common.item.accessories.pendant.ZanitePendantItem;
+import com.gildedgames.aether.common.item.accessories.ring.IceRingItem;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.gildedgames.aether.common.item.accessories.ring.ZaniteRingItem;
@@ -172,7 +175,16 @@ public class AetherItems
 	public static final RegistryObject<Item> ZANITE_RING = ITEMS.register("zanite_ring",
 			() -> new ZaniteRingItem(new Item.Properties().stacksTo(1).defaultDurability(49).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> ICE_RING = ITEMS.register("ice_ring",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).defaultDurability(125).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new IceRingItem(new Item.Properties().stacksTo(1).defaultDurability(125).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+
+	public static final RegistryObject<Item> IRON_PENDANT = ITEMS.register("iron_pendant",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> GOLD_PENDANT = ITEMS.register("golden_pendant",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> ZANITE_PENDANT = ITEMS.register("zanite_pendant",
+			() -> new ZanitePendantItem(new Item.Properties().stacksTo(1).defaultDurability(98).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> ICE_PENDANT = ITEMS.register("ice_pendant",
+			() -> new IcePendantItem(new Item.Properties().stacksTo(1).defaultDurability(250).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
 	public static final RegistryObject<Item> LEATHER_GLOVES = ITEMS.register("leather_gloves",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
@@ -198,15 +210,6 @@ public class AetherItems
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> VALKYRIE_GLOVES = ITEMS.register("valkyrie_gloves",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
-
-	public static final RegistryObject<Item> IRON_PENDANT = ITEMS.register("iron_pendant",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
-	public static final RegistryObject<Item> GOLD_PENDANT = ITEMS.register("golden_pendant",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
-	public static final RegistryObject<Item> ZANITE_PENDANT = ITEMS.register("zanite_pendant",
-			() -> new ZanitePendantItem(new Item.Properties().stacksTo(1).defaultDurability(98).tab(AetherItemGroups.AETHER_ACCESSORIES)));
-	public static final RegistryObject<Item> ICE_PENDANT = ITEMS.register("ice_pendant",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).defaultDurability(250).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
 	public static final RegistryObject<Item> RED_CAPE = ITEMS.register("red_cape",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
@@ -304,4 +307,8 @@ public class AetherItems
 			() -> new SpawnEggItem(AetherEntityTypes.WHIRLWIND_TYPE,0x9fc3f7, 0xffffff, new Item.Properties().tab(ItemGroup.TAB_MISC)));
 	public static final RegistryObject<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg",
 			() -> new SpawnEggItem(AetherEntityTypes.ZEPHYR_TYPE,0xDFDFDF, 0x99CFE8, new Item.Properties().tab(ItemGroup.TAB_MISC)));
+
+	public static void registerAbilities() {
+		IIceAccessory.registerDefaultFreezables();
+	}
 }
