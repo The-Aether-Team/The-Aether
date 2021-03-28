@@ -591,7 +591,7 @@ public class AetherRecipeData extends AetherRecipeProvider
         repairingRecipe(Items.NETHERITE_BOOTS, 30000).save(consumer, name("netherite_boots_repairing"));
 
         repairingRecipe(AetherItems.ZANITE_RING.get(), 2250).save(consumer, name("zanite_ring_repairing"));
-        //repairingRecipe(AetherItems.ZANITE_PENDANT.get(), 2250).save(consumer, name("zanite_pendant_repairing"));
+        repairingRecipe(AetherItems.ZANITE_PENDANT.get(), 2250).save(consumer, name("zanite_pendant_repairing"));
 
         enchantingRecipe(AetherItems.ENCHANTED_DART.get(), AetherItems.GOLDEN_DART.get(), 250).save(consumer, name("enchanted_dart_enchanting"));
         enchantingRecipe(AetherItems.ENCHANTED_DART_SHOOTER.get(), AetherItems.GOLDEN_DART_SHOOTER.get(), 500).save(consumer, name("enchanted_dart_shooter_enchanting"));

@@ -180,7 +180,7 @@ public class AetherItems
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> IRON_GLOVES = ITEMS.register("iron_gloves",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
-	public static final RegistryObject<Item> GOLD_GLOVES = ITEMS.register("golden_gloves",
+	public static final RegistryObject<Item> GOLDEN_GLOVES = ITEMS.register("golden_gloves",
 			() -> new GoldGlovesItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> DIAMOND_GLOVES = ITEMS.register("diamond_gloves",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));

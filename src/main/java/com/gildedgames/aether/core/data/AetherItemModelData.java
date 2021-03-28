@@ -116,7 +116,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.LEATHER_GLOVES, "accessories/");
         item(AetherItems.CHAINMAIL_GLOVES, "accessories/");
         item(AetherItems.IRON_GLOVES, "accessories/");
-        item(AetherItems.GOLD_GLOVES, "accessories/");
+        item(AetherItems.GOLDEN_GLOVES, "accessories/");
         item(AetherItems.DIAMOND_GLOVES, "accessories/");
         item(AetherItems.NETHERITE_GLOVES, "accessories/");
         item(AetherItems.ZANITE_GLOVES, "accessories/");
