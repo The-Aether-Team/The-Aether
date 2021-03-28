@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.item.accessories.ring;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.entity.LivingEntity;
@@ -36,7 +35,6 @@ public class ZaniteRingItem extends AccessoryItem
             ItemStack stack = triple.getRight();
             float newSpeed = originalSpeed * (1.0F + (((float) stack.getDamageValue()) / (((float) stack.getMaxDamage()) * 3.0F)));
             event.setNewSpeed(newSpeed == originalSpeed ? originalSpeed : newSpeed + originalSpeed);
-            Aether.LOGGER.info("Zanite Ring Speed: " + event.getNewSpeed());
         });
     }
 }

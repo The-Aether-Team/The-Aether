@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "aether.refmap.json",
   "mixins": [
+    "common.PiglinTasksMixin"
   ],
   "client": [
     "client.ClientRecipeBookMixin"
