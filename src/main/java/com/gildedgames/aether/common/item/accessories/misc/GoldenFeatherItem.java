@@ -18,12 +18,9 @@ public class GoldenFeatherItem extends AccessoryItem
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        //Vector3d motion = livingEntity.getDeltaMovement();
-
         if (livingEntity.getDeltaMovement().y < 0.0 && !livingEntity.isOnGround() && !livingEntity.isInWater() && !livingEntity.isShiftKeyDown()) {
             livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(1.0, 0.6, 1.0));
         }
-
         livingEntity.fallDistance = 0.0F;
     }
 }
