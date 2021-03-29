@@ -1,8 +1,15 @@
 package com.gildedgames.aether.core;
 
+import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.renderer.AetherSkyRenderer;
+import com.gildedgames.aether.common.registry.AetherDimensions;
+import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class AetherConfig
@@ -95,6 +102,7 @@ public class AetherConfig
 
     public static class Client {
         public final ConfigValue<Boolean> legacy_models;
+        public final ConfigValue<Boolean> disable_aether_skybox;
 
         public final ConfigValue<Boolean> enable_aether_menu;
         public final ConfigValue<Boolean> enable_aether_menu_button;
@@ -107,6 +115,9 @@ public class AetherConfig
             legacy_models = builder
                     .comment("Changes Zephyr and Aerwhale rendering to use their old models from the b1.7.3 version of the mod")
                     .define("Switches to legacy mob models", false);
+            disable_aether_skybox = builder
+                    .comment("Disables the Aether's custom skybox. Use this if you have a shader that is incompatible with custom skyboxes.")
+                    .define("Disables Aether custom skybox", false);
             builder.pop();
 
             builder.push("Gui");
@@ -144,4 +155,15 @@ public class AetherConfig
         CLIENT_SPEC = clientSpecPair.getRight();
         CLIENT = clientSpecPair.getLeft();
     }
+
+    @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ConfigListener {
+        @SubscribeEvent
+        public static void onConfigReload(ModConfig.Reloading event) {
+            if(event.getConfig().getType() == ModConfig.Type.CLIENT) {
+                DimensionRenderInfo.EFFECTS.get(AetherDimensions.AETHER_DIMENSION.location()).setSkyRenderHandler(CLIENT.disable_aether_skybox.get() ? null : new AetherSkyRenderer());
+            }
+        }
+    }
+
 }

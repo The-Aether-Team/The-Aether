@@ -148,7 +148,7 @@ public class Aether
 					return false;
 				}
 			};
-			aetherRenderInfo.setSkyRenderHandler(new AetherSkyRenderer());
+			aetherRenderInfo.setSkyRenderHandler(AetherConfig.CLIENT.disable_aether_skybox.get() ? null : new AetherSkyRenderer());
 			DimensionRenderInfo.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), aetherRenderInfo);
 		});
 	}
