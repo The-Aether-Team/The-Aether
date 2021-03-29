@@ -130,7 +130,13 @@ public class Aether
 	}
 
 	public void clientSetup(FMLClientSetupEvent event) {
+		AetherRendering.registerEntityRenderers(event);
+		AetherRendering.registerTileEntityRenderers();
 		event.enqueueWork(() -> {
+			AetherRendering.registerBlockRenderLayers();
+			AetherRendering.registerItemModelProperties();
+			AetherRendering.registerGuiFactories();
+			AetherRendering.registerWoodTypeAtlases();
 			DimensionRenderInfo aetherRenderInfo = new DimensionRenderInfo(-5.0F, true, DimensionRenderInfo.FogType.NORMAL, false, false) {
 				@Override
 				public Vector3d getBrightnessDependentFogColor(Vector3d color, float p_230494_2_) {
@@ -144,13 +150,6 @@ public class Aether
 			};
 			aetherRenderInfo.setSkyRenderHandler(new AetherSkyRenderer());
 			DimensionRenderInfo.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), aetherRenderInfo);
-
-			AetherRendering.registerBlockRenderLayers();
-			AetherRendering.registerEntityRenderers(event);
-			AetherRendering.registerTileEntityRenderers();
-			AetherRendering.registerGuiFactories();
-			AetherRendering.registerItemModelProperties();
-			AetherRendering.registerWoodTypeAtlases();
 		});
 	}
 
