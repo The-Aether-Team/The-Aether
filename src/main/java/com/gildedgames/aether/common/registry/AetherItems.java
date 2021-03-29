@@ -2,9 +2,13 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.item.accessories.abilities.IIceAccessory;
 import com.gildedgames.aether.common.item.accessories.glove.GlovesItem;
 import com.gildedgames.aether.common.item.accessories.glove.ZaniteGlovesItem;
 import com.gildedgames.aether.common.item.accessories.gloves.GoldGlovesItem;
+import com.gildedgames.aether.common.item.accessories.misc.GoldenFeatherItem;
+import com.gildedgames.aether.common.item.accessories.misc.IronBubbleItem;
+import com.gildedgames.aether.common.item.accessories.misc.RegenerationStoneItem;
 import com.gildedgames.aether.common.item.accessories.pendant.IcePendantItem;
 import com.gildedgames.aether.common.item.accessories.pendant.ZanitePendantItem;
 import com.gildedgames.aether.common.item.accessories.ring.IceRingItem;
@@ -230,11 +234,11 @@ public class AetherItems
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
 	public static final RegistryObject<Item> GOLDEN_FEATHER = ITEMS.register("golden_feather",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new GoldenFeatherItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> REGENERATION_STONE = ITEMS.register("regeneration_stone",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new RegenerationStoneItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> IRON_BUBBLE = ITEMS.register("iron_bubble",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new IronBubbleItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> REPULSION_SHIELD = ITEMS.register("repulsion_shield",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
@@ -276,6 +280,8 @@ public class AetherItems
 	public static final RegistryObject<Item> COLD_PARACHUTE = ITEMS.register("cold_parachute", () -> new ParachuteItem(AetherParachuteTypes.COLD_PARACHUTE, new Item.Properties().stacksTo(1).durability(1).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> GOLDEN_PARACHUTE = ITEMS.register("golden_parachute", () -> new ParachuteItem(AetherParachuteTypes.GOLDEN_PARACHUTE, new Item.Properties().stacksTo(1).durability(20).tab(AetherItemGroups.AETHER_MISC)));
 
+	public static final RegistryObject<SignItem> SKYROOT_SIGN = ITEMS.register("skyroot_sign", () -> new SignItem((new Item.Properties()).stacksTo(16).tab(AetherItemGroups.AETHER_BLOCKS), AetherBlocks.SKYROOT_SIGN.get(), AetherBlocks.SKYROOT_WALL_SIGN.get()));
+
 	//item("nature_staff", new NatureStaffItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_TOOLS))),
 	//item("cloud_staff", new CloudStaffItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_TOOLS))),
 
@@ -308,4 +314,8 @@ public class AetherItems
 			() -> new SpawnEggItem(AetherEntityTypes.WHIRLWIND_TYPE,0x9fc3f7, 0xffffff, new Item.Properties().tab(ItemGroup.TAB_MISC)));
 	public static final RegistryObject<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg",
 			() -> new SpawnEggItem(AetherEntityTypes.ZEPHYR_TYPE,0xDFDFDF, 0x99CFE8, new Item.Properties().tab(ItemGroup.TAB_MISC)));
+
+	public static void registerAbilities() {
+		IIceAccessory.registerDefaultFreezables();
+	}
 }

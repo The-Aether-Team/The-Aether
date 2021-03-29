@@ -49,6 +49,10 @@ public class AetherLangData extends LanguageProvider
         add("aether." + key, name);
     }
 
+    public void addCuriosIdentifier(String key, String name) {
+        add("curios.identifier." + key, name);
+    }
+
     public void addItemLore(Supplier<? extends Item> key, String name) {
         addLore(key.get().getDescriptionId(), name);
     }
@@ -448,6 +452,10 @@ public class AetherLangData extends LanguageProvider
         addMessage("bronze_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
         addMessage("silver_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
         addMessage("gold_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Golden Key.");
+
+
+        addCuriosIdentifier("shield", "Shield");
+        addCuriosIdentifier("misc", "Miscellaneous");
 
 
         addItemLore(AetherItems.AECHOR_PETAL, "The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.");
