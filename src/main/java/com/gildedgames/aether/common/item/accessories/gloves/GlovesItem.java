@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.item.accessories.glove;
+package com.gildedgames.aether.common.item.accessories.gloves;
 
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.google.common.collect.HashMultimap;
@@ -11,8 +11,8 @@ import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.UUID;
 
-public class GlovesItem extends AccessoryItem {
-
+public class GlovesItem extends AccessoryItem
+{
     protected double damage;
 
     public GlovesItem(Properties properties, double punchDamage) {
@@ -26,6 +26,4 @@ public class GlovesItem extends AccessoryItem {
         atts.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Gloves Damage Bonus", damage, AttributeModifier.Operation.ADDITION));
         return atts;
     }
-
-
 }

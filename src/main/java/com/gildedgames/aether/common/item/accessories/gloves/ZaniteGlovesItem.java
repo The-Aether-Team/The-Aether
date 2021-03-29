@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.item.accessories.glove;
+package com.gildedgames.aether.common.item.accessories.gloves;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -10,8 +10,8 @@ import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.UUID;
 
-public class ZaniteGlovesItem extends GlovesItem {
-
+public class ZaniteGlovesItem extends GlovesItem
+{
     public ZaniteGlovesItem(Properties properties, double punchDamage) {
         super(properties, punchDamage);
     }
