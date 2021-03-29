@@ -19,6 +19,7 @@ import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.common.registry.AetherFeatures;
 import com.gildedgames.aether.core.data.AetherLootTableData;
 import net.minecraft.block.*;
+import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.dispenser.*;
@@ -124,6 +125,7 @@ public class Aether
 			registerDispenserBehaviors();
 			registerComposting();
 			registerFuels();
+			registerWoodTypes();
 		});
 	}
 
@@ -148,6 +150,7 @@ public class Aether
 			};
 			aetherRenderInfo.setSkyRenderHandler(new AetherSkyRenderer());
 			DimensionRenderInfo.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), aetherRenderInfo);
+			Atlases.addWoodType(AetherWoodTypes.SKYROOT);
 		});
 
 	}
@@ -290,5 +293,9 @@ public class Aether
 		AltarTileEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 500);
 
 		FreezerTileEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 500);
+	}
+
+	private void registerWoodTypes() {
+		WoodType.register(AetherWoodTypes.SKYROOT);
 	}
 }

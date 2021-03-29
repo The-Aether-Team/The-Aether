@@ -79,6 +79,15 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .unlockedBy("has_holystone_pickaxe", has(AetherItems.HOLYSTONE_PICKAXE.get()))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(AetherBlocks.SKYROOT_SIGN.get(), 3)
+                .pattern("PPP")
+                .pattern("PPP")
+                .pattern(" S ")
+                .define('P', AetherBlocks.SKYROOT_PLANKS.get().asItem())
+                .define('S', AetherTags.Items.SKYROOT_STICKS)
+                .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
+                .save(consumer);
+
         makeFence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS).save(consumer);
         makeFenceGate(AetherBlocks.SKYROOT_FENCE_GATE, AetherBlocks.SKYROOT_PLANKS).save(consumer);
 

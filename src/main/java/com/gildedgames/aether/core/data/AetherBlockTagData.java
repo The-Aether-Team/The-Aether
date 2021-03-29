@@ -182,6 +182,13 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .add(AetherBlocks.AMBROSIUM_TORCH.get());
         tag(BlockTags.FENCE_GATES)
                 .add(AetherBlocks.SKYROOT_FENCE_GATE.get());
+        tag(BlockTags.SIGNS)
+                .add(AetherBlocks.SKYROOT_SIGN.get())
+                .add(AetherBlocks.SKYROOT_WALL_SIGN.get());
+        tag(BlockTags.STANDING_SIGNS)
+                .add(AetherBlocks.SKYROOT_SIGN.get());
+        tag(BlockTags.WALL_SIGNS)
+                .add(AetherBlocks.SKYROOT_WALL_SIGN.get());
 
         //forge
         tag(Tags.Blocks.DIRT)
