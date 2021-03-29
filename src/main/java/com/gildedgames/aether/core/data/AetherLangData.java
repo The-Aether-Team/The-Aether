@@ -109,6 +109,8 @@ public class AetherLangData extends LanguageProvider
 
         addBlock(AetherBlocks.AMBROSIUM_TORCH, "Ambrosium Torch");
 
+        addBlock(AetherBlocks.SKYROOT_SIGN, "Skyroot Sign");
+
         addBlock(AetherBlocks.BERRY_BUSH_STEM, "Bush Stem");
         addBlock(AetherBlocks.BERRY_BUSH, "Berry Bush");
 

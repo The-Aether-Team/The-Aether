@@ -1,6 +1,5 @@
 package com.gildedgames.aether.client;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.inventory.AltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.FreezerScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.IncubatorScreen;
@@ -14,34 +13,19 @@ import com.gildedgames.aether.common.entity.tile.ChestMimicTileEntity;
 import com.gildedgames.aether.common.entity.tile.SkyrootBedTileEntity;
 import com.gildedgames.aether.common.entity.tile.TreasureChestTileEntity;
 import com.gildedgames.aether.common.registry.*;
-import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.MainWindow;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
-import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import java.util.function.Supplier;
@@ -150,6 +134,10 @@ public class AetherRendering
 
         ItemModelsProperties.register(AetherItems.NOTCH_HAMMER.get(), new ResourceLocation("named"), (stack, world, living)
                 -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb") ? 1.0F : 0.0F);
+    }
+
+    public static void registerWoodTypeAtlases() {
+        Atlases.addWoodType(AetherWoodTypes.SKYROOT);
     }
 
     private static void render(Supplier<? extends Block> block, RenderType render) {

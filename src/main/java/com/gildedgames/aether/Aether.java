@@ -111,6 +111,7 @@ public class Aether
 			AetherBlocks.registerPots();
 			AetherBlocks.registerAxeStrippingBlocks();
 			AetherBlocks.registerFlammability();
+			AetherBlocks.registerWoodTypes();
 
 			AetherEntityTypes.registerSpawnPlacements();
 
@@ -125,17 +126,10 @@ public class Aether
 			registerDispenserBehaviors();
 			registerComposting();
 			registerFuels();
-			registerWoodTypes();
 		});
 	}
 
 	public void clientSetup(FMLClientSetupEvent event) {
-		AetherRendering.registerBlockRenderLayers();
-		AetherRendering.registerEntityRenderers(event);
-		AetherRendering.registerTileEntityRenderers();
-		AetherRendering.registerGuiFactories();
-		AetherRendering.registerItemModelProperties();
-
 		event.enqueueWork(() -> {
 			DimensionRenderInfo aetherRenderInfo = new DimensionRenderInfo(-5.0F, true, DimensionRenderInfo.FogType.NORMAL, false, false) {
 				@Override
@@ -150,9 +144,14 @@ public class Aether
 			};
 			aetherRenderInfo.setSkyRenderHandler(new AetherSkyRenderer());
 			DimensionRenderInfo.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), aetherRenderInfo);
-			Atlases.addWoodType(AetherWoodTypes.SKYROOT);
-		});
 
+			AetherRendering.registerBlockRenderLayers();
+			AetherRendering.registerEntityRenderers(event);
+			AetherRendering.registerTileEntityRenderers();
+			AetherRendering.registerGuiFactories();
+			AetherRendering.registerItemModelProperties();
+			AetherRendering.registerWoodTypeAtlases();
+		});
 	}
 
 	public void curiosSetup(InterModEnqueueEvent event)
@@ -293,9 +292,5 @@ public class Aether
 		AltarTileEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 500);
 
 		FreezerTileEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 500);
-	}
-
-	private void registerWoodTypes() {
-		WoodType.register(AetherWoodTypes.SKYROOT);
 	}
 }

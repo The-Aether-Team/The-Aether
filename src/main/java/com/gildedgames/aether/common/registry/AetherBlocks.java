@@ -270,6 +270,10 @@ public class AetherBlocks
 		fireblock.setFlammable(AetherBlocks.SKYROOT_BOOKSHELF.get(), 30, 20);
 	}
 
+	public static void registerWoodTypes() {
+		WoodType.register(AetherWoodTypes.SKYROOT);
+	}
+
 
 	private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {
 		RegistryObject<T> register = BLOCKS.register(name, block);
