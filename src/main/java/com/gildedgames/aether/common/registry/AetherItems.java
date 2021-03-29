@@ -3,7 +3,6 @@ package com.gildedgames.aether.common.registry;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.item.accessories.glove.GlovesItem;
-import com.gildedgames.aether.common.item.accessories.glove.ZaniteGlovesItem;
 import com.gildedgames.aether.common.item.accessories.pendant.ZanitePendantItem;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
@@ -168,12 +167,21 @@ public class AetherItems
 	// Accessories
 	public static final RegistryObject<Item> IRON_RING = ITEMS.register("iron_ring",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
-	public static final RegistryObject<Item> GOLD_RING = ITEMS.register("golden_ring",
+	public static final RegistryObject<Item> GOLDEN_RING = ITEMS.register("golden_ring",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> ZANITE_RING = ITEMS.register("zanite_ring",
 			() -> new ZaniteRingItem(new Item.Properties().stacksTo(1).defaultDurability(49).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> ICE_RING = ITEMS.register("ice_ring",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).defaultDurability(125).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new IceRingItem(new Item.Properties().stacksTo(1).defaultDurability(125).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+
+	public static final RegistryObject<Item> IRON_PENDANT = ITEMS.register("iron_pendant",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> GOLDEN_PENDANT = ITEMS.register("golden_pendant",
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> ZANITE_PENDANT = ITEMS.register("zanite_pendant",
+			() -> new ZanitePendantItem(new Item.Properties().stacksTo(1).defaultDurability(98).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> ICE_PENDANT = ITEMS.register("ice_pendant",
+			() -> new IcePendantItem(new Item.Properties().stacksTo(1).defaultDurability(250).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
 	public static final RegistryObject<Item> LEATHER_GLOVES = ITEMS.register("leather_gloves",
 			() -> new GlovesItem(new Item.Properties().stacksTo(1).defaultDurability(59).tab(AetherItemGroups.AETHER_ACCESSORIES), 0.5D));
@@ -181,8 +189,8 @@ public class AetherItems
 			() -> new GlovesItem(new Item.Properties().stacksTo(1).defaultDurability(131).tab(AetherItemGroups.AETHER_ACCESSORIES), 0.7D));
 	public static final RegistryObject<Item> IRON_GLOVES = ITEMS.register("iron_gloves",
 			() -> new GlovesItem(new Item.Properties().stacksTo(1).defaultDurability(250).tab(AetherItemGroups.AETHER_ACCESSORIES), 1.0D));
-	public static final RegistryObject<Item> GOLD_GLOVES = ITEMS.register("golden_gloves",
-			() -> new GlovesItem(new Item.Properties().stacksTo(1).defaultDurability(32).tab(AetherItemGroups.AETHER_ACCESSORIES), 0.5D));
+	public static final RegistryObject<Item> GOLDEN_GLOVES = ITEMS.register("golden_gloves",
+			() -> new GoldGlovesItem(new Item.Properties().stacksTo(1).defaultDurability(32).tab(AetherItemGroups.AETHER_ACCESSORIES), 0.5D));
 	public static final RegistryObject<Item> DIAMOND_GLOVES = ITEMS.register("diamond_gloves",
 			() -> new GlovesItem(new Item.Properties().stacksTo(1).defaultDurability(1561).tab(AetherItemGroups.AETHER_ACCESSORIES), 2.0D));
 	public static final RegistryObject<Item> NETHERITE_GLOVES = ITEMS.register("netherite_gloves",
@@ -199,15 +207,6 @@ public class AetherItems
 			() -> new GlovesItem(new Item.Properties().stacksTo(1).defaultDurability(2031).tab(AetherItemGroups.AETHER_ACCESSORIES), 4.0D));
 	public static final RegistryObject<Item> VALKYRIE_GLOVES = ITEMS.register("valkyrie_gloves",
 			() -> new GlovesItem(new Item.Properties().stacksTo(1).defaultDurability(1561).tab(AetherItemGroups.AETHER_ACCESSORIES), 4.0D));
-
-	public static final RegistryObject<Item> IRON_PENDANT = ITEMS.register("iron_pendant",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
-	public static final RegistryObject<Item> GOLD_PENDANT = ITEMS.register("golden_pendant",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
-	public static final RegistryObject<Item> ZANITE_PENDANT = ITEMS.register("zanite_pendant",
-			() -> new ZanitePendantItem(new Item.Properties().stacksTo(1).defaultDurability(98).tab(AetherItemGroups.AETHER_ACCESSORIES)));
-	public static final RegistryObject<Item> ICE_PENDANT = ITEMS.register("ice_pendant",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).defaultDurability(250).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
 	public static final RegistryObject<Item> RED_CAPE = ITEMS.register("red_cape",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));

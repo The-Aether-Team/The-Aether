@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 
+import com.gildedgames.aether.common.entity.tile.SkyrootSignTileEntity;
 import com.gildedgames.aether.common.entity.tile.*;
 import com.google.common.collect.Sets;
 import net.minecraft.tileentity.TileEntityType;
@@ -25,4 +26,6 @@ public class AetherTileEntityTypes
 			new TileEntityType<>(TreasureChestTileEntity::new, Sets.newHashSet(AetherBlocks.TREASURE_CHEST.get()), null));
 	public static final RegistryObject<TileEntityType<SkyrootBedTileEntity>> SKYROOT_BED = TILE_ENTITIES.register("skyroot_bed", () ->
 			new TileEntityType<>(SkyrootBedTileEntity::new, Sets.newHashSet(AetherBlocks.SKYROOT_BED.get()), null));
+	public static final RegistryObject<TileEntityType<SkyrootSignTileEntity>> SKYROOT_SIGN = TILE_ENTITIES.register("custom_sign", () ->
+			TileEntityType.Builder.of(SkyrootSignTileEntity::new, AetherBlocks.SKYROOT_WALL_SIGN.get(), AetherBlocks.SKYROOT_SIGN.get()).build(null));
 }

@@ -26,6 +26,7 @@ public class AetherBlockTagData extends BlockTagsProvider
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void addTags() {
         //aether
         tag(AetherTags.Blocks.AETHER_DIRT)
@@ -161,6 +162,8 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .addTag(AetherTags.Blocks.AETHER_DIRT);
         tag(BlockTags.IMPERMEABLE)
                 .add(AetherBlocks.QUICKSOIL_GLASS.get());
+        tag(BlockTags.BAMBOO_PLANTABLE_ON)
+                .addTags(AetherTags.Blocks.AETHER_DIRT);
         tag(BlockTags.DRAGON_IMMUNE)
                 .addTag(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)
                 .addTag(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS)
@@ -168,6 +171,8 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(BlockTags.WITHER_IMMUNE)
                 .addTag(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)
                 .addTag(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS);
+        tag(BlockTags.BEE_GROWABLES)
+                .add(AetherBlocks.BERRY_BUSH_STEM.get());
         tag(BlockTags.PORTALS)
                 .add(AetherBlocks.AETHER_PORTAL.get());
         tag(BlockTags.BEACON_BASE_BLOCKS)
@@ -177,6 +182,13 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .add(AetherBlocks.AMBROSIUM_TORCH.get());
         tag(BlockTags.FENCE_GATES)
                 .add(AetherBlocks.SKYROOT_FENCE_GATE.get());
+        tag(BlockTags.SIGNS)
+                .add(AetherBlocks.SKYROOT_SIGN.get())
+                .add(AetherBlocks.SKYROOT_WALL_SIGN.get());
+        tag(BlockTags.STANDING_SIGNS)
+                .add(AetherBlocks.SKYROOT_SIGN.get());
+        tag(BlockTags.WALL_SIGNS)
+                .add(AetherBlocks.SKYROOT_WALL_SIGN.get());
 
         //forge
         tag(Tags.Blocks.DIRT)

@@ -79,6 +79,15 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .unlockedBy("has_holystone_pickaxe", has(AetherItems.HOLYSTONE_PICKAXE.get()))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(AetherBlocks.SKYROOT_SIGN.get(), 3)
+                .pattern("PPP")
+                .pattern("PPP")
+                .pattern(" S ")
+                .define('P', AetherBlocks.SKYROOT_PLANKS.get().asItem())
+                .define('S', AetherTags.Items.SKYROOT_STICKS)
+                .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
+                .save(consumer);
+
         makeFence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS).save(consumer);
         makeFenceGate(AetherBlocks.SKYROOT_FENCE_GATE, AetherBlocks.SKYROOT_PLANKS).save(consumer);
 
@@ -209,7 +218,7 @@ public class AetherRecipeData extends AetherRecipeProvider
         makeBootsWithBlock(AetherItems.GRAVITITE_BOOTS, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
 
         makeRing(AetherItems.IRON_RING, Items.IRON_INGOT).save(consumer);
-        makeRing(AetherItems.GOLD_RING, Items.GOLD_INGOT).save(consumer);
+        makeRing(AetherItems.GOLDEN_RING, Items.GOLD_INGOT).save(consumer);
         makeRing(AetherItems.ZANITE_RING, AetherItems.ZANITE_GEMSTONE.get()).save(consumer);
 
         ShapedRecipeBuilder.shaped(AetherItems.SKYROOT_STICK.get(), 4)
@@ -591,7 +600,7 @@ public class AetherRecipeData extends AetherRecipeProvider
         repairingRecipe(Items.NETHERITE_BOOTS, 30000).save(consumer, name("netherite_boots_repairing"));
 
         repairingRecipe(AetherItems.ZANITE_RING.get(), 2250).save(consumer, name("zanite_ring_repairing"));
-        //repairingRecipe(AetherItems.ZANITE_PENDANT.get(), 2250).save(consumer, name("zanite_pendant_repairing"));
+        repairingRecipe(AetherItems.ZANITE_PENDANT.get(), 2250).save(consumer, name("zanite_pendant_repairing"));
 
         enchantingRecipe(AetherItems.ENCHANTED_DART.get(), AetherItems.GOLDEN_DART.get(), 250).save(consumer, name("enchanted_dart_enchanting"));
         enchantingRecipe(AetherItems.ENCHANTED_DART_SHOOTER.get(), AetherItems.GOLDEN_DART_SHOOTER.get(), 500).save(consumer, name("enchanted_dart_shooter_enchanting"));
@@ -615,7 +624,10 @@ public class AetherRecipeData extends AetherRecipeProvider
         freezingRecipe(Items.LAVA_BUCKET, Blocks.OBSIDIAN, 500).save(consumer, name("obsidian_from_bucket_freezing"));
 
         freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.IRON_RING.get(), 2500).save(consumer, name("ice_ring_from_iron_freezing"));
-        freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.GOLD_RING.get(), 2500).save(consumer, name("ice_ring_from_gold_freezing"));
+        freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.GOLDEN_RING.get(), 2500).save(consumer, name("ice_ring_from_gold_freezing"));
+
+        freezingRecipe(AetherItems.ICE_PENDANT.get(), AetherItems.IRON_PENDANT.get(), 2500).save(consumer, name("ice_pendant_from_iron_freezing"));
+        freezingRecipe(AetherItems.ICE_PENDANT.get(), AetherItems.GOLDEN_PENDANT.get(), 2500).save(consumer, name("ice_pendant_from_gold_freezing"));
     }
 
     private ResourceLocation name(String name) {

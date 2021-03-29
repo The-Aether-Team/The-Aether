@@ -23,6 +23,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.*;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -99,6 +100,9 @@ public class AetherBlocks
 
 	public static final RegistryObject<Block> AMBROSIUM_WALL_TORCH = BLOCKS.register("ambrosium_wall_torch", () -> new WallTorchBlock(AbstractBlock.Properties.copy(Blocks.WALL_TORCH), ParticleTypes.SMOKE));
 	public static final RegistryObject<Block> AMBROSIUM_TORCH = register("ambrosium_torch", () -> new TorchBlock(AbstractBlock.Properties.copy(Blocks.TORCH), ParticleTypes.SMOKE));
+
+	public static final RegistryObject<Block> SKYROOT_SIGN = BLOCKS.register("skyroot_sign", () -> new SkyrootSignBlock(AbstractBlock.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD), AetherWoodTypes.SKYROOT));
+	public static final RegistryObject<Block> SKYROOT_WALL_SIGN = BLOCKS.register("skyroot_wall_sign", () -> new SkyrootWallSignBlock(AbstractBlock.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD).dropsLike(SKYROOT_SIGN.get()), AetherWoodTypes.SKYROOT));
 
 	public static final RegistryObject<Block> BERRY_BUSH = register("berry_bush", () -> new BerryBushBlock(AbstractBlock.Properties.of(Material.PLANT).strength(0.2F).sound(SoundType.GRASS).harvestTool(ToolType.HOE).noOcclusion()
 			.isValidSpawn((state, reader, pos, entity) -> (entity == EntityType.OCELOT || entity == EntityType.PARROT)).isSuffocating((state, reader, pos) -> false).isViewBlocking((state, reader, pos) -> false)));
@@ -264,6 +268,10 @@ public class AetherBlocks
 		fireblock.setFlammable(AetherBlocks.SKYROOT_STAIRS.get(), 5, 20);
 		fireblock.setFlammable(AetherBlocks.SKYROOT_SLAB.get(), 5, 20);
 		fireblock.setFlammable(AetherBlocks.SKYROOT_BOOKSHELF.get(), 30, 20);
+	}
+
+	public static void registerWoodTypes() {
+		WoodType.register(AetherWoodTypes.SKYROOT);
 	}
 
 

@@ -166,13 +166,16 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get().asItem())
                 .add(AetherBlocks.HOLIDAY_LEAVES.get().asItem())
                 .add(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get().asItem());
+        tag(ItemTags.SIGNS)
+                .add(AetherBlocks.SKYROOT_SIGN.get().asItem());
         tag(ItemTags.SMALL_FLOWERS)
                 .add(AetherBlocks.PURPLE_FLOWER.get().asItem())
                 .add(AetherBlocks.WHITE_FLOWER.get().asItem());
         tag(ItemTags.BEDS)
                 .add(AetherBlocks.SKYROOT_BED.get().asItem());
         tag(ItemTags.PIGLIN_LOVED)
-                .add(AetherItems.GOLD_RING.get());
+                .add(AetherItems.GOLDEN_RING.get())
+                .add(AetherItems.GOLDEN_PENDANT.get());
         tag(ItemTags.MUSIC_DISCS)
                 .add(AetherItems.MUSIC_DISC_AETHER_TUNE.get())
                 .add(AetherItems.MUSIC_DISC_ASCENDING_DAWN.get())
@@ -185,6 +188,10 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(Tags.Items.FENCE_GATES_WOODEN)
                 .add(AetherBlocks.SKYROOT_FENCE_GATE.get().asItem());
         tag(Tags.Items.FENCES_WOODEN)
+                .add(AetherBlocks.SKYROOT_FENCE.get().asItem());
+        tag(Tags.Items.FENCE_GATES)
+                .add(AetherBlocks.SKYROOT_FENCE_GATE.get().asItem());
+        tag(Tags.Items.FENCES)
                 .add(AetherBlocks.SKYROOT_FENCE.get().asItem());
         tag(Tags.Items.GEMS)
                 .add(AetherItems.ZANITE_GEMSTONE.get());

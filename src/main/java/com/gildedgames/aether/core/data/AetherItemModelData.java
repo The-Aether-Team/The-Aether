@@ -109,14 +109,19 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.GINGERBREAD_MAN, "food/");
 
         item(AetherItems.IRON_RING, "accessories/");
-        item(AetherItems.GOLD_RING, "accessories/");
+        item(AetherItems.GOLDEN_RING, "accessories/");
         item(AetherItems.ZANITE_RING, "accessories/");
         item(AetherItems.ICE_RING, "accessories/");
+
+        item(AetherItems.IRON_PENDANT, "accessories/");
+        item(AetherItems.GOLDEN_PENDANT, "accessories/");
+        item(AetherItems.ZANITE_PENDANT, "accessories/");
+        item(AetherItems.ICE_PENDANT, "accessories/");
 
         item(AetherItems.LEATHER_GLOVES, "accessories/");
         item(AetherItems.CHAINMAIL_GLOVES, "accessories/");
         item(AetherItems.IRON_GLOVES, "accessories/");
-        item(AetherItems.GOLD_GLOVES, "accessories/");
+        item(AetherItems.GOLDEN_GLOVES, "accessories/");
         item(AetherItems.DIAMOND_GLOVES, "accessories/");
         item(AetherItems.NETHERITE_GLOVES, "accessories/");
         item(AetherItems.ZANITE_GLOVES, "accessories/");
@@ -125,11 +130,6 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.PHOENIX_GLOVES, "accessories/");
         item(AetherItems.OBSIDIAN_GLOVES, "accessories/");
         item(AetherItems.VALKYRIE_GLOVES, "accessories/");
-
-        item(AetherItems.IRON_PENDANT, "accessories/");
-        item(AetherItems.GOLD_PENDANT, "accessories/");
-        item(AetherItems.ZANITE_PENDANT, "accessories/");
-        item(AetherItems.ICE_PENDANT, "accessories/");
 
         item(AetherItems.RED_CAPE, "accessories/");
         item(AetherItems.BLUE_CAPE, "accessories/");
@@ -230,6 +230,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.INCUBATOR);
 
         itemTorch(AetherBlocks.AMBROSIUM_TORCH, "utility/");
+        item(() -> AetherBlocks.SKYROOT_SIGN.get().asItem(), "miscellaneous/");
 
         itemBlock(AetherBlocks.BERRY_BUSH);
         itemBlockFlat(AetherBlocks.BERRY_BUSH_STEM, "natural/");
