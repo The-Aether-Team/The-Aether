@@ -170,7 +170,7 @@ public class AetherItems
 	// Accessories
 	public static final RegistryObject<Item> IRON_RING = ITEMS.register("iron_ring",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
-	public static final RegistryObject<Item> GOLD_RING = ITEMS.register("golden_ring",
+	public static final RegistryObject<Item> GOLDEN_RING = ITEMS.register("golden_ring",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> ZANITE_RING = ITEMS.register("zanite_ring",
 			() -> new ZaniteRingItem(new Item.Properties().stacksTo(1).defaultDurability(49).tab(AetherItemGroups.AETHER_ACCESSORIES)));
@@ -179,7 +179,7 @@ public class AetherItems
 
 	public static final RegistryObject<Item> IRON_PENDANT = ITEMS.register("iron_pendant",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
-	public static final RegistryObject<Item> GOLD_PENDANT = ITEMS.register("golden_pendant",
+	public static final RegistryObject<Item> GOLDEN_PENDANT = ITEMS.register("golden_pendant",
 			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> ZANITE_PENDANT = ITEMS.register("zanite_pendant",
 			() -> new ZanitePendantItem(new Item.Properties().stacksTo(1).defaultDurability(98).tab(AetherItemGroups.AETHER_ACCESSORIES)));

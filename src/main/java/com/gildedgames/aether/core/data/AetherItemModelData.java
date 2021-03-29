@@ -109,9 +109,14 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.GINGERBREAD_MAN, "food/");
 
         item(AetherItems.IRON_RING, "accessories/");
-        item(AetherItems.GOLD_RING, "accessories/");
+        item(AetherItems.GOLDEN_RING, "accessories/");
         item(AetherItems.ZANITE_RING, "accessories/");
         item(AetherItems.ICE_RING, "accessories/");
+
+        item(AetherItems.IRON_PENDANT, "accessories/");
+        item(AetherItems.GOLDEN_PENDANT, "accessories/");
+        item(AetherItems.ZANITE_PENDANT, "accessories/");
+        item(AetherItems.ICE_PENDANT, "accessories/");
 
         item(AetherItems.LEATHER_GLOVES, "accessories/");
         item(AetherItems.CHAINMAIL_GLOVES, "accessories/");
@@ -125,11 +130,6 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.PHOENIX_GLOVES, "accessories/");
         item(AetherItems.OBSIDIAN_GLOVES, "accessories/");
         item(AetherItems.VALKYRIE_GLOVES, "accessories/");
-
-        item(AetherItems.IRON_PENDANT, "accessories/");
-        item(AetherItems.GOLD_PENDANT, "accessories/");
-        item(AetherItems.ZANITE_PENDANT, "accessories/");
-        item(AetherItems.ICE_PENDANT, "accessories/");
 
         item(AetherItems.RED_CAPE, "accessories/");
         item(AetherItems.BLUE_CAPE, "accessories/");

@@ -168,6 +168,7 @@ public class Aether
 		if (event.includeClient()) {
 			generator.addProvider(new AetherBlockStateData(generator, helper));
 			generator.addProvider(new AetherItemModelData(generator, helper));
+			generator.addProvider(new AetherLangData(generator));
 		}
 		if (event.includeServer()) {
 			generator.addProvider(new AetherRecipeData(generator));

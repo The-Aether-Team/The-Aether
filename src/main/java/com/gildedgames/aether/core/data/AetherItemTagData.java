@@ -172,7 +172,8 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(ItemTags.BEDS)
                 .add(AetherBlocks.SKYROOT_BED.get().asItem());
         tag(ItemTags.PIGLIN_LOVED)
-                .add(AetherItems.GOLD_RING.get());
+                .add(AetherItems.GOLDEN_RING.get())
+                .add(AetherItems.GOLDEN_PENDANT.get());
         tag(ItemTags.MUSIC_DISCS)
                 .add(AetherItems.MUSIC_DISC_AETHER_TUNE.get())
                 .add(AetherItems.MUSIC_DISC_ASCENDING_DAWN.get())

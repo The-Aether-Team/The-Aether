@@ -209,7 +209,7 @@ public class AetherRecipeData extends AetherRecipeProvider
         makeBootsWithBlock(AetherItems.GRAVITITE_BOOTS, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
 
         makeRing(AetherItems.IRON_RING, Items.IRON_INGOT).save(consumer);
-        makeRing(AetherItems.GOLD_RING, Items.GOLD_INGOT).save(consumer);
+        makeRing(AetherItems.GOLDEN_RING, Items.GOLD_INGOT).save(consumer);
         makeRing(AetherItems.ZANITE_RING, AetherItems.ZANITE_GEMSTONE.get()).save(consumer);
 
         ShapedRecipeBuilder.shaped(AetherItems.SKYROOT_STICK.get(), 4)
@@ -615,7 +615,10 @@ public class AetherRecipeData extends AetherRecipeProvider
         freezingRecipe(Items.LAVA_BUCKET, Blocks.OBSIDIAN, 500).save(consumer, name("obsidian_from_bucket_freezing"));
 
         freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.IRON_RING.get(), 2500).save(consumer, name("ice_ring_from_iron_freezing"));
-        freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.GOLD_RING.get(), 2500).save(consumer, name("ice_ring_from_gold_freezing"));
+        freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.GOLDEN_RING.get(), 2500).save(consumer, name("ice_ring_from_gold_freezing"));
+
+        freezingRecipe(AetherItems.ICE_PENDANT.get(), AetherItems.IRON_PENDANT.get(), 2500).save(consumer, name("ice_pendant_from_iron_freezing"));
+        freezingRecipe(AetherItems.ICE_PENDANT.get(), AetherItems.GOLDEN_PENDANT.get(), 2500).save(consumer, name("ice_pendant_from_gold_freezing"));
     }
 
     private ResourceLocation name(String name) {
