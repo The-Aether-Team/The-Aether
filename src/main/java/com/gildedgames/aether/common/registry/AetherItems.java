@@ -272,6 +272,8 @@ public class AetherItems
 	public static final RegistryObject<Item> COLD_PARACHUTE = ITEMS.register("cold_parachute", () -> new ParachuteItem(AetherParachuteTypes.COLD_PARACHUTE, new Item.Properties().stacksTo(1).durability(1).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> GOLDEN_PARACHUTE = ITEMS.register("golden_parachute", () -> new ParachuteItem(AetherParachuteTypes.GOLDEN_PARACHUTE, new Item.Properties().stacksTo(1).durability(20).tab(AetherItemGroups.AETHER_MISC)));
 
+	public static final RegistryObject<SignItem> SKYROOT_SIGN = ITEMS.register("skyroot_sign", () -> new SignItem((new Item.Properties()).stacksTo(16).tab(AetherItemGroups.AETHER_BLOCKS), AetherBlocks.SKYROOT_SIGN.get(), AetherBlocks.SKYROOT_WALL_SIGN.get()));
+
 	//item("nature_staff", new NatureStaffItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_TOOLS))),
 	//item("cloud_staff", new CloudStaffItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_TOOLS))),
 

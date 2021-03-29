@@ -395,6 +395,7 @@ a0366998f14c5c11fba12e35a4e77900c4861644 assets/aether/models/item/skyroot_poiso
 36d828fe487eb1f0cb25172034826e74b6bb9e6b assets/aether/models/item/skyroot_remedy_bucket.json
 f0a53c585a2a7818d453ab4566adeb99452866fa assets/aether/models/item/skyroot_sapling.json
 fa24ace7fe8f3d8c5c8a5ada2e9a823e5fe1308b assets/aether/models/item/skyroot_shovel.json
+e95a407a125e86d78e2ec5360c9f60dedd5b179a assets/aether/models/item/skyroot_sign.json
 7145616911ac051957b97de2532669d800bf9c6a assets/aether/models/item/skyroot_slab.json
 18729f0472c8ade91f2bc99ba470ab9839d4e011 assets/aether/models/item/skyroot_stairs.json
 205dc64825685f5732ca9e2af3d4cc02ffc99601 assets/aether/models/item/skyroot_stick.json
@@ -544,6 +545,7 @@ ffe7e9a6466075ab3c0d4bbab197cc28f5b7ea8b data/aether/advancements/recipes/aether
 cb0efb1d7b07d388d6cf7f6a3b158f4e41c3faed data/aether/advancements/recipes/aether_blocks/skyroot_fence_gate.json
 577cd68df8e2fd8981fb030e8f9cd858bb5cdbdc data/aether/advancements/recipes/aether_blocks/skyroot_planks.json
 b0658480609b71a7ca05298fb94deda2f92c0cd9 data/aether/advancements/recipes/aether_blocks/skyroot_pressure_plate.json
+b9837facd95f883b97cd11a1a4816666152b8836 data/aether/advancements/recipes/aether_blocks/skyroot_sign.json
 9d4632f38d4184ad8499f45c29ea87f1ae03fbc8 data/aether/advancements/recipes/aether_blocks/skyroot_slab.json
 73f4919cd98d476c1a8763b1fc5c1b2784737352 data/aether/advancements/recipes/aether_blocks/skyroot_stairs.json
 d491e2c14050d5a3cb793ce48ac11efc537411ca data/aether/advancements/recipes/aether_blocks/skyroot_trapdoor.json
@@ -780,6 +782,7 @@ fb469500b226607fc703579c746e56291d461def data/aether/loot_tables/blocks/skyroot_
 c0d20043b1e8e496f03d01ef3a4901c13c8f8ebf data/aether/loot_tables/blocks/skyroot_planks.json
 a65f844928817cae87f31314791c4e43f52667cf data/aether/loot_tables/blocks/skyroot_pressure_plate.json
 a835b07036e4d3d6f28fbb56371d7f60c2220a38 data/aether/loot_tables/blocks/skyroot_sapling.json
+0857a043493ee741ae61f614cb4a3c5b4a9b5113 data/aether/loot_tables/blocks/skyroot_sign.json
 d2bd6980a8c9e544903fa37fb9fa25c603dd326c data/aether/loot_tables/blocks/skyroot_slab.json
 046eb23873b2e82792a705544e60d62620d54475 data/aether/loot_tables/blocks/skyroot_stairs.json
 b520bbbb6fecb7ce89c6cbd62ad701f48574a0ff data/aether/loot_tables/blocks/skyroot_trapdoor.json
@@ -1012,6 +1015,7 @@ d05dcc034d721a8e0de73bbca35cfd53f735d0da data/aether/recipes/skyroot_piston.json
 6890c15a367ec15b4ccaaf7d4b94b5ddc08de193 data/aether/recipes/skyroot_shield.json
 7277a2d8eb75a01cb7a2d3c6f486e52dc24bc8b6 data/aether/recipes/skyroot_shovel.json
 b112a4d7abb5cbe5ba133301e808e6b87a36e838 data/aether/recipes/skyroot_shovel_repairing.json
+2724834546bbbf7638c9b6ee1b8aa0388d00bb97 data/aether/recipes/skyroot_sign.json
 eb5891e6c993259633d04f9d1173f05ab29aa1de data/aether/recipes/skyroot_slab.json
 e1c8248949c460462e998bf92bf2b938a9a79331 data/aether/recipes/skyroot_smithing_table.json
 f66a822bba027a353e0fb80b5f7479c265528747 data/aether/recipes/skyroot_stairs.json
@@ -1105,7 +1109,9 @@ f84b72d8d4ac67867e925b9b4116fd7fc7e33ea0 data/forge/tags/blocks/ores.json
 3efaa4aaad5a363c6a1e36e6827b65f11fea5cb8 data/forge/tags/blocks/stone.json
 1ea00a2a136c31f18e9a99db9584fac2c6e42aa6 data/forge/tags/blocks/storage_blocks.json
 c3ebaf374fbaf8b34bbf67403812c7ff8e077ea4 data/forge/tags/items/bookshelves.json
+ef896638976d84e49ea64f3df732b1fa877600bb data/forge/tags/items/fence_gates.json
 ef896638976d84e49ea64f3df732b1fa877600bb data/forge/tags/items/fence_gates/wooden.json
+0951b17699df5d7949eefbb975fa38059e801e9c data/forge/tags/items/fences.json
 0951b17699df5d7949eefbb975fa38059e801e9c data/forge/tags/items/fences/wooden.json
 8df09b1efcd937f8c2f3ffeb8c466cc9e74c444f data/forge/tags/items/gems.json
 09ab249c93193997ee72291f6b847e58b9391034 data/forge/tags/items/glass/colorless.json
@@ -1128,12 +1134,15 @@ a0f3c2f4910e857b799981106ebf4953767be364 data/minecraft/tags/blocks/logs_that_bu
 2c9d8e4296fb4d28aa9c197a58b4f97577c3acc2 data/minecraft/tags/blocks/portals.json
 fa9dc3578eb2f2626f2b5058e1b0a0581c4d82b6 data/minecraft/tags/blocks/pressure_plates.json
 1f0916a254faf5c2d9493e82773490f2b5576523 data/minecraft/tags/blocks/saplings.json
+f0850ab85b7004eeabeee2e6bac83b264607819e data/minecraft/tags/blocks/signs.json
 5b36239a362f76704b0f8ffaf9a57276a21886b4 data/minecraft/tags/blocks/slabs.json
 6474007b06fb828a758eda656ac1d36732fb81c8 data/minecraft/tags/blocks/small_flowers.json
 18998b10a1e830e7b97f8fe385497fef71208a10 data/minecraft/tags/blocks/stairs.json
+b82675eea2083edc06f74047ae86b5e37e5e022e data/minecraft/tags/blocks/standing_signs.json
 5cdfe95e7244d2e6d1aa44d451e2417191ea7b66 data/minecraft/tags/blocks/stone_bricks.json
 4eca19e7372c333e02a61b39149536f67bada489 data/minecraft/tags/blocks/valid_spawn.json
 b3186ddf263054952cccec5ea572198c805d8236 data/minecraft/tags/blocks/wall_post_override.json
+de61dee63a0989655a0d0ec1da3b259fe5f20a06 data/minecraft/tags/blocks/wall_signs.json
 06a39e0f517acff3947e37cb102a83b998574a68 data/minecraft/tags/blocks/walls.json
 4122ec572f8ef0f0658da36df1042c7d2acbff72 data/minecraft/tags/blocks/wither_immune.json
 4c3ec34f29a21251474f3ae809c83eb236d038f4 data/minecraft/tags/blocks/wooden_buttons.json
@@ -1151,6 +1160,7 @@ a0f3c2f4910e857b799981106ebf4953767be364 data/minecraft/tags/items/logs_that_bur
 bb380d05f22548260c444b51c83d0d2987e51985 data/minecraft/tags/items/music_discs.json
 fb4c4acc1ad7161542ed1212245c0ccda63ec967 data/minecraft/tags/items/piglin_loved.json
 1f0916a254faf5c2d9493e82773490f2b5576523 data/minecraft/tags/items/saplings.json
+b82675eea2083edc06f74047ae86b5e37e5e022e data/minecraft/tags/items/signs.json
 5b36239a362f76704b0f8ffaf9a57276a21886b4 data/minecraft/tags/items/slabs.json
 6474007b06fb828a758eda656ac1d36732fb81c8 data/minecraft/tags/items/small_flowers.json
 18998b10a1e830e7b97f8fe385497fef71208a10 data/minecraft/tags/items/stairs.json

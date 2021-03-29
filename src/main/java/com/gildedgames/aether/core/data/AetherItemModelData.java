@@ -230,6 +230,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.INCUBATOR);
 
         itemTorch(AetherBlocks.AMBROSIUM_TORCH, "utility/");
+        item(() -> AetherBlocks.SKYROOT_SIGN.get().asItem(), "miscellaneous/");
 
         itemBlock(AetherBlocks.BERRY_BUSH);
         itemBlockFlat(AetherBlocks.BERRY_BUSH_STEM, "natural/");
