@@ -8,6 +8,12 @@
           "type": "minecraft:item",
           "name": "aether:golden_parachute"
         }
+      ],
+      "conditions": [
+        {
+          "condition": "aether:config_enabled",
+          "config": "[Gameplay, Gives starting loot on entry]"
+        }
       ]
     },
     {
@@ -16,6 +22,12 @@
         {
           "type": "minecraft:item",
           "name": "aether:book_of_lore"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "aether:config_enabled",
+          "config": "[Gameplay, Gives starting loot on entry]"
         }
       ]
     }

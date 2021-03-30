@@ -1,5 +1,7 @@
 package com.gildedgames.aether.core.data;
 
+import com.gildedgames.aether.common.loot.conditions.ConfigEnabled;
+import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.provider.AetherLootTableProvider;
 import com.gildedgames.aether.common.registry.*;
 import net.minecraft.advancements.criterion.ItemPredicate;
@@ -335,8 +337,8 @@ public class AetherLootTableData extends AetherLootTableProvider
     {
         public void accept(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
             builder.accept(AetherLoot.ENTER_AETHER, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(AetherItems.GOLDEN_PARACHUTE.get())))
-                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(AetherItems.BOOK_OF_LORE.get())))
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(AetherItems.GOLDEN_PARACHUTE.get())).when(ConfigEnabled.isEnabled(AetherConfig.COMMON.enable_startup_loot)))
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(AetherItems.BOOK_OF_LORE.get())).when(ConfigEnabled.isEnabled(AetherConfig.COMMON.enable_startup_loot)))
             );
         }
     }

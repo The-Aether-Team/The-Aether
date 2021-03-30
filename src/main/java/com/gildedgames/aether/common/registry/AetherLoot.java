@@ -4,15 +4,14 @@ import java.util.Collections;
 import java.util.Set;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.loot.conditions.ConfigEnabled;
 import com.gildedgames.aether.common.loot.functions.DoubleDrops;
 import com.gildedgames.aether.common.loot.functions.SpawnTNT;
 import com.gildedgames.aether.common.loot.functions.SpawnXP;
 import com.google.common.collect.Sets;
 
-import net.minecraft.loot.LootFunctionType;
-import net.minecraft.loot.LootParameterSet;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootParameters;
+import net.minecraft.loot.*;
+import net.minecraft.loot.conditions.LootConditionManager;
 import net.minecraft.loot.functions.LootFunctionManager;
 import net.minecraft.util.ResourceLocation;
 
@@ -24,6 +23,8 @@ public class AetherLoot
 	public static final LootParameterSet STRIPPING = LootParameterSets.register("aether:stripping", (p_237455_0_) -> {
 		p_237455_0_.required(LootParameters.BLOCK_STATE).required(LootParameters.ORIGIN).required(LootParameters.TOOL);
 	});
+
+	public static final LootConditionType CONFIG_ENABLED = LootConditionManager.register(new ResourceLocation(Aether.MODID, "config_enabled").toString(), new ConfigEnabled.Serializer());
 
 	public static final LootFunctionType DOUBLE_DROPS = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "double_drops").toString(), new DoubleDrops.Serializer());
 	public static final LootFunctionType SPAWN_ENTITY = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "spawn_entity").toString(), new SpawnTNT.Serializer());
