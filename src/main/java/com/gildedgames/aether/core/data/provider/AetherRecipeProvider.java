@@ -7,9 +7,11 @@ import net.minecraft.block.Block;
 import net.minecraft.data.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
+import net.minecraftforge.common.Tags;
 
 import java.util.function.Supplier;
 
@@ -206,8 +208,8 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
-    public ShapedRecipeBuilder makeChestplate(Supplier<? extends Item> helmetOut, Supplier<? extends Item> materialIn) {
-        return ShapedRecipeBuilder.shaped(helmetOut.get())
+    public ShapedRecipeBuilder makeChestplate(Supplier<? extends Item> chestplateOut, Supplier<? extends Item> materialIn) {
+        return ShapedRecipeBuilder.shaped(chestplateOut.get())
                 .pattern("M M")
                 .pattern("MMM")
                 .pattern("MMM")
@@ -215,8 +217,8 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
-    public ShapedRecipeBuilder makeLeggings(Supplier<? extends Item> helmetOut, Supplier<? extends Item> materialIn) {
-        return ShapedRecipeBuilder.shaped(helmetOut.get())
+    public ShapedRecipeBuilder makeLeggings(Supplier<? extends Item> leggingsOut, Supplier<? extends Item> materialIn) {
+        return ShapedRecipeBuilder.shaped(leggingsOut.get())
                 .pattern("MMM")
                 .pattern("M M")
                 .pattern("M M")
@@ -224,12 +226,26 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
-    public ShapedRecipeBuilder makeBoots(Supplier<? extends Item> helmetOut, Supplier<? extends Item> materialIn) {
-        return ShapedRecipeBuilder.shaped(helmetOut.get())
+    public ShapedRecipeBuilder makeBoots(Supplier<? extends Item> bootsOut, Supplier<? extends Item> materialIn) {
+        return ShapedRecipeBuilder.shaped(bootsOut.get())
                 .pattern("M M")
                 .pattern("M M")
                 .define('M', materialIn.get())
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
+    }
+
+    public ShapedRecipeBuilder makeGloves(Supplier<? extends Item> glovesOut, Supplier<? extends Item> materialIn) {
+        return ShapedRecipeBuilder.shaped(glovesOut.get())
+                .pattern("M M")
+                .define('M', materialIn.get())
+                .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
+    }
+
+    public ShapedRecipeBuilder makeGlovesWithTag(Supplier<? extends Item> glovesOut, Tags.IOptionalNamedTag<Item> materialTag, String advancementName) {
+        return ShapedRecipeBuilder.shaped(glovesOut.get())
+                .pattern("M M")
+                .define('M', materialTag)
+                .unlockedBy("has_" + advancementName, has(materialTag));
     }
 
     public ShapedRecipeBuilder makeHelmetWithBlock(Supplier<? extends Item> helmetOut, Supplier<? extends Block> materialIn) {
@@ -240,8 +256,8 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
-    public ShapedRecipeBuilder makeChestplateWithBlock(Supplier<? extends Item> helmetOut, Supplier<? extends Block> materialIn) {
-        return ShapedRecipeBuilder.shaped(helmetOut.get())
+    public ShapedRecipeBuilder makeChestplateWithBlock(Supplier<? extends Item> chestplateOut, Supplier<? extends Block> materialIn) {
+        return ShapedRecipeBuilder.shaped(chestplateOut.get())
                 .pattern("M M")
                 .pattern("MMM")
                 .pattern("MMM")
@@ -249,8 +265,8 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
-    public ShapedRecipeBuilder makeLeggingsWithBlock(Supplier<? extends Item> helmetOut, Supplier<? extends Block> materialIn) {
-        return ShapedRecipeBuilder.shaped(helmetOut.get())
+    public ShapedRecipeBuilder makeLeggingsWithBlock(Supplier<? extends Item> leggingsOut, Supplier<? extends Block> materialIn) {
+        return ShapedRecipeBuilder.shaped(leggingsOut.get())
                 .pattern("MMM")
                 .pattern("M M")
                 .pattern("M M")
@@ -258,9 +274,16 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
-    public ShapedRecipeBuilder makeBootsWithBlock(Supplier<? extends Item> helmetOut, Supplier<? extends Block> materialIn) {
-        return ShapedRecipeBuilder.shaped(helmetOut.get())
+    public ShapedRecipeBuilder makeBootsWithBlock(Supplier<? extends Item> bootsOut, Supplier<? extends Block> materialIn) {
+        return ShapedRecipeBuilder.shaped(bootsOut.get())
                 .pattern("M M")
+                .pattern("M M")
+                .define('M', materialIn.get())
+                .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
+    }
+
+    public ShapedRecipeBuilder makeGlovesWithBlock(Supplier<? extends Item> glovesOut, Supplier<? extends Block> materialIn) {
+        return ShapedRecipeBuilder.shaped(glovesOut.get())
                 .pattern("M M")
                 .define('M', materialIn.get())
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
@@ -271,6 +294,16 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern(" M ")
                 .pattern("M M")
                 .pattern(" M ")
+                .define('M', materialIn)
+                .unlockedBy("has_" + materialIn.getRegistryName().getPath(), has(materialIn));
+    }
+
+    public ShapedRecipeBuilder makePendant(Supplier<? extends Item> helmetOut, Item materialIn) {
+        return ShapedRecipeBuilder.shaped(helmetOut.get())
+                .pattern("SSS")
+                .pattern("S S")
+                .pattern(" M ")
+                .define('S', Tags.Items.STRING)
                 .define('M', materialIn)
                 .unlockedBy("has_" + materialIn.getRegistryName().getPath(), has(materialIn));
     }
@@ -293,6 +326,16 @@ public class AetherRecipeProvider extends RecipeProvider
     public SingleItemRecipeBuilder stonecuttingRecipe(Supplier<Block> input, IItemProvider result, int resultAmount) {
         return SingleItemRecipeBuilder.stonecutting(Ingredient.of(input.get()), result, resultAmount)
                 .unlocks("has_" + input.get().getRegistryName(), has(input.get()));
+    }
+
+    public SmithingRecipeBuilder smithingRecipe(Supplier<Item> input, Supplier<Item> upgradeItem, Supplier<Item> result) {
+        return SmithingRecipeBuilder.smithing(Ingredient.of(input.get()), Ingredient.of(upgradeItem.get()), result.get())
+                .unlocks("has_" + upgradeItem.get().getRegistryName(), has(upgradeItem.get()));
+    }
+
+    public SmithingRecipeBuilder smithingRecipeWithTag(Supplier<Item> input, Tags.IOptionalNamedTag<Item> upgradeTag, Supplier<Item> result, String advancementName) {
+        return SmithingRecipeBuilder.smithing(Ingredient.of(input.get()), Ingredient.of(upgradeTag), result.get())
+                .unlocks("has_" + advancementName, has(upgradeTag));
     }
 
     public AltarRepairBuilder repairingRecipe(IItemProvider item, int duration) {
