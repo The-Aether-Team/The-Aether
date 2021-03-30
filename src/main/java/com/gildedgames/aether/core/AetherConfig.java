@@ -116,7 +116,7 @@ public class AetherConfig
                     .comment("Changes Zephyr and Aerwhale rendering to use their old models from the b1.7.3 version of the mod")
                     .define("Switches to legacy mob models", false);
             disable_aether_skybox = builder
-                    .comment("Disables the Aether's custom skybox. Use this if you have a shader that is incompatible with custom skyboxes.")
+                    .comment("Disables the Aether's custom skybox in case you have a shader that is incompatible with custom skyboxes")
                     .define("Disables Aether custom skybox", false);
             builder.pop();
 
