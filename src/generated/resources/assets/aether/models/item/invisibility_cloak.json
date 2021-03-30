@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "aether:item/accessories/invisibility_cape"
+    "layer0": "aether:item/accessories/invisibility_cloak"
   }
 }

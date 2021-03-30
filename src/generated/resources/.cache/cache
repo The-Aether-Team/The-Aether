@@ -90,7 +90,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-15c8cb22dffcf96743d9fe5a83709a371230d81a assets/aether/lang/en_us.json
+d5317377519886498ac18d27f3fcb6cab0d891a4 assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -319,7 +319,7 @@ b2d8e0375553ffa7701303680ec107be7a2cd475 assets/aether/models/item/ice_pendant.j
 3de73e4d8b7a7d56ed7a7a2ceabe98ee06e27126 assets/aether/models/item/ice_ring.json
 dfad2e24c06c75a3807973e91399e908bbd79527 assets/aether/models/item/icestone.json
 943469ebed93b1c29b6b780e42dbb6f1fdf415bb assets/aether/models/item/incubator.json
-d73cd7afd37f5d63cea4353dd119cf390f3facce assets/aether/models/item/invisibility_cape.json
+dc7bc264f4e04e8ac49cec4f16361bedb30b55bc assets/aether/models/item/invisibility_cloak.json
 e953ef70258a00f3a45788c70d454a0d78ee82fc assets/aether/models/item/iron_bubble.json
 31269ebcb3936c61c63276f66dc8c83188b34e2a assets/aether/models/item/iron_gloves.json
 fbf72f8cb62b2f30b93546ad99ae54194acd2d61 assets/aether/models/item/iron_pendant.json

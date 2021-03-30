@@ -318,7 +318,7 @@ public class AetherLangData extends LanguageProvider
         addItem(AetherItems.YELLOW_CAPE, "Yellow Cape");
         addItem(AetherItems.WHITE_CAPE, "White Cape");
         addItem(AetherItems.SWET_CAPE, "Swet Cape");
-        addItem(AetherItems.INVISIBILITY_CAPE, "Invisibility Cloak");
+        addItem(AetherItems.INVISIBILITY_CLOAK, "Invisibility Cloak");
         addItem(AetherItems.AGILITY_CAPE, "Agility Cape");
         addItem(AetherItems.VALKYRIE_CAPE, "Valkyrie Cape");
 
@@ -554,7 +554,7 @@ public class AetherLangData extends LanguageProvider
         addItemLore(AetherItems.ICE_RING, "A ring which allows you to freeze water, and lava when walked on.");
         addBlockLore(AetherBlocks.ICESTONE, "Icestone is a common ore that can be used as fuel for a Freezer. It can be used to freeze nearby liquids such as Lava and Water.");
         addBlockLore(AetherBlocks.INCUBATOR, "Used to incubate Moa's. You use Ambrosium Torches for the fuel. The process can take quite some time, but it is worth the wait once your Moa of choice hatches!");
-        addItemLore(AetherItems.INVISIBILITY_CAPE, "A cloak that makes the wearer completely invisible! Since mobs cannot see you, they cannot attack you. Sneak up on your enemies with it!");
+        addItemLore(AetherItems.INVISIBILITY_CLOAK, "A cloak that makes the wearer completely invisible! Since mobs cannot see you, they cannot attack you. Sneak up on your enemies with it!");
         addItemLore(AetherItems.IRON_BUBBLE, "A common dungeon loot. It allows for the wearer to breathe underwater for a longer time than normal.");
         addItemLore(AetherItems.IRON_GLOVES, "Part of the Iron Armor set, it is needed to complete the Iron Armor set.");
         addItemLore(AetherItems.IRON_PENDANT, "An aesthetic accessory made of iron.");

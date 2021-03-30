@@ -136,7 +136,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.YELLOW_CAPE, "accessories/");
         item(AetherItems.WHITE_CAPE, "accessories/");
         item(AetherItems.SWET_CAPE, "accessories/");
-        item(AetherItems.INVISIBILITY_CAPE, "accessories/");
+        item(AetherItems.INVISIBILITY_CLOAK, "accessories/");
         item(AetherItems.AGILITY_CAPE, "accessories/");
         item(AetherItems.VALKYRIE_CAPE, "accessories/");
 
