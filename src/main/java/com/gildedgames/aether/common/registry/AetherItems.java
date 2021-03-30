@@ -13,6 +13,7 @@ import com.gildedgames.aether.common.item.accessories.misc.RegenerationStoneItem
 import com.gildedgames.aether.common.item.accessories.pendant.IcePendantItem;
 import com.gildedgames.aether.common.item.accessories.pendant.ZanitePendantItem;
 import com.gildedgames.aether.common.item.accessories.ring.IceRingItem;
+import com.gildedgames.aether.common.item.materials.AmbrosiumShardItem;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.gildedgames.aether.common.item.accessories.ring.ZaniteRingItem;
@@ -248,8 +249,7 @@ public class AetherItems
 	public static final RegistryObject<Item> GOLDEN_AMBER = ITEMS.register("golden_amber", () -> new Item(new Item.Properties().tab(AetherItemGroups.AETHER_MATERIALS)));
 	public static final RegistryObject<Item> SWET_BALL = ITEMS.register("swet_ball", () -> new SwetBallItem(new Item.Properties().tab(AetherItemGroups.AETHER_MATERIALS)));
 	public static final RegistryObject<Item> AECHOR_PETAL = ITEMS.register("aechor_petal", () -> new Item(new Item.Properties().tab(AetherItemGroups.AETHER_MATERIALS)));
-	public static final RegistryObject<Item> AMBROSIUM_SHARD = ITEMS.register("ambrosium_shard", () -> new Item(new Item.Properties()
-			.food(new Food.Builder().alwaysEat().fast().effect(() -> new EffectInstance(Effects.HEAL, 1), 1.0F).build()).tab(AetherItemGroups.AETHER_MATERIALS)));
+	public static final RegistryObject<Item> AMBROSIUM_SHARD = ITEMS.register("ambrosium_shard", () -> new AmbrosiumShardItem(new Item.Properties().tab(AetherItemGroups.AETHER_MATERIALS)));
 	public static final RegistryObject<Item> ZANITE_GEMSTONE = ITEMS.register("zanite_gemstone", () -> new Item(new Item.Properties().tab(AetherItemGroups.AETHER_MATERIALS)));
 
 	// Misc
