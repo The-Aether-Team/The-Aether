@@ -11,8 +11,8 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 import java.util.Random;
 
-public class GoldAercloudFeature extends Feature<NoFeatureConfig> {
-
+public class GoldAercloudFeature extends Feature<NoFeatureConfig>
+{
     public GoldAercloudFeature(Codec<NoFeatureConfig> codec) {
         super(codec);
     }
@@ -44,6 +44,6 @@ public class GoldAercloudFeature extends Feature<NoFeatureConfig> {
             }
         }
 
-        return false;
+        return true;
     }
 }

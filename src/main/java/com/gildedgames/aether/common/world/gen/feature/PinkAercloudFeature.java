@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.world.gen.feature;
 
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.core.AetherConfig;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
@@ -11,15 +12,15 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 import java.util.Random;
 
-public class PinkAercloudFeature extends Feature<NoFeatureConfig> {
-
+public class PinkAercloudFeature extends Feature<NoFeatureConfig>
+{
     public PinkAercloudFeature(Codec<NoFeatureConfig> codec) {
         super(codec);
     }
 
     @Override
     public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
-        if(true/*TODO: Pink Clouds Config Option*/) {
+        if (AetherConfig.COMMON.generate_pink_aerclouds.get()) {
             BlockPos origin = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
             BlockPos position = new BlockPos(origin.getX() + 8, origin.getY(), origin.getZ() + 8);
 
@@ -45,6 +46,7 @@ public class PinkAercloudFeature extends Feature<NoFeatureConfig> {
                 }
             }
         }
-        return false;
+
+        return true;
     }
 }

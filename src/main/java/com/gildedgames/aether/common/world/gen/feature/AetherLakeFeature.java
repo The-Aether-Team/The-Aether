@@ -21,7 +21,8 @@ import java.util.Random;
  * grass or mycelium, depending on the SurfaceBuilder's top block. This version generates whatever the
  * surfacebuilder's top block is.
  */
-public class AetherLakeFeature extends Feature<BlockStateFeatureConfig> {
+public class AetherLakeFeature extends Feature<BlockStateFeatureConfig>
+{
     public AetherLakeFeature(Codec<BlockStateFeatureConfig> codec) {
         super(codec);
     }
@@ -32,12 +33,10 @@ public class AetherLakeFeature extends Feature<BlockStateFeatureConfig> {
         }
 
         if (pos.getY() <= 4) {
-            return false;
+            return true;
         } else {
             pos = pos.below(4);
-            if (reader.startsForFeature(SectionPos.of(pos), Structure.VILLAGE).findAny().isPresent()) {
-                return false;
-            } else {
+            if (!reader.startsForFeature(SectionPos.of(pos), Structure.VILLAGE).findAny().isPresent()) {
                 boolean[] aboolean = new boolean[2048];
                 int i = rand.nextInt(4) + 4;
 
@@ -71,11 +70,11 @@ public class AetherLakeFeature extends Feature<BlockStateFeatureConfig> {
                             if (flag) {
                                 Material material = reader.getBlockState(pos.offset(k1, k, l2)).getMaterial();
                                 if (k >= 4 && material.isLiquid()) {
-                                    return false;
+                                    return true;
                                 }
 
                                 if (k < 4 && !material.isSolid() && reader.getBlockState(pos.offset(k1, k, l2)) != config.state) {
-                                    return false;
+                                    return true;
                                 }
                             }
                         }
@@ -132,8 +131,8 @@ public class AetherLakeFeature extends Feature<BlockStateFeatureConfig> {
                     }
                 }
 
-                return true;
             }
+            return true;
         }
     }
 }

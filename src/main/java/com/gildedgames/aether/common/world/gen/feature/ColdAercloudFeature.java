@@ -11,8 +11,8 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 import java.util.Random;
 
-public class ColdAercloudFeature extends Feature<NoFeatureConfig> {
-
+public class ColdAercloudFeature extends Feature<NoFeatureConfig>
+{
     public ColdAercloudFeature(Codec<NoFeatureConfig> codec) {
         super(codec);
     }
@@ -44,6 +44,6 @@ public class ColdAercloudFeature extends Feature<NoFeatureConfig> {
             }
         }
 
-        return false;
+        return true;
     }
 }

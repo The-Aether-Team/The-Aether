@@ -10,8 +10,8 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 import java.util.Random;
 
-public class HolystoneSphereFeature extends Feature<NoFeatureConfig> {
-
+public class HolystoneSphereFeature extends Feature<NoFeatureConfig>
+{
     public HolystoneSphereFeature(Codec<NoFeatureConfig> codec) {
         super(codec);
     }
@@ -31,6 +31,7 @@ public class HolystoneSphereFeature extends Feature<NoFeatureConfig> {
                 }
             }
         }
+
         return true;
     }
 }

@@ -12,8 +12,8 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 import java.util.Random;
 
-public class QuicksoilFeature extends Feature<NoFeatureConfig> {
-
+public class QuicksoilFeature extends Feature<NoFeatureConfig>
+{
     public QuicksoilFeature(Codec<NoFeatureConfig> codec) {
         super(codec);
     }
@@ -39,6 +39,7 @@ public class QuicksoilFeature extends Feature<NoFeatureConfig> {
 
             }
         }
-        return false;
+
+        return true;
     }
 }

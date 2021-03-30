@@ -17,8 +17,8 @@ import net.minecraft.world.gen.feature.template.*;
 
 import java.util.Random;
 
-public class CrystalTreeFeature extends Feature<NoFeatureConfig> {
-
+public class CrystalTreeFeature extends Feature<NoFeatureConfig>
+{
     private static final ResourceLocation TREE = new ResourceLocation(Aether.MODID, "crystal_tree/crystal_tree");
     private static final ResourceLocation FRUIT = new ResourceLocation(Aether.MODID, "crystal_tree/crystal_fruit_tree");
 
@@ -46,6 +46,7 @@ public class CrystalTreeFeature extends Feature<NoFeatureConfig> {
         IntegrityProcessor integrityprocessor = new IntegrityProcessor(0.2F);
         placementsettings.clearProcessors().addProcessor(integrityprocessor);
         fruit.placeInWorld(reader, blockpos1, blockpos1, placementsettings, rand, 4);
+
         return true;
     }
 }
