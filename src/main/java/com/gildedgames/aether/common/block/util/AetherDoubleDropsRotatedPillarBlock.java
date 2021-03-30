@@ -9,7 +9,7 @@ import net.minecraft.state.StateContainer;
 
 import net.minecraft.block.AbstractBlock.Properties;
 
-public class AetherDoubleDropsRotatedPillarBlock extends RotatedPillarBlock
+public class AetherDoubleDropsRotatedPillarBlock extends RotatedPillarBlock implements IAetherDoubleDropBlock
 {
 	public AetherDoubleDropsRotatedPillarBlock(Properties properties) {
 		super(properties);
