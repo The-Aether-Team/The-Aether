@@ -54,11 +54,11 @@ public class AetherLangData extends LanguageProvider
     }
 
     public void addItemLore(Supplier<? extends Item> key, String name) {
-        addLore(key.get().getDescriptionId(), name);
+        addLore(key.get().getDescriptionId().replace("item.", "").replace("aether.", ""), name);
     }
 
     public void addBlockLore(Supplier<? extends Block> key, String name) {
-        addLore(key.get().getDescriptionId(), name);
+        addLore(key.get().getDescriptionId().replace("block.", "").replace("aether.", ""), name);
     }
 
     public void addLore(String key, String name) {
