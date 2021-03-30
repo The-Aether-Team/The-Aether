@@ -9,7 +9,8 @@
     "common.FindPollinationTargetGoalMixin"
   ],
   "client": [
-    "client.ClientRecipeBookMixin"
+    "client.ClientRecipeBookMixin",
+    "client.WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
