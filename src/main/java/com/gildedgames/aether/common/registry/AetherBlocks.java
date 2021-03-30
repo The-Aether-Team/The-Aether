@@ -101,7 +101,7 @@ public class AetherBlocks
 	public static final RegistryObject<Block> AMBROSIUM_WALL_TORCH = BLOCKS.register("ambrosium_wall_torch", () -> new WallTorchBlock(AbstractBlock.Properties.copy(Blocks.WALL_TORCH), ParticleTypes.SMOKE));
 	public static final RegistryObject<Block> AMBROSIUM_TORCH = register("ambrosium_torch", () -> new TorchBlock(AbstractBlock.Properties.copy(Blocks.TORCH), ParticleTypes.SMOKE));
 
-	public static final RegistryObject<Block> SKYROOT_SIGN = BLOCKS.register("skyroot_sign", () -> new SkyrootSignBlock(AbstractBlock.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD), AetherWoodTypes.SKYROOT));
+	public static final RegistryObject<Block> SKYROOT_SIGN = register("skyroot_sign", () -> new SkyrootSignBlock(AbstractBlock.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD), AetherWoodTypes.SKYROOT));
 	public static final RegistryObject<Block> SKYROOT_WALL_SIGN = BLOCKS.register("skyroot_wall_sign", () -> new SkyrootWallSignBlock(AbstractBlock.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD).dropsLike(SKYROOT_SIGN.get()), AetherWoodTypes.SKYROOT));
 
 	public static final RegistryObject<Block> BERRY_BUSH = register("berry_bush", () -> new BerryBushBlock(AbstractBlock.Properties.of(Material.PLANT).strength(0.2F).sound(SoundType.GRASS).harvestTool(ToolType.HOE).noOcclusion()
@@ -287,8 +287,7 @@ public class AetherBlocks
 	}
 
 	private static <T extends Block> Supplier<BlockItem> registerBlockItem(final RegistryObject<T> block) {
-		return () ->
-		{
+		return () -> {
 			if (Objects.requireNonNull(block.get()) == ENCHANTED_AETHER_GRASS_BLOCK.get()
 					|| Objects.requireNonNull(block.get()) == QUICKSOIL_GLASS.get()
 					|| Objects.requireNonNull(block.get()) == ENCHANTED_GRAVITITE.get()) {
@@ -302,6 +301,9 @@ public class AetherBlocks
 			}
 			else if (Objects.requireNonNull(block.get()) == AMBROSIUM_TORCH.get()) {
 				return new WallOrFloorItem(AMBROSIUM_TORCH.get(), AMBROSIUM_WALL_TORCH.get(), new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
+			}
+			else if (Objects.requireNonNull(block.get()) == SKYROOT_SIGN.get()) {
+				return new SignItem((new Item.Properties()).stacksTo(16).tab(AetherItemGroups.AETHER_BLOCKS), SKYROOT_SIGN.get(), SKYROOT_WALL_SIGN.get());
 			}
 			else if (Objects.requireNonNull(block.get()) == CHEST_MIMIC.get()) {
 				return new BlockItem(Objects.requireNonNull(block.get()), new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS).setISTER(() -> AetherRendering::chestMimicRenderer));

@@ -10,7 +10,6 @@ import net.minecraft.world.IBlockReader;
 
 public class SkyrootWallSignBlock extends WallSignBlock
 {
-
     public SkyrootWallSignBlock(AbstractBlock.Properties propertiesIn, WoodType woodTypeIn)
     {
         super(propertiesIn, woodTypeIn);
