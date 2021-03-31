@@ -1,15 +1,7 @@
 package com.gildedgames.aether.core;
 
-import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.renderer.AetherSkyRenderer;
-import com.gildedgames.aether.common.registry.AetherDimensions;
-import net.minecraft.client.world.DimensionRenderInfo;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class AetherConfig
@@ -155,15 +147,4 @@ public class AetherConfig
         CLIENT_SPEC = clientSpecPair.getRight();
         CLIENT = clientSpecPair.getLeft();
     }
-
-    @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class ConfigListener {
-        @SubscribeEvent
-        public static void onConfigReload(ModConfig.Reloading event) {
-            if(event.getConfig().getType() == ModConfig.Type.CLIENT) {
-                DimensionRenderInfo.EFFECTS.get(AetherDimensions.AETHER_DIMENSION.location()).setSkyRenderHandler(CLIENT.disable_aether_skybox.get() ? null : new AetherSkyRenderer());
-            }
-        }
-    }
-
 }

@@ -19,7 +19,6 @@ import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.common.registry.AetherFeatures;
 import com.gildedgames.aether.core.data.AetherLootTableData;
 import net.minecraft.block.*;
-import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.dispenser.*;
@@ -37,6 +36,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -51,6 +51,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryBuilder;
 import org.apache.logging.log4j.LogManager;
@@ -132,29 +133,26 @@ public class Aether
 	public void clientSetup(FMLClientSetupEvent event) {
 		AetherRendering.registerEntityRenderers(event);
 		AetherRendering.registerTileEntityRenderers();
-		event.enqueueWork(() -> {
-			AetherRendering.registerBlockRenderLayers();
-			AetherRendering.registerItemModelProperties();
-			AetherRendering.registerGuiFactories();
-			AetherRendering.registerWoodTypeAtlases();
-			DimensionRenderInfo aetherRenderInfo = new DimensionRenderInfo(-5.0F, true, DimensionRenderInfo.FogType.NORMAL, false, false) {
-				@Override
-				public Vector3d getBrightnessDependentFogColor(Vector3d color, float p_230494_2_) {
-					return color.multiply((p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.91F + 0.09F));
-				}
+		AetherRendering.registerBlockRenderLayers();
+		AetherRendering.registerItemModelProperties();
+		AetherRendering.registerGuiFactories();
+		AetherRendering.registerWoodTypeAtlases();
+		DimensionRenderInfo aetherRenderInfo = new DimensionRenderInfo(-5.0F, true, DimensionRenderInfo.FogType.NORMAL, false, false) {
+			@Override
+			public Vector3d getBrightnessDependentFogColor(Vector3d color, float p_230494_2_) {
+				return color.multiply((p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.91F + 0.09F));
+			}
 
-				@Override
-				public boolean isFoggyAt(int x, int z) {
-					return false;
-				}
-			};
-			aetherRenderInfo.setSkyRenderHandler(AetherConfig.CLIENT.disable_aether_skybox.get() ? null : new AetherSkyRenderer());
-			DimensionRenderInfo.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), aetherRenderInfo);
-		});
+			@Override
+			public boolean isFoggyAt(int x, int z) {
+				return false;
+			}
+		};
+		aetherRenderInfo.setSkyRenderHandler(AetherConfig.CLIENT.disable_aether_skybox.get() ? null : new AetherSkyRenderer());
+		DimensionRenderInfo.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), aetherRenderInfo);
 	}
 
-	public void curiosSetup(InterModEnqueueEvent event)
-	{
+	public void curiosSetup(InterModEnqueueEvent event) {
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.NECKLACE.getMessageBuilder().icon(new ResourceLocation(Aether.MODID, "gui/slots/pendant")).build());
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.BACK.getMessageBuilder().icon(new ResourceLocation(Aether.MODID, "gui/slots/cape")).build());
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.RING.getMessageBuilder().icon(new ResourceLocation(Aether.MODID, "gui/slots/ring")).size(2).build());
