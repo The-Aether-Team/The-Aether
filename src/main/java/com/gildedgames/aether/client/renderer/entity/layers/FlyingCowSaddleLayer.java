@@ -11,6 +11,8 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.CowModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class FlyingCowSaddleLayer extends LayerRenderer<FlyingCowEntity, CowModel<FlyingCowEntity>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/flying_cow/saddle.png");
@@ -19,6 +21,7 @@ public class FlyingCowSaddleLayer extends LayerRenderer<FlyingCowEntity, CowMode
         super(entityRendererIn);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, FlyingCowEntity cow, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (cow.isSaddled()) {

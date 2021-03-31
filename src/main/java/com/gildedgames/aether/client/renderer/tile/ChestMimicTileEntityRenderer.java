@@ -22,6 +22,8 @@ import net.minecraft.tileentity.TileEntityMerger;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.Calendar;
@@ -75,6 +77,7 @@ public class ChestMimicTileEntityRenderer<T extends TileEntity> extends TileEnti
 		this.leftLatch.y = 8.0F;
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void render(T tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		World world = tileEntityIn.getLevel();
@@ -112,6 +115,7 @@ public class ChestMimicTileEntityRenderer<T extends TileEntity> extends TileEnti
 		}
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	private void renderModels(MatrixStack matrixStackIn, IVertexBuilder bufferIn, ModelRenderer chestLid, ModelRenderer chestLatch, ModelRenderer chestBottom, int combinedLightIn, int combinedOverlayIn) {
 		chestLid.render(matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 		chestLatch.render(matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);

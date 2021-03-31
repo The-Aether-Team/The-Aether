@@ -18,6 +18,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ISkyRenderHandler;
 
 import javax.annotation.Nullable;
@@ -38,6 +40,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         createStars();
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(int ticks, float partialTicks, MatrixStack matrixStack, ClientWorld world, Minecraft mc) {
         TextureManager textureManager = Minecraft.getInstance().getTextureManager();

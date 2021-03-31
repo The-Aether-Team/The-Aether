@@ -13,6 +13,8 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class SheepuffCoatLayer extends LayerRenderer<SheepuffEntity, SheepuffModel> {
     private static final ResourceLocation FUR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/sheepuff/sheepuff_fur.png");
@@ -24,6 +26,7 @@ public class SheepuffCoatLayer extends LayerRenderer<SheepuffEntity, SheepuffMod
         super(entityRendererIn);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, SheepuffEntity sheepuff, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (!sheepuff.getSheared() && !sheepuff.isInvisible()) {

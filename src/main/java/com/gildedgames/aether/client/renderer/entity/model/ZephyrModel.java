@@ -5,6 +5,8 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ZephyrModel extends EntityModel<ZephyrEntity> {
     private final ModelRenderer LeftFace;
@@ -107,6 +109,7 @@ public class ZephyrModel extends EntityModel<ZephyrEntity> {
         this.Tail3.yRot = this.Tail2.yRot + 0.35F;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
         LeftFace.render(matrixStack, buffer, packedLight, packedOverlay);

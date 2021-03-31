@@ -8,6 +8,8 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.SlimeModel;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class SentryRenderer extends MobRenderer<SentryEntity, SlimeModel<SentryEntity>> {
 
@@ -23,7 +25,8 @@ public class SentryRenderer extends MobRenderer<SentryEntity, SlimeModel<SentryE
 	public ResourceLocation getTextureLocation(SentryEntity entity) {
 		return entity.isAwake()? SENTRY_TEXTURES_LIT : SENTRY_TEXTURES;
 	}
-	
+
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	protected void scale(SentryEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
 //		GL11.glScalef(1.75F, 1.75F, 1.75F);

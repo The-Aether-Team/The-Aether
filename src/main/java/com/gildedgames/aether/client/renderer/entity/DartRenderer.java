@@ -16,6 +16,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix3f;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class DartRenderer<T extends AbstractDartEntity> extends EntityRenderer<T> {
     public static final ResourceLocation GOLDEN_DART_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/dart/golden_dart.png");
@@ -26,6 +28,7 @@ public class DartRenderer<T extends AbstractDartEntity> extends EntityRenderer<T
         this.shadowRadius = 0.0F;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(T dart, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
         if (dart.isInvisible()) {
@@ -87,9 +90,7 @@ public class DartRenderer<T extends AbstractDartEntity> extends EntityRenderer<T
         return entity instanceof GoldenDartEntity ? GOLDEN_DART_TEXTURE : entity instanceof EnchantedDartEntity ? ENCHANTED_DART_TEXTURE : POISON_DART_TEXTURE;
     }
 
-    /**
-     * Copied from ArrowRenderer to simplify drawing vertices.
-     */
+    @OnlyIn(Dist.CLIENT)
     public void drawVertex(Matrix4f matrix, Matrix3f normals, IVertexBuilder vertexBuilder, int offsetX, int offsetY, int offsetZ, float textureX, float textureY, int normalX, int normalY, int normalZ, int packedLightIn) {
         vertexBuilder.vertex(matrix, (float)offsetX, (float)offsetY, (float)offsetZ).color(255, 255, 255, 255).uv(textureX, textureY).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(packedLightIn).normal(normals, (float)normalX, (float)normalZ, (float)normalY).endVertex();
     }

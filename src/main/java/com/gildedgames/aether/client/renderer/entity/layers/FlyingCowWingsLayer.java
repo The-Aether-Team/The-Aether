@@ -12,6 +12,8 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.CowModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class FlyingCowWingsLayer extends LayerRenderer<FlyingCowEntity, CowModel<FlyingCowEntity>> {
     private static final ResourceLocation WINGS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/flying_cow/wings.png");
@@ -22,6 +24,7 @@ public class FlyingCowWingsLayer extends LayerRenderer<FlyingCowEntity, CowModel
         super(entityRendererIn);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, FlyingCowEntity cow, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         wingsModel.setupAnim(cow, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);

@@ -16,6 +16,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,6 +56,7 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
         }));
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
@@ -62,6 +65,7 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
         this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     protected void renderLabels(MatrixStack matrixStack, int x, int y) {
         ITextComponent previous = new TranslationTextComponent("gui.aether.book_of_lore.previous");
@@ -103,6 +107,7 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
         this.nextButton.setIsActive(this.currentPageNumber < this.pages.size() - 1);
     }
 
+    @OnlyIn(Dist.CLIENT)
     private void createText(MatrixStack matrixStack, List<IReorderingProcessor> reorderingProcessors, int x, int y) {
         int length = 0;
         for (IReorderingProcessor line : reorderingProcessors) {
@@ -131,6 +136,7 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -144,20 +150,24 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
         blit(matrixStack, i + 12, j + 2, 0, 0, this.imageWidth, this.imageHeight + 56, 256, 256);
     }
 
+    @OnlyIn(Dist.CLIENT)
     private void drawBookText(MatrixStack matrixStack, FontRenderer fontRenderer, IReorderingProcessor font, int x, int y) {
         fontRenderer.draw(matrixStack, font, (float) x, (float) y, 4210752);
     }
 
+    @OnlyIn(Dist.CLIENT)
     private void drawBookText(MatrixStack matrixStack, FontRenderer fontRenderer, ITextComponent font, int x, int y) {
         IReorderingProcessor text = font.getVisualOrderText();
         fontRenderer.draw(matrixStack, text, (float) x, (float) y, 4210752);
     }
 
+    @OnlyIn(Dist.CLIENT)
     private void drawRightBookText(MatrixStack matrixStack, FontRenderer fontRenderer, ITextComponent font, int x, int y) {
         IReorderingProcessor text = font.getVisualOrderText();
         fontRenderer.draw(matrixStack, text, (float) (x - fontRenderer.width(text)), (float) y, 4210752);
     }
 
+    @OnlyIn(Dist.CLIENT)
     private void drawCenteredBookText(MatrixStack matrixStack, FontRenderer fontRenderer, ITextComponent font, int x, int y) {
         IReorderingProcessor text = font.getVisualOrderText();
         fontRenderer.draw(matrixStack, text, (float) (x - fontRenderer.width(text) / 2), (float) y, 4210752);

@@ -12,6 +12,8 @@ import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ZephyrTransparencyLayer extends LayerRenderer<ZephyrEntity, ZephyrModel> {
     private static final ResourceLocation LAYER_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/zephyr/zephyr_layer.png");
@@ -24,6 +26,7 @@ public class ZephyrTransparencyLayer extends LayerRenderer<ZephyrEntity, ZephyrM
         zephyrRenderer = (ZephyrRenderer) entityRendererIn;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, ZephyrEntity zephyr, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (!zephyr.isInvisible())

@@ -11,6 +11,8 @@ import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ColdParachuteRenderer extends EntityRenderer<ColdParachuteEntity>
 {
@@ -19,6 +21,7 @@ public class ColdParachuteRenderer extends EntityRenderer<ColdParachuteEntity>
         this.shadowRadius = 0.0F;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(ColdParachuteEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
         matrixStackIn.pushPose();

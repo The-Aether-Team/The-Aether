@@ -46,9 +46,6 @@ public class EvilWhirlyParticle extends SpriteTexturedParticle {
         this.setPos(whirlwind.getX(), whirlwind.getY(), whirlwind.getZ());
     }
 
-    /**
-     * Renders the particle
-     */
     @Override
     public void render(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks) {
         float f = ((float)this.age + partialTicks) / (float)this.lifetime * 32.0F;

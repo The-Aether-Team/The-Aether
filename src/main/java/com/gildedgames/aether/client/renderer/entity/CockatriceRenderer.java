@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class CockatriceRenderer extends MobRenderer<CockatriceEntity, CockatriceModel>{
     private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/cockatrice/cockatrice.png");
@@ -19,6 +21,7 @@ public class CockatriceRenderer extends MobRenderer<CockatriceEntity, Cockatrice
         this.addLayer(new CockatriceLayer<>(this));
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
 	protected void scale(CockatriceEntity cockatrice, MatrixStack matrixStackIn, float partialTickTime) {
         matrixStackIn.scale(1.8F, 1.8F, 1.8F);

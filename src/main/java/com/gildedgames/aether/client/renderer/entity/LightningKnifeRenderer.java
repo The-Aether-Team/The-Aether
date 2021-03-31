@@ -13,6 +13,8 @@ import net.minecraft.entity.IRendersAsItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Objects;
 
@@ -21,7 +23,8 @@ public class LightningKnifeRenderer extends EntityRenderer<LightningKnifeEntity>
 	public LightningKnifeRenderer(EntityRendererManager renderManager) {
 		super(renderManager);
 	}
-	
+
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void render(LightningKnifeEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrix, IRenderTypeBuffer bufferIn, int packedLightIn) {
 		matrix.pushPose();

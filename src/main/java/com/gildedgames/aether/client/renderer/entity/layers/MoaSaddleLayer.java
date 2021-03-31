@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class MoaSaddleLayer extends LayerRenderer<MoaEntity, MoaModel> {
 	private final MoaModel moaModel = new MoaModel(0.25F);
@@ -18,6 +20,7 @@ public class MoaSaddleLayer extends LayerRenderer<MoaEntity, MoaModel> {
 		super(entityRendererIn);
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, MoaEntity moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (moa.isSaddled()) {

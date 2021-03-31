@@ -9,6 +9,8 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class LorePageButton extends Button
 {
@@ -27,6 +29,7 @@ public class LorePageButton extends Button
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         Minecraft minecraft = Minecraft.getInstance();
