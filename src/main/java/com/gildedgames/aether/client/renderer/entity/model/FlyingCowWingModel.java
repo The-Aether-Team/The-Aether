@@ -6,10 +6,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class FlyingCowWingModel extends EntityModel<FlyingCowEntity> {
     private ModelRenderer leftWingInner = new ModelRenderer(this, 0, 0);
     private ModelRenderer leftWingOuter = new ModelRenderer(this, 20, 0);

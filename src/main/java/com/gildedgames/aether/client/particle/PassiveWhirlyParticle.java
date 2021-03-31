@@ -10,7 +10,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class PassiveWhirlyParticle extends SpriteTexturedParticle {
     WhirlwindEntity whirlwind;
     IAnimatedSprite animatedSprite;

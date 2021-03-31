@@ -7,10 +7,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.AbstractFurnaceContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class AetherFurnaceScreen<T extends AbstractFurnaceContainer> extends ContainerScreen<T>
 {
     private final ResourceLocation guiTexture;

@@ -8,10 +8,7 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.SlimeModel;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class SentryRenderer extends MobRenderer<SentryEntity, SlimeModel<SentryEntity>> {
 
 	private static final ResourceLocation SENTRY_TEXTURES     = new ResourceLocation(Aether.MODID, "textures/entity/sentry/sentry.png");

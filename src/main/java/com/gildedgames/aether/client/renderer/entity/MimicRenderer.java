@@ -9,10 +9,7 @@ import com.gildedgames.aether.common.entity.monster.MimicEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class MimicRenderer extends MobRenderer<MimicEntity, MimicModel> {
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mimic/normal.png");

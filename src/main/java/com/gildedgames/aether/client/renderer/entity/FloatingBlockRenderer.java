@@ -15,12 +15,9 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-@OnlyIn(Dist.CLIENT)
 public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 
 	public FloatingBlockRenderer(EntityRendererManager renderManager) {

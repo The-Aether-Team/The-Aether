@@ -11,10 +11,7 @@ import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class TNTPresentRenderer extends EntityRenderer<TNTPresentEntity>
 {
     public TNTPresentRenderer(EntityRendererManager renderManagerIn) {

@@ -10,10 +10,7 @@ import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class CustomItemStackTileEntityRenderer extends ItemStackTileEntityRenderer {
 	private final Supplier<? extends TileEntity> tileEntityCreator;
 	private /*final*/ TileEntity tileEntity;

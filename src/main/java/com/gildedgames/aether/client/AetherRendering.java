@@ -30,7 +30,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import java.util.function.Supplier;
 
-@OnlyIn(Dist.CLIENT)
 public class AetherRendering
 {
     public static void registerBlockRenderLayers() {

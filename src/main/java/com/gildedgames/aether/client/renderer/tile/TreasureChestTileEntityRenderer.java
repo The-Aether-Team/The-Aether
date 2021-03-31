@@ -1,16 +1,13 @@
 package com.gildedgames.aether.client.renderer.tile;
 
-import com.gildedgames.aether.client.renderer.AetherAtlases;
+import com.gildedgames.aether.client.registry.AetherAtlases;
 import net.minecraft.client.renderer.model.RenderMaterial;
 import net.minecraft.client.renderer.tileentity.ChestTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.state.properties.ChestType;
 import net.minecraft.tileentity.IChestLid;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class TreasureChestTileEntityRenderer<T extends TileEntity & IChestLid> extends ChestTileEntityRenderer<T> {
 
 	public TreasureChestTileEntityRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {

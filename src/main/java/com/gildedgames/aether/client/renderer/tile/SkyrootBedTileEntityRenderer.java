@@ -21,10 +21,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class SkyrootBedTileEntityRenderer extends TileEntityRenderer<SkyrootBedTileEntity>
 {
     private final ModelRenderer HEAD;

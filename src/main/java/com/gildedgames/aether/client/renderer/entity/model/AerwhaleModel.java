@@ -4,10 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class AerwhaleModel extends BaseAerwhaleModel {
 	private final ModelRenderer frontBody;
 	private final ModelRenderer rightFin;

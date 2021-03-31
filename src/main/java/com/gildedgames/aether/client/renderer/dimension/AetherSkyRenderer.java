@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.renderer;
+package com.gildedgames.aether.client.renderer.dimension;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;

@@ -22,13 +22,10 @@ import net.minecraft.tileentity.TileEntityMerger;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.Calendar;
 
-@OnlyIn(Dist.CLIENT)
 public class ChestMimicTileEntityRenderer<T extends TileEntity> extends TileEntityRenderer<T>
 {
 	private final ModelRenderer singleLid;

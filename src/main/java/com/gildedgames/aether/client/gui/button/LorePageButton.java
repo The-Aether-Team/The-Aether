@@ -10,8 +10,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 
-import net.minecraft.client.gui.widget.button.Button.IPressable;
-
 public class LorePageButton extends Button
 {
     private static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/lore_widgets.png");
