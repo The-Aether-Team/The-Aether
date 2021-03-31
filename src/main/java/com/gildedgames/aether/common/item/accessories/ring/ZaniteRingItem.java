@@ -10,7 +10,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.CuriosApi;
 
-@Mod.EventBusSubscriber
 public class ZaniteRingItem extends AccessoryItem
 {
     public ZaniteRingItem(Properties properties) {
@@ -27,10 +26,5 @@ public class ZaniteRingItem extends AccessoryItem
         if (livingEntity.tickCount % 400 == 0) {
             stack.hurtAndBreak(1, livingEntity, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity));
         }
-    }
-
-    @SubscribeEvent
-    public static void onMiningSpeed(PlayerEvent.BreakSpeed event) {
-        CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.ZANITE_RING.get(), event.getPlayer()).ifPresent((triple) -> IZaniteAccessory.handleMiningSpeed(event, triple));
     }
 }

@@ -6,7 +6,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
 public class IceRingItem extends AccessoryItem
 {
     public IceRingItem(Properties properties) {

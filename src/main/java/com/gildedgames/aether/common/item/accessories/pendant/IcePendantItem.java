@@ -6,7 +6,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
 public class IcePendantItem extends AccessoryItem
 {
     public IcePendantItem(Properties properties) {

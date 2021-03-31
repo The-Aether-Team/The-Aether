@@ -15,9 +15,10 @@ public class AetherClient
     }
 
     public static void clientSetup(FMLClientSetupEvent event) {
+        AetherRendering.registerEntityRenderers();
+        AetherRendering.registerTileEntityRenderers();
+
         event.enqueueWork(() -> {
-            AetherRendering.registerEntityRenderers(event);
-            AetherRendering.registerTileEntityRenderers();
             AetherRendering.registerBlockRenderLayers();
             AetherRendering.registerItemModelProperties();
             AetherRendering.registerGuiFactories();
