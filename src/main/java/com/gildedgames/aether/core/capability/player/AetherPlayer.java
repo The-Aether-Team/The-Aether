@@ -13,6 +13,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
@@ -81,25 +83,25 @@ public class AetherPlayer implements IAetherPlayer
 	 * On the client, this will also help to set the portal overlay.
 	 */
 	private void handleAetherPortal() {
-		if(player.level.isClientSide) {
+		if (player.level.isClientSide) {
 			this.prevPortalAnimTime = this.portalAnimTime;
 			Minecraft mc = Minecraft.getInstance();
-			if(this.isInAetherPortal) {
+			if (this.isInAetherPortal) {
 				if (mc.screen != null && !mc.screen.isPauseScreen()) {
 					if (mc.screen instanceof ContainerScreen) {
 						player.closeContainer();
 					}
 
-					mc.setScreen((Screen) null);
+					mc.setScreen(null);
 				}
 
 				if (this.portalAnimTime == 0.0F) {
-					mc.getSoundManager().play(SimpleSound.forLocalAmbience(SoundEvents.PORTAL_TRIGGER, random.nextFloat() * 0.4F + 0.8F, 0.25F));
+					playPortalSound(mc);
 				}
 			}
 		}
 
-		if(this.isInAetherPortal) {
+		if (this.isInAetherPortal) {
 			++this.aetherPortalTimer;
 			if(player.level.isClientSide) {
 				this.portalAnimTime += 0.0125F;
@@ -110,7 +112,7 @@ public class AetherPlayer implements IAetherPlayer
 			this.isInAetherPortal = false;
 		}
 		else{
-			if(player.level.isClientSide) {
+			if (player.level.isClientSide) {
 				if (this.portalAnimTime > 0.0F)
 				{
 					this.portalAnimTime -= 0.05F;
@@ -125,6 +127,11 @@ public class AetherPlayer implements IAetherPlayer
 				this.aetherPortalTimer -= 4;
 			}
 		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	private void playPortalSound(Minecraft mc) {
+		mc.getSoundManager().play(SimpleSound.forLocalAmbience(SoundEvents.PORTAL_TRIGGER, random.nextFloat() * 0.4F + 0.8F, 0.25F));
 	}
 
 	@Override
