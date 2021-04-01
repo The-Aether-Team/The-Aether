@@ -28,6 +28,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
+@OnlyIn(value = Dist.CLIENT, _interface = IChestLid.class)
 public class TreasureChestTileEntity extends LockableLootTileEntity implements IChestLid, ITickableTileEntity
 {
     private NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);

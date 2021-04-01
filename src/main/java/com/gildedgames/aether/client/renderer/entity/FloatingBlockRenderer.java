@@ -15,8 +15,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
@@ -27,7 +25,6 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 		this.shadowRadius = 0.5F;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@SuppressWarnings("deprecation")
 	@Override
 	public void render(FloatingBlockEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {

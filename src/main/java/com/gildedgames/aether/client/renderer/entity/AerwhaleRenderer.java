@@ -13,8 +13,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleModel> {
     private static final ResourceLocation AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/aerwhale/aerwhale.png");
@@ -32,7 +30,6 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
     private Object _data;
     private static Object _staticData;
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     protected void scale(AerwhaleEntity aerwhale, MatrixStack matrixStackIn, float partialTickTime) {
         matrixStackIn.translate(0, 1.2, 0);
@@ -64,7 +61,6 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
 //        }
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(AerwhaleEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
     	super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);

@@ -5,8 +5,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class PhygWingModel extends EntityModel<PhygEntity> {
     private ModelRenderer leftWingInner = new ModelRenderer(this, 0, 0);
@@ -84,7 +82,6 @@ public class PhygWingModel extends EntityModel<PhygEntity> {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
         if(isChild) {

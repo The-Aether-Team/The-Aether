@@ -11,8 +11,6 @@ import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class TNTPresentRenderer extends EntityRenderer<TNTPresentEntity>
 {
@@ -21,7 +19,6 @@ public class TNTPresentRenderer extends EntityRenderer<TNTPresentEntity>
         this.shadowRadius = 0.5F;
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(TNTPresentEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
         matrixStackIn.pushPose();

@@ -4,8 +4,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class AerwhaleModel extends BaseAerwhaleModel {
 	private final ModelRenderer frontBody;
@@ -81,7 +79,6 @@ public class AerwhaleModel extends BaseAerwhaleModel {
 		this.middleBody.xRot = -0.0698132F;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		//System.out.println("Aerwhale render");

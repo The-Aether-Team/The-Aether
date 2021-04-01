@@ -7,8 +7,6 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class CockatriceModel extends EntityModel<CockatriceEntity> {
     private final ModelRenderer head, body;
@@ -112,7 +110,6 @@ public class CockatriceModel extends EntityModel<CockatriceEntity> {
         this.jaw.xRot += 0.35F;
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
         this.legs.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);

@@ -25,9 +25,7 @@ import net.minecraftforge.client.ISkyRenderHandler;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-/**
- * Custom sky renderer to make celestial bodies invisible and to make the sky not go dark below y = 63.
- */
+@OnlyIn(Dist.CLIENT)
 public class AetherSkyRenderer implements ISkyRenderHandler {
     private static final ResourceLocation MOON_LOCATION = new ResourceLocation("textures/environment/moon_phases.png");
     private static final ResourceLocation SUN_LOCATION = new ResourceLocation("textures/environment/sun.png");
@@ -40,7 +38,6 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         createStars();
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(int ticks, float partialTicks, MatrixStack matrixStack, ClientWorld world, Minecraft mc) {
         TextureManager textureManager = Minecraft.getInstance().getTextureManager();

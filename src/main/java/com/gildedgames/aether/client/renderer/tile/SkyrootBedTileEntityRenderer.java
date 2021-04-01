@@ -21,8 +21,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class SkyrootBedTileEntityRenderer extends TileEntityRenderer<SkyrootBedTileEntity>
 {
@@ -54,7 +52,6 @@ public class SkyrootBedTileEntityRenderer extends TileEntityRenderer<SkyrootBedT
         this.LEGS[3].zRot = (float)Math.PI;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void render(SkyrootBedTileEntity tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
         World world = tileEntityIn.getLevel();
         if (world != null) {
@@ -68,7 +65,6 @@ public class SkyrootBedTileEntityRenderer extends TileEntityRenderer<SkyrootBedT
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     private void renderModel(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, boolean isHead, Direction direction, int combinedLightIn, int combinedOverlayIn, boolean isFoot) {
         this.HEAD.visible = isHead;
         this.FOOT.visible = !isHead;

@@ -8,8 +8,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ZephyrRenderer extends MobRenderer<ZephyrEntity, ZephyrModel> {
     private static final ResourceLocation ZEPHYR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/zephyr/zephyr_main.png");
@@ -18,7 +16,6 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, ZephyrModel> {
         addLayer(new ZephyrTransparencyLayer(this));
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     protected void scale(ZephyrEntity zephyr, MatrixStack matrixStackIn, float partialTickTime) {
         float f1 = ((float) zephyr.getAttackCharge() + partialTickTime) / 20.0F;

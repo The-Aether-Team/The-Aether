@@ -9,8 +9,6 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class IncubatorScreen extends ContainerScreen<IncubatorContainer> {
 	private static final ResourceLocation INCUBATOR_GUI_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/container/incubator.png");
@@ -25,7 +23,6 @@ public class IncubatorScreen extends ContainerScreen<IncubatorContainer> {
 		this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		this.renderBackground(matrixStack);
@@ -34,7 +31,6 @@ public class IncubatorScreen extends ContainerScreen<IncubatorContainer> {
 		this.renderTooltip(matrixStack, mouseX, mouseY);
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Override
 	protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);

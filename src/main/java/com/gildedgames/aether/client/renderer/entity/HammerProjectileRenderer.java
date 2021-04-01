@@ -13,8 +13,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Matrix3f;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class HammerProjectileRenderer extends EntityRenderer<HammerProjectileEntity> {
     public static final ResourceLocation NOTCH_WAVE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/notch_wave.png");
@@ -24,7 +22,6 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectileEnt
         this.shadowRadius = 0.0F;
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(HammerProjectileEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
         matrixStackIn.pushPose();
@@ -47,7 +44,6 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectileEnt
         return NOTCH_WAVE;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void drawVertex(Matrix4f matrix, Matrix3f normals, IVertexBuilder vertexBuilder, float offsetX, float offsetY, float offsetZ, float textureX, float textureY, int normalX, int normalY, int normalZ, int packedLightIn) {
         vertexBuilder.vertex(matrix, offsetX, offsetY, offsetZ).color(255, 255, 255, 255).uv(textureX, textureY).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(packedLightIn).normal(normals, (float)normalX, (float)normalZ, (float)normalY).endVertex();
     }

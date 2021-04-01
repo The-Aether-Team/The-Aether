@@ -6,8 +6,6 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class FlyingCowWingModel extends EntityModel<FlyingCowEntity> {
     private ModelRenderer leftWingInner = new ModelRenderer(this, 0, 0);
@@ -51,7 +49,6 @@ public class FlyingCowWingModel extends EntityModel<FlyingCowEntity> {
         this.rightWingOuter.zRot = -(flyingCow.wingAngle - wingBend + ((float)Math.PI / 2.0F));
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
         matrixStackIn.pushPose();

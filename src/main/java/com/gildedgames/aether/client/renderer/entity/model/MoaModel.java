@@ -7,8 +7,6 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class MoaModel extends EntityModel<MoaEntity> {
 	private final ModelRenderer head, body;
@@ -145,7 +143,6 @@ public class MoaModel extends EntityModel<MoaEntity> {
 		this.renderLegs = !moa.isSitting() || (!moa.isOnGround() && moa.isSitting());
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
 		if (this.renderLegs)

@@ -7,8 +7,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class AechorPlantRenderer extends MobRenderer<AechorPlantEntity, AechorPlantModel<AechorPlantEntity>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/aechor_plant/aechor_plant.png");
@@ -17,7 +15,6 @@ public class AechorPlantRenderer extends MobRenderer<AechorPlantEntity, AechorPl
         super(renderManager, new AechorPlantModel(), 0.3F);
     }
 
-    @OnlyIn(Dist.CLIENT)
     protected void scale(AechorPlantEntity aechorPlant, MatrixStack matrixStackIn, float partialTickTime) {
         float f1 = (float)Math.sin((double)aechorPlant.sinage);
         float f3;

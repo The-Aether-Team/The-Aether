@@ -6,8 +6,6 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class AechorPlantModel<T extends Entity> extends EntityModel<AechorPlantEntity> {
 
@@ -72,7 +70,6 @@ public class AechorPlantModel<T extends Entity> extends EntityModel<AechorPlantE
         Thorn[3].addBox(0F, 2.25F, -1.75F, 1, 1, 1, Math.abs(size - 0.25F));
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
         for (int i = 0; i < 10; i++) {

@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class CustomItemStackTileEntityRenderer extends ItemStackTileEntityRenderer {
 	private final Supplier<? extends TileEntity> tileEntityCreator;
@@ -21,7 +19,6 @@ public class CustomItemStackTileEntityRenderer extends ItemStackTileEntityRender
 		this.tileEntityCreator = tileEntityCreator;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void renderByItem(ItemStack itemStackIn, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		TileEntity tileEntity = this.tileEntity;

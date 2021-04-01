@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.PigModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class PhygSaddleLayer extends LayerRenderer<PhygEntity, PigModel<PhygEntity>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/pig/pig_saddle.png");
@@ -20,7 +18,6 @@ public class PhygSaddleLayer extends LayerRenderer<PhygEntity, PigModel<PhygEnti
         super(entityRendererIn);
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, PhygEntity phyg, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (phyg.isSaddled()) {
