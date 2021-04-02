@@ -6,7 +6,8 @@
   "refmap": "aether.refmap.json",
   "mixins": [
     "common.PiglinTasksMixin",
-    "common.FindPollinationTargetGoalMixin"
+    "common.FindPollinationTargetGoalMixin",
+    "common.EatBerriesGoalMixin"
   ],
   "client": [
     "client.ClientRecipeBookMixin",
