@@ -5,9 +5,10 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "aether.refmap.json",
   "mixins": [
-    "common.PiglinTasksMixin",
+    "common.EatBerriesGoalMixin",
     "common.FindPollinationTargetGoalMixin",
-    "common.EatBerriesGoalMixin"
+    "common.FoxEntityMixin",
+    "common.PiglinTasksMixin"
   ],
   "client": [
     "client.ClientRecipeBookMixin",
