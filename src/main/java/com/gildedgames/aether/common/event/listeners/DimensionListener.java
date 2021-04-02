@@ -20,7 +20,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.event.world.SleepFinishedTimeEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -76,10 +76,11 @@ public class DimensionListener
     }
 
     @SubscribeEvent
-    public static void onPlayerWakeUp(PlayerWakeUpEvent event) {
-        MinecraftServer server = event.getPlayer().getServer();
-        if (server != null) {
-            for(ServerWorld serverworld : server.getAllLevels()) {
+    public static void onSleepFinishedTime(SleepFinishedTimeEvent event) {
+        if (event.getWorld() instanceof ServerWorld) {
+            ServerWorld world = (ServerWorld) event.getWorld();
+            MinecraftServer server = world.getServer();
+            for (ServerWorld serverworld : server.getAllLevels()) {
                 serverworld.setDayTime(0);
             }
         }
