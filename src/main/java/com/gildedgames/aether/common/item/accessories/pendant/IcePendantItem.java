@@ -1,15 +1,13 @@
 package com.gildedgames.aether.common.item.accessories.pendant;
 
-import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.gildedgames.aether.common.item.accessories.abilities.IIceAccessory;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Mod;
 
-public class IcePendantItem extends AccessoryItem
+public class IcePendantItem extends PendantItem
 {
     public IcePendantItem(Properties properties) {
-        super(properties);
+        super("ice_pendant", properties);
     }
 
     @Override

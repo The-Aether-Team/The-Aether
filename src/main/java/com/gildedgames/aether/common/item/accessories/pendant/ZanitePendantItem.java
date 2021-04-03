@@ -1,19 +1,14 @@
 package com.gildedgames.aether.common.item.accessories.pendant;
 
-import com.gildedgames.aether.common.item.accessories.AccessoryItem;
-import com.gildedgames.aether.common.item.accessories.abilities.IZaniteAccessory;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.CuriosApi;
 
-public class ZanitePendantItem extends AccessoryItem
+public class ZanitePendantItem extends PendantItem
 {
     public ZanitePendantItem(Properties properties) {
-        super(properties);
+        super("zanite_pendant", properties);
     }
 
     @Override

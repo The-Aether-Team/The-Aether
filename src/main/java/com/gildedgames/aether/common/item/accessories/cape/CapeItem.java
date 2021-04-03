@@ -36,42 +36,45 @@ public class CapeItem extends AccessoryItem
     }
 
     @Override
-    public void renderModel(PlayerModel<?> model, String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-        if (livingEntity instanceof AbstractClientPlayerEntity) {
-            AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) livingEntity;
-            if (!player.isInvisible()) {
-                ItemStack itemstack = player.getItemBySlot(EquipmentSlotType.CHEST);
-                if (itemstack.getItem() != Items.ELYTRA) {
-                    matrixStack.pushPose();
-                    matrixStack.translate(0.0D, 0.0D, 0.125D);
-                    double d0 = MathHelper.lerp(partialTicks, player.xCloakO, player.xCloak) - MathHelper.lerp(partialTicks, player.xo, player.getX());
-                    double d1 = MathHelper.lerp(partialTicks, player.yCloakO, player.yCloak) - MathHelper.lerp(partialTicks, player.yo, player.getY());
-                    double d2 = MathHelper.lerp(partialTicks, player.zCloakO, player.zCloak) - MathHelper.lerp(partialTicks, player.zo, player.getZ());
-                    float f = player.yBodyRotO + (player.yBodyRot - player.yBodyRotO);
-                    double d3 = MathHelper.sin(f * ((float)Math.PI / 180F));
-                    double d4 = -MathHelper.cos(f * ((float)Math.PI / 180F));
-                    float f1 = (float)d1 * 10.0F;
-                    f1 = MathHelper.clamp(f1, -6.0F, 32.0F);
-                    float f2 = (float)(d0 * d3 + d2 * d4) * 100.0F;
-                    f2 = MathHelper.clamp(f2, 0.0F, 150.0F);
-                    float f3 = (float)(d0 * d4 - d2 * d3) * 100.0F;
-                    f3 = MathHelper.clamp(f3, -20.0F, 20.0F);
-                    if (f2 < 0.0F) {
-                        f2 = 0.0F;
-                    }
+    public void renderModel(BipedModel<?> model, String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
+        if (model instanceof PlayerModel<?>) {
+            PlayerModel<?> playerModel = (PlayerModel<?>) model;
+            if (livingEntity instanceof AbstractClientPlayerEntity) {
+                AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) livingEntity;
+                if (!player.isInvisible()) {
+                    ItemStack itemstack = player.getItemBySlot(EquipmentSlotType.CHEST);
+                    if (itemstack.getItem() != Items.ELYTRA) {
+                        matrixStack.pushPose();
+                        matrixStack.translate(0.0D, 0.0D, 0.125D);
+                        double d0 = MathHelper.lerp(partialTicks, player.xCloakO, player.xCloak) - MathHelper.lerp(partialTicks, player.xo, player.getX());
+                        double d1 = MathHelper.lerp(partialTicks, player.yCloakO, player.yCloak) - MathHelper.lerp(partialTicks, player.yo, player.getY());
+                        double d2 = MathHelper.lerp(partialTicks, player.zCloakO, player.zCloak) - MathHelper.lerp(partialTicks, player.zo, player.getZ());
+                        float f = player.yBodyRotO + (player.yBodyRot - player.yBodyRotO);
+                        double d3 = MathHelper.sin(f * ((float)Math.PI / 180F));
+                        double d4 = -MathHelper.cos(f * ((float)Math.PI / 180F));
+                        float f1 = (float)d1 * 10.0F;
+                        f1 = MathHelper.clamp(f1, -6.0F, 32.0F);
+                        float f2 = (float)(d0 * d3 + d2 * d4) * 100.0F;
+                        f2 = MathHelper.clamp(f2, 0.0F, 150.0F);
+                        float f3 = (float)(d0 * d4 - d2 * d3) * 100.0F;
+                        f3 = MathHelper.clamp(f3, -20.0F, 20.0F);
+                        if (f2 < 0.0F) {
+                            f2 = 0.0F;
+                        }
 
-                    float f4 = MathHelper.lerp(partialTicks, player.oBob, player.bob);
-                    f1 = f1 + MathHelper.sin(MathHelper.lerp(partialTicks, player.walkDistO, player.walkDist) * 6.0F) * 32.0F * f4;
-                    if (player.isCrouching()) {
-                        f1 += 25.0F;
-                    }
+                        float f4 = MathHelper.lerp(partialTicks, player.oBob, player.bob);
+                        f1 = f1 + MathHelper.sin(MathHelper.lerp(partialTicks, player.walkDistO, player.walkDist) * 6.0F) * 32.0F * f4;
+                        if (player.isCrouching()) {
+                            f1 += 25.0F;
+                        }
 
-                    matrixStack.mulPose(Vector3f.XP.rotationDegrees(6.0F + f2 / 2.0F + f1));
-                    matrixStack.mulPose(Vector3f.ZP.rotationDegrees(f3 / 2.0F));
-                    matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - f3 / 2.0F));
-                    IVertexBuilder ivertexbuilder = renderTypeBuffer.getBuffer(RenderType.entitySolid(this.CAPE_LOCATION));
-                    model.renderCloak(matrixStack, ivertexbuilder, light, OverlayTexture.NO_OVERLAY);
-                    matrixStack.popPose();
+                        matrixStack.mulPose(Vector3f.XP.rotationDegrees(6.0F + f2 / 2.0F + f1));
+                        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(f3 / 2.0F));
+                        matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - f3 / 2.0F));
+                        IVertexBuilder ivertexbuilder = renderTypeBuffer.getBuffer(RenderType.entitySolid(this.CAPE_LOCATION));
+                        playerModel.renderCloak(matrixStack, ivertexbuilder, light, OverlayTexture.NO_OVERLAY);
+                        matrixStack.popPose();
+                    }
                 }
             }
         }

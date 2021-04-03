@@ -133,7 +133,7 @@ public class Aether
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.RING.getMessageBuilder().icon(new ResourceLocation(Aether.MODID, "gui/slots/ring")).size(2).build());
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("shield").icon(new ResourceLocation(Aether.MODID, "gui/slots/shield")).build());
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.HANDS.getMessageBuilder().icon(new ResourceLocation(Aether.MODID, "gui/slots/gloves")).build());
-		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("misc").icon(new ResourceLocation(Aether.MODID, "gui/slots/misc")).size(2).build());
+		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.CHARM.getMessageBuilder().icon(new ResourceLocation(Aether.MODID, "gui/slots/misc")).size(2).build());
 	}
 
 	public void dataSetup(GatherDataEvent event) {

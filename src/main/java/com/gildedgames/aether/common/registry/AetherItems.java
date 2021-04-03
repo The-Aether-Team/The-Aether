@@ -13,6 +13,7 @@ import com.gildedgames.aether.common.item.accessories.misc.GoldenFeatherItem;
 import com.gildedgames.aether.common.item.accessories.misc.IronBubbleItem;
 import com.gildedgames.aether.common.item.accessories.misc.RegenerationStoneItem;
 import com.gildedgames.aether.common.item.accessories.pendant.IcePendantItem;
+import com.gildedgames.aether.common.item.accessories.pendant.PendantItem;
 import com.gildedgames.aether.common.item.accessories.pendant.ZanitePendantItem;
 import com.gildedgames.aether.common.item.accessories.ring.IceRingItem;
 import com.gildedgames.aether.common.item.materials.AmbrosiumShardItem;
@@ -185,9 +186,9 @@ public class AetherItems
 			() -> new IceRingItem(new Item.Properties().stacksTo(1).defaultDurability(125).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
 	public static final RegistryObject<Item> IRON_PENDANT = ITEMS.register("iron_pendant",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new PendantItem("iron_pendant", new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> GOLDEN_PENDANT = ITEMS.register("golden_pendant",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new PendantItem("golden_pendant", new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> ZANITE_PENDANT = ITEMS.register("zanite_pendant",
 			() -> new ZanitePendantItem(new Item.Properties().stacksTo(1).defaultDurability(98).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> ICE_PENDANT = ITEMS.register("ice_pendant",

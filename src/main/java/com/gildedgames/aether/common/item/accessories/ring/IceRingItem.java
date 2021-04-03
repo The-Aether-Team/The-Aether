@@ -4,7 +4,6 @@ import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.gildedgames.aether.common.item.accessories.abilities.IIceAccessory;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Mod;
 
 public class IceRingItem extends AccessoryItem
 {

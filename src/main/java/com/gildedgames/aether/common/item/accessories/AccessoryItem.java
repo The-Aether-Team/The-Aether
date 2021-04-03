@@ -30,10 +30,7 @@ public class AccessoryItem extends Item implements ICurioItem
         EntityRenderer<?> entityRenderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(livingEntity);
         if (entityRenderer instanceof IEntityRenderer<?, ?>) {
             EntityModel<?> model = ((IEntityRenderer<?, ?>) entityRenderer).getModel();
-            if (model instanceof PlayerModel<?>) {
-                PlayerModel<?> playerModel = (PlayerModel<?>) model;
-                this.renderModel(playerModel, identifier, index, matrixStack, renderTypeBuffer, light, livingEntity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack);
-            } else if (model instanceof BipedModel<?>) {
+            if (model instanceof BipedModel<?>) {
                 BipedModel<?> bipedModel = (BipedModel<?>) model;
                 this.renderModel(bipedModel, identifier, index, matrixStack, renderTypeBuffer, light, livingEntity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack);
             }
@@ -41,6 +38,4 @@ public class AccessoryItem extends Item implements ICurioItem
     }
 
     public void renderModel(BipedModel<?> model, String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) { }
-
-    public void renderModel(PlayerModel<?> model, String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) { }
 }
