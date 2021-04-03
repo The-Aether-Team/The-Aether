@@ -204,7 +204,7 @@ public class AetherItems
 	public static final RegistryObject<Item> DIAMOND_GLOVES = ITEMS.register("diamond_gloves",
 			() -> new GlovesItem(new Item.Properties().stacksTo(1).defaultDurability(1561).tab(AetherItemGroups.AETHER_ACCESSORIES), 2.0D));
 	public static final RegistryObject<Item> NETHERITE_GLOVES = ITEMS.register("netherite_gloves",
-			() -> new GlovesItem(new Item.Properties().stacksTo(1).defaultDurability(2031).tab(AetherItemGroups.AETHER_ACCESSORIES), 4.0D));
+			() -> new GlovesItem(new Item.Properties().stacksTo(1).defaultDurability(2031).fireResistant().tab(AetherItemGroups.AETHER_ACCESSORIES), 4.0D));
 	public static final RegistryObject<Item> ZANITE_GLOVES = ITEMS.register("zanite_gloves",
 			() -> new ZaniteGlovesItem(new Item.Properties().stacksTo(1).defaultDurability(250).tab(AetherItemGroups.AETHER_ACCESSORIES), 1.0D));
 	public static final RegistryObject<Item> GRAVITITE_GLOVES = ITEMS.register("gravitite_gloves",
