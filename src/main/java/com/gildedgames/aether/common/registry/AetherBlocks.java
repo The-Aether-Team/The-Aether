@@ -23,7 +23,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.*;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;

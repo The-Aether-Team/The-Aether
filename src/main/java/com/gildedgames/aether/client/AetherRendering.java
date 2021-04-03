@@ -4,6 +4,7 @@ import com.gildedgames.aether.client.gui.screen.inventory.AltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.FreezerScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.IncubatorScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.LoreBookScreen;
+import com.gildedgames.aether.common.registry.AetherWoodTypes;
 import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicTileEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.CustomItemStackTileEntityRenderer;

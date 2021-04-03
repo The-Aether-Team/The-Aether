@@ -141,9 +141,12 @@ public class AetherLootTableProvider extends LootTableProvider
                                     .when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))));
         }
 
-        protected static LootTable.Builder droppingDoubleGoldenOak(Block block, Item item) {
+        protected static LootTable.Builder droppingDoubleGoldenOak(Block original, Block block, Item item) {
             return LootTable.lootTable()
-                    .withPool(applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(block))))
+                    .withPool(applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(original)
+                            .when(HAS_SILK_TOUCH))))
+                    .withPool(applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(block)
+                            .when(HAS_SILK_TOUCH.invert()))))
                     .withPool(applyExplosionDecay(item, LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(item)
                             .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
                             .when(HAS_SILK_TOUCH.invert())

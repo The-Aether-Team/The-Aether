@@ -80,11 +80,11 @@ public class AetherLootTableData extends AetherLootTableProvider
 
             dropSelfDouble(AetherBlocks.SKYROOT_LOG);
             this.add(AetherBlocks.GOLDEN_OAK_LOG.get(),
-                    (log) -> droppingDoubleGoldenOak(AetherBlocks.SKYROOT_LOG.get(), AetherItems.GOLDEN_AMBER.get()));
+                    (log) -> droppingDoubleGoldenOak(log, AetherBlocks.SKYROOT_LOG.get(), AetherItems.GOLDEN_AMBER.get()));
             dropSelfDouble(AetherBlocks.STRIPPED_SKYROOT_LOG);
             dropSelfDouble(AetherBlocks.SKYROOT_WOOD);
             this.add(AetherBlocks.GOLDEN_OAK_WOOD.get(),
-                    (wood) -> droppingDoubleGoldenOak(AetherBlocks.SKYROOT_WOOD.get(), AetherItems.GOLDEN_AMBER.get()));
+                    (wood) -> droppingDoubleGoldenOak(wood, AetherBlocks.SKYROOT_WOOD.get(), AetherItems.GOLDEN_AMBER.get()));
             dropSelfDouble(AetherBlocks.STRIPPED_SKYROOT_WOOD);
 
             dropSelf(AetherBlocks.SKYROOT_PLANKS);
