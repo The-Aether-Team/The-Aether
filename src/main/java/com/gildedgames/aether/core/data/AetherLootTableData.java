@@ -5,6 +5,7 @@ import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.provider.AetherLootTableProvider;
 import com.gildedgames.aether.common.registry.*;
 import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.block.BedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
@@ -19,6 +20,7 @@ import net.minecraft.loot.functions.ApplyBonus;
 import net.minecraft.loot.functions.LootingEnchantBonus;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.loot.functions.Smelt;
+import net.minecraft.state.properties.BedPart;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 
@@ -188,7 +190,8 @@ public class AetherLootTableData extends AetherLootTableProvider
             this.add(AetherBlocks.SKYROOT_BOOKSHELF.get(),
                     (bookshelf) -> createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ConstantRange.exactly(3)));
 
-            dropSelf(AetherBlocks.SKYROOT_BED);
+            this.add(AetherBlocks.SKYROOT_BED.get(),
+                    (bed) -> createSinglePropConditionTable(bed, BedBlock.PART, BedPart.HEAD));
         }
 
         @Override
