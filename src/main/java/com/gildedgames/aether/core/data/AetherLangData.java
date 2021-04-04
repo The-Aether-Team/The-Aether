@@ -455,7 +455,6 @@ public class AetherLangData extends LanguageProvider
 
 
         addCuriosIdentifier("shield", "Shield");
-        addCuriosIdentifier("misc", "Miscellaneous");
 
 
         addItemLore(AetherItems.AECHOR_PETAL, "The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.");
