@@ -12,6 +12,7 @@ import com.gildedgames.aether.common.item.accessories.gloves.GoldGlovesItem;
 import com.gildedgames.aether.common.item.accessories.misc.GoldenFeatherItem;
 import com.gildedgames.aether.common.item.accessories.misc.IronBubbleItem;
 import com.gildedgames.aether.common.item.accessories.misc.RegenerationStoneItem;
+import com.gildedgames.aether.common.item.accessories.misc.RepulsionShieldItem;
 import com.gildedgames.aether.common.item.accessories.pendant.IcePendantItem;
 import com.gildedgames.aether.common.item.accessories.pendant.PendantItem;
 import com.gildedgames.aether.common.item.accessories.pendant.ZanitePendantItem;
@@ -243,7 +244,7 @@ public class AetherItems
 	public static final RegistryObject<Item> IRON_BUBBLE = ITEMS.register("iron_bubble",
 			() -> new IronBubbleItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> REPULSION_SHIELD = ITEMS.register("repulsion_shield",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new RepulsionShieldItem(new Item.Properties().stacksTo(1).defaultDurability(512).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
 	// Materials
 	public static final RegistryObject<Item> SKYROOT_STICK = ITEMS.register("skyroot_stick", () -> new SkyrootStickItem(new Item.Properties().tab(AetherItemGroups.AETHER_MATERIALS)));

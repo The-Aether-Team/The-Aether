@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import top.theillusivec4.curios.api.type.capability.ICurio;
 
 public class PendantItem extends AccessoryItem
 {
@@ -30,13 +29,10 @@ public class PendantItem extends AccessoryItem
 
     @Override
     public void renderModel(BipedModel<?> model, String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-        ICurio.RenderHelper.translateIfSneaking(matrixStack, livingEntity);
-        ICurio.RenderHelper.rotateIfSneaking(matrixStack, livingEntity);
-
+        matrixStack.scale(1.1F, 1.1F, 1.1F);
         if (model == null) {
             model = new BipedModel<>(1.0F);
         }
-
         IVertexBuilder buffer = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(this.PENDANT_LOCATION), false, stack.isEnchanted());
         model.body.render(matrixStack, buffer, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
     }
