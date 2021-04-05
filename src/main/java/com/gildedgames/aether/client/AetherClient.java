@@ -19,6 +19,7 @@ public class AetherClient
         AetherRendering.registerTileEntityRenderers();
 
         event.enqueueWork(() -> {
+            AetherRendering.registerColors();
             AetherRendering.registerBlockRenderLayers();
             AetherRendering.registerItemModelProperties();
             AetherRendering.registerGuiFactories();

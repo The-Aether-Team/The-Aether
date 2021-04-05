@@ -7,6 +7,7 @@ import com.gildedgames.aether.common.item.accessories.cape.CapeItem;
 import com.gildedgames.aether.common.item.accessories.cape.InvisibilityCloakItem;
 import com.gildedgames.aether.common.item.accessories.cape.ValkyrieCapeItem;
 import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
+import com.gildedgames.aether.common.item.accessories.gloves.LeatherGlovesItem;
 import com.gildedgames.aether.common.item.accessories.gloves.ZaniteGlovesItem;
 import com.gildedgames.aether.common.item.accessories.gloves.GoldGlovesItem;
 import com.gildedgames.aether.common.item.accessories.misc.GoldenFeatherItem;
@@ -196,7 +197,7 @@ public class AetherItems
 			() -> new IcePendantItem(new Item.Properties().stacksTo(1).defaultDurability(250).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
 	public static final RegistryObject<Item> LEATHER_GLOVES = ITEMS.register("leather_gloves",
-			() -> new GlovesItem(new Item.Properties().stacksTo(1).defaultDurability(59).tab(AetherItemGroups.AETHER_ACCESSORIES), 0.5D));
+			() -> new LeatherGlovesItem(new Item.Properties().stacksTo(1).defaultDurability(59).tab(AetherItemGroups.AETHER_ACCESSORIES), 0.5D));
 	public static final RegistryObject<Item> CHAINMAIL_GLOVES = ITEMS.register("chainmail_gloves",
 			() -> new GlovesItem(new Item.Properties().stacksTo(1).defaultDurability(131).tab(AetherItemGroups.AETHER_ACCESSORIES), 0.7D));
 	public static final RegistryObject<Item> IRON_GLOVES = ITEMS.register("iron_gloves",
