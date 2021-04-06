@@ -10,18 +10,24 @@ import javax.annotation.Nonnull;
 
 public class GlovesModel extends BipedModel<LivingEntity>
 {
-    public GlovesModel() {
-        //TODO: Boolean for isSlim
+    public GlovesModel(boolean isSlim) {
         super(1.0F);
         this.texWidth = 16;
         this.texHeight = 16;
         this.rightArm = new ModelRenderer(this, 0, 0);
-        this.rightArm.setPos(-5.0F, 2.0F, 0.0F);
-        this.rightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.6F);
         this.leftArm = new ModelRenderer(this, 0, 0);
         this.leftArm.mirror = true;
-        this.leftArm.setPos(5.0F, 2.0F, 0.0F);
-        this.leftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.6F);
+        if (!isSlim) {
+            this.rightArm.setPos(-5.0F, 2.0F, 0.0F);
+            this.rightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.6F);
+            this.leftArm.setPos(5.0F, 2.0F, 0.0F);
+            this.leftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.6F);
+        } else {
+            this.rightArm.setPos(-5.0F, 2.0F, 0.0F);
+            this.rightArm.addBox(-2.0F, -2.0F, -2.0F, 3, 12, 4, 0.6F);
+            this.leftArm.setPos(5.0F, 2.0F, 0.0F);
+            this.leftArm.addBox(-1.0F, -2.0F, -2.0F, 3, 12, 4, 0.6F);
+        }
     }
 
     @Override
