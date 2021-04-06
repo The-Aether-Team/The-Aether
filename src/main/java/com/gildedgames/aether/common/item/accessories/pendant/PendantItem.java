@@ -15,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class PendantItem extends AccessoryItem
 {
-    private final ResourceLocation PENDANT_LOCATION;
+    protected final ResourceLocation PENDANT_LOCATION;
 
     public PendantItem(String pendantLocation, Properties properties) {
         super(properties);

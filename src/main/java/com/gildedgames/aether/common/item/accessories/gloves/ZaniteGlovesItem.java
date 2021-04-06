@@ -12,34 +12,26 @@ import java.util.UUID;
 
 public class ZaniteGlovesItem extends GlovesItem
 {
-    public ZaniteGlovesItem(Properties properties, double punchDamage) {
-        super(properties, punchDamage);
+    public ZaniteGlovesItem(double punchDamage, Properties properties) {
+        super(punchDamage, "zanite_gloves", properties);
     }
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
-        Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
-        atts.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Gloves Damage Bonus", calculateIncrease(stack), AttributeModifier.Operation.ADDITION));
-        return atts;
+        Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
+        attributes.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Gloves Damage Bonus", calculateIncrease(stack), AttributeModifier.Operation.ADDITION));
+        return attributes;
     }
 
     private float calculateIncrease(ItemStack tool) {
         int current = tool.getDamageValue();
         int maxDamage = tool.getMaxDamage();
 
-        if (maxDamage - 50 <= current) {
-            return 3.5F;
-        }
-        else if (maxDamage - 110 <= current) {
-            return 3.0F;
-        }
-        else if (maxDamage - 200 <= current) {
-            return 2.5F;
-        }
-        else if (maxDamage - 239 <= current) {
+        if (maxDamage - 55 <= current) {
             return 2.0F;
-        }
-        else {
+        } else if (maxDamage - 110 <= current) {
+            return 1.5F;
+        } else {
             return 1.0F;
         }
     }
