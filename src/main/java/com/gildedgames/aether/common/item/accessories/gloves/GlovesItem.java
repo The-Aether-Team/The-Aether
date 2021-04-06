@@ -36,11 +36,6 @@ public class GlovesItem extends AccessoryItem
         this.setRenderTexture(Aether.MODID, glovesName);
     }
 
-    public void setRenderTexture(String modId, String registryName) {
-        this.GLOVES_TEXTURE = new ResourceLocation(modId, "textures/models/accessory/gloves/" + registryName + "_accessory.png");
-        this.GLOVES_SLIM_TEXTURE = new ResourceLocation(modId, "textures/models/accessory/gloves/" + registryName + "_slim_accessory.png");
-    }
-
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
@@ -63,13 +58,19 @@ public class GlovesItem extends AccessoryItem
             vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(this.GLOVES_TEXTURE), false, stack.isEnchanted());
         }
         else {
-            gloves = new GlovesModel(true);
-            vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(this.GLOVES_SLIM_TEXTURE), false, stack.isEnchanted());
+            PlayerModel<?> playerModel = (PlayerModel<?>) model;
+            gloves = new GlovesModel(playerModel.slim);
+            vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(playerModel.slim ? this.GLOVES_SLIM_TEXTURE : this.GLOVES_TEXTURE), false, stack.isEnchanted());
         }
 
         gloves.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
         gloves.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         ICurio.RenderHelper.followBodyRotations(livingEntity, gloves);
         gloves.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+    }
+
+    public void setRenderTexture(String modId, String registryName) {
+        this.GLOVES_TEXTURE = new ResourceLocation(modId, "textures/models/accessory/gloves/" + registryName + "_accessory.png");
+        this.GLOVES_SLIM_TEXTURE = new ResourceLocation(modId, "textures/models/accessory/gloves/" + registryName + "_slim_accessory.png");
     }
 }

@@ -32,7 +32,7 @@ public class LeatherGlovesItem extends GlovesItem implements IDyeableArmorItem
         else {
             PlayerModel<?> playerModel = (PlayerModel<?>) model;
             gloves = new GlovesModel(playerModel.slim);
-            vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(this.GLOVES_SLIM_TEXTURE), false, stack.isEnchanted());
+            vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(playerModel.slim ? this.GLOVES_SLIM_TEXTURE : this.GLOVES_TEXTURE), false, stack.isEnchanted());
         }
 
         gloves.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);

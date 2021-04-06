@@ -23,11 +23,11 @@ import net.minecraft.util.math.vector.Vector3f;
 
 public class CapeItem extends AccessoryItem
 {
-    private final ResourceLocation CAPE_LOCATION;
+    private ResourceLocation CAPE_LOCATION;
 
     public CapeItem(String capeLocation, Properties properties) {
         super(properties);
-        this.CAPE_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/" + capeLocation + "_accessory.png");
+        this.setRenderTexture(Aether.MODID, capeLocation);
     }
 
     @Override
@@ -80,4 +80,7 @@ public class CapeItem extends AccessoryItem
         }
     }
 
+    public void setRenderTexture(String modId, String registryName) {
+        this.CAPE_LOCATION = new ResourceLocation(modId, "textures/models/accessory/capes/" + registryName + "_accessory.png");
+    }
 }

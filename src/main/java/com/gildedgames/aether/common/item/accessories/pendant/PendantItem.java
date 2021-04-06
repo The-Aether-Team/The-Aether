@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.item.accessories.pendant;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.renderer.accessory.model.PendantModel;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -12,14 +13,15 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import top.theillusivec4.curios.api.type.capability.ICurio;
 
 public class PendantItem extends AccessoryItem
 {
-    protected final ResourceLocation PENDANT_LOCATION;
+    protected ResourceLocation PENDANT_LOCATION;
 
     public PendantItem(String pendantLocation, Properties properties) {
         super(properties);
-        this.PENDANT_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/accessory/pendant/" + pendantLocation + "_accessory.png");
+        this.setRenderTexture(Aether.MODID, pendantLocation);
     }
 
     @Override
@@ -29,11 +31,17 @@ public class PendantItem extends AccessoryItem
 
     @Override
     public void renderModel(BipedModel<?> model, String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-        matrixStack.scale(1.1F, 1.1F, 1.1F);
-        if (model == null) {
-            model = new BipedModel<>(1.0F);
-        }
+        PendantModel pendant = new PendantModel();
+
+        pendant.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
+        pendant.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        ICurio.RenderHelper.followBodyRotations(livingEntity, pendant);
+
         IVertexBuilder buffer = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(this.PENDANT_LOCATION), false, stack.isEnchanted());
-        model.body.render(matrixStack, buffer, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        pendant.renderToBuffer(matrixStack, buffer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+    }
+
+    public void setRenderTexture(String modId, String registryName) {
+        this.PENDANT_LOCATION = new ResourceLocation(modId, "textures/models/accessory/pendant/" + registryName + "_accessory.png");
     }
 }
