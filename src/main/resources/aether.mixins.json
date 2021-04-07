@@ -12,7 +12,8 @@
   ],
   "client": [
     "client.ClientRecipeBookMixin",
-    "client.WorldRendererMixin"
+    "client.WorldRendererMixin",
+    "client.ElytraLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -44,4 +44,8 @@ public class PendantItem extends AccessoryItem
     public void setRenderTexture(String modId, String registryName) {
         this.PENDANT_LOCATION = new ResourceLocation(modId, "textures/models/accessory/pendant/" + registryName + "_accessory.png");
     }
+
+    public ResourceLocation getPendantTexture() {
+        return this.PENDANT_LOCATION;
+    }
 }

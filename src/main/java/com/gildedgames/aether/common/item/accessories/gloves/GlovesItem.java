@@ -73,4 +73,12 @@ public class GlovesItem extends AccessoryItem
         this.GLOVES_TEXTURE = new ResourceLocation(modId, "textures/models/accessory/gloves/" + registryName + "_accessory.png");
         this.GLOVES_SLIM_TEXTURE = new ResourceLocation(modId, "textures/models/accessory/gloves/" + registryName + "_slim_accessory.png");
     }
+
+    public ResourceLocation getGlovesTexture() {
+        return this.GLOVES_TEXTURE;
+    }
+
+    public ResourceLocation getGlovesSlimTexture() {
+        return this.GLOVES_SLIM_TEXTURE;
+    }
 }
