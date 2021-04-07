@@ -39,9 +39,9 @@ public class RepulsionShieldItem extends AccessoryItem
         Vector3d motion = livingEntity.getDeltaMovement();
 
         if (motion.x() == 0.0 && (motion.y() == -0.0784000015258789 || motion.y() == 0.0) && motion.z() == 0.0) {
-            texture = REPULSION_SHIELD;
+            texture = this.getRepulsionShieldTexture();
         } else {
-            texture = REPULSION_SHIELD_INACTIVE;
+            texture = this.getRepulsionShieldInactiveTexture();
         }
 
         IVertexBuilder vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.entityTranslucent(texture), false, stack.isEnchanted());
@@ -49,5 +49,13 @@ public class RepulsionShieldItem extends AccessoryItem
         shield.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         ICurio.RenderHelper.followBodyRotations(livingEntity, shield);
         shield.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+    }
+
+    public ResourceLocation getRepulsionShieldTexture() {
+        return REPULSION_SHIELD;
+    }
+
+    public ResourceLocation getRepulsionShieldInactiveTexture() {
+        return REPULSION_SHIELD_INACTIVE;
     }
 }
