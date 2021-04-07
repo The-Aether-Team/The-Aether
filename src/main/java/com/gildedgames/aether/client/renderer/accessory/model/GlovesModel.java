@@ -19,14 +19,14 @@ public class GlovesModel extends BipedModel<LivingEntity>
         this.leftArm.mirror = true;
         if (!isSlim) {
             this.rightArm.setPos(-5.0F, 2.0F, 0.0F);
-            this.rightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.6F);
+            this.rightArm.addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.6F);
             this.leftArm.setPos(5.0F, 2.0F, 0.0F);
-            this.leftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.6F);
+            this.leftArm.addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.6F);
         } else {
             this.rightArm.setPos(-5.0F, 2.0F, 0.0F);
-            this.rightArm.addBox(-2.0F, -2.0F, -2.0F, 3, 12, 4, 0.6F);
+            this.rightArm.addBox(-2.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, 0.6F);
             this.leftArm.setPos(5.0F, 2.0F, 0.0F);
-            this.leftArm.addBox(-1.0F, -2.0F, -2.0F, 3, 12, 4, 0.6F);
+            this.leftArm.addBox(-1.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, 0.6F);
         }
     }
 

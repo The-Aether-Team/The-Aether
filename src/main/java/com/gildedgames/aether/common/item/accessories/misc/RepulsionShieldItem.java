@@ -1,6 +1,8 @@
 package com.gildedgames.aether.common.item.accessories.misc;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
+import com.gildedgames.aether.client.renderer.accessory.model.RepulsionShieldModel;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -19,7 +21,6 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 public class RepulsionShieldItem extends AccessoryItem
 {
     private static final ResourceLocation REPULSION_SHIELD = new ResourceLocation(Aether.MODID, "textures/models/accessory/repulsion_shield_accessory.png");
-    private static final ResourceLocation REPULSION_SHIELD_SLIM = new ResourceLocation(Aether.MODID, "textures/models/accessory/repulsion_shield_slim_accessory.png");
     private static final ResourceLocation REPULSION_SHIELD_INACTIVE = new ResourceLocation(Aether.MODID, "textures/models/accessory/repulsion_shield_inactive_accessory.png");
 
     public RepulsionShieldItem(Properties properties) {
@@ -33,21 +34,20 @@ public class RepulsionShieldItem extends AccessoryItem
 
     @Override
     public void renderModel(BipedModel<?> model, String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-        if (model instanceof PlayerModel<?>) {
-            PlayerModel<?> playerModel = (PlayerModel<?>) model;
-            Vector3d motion = livingEntity.getDeltaMovement();
-            IVertexBuilder buffer;
+        RepulsionShieldModel shield = new RepulsionShieldModel();
+        ResourceLocation texture;
+        Vector3d motion = livingEntity.getDeltaMovement();
 
-            if (motion.x() == 0.0 && (motion.y() == -0.0784000015258789 || motion.y() == 0.0) && motion.z() == 0.0) {
-                if (!playerModel.slim) {
-                    buffer = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.entityTranslucent(REPULSION_SHIELD), false, stack.isEnchanted());
-                } else {
-                    buffer = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.entityTranslucent(REPULSION_SHIELD_SLIM), false, stack.isEnchanted());
-                }
-            } else {
-                buffer = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.entityTranslucent(REPULSION_SHIELD_INACTIVE), false, stack.isEnchanted());
-            }
-            model.renderToBuffer(matrixStack, buffer, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        if (motion.x() == 0.0 && (motion.y() == -0.0784000015258789 || motion.y() == 0.0) && motion.z() == 0.0) {
+            texture = REPULSION_SHIELD;
+        } else {
+            texture = REPULSION_SHIELD_INACTIVE;
         }
+
+        IVertexBuilder vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.entityTranslucent(texture), false, stack.isEnchanted());
+        shield.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
+        shield.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        ICurio.RenderHelper.followBodyRotations(livingEntity, shield);
+        shield.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 }
