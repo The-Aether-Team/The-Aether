@@ -22,17 +22,13 @@ import java.util.Random;
 public class AetherPlayer implements IAetherPlayer
 {
 	private final PlayerEntity player;
-	private final Random random = new Random();
+
+	private ParachuteEntity parachute = null;
+
 	public boolean isInAetherPortal = false;
 	public int aetherPortalTimer = 0;
 	public float prevPortalAnimTime, portalAnimTime = 0.0F;
 
-	//STORAGE
-	private ParachuteEntity parachute = null;
-
-	//DATA
-
-	//VARIABLES
 	private boolean isJumping;
 	
 	public AetherPlayer(PlayerEntity player) {
@@ -131,7 +127,7 @@ public class AetherPlayer implements IAetherPlayer
 
 	@OnlyIn(Dist.CLIENT)
 	private void playPortalSound(Minecraft mc) {
-		mc.getSoundManager().play(SimpleSound.forLocalAmbience(SoundEvents.PORTAL_TRIGGER, random.nextFloat() * 0.4F + 0.8F, 0.25F));
+		mc.getSoundManager().play(SimpleSound.forLocalAmbience(SoundEvents.PORTAL_TRIGGER, this.getPlayer().random.nextFloat() * 0.4F + 0.8F, 0.25F));
 	}
 
 	@Override
