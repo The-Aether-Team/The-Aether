@@ -55,12 +55,12 @@ public class GlovesItem extends AccessoryItem
 
         if (!(model instanceof PlayerModel<?>)) {
             gloves = new GlovesModel(false);
-            vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(this.GLOVES_TEXTURE), false, stack.isEnchanted());
+            vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(this.getGlovesTexture()), false, stack.isEnchanted());
         }
         else {
             PlayerModel<?> playerModel = (PlayerModel<?>) model;
             gloves = new GlovesModel(playerModel.slim);
-            vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(playerModel.slim ? this.GLOVES_SLIM_TEXTURE : this.GLOVES_TEXTURE), false, stack.isEnchanted());
+            vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(playerModel.slim ? this.getGlovesSlimTexture() : this.getGlovesTexture()), false, stack.isEnchanted());
         }
 
         gloves.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
