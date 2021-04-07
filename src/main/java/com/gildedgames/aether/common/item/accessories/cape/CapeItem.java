@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.item.accessories.cape;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.renderer.accessory.model.CapeModel;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -37,6 +38,7 @@ public class CapeItem extends AccessoryItem
 
     @Override
     public void renderModel(BipedModel<?> model, String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
+        CapeModel cape = new CapeModel();
         if (model instanceof PlayerModel<?>) {
             PlayerModel<?> playerModel = (PlayerModel<?>) model;
             if (livingEntity instanceof AbstractClientPlayerEntity) {
@@ -71,8 +73,8 @@ public class CapeItem extends AccessoryItem
                         matrixStack.mulPose(Vector3f.XP.rotationDegrees(6.0F + f2 / 2.0F + f1));
                         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(f3 / 2.0F));
                         matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - f3 / 2.0F));
-                        IVertexBuilder ivertexbuilder = renderTypeBuffer.getBuffer(RenderType.entitySolid(this.getCapeTexture()));
-                        playerModel.renderCloak(matrixStack, ivertexbuilder, light, OverlayTexture.NO_OVERLAY);
+                        IVertexBuilder ivertexbuilder = renderTypeBuffer.getBuffer(RenderType.entitySolid(this.CAPE_LOCATION));
+                        cape.renderToBuffer(matrixStack, ivertexbuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
                         matrixStack.popPose();
                     }
                 }
