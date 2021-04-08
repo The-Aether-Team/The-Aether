@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.capability.player;
+package com.gildedgames.aether.core.capability.capabilities.player;
 
 import com.gildedgames.aether.common.entity.block.ParachuteEntity;
 import com.gildedgames.aether.core.api.registers.ParachuteType;
@@ -7,7 +7,6 @@ import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.registry.AetherParachuteTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -15,8 +14,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.Random;
 
 
 public class AetherPlayer implements IAetherPlayer
