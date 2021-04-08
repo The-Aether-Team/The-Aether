@@ -51,7 +51,7 @@ public class CapeItem extends AccessoryItem
                 ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlotType.CHEST);
                 if (itemstack.getItem() != Items.ELYTRA) {
                     ICurio.RenderHelper.translateIfSneaking(matrixStack, livingEntity);
-                    
+
                     matrixStack.pushPose();
                     matrixStack.translate(0.0D, 0.0D, 0.125D);
                     double d0 = MathHelper.lerp(partialTicks, capeEntity.getxCloakO(), capeEntity.getxCloak()) - MathHelper.lerp(partialTicks, livingEntity.xo, livingEntity.getX());
