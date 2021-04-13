@@ -214,7 +214,6 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.SKYROOT_LOG);
         itemBlock(AetherBlocks.GOLDEN_OAK_LOG);
         itemBlock(AetherBlocks.STRIPPED_SKYROOT_LOG);
-        itemBlock(AetherBlocks.STRIPPED_SKYROOT_LOG);
         itemBlock(AetherBlocks.SKYROOT_WOOD);
         itemBlock(AetherBlocks.GOLDEN_OAK_WOOD);
         itemBlock(AetherBlocks.STRIPPED_SKYROOT_WOOD);
