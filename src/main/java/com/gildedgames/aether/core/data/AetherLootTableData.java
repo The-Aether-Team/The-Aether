@@ -54,6 +54,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropSelfDouble(AetherBlocks.QUICKSOIL);
             dropSelfDouble(AetherBlocks.HOLYSTONE);
             dropSelfDouble(AetherBlocks.MOSSY_HOLYSTONE);
+            drop(AetherBlocks.AETHER_FARMLAND, AetherBlocks.AETHER_DIRT);
 
             dropSelfDouble(AetherBlocks.COLD_AERCLOUD);
             dropSelfDouble(AetherBlocks.BLUE_AERCLOUD);

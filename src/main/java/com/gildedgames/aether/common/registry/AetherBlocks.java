@@ -23,6 +23,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.*;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -44,6 +45,7 @@ public class AetherBlocks
 	public static final RegistryObject<Block> QUICKSOIL = register("quicksoil", () -> new AetherDoubleDropBlock(AbstractBlock.Properties.copy(Blocks.SAND).harvestTool(ToolType.SHOVEL).friction(1.1F)));
 	public static final RegistryObject<Block> HOLYSTONE = register("holystone", () -> new AetherDoubleDropBlock(AbstractBlock.Properties.copy(Blocks.STONE).strength(0.5F, 6.0f).harvestTool(ToolType.PICKAXE)));
 	public static final RegistryObject<Block> MOSSY_HOLYSTONE = register("mossy_holystone", () -> new AetherDoubleDropBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE.get())));
+	public static final RegistryObject<Block> AETHER_FARMLAND = register("aether_farmland", () -> new AetherFarmlandBlock(AbstractBlock.Properties.copy(Blocks.FARMLAND).harvestTool(ToolType.SHOVEL)));
 
 	public static final RegistryObject<Block> COLD_AERCLOUD = register("cold_aercloud",
 			() -> new AercloudBlock(AbstractBlock.Properties.of(Material.ICE).strength(0.2F).sound(SoundType.WOOL).harvestTool(ToolType.HOE).noOcclusion()));
@@ -240,6 +242,15 @@ public class AetherBlocks
 				.put(AetherBlocks.GOLDEN_OAK_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
 				.put(AetherBlocks.SKYROOT_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
 				.put(AetherBlocks.GOLDEN_OAK_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
+				.build();
+	}
+
+	public static void registerHoeTillingBlocks() {
+		HoeItem.TILLABLES = ImmutableMap.<Block, BlockState>builder()
+				.putAll(HoeItem.TILLABLES)
+				.put(AetherBlocks.AETHER_DIRT.get(), AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())
+				.put(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())
+				.put(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())
 				.build();
 	}
 

@@ -74,6 +74,7 @@ public class AetherLangData extends LanguageProvider
         addBlock(AetherBlocks.QUICKSOIL, "Quicksoil");
         addBlock(AetherBlocks.HOLYSTONE, "Holystone");
         addBlock(AetherBlocks.MOSSY_HOLYSTONE, "Mossy Holystone");
+        addBlock(AetherBlocks.AETHER_FARMLAND, "Aether Farmland");
 
         addBlock(AetherBlocks.COLD_AERCLOUD, "Cold Aercloud");
         addBlock(AetherBlocks.BLUE_AERCLOUD, "Blue Aercloud");
