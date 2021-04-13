@@ -8,7 +8,8 @@
     "common.EatBerriesGoalMixin",
     "common.FindPollinationTargetGoalMixin",
     "common.FoxEntityMixin",
-    "common.PiglinTasksMixin"
+    "common.PiglinTasksMixin",
+    "common.CropsBlockMixin"
   ],
   "client": [
     "client.ClientRecipeBookMixin",

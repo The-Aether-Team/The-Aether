@@ -108,6 +108,7 @@ public class Aether
 
 			AetherBlocks.registerPots();
 			AetherBlocks.registerAxeStrippingBlocks();
+			AetherBlocks.registerHoeTillingBlocks();
 			AetherBlocks.registerFlammability();
 			AetherBlocks.registerWoodTypes();
 
