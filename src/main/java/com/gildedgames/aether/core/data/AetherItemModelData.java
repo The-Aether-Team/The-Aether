@@ -118,7 +118,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.ZANITE_PENDANT, "accessories/");
         item(AetherItems.ICE_PENDANT, "accessories/");
 
-        item(AetherItems.LEATHER_GLOVES, "accessories/");
+        dyedItem(AetherItems.LEATHER_GLOVES, "accessories/");
         item(AetherItems.CHAINMAIL_GLOVES, "accessories/");
         item(AetherItems.IRON_GLOVES, "accessories/");
         item(AetherItems.GOLDEN_GLOVES, "accessories/");

@@ -21,9 +21,12 @@ import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
+import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -32,6 +35,10 @@ import java.util.function.Supplier;
 
 public class AetherRendering
 {
+    public static void registerColors() {
+        Minecraft.getInstance().getItemColors().register((color, itemProvider) -> itemProvider > 0 ? -1 : ((IDyeableArmorItem) color.getItem()).getColor(color), AetherItems.LEATHER_GLOVES.get());
+    }
+
     public static void registerBlockRenderLayers() {
         RenderType cutout = RenderType.cutout();
         RenderType mipped = RenderType.cutoutMipped();

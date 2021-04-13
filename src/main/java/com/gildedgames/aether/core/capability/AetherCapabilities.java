@@ -1,12 +1,17 @@
 package com.gildedgames.aether.core.capability;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.core.capability.player.AetherPlayer;
-import com.gildedgames.aether.core.capability.player.AetherPlayerProvider;
-import com.gildedgames.aether.core.capability.player.AetherPlayerStorage;
+import com.gildedgames.aether.core.capability.capabilities.cape.CapeEntity;
+import com.gildedgames.aether.core.capability.capabilities.cape.CapeEntityProvider;
+import com.gildedgames.aether.core.capability.capabilities.cape.CapeEntityStorage;
+import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayer;
+import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayerProvider;
+import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayerStorage;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
+import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
@@ -20,9 +25,13 @@ public class AetherCapabilities
 {
 	@CapabilityInject(IAetherPlayer.class)
 	public static final Capability<IAetherPlayer> AETHER_PLAYER_CAPABILITY = null;
+
+	@CapabilityInject(ICapeEntity.class)
+	public static final Capability<ICapeEntity> CAPE_ENTITY_CAPABILITY = null;
 	
 	public static void register() {
 		CapabilityManager.INSTANCE.register(IAetherPlayer.class, new AetherPlayerStorage(), () -> null);
+		CapabilityManager.INSTANCE.register(ICapeEntity.class, new CapeEntityStorage(), () -> null);
 	}
 	
 	@EventBusSubscriber(modid = Aether.MODID)
@@ -30,8 +39,11 @@ public class AetherCapabilities
 	{
 		@SubscribeEvent
 		public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
-			if (event.getObject() instanceof PlayerEntity) {
-				event.addCapability(new ResourceLocation(Aether.MODID, "aether_player"), new AetherPlayerProvider(new AetherPlayer((PlayerEntity) event.getObject())));
+			if (event.getObject() instanceof LivingEntity) {
+				event.addCapability(new ResourceLocation(Aether.MODID, "cape_entity"), new CapeEntityProvider(new CapeEntity((LivingEntity) event.getObject())));
+				if (event.getObject() instanceof PlayerEntity) {
+					event.addCapability(new ResourceLocation(Aether.MODID, "aether_player"), new AetherPlayerProvider(new AetherPlayer((PlayerEntity) event.getObject())));
+				}
 			}
 		}
 	}

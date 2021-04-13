@@ -1,7 +1,6 @@
-package com.gildedgames.aether.core.capability.player;
+package com.gildedgames.aether.core.capability.capabilities.player;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
