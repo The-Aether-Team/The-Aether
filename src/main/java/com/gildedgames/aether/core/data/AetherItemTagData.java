@@ -203,8 +203,6 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.GRAVITITE_ORE.get().asItem());
         tag(Tags.Items.RODS_WOODEN)
                 .add(AetherItems.SKYROOT_STICK.get());
-        tag(Tags.Items.STONE)
-                .addTag(AetherTags.Items.HOLYSTONE);
         tag(Tags.Items.STORAGE_BLOCKS)
                 .add(AetherBlocks.ZANITE_BLOCK.get().asItem());
     }
