@@ -167,6 +167,10 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.COLD_PARACHUTE, "miscellaneous/");
         item(AetherItems.GOLDEN_PARACHUTE, "miscellaneous/");
 
+        item(AetherItems.NATURE_STAFF, "miscellaneous/");
+        item(AetherItems.CLOUD_STAFF, "miscellaneous/");
+        item(AetherItems.LIFE_SHARD, "miscellaneous/");
+
         item(AetherItems.MUSIC_DISC_AETHER_TUNE, "miscellaneous/");
         item(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "miscellaneous/");
         item(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "miscellaneous/");

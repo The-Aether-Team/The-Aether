@@ -359,6 +359,10 @@ public class AetherLangData extends LanguageProvider
         addItem(AetherItems.COLD_PARACHUTE, "Cold Parachute");
         addItem(AetherItems.GOLDEN_PARACHUTE, "Golden Parachute");
 
+        addItem(AetherItems.NATURE_STAFF, "Nature Staff");
+        addItem(AetherItems.CLOUD_STAFF, "Cloud Staff");
+        addItem(AetherItems.LIFE_SHARD, "Life Shard");
+
         addItem(AetherItems.BOOK_OF_LORE, "Book of Lore");
 
         addItem(AetherItems.AECHOR_PLANT_SPAWN_EGG, "Aechor Plant Spawn Egg");

@@ -90,7 +90,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-a4a6f8830f8f06047808ffc32e09b85382af966f assets/aether/lang/en_us.json
+7c18545a4837946d16555aed91710f2e455d2ef8 assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -254,6 +254,7 @@ abd327f0be632d7fdfecdaeba37274fc358c2efe assets/aether/models/item/carved_slab.j
 78200595f7ac9d858ced69b42b30f7df4c2aa134 assets/aether/models/item/carved_stone.json
 c56654b2642590f76dce49cd4cac2326c9acfd2e assets/aether/models/item/carved_wall.json
 f76d462c5d639b2a4a6a95c0d783e43cd9abcf32 assets/aether/models/item/chainmail_gloves.json
+b19a6fd02afe52c9999d71bfff041c40e2507a56 assets/aether/models/item/cloud_staff.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/aether/models/item/cockatrice_spawn_egg.json
 1e3d58d5e42db8430bdc228d923bc6cb79087621 assets/aether/models/item/cold_aercloud.json
 62e292b1c0cfc3ca3437222036ca8800397c25a7 assets/aether/models/item/cold_parachute.json
@@ -326,6 +327,7 @@ e953ef70258a00f3a45788c70d454a0d78ee82fc assets/aether/models/item/iron_bubble.j
 fbf72f8cb62b2f30b93546ad99ae54194acd2d61 assets/aether/models/item/iron_pendant.json
 c5010254f712ced645f18ed158c69e9c7bcfd77d assets/aether/models/item/iron_ring.json
 c269b702b6763dd47f53ccbc898aafcc5f1ee457 assets/aether/models/item/leather_gloves.json
+904c44ab1fe9f1aaed37b0482d09bc091abb1e99 assets/aether/models/item/life_shard.json
 2968a0892734eaeda4530597123d077bea9bae88 assets/aether/models/item/light_angelic_stone.json
 114c4dbf0f273da5c0abc5f59039869de1d6675c assets/aether/models/item/light_hellfire_stone.json
 382e5ac5c7a6d4eb9cae1e6e6880036bf2f02996 assets/aether/models/item/lightning_knife.json
@@ -346,6 +348,7 @@ a961a07c09e1221eedc53648a370680babec55e0 assets/aether/models/item/music_disc_ae
 2dca84ab9b2aa97b92a6137a53ca254a2d4eb522 assets/aether/models/item/music_disc_ascending_dawn.json
 bffe667fe2505b9152fe3ba434344a61e21069de assets/aether/models/item/music_disc_legacy.json
 20d5eec34ab05ef728b1a1d067a2c1adc22eb218 assets/aether/models/item/music_disc_welcoming_skies.json
+e466f8d8015f6941c22407da63c76794aa70a2e2 assets/aether/models/item/nature_staff.json
 b037e8decaa29f6b9b275f3080c2a8a1bbae88ef assets/aether/models/item/neptune_boots.json
 a4ef6763465f83266499a591863c2e848091f961 assets/aether/models/item/neptune_chestplate.json
 31eb4a1ad140f67e5425dfe7073116589b0e7c35 assets/aether/models/item/neptune_gloves.json
