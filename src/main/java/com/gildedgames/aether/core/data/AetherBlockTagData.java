@@ -4,6 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.TagsProvider;
@@ -79,6 +80,9 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .add(AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get())
                 .add(AetherBlocks.TRAPPED_HELLFIRE_STONE.get())
                 .add(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE.get());
+        tag(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)
+                .add(Blocks.GLOWSTONE)
+                .add(Blocks.SHROOMLIGHT);
 
         //vanilla
         tag(BlockTags.STONE_BRICKS)
