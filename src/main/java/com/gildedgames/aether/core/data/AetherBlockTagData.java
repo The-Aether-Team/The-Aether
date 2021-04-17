@@ -81,8 +81,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .add(AetherBlocks.TRAPPED_HELLFIRE_STONE.get())
                 .add(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE.get());
         tag(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)
-                .add(Blocks.GLOWSTONE)
-                .add(Blocks.SHROOMLIGHT);
+                .add(Blocks.GLOWSTONE);
 
         //vanilla
         tag(BlockTags.STONE_BRICKS)
