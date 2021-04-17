@@ -90,7 +90,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-a4a6f8830f8f06047808ffc32e09b85382af966f assets/aether/lang/en_us.json
+07e1ccbceef4e24a2156d4c344d511a61bf00125 assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -223,6 +223,7 @@ cbe27d59684f85c328915be20cfdaf75d93762c7 assets/aether/models/block/zanite_block
 33760f809d0c4f9657c81af6dde1c0d8f816b43b assets/aether/models/block/zanite_ore.json
 e7f3198d8a1ec9489323098adf44c2b1751b9e0f assets/aether/models/item/aechor_petal.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/aether/models/item/aechor_plant_spawn_egg.json
+98167609bf3898587f7565736a6fc24a7966cacd assets/aether/models/item/aerbunny_spawn_egg.json
 ebccb7bcea2bb0f18165d17eb02616077f9f2546 assets/aether/models/item/aerogel.json
 ea6b66d4f9b2b8772454e42ff2dee0602af36bde assets/aether/models/item/aerogel_slab.json
 ae8abae56a78d7335f7733dea976d0872c04bded assets/aether/models/item/aerogel_stairs.json
@@ -822,6 +823,7 @@ c1883d3d61fd2f4dd4fef5854aa397757ac1cb79 data/aether/loot_tables/blocks/white_fl
 c421201f67d94f677674b79a4e7c27e2633d4b87 data/aether/loot_tables/blocks/zanite_block.json
 995a84db535f89c3a30ca4673f09b020e45d3488 data/aether/loot_tables/blocks/zanite_ore.json
 3abfadb800d57135e37506b93d0216f551ef837f data/aether/loot_tables/entities/aechor_plant.json
+6b80108d13eea8aa17543647ee2e6fb56f03cd1d data/aether/loot_tables/entities/aerbunny.json
 f0266b86d509baafb030ddb9915394ea06d372cd data/aether/loot_tables/entities/aerwhale.json
 976cd1e21d02e900c4b9ffb6b40c1179c4c7cef2 data/aether/loot_tables/entities/cockatrice.json
 e0c556ac048d3ba95c3c83867f1ae5395b3a09c4 data/aether/loot_tables/entities/flying_cow.json

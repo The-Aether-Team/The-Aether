@@ -272,6 +272,15 @@ public class AetherLootTableData extends AetherLootTableProvider
                     )
             );
 
+            this.add(AetherEntityTypes.AERBUNNY.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(Items.STRING)
+                                    .apply(SetCount.setCount(RandomValueRange.between(0.0F, 2.0F)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
+                            )
+                    )
+            );
+
             this.add(AetherEntityTypes.AERWHALE.get(), LootTable.lootTable());
             this.add(AetherEntityTypes.WHIRLWIND.get(), LootTable.lootTable());
 
