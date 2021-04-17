@@ -6,11 +6,7 @@ import com.gildedgames.aether.common.entity.block.ColdParachuteEntity;
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.common.entity.block.GoldenParachuteEntity;
 import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
-import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
-import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
-import com.gildedgames.aether.common.entity.passive.MoaEntity;
-import com.gildedgames.aether.common.entity.passive.PhygEntity;
-import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
+import com.gildedgames.aether.common.entity.passive.*;
 
 import com.gildedgames.aether.common.entity.monster.*;
 import com.gildedgames.aether.common.entity.projectile.*;
@@ -46,6 +42,11 @@ public class AetherEntityTypes
 
 	public static final EntityType<AerwhaleEntity> AERWHALE_TYPE = EntityType.Builder.<AerwhaleEntity>of(AerwhaleEntity::new, EntityClassification.CREATURE).sized(3.0F, 3.0F).fireImmune().build("aerwhale");
 	public static final RegistryObject<EntityType<AerwhaleEntity>> AERWHALE = ENTITIES.register("aerwhale", () -> AERWHALE_TYPE);
+
+	public static final EntityType<AerbunnyEntity> AERBUNNY_TYPE = EntityType.Builder.of(AerbunnyEntity::new, EntityClassification.CREATURE).sized(0.4F, 0.4F).build("aerbunny");
+	public static final RegistryObject<EntityType<AerbunnyEntity>> AERBUNNY = ENTITIES.register("aerbunny", () -> AERBUNNY_TYPE);
+
+	//Swet
 
 	public static final EntityType<WhirlwindEntity> WHIRLWIND_TYPE = EntityType.Builder.of(WhirlwindEntity::new, EntityClassification.MONSTER).sized(0.6F, 0.8F).build("whirlwind");
 	public static final RegistryObject<EntityType<WhirlwindEntity>> WHIRLWIND = ENTITIES.register("whirlwind", () -> WHIRLWIND_TYPE);
@@ -115,6 +116,7 @@ public class AetherEntityTypes
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.FLYING_COW.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.SHEEPUFF.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.MOA.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.AERBUNNY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
 
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.WHIRLWIND.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WhirlwindEntity::canWhirlwindSpawn);
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.AECHOR_PLANT.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AechorPlantEntity::canAechorSpawn);
@@ -129,6 +131,7 @@ public class AetherEntityTypes
 		event.put(AetherEntityTypes.SHEEPUFF.get(), SheepuffEntity.registerAttributes().build());
 		event.put(AetherEntityTypes.MOA.get(), MoaEntity.registerAttributes().build());
 		event.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.registerAttributes().build());
+		event.put(AetherEntityTypes.AERBUNNY.get(), AerbunnyEntity.registerAttributes().build());
 
 		event.put(AetherEntityTypes.WHIRLWIND.get(), WhirlwindEntity.registerAttributes().build());
 		event.put(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantEntity.registerAttributes().build());
