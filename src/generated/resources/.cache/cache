@@ -1200,6 +1200,7 @@ a7cd419c050774fb6b05dc44fc4d80f825c70954 data/minecraft/tags/blocks/wooden_stair
 98757dac7cc9011ff5edd77bd8418f658226a2a3 data/minecraft/tags/blocks/wooden_trapdoors.json
 5f3e437813590dcc155d899998fb5b859b0e0f10 data/minecraft/tags/entity_types/arrows.json
 d59275533665cb021bf31f94e812698d34d89e30 data/minecraft/tags/entity_types/impact_projectiles.json
+8df09b1efcd937f8c2f3ffeb8c466cc9e74c444f data/minecraft/tags/items/beacon_payment_items.json
 d3815d5fe2d05fce780751f7c4231401f3f16a78 data/minecraft/tags/items/beds.json
 501b1c2f1125e6acc2911a3c0a4a93620aa93fef data/minecraft/tags/items/leaves.json
 a0f3c2f4910e857b799981106ebf4953767be364 data/minecraft/tags/items/logs_that_burn.json

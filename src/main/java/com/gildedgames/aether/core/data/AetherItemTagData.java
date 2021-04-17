@@ -181,6 +181,8 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherItems.MUSIC_DISC_ASCENDING_DAWN.get())
                 .add(AetherItems.MUSIC_DISC_WELCOMING_SKIES.get())
                 .add(AetherItems.MUSIC_DISC_LEGACY.get());
+        tag(ItemTags.BEACON_PAYMENT_ITEMS)
+                .add(AetherItems.ZANITE_GEMSTONE.get());
 
         //forge
         tag(Tags.Items.BOOKSHELVES)
