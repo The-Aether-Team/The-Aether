@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aether:pillar"
+  },
+  "result": "aether:pillar_top",
+  "count": 1
+}

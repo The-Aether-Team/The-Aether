@@ -476,14 +476,26 @@ public class AetherRecipeData extends AetherRecipeProvider
         stonecuttingRecipe(AetherBlocks.CARVED_STONE, AetherBlocks.CARVED_WALL.get()).save(consumer, name("carved_wall_stonecutting"));
         stonecuttingRecipe(AetherBlocks.CARVED_STONE, AetherBlocks.CARVED_STAIRS.get()).save(consumer, name("carved_stairs_stonecutting"));
         stonecuttingRecipe(AetherBlocks.CARVED_STONE, AetherBlocks.CARVED_SLAB.get(), 2).save(consumer, name("carved_slab_stonecutting"));
+        stonecuttingRecipe(AetherBlocks.CARVED_STONE, AetherBlocks.SENTRY_STONE.get(), 1).save(consumer, name("sentry_stone_stoncutting"));
+        stonecuttingRecipe(AetherBlocks.SENTRY_STONE, AetherBlocks.CARVED_STONE.get(), 1).save(consumer, name("carved_stone_from_sentry_stone_stoncutting"));
 
         stonecuttingRecipe(AetherBlocks.ANGELIC_STONE, AetherBlocks.ANGELIC_WALL.get()).save(consumer, name("angelic_wall_stonecutting"));
         stonecuttingRecipe(AetherBlocks.ANGELIC_STONE, AetherBlocks.ANGELIC_STAIRS.get()).save(consumer, name("angelic_stairs_stonecutting"));
         stonecuttingRecipe(AetherBlocks.ANGELIC_STONE, AetherBlocks.ANGELIC_SLAB.get(), 2).save(consumer, name("angelic_slab_stonecutting"));
+        stonecuttingRecipe(AetherBlocks.ANGELIC_STONE, AetherBlocks.PILLAR.get(), 1).save(consumer, name("pillar_stonecutting"));
+        stonecuttingRecipe(AetherBlocks.ANGELIC_STONE, AetherBlocks.PILLAR_TOP.get(), 1).save(consumer, name("pillar_top_stonecutting"));
+        stonecuttingRecipe(AetherBlocks.PILLAR::get, AetherBlocks.ANGELIC_STONE.get(), 1).save(consumer, name("angelic_stone_from_pillar_stonecutting"));
+        stonecuttingRecipe(AetherBlocks.PILLAR_TOP::get, AetherBlocks.ANGELIC_STONE.get(), 1).save(consumer, name("angelic_stone_from_pillar_top_stonecutting"));
+        stonecuttingRecipe(AetherBlocks.PILLAR::get, AetherBlocks.PILLAR_TOP.get(), 1).save(consumer, name("pillar_top_from_pillar_stonecutting"));
+        stonecuttingRecipe(AetherBlocks.PILLAR_TOP::get, AetherBlocks.PILLAR.get(), 1).save(consumer, name("pillar_from_pillar_top_stonecutting"));
+        stonecuttingRecipe(AetherBlocks.ANGELIC_STONE, AetherBlocks.LIGHT_ANGELIC_STONE.get(), 1).save(consumer, name("light_angelic_stone_stonecutting"));
+        stonecuttingRecipe(AetherBlocks.LIGHT_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE.get(), 1).save(consumer, name("angelic_stone_from_light_angelic_stone_stonecutting"));
 
         stonecuttingRecipe(AetherBlocks.HELLFIRE_STONE, AetherBlocks.HELLFIRE_WALL.get()).save(consumer, name("hellfire_wall_stonecutting"));
         stonecuttingRecipe(AetherBlocks.HELLFIRE_STONE, AetherBlocks.HELLFIRE_STAIRS.get()).save(consumer, name("hellfire_stairs_stonecutting"));
         stonecuttingRecipe(AetherBlocks.HELLFIRE_STONE, AetherBlocks.HELLFIRE_SLAB.get(), 2).save(consumer, name("hellfire_slab_stonecutting"));
+        stonecuttingRecipe(AetherBlocks.HELLFIRE_STONE, AetherBlocks.LIGHT_HELLFIRE_STONE.get(), 1).save(consumer, name("light_hellfire_stone_stonecutting"));
+        stonecuttingRecipe(AetherBlocks.LIGHT_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE.get(), 1).save(consumer, name("hellfire_stone_from_light_hellfire_stone_stonecutting"));
 
         stonecuttingRecipe(AetherBlocks.HOLYSTONE, AetherBlocks.HOLYSTONE_WALL.get()).save(consumer, name("holystone_wall_stonecutting"));
         stonecuttingRecipe(AetherBlocks.HOLYSTONE, AetherBlocks.HOLYSTONE_STAIRS.get()).save(consumer, name("holystone_stairs_stonecutting"));

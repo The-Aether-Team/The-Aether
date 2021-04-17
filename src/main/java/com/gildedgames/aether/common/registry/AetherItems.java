@@ -68,7 +68,7 @@ public class AetherItems
 	public static final RegistryObject<PickaxeItem> VALKYRIE_PICKAXE = ITEMS.register("valkyrie_pickaxe", () -> new ValkyriePickaxeItem(1, -2.8f));
 	public static final RegistryObject<AxeItem> VALKYRIE_AXE = ITEMS.register("valkyrie_axe", () -> new ValkyrieAxeItem(5.0f, -3.0f));
 	public static final RegistryObject<ShovelItem> VALKYRIE_SHOVEL = ITEMS.register("valkyrie_shovel", () -> new ValkyrieShovelItem(1.5f, -3.0f));
-	public static final RegistryObject<HoeItem> VALKYRIE_HOE = ITEMS.register("valkyrie_hoe", () -> new ValkyrieHoeItem(-3, 0));
+	public static final RegistryObject<HoeItem> VALKYRIE_HOE = ITEMS.register("valkyrie_hoe", () -> new ValkyrieHoeItem(0, 0));
 
 	// Weapons
 	public static final RegistryObject<SwordItem> SKYROOT_SWORD = ITEMS.register("skyroot_sword", SkyrootSwordItem::new);
@@ -285,11 +285,18 @@ public class AetherItems
 	public static final RegistryObject<Item> GOLDEN_PARACHUTE = ITEMS.register("golden_parachute", () -> new ParachuteItem(AetherParachuteTypes.GOLDEN_PARACHUTE, new Item.Properties().stacksTo(1).durability(20).tab(AetherItemGroups.AETHER_MISC)));
 
 	//item("nature_staff", new NatureStaffItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_TOOLS))),
+	public static final RegistryObject<Item> NATURE_STAFF = ITEMS.register("nature_staff", () -> new Item(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_TOOLS)));
 	//item("cloud_staff", new CloudStaffItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_TOOLS))),
+	public static final RegistryObject<Item> CLOUD_STAFF = ITEMS.register("cloud_staff", () -> new Item(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_TOOLS)));
 
 	//item("moa_egg", new MoaEggItem(new Item.Properties().maxStackSize(1).group(AetherItemGroups.AETHER_MISC))),
+//	public static final RegistryObject<Item> WHITE_MOA_EGG = ITEMS.register("white_moa_egg", () -> new Item(new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
+//	public static final RegistryObject<Item> ORANGE_MOA_EGG = ITEMS.register("orange_moa_egg", () -> new Item(new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
+//	public static final RegistryObject<Item> BLUE_MOA_EGG = ITEMS.register("blue_moa_egg", () -> new Item(new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
+//	public static final RegistryObject<Item> BLACK_MOA_EGG = ITEMS.register("black_moa_egg", () -> new Item(new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 
 	//item("life_shard", new LifeShardItem(new Item.Properties().rarity(Aether.AETHER_LOOT).group(AetherItemGroups.AETHER_MISC))),
+	public static final RegistryObject<Item> LIFE_SHARD = ITEMS.register("life_shard", () -> new Item(new Item.Properties().rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<Item> BOOK_OF_LORE = ITEMS.register("book_of_lore",
 			() -> new LoreBookItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
