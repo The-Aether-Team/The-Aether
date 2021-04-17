@@ -296,6 +296,8 @@ public class AetherItems
 
 	public static final RegistryObject<SpawnEggItem> AECHOR_PLANT_SPAWN_EGG = ITEMS.register("aechor_plant_spawn_egg",
 			() -> new SpawnEggItem(AetherEntityTypes.AECHOR_PLANT_TYPE,0x076178, 0x4BC69E, new Item.Properties().tab(ItemGroup.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> AERBUNNY_SPAWN_EGG = ITEMS.register("aerbunny_spawn_egg",
+			() -> new SpawnEggItem(AetherEntityTypes.AERBUNNY_TYPE, 0xe2fcff, 0xffdff9, new Item.Properties().tab(ItemGroup.TAB_MISC)));
 	public static final RegistryObject<SpawnEggItem> AERWHALE_SPAWN_EGG = ITEMS.register("aerwhale_spawn_egg",
 			() -> new SpawnEggItem(AetherEntityTypes.AERWHALE_TYPE,0x79B7D1, 0xE0D25C, new Item.Properties().tab(ItemGroup.TAB_MISC)));
 	public static final RegistryObject<SpawnEggItem> COCKATRICE_SPAWN_EGG = ITEMS.register("cockatrice_spawn_egg",
