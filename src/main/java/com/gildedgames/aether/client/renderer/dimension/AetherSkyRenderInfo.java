@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 
 public class AetherSkyRenderInfo extends DimensionRenderInfo
 {
+    private ISkyRenderHandler skyRenderer = new AetherSkyRenderer();
     public AetherSkyRenderInfo() {
         super(-5.0F, true, DimensionRenderInfo.FogType.NORMAL, false, false);
     }
@@ -26,6 +27,6 @@ public class AetherSkyRenderInfo extends DimensionRenderInfo
     @Nullable
     @Override
     public ISkyRenderHandler getSkyRenderHandler() {
-       return AetherConfig.CLIENT.disable_aether_skybox.get() ? null : new AetherSkyRenderer();
+       return AetherConfig.CLIENT.disable_aether_skybox.get() ? null : skyRenderer;
     }
 }
