@@ -1,8 +1,8 @@
 package com.gildedgames.aether.common.entity.passive;
 
+import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.AetherAnimalEntity;
-import com.gildedgames.aether.common.entity.MountableEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -18,7 +18,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -107,11 +106,10 @@ public class AerbunnyEntity extends AetherAnimalEntity {
         return true;
     }
 
-    // TODO: Why doesn't this work?
-    /*@Override
+    @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return damageSource.getEntity() == this.getVehicle() && super.isInvulnerableTo(damageSource);
-    }*/
+        return damageSource.getEntity() == this.getVehicle() || super.isInvulnerableTo(damageSource);
+    }
 
 
 
@@ -161,7 +159,7 @@ public class AerbunnyEntity extends AetherAnimalEntity {
                     double d5 = (float)getY() + getBbHeight() + 0.125F;
                     double d8 = (float)getZ() + random.nextFloat() * 0.25F;
                     float f1 = random.nextFloat() * 360F;
-                    this.level.addParticle(ParticleTypes.SMOKE, -Math.sin(0.01745329F * f1) * 0.75D, d5 - 0.25D, Math.cos(0.01745329F * f1) * 0.75D, d2, 0.125D, d8);
+                    this.level.addParticle(AetherParticleTypes.WHITE_SMOKE.get(), -Math.sin(0.01745329F * f1) * 0.75D, d5 - 0.25D, Math.cos(0.01745329F * f1) * 0.75D, d2, 0.125D, d8);
                 }
             }
 
@@ -205,7 +203,7 @@ public class AerbunnyEntity extends AetherAnimalEntity {
                 double d1 = this.random.nextGaussian() * 0.02D;
                 double d2 = this.random.nextGaussian() * 0.02D;
                 double d3 = 10.0D;
-                this.level.addParticle(ParticleTypes.SMOKE,
+                this.level.addParticle(AetherParticleTypes.WHITE_SMOKE.get(),
                         this.getX() + (double)(this.random.nextFloat() * this.getBbWidth() * 2.0F) - (double)this.getBbWidth() - d0 * d3,
                         this.getY() + (double)(this.random.nextFloat() * this.getBbHeight()) - d1 * d3,
                         this.getZ() + (double)(this.random.nextFloat() * this.getBbWidth() * 2.0F) - (double)this.getBbWidth() - d2 * d3,

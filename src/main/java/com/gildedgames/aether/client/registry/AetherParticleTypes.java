@@ -28,6 +28,7 @@ public class AetherParticleTypes
 	public static final RegistryObject<BasicParticleType> FREEZER = PARTICLES.register("freezer", () -> new BasicParticleType(false));
 	public static final RegistryObject<BasicParticleType> PASSIVE_WHIRLWIND = PARTICLES.register("passive_whirlwind", () -> new BasicParticleType(false));
 	public static final RegistryObject<BasicParticleType> EVIL_WHIRLWIND = PARTICLES.register("evil_whirlwind", () -> new BasicParticleType(false));
+	public static final RegistryObject<BasicParticleType> WHITE_SMOKE = PARTICLES.register("white_smoke", () -> new BasicParticleType(false));
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
@@ -41,5 +42,6 @@ public class AetherParticleTypes
 		particleManager.register(FREEZER.get(), FreezerParticle.Factory::new);
 		particleManager.register(PASSIVE_WHIRLWIND.get(), PassiveWhirlyParticle.Factory::new);
 		particleManager.register(EVIL_WHIRLWIND.get(), EvilWhirlyParticle.Factory::new);
+		particleManager.register(WHITE_SMOKE.get(), WhiteSmokeParticle.Factory::new);
 	}
 }
