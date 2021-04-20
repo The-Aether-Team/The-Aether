@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.event.listeners;
 
 import com.gildedgames.aether.common.registry.AetherAdvancements;
 import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.common.world.AetherTeleporter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -37,14 +38,11 @@ public class EntityListener
             MinecraftServer minecraftserver = serverLevel.getServer();
             if (minecraftserver != null) {
                 ServerWorld destination = minecraftserver.getLevel(World.OVERWORLD);
-                if (destination != null && !entity.isPassenger()) {
-                    if(entity instanceof ServerPlayerEntity) {
-                        ((ServerPlayerEntity)entity).teleportTo(destination, entity.getX(), 255D, entity.getZ(), 0.0F, 0.0F);
-                    }
-                    else {
-                        entity.setPos(entity.getX(), 255D, entity.getZ());
-                        destination.addFromAnotherDimension(entity);
-                    }
+                if (destination != null) {
+                    entity.level.getProfiler().push("aether_fall");
+                    entity.setPortalCooldown();
+                    entity.changeDimension(destination, new AetherTeleporter(destination, false));
+                    entity.level.getProfiler().pop();
                 }
             }
         }
