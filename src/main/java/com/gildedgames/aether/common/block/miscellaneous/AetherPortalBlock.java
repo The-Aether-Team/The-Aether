@@ -4,6 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
@@ -222,7 +223,7 @@ public class AetherPortalBlock extends Block
 		
 		boolean tryPortal = false;
 		for (Direction direction : Direction.values()) {
-			if (world.getBlockState(pos.relative(direction)).getBlock() == Blocks.GLOWSTONE) {
+			if (world.getBlockState(pos.relative(direction)).getBlock().is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)) {
 				if (AetherBlocks.AETHER_PORTAL.get().isPortal(world, pos) != null) {
 					tryPortal = true;
 					break;
@@ -331,13 +332,13 @@ public class AetherPortalBlock extends Block
 			for (i = 0; i < 22; ++i) {
 				BlockPos blockpos = pos.relative(directionIn, i);
 				if (!this.isEmptyBlock(this.world.getBlockState(blockpos))
-					|| this.world.getBlockState(blockpos.below()).getBlock() != Blocks.GLOWSTONE) {
+					|| !(this.world.getBlockState(blockpos.below()).getBlock().is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS))) {
 					break;
 				}
 			}
 
 			BlockPos framePos = pos.relative(directionIn, i);
-			return this.world.getBlockState(framePos).getBlock() == Blocks.GLOWSTONE? i : 0;
+			return this.world.getBlockState(framePos).getBlock().is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS) ? i : 0;
 		}
 
 		public int getHeight() {
@@ -365,13 +366,13 @@ public class AetherPortalBlock extends Block
 
 					if (i == 0) {
 						BlockPos framePos = blockpos.relative(this.leftDir);
-						if (this.world.getBlockState(framePos).getBlock() != Blocks.GLOWSTONE) {
+						if (!(this.world.getBlockState(framePos).getBlock().is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS))) {
 							break outerloop;
 						}
 					}
 					else if (i == this.width - 1) {
 						BlockPos framePos = blockpos.relative(this.rightDir);
-						if (this.world.getBlockState(framePos).getBlock() != Blocks.GLOWSTONE) {
+						if (!(this.world.getBlockState(framePos).getBlock().is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS))) {
 							break outerloop;
 						}
 					}
@@ -380,7 +381,7 @@ public class AetherPortalBlock extends Block
 
 			for (int j = 0; j < this.width; ++j) {
 				BlockPos framePos = this.bottomLeft.relative(this.rightDir, j).above(this.height);
-				if (this.world.getBlockState(framePos).getBlock() != Blocks.GLOWSTONE) {
+				if (!(this.world.getBlockState(framePos).getBlock().is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS))) {
 					this.height = 0;
 					break;
 				}

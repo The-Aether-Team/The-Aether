@@ -359,9 +359,14 @@ public class AetherLangData extends LanguageProvider
         addItem(AetherItems.COLD_PARACHUTE, "Cold Parachute");
         addItem(AetherItems.GOLDEN_PARACHUTE, "Golden Parachute");
 
+        addItem(AetherItems.NATURE_STAFF, "Nature Staff");
+        addItem(AetherItems.CLOUD_STAFF, "Cloud Staff");
+        addItem(AetherItems.LIFE_SHARD, "Life Shard");
+
         addItem(AetherItems.BOOK_OF_LORE, "Book of Lore");
 
         addItem(AetherItems.AECHOR_PLANT_SPAWN_EGG, "Aechor Plant Spawn Egg");
+        addItem(AetherItems.AERBUNNY_SPAWN_EGG, "Aerbunny Spawn Egg");
         addItem(AetherItems.AERWHALE_SPAWN_EGG, "Aerwhale Spawn Egg");
         addItem(AetherItems.COCKATRICE_SPAWN_EGG, "Cockatrice Spawn Egg");
         addItem(AetherItems.FLYING_COW_SPAWN_EGG, "Flying Cow Spawn Egg");
@@ -378,6 +383,7 @@ public class AetherLangData extends LanguageProvider
         addEntityType(AetherEntityTypes.FLYING_COW, "Flying Cow");
         addEntityType(AetherEntityTypes.SHEEPUFF, "Sheepuff");
         addEntityType(AetherEntityTypes.MOA, "Moa");
+        addEntityType(AetherEntityTypes.AERBUNNY, "Aerbunny");
         addEntityType(AetherEntityTypes.AERWHALE, "Aerwhale");
         addEntityType(AetherEntityTypes.WHIRLWIND, "Whirlwind");
         addEntityType(AetherEntityTypes.AECHOR_PLANT, "Aechor Plant");
