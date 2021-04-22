@@ -37,8 +37,8 @@ public class PendantItem extends AccessoryItem
         pendant.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         ICurio.RenderHelper.followBodyRotations(livingEntity, pendant);
 
-        IVertexBuilder buffer = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(this.getPendantTexture()), false, stack.isEnchanted());
-        pendant.renderToBuffer(matrixStack, buffer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        IVertexBuilder vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(this.getPendantTexture()), false, stack.isEnchanted());
+        pendant.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     public void setRenderTexture(String modId, String registryName) {
