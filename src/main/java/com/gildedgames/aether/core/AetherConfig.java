@@ -24,7 +24,6 @@ public class AetherConfig
         public final ConfigValue<Boolean> admin_sun_altar;
 
         public final ConfigValue<Boolean> disable_aether_portal;
-        public final ConfigValue<Boolean> activate_with_skyroot_bucket;
         public final ConfigValue<Boolean> disable_eternal_day;
 
         public Common(ForgeConfigSpec.Builder builder) {
