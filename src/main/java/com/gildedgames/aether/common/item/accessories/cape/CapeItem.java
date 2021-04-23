@@ -26,6 +26,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.fml.ModList;
+import top.theillusivec4.colytra.common.ElytraNBT;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
@@ -49,7 +51,9 @@ public class CapeItem extends AccessoryItem
             CapeModel cape = new CapeModel();
             if (!livingEntity.isInvisible()) {
                 ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlotType.CHEST);
-                if (itemstack.getItem() != Items.ELYTRA) {
+                boolean hasColytra = ModList.get().isLoaded("colytra") && !ElytraNBT.getElytra(itemstack).isEmpty();
+
+                if (itemstack.getItem() != Items.ELYTRA && !hasColytra) {
                     ICurio.RenderHelper.translateIfSneaking(matrixStack, livingEntity);
 
                     matrixStack.pushPose();
