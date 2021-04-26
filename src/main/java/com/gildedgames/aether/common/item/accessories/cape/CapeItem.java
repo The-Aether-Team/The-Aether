@@ -54,6 +54,8 @@ public class CapeItem extends AccessoryItem
                 boolean hasColytra = ModList.get().isLoaded("colytra") && !ElytraNBT.getElytra(itemstack).isEmpty();
 
                 if (itemstack.getItem() != Items.ELYTRA && !hasColytra) {
+                    cape.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
+                    cape.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                     matrixStack.pushPose();
                     matrixStack.translate(0.0D, 0.0D, 0.125D);
                     double d0 = MathHelper.lerp(partialTicks, capeEntity.getxCloakO(), capeEntity.getxCloak()) - MathHelper.lerp(partialTicks, livingEntity.xo, livingEntity.getX());
