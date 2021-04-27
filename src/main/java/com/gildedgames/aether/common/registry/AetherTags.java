@@ -68,6 +68,7 @@ public class AetherTags
 	{
 		public static final ITag.INamedTag<EntityType<?>> PIGS = tag("pigs");
 		public static final ITag.INamedTag<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
+		public static final ITag.INamedTag<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
 
 		private static ITag.INamedTag<EntityType<?>> tag(String name) {
 			return EntityTypeTags.bind(new ResourceLocation(Aether.MODID, name).toString());
