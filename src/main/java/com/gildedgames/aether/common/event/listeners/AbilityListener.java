@@ -1,7 +1,5 @@
 package com.gildedgames.aether.common.event.listeners;
 
-import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.item.accessories.abilities.IRepulsionAccessory;
 import com.gildedgames.aether.common.item.accessories.abilities.IZaniteAccessory;
 import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -122,7 +120,8 @@ public class AbilityListener
             }
         }
     }
-    
+
+    //TODO: Make sure this doesn't ever affect projectiles shot by the player/entity wearing the shield.
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
         if (event.getRayTraceResult().getType() == RayTraceResult.Type.ENTITY) {
@@ -133,7 +132,7 @@ public class AbilityListener
                 if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
                     CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.REPULSION_SHIELD.get(), impactedLiving).ifPresent((triple) -> {
                         event.setCanceled(true);
-                        IRepulsionAccessory.handleDeflection(projectile);
+                        projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.5D));
                     });
                 }
             }
