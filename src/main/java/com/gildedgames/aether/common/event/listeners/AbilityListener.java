@@ -132,7 +132,8 @@ public class AbilityListener
                 if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
                     CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.REPULSION_SHIELD.get(), impactedLiving).ifPresent((triple) -> {
                         event.setCanceled(true);
-                        projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.5D));
+                        projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25D));
+                        triple.getRight().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), entity));
                     });
                 }
             }
