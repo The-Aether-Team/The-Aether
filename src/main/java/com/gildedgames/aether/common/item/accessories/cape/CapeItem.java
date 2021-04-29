@@ -52,8 +52,12 @@ public class CapeItem extends AccessoryItem
             if (!livingEntity.isInvisible()) {
                 ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlotType.CHEST);
                 boolean hasColytra = ModList.get().isLoaded("colytra") && !ElytraNBT.getElytra(itemstack).isEmpty();
+                boolean hasCape = livingEntity instanceof AbstractClientPlayerEntity
+                        && ((AbstractClientPlayerEntity) livingEntity).isCapeLoaded()
+                        && ((AbstractClientPlayerEntity) livingEntity).getCloakTextureLocation() != null
+                        && ((AbstractClientPlayerEntity) livingEntity).isModelPartShown(PlayerModelPart.CAPE);
 
-                if (itemstack.getItem() != Items.ELYTRA && !hasColytra) {
+                if (itemstack.getItem() != Items.ELYTRA && !hasColytra && !hasCape) {
                     cape.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
                     cape.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                     matrixStack.pushPose();
