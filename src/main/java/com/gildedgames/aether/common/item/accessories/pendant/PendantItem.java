@@ -33,8 +33,6 @@ public class PendantItem extends AccessoryItem
     public void renderModel(BipedModel<?> model, String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
         PendantModel pendant = new PendantModel();
 
-        pendant.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
-        pendant.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         ICurio.RenderHelper.followBodyRotations(livingEntity, pendant);
 
         IVertexBuilder vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(this.getPendantTexture()), false, stack.isEnchanted());

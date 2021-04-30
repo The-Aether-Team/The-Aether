@@ -63,9 +63,8 @@ public class GlovesItem extends AccessoryItem
             vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(playerModel.slim ? this.getGlovesSlimTexture() : this.getGlovesTexture()), false, stack.isEnchanted());
         }
 
-        gloves.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
-        gloves.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         ICurio.RenderHelper.followBodyRotations(livingEntity, gloves);
+
         gloves.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 

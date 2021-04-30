@@ -58,7 +58,6 @@ public class CapeItem extends AccessoryItem
                         && ((AbstractClientPlayerEntity) livingEntity).isModelPartShown(PlayerModelPart.CAPE);
 
                 if (itemstack.getItem() != Items.ELYTRA && !hasColytra && !hasCape) {
-                    cape.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
                     cape.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                     matrixStack.pushPose();
                     matrixStack.translate(0.0D, 0.0D, 0.125D);
