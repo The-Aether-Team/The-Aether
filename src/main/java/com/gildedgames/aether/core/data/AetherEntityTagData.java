@@ -40,11 +40,10 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 .add(EntityType.WITHER)
                 .add(EntityType.ENDER_DRAGON);
         tag(AetherTags.Entities.DEFLECTABLE_PROJECTILES)
-                .add(EntityType.ARROW)
-                .add(EntityType.SPECTRAL_ARROW)
+                .addTag(EntityTypeTags.ARROWS)
+                .add(EntityType.EGG)
                 .add(EntityType.SMALL_FIREBALL)
                 .add(EntityType.FIREBALL)
-                .add(EntityType.DRAGON_FIREBALL)
                 .add(EntityType.SNOWBALL)
                 .add(AetherEntityTypes.GOLDEN_DART.get())
                 .add(AetherEntityTypes.POISON_DART.get())

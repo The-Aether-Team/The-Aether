@@ -1,11 +1,10 @@
 {
   "replace": false,
   "values": [
-    "minecraft:arrow",
-    "minecraft:spectral_arrow",
+    "#minecraft:arrows",
+    "minecraft:egg",
     "minecraft:small_fireball",
     "minecraft:fireball",
-    "minecraft:dragon_fireball",
     "minecraft:snowball",
     "aether:golden_dart",
     "aether:poison_dart",
