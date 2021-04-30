@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class AetherDimensions {
 
-	public static final RegistryKey<DimensionType> AETHER_DIMENSION = RegistryKey.create(Registry.DIMENSION_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, "aether"));
-	public static final RegistryKey<World> AETHER_WORLD = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(Aether.MODID, "aether"));
+	public static final RegistryKey<DimensionType> AETHER_DIMENSION = RegistryKey.create(Registry.DIMENSION_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, "the_aether"));
+	public static final RegistryKey<World> AETHER_WORLD = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(Aether.MODID, "the_aether"));
 
 }
