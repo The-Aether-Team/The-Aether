@@ -135,39 +135,39 @@ public class AetherBlocks
 	public static final RegistryObject<Block> LIGHT_HELLFIRE_STONE = register("light_hellfire_stone", () -> new Block(AbstractBlock.Properties.copy(AetherBlocks.HELLFIRE_STONE.get()).lightLevel((state) -> 11)));
 
 	public static final RegistryObject<Block> LOCKED_CARVED_STONE = register("locked_carved_stone", () -> new Block(AbstractBlock.Properties.of(Material.STONE)
-			.strength(-1.0F, 3600000.0F).noDrops().isValidSpawn((state, reader, pos, entity) -> false)));
+			.strength(-1.0F, 3600000.0F).isValidSpawn((state, reader, pos, entity) -> false)));
 	public static final RegistryObject<Block> LOCKED_SENTRY_STONE = register("locked_sentry_stone", () -> new Block(AbstractBlock.Properties.of(Material.STONE)
-			.strength(-1.0F, 3600000.0F).noDrops().isValidSpawn((state, reader, pos, entity) -> false).lightLevel((state) -> 11)));
+			.strength(-1.0F, 3600000.0F).isValidSpawn((state, reader, pos, entity) -> false).lightLevel((state) -> 11)));
 	public static final RegistryObject<Block> LOCKED_ANGELIC_STONE = register("locked_angelic_stone", () -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.SAND)
-			.strength(-1.0F, 3600000.0F).noDrops().isValidSpawn((state, reader, pos, entity) -> false)));
+			.strength(-1.0F, 3600000.0F).isValidSpawn((state, reader, pos, entity) -> false)));
 	public static final RegistryObject<Block> LOCKED_LIGHT_ANGELIC_STONE = register("locked_light_angelic_stone", () -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.SAND)
-			.strength(-1.0F, 3600000.0F).noDrops().isValidSpawn((state, reader, pos, entity) -> false).lightLevel((state) -> 11)));
+			.strength(-1.0F, 3600000.0F).isValidSpawn((state, reader, pos, entity) -> false).lightLevel((state) -> 11)));
 	public static final RegistryObject<Block> LOCKED_HELLFIRE_STONE = register("locked_hellfire_stone", () -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.NETHER)
-			.strength(-1.0F, 3600000.0F).noDrops().isValidSpawn((state, reader, pos, entity) -> false)));
+			.strength(-1.0F, 3600000.0F).isValidSpawn((state, reader, pos, entity) -> false)));
 	public static final RegistryObject<Block> LOCKED_LIGHT_HELLFIRE_STONE = register("locked_light_hellfire_stone", () -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.NETHER)
-			.strength(-1.0F, 3600000.0F).noDrops().isValidSpawn((state, reader, pos, entity) -> false).lightLevel((state) -> 11)));
+			.strength(-1.0F, 3600000.0F).isValidSpawn((state, reader, pos, entity) -> false).lightLevel((state) -> 11)));
 
 	public static final RegistryObject<Block> TRAPPED_CARVED_STONE = register("trapped_carved_stone",
 			() -> new TrappedBlock(AetherEntityTypes.SENTRY::get, () -> LOCKED_CARVED_STONE.get().defaultBlockState(), AbstractBlock.Properties.of(Material.STONE)
-					.strength(-1.0F, 3600000.0F).noDrops().isValidSpawn((state, reader, pos, entity) -> false)));
+					.strength(-1.0F, 3600000.0F).isValidSpawn((state, reader, pos, entity) -> false)));
 	public static final RegistryObject<Block> TRAPPED_SENTRY_STONE = register("trapped_sentry_stone",
 			() -> new TrappedBlock(AetherEntityTypes.SENTRY::get, () -> LOCKED_SENTRY_STONE.get().defaultBlockState(), AbstractBlock.Properties.of(Material.STONE)
-					.strength(-1.0F, 3600000.0F).noDrops().isValidSpawn((state, reader, pos, entity) -> false).lightLevel((state) -> 11)));
+					.strength(-1.0F, 3600000.0F).isValidSpawn((state, reader, pos, entity) -> false).lightLevel((state) -> 11)));
 	public static final RegistryObject<Block> TRAPPED_ANGELIC_STONE = register("trapped_angelic_stone",
 			() -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.SAND)
-					.strength(-1.0F, 3600000.0F).noDrops().isValidSpawn((state, reader, pos, entity) -> false)));
+					.strength(-1.0F, 3600000.0F).isValidSpawn((state, reader, pos, entity) -> false)));
 	//new TrappedBlock(() -> AetherEntityTypes.VALKYRIE, () -> LOCKED_ANGELIC_STONE.getDefaultState(), Block.Properties.from(Blocks.BEDROCK)));
 	public static final RegistryObject<Block> TRAPPED_LIGHT_ANGELIC_STONE = register("trapped_light_angelic_stone",
 			() -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.SAND)
-					.strength(-1.0F, 3600000.0F).noDrops().isValidSpawn((state, reader, pos, entity) -> false).lightLevel((state) -> 11)));
+					.strength(-1.0F, 3600000.0F).isValidSpawn((state, reader, pos, entity) -> false).lightLevel((state) -> 11)));
 	//new TrappedBlock(() -> AetherEntityTypes.VALKYRIE, () -> LOCKED_LIGHT_ANGELIC_STONE.getDefaultState(), Block.Properties.from(Blocks.BEDROCK).setLightLevel((state) -> 11)));
 	public static final RegistryObject<Block> TRAPPED_HELLFIRE_STONE = register("trapped_hellfire_stone",
 			() -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.NETHER)
-					.strength(-1.0F, 3600000.0F).noDrops().isValidSpawn((state, reader, pos, entity) -> false)));
+					.strength(-1.0F, 3600000.0F).isValidSpawn((state, reader, pos, entity) -> false)));
 	//new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_HELLFIRE_STONE.getDefaultState(), Block.Properties.from(Blocks.BEDROCK)));
 	public static final RegistryObject<Block> TRAPPED_LIGHT_HELLFIRE_STONE = register("trapped_light_hellfire_stone",
 			() -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.NETHER)
-					.strength(-1.0F, 3600000.0F).noDrops().isValidSpawn((state, reader, pos, entity) -> false).lightLevel((state) -> 11)));
+					.strength(-1.0F, 3600000.0F).isValidSpawn((state, reader, pos, entity) -> false).lightLevel((state) -> 11)));
 	//new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_LIGHT_HELLFIRE_STONE.getDefaultState(), Block.Properties.from(Blocks.BEDROCK).setLightLevel((state) -> 11)));
 
 	public static final RegistryObject<Block> CHEST_MIMIC = register("chest_mimic", () -> new ChestMimicBlock(AbstractBlock.Properties.copy(Blocks.CHEST).harvestTool(ToolType.AXE)));

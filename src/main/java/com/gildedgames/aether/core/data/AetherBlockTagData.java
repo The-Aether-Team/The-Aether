@@ -37,10 +37,6 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(AetherTags.Blocks.HOLYSTONE)
                 .add(AetherBlocks.HOLYSTONE.get())
                 .add(AetherBlocks.MOSSY_HOLYSTONE.get());
-        tag(AetherTags.Blocks.AETHER_ISLAND_BLOCKS)
-                .add(AetherBlocks.AETHER_DIRT.get())
-                .add(AetherBlocks.AETHER_GRASS_BLOCK.get())
-                .add(AetherBlocks.HOLYSTONE.get());
         tag(AetherTags.Blocks.AERCLOUDS)
                 .add(AetherBlocks.COLD_AERCLOUD.get())
                 .add(AetherBlocks.BLUE_AERCLOUD.get())
@@ -80,6 +76,12 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .add(AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get())
                 .add(AetherBlocks.TRAPPED_HELLFIRE_STONE.get())
                 .add(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE.get());
+        tag(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)
+                .add(AetherBlocks.AETHER_GRASS_BLOCK.get());
+        tag(AetherTags.Blocks.AETHER_ISLAND_BLOCKS)
+                .add(AetherBlocks.AETHER_DIRT.get())
+                .add(AetherBlocks.AETHER_GRASS_BLOCK.get())
+                .add(AetherBlocks.HOLYSTONE.get());
         tag(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)
                 .add(Blocks.GLOWSTONE);
 
