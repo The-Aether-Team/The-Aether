@@ -28,9 +28,7 @@ import net.minecraft.util.Direction.AxisDirection;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -62,59 +60,33 @@ public class AetherPortalBlock extends Block
 			case Z:
 				return Z_AABB;
 			case X:
-				return X_AABB;
 			default:
-				throw new AssertionError("Invalid value found for 'axis'");
+				return X_AABB;
 		}
 	}
 
-	public boolean trySpawnPortal(IWorld worldIn, BlockPos pos) {
-		AetherPortalBlock.Size aetherPortalSize = this.isPortal(worldIn, pos);
-		if (aetherPortalSize != null) {
-			aetherPortalSize.placePortalBlocks();
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	@Nullable
-	public AetherPortalBlock.Size isPortal(IWorld world, BlockPos pos) {
-		AetherPortalBlock.Size aetherPortalSizeX = new AetherPortalBlock.Size(world, pos, Axis.X);
-		if (aetherPortalSizeX.isValid() && aetherPortalSizeX.portalBlockCount == 0) {
-			return aetherPortalSizeX;
-		}
-		else {
-			AetherPortalBlock.Size aetherPortalSizeZ = new AetherPortalBlock.Size(world, pos, Axis.Z);
-			return aetherPortalSizeZ.isValid() && aetherPortalSizeZ.portalBlockCount == 0? aetherPortalSizeZ : null;
-		}
-	}
-	
 	@Override
 	@Deprecated
 	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
 		Axis directionAxis = facing.getAxis();
 		Axis stateAxis = stateIn.getValue(AXIS);
 		boolean flag = stateAxis != directionAxis && directionAxis.isHorizontal();
-		return (!flag && facingState.getBlock() != this && !(new AetherPortalBlock.Size(worldIn, currentPos, stateAxis)).canCreatePortal())? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos); 
+		return (!flag && facingState.getBlock() != this && !(new AetherPortalBlock.Size(worldIn, currentPos, stateAxis)).canCreatePortal()) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
 	@Override
 	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entity) {
-		if(!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {
-			if(entity.isOnPortalCooldown()) {
+		if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {
+			if (entity.isOnPortalCooldown()) {
 				entity.setPortalCooldown();
-			}
-			else {
-				if(!entity.level.isClientSide && !pos.equals(entity.portalEntrancePos)) {
+			} else {
+				if (!entity.level.isClientSide && !pos.equals(entity.portalEntrancePos)) {
 					entity.portalEntrancePos = pos.immutable();
 				}
 				LazyOptional<IAetherPlayer> aetherPlayer = entity.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
-				if(!aetherPlayer.isPresent()) {
+				if (!aetherPlayer.isPresent()) {
 					handleTeleportation(entity);
-				}
-				else {
+				} else {
 					aetherPlayer.ifPresent(handler -> {
 						handler.setInPortal(true);
 						int waitTime = handler.getPortalTimer();
@@ -128,9 +100,19 @@ public class AetherPortalBlock extends Block
 		}
 	}
 
+	public boolean trySpawnPortal(IWorld worldIn, BlockPos pos) {
+		AetherPortalBlock.Size aetherPortalSize = this.isPortal(worldIn, pos);
+		if (aetherPortalSize != null) {
+			aetherPortalSize.placePortalBlocks();
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	private void handleTeleportation(Entity entity) {
 		World serverworld = entity.level;
-		if(serverworld != null) {
+		if (serverworld != null) {
 			MinecraftServer minecraftserver = serverworld.getServer();
 			RegistryKey<World> where2go = entity.level.dimension() == AetherDimensions.AETHER_WORLD ? World.OVERWORLD : AetherDimensions.AETHER_WORLD;
 			if (minecraftserver != null) {
@@ -202,24 +184,22 @@ public class AetherPortalBlock extends Block
 	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(AXIS);
 	}
-	
+
 	@SubscribeEvent
 	public static void onNeighborNotify(NeighborNotifyEvent event) {
 		BlockPos pos = event.getPos();
-		IWorld world = event.getWorld();
-		
+		World world = (World) event.getWorld();
+
 		BlockState blockstate = world.getBlockState(pos);
 		FluidState fluidstate = world.getFluidState(pos);
+
 		if (fluidstate.getType() != Fluids.WATER || blockstate.isAir(world, pos)) {
 			return;
 		}
 
-		/* idk what to do with this
-		DimensionType dimension = world.getDimension().getType();
-		if (dimension != DimensionType.OVERWORLD && dimension != AetherDimensions.THE_AETHER) {
+		if (world.dimension() != World.OVERWORLD && world.dimension() != AetherDimensions.AETHER_WORLD) {
 			return;
 		}
-		*/
 		
 		boolean tryPortal = false;
 		for (Direction direction : Direction.values()) {
@@ -239,47 +219,16 @@ public class AetherPortalBlock extends Block
 			event.setCanceled(true);
 		}
 	}
-	
-	@SuppressWarnings("deprecation")
-	public static BlockPattern.PatternHelper createPatternHelper(IWorld worldIn, BlockPos pos) {
-		Axis axis = Axis.Z;
-		AetherPortalBlock.Size size = new AetherPortalBlock.Size(worldIn, pos, Axis.X);
-		LoadingCache<BlockPos, CachedBlockInfo> cache = BlockPattern.createLevelCache(worldIn, true);
-		if (!size.isValid()) {
-			axis = Axis.X;
-			size = new AetherPortalBlock.Size(worldIn, pos, Axis.Z);
-		}
 
-		if (!size.isValid()) {
-			return new BlockPattern.PatternHelper(pos, Direction.NORTH, Direction.UP, cache, 1, 1, 1);
+	@Nullable
+	public AetherPortalBlock.Size isPortal(IWorld world, BlockPos pos) {
+		AetherPortalBlock.Size aetherPortalSizeX = new AetherPortalBlock.Size(world, pos, Axis.X);
+		if (aetherPortalSizeX.isValid() && aetherPortalSizeX.portalBlockCount == 0) {
+			return aetherPortalSizeX;
 		}
 		else {
-			int[] axes = new int[AxisDirection.values().length];
-			Direction direction = size.rightDir.getCounterClockWise();
-			BlockPos blockpos = size.bottomLeft.above(size.getHeight() - 1);
-
-			for (AxisDirection axisDir : AxisDirection.values()) {
-				BlockPattern.PatternHelper helper = new BlockPattern.PatternHelper((direction.getAxisDirection() == axisDir)? blockpos : blockpos.relative(size.rightDir, size.getWidth() - 1), Direction.get(axisDir, axis), Direction.UP, cache, size.getWidth(), size.getHeight(), 1);
-
-				for (int i = 0; i < size.getWidth(); ++i) {
-					for (int j = 0; j < size.getHeight(); ++j) {
-						CachedBlockInfo cachedInfo = helper.getBlock(i, j, 1);
-						if (!cachedInfo.getState().isAir()) {
-							++axes[axisDir.ordinal()];
-						}
-					}
-				}
-			}
-
-			AxisDirection axisDirPos = AxisDirection.POSITIVE;
-
-			for (AxisDirection axisDir : AxisDirection.values()) {
-				if (axes[axisDir.ordinal()] < axes[axisDirPos.ordinal()]) {
-					axisDirPos = axisDir;
-				}
-			}
-
-			return new BlockPattern.PatternHelper((direction.getAxisDirection() == axisDirPos)? blockpos : blockpos.relative(size.rightDir, size.getWidth() - 1), Direction.get(axisDirPos, axis), Direction.UP, cache, size.getWidth(), size.getHeight(), 1);
+			AetherPortalBlock.Size aetherPortalSizeZ = new AetherPortalBlock.Size(world, pos, Axis.Z);
+			return aetherPortalSizeZ.isValid() && aetherPortalSizeZ.portalBlockCount == 0? aetherPortalSizeZ : null;
 		}
 	}
 

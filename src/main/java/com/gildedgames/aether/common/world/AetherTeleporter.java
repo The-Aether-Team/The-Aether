@@ -27,8 +27,8 @@ import java.util.Comparator;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class AetherTeleporter implements ITeleporter {
-
+public class AetherTeleporter implements ITeleporter
+{
     protected final ServerWorld world;
 
     public AetherTeleporter(ServerWorld worldIn) {
@@ -62,16 +62,16 @@ public class AetherTeleporter implements ITeleporter {
         int dimensionLogicalHeight = this.world.getHeight() - 1;
         BlockPos.Mutable mutablePos = pos.mutable();
 
-        for(BlockPos.Mutable blockpos$mutable1 : BlockPos.spiralAround(pos, 16, Direction.EAST, Direction.SOUTH)) {
+        for (BlockPos.Mutable blockpos$mutable1 : BlockPos.spiralAround(pos, 16, Direction.EAST, Direction.SOUTH)) {
             int j = Math.min(dimensionLogicalHeight, this.world.getHeight(Heightmap.Type.MOTION_BLOCKING, blockpos$mutable1.getX(), blockpos$mutable1.getZ()));
             if (worldborder.isWithinBounds(blockpos$mutable1) && worldborder.isWithinBounds(blockpos$mutable1.move(direction, 1))) {
                 blockpos$mutable1.move(direction.getOpposite(), 1);
 
-                for(int l = j; l >= 0; --l) {
+                for (int l = j; l >= 0; --l) {
                     blockpos$mutable1.setY(l);
                     if (this.world.isEmptyBlock(blockpos$mutable1)) {
                         int i1;
-                        for(i1 = l; l > 0 && this.world.isEmptyBlock(blockpos$mutable1.move(Direction.DOWN)); --l) {
+                        for (i1 = l; l > 0 && this.world.isEmptyBlock(blockpos$mutable1.move(Direction.DOWN)); --l) {
                         }
 
                         if (l + 4 <= dimensionLogicalHeight) {
@@ -109,9 +109,9 @@ public class AetherTeleporter implements ITeleporter {
                 return Optional.empty();
             }
 
-            for(int l1 = -1; l1 < 2; ++l1) {
-                for(int k2 = 0; k2 < 2; ++k2) {
-                    for(int i3 = -1; i3 < 3; ++i3) {
+            for (int l1 = -1; l1 < 2; ++l1) {
+                for (int k2 = 0; k2 < 2; ++k2) {
+                    for (int i3 = -1; i3 < 3; ++i3) {
                         BlockState blockstate1 = i3 < 0 ? Blocks.GLOWSTONE.defaultBlockState() : Blocks.AIR.defaultBlockState();
                         mutablePos.setWithOffset(blockpos, k2 * direction.getStepX() + l1 * direction1.getStepX(), i3, k2 * direction.getStepZ() + l1 * direction1.getStepZ());
                         this.world.setBlockAndUpdate(mutablePos, blockstate1);
@@ -120,8 +120,8 @@ public class AetherTeleporter implements ITeleporter {
             }
         }
 
-        for(int k1 = -1; k1 < 3; ++k1) {
-            for(int i2 = -1; i2 < 4; ++i2) {
+        for (int k1 = -1; k1 < 3; ++k1) {
+            for (int i2 = -1; i2 < 4; ++i2) {
                 if (k1 == -1 || k1 == 2 || i2 == -1 || i2 == 3) {
                     mutablePos.setWithOffset(blockpos, k1 * direction.getStepX(), i2, k1 * direction.getStepZ());
                     this.world.setBlock(mutablePos, Blocks.GLOWSTONE.defaultBlockState(), 3);
@@ -131,8 +131,8 @@ public class AetherTeleporter implements ITeleporter {
 
         BlockState aetherPortal = AetherBlocks.AETHER_PORTAL.get().defaultBlockState().setValue(AetherPortalBlock.AXIS, axis);
 
-        for(int j2 = 0; j2 < 2; ++j2) {
-            for(int l2 = 0; l2 < 3; ++l2) {
+        for (int j2 = 0; j2 < 2; ++j2) {
+            for (int l2 = 0; l2 < 3; ++l2) {
                 mutablePos.setWithOffset(blockpos, j2 * direction.getStepX(), l2, j2 * direction.getStepZ());
                 this.world.setBlock(mutablePos, aetherPortal, 18);
             }
@@ -144,8 +144,8 @@ public class AetherTeleporter implements ITeleporter {
     private boolean checkRegionForPlacement(BlockPos originalPos, BlockPos.Mutable offsetPos, Direction directionIn, int offsetScale) {
         Direction direction = directionIn.getClockWise();
 
-        for(int i = -1; i < 3; ++i) {
-            for(int j = -1; j < 4; ++j) {
+        for (int i = -1; i < 3; ++i) {
+            for (int j = -1; j < 4; ++j) {
                 offsetPos.setWithOffset(originalPos, directionIn.getStepX() * i + direction.getStepX() * offsetScale, j, directionIn.getStepZ() * i + direction.getStepZ() * offsetScale);
                 if (j < 0 && !this.world.getBlockState(offsetPos).getMaterial().isSolid()) {
                     return false;
@@ -195,7 +195,7 @@ public class AetherTeleporter implements ITeleporter {
 
     protected Optional<TeleportationRepositioner.Result> getOrMakePortal(Entity entity, BlockPos pos) {
         Optional<TeleportationRepositioner.Result> existingPortal = this.getExistingPortal(pos);
-        if(existingPortal.isPresent()) {
+        if (existingPortal.isPresent()) {
             return existingPortal;
         }
         else {
