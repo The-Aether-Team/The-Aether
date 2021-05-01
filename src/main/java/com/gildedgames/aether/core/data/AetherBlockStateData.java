@@ -112,6 +112,7 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         wallBlock(AetherBlocks.HELLFIRE_WALL, AetherBlocks.HELLFIRE_STONE, "dungeon/");
         wallBlock(AetherBlocks.HOLYSTONE_WALL, AetherBlocks.HOLYSTONE, "natural/");
         wallBlock(AetherBlocks.MOSSY_HOLYSTONE_WALL, AetherBlocks.MOSSY_HOLYSTONE, "natural/");
+        wallBlock(AetherBlocks.ICESTONE_WALL, AetherBlocks.ICESTONE, "natural/");
         wallBlock(AetherBlocks.HOLYSTONE_BRICK_WALL, AetherBlocks.HOLYSTONE_BRICKS, "construction/");
 
         stairs(AetherBlocks.SKYROOT_STAIRS, AetherBlocks.SKYROOT_PLANKS, "construction/");
@@ -120,6 +121,7 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         stairs(AetherBlocks.HELLFIRE_STAIRS, AetherBlocks.HELLFIRE_STONE, "dungeon/");
         stairs(AetherBlocks.HOLYSTONE_STAIRS, AetherBlocks.HOLYSTONE, "natural/");
         stairs(AetherBlocks.MOSSY_HOLYSTONE_STAIRS, AetherBlocks.MOSSY_HOLYSTONE, "natural/");
+        stairs(AetherBlocks.ICESTONE_STAIRS, AetherBlocks.ICESTONE, "natural/");
         stairs(AetherBlocks.HOLYSTONE_BRICK_STAIRS, AetherBlocks.HOLYSTONE_BRICKS, "construction/");
 
         slab(AetherBlocks.SKYROOT_SLAB, AetherBlocks.SKYROOT_PLANKS, "construction/");
@@ -128,6 +130,7 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         slab(AetherBlocks.HELLFIRE_SLAB, AetherBlocks.HELLFIRE_STONE, "dungeon/");
         slab(AetherBlocks.HOLYSTONE_SLAB, AetherBlocks.HOLYSTONE, "natural/");
         slab(AetherBlocks.MOSSY_HOLYSTONE_SLAB, AetherBlocks.MOSSY_HOLYSTONE, "natural/");
+        slab(AetherBlocks.ICESTONE_SLAB, AetherBlocks.ICESTONE, "natural/");
         slab(AetherBlocks.HOLYSTONE_BRICK_SLAB, AetherBlocks.HOLYSTONE_BRICKS, "construction/");
         slab(AetherBlocks.AEROGEL_SLAB, AetherBlocks.AEROGEL, "construction/");
 

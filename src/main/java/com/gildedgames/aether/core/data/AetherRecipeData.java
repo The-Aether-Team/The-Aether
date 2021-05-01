@@ -96,6 +96,7 @@ public class AetherRecipeData extends AetherRecipeProvider
         makeWall(AetherBlocks.HELLFIRE_WALL, AetherBlocks.HELLFIRE_STONE).save(consumer);
         makeWall(AetherBlocks.HOLYSTONE_WALL, AetherBlocks.HOLYSTONE).save(consumer);
         makeWall(AetherBlocks.MOSSY_HOLYSTONE_WALL, AetherBlocks.MOSSY_HOLYSTONE).save(consumer);
+        makeWall(AetherBlocks.ICESTONE_WALL, AetherBlocks.ICESTONE).save(consumer);
         makeWall(AetherBlocks.HOLYSTONE_BRICK_WALL, AetherBlocks.HOLYSTONE_BRICKS).save(consumer);
         makeWall(AetherBlocks.AEROGEL_WALL, AetherBlocks.AEROGEL).save(consumer);
 
@@ -105,6 +106,7 @@ public class AetherRecipeData extends AetherRecipeProvider
         makeStairs(AetherBlocks.HELLFIRE_STAIRS, AetherBlocks.HELLFIRE_STONE).save(consumer);
         makeStairs(AetherBlocks.HOLYSTONE_STAIRS, AetherBlocks.HOLYSTONE).save(consumer);
         makeStairs(AetherBlocks.MOSSY_HOLYSTONE_STAIRS, AetherBlocks.MOSSY_HOLYSTONE).save(consumer);
+        makeStairs(AetherBlocks.ICESTONE_STAIRS, AetherBlocks.ICESTONE).save(consumer);
         makeStairs(AetherBlocks.HOLYSTONE_BRICK_STAIRS, AetherBlocks.HOLYSTONE_BRICKS).save(consumer);
         makeStairs(AetherBlocks.AEROGEL_STAIRS, AetherBlocks.AEROGEL).save(consumer);
 
@@ -114,6 +116,7 @@ public class AetherRecipeData extends AetherRecipeProvider
         makeSlab(AetherBlocks.HELLFIRE_SLAB, AetherBlocks.HELLFIRE_STONE).save(consumer);
         makeSlab(AetherBlocks.HOLYSTONE_SLAB, AetherBlocks.HOLYSTONE).save(consumer);
         makeSlab(AetherBlocks.MOSSY_HOLYSTONE_SLAB, AetherBlocks.MOSSY_HOLYSTONE).save(consumer);
+        makeSlab(AetherBlocks.ICESTONE_SLAB, AetherBlocks.ICESTONE).save(consumer);
         makeSlab(AetherBlocks.HOLYSTONE_BRICK_SLAB, AetherBlocks.HOLYSTONE_BRICKS).save(consumer);
         makeSlab(AetherBlocks.AEROGEL_SLAB, AetherBlocks.AEROGEL).save(consumer);
 

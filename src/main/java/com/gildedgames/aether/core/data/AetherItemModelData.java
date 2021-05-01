@@ -283,6 +283,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemWallBlock(AetherBlocks.HELLFIRE_WALL, AetherBlocks.HELLFIRE_STONE, "dungeon/");
         itemWallBlock(AetherBlocks.HOLYSTONE_WALL, AetherBlocks.HOLYSTONE, "natural/");
         itemWallBlock(AetherBlocks.MOSSY_HOLYSTONE_WALL, AetherBlocks.MOSSY_HOLYSTONE, "natural/");
+        itemWallBlock(AetherBlocks.ICESTONE_WALL, AetherBlocks.ICESTONE, "natural/");
         itemWallBlock(AetherBlocks.HOLYSTONE_BRICK_WALL, AetherBlocks.HOLYSTONE_BRICKS, "construction/");
         itemWallBlock(AetherBlocks.AEROGEL_WALL, AetherBlocks.AEROGEL, "construction/");
 
@@ -292,6 +293,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.HELLFIRE_STAIRS);
         itemBlock(AetherBlocks.HOLYSTONE_STAIRS);
         itemBlock(AetherBlocks.MOSSY_HOLYSTONE_STAIRS);
+        itemBlock(AetherBlocks.ICESTONE_STAIRS);
         itemBlock(AetherBlocks.HOLYSTONE_BRICK_STAIRS);
         itemBlock(AetherBlocks.AEROGEL_STAIRS);
 
@@ -301,6 +303,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.HELLFIRE_SLAB);
         itemBlock(AetherBlocks.HOLYSTONE_SLAB);
         itemBlock(AetherBlocks.MOSSY_HOLYSTONE_SLAB);
+        itemBlock(AetherBlocks.ICESTONE_SLAB);
         itemBlock(AetherBlocks.HOLYSTONE_BRICK_SLAB);
         itemBlock(AetherBlocks.AEROGEL_SLAB);
 

@@ -140,6 +140,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.HELLFIRE_STAIRS.get().asItem())
                 .add(AetherBlocks.HOLYSTONE_STAIRS.get().asItem())
                 .add(AetherBlocks.MOSSY_HOLYSTONE_STAIRS.get().asItem())
+                .add(AetherBlocks.ICESTONE_STAIRS.get().asItem())
                 .add(AetherBlocks.HOLYSTONE_BRICK_STAIRS.get().asItem())
                 .add(AetherBlocks.AEROGEL_STAIRS.get().asItem());
         tag(ItemTags.SLABS)
@@ -149,6 +150,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.HELLFIRE_SLAB.get().asItem())
                 .add(AetherBlocks.HOLYSTONE_SLAB.get().asItem())
                 .add(AetherBlocks.MOSSY_HOLYSTONE_SLAB.get().asItem())
+                .add(AetherBlocks.ICESTONE_SLAB.get().asItem())
                 .add(AetherBlocks.HOLYSTONE_BRICK_SLAB.get().asItem())
                 .add(AetherBlocks.AEROGEL_SLAB.get().asItem());
         tag(ItemTags.WALLS)
@@ -157,6 +159,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.HELLFIRE_WALL.get().asItem())
                 .add(AetherBlocks.HOLYSTONE_WALL.get().asItem())
                 .add(AetherBlocks.MOSSY_HOLYSTONE_WALL.get().asItem())
+                .add(AetherBlocks.ICESTONE_WALL.get().asItem())
                 .add(AetherBlocks.HOLYSTONE_BRICK_WALL.get().asItem())
                 .add(AetherBlocks.AEROGEL_WALL.get().asItem());
         tag(ItemTags.LEAVES)

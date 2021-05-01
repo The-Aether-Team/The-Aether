@@ -169,6 +169,7 @@ public class AetherLangData extends LanguageProvider
         addBlock(AetherBlocks.HELLFIRE_WALL, "Hellfire Wall");
         addBlock(AetherBlocks.HOLYSTONE_WALL, "Holystone Wall");
         addBlock(AetherBlocks.MOSSY_HOLYSTONE_WALL, "Mossy Holystone Wall");
+        addBlock(AetherBlocks.ICESTONE_WALL, "Icestone Wall");
         addBlock(AetherBlocks.HOLYSTONE_BRICK_WALL, "Holystone Brick Wall");
         addBlock(AetherBlocks.AEROGEL_WALL, "Aerogel Wall");
 
@@ -178,6 +179,7 @@ public class AetherLangData extends LanguageProvider
         addBlock(AetherBlocks.HELLFIRE_STAIRS, "Hellfire Stairs");
         addBlock(AetherBlocks.HOLYSTONE_STAIRS, "Holystone Stairs");
         addBlock(AetherBlocks.MOSSY_HOLYSTONE_STAIRS, "Mossy Holystone Stairs");
+        addBlock(AetherBlocks.ICESTONE_STAIRS, "Icestone Stairs");
         addBlock(AetherBlocks.HOLYSTONE_BRICK_STAIRS, "Holystone Brick Stairs");
         addBlock(AetherBlocks.AEROGEL_STAIRS, "Aerogel Stairs");
 
@@ -187,6 +189,7 @@ public class AetherLangData extends LanguageProvider
         addBlock(AetherBlocks.HELLFIRE_SLAB, "Hellfire Slab");
         addBlock(AetherBlocks.HOLYSTONE_SLAB, "Holystone Slab");
         addBlock(AetherBlocks.MOSSY_HOLYSTONE_SLAB, "Mossy Holystone Slab");
+        addBlock(AetherBlocks.ICESTONE_SLAB, "Icestone Slab");
         addBlock(AetherBlocks.HOLYSTONE_BRICK_SLAB, "Holystone Brick Slab");
         addBlock(AetherBlocks.AEROGEL_SLAB, "Aerogel Slab");
 
