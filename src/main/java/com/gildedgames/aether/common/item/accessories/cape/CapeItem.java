@@ -3,33 +3,24 @@ package com.gildedgames.aether.common.item.accessories.cape;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.accessory.model.CapeModel;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
-import com.gildedgames.aether.core.capability.capabilities.cape.CapeEntity;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
-import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.JumpPacket;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.fml.ModList;
 import top.theillusivec4.colytra.common.ElytraNBT;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.type.capability.ICurio;
 
 public class CapeItem extends AccessoryItem
 {
@@ -57,7 +48,7 @@ public class CapeItem extends AccessoryItem
                         && ((AbstractClientPlayerEntity) livingEntity).getCloakTextureLocation() != null
                         && ((AbstractClientPlayerEntity) livingEntity).isModelPartShown(PlayerModelPart.CAPE);
 
-                if (itemstack.getItem() != Items.ELYTRA && !hasColytra && !hasCape) {
+                if (!(itemstack.getItem() instanceof ElytraItem) && !hasColytra && !hasCape) {
                     cape.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                     matrixStack.pushPose();
                     matrixStack.translate(0.0D, 0.0D, 0.125D);
