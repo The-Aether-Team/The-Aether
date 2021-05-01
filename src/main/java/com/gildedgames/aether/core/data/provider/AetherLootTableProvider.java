@@ -138,7 +138,8 @@ public class AetherLootTableProvider extends LootTableProvider
                     .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1)).when(HAS_SHEARS_OR_SILK_TOUCH.invert())
                             .add(applyExplosionDecay(block,
                                     ItemLootEntry.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetCount.setCount(RandomValueRange.between(1.0F, 2.0F))))
-                                    .when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))));
+                                    .when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
+                    .apply(DoubleDrops.builder());
         }
 
         protected static LootTable.Builder droppingDoubleGoldenOak(Block original, Block block, Item item) {
@@ -167,9 +168,8 @@ public class AetherLootTableProvider extends LootTableProvider
                             .when(LocationCheck.checkLocation(
                                     LocationPredicate.Builder.location().setBlock(
                                             BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
-                                    new BlockPos(0, -1, 0))))
-                            )
-                    )
+                                    new BlockPos(0, -1, 0))))))
+                    .apply(DoubleDrops.builder())
             );
         }
 
