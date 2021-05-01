@@ -4,6 +4,7 @@ import com.gildedgames.aether.client.gui.screen.inventory.AltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.FreezerScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.IncubatorScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.LoreBookScreen;
+import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.common.registry.AetherWoodTypes;
 import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicTileEntityRenderer;
@@ -27,6 +28,7 @@ import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.Items;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -36,12 +38,19 @@ import java.util.function.Supplier;
 public class AetherRendering
 {
     public static void registerColors() {
-        Minecraft.getInstance().getItemColors().register((color, itemProvider) -> itemProvider > 0 ? -1 : ((IDyeableArmorItem) color.getItem()).getColor(color), AetherItems.LEATHER_GLOVES.get());
+        ItemColors colors = Minecraft.getInstance().getItemColors();
+
+        colors.register((color, itemProvider) -> itemProvider > 0 ? -1 : ((IDyeableArmorItem) color.getItem()).getColor(color), AetherItems.LEATHER_GLOVES.get());
+
+        //TODO: Once Moa Eggs are fully functional this code can probably be simplified similar to spawn eggs.
+        colors.register((color, itemProvider) -> ((MoaEggItem) color.getItem()).getColor(itemProvider), AetherItems.BLUE_MOA_EGG.get());
+        colors.register((color, itemProvider) -> ((MoaEggItem) color.getItem()).getColor(itemProvider), AetherItems.WHITE_MOA_EGG.get());
+        colors.register((color, itemProvider) -> ((MoaEggItem) color.getItem()).getColor(itemProvider), AetherItems.BLACK_MOA_EGG.get());
+        colors.register((color, itemProvider) -> ((MoaEggItem) color.getItem()).getColor(itemProvider), AetherItems.ORANGE_MOA_EGG.get());
     }
 
     public static void registerBlockRenderLayers() {
         RenderType cutout = RenderType.cutout();
-        RenderType mipped = RenderType.cutoutMipped();
         RenderType translucent = RenderType.translucent();
 
         render(AetherBlocks.SKYROOT_DOOR, cutout);

@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.item.misc;
+package com.gildedgames.aether.common.item.miscellaneous;
 
 import com.gildedgames.aether.common.inventory.container.LoreBookContainer;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,8 +11,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
-
-import net.minecraft.item.Item.Properties;
 
 public class LoreBookItem extends Item
 {

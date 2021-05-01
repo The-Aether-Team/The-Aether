@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.item.misc;
+package com.gildedgames.aether.common.item.miscellaneous;
 
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherEffects;

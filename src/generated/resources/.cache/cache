@@ -93,7 +93,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-8a341d84fa2e186ca78aa9f0bfddab36f414bc28 assets/aether/lang/en_us.json
+965a3d56e401afbcfd174aecf34594c87702f3e2 assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -254,10 +254,12 @@ eec543303c980fd729f0902989ef9299d88de2c4 assets/aether/models/item/angelic_stone
 464a4dbf45df36c2f9a6199f85b4a646dcf9582f assets/aether/models/item/angelic_wall.json
 8941e28b6b801e36d4ae3b8640d7790fd38c73ba assets/aether/models/item/berry_bush.json
 2be3f6962ffac7e2231224fa8736570eb72381c1 assets/aether/models/item/berry_bush_stem.json
+4b8f03d0c03b5f86e9fe295e7608c92dcba3c720 assets/aether/models/item/black_moa_egg.json
 00182372c4499a83837e59b8e56332653cd146f8 assets/aether/models/item/blue_aercloud.json
 bb24a4b6f5624ace259fd60d8f465845c5a2ea2d assets/aether/models/item/blue_berry.json
 b7da65a495a98851bcc38d7f728af9a62351df95 assets/aether/models/item/blue_cape.json
 56870822cf15f244921071d9b757cb55392ffbc2 assets/aether/models/item/blue_gummy_swet.json
+4b8f03d0c03b5f86e9fe295e7608c92dcba3c720 assets/aether/models/item/blue_moa_egg.json
 2e0038ff4547d5c2d1851e1c2b579ce6d805c31f assets/aether/models/item/book_of_lore.json
 5c05495338c6c708dde66607698081db7f40e386 assets/aether/models/item/bronze_dungeon_key.json
 448b086eeaf0515d0ab1a9280f87e46a927fa11b assets/aether/models/item/candy_cane.json
@@ -375,6 +377,7 @@ d40fecc25a6fdaf6d8160458e39e0248d8e8d903 assets/aether/models/item/neptune_leggi
 b371b919811bcce3492bbcbc3f2ee620ba17f750 assets/aether/models/item/obsidian_gloves.json
 9b4361a03614be79984d59ad8ca164b153dfb202 assets/aether/models/item/obsidian_helmet.json
 f798327129870980927f4e51f1b495bec89846d5 assets/aether/models/item/obsidian_leggings.json
+4b8f03d0c03b5f86e9fe295e7608c92dcba3c720 assets/aether/models/item/orange_moa_egg.json
 0ee5300d7fd1c67ae9476d1018e8d7318f57b22e assets/aether/models/item/phoenix_boots.json
 992d6f82f02e7ab6e1358013137195af579f5207 assets/aether/models/item/phoenix_chestplate.json
 3aaf02cd7392404a02972cf7c94d4bcd2d1c9015 assets/aether/models/item/phoenix_gloves.json
@@ -451,6 +454,7 @@ f413a26e78b95a49eb3b3aa522fb40f16d1be76b assets/aether/models/item/victory_medal
 cd990c5107180b10434baf96de74cf8b041b4716 assets/aether/models/item/white_apple.json
 f6789671107f1f0d4ba6eadff6cdd3215ff85a80 assets/aether/models/item/white_cape.json
 a27d299b0d02bd92659c1ce6ff7d2bc3cdde6000 assets/aether/models/item/white_flower.json
+4b8f03d0c03b5f86e9fe295e7608c92dcba3c720 assets/aether/models/item/white_moa_egg.json
 f22bde6cfda058be631767360f4a77bab292fc5a assets/aether/models/item/yellow_cape.json
 b20a422f508e23b265fa0aa22663c5ac65e9f418 assets/aether/models/item/zanite_axe.json
 5878ff8c50422c5c6a8da1fc7e9468be3c0cd9ad assets/aether/models/item/zanite_block.json

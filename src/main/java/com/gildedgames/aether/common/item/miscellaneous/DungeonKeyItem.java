@@ -1,13 +1,7 @@
-package com.gildedgames.aether.common.item.misc;
+package com.gildedgames.aether.common.item.miscellaneous;
 
-import com.gildedgames.aether.common.entity.tile.TreasureChestTileEntity;
 import com.gildedgames.aether.core.api.registers.DungeonType;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
 import org.apache.commons.lang3.Validate;
 
 import java.util.function.Supplier;

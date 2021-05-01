@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.item.misc;
+package com.gildedgames.aether.common.item.miscellaneous;
 
 import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -14,8 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
-
-import net.minecraft.item.Item.Properties;
 
 public class SkyrootBucketItem extends Item {
     public SkyrootBucketItem(Properties properties) {

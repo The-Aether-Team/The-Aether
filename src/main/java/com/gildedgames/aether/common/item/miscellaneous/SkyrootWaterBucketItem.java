@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.item.misc;
+package com.gildedgames.aether.common.item.miscellaneous;
 
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.block.Block;
@@ -20,8 +20,6 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-
-import net.minecraft.item.Item.Properties;
 
 public class SkyrootWaterBucketItem extends Item {
     public SkyrootWaterBucketItem(Properties properties) {

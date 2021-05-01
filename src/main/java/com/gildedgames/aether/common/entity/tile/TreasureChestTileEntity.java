@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.entity.tile;
 
 import com.gildedgames.aether.common.block.dungeon.TreasureChestBlock;
-import com.gildedgames.aether.common.item.misc.DungeonKeyItem;
+import com.gildedgames.aether.common.item.miscellaneous.DungeonKeyItem;
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import com.gildedgames.aether.core.api.registers.DungeonType;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;

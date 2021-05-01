@@ -169,6 +169,12 @@ public class AetherItemModelData extends AetherItemModelProvider
 
         item(AetherItems.NATURE_STAFF, "miscellaneous/");
         item(AetherItems.CLOUD_STAFF, "miscellaneous/");
+
+        moaEggItem(AetherItems.BLUE_MOA_EGG, "miscellaneous/");
+        moaEggItem(AetherItems.WHITE_MOA_EGG, "miscellaneous/");
+        moaEggItem(AetherItems.BLACK_MOA_EGG, "miscellaneous/");
+        moaEggItem(AetherItems.ORANGE_MOA_EGG, "miscellaneous/");
+
         item(AetherItems.LIFE_SHARD, "miscellaneous/");
 
         item(AetherItems.MUSIC_DISC_AETHER_TUNE, "miscellaneous/");

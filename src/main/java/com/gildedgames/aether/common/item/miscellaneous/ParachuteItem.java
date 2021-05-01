@@ -1,9 +1,7 @@
-package com.gildedgames.aether.common.item.misc;
+package com.gildedgames.aether.common.item.miscellaneous;
 
-import com.gildedgames.aether.common.entity.block.ParachuteEntity;
 import com.gildedgames.aether.core.api.registers.ParachuteType;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

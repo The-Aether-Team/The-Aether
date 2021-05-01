@@ -364,6 +364,12 @@ public class AetherLangData extends LanguageProvider
 
         addItem(AetherItems.NATURE_STAFF, "Nature Staff");
         addItem(AetherItems.CLOUD_STAFF, "Cloud Staff");
+
+        addItem(AetherItems.BLUE_MOA_EGG, "Blue Moa Egg");
+        addItem(AetherItems.WHITE_MOA_EGG, "White Moa Egg");
+        addItem(AetherItems.BLACK_MOA_EGG, "Black Moa Egg");
+        addItem(AetherItems.ORANGE_MOA_EGG, "Orange Moa Egg");
+
         addItem(AetherItems.LIFE_SHARD, "Life Shard");
 
         addItem(AetherItems.BOOK_OF_LORE, "Book of Lore");
