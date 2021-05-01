@@ -196,7 +196,7 @@ public class AetherBlocks
 	public static final RegistryObject<WallBlock> HELLFIRE_WALL = register("hellfire_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.HELLFIRE_STONE.get())));
 	public static final RegistryObject<WallBlock> HOLYSTONE_WALL = register("holystone_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE.get())));
 	public static final RegistryObject<WallBlock> MOSSY_HOLYSTONE_WALL = register("mossy_holystone_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get())));
-	public static final RegistryObject<WallBlock> ICESTONE_WALL = register("icestone_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get())));
+	public static final RegistryObject<WallBlock> ICESTONE_WALL = register("icestone_wall", () -> new IcestoneWallBlock(AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get())));
 	public static final RegistryObject<WallBlock> HOLYSTONE_BRICK_WALL = register("holystone_brick_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get())));
 	public static final RegistryObject<WallBlock> AEROGEL_WALL = register("aerogel_wall", () -> new AerogelWallBlock(AbstractBlock.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking((state, reader, pos) -> false)));
 
@@ -213,7 +213,7 @@ public class AetherBlocks
 	public static final RegistryObject<StairsBlock> MOSSY_HOLYSTONE_STAIRS = register("mossy_holystone_stairs",
 			() -> new StairsBlock(() -> MOSSY_HOLYSTONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get())));
 	public static final RegistryObject<StairsBlock> ICESTONE_STAIRS = register("icestone_stairs",
-			() -> new StairsBlock(() -> ICESTONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get())));
+			() -> new IcestoneStairsBlock(() -> ICESTONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get())));
 	public static final RegistryObject<StairsBlock> HOLYSTONE_BRICK_STAIRS = register("holystone_brick_stairs",
 			() -> new StairsBlock(() -> HOLYSTONE_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get())));
 	public static final RegistryObject<StairsBlock> AEROGEL_STAIRS = register("aerogel_stairs",
@@ -232,7 +232,7 @@ public class AetherBlocks
 	public static final RegistryObject<SlabBlock> MOSSY_HOLYSTONE_SLAB = register("mossy_holystone_slab",
 			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get()).strength(2.0F)));
 	public static final RegistryObject<SlabBlock> ICESTONE_SLAB = register("icestone_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get()).strength(2.0F)));
+			() -> new IcestoneSlabBlock(AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get()).strength(2.0F)));
 	public static final RegistryObject<SlabBlock> HOLYSTONE_BRICK_SLAB = register("holystone_brick_slab",
 			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get()).strength(2.0F)));
 	public static final RegistryObject<SlabBlock> AEROGEL_SLAB = register("aerogel_slab",
