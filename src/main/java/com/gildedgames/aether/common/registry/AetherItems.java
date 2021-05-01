@@ -131,13 +131,13 @@ public class AetherItems
 			() -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, EquipmentSlotType.FEET, new Item.Properties().rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ARMOR)));
 
 	public static final RegistryObject<Item> PHOENIX_HELMET = ITEMS.register("phoenix_helmet",
-			() -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlotType.HEAD, new Item.Properties().rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ARMOR)));
+			() -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlotType.HEAD, new Item.Properties().rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_ARMOR)));
 	public static final RegistryObject<Item> PHOENIX_CHESTPLATE = ITEMS.register("phoenix_chestplate",
-			() -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlotType.CHEST, new Item.Properties().rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ARMOR)));
+			() -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlotType.CHEST, new Item.Properties().rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_ARMOR)));
 	public static final RegistryObject<Item> PHOENIX_LEGGINGS = ITEMS.register("phoenix_leggings",
-			() -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlotType.LEGS, new Item.Properties().rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ARMOR)));
+			() -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlotType.LEGS, new Item.Properties().rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_ARMOR)));
 	public static final RegistryObject<Item> PHOENIX_BOOTS = ITEMS.register("phoenix_boots",
-			() -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlotType.FEET, new Item.Properties().rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ARMOR)));
+			() -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlotType.FEET, new Item.Properties().rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_ARMOR)));
 
 	public static final RegistryObject<Item> OBSIDIAN_HELMET = ITEMS.register("obsidian_helmet",
 			() -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, EquipmentSlotType.HEAD, new Item.Properties().rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ARMOR)));

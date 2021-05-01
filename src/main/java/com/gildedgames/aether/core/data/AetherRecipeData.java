@@ -243,6 +243,20 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(AetherItems.COLD_PARACHUTE.get(), 1)
+                .pattern("AA")
+                .pattern("AA")
+                .define('A', AetherBlocks.COLD_AERCLOUD.get())
+                .unlockedBy("has_aercloud", has(AetherBlocks.COLD_AERCLOUD.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(AetherItems.GOLDEN_PARACHUTE.get(), 1)
+                .pattern("AA")
+                .pattern("AA")
+                .define('A', AetherBlocks.GOLDEN_AERCLOUD.get())
+                .unlockedBy("has_aercloud", has(AetherBlocks.GOLDEN_AERCLOUD.get()))
+                .save(consumer);
+
         ShapelessRecipeBuilder.shapeless(AetherItems.BOOK_OF_LORE.get())
                 .requires(Items.BOOK)
                 .requires(AetherTags.Items.BOOK_OF_LORE_MATERIALS)
