@@ -1181,6 +1181,7 @@ d84975c4861b70c3f92cfbad01916658bf6145c7 data/aether/tags/blocks/skyroot_logs.js
 46f3e0bfc31092b03e1dd04eded8942029c12bd2 data/aether/tags/entity_types/deflectable_projectiles.json
 eb63088b6df7e0f3d78ff3e43d59e289e6677d27 data/aether/tags/entity_types/no_skyroot_double_drops.json
 950d8653641729fae48d516598df550671f5bffb data/aether/tags/entity_types/pigs.json
+6d86d02a3f9975defeaf27b7d67dcb5a5d06348f data/aether/tags/fluids/freezable_to_aerogel.json
 43e63f3bd6394d9fe41429c3f74604766f9d56dd data/aether/tags/items/accepted_music_discs.json
 8d6c9296865148dd7bd9a1a7bd93162b92f9573c data/aether/tags/items/aerclouds.json
 36c4998736ba1b2f6f0dd59363b4fd9f1977f8cf data/aether/tags/items/aerogel.json

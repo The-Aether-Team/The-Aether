@@ -163,7 +163,7 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public void givePortalItem() {
 		if (this.canGetPortal()) {
-			this.getPlayer().addItem(new ItemStack(AetherItems.AETHER_PORTAL_FRAME.get(), 1));
+			this.getPlayer().addItem(new ItemStack(AetherItems.AETHER_PORTAL_FRAME.get()));
 			this.setCanGetPortal(false);
 		}
 	}

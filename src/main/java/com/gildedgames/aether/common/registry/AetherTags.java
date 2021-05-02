@@ -3,11 +3,9 @@ package com.gildedgames.aether.common.registry;
 import com.gildedgames.aether.Aether;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.tags.ITag;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.DimensionType;
 
@@ -77,6 +75,15 @@ public class AetherTags
 
 		private static ITag.INamedTag<EntityType<?>> tag(String name) {
 			return EntityTypeTags.bind(new ResourceLocation(Aether.MODID, name).toString());
+		}
+	}
+
+	public static class Fluids
+	{
+		public static final ITag.INamedTag<Fluid> FREEZABLE_TO_AEROGEL = tag("freezable_to_aerogel");
+
+		private static ITag.INamedTag<Fluid> tag(String name) {
+			return FluidTags.bind(new ResourceLocation(Aether.MODID, name).toString());
 		}
 	}
 }

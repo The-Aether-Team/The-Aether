@@ -13,10 +13,6 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class AetherEventHooks
 {
-	public static void firePlayerEnchantedEvent(PlayerEntity entity, ItemStack stack) {
-		// TODO
-	}
-	
 	public static boolean isItemBanned(ItemStack itemStack) {
 		AetherBannedItemEvent.Check event = new AetherBannedItemEvent.Check(itemStack.copy());
 		MinecraftForge.EVENT_BUS.post(event);
