@@ -47,6 +47,10 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.STONE_CRAFTING)
                 .addTag(ItemTags.STONE_CRAFTING_MATERIALS)
                 .add(AetherBlocks.HOLYSTONE.get().asItem());
+        tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS);
+        tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_BUCKETS)
+                .add(Items.WATER_BUCKET)
+                .add(AetherItems.SKYROOT_WATER_BUCKET.get());
         tag(AetherTags.Items.SKYROOT_STICKS)
                 .add(AetherItems.SKYROOT_STICK.get());
         tag(AetherTags.Items.SKYROOT_TOOLS)

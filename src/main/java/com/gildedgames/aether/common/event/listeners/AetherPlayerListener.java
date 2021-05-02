@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.event.listeners;
 
+import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -25,5 +26,17 @@ public class AetherPlayerListener
                 () -> new IllegalStateException("Player " + event.getPlayer().getName().getContents() + " has no AetherPlayer capability!"));;
 
         newPlayer.copyFrom(original);
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        PlayerEntity player = event.getPlayer();
+        IAetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+            if (AetherConfig.COMMON.start_with_portal.get()) {
+                aetherPlayer.givePortalItem();
+            } else {
+                aetherPlayer.setCanGetPortal(false);
+            }
+        });
     }
 }

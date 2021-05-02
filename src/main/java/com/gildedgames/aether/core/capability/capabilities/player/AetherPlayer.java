@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.capability.capabilities.player;
 
 import com.gildedgames.aether.common.entity.block.ParachuteEntity;
+import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.api.registers.ParachuteType;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
@@ -9,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
@@ -26,6 +28,7 @@ public class AetherPlayer implements IAetherPlayer
 	public int aetherPortalTimer = 0;
 	public float prevPortalAnimTime, portalAnimTime = 0.0F;
 
+	private boolean canGetPortal = true;
 	private boolean isJumping;
 	
 	public AetherPlayer(PlayerEntity player) {
@@ -40,6 +43,7 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public CompoundNBT serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
+		nbt.putBoolean("CanGetPortal", this.canGetPortal());
 		if (this.getParachute() != null) {
 			nbt.putString("Parachute", this.getParachute().getParachuteType().getRegistryName().toString());
 		}
@@ -54,6 +58,9 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public void deserializeNBT(CompoundNBT nbt) {
+		if (nbt.contains("CanGetPortal")) {
+			this.setCanGetPortal(nbt.getBoolean("CanGetPortal"));
+		}
 		if (nbt.contains("Parachute")) {
 			this.setParachute(AetherParachuteTypes.PARACHUTES.get(new ResourceLocation(nbt.getString("Parachute"))));
 		}
@@ -61,11 +68,9 @@ public class AetherPlayer implements IAetherPlayer
 	
 	@Override
 	public void copyFrom(IAetherPlayer other) {
-		CompoundNBT nbt = new CompoundNBT();
-		//this.shouldRenderGlow = other.shouldRenderGlow();
+		this.setCanGetPortal(other.canGetPortal());
 	}
 
-	// TODO
 	@Override
 	public void onUpdate() {
 		handleAetherPortal();
@@ -153,6 +158,24 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public ParachuteEntity getParachute() {
 		return this.parachute;
+	}
+
+	@Override
+	public void givePortalItem() {
+		if (this.canGetPortal()) {
+			this.getPlayer().addItem(new ItemStack(AetherItems.AETHER_PORTAL_FRAME.get(), 1));
+			this.setCanGetPortal(false);
+		}
+	}
+
+	@Override
+	public void setCanGetPortal(boolean canGetPortal) {
+		this.canGetPortal = canGetPortal;
+	}
+
+	@Override
+	public boolean canGetPortal() {
+		return this.canGetPortal;
 	}
 
 	@Override

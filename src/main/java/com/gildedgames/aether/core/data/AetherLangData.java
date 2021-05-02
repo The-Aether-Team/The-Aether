@@ -374,6 +374,8 @@ public class AetherLangData extends LanguageProvider
 
         addItem(AetherItems.BOOK_OF_LORE, "Book of Lore");
 
+        addItem(AetherItems.AETHER_PORTAL_FRAME, "Aether Portal Frame");
+
         addItem(AetherItems.AECHOR_PLANT_SPAWN_EGG, "Aechor Plant Spawn Egg");
         addItem(AetherItems.AERBUNNY_SPAWN_EGG, "Aerbunny Spawn Egg");
         addItem(AetherItems.AERWHALE_SPAWN_EGG, "Aerwhale Spawn Egg");

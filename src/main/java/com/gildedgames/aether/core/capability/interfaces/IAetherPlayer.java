@@ -23,6 +23,11 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 	void setParachute(ParachuteType parachuteType);
 	ParachuteEntity getParachute();
 
+	void givePortalItem();
+
+	void setCanGetPortal(boolean canGetPortal);
+	boolean canGetPortal();
+
 	void setJumping(boolean isJumping);
 	boolean isJumping();
 

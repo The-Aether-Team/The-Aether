@@ -15,6 +15,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.pattern.BlockPattern;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
@@ -26,6 +27,8 @@ import net.minecraft.util.*;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Direction.AxisDirection;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.*;
@@ -33,6 +36,8 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -173,7 +178,7 @@ public class AetherPortalBlock extends Block
 					case X:
 						return state.setValue(AXIS, Axis.Z);
 					default:
-						throw new AssertionError("Invalid value for 'axis'");
+						return state;
 				}
 			default:
 				return state;
@@ -186,38 +191,61 @@ public class AetherPortalBlock extends Block
 	}
 
 	@SubscribeEvent
-	public static void onNeighborNotify(NeighborNotifyEvent event) {
-		BlockPos pos = event.getPos();
-		World world = (World) event.getWorld();
-
-		BlockState blockstate = world.getBlockState(pos);
-		FluidState fluidstate = world.getFluidState(pos);
-
-		if (fluidstate.getType() != Fluids.WATER || blockstate.isAir(world, pos)) {
-			return;
+	public static void onBlockRightClicked(PlayerInteractEvent.RightClickBlock event) {
+        BlockRayTraceResult hitVec = event.getHitVec();
+        BlockPos pos = hitVec.getBlockPos().relative(hitVec.getDirection());
+		if (event.getItemStack().getItem().is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS)) {
+			if (fillPortalBlocks(event.getWorld(), pos, event.getPlayer(), event.getHand(), event.getItemStack())) {
+				event.setCanceled(true);
+			}
 		}
+	}
 
-		if (world.dimension() != World.OVERWORLD && world.dimension() != AetherDimensions.AETHER_WORLD) {
-			return;
-		}
-		
-		boolean tryPortal = false;
-		for (Direction direction : Direction.values()) {
-			if (world.getBlockState(pos.relative(direction)).getBlock().is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)) {
-				if (AetherBlocks.AETHER_PORTAL.get().isPortal(world, pos) != null) {
-					tryPortal = true;
-					break;
+	@SubscribeEvent
+	public static void onBucketRightClicked(FillBucketEvent event) {
+		RayTraceResult rayTraceResult = event.getTarget();
+		if (rayTraceResult instanceof BlockRayTraceResult)  {
+			BlockRayTraceResult hitVec = (BlockRayTraceResult) rayTraceResult;
+			BlockPos pos = hitVec.getBlockPos().relative(hitVec.getDirection());
+			if (event.getEmptyBucket().getItem().is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_BUCKETS)) {
+				Hand hand = event.getEmptyBucket().getItem() == event.getPlayer().getOffhandItem().getItem() ? Hand.OFF_HAND : Hand.MAIN_HAND;
+				if (fillPortalBlocks(event.getWorld(), pos, event.getPlayer(), hand, event.getEmptyBucket())) {
+					event.setCanceled(true);
 				}
 			}
 		}
-		
-		if (!tryPortal) {
-			return;
+	}
+
+	private static boolean fillPortalBlocks(World world, BlockPos pos, PlayerEntity player, Hand hand, ItemStack stack) {
+		if (world.dimension() == World.OVERWORLD || world.dimension() == AetherDimensions.AETHER_WORLD) {
+			boolean tryPortal = false;
+			for (Direction direction : Direction.values()) {
+				if (world.getBlockState(pos.relative(direction)).getBlock().is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)) {
+					if (AetherBlocks.AETHER_PORTAL.get().isPortal(world, pos) != null) {
+						tryPortal = true;
+						break;
+					}
+				}
+			}
+			if (tryPortal) {
+				if (AetherBlocks.AETHER_PORTAL.get().trySpawnPortal(world, pos)) {
+					player.playSound(SoundEvents.BUCKET_EMPTY, 1.0F, 1.0F);
+					player.swing(hand);
+					if (!player.isCreative()) {
+						if (stack.getCount() > 1) {
+							stack.shrink(1);
+							player.addItem(stack.hasContainerItem() ? stack.getContainerItem() : ItemStack.EMPTY);
+						} else if (stack.isDamageableItem()) {
+							stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+						} else {
+							player.setItemInHand(hand, stack.hasContainerItem() ? stack.getContainerItem() : ItemStack.EMPTY);
+						}
+					}
+					return true;
+				}
+			}
 		}
-		
-		if (AetherBlocks.AETHER_PORTAL.get().trySpawnPortal(world, pos)) {
-			event.setCanceled(true);
-		}
+		return false;
 	}
 
 	@Nullable
