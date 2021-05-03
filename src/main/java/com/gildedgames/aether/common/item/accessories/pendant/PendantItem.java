@@ -13,15 +13,28 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
+
+import javax.annotation.Nonnull;
+import java.util.function.Supplier;
 
 public class PendantItem extends AccessoryItem
 {
     protected ResourceLocation PENDANT_LOCATION;
+    protected final Supplier<SoundEvent> equipSound;
 
-    public PendantItem(String pendantLocation, Properties properties) {
+    public PendantItem(String pendantLocation, Supplier<SoundEvent> pendantSound, Properties properties) {
         super(properties);
         this.setRenderTexture(Aether.MODID, pendantLocation);
+        this.equipSound = pendantSound;
+    }
+
+    @Nonnull
+    @Override
+    public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
+        return new ICurio.SoundInfo(this.equipSound.get(), 1.0f, 1.0f);
     }
 
     @Override

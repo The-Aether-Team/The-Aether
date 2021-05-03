@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.item.accessories.pendant;
 
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -8,7 +9,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 public class ZanitePendantItem extends PendantItem
 {
     public ZanitePendantItem(Properties properties) {
-        super("zanite_pendant", properties);
+        super("zanite_pendant", AetherSoundEvents.ITEM_ACCESSORY_EQUIP_ZANITE_PENDANT, properties);
     }
 
     @Override

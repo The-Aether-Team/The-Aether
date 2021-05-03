@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.item.accessories.cape;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.client.renderer.accessory.model.CapeModel;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
@@ -17,10 +18,15 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.fml.ModList;
 import top.theillusivec4.colytra.common.ElytraNBT;
+import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.type.capability.ICurio;
+
+import javax.annotation.Nonnull;
 
 public class CapeItem extends AccessoryItem
 {
@@ -29,6 +35,12 @@ public class CapeItem extends AccessoryItem
     public CapeItem(String capeLocation, Properties properties) {
         super(properties);
         this.setRenderTexture(Aether.MODID, capeLocation);
+    }
+
+    @Nonnull
+    @Override
+    public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
+        return new ICurio.SoundInfo(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_CAPE.get(), 1.0f, 1.0f);
     }
 
     @Override

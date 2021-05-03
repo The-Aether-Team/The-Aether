@@ -18,7 +18,7 @@ public class AetherLangData extends LanguageProvider
     }
 
     private void addDiscDesc(Supplier<? extends Item> key, String name) {
-        add("item.aether." + key.get().getDescriptionId() + ".desc", name);
+        add(key.get().getDescriptionId() + ".desc", name);
     }
 
     public void addContainerType(Supplier<? extends ContainerType<?>> key, String name) {

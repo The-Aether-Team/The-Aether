@@ -3,9 +3,9 @@ package com.gildedgames.aether.core.network;
 import com.gildedgames.aether.Aether;
 
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
-import com.gildedgames.aether.core.network.packet.ExtendedAttackPacket;
-import com.gildedgames.aether.core.network.packet.JumpPacket;
-import com.gildedgames.aether.core.network.packet.SmokeParticlePacket;
+import com.gildedgames.aether.core.network.packet.server.ExtendedAttackPacket;
+import com.gildedgames.aether.core.network.packet.server.JumpPacket;
+import com.gildedgames.aether.core.network.packet.client.SmokeParticlePacket;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;

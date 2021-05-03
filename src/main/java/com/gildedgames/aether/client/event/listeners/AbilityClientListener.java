@@ -2,7 +2,7 @@ package com.gildedgames.aether.client.event.listeners;
 
 import com.gildedgames.aether.common.item.tools.abilities.IValkyrieToolItem;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.ExtendedAttackPacket;
+import com.gildedgames.aether.core.network.packet.server.ExtendedAttackPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;

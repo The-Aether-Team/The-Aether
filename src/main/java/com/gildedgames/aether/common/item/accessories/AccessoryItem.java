@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.item.accessories;
 
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -12,7 +13,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
+
+import javax.annotation.Nonnull;
 
 public class AccessoryItem extends Item implements ICurioItem
 {
@@ -23,6 +27,12 @@ public class AccessoryItem extends Item implements ICurioItem
     @Override
     public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
         return true;
+    }
+
+    @Nonnull
+    @Override
+    public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
+        return new ICurio.SoundInfo(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GENERIC.get(), 1.0f, 1.0f);
     }
 
     @Override

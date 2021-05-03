@@ -6,7 +6,7 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.SmokeParticlePacket;
+import com.gildedgames.aether.core.network.packet.client.SmokeParticlePacket;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

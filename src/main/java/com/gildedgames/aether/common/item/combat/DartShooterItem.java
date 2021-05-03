@@ -49,7 +49,7 @@ public class DartShooterItem extends Item
             }
             worldIn.addFreshEntity(dart);
         }
-        worldIn.playSound(playerIn, playerIn.blockPosition(), AetherSoundEvents.ENTITY_DART_SHOOTER_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
+        worldIn.playSound(playerIn, playerIn.blockPosition(), AetherSoundEvents.ITEM_DART_SHOOTER_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
         if (!flag) {
             ammo.shrink(1);
             if (ammo.isEmpty()) {
