@@ -108,10 +108,7 @@ public class AerbunnyEntity extends AetherAnimalEntity {
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        if(this.getVehicle() == null)
-            return super.isInvulnerableTo(damageSource);
-        
-        return damageSource.getEntity() == this.getVehicle() || super.isInvulnerableTo(damageSource);
+        return (this.getVehicle() != null && this.getVehicle() == damageSource.getEntity()) || super.isInvulnerableTo(damageSource);
     }
 
 
