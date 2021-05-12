@@ -1,7 +1,5 @@
 package com.gildedgames.aether.client.gui.MainMenu;
 
-import java.lang.reflect.Field;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -39,6 +37,8 @@ public class AetherMainMenuScreen extends MainMenuScreen {
 		this.mode = mode;
 
 	}
+	
+	int btnCounter = 0;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -61,8 +61,9 @@ public class AetherMainMenuScreen extends MainMenuScreen {
 		
 		// Reposition the Buttons
 		button.x = 20;
-		button.y = 70 + buttons.size() * 25;
+		button.y = 70 + btnCounter * 25;
 		button.setWidth(200);
+		btnCounter++;
 
 		// Wrap the buttons to AetherButtons
 		AetherMainMenuButton newButton = new AetherMainMenuButton((Button) button);
@@ -71,6 +72,7 @@ public class AetherMainMenuScreen extends MainMenuScreen {
 
 	@Override
 	protected void init() {
+		btnCounter = 0;
 		super.init();
 		
 		//TODO Read value from config
@@ -100,13 +102,8 @@ public class AetherMainMenuScreen extends MainMenuScreen {
 			modUpdateNotification = new AetherNotificationModUpdateScreen();
 			modUpdateNotification.init();
 			
-			try {
-				// Get the splash 
-				Field splashField = MainMenuScreen.class.getDeclaredField("splash");
-				splashField.setAccessible(true);
-				splash = (String) splashField.get(this);
-			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-				e.printStackTrace();
+			if (splash == null) {
+				splash = this.minecraft.getSplashManager().getSplash();
 			}
 		}
 	}
