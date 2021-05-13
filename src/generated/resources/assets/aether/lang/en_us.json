@@ -162,6 +162,8 @@
   "gui.aether.book_of_lore.next": "Next",
   "gui.aether.book_of_lore.of_lore": "Of Lore",
   "gui.aether.book_of_lore.previous": "Prev.",
+  "gui.aether.menu.aether": "Aether Theme",
+  "gui.aether.menu.minecraft": "Normal Theme",
   "item.aether.aechor_petal": "Aechor Petal",
   "item.aether.aechor_plant_spawn_egg": "Aechor Plant Spawn Egg",
   "item.aether.aerbunny_spawn_egg": "Aerbunny Spawn Egg",

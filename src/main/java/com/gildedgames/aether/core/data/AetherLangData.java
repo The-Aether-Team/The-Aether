@@ -45,6 +45,10 @@ public class AetherLangData extends LanguageProvider
         add("gui.aether." + key, name);
     }
 
+    public void addMenuText(String key, String name) {
+        addGuiText("menu." + key, name);
+    }
+
     public void addLoreBookText(String key, String name) {
         addGuiText("book_of_lore." + key, name);
     }
@@ -462,6 +466,10 @@ public class AetherLangData extends LanguageProvider
         addAdvancementDesc("silver_dungeon", "Defeat the Silver Dungeon boss");
         addAdvancementDesc("gold_dungeon", "Defeat the Golden Dungeon boss");
         addAdvancementDesc("loreception", "Put a Book of Lore inside a Book of Lore");
+
+
+        addMenuText("minecraft", "Normal Theme");
+        addMenuText("aether", "Aether Theme");
 
 
         addLoreBookText("previous", "Prev.");
