@@ -243,6 +243,13 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(AetherItems.SKYROOT_BUCKET.get(), 1)
+                .pattern("S S")
+                .pattern(" S ")
+                .define('S', AetherBlocks.SKYROOT_PLANKS.get())
+                .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
+                .save(consumer);
+
         ShapedRecipeBuilder.shaped(AetherItems.COLD_PARACHUTE.get(), 1)
                 .pattern("AA")
                 .pattern("AA")
@@ -255,6 +262,14 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .pattern("AA")
                 .define('A', AetherBlocks.GOLDEN_AERCLOUD.get())
                 .unlockedBy("has_aercloud", has(AetherBlocks.GOLDEN_AERCLOUD.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(AetherItems.NATURE_STAFF.get(), 1)
+                .pattern("Z")
+                .pattern("S")
+                .define('Z', AetherItems.ZANITE_GEMSTONE.get())
+                .define('S', AetherTags.Items.SKYROOT_STICKS)
+                .unlockedBy("has_zanite", has(AetherItems.ZANITE_GEMSTONE.get()))
                 .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(AetherItems.BOOK_OF_LORE.get())
@@ -334,16 +349,6 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .unlockedBy("has_honeycomb", has(Items.HONEYCOMB))
                 .group("beehive")
                 .save(consumer, name("skyroot_beehive"));
-
-        ShapedRecipeBuilder.shaped(Items.BOWL, 4)
-                .pattern("S S")
-                .pattern(" S ")
-                .define('S', AetherTags.Items.PLANKS_CRAFTING)
-                .unlockedBy("has_brown_mushroom", has(Blocks.BROWN_MUSHROOM))
-                .unlockedBy("has_red_mushroom", has(Blocks.RED_MUSHROOM))
-                .unlockedBy("has_mushroom_stew", has(Items.MUSHROOM_STEW))
-                .group("bowl")
-                .save(consumer, name("skyroot_bowl"));
 
         ShapedRecipeBuilder.shaped(Blocks.CARTOGRAPHY_TABLE, 1)
                 .pattern("PP")
@@ -660,6 +665,8 @@ public class AetherRecipeData extends AetherRecipeProvider
 
         enchantingRecipe(AetherItems.MUSIC_DISC_AETHER_TUNE.get(), AetherTags.Items.ACCEPTED_MUSIC_DISCS, 2500).save(consumer, name("aether_tune_enchanting"));
         enchantingRecipe(AetherItems.MUSIC_DISC_LEGACY.get(), Items.MUSIC_DISC_CAT, 2500).save(consumer, name("legacy_enchanting"));
+
+        enchantingRecipe(AetherItems.SKYROOT_REMEDY_BUCKET.get(), AetherItems.SKYROOT_POISON_BUCKET.get(), 1000).save(consumer, name("remedy_bucket_enchanting"));
 
         freezingRecipe(AetherBlocks.BLUE_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 100).save(consumer, name("blue_aercloud_freezing"));
         freezingRecipe(AetherBlocks.CRYSTAL_LEAVES.get(), AetherBlocks.SKYROOT_LEAVES.get(), 150).save(consumer, name("crystal_leaves_freezing"));
