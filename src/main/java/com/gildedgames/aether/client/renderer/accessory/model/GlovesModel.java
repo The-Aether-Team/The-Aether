@@ -79,29 +79,27 @@ public class GlovesModel extends BipedModel<LivingEntity>
         }
 
         public void renderGloves(MatrixStack matrixStack, IRenderTypeBuffer buffer, int light, AbstractClientPlayerEntity player, ResourceLocation glovesTexture, ItemStack glovesStack, HandSide handSide) {
-            if (!player.isInvisible()) {
-                ModelRenderer armModel = handSide != HandSide.LEFT ? this.rightArm : this.leftArm;
-                ModelRenderer sleeveModel = handSide != HandSide.LEFT ? this.rightSleeve : this.leftSleeve;
+            ModelRenderer armModel = handSide != HandSide.LEFT ? this.rightArm : this.leftArm;
+            ModelRenderer sleeveModel = handSide != HandSide.LEFT ? this.rightSleeve : this.leftSleeve;
 
-                this.setAllVisible(false);
-                armModel.visible = true;
-                sleeveModel.visible = true;
+            this.setAllVisible(false);
+            armModel.visible = true;
+            sleeveModel.visible = true;
 
-                this.attackTime  = 0.0F;
-                this.crouching = false;
-                this.swimAmount = 0.0F;
-                this.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+            this.attackTime  = 0.0F;
+            this.crouching = false;
+            this.swimAmount = 0.0F;
+            this.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 
-                //TODO: toggle.
-                boolean isSleeve = false;
+            //TODO: toggle.
+            boolean isSleeve = false;
 
-                if (!isSleeve) {
-                    armModel.xRot = 0.0F;
-                    armModel.render(matrixStack, ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(glovesTexture), false, glovesStack.isEnchanted()), light, OverlayTexture.NO_OVERLAY);
-                } else {
-                    sleeveModel.xRot = 0.0F;
-                    sleeveModel.render(matrixStack, ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(glovesTexture), false, glovesStack.isEnchanted()), light, OverlayTexture.NO_OVERLAY);
-                }
+            if (!isSleeve) {
+                armModel.xRot = 0.0F;
+                armModel.render(matrixStack, ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(glovesTexture), false, glovesStack.isEnchanted()), light, OverlayTexture.NO_OVERLAY);
+            } else {
+                sleeveModel.xRot = 0.0F;
+                sleeveModel.render(matrixStack, ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(glovesTexture), false, glovesStack.isEnchanted()), light, OverlayTexture.NO_OVERLAY);
             }
         }
     }
