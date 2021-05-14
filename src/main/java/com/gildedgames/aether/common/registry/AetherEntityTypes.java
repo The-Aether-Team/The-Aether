@@ -138,7 +138,7 @@ public class AetherEntityTypes
 		event.put(AetherEntityTypes.COCKATRICE.get(), CockatriceEntity.registerAttributes().build());
 		event.put(AetherEntityTypes.ZEPHYR.get(), ZephyrEntity.registerAttributes().build());
 
-		event.put(AetherEntityTypes.SENTRY.get(), SlimeEntity.createLivingAttributes().build());
+		event.put(AetherEntityTypes.SENTRY.get(), SentryEntity.registerAttributes().build());
 		event.put(AetherEntityTypes.MIMIC.get(), MimicEntity.registerAttributes().build());
 	}
 }
