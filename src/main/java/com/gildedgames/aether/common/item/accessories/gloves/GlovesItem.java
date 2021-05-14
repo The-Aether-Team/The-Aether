@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.item.accessories.gloves;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.google.common.collect.HashMultimap;
@@ -19,21 +20,26 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 public class GlovesItem extends AccessoryItem
 {
+    protected double damage;
     protected ResourceLocation GLOVES_TEXTURE;
     protected ResourceLocation GLOVES_SLIM_TEXTURE;
-    protected double damage;
+    protected final Supplier<SoundEvent> equipSound;
 
-    public GlovesItem(double punchDamage, String glovesName, Properties properties) {
+    public GlovesItem(double punchDamage, String glovesName, Supplier<SoundEvent> glovesSound, Properties properties) {
         super(properties);
         this.damage = punchDamage;
         this.setRenderTexture(Aether.MODID, glovesName);
+        this.equipSound = glovesSound;
     }
 
     @Override
@@ -41,6 +47,12 @@ public class GlovesItem extends AccessoryItem
         Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
         attributes.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Gloves Damage Bonus", this.damage, AttributeModifier.Operation.ADDITION));
         return attributes;
+    }
+
+    @Nonnull
+    @Override
+    public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
+        return new ICurio.SoundInfo(this.equipSound.get(), 1.0f, 1.0f);
     }
 
     @Override
@@ -63,9 +75,8 @@ public class GlovesItem extends AccessoryItem
             vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(playerModel.slim ? this.getGlovesSlimTexture() : this.getGlovesTexture()), false, stack.isEnchanted());
         }
 
-        gloves.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);
-        gloves.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         ICurio.RenderHelper.followBodyRotations(livingEntity, gloves);
+
         gloves.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 

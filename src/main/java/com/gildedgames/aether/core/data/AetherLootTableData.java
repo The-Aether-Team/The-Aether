@@ -108,7 +108,7 @@ public class AetherLootTableData extends AetherLootTableProvider
 
             this.add(AetherBlocks.BERRY_BUSH.get(),
                     (bush) -> droppingBerryBush(bush, AetherItems.BLUE_BERRY.get()));
-            dropSelf(AetherBlocks.BERRY_BUSH_STEM);
+            dropSelfDouble(AetherBlocks.BERRY_BUSH_STEM);
 
             dropSelf(AetherBlocks.PURPLE_FLOWER);
             dropSelf(AetherBlocks.WHITE_FLOWER);
@@ -165,6 +165,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropSelf(AetherBlocks.HELLFIRE_WALL);
             dropSelf(AetherBlocks.HOLYSTONE_WALL);
             dropSelf(AetherBlocks.MOSSY_HOLYSTONE_WALL);
+            dropSelf(AetherBlocks.ICESTONE_WALL);
             dropSelf(AetherBlocks.HOLYSTONE_BRICK_WALL);
             dropSelf(AetherBlocks.AEROGEL_WALL);
 
@@ -174,6 +175,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropSelf(AetherBlocks.HELLFIRE_STAIRS);
             dropSelf(AetherBlocks.HOLYSTONE_STAIRS);
             dropSelf(AetherBlocks.MOSSY_HOLYSTONE_STAIRS);
+            dropSelf(AetherBlocks.ICESTONE_STAIRS);
             dropSelf(AetherBlocks.HOLYSTONE_BRICK_STAIRS);
             dropSelf(AetherBlocks.AEROGEL_STAIRS);
 
@@ -183,6 +185,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropSelf(AetherBlocks.HELLFIRE_SLAB);
             dropSelf(AetherBlocks.HOLYSTONE_SLAB);
             dropSelf(AetherBlocks.MOSSY_HOLYSTONE_SLAB);
+            dropSelf(AetherBlocks.ICESTONE_SLAB);
             dropSelf(AetherBlocks.HOLYSTONE_BRICK_SLAB);
             dropSelf(AetherBlocks.AEROGEL_SLAB);
 

@@ -24,8 +24,8 @@ import java.util.Map;
 
 public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
 {
-    private static final ResourceLocation TEXTURE_LORE_BACKING = new ResourceLocation(Aether.MODID, "textures/gui/lore_backing.png");
-    private static final ResourceLocation TEXTURE_LORE_BOOK = new ResourceLocation(Aether.MODID, "textures/gui/lore_book.png");
+    private static final ResourceLocation TEXTURE_LORE_BACKING = new ResourceLocation(Aether.MODID, "textures/gui/container/lore_backing.png");
+    private static final ResourceLocation TEXTURE_LORE_BOOK = new ResourceLocation(Aether.MODID, "textures/gui/container/lore_book.png");
 
     private Map<Integer, List<IReorderingProcessor>> pages = new HashMap<>();
 

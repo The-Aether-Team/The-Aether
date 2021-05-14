@@ -5,13 +5,13 @@ import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.SmokeParticlePacket;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CampfireBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.state.properties.BedPart;
@@ -23,6 +23,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.SleepFinishedTimeEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -76,6 +77,20 @@ public class DimensionListener
             world.addParticle(ParticleTypes.LARGE_SMOKE, x, y, z, 0.0, 0.0, 0.0);
         }
         world.playSound(null, event.getPos(), SoundEvents.FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1.0F, 1.0F);
+    }
+
+    @SubscribeEvent
+    public static void onNeighborNotified(BlockEvent.NeighborNotifyEvent event) {
+        if (event.getWorld() instanceof World) {
+            World world = (World) event.getWorld();
+            BlockPos pos = event.getPos();
+            FluidState fluidstate = world.getFluidState(pos);
+            if (world.dimension() == AetherDimensions.AETHER_WORLD && fluidstate.getType().is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
+                world.setBlockAndUpdate(pos, AetherBlocks.AEROGEL.get().defaultBlockState());
+                AetherPacketHandler.sendToAll(new SmokeParticlePacket(pos));
+                event.setCanceled(true);
+            }
+        }
     }
 
     @SubscribeEvent

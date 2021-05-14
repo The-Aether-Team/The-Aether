@@ -2,9 +2,12 @@ package com.gildedgames.aether.common.entity.monster;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
@@ -42,6 +45,10 @@ public class SentryEntity extends SlimeEntity {
 		this.goalSelector.addGoal(5, new SentryEntity.HopGoal(this));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (entity) -> Math.abs(entity.getY() - this.getY()) <= 4.0));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
+	}
+
+	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+		return CreatureEntity.createMobAttributes().add(Attributes.ATTACK_DAMAGE);
 	}
 	
 	@Override

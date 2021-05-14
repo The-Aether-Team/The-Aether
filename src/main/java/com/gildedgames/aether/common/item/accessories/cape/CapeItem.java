@@ -1,33 +1,32 @@
 package com.gildedgames.aether.common.item.accessories.cape;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.client.renderer.accessory.model.CapeModel;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
-import com.gildedgames.aether.core.capability.capabilities.cape.CapeEntity;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
-import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.JumpPacket;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
-import top.theillusivec4.curios.api.CuriosApi;
+import net.minecraftforge.fml.ModList;
+import top.theillusivec4.colytra.common.ElytraNBT;
+import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
+
+import javax.annotation.Nonnull;
 
 public class CapeItem extends AccessoryItem
 {
@@ -36,6 +35,12 @@ public class CapeItem extends AccessoryItem
     public CapeItem(String capeLocation, Properties properties) {
         super(properties);
         this.setRenderTexture(Aether.MODID, capeLocation);
+    }
+
+    @Nonnull
+    @Override
+    public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
+        return new ICurio.SoundInfo(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_CAPE.get(), 1.0f, 1.0f);
     }
 
     @Override
@@ -49,9 +54,14 @@ public class CapeItem extends AccessoryItem
             CapeModel cape = new CapeModel();
             if (!livingEntity.isInvisible()) {
                 ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlotType.CHEST);
-                if (itemstack.getItem() != Items.ELYTRA) {
-                    ICurio.RenderHelper.translateIfSneaking(matrixStack, livingEntity);
+                boolean hasColytra = ModList.get().isLoaded("colytra") && !ElytraNBT.getElytra(itemstack).isEmpty();
+                boolean hasCape = livingEntity instanceof AbstractClientPlayerEntity
+                        && ((AbstractClientPlayerEntity) livingEntity).isCapeLoaded()
+                        && ((AbstractClientPlayerEntity) livingEntity).getCloakTextureLocation() != null
+                        && ((AbstractClientPlayerEntity) livingEntity).isModelPartShown(PlayerModelPart.CAPE);
 
+                if (!(itemstack.getItem() instanceof ElytraItem) && !hasColytra && !hasCape) {
+                    cape.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                     matrixStack.pushPose();
                     matrixStack.translate(0.0D, 0.0D, 0.125D);
                     double d0 = MathHelper.lerp(partialTicks, capeEntity.getxCloakO(), capeEntity.getxCloak()) - MathHelper.lerp(partialTicks, livingEntity.xo, livingEntity.getX());

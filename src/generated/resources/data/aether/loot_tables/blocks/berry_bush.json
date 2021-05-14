@@ -54,6 +54,11 @@
           ],
           "name": "aether:blue_berry"
         }
+      ],
+      "functions": [
+        {
+          "function": "aether:double_drops"
+        }
       ]
     }
   ]

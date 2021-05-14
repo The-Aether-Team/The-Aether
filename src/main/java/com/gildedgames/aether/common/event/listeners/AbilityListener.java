@@ -10,18 +10,20 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.*;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -115,6 +117,25 @@ public class AbilityListener
             LivingEntity livingTarget = (LivingEntity) target;
             if (livingTarget.isAttackable() && !livingTarget.skipAttackInteraction(player)) {
                 CuriosApi.getCuriosHelper().findEquippedCurio((stack) -> stack.getItem() instanceof GlovesItem, player).ifPresent((triple) -> triple.getRight().hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND)));
+            }
+        }
+    }
+
+    //TODO: Make sure this doesn't ever affect projectiles shot by the player/entity wearing the shield.
+    @SubscribeEvent
+    public static void onProjectileImpact(ProjectileImpactEvent event) {
+        if (event.getRayTraceResult().getType() == RayTraceResult.Type.ENTITY) {
+            Entity impactedEntity = ((EntityRayTraceResult) event.getRayTraceResult()).getEntity();
+            if (impactedEntity instanceof LivingEntity && event.getEntity() instanceof ProjectileEntity) {
+                LivingEntity impactedLiving = (LivingEntity) impactedEntity;
+                ProjectileEntity projectile = (ProjectileEntity) event.getEntity();
+                if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
+                    CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.REPULSION_SHIELD.get(), impactedLiving).ifPresent((triple) -> {
+                        event.setCanceled(true);
+                        projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25D));
+                        triple.getRight().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), entity));
+                    });
+                }
             }
         }
     }

@@ -29,7 +29,7 @@ public class LightningKnifeItem extends Item
 			heldItem.shrink(1);
 		}
 		
-		worldIn.playSound(null, playerIn.blockPosition(), AetherSoundEvents.ENTITY_PROJECTILE_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
+		worldIn.playSound(null, playerIn.blockPosition(), AetherSoundEvents.ITEM_LIGHTNING_KNIFE_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
 		
 		if (!worldIn.isClientSide) {
 			LightningKnifeEntity lightningKnife = new LightningKnifeEntity(playerIn, worldIn);

@@ -3,17 +3,17 @@ package com.gildedgames.aether.common.registry;
 import com.gildedgames.aether.Aether;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.tags.ITag;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.*;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.DimensionType;
 
 public class AetherTags
 {
 	public static class Blocks
 	{
+		public static final ITag.INamedTag<Block> AETHER_PORTAL_BLOCKS = tag("aether_portal_blocks");
 		public static final ITag.INamedTag<Block> AETHER_DIRT = tag("aether_dirt");
 		public static final ITag.INamedTag<Block> HOLYSTONE = tag("holystone");
 		public static final ITag.INamedTag<Block> AERCLOUDS = tag("aerclouds");
@@ -23,8 +23,8 @@ public class AetherTags
 		public static final ITag.INamedTag<Block> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final ITag.INamedTag<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final ITag.INamedTag<Block> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final ITag.INamedTag<Block> ENCHANTABLE_GRASS_BLOCKS = tag("enchantable_grass_blocks");
 		public static final ITag.INamedTag<Block> AETHER_ISLAND_BLOCKS = tag("aether_island_blocks");
-		public static final ITag.INamedTag<Block> AETHER_PORTAL_BLOCKS = tag("aether_portal_blocks");
 
 		private static ITag.INamedTag<Block> tag(String name) {
 			return BlockTags.bind(new ResourceLocation(Aether.MODID, name).toString());
@@ -42,10 +42,13 @@ public class AetherTags
 		public static final ITag.INamedTag<Item> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final ITag.INamedTag<Item> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final ITag.INamedTag<Item> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+
 		public static final ITag.INamedTag<Item> PLANKS_CRAFTING = tag("planks_crafting");
 		public static final ITag.INamedTag<Item> STONE_CRAFTING = tag("stone_crafting");
 
 		//TODO: Make sure these are all in use. Tool tags can potentially be used for abilities.
+		public static final ITag.INamedTag<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
+		public static final ITag.INamedTag<Item> AETHER_PORTAL_ACTIVATION_BUCKETS = tag("aether_portal_activation_buckets");
 		public static final ITag.INamedTag<Item> SKYROOT_STICKS = tag("skyroot_stick");
 		public static final ITag.INamedTag<Item> SKYROOT_TOOLS = tag("skyroot_tools");
 		public static final ITag.INamedTag<Item> HOLYSTONE_TOOLS = tag("holystone_tools");
@@ -68,9 +71,19 @@ public class AetherTags
 	{
 		public static final ITag.INamedTag<EntityType<?>> PIGS = tag("pigs");
 		public static final ITag.INamedTag<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
+		public static final ITag.INamedTag<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
 
 		private static ITag.INamedTag<EntityType<?>> tag(String name) {
 			return EntityTypeTags.bind(new ResourceLocation(Aether.MODID, name).toString());
+		}
+	}
+
+	public static class Fluids
+	{
+		public static final ITag.INamedTag<Fluid> FREEZABLE_TO_AEROGEL = tag("freezable_to_aerogel");
+
+		private static ITag.INamedTag<Fluid> tag(String name) {
+			return FluidTags.bind(new ResourceLocation(Aether.MODID, name).toString());
 		}
 	}
 }

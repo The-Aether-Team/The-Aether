@@ -24,7 +24,7 @@
     "enter_aether": {
       "trigger": "minecraft:changed_dimension",
       "conditions": {
-        "to": "aether:aether"
+        "to": "aether:the_aether"
       }
     }
   },

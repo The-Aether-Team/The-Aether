@@ -1,14 +1,14 @@
 package com.gildedgames.aether.common.item.accessories.ring;
 
-import com.gildedgames.aether.common.item.accessories.AccessoryItem;
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.item.accessories.abilities.IIceAccessory;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 
-public class IceRingItem extends AccessoryItem
+public class IceRingItem extends RingItem
 {
     public IceRingItem(Properties properties) {
-        super(properties);
+        super(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_ICE_RING, properties);
     }
 
     @Override

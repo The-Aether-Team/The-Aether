@@ -31,7 +31,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 .add(EntityType.PIG)
                 .add(AetherEntityTypes.PHYG.get())
                 .add(EntityType.PIGLIN)
-                .add(EntityType.PIGLIN_BRUTE) //PIGLIN BRUTE
+                .add(EntityType.PIGLIN_BRUTE)
                 .add(EntityType.ZOMBIFIED_PIGLIN)
                 .add(EntityType.HOGLIN)
                 .add(EntityType.ZOGLIN);
@@ -39,6 +39,17 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 .add(EntityType.PLAYER)
                 .add(EntityType.WITHER)
                 .add(EntityType.ENDER_DRAGON);
+        tag(AetherTags.Entities.DEFLECTABLE_PROJECTILES)
+                .addTag(EntityTypeTags.ARROWS)
+                .add(EntityType.EGG)
+                .add(EntityType.SMALL_FIREBALL)
+                .add(EntityType.FIREBALL)
+                .add(EntityType.SNOWBALL)
+                .add(AetherEntityTypes.GOLDEN_DART.get())
+                .add(AetherEntityTypes.POISON_DART.get())
+                .add(AetherEntityTypes.ENCHANTED_DART.get())
+                .add(AetherEntityTypes.POISON_NEEDLE.get())
+                .add(AetherEntityTypes.ZEPHYR_SNOWBALL.get());
 
         //vanilla
         tag(EntityTypeTags.ARROWS)

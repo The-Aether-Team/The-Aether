@@ -18,10 +18,7 @@ import net.minecraft.world.gen.feature.template.BlockMatchRuleTest;
 import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraft.world.gen.foliageplacer.BlobFoliagePlacer;
 import net.minecraft.world.gen.foliageplacer.FancyFoliagePlacer;
-import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
-import net.minecraft.world.gen.placement.ChanceConfig;
-import net.minecraft.world.gen.placement.Placement;
-import net.minecraft.world.gen.placement.TopSolidRangeConfig;
+import net.minecraft.world.gen.placement.*;
 import net.minecraft.world.gen.trunkplacer.FancyTrunkPlacer;
 import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer;
 import net.minecraftforge.fml.RegistryObject;
@@ -30,9 +27,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.OptionalInt;
 
-public class AetherFeatures {
-
+public class AetherFeatures
+{
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Aether.MODID);
+
+    public static final RegistryObject<Feature<BlockClusterFeatureConfig>> GRASS_PATCH = FEATURES.register("grass_patch", () -> new AetherGrassFeature(BlockClusterFeatureConfig.CODEC));
 
     public static final RegistryObject<Feature<NoFeatureConfig>> QUICKSOIL = FEATURES.register("quicksoil", () -> new QuicksoilFeature(NoFeatureConfig.CODEC));
 
@@ -49,6 +48,9 @@ public class AetherFeatures {
 
     public static void registerConfiguredFeatures() {
         RuleTest HOLYSTONE = new BlockMatchRuleTest(AetherBlocks.HOLYSTONE.get());
+
+        register("grass_patch", GRASS_PATCH.get().configured(Features.Configs.DEFAULT_GRASS_CONFIG).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE).decorated(Placement.COUNT_NOISE.configured(new NoiseDependant(-0.8D, 5, 10))));
+        register("tall_grass_patch", GRASS_PATCH.get().configured(Features.Configs.TALL_GRASS_CONFIG).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP).squared().decorated(Placement.COUNT_NOISE.configured(new NoiseDependant(-0.8D, 0, 7))));
 
         register("quicksoil", QUICKSOIL.get().configured(IFeatureConfig.NONE).decorated(Placement.RANGE_VERY_BIASED.configured(new TopSolidRangeConfig(63, 0, 70))).squared().count(10));
 
@@ -91,7 +93,7 @@ public class AetherFeatures {
                         (new WeightedBlockStateProvider())
                                 .add(AetherBlocks.PURPLE_FLOWER.get().defaultBlockState(), 1)
                                 .add(AetherBlocks.WHITE_FLOWER.get().defaultBlockState(), 1)
-                                .add(AetherBlocks.BERRY_BUSH.get().defaultBlockState(), 1), SimpleBlockPlacer.INSTANCE))
+                                .add(AetherBlocks.BERRY_BUSH.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true), 1), SimpleBlockPlacer.INSTANCE))
                         .tries(64).whitelist(ImmutableSet.of(AetherBlocks.AETHER_GRASS_BLOCK.get())).build())
                 .decorated(Features.Placements.ADD_32)
                 .decorated(Features.Placements.HEIGHTMAP_SQUARE).count(2));

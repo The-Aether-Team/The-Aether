@@ -12,12 +12,13 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundEvents;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
 public class LeatherGlovesItem extends GlovesItem implements IDyeableArmorItem
 {
     public LeatherGlovesItem(double punchDamage, Properties properties) {
-        super(punchDamage, "leather_gloves", properties);
+        super(punchDamage, "leather_gloves", () -> SoundEvents.ARMOR_EQUIP_LEATHER, properties);
     }
 
     @Override

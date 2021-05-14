@@ -2,6 +2,7 @@ package com.gildedgames.aether.integration.crafttweaker.actions;
 
 import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
 import com.gildedgames.aether.common.block.natural.IcestoneBlock;
+import com.gildedgames.aether.common.block.util.IIcestoneBlock;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 
@@ -17,7 +18,7 @@ public class RemoveIcestoneFreezableAction implements IRuntimeAction
 
     @Override
     public void apply() {
-        IcestoneBlock.removeFreezableFluid(() -> this.fluid, () -> this.block);
+        IIcestoneBlock.removeFreezableFluid(() -> this.fluid, () -> this.block);
     }
 
     @Override

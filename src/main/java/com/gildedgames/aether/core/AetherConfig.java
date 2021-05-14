@@ -24,7 +24,6 @@ public class AetherConfig
         public final ConfigValue<Boolean> admin_sun_altar;
 
         public final ConfigValue<Boolean> disable_aether_portal;
-        public final ConfigValue<Boolean> activate_with_skyroot_bucket;
         public final ConfigValue<Boolean> disable_eternal_day;
 
         public Common(ForgeConfigSpec.Builder builder) {
@@ -82,9 +81,6 @@ public class AetherConfig
             disable_aether_portal = builder
                     .comment("Prevents the Aether Portal from being created normally in the mod")
                     .define("Disables Aether Portal creation", false);
-            activate_with_skyroot_bucket = builder
-                    .comment("The Aether Portal can only be activated with an item tagged as a Skyroot Bucket")
-                    .define("Aether Portals activate with Skyroot Buckets", false);
             disable_eternal_day = builder
                     .comment("Removes eternal day so that the Aether has a normal daylight cycle even before defeating the Sun Spirit")
                     .define("Disables eternal day", false);

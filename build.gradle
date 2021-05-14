@@ -8,18 +8,24 @@ buildscript {
             name 'Sponge'
             url 'https://repo.spongepowered.org/repository/maven-public/'
         }
+        maven {
+            name 'Gradle'
+            url "https://plugins.gradle.org/m2/"
+        }
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+        classpath "com.wynprice.cursemaven:CurseMaven:2.1.5"
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
+apply plugin: "com.wynprice.cursemaven"
 
 version = project.mc_version + '-v' +project.aether_version
 group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -95,6 +101,8 @@ dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
 
     compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
+
+    compileOnly fg.deobf("curse.maven:colytra:${project.colytra_version}")
 
     runtime fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 }

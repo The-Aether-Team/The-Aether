@@ -47,6 +47,10 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.STONE_CRAFTING)
                 .addTag(ItemTags.STONE_CRAFTING_MATERIALS)
                 .add(AetherBlocks.HOLYSTONE.get().asItem());
+        tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS);
+        tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_BUCKETS)
+                .add(Items.WATER_BUCKET)
+                .add(AetherItems.SKYROOT_WATER_BUCKET.get());
         tag(AetherTags.Items.SKYROOT_STICKS)
                 .add(AetherItems.SKYROOT_STICK.get());
         tag(AetherTags.Items.SKYROOT_TOOLS)
@@ -140,6 +144,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.HELLFIRE_STAIRS.get().asItem())
                 .add(AetherBlocks.HOLYSTONE_STAIRS.get().asItem())
                 .add(AetherBlocks.MOSSY_HOLYSTONE_STAIRS.get().asItem())
+                .add(AetherBlocks.ICESTONE_STAIRS.get().asItem())
                 .add(AetherBlocks.HOLYSTONE_BRICK_STAIRS.get().asItem())
                 .add(AetherBlocks.AEROGEL_STAIRS.get().asItem());
         tag(ItemTags.SLABS)
@@ -149,6 +154,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.HELLFIRE_SLAB.get().asItem())
                 .add(AetherBlocks.HOLYSTONE_SLAB.get().asItem())
                 .add(AetherBlocks.MOSSY_HOLYSTONE_SLAB.get().asItem())
+                .add(AetherBlocks.ICESTONE_SLAB.get().asItem())
                 .add(AetherBlocks.HOLYSTONE_BRICK_SLAB.get().asItem())
                 .add(AetherBlocks.AEROGEL_SLAB.get().asItem());
         tag(ItemTags.WALLS)
@@ -157,6 +163,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.HELLFIRE_WALL.get().asItem())
                 .add(AetherBlocks.HOLYSTONE_WALL.get().asItem())
                 .add(AetherBlocks.MOSSY_HOLYSTONE_WALL.get().asItem())
+                .add(AetherBlocks.ICESTONE_WALL.get().asItem())
                 .add(AetherBlocks.HOLYSTONE_BRICK_WALL.get().asItem())
                 .add(AetherBlocks.AEROGEL_WALL.get().asItem());
         tag(ItemTags.LEAVES)
@@ -182,7 +189,8 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherItems.MUSIC_DISC_WELCOMING_SKIES.get())
                 .add(AetherItems.MUSIC_DISC_LEGACY.get());
         tag(ItemTags.BEACON_PAYMENT_ITEMS)
-                .add(AetherItems.ZANITE_GEMSTONE.get());
+                .add(AetherItems.ZANITE_GEMSTONE.get())
+                .add(AetherBlocks.ENCHANTED_GRAVITITE.get().asItem());
 
         //forge
         tag(Tags.Items.BOOKSHELVES)
