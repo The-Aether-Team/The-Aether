@@ -6,28 +6,27 @@ buildscript {
         }
         maven {
             name 'Sponge'
-            url 'https://repo.spongepowered.org/repository/maven-public/'
+            //url 'https://repo.spongepowered.org/repository/maven-public/'
+            url 'https://sizableshrimp.me/maven'
         }
         maven {
             name 'Gradle'
             url "https://plugins.gradle.org/m2/"
         }
-        jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
-        classpath "com.wynprice.cursemaven:CurseMaven:2.1.5"
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.0+', changing: true
+        //classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.8-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
-apply plugin: "com.wynprice.cursemaven"
 
-version = project.mc_version + '-v' +project.aether_version
+version = project.mc_version + '-v' + project.aether_version
 group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'aether'
 
@@ -104,13 +103,14 @@ dependencies {
 
     compileOnly fg.deobf("curse.maven:colytra:${project.colytra_version}")
 
-    runtime fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
+    runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 }
 
 repositories {
     maven { url = "https://maven.blamejared.com" }
     maven { url = "https://maven.theillusivec4.top/" }
-    maven { url = "http://jcenter.bintray.com/" }
+    maven { url = "https://jcenter.bintray.com/" }
+    maven { url = "https://www.cursemaven.com" }
 }
 
 jar {
@@ -120,7 +120,7 @@ jar {
             "Specification-Vendor": "Gilded Games",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
+            "Implementation-Version": "${archiveVersion}",
             "Implementation-Vendor" : "Gilded Games",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
             "MixinConfigs": "aether.mixins.json"
