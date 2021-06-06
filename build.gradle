@@ -101,7 +101,7 @@ dependencies {
 
     compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
 
-    compileOnly fg.deobf("curse.maven:colytra:${project.colytra_version}")
+    compileOnly fg.deobf("curse.maven:colytra-280200:${project.colytra_version}")
 
     runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 }
