@@ -20,15 +20,6 @@ jobs:
             - v3-dependencies-{{ checksum "build.gradle" }}
             - v3-dependencies-
 
-      - run:
-          command: |
-            while true; do
-              sleep 5
-              ps auxwwf
-              echo "======"
-            done
-          background: true
-
       - run: gradle dependencies
 
       - save_cache:
