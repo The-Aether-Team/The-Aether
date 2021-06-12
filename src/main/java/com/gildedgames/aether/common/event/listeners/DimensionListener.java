@@ -7,12 +7,13 @@ import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.SetVehiclePacket;
 import com.gildedgames.aether.core.network.packet.client.SmokeParticlePacket;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
@@ -26,7 +27,6 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.SleepFinishedTimeEvent;
@@ -143,11 +143,17 @@ public class DimensionListener
                 entity.setPortalCooldown();
                 Entity target = entity.changeDimension(destination, new AetherTeleporter(destination, false));
                 entity.level.getProfiler().pop();
-                //Check for passengers
+                // Check for passengers
                 if(target != null) {
                     for (Entity passenger : passengers) {
-                        fallFromAether(passenger);
-                        passenger.startRiding(target);
+                        passenger.stopRiding();
+                        Entity nextPassenger = fallFromAether(passenger);
+                        if(nextPassenger != null) {
+                            nextPassenger.startRiding(target);
+                            if(target instanceof ServerPlayerEntity) { // Fixes a desync between the server and client
+                                AetherPacketHandler.sendToPlayer(new SetVehiclePacket(nextPassenger.getId(), target.getId()), (ServerPlayerEntity) target);
+                            }
+                        }
                     }
                 }
                 return target;
