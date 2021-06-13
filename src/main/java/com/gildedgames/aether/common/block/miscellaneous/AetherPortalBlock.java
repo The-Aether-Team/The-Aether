@@ -125,7 +125,7 @@ public class AetherPortalBlock extends Block
 				if (destination != null && minecraftserver.isNetherEnabled() && !entity.isPassenger()) {
 					entity.level.getProfiler().push("aether_portal");
 					entity.setPortalCooldown();
-					entity.changeDimension(destination, new AetherTeleporter(destination));
+					entity.changeDimension(destination, new AetherTeleporter(destination, true));
 					entity.level.getProfiler().pop();
 				}
 			}

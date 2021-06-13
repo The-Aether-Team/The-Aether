@@ -3,6 +3,7 @@ package com.gildedgames.aether.core.network;
 import com.gildedgames.aether.Aether;
 
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
+import com.gildedgames.aether.core.network.packet.client.SetVehiclePacket;
 import com.gildedgames.aether.core.network.packet.server.ExtendedAttackPacket;
 import com.gildedgames.aether.core.network.packet.server.JumpPacket;
 import com.gildedgames.aether.core.network.packet.client.SmokeParticlePacket;
@@ -29,6 +30,7 @@ public class AetherPacketHandler
 		register(JumpPacket.class, JumpPacket::decode);
 		register(ExtendedAttackPacket.class, ExtendedAttackPacket::decode);
 		register(SmokeParticlePacket.class, SmokeParticlePacket::decode);
+		register(SetVehiclePacket.class, SetVehiclePacket::decode);
 	}
 
 	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<PacketBuffer, MSG> decoder)

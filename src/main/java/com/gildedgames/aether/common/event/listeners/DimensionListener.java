@@ -5,11 +5,15 @@ import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.SetVehiclePacket;
 import com.gildedgames.aether.core.network.packet.client.SmokeParticlePacket;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
@@ -22,12 +26,18 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.SleepFinishedTimeEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Objects;
 
 @Mod.EventBusSubscriber
 public class DimensionListener
@@ -102,5 +112,53 @@ public class DimensionListener
                 serverworld.setDayTime(0);
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void onWorldTick(TickEvent.WorldTickEvent event) {
+        if(event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
+            if(event.world.dimension() == AetherDimensions.AETHER_WORLD) {
+                List<Entity> loadedEntities = ((ServerWorld)event.world).getEntities(null, Objects::nonNull);
+                for(Entity entity : loadedEntities) {
+                    if(entity.getY() <= 0 && !entity.isPassenger()) {
+                        fallFromAether(entity);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Code to handle falling out of the Aether with all of the passengers intact.
+     */
+    @Nullable
+    private static Entity fallFromAether(Entity entity) {
+        World serverLevel = entity.level;
+        MinecraftServer minecraftserver = serverLevel.getServer();
+        if (minecraftserver != null) {
+            ServerWorld destination = minecraftserver.getLevel(World.OVERWORLD);
+            if (destination != null) {
+                List<Entity> passengers = entity.getPassengers();
+                entity.level.getProfiler().push("aether_fall");
+                entity.setPortalCooldown();
+                Entity target = entity.changeDimension(destination, new AetherTeleporter(destination, false));
+                entity.level.getProfiler().pop();
+                // Check for passengers
+                if(target != null) {
+                    for (Entity passenger : passengers) {
+                        passenger.stopRiding();
+                        Entity nextPassenger = fallFromAether(passenger);
+                        if(nextPassenger != null) {
+                            nextPassenger.startRiding(target);
+                            if(target instanceof ServerPlayerEntity) { // Fixes a desync between the server and client
+                                AetherPacketHandler.sendToPlayer(new SetVehiclePacket(nextPassenger.getId(), target.getId()), (ServerPlayerEntity) target);
+                            }
+                        }
+                    }
+                }
+                return target;
+            }
+        }
+        return null;
     }
 }
