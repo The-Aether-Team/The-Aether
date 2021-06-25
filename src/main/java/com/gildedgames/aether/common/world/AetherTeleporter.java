@@ -6,6 +6,7 @@ import com.gildedgames.aether.common.registry.AetherPOI;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.TeleportationRepositioner;
@@ -30,9 +31,11 @@ import java.util.function.Function;
 public class AetherTeleporter implements ITeleporter
 {
     protected final ServerWorld world;
+    private boolean hasFrame; //Whether to generate a portal frame or not.
 
-    public AetherTeleporter(ServerWorld worldIn) {
+    public AetherTeleporter(ServerWorld worldIn, boolean isFrame) {
         this.world = worldIn;
+        this.hasFrame = isFrame;
     }
 
     public Optional<TeleportationRepositioner.Result> getExistingPortal(BlockPos pos) {
@@ -167,6 +170,9 @@ public class AetherTeleporter implements ITeleporter
         if (entity.level.dimension() != AetherDimensions.AETHER_WORLD && !isAether) {
             return null;
         }
+        else if(!this.hasFrame) {
+            return new PortalInfo(new Vector3d(entity.getX(), 255D, entity.getZ()), Vector3d.ZERO, entity.yRot, entity.xRot); //For falling out of the Aether
+        }
         else {
             WorldBorder border = destWorld.getWorldBorder();
             double minX = Math.max(-2.9999872E7D, border.getMinX() + 16.0D);
@@ -207,5 +213,9 @@ public class AetherTeleporter implements ITeleporter
 
             return makePortal;
         }
+    }
+
+    public boolean playTeleportSound(ServerPlayerEntity player, ServerWorld sourceWorld, ServerWorld destWorld) {
+        return this.hasFrame;
     }
 }
