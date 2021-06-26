@@ -2,9 +2,9 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.AetherAnimalEntity;
-import com.gildedgames.aether.common.entity.block.ColdParachuteEntity;
+import com.gildedgames.aether.common.entity.equipment.ColdParachuteEntity;
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
-import com.gildedgames.aether.common.entity.block.GoldenParachuteEntity;
+import com.gildedgames.aether.common.entity.equipment.GoldenParachuteEntity;
 import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
 import com.gildedgames.aether.common.entity.passive.*;
 
@@ -13,8 +13,6 @@ import com.gildedgames.aether.common.entity.projectile.*;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

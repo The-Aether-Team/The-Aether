@@ -1,7 +1,5 @@
 package com.gildedgames.aether.core.capability.interfaces;
 
-import com.gildedgames.aether.common.entity.block.ParachuteEntity;
-import com.gildedgames.aether.core.api.registers.ParachuteType;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -20,11 +18,7 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 
 	void copyFrom(IAetherPlayer other);
 
-	void setParachute(ParachuteType parachuteType);
-	ParachuteEntity getParachute();
-
 	void givePortalItem();
-
 	void setCanGetPortal(boolean canGetPortal);
 	boolean canGetPortal();
 

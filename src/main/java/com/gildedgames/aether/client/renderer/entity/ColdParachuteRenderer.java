@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import com.gildedgames.aether.common.entity.block.ColdParachuteEntity;
+import com.gildedgames.aether.common.entity.equipment.ColdParachuteEntity;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
@@ -23,7 +23,7 @@ public class ColdParachuteRenderer extends EntityRenderer<ColdParachuteEntity>
     public void render(ColdParachuteEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
         matrixStackIn.pushPose();
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
-        matrixStackIn.translate(-0.5, 0.0, 0.5);
+        matrixStackIn.translate(-0.5, -0.5, 0.5);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90.0F));
         Minecraft.getInstance().getBlockRenderer().renderSingleBlock(AetherBlocks.COLD_AERCLOUD.get().defaultBlockState(), matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
         matrixStackIn.popPose();
