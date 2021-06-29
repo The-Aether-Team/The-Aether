@@ -18,10 +18,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AdvancementToast.class)
 public abstract class AdvancementToastMixin {
-    @Final @Shadow private Advancement advancement;
-    @Shadow private boolean playedSound;
+    @Final
+    @Shadow
+    private Advancement advancement;
+    @Shadow
+    private boolean playedSound;
 
     /**
+     * {@link AdvancementToast#render(MatrixStack, ToastGui, long)}
      * Injector mixin to play the Aether's advancement sounds when the player gets an Aether advancement.
      */
     @Inject(at = @At("HEAD"), method = "render(Lcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/gui/toasts/ToastGui;J)Lnet/minecraft/client/gui/toasts/IToast$Visibility;")

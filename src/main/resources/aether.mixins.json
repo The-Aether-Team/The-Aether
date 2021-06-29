@@ -15,6 +15,7 @@
     "client.AdvancementToastMixin",
     "client.ClientRecipeBookMixin",
     "client.ElytraLayerMixin",
+    "client.MinecraftMixin",
     "client.WorldRendererMixin"
   ],
   "injectors": {
