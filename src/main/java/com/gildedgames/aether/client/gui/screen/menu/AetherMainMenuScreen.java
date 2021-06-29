@@ -1,11 +1,13 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
 import com.gildedgames.aether.client.gui.button.AetherMenuButton;
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.core.AetherConfig;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import net.minecraft.client.audio.BackgroundMusicSelector;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
@@ -19,6 +21,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class AetherMainMenuScreen extends MainMenuScreen
 {
+	public static final BackgroundMusicSelector MENU = new BackgroundMusicSelector(AetherSoundEvents.MUSIC_MENU.get(), 20, 600, true);
+
 	private final RenderSkybox panorama = new RenderSkybox(new RenderSkyboxCube(new ResourceLocation("aether:textures/gui/title/panorama/panorama")));
 	private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
 	private static final ResourceLocation AETHER_LOGO = new ResourceLocation("aether:textures/gui/title/aether.png");
@@ -30,7 +34,7 @@ public class AetherMainMenuScreen extends MainMenuScreen
 
 	private int buttonCount;
 
-	public AetherMainMenuScreen() { }
+	public AetherMainMenuScreen() {}
 
 	@SuppressWarnings("unchecked")
 	@Override
