@@ -1,15 +1,22 @@
 package com.gildedgames.aether.core.capability.capabilities.player;
 
+import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.entity.miscellaneous.ParachuteEntity;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
+import com.gildedgames.aether.core.registry.AetherParachuteTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -61,8 +68,13 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public void onUpdate() {
 		handleAetherPortal();
+		activateParachute();
 	}
 
+	/**
+	 * Increments or decrements the Aether portal timer depending on whether or not the player is inside an Aether portal.
+	 * On the client, this will also help to set the portal overlay.
+	 */
 	private void handleAetherPortal() {
 		if (player.level.isClientSide) {
 			this.prevPortalAnimTime = this.portalAnimTime;
@@ -113,6 +125,38 @@ public class AetherPlayer implements IAetherPlayer
 	@OnlyIn(Dist.CLIENT)
 	private void playPortalSound(Minecraft mc) {
 		mc.getSoundManager().play(SimpleSound.forLocalAmbience(SoundEvents.PORTAL_TRIGGER, this.getPlayer().random.nextFloat() * 0.4F + 0.8F, 0.25F));
+	}
+
+	private void activateParachute() {
+		PlayerEntity player = this.getPlayer();
+		PlayerInventory inventory = this.getPlayer().inventory;
+		World world = player.level;
+		if (!player.isCreative()) {
+			if (player.getDeltaMovement().y() < -1.5D) {
+				for (ItemStack stack : inventory.items) {
+					Item item = stack.getItem();
+					if (item == AetherItems.COLD_PARACHUTE.get()) {
+						ParachuteEntity parachuteEntity = new ParachuteEntity(world, player.getX(), player.getY() - 1.0D, player.getZ());
+						parachuteEntity.setParachuteType(AetherParachuteTypes.COLD_PARACHUTE);
+						if (!world.isClientSide) {
+							world.addFreshEntity(parachuteEntity);
+							player.startRiding(parachuteEntity);
+							stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(Hand.MAIN_HAND));
+						}
+						parachuteEntity.spawnExplosionParticle();
+					} else if (item == AetherItems.GOLDEN_PARACHUTE.get()) {
+						ParachuteEntity parachuteEntity = new ParachuteEntity(world, player.getX(), player.getY() - 1.0D, player.getZ());
+						parachuteEntity.setParachuteType(AetherParachuteTypes.GOLDEN_PARACHUTE);
+						if (!world.isClientSide) {
+							world.addFreshEntity(parachuteEntity);
+							player.startRiding(parachuteEntity);
+							stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(Hand.MAIN_HAND));
+						}
+						parachuteEntity.spawnExplosionParticle();
+					}
+				}
+			}
+		}
 	}
 
 	@Override
