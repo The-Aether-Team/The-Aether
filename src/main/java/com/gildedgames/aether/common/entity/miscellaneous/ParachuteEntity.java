@@ -43,10 +43,6 @@ public class ParachuteEntity extends Entity
         this.entityData.define(DATA_PARACHUTE_TYPE, AetherParachuteTypes.COLD_PARACHUTE.getRegistryName());
     }
 
-    protected float getEyeHeight(@Nonnull Pose p_213316_1_, EntitySize p_213316_2_) {
-        return p_213316_2_.height;
-    }
-
     @Override
     public void tick() {
         super.tick();
@@ -79,7 +75,7 @@ public class ParachuteEntity extends Entity
             double z = this.parachuteSpeed * (passengerVec.z() * 10.0D);
             this.setDeltaMovement(parachuteVec.add((new Vector3d(x, 0.0D, z)).subtract(parachuteVec).scale(0.2D)));
             Vector3d parachuteVec2 = this.getDeltaMovement();
-            this.setDeltaMovement(parachuteVec2.x(), passengerVec.y() * 0.6, parachuteVec2.z());
+            this.setDeltaMovement(parachuteVec2.x(), -0.15, parachuteVec2.z());
         }
     }
 
