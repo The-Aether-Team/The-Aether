@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.entity.miscellaneous;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.core.api.registers.ParachuteType;
 import com.gildedgames.aether.core.registry.AetherParachuteTypes;
@@ -11,6 +10,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -22,6 +22,7 @@ import java.util.List;
 public class ParachuteEntity extends Entity
 {
     private static final DataParameter<String> DATA_PARACHUTE_TYPE = EntityDataManager.defineId(ParachuteEntity.class, DataSerializers.STRING);
+    private float parachuteSpeed;
 
     public ParachuteEntity(EntityType<?> entityType, World world) {
         super(entityType, world);
@@ -52,20 +53,33 @@ public class ParachuteEntity extends Entity
         boolean hasControllingPassenger = this.getControllingPassenger() != null;
         if (hasControllingPassenger) {
             Entity passenger = this.getControllingPassenger();
-
-            //TODO: Movement has no weight; very precise
             this.fallDistance = 0.0F;
-            this.setDeltaMovement(passenger.getDeltaMovement().multiply(5.0D, 1.0D, 5.0D));
-            this.move(MoverType.SELF, passenger.getDeltaMovement());
-
+            this.moveParachute(passenger);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.spawnExplosionParticle();
             if (this.isOnGround() || this.isInWater() || this.isInLava()) {
                 this.ejectPassengers();
                 this.die();
             }
-
-            this.spawnExplosionParticle();
         } else {
             this.die();
+        }
+    }
+
+    private void moveParachute(Entity passenger) {
+        if (this.isVehicle()) {
+            Vector3d parachuteVec = this.getDeltaMovement();
+            Vector3d passengerVec = passenger.getDeltaMovement();
+            if (passengerVec.x() != 0.0D || passengerVec.z() != 0.0D) {
+                this.parachuteSpeed = MathHelper.approach(this.parachuteSpeed, 0.6F, 0.025F);
+            } else {
+                this.parachuteSpeed = MathHelper.approach(this.parachuteSpeed, 0.0F, 0.0005F);
+            }
+            double x = this.parachuteSpeed * (passengerVec.x() * 10.0D);
+            double z = this.parachuteSpeed * (passengerVec.z() * 10.0D);
+            this.setDeltaMovement(parachuteVec.add((new Vector3d(x, 0.0D, z)).subtract(parachuteVec).scale(0.2D)));
+            Vector3d parachuteVec2 = this.getDeltaMovement();
+            this.setDeltaMovement(parachuteVec2.x(), passengerVec.y() * 0.6, parachuteVec2.z());
         }
     }
 
