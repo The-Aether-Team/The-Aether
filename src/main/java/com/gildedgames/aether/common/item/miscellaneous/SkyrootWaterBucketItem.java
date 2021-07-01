@@ -21,7 +21,8 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class SkyrootWaterBucketItem extends Item {
+public class SkyrootWaterBucketItem extends Item
+{
     public SkyrootWaterBucketItem(Properties properties) {
         super(properties);
     }
@@ -29,12 +30,14 @@ public class SkyrootWaterBucketItem extends Item {
     public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getItemInHand(handIn);
         RayTraceResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, RayTraceContext.FluidMode.NONE);
+        ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(playerIn, worldIn, itemstack, raytraceresult);
+        if (ret != null) return ret;
         if (raytraceresult.getType() == RayTraceResult.Type.MISS) {
             return ActionResult.pass(itemstack);
         } else if (raytraceresult.getType() != RayTraceResult.Type.BLOCK) {
             return ActionResult.pass(itemstack);
         } else {
-            BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult)raytraceresult;
+            BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult) raytraceresult;
             BlockPos blockpos = blockraytraceresult.getBlockPos();
             Direction direction = blockraytraceresult.getDirection();
             BlockPos blockpos1 = blockpos.relative(direction);
@@ -59,7 +62,7 @@ public class SkyrootWaterBucketItem extends Item {
         boolean flag = blockstate.canBeReplaced(Fluids.WATER);
         boolean flag1 = blockstate.isAir() || flag || block instanceof ILiquidContainer && ((ILiquidContainer)block).canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER);
         if (!flag1) {
-            return rayTrace != null && this.tryPlaceContainedLiquid(player, worldIn, rayTrace.getBlockPos().relative(rayTrace.getDirection()), (BlockRayTraceResult)null);
+            return rayTrace != null && this.tryPlaceContainedLiquid(player, worldIn, rayTrace.getBlockPos().relative(rayTrace.getDirection()), null);
         } else if (worldIn.dimensionType().ultraWarm()) {
             int i = posIn.getX();
             int j = posIn.getY();

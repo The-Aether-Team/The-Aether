@@ -11,14 +11,14 @@ import net.minecraft.util.DrinkHelper;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-public class SkyrootRemedyBucketItem extends Item {
+public class SkyrootRemedyBucketItem extends Item
+{
     public SkyrootRemedyBucketItem(Properties properties) {
         super(properties);
     }
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-        if (!worldIn.isClientSide) entityLiving.curePotionEffects(stack);
         if (entityLiving instanceof PlayerEntity && !((PlayerEntity)entityLiving).abilities.instabuild) {
             stack.shrink(1);
         }

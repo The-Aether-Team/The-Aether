@@ -13,7 +13,8 @@ import net.minecraft.util.DrinkHelper;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-public class SkyrootPoisonBucketItem extends Item {
+public class SkyrootPoisonBucketItem extends Item
+{
     public SkyrootPoisonBucketItem(Properties properties) {
         super(properties);
     }
