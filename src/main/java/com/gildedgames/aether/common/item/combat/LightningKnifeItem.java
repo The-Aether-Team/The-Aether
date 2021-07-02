@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.combat;
 
-import com.gildedgames.aether.common.entity.projectile.LightningKnifeEntity;
+import com.gildedgames.aether.common.entity.projectile.weapon.LightningKnifeEntity;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;

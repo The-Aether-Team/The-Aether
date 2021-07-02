@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.combat;
 
-import com.gildedgames.aether.common.entity.projectile.AbstractDartEntity;
+import com.gildedgames.aether.common.entity.projectile.weapon.AbstractDartEntity;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -10,8 +10,6 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 import java.util.function.Supplier;
-
-import net.minecraft.item.Item.Properties;
 
 public class DartShooterItem extends Item
 {

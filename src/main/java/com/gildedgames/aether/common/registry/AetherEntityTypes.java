@@ -9,6 +9,7 @@ import com.gildedgames.aether.common.entity.passive.*;
 
 import com.gildedgames.aether.common.entity.monster.*;
 import com.gildedgames.aether.common.entity.projectile.*;
+import com.gildedgames.aether.common.entity.projectile.weapon.*;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;

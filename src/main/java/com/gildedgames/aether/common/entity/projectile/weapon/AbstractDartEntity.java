@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.entity.projectile;
+package com.gildedgames.aether.common.entity.projectile.weapon;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import net.minecraft.entity.EntityType;

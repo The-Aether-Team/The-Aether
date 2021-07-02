@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.entity.projectile;
+package com.gildedgames.aether.common.entity.projectile.weapon;
 
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.google.common.collect.Sets;

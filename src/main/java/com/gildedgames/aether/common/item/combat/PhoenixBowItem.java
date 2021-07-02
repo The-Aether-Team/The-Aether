@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.item.combat;
 
-import com.gildedgames.aether.common.entity.projectile.PhoenixArrowEntity;
-import com.gildedgames.aether.common.entity.projectile.SpectralPhoenixArrowEntity;
+import com.gildedgames.aether.common.entity.projectile.weapon.PhoenixArrowEntity;
+import com.gildedgames.aether.common.entity.projectile.weapon.SpectralPhoenixArrowEntity;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.enchantment.EnchantmentHelper;
