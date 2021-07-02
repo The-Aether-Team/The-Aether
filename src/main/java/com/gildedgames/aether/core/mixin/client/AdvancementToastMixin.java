@@ -17,7 +17,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AdvancementToast.class)
-public abstract class AdvancementToastMixin {
+public abstract class AdvancementToastMixin
+{
     @Final
     @Shadow
     private Advancement advancement;
@@ -30,7 +31,7 @@ public abstract class AdvancementToastMixin {
      */
     @Inject(at = @At("HEAD"), method = "render(Lcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/gui/toasts/ToastGui;J)Lnet/minecraft/client/gui/toasts/IToast$Visibility;")
     private void onRender(MatrixStack p_230444_1_, ToastGui p_230444_2_, long p_230444_3_, CallbackInfoReturnable<IToast.Visibility> cir) {
-        if(!this.playedSound) {
+        if (!this.playedSound) {
             ResourceLocation enterAether = new ResourceLocation(Aether.MODID, "enter_aether");
             if (advancement.getId().equals(enterAether) || (advancement.getParent() != null && advancement.getParent().getId().equals(enterAether))) {
                 this.playedSound = true;

@@ -10,7 +10,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
-public abstract class MinecraftMixin {
+public abstract class MinecraftMixin
+{
     /**
      * {@link Minecraft#getSituationalMusic()}
      * Injector mixin to make sure the game recognizes the Aether menu and doesn't try to interrupt with its own music,
@@ -20,7 +21,7 @@ public abstract class MinecraftMixin {
      */
     @Inject(at = @At(value = "RETURN", ordinal = 4), method = "getSituationalMusic()Lnet/minecraft/client/audio/BackgroundMusicSelector;", cancellable = true)
     public void onGetSituationalMusic(CallbackInfoReturnable<BackgroundMusicSelector> cir) {
-        if(AetherConfig.CLIENT.enable_aether_menu.get()) {
+        if (AetherConfig.CLIENT.enable_aether_menu.get()) {
             cir.setReturnValue(AetherMainMenuScreen.MENU);
         }
     }

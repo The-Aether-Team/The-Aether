@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.button.AetherMenuButton;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.core.AetherConfig;
@@ -48,16 +49,18 @@ public class AetherMainMenuScreen extends MainMenuScreen
 					|| buttonText.equals(new TranslationTextComponent("menu.online"))
 					|| buttonText.equals(new TranslationTextComponent("menu.options"))
 					|| buttonText.equals(new TranslationTextComponent("menu.quit"))) {
-				button.x = 20;
-				button.y = 70 + this.buttonCount * 25;
+				button.x = 30;
+				button.y = 80 + this.buttonCount * 25;
 				button.setWidth(200);
 				AetherMenuButton aetherButton = new AetherMenuButton(button);
 				this.buttonCount++;
 				return (T) super.addButton(aetherButton);
 			} else if (buttonText.equals(new TranslationTextComponent("narrator.button.accessibility"))) {
 				this.buttonAccessibility = button;
+				return null;
 			} else if (buttonText.equals(new TranslationTextComponent("narrator.button.language"))) {
 				this.buttonLanguage = button;
+				return null;
 			}
 			return (T) super.addButton(button);
 		}
@@ -71,15 +74,15 @@ public class AetherMainMenuScreen extends MainMenuScreen
 
 		int buttonOffset = 0;
 		if (AetherConfig.CLIENT.enable_aether_menu_button.get()) {
-			buttonOffset = -22;
+			buttonOffset = -24;
 		}
 
-		this.buttonLanguage.x = width - 22 + buttonOffset;
-		this.buttonLanguage.y = 2;
+		this.buttonLanguage.x = width - 24 + buttonOffset;
+		this.buttonLanguage.y = 4;
 		super.addButton(this.buttonLanguage);
 
-		this.buttonAccessibility.x = width - 44 + buttonOffset;
-		this.buttonAccessibility.y = 2;
+		this.buttonAccessibility.x = width - 48 + buttonOffset;
+		this.buttonAccessibility.y = 4;
 		super.addButton(this.buttonAccessibility);
 
 		this.modUpdateNotification = new AetherNotificationModUpdateScreen();
@@ -103,8 +106,8 @@ public class AetherMainMenuScreen extends MainMenuScreen
 			blit(matrixStack, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
 
 			this.minecraft.getTextureManager().bind(AETHER_LOGO);
-			this.blit(matrixStack, 10, 10, 0, 0, 155, 44);
-			this.blit(matrixStack, 10 + 155, 10, 0, 45, 155, 44);
+			this.blit(matrixStack, 10, 15, 0, 0, 155, 44);
+			this.blit(matrixStack, 10 + 155, 15, 0, 45, 155, 44);
 
 			net.minecraftforge.client.ForgeHooksClient.renderMainMenu(this, matrixStack, this.font, this.width, this.height, -1);
 

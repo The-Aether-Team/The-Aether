@@ -23,7 +23,7 @@ public class OpenGuiListener
 		if (event.getGui() instanceof MainMenuScreen) {
 			if (AetherConfig.CLIENT.enable_aether_menu_button.get()) {
 				Screen gui = event.getGui();
-				Button themeSwitchButton = new Button(gui.width - 22, 2, 20, 20, new StringTextComponent("T"),
+				Button themeSwitchButton = new Button(gui.width - 24, 4, 20, 20, new StringTextComponent("T"),
 						(pressed) -> {
 							AetherConfig.CLIENT.enable_aether_menu.set(!AetherConfig.CLIENT.enable_aether_menu.get());
 							AetherConfig.CLIENT.enable_aether_menu.save();
