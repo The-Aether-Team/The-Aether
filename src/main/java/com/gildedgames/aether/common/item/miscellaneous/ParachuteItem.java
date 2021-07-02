@@ -32,7 +32,7 @@ public class ParachuteItem extends Item
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
-        if (!playerEntity.isOnGround() && !playerEntity.isInWater() && !playerEntity.isInLava()) {
+        if (!playerEntity.isOnGround() && !playerEntity.isInWater() && !playerEntity.isInLava() && !playerEntity.isShiftKeyDown()) {
             ParachuteEntity parachuteEntity = new ParachuteEntity(world, playerEntity.getX(), playerEntity.getY() - 1.0D, playerEntity.getZ());
             parachuteEntity.setParachuteType(this.parachute);
             if (playerEntity.isPassenger()) {

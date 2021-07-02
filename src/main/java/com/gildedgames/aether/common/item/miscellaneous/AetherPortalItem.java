@@ -22,8 +22,8 @@ public class AetherPortalItem extends Item
         PlayerEntity player = context.getPlayer();
         if (player != null) {
             if (createPortalFrame(context.getLevel(), context.getClickedPos().relative(context.getClickedFace()), player.getDirection().getAxis())) {
+                player.swing(context.getHand());
                 if (!player.isCreative()) {
-                    player.swing(context.getHand());
                     context.getItemInHand().shrink(1);
                 }
                 return ActionResultType.CONSUME;

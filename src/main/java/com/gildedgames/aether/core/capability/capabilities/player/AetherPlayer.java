@@ -131,28 +131,37 @@ public class AetherPlayer implements IAetherPlayer
 		PlayerEntity player = this.getPlayer();
 		PlayerInventory inventory = this.getPlayer().inventory;
 		World world = player.level;
-		if (!player.isCreative()) {
+		if (!player.isCreative() && !player.isShiftKeyDown()) {
 			if (player.getDeltaMovement().y() < -1.5D) {
-				for (ItemStack stack : inventory.items) {
-					Item item = stack.getItem();
-					if (item == AetherItems.COLD_PARACHUTE.get()) {
-						ParachuteEntity parachuteEntity = new ParachuteEntity(world, player.getX(), player.getY() - 1.0D, player.getZ());
-						parachuteEntity.setParachuteType(AetherParachuteTypes.COLD_PARACHUTE);
-						if (!world.isClientSide) {
-							world.addFreshEntity(parachuteEntity);
-							player.startRiding(parachuteEntity);
-							stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(Hand.MAIN_HAND));
+				if (inventory.contains(new ItemStack(AetherItems.COLD_PARACHUTE.get()))) {
+					for (ItemStack stack : inventory.items) {
+						Item item = stack.getItem();
+						if (item == AetherItems.COLD_PARACHUTE.get()) {
+							ParachuteEntity parachuteEntity = new ParachuteEntity(world, player.getX(), player.getY() - 1.0D, player.getZ());
+							parachuteEntity.setParachuteType(AetherParachuteTypes.COLD_PARACHUTE);
+							if (!world.isClientSide) {
+								world.addFreshEntity(parachuteEntity);
+								player.startRiding(parachuteEntity);
+								stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(Hand.MAIN_HAND));
+							}
+							parachuteEntity.spawnExplosionParticle();
+							break;
 						}
-						parachuteEntity.spawnExplosionParticle();
-					} else if (item == AetherItems.GOLDEN_PARACHUTE.get()) {
-						ParachuteEntity parachuteEntity = new ParachuteEntity(world, player.getX(), player.getY() - 1.0D, player.getZ());
-						parachuteEntity.setParachuteType(AetherParachuteTypes.GOLDEN_PARACHUTE);
-						if (!world.isClientSide) {
-							world.addFreshEntity(parachuteEntity);
-							player.startRiding(parachuteEntity);
-							stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(Hand.MAIN_HAND));
+					}
+				} else if (inventory.contains(new ItemStack(AetherItems.GOLDEN_PARACHUTE.get()))) {
+					for (ItemStack stack : inventory.items) {
+						Item item = stack.getItem();
+						if (item == AetherItems.GOLDEN_PARACHUTE.get()) {
+							ParachuteEntity parachuteEntity = new ParachuteEntity(world, player.getX(), player.getY() - 1.0D, player.getZ());
+							parachuteEntity.setParachuteType(AetherParachuteTypes.GOLDEN_PARACHUTE);
+							if (!world.isClientSide) {
+								world.addFreshEntity(parachuteEntity);
+								player.startRiding(parachuteEntity);
+								stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(Hand.MAIN_HAND));
+							}
+							parachuteEntity.spawnExplosionParticle();
+							break;
 						}
-						parachuteEntity.spawnExplosionParticle();
 					}
 				}
 			}
