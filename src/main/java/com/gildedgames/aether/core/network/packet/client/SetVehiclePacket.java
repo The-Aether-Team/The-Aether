@@ -1,13 +1,15 @@
 package com.gildedgames.aether.core.network.packet.client;
 
 import com.gildedgames.aether.core.network.IAetherPacket;
+import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 
-public class SetVehiclePacket extends IAetherPacket.AetherPacket {
+public class SetVehiclePacket extends AetherPacket
+{
     private int passengerID;
     private int vehicleID;
 

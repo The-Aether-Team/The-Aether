@@ -14,6 +14,7 @@ public class AetherPlayerListener
     @SubscribeEvent
     public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity) {
+            IAetherPlayer.get((PlayerEntity) event.getEntityLiving()).ifPresent(IAetherPlayer::sync);
             IAetherPlayer.get((PlayerEntity) event.getEntityLiving()).ifPresent(IAetherPlayer::onUpdate);
         }
     }
@@ -21,11 +22,12 @@ public class AetherPlayerListener
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event) {
         IAetherPlayer original = IAetherPlayer.get(event.getOriginal()).orElseThrow(
-                () -> new IllegalStateException("Player " + event.getOriginal().getName().getContents() + " has no AetherPlayer capability!"));;
+                () -> new IllegalStateException("Player " + event.getOriginal().getName().getContents() + " has no AetherPlayer capability!"));
         IAetherPlayer newPlayer = IAetherPlayer.get(event.getPlayer()).orElseThrow(
-                () -> new IllegalStateException("Player " + event.getPlayer().getName().getContents() + " has no AetherPlayer capability!"));;
+                () -> new IllegalStateException("Player " + event.getPlayer().getName().getContents() + " has no AetherPlayer capability!"));
 
         newPlayer.copyFrom(original);
+        newPlayer.copyHealth(original, event.isWasDeath());
     }
 
     @SubscribeEvent

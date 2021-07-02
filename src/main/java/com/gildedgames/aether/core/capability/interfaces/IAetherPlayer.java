@@ -17,6 +17,14 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 	void onUpdate();
 
 	void copyFrom(IAetherPlayer other);
+	void copyHealth(IAetherPlayer other, boolean wasDeath);
+
+	void sync();
+
+	void addToLifeShardCount(int amountToAdd);
+	void setLifeShardCount(int amount);
+	int getLifeShardLimit();
+	int getLifeShardCount();
 
 	void givePortalItem();
 	void setCanGetPortal(boolean canGetPortal);

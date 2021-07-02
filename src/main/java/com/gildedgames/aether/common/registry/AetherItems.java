@@ -285,7 +285,7 @@ public class AetherItems
 	public static final RegistryObject<Item> NATURE_STAFF = ITEMS.register("nature_staff", () -> new Item(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> CLOUD_STAFF = ITEMS.register("cloud_staff", () -> new Item(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
 
-	public static final RegistryObject<Item> LIFE_SHARD = ITEMS.register("life_shard", () -> new Item(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> LIFE_SHARD = ITEMS.register("life_shard", () -> new LifeShardItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune",
 			() -> new MusicDiscItem(1, AetherSoundEvents.ITEM_MUSIC_DISC_AETHER_TUNE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC)));
