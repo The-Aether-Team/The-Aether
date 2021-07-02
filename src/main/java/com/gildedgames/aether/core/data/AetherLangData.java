@@ -445,15 +445,15 @@ public class AetherLangData extends LanguageProvider
 
 
         addAdvancement("enter_aether", "Hostile Paradise");
-        addAdvancement("blue_aercloud", "To infinity and beyond!");
-        addAdvancement("incubator", "Now you're family");
-        addAdvancement("altar", "Do you believe in magic?");
-        addAdvancement("gravitite_tools", "Pink is the new blue");
-        addAdvancement("mount_phyg", "When Phygs fly");
+        addAdvancement("blue_aercloud", "To Infinity and Beyond!");
+        addAdvancement("incubator", "Now You're Family");
+        addAdvancement("altar", "Do You Believe in Magic?");
+        addAdvancement("gravitite_tools", "Pink is the New Blue");
+        addAdvancement("mount_phyg", "When Phygs Fly");
         addAdvancement("bronze_dungeon", "Like a Bossaru!");
         addAdvancement("silver_dungeon", "Dethroned");
         addAdvancement("gold_dungeon", "Extinguished");
-        addAdvancement("loreception", "Lore-ception!");
+        addAdvancement("loreception", "Lore-Ception!");
 
 
         addAdvancementDesc("enter_aether", "Enter the Aether");
