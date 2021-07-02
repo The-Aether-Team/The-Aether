@@ -479,6 +479,7 @@ public class AetherLangData extends LanguageProvider
         addLoreBookText("item", "Item:");
 
 
+        addMessage("life_shard_limit", "You can only use a total of %s Life Shards.");
         addMessage("bronze_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
         addMessage("silver_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
         addMessage("gold_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Golden Key.");

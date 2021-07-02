@@ -21,6 +21,7 @@
   "advancement.aether.silver_dungeon.desc": "Defeat the Silver Dungeon boss",
   "aether.bronze_dungeon_chest_locked": "This Treasure Chest must be unlocked with a Bronze Key.",
   "aether.gold_dungeon_chest_locked": "This Treasure Chest must be unlocked with a Golden Key.",
+  "aether.life_shard_limit": "You can only use a total of %s Life Shards.",
   "aether.silver_dungeon_chest_locked": "This Treasure Chest must be unlocked with a Silver Key.",
   "block.aether.aerogel": "Aerogel",
   "block.aether.aerogel_slab": "Aerogel Slab",

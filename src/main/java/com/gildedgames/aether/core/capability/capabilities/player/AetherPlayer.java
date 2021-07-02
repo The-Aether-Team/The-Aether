@@ -205,7 +205,7 @@ public class AetherPlayer implements IAetherPlayer
 
 	private void handleLifeShardModifier() {
 		ModifiableAttributeInstance health = this.getPlayer().getAttribute(Attributes.MAX_HEALTH);
-		AttributeModifier LIFE_SHARD_HEALTH = new AttributeModifier(LIFE_SHARD_HEALTH_ID, "Life Shard health increase", this.lifeShardCount, AttributeModifier.Operation.ADDITION);
+		AttributeModifier LIFE_SHARD_HEALTH = new AttributeModifier(LIFE_SHARD_HEALTH_ID, "Life Shard health increase", this.lifeShardCount * 2.0F, AttributeModifier.Operation.ADDITION);
 		if (health != null) {
 			if (health.hasModifier(LIFE_SHARD_HEALTH)) {
 				health.removeModifier(LIFE_SHARD_HEALTH);
