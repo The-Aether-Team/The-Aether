@@ -96,6 +96,10 @@ public class AetherConfig
         public final ConfigValue<Boolean> enable_aether_menu_button;
         public final ConfigValue<Boolean> enable_trivia;
 
+        public final ConfigValue<Boolean> disable_menu_music;
+        public final ConfigValue<Boolean> disable_dimension_music;
+        public final ConfigValue<Boolean> records_mute_music;
+
         public final ConfigValue<Boolean> install_resource_packs;
 
         public Client(ForgeConfigSpec.Builder builder) {
@@ -118,6 +122,18 @@ public class AetherConfig
             enable_trivia = builder
                     .comment("Adds random trivia and tips to the bottom of loading screens")
                     .define("Enables random trivia", true);
+            builder.pop();
+
+            builder.push("Audio");
+            disable_menu_music = builder
+                    .comment("Disables the Aether's menu music in case another mod implements its own")
+                    .define("Disables menu music", false);
+            disable_dimension_music = builder
+                    .comment("Disables the Aether's in-game dimension music in case another mod implements its own")
+                    .define("Disables in-game dimension music", false);
+            records_mute_music = builder
+                    .comment("Causes in-game music to be muted if a music disc/record is playing")
+                    .define("Records mute in-game music", true);
             builder.pop();
 
             builder.push("Resource Pack");

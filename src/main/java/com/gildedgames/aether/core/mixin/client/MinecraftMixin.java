@@ -21,7 +21,7 @@ public abstract class MinecraftMixin
      */
     @Inject(at = @At(value = "RETURN", ordinal = 4), method = "getSituationalMusic()Lnet/minecraft/client/audio/BackgroundMusicSelector;", cancellable = true)
     public void onGetSituationalMusic(CallbackInfoReturnable<BackgroundMusicSelector> cir) {
-        if (AetherConfig.CLIENT.enable_aether_menu.get()) {
+        if (AetherConfig.CLIENT.enable_aether_menu.get() && !AetherConfig.CLIENT.disable_menu_music.get()) {
             cir.setReturnValue(AetherMainMenuScreen.MENU);
         }
     }
