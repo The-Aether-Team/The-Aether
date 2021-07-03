@@ -48,10 +48,10 @@ public class AetherConfig
             builder.push("Loot");
             spawn_golden_feather = builder
                     .comment("Allows the Golden Feather to spawn in the Silver Dungeon loot table")
-                    .define("Golden Feather in loot", true);
+                    .define("Golden Feather in loot", false);
             spawn_valkyrie_cape = builder
                     .comment("Allows the Valkyrie Cape to spawn in the Silver Dungeon loot table")
-                    .define("Valkyrie Cape in loot", false);
+                    .define("Valkyrie Cape in loot", true);
             builder.pop();
 
             builder.push("World Generation");

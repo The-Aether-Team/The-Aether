@@ -45,6 +45,7 @@ public class AetherLootTableProvider extends LootTableProvider
         return ImmutableList.of(
                 Pair.of(AetherLootTableData.RegisterBlockLoot::new, LootParameterSets.BLOCK),
                 Pair.of(AetherLootTableData.RegisterEntityLoot::new, LootParameterSets.ENTITY),
+                Pair.of(AetherLootTableData.RegisterDungeonLoot::new, LootParameterSets.CHEST),
                 Pair.of(AetherLootTableData.RegisterAdvancementLoot::new, LootParameterSets.ADVANCEMENT_REWARD),
                 Pair.of(AetherLootTableData.RegisterStrippingLoot::new, AetherLoot.STRIPPING));
     }
