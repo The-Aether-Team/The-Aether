@@ -45,13 +45,13 @@ public class TreasureChestTileEntity extends LockableLootTileEntity implements I
 
     public TreasureChestTileEntity() {
         this(AetherTileEntityTypes.TREASURE_CHEST.get());
-        this.kind = AetherDungeonTypes.BRONZE.get().getRegistryName().toString();
+        this.kind = AetherDungeonTypes.BRONZE.getRegistryName();
         this.locked = true;
     }
 
     public TreasureChestTileEntity(Supplier<DungeonType> type) {
         this();
-        this.kind = type.get().getRegistryName().toString();
+        this.kind = type.get().getRegistryName();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class TreasureChestTileEntity extends LockableLootTileEntity implements I
     }
 
     protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container." + this.getKind().replace(":", ".") + "_dungeon_chest");
+        return new TranslationTextComponent("container.aether." + this.getKind() + "_dungeon_chest");
     }
 
     @Override
@@ -72,7 +72,7 @@ public class TreasureChestTileEntity extends LockableLootTileEntity implements I
     public void load(BlockState state, CompoundNBT compound) {
         super.load(state, compound);
         this.locked = !compound.contains("Locked") || compound.getBoolean("Locked");
-        this.kind = compound.contains("Kind") ? compound.getString("Kind") : AetherDungeonTypes.BRONZE.get().getRegistryName().toString();
+        this.kind = compound.contains("Kind") ? compound.getString("Kind") : AetherDungeonTypes.BRONZE.getRegistryName();
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(compound)) {
             ItemStackHelper.loadAllItems(compound, this.items);
@@ -201,10 +201,10 @@ public class TreasureChestTileEntity extends LockableLootTileEntity implements I
     @Override
     public boolean canOpen(PlayerEntity player) {
         ItemStack stack = player.getMainHandItem();
-        boolean keyMatches = stack.getItem() instanceof DungeonKeyItem && this.getKind().equals(((DungeonKeyItem) stack.getItem()).getDungeonType().getRegistryName().toString());
+        boolean keyMatches = stack.getItem() instanceof DungeonKeyItem && this.getKind().equals(((DungeonKeyItem) stack.getItem()).getDungeonType().getRegistryName());
         boolean canOpen = super.canOpen(player) && keyMatches || !this.getLocked();
 
-        if (!canOpen) player.displayClientMessage(new TranslationTextComponent(this.getKind().replace(":", ".") + "_dungeon_chest_locked"), true);
+        if (!canOpen) player.displayClientMessage(new TranslationTextComponent("aether." + this.getKind() + "_dungeon_chest_locked"), true);
 
         if (this.getLocked() && keyMatches) stack.shrink(1);
         this.setLocked(!canOpen);

@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.registry;
 
-import java.util.Collections;
 import java.util.Set;
 
 import com.gildedgames.aether.Aether;
@@ -18,7 +17,6 @@ import net.minecraft.util.ResourceLocation;
 public class AetherLoot
 {
 	private static final Set<ResourceLocation> LOOT_TABLES = Sets.newHashSet();
-	private static final Set<ResourceLocation> READ_ONLY_LOOT_TABLES = Collections.unmodifiableSet(LOOT_TABLES);
 
 	public static final LootParameterSet STRIPPING = LootParameterSets.register("aether:stripping", (p_237455_0_) -> {
 		p_237455_0_.required(LootParameters.BLOCK_STATE).required(LootParameters.ORIGIN).required(LootParameters.TOOL);
@@ -26,9 +24,9 @@ public class AetherLoot
 
 	public static final LootConditionType CONFIG_ENABLED = LootConditionManager.register(new ResourceLocation(Aether.MODID, "config_enabled").toString(), new ConfigEnabled.Serializer());
 
-	public static final LootFunctionType DOUBLE_DROPS = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "double_drops").toString(), new DoubleDrops.Serializer());
 	public static final LootFunctionType SPAWN_ENTITY = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "spawn_entity").toString(), new SpawnTNT.Serializer());
 	public static final LootFunctionType SPAWN_XP = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "spawn_xp").toString(), new SpawnXP.Serializer());
+	public static final LootFunctionType DOUBLE_DROPS = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "double_drops").toString(), new DoubleDrops.Serializer());
 
 	public static final ResourceLocation ENTITIES_SHEEPUFF_WHITE = register("entities/sheepuff/white");
 	public static final ResourceLocation ENTITIES_SHEEPUFF_ORANGE = register("entities/sheepuff/orange");
@@ -51,12 +49,6 @@ public class AetherLoot
 
 	public static final ResourceLocation STRIP_GOLDEN_OAK = register("stripping/strip_golden_oak");
 
-	public static final ResourceLocation CHESTS_BRONZE_DUNGEON_REWARD = register("chests/bronze_dungeon_reward");
-	public static final ResourceLocation CHESTS_SILVER_DUNGEON_REWARD = register("chests/silver_dungeon_reward");
-	public static final ResourceLocation CHESTS_GOLD_DUNGEON_REWARD = register("chests/gold_dungeon_reward");
-	public static final ResourceLocation CHESTS_BRONZE_DUNGEON_CHEST = register("chests/bronze_dungeon_chest");
-	public static final ResourceLocation CHESTS_SILVER_DUNGEON_CHEST = register("chests/silver_dungeon_chest");
-
 	private static ResourceLocation register(String id) {
 		return register(new ResourceLocation(Aether.MODID, id));
 	}
@@ -70,7 +62,7 @@ public class AetherLoot
 		}
 	}
 
-	public static Set<ResourceLocation> getReadOnlyLootTables() {
-		return READ_ONLY_LOOT_TABLES;
+	public static Set<ResourceLocation> getLootTables() {
+		return LOOT_TABLES;
 	}
 }

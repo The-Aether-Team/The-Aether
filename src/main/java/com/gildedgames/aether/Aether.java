@@ -74,8 +74,6 @@ public class Aether
 		forgeBus.addListener(EventPriority.NORMAL, AetherStructures::addDimensionalSpacing);
 
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> AetherClient::clientInitialization);
-
-		AetherDungeonTypes.DUNGEON_TYPES.makeRegistry("dungeon_types", RegistryBuilder::new);
 		
 		DeferredRegister<?>[] registers = {
 				AetherBlocks.BLOCKS,
@@ -89,7 +87,6 @@ public class Aether
 				AetherContainerTypes.CONTAINERS,
 				AetherTileEntityTypes.TILE_ENTITIES,
 				AetherRecipes.RECIPE_SERIALIZERS,
-				AetherDungeonTypes.DUNGEON_TYPES,
 				AetherStructures.STRUCTURES
 		};
 
@@ -115,6 +112,8 @@ public class Aether
 			AetherEntityTypes.registerSpawnPlacements();
 
 			AetherItems.registerAbilities();
+
+			AetherLoot.getLootTables();
 
 			AetherFeatures.registerConfiguredFeatures();
 			AetherAdvancements.init();
