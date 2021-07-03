@@ -50,7 +50,7 @@ public class AetherRankings {
 			
 			event.addRank("c3e6871e-8e60-490a-8a8d-2bbe35ad1604", AetherRank.DEVELOPER, AetherRank.GILDED_GAMES); // Raptor
 			event.addRank("58a5d694-a8a6-4605-ab33-d6904107ad5f", AetherRank.DEVELOPER, AetherRank.GILDED_GAMES); // bconlon
-//			event.addRank("????????-????-????-????-????????????", DEVELOPER, GILDED_GAMES); // quek
+			event.addRank("353a859b-ba16-4e6a-8f63-9a8c79ab0071", AetherRank.DEVELOPER, AetherRank.GILDED_GAMES); // quek
 			event.addRank("3c0e4411-3421-40bd-b092-056d3e99b98a", AetherRank.DEVELOPER, AetherRank.GILDED_GAMES); // Oscar Payne
 			
 			event.addRank("6e8be0ba-e4bb-46af-aea8-2c1f5eec5bc2", AetherRank.RETIRED_DEVELOPER); // Brendan Freeman
