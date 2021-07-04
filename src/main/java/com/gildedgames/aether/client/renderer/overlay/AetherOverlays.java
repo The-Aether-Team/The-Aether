@@ -50,9 +50,9 @@ public class AetherOverlays
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder bufferbuilder = tessellator.getBuilder();
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-            bufferbuilder.vertex(0.0D, window.getScreenHeight(), -90.0D).uv(f, f3).endVertex();
-            bufferbuilder.vertex(window.getScreenWidth(), window.getScreenHeight(), -90.0D).uv(f2, f3).endVertex();
-            bufferbuilder.vertex(window.getScreenWidth(), 0.0D, -90.0D).uv(f2, f1).endVertex();
+            bufferbuilder.vertex(0.0D, window.getGuiScaledHeight(), -90.0D).uv(f, f3).endVertex();
+            bufferbuilder.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0D).uv(f2, f3).endVertex();
+            bufferbuilder.vertex(window.getGuiScaledWidth(), 0.0D, -90.0D).uv(f2, f1).endVertex();
             bufferbuilder.vertex(0.0D, 0.0D, -90.0D).uv(f, f1).endVertex();
             tessellator.end();
             RenderSystem.depthMask(true);
@@ -74,9 +74,9 @@ public class AetherOverlays
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder bufferbuilder = tessellator.getBuilder();
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR_TEX);
-            bufferbuilder.vertex(0.0D, window.getScreenHeight(), -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(0.0F, 1.0F).endVertex();
-            bufferbuilder.vertex(window.getScreenWidth(), window.getScreenHeight(), -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(1.0F, 1.0F).endVertex();
-            bufferbuilder.vertex(window.getScreenWidth(), 0.0D, -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(1.0F, 0.0F).endVertex();
+            bufferbuilder.vertex(0.0D, window.getGuiScaledHeight(), -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(0.0F, 1.0F).endVertex();
+            bufferbuilder.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(1.0F, 1.0F).endVertex();
+            bufferbuilder.vertex(window.getGuiScaledWidth(), 0.0D, -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(1.0F, 0.0F).endVertex();
             bufferbuilder.vertex(0.0D, 0.0D, -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(0.0F, 0.0F).endVertex();
             tessellator.end();
             RenderSystem.depthMask(true);
@@ -97,9 +97,9 @@ public class AetherOverlays
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder bufferbuilder = tessellator.getBuilder();
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR_TEX);
-            bufferbuilder.vertex(0.0D, window.getScreenHeight(), -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(0.0F, 1.0F).endVertex();
-            bufferbuilder.vertex(window.getScreenWidth(), window.getScreenHeight(), -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(1.0F, 1.0F).endVertex();
-            bufferbuilder.vertex(window.getScreenWidth(), 0.0D, -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(1.0F, 0.0F).endVertex();
+            bufferbuilder.vertex(0.0D, window.getGuiScaledHeight(), -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(0.0F, 1.0F).endVertex();
+            bufferbuilder.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(1.0F, 1.0F).endVertex();
+            bufferbuilder.vertex(window.getGuiScaledWidth(), 0.0D, -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(1.0F, 0.0F).endVertex();
             bufferbuilder.vertex(0.0D, 0.0D, -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(0.0F, 0.0F).endVertex();
             tessellator.end();
             RenderSystem.depthMask(true);

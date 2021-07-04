@@ -17,7 +17,7 @@ public class OverlayRenderListener
     @SubscribeEvent
     public static void onRenderOverlayPre(RenderGameOverlayEvent.Pre event) {
         Minecraft minecraft = Minecraft.getInstance();
-        MainWindow window = event.getWindow();
+        MainWindow window = minecraft.getWindow();
         ClientPlayerEntity player = minecraft.player;
         if (player != null) {
             IAetherPlayer.get(player).ifPresent(handler -> {
@@ -32,7 +32,7 @@ public class OverlayRenderListener
     @SubscribeEvent
     public static void onRenderOverlayPost(RenderGameOverlayEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
-        MainWindow window = event.getWindow();
+        MainWindow window = minecraft.getWindow();
         ClientPlayerEntity player = minecraft.player;
         if (player != null) {
             IAetherPlayer.get(player).ifPresent(handler -> {
