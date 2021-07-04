@@ -169,10 +169,8 @@ public class AetherItems
 	public static final RegistryObject<Item> ENCHANTED_BERRY = ITEMS.register("enchanted_berry",
 			() -> new Item(new Item.Properties().rarity(Rarity.RARE).food(new Food.Builder().fast().nutrition(8).build()).tab(AetherItemGroups.AETHER_FOOD)));
 	public static final RegistryObject<Item> WHITE_APPLE = ITEMS.register("white_apple", WhiteAppleItem::new);
-	public static final RegistryObject<Item> BLUE_GUMMY_SWET = ITEMS.register("blue_gummy_swet",
-			() -> new GummySwetItem(new Item.Properties().food(new Food.Builder().fast().nutrition(20).build()).tab(AetherItemGroups.AETHER_FOOD)));
-	public static final RegistryObject<Item> GOLDEN_GUMMY_SWET = ITEMS.register("golden_gummy_swet",
-			() -> new GummySwetItem(new Item.Properties().food(new Food.Builder().fast().nutrition(20).build()).tab(AetherItemGroups.AETHER_FOOD)));
+	public static final RegistryObject<Item> BLUE_GUMMY_SWET = ITEMS.register("blue_gummy_swet", GummySwetItem::new);
+	public static final RegistryObject<Item> GOLDEN_GUMMY_SWET = ITEMS.register("golden_gummy_swet", GummySwetItem::new);
 	public static final RegistryObject<Item> HEALING_STONE = ITEMS.register("healing_stone", HealingStoneItem::new);
 	public static final RegistryObject<Item> CANDY_CANE = ITEMS.register("candy_cane",
 			() -> new Item(new Item.Properties().food(new Food.Builder().fast().nutrition(2).build()).tab(AetherItemGroups.AETHER_FOOD)));

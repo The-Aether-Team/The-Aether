@@ -10,6 +10,7 @@ public class AetherConfig
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
         public final ConfigValue<Boolean> edible_ambrosium;
+        public final ConfigValue<Boolean> healing_gummy_swets;
         public final ConfigValue<Integer> maximum_life_shards;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
 
@@ -37,6 +38,9 @@ public class AetherConfig
             edible_ambrosium = builder
                     .comment("Ambrosium Shards can be eaten to restore a half heart of health")
                     .define("Ambrosium Shards are edible", false);
+            healing_gummy_swets = builder
+                    .comment("Gummy Swets when eaten restore full health instead of full hunger")
+                    .define("Gummy Swets restore health", false);
             maximum_life_shards = builder
                     .comment("Determines the limit of the amount of Life Shards a player can consume to increase their health")
                     .define("Maximum consumable Life Shards", 10);
