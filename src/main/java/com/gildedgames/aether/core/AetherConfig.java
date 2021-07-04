@@ -25,6 +25,7 @@ public class AetherConfig
         public final ConfigValue<Boolean> admin_sun_altar;
 
         public final ConfigValue<Boolean> disable_aether_portal;
+        public final ConfigValue<Boolean> disable_falling_to_overworld;
         public final ConfigValue<Boolean> disable_eternal_day;
 
         public Common(ForgeConfigSpec.Builder builder) {
@@ -85,6 +86,9 @@ public class AetherConfig
             disable_aether_portal = builder
                     .comment("Prevents the Aether Portal from being created normally in the mod")
                     .define("Disables Aether Portal creation", false);
+            disable_falling_to_overworld = builder
+                    .comment("Prevents the player from falling back to the Overworld when they fall out of the Aether")
+                    .define("Disables falling into the Overworld", false);
             disable_eternal_day = builder
                     .comment("Removes eternal day so that the Aether has a normal daylight cycle even before defeating the Sun Spirit")
                     .define("Disables eternal day", false);

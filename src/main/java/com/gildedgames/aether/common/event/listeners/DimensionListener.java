@@ -6,6 +6,7 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.common.world.AetherTeleporter;
+import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.SetVehiclePacket;
 import com.gildedgames.aether.core.network.packet.client.SmokeParticlePacket;
@@ -116,12 +117,14 @@ public class DimensionListener
 
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
-        if(event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
-            if(event.world.dimension() == AetherDimensions.AETHER_WORLD) {
-                List<Entity> loadedEntities = ((ServerWorld)event.world).getEntities(null, Objects::nonNull);
-                for(Entity entity : loadedEntities) {
-                    if(entity.getY() <= 0 && !entity.isPassenger()) {
-                        fallFromAether(entity);
+        if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
+            if (event.world.dimension() == AetherDimensions.AETHER_WORLD) {
+                if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
+                    List<Entity> loadedEntities = ((ServerWorld) event.world).getEntities(null, Objects::nonNull);
+                    for (Entity entity : loadedEntities) {
+                        if (entity.getY() <= 0 && !entity.isPassenger()) {
+                            fallFromAether(entity);
+                        }
                     }
                 }
             }
