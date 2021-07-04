@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.accessory.layer;
 
-import com.gildedgames.aether.common.item.accessories.misc.RepulsionShieldItem;
+import com.gildedgames.aether.common.item.accessories.miscellaneous.RepulsionShieldItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;

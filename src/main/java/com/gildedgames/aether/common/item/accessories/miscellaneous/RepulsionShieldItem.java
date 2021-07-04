@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.item.accessories.misc;
+package com.gildedgames.aether.common.item.accessories.miscellaneous;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;

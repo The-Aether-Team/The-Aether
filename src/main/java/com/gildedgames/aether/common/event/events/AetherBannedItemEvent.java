@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.event;
+package com.gildedgames.aether.common.event.events;
 
 import javax.annotation.Nullable;
 
@@ -11,7 +11,8 @@ import net.minecraft.world.IWorld;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
-public abstract class AetherBannedItemEvent extends Event {
+public abstract class AetherBannedItemEvent extends Event
+{
 	private final ItemStack itemStack;
 	
 	protected AetherBannedItemEvent(ItemStack itemStack) {
@@ -22,7 +23,8 @@ public abstract class AetherBannedItemEvent extends Event {
 		return this.itemStack;
 	}
 	
-	public static class Check extends AetherBannedItemEvent {
+	public static class Check extends AetherBannedItemEvent
+	{
 		private boolean banned = true;
 		
 		public Check(ItemStack itemStack) {
@@ -36,11 +38,11 @@ public abstract class AetherBannedItemEvent extends Event {
 		public void setBanned(boolean banned) {
 			this.banned = banned;
 		}
-		
 	}
 	
 	@Cancelable
-	public static class SpawnParticles extends AetherBannedItemEvent {
+	public static class SpawnParticles extends AetherBannedItemEvent
+	{
 		private final IWorld world;
 		private final BlockPos pos;
 		@Nullable
@@ -65,7 +67,5 @@ public abstract class AetherBannedItemEvent extends Event {
 		public Direction getFace() {
 			return this.face;
 		}
-		
 	}
-
 }

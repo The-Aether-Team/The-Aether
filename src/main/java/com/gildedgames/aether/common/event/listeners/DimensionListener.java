@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.event.listeners;
 
-import com.gildedgames.aether.common.event.AetherBannedItemEvent;
+import com.gildedgames.aether.common.event.events.AetherBannedItemEvent;
 import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;

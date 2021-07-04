@@ -1,5 +1,7 @@
 package com.gildedgames.aether.common.item.accessories.abilities;
 
+import com.gildedgames.aether.common.event.events.FreezeEvent;
+import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -50,16 +52,21 @@ public interface IIceAccessory
                     World world = livingEntity.level;
                     BlockPos pos = livingEntity.blockPosition();
                     BlockPos newPos = pos.offset(x, y, z);
-                    BlockState state2 = world.getBlockState(newPos);
-                    Block block = state2.getBlock();
+                    BlockState state = world.getBlockState(newPos);
+                    Block block = state.getBlock();
                     if (block instanceof FlowingFluidBlock) {
-                        FluidState fluidState = state2.getFluidState();
+                        FluidState fluidState = state.getFluidState();
                         if (FREEZABLES.containsKey(fluidState.getType())) {
-                            world.setBlockAndUpdate(newPos, FREEZABLES.get(fluidState.getType()).defaultBlockState());
-                            if (fluidState.is(FluidTags.LAVA)) {
-                                world.playSound(null, newPos, SoundEvents.LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                            BlockState frozenState = FREEZABLES.get(fluidState.getType()).defaultBlockState();
+                            FreezeEvent.FreezeFromItem event = AetherEventHooks.onItemFreezeFluid(world, newPos, fluidState, frozenState, stack);
+                            if (!event.isCanceled()) {
+                                frozenState = event.getFrozenBlock();
+                                world.setBlockAndUpdate(newPos, frozenState);
+                                if (fluidState.is(FluidTags.LAVA)) {
+                                    world.playSound(null, newPos, SoundEvents.LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                                }
+                                stack.hurtAndBreak(1, livingEntity, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity));
                             }
-                            stack.hurtAndBreak(1, livingEntity, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity));
                         }
                     }
                 }
