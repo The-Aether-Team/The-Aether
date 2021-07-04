@@ -7,6 +7,7 @@ import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.SetLifeShardPacket;
+import com.gildedgames.aether.core.network.packet.client.SetRemedyTimerPacket;
 import com.gildedgames.aether.core.registry.AetherParachuteTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
@@ -34,13 +35,17 @@ public class AetherPlayer implements IAetherPlayer
 
 	private static final UUID LIFE_SHARD_HEALTH_ID = UUID.fromString("E11710C8-4247-4CB6-B3B5-729CB34CFC1A");
 
-	private int lifeShardCount = 0;
+	private boolean canGetPortal = true;
+
 	public boolean isInAetherPortal = false;
 	public int aetherPortalTimer = 0;
 	public float prevPortalAnimTime, portalAnimTime = 0.0F;
 
-	private boolean canGetPortal = true;
 	private boolean isJumping;
+
+	private int remedyTimer = 0;
+
+	private int lifeShardCount = 0;
 	
 	public AetherPlayer(PlayerEntity player) {
 		this.player = player;
@@ -54,8 +59,9 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public CompoundNBT serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
-		nbt.putInt("LifeShardCount", this.getLifeShardCount());
 		nbt.putBoolean("CanGetPortal", this.canGetPortal());
+		nbt.putInt("LifeShardCount", this.getLifeShardCount());
+		nbt.putInt("RemedyTimer", this.getRemedyTimer());
 
 		//Set<AetherRank> ranks = AetherRankings.getRanksOf(this.player.getUniqueID());
 //		if (ranks.stream().anyMatch(AetherRank::hasHalo)) {
@@ -67,18 +73,22 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public void deserializeNBT(CompoundNBT nbt) {
-		if (nbt.contains("LifeShardCount")) {
-			this.setLifeShardCount(nbt.getInt("LifeShardCount"));
-		}
 		if (nbt.contains("CanGetPortal")) {
 			this.setCanGetPortal(nbt.getBoolean("CanGetPortal"));
+		}
+		if (nbt.contains("RemedyTimer")) {
+			this.setRemedyTimer(nbt.getInt("RemedyTimer"));
+		}
+		if (nbt.contains("LifeShardCount")) {
+			this.setLifeShardCount(nbt.getInt("LifeShardCount"));
 		}
 	}
 	
 	@Override
 	public void copyFrom(IAetherPlayer other) {
-		this.setLifeShardCount(other.getLifeShardCount());
 		this.setCanGetPortal(other.canGetPortal());
+		this.setRemedyTimer(other.getRemedyTimer());
+		this.setLifeShardCount(other.getLifeShardCount());
 	}
 
 	@Override
@@ -95,6 +105,7 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public void sync() {
 		if (!this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new SetRemedyTimerPacket(this.getRemedyTimer()), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getLifeShardCount()), (ServerPlayerEntity) this.getPlayer());
 		}
 	}
@@ -103,6 +114,7 @@ public class AetherPlayer implements IAetherPlayer
 	public void onUpdate() {
 		handleAetherPortal();
 		activateParachute();
+		tickDownRemedy();
 		handleLifeShardModifier();
 	}
 
@@ -203,6 +215,17 @@ public class AetherPlayer implements IAetherPlayer
 		}
 	}
 
+	private void tickDownRemedy() {
+		if (!this.getPlayer().level.isClientSide) {
+			if (this.remedyTimer > 0) {
+				this.remedyTimer--;
+			} else {
+				this.remedyTimer = 0;
+			}
+		}
+
+	}
+
 	private void handleLifeShardModifier() {
 		ModifiableAttributeInstance health = this.getPlayer().getAttribute(Attributes.MAX_HEALTH);
 		AttributeModifier LIFE_SHARD_HEALTH = new AttributeModifier(LIFE_SHARD_HEALTH_ID, "Life Shard health increase", this.lifeShardCount * 2.0F, AttributeModifier.Operation.ADDITION);
@@ -212,28 +235,6 @@ public class AetherPlayer implements IAetherPlayer
 			}
 			health.addTransientModifier(LIFE_SHARD_HEALTH);
 		}
-	}
-
-	@Override
-	public void addToLifeShardCount(int amountToAdd) {
-		this.lifeShardCount += amountToAdd;
-		handleLifeShardModifier();
-	}
-
-	@Override
-	public void setLifeShardCount(int amount) {
-		this.lifeShardCount = amount;
-		handleLifeShardModifier();
-	}
-
-	@Override
-	public int getLifeShardLimit() {
-		return AetherConfig.COMMON.maximum_life_shards.get();
-	}
-
-	@Override
-	public int getLifeShardCount() {
-		return this.lifeShardCount;
 	}
 
 	@Override
@@ -252,16 +253,6 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public boolean canGetPortal() {
 		return this.canGetPortal;
-	}
-
-	@Override
-	public void setJumping(boolean isJumping) {
-		this.isJumping = isJumping;
-	}
-
-	@Override
-	public boolean isJumping() {
-		return this.isJumping;
 	}
 
 	@Override
@@ -297,5 +288,47 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public float getPrevPortalAnimTime() {
 		return this.prevPortalAnimTime;
+	}
+
+	@Override
+	public void setJumping(boolean isJumping) {
+		this.isJumping = isJumping;
+	}
+
+	@Override
+	public boolean isJumping() {
+		return this.isJumping;
+	}
+
+	@Override
+	public void setRemedyTimer(int timer) {
+		this.remedyTimer = timer;
+	}
+
+	@Override
+	public int getRemedyTimer() {
+		return this.remedyTimer;
+	}
+
+	@Override
+	public void addToLifeShardCount(int amountToAdd) {
+		this.lifeShardCount += amountToAdd;
+		handleLifeShardModifier();
+	}
+
+	@Override
+	public void setLifeShardCount(int amount) {
+		this.lifeShardCount = amount;
+		handleLifeShardModifier();
+	}
+
+	@Override
+	public int getLifeShardLimit() {
+		return AetherConfig.COMMON.maximum_life_shards.get();
+	}
+
+	@Override
+	public int getLifeShardCount() {
+		return this.lifeShardCount;
 	}
 }

@@ -1,25 +1,19 @@
 package com.gildedgames.aether.client.renderer.overlay;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEffects;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldVertexBufferUploader;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.world.border.WorldBorder;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -29,6 +23,9 @@ public class AetherOverlays
 {
     private static final ResourceLocation TEXTURE_INEBRIATION_VIGNETTE = new ResourceLocation("aether", "textures/blur/inebriation_vignette.png");
     private static final ResourceLocation TEXTURE_REMEDY_VIGNETTE = new ResourceLocation("aether", "textures/blur/remedy_vignette.png");
+    private static final ResourceLocation TEXTURE_REPULSION_SHIELD_VIGNETTE = new ResourceLocation("aether", "textures/blur/repulsion_shield_vignette.png");
+
+    private static int maxNumber = 0;
 
     public static void renderAetherPortalOverlay(RenderGameOverlayEvent.Post event, Minecraft mc, MainWindow window, IAetherPlayer handler) {
         float timeInPortal = handler.getPrevPortalAnimTime() + (handler.getPortalAnimTime() - handler.getPrevPortalAnimTime()) * event.getPartialTicks();
@@ -87,7 +84,32 @@ public class AetherOverlays
         }
     }
 
-    public static void renderRemedyOverlay() {
+    public static void renderRemedyOverlay(Minecraft mc, MainWindow window, IAetherPlayer handler) {
+        int remedyTimer = handler.getRemedyTimer();
+        if (remedyTimer > 0) {
+            if (maxNumber == 0) {
+                maxNumber = remedyTimer;
+            }
+            float alpha = (float) remedyTimer / maxNumber;
+            RenderSystem.disableDepthTest();
+            RenderSystem.depthMask(false);
+            mc.getTextureManager().bind(TEXTURE_REMEDY_VIGNETTE);
+            Tessellator tessellator = Tessellator.getInstance();
+            BufferBuilder bufferbuilder = tessellator.getBuilder();
+            bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR_TEX);
+            bufferbuilder.vertex(0.0D, window.getScreenHeight(), -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(0.0F, 1.0F).endVertex();
+            bufferbuilder.vertex(window.getScreenWidth(), window.getScreenHeight(), -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(1.0F, 1.0F).endVertex();
+            bufferbuilder.vertex(window.getScreenWidth(), 0.0D, -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(1.0F, 0.0F).endVertex();
+            bufferbuilder.vertex(0.0D, 0.0D, -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(0.0F, 0.0F).endVertex();
+            tessellator.end();
+            RenderSystem.depthMask(true);
+            RenderSystem.enableDepthTest();
+        } else {
+            maxNumber = 0;
+        }
+    }
+
+    public static void renderRepulsionShieldOverlay() {
 
     }
 }

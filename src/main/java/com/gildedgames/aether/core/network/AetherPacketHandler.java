@@ -4,6 +4,7 @@ import com.gildedgames.aether.Aether;
 
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import com.gildedgames.aether.core.network.packet.client.SetLifeShardPacket;
+import com.gildedgames.aether.core.network.packet.client.SetRemedyTimerPacket;
 import com.gildedgames.aether.core.network.packet.client.SetVehiclePacket;
 import com.gildedgames.aether.core.network.packet.server.ExtendedAttackPacket;
 import com.gildedgames.aether.core.network.packet.server.JumpPacket;
@@ -30,6 +31,7 @@ public class AetherPacketHandler
 	public static synchronized void register() {
 		// CLIENT
 		register(SetLifeShardPacket.class, SetLifeShardPacket::decode);
+		register(SetRemedyTimerPacket.class, SetRemedyTimerPacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
 		register(SmokeParticlePacket.class, SmokeParticlePacket::decode);
 

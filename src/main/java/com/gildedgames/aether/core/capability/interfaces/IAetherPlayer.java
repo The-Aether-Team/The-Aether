@@ -21,17 +21,9 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 
 	void sync();
 
-	void addToLifeShardCount(int amountToAdd);
-	void setLifeShardCount(int amount);
-	int getLifeShardLimit();
-	int getLifeShardCount();
-
 	void givePortalItem();
 	void setCanGetPortal(boolean canGetPortal);
 	boolean canGetPortal();
-
-	void setJumping(boolean isJumping);
-	boolean isJumping();
 
 	void setInPortal(boolean inPortal);
 	boolean isInPortal();
@@ -42,4 +34,15 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 
 	float getPortalAnimTime();
 	float getPrevPortalAnimTime();
+
+	void setJumping(boolean isJumping);
+	boolean isJumping();
+
+	void setRemedyTimer(int timer);
+	int getRemedyTimer();
+
+	void addToLifeShardCount(int amountToAdd);
+	void setLifeShardCount(int amount);
+	int getLifeShardLimit();
+	int getLifeShardCount();
 }

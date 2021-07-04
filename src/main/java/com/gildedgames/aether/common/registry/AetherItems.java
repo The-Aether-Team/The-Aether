@@ -19,6 +19,7 @@ import com.gildedgames.aether.common.item.accessories.pendant.PendantItem;
 import com.gildedgames.aether.common.item.accessories.pendant.ZanitePendantItem;
 import com.gildedgames.aether.common.item.accessories.ring.IceRingItem;
 import com.gildedgames.aether.common.item.accessories.ring.RingItem;
+import com.gildedgames.aether.common.item.food.WhiteAppleItem;
 import com.gildedgames.aether.common.item.materials.AmbrosiumShardItem;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
@@ -167,8 +168,7 @@ public class AetherItems
 			() -> new Item(new Item.Properties().food(new Food.Builder().fast().nutrition(2).build()).tab(AetherItemGroups.AETHER_FOOD)));
 	public static final RegistryObject<Item> ENCHANTED_BERRY = ITEMS.register("enchanted_berry",
 			() -> new Item(new Item.Properties().rarity(Rarity.RARE).food(new Food.Builder().fast().nutrition(8).build()).tab(AetherItemGroups.AETHER_FOOD)));
-	public static final RegistryObject<Item> WHITE_APPLE = ITEMS.register("white_apple",
-			() -> new Item(new Item.Properties().food(new Food.Builder().fast().nutrition(0).build()).tab(AetherItemGroups.AETHER_FOOD)));
+	public static final RegistryObject<Item> WHITE_APPLE = ITEMS.register("white_apple", WhiteAppleItem::new);
 	public static final RegistryObject<Item> BLUE_GUMMY_SWET = ITEMS.register("blue_gummy_swet",
 			() -> new GummySwetItem(new Item.Properties().food(new Food.Builder().fast().nutrition(20).build()).tab(AetherItemGroups.AETHER_FOOD)));
 	public static final RegistryObject<Item> GOLDEN_GUMMY_SWET = ITEMS.register("golden_gummy_swet",

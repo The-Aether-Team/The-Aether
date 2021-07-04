@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.item.miscellaneous;
 
 import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -19,8 +20,12 @@ public class SkyrootRemedyBucketItem extends Item
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-        if (entityLiving instanceof PlayerEntity && !((PlayerEntity)entityLiving).abilities.instabuild) {
-            stack.shrink(1);
+        if (entityLiving instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entityLiving;
+            IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setRemedyTimer(200));
+            if (!player.abilities.instabuild) {
+                stack.shrink(1);
+            }
         }
         return stack.isEmpty() ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : stack;
     }

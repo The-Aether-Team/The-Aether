@@ -22,7 +22,7 @@ public class SkyrootPoisonBucketItem extends Item
     @Override
     public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
         if (!worldIn.isClientSide) entityLiving.addEffect(new EffectInstance(AetherEffects.INEBRIATION.get(), 500, 0, false, false));
-        if (entityLiving instanceof PlayerEntity && !((PlayerEntity)entityLiving).abilities.instabuild) {
+        if (entityLiving instanceof PlayerEntity && !((PlayerEntity) entityLiving).abilities.instabuild) {
             stack.shrink(1);
         }
         return stack.isEmpty() ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : stack;

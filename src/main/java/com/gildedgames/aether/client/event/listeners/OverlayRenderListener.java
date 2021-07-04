@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 public class OverlayRenderListener
 {
     @SubscribeEvent
-    public static void onRenderOverlay(RenderGameOverlayEvent.Pre event) {
+    public static void onRenderOverlayPre(RenderGameOverlayEvent.Pre event) {
         Minecraft minecraft = Minecraft.getInstance();
         MainWindow window = event.getWindow();
         ClientPlayerEntity player = minecraft.player;
@@ -23,13 +23,14 @@ public class OverlayRenderListener
             IAetherPlayer.get(player).ifPresent(handler -> {
                 if (event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE && minecraft.options.getCameraType() == PointOfView.FIRST_PERSON) {
                     AetherOverlays.renderInebriationOverlay(minecraft, window, handler);
+                    AetherOverlays.renderRemedyOverlay(minecraft, window, handler);
                 }
             });
         }
     }
 
     @SubscribeEvent
-    public static void onRenderOverlay(RenderGameOverlayEvent.Post event) {
+    public static void onRenderOverlayPost(RenderGameOverlayEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
         MainWindow window = event.getWindow();
         ClientPlayerEntity player = minecraft.player;
