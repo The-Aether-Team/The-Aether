@@ -63,7 +63,7 @@ public class InebriationEffect extends Effect
     public List<ItemStack> getCurativeItems() {
         ArrayList<ItemStack> curatives = new ArrayList<>();
         curatives.add(new ItemStack(AetherItems.SKYROOT_REMEDY_BUCKET.get()));
-        curatives.add(new ItemStack(AetherItems.WHITE_APPLE.get())); //TODO: This doesn't work?
+        curatives.add(new ItemStack(AetherItems.WHITE_APPLE.get()));
         return curatives;
     }
 }
