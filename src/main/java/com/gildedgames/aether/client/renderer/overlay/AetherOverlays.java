@@ -25,7 +25,8 @@ public class AetherOverlays
     private static final ResourceLocation TEXTURE_REMEDY_VIGNETTE = new ResourceLocation("aether", "textures/blur/remedy_vignette.png");
     private static final ResourceLocation TEXTURE_REPULSION_SHIELD_VIGNETTE = new ResourceLocation("aether", "textures/blur/repulsion_shield_vignette.png");
 
-    private static int maxNumber = 0;
+    private static int maxRemedyNumber = 0;
+    private static int maxRepulsionShieldNumber = 0;
 
     public static void renderAetherPortalOverlay(RenderGameOverlayEvent.Post event, Minecraft mc, MainWindow window, IAetherPlayer handler) {
         float timeInPortal = handler.getPrevPortalAnimTime() + (handler.getPortalAnimTime() - handler.getPrevPortalAnimTime()) * event.getPartialTicks();
@@ -87,10 +88,10 @@ public class AetherOverlays
     public static void renderRemedyOverlay(Minecraft mc, MainWindow window, IAetherPlayer handler) {
         int remedyTimer = handler.getRemedyTimer();
         if (remedyTimer > 0) {
-            if (maxNumber == 0) {
-                maxNumber = remedyTimer;
+            if (maxRemedyNumber == 0) {
+                maxRemedyNumber = remedyTimer;
             }
-            float alpha = (float) remedyTimer / maxNumber;
+            float alpha = (float) remedyTimer / maxRemedyNumber;
             RenderSystem.disableDepthTest();
             RenderSystem.depthMask(false);
             mc.getTextureManager().bind(TEXTURE_REMEDY_VIGNETTE);
@@ -105,11 +106,32 @@ public class AetherOverlays
             RenderSystem.depthMask(true);
             RenderSystem.enableDepthTest();
         } else {
-            maxNumber = 0;
+            maxRemedyNumber = 0;
         }
     }
 
-    public static void renderRepulsionShieldOverlay() {
-
+    public static void renderRepulsionShieldOverlay(Minecraft mc, MainWindow window, IAetherPlayer handler) {
+        int projectileImpactedTimer = handler.getProjectileImpactedTimer();
+        if (projectileImpactedTimer > 0) {
+            if (maxRepulsionShieldNumber == 0) {
+                maxRepulsionShieldNumber = projectileImpactedTimer;
+            }
+            float alpha = (float) projectileImpactedTimer / maxRepulsionShieldNumber;
+            RenderSystem.disableDepthTest();
+            RenderSystem.depthMask(false);
+            mc.getTextureManager().bind(TEXTURE_REPULSION_SHIELD_VIGNETTE);
+            Tessellator tessellator = Tessellator.getInstance();
+            BufferBuilder bufferbuilder = tessellator.getBuilder();
+            bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR_TEX);
+            bufferbuilder.vertex(0.0D, window.getGuiScaledHeight(), -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(0.0F, 1.0F).endVertex();
+            bufferbuilder.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(1.0F, 1.0F).endVertex();
+            bufferbuilder.vertex(window.getGuiScaledWidth(), 0.0D, -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(1.0F, 0.0F).endVertex();
+            bufferbuilder.vertex(0.0D, 0.0D, -90.0D).color(1.0F, 1.0F, 1.0F, alpha).uv(0.0F, 0.0F).endVertex();
+            tessellator.end();
+            RenderSystem.depthMask(true);
+            RenderSystem.enableDepthTest();
+        } else {
+            maxRepulsionShieldNumber = 0;
+        }
     }
 }

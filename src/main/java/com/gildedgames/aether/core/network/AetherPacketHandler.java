@@ -3,12 +3,9 @@ package com.gildedgames.aether.core.network;
 import com.gildedgames.aether.Aether;
 
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
-import com.gildedgames.aether.core.network.packet.client.SetLifeShardPacket;
-import com.gildedgames.aether.core.network.packet.client.SetRemedyTimerPacket;
-import com.gildedgames.aether.core.network.packet.client.SetVehiclePacket;
+import com.gildedgames.aether.core.network.packet.client.*;
 import com.gildedgames.aether.core.network.packet.server.ExtendedAttackPacket;
 import com.gildedgames.aether.core.network.packet.server.JumpPacket;
-import com.gildedgames.aether.core.network.packet.client.SmokeParticlePacket;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
@@ -31,6 +28,7 @@ public class AetherPacketHandler
 	public static synchronized void register() {
 		// CLIENT
 		register(SetLifeShardPacket.class, SetLifeShardPacket::decode);
+		register(SetProjectileImpactedTimerPacket.class, SetProjectileImpactedTimerPacket::decode);
 		register(SetRemedyTimerPacket.class, SetRemedyTimerPacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
 		register(SmokeParticlePacket.class, SmokeParticlePacket::decode);

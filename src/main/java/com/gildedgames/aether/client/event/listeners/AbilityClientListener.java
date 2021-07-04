@@ -1,6 +1,5 @@
 package com.gildedgames.aether.client.event.listeners;
 
-import com.gildedgames.aether.common.item.accessories.abilities.IZaniteAccessory;
 import com.gildedgames.aether.common.item.tools.abilities.IValkyrieToolItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.network.AetherPacketHandler;

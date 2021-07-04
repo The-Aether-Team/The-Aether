@@ -5,6 +5,7 @@ import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherLoot;
 import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -132,6 +133,9 @@ public class AbilityListener
                 if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
                     CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.REPULSION_SHIELD.get(), impactedLiving).ifPresent((triple) -> {
                         event.setCanceled(true);
+                        if (impactedEntity instanceof PlayerEntity) {
+                            IAetherPlayer.get((PlayerEntity) impactedLiving).ifPresent(aetherPlayer -> aetherPlayer.setProjectileImpactedTimer(150));
+                        }
                         projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25D));
                         triple.getRight().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), entity));
                     });

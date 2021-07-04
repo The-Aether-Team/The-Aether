@@ -24,6 +24,7 @@ public class OverlayRenderListener
                 if (event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE && minecraft.options.getCameraType() == PointOfView.FIRST_PERSON) {
                     AetherOverlays.renderInebriationOverlay(minecraft, window, handler);
                     AetherOverlays.renderRemedyOverlay(minecraft, window, handler);
+                    AetherOverlays.renderRepulsionShieldOverlay(minecraft, window, handler);
                 }
             });
         }

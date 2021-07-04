@@ -41,6 +41,9 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 	void setRemedyTimer(int timer);
 	int getRemedyTimer();
 
+	void setProjectileImpactedTimer(int timer);
+	int getProjectileImpactedTimer();
+
 	void addToLifeShardCount(int amountToAdd);
 	void setLifeShardCount(int amount);
 	int getLifeShardLimit();

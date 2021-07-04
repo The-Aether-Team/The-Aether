@@ -7,6 +7,7 @@ import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.SetLifeShardPacket;
+import com.gildedgames.aether.core.network.packet.client.SetProjectileImpactedTimerPacket;
 import com.gildedgames.aether.core.network.packet.client.SetRemedyTimerPacket;
 import com.gildedgames.aether.core.registry.AetherParachuteTypes;
 import net.minecraft.client.Minecraft;
@@ -45,6 +46,8 @@ public class AetherPlayer implements IAetherPlayer
 
 	private int remedyTimer = 0;
 
+	private int projectileImpactedTimer = 0;
+
 	private int lifeShardCount = 0;
 	
 	public AetherPlayer(PlayerEntity player) {
@@ -60,8 +63,9 @@ public class AetherPlayer implements IAetherPlayer
 	public CompoundNBT serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putBoolean("CanGetPortal", this.canGetPortal());
-		nbt.putInt("LifeShardCount", this.getLifeShardCount());
 		nbt.putInt("RemedyTimer", this.getRemedyTimer());
+		nbt.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
+		nbt.putInt("LifeShardCount", this.getLifeShardCount());
 
 		//Set<AetherRank> ranks = AetherRankings.getRanksOf(this.player.getUniqueID());
 //		if (ranks.stream().anyMatch(AetherRank::hasHalo)) {
@@ -79,6 +83,9 @@ public class AetherPlayer implements IAetherPlayer
 		if (nbt.contains("RemedyTimer")) {
 			this.setRemedyTimer(nbt.getInt("RemedyTimer"));
 		}
+		if (nbt.contains("ProjectileImpactedTimer")) {
+			this.setProjectileImpactedTimer(nbt.getInt("ProjectileImpactedTimer"));
+		}
 		if (nbt.contains("LifeShardCount")) {
 			this.setLifeShardCount(nbt.getInt("LifeShardCount"));
 		}
@@ -88,6 +95,7 @@ public class AetherPlayer implements IAetherPlayer
 	public void copyFrom(IAetherPlayer other) {
 		this.setCanGetPortal(other.canGetPortal());
 		this.setRemedyTimer(other.getRemedyTimer());
+		this.setProjectileImpactedTimer(other.getProjectileImpactedTimer());
 		this.setLifeShardCount(other.getLifeShardCount());
 	}
 
@@ -106,6 +114,7 @@ public class AetherPlayer implements IAetherPlayer
 	public void sync() {
 		if (!this.getPlayer().level.isClientSide) {
 			AetherPacketHandler.sendToPlayer(new SetRemedyTimerPacket(this.getRemedyTimer()), (ServerPlayerEntity) this.getPlayer());
+			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedTimerPacket(this.getProjectileImpactedTimer()), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getLifeShardCount()), (ServerPlayerEntity) this.getPlayer());
 		}
 	}
@@ -115,6 +124,7 @@ public class AetherPlayer implements IAetherPlayer
 		handleAetherPortal();
 		activateParachute();
 		tickDownRemedy();
+		tickDownProjectileImpact();
 		handleLifeShardModifier();
 	}
 
@@ -223,7 +233,16 @@ public class AetherPlayer implements IAetherPlayer
 				this.remedyTimer = 0;
 			}
 		}
+	}
 
+	private void tickDownProjectileImpact() {
+		if (!this.getPlayer().level.isClientSide) {
+			if (this.projectileImpactedTimer > 0) {
+				this.projectileImpactedTimer--;
+			} else {
+				this.projectileImpactedTimer = 0;
+			}
+		}
 	}
 
 	private void handleLifeShardModifier() {
@@ -308,6 +327,16 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public int getRemedyTimer() {
 		return this.remedyTimer;
+	}
+
+	@Override
+	public void setProjectileImpactedTimer(int projectileImpactedTimer) {
+		this.projectileImpactedTimer = projectileImpactedTimer;
+	}
+
+	@Override
+	public int getProjectileImpactedTimer() {
+		return projectileImpactedTimer;
 	}
 
 	@Override
