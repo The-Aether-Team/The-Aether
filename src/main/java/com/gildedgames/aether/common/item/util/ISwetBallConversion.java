@@ -4,7 +4,6 @@ import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
 import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.google.common.collect.Maps;
-import javafx.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -16,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -55,13 +55,14 @@ public interface ISwetBallConversion
 
     static void registerBiomeConversion(ResourceLocation biome, Supplier<Block> oldBlock, Supplier<BlockState> newBlock) {
         if (!BIOME_CONVERSIONS.containsKey(biome)) {
-            BIOME_CONVERSIONS.put(biome, new Pair<>(oldBlock.get(), newBlock.get()));
+            BIOME_CONVERSIONS.put(biome, Pair.of(oldBlock.get(), newBlock.get()));
+
         }
     }
 
     static void removeBiomeConversion(ResourceLocation biome, Supplier<Block> oldBlock, Supplier<BlockState> newBlock) {
         if (BIOME_CONVERSIONS.containsKey(biome)) {
-            BIOME_CONVERSIONS.remove(biome, new Pair<>(oldBlock.get(), newBlock.get()));
+            BIOME_CONVERSIONS.remove(biome, Pair.of(oldBlock.get(), newBlock.get()));
         }
     }
 
