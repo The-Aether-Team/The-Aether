@@ -7,28 +7,34 @@ import net.minecraft.network.PacketBuffer;
 
 import static com.gildedgames.aether.core.network.IAetherPacket.*;
 
-public class SetRemedyTimerPacket extends AetherPacket
+public class SetRemedyPacket extends AetherPacket
 {
-    private final int timer;
+    private final int max, timer;
 
-    public SetRemedyTimerPacket(int timer) {
+    public SetRemedyPacket(int max, int timer) {
+        this.max = max;
         this.timer = timer;
     }
 
     @Override
     public void encode(PacketBuffer buf) {
+        buf.writeInt(this.max);
         buf.writeInt(this.timer);
     }
 
-    public static SetRemedyTimerPacket decode(PacketBuffer buf) {
+    public static SetRemedyPacket decode(PacketBuffer buf) {
+        int maxAmount = buf.readInt();
         int timerAmount = buf.readInt();
-        return new SetRemedyTimerPacket(timerAmount);
+        return new SetRemedyPacket(maxAmount, timerAmount);
     }
 
     @Override
     public void execute(PlayerEntity playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level != null) {
-            IAetherPlayer.get(Minecraft.getInstance().player).ifPresent(aetherPlayer -> aetherPlayer.setRemedyTimer(this.timer));
+            IAetherPlayer.get(Minecraft.getInstance().player).ifPresent(aetherPlayer -> {
+                aetherPlayer.setRemedyMaximum(this.max);
+                aetherPlayer.setRemedyTimer(this.timer);
+            });
         }
     }
 }

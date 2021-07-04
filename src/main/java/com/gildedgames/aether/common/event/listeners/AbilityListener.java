@@ -134,7 +134,10 @@ public class AbilityListener
                     CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.REPULSION_SHIELD.get(), impactedLiving).ifPresent((triple) -> {
                         event.setCanceled(true);
                         if (impactedEntity instanceof PlayerEntity) {
-                            IAetherPlayer.get((PlayerEntity) impactedLiving).ifPresent(aetherPlayer -> aetherPlayer.setProjectileImpactedTimer(150));
+                            IAetherPlayer.get((PlayerEntity) impactedLiving).ifPresent(aetherPlayer -> {
+                                aetherPlayer.setProjectileImpactedMaximum(150);
+                                aetherPlayer.setProjectileImpactedTimer(150);
+                            });
                         }
                         projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25D));
                         triple.getRight().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), entity));

@@ -23,7 +23,10 @@ public class WhiteAppleItem extends Item
         if (!worldIn.isClientSide) entityLiving.curePotionEffects(new ItemStack(AetherItems.WHITE_APPLE.get()));
         if (entityLiving instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entityLiving;
-            IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setRemedyTimer(300));
+            IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                aetherPlayer.setRemedyMaximum(300);
+                aetherPlayer.setRemedyTimer(300);
+            });
         }
         return super.finishUsingItem(stack, worldIn, entityLiving);
     }

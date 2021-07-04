@@ -7,28 +7,34 @@ import net.minecraft.network.PacketBuffer;
 
 import static com.gildedgames.aether.core.network.IAetherPacket.*;
 
-public class SetProjectileImpactedTimerPacket extends AetherPacket
+public class SetProjectileImpactedPacket extends AetherPacket
 {
-    private final int timer;
+    private final int max, timer;
 
-    public SetProjectileImpactedTimerPacket(int timer) {
+    public SetProjectileImpactedPacket(int max, int timer) {
+        this.max = max;
         this.timer = timer;
     }
 
     @Override
     public void encode(PacketBuffer buf) {
+        buf.writeInt(this.max);
         buf.writeInt(this.timer);
     }
 
-    public static SetProjectileImpactedTimerPacket decode(PacketBuffer buf) {
+    public static SetProjectileImpactedPacket decode(PacketBuffer buf) {
+        int maxAmount = buf.readInt();
         int timerAmount = buf.readInt();
-        return new SetProjectileImpactedTimerPacket(timerAmount);
+        return new SetProjectileImpactedPacket(maxAmount, timerAmount);
     }
 
     @Override
     public void execute(PlayerEntity playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level != null) {
-            IAetherPlayer.get(Minecraft.getInstance().player).ifPresent(aetherPlayer -> aetherPlayer.setProjectileImpactedTimer(this.timer));
+            IAetherPlayer.get(Minecraft.getInstance().player).ifPresent(aetherPlayer -> {
+                aetherPlayer.setProjectileImpactedMaximum(this.max);
+                aetherPlayer.setProjectileImpactedTimer(this.timer);
+            });
         }
     }
 }

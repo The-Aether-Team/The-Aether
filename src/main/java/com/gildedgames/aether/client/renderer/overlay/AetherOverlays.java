@@ -25,9 +25,6 @@ public class AetherOverlays
     private static final ResourceLocation TEXTURE_REMEDY_VIGNETTE = new ResourceLocation("aether", "textures/blur/remedy_vignette.png");
     private static final ResourceLocation TEXTURE_REPULSION_SHIELD_VIGNETTE = new ResourceLocation("aether", "textures/blur/repulsion_shield_vignette.png");
 
-    private static int maxRemedyNumber = 0;
-    private static int maxRepulsionShieldNumber = 0;
-
     public static void renderAetherPortalOverlay(RenderGameOverlayEvent.Post event, Minecraft mc, MainWindow window, IAetherPlayer handler) {
         float timeInPortal = handler.getPrevPortalAnimTime() + (handler.getPortalAnimTime() - handler.getPrevPortalAnimTime()) * event.getPartialTicks();
         if (timeInPortal > 0.0F) {
@@ -86,12 +83,10 @@ public class AetherOverlays
     }
 
     public static void renderRemedyOverlay(Minecraft mc, MainWindow window, IAetherPlayer handler) {
+        int remedyMaximum = handler.getRemedyMaximum();
         int remedyTimer = handler.getRemedyTimer();
         if (remedyTimer > 0) {
-            if (maxRemedyNumber == 0) {
-                maxRemedyNumber = remedyTimer;
-            }
-            float alpha = (float) remedyTimer / maxRemedyNumber;
+            float alpha = ((float) remedyTimer / remedyMaximum) / 1.5F;
             RenderSystem.disableDepthTest();
             RenderSystem.depthMask(false);
             mc.getTextureManager().bind(TEXTURE_REMEDY_VIGNETTE);
@@ -105,18 +100,14 @@ public class AetherOverlays
             tessellator.end();
             RenderSystem.depthMask(true);
             RenderSystem.enableDepthTest();
-        } else {
-            maxRemedyNumber = 0;
         }
     }
 
     public static void renderRepulsionShieldOverlay(Minecraft mc, MainWindow window, IAetherPlayer handler) {
+        int projectileImpactedMaximum = handler.getProjectileImpactedMaximum();
         int projectileImpactedTimer = handler.getProjectileImpactedTimer();
         if (projectileImpactedTimer > 0) {
-            if (maxRepulsionShieldNumber == 0) {
-                maxRepulsionShieldNumber = projectileImpactedTimer;
-            }
-            float alpha = (float) projectileImpactedTimer / maxRepulsionShieldNumber;
+            float alpha = (float) projectileImpactedTimer / projectileImpactedMaximum;
             RenderSystem.disableDepthTest();
             RenderSystem.depthMask(false);
             mc.getTextureManager().bind(TEXTURE_REPULSION_SHIELD_VIGNETTE);
@@ -130,8 +121,6 @@ public class AetherOverlays
             tessellator.end();
             RenderSystem.depthMask(true);
             RenderSystem.enableDepthTest();
-        } else {
-            maxRepulsionShieldNumber = 0;
         }
     }
 }

@@ -23,7 +23,10 @@ public class SkyrootRemedyBucketItem extends Item
         if (!worldIn.isClientSide) entityLiving.curePotionEffects(new ItemStack(AetherItems.SKYROOT_REMEDY_BUCKET.get()));
         if (entityLiving instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entityLiving;
-            IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setRemedyTimer(200));
+            IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                aetherPlayer.setRemedyMaximum(200);
+                aetherPlayer.setRemedyTimer(200);
+            });
             if (!player.abilities.instabuild) {
                 stack.shrink(1);
             }

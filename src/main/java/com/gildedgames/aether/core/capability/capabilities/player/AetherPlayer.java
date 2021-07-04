@@ -7,8 +7,8 @@ import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.SetLifeShardPacket;
-import com.gildedgames.aether.core.network.packet.client.SetProjectileImpactedTimerPacket;
-import com.gildedgames.aether.core.network.packet.client.SetRemedyTimerPacket;
+import com.gildedgames.aether.core.network.packet.client.SetProjectileImpactedPacket;
+import com.gildedgames.aether.core.network.packet.client.SetRemedyPacket;
 import com.gildedgames.aether.core.registry.AetherParachuteTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
@@ -44,8 +44,10 @@ public class AetherPlayer implements IAetherPlayer
 
 	private boolean isJumping;
 
+	private int remedyMaximum = 0;
 	private int remedyTimer = 0;
 
+	private int projectileImpactedMaximum = 0;
 	private int projectileImpactedTimer = 0;
 
 	private int lifeShardCount = 0;
@@ -63,7 +65,9 @@ public class AetherPlayer implements IAetherPlayer
 	public CompoundNBT serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putBoolean("CanGetPortal", this.canGetPortal());
+		nbt.putInt("RemedyMaximum", this.getRemedyMaximum());
 		nbt.putInt("RemedyTimer", this.getRemedyTimer());
+		nbt.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
 		nbt.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
 		nbt.putInt("LifeShardCount", this.getLifeShardCount());
 
@@ -80,8 +84,14 @@ public class AetherPlayer implements IAetherPlayer
 		if (nbt.contains("CanGetPortal")) {
 			this.setCanGetPortal(nbt.getBoolean("CanGetPortal"));
 		}
+		if (nbt.contains("RemedyMaximum")) {
+			this.setRemedyMaximum(nbt.getInt("RemedyMaximum"));
+		}
 		if (nbt.contains("RemedyTimer")) {
 			this.setRemedyTimer(nbt.getInt("RemedyTimer"));
+		}
+		if (nbt.contains("ProjectileImpactedMaximum")) {
+			this.setProjectileImpactedMaximum(nbt.getInt("ProjectileImpactedMaximum"));
 		}
 		if (nbt.contains("ProjectileImpactedTimer")) {
 			this.setProjectileImpactedTimer(nbt.getInt("ProjectileImpactedTimer"));
@@ -94,7 +104,9 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public void copyFrom(IAetherPlayer other) {
 		this.setCanGetPortal(other.canGetPortal());
+		this.setRemedyMaximum(other.getRemedyMaximum());
 		this.setRemedyTimer(other.getRemedyTimer());
+		this.setProjectileImpactedMaximum(other.getProjectileImpactedMaximum());
 		this.setProjectileImpactedTimer(other.getProjectileImpactedTimer());
 		this.setLifeShardCount(other.getLifeShardCount());
 	}
@@ -113,8 +125,8 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public void sync() {
 		if (!this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new SetRemedyTimerPacket(this.getRemedyTimer()), (ServerPlayerEntity) this.getPlayer());
-			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedTimerPacket(this.getProjectileImpactedTimer()), (ServerPlayerEntity) this.getPlayer());
+			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getRemedyMaximum(), this.getRemedyTimer()), (ServerPlayerEntity) this.getPlayer());
+			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getProjectileImpactedMaximum(), this.getProjectileImpactedTimer()), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getLifeShardCount()), (ServerPlayerEntity) this.getPlayer());
 		}
 	}
@@ -230,6 +242,7 @@ public class AetherPlayer implements IAetherPlayer
 			if (this.remedyTimer > 0) {
 				this.remedyTimer--;
 			} else {
+				this.remedyMaximum = 0;
 				this.remedyTimer = 0;
 			}
 		}
@@ -240,6 +253,7 @@ public class AetherPlayer implements IAetherPlayer
 			if (this.projectileImpactedTimer > 0) {
 				this.projectileImpactedTimer--;
 			} else {
+				this.projectileImpactedMaximum = 0;
 				this.projectileImpactedTimer = 0;
 			}
 		}
@@ -320,6 +334,16 @@ public class AetherPlayer implements IAetherPlayer
 	}
 
 	@Override
+	public void setRemedyMaximum(int remedyMaximum) {
+		this.remedyMaximum = remedyMaximum;
+	}
+
+	@Override
+	public int getRemedyMaximum() {
+		return remedyMaximum;
+	}
+
+	@Override
 	public void setRemedyTimer(int timer) {
 		this.remedyTimer = timer;
 	}
@@ -327,6 +351,16 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public int getRemedyTimer() {
 		return this.remedyTimer;
+	}
+
+	@Override
+	public void setProjectileImpactedMaximum(int projectileImpactedMaximum) {
+		this.projectileImpactedMaximum = projectileImpactedMaximum;
+	}
+
+	@Override
+	public int getProjectileImpactedMaximum() {
+		return projectileImpactedMaximum;
 	}
 
 	@Override
