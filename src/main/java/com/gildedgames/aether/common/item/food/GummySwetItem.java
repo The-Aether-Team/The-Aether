@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.item.food;
 
+import com.gildedgames.aether.common.registry.AetherFoods;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.entity.LivingEntity;
@@ -15,7 +16,7 @@ import net.minecraft.world.World;
 public class GummySwetItem extends Item
 {
 	public GummySwetItem() {
-		super(new Item.Properties().food(new Food.Builder().fast().nutrition(20).build()).tab(AetherItemGroups.AETHER_FOOD));
+		super(new Item.Properties().food(AetherFoods.GUMMY_SWET).tab(AetherItemGroups.AETHER_FOOD));
 	}
 
 	public ActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {

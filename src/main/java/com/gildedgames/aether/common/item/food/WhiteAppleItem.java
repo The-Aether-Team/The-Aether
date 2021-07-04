@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.item.food;
 
+import com.gildedgames.aether.common.registry.AetherFoods;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.entity.LivingEntity;
@@ -12,8 +13,7 @@ import net.minecraft.world.World;
 public class WhiteAppleItem extends Item
 {
     public WhiteAppleItem() {
-        super(new Item.Properties().food(new Food.Builder().alwaysEat().fast().nutrition(0).build())
-                .tab(AetherItemGroups.AETHER_FOOD));
+        super(new Item.Properties().food(AetherFoods.WHITE_APPLE).tab(AetherItemGroups.AETHER_FOOD));
     }
 
     @Override
