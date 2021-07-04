@@ -48,7 +48,7 @@ public class SwetBallItem extends Item
 		
 		world.setBlockAndUpdate(pos, newBlockState);
 		
-		if (!player.isCreative()) {
+		if (!player.abilities.instabuild) {
 			heldItem.shrink(1);
 		}
 		

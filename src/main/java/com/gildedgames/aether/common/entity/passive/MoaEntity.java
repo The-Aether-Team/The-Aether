@@ -347,7 +347,7 @@ public class MoaEntity extends SaddleableEntity {
 		if (!stack.isEmpty() && this.isPlayerGrown()) {
 			if (this.isBaby() && this.isHungry()) {
 				if (this.getAmountFed() < 3 && stack.getItem() == AetherItems.AECHOR_PETAL.get()) {
-					if (!player.isCreative()) {
+					if (!player.abilities.instabuild) {
 						stack.shrink(1);
 					}
 					

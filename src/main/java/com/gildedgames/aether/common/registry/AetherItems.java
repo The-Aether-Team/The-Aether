@@ -21,6 +21,7 @@ import com.gildedgames.aether.common.item.accessories.ring.IceRingItem;
 import com.gildedgames.aether.common.item.accessories.ring.RingItem;
 import com.gildedgames.aether.common.item.food.WhiteAppleItem;
 import com.gildedgames.aether.common.item.materials.AmbrosiumShardItem;
+import com.gildedgames.aether.common.item.miscellaneous.bucket.*;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.gildedgames.aether.common.item.accessories.ring.ZaniteRingItem;

@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.item.miscellaneous;
+package com.gildedgames.aether.common.item.miscellaneous.bucket;
 
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;

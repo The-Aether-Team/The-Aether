@@ -37,10 +37,8 @@ public interface IGravititeToolItem {
 				entity.floatTime = 0;
 				world.addFreshEntity(entity);
 			}
-			
-			if (!context.getPlayer().isCreative()) {
-				heldItem.hurtAndBreak(4, context.getPlayer(), (player) -> player.broadcastBreakEvent(context.getHand()));
-			}
+
+			heldItem.hurtAndBreak(4, context.getPlayer(), (player) -> player.broadcastBreakEvent(context.getHand()));
 			
 			return ActionResultType.SUCCESS;
 		}

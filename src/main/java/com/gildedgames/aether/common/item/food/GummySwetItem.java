@@ -29,7 +29,7 @@ public class GummySwetItem extends Item
 				return ActionResult.fail(itemstack);
 			}
 		} else {
-			if (playerEntity.getHealth() < playerEntity.getMaxHealth()) {
+			if (playerEntity.getHealth() < playerEntity.getMaxHealth() && !playerEntity.isCreative()) {
 				playerEntity.startUsingItem(hand);
 				return ActionResult.consume(itemstack);
 			} else {
@@ -43,7 +43,7 @@ public class GummySwetItem extends Item
 			return livingEntity.eat(world, stack);
 		} else {
 			livingEntity.heal(livingEntity.getMaxHealth());
-			if (livingEntity instanceof PlayerEntity && !((PlayerEntity) livingEntity).isCreative()) {
+			if (livingEntity instanceof PlayerEntity && !((PlayerEntity) livingEntity).abilities.instabuild) {
 				stack.shrink(1);
 			}
 			return stack;
