@@ -7,6 +7,7 @@ import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.block.Block;
@@ -189,8 +190,10 @@ public class AetherPortalBlock extends Block
         BlockRayTraceResult hitVec = event.getHitVec();
         BlockPos pos = hitVec.getBlockPos().relative(hitVec.getDirection());
 		if (event.getItemStack().getItem().is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS)) {
-			if (fillPortalBlocks(event.getWorld(), pos, event.getPlayer(), event.getHand(), event.getItemStack())) {
-				event.setCanceled(true);
+			if (!AetherConfig.COMMON.disable_aether_portal.get()) {
+				if (fillPortalBlocks(event.getWorld(), pos, event.getPlayer(), event.getHand(), event.getItemStack())) {
+					event.setCanceled(true);
+				}
 			}
 		}
 	}
@@ -202,9 +205,11 @@ public class AetherPortalBlock extends Block
 			BlockRayTraceResult hitVec = (BlockRayTraceResult) rayTraceResult;
 			BlockPos pos = hitVec.getBlockPos().relative(hitVec.getDirection());
 			if (event.getEmptyBucket().getItem().is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_BUCKETS)) {
-				Hand hand = event.getEmptyBucket().getItem() == event.getPlayer().getOffhandItem().getItem() ? Hand.OFF_HAND : Hand.MAIN_HAND;
-				if (fillPortalBlocks(event.getWorld(), pos, event.getPlayer(), hand, event.getEmptyBucket())) {
-					event.setCanceled(true);
+				if (!AetherConfig.COMMON.disable_aether_portal.get()) {
+					Hand hand = event.getEmptyBucket().getItem() == event.getPlayer().getOffhandItem().getItem() ? Hand.OFF_HAND : Hand.MAIN_HAND;
+					if (fillPortalBlocks(event.getWorld(), pos, event.getPlayer(), hand, event.getEmptyBucket())) {
+						event.setCanceled(true);
+					}
 				}
 			}
 		}
