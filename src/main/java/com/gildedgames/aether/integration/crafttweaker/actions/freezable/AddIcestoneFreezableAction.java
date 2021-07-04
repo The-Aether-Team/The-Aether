@@ -1,4 +1,4 @@
-package com.gildedgames.aether.integration.crafttweaker.actions;
+package com.gildedgames.aether.integration.crafttweaker.actions.freezable;
 
 import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
 import com.gildedgames.aether.common.block.natural.IcestoneBlock;
@@ -6,23 +6,23 @@ import com.gildedgames.aether.common.block.util.IIcestoneBlock;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 
-public class RemoveIcestoneFreezableAction implements IRuntimeAction
+public class AddIcestoneFreezableAction implements IRuntimeAction
 {
     private final Fluid fluid;
     private final Block block;
 
-    public RemoveIcestoneFreezableAction(Fluid fluid, Block block) {
+    public AddIcestoneFreezableAction(Fluid fluid, Block block) {
         this.fluid = fluid;
         this.block = block;
     }
 
     @Override
     public void apply() {
-        IIcestoneBlock.removeFreezableFluid(() -> this.fluid, () -> this.block);
+        IIcestoneBlock.registerFreezableFluid(() -> this.fluid, () -> this.block);
     }
 
     @Override
     public String describe() {
-        return "Making fluid " + this.fluid.getRegistryName() + " no longer freezable by Icestone into " + this.block.getRegistryName();
+        return "Making fluid " + this.fluid.getRegistryName() + " freezable by Icestone into " + this.block.getRegistryName();
     }
 }

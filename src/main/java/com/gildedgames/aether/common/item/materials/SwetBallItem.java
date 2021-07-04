@@ -11,7 +11,8 @@ public class SwetBallItem extends Item
 {
 	public SwetBallItem(Item.Properties properties) {
 		super(properties);
-		ISwetBallConversion.registerDefaultBiomeConversions();
+		ISwetBallConversion.registerDefaultConversions();
+		ISwetBallConversion.registerBiomeConversions();
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package com.gildedgames.aether.integration.crafttweaker.actions;
+package com.gildedgames.aether.integration.crafttweaker.actions.freezable;
 
 import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
 import com.gildedgames.aether.common.item.accessories.abilities.IIceAccessory;
