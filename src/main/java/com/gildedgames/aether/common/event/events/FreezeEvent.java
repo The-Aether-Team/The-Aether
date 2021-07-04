@@ -9,14 +9,17 @@ import net.minecraft.world.IWorld;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
+import javax.annotation.Nonnull;
+
 public class FreezeEvent extends Event
 {
     private final IWorld world;
     private final BlockPos pos;
     private final FluidState previousFluid;
+    @Nonnull
     private BlockState frozenBlock;
 
-    public FreezeEvent(IWorld world, BlockPos pos, FluidState fluidState, BlockState blockState) {
+    public FreezeEvent(IWorld world, BlockPos pos, FluidState fluidState, @Nonnull BlockState blockState) {
         this.world = world;
         this.pos = pos;
         this.previousFluid = fluidState;
@@ -35,11 +38,12 @@ public class FreezeEvent extends Event
         return this.previousFluid;
     }
 
+    @Nonnull
     public BlockState getFrozenBlock() {
         return this.frozenBlock;
     }
 
-    public void setFrozenBlock(BlockState frozenBlock) {
+    public void setFrozenBlock(@Nonnull BlockState frozenBlock) {
         this.frozenBlock = frozenBlock;
     }
 

@@ -11,7 +11,7 @@ import net.minecraft.world.IWorld;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
-public abstract class AetherBannedItemEvent extends Event
+public class AetherBannedItemEvent extends Event
 {
 	private final ItemStack itemStack;
 	

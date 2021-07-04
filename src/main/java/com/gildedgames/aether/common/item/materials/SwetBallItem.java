@@ -1,7 +1,8 @@
 package com.gildedgames.aether.common.item.materials;
 
+import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
 import com.gildedgames.aether.common.registry.AetherBlocks;
-import com.gildedgames.aether.common.event.SwettyBallGrowGrassEvent;
+import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -38,7 +39,7 @@ public class SwetBallItem extends Item
 			newBlockState = Blocks.GRASS_BLOCK.defaultBlockState();
 		}
 		
-		SwettyBallGrowGrassEvent event = new SwettyBallGrowGrassEvent(heldItem, oldBlockState, newBlockState, player, pos);
+		SwetBallConvertEvent event = AetherEventHooks.onSwetBallConvert(player, world, pos, heldItem, oldBlockState, newBlockState);
 		MinecraftForge.EVENT_BUS.post(event);
 		newBlockState = event.getNewBlockState();
 		
