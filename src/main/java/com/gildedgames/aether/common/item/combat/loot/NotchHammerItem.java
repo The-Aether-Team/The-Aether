@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.combat.loot;
 
-import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectileEntity;
+import com.gildedgames.aether.common.entity.projectile.combat.HammerProjectileEntity;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.entity.player.PlayerEntity;

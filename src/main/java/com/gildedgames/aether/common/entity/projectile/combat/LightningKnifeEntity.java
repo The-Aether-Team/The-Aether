@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.entity.projectile.weapon;
+package com.gildedgames.aether.common.entity.projectile.combat;
 
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -50,6 +50,7 @@ public class LightningKnifeEntity extends ProjectileItemEntity {
 		}
 		
 		this.remove();
+		super.onHit(result);
 	}
 
 	@Override

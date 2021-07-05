@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.entity.projectile;
 
-import com.gildedgames.aether.common.entity.projectile.weapon.AbstractDartEntity;
+import com.gildedgames.aether.common.entity.projectile.combat.AbstractDartEntity;
 import com.gildedgames.aether.common.registry.AetherEffects;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import net.minecraft.entity.EntityType;

@@ -59,7 +59,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 .add(AetherEntityTypes.GOLDEN_DART.get())
                 .add(AetherEntityTypes.POISON_DART.get())
                 .add(AetherEntityTypes.ENCHANTED_DART.get())
-                .add(AetherEntityTypes.LIGHTNING_KNIFE.get()) //TODO: Lightning knife doesnt work with this.
+                .add(AetherEntityTypes.LIGHTNING_KNIFE.get())
                 .add(AetherEntityTypes.HAMMER_PROJECTILE.get());
     }
 

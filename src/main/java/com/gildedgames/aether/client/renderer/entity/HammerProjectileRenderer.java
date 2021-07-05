@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectileEntity;
+import com.gildedgames.aether.common.entity.projectile.combat.HammerProjectileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

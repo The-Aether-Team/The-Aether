@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import com.gildedgames.aether.common.entity.projectile.weapon.LightningKnifeEntity;
+import com.gildedgames.aether.common.entity.projectile.combat.LightningKnifeEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

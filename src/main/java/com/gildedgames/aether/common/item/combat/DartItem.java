@@ -1,9 +1,9 @@
 package com.gildedgames.aether.common.item.combat;
 
-import com.gildedgames.aether.common.entity.projectile.weapon.AbstractDartEntity;
-import com.gildedgames.aether.common.entity.projectile.weapon.EnchantedDartEntity;
-import com.gildedgames.aether.common.entity.projectile.weapon.GoldenDartEntity;
-import com.gildedgames.aether.common.entity.projectile.weapon.PoisonDartEntity;
+import com.gildedgames.aether.common.entity.projectile.combat.AbstractDartEntity;
+import com.gildedgames.aether.common.entity.projectile.combat.EnchantedDartEntity;
+import com.gildedgames.aether.common.entity.projectile.combat.GoldenDartEntity;
+import com.gildedgames.aether.common.entity.projectile.combat.PoisonDartEntity;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
