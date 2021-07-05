@@ -21,6 +21,7 @@ import com.gildedgames.aether.common.item.accessories.ring.IceRingItem;
 import com.gildedgames.aether.common.item.accessories.ring.RingItem;
 import com.gildedgames.aether.common.item.food.WhiteAppleItem;
 import com.gildedgames.aether.common.item.materials.AmbrosiumShardItem;
+import com.gildedgames.aether.common.item.materials.abilities.ISwetBallConversion;
 import com.gildedgames.aether.common.item.miscellaneous.bucket.*;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
@@ -323,6 +324,8 @@ public class AetherItems
 			() -> new SpawnEggItem(AetherEntityTypes.ZEPHYR_TYPE,0xDFDFDF, 0x99CFE8, new Item.Properties().tab(ItemGroup.TAB_MISC)));
 
 	public static void registerAbilities() {
+		ISwetBallConversion.registerDefaultConversions();
+		ISwetBallConversion.registerBiomeConversions();
 		IIceAccessory.registerDefaultFreezables();
 	}
 }

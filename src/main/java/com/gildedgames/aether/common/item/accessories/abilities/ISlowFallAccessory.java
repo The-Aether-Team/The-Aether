@@ -4,7 +4,7 @@ import net.minecraft.entity.LivingEntity;
 
 public interface ISlowFallAccessory
 {
-    static void handleSlowFall(LivingEntity livingEntity) {
+    default void handleSlowFall(LivingEntity livingEntity) {
         if (livingEntity.getDeltaMovement().y < 0.0 && !livingEntity.isOnGround() && !livingEntity.isInWater() && !livingEntity.isShiftKeyDown()) {
             livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(1.0, 0.6, 1.0));
         }

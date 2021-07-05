@@ -45,7 +45,7 @@ public interface IIceAccessory
         }
     }
 
-    static void handleLiquidFreezing(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
+    default void handleLiquidFreezing(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
                 for (int z = -1; z <= 1; z++) {

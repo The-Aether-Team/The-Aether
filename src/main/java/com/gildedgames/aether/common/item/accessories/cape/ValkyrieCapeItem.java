@@ -4,7 +4,7 @@ import com.gildedgames.aether.common.item.accessories.abilities.ISlowFallAccesso
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 
-public class ValkyrieCapeItem extends CapeItem
+public class ValkyrieCapeItem extends CapeItem implements ISlowFallAccessory
 {
     public ValkyrieCapeItem(Properties properties) {
         super("valkyrie_cape", properties);
@@ -12,6 +12,6 @@ public class ValkyrieCapeItem extends CapeItem
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        ISlowFallAccessory.handleSlowFall(livingEntity);
+        handleSlowFall(livingEntity);
     }
 }

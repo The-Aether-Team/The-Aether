@@ -5,7 +5,7 @@ import com.gildedgames.aether.common.item.accessories.abilities.ISlowFallAccesso
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 
-public class GoldenFeatherItem extends AccessoryItem
+public class GoldenFeatherItem extends AccessoryItem implements ISlowFallAccessory
 {
     public GoldenFeatherItem(Properties properties) {
         super(properties);
@@ -13,6 +13,6 @@ public class GoldenFeatherItem extends AccessoryItem
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        ISlowFallAccessory.handleSlowFall(livingEntity);
+        handleSlowFall(livingEntity);
     }
 }

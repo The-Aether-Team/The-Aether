@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.item.util;
+package com.gildedgames.aether.common.item.materials.abilities;
 
 import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
 import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
@@ -66,7 +66,7 @@ public interface ISwetBallConversion
         }
     }
 
-    static ActionResultType convertBlock(ItemUseContext context) {
+    default ActionResultType convertBlock(ItemUseContext context) {
         PlayerEntity player = context.getPlayer();
         World world = context.getLevel();
         BlockPos pos = context.getClickedPos();

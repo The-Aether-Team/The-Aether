@@ -10,7 +10,7 @@ import net.minecraft.world.server.ServerWorld;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class IcestoneStairsBlock extends StairsBlock
+public class IcestoneStairsBlock extends StairsBlock implements IIcestoneBlock
 {
     public IcestoneStairsBlock(Supplier<BlockState> state, Properties properties) {
         super(state, properties);
@@ -25,7 +25,7 @@ public class IcestoneStairsBlock extends StairsBlock
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         super.tick(state, worldIn, pos, random);
-        IIcestoneBlock.freezeFluids(worldIn, pos);
+        freezeFluids(worldIn, pos);
         worldIn.getBlockTicks().scheduleTick(pos, this, 10);
     }
 }

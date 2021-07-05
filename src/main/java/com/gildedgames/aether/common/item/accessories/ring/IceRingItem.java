@@ -5,7 +5,7 @@ import com.gildedgames.aether.common.item.accessories.abilities.IIceAccessory;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 
-public class IceRingItem extends RingItem
+public class IceRingItem extends RingItem implements IIceAccessory
 {
     public IceRingItem(Properties properties) {
         super(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_ICE_RING, properties);
@@ -13,6 +13,6 @@ public class IceRingItem extends RingItem
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        IIceAccessory.handleLiquidFreezing(identifier, index, livingEntity, stack);
+        handleLiquidFreezing(identifier, index, livingEntity, stack);
     }
 }
