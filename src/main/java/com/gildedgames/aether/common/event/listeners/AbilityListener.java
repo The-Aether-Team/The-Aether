@@ -1,16 +1,19 @@
 package com.gildedgames.aether.common.event.listeners;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.item.accessories.abilities.IZaniteAccessory;
 import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherLoot;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.util.EquipmentUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
@@ -18,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.*;
+import net.minecraft.network.play.server.SEntityVelocityPacket;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
@@ -126,7 +130,32 @@ public class AbilityListener
         }
     }
 
-
+    @SubscribeEvent
+    public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
+        LivingEntity entity = event.getEntityLiving();
+        if (EquipmentUtil.hasFullGravititeSet(entity)) {
+            if (entity instanceof PlayerEntity) {
+                IAetherPlayer.get((PlayerEntity) entity).ifPresent(aetherPlayer -> {
+                    if (aetherPlayer.hasJumpBoost()) {
+                        aetherPlayer.getPlayer().fallDistance = 0.0F;
+                    }
+                    if (aetherPlayer.isJumping() && !aetherPlayer.hasJumpBoost()) {
+                        if (!aetherPlayer.getPlayer().isShiftKeyDown()) {
+                            aetherPlayer.getPlayer().push(0.0, 1.0, 0.0);
+                            if (aetherPlayer.getPlayer() instanceof ServerPlayerEntity) {
+                                ((ServerPlayerEntity) aetherPlayer.getPlayer()).connection.send(new SEntityVelocityPacket(aetherPlayer.getPlayer()));
+                            }
+                            aetherPlayer.setJumpBoost(true);
+                        }
+                    } else {
+                        if (aetherPlayer.getPlayer().isOnGround()) {
+                            aetherPlayer.setJumpBoost(false);
+                        }
+                    }
+                });
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void onPlayerAttack(AttackEntityEvent event) {

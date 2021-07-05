@@ -14,12 +14,12 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 		return player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
 	}
 
-	void onUpdate();
-
 	void copyFrom(IAetherPlayer other);
 	void copyHealth(IAetherPlayer other, boolean wasDeath);
 
 	void sync();
+
+	void onUpdate();
 
 	void givePortalItem();
 	void setCanGetPortal(boolean canGetPortal);
@@ -37,6 +37,9 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 
 	void setJumping(boolean isJumping);
 	boolean isJumping();
+
+	void setJumpBoost(boolean jumpBoost);
+	boolean hasJumpBoost();
 
 	void setRemedyMaximum(int max);
 	int getRemedyMaximum();

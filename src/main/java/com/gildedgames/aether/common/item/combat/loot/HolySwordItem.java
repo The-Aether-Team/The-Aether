@@ -25,9 +25,9 @@ public class HolySwordItem extends SwordItem
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (target.getMobType() == CreatureAttribute.UNDEAD || target.isInvertedHealAndHarm()) {
             float damageAmount = 15.0F;
-            int smiteLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SMITE, stack);
-            if (smiteLevel > 0) {
-                damageAmount += (smiteLevel * 2.5);
+            int smiteModifier = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SMITE, stack);
+            if (smiteModifier > 0) {
+                damageAmount += (smiteModifier * 2.5);
             }
             target.hurt(DamageSource.DROWN, damageAmount);
             stack.hurtAndBreak(10, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));

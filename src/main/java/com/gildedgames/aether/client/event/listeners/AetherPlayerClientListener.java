@@ -17,7 +17,6 @@ public class AetherPlayerClientListener
             boolean isJumping = event.getMovementInput().jumping;
             if (isJumping != player.isJumping()) {
                 AetherPacketHandler.sendToServer(new JumpPacket(event.getPlayer().getUUID(), isJumping));
-
                 player.setJumping(isJumping);
             }
         });

@@ -17,11 +17,9 @@ public class GravititeSwordItem extends SwordItem
 	
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (target.hurtTime > 0 || target.deathTime > 0) {
-			target.push(0.0, 1.0, 0.0);
-			if (target instanceof ServerPlayerEntity) {
-				((ServerPlayerEntity) target).connection.send(new SEntityVelocityPacket(target));
-			}
+		target.push(0.0, 1.0, 0.0);
+		if (target instanceof ServerPlayerEntity) {
+			((ServerPlayerEntity) target).connection.send(new SEntityVelocityPacket(target));
 		}
 		return super.hurtEnemy(stack, target, attacker);
 	}
