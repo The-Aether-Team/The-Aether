@@ -25,7 +25,6 @@ public class LoreBookItem extends Item
                     new SimpleNamedContainerProvider((id, inventory, player) -> LoreBookContainer.create(id, inventory),
                             new TranslationTextComponent("container.aether.book_of_lore")));
         }
-
         return super.use(worldIn, playerIn, handIn);
     }
 }
