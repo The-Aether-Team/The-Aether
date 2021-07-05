@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.item.materials.abilities;
+package com.gildedgames.aether.common.item.materials.util;
 
 import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
 import com.gildedgames.aether.common.event.hooks.AetherEventHooks;

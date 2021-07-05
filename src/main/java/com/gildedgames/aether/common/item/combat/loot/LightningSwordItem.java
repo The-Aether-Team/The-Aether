@@ -16,8 +16,10 @@ public class LightningSwordItem extends SwordItem
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         LightningBoltEntity lightningBolt = EntityType.LIGHTNING_BOLT.create(attacker.level);
-        lightningBolt.setPos(target.getX(), target.getY(), target.getZ());
-        attacker.level.addFreshEntity(lightningBolt);
+        if (lightningBolt != null) {
+            lightningBolt.setPos(target.getX(), target.getY(), target.getZ());
+            attacker.level.addFreshEntity(lightningBolt);
+        }
         return super.hurtEnemy(stack, target, attacker);
     }
 }

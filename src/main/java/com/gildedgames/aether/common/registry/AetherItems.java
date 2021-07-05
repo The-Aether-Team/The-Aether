@@ -22,7 +22,7 @@ import com.gildedgames.aether.common.item.accessories.ring.RingItem;
 import com.gildedgames.aether.common.item.combat.loot.*;
 import com.gildedgames.aether.common.item.food.WhiteAppleItem;
 import com.gildedgames.aether.common.item.materials.AmbrosiumShardItem;
-import com.gildedgames.aether.common.item.materials.abilities.ISwetBallConversion;
+import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
 import com.gildedgames.aether.common.item.miscellaneous.bucket.*;
 import com.gildedgames.aether.common.item.tools.gravitite.GravititeAxeItem;
 import com.gildedgames.aether.common.item.tools.gravitite.GravititeHoeItem;

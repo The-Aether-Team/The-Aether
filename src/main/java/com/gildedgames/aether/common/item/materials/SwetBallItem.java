@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.materials;
 
-import com.gildedgames.aether.common.item.materials.abilities.ISwetBallConversion;
+import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
