@@ -12,7 +12,7 @@ public enum AetherItemTiers implements IItemTier
 	HOLYSTONE(1, 131, 4.0F, 1.0F, 5, () -> Ingredient.of(AetherBlocks.HOLYSTONE.get())),
 	ZANITE(2, 250, 6.0F, 2.0F, 14, () -> Ingredient.of(AetherItems.ZANITE_GEMSTONE.get())),
 	GRAVITITE(3, 1561, 8.0F, 3.0F, 10, () -> Ingredient.of(AetherBlocks.ENCHANTED_GRAVITITE.get())),
-	VALKYRIE(3, 1561, 8.0F, 3.0F, 22, () -> Ingredient.EMPTY);
+	VALKYRIE(3, 2031, 8.0F, 3.0F, 22, () -> Ingredient.EMPTY);
 
 	private final int harvestLevel;
 	private final int maxUses;

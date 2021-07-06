@@ -20,11 +20,11 @@ public class ValkyrieHoeItem extends HoeItem implements IValkyrieToolItem
     private final float attackDamage;
     private final float attackSpeed;
 
-    private Multimap<Attribute, AttributeModifier> HoeAttributes;
+    private Multimap<Attribute, AttributeModifier> hoeAttributes;
 
     public ValkyrieHoeItem(int attackDamageIn, float attackSpeedIn) {
         super(AetherItemTiers.VALKYRIE, attackDamageIn, attackSpeedIn, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_TOOLS));
-        this.attackDamage = attackDamageIn;
+        this.attackDamage = attackDamageIn + AetherItemTiers.VALKYRIE.getAttackDamageBonus();
         this.attackSpeed = attackSpeedIn;
     }
 
@@ -34,7 +34,7 @@ public class ValkyrieHoeItem extends HoeItem implements IValkyrieToolItem
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
         builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(REACH_MODIFIER_UUID, "Tool modifier", this.getReachDistanceModifier(), AttributeModifier.Operation.ADDITION));
-        this.HoeAttributes = builder.build();
-        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.HoeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
+        this.hoeAttributes = builder.build();
+        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.hoeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
     }
 }

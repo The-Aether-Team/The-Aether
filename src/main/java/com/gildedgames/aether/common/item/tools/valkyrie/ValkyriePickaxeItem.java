@@ -17,14 +17,14 @@ import net.minecraftforge.common.ForgeMod;
 
 public class ValkyriePickaxeItem extends PickaxeItem implements IValkyrieToolItem
 {
-    private final int attackDamage;
+    private final float attackDamage;
     private final float attackSpeed;
 
     private Multimap<Attribute, AttributeModifier> pickaxeAttributes;
 
     public ValkyriePickaxeItem(int attackDamageIn, float attackSpeedIn) {
         super(AetherItemTiers.VALKYRIE, attackDamageIn, attackSpeedIn, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_TOOLS));
-        this.attackDamage = attackDamageIn;
+        this.attackDamage = attackDamageIn + AetherItemTiers.VALKYRIE.getAttackDamageBonus();
         this.attackSpeed = attackSpeedIn;
     }
 

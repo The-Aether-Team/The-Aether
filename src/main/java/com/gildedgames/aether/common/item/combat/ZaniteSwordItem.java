@@ -16,7 +16,7 @@ import net.minecraft.item.SwordItem;
 public class ZaniteSwordItem extends SwordItem
 {
 	public ZaniteSwordItem() {
-		super(AetherItemTiers.ZANITE, 3, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS));
+		super(AetherItemTiers.ZANITE, 5, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS));
 	}
 
 	@Override

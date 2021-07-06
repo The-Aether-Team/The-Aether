@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 public class FlamingSwordItem extends SwordItem
 {
 	public FlamingSwordItem() {
-		super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().durability(502).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+		super(ItemTier.DIAMOND, 4, -2.4f, new Item.Properties().durability(502).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
 	}
 
 	@Override

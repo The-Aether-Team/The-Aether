@@ -24,7 +24,7 @@ public class ValkyrieShovelItem extends ShovelItem implements IValkyrieToolItem
 
     public ValkyrieShovelItem(float attackDamageIn, float attackSpeedIn) {
         super(AetherItemTiers.VALKYRIE, attackDamageIn, attackSpeedIn, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_TOOLS));
-        this.attackDamage = attackDamageIn;
+        this.attackDamage = attackDamageIn + AetherItemTiers.VALKYRIE.getAttackDamageBonus();;
         this.attackSpeed = attackSpeedIn;
     }
 
