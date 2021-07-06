@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.event.listeners;
+package com.gildedgames.aether.common.event.listeners.capability;
 
 import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
 import net.minecraftforge.event.entity.living.LivingEvent;

@@ -1,0 +1,81 @@
+package com.gildedgames.aether.common.event.listeners.abilities;
+
+import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.common.registry.AetherTags;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.Hand;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+@Mod.EventBusSubscriber
+public class WeaponAbilityListener
+{
+    private static final Map<Integer, NonNullList<Item>> doubleDropEntities = new HashMap<>();
+
+    @SubscribeEvent
+    public static void trackEntityDeath(LivingDeathEvent event) {
+        if (event.getSource() instanceof EntityDamageSource) {
+            LivingEntity entity = event.getEntityLiving();
+            EntityDamageSource source = (EntityDamageSource) event.getSource();
+            if (source.getDirectEntity() instanceof PlayerEntity) {
+                PlayerEntity player = (PlayerEntity) source.getDirectEntity();
+                ItemStack stack = player.getItemInHand(Hand.MAIN_HAND);
+                Item item = stack.getItem();
+                if (item == AetherItems.SKYROOT_SWORD.get() && !entity.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
+                    NonNullList<Item> inventory = NonNullList.create();
+                    for (ItemStack handStack : entity.getHandSlots()) {
+                        inventory.add(handStack.getItem());
+                    }
+                    for (ItemStack armorStack : entity.getArmorSlots()) {
+                        inventory.add(armorStack.getItem());
+                    }
+                    inventory.removeIf((storedItem -> storedItem == Items.AIR));
+                    doubleDropEntities.put(entity.getId(), inventory);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void doSkyrootDoubleDrops(LivingDropsEvent event) {
+        if (event.getSource() instanceof EntityDamageSource) {
+            LivingEntity entity = event.getEntityLiving();
+            EntityDamageSource source = (EntityDamageSource) event.getSource();
+            if (source.getDirectEntity() instanceof PlayerEntity) {
+                PlayerEntity player = (PlayerEntity) source.getDirectEntity();
+                ItemStack stack = player.getItemInHand(Hand.MAIN_HAND);
+                Item item = stack.getItem();
+                if (item == AetherItems.SKYROOT_SWORD.get() && !entity.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
+                    ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
+                    for (ItemEntity drop : event.getDrops()) {
+                        ItemStack droppedStack = drop.getItem();
+                        if (!droppedStack.getItem().is(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS)) {
+                            ItemEntity dropEntity = new ItemEntity(entity.level, drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy());
+                            dropEntity.setDefaultPickUpDelay();
+                            newDrops.add(dropEntity);
+                        }
+                    }
+                    if (doubleDropEntities.containsKey(entity.getId())) {
+                        NonNullList<Item> inventory = doubleDropEntities.get(entity.getId());
+                        newDrops.removeIf(newDrop -> inventory.contains(newDrop.getItem().getItem()));
+                        doubleDropEntities.remove(entity.getId());
+                    }
+                    event.getDrops().addAll(newDrops);
+                }
+            }
+        }
+    }
+}

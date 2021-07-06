@@ -1,13 +1,11 @@
 package com.gildedgames.aether.core.capability.capabilities.player;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.miscellaneous.ParachuteEntity;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.client.JumpBoostPacket;
 import com.gildedgames.aether.core.network.packet.client.SetLifeShardPacket;
 import com.gildedgames.aether.core.network.packet.client.SetProjectileImpactedPacket;
 import com.gildedgames.aether.core.network.packet.client.SetRemedyPacket;
@@ -46,8 +44,6 @@ public class AetherPlayer implements IAetherPlayer
 
 	private boolean isJumping;
 
-	private boolean hasJumpBoost;
-
 	private int remedyMaximum = 0;
 	private int remedyTimer = 0;
 
@@ -69,7 +65,6 @@ public class AetherPlayer implements IAetherPlayer
 	public CompoundNBT serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putBoolean("CanGetPortal", this.canGetPortal());
-		nbt.putBoolean("hasJumpBoost", this.hasJumpBoost());
 		nbt.putInt("RemedyMaximum", this.getRemedyMaximum());
 		nbt.putInt("RemedyTimer", this.getRemedyTimer());
 		nbt.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
@@ -88,9 +83,6 @@ public class AetherPlayer implements IAetherPlayer
 	public void deserializeNBT(CompoundNBT nbt) {
 		if (nbt.contains("CanGetPortal")) {
 			this.setCanGetPortal(nbt.getBoolean("CanGetPortal"));
-		}
-		if (nbt.contains("hasJumpBoost")) {
-			this.setJumpBoost(nbt.getBoolean("hasJumpBoost"));
 		}
 		if (nbt.contains("RemedyMaximum")) {
 			this.setRemedyMaximum(nbt.getInt("RemedyMaximum"));
@@ -133,7 +125,6 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public void sync() {
 		if (!this.getPlayer().level.isClientSide && this.getPlayer() instanceof ServerPlayerEntity) {
-			AetherPacketHandler.sendToPlayer(new JumpBoostPacket(this.getPlayer().getId(), this.hasJumpBoost()), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.getRemedyMaximum(), this.getRemedyTimer()), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.getProjectileImpactedMaximum(), this.getProjectileImpactedTimer()), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), this.getLifeShardCount()), (ServerPlayerEntity) this.getPlayer());
@@ -340,16 +331,6 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public boolean isJumping() {
 		return this.isJumping;
-	}
-
-	@Override
-	public void setJumpBoost(boolean jumpBoost) {
-		this.hasJumpBoost = jumpBoost;
-	}
-
-	@Override
-	public boolean hasJumpBoost() {
-		return this.hasJumpBoost;
 	}
 
 	@Override
