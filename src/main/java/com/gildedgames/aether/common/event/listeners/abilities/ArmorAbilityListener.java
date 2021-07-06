@@ -1,18 +1,19 @@
 package com.gildedgames.aether.common.event.listeners.abilities;
 
-import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.item.accessories.abilities.IZaniteAccessory;
 import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.PhoenixParticlePacket;
 import com.gildedgames.aether.core.util.EquipmentUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SEntityVelocityPacket;
-import net.minecraft.util.Hand;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -31,21 +32,29 @@ public class ArmorAbilityListener
     @SubscribeEvent
     public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
         LivingEntity entity = event.getEntityLiving();
-//        else if (EquipmentUtil.hasFullNeptuneSet(entity)) {
-//            if (entity.isInWater()) {
-//                Vector3d movement = entity.getDeltaMovement();
-//                float defaultBoost = 1.25F;
-//                float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
-//                if (depthStriderModifier > 0.0F) {
-//                    defaultBoost += depthStriderModifier * 0.25F;
-//                }
-//                entity.moveRelative(defaultBoost, vector);
-//
-//
-//
-//                entity.setDeltaMovement(movement.multiply(defaultBoost, 1.0F, defaultBoost));
-//            }
-//        }
+        if (EquipmentUtil.hasFullNeptuneSet(entity)) {
+            if (entity.isInWaterOrBubble()) {
+                float defaultBoost = 1.55F;
+                float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
+                if (depthStriderModifier > 0.0F) {
+                    defaultBoost += depthStriderModifier * 0.15F;
+                }
+                Vector3d movement = entity.getDeltaMovement().multiply(defaultBoost, 1.0F, defaultBoost);
+                entity.move(MoverType.SELF, movement);
+            }
+        } else if (EquipmentUtil.hasFullPhoenixSet(entity)) {
+            entity.clearFire();
+            if (entity.isInLava()) {
+                float defaultBoost = 10.5F;
+                float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
+                if (depthStriderModifier > 0.0F) {
+                    defaultBoost += depthStriderModifier * 1.5F;
+                }
+                Vector3d movement = entity.getDeltaMovement().multiply(defaultBoost, 0.25F, defaultBoost);
+                entity.move(MoverType.SELF, movement);
+            }
+            AetherPacketHandler.sendToAll(new PhoenixParticlePacket(entity.getId()));
+        }
 
         if (entity.isInWaterRainOrBubble()) {
             for (EquipmentSlotType equipmentslottype : EquipmentSlotType.values()) {
@@ -63,6 +72,49 @@ public class ArmorAbilityListener
                 }
             }
             CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.PHOENIX_GLOVES.get(), entity).ifPresent((triple) -> breakPhoenixGloves(entity, triple, new ItemStack(AetherItems.OBSIDIAN_GLOVES.get())));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityJump(LivingEvent.LivingJumpEvent event) {
+        LivingEntity entity = event.getEntityLiving();
+        if (EquipmentUtil.hasFullGravititeSet(entity)) {
+            if (entity instanceof PlayerEntity) {
+                PlayerEntity player = (PlayerEntity) entity;
+                if (!player.isShiftKeyDown()) {
+                    player.push(0.0, 1.0, 0.0);
+                    if (player instanceof ServerPlayerEntity) {
+                        ((ServerPlayerEntity) player).connection.send(new SEntityVelocityPacket(player));
+                    }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityFall(LivingFallEvent event) {
+        LivingEntity entity = event.getEntityLiving();
+        if (entity.getItemBySlot(EquipmentSlotType.FEET).getItem() == AetherItems.SENTRY_BOOTS.get() || EquipmentUtil.hasFullGravititeSet(entity) || EquipmentUtil.hasFullValkyrieSet(entity)) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityAttack(LivingAttackEvent event) {
+        LivingEntity entity = event.getEntityLiving();
+        if (EquipmentUtil.hasFullPhoenixSet(entity)) {
+            if (event.getSource().isFire()) {
+                event.setCanceled(true);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityHurt(LivingHurtEvent event) {
+        LivingEntity entity = event.getEntityLiving();
+        if (EquipmentUtil.hasFullObsidianSet(entity)) {
+            float originalDamage = event.getAmount();
+            event.setAmount(originalDamage / 2);
         }
     }
 
@@ -96,39 +148,6 @@ public class ArmorAbilityListener
                     }
                 });
             }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onEntityJump(LivingEvent.LivingJumpEvent event) {
-        LivingEntity entity = event.getEntityLiving();
-        if (EquipmentUtil.hasFullGravititeSet(entity)) {
-            if (entity instanceof PlayerEntity) {
-                PlayerEntity player = (PlayerEntity) entity;
-                if (!player.isShiftKeyDown()) {
-                    player.push(0.0, 1.0, 0.0);
-                    if (player instanceof ServerPlayerEntity) {
-                        ((ServerPlayerEntity) player).connection.send(new SEntityVelocityPacket(player));
-                    }
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onEntityFall(LivingFallEvent event) {
-        LivingEntity entity = event.getEntityLiving();
-        if (entity.getItemBySlot(EquipmentSlotType.FEET).getItem() == AetherItems.SENTRY_BOOTS.get() || EquipmentUtil.hasFullGravititeSet(entity) || EquipmentUtil.hasFullValkyrieSet(entity)) {
-            event.setCanceled(true);
-        }
-    }
-
-    @SubscribeEvent
-    public static void onEntityHurt(LivingHurtEvent event) {
-        LivingEntity entity = event.getEntityLiving();
-        if (EquipmentUtil.hasFullObsidianSet(entity)) {
-            float originalDamage = event.getAmount();
-            event.setAmount(originalDamage / 2);
         }
     }
 }
