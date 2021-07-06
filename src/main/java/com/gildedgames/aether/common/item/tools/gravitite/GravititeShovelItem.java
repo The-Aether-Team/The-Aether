@@ -16,12 +16,20 @@ public class GravititeShovelItem extends ShovelItem implements IGravititeToolIte
 
 	@Override
 	public ActionResultType useOn(ItemUseContext context) {
-		ActionResultType result = super.useOn(context);
-		if (result == ActionResultType.PASS || result == ActionResultType.FAIL) {
-			float destroySpeed = this.getDestroySpeed(context.getItemInHand(), context.getLevel().getBlockState(context.getClickedPos()));
-			float efficiency = this.getTier().getSpeed();
-			return floatBlock(context, destroySpeed, efficiency);
+		if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) {
+			return this.startFloatBlock(context);
+		} else {
+			ActionResultType result = super.useOn(context);
+			if (result == ActionResultType.PASS || result == ActionResultType.FAIL) {
+				return this.startFloatBlock(context);
+			}
+			return result;
 		}
-		return result;
+	}
+
+	private ActionResultType startFloatBlock(ItemUseContext context) {
+		float destroySpeed = this.getDestroySpeed(context.getItemInHand(), context.getLevel().getBlockState(context.getClickedPos()));
+		float efficiency = this.getTier().getSpeed();
+		return floatBlock(context, destroySpeed, efficiency);
 	}
 }
