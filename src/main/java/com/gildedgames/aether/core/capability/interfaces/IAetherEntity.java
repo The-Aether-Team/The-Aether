@@ -17,4 +17,7 @@ public interface IAetherEntity extends INBTSerializable<CompoundNBT>
     void sync();
 
     void onUpdate();
+
+    void setLightningImmunityTimer(int timer);
+    int getLightingImmunityTimer();
 }
