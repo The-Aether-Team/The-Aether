@@ -35,7 +35,7 @@ public class LightningKnifeItem extends Item
 			lightningKnife.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 0.8F, 1.0F);
 			worldIn.addFreshEntity(lightningKnife);
 		}
-		worldIn.playSound(null, playerIn.blockPosition(), AetherSoundEvents.ITEM_LIGHTNING_KNIFE_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
+		worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(), AetherSoundEvents.ITEM_LIGHTNING_KNIFE_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F), false);
 		return ActionResult.success(heldItem);
 	}
 }

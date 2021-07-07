@@ -25,12 +25,11 @@
   },
   "item.lightning_knife.shoot": {
     "subtitle": "item.lightning_knife.shoot",
-    "sounds": [
-      {
-        "name": "aether:entity/projectile/shoot",
-        "stream": true
-      }
-    ]
+    "sounds": ["aether:entity/projectile/shoot"]
+  },
+  "item.hammer_of_notch.shoot": {
+    "subtitle": "item.hammer_of_notch.shoot",
+    "sounds": ["minecraft:mob/ghast/fireball4"]
   },
   "item.armor.equip_zanite": {
     "subtitle": "item.armor.equip_zanite",
@@ -246,6 +245,11 @@
   "item.music_disc.legacy": {
     "sounds": ["aether:item/records/legacy"]
   },
+
+
+
+
+
   "music.menu": {
     "sounds": [
       {

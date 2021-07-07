@@ -17,6 +17,7 @@ public class AetherSoundEvents
 
 	public static final RegistryObject<SoundEvent> ITEM_DART_SHOOTER_SHOOT = register("item.dart_shooter.shoot");
 	public static final RegistryObject<SoundEvent> ITEM_LIGHTNING_KNIFE_SHOOT = register("item.lightning_knife.shoot");
+	public static final RegistryObject<SoundEvent> ITEM_HAMMER_OF_NOTCH_SHOOT = register("item.hammer_of_notch.shoot");
 
 	public static final RegistryObject<SoundEvent> ITEM_ARMOR_EQUIP_ZANITE = register("item.armor.equip_zanite");
 	public static final RegistryObject<SoundEvent> ITEM_ARMOR_EQUIP_GRAVITITE = register("item.armor.equip_gravitite");
@@ -46,7 +47,7 @@ public class AetherSoundEvents
 	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_LEGACY = register("item.music_disc.legacy");
 
 
-
+	//move ui to the end then music after it
 	public static final RegistryObject<SoundEvent> MUSIC_MENU = register("music.menu");
 	public static final RegistryObject<SoundEvent> MUSIC_AETHER1 = register("music.aether1");
 	public static final RegistryObject<SoundEvent> MUSIC_AETHER2 = register("music.aether2");

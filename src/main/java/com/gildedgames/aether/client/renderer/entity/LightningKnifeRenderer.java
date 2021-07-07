@@ -17,6 +17,7 @@ public class LightningKnifeRenderer extends EntityRenderer<LightningKnifeEntity>
 {
 	public LightningKnifeRenderer(EntityRendererManager renderManager) {
 		super(renderManager);
+		this.shadowRadius = 0.0F;
 	}
 
 	@Override

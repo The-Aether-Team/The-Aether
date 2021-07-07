@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.item.combat.loot;
 
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.projectile.combat.HammerProjectileEntity;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -11,8 +12,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;;
+import net.minecraft.world.World;
 
 public class NotchHammerItem extends SwordItem
 {
@@ -21,19 +21,19 @@ public class NotchHammerItem extends SwordItem
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack hammer = player.getItemInHand(hand);
-        world.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.GHAST_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F), false);
-
-        if(!world.isClientSide) {
-            HammerProjectileEntity hammerProjectile = new HammerProjectileEntity(world, player);
-            hammerProjectile.shoot(player, player.xRot, player.yRot, 0.0F, 1.5F, 1.0F);
-            world.addFreshEntity(hammerProjectile);
-            if(!player.abilities.instabuild) {
-                player.getCooldowns().addCooldown(this, 200);
-                hammer.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand hand) {
+        ItemStack heldItem = playerIn.getItemInHand(hand);
+        playerIn.swing(hand);
+        if(!worldIn.isClientSide) {
+            if(!playerIn.abilities.instabuild) {
+                playerIn.getCooldowns().addCooldown(this, 200);
+                heldItem.hurtAndBreak(1, playerIn, (p) -> p.broadcastBreakEvent(hand));
             }
+            HammerProjectileEntity hammerProjectile = new HammerProjectileEntity(playerIn, worldIn);
+            hammerProjectile.shoot(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.5F, 1.0F);
+            worldIn.addFreshEntity(hammerProjectile);
         }
-        return ActionResult.success(hammer);
+        worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(), AetherSoundEvents.ITEM_HAMMER_OF_NOTCH_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F), false);
+        return ActionResult.success(heldItem);
     }
 }

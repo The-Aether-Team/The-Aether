@@ -24,23 +24,12 @@ public class HammerProjectileEntity extends ThrowableEntity
         super(type, worldIn);
     }
 
-    public HammerProjectileEntity(World world, LivingEntity player) {
-        super(AetherEntityTypes.HAMMER_PROJECTILE.get(), player, world);
-        this.setOwner(player);
-    }
-
-    @Override
-    public IPacket<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    @Override
-    protected void defineSynchedData() {
+    public HammerProjectileEntity(LivingEntity owner, World world) {
+        super(AetherEntityTypes.HAMMER_PROJECTILE.get(), owner, world);
     }
 
     @Override
     public void tick() {
-        this.level.addParticle(ParticleTypes.CLOUD, this.getX(), this.getY() + 0.2, this.getZ(), 0.0, 0.0, 0.0);
         super.tick();
         if (!this.onGround) {
             ++this.ticksInAir;
@@ -48,32 +37,9 @@ public class HammerProjectileEntity extends ThrowableEntity
         if (this.ticksInAir > 500) {
             this.remove();
         }
-        //TODO: Code this to ignore the shooter and its passengers
-    }
-
-    @Override
-    protected void onHit(RayTraceResult result) {
-        for(int j = 0; j < 8; j++) {
-            this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
-            this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
-            this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
-            this.level.addParticle(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
-            this.level.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+        if (this.level.isClientSide) {
+            this.level.addParticle(ParticleTypes.CLOUD, this.getX(), this.getY() + 0.2, this.getZ(), 0.0, 0.0, 0.0);
         }
-        super.onHit(result);
-        if (!this.level.isClientSide) {
-            this.remove();
-        }
-    }
-
-    /**
-     * When an entity is hit, this method makes sure it is not the shooter that gets hit.
-     */
-    @Override
-    protected void onHitEntity(EntityRayTraceResult result) {
-        Entity target = result.getEntity();
-        target.hurt(DamageSource.thrown(this, getOwner()), 5);
-        target.push(this.getDeltaMovement().x, 0.6D, this.getDeltaMovement().z);
     }
 
     public void shoot(PlayerEntity player, float rotationPitch, float rotationYaw, float v, float velocity, float inaccuracy) {
@@ -85,12 +51,43 @@ public class HammerProjectileEntity extends ThrowableEntity
         this.setDeltaMovement(this.getDeltaMovement().add(playerMotion.x, player.isOnGround() ? 0.0D : playerMotion.y, playerMotion.z));
     }
 
+    @Override
+    protected void onHit(RayTraceResult result) {
+        super.onHit(result);
+        if (!this.level.isClientSide) {
+            this.remove();
+        } else {
+            for(int j = 0; j < 8; j++) {
+                this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+                this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+                this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+                this.level.addParticle(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+                this.level.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+            }
+        }
+    }
 
-    /**
-     * Gets the amount of gravity to apply to the thrown entity with each tick.
-     */
+    @Override
+    protected void onHitEntity(EntityRayTraceResult result) {
+        if (!this.level.isClientSide) {
+            Entity target = result.getEntity();
+            if (target != this.getOwner()) {
+                target.hurt(DamageSource.thrown(this, this.getOwner()), 5);
+                target.push(this.getDeltaMovement().x, 0.6D, this.getDeltaMovement().z);
+            }
+        }
+    }
+
     @Override
     protected float getGravity() {
         return 0.0F;
+    }
+
+    @Override
+    protected void defineSynchedData() { }
+
+    @Override
+    public IPacket<?> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }
