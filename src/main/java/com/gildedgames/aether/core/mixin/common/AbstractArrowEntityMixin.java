@@ -1,6 +1,8 @@
 package com.gildedgames.aether.core.mixin.common;
 
+import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.PhoenixArrowPacket;
 import com.gildedgames.aether.core.network.packet.client.PhoenixParticlePacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -26,16 +28,25 @@ public abstract class AbstractArrowEntityMixin extends Entity
 
     @Inject(at = @At("HEAD"), method = "tick", cancellable = true)
     private void tick(CallbackInfo ci) {
-        if (this.inGround) {
-            if (this.inGroundTime % 5 == 0) {
-                for (int i = 0; i < 1; i++) {
-                    AetherPacketHandler.sendToAll(new PhoenixParticlePacket(this.getId()));
+        Entity entity = this.getEntity();
+        if (entity instanceof AbstractArrowEntity) {
+            AbstractArrowEntity arrow = (AbstractArrowEntity) entity;
+            IPhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
+                if (phoenixArrow.isPhoenixArrow()) {
+                    AetherPacketHandler.sendToAll(new PhoenixArrowPacket(this.getId(), true));
+                    if (this.inGround) {
+                        if (this.inGroundTime % 5 == 0) {
+                            for (int i = 0; i < 1; i++) {
+                                AetherPacketHandler.sendToAll(new PhoenixParticlePacket(this.getId()));
+                            }
+                        }
+                    } else {
+                        for (int i = 0; i < 2; i++) {
+                            AetherPacketHandler.sendToAll(new PhoenixParticlePacket(this.getId()));
+                        }
+                    }
                 }
-            }
-        } else {
-            for (int i = 0; i < 2; i++) {
-                AetherPacketHandler.sendToAll(new PhoenixParticlePacket(this.getId()));
-            }
+            });
         }
     }
 }

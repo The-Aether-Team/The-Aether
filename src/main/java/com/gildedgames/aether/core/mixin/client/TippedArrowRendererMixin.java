@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.mixin.client;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
 import net.minecraft.client.renderer.entity.TippedArrowRenderer;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.util.ResourceLocation;
@@ -18,8 +19,12 @@ public class TippedArrowRendererMixin
 
     @Inject(at = @At("HEAD"), method = "getTextureLocation", cancellable = true)
     private void getTextureLocation(ArrowEntity entity, CallbackInfoReturnable<ResourceLocation> cir) {
-        if (entity.getColor() <= 0) {
-            cir.setReturnValue(FLAMING_ARROW_LOCATION);
-        }
+        IPhoenixArrow.get(entity).ifPresent(phoenixArrow -> {
+            if (phoenixArrow.isPhoenixArrow()) {
+                if (entity.getColor() <= 0) {
+                    cir.setReturnValue(FLAMING_ARROW_LOCATION);
+                }
+            }
+        });
     }
 }
