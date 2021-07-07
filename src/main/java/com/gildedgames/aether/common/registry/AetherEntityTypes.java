@@ -96,12 +96,6 @@ public class AetherEntityTypes
 	public static final EntityType<PoisonNeedleEntity> POISON_NEEDLE_TYPE = EntityType.Builder.<PoisonNeedleEntity>of(PoisonNeedleEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).build("poison_needle");
 	public static final RegistryObject<EntityType<PoisonNeedleEntity>> POISON_NEEDLE = ENTITIES.register("poison_needle", () -> POISON_NEEDLE_TYPE);
 
-	public static final EntityType<PhoenixArrowEntity> PHOENIX_ARROW_TYPE = EntityType.Builder.<PhoenixArrowEntity>of(PhoenixArrowEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).build("phoenix_arrow");
-	public static final RegistryObject<EntityType<PhoenixArrowEntity>> PHOENIX_ARROW = ENTITIES.register("phoenix_arrow", () -> PHOENIX_ARROW_TYPE);
-
-	public static final EntityType<SpectralPhoenixArrowEntity> SPECTRAL_PHOENIX_ARROW_TYPE = EntityType.Builder.<SpectralPhoenixArrowEntity>of(SpectralPhoenixArrowEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).build("spectral_phoenix_arrow");
-	public static final RegistryObject<EntityType<SpectralPhoenixArrowEntity>> SPECTRAL_PHOENIX_ARROW = ENTITIES.register("spectral_phoenix_arrow", () -> SPECTRAL_PHOENIX_ARROW_TYPE);
-
 	public static final EntityType<HammerProjectileEntity> HAMMER_PROJECTILE_TYPE = EntityType.Builder.<HammerProjectileEntity>of(HammerProjectileEntity::new, EntityClassification.MISC).sized(0.25F, 0.25F).build("hammer_projectile");
 	public static final RegistryObject<EntityType<HammerProjectileEntity>> HAMMER_PROJECTILE = ENTITIES.register("hammer_projectile", () -> HAMMER_PROJECTILE_TYPE);
 

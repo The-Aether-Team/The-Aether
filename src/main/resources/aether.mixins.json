@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "aether.refmap.json",
   "mixins": [
+    "common.AbstractArrowEntityMixin",
     "common.CropsBlockMixin",
     "common.EatBerriesGoalMixin",
     "common.FindPollinationTargetGoalMixin",
@@ -16,6 +17,7 @@
     "client.ClientRecipeBookMixin",
     "client.ElytraLayerMixin",
     "client.MinecraftMixin",
+    "client.TippedArrowRendererMixin",
     "client.WorldRendererMixin"
   ],
   "injectors": {

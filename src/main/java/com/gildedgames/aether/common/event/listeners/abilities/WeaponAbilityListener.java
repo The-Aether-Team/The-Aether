@@ -2,6 +2,8 @@ package com.gildedgames.aether.common.event.listeners.abilities;
 
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,6 +13,9 @@ import net.minecraft.item.Items;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -76,6 +81,18 @@ public class WeaponAbilityListener
                     event.getDrops().addAll(newDrops);
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onArrowHit(ProjectileImpactEvent.Arrow event) {
+        if (event.getRayTraceResult().getType() == RayTraceResult.Type.ENTITY) {
+            Entity impactedEntity = ((EntityRayTraceResult) event.getRayTraceResult()).getEntity();
+            IPhoenixArrow.get(event.getArrow()).ifPresent(phoenixArrow -> {
+                if (phoenixArrow.isPhoenixArrow() && phoenixArrow.getFireTime() > 0) {
+                    impactedEntity.setSecondsOnFire(phoenixArrow.getFireTime());
+                }
+            });
         }
     }
 }

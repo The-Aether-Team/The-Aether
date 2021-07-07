@@ -52,9 +52,6 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 .add(AetherEntityTypes.ZEPHYR_SNOWBALL.get());
 
         //vanilla
-        tag(EntityTypeTags.ARROWS)
-                .add(AetherEntityTypes.PHOENIX_ARROW.get())
-                .add(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW.get());
         tag(EntityTypeTags.IMPACT_PROJECTILES)
                 .add(AetherEntityTypes.GOLDEN_DART.get())
                 .add(AetherEntityTypes.POISON_DART.get())

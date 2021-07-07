@@ -93,7 +93,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-7615116b50a140d8bd85f2f538e85c5ff95639a5 assets/aether/lang/en_us.json
+280bbfc171ea9b74da458c64648c525dc56eaffa assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -1285,7 +1285,6 @@ ba0e153386ed103dbf03e4590f3aeef73c4c44bc data/minecraft/tags/blocks/wooden_press
 4ce750611fe5aa6a085b50629af4c068c56b7bad data/minecraft/tags/blocks/wooden_slabs.json
 a7cd419c050774fb6b05dc44fc4d80f825c70954 data/minecraft/tags/blocks/wooden_stairs.json
 98757dac7cc9011ff5edd77bd8418f658226a2a3 data/minecraft/tags/blocks/wooden_trapdoors.json
-5f3e437813590dcc155d899998fb5b859b0e0f10 data/minecraft/tags/entity_types/arrows.json
 d59275533665cb021bf31f94e812698d34d89e30 data/minecraft/tags/entity_types/impact_projectiles.json
 76d13b88af90739b635968f9df001fd85ab8e83b data/minecraft/tags/items/beacon_payment_items.json
 d3815d5fe2d05fce780751f7c4231401f3f16a78 data/minecraft/tags/items/beds.json

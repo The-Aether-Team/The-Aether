@@ -417,8 +417,6 @@ public class AetherLangData extends LanguageProvider
         addEntityType(AetherEntityTypes.GOLDEN_DART, "Golden Dart");
         addEntityType(AetherEntityTypes.POISON_DART, "Poison Dart");
         addEntityType(AetherEntityTypes.ENCHANTED_DART, "Enchanted Dart");
-        addEntityType(AetherEntityTypes.PHOENIX_ARROW, "Phoenix Arrow");
-        addEntityType(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW, "Spectral Phoenix Arrow");
         addEntityType(AetherEntityTypes.HAMMER_PROJECTILE, "Hammer Projectile");
 
 
