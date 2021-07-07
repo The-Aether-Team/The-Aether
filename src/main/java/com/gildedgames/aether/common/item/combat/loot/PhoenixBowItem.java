@@ -19,9 +19,9 @@ public class PhoenixBowItem extends BowItem
     public AbstractArrowEntity customArrow(AbstractArrowEntity arrow) {
         IPhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
             phoenixArrow.setPhoenixArrow(true);
-            int defaultTime = 5;
+            int defaultTime = 20;
             if (arrow.getOwner() instanceof LivingEntity && EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAMING_ARROWS, (LivingEntity) arrow.getOwner()) > 0) {
-                defaultTime = 10;
+                defaultTime = 40;
             }
             phoenixArrow.setFireTime(defaultTime);
         });

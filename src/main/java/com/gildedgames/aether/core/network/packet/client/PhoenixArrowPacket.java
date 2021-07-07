@@ -1,6 +1,5 @@
 package com.gildedgames.aether.core.network.packet.client;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
 import com.gildedgames.aether.core.network.IAetherPacket;
 import net.minecraft.client.Minecraft;
