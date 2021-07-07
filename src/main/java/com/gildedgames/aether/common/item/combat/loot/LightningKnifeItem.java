@@ -5,6 +5,7 @@ import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 
+import com.gildedgames.aether.core.capability.interfaces.IAetherEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,19 +25,17 @@ public class LightningKnifeItem extends Item
 	@Override
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand hand) {
 		ItemStack heldItem = playerIn.getItemInHand(hand);
-		
-		if (!playerIn.abilities.instabuild && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, heldItem) == 0) {
-			heldItem.shrink(1);
-		}
-		
-		worldIn.playSound(null, playerIn.blockPosition(), AetherSoundEvents.ITEM_LIGHTNING_KNIFE_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
-		
+		playerIn.swing(hand);
 		if (!worldIn.isClientSide) {
+			if (!playerIn.abilities.instabuild && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, heldItem) == 0) {
+				heldItem.shrink(1);
+			}
+			IAetherEntity.get(playerIn).ifPresent(aetherEntity -> aetherEntity.setLightningImmunityTimer(65));
 			LightningKnifeEntity lightningKnife = new LightningKnifeEntity(playerIn, worldIn);
 			lightningKnife.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 0.8F, 1.0F);
 			worldIn.addFreshEntity(lightningKnife);
 		}
-		
+		worldIn.playSound(null, playerIn.blockPosition(), AetherSoundEvents.ITEM_LIGHTNING_KNIFE_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
 		return ActionResult.success(heldItem);
 	}
 }
