@@ -6,6 +6,9 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -32,22 +35,14 @@ public class ValkyrieLanceItem extends TieredItem implements IValkyrieToolItem, 
         this.attackSpeed = attackSpeedIn;
     }
 
-    public float getAttackDamage() {
-        return this.attackDamage;
-    }
-
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.hurtAndBreak(1, attacker, (entity) -> {
-            entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
-        });
+        stack.hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
         return true;
     }
 
     public boolean mineBlock(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
         if (state.getDestroySpeed(worldIn, pos) != 0.0F) {
-            stack.hurtAndBreak(2, entityLiving, (entity) -> {
-                entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
-            });
+            stack.hurtAndBreak(2, entityLiving, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
         }
 
         return true;
@@ -64,5 +59,10 @@ public class ValkyrieLanceItem extends TieredItem implements IValkyrieToolItem, 
         attributeBuilder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(REACH_MODIFIER_UUID, "Tool modifier", this.getReachDistanceModifier(), AttributeModifier.Operation.ADDITION));
         Multimap<Attribute, AttributeModifier> attributes = attributeBuilder.build();
         return equipmentSlot == EquipmentSlotType.MAINHAND ? attributes : super.getDefaultAttributeModifiers(equipmentSlot);
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return enchantment.category == EnchantmentType.WEAPON && enchantment != Enchantments.SWEEPING_EDGE;
     }
 }

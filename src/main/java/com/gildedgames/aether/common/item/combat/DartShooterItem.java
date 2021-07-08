@@ -2,9 +2,8 @@ package com.gildedgames.aether.common.item.combat;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.projectile.combat.AbstractDartEntity;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.enchantment.IVanishable;
+import com.google.common.collect.ImmutableSet;
+import net.minecraft.enchantment.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -45,7 +44,7 @@ public class DartShooterItem extends ShootableItem implements IVanishable
                     abstractDartEntity.setNoGravity(true);
 
                     int powerModifier = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, heldItem);
-                    if (powerModifier > 0 && abstractDartEntity.getBaseDamage() > 0.0D) {
+                    if (powerModifier > 0) {
                         abstractDartEntity.setBaseDamage(abstractDartEntity.getBaseDamage() + powerModifier * 0.5D + 0.5D);
                     }
 
@@ -54,7 +53,6 @@ public class DartShooterItem extends ShootableItem implements IVanishable
                         abstractDartEntity.setKnockback(punchModifier);
                     }
 
-                    heldItem.hurtAndBreak(1, playerentity, (p_220009_1_) -> p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand()));
                     if (shouldNotPickupAmmo || playerentity.abilities.instabuild) {
                         abstractDartEntity.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
                     }
@@ -75,12 +73,12 @@ public class DartShooterItem extends ShootableItem implements IVanishable
     }
 
     @Override
-    public int getUseDuration(ItemStack p_77626_1_) {
+    public int getUseDuration(ItemStack stack) {
         return 4;
     }
 
     @Override
-    public UseAction getUseAnimation(ItemStack p_77661_1_) {
+    public UseAction getUseAnimation(ItemStack stack) {
         return UseAction.BOW;
     }
 
@@ -99,11 +97,21 @@ public class DartShooterItem extends ShootableItem implements IVanishable
 
     @Override
     public Predicate<ItemStack> getAllSupportedProjectiles() {
-        return (p_220003_0_) -> p_220003_0_.getItem() == this.dartType.get();
+        return (stack) -> stack.getItem() == this.dartType.get();
     }
 
     @Override
     public int getDefaultProjectileRange() {
         return 15;
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return ImmutableSet.of(Enchantments.POWER_ARROWS, Enchantments.PUNCH_ARROWS).contains(enchantment);
     }
 }
