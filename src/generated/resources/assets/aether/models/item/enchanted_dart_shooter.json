@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "aether:item/dart_shooter",
   "textures": {
     "layer0": "aether:item/weapons/enchanted_dart_shooter"
   }

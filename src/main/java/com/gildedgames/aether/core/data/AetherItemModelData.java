@@ -49,8 +49,6 @@ public class AetherItemModelData extends AetherItemModelProvider
         handheldItem(AetherItems.ZANITE_SWORD, "weapons/");
         handheldItem(AetherItems.GRAVITITE_SWORD, "weapons/");
 
-        handheldItem(AetherItems.VALKYRIE_LANCE, "weapons/");
-
         handheldItem(AetherItems.FLAMING_SWORD, "weapons/");
         handheldItem(AetherItems.LIGHTNING_SWORD, "weapons/");
         handheldItem(AetherItems.HOLY_SWORD, "weapons/");
@@ -63,9 +61,9 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.POISON_DART, "weapons/");
         item(AetherItems.ENCHANTED_DART, "weapons/");
 
-        item(AetherItems.GOLDEN_DART_SHOOTER, "weapons/");
-        item(AetherItems.POISON_DART_SHOOTER, "weapons/");
-        item(AetherItems.ENCHANTED_DART_SHOOTER, "weapons/");
+        dartShooterItem(AetherItems.GOLDEN_DART_SHOOTER, "weapons/");
+        dartShooterItem(AetherItems.POISON_DART_SHOOTER, "weapons/");
+        dartShooterItem(AetherItems.ENCHANTED_DART_SHOOTER, "weapons/");
 
         item(AetherItems.ZANITE_HELMET, "armor/");
         item(AetherItems.ZANITE_CHESTPLATE, "armor/");

@@ -280,7 +280,7 @@ f94ac7a489a93c165e44d727c683ce7ed02d7032 assets/aether/models/item/decorated_hol
 04439a475cc9eaef9982ad62c9c8382c2ba47af0 assets/aether/models/item/enchanted_aether_grass_block.json
 dda8cac23eac9695601291a2e796f42336a22b26 assets/aether/models/item/enchanted_berry.json
 2788773098d9a68dca5e4d6d2a8634f5f1a3edc1 assets/aether/models/item/enchanted_dart.json
-0803ea2e3d079eb5c404d8e99931dd1784406d0e assets/aether/models/item/enchanted_dart_shooter.json
+4dc6a44a847eecb8ea13b31d828c36dabe7d7b73 assets/aether/models/item/enchanted_dart_shooter.json
 89c43872d077d4d192456311ebea4ac29bacecb7 assets/aether/models/item/enchanted_gravitite.json
 5343901471e8dd6f0407ccad4e61bb28f74862a8 assets/aether/models/item/flaming_sword.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/aether/models/item/flying_cow_spawn_egg.json
@@ -290,7 +290,7 @@ f1543bf85f816fc52d4bc0890ba72a74068fa9ad assets/aether/models/item/gingerbread_m
 1dcbe6d4070e88f0f730ec3b6333500110fdaa73 assets/aether/models/item/golden_aercloud.json
 17e59fceef850693a84f811d27ca20ee2bf5c00b assets/aether/models/item/golden_amber.json
 535b88e38c2056a7781b4167c6e0e7133f9c222b assets/aether/models/item/golden_dart.json
-7491e90be9326b0124da85fd355ce3b4f581bc97 assets/aether/models/item/golden_dart_shooter.json
+95bc7628535531bdf00b00aeb1fea0c1049a4e7f assets/aether/models/item/golden_dart_shooter.json
 454806cf4046f00bf71645e600af69b71a325eb4 assets/aether/models/item/golden_feather.json
 1f4943650358f170bc9f133de25c56200d30df08 assets/aether/models/item/golden_gloves.json
 eec365113e7832370e24171f101b9263f9b64c12 assets/aether/models/item/golden_gummy_swet.json
@@ -390,7 +390,7 @@ e20a5e14b16cda6257dfcd8f33b015fc761c49cb assets/aether/models/item/pig_slayer.js
 65a041d62793dcb74ef920688c9be9f418a2144d assets/aether/models/item/pillar_top.json
 3a8e5b49d93be624e75de8cf08fb99021cd8c67c assets/aether/models/item/pink_aercloud.json
 e6d9f71b66d9aa584e2efe9b206657f59f063c9a assets/aether/models/item/poison_dart.json
-4bc60f30c3a1acd5e04c99737fe18c401642da20 assets/aether/models/item/poison_dart_shooter.json
+03a22148517fda3eada1be5de2a41efdbdbf440b assets/aether/models/item/poison_dart_shooter.json
 06be615de0027fdc5cfaf2e64e796d854f24bf57 assets/aether/models/item/present.json
 4f799712d1deb9e08a8acea89e38e7d95b4bc7fc assets/aether/models/item/purple_flower.json
 623b9b2c8c8295613f8856e3f359426e68cfd994 assets/aether/models/item/quicksoil.json
@@ -445,7 +445,6 @@ e60aa96b6c2814a6258780ab56bde5982e08ab20 assets/aether/models/item/valkyrie_cape
 961b060ab155cf86b25f56daa4cbec99589e5d80 assets/aether/models/item/valkyrie_gloves.json
 28dfb06c46d1d56c8153a0dd6444505c096ff26c assets/aether/models/item/valkyrie_helmet.json
 4095579063d25ec7b9ba77eba26d7b82ccefd99b assets/aether/models/item/valkyrie_hoe.json
-3ee77c91d48a8aa6f983ef531f9435345f18dd14 assets/aether/models/item/valkyrie_lance.json
 a1e6e3236d1d35c9ec45780b7124e693aea99586 assets/aether/models/item/valkyrie_leggings.json
 516c846f016b56b58ec9bbe0914732573fc4b928 assets/aether/models/item/valkyrie_pickaxe.json
 0a8c3ae992b8a2f0461cd975f64df4b3897137f0 assets/aether/models/item/valkyrie_shovel.json

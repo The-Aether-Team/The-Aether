@@ -39,6 +39,11 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
                 .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()));
     }
 
+    public ItemModelBuilder dartShooterItem(Supplier<? extends Item> item, String location) {
+        return withExistingParent(item.get().getRegistryName().getPath(), modLoc("item/dart_shooter"))
+                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()));
+    }
+
     public ItemModelBuilder dyedItem(Supplier<? extends Item> item, String location) {
         return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/generated"))
                 .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
