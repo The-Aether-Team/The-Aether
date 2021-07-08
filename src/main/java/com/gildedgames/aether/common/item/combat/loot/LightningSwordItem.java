@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.item.combat.loot;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.interfaces.IAetherEntity;
+import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.LightningBoltEntity;
@@ -23,7 +24,7 @@ public class LightningSwordItem extends SwordItem
         LightningBoltEntity lightningBolt = EntityType.LIGHTNING_BOLT.create(attacker.level);
         if (lightningBolt != null) {
             if (!attacker.level.isClientSide) {
-                IAetherEntity.get(attacker).ifPresent(aetherEntity -> aetherEntity.setLightningImmunityTimer(25));
+                ILightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(attacker));
             }
             lightningBolt.setPos(target.getX(), target.getY(), target.getZ());
             attacker.level.addFreshEntity(lightningBolt);
@@ -35,8 +36,8 @@ public class LightningSwordItem extends SwordItem
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
         if (event.getEntity() instanceof LivingEntity) {
             LivingEntity entity = (LivingEntity) event.getEntity();
-            IAetherEntity.get(entity).ifPresent(aetherEntity -> {
-                if (aetherEntity.getLightingImmunityTimer() > 0) {
+            ILightningTracker.get(event.getLightning()).ifPresent(lightningTracker -> {
+                if (lightningTracker.getOwner() == entity) {
                     event.setCanceled(true);
                 }
             });

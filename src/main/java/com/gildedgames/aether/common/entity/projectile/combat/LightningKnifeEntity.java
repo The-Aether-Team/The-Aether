@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.entity.projectile.combat;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 
+import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.LightningBoltEntity;
@@ -30,6 +31,7 @@ public class LightningKnifeEntity extends ProjectileItemEntity
 			if (result.getType() != RayTraceResult.Type.MISS && this.level instanceof ServerWorld) {
 				LightningBoltEntity lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
 				if (lightningBolt != null) {
+					ILightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(this.getOwner()));
 					lightningBolt.setPos(this.getX(), this.getY(), this.getZ());
 					this.level.addFreshEntity(lightningBolt);
 				}

@@ -6,6 +6,7 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherEntity;
+import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,7 +31,6 @@ public class LightningKnifeItem extends Item
 			if (!playerIn.abilities.instabuild && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, heldItem) == 0) {
 				heldItem.shrink(1);
 			}
-			IAetherEntity.get(playerIn).ifPresent(aetherEntity -> aetherEntity.setLightningImmunityTimer(65));
 			LightningKnifeEntity lightningKnife = new LightningKnifeEntity(playerIn, worldIn);
 			lightningKnife.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 0.8F, 1.0F);
 			worldIn.addFreshEntity(lightningKnife);

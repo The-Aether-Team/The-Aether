@@ -10,16 +10,17 @@ import com.gildedgames.aether.core.capability.capabilities.cape.CapeEntityStorag
 import com.gildedgames.aether.core.capability.capabilities.entity.AetherEntity;
 import com.gildedgames.aether.core.capability.capabilities.entity.AetherEntityProvider;
 import com.gildedgames.aether.core.capability.capabilities.entity.AetherEntityStorage;
+import com.gildedgames.aether.core.capability.capabilities.lightning.LightningTracker;
+import com.gildedgames.aether.core.capability.capabilities.lightning.LightningTrackerProvider;
+import com.gildedgames.aether.core.capability.capabilities.lightning.LightningTrackerStorage;
 import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayer;
 import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayerProvider;
 import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayerStorage;
-import com.gildedgames.aether.core.capability.interfaces.IAetherEntity;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.interfaces.*;
 
-import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
-import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.util.ResourceLocation;
@@ -32,7 +33,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 public class AetherCapabilities
 {
-
 	@CapabilityInject(IAetherEntity.class)
 	public static final Capability<IAetherEntity> AETHER_ENTITY_CAPABILITY = null;
 
@@ -45,11 +45,15 @@ public class AetherCapabilities
 	@CapabilityInject(IPhoenixArrow.class)
 	public static final Capability<IPhoenixArrow> PHOENIX_ARROW_CAPABILITY = null;
 
+	@CapabilityInject(ILightningTracker.class)
+	public static final Capability<ILightningTracker> LIGHTNING_TRACKER_CAPABILITY = null;
+
 	public static void register() {
 		CapabilityManager.INSTANCE.register(IAetherEntity.class, new AetherEntityStorage(), () -> null);
 		CapabilityManager.INSTANCE.register(ICapeEntity.class, new CapeEntityStorage(), () -> null);
 		CapabilityManager.INSTANCE.register(IAetherPlayer.class, new AetherPlayerStorage(), () -> null);
 		CapabilityManager.INSTANCE.register(IPhoenixArrow.class, new PhoenixArrowStorage(), () -> null);
+		CapabilityManager.INSTANCE.register(ILightningTracker.class, new LightningTrackerStorage(), () -> null);
 	}
 	
 	@EventBusSubscriber(modid = Aether.MODID)
@@ -66,6 +70,9 @@ public class AetherCapabilities
 			}
 			if (event.getObject() instanceof AbstractArrowEntity) {
 				event.addCapability(new ResourceLocation(Aether.MODID, "phoenix_arrow"), new PhoenixArrowProvider(new PhoenixArrow((AbstractArrowEntity) event.getObject())));
+			}
+			if (event.getObject() instanceof LightningBoltEntity) {
+				event.addCapability(new ResourceLocation(Aether.MODID, "lightning_tracker"), new LightningTrackerProvider(new LightningTracker((LightningBoltEntity) event.getObject())));
 			}
 		}
 	}
