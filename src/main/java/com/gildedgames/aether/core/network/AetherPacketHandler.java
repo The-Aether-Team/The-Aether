@@ -28,6 +28,7 @@ public class AetherPacketHandler
 	public static synchronized void register() {
 		// CLIENT
 		register(FlameParticlePacket.class, FlameParticlePacket::decode);
+		register(InebriationParticlePacket.class, InebriationParticlePacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PhoenixParticlePacket.class, PhoenixParticlePacket::decode);
 		register(SetLifeShardPacket.class, SetLifeShardPacket::decode);
