@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.entity.projectile.combat;
 
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherEffects;
 import net.minecraft.entity.EntityType;
@@ -16,21 +15,10 @@ public class PoisonDartEntity extends AbstractDartEntity
         this.setBaseDamage(0.0D);
     }
 
-    public PoisonDartEntity(World worldIn, double x, double y, double z) {
-        super(AetherEntityTypes.POISON_DART.get(), x, y, z, worldIn);
-        this.setBaseDamage(0.0D);
-    }
-
-    public PoisonDartEntity(World worldIn, LivingEntity shooter) {
-        super(AetherEntityTypes.POISON_DART.get(), shooter, worldIn);
-        this.setBaseDamage(0.0D);
-    }
-
     @Override
     protected void doPostHurtEffects(LivingEntity living) {
         super.doPostHurtEffects(living);
-
-        if (!level.isClientSide) {
+        if (!this.level.isClientSide) {
             living.addEffect(new EffectInstance(AetherEffects.INEBRIATION.get(), 500, 0, false, false));
         }
     }

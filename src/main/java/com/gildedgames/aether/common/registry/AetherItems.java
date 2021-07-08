@@ -114,9 +114,9 @@ public class AetherItems
 
 	public static final RegistryObject<Item> LIGHTNING_KNIFE = ITEMS.register("lightning_knife", LightningKnifeItem::new);
 
-	public static final RegistryObject<Item> GOLDEN_DART = ITEMS.register("golden_dart", () -> new DartItem(new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
-	public static final RegistryObject<Item> POISON_DART = ITEMS.register("poison_dart", () -> new DartItem(new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
-	public static final RegistryObject<Item> ENCHANTED_DART = ITEMS.register("enchanted_dart", () -> new DartItem(new Item.Properties().rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS)));
+	public static final RegistryObject<Item> GOLDEN_DART = ITEMS.register("golden_dart", () -> new DartItem(AetherEntityTypes.GOLDEN_DART::get, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
+	public static final RegistryObject<Item> POISON_DART = ITEMS.register("poison_dart", () -> new DartItem(AetherEntityTypes.POISON_DART::get, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
+	public static final RegistryObject<Item> ENCHANTED_DART = ITEMS.register("enchanted_dart", () -> new DartItem(AetherEntityTypes.ENCHANTED_DART::get, new Item.Properties().rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS)));
 
 	public static final RegistryObject<Item> GOLDEN_DART_SHOOTER = ITEMS.register("golden_dart_shooter",
 			() -> new DartShooterItem(GOLDEN_DART, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_WEAPONS)));

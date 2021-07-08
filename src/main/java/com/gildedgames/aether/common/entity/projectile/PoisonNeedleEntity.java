@@ -9,15 +9,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
 
-public class PoisonNeedleEntity extends AbstractDartEntity {
+public class PoisonNeedleEntity extends AbstractDartEntity
+{
     public PoisonNeedleEntity(EntityType<? extends PoisonNeedleEntity> type, World worldIn) {
         super(type, worldIn);
-        this.setBaseDamage(1.0D);
-        this.setNoGravity(false);
-    }
-
-    public PoisonNeedleEntity(World worldIn, double x, double y, double z) {
-        super(AetherEntityTypes.POISON_NEEDLE.get(), x, y, z, worldIn);
         this.setBaseDamage(1.0D);
         this.setNoGravity(false);
     }
@@ -31,8 +26,7 @@ public class PoisonNeedleEntity extends AbstractDartEntity {
     @Override
     protected void doPostHurtEffects(LivingEntity living) {
         super.doPostHurtEffects(living);
-
-        if (!level.isClientSide) {
+        if (!this.level.isClientSide) {
             living.addEffect(new EffectInstance(AetherEffects.INEBRIATION.get(), 500, 0, false, false));
         }
     }

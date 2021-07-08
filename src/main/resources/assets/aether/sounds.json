@@ -21,11 +21,11 @@
   },
   "item.dart_shooter.shoot": {
     "subtitle": "item.dart_shooter.shoot",
-    "sounds": ["aether:item/dart_shooter/shoot"]
+    "sounds": ["minecraft:random/bow"]
   },
   "item.lightning_knife.shoot": {
     "subtitle": "item.lightning_knife.shoot",
-    "sounds": ["aether:entity/projectile/shoot"]
+    "sounds": ["minecraft:random/bow"]
   },
   "item.hammer_of_notch.shoot": {
     "subtitle": "item.hammer_of_notch.shoot",

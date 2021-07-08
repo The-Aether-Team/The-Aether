@@ -1,75 +1,85 @@
 package com.gildedgames.aether.common.item.combat;
 
-import com.gildedgames.aether.common.entity.projectile.combat.AbstractDartEntity;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.entity.projectile.combat.AbstractDartEntity;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class DartShooterItem extends Item
+public class DartShooterItem extends ShootableItem implements IVanishable
 {
-    protected final Supplier<Item> ammoType;
-    public DartShooterItem(Supplier<Item> ammo, Properties builder) {
+    protected final Supplier<Item> dartType;
+
+    public DartShooterItem(Supplier<Item> dartType, Properties builder) {
         super(builder);
-        this.ammoType = ammo;
+        this.dartType = dartType;
     }
 
     @Override
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        boolean flag = playerIn.abilities.instabuild;
-        ItemStack heldItem = playerIn.getItemInHand(handIn);
-        ItemStack ammo = this.findAmmo(playerIn);
-        if(ammo.isEmpty() && !flag) {
-            return ActionResult.fail(heldItem);
-        }
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand hand) {
+        ItemStack heldItem = playerIn.getItemInHand(hand);
+        ItemStack ammoItem = playerIn.getProjectile(heldItem);
+        boolean ammoExists = !ammoItem.isEmpty();
+        if (playerIn.abilities.instabuild || ammoExists) {
+            if (!ammoExists) {
+                ammoItem = new ItemStack(this.dartType.get());
+            }
+            boolean shouldNotPickupAmmo = playerIn.abilities.instabuild || (ammoItem.getItem() instanceof DartItem && ((DartItem) ammoItem.getItem()).isInfinite(heldItem));
+            if (!worldIn.isClientSide) {
+                DartItem dartItem = (DartItem) (ammoItem.getItem() instanceof DartItem ? ammoItem.getItem() : this.dartType.get());
+                AbstractDartEntity abstractDartEntity = dartItem.createDart(worldIn, playerIn);
+                abstractDartEntity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.0F, 1.0F);
+                abstractDartEntity.setNoGravity(true);
 
-        if (!worldIn.isClientSide) {
-            DartItem dartItem;
-            if(flag && ammo.isEmpty()) {
-                dartItem = (DartItem) ammoType.get();
-            }
-            else {
-                dartItem = (DartItem) ammo.getItem();
-            }
-            AbstractDartEntity dart = dartItem.createDart(worldIn, ammo, playerIn);
-            dart.setNoGravity(true);
-            dart.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.0F, 1.0F);
-            if (flag) {
-                dart.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
-            }
-            else {
-                dart.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
-            }
-            worldIn.addFreshEntity(dart);
-        }
-        worldIn.playSound(playerIn, playerIn.blockPosition(), AetherSoundEvents.ITEM_DART_SHOOTER_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
-        if (!flag) {
-            ammo.shrink(1);
-            if (ammo.isEmpty()) {
-                playerIn.inventory.removeItem(ammo);
-            }
-        }
-        return ActionResult.consume(heldItem);
-    }
+                int powerModifier = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, heldItem);
+                if (powerModifier > 0 && abstractDartEntity.getBaseDamage() > 0.0D) {
+                    abstractDartEntity.setBaseDamage(abstractDartEntity.getBaseDamage() + powerModifier * 0.5D + 0.5D);
+                }
 
-    private ItemStack findAmmo(PlayerEntity player) {
-        IInventory inv = player.inventory;
-        for (int i = 0; i < inv.getContainerSize(); i++) {
-            ItemStack stack = inv.getItem(i);
-            if (stack == ItemStack.EMPTY) {
-                continue;
+                int punchModifier = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, heldItem);
+                if (punchModifier > 0) {
+                    abstractDartEntity.setKnockback(punchModifier);
+                }
+
+                heldItem.hurtAndBreak(1, playerIn, (p_220009_1_) -> p_220009_1_.broadcastBreakEvent(playerIn.getUsedItemHand()));
+                if (shouldNotPickupAmmo || playerIn.abilities.instabuild) {
+                    abstractDartEntity.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+                }
+
+                worldIn.addFreshEntity(abstractDartEntity);
             }
-            else {
-                if(stack.getItem() == this.ammoType.get()) {
-                    return stack;
+            worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), AetherSoundEvents.ITEM_DART_SHOOTER_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
+            if (!shouldNotPickupAmmo && !playerIn.abilities.instabuild) {
+                ammoItem.shrink(1);
+                if (!ammoExists) {
+                    playerIn.inventory.removeItem(ammoItem);
                 }
             }
+            playerIn.awardStat(Stats.ITEM_USED.get(this));
+            return ActionResult.consume(heldItem);
+        } else {
+            return ActionResult.fail(heldItem);
         }
-        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public Predicate<ItemStack> getAllSupportedProjectiles() {
+        return (p_220003_0_) -> p_220003_0_.getItem() == this.dartType.get();
+    }
+
+    @Override
+    public int getDefaultProjectileRange() {
+        return 15;
     }
 }
