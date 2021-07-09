@@ -5,17 +5,20 @@ import com.gildedgames.aether.common.item.miscellaneous.DungeonKeyItem;
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import com.gildedgames.aether.core.api.registers.DungeonType;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
@@ -47,11 +50,6 @@ public class TreasureChestTileEntity extends LockableLootTileEntity implements I
         this(AetherTileEntityTypes.TREASURE_CHEST.get());
         this.kind = AetherDungeonTypes.BRONZE.getRegistryName();
         this.locked = true;
-    }
-
-    public TreasureChestTileEntity(Supplier<DungeonType> type) {
-        this();
-        this.kind = type.get().getRegistryName();
     }
 
     @Override
@@ -206,7 +204,14 @@ public class TreasureChestTileEntity extends LockableLootTileEntity implements I
 
         if (!canOpen) player.displayClientMessage(new TranslationTextComponent("aether." + this.getKind() + "_dungeon_chest_locked"), true);
 
-        if (this.getLocked() && keyMatches) stack.shrink(1);
+        if (this.getLocked() && keyMatches) {
+            if (player instanceof ServerPlayerEntity) {
+                ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) player;
+                CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
+                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+            }
+            stack.shrink(1);
+        }
         this.setLocked(!canOpen);
 
         return canOpen;

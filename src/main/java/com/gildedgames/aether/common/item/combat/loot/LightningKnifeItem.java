@@ -12,6 +12,7 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
@@ -36,6 +37,7 @@ public class LightningKnifeItem extends Item
 			worldIn.addFreshEntity(lightningKnife);
 		}
 		worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(), AetherSoundEvents.ITEM_LIGHTNING_KNIFE_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F), false);
+		playerIn.awardStat(Stats.ITEM_USED.get(this));
 		return ActionResult.success(heldItem);
 	}
 }

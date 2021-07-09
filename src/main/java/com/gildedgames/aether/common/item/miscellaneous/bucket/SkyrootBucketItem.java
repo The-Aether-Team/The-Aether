@@ -8,6 +8,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
@@ -34,6 +35,7 @@ public class SkyrootBucketItem extends Item
                 if (blockstate1.getBlock() instanceof IBucketPickupHandler) {
                     Fluid fluid = ((IBucketPickupHandler)blockstate1.getBlock()).takeLiquid(worldIn, blockpos, blockstate1);
                     if (fluid == Fluids.WATER) {
+                        playerIn.awardStat(Stats.ITEM_USED.get(this));
                         SoundEvent soundevent = SoundEvents.BUCKET_FILL;
                         playerIn.playSound(soundevent, 1.0F, 1.0F);
                         ItemStack itemstack1 = DrinkHelper.createFilledResult(itemstack, playerIn, new ItemStack(AetherItems.SKYROOT_WATER_BUCKET.get()));

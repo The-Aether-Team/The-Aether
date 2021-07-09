@@ -11,6 +11,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -45,6 +46,7 @@ public class SkyrootWaterBucketItem extends Item
                 BlockState blockstate = worldIn.getBlockState(blockpos);
                 BlockPos blockpos2 = canBlockContainFluid(worldIn, blockpos, blockstate) ? blockpos : blockpos1;
                 if (this.tryPlaceContainedLiquid(playerIn, worldIn, blockpos2, blockraytraceresult)) {
+                    playerIn.awardStat(Stats.ITEM_USED.get(this));
                     return ActionResult.sidedSuccess(!playerIn.abilities.instabuild ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : itemstack, worldIn.isClientSide());
                 } else {
                     return ActionResult.fail(itemstack);
@@ -75,7 +77,7 @@ public class SkyrootWaterBucketItem extends Item
 
             return true;
         } else if (block instanceof ILiquidContainer && ((ILiquidContainer)block).canPlaceLiquid(worldIn,posIn,blockstate, Fluids.WATER)) {
-            ((ILiquidContainer)block).placeLiquid(worldIn, posIn, blockstate, ((FlowingFluid)Fluids.WATER).getSource(false));
+            ((ILiquidContainer)block).placeLiquid(worldIn, posIn, blockstate, Fluids.WATER.getSource(false));
             this.playEmptySound(player, worldIn, posIn);
             return true;
         } else {
