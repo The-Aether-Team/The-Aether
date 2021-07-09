@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class AetherMenuButton extends Button
 {
-	public static final ResourceLocation AETHER_WIDGETS = new ResourceLocation("aether:textures/gui/buttons.png");
+	public static final ResourceLocation AETHER_WIDGETS = new ResourceLocation("aether:textures/gui/title/buttons.png");
 	public int initialX;
 	public int renderOffset;
 	

@@ -20,13 +20,13 @@ public class OverlayRenderListener
         MainWindow window = minecraft.getWindow();
         ClientPlayerEntity player = minecraft.player;
         if (player != null) {
-            IAetherPlayer.get(player).ifPresent(handler -> {
-                if (event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE && minecraft.options.getCameraType() == PointOfView.FIRST_PERSON) {
+            if (event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE && minecraft.options.getCameraType() == PointOfView.FIRST_PERSON) {
+                IAetherPlayer.get(player).ifPresent(handler -> {
                     AetherOverlays.renderInebriationOverlay(minecraft, window, handler);
                     AetherOverlays.renderRemedyOverlay(minecraft, window, handler);
                     AetherOverlays.renderRepulsionShieldOverlay(minecraft, window, handler);
-                }
-            });
+                });
+            }
         }
     }
 
@@ -36,11 +36,11 @@ public class OverlayRenderListener
         MainWindow window = minecraft.getWindow();
         ClientPlayerEntity player = minecraft.player;
         if (player != null) {
-            IAetherPlayer.get(player).ifPresent(handler -> {
-                if (event.getType() == RenderGameOverlayEvent.ElementType.PORTAL) {
-                    AetherOverlays.renderAetherPortalOverlay(event, minecraft, window, handler);
-                }
-            });
+            if (event.getType() == RenderGameOverlayEvent.ElementType.ALL) {
+                AetherOverlays.renderHammerCooldownOverlay(event, minecraft, window, player);
+            } else if (event.getType() == RenderGameOverlayEvent.ElementType.PORTAL) {
+                IAetherPlayer.get(player).ifPresent(handler -> AetherOverlays.renderAetherPortalOverlay(event, minecraft, window, handler));
+            }
         }
     }
 }

@@ -407,7 +407,7 @@ public class AetherLootTableData extends AetherLootTableProvider
                             .add(ItemLootEntry.lootTableItem(AetherItems.AGILITY_CAPE.get()).setWeight(1))
                             .add(ItemLootEntry.lootTableItem(AetherItems.SENTRY_BOOTS.get()).setWeight(1))
                             .add(ItemLootEntry.lootTableItem(AetherItems.REPULSION_SHIELD.get()).setWeight(1))
-                            .add(ItemLootEntry.lootTableItem(AetherItems.NOTCH_HAMMER.get()).setWeight(1))
+                            .add(ItemLootEntry.lootTableItem(AetherItems.HAMMER_OF_NOTCH.get()).setWeight(1))
                             .add(ItemLootEntry.lootTableItem(AetherItems.CLOUD_STAFF.get()).setWeight(1))
                     )
             );

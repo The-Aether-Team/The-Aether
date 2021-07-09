@@ -15,9 +15,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-public class NotchHammerItem extends SwordItem
+public class HammerOfNotchItem extends SwordItem
 {
-    public NotchHammerItem() {
+    public HammerOfNotchItem() {
         super(ItemTier.IRON, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
     }
 
@@ -25,8 +25,8 @@ public class NotchHammerItem extends SwordItem
     public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand hand) {
         ItemStack heldItem = playerIn.getItemInHand(hand);
         playerIn.swing(hand);
-        if(!worldIn.isClientSide) {
-            if(!playerIn.abilities.instabuild) {
+        if (!worldIn.isClientSide) {
+            if (!playerIn.abilities.instabuild) {
                 playerIn.getCooldowns().addCooldown(this, 200);
                 heldItem.hurtAndBreak(1, playerIn, (p) -> p.broadcastBreakEvent(hand));
             }

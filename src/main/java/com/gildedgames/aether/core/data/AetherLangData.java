@@ -247,7 +247,7 @@ public class AetherLangData extends LanguageProvider
         addItem(AetherItems.PIG_SLAYER, "Pig Slayer");
         addItem(AetherItems.CANDY_CANE_SWORD, "Candy Cane Sword");
 
-        addItem(AetherItems.NOTCH_HAMMER, "Hammer of Notch");
+        addItem(AetherItems.HAMMER_OF_NOTCH, "Hammer of Notch");
 
         addItem(AetherItems.LIGHTNING_KNIFE, "Lightning Knife");
 
@@ -477,6 +477,9 @@ public class AetherLangData extends LanguageProvider
         addLoreBookText("item", "Item:");
 
 
+        addMessage("hammer_of_notch_cooldown", "Cooldown");
+
+
         addMessage("life_shard_limit", "You can only use a total of %s Life Shards.");
         addMessage("bronze_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
         addMessage("silver_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
@@ -603,7 +606,7 @@ public class AetherLangData extends LanguageProvider
         addItemLore(AetherItems.NEPTUNE_GLOVES, "Found in Silver Dungeons, these gloves are requires to complete the Neptune Armor set, which allows for underwater walking.");
         addItemLore(AetherItems.NEPTUNE_HELMET, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
         addItemLore(AetherItems.NEPTUNE_LEGGINGS, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
-        addItemLore(AetherItems.NOTCH_HAMMER, "A mighty hammer which shoots heavy projectiles at mobs. It's said that Notch actually held this hammer.");
+        addItemLore(AetherItems.HAMMER_OF_NOTCH, "A mighty hammer which shoots heavy projectiles at mobs. It's said that Notch actually held this hammer.");
         addItemLore(AetherItems.OBSIDIAN_BOOTS, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addItemLore(AetherItems.OBSIDIAN_CHESTPLATE, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addItemLore(AetherItems.OBSIDIAN_GLOVES, "Needed to complete the Obsidian Armor set, you can convert Phoenix Gloves into Obsidian by standing in water while wearing them.");

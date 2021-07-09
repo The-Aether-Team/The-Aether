@@ -2,18 +2,26 @@ package com.gildedgames.aether.client.renderer.overlay;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEffects;
+import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -24,6 +32,7 @@ public class AetherOverlays
     private static final ResourceLocation TEXTURE_INEBRIATION_VIGNETTE = new ResourceLocation("aether", "textures/blur/inebriation_vignette.png");
     private static final ResourceLocation TEXTURE_REMEDY_VIGNETTE = new ResourceLocation("aether", "textures/blur/remedy_vignette.png");
     private static final ResourceLocation TEXTURE_REPULSION_SHIELD_VIGNETTE = new ResourceLocation("aether", "textures/blur/repulsion_shield_vignette.png");
+    private static final ResourceLocation TEXTURE_COOLDOWN_BAR = new ResourceLocation("aether", "textures/gui/cooldown_bar.png");
 
     public static void renderAetherPortalOverlay(RenderGameOverlayEvent.Post event, Minecraft mc, MainWindow window, IAetherPlayer handler) {
         float timeInPortal = handler.getPrevPortalAnimTime() + (handler.getPortalAnimTime() - handler.getPrevPortalAnimTime()) * event.getPartialTicks();
@@ -121,6 +130,32 @@ public class AetherOverlays
             tessellator.end();
             RenderSystem.depthMask(true);
             RenderSystem.enableDepthTest();
+        }
+    }
+
+    public static void renderHammerCooldownOverlay(RenderGameOverlayEvent.Post event, Minecraft mc, MainWindow window, ClientPlayerEntity player) {
+        PlayerInventory inventory = player.inventory;
+        MatrixStack matrixStack = event.getMatrixStack();
+        if (inventory.contains(new ItemStack(AetherItems.HAMMER_OF_NOTCH.get()))) {
+            for (ItemStack itemStack : inventory.items) {
+                Item item = itemStack.getItem();
+                if (item == AetherItems.HAMMER_OF_NOTCH.get()) {
+                    float cooldownPercent = player.getCooldowns().getCooldownPercent(item, 0.0F);
+                    if (cooldownPercent > 0.0F) {
+                        if (player.getMainHandItem().getItem() == item) {
+                            itemStack = player.getMainHandItem();
+                        } else if (player.getOffhandItem().getItem() == item) {
+                            itemStack = player.getOffhandItem();
+                        }
+                        String text = itemStack.getHoverName().getString().concat(" ").concat(new TranslationTextComponent("aether.hammer_of_notch_cooldown").getString());
+                        mc.font.drawShadow(matrixStack, text, (window.getGuiScaledWidth() / 2.0F) - (mc.font.width(text) / 2.0F), 32, 16777215);
+                        mc.getTextureManager().bind(TEXTURE_COOLDOWN_BAR);
+                        AbstractGui.blit(matrixStack, window.getGuiScaledWidth() / 2 - 64, 42, 0, 8, 128, 8, 256, 256);
+                        AbstractGui.blit(matrixStack, window.getGuiScaledWidth() / 2 - 64, 42, 0, 0, (int) (cooldownPercent * 128), 8, 256, 256);
+                        break;
+                    }
+                }
+            }
         }
     }
 }

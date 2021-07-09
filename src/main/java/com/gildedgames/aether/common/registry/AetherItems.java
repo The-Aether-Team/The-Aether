@@ -109,7 +109,7 @@ public class AetherItems
 	public static final RegistryObject<SwordItem> PIG_SLAYER = ITEMS.register("pig_slayer", PigSlayerItem::new);
 	public static final RegistryObject<SwordItem> CANDY_CANE_SWORD = ITEMS.register("candy_cane_sword", CandyCaneSwordItem::new);
 
-	public static final RegistryObject<SwordItem> NOTCH_HAMMER = ITEMS.register("notch_hammer", NotchHammerItem::new);
+	public static final RegistryObject<SwordItem> HAMMER_OF_NOTCH = ITEMS.register("hammer_of_notch", HammerOfNotchItem::new);
 
 	public static final RegistryObject<Item> LIGHTNING_KNIFE = ITEMS.register("lightning_knife", LightningKnifeItem::new);
 
