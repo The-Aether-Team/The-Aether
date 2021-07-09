@@ -4,6 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherRecipes.RecipeTypes;
 import com.gildedgames.aether.common.inventory.container.AltarContainer;
 
+import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -66,7 +67,7 @@ public class AltarTileEntity extends AbstractFurnaceTileEntity
 			ItemStack itemstack1 = p_214007_1_.getResultItem();
 			ItemStack itemstack2 = this.items.get(2);
 
-			if (itemstack.getItem() == itemstack1.getItem()) {
+			if (itemstack.getItem() == itemstack1.getItem() || itemstack1.getItem().is(AetherTags.Items.SAVE_NBT_IN_RECIPE)) {
 				EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(itemstack), itemstack1);
 				if (itemstack.hasTag()) {
 					itemstack1.setTag(itemstack.getTag());

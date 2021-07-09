@@ -1228,6 +1228,7 @@ c294a7ed55dd3893da97c77889a570a9ade6abc8 data/aether/tags/items/locked_dungeon_b
 28b206363dd8ded37bb9a533a071e193dc3bed17 data/aether/tags/items/no_skyroot_double_drops.json
 9785a8eb61e2d850a739425c5448748621ff291d data/aether/tags/items/pig_drops.json
 3b4d3f5ecff7d9fdbfc474336bcaa4b680b87240 data/aether/tags/items/planks_crafting.json
+1d4f168b461ad8458672d78267e5d0d739323d2a data/aether/tags/items/save_nbt_in_recipe.json
 d84975c4861b70c3f92cfbad01916658bf6145c7 data/aether/tags/items/skyroot_logs.json
 ef1688d8839282e91b8aa07f3029cefcf02df64e data/aether/tags/items/skyroot_stick.json
 69066826c7925cc083e02158348c83b97698c58c data/aether/tags/items/skyroot_tools.json
