@@ -2,7 +2,6 @@ package com.gildedgames.aether.common.item.combat.loot;
 
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.capability.interfaces.IAetherEntity;
 import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

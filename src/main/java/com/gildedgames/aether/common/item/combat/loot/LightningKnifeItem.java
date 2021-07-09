@@ -5,8 +5,6 @@ import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 
-import com.gildedgames.aether.core.capability.interfaces.IAetherEntity;
-import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
