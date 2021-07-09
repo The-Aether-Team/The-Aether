@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.item.accessories.abilities;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.event.events.FreezeEvent;
 import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
 import com.google.common.collect.Maps;
@@ -65,7 +66,9 @@ public interface IIceAccessory
                                 if (fluidState.is(FluidTags.LAVA)) {
                                     world.playSound(null, newPos, SoundEvents.LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
                                 }
-                                stack.hurtAndBreak(1, livingEntity, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity));
+                                if ((x + y + z) % 3 == 0) {
+                                    stack.hurtAndBreak(1, livingEntity, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity));
+                                }
                             }
                         }
                     }
