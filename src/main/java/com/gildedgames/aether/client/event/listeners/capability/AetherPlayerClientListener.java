@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.event.listeners;
+package com.gildedgames.aether.client.event.listeners.capability;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacketHandler;

@@ -44,7 +44,6 @@ public class ValkyrieLanceItem extends TieredItem implements IValkyrieToolItem, 
         if (state.getDestroySpeed(worldIn, pos) != 0.0F) {
             stack.hurtAndBreak(2, entityLiving, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
         }
-
         return true;
     }
 
