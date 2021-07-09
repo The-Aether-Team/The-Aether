@@ -52,6 +52,11 @@ public class AccessoryAbilityListener
     }
 
     @SubscribeEvent
+    public static void onTargetSet(LivingEvent.LivingVisibilityEvent event) {
+        CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.INVISIBILITY_CLOAK.get(), event.getEntityLiving()).ifPresent((triple) -> event.modifyVisibility(0.0D));
+    }
+
+    @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
         if (event.getRayTraceResult().getType() == RayTraceResult.Type.ENTITY) {
             Entity impactedEntity = ((EntityRayTraceResult) event.getRayTraceResult()).getEntity();
