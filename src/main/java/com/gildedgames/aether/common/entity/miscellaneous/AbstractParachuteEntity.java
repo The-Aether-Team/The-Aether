@@ -1,47 +1,32 @@
 package com.gildedgames.aether.common.entity.miscellaneous;
 
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.core.api.registers.ParachuteType;
-import com.gildedgames.aether.core.registry.AetherParachuteTypes;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ParachuteEntity extends Entity
+public abstract class AbstractParachuteEntity extends Entity
 {
-    private static final DataParameter<String> DATA_PARACHUTE_TYPE = EntityDataManager.defineId(ParachuteEntity.class, DataSerializers.STRING);
     private float parachuteSpeed;
 
-    public ParachuteEntity(EntityType<?> entityType, World world) {
+    public AbstractParachuteEntity(EntityType<?> entityType, World world) {
         super(entityType, world);
         this.blocksBuilding = true;
-    }
-
-    public ParachuteEntity(World worldIn, double x, double y, double z) {
-        this(AetherEntityTypes.PARACHUTE.get(), worldIn);
-        this.setPos(x, y, z);
         this.setDeltaMovement(Vector3d.ZERO);
-        this.xo = x;
-        this.yo = y;
-        this.zo = z;
+        this.xo = this.getX();
+        this.yo = this.getY();
+        this.zo = this.getZ();
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(DATA_PARACHUTE_TYPE, AetherParachuteTypes.COLD_PARACHUTE.getRegistryName());
-    }
+    protected void defineSynchedData() { }
 
     @Override
     public void tick() {
@@ -126,25 +111,11 @@ public class ParachuteEntity extends Entity
         return list.isEmpty() ? null : list.get(0);
     }
 
-    public void setParachuteType(ParachuteType type) {
-        this.entityData.set(DATA_PARACHUTE_TYPE, type.getRegistryName());
-    }
-
-    public ParachuteType getParachuteType() {
-        return AetherParachuteTypes.PARACHUTES.get(this.getEntityData().get(DATA_PARACHUTE_TYPE));
-    }
+    @Override
+    protected void addAdditionalSaveData(CompoundNBT nbt) { }
 
     @Override
-    protected void addAdditionalSaveData(CompoundNBT nbt) {
-        nbt.putString("Type", this.getParachuteType().getRegistryName());
-    }
-
-    @Override
-    protected void readAdditionalSaveData(CompoundNBT nbt) {
-        if (nbt.contains("Type", 8)) {
-            this.setParachuteType(AetherParachuteTypes.PARACHUTES.get(nbt.getString("Type")));
-        }
-    }
+    protected void readAdditionalSaveData(CompoundNBT nbt) { }
 
     @Override
     public IPacket<?> getAddEntityPacket() {
