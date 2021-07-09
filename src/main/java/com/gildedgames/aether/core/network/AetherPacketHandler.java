@@ -27,6 +27,7 @@ public class AetherPacketHandler
 	
 	public static synchronized void register() {
 		// CLIENT
+		register(DartCountPacket.class, DartCountPacket::decode);
 		register(FlameParticlePacket.class, FlameParticlePacket::decode);
 		register(InebriationParticlePacket.class, InebriationParticlePacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);

@@ -8,6 +8,7 @@ import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.DartCountPacket;
 import com.gildedgames.aether.core.network.packet.client.SetLifeShardPacket;
 import com.gildedgames.aether.core.network.packet.client.SetProjectileImpactedPacket;
 import com.gildedgames.aether.core.network.packet.client.SetRemedyPacket;
@@ -45,6 +46,14 @@ public class AetherPlayer implements IAetherPlayer
 
 	private boolean isJumping;
 
+	private int goldenDartCount = 0;
+	private int poisonDartCount = 0;
+	private int enchantedDartCount = 0;
+	private int removeGoldenDartTime;
+	private int removePoisonDartTime;
+	private int removeEnchantedDartTime;
+
+
 	private int remedyMaximum = 0;
 	private int remedyTimer = 0;
 
@@ -66,6 +75,9 @@ public class AetherPlayer implements IAetherPlayer
 	public CompoundNBT serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putBoolean("CanGetPortal", this.canGetPortal());
+		nbt.putInt("GoldenDartCount", this.getGoldenDartCount());
+		nbt.putInt("PoisonDartCount", this.getPoisonDartCount());
+		nbt.putInt("EnchantedDartCount", this.getEnchantedDartCount());
 		nbt.putInt("RemedyMaximum", this.getRemedyMaximum());
 		nbt.putInt("RemedyTimer", this.getRemedyTimer());
 		nbt.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
@@ -84,6 +96,15 @@ public class AetherPlayer implements IAetherPlayer
 	public void deserializeNBT(CompoundNBT nbt) {
 		if (nbt.contains("CanGetPortal")) {
 			this.setCanGetPortal(nbt.getBoolean("CanGetPortal"));
+		}
+		if (nbt.contains("GoldenDartCount")) {
+			this.setGoldenDartCount(nbt.getInt("GoldenDartCount"));
+		}
+		if (nbt.contains("PoisonDartCount")) {
+			this.setPoisonDartCount(nbt.getInt("PoisonDartCount"));
+		}
+		if (nbt.contains("EnchantedDartCount")) {
+			this.setEnchantedDartCount(nbt.getInt("EnchantedDartCount"));
 		}
 		if (nbt.contains("RemedyMaximum")) {
 			this.setRemedyMaximum(nbt.getInt("RemedyMaximum"));
@@ -126,6 +147,7 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public void sync() {
 		if (!this.getPlayer().level.isClientSide && this.getPlayer() instanceof ServerPlayerEntity) {
+			AetherPacketHandler.sendToPlayer(new DartCountPacket(this.getPlayer().getId(), this.getGoldenDartCount(), this.getPoisonDartCount(), this.getEnchantedDartCount()), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.getRemedyMaximum(), this.getRemedyTimer()), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.getProjectileImpactedMaximum(), this.getProjectileImpactedTimer()), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), this.getLifeShardCount()), (ServerPlayerEntity) this.getPlayer());
@@ -136,6 +158,7 @@ public class AetherPlayer implements IAetherPlayer
 	public void onUpdate() {
 		handleAetherPortal();
 		activateParachute();
+		handleRemoveDarts();
 		tickDownRemedy();
 		tickDownProjectileImpact();
 		handleLifeShardModifier();
@@ -166,7 +189,7 @@ public class AetherPlayer implements IAetherPlayer
 
 		if (this.isInAetherPortal) {
 			++this.aetherPortalTimer;
-			if(player.level.isClientSide) {
+			if (player.level.isClientSide) {
 				this.portalAnimTime += 0.0125F;
 				if(this.portalAnimTime > 1.0F) {
 					this.portalAnimTime = 1.0F;
@@ -174,7 +197,7 @@ public class AetherPlayer implements IAetherPlayer
 			}
 			this.isInAetherPortal = false;
 		}
-		else{
+		else {
 			if (player.level.isClientSide) {
 				if (this.portalAnimTime > 0.0F)
 				{
@@ -238,6 +261,42 @@ public class AetherPlayer implements IAetherPlayer
 						}
 					}
 				}
+			}
+		}
+	}
+
+	private void handleRemoveDarts() {
+		int goldenDarts = this.getGoldenDartCount();
+		if (goldenDarts > 0) {
+			if (this.removeGoldenDartTime <= 0) {
+				this.removeGoldenDartTime = 20 * (30 - goldenDarts);
+			}
+
+			--this.removeGoldenDartTime;
+			if (this.removeGoldenDartTime <= 0) {
+				this.setGoldenDartCount(goldenDarts - 1);
+			}
+		}
+		int poisonDarts = this.getPoisonDartCount();
+		if (poisonDarts > 0) {
+			if (this.removePoisonDartTime <= 0) {
+				this.removePoisonDartTime = 20 * (30 - poisonDarts);
+			}
+
+			--this.removePoisonDartTime;
+			if (this.removePoisonDartTime <= 0) {
+				this.setPoisonDartCount(poisonDarts - 1);
+			}
+		}
+		int enchantedDarts = this.getEnchantedDartCount();
+		if (enchantedDarts > 0) {
+			if (this.removeEnchantedDartTime <= 0) {
+				this.removeEnchantedDartTime = 20 * (30 - enchantedDarts);
+			}
+
+			--this.removeEnchantedDartTime;
+			if (this.removeEnchantedDartTime <= 0) {
+				this.setEnchantedDartCount(enchantedDarts - 1);
 			}
 		}
 	}
@@ -336,6 +395,36 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public boolean isJumping() {
 		return this.isJumping;
+	}
+
+	@Override
+	public void setGoldenDartCount(int count) {
+		this.goldenDartCount = count;
+	}
+
+	@Override
+	public int getGoldenDartCount() {
+		return this.goldenDartCount;
+	}
+
+	@Override
+	public void setPoisonDartCount(int count) {
+		this.poisonDartCount = count;
+	}
+
+	@Override
+	public int getPoisonDartCount() {
+		return this.poisonDartCount;
+	}
+
+	@Override
+	public void setEnchantedDartCount(int count) {
+		this.enchantedDartCount = count;
+	}
+
+	@Override
+	public int getEnchantedDartCount() {
+		return this.enchantedDartCount;
 	}
 
 	@Override

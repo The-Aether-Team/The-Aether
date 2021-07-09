@@ -88,13 +88,13 @@ public class AetherEntityTypes
 	public static final EntityType<ZephyrSnowballEntity> ZEPHYR_SNOWBALL_TYPE = EntityType.Builder.<ZephyrSnowballEntity>of(ZephyrSnowballEntity::new, EntityClassification.MISC).sized(1.0F, 1.0F).build("zephyr_snowball");
 	public static final RegistryObject<EntityType<ZephyrSnowballEntity>> ZEPHYR_SNOWBALL = ENTITIES.register("zephyr_snowball", () -> ZEPHYR_SNOWBALL_TYPE);
 
-	public static final EntityType<GoldenDartEntity> GOLDEN_DART_TYPE = EntityType.Builder.of(GoldenDartEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).build("golden_dart");
+	public static final EntityType<GoldenDartEntity> GOLDEN_DART_TYPE = EntityType.Builder.<GoldenDartEntity>of(GoldenDartEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).build("golden_dart");
 	public static final RegistryObject<EntityType<GoldenDartEntity>> GOLDEN_DART = ENTITIES.register("golden_dart", () -> GOLDEN_DART_TYPE);
 
-	public static final EntityType<PoisonDartEntity> POISON_DART_TYPE = EntityType.Builder.of(PoisonDartEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).build("poison_dart");
+	public static final EntityType<PoisonDartEntity> POISON_DART_TYPE = EntityType.Builder.<PoisonDartEntity>of(PoisonDartEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).build("poison_dart");
 	public static final RegistryObject<EntityType<PoisonDartEntity>> POISON_DART = ENTITIES.register("poison_dart", () -> POISON_DART_TYPE);
 
-	public static final EntityType<EnchantedDartEntity> ENCHANTED_DART_TYPE = EntityType.Builder.of(EnchantedDartEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).build("enchanted_dart");
+	public static final EntityType<EnchantedDartEntity> ENCHANTED_DART_TYPE = EntityType.Builder.<EnchantedDartEntity>of(EnchantedDartEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).build("enchanted_dart");
 	public static final RegistryObject<EntityType<EnchantedDartEntity>> ENCHANTED_DART = ENTITIES.register("enchanted_dart", () -> ENCHANTED_DART_TYPE);
 
 	public static final EntityType<PoisonNeedleEntity> POISON_NEEDLE_TYPE = EntityType.Builder.<PoisonNeedleEntity>of(PoisonNeedleEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).build("poison_needle");

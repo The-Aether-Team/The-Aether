@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.entity.projectile.combat;
 
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
@@ -9,6 +10,11 @@ public class GoldenDartEntity extends AbstractDartEntity
 {
     public GoldenDartEntity(EntityType<? extends GoldenDartEntity> type, World worldIn) {
         super(type, worldIn);
+        this.setBaseDamage(4.0D);
+    }
+
+    public GoldenDartEntity(World worldIn) {
+        super(AetherEntityTypes.GOLDEN_DART.get(), worldIn);
         this.setBaseDamage(4.0D);
     }
 

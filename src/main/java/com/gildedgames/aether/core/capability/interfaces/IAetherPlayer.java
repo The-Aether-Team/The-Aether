@@ -38,6 +38,13 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 	void setJumping(boolean isJumping);
 	boolean isJumping();
 
+	void setGoldenDartCount(int count);
+	int getGoldenDartCount();
+	void setPoisonDartCount(int count);
+	int getPoisonDartCount();
+	void setEnchantedDartCount(int count);
+	int getEnchantedDartCount();
+
 	void setRemedyMaximum(int max);
 	int getRemedyMaximum();
 	void setRemedyTimer(int timer);

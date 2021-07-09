@@ -1,7 +1,12 @@
 package com.gildedgames.aether.common.event.listeners.abilities;
 
+import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
+import com.gildedgames.aether.common.entity.projectile.combat.EnchantedDartEntity;
+import com.gildedgames.aether.common.entity.projectile.combat.GoldenDartEntity;
+import com.gildedgames.aether.common.entity.projectile.combat.PoisonDartEntity;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -10,6 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
@@ -18,6 +24,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -93,6 +100,23 @@ public class WeaponAbilityListener
                     impactedEntity.setSecondsOnFire(phoenixArrow.getFireTime());
                 }
             });
+        }
+    }
+
+    @SubscribeEvent
+    public static void onDartHurt(LivingHurtEvent event) {
+        if (event.getEntityLiving() instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
+            if (!playerEntity.level.isClientSide) {
+                Entity source = event.getSource().getDirectEntity();
+                if (source instanceof GoldenDartEntity) {
+                    IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setGoldenDartCount(aetherPlayer.getGoldenDartCount() + 1));
+                } else if (source instanceof PoisonDartEntity || source instanceof PoisonNeedleEntity) {
+                    IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setPoisonDartCount(aetherPlayer.getPoisonDartCount() + 1));
+                } else if (source instanceof EnchantedDartEntity) {
+                    IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setEnchantedDartCount(aetherPlayer.getEnchantedDartCount() + 1));
+                }
+            }
         }
     }
 }

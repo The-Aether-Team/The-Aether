@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.entity.projectile.combat;
 
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherEffects;
 import net.minecraft.entity.EntityType;
@@ -12,6 +13,11 @@ public class PoisonDartEntity extends AbstractDartEntity
 {
     public PoisonDartEntity(EntityType<? extends PoisonDartEntity> type, World worldIn) {
         super(type, worldIn);
+        this.setBaseDamage(0.0D);
+    }
+
+    public PoisonDartEntity(World worldIn) {
+        super(AetherEntityTypes.POISON_DART.get(), worldIn);
         this.setBaseDamage(0.0D);
     }
 
