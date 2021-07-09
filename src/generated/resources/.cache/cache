@@ -1226,6 +1226,7 @@ bcc812fe8c9cd1c675cd91f170cad804bc8da32a data/aether/tags/items/holystone.json
 1af6021073f2b9d774a68d7c423d99ed110fda9f data/aether/tags/items/holystone_tools.json
 c294a7ed55dd3893da97c77889a570a9ade6abc8 data/aether/tags/items/locked_dungeon_blocks.json
 28b206363dd8ded37bb9a533a071e193dc3bed17 data/aether/tags/items/no_skyroot_double_drops.json
+9785a8eb61e2d850a739425c5448748621ff291d data/aether/tags/items/pig_drops.json
 3b4d3f5ecff7d9fdbfc474336bcaa4b680b87240 data/aether/tags/items/planks_crafting.json
 d84975c4861b70c3f92cfbad01916658bf6145c7 data/aether/tags/items/skyroot_logs.json
 ef1688d8839282e91b8aa07f3029cefcf02df64e data/aether/tags/items/skyroot_stick.json

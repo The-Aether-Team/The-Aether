@@ -91,6 +91,8 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherItems.BRONZE_DUNGEON_KEY.get())
                 .add(AetherItems.SILVER_DUNGEON_KEY.get())
                 .add(AetherItems.GOLD_DUNGEON_KEY.get());
+        tag(AetherTags.Items.PIG_DROPS)
+                .add(Items.PORKCHOP);
         tag(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS)
                 .addTag(AetherTags.Items.DUNGEON_KEYS)
                 .add(AetherItems.VICTORY_MEDAL.get())

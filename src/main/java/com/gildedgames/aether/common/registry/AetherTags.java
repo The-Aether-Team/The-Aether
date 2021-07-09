@@ -59,6 +59,7 @@ public class AetherTags
 		public static final ITag.INamedTag<Item> BANNED_IN_AETHER = tag("banned_in_aether");
 		public static final ITag.INamedTag<Item> DUNGEON_KEYS = tag("dungeon_keys");
 		public static final ITag.INamedTag<Item> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
+		public static final ITag.INamedTag<Item> PIG_DROPS = tag("pig_drops");
 		public static final ITag.INamedTag<Item> ACCEPTED_MUSIC_DISCS = tag("accepted_music_discs");
 		public static final ITag.INamedTag<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 
