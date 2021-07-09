@@ -22,7 +22,7 @@ public class FreezerContainer extends AbstractFurnaceContainer
 	}
 
 	@Override
-	public boolean isFuel(ItemStack stack) {
+	protected boolean isFuel(ItemStack stack) {
 		return FreezerTileEntity.getFreezingMap().containsKey(stack.getItem());
 	}
 }

@@ -22,7 +22,7 @@ public class AltarContainer extends AbstractFurnaceContainer
 	}
 
 	@Override
-	public boolean isFuel(ItemStack stack) {
+	protected boolean isFuel(ItemStack stack) {
 		return AltarTileEntity.getEnchantingMap().containsKey(stack.getItem());
 	}
 }

@@ -59,6 +59,7 @@ public class AltarTileEntity extends AbstractFurnaceTileEntity
 		enchantingMap.put(item, burnTimeIn);
 	}
 
+	@Override
 	public void burn(@Nullable IRecipe<?> p_214007_1_) {
 		if (p_214007_1_ != null && this.canBurn(p_214007_1_)) {
 			ItemStack itemstack = this.items.get(0);
@@ -97,8 +98,18 @@ public class AltarTileEntity extends AbstractFurnaceTileEntity
 	}
 
 	@Override
-	public void awardUsedRecipesAndPopExperience(PlayerEntity p_235645_1_) {
+	public boolean canPlaceItem(int p_94041_1_, ItemStack p_94041_2_) {
+		if (p_94041_1_ == 2) {
+			return false;
+		} else if (p_94041_1_ != 1) {
+			return true;
+		} else {
+			return this.getBurnDuration(p_94041_2_) > 0;
+		}
 	}
+
+	@Override
+	public void awardUsedRecipesAndPopExperience(PlayerEntity p_235645_1_) { }
 
 	@Override
 	public List<IRecipe<?>> getRecipesToAwardAndPopExperience(World p_235640_1_, Vector3d p_235640_2_) {
