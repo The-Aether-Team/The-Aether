@@ -389,7 +389,10 @@ public class AetherPortalBlock extends Block
 				BlockPos blockpos = this.bottomLeft.relative(this.rightDir, i);
 
 				for (int j = 0; j < this.height; ++j) {
-					this.world.setBlock(blockpos.above(j), AetherBlocks.AETHER_PORTAL.get().defaultBlockState().setValue(AetherPortalBlock.AXIS, this.axis), 18);
+					if (this.world instanceof World) {
+						World world = (World) this.world;
+						world.setBlockAndUpdate(blockpos.above(j), AetherBlocks.AETHER_PORTAL.get().defaultBlockState().setValue(AetherPortalBlock.AXIS, this.axis));
+					}
 				}
 			}
 
