@@ -130,10 +130,10 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
                         }
                     }
                 }
-                //this.floatEntities();
                 this.causeDamage(this.time / 10.0F);
             }
             this.setDeltaMovement(this.getDeltaMovement().scale(0.98D));
+            this.floatEntities();
         }
     }
 
@@ -144,18 +144,6 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
             }
         }
     }
-
-//    private void floatEntities() {
-//        List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox().expandTowards(0.0D, 1.0D, 0.0D)));
-//        for (Entity entity : list) {
-//            //entity.move(MoverType.SELF, this.getDeltaMovement());
-//            entity.setPosAndOldPos(entity.getX() + 0.5D, this.getY() + 1.5D, entity.getZ() + 0.5D);
-//            entity.setPos(entity.position().x(), entity.position().y(), entity.position().z());
-//            //entity.moveTo(entity.getX(), this.getY() + 1.0D, entity.getZ());
-//            entity.setOnGround(true);
-//            entity.fallDistance = 0.0F;
-//        }
-//    }
 
     private void causeDamage(float p_225503_1_) {
         if (this.hurtEntities) {
@@ -179,6 +167,23 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
                     }
                 }
             }
+        }
+    }
+
+    //issue seems to be that falling onto the floating block confuses the game, but if the block picks you up while still things go fine.
+    private void floatEntities() {
+        List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox().expandTowards(0.0D, 1.0D, 0.0D)));
+        for (Entity entity : list) {
+
+            Vector3d motion = entity.getDeltaMovement();
+            entity.setDeltaMovement(motion.x(), -0.0784, motion.z());
+            entity.noPhysics = true;
+            entity.fallDistance = 0.0F;
+            entity.setOnGround(true);
+            entity.setPos(entity.getX(), this.getY() + this.getBoundingBox().getYsize(), entity.getZ());
+            Aether.LOGGER.info("this " + this.getDeltaMovement());
+            Aether.LOGGER.info("entity " + entity.getDeltaMovement());
+            //this.setDeltaMovement(Vector3d.ZERO);
         }
     }
 

@@ -76,14 +76,12 @@ public class AetherEntityTypes
 
 	public static final EntityType<FloatingBlockEntity> FLOATING_BLOCK_TYPE = EntityType.Builder.<FloatingBlockEntity>of(FloatingBlockEntity::new, EntityClassification.MISC).sized(0.98F, 0.98F).build("floating_block");
 	public static final RegistryObject<EntityType<FloatingBlockEntity>> FLOATING_BLOCK = ENTITIES.register("floating_block", () -> FLOATING_BLOCK_TYPE);
-	//.setCustomClientFactory((spawnEntity, world) -> new FloatingBlockEntity(world))
 
 	public static final EntityType<TNTPresentEntity> TNT_PRESENT_TYPE = EntityType.Builder.<TNTPresentEntity>of(TNTPresentEntity::new, EntityClassification.MISC).sized(0.98F, 0.98F).build("tnt_present");
 	public static final RegistryObject<EntityType<TNTPresentEntity>> TNT_PRESENT = ENTITIES.register("tnt_present", () -> TNT_PRESENT_TYPE);
 
 	public static final EntityType<LightningKnifeEntity> LIGHTNING_KNIFE_TYPE = EntityType.Builder.<LightningKnifeEntity>of(LightningKnifeEntity::new, EntityClassification.MISC).sized(0.25F, 0.25F).build("lightning_knife");
 	public static final RegistryObject<EntityType<LightningKnifeEntity>> LIGHTNING_KNIFE = ENTITIES.register("lightning_knife", () -> LIGHTNING_KNIFE_TYPE);
-	//.setCustomClientFactory((spawnEntity, world) -> new LightningKnifeEntity(world)
 
 	public static final EntityType<ZephyrSnowballEntity> ZEPHYR_SNOWBALL_TYPE = EntityType.Builder.<ZephyrSnowballEntity>of(ZephyrSnowballEntity::new, EntityClassification.MISC).sized(1.0F, 1.0F).build("zephyr_snowball");
 	public static final RegistryObject<EntityType<ZephyrSnowballEntity>> ZEPHYR_SNOWBALL = ENTITIES.register("zephyr_snowball", () -> ZEPHYR_SNOWBALL_TYPE);
