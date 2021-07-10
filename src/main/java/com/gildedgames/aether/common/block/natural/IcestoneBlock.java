@@ -20,13 +20,13 @@ public class IcestoneBlock extends Block implements IIcestoneBlock
 	@Override
 	public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
 		super.onPlace(state, worldIn, pos, oldState, isMoving);
-		worldIn.getBlockTicks().scheduleTick(pos, this, 10);
+		worldIn.getBlockTicks().scheduleTick(pos, this, 5);
 	}
 
 	@Override
 	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
 		super.tick(state, worldIn, pos, random);
 		freezeFluids(worldIn, pos);
-		worldIn.getBlockTicks().scheduleTick(pos, this, 10);
+		worldIn.getBlockTicks().scheduleTick(pos, this, 5);
 	}
 }

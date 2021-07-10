@@ -7,6 +7,8 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -109,6 +111,27 @@ public abstract class AbstractParachuteEntity extends Entity
     public Entity getControllingPassenger() {
         List<Entity> list = this.getPassengers();
         return list.isEmpty() ? null : list.get(0);
+    }
+
+	@Override
+	public boolean isAttackable() {
+		return false;
+	}
+
+    @Override
+    protected boolean isMovementNoisy() {
+        return false;
+    }
+
+    @Override
+    public boolean isPickable() {
+        return !this.removed;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public boolean displayFireAnimation() {
+        return false;
     }
 
     @Override

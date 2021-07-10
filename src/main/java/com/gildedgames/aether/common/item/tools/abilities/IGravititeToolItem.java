@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -26,7 +27,10 @@ public interface IGravititeToolItem
 				if (world.getBlockEntity(pos) == null && state.getDestroySpeed(world, pos) != -1.0F) {
 					if (!world.isClientSide) {
 						FloatingBlockEntity entity = new FloatingBlockEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, state);
-						entity.floatTime = 0;
+						if (world.getBlockState(pos).is(BlockTags.ANVIL)) {
+							entity.setHurtsEntities(true);
+						}
+						world.removeBlock(pos, false);
 						world.addFreshEntity(entity);
 						heldItem.hurtAndBreak(4, player, (p) -> p.broadcastBreakEvent(hand));
 					}
