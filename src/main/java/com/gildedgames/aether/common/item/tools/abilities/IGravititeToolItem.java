@@ -26,7 +26,7 @@ public interface IGravititeToolItem
 			if ((destroySpeed == efficiency || ForgeHooks.isToolEffective(world, pos, heldItem)) && world.isEmptyBlock(pos.above())) {
 				if (world.getBlockEntity(pos) == null && state.getDestroySpeed(world, pos) != -1.0F) {
 					if (!world.isClientSide) {
-						FloatingBlockEntity entity = new FloatingBlockEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, state);
+						FloatingBlockEntity entity = new FloatingBlockEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, state);
 						if (world.getBlockState(pos).is(BlockTags.ANVIL)) {
 							entity.setHurtsEntities(true);
 						}

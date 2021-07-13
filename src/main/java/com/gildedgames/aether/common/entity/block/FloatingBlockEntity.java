@@ -1,19 +1,26 @@
 package com.gildedgames.aether.common.entity.block;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.util.FloatingBlock;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.SetPositionPacket;
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.*;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.monster.ShulkerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.DirectionalPlaceContext;
 import net.minecraft.item.ItemStack;
@@ -30,11 +37,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
@@ -50,6 +53,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
     public int time;
     private boolean cancelDrop;
     private boolean hurtEntities;
+    private List<Entity> collidedEntityList = new ArrayList<>();
     protected static final DataParameter<BlockPos> DATA_START_POS = EntityDataManager.defineId(FloatingBlockEntity.class, DataSerializers.BLOCK_POS);
 
     public FloatingBlockEntity(EntityType<? extends FloatingBlockEntity> entityType, World world) {
@@ -60,7 +64,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
         this(AetherEntityTypes.FLOATING_BLOCK.get(), world);
         this.blockState = blockState;
         this.blocksBuilding = true;
-        this.setPos(x, y + (double)((1.0F - this.getBbHeight()) / 2.0F), z);
+        this.setPos(x, y, z);
         this.setDeltaMovement(Vector3d.ZERO);
         this.xo = x;
         this.yo = y;
@@ -80,10 +84,25 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
         } else {
             this.time++;
             Block block = this.blockState.getBlock();
+            this.collidedEntityList.clear();
+            List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox()));
+            this.collidedEntityList.addAll(list);
             if (!this.isNoGravity()) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.04D, 0.0D));
+//                for (Entity entity : this.collidedEntityList) {
+//                    //entity.setDeltaMovement(entity.getDeltaMovement().x(), 0.0D, entity.getDeltaMovement().z());
+//                    entity.setDeltaMovement(entity.getDeltaMovement().x(), this.getDeltaMovement().y(), entity.getDeltaMovement().z());
+//                    entity.setDeltaMovement(entity.getDeltaMovement().add(0.0D, 0.04D, 0.0D));
+//                    entity.setOnGround(true);
+//                    entity.fallDistance = 0.0F;
+//                    Aether.LOGGER.info("block: " + this.getDeltaMovement());
+//                    Aether.LOGGER.info("entity: " + entity.getDeltaMovement());
+//                }
             }
             this.move(MoverType.SELF, this.getDeltaMovement());
+//            for (Entity entity : this.collidedEntityList) {
+//                entity.move(MoverType.SELF, entity.getDeltaMovement());
+//            }
             if (!this.level.isClientSide) {
                 BlockPos blockPos = this.blockPosition();
                 boolean isConcrete = this.blockState.getBlock() instanceof ConcretePowderBlock;
@@ -106,6 +125,9 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
                 } else {
                     BlockState blockstate = this.level.getBlockState(blockPos);
                     this.setDeltaMovement(this.getDeltaMovement().multiply(0.7D, 1.5D, 0.7D));
+//                    for (Entity entity : this.collidedEntityList) {
+//                        entity.setDeltaMovement(entity.getDeltaMovement().multiply(0.7D, 1.5D, 0.7D));
+//                    }
                     if (!blockstate.is(Blocks.MOVING_PISTON)) {
                         this.remove();
                         if (!this.cancelDrop) {
@@ -133,6 +155,9 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
                 this.causeDamage(this.time / 10.0F);
             }
             this.setDeltaMovement(this.getDeltaMovement().scale(0.98D));
+//            for (Entity entity : this.collidedEntityList) {
+//                entity.setDeltaMovement(entity.getDeltaMovement().scale(0.98D));
+//            }
             this.floatEntities();
         }
     }
@@ -169,22 +194,53 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
             }
         }
     }
+//
+//    @Override
+//    public boolean canBeCollidedWith() {
+//        return true;
+//    }
 
     //issue seems to be that falling onto the floating block confuses the game, but if the block picks you up while still things go fine.
     private void floatEntities() {
         List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox().expandTowards(0.0D, 1.0D, 0.0D)));
         for (Entity entity : list) {
-
-            Vector3d motion = entity.getDeltaMovement();
-            entity.setDeltaMovement(motion.x(), -0.0784, motion.z());
-            entity.noPhysics = true;
-            entity.fallDistance = 0.0F;
-            entity.setOnGround(true);
-            entity.setPos(entity.getX(), this.getY() + this.getBoundingBox().getYsize(), entity.getZ());
-            Aether.LOGGER.info("this " + this.getDeltaMovement());
-            Aether.LOGGER.info("entity " + entity.getDeltaMovement());
+            //entity.noPhysics = true;
+            //entity.fallDistance = 0.0F;
+            //entity.setOnGround(true);
+            if (this.level.isClientSide) {
+                Vector3d entityMotion = entity.getDeltaMovement();
+                Vector3d blockMotion = this.getDeltaMovement();
+                entity.setDeltaMovement(entityMotion.x(), blockMotion.y(), entityMotion.z());
+                //entity.move(MoverType.SHULKER, entity.getDeltaMovement());
+            }
+            //this.checkAndResetUpdateChunkPos();
+            //entity.checkAndResetUpdateChunkPos();
+            //entity.move(MoverType.PLAYER, entity.getDeltaMovement());
+            //entity.setPos(entity.getX(), this.getY() + this.getBoundingBox().getYsize(), entity.getZ());
+            //Aether.LOGGER.info("block " + this.getDeltaMovement());
             //this.setDeltaMovement(Vector3d.ZERO);
         }
+
+//
+//        List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox().expandTowards(0.0D, 1.0D, 0.0D)));
+//        for (Entity entity : list) {
+
+
+
+//            Vector3d motion = entity.getDeltaMovement();
+//            //entity.setDeltaMovement(Vector3d.ZERO);
+//            //entity.setDeltaMovement(motion.x(), 0.0001, motion.z());
+//            entity.setPos(entity.getX(), this.getY() + this.getBoundingBox().getYsize(), entity.getZ());
+//            entity.setDeltaMovement(motion.x(), -0.0784, motion.z());
+//            //entity.verticalCollision = false;
+//            //entity.noPhysics = true;
+//            //entity.move(MoverType.SHULKER, new Vector3d());
+//            entity.fallDistance = 0.0F;
+//            entity.setOnGround(true);
+//            //Aether.LOGGER.info("this " + this.getDeltaMovement());
+//            //Aether.LOGGER.info("entity " + entity.getDeltaMovement());
+//            //this.setDeltaMovement(Vector3d.ZERO);
+//        }
     }
 
     public BlockState getBlockState() {

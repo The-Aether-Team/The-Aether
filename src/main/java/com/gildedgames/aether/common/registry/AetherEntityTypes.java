@@ -74,7 +74,7 @@ public class AetherEntityTypes
 	public static final EntityType<GoldenParachuteEntity> GOLDEN_PARACHUTE_TYPE = EntityType.Builder.of(GoldenParachuteEntity::new, EntityClassification.MISC).sized(0.98F, 0.98F).build("golden_parachute");
 	public static final RegistryObject<EntityType<GoldenParachuteEntity>> GOLDEN_PARACHUTE = ENTITIES.register("golden_parachute", () -> GOLDEN_PARACHUTE_TYPE);
 
-	public static final EntityType<FloatingBlockEntity> FLOATING_BLOCK_TYPE = EntityType.Builder.<FloatingBlockEntity>of(FloatingBlockEntity::new, EntityClassification.MISC).sized(0.98F, 0.98F).build("floating_block");
+	public static final EntityType<FloatingBlockEntity> FLOATING_BLOCK_TYPE = EntityType.Builder.<FloatingBlockEntity>of(FloatingBlockEntity::new, EntityClassification.MISC).sized(1.0F, 1.0F).updateInterval(1).build("floating_block");
 	public static final RegistryObject<EntityType<FloatingBlockEntity>> FLOATING_BLOCK = ENTITIES.register("floating_block", () -> FLOATING_BLOCK_TYPE);
 
 	public static final EntityType<TNTPresentEntity> TNT_PRESENT_TYPE = EntityType.Builder.<TNTPresentEntity>of(TNTPresentEntity::new, EntityClassification.MISC).sized(0.98F, 0.98F).build("tnt_present");
