@@ -4,6 +4,8 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.block.miscellaneous.AetherPortalBlock;
 import com.gildedgames.aether.common.registry.AetherPOI;
 import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.PortalTravelSoundPacket;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -215,7 +217,11 @@ public class AetherTeleporter implements ITeleporter
         }
     }
 
+    @Override
     public boolean playTeleportSound(ServerPlayerEntity player, ServerWorld sourceWorld, ServerWorld destWorld) {
-        return this.hasFrame;
+        if (this.hasFrame) {
+            AetherPacketHandler.sendToPlayer(new PortalTravelSoundPacket(), player);
+        }
+        return false;
     }
 }

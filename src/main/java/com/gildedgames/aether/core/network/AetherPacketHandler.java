@@ -32,6 +32,7 @@ public class AetherPacketHandler
 		register(InebriationParticlePacket.class, InebriationParticlePacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PhoenixParticlePacket.class, PhoenixParticlePacket::decode);
+		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(SetLifeShardPacket.class, SetLifeShardPacket::decode);
 		register(SetProjectileImpactedPacket.class, SetProjectileImpactedPacket::decode);
 		register(SetRemedyPacket.class, SetRemedyPacket::decode);
@@ -43,13 +44,11 @@ public class AetherPacketHandler
 		register(JumpPacket.class, JumpPacket::decode);
 	}
 
-	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<PacketBuffer, MSG> decoder)
-	{
+	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<PacketBuffer, MSG> decoder) {
 		INSTANCE.messageBuilder(packet, index++).encoder(AetherPacket::encode).decoder(decoder).consumer(AetherPacket::handle).add();
 	}
 
-	public static <MSG> void sendToPlayer(MSG message, ServerPlayerEntity player)
-	{
+	public static <MSG> void sendToPlayer(MSG message, ServerPlayerEntity player) {
 		INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
 	}
 
