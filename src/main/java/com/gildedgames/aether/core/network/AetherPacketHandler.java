@@ -33,7 +33,6 @@ public class AetherPacketHandler
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PhoenixParticlePacket.class, PhoenixParticlePacket::decode);
 		register(SetLifeShardPacket.class, SetLifeShardPacket::decode);
-		register(SetPositionPacket.class, SetPositionPacket::decode);
 		register(SetProjectileImpactedPacket.class, SetProjectileImpactedPacket::decode);
 		register(SetRemedyPacket.class, SetRemedyPacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);

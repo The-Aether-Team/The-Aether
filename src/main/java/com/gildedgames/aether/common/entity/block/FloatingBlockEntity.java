@@ -7,21 +7,14 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.util.FloatingBlock;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.client.SetPositionPacket;
 import com.google.common.collect.Lists;
 
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.*;
-import net.minecraft.block.material.PushReaction;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.ShulkerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.DirectionalPlaceContext;
 import net.minecraft.item.ItemStack;
@@ -54,7 +47,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
     public int time;
     private boolean cancelDrop;
     private boolean hurtEntities;
-    private List<Entity> carriedEntityList = new ArrayList<>();
+    private final List<Entity> carriedEntityList = new ArrayList<>();
     protected static final DataParameter<BlockPos> DATA_START_POS = EntityDataManager.defineId(FloatingBlockEntity.class, DataSerializers.BLOCK_POS);
 
     public FloatingBlockEntity(EntityType<? extends FloatingBlockEntity> entityType, World world) {
@@ -81,32 +74,21 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
     @Override
     public void tick() {
         if (this.blockState.isAir()) {
+            resetEntities();
             this.remove();
         } else {
             this.time++;
             Block block = this.blockState.getBlock();
-            this.getCarriedEntityList().clear();
-            List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox()));
+            this.resetEntities();
+            List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox().expandTowards(0.0D, 0.5D, 0.0D)));
             this.getCarriedEntityList().addAll(list);
-            this.resetCarriedEntityMovement();
             if (!this.isNoGravity()) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.04D, 0.0D));
-                this.addCarriedEntityMovement(new Vector3d(0.0D, 0.04D, 0.0D));
-//                for (Entity entity : this.collidedEntityList) {
-//                    //entity.setDeltaMovement(entity.getDeltaMovement().x(), 0.0D, entity.getDeltaMovement().z());
-//                    entity.setDeltaMovement(entity.getDeltaMovement().x(), this.getDeltaMovement().y(), entity.getDeltaMovement().z());
-//                    entity.setDeltaMovement(entity.getDeltaMovement().add(0.0D, 0.04D, 0.0D));
-//                    entity.setOnGround(true);
-//                    entity.fallDistance = 0.0F;
-//                    Aether.LOGGER.info("block: " + this.getDeltaMovement());
-//                    Aether.LOGGER.info("entity: " + entity.getDeltaMovement());
-//                }
             }
             this.move(MoverType.SELF, this.getDeltaMovement());
             for (Entity entity : this.getCarriedEntityList()) {
                 entity.move(MoverType.SELF, entity.getDeltaMovement());
             }
-            //
             if (!this.level.isClientSide) {
                 BlockPos blockPos = this.blockPosition();
                 boolean isConcrete = this.blockState.getBlock() instanceof ConcretePowderBlock;
@@ -124,16 +106,14 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
                         if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                             this.dropItem();
                         }
+                        resetEntities();
                         this.remove();
                     }
                 } else {
                     BlockState blockstate = this.level.getBlockState(blockPos);
                     this.setDeltaMovement(this.getDeltaMovement().multiply(0.7D, 1.5D, 0.7D));
-                    this.multiplyCarriedEntityMovement(new Vector3d(0.7D, 1.5D, 0.7D));
-//                    for (Entity entity : this.collidedEntityList) {
-//                        entity.setDeltaMovement(entity.getDeltaMovement().multiply(0.7D, 1.5D, 0.7D));
-//                    }
                     if (!blockstate.is(Blocks.MOVING_PISTON)) {
+                        resetEntities();
                         this.remove();
                         if (!this.cancelDrop) {
                             boolean canBeReplaced = blockstate.canBeReplaced(new DirectionalPlaceContext(this.level, blockPos, Direction.UP, ItemStack.EMPTY, Direction.DOWN));
@@ -160,11 +140,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
                 this.causeDamage(this.time / 10.0F);
             }
             this.setDeltaMovement(this.getDeltaMovement().scale(0.98D));
-            this.scaleCarriedEntityMovement(0.98D);
-//            for (Entity entity : this.collidedEntityList) {
-//                entity.setDeltaMovement(entity.getDeltaMovement().scale(0.98D));
-//            }
-            //this.floatEntities();
+            this.floatEntities();
         }
     }
 
@@ -205,86 +181,21 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
         return this.carriedEntityList;
     }
 
-    private void resetCarriedEntityMovement() {
+    private void resetEntities() {
         for (Entity entity : this.getCarriedEntityList()) {
-            Vector3d blockMovement = this.getDeltaMovement();
-            Vector3d entityMovement = entity.getDeltaMovement();
-            entity.setNoGravity(true);
-            entity.setDeltaMovement(entityMovement.x(), blockMovement.y(), entityMovement.z());
+            entity.setNoGravity(false);
         }
+        this.getCarriedEntityList().clear();
     }
 
-    private void addCarriedEntityMovement(Vector3d addVector) {
-        for (Entity entity : this.getCarriedEntityList()) {
-            Vector3d entityMovement = entity.getDeltaMovement();
-            entity.setDeltaMovement(entityMovement.add(addVector));
-        }
-    }
-
-    private void multiplyCarriedEntityMovement(Vector3d multiplyVector) {
-        for (Entity entity : this.getCarriedEntityList()) {
-            Vector3d entityMovement = entity.getDeltaMovement();
-            entity.setDeltaMovement(entityMovement.multiply(multiplyVector));
-        }
-    }
-
-    private void scaleCarriedEntityMovement(double scaleFactor) {
-        for (Entity entity : this.getCarriedEntityList()) {
-            Vector3d entityMovement = entity.getDeltaMovement();
-            entity.setDeltaMovement(entityMovement.scale(scaleFactor));
-        }
-    }
-
-//
-//    @Override
-//    public boolean canBeCollidedWith() {
-//        return true;
-//    }
-
-    //issue seems to be that falling onto the floating block confuses the game, but if the block picks you up while still things go fine.
     private void floatEntities() {
-       // List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox().expandTowards(0.0D, 1.0D, 0.0D)));
-        for (Entity entity : this.carriedEntityList) {
-            //entity.noPhysics = true;
-            //entity.fallDistance = 0.0F;
-            //entity.setOnGround(true);
-            //entity.noPhysics = true;
-            //entity.setNoGravity(true);
-            if (this.level.isClientSide) {
-                Vector3d entityMotion = entity.getDeltaMovement();
-                Vector3d blockMotion = this.getDeltaMovement();
-                entity.setDeltaMovement(entityMotion.x(), blockMotion.y(), entityMotion.z());
-                //entity.setPos(entity.getX(), this.getY() + this.getBoundingBox().getYsize(), entity.getZ());
-                //entity.move(MoverType.SHULKER, entity.getDeltaMovement());
-            }
-            //this.checkAndResetUpdateChunkPos();
-            //entity.checkAndResetUpdateChunkPos();
-            //entity.move(MoverType.PLAYER, entity.getDeltaMovement());
-            //entity.setPos(entity.getX(), this.getY() + this.getBoundingBox().getYsize(), entity.getZ());
-            //Aether.LOGGER.info("block " + this.getDeltaMovement());
-            //this.setDeltaMovement(Vector3d.ZERO);
+        for (Entity entity : this.getCarriedEntityList()) {
+            entity.setOnGround(true);
+            entity.fallDistance = 0.0F;
+            entity.noPhysics = true;
+            entity.setNoGravity(true);
+            entity.setPos(entity.getX(), this.getY() + 1.0D, entity.getZ());
         }
-
-//
-//        List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox().expandTowards(0.0D, 1.0D, 0.0D)));
-//        for (Entity entity : list) {
-
-
-
-//            Vector3d motion = entity.getDeltaMovement();
-//            //entity.setDeltaMovement(Vector3d.ZERO);
-//            //entity.setDeltaMovement(motion.x(), 0.0001, motion.z());
-//            entity.setPos(entity.getX(), this.getY() + this.getBoundingBox().getYsize(), entity.getZ());
-//            entity.setDeltaMovement(motion.x(), -0.0784, motion.z());
-//            //entity.verticalCollision = false;
-//            //entity.noPhysics = true;
-//            //entity.move(MoverType.SHULKER, new Vector3d());
-//            entity.fallDistance = 0.0F;
-//            entity.setOnGround(true);
-//            //Aether.LOGGER.info("this " + this.getDeltaMovement());
-//            //Aether.LOGGER.info("entity " + entity.getDeltaMovement());
-//            //this.setDeltaMovement(Vector3d.ZERO);
-//        }
     }
 
     public BlockState getBlockState() {

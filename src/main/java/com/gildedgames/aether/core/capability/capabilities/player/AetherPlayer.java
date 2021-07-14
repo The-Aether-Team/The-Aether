@@ -1,7 +1,5 @@
 package com.gildedgames.aether.core.capability.capabilities.player;
 
-import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.ColdParachuteEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.GoldenParachuteEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
@@ -14,12 +12,9 @@ import com.gildedgames.aether.core.network.packet.client.DartCountPacket;
 import com.gildedgames.aether.core.network.packet.client.SetLifeShardPacket;
 import com.gildedgames.aether.core.network.packet.client.SetProjectileImpactedPacket;
 import com.gildedgames.aether.core.network.packet.client.SetRemedyPacket;
-import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.MoverType;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
@@ -35,7 +30,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.List;
 import java.util.UUID;
 
 public class AetherPlayer implements IAetherPlayer
@@ -162,16 +156,6 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public void onUpdate() {
-		List<Entity> list = Lists.newArrayList(this.getPlayer().level.getEntities(this.getPlayer(), this.getPlayer().getBoundingBox().expandTowards(0.0D, -1.0D, 0.0D)));
-		if (list.isEmpty()) {
-			this.getPlayer().setNoGravity(false);
-		}
-		//this.getPlayer().noPhysics = true;
-//		if (this.getPlayer().level.isClientSide) {
-//			Aether.LOGGER.info("entity " + this.getPlayer().getDeltaMovement());
-//		}
-		//Aether.LOGGER.info(this.getPlayer().isNoGravity());
-
 		handleAetherPortal();
 		activateParachute();
 		handleRemoveDarts();
