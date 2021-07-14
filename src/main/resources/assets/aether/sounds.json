@@ -8,6 +8,12 @@
       }
     ]
   },
+  "block.aether_portal.travel": {
+    "sounds": ["minecraft:portal/travel"]
+  },
+  "block.aether_portal.trigger": {
+    "sounds": ["minecraft:portal/trigger"]
+  },
   "block.dungeon_trap.trigger": {
     "subtitle": "subtitles.block.dungeon_trap.trigger",
     "sounds": [
