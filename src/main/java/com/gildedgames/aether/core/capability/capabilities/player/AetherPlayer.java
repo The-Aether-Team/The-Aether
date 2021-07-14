@@ -170,6 +170,7 @@ public class AetherPlayer implements IAetherPlayer
 //		if (this.getPlayer().level.isClientSide) {
 //			Aether.LOGGER.info("entity " + this.getPlayer().getDeltaMovement());
 //		}
+		//Aether.LOGGER.info(this.getPlayer().isNoGravity());
 
 		handleAetherPortal();
 		activateParachute();
