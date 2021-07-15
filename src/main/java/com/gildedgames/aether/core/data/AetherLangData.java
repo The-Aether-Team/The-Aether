@@ -477,6 +477,10 @@ public class AetherLangData extends LanguageProvider
         addLoreBookText("item", "Item:");
 
 
+        addGuiText("ascending", "Ascending to the Aether");
+        addGuiText("descending", "Descending from the Aether");
+
+
         addMessage("hammer_of_notch_cooldown", "Cooldown");
 
 

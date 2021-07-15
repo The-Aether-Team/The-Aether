@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.renderer.dimension;
+package com.gildedgames.aether.client.world;
 
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.client.world.DimensionRenderInfo;

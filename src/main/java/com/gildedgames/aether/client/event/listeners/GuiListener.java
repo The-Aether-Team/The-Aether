@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public class OpenGuiListener
+public class GuiListener
 {
 	@SubscribeEvent
 	public static void onGuiInitialize(GuiScreenEvent.InitGuiEvent.Post event) {

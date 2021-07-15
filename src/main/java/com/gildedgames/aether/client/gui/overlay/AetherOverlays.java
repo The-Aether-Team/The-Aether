@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.renderer.overlay;
+package com.gildedgames.aether.client.gui.overlay;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEffects;

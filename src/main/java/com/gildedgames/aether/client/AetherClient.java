@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.client.renderer.accessory.layer.RepulsionShieldLayer;
-import com.gildedgames.aether.client.renderer.dimension.AetherSkyRenderInfo;
+import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
 import com.gildedgames.aether.client.renderer.player.layer.EnchantedDartLayer;
 import com.gildedgames.aether.client.renderer.player.layer.GoldenDartLayer;
 import com.gildedgames.aether.client.renderer.player.layer.PoisonDartLayer;

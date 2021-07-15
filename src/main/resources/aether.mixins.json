@@ -15,9 +15,11 @@
   "client": [
     "client.AdvancementToastMixin",
     "client.ClientRecipeBookMixin",
+    "client.DownloadTerrainScreenMixin",
     "client.ElytraLayerMixin",
     "client.MinecraftMixin",
     "client.TippedArrowRendererMixin",
+    "client.WorkingScreenMixin",
     "client.WorldRendererMixin"
   ],
   "injectors": {

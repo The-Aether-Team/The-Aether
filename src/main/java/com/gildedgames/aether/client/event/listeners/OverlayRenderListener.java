@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.event.listeners;
 
-import com.gildedgames.aether.client.renderer.overlay.AetherOverlays;
+import com.gildedgames.aether.client.gui.overlay.AetherOverlays;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
