@@ -7,6 +7,7 @@ import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.AetherConfig;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.SetVehiclePacket;
 import com.gildedgames.aether.core.network.packet.client.SmokeParticlePacket;
@@ -144,16 +145,23 @@ public class DimensionListener
                 List<Entity> passengers = entity.getPassengers();
                 entity.level.getProfiler().push("aether_fall");
                 entity.setPortalCooldown();
+                if (entity instanceof PlayerEntity) {
+                    IAetherPlayer.get((PlayerEntity) entity).ifPresent(aetherPlayer -> {
+                        if (!entity.level.isClientSide) {
+                            aetherPlayer.setLeavingAether(true);
+                        }
+                    });
+                }
                 Entity target = entity.changeDimension(destination, new AetherTeleporter(destination, false));
                 entity.level.getProfiler().pop();
                 // Check for passengers
-                if(target != null) {
+                if (target != null) {
                     for (Entity passenger : passengers) {
                         passenger.stopRiding();
                         Entity nextPassenger = fallFromAether(passenger);
-                        if(nextPassenger != null) {
+                        if (nextPassenger != null) {
                             nextPassenger.startRiding(target);
-                            if(target instanceof ServerPlayerEntity) { // Fixes a desync between the server and client
+                            if (target instanceof ServerPlayerEntity) { // Fixes a desync between the server and client
                                 AetherPacketHandler.sendToPlayer(new SetVehiclePacket(nextPassenger.getId(), target.getId()), (ServerPlayerEntity) target);
                             }
                         }

@@ -25,9 +25,8 @@ public class DownloadTerrainScreenMixin
             if (dimension == AetherDimensions.AETHER_WORLD) {
                 Screen.drawCenteredString(p_230430_1_, screen.getMinecraft().font, new TranslationTextComponent("gui.aether.ascending"), screen.width / 2, screen.height / 2 + 50, 16777215);
             } else {
-                //TODO: I sure hope this check works since I can't test it on my end.
                 IAetherPlayer.get(Minecraft.getInstance().player).ifPresent(aetherPlayer -> {
-                    if (aetherPlayer.isInPortal()) {
+                    if (aetherPlayer.getLeavingAether() || aetherPlayer.isInPortal()) {
                         Screen.drawCenteredString(p_230430_1_, screen.getMinecraft().font, new TranslationTextComponent("gui.aether.descending"), screen.width / 2, screen.height / 2 + 50, 16777215);
                     }
                 });

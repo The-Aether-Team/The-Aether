@@ -19,8 +19,8 @@ public class SetVehiclePacket extends AetherPacket
 
     @Override
     public void encode(PacketBuffer buf) {
-        buf.writeVarInt(passengerID);
-        buf.writeVarInt(vehicleID);
+        buf.writeVarInt(this.passengerID);
+        buf.writeVarInt(this.vehicleID);
     }
 
     public static SetVehiclePacket decode(PacketBuffer buf) {
@@ -31,8 +31,8 @@ public class SetVehiclePacket extends AetherPacket
     public void execute(PlayerEntity player) {
         ClientPlayerEntity clientPlayer = Minecraft.getInstance().player;
         if(clientPlayer != null && clientPlayer.level != null) {
-            Entity passenger = clientPlayer.level.getEntity(passengerID);
-            Entity vehicle = clientPlayer.level.getEntity(vehicleID);
+            Entity passenger = clientPlayer.level.getEntity(this.passengerID);
+            Entity vehicle = clientPlayer.level.getEntity(this.vehicleID);
             if (passenger != null && vehicle != null)
                 passenger.startRiding(vehicle);
         }

@@ -9,10 +9,7 @@ import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.client.DartCountPacket;
-import com.gildedgames.aether.core.network.packet.client.SetLifeShardPacket;
-import com.gildedgames.aether.core.network.packet.client.SetProjectileImpactedPacket;
-import com.gildedgames.aether.core.network.packet.client.SetRemedyPacket;
+import com.gildedgames.aether.core.network.packet.client.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -44,6 +41,8 @@ public class AetherPlayer implements IAetherPlayer
 	public int aetherPortalTimer = 0;
 	public float prevPortalAnimTime, portalAnimTime = 0.0F;
 
+	private boolean leavingAether;
+
 	private boolean isJumping;
 
 	private int goldenDartCount = 0;
@@ -52,7 +51,6 @@ public class AetherPlayer implements IAetherPlayer
 	private int removeGoldenDartTime;
 	private int removePoisonDartTime;
 	private int removeEnchantedDartTime;
-
 
 	private int remedyMaximum = 0;
 	private int remedyTimer = 0;
@@ -151,11 +149,15 @@ public class AetherPlayer implements IAetherPlayer
 			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.getRemedyMaximum(), this.getRemedyTimer()), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.getProjectileImpactedMaximum(), this.getProjectileImpactedTimer()), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), this.getLifeShardCount()), (ServerPlayerEntity) this.getPlayer());
+			AetherPacketHandler.sendToPlayer(new SetLeavingAetherPacket(this.getPlayer().getId(), this.getLeavingAether()), (ServerPlayerEntity) this.getPlayer());
 		}
 	}
 
 	@Override
 	public void onUpdate() {
+		if (this.getPlayer().level.dimension() == World.OVERWORLD && this.getPlayer().isOnGround() && !this.isInPortal()) {
+			this.setLeavingAether(false);
+		}
 		handleAetherPortal();
 		activateParachute();
 		handleRemoveDarts();
@@ -385,6 +387,16 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public float getPrevPortalAnimTime() {
 		return this.prevPortalAnimTime;
+	}
+
+	@Override
+	public void setLeavingAether(boolean bool) {
+		this.leavingAether = bool;
+	}
+
+	@Override
+	public boolean getLeavingAether() {
+		return this.leavingAether;
 	}
 
 	@Override
