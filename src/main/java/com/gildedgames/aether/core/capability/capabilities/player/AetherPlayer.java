@@ -41,8 +41,6 @@ public class AetherPlayer implements IAetherPlayer
 	public int aetherPortalTimer = 0;
 	public float prevPortalAnimTime, portalAnimTime = 0.0F;
 
-	private boolean leavingAether;
-
 	private boolean isJumping;
 
 	private int goldenDartCount = 0;
@@ -149,15 +147,11 @@ public class AetherPlayer implements IAetherPlayer
 			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.getRemedyMaximum(), this.getRemedyTimer()), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.getProjectileImpactedMaximum(), this.getProjectileImpactedTimer()), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), this.getLifeShardCount()), (ServerPlayerEntity) this.getPlayer());
-			AetherPacketHandler.sendToPlayer(new SetLeavingAetherPacket(this.getPlayer().getId(), this.getLeavingAether()), (ServerPlayerEntity) this.getPlayer());
 		}
 	}
 
 	@Override
 	public void onUpdate() {
-		if (this.getPlayer().level.dimension() == World.OVERWORLD && this.getPlayer().isOnGround() && !this.isInPortal()) {
-			this.setLeavingAether(false);
-		}
 		handleAetherPortal();
 		activateParachute();
 		handleRemoveDarts();
@@ -387,16 +381,6 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public float getPrevPortalAnimTime() {
 		return this.prevPortalAnimTime;
-	}
-
-	@Override
-	public void setLeavingAether(boolean bool) {
-		this.leavingAether = bool;
-	}
-
-	@Override
-	public boolean getLeavingAether() {
-		return this.leavingAether;
 	}
 
 	@Override

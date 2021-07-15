@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.mixin.client;
 
+import com.gildedgames.aether.common.event.listeners.DimensionListener;
 import com.gildedgames.aether.common.registry.AetherDimensions;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.DownloadTerrainScreen;
@@ -25,11 +25,9 @@ public class DownloadTerrainScreenMixin
             if (dimension == AetherDimensions.AETHER_WORLD) {
                 Screen.drawCenteredString(p_230430_1_, screen.getMinecraft().font, new TranslationTextComponent("gui.aether.ascending"), screen.width / 2, screen.height / 2 + 50, 16777215);
             } else {
-                IAetherPlayer.get(Minecraft.getInstance().player).ifPresent(aetherPlayer -> {
-                    if (aetherPlayer.getLeavingAether() || aetherPlayer.isInPortal()) {
-                        Screen.drawCenteredString(p_230430_1_, screen.getMinecraft().font, new TranslationTextComponent("gui.aether.descending"), screen.width / 2, screen.height / 2 + 50, 16777215);
-                    }
-                });
+                if (DimensionListener.leavingAether) {
+                    Screen.drawCenteredString(p_230430_1_, screen.getMinecraft().font, new TranslationTextComponent("gui.aether.descending"), screen.width / 2, screen.height / 2 + 50, 16777215);
+                }
             }
         }
     }

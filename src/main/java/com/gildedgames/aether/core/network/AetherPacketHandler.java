@@ -36,7 +36,6 @@ public class AetherPacketHandler
 		register(SetLifeShardPacket.class, SetLifeShardPacket::decode);
 		register(SetProjectileImpactedPacket.class, SetProjectileImpactedPacket::decode);
 		register(SetRemedyPacket.class, SetRemedyPacket::decode);
-		register(SetLeavingAetherPacket.class, SetLeavingAetherPacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
 		register(SmokeParticlePacket.class, SmokeParticlePacket::decode);
 

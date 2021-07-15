@@ -7,7 +7,6 @@ import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.AetherConfig;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.SetVehiclePacket;
 import com.gildedgames.aether.core.network.packet.client.SmokeParticlePacket;
@@ -29,6 +28,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.SleepFinishedTimeEvent;
@@ -44,6 +44,8 @@ import java.util.Objects;
 @Mod.EventBusSubscriber
 public class DimensionListener
 {
+    public static boolean leavingAether;
+
     @SubscribeEvent
     public static void checkBlockBanned(PlayerInteractEvent.RightClickBlock event) {
         PlayerEntity player = event.getPlayer();
@@ -106,6 +108,11 @@ public class DimensionListener
     }
 
     @SubscribeEvent
+    public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {
+        leavingAether = event.getEntity().level.dimension() == AetherDimensions.AETHER_WORLD && event.getDimension() == World.OVERWORLD;
+    }
+
+    @SubscribeEvent
     public static void onSleepFinishedTime(SleepFinishedTimeEvent event) {
         if (event.getWorld() instanceof ServerWorld) {
             ServerWorld world = (ServerWorld) event.getWorld();
@@ -145,13 +152,6 @@ public class DimensionListener
                 List<Entity> passengers = entity.getPassengers();
                 entity.level.getProfiler().push("aether_fall");
                 entity.setPortalCooldown();
-                if (entity instanceof PlayerEntity) {
-                    IAetherPlayer.get((PlayerEntity) entity).ifPresent(aetherPlayer -> {
-                        if (!entity.level.isClientSide) {
-                            aetherPlayer.setLeavingAether(true);
-                        }
-                    });
-                }
                 Entity target = entity.changeDimension(destination, new AetherTeleporter(destination, false));
                 entity.level.getProfiler().pop();
                 // Check for passengers

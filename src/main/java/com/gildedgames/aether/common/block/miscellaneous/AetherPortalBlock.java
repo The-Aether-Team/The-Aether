@@ -90,7 +90,7 @@ public class AetherPortalBlock extends Block
 					aetherPlayer.ifPresent(handler -> {
 						handler.setInPortal(true);
 						int waitTime = handler.getPortalTimer();
-						if(waitTime >= entity.getPortalWaitTime()) {
+						if (waitTime >= entity.getPortalWaitTime()) {
 							handleTeleportation(entity);
 							handler.setPortalTimer(0);
 						}
@@ -120,15 +120,6 @@ public class AetherPortalBlock extends Block
 				if (destination != null && minecraftserver.isNetherEnabled() && !entity.isPassenger()) {
 					entity.level.getProfiler().push("aether_portal");
 					entity.setPortalCooldown();
-					if (entity instanceof PlayerEntity) {
-						IAetherPlayer.get((PlayerEntity) entity).ifPresent(aetherPlayer -> {
-							if (where2go == World.OVERWORLD) {
-								if (!entity.level.isClientSide) {
-									aetherPlayer.setLeavingAether(true);
-								}
-							}
-						});
-					}
 					entity.changeDimension(destination, new AetherTeleporter(destination, true));
 					entity.level.getProfiler().pop();
 				}

@@ -35,9 +35,6 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 	float getPortalAnimTime();
 	float getPrevPortalAnimTime();
 
-	void setLeavingAether(boolean bool);
-	boolean getLeavingAether();
-
 	void setJumping(boolean isJumping);
 	boolean isJumping();
 
