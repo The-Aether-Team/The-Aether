@@ -15,6 +15,7 @@
   "client": [
     "client.AdvancementToastMixin",
     "client.ClientRecipeBookMixin",
+    "client.DirtMessageScreenMixin",
     "client.DownloadTerrainScreenMixin",
     "client.ElytraLayerMixin",
     "client.MinecraftMixin",

@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(WorldRenderer.class)
-public abstract class WorldRendererMixin
+public class WorldRendererMixin
 {
     @Shadow
     private ClientWorld level;

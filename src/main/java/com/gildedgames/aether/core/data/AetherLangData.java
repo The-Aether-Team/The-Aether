@@ -470,15 +470,16 @@ public class AetherLangData extends LanguageProvider
         addMenuText("aether", "Aether Theme");
 
 
+        addGuiText("pro_tip", "Pro Tip:");
+        addGuiText("ascending", "Ascending to the Aether");
+        addGuiText("descending", "Descending from the Aether");
+
+
         addLoreBookText("previous", "Prev.");
         addLoreBookText("next", "Next");
         addLoreBookText("book", "Book");
         addLoreBookText("of_lore", "Of Lore");
         addLoreBookText("item", "Item:");
-
-
-        addGuiText("ascending", "Ascending to the Aether");
-        addGuiText("descending", "Descending from the Aether");
 
 
         addMessage("hammer_of_notch_cooldown", "Cooldown");
