@@ -33,7 +33,7 @@ public abstract class EatBerriesGoalMixin extends MoveToBlockGoal
         }
     }
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ForgeEventFactory;getMobGriefingEvent(Lnet/minecraft/world/World;Lnet/minecraft/entity/Entity;)Z", shift = At.Shift.AFTER), method = "onReachedTarget", cancellable = true)
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ForgeEventFactory;getMobGriefingEvent(Lnet/minecraft/world/World;Lnet/minecraft/entity/Entity;)Z", shift = At.Shift.AFTER), method = "onReachedTarget", cancellable = true, remap = false)
     private void onReachedTarget(CallbackInfo ci) {
         BlockState blockstate = this.mob.level.getBlockState(this.blockPos);
         if (blockstate.is(AetherBlocks.BERRY_BUSH.get())) {

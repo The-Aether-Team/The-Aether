@@ -7,6 +7,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.util.FloatingBlock;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.*;
@@ -16,6 +17,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.DirectionalPlaceContext;
 import net.minecraft.item.ItemStack;
@@ -53,8 +55,6 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
     private final List<Entity> carriedEntityList = new ArrayList<>();
     protected static final DataParameter<BlockPos> DATA_START_POS = EntityDataManager.defineId(FloatingBlockEntity.class, DataSerializers.BLOCK_POS);
 
-    public static ArrayList<FloatingBlockEntity> blocks = new ArrayList<FloatingBlockEntity>();
-
     public FloatingBlockEntity(EntityType<? extends FloatingBlockEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -69,7 +69,6 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
         this.yo = y;
         this.zo = z;
         this.setStartPos(this.blockPosition());
-        blocks.add(this);
     }
 
     @Override
@@ -80,20 +79,18 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
     @Override
     public void tick() {
         if (this.blockState.isAir()) {
-            resetEntities();
+            this.getCarriedEntityList().clear();
             this.remove();
         } else {
             this.time++;
             Block block = this.blockState.getBlock();
-            this.resetEntities();
-            List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox().expandTowards(0.0D, Math.abs(0.1), 0.0D)));
+            this.getCarriedEntityList().clear();
+            List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox().expandTowards(0.0D, 0.1D, 0.0D)));
             this.getCarriedEntityList().addAll(list);
-
             if (!this.isNoGravity()) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.04D, 0.0D));
             }
             this.move(MoverType.SELF, getDeltaMovement());
-
             if (!this.level.isClientSide) {
                 BlockPos blockPos = this.blockPosition();
                 boolean isConcrete = this.blockState.getBlock() instanceof ConcretePowderBlock;
@@ -111,14 +108,14 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
                         if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                             this.dropItem();
                         }
-                        resetEntities();
+                        this.getCarriedEntityList().clear();
                         this.remove();
                     }
                 } else {
                     BlockState blockstate = this.level.getBlockState(blockPos);
                     this.setDeltaMovement(this.getDeltaMovement().multiply(0.7D, 1.5D, 0.7D));
                     if (!blockstate.is(Blocks.MOVING_PISTON)) {
-                        resetEntities();
+                        this.getCarriedEntityList().clear();
                         this.remove();
                         if (!this.cancelDrop) {
                             boolean canBeReplaced = blockstate.canBeReplaced(new DirectionalPlaceContext(this.level, blockPos, Direction.UP, ItemStack.EMPTY, Direction.DOWN));
@@ -182,53 +179,22 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
         }
     }
 
-    public List<Entity> getCarriedEntityList() {
-        return this.carriedEntityList;
-    }
-
-    private void resetEntities() {
-        for (Entity entity : this.getCarriedEntityList()) {
-            entity.setNoGravity(false);
-            entity.noPhysics = false;
-        }
-        this.getCarriedEntityList().clear();
-    }
-
     private void floatEntities() {
-
-
-        for (int i = 0; i < this.getCarriedEntityList().size(); i++) {
-            Entity entity = this.getCarriedEntityList().get(i);
+        for (Entity entity : this.getCarriedEntityList()) {
             entity.setOnGround(true);
-            entity.causeFallDamage(entity.fallDistance, 1.0F);
             entity.fallDistance = 0.0F;
-            if (entity instanceof LivingEntity) {
-                LivingEntity living = (LivingEntity)entity;
-                boolean jumping = ObfuscationReflectionHelper.getPrivateValue(LivingEntity.class, living, "jumping");
-                if (jumping) {
-                    entity.setDeltaMovement(entity.getDeltaMovement().add(this.getDeltaMovement()));
-                    this.getCarriedEntityList().remove(entity);
-                    continue;
-                }
-            }
-            if (!level.isClientSide) {
-                entity.setPos(entity.getX(), getY() + 1.0D, entity.getZ());
-            }
+            entity.setPos(entity.getX(), getY() + 1.0D, entity.getZ());
         }
     }
 
     @Override
     public void remove() {
+        this.getCarriedEntityList().clear();
         super.remove();
-        blocks.remove(this);
-        resetEntities();
     }
 
-
-    public void removeCarriedEntity(Entity entity) {
-        entity.setNoGravity(false);
-        entity.noPhysics = false;
-        this.getCarriedEntityList().remove(entity);
+    public List<Entity> getCarriedEntityList() {
+        return this.carriedEntityList;
     }
 
     public BlockState getBlockState() {

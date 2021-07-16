@@ -8,6 +8,7 @@
     "common.AbstractArrowEntityMixin",
     "common.CropsBlockMixin",
     "common.EatBerriesGoalMixin",
+    "common.EntityMixin",
     "common.FindPollinationTargetGoalMixin",
     "common.FoxEntityMixin",
     "common.PiglinTasksMixin"

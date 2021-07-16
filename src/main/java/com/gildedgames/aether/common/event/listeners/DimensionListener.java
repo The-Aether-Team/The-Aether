@@ -125,16 +125,19 @@ public class DimensionListener
 
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
-        if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
+        if (event.side == LogicalSide.SERVER) {
             if (event.world.dimension() == AetherDimensions.AETHER_WORLD) {
-                if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
-                    List<Entity> loadedEntities = ((ServerWorld) event.world).getEntities(null, Objects::nonNull);
-                    for (Entity entity : loadedEntities) {
-                        if (entity.getY() <= 0 && !entity.isPassenger()) {
-                            fallFromAether(entity);
+                if (event.phase == TickEvent.Phase.END) {
+                    if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
+                        List<Entity> loadedEntities = ((ServerWorld) event.world).getEntities(null, Objects::nonNull);
+                        for (Entity entity : loadedEntities) {
+                            if (entity.getY() <= 0 && !entity.isPassenger()) {
+                                fallFromAether(entity);
+                            }
                         }
                     }
                 }
+                ((ServerWorld)event.world).setDayTime(6000);
             }
         }
     }

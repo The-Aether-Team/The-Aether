@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -49,10 +50,8 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity>
 				super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 			}
 		}
-		for (int i = 0; i < entityIn.getCarriedEntityList().size(); i++) {
-			Entity entity = entityIn.getCarriedEntityList().get(i);
+		for (Entity entity : entityIn.getCarriedEntityList()) {
 			entity.setPos(entity.getX(), entityIn.getY() + 1.0D, entity.getZ());
-			entity.setDeltaMovement(entityIn.getDeltaMovement());
 		}
 	}
 
