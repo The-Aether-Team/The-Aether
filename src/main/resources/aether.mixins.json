@@ -19,6 +19,7 @@
     "client.DownloadTerrainScreenMixin",
     "client.ElytraLayerMixin",
     "client.MinecraftMixin",
+    "client.SplashesMixin",
     "client.TippedArrowRendererMixin",
     "client.WorkingScreenMixin",
     "client.WorldRendererMixin"
