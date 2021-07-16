@@ -9,8 +9,8 @@ import net.minecraft.network.PacketBuffer;
 
 public class SetVehiclePacket extends AetherPacket
 {
-    private int passengerID;
-    private int vehicleID;
+    private final int passengerID;
+    private final int vehicleID;
 
     public SetVehiclePacket(int passenger, int vehicle) {
         this.passengerID = passenger;
@@ -19,22 +19,24 @@ public class SetVehiclePacket extends AetherPacket
 
     @Override
     public void encode(PacketBuffer buf) {
-        buf.writeVarInt(this.passengerID);
-        buf.writeVarInt(this.vehicleID);
+        buf.writeInt(this.passengerID);
+        buf.writeInt(this.vehicleID);
     }
 
     public static SetVehiclePacket decode(PacketBuffer buf) {
-        return new SetVehiclePacket(buf.readVarInt(), buf.readVarInt());
+        int passenger = buf.readInt();
+        int vehicle = buf.readInt();
+        return new SetVehiclePacket(passenger, vehicle);
     }
 
     @Override
     public void execute(PlayerEntity player) {
-        ClientPlayerEntity clientPlayer = Minecraft.getInstance().player;
-        if(clientPlayer != null && clientPlayer.level != null) {
-            Entity passenger = clientPlayer.level.getEntity(this.passengerID);
-            Entity vehicle = clientPlayer.level.getEntity(this.vehicleID);
-            if (passenger != null && vehicle != null)
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level != null) {
+            Entity passenger = Minecraft.getInstance().player.level.getEntity(this.passengerID);
+            Entity vehicle = Minecraft.getInstance().player.level.getEntity(this.vehicleID);
+            if (passenger != null && vehicle != null) {
                 passenger.startRiding(vehicle);
+            }
         }
     }
 }

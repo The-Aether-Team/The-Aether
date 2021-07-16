@@ -33,9 +33,9 @@ public abstract class AdvancementToastMixin
     private void onRender(MatrixStack p_230444_1_, ToastGui p_230444_2_, long p_230444_3_, CallbackInfoReturnable<IToast.Visibility> cir) {
         if (!this.playedSound) {
             ResourceLocation enterAether = new ResourceLocation(Aether.MODID, "enter_aether");
-            if (advancement.getId().equals(enterAether) || (advancement.getParent() != null && advancement.getParent().getId().equals(enterAether))) {
+            if (this.advancement.getId().equals(enterAether) || (this.advancement.getParent() != null && this.advancement.getParent().getId().equals(enterAether))) {
                 this.playedSound = true;
-                switch (advancement.getId().getPath()) {
+                switch (this.advancement.getId().getPath()) {
                     case "like_a_bossaru":
                         p_230444_2_.getMinecraft().getSoundManager().play(SimpleSound.forUI(AetherSoundEvents.UI_TOAST_AETHER_BRONZE.get(), 1.0F, 1.0F));
                         break;
