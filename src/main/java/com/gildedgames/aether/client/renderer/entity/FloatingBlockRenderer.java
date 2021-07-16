@@ -12,9 +12,12 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.Random;
 
@@ -45,6 +48,11 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity>
 				matrixStackIn.popPose();
 				super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 			}
+		}
+		for (int i = 0; i < entityIn.getCarriedEntityList().size(); i++) {
+			Entity entity = entityIn.getCarriedEntityList().get(i);
+			entity.setPos(entity.getX(), entityIn.getY() + 1.0D, entity.getZ());
+			entity.setDeltaMovement(entityIn.getDeltaMovement());
 		}
 	}
 
