@@ -114,7 +114,7 @@ public class Aether
 
 			AetherItems.registerAbilities();
 
-			AetherLoot.getLootTables();
+			AetherLoot.load();
 
 			AetherFeatures.registerConfiguredFeatures();
 			AetherAdvancements.init();

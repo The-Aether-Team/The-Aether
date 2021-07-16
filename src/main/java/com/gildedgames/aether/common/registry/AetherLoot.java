@@ -89,7 +89,5 @@ public class AetherLoot
 		}
 	}
 
-	public static Set<ResourceLocation> getLootTables() {
-		return LOOT_TABLES;
-	}
+	public static void load() { }
 }
