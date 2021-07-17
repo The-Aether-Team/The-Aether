@@ -22,7 +22,9 @@
     "client.SplashesMixin",
     "client.TippedArrowRendererMixin",
     "client.WorkingScreenMixin",
-    "client.WorldRendererMixin"
+    "client.WorldRendererMixin",
+    "client.SessionLockManagerMixin",
+    "client.LevelSaveMixin"
   ],
   "injectors": {
     "defaultRequire": 1

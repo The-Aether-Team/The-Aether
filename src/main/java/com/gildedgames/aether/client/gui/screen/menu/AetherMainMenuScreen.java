@@ -103,6 +103,8 @@ public class AetherMainMenuScreen extends MainMenuScreen
 		}
 	}
 
+
+	public static String menu_world;
 	public static void LoadAetherMenuWorld() {
 		if (GuiListener.load_level != false) return;
 		GuiListener.load_level = true;
@@ -122,14 +124,15 @@ public class AetherMainMenuScreen extends MainMenuScreen
 			if (newest != null) {
 				if (newest.isDirectory()) {
 					String name = newest.getName();
-
+					AetherMainMenuScreen.menu_world = name;
 					new Thread(() -> {
 						while (true) {
 							if (Minecraft.getInstance().player != null) {
+
 								Minecraft.getInstance().setScreen(new AetherMainMenuScreen());
 								Minecraft.getInstance().forceSetScreen(new AetherMainMenuScreen());
-								Minecraft.getInstance().getSingleplayerServer().getCommands().performCommand(Minecraft.getInstance().getSingleplayerServer().createCommandSourceStack(), "/gamemode @a spectator");
-								GuiListener.load_level = true;
+
+								Minecraft.getInstance().getSingleplayerServer().getPlayerList().getPlayers().get(0).getLevel().players().clear();
 								return;
 							}
 							try {
@@ -147,7 +150,6 @@ public class AetherMainMenuScreen extends MainMenuScreen
 			}
 		}
 	}
-
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -170,10 +172,10 @@ public class AetherMainMenuScreen extends MainMenuScreen
 				}
 
 				if (this.minecraft.player != null) {
-
+					this.minecraft.options.hideGui = true;
 					List<ServerPlayerEntity> players = this.minecraft.getSingleplayerServer().getPlayerList().getPlayers();
 					for (int i = 0; i < players.size(); i++) {
-						players.get(i).setGameMode(GameType.SPECTATOR);
+						players.get(i).getLevel().players().clear();
 					}
 					this.minecraft.player.yRot += 0.1F * partialTicks;
 				}

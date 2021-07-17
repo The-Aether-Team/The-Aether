@@ -34,7 +34,6 @@ public class GuiListener
 	public static boolean load_level = false;
 	@SubscribeEvent
 	public static void onGuiInitialize(GuiScreenEvent.InitGuiEvent.Post event) {
-
 		System.out.println(event.getGui());
 		if (event.getGui() instanceof DisconnectedScreen)  {
 			if (GuiListener.load_level == true) {
@@ -59,6 +58,7 @@ public class GuiListener
 					!(event.getGui() instanceof AetherMainMenuScreen);
 
 			if (Minecraft.getInstance().level != null) {
+				Minecraft.getInstance().options.hideGui = false;
 				Minecraft.getInstance().level.disconnect();
 				GuiListener.load_level = flag;
 			}
