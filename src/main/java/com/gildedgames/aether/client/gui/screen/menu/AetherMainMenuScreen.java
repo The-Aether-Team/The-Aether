@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
+import com.gildedgames.aether.client.event.listeners.GuiListener;
 import com.gildedgames.aether.client.gui.button.AetherMenuButton;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.core.AetherConfig;
@@ -7,17 +8,27 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.BackgroundMusicSelector;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.RenderSkybox;
 import net.minecraft.client.renderer.RenderSkyboxCube;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Rotations;
+import net.minecraft.util.math.vector.Orientation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.GameType;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AetherMainMenuScreen extends MainMenuScreen
 {
@@ -92,18 +103,81 @@ public class AetherMainMenuScreen extends MainMenuScreen
 		}
 	}
 
+	public static void LoadAetherMenuWorld() {
+		if (GuiListener.load_level != false) return;
+		GuiListener.load_level = true;
+		File file = new File("saves");
+
+		if (file.isDirectory()) {
+			File[] levels = file.listFiles();
+			File newest = null;
+			long time = -999999;
+			for (int i = 0; i < levels.length; i++) {
+				if (levels[i].lastModified() > time) {
+					newest = levels[i];
+					time = levels[i].lastModified();
+				}
+			}
+
+			if (newest != null) {
+				if (newest.isDirectory()) {
+					String name = newest.getName();
+
+					new Thread(() -> {
+						while (true) {
+							if (Minecraft.getInstance().player != null) {
+								Minecraft.getInstance().setScreen(new AetherMainMenuScreen());
+								Minecraft.getInstance().forceSetScreen(new AetherMainMenuScreen());
+								Minecraft.getInstance().getSingleplayerServer().getCommands().performCommand(Minecraft.getInstance().getSingleplayerServer().createCommandSourceStack(), "/gamemode @a spectator");
+								GuiListener.load_level = true;
+								return;
+							}
+							try {
+								Thread.sleep(100);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}).start();
+
+					Minecraft.getInstance().loadLevel(name);
+					GuiListener.load_level = true;
+					return;
+				}
+			}
+		}
+	}
+
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		if (this.minecraft != null) {
-			fill(matrixStack, 0, 0, this.width, this.height, -1);
-			this.panorama.render(partialTicks, 1.0F);
-			this.minecraft.getTextureManager().bind(PANORAMA_OVERLAY);
-			RenderSystem.enableBlend();
-			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-			blit(matrixStack, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
+			if (Minecraft.getInstance().screen instanceof AetherMainMenuScreen) {
+				LoadAetherMenuWorld();
+			}
+			if (this.minecraft.level == null) {
+				fill(matrixStack, 0, 0, this.width, this.height, -1);
+				this.panorama.render(partialTicks, 1.0F);
+				this.minecraft.getTextureManager().bind(PANORAMA_OVERLAY);
+				RenderSystem.enableBlend();
+				RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+				blit(matrixStack, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
+			} else {
+				if (!this.minecraft.getMusicManager().isPlayingMusic(MENU)) {
+					this.minecraft.getMusicManager().startPlaying(AetherMainMenuScreen.MENU);
+				}
 
+				if (this.minecraft.player != null) {
+
+					List<ServerPlayerEntity> players = this.minecraft.getSingleplayerServer().getPlayerList().getPlayers();
+					for (int i = 0; i < players.size(); i++) {
+						players.get(i).setGameMode(GameType.SPECTATOR);
+					}
+					this.minecraft.player.yRot += 0.1F * partialTicks;
+				}
+			}
 			this.minecraft.getTextureManager().bind(AETHER_LOGO);
 			this.blit(matrixStack, 10, 15, 0, 0, 155, 44);
 			this.blit(matrixStack, 10 + 155, 15, 0, 45, 155, 44);
