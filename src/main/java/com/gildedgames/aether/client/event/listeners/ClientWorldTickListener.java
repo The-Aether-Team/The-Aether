@@ -4,8 +4,12 @@ import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.network.play.server.SChatPacket;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.storage.DerivedWorldInfo;
 import net.minecraft.world.storage.ServerWorldInfo;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,14 +32,13 @@ public class ClientWorldTickListener {
                 }
             }
         }
-        if (GuiListener.load_level && Minecraft.getInstance().screen == null) {
-            if (AetherConfig.CLIENT.enable_aether_menu.get()) {
-                Minecraft.getInstance().setScreen(new AetherMainMenuScreen());
-                Minecraft.getInstance().forceSetScreen(new AetherMainMenuScreen());
-            } else {
-                Minecraft.getInstance().setScreen(new MainMenuScreen());
-                Minecraft.getInstance().forceSetScreen(new MainMenuScreen());
+        if (GuiListener.load_level == true) {
+            ClientPlayerEntity player = Minecraft.getInstance().player;
+            if (player != null) {
+                player.setNoGravity(true);
+                player.noPhysics = true;
             }
+
         }
     }
 }

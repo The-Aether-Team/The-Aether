@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.event.listeners.GuiListener;
 import com.gildedgames.aether.client.gui.button.AetherMenuButton;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
@@ -103,9 +104,9 @@ public class AetherMainMenuScreen extends MainMenuScreen
 		}
 	}
 
-
 	public static String menu_world;
 	public static void LoadAetherMenuWorld() {
+		if (GuiListener.load_error) return;
 		if (GuiListener.load_level != false) return;
 		GuiListener.load_level = true;
 		File file = new File("saves");

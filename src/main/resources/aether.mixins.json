@@ -24,7 +24,8 @@
     "client.WorkingScreenMixin",
     "client.WorldRendererMixin",
     "client.SessionLockManagerMixin",
-    "client.LevelSaveMixin"
+    "client.LevelSaveMixin",
+    "client.ClientEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

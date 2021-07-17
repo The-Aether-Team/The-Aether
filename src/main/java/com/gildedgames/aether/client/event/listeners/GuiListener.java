@@ -30,7 +30,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class GuiListener
 {
-
+	public static boolean load_error = false;
 	public static boolean load_level = false;
 	@SubscribeEvent
 	public static void onGuiInitialize(GuiScreenEvent.InitGuiEvent.Post event) {
@@ -54,13 +54,15 @@ public class GuiListener
 		event.getGui() instanceof WorkingScreen ||
 		event.getGui() instanceof MainMenuScreen &&
 		!(event.getGui() instanceof AetherMainMenuScreen)) {
-			boolean flag = event.getGui() instanceof MainMenuScreen &&
-					!(event.getGui() instanceof AetherMainMenuScreen);
+			if (GuiListener.load_level == true) {
+				boolean flag = event.getGui() instanceof MainMenuScreen &&
+						!(event.getGui() instanceof AetherMainMenuScreen);
 
-			if (Minecraft.getInstance().level != null) {
-				Minecraft.getInstance().options.hideGui = false;
-				Minecraft.getInstance().level.disconnect();
-				GuiListener.load_level = flag;
+				if (Minecraft.getInstance().level != null) {
+					Minecraft.getInstance().options.hideGui = false;
+					Minecraft.getInstance().level.disconnect();
+					GuiListener.load_level = flag;
+				}
 			}
 		}
 
