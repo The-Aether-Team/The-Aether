@@ -23,10 +23,10 @@ public class DownloadTerrainScreenMixin
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level != null) {
             RegistryKey<World> dimension = Minecraft.getInstance().player.level.dimension();
             if (dimension == AetherDimensions.AETHER_WORLD) {
-                Screen.drawCenteredString(p_230430_1_, screen.getMinecraft().font, new TranslationTextComponent("gui.aether.ascending"), screen.width / 2, screen.height / 2 + 50, 16777215);
+                Screen.drawCenteredString(p_230430_1_, screen.getMinecraft().font, new TranslationTextComponent("gui.aether.ascending"), screen.width / 2, 50, 16777215);
             } else {
                 if (DimensionListener.leavingAether) {
-                    Screen.drawCenteredString(p_230430_1_, screen.getMinecraft().font, new TranslationTextComponent("gui.aether.descending"), screen.width / 2, screen.height / 2 + 50, 16777215);
+                    Screen.drawCenteredString(p_230430_1_, screen.getMinecraft().font, new TranslationTextComponent("gui.aether.descending"), screen.width / 2, 50, 16777215);
                 }
             }
         }
