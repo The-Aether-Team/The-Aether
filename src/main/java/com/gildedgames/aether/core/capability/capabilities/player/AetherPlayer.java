@@ -71,9 +71,6 @@ public class AetherPlayer implements IAetherPlayer
 	public CompoundNBT serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putBoolean("CanGetPortal", this.canGetPortal());
-		nbt.putInt("GoldenDartCount", this.getGoldenDartCount());
-		nbt.putInt("PoisonDartCount", this.getPoisonDartCount());
-		nbt.putInt("EnchantedDartCount", this.getEnchantedDartCount());
 		nbt.putInt("RemedyMaximum", this.getRemedyMaximum());
 		nbt.putInt("RemedyTimer", this.getRemedyTimer());
 		nbt.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
@@ -92,15 +89,6 @@ public class AetherPlayer implements IAetherPlayer
 	public void deserializeNBT(CompoundNBT nbt) {
 		if (nbt.contains("CanGetPortal")) {
 			this.setCanGetPortal(nbt.getBoolean("CanGetPortal"));
-		}
-		if (nbt.contains("GoldenDartCount")) {
-			this.setGoldenDartCount(nbt.getInt("GoldenDartCount"));
-		}
-		if (nbt.contains("PoisonDartCount")) {
-			this.setPoisonDartCount(nbt.getInt("PoisonDartCount"));
-		}
-		if (nbt.contains("EnchantedDartCount")) {
-			this.setEnchantedDartCount(nbt.getInt("EnchantedDartCount"));
 		}
 		if (nbt.contains("RemedyMaximum")) {
 			this.setRemedyMaximum(nbt.getInt("RemedyMaximum"));
@@ -140,14 +128,18 @@ public class AetherPlayer implements IAetherPlayer
 		}
 	}
 
+//	@Override
+//	public void sync() {
+//		if (!this.getPlayer().level.isClientSide && this.getPlayer() instanceof ServerPlayerEntity) {
+//			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.getRemedyMaximum(), this.getRemedyTimer()), (ServerPlayerEntity) this.getPlayer());
+//			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.getProjectileImpactedMaximum(), this.getProjectileImpactedTimer()), (ServerPlayerEntity) this.getPlayer());
+//			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), this.getLifeShardCount()), (ServerPlayerEntity) this.getPlayer());
+//		}
+//	}
+
 	@Override
 	public void sync() {
-		if (!this.getPlayer().level.isClientSide && this.getPlayer() instanceof ServerPlayerEntity) {
-			AetherPacketHandler.sendToPlayer(new DartCountPacket(this.getPlayer().getId(), this.getGoldenDartCount(), this.getPoisonDartCount(), this.getEnchantedDartCount()), (ServerPlayerEntity) this.getPlayer());
-			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.getRemedyMaximum(), this.getRemedyTimer()), (ServerPlayerEntity) this.getPlayer());
-			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.getProjectileImpactedMaximum(), this.getProjectileImpactedTimer()), (ServerPlayerEntity) this.getPlayer());
-			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), this.getLifeShardCount()), (ServerPlayerEntity) this.getPlayer());
-		}
+
 	}
 
 	@Override
@@ -400,6 +392,9 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public int getGoldenDartCount() {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new GoldenDartCountPacket(this.getPlayer().getId(), this.goldenDartCount), (ServerPlayerEntity) this.getPlayer());
+		}
 		return this.goldenDartCount;
 	}
 
@@ -410,6 +405,9 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public int getPoisonDartCount() {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new PoisonDartCountPacket(this.getPlayer().getId(), this.poisonDartCount), (ServerPlayerEntity) this.getPlayer());
+		}
 		return this.poisonDartCount;
 	}
 
@@ -420,6 +418,9 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public int getEnchantedDartCount() {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new EnchantedDartCountPacket(this.getPlayer().getId(), this.enchantedDartCount), (ServerPlayerEntity) this.getPlayer());
+		}
 		return this.enchantedDartCount;
 	}
 

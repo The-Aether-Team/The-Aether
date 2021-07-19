@@ -8,7 +8,10 @@ import com.gildedgames.aether.core.network.packet.server.ExtendedAttackPacket;
 import com.gildedgames.aether.core.network.packet.server.JumpPacket;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -27,11 +30,13 @@ public class AetherPacketHandler
 	
 	public static synchronized void register() {
 		// CLIENT
-		register(DartCountPacket.class, DartCountPacket::decode);
+		register(EnchantedDartCountPacket.class, EnchantedDartCountPacket::decode);
 		register(FlameParticlePacket.class, FlameParticlePacket::decode);
+		register(GoldenDartCountPacket.class, GoldenDartCountPacket::decode);
 		register(InebriationParticlePacket.class, InebriationParticlePacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PhoenixParticlePacket.class, PhoenixParticlePacket::decode);
+		register(PoisonDartCountPacket.class, PoisonDartCountPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(SetLifeShardPacket.class, SetLifeShardPacket::decode);
 		register(SetProjectileImpactedPacket.class, SetProjectileImpactedPacket::decode);
@@ -52,8 +57,11 @@ public class AetherPacketHandler
 		INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
 	}
 
-	public static <MSG> void sendToAll(MSG message)
-	{
+	public static <MSG> void sendToNear(MSG message, double x, double y, double z, double radius, RegistryKey<World> dimension) {
+		INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(x, y, z, radius, dimension)), message);
+	}
+
+	public static <MSG> void sendToAll(MSG message) {
 		INSTANCE.send(PacketDistributor.ALL.noArg(), message);
 	}
 

@@ -7,32 +7,26 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 
-public class DartCountPacket extends AetherPacket
+public class PoisonDartCountPacket extends AetherPacket
 {
     private final int playerID;
-    private final int goldenDartCount, poisonDartCount, enchantedDartCount;
+    private final int poisonDartCount;
 
-    public DartCountPacket(int playerID, int goldenDartCount, int poisonDartCount, int enchantedDartCount) {
+    public PoisonDartCountPacket(int playerID, int poisonDartCount) {
         this.playerID = playerID;
-        this.goldenDartCount = goldenDartCount;
         this.poisonDartCount = poisonDartCount;
-        this.enchantedDartCount = enchantedDartCount;
     }
 
     @Override
     public void encode(PacketBuffer buf) {
         buf.writeInt(this.playerID);
-        buf.writeInt(this.goldenDartCount);
         buf.writeInt(this.poisonDartCount);
-        buf.writeInt(this.enchantedDartCount);
     }
 
-    public static DartCountPacket decode(PacketBuffer buf) {
+    public static PoisonDartCountPacket decode(PacketBuffer buf) {
         int playerID = buf.readInt();
-        int goldenDartCount = buf.readInt();
         int poisonDartCount = buf.readInt();
-        int enchantedDartCount = buf.readInt();
-        return new DartCountPacket(playerID, goldenDartCount, poisonDartCount, enchantedDartCount);
+        return new PoisonDartCountPacket(playerID, poisonDartCount);
     }
 
     @Override
@@ -40,11 +34,7 @@ public class DartCountPacket extends AetherPacket
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level != null) {
             Entity entity = Minecraft.getInstance().player.level.getEntity(this.playerID);
             if (entity instanceof PlayerEntity) {
-                IAetherPlayer.get((PlayerEntity) entity).ifPresent(aetherPlayer -> {
-                    aetherPlayer.setGoldenDartCount(this.goldenDartCount);
-                    aetherPlayer.setPoisonDartCount(this.poisonDartCount);
-                    aetherPlayer.setEnchantedDartCount(this.enchantedDartCount);
-                });
+                IAetherPlayer.get((PlayerEntity) entity).ifPresent(aetherPlayer -> aetherPlayer.setPoisonDartCount(this.poisonDartCount));
             }
         }
     }

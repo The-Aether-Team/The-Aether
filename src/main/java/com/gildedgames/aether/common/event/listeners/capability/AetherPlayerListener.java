@@ -12,9 +12,21 @@ import net.minecraftforge.fml.common.Mod;
 public class AetherPlayerListener
 {
     @SubscribeEvent
+    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        PlayerEntity player = event.getPlayer();
+        IAetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+            aetherPlayer.sync();
+            if (AetherConfig.COMMON.start_with_portal.get()) {
+                aetherPlayer.givePortalItem();
+            } else {
+                aetherPlayer.setCanGetPortal(false);
+            }
+        });
+    }
+
+    @SubscribeEvent
     public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity) {
-            IAetherPlayer.get((PlayerEntity) event.getEntityLiving()).ifPresent(IAetherPlayer::sync);
             IAetherPlayer.get((PlayerEntity) event.getEntityLiving()).ifPresent(IAetherPlayer::onUpdate);
         }
     }
@@ -28,17 +40,5 @@ public class AetherPlayerListener
 
         newPlayer.copyFrom(original);
         newPlayer.copyHealth(original, event.isWasDeath());
-    }
-
-    @SubscribeEvent
-    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        PlayerEntity player = event.getPlayer();
-        IAetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-            if (AetherConfig.COMMON.start_with_portal.get()) {
-                aetherPlayer.givePortalItem();
-            } else {
-                aetherPlayer.setCanGetPortal(false);
-            }
-        });
     }
 }

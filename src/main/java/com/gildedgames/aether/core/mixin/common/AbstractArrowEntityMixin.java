@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.PacketDistributor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,16 +29,18 @@ public class AbstractArrowEntityMixin
         AbstractArrowEntity arrow = (AbstractArrowEntity) (Object) this;
         IPhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
             if (phoenixArrow.isPhoenixArrow()) {
-                AetherPacketHandler.sendToAll(new PhoenixArrowPacket(arrow.getId(), true));
-                if (this.inGround) {
-                    if (this.inGroundTime % 5 == 0) {
-                        for (int i = 0; i < 1; i++) {
+                if (!arrow.level.isClientSide) {
+                    AetherPacketHandler.sendToNear(new PhoenixArrowPacket(arrow.getId(), true), arrow.getX(), arrow.getY(), arrow.getZ(), 1.0D, arrow.level.dimension());
+                    if (this.inGround) {
+                        if (this.inGroundTime % 5 == 0) {
+                            for (int i = 0; i < 1; i++) {
+                                AetherPacketHandler.sendToAll(new PhoenixParticlePacket(arrow.getId()));
+                            }
+                        }
+                    } else {
+                        for (int i = 0; i < 2; i++) {
                             AetherPacketHandler.sendToAll(new PhoenixParticlePacket(arrow.getId()));
                         }
-                    }
-                } else {
-                    for (int i = 0; i < 2; i++) {
-                        AetherPacketHandler.sendToAll(new PhoenixParticlePacket(arrow.getId()));
                     }
                 }
             }
