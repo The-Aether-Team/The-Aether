@@ -128,18 +128,13 @@ public class AetherPlayer implements IAetherPlayer
 		}
 	}
 
-//	@Override
-//	public void sync() {
-//		if (!this.getPlayer().level.isClientSide && this.getPlayer() instanceof ServerPlayerEntity) {
-//			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.getRemedyMaximum(), this.getRemedyTimer()), (ServerPlayerEntity) this.getPlayer());
-//			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.getProjectileImpactedMaximum(), this.getProjectileImpactedTimer()), (ServerPlayerEntity) this.getPlayer());
-//			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), this.getLifeShardCount()), (ServerPlayerEntity) this.getPlayer());
-//		}
-//	}
-
 	@Override
 	public void sync() {
-
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.remedyMaximum, this.remedyTimer), (ServerPlayerEntity) this.getPlayer());
+			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.projectileImpactedMaximum, this.projectileImpactedTimer), (ServerPlayerEntity) this.getPlayer());
+//			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), this.getLifeShardCount()), (ServerPlayerEntity) this.getPlayer());
+		}
 	}
 
 	@Override
@@ -290,24 +285,20 @@ public class AetherPlayer implements IAetherPlayer
 	}
 
 	private void tickDownRemedy() {
-		if (!this.getPlayer().level.isClientSide) {
-			if (this.remedyTimer > 0) {
-				this.remedyTimer--;
-			} else {
-				this.remedyMaximum = 0;
-				this.remedyTimer = 0;
-			}
+		if (this.remedyTimer > 0) {
+			this.remedyTimer--;
+		} else {
+			this.remedyMaximum = 0;
+			this.remedyTimer = 0;
 		}
 	}
 
 	private void tickDownProjectileImpact() {
-		if (!this.getPlayer().level.isClientSide) {
-			if (this.projectileImpactedTimer > 0) {
-				this.projectileImpactedTimer--;
-			} else {
-				this.projectileImpactedMaximum = 0;
-				this.projectileImpactedTimer = 0;
-			}
+		if (this.projectileImpactedTimer > 0) {
+			this.projectileImpactedTimer--;
+		} else {
+			this.projectileImpactedMaximum = 0;
+			this.projectileImpactedTimer = 0;
 		}
 	}
 
@@ -431,6 +422,9 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public int getRemedyMaximum() {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.remedyMaximum, this.remedyTimer), (ServerPlayerEntity) this.getPlayer());
+		}
 		return remedyMaximum;
 	}
 
@@ -441,6 +435,9 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public int getRemedyTimer() {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.remedyMaximum, this.remedyTimer), (ServerPlayerEntity) this.getPlayer());
+		}
 		return this.remedyTimer;
 	}
 
@@ -451,6 +448,9 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public int getProjectileImpactedMaximum() {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.projectileImpactedMaximum, this.projectileImpactedTimer), (ServerPlayerEntity) this.getPlayer());
+		}
 		return projectileImpactedMaximum;
 	}
 
@@ -461,6 +461,9 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public int getProjectileImpactedTimer() {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.projectileImpactedMaximum, this.projectileImpactedTimer), (ServerPlayerEntity) this.getPlayer());
+		}
 		return projectileImpactedTimer;
 	}
 
