@@ -9,12 +9,15 @@ import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+
+import java.util.List;
 
 public class HammerProjectileEntity extends ThrowableEntity
 {
@@ -71,10 +74,25 @@ public class HammerProjectileEntity extends ThrowableEntity
     protected void onHitEntity(EntityRayTraceResult result) {
         if (!this.level.isClientSide) {
             Entity target = result.getEntity();
-            if (target != this.getOwner()) {
-                target.hurt(DamageSource.thrown(this, this.getOwner()), 5);
-                target.push(this.getDeltaMovement().x, 0.6D, this.getDeltaMovement().z);
+            launchTarget(target);
+        }
+    }
+
+    @Override
+    protected void onHitBlock(BlockRayTraceResult p_230299_1_) {
+        super.onHitBlock(p_230299_1_);
+        if (!this.level.isClientSide) {
+            List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate(3.0D));
+            for (Entity target : list) {
+                launchTarget(target);
             }
+        }
+    }
+
+    private void launchTarget(Entity target) {
+        if (target != this.getOwner()) {
+            target.hurt(DamageSource.thrown(this, this.getOwner()), 5);
+            target.push(this.getDeltaMovement().x, 0.6D, this.getDeltaMovement().z);
         }
     }
 
