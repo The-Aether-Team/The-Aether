@@ -53,7 +53,9 @@ public class ArmorAbilityListener
                 Vector3d movement = entity.getDeltaMovement().multiply(defaultBoost, 0.25F, defaultBoost);
                 entity.move(MoverType.SELF, movement);
             }
-            AetherPacketHandler.sendToAll(new PhoenixParticlePacket(entity.getId()));
+            if (!entity.level.isClientSide) {
+                AetherPacketHandler.sendToAll(new PhoenixParticlePacket(entity.getId()));
+            }
         }
 
         if (entity.isInWaterRainOrBubble()) {
