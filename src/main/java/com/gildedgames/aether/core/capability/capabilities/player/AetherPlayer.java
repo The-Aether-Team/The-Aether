@@ -56,6 +56,7 @@ public class AetherPlayer implements IAetherPlayer
 	private int projectileImpactedMaximum = 0;
 	private int projectileImpactedTimer = 0;
 
+	private float savedHealth = 0.0F;
 	private int lifeShardCount = 0;
 	
 	public AetherPlayer(PlayerEntity player) {
@@ -75,6 +76,7 @@ public class AetherPlayer implements IAetherPlayer
 		nbt.putInt("RemedyTimer", this.getRemedyTimer());
 		nbt.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
 		nbt.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
+		nbt.putFloat("SavedHealth", this.getSavedHealth());
 		nbt.putInt("LifeShardCount", this.getLifeShardCount());
 
 		//Set<AetherRank> ranks = AetherRankings.getRanksOf(this.player.getUniqueID());
@@ -102,6 +104,9 @@ public class AetherPlayer implements IAetherPlayer
 		if (nbt.contains("ProjectileImpactedTimer")) {
 			this.setProjectileImpactedTimer(nbt.getInt("ProjectileImpactedTimer"));
 		}
+		if (nbt.contains("SavedHealth")) {
+			this.setSavedHealth(nbt.getFloat("SavedHealth"));
+		}
 		if (nbt.contains("LifeShardCount")) {
 			this.setLifeShardCount(nbt.getInt("LifeShardCount"));
 		}
@@ -118,33 +123,23 @@ public class AetherPlayer implements IAetherPlayer
 	}
 
 	@Override
-	public void copyHealth(IAetherPlayer other, boolean wasDeath) {
-		if (!wasDeath) {
-			this.getPlayer().setHealth(other.getPlayer().getHealth());
-		} else {
-			if (this.getPlayer().getHealth() == 20.0F) {
-				this.getPlayer().setHealth(this.getPlayer().getMaxHealth());
-			}
-		}
-	}
-
-	@Override
 	public void sync() {
 		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
 			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.remedyMaximum, this.remedyTimer), (ServerPlayerEntity) this.getPlayer());
 			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.projectileImpactedMaximum, this.projectileImpactedTimer), (ServerPlayerEntity) this.getPlayer());
-//			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), this.getLifeShardCount()), (ServerPlayerEntity) this.getPlayer());
+			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), this.lifeShardCount), (ServerPlayerEntity) this.getPlayer());
 		}
 	}
 
 	@Override
 	public void onUpdate() {
-		handleAetherPortal();
-		activateParachute();
-		handleRemoveDarts();
-		tickDownRemedy();
-		tickDownProjectileImpact();
-		handleLifeShardModifier();
+		this.handleAetherPortal();
+		this.activateParachute();
+		this.handleRemoveDarts();
+		this.tickDownRemedy();
+		this.tickDownProjectileImpact();
+		this.handleSavedHealth();
+		this.handleLifeShardModifier();
 	}
 
 	/**
@@ -302,9 +297,23 @@ public class AetherPlayer implements IAetherPlayer
 		}
 	}
 
+	private void handleSavedHealth() {
+		if (this.getSavedHealth() > 0.0F) {
+			ModifiableAttributeInstance health = this.getPlayer().getAttribute(Attributes.MAX_HEALTH);
+			if (health != null && health.hasModifier(this.getLifeShardHealthAttributeModifier())) {
+				if (this.getSavedHealth() >= this.getPlayer().getMaxHealth()) {
+					this.getPlayer().setHealth(this.getPlayer().getMaxHealth());
+				} else {
+					this.getPlayer().setHealth(this.getSavedHealth());
+				}
+				this.setSavedHealth(0.0F);
+			}
+		}
+	}
+
 	private void handleLifeShardModifier() {
 		ModifiableAttributeInstance health = this.getPlayer().getAttribute(Attributes.MAX_HEALTH);
-		AttributeModifier LIFE_SHARD_HEALTH = new AttributeModifier(LIFE_SHARD_HEALTH_ID, "Life Shard health increase", this.lifeShardCount * 2.0F, AttributeModifier.Operation.ADDITION);
+		AttributeModifier LIFE_SHARD_HEALTH = this.getLifeShardHealthAttributeModifier();
 		if (health != null) {
 			if (health.hasModifier(LIFE_SHARD_HEALTH)) {
 				health.removeModifier(LIFE_SHARD_HEALTH);
@@ -468,15 +477,31 @@ public class AetherPlayer implements IAetherPlayer
 	}
 
 	@Override
+	public void setSavedHealth(float health) {
+		this.savedHealth = health;
+	}
+
+	@Override
+	public float getSavedHealth() {
+		return this.savedHealth;
+	}
+
+	@Override
 	public void addToLifeShardCount(int amountToAdd) {
 		this.lifeShardCount += amountToAdd;
-		handleLifeShardModifier();
 	}
 
 	@Override
 	public void setLifeShardCount(int amount) {
 		this.lifeShardCount = amount;
-		handleLifeShardModifier();
+	}
+
+	@Override
+	public int getLifeShardCount() {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), this.lifeShardCount), (ServerPlayerEntity) this.getPlayer());
+		}
+		return this.lifeShardCount;
 	}
 
 	@Override
@@ -485,7 +510,7 @@ public class AetherPlayer implements IAetherPlayer
 	}
 
 	@Override
-	public int getLifeShardCount() {
-		return this.lifeShardCount;
+	public AttributeModifier getLifeShardHealthAttributeModifier() {
+		return new AttributeModifier(LIFE_SHARD_HEALTH_ID, "Life Shard health increase", this.getLifeShardCount() * 2.0F, AttributeModifier.Operation.ADDITION);
 	}
 }

@@ -2,6 +2,8 @@ package com.gildedgames.aether.common.event.listeners.capability;
 
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -25,6 +27,17 @@ public class AetherPlayerListener
     }
 
     @SubscribeEvent
+    public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
+        PlayerEntity player = event.getPlayer();
+        IAetherPlayer.get(player).ifPresent((aetherPlayer) ->  {
+            ModifiableAttributeInstance health = player.getAttribute(Attributes.MAX_HEALTH);
+            if (health != null && health.hasModifier(aetherPlayer.getLifeShardHealthAttributeModifier())) {
+                aetherPlayer.setSavedHealth(player.getHealth());
+            }
+        });
+    }
+
+    @SubscribeEvent
     public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity) {
             IAetherPlayer.get((PlayerEntity) event.getEntityLiving()).ifPresent(IAetherPlayer::onUpdate);
@@ -39,6 +52,10 @@ public class AetherPlayerListener
                 () -> new IllegalStateException("Player " + event.getPlayer().getName().getContents() + " has no AetherPlayer capability!"));
 
         newPlayer.copyFrom(original);
-        newPlayer.copyHealth(original, event.isWasDeath());
+        if (!event.isWasDeath()) {
+            newPlayer.setSavedHealth(original.getPlayer().getHealth());
+        } else {
+            newPlayer.setSavedHealth(1024.0F); //Max health.
+        }
     }
 }

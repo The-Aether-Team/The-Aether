@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.capability.interfaces;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -15,7 +16,6 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 	}
 
 	void copyFrom(IAetherPlayer other);
-	void copyHealth(IAetherPlayer other, boolean wasDeath);
 
 	void sync();
 
@@ -55,8 +55,12 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 	void setProjectileImpactedTimer(int timer);
 	int getProjectileImpactedTimer();
 
+	void setSavedHealth(float health);
+	float getSavedHealth();
+
 	void addToLifeShardCount(int amountToAdd);
 	void setLifeShardCount(int amount);
-	int getLifeShardLimit();
 	int getLifeShardCount();
+	int getLifeShardLimit();
+	AttributeModifier getLifeShardHealthAttributeModifier();
 }
