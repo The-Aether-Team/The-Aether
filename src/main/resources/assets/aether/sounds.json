@@ -257,58 +257,10 @@
 
 
 
-  "music.menu": {
-    "sounds": [
-      {
-        "name": "aether:music/menu",
-        "stream": true
-      }
-    ]
-  },
-  "music.aether1": {
-    "sounds": [
-      {
-        "name": "aether:music/aether1",
-        "stream": true
-      }
-    ]
-  },
-  "music.aether2": {
-    "sounds": [
-      {
-        "name": "aether:music/aether2",
-        "stream": true
-      }
-    ]
-  },
-  "music.aether3": {
-    "sounds": [
-      {
-        "name": "aether:music/aether3",
-        "stream": true
-      }
-    ]
-  },
-  "music.aether4": {
-    "sounds": [
-      {
-        "name": "aether:music/aether4",
-        "stream": true
-      }
-    ]
-  },
   "ui.toast.aether_general": {
     "sounds": [
       {
         "name": "aether:achievement/achievement_gen",
-        "stream": true
-      }
-    ]
-  },
-  "ui.toast.aether_silver": {
-    "sounds": [
-      {
-        "name": "aether:achievement/achievement_silver",
         "stream": true
       }
     ]
@@ -321,6 +273,52 @@
       }
     ]
   },
+  "ui.toast.aether_silver": {
+    "sounds": [
+      {
+        "name": "aether:achievement/achievement_silver",
+        "stream": true
+      }
+    ]
+  },
+  "music.menu": {
+    "sounds": [
+      {
+        "name": "aether:music/menu",
+        "stream": true
+      }
+    ]
+  },
+  "music.aether": {
+    "sounds": [
+      {
+        "name": "aether:music/aether1",
+        "stream": true
+      },
+      {
+        "name": "aether:music/aether2",
+        "stream": true
+      },
+      {
+        "name": "aether:music/aether3",
+        "stream": true
+      },
+      {
+        "name": "aether:music/aether4",
+        "stream": true
+      },
+      {
+        "name": "aether:music/aether5",
+        "stream": true
+      }
+    ]
+  },
+
+
+
+
+
+
   "entity.dart.hit": {
     "subtitle": "subtitles.entity.dart.hit",
     "sounds": ["aether:entity/projectile/shoot"]

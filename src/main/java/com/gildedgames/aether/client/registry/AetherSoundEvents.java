@@ -50,16 +50,19 @@ public class AetherSoundEvents
 	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_LEGACY = register("item.music_disc.legacy");
 
 
-	//move ui to the end then music after it
-	public static final RegistryObject<SoundEvent> MUSIC_MENU = register("music.menu");
-	public static final RegistryObject<SoundEvent> MUSIC_AETHER1 = register("music.aether1");
-	public static final RegistryObject<SoundEvent> MUSIC_AETHER2 = register("music.aether2");
-	public static final RegistryObject<SoundEvent> MUSIC_AETHER3 = register("music.aether3");
-	public static final RegistryObject<SoundEvent> MUSIC_AETHER4 = register("music.aether4");
 
+
+	//move ui to the end then music after it
 	public static final RegistryObject<SoundEvent> UI_TOAST_AETHER_GENERAL = register("ui.toast.aether_general");
-	public static final RegistryObject<SoundEvent> UI_TOAST_AETHER_SILVER = register("ui.toast.aether_silver");
 	public static final RegistryObject<SoundEvent> UI_TOAST_AETHER_BRONZE = register("ui.toast.aether_bronze");
+	public static final RegistryObject<SoundEvent> UI_TOAST_AETHER_SILVER = register("ui.toast.aether_silver");
+
+	public static final RegistryObject<SoundEvent> MUSIC_MENU = register("music.menu");
+	public static final RegistryObject<SoundEvent> MUSIC_AETHER = register("music.aether");
+
+
+
+
 
 	public static final RegistryObject<SoundEvent> ENTITY_DART_HIT = register("entity.dart.hit");
 

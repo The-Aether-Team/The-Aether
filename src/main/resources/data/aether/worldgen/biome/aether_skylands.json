@@ -13,7 +13,13 @@
     "water_fog_color": 329011,
     "grass_color": 11665355,
     "foliage_color": 11665355,
-    "grass_color_modifier": "none"
+    "grass_color_modifier": "none",
+    "music": {
+      "sound": "aether:music.aether",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": true
+    }
   },
   "surface_builder": "aether:aether_grass",
   "carvers": {
