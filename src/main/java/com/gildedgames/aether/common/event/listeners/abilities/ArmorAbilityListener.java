@@ -45,6 +45,7 @@ public class ArmorAbilityListener
         } else if (EquipmentUtil.hasFullPhoenixSet(entity)) {
             entity.clearFire();
             if (entity.isInLava()) {
+                entity.fallDistance *= 0.0F;
                 float defaultBoost = 10.5F;
                 float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
                 if (depthStriderModifier > 0.0F) {

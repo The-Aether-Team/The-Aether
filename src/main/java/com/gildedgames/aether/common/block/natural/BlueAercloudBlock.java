@@ -22,7 +22,7 @@ public class BlueAercloudBlock extends AercloudBlock
 	
 	@Override
 	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
-		entity.fallDistance = 0.0F;
+		entity.fallDistance *= 0.0F;
 		Vector3d motion = entity.getDeltaMovement();
 
 		if (entity.isShiftKeyDown()) {

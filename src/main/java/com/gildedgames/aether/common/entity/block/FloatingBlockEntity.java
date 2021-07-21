@@ -182,7 +182,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
     private void floatEntities() {
         for (Entity entity : this.getCarriedEntityList()) {
             entity.setOnGround(true);
-            entity.fallDistance = 0.0F;
+            entity.fallDistance *= 0.0F;
             entity.setPos(entity.getX(), getY() + 1.0D, entity.getZ());
         }
     }
