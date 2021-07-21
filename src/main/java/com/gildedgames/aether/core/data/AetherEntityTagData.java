@@ -49,7 +49,9 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 .add(AetherEntityTypes.POISON_DART.get())
                 .add(AetherEntityTypes.ENCHANTED_DART.get())
                 .add(AetherEntityTypes.POISON_NEEDLE.get())
-                .add(AetherEntityTypes.ZEPHYR_SNOWBALL.get());
+                .add(AetherEntityTypes.ZEPHYR_SNOWBALL.get())
+                .add(AetherEntityTypes.LIGHTNING_KNIFE.get())
+                .add(AetherEntityTypes.HAMMER_PROJECTILE.get());
 
         //vanilla
         tag(EntityTypeTags.IMPACT_PROJECTILES)
