@@ -54,12 +54,12 @@ public abstract class AbstractParachuteEntity extends Entity
             Vector3d parachuteVec = this.getDeltaMovement();
             Vector3d passengerVec = passenger.getDeltaMovement();
             if (passengerVec.x() != 0.0D || passengerVec.z() != 0.0D) {
-                this.parachuteSpeed = MathHelper.approach(this.parachuteSpeed, 0.6F, 0.025F);
+                this.parachuteSpeed = MathHelper.approach(this.parachuteSpeed, 0.8F, 0.025F);
             } else {
                 this.parachuteSpeed = MathHelper.approach(this.parachuteSpeed, 0.0F, 0.0005F);
             }
-            double x = this.parachuteSpeed * (passengerVec.x() * 10.0D);
-            double z = this.parachuteSpeed * (passengerVec.z() * 10.0D);
+            double x = this.parachuteSpeed * (passengerVec.x() * 12.0D);
+            double z = this.parachuteSpeed * (passengerVec.z() * 12.0D);
             this.setDeltaMovement(parachuteVec.add((new Vector3d(x, 0.0D, z)).subtract(parachuteVec).scale(0.2D)));
             Vector3d parachuteVec2 = this.getDeltaMovement();
             this.setDeltaMovement(parachuteVec2.x(), -0.15, parachuteVec2.z());
