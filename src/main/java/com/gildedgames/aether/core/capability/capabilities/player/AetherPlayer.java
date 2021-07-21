@@ -90,45 +90,45 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public void deserializeNBT(CompoundNBT nbt) {
 		if (nbt.contains("CanGetPortal")) {
-			this.setCanGetPortal(nbt.getBoolean("CanGetPortal"));
+			this.canGetPortal = nbt.getBoolean("CanGetPortal");
 		}
 		if (nbt.contains("RemedyMaximum")) {
-			this.setRemedyMaximum(nbt.getInt("RemedyMaximum"));
+			this.remedyMaximum = nbt.getInt("RemedyMaximum");
 		}
 		if (nbt.contains("RemedyTimer")) {
-			this.setRemedyTimer(nbt.getInt("RemedyTimer"));
+			this.remedyTimer = nbt.getInt("RemedyTimer");
 		}
 		if (nbt.contains("ProjectileImpactedMaximum")) {
-			this.setProjectileImpactedMaximum(nbt.getInt("ProjectileImpactedMaximum"));
+			this.projectileImpactedMaximum = nbt.getInt("ProjectileImpactedMaximum");
 		}
 		if (nbt.contains("ProjectileImpactedTimer")) {
-			this.setProjectileImpactedTimer(nbt.getInt("ProjectileImpactedTimer"));
+			this.projectileImpactedTimer = nbt.getInt("ProjectileImpactedTimer");
 		}
 		if (nbt.contains("SavedHealth")) {
-			this.setSavedHealth(nbt.getFloat("SavedHealth"));
+			this.savedHealth = nbt.getFloat("SavedHealth");
 		}
 		if (nbt.contains("LifeShardCount")) {
-			this.setLifeShardCount(nbt.getInt("LifeShardCount"));
+			this.lifeShardCount = nbt.getInt("LifeShardCount");
 		}
 	}
-	
+
 	@Override
-	public void copyFrom(IAetherPlayer other) {
+	public void copyFrom(IAetherPlayer other, boolean isWasDeath) {
+		if (!isWasDeath) {
+			this.setRemedyMaximum(other.getRemedyMaximum());
+			this.setRemedyTimer(other.getRemedyTimer());
+			this.setProjectileImpactedMaximum(other.getProjectileImpactedMaximum());
+			this.setProjectileImpactedTimer(other.getProjectileImpactedTimer());
+		}
 		this.setCanGetPortal(other.canGetPortal());
-		this.setRemedyMaximum(other.getRemedyMaximum());
-		this.setRemedyTimer(other.getRemedyTimer());
-		this.setProjectileImpactedMaximum(other.getProjectileImpactedMaximum());
-		this.setProjectileImpactedTimer(other.getProjectileImpactedTimer());
 		this.setLifeShardCount(other.getLifeShardCount());
 	}
 
 	@Override
 	public void sync() {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.remedyMaximum, this.remedyTimer), (ServerPlayerEntity) this.getPlayer());
-			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.projectileImpactedMaximum, this.projectileImpactedTimer), (ServerPlayerEntity) this.getPlayer());
-			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), this.lifeShardCount), (ServerPlayerEntity) this.getPlayer());
-		}
+		this.sendRemedyPacket(this.remedyMaximum, this.remedyTimer);
+		this.sendProjectileImpactedPacket(this.projectileImpactedMaximum, this.projectileImpactedTimer);
+		this.sendLifeShardPacket(this.lifeShardCount);
 	}
 
 	@Override
@@ -387,93 +387,86 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public void setGoldenDartCount(int count) {
+		this.sendGoldenDartPacket(count);
 		this.goldenDartCount = count;
 	}
 
 	@Override
 	public int getGoldenDartCount() {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new GoldenDartCountPacket(this.getPlayer().getId(), this.goldenDartCount), (ServerPlayerEntity) this.getPlayer());
-		}
+		this.sendGoldenDartPacket(this.goldenDartCount);
 		return this.goldenDartCount;
 	}
 
 	@Override
 	public void setPoisonDartCount(int count) {
+		this.sendPoisonDartPacket(count);
 		this.poisonDartCount = count;
 	}
 
 	@Override
 	public int getPoisonDartCount() {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new PoisonDartCountPacket(this.getPlayer().getId(), this.poisonDartCount), (ServerPlayerEntity) this.getPlayer());
-		}
+		this.sendPoisonDartPacket(this.poisonDartCount);
 		return this.poisonDartCount;
 	}
 
 	@Override
 	public void setEnchantedDartCount(int count) {
+		this.sendEnchantedDartPacket(count);
 		this.enchantedDartCount = count;
 	}
 
 	@Override
 	public int getEnchantedDartCount() {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new EnchantedDartCountPacket(this.getPlayer().getId(), this.enchantedDartCount), (ServerPlayerEntity) this.getPlayer());
-		}
+		this.sendEnchantedDartPacket(this.enchantedDartCount);
 		return this.enchantedDartCount;
 	}
 
 	@Override
 	public void setRemedyMaximum(int remedyMaximum) {
+		this.sendRemedyPacket(remedyMaximum, this.remedyTimer);
 		this.remedyMaximum = remedyMaximum;
 	}
 
 	@Override
 	public int getRemedyMaximum() {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.remedyMaximum, this.remedyTimer), (ServerPlayerEntity) this.getPlayer());
-		}
+		this.sendRemedyPacket(this.remedyMaximum, this.remedyTimer);
 		return remedyMaximum;
 	}
 
 	@Override
 	public void setRemedyTimer(int timer) {
+		this.sendRemedyPacket(this.remedyMaximum, timer);
 		this.remedyTimer = timer;
 	}
 
 	@Override
 	public int getRemedyTimer() {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), this.remedyMaximum, this.remedyTimer), (ServerPlayerEntity) this.getPlayer());
-		}
+		this.sendRemedyPacket(this.remedyMaximum, this.remedyTimer);
 		return this.remedyTimer;
 	}
 
 	@Override
 	public void setProjectileImpactedMaximum(int projectileImpactedMaximum) {
+		this.sendProjectileImpactedPacket(projectileImpactedMaximum, this.projectileImpactedTimer);
 		this.projectileImpactedMaximum = projectileImpactedMaximum;
 	}
 
 	@Override
 	public int getProjectileImpactedMaximum() {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.projectileImpactedMaximum, this.projectileImpactedTimer), (ServerPlayerEntity) this.getPlayer());
-		}
-		return projectileImpactedMaximum;
+		this.sendProjectileImpactedPacket(this.projectileImpactedMaximum, this.projectileImpactedTimer);
+		return this.projectileImpactedMaximum;
 	}
 
 	@Override
 	public void setProjectileImpactedTimer(int projectileImpactedTimer) {
+		this.sendProjectileImpactedPacket(this.projectileImpactedMaximum, projectileImpactedTimer);
 		this.projectileImpactedTimer = projectileImpactedTimer;
 	}
 
 	@Override
 	public int getProjectileImpactedTimer() {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), this.projectileImpactedMaximum, this.projectileImpactedTimer), (ServerPlayerEntity) this.getPlayer());
-		}
-		return projectileImpactedTimer;
+		this.sendProjectileImpactedPacket(this.projectileImpactedMaximum, this.projectileImpactedTimer);
+		return this.projectileImpactedTimer;
 	}
 
 	@Override
@@ -488,19 +481,20 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public void addToLifeShardCount(int amountToAdd) {
-		this.lifeShardCount += amountToAdd;
+		int newAmount = this.lifeShardCount + amountToAdd;
+		this.sendLifeShardPacket(newAmount);
+		this.lifeShardCount = newAmount;
 	}
 
 	@Override
 	public void setLifeShardCount(int amount) {
+		this.sendLifeShardPacket(amount);
 		this.lifeShardCount = amount;
 	}
 
 	@Override
 	public int getLifeShardCount() {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), this.lifeShardCount), (ServerPlayerEntity) this.getPlayer());
-		}
+		this.sendLifeShardPacket(this.lifeShardCount);
 		return this.lifeShardCount;
 	}
 
@@ -512,5 +506,41 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public AttributeModifier getLifeShardHealthAttributeModifier() {
 		return new AttributeModifier(LIFE_SHARD_HEALTH_ID, "Life Shard health increase", this.getLifeShardCount() * 2.0F, AttributeModifier.Operation.ADDITION);
+	}
+
+	private void sendGoldenDartPacket(int count) {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new GoldenDartCountPacket(this.getPlayer().getId(), count), (ServerPlayerEntity) this.getPlayer());
+		}
+	}
+
+	private void sendPoisonDartPacket(int count) {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new PoisonDartCountPacket(this.getPlayer().getId(), count), (ServerPlayerEntity) this.getPlayer());
+		}
+	}
+
+	private void sendEnchantedDartPacket(int count) {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new EnchantedDartCountPacket(this.getPlayer().getId(), count), (ServerPlayerEntity) this.getPlayer());
+		}
+	}
+
+	private void sendRemedyPacket(int maximum, int timer) {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), maximum, timer), (ServerPlayerEntity) this.getPlayer());
+		}
+	}
+
+	private void sendProjectileImpactedPacket(int maximum, int timer) {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), maximum, timer), (ServerPlayerEntity) this.getPlayer());
+		}
+	}
+
+	private void sendLifeShardPacket(int amount) {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), amount), (ServerPlayerEntity) this.getPlayer());
+		}
 	}
 }

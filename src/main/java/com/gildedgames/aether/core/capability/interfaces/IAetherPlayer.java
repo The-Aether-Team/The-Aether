@@ -15,7 +15,7 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 		return player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
 	}
 
-	void copyFrom(IAetherPlayer other);
+	void copyFrom(IAetherPlayer other, boolean isWasDeath);
 
 	void sync();
 
