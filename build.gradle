@@ -43,7 +43,8 @@ minecraft {
             //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             //property 'forge.logging.console.level', 'debug'
 
-            property 'mixin.env.disableRefMap', 'true'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
             arg "--mixin=aether.mixins.json"
 
             mods {
@@ -59,7 +60,8 @@ minecraft {
             //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             //property 'forge.logging.console.level', 'debug'
 
-            property 'mixin.env.disableRefMap', 'true'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
             arg "--mixin=aether.mixins.json"
 
             mods {
@@ -71,6 +73,10 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
+
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            arg "--mixin=aether.mixins.json"
 
             //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             //property 'forge.logging.console.level', 'debug'
@@ -108,6 +114,8 @@ dependencies {
     compileOnly fg.deobf("curse.maven:curious-elytra-317716:${project.curiouselytra_version}")
 
     runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
+
+    runtimeOnly fg.deobf("curse.maven:shutup-experimental-settings-407174:${project.shutupexperimentalsettings_version}")
 
     //compileOnly fileTree(dir: 'libs', include: '*.jar')
 }
