@@ -8,6 +8,7 @@ import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -93,6 +94,12 @@ public class AccessoryAbilityListener
     private static void handleDeflection(ProjectileImpactEvent event, ProjectileEntity projectile, LivingEntity impactedLiving, ImmutableTriple<String, Integer, ItemStack> triple) {
         event.setCanceled(true);
         projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25D));
+        if (projectile instanceof DamagingProjectileEntity) {
+            DamagingProjectileEntity damagingProjectileEntity = (DamagingProjectileEntity) projectile;
+            damagingProjectileEntity.xPower *= -0.25D;
+            damagingProjectileEntity.yPower *= -0.25D;
+            damagingProjectileEntity.zPower *= -0.25D;
+        }
         triple.getRight().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), entity));
     }
 }
