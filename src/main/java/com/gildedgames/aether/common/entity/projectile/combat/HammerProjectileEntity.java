@@ -91,8 +91,10 @@ public class HammerProjectileEntity extends ThrowableEntity
 
     private void launchTarget(Entity target) {
         if (target != this.getOwner()) {
-            target.hurt(DamageSource.thrown(this, this.getOwner()), 5);
-            target.push(this.getDeltaMovement().x, 0.6D, this.getDeltaMovement().z);
+            if (this.getOwner() == null || target != this.getOwner().getVehicle()) {
+                target.hurt(DamageSource.thrown(this, this.getOwner()), 5);
+                target.push(this.getDeltaMovement().x, 0.6D, this.getDeltaMovement().z);
+            }
         }
     }
 

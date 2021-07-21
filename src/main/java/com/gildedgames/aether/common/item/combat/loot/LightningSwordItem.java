@@ -7,11 +7,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.item.*;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
 public class LightningSwordItem extends SwordItem
 {
     public LightningSwordItem() {
@@ -29,17 +25,5 @@ public class LightningSwordItem extends SwordItem
             attacker.level.addFreshEntity(lightningBolt);
         }
         return super.hurtEnemy(stack, target, attacker);
-    }
-
-    @SubscribeEvent
-    public static void onLightningStrike(EntityStruckByLightningEvent event) {
-        if (event.getEntity() instanceof LivingEntity) {
-            LivingEntity entity = (LivingEntity) event.getEntity();
-            ILightningTracker.get(event.getLightning()).ifPresent(lightningTracker -> {
-                if (lightningTracker.getOwner() == entity) {
-                    event.setCanceled(true);
-                }
-            });
-        }
     }
 }
