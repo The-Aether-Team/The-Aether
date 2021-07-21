@@ -10,14 +10,17 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.CuriosApi;
 
 @Mod.EventBusSubscriber
@@ -65,18 +68,31 @@ public class AccessoryAbilityListener
                 ProjectileEntity projectile = (ProjectileEntity) event.getEntity();
                 if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
                     CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.REPULSION_SHIELD.get(), impactedLiving).ifPresent((triple) -> {
-                        event.setCanceled(true);
-                        if (impactedEntity instanceof PlayerEntity) {
-                            IAetherPlayer.get((PlayerEntity) impactedLiving).ifPresent(aetherPlayer -> {
-                                aetherPlayer.setProjectileImpactedMaximum(150);
-                                aetherPlayer.setProjectileImpactedTimer(150);
-                            });
+                        Vector3d motion = impactedLiving.getDeltaMovement();
+                        if (!impactedLiving.level.isClientSide) {
+                            if (impactedLiving instanceof PlayerEntity) {
+                                IAetherPlayer.get((PlayerEntity) impactedLiving).ifPresent(aetherPlayer -> {
+                                    if (!aetherPlayer.isMoving()) {
+                                        aetherPlayer.setProjectileImpactedMaximum(150);
+                                        aetherPlayer.setProjectileImpactedTimer(150);
+                                        handleDeflection(event, projectile, impactedLiving, triple);
+                                    }
+                                });
+                            } else {
+                                if (motion.x() == 0.0 && (motion.y() == -0.0784000015258789 || motion.y() == 0.0) && motion.z() == 0.0) {
+                                    handleDeflection(event, projectile, impactedLiving, triple);
+                                }
+                            }
                         }
-                        projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25D));
-                        triple.getRight().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), entity));
                     });
                 }
             }
         }
+    }
+
+    private static void handleDeflection(ProjectileImpactEvent event, ProjectileEntity projectile, LivingEntity impactedLiving, ImmutableTriple<String, Integer, ItemStack> triple) {
+        event.setCanceled(true);
+        projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25D));
+        triple.getRight().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), entity));
     }
 }

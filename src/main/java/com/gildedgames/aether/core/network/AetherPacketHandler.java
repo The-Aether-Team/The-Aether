@@ -6,6 +6,7 @@ import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import com.gildedgames.aether.core.network.packet.client.*;
 import com.gildedgames.aether.core.network.packet.server.ExtendedAttackPacket;
 import com.gildedgames.aether.core.network.packet.server.JumpPacket;
+import com.gildedgames.aether.core.network.packet.server.MovementPacket;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.RegistryKey;
@@ -47,6 +48,7 @@ public class AetherPacketHandler
 		// SERVER
 		register(ExtendedAttackPacket.class, ExtendedAttackPacket::decode);
 		register(JumpPacket.class, JumpPacket::decode);
+		register(MovementPacket.class, MovementPacket::decode);
 	}
 
 	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<PacketBuffer, MSG> decoder) {

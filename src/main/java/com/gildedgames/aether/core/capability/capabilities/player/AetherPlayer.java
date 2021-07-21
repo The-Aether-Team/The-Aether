@@ -41,6 +41,8 @@ public class AetherPlayer implements IAetherPlayer
 	public int aetherPortalTimer = 0;
 	public float prevPortalAnimTime, portalAnimTime = 0.0F;
 
+	private boolean isMoving;
+
 	private boolean isJumping;
 
 	private int goldenDartCount = 0;
@@ -373,6 +375,16 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public float getPrevPortalAnimTime() {
 		return this.prevPortalAnimTime;
+	}
+
+	@Override
+	public void setMoving(boolean isMoving) {
+		this.isMoving = isMoving;
+	}
+
+	@Override
+	public boolean isMoving() {
+		return this.isMoving;
 	}
 
 	@Override
