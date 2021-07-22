@@ -31,6 +31,15 @@ public class DartItem extends Item
         }
     }
 
+    public AbstractDartEntity createDart(World world) {
+        Entity entity = this.dartEntity.get().create(world);
+        if (entity instanceof AbstractDartEntity) {
+            return (AbstractDartEntity) entity;
+        } else {
+            return null;
+        }
+    }
+
     public boolean isInfinite(ItemStack dartShooter) {
         int enchant = net.minecraft.enchantment.EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY_ARROWS, dartShooter);
         return enchant > 0 && this.getClass() == DartItem.class;

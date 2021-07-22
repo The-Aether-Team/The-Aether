@@ -13,12 +13,12 @@ public class PoisonDartEntity extends AbstractDartEntity
 {
     public PoisonDartEntity(EntityType<? extends PoisonDartEntity> type, World worldIn) {
         super(type, worldIn);
-        this.setBaseDamage(0.0D);
+        this.setBaseDamage(0.5D);
     }
 
     public PoisonDartEntity(World worldIn) {
         super(AetherEntityTypes.POISON_DART.get(), worldIn);
-        this.setBaseDamage(0.0D);
+        this.setBaseDamage(0.5D);
     }
 
     @Override

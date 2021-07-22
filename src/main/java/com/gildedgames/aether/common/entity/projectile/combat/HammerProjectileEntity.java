@@ -31,6 +31,10 @@ public class HammerProjectileEntity extends ThrowableEntity
         super(AetherEntityTypes.HAMMER_PROJECTILE.get(), owner, world);
     }
 
+    public HammerProjectileEntity(World world) {
+        super(AetherEntityTypes.HAMMER_PROJECTILE.get(), world);
+    }
+
     @Override
     public void tick() {
         super.tick();

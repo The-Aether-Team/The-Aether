@@ -247,6 +247,35 @@ public class AetherPortalBlock extends Block
 		return false;
 	}
 
+	public static boolean fillPortalBlocksWithoutContext(World world, BlockPos pos, ItemStack stack) {
+		if (world.dimension() == World.OVERWORLD || world.dimension() == AetherDimensions.AETHER_WORLD) {
+			boolean tryPortal = false;
+			for (Direction direction : Direction.values()) {
+				if (world.getBlockState(pos.relative(direction)).getBlock().is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)) {
+					if (AetherBlocks.AETHER_PORTAL.get().isPortal(world, pos) != null) {
+						tryPortal = true;
+						break;
+					}
+				}
+			}
+			if (tryPortal) {
+				if (AetherBlocks.AETHER_PORTAL.get().trySpawnPortal(world, pos)) {
+					if (stack.isDamageableItem()) {
+						int damage = stack.getDamageValue();
+						stack.setDamageValue(damage + 1);
+						if (stack.getDamageValue() >= stack.getMaxDamage()) {
+							stack.shrink(1);
+						}
+					} else {
+						stack.shrink(1);
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	@Nullable
 	public AetherPortalBlock.Size isPortal(IWorld world, BlockPos pos) {
 		AetherPortalBlock.Size aetherPortalSizeX = new AetherPortalBlock.Size(world, pos, Axis.X);

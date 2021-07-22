@@ -102,4 +102,35 @@ public interface ISwetBallConversion
 
         return ActionResultType.PASS;
     }
+
+    static boolean convertBlockWithoutContext(World world, BlockPos pos, ItemStack stack) {
+        BlockState oldBlockState = world.getBlockState(pos);
+        BlockState newBlockState = oldBlockState;
+
+        Block oldBlock = oldBlockState.getBlock();
+        if (DEFAULT_CONVERSIONS.containsKey(oldBlock)) {
+            newBlockState = DEFAULT_CONVERSIONS.get(oldBlock);
+        }
+
+        Biome biome = world.getBiome(pos);
+        ResourceLocation biomeName = biome.getRegistryName();
+        if (BIOME_CONVERSIONS.containsKey(biomeName)) {
+            Pair<Block, BlockState> blockPair = BIOME_CONVERSIONS.get(biomeName);
+            if (blockPair.getKey() == oldBlockState.getBlock()) {
+                newBlockState = blockPair.getValue();
+            }
+        }
+
+        SwetBallConvertEvent event = AetherEventHooks.onSwetBallConvert(null, world, pos, stack, oldBlockState, newBlockState);
+        if (!event.isCanceled()) {
+            newBlockState = event.getNewBlockState();
+            if (newBlockState != oldBlockState && world.getBlockState(pos.above()).isAir()) {
+                world.setBlockAndUpdate(pos, newBlockState);
+                stack.shrink(1);
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

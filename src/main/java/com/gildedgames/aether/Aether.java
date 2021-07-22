@@ -3,8 +3,11 @@ package com.gildedgames.aether;
 import com.gildedgames.aether.client.AetherClient;
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
+import com.gildedgames.aether.common.entity.projectile.combat.*;
+import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
+import com.gildedgames.aether.common.item.miscellaneous.bucket.SkyrootWaterBucketItem;
 import com.gildedgames.aether.core.AetherConfig;
-import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.core.data.*;
 import com.gildedgames.aether.common.entity.tile.AltarTileEntity;
@@ -22,16 +25,18 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.dispenser.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.projectile.SmallFireballEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.SpawnEggItem;
+import net.minecraft.entity.projectile.*;
+import net.minecraft.fluid.FlowingFluid;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.*;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.DispenserTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -49,7 +54,6 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
@@ -158,26 +162,153 @@ public class Aether
 	}
 
 	private void registerDispenserBehaviors() {
-		IDispenseItemBehavior dispenseSpawnEgg = new DefaultDispenseItemBehavior() {
+		DispenserBlock.registerBehavior(AetherItems.GOLDEN_DART.get(), new DispenseDartBehavior(AetherItems.GOLDEN_DART));
+		DispenserBlock.registerBehavior(AetherItems.POISON_DART.get(), new DispenseDartBehavior(AetherItems.POISON_DART));
+		DispenserBlock.registerBehavior(AetherItems.ENCHANTED_DART.get(), new DispenseDartBehavior(AetherItems.ENCHANTED_DART));
+		DispenserBlock.registerBehavior(AetherItems.LIGHTNING_KNIFE.get(), new ProjectileDispenseBehavior()
+		{
+			@Override
+			protected ProjectileEntity getProjectile(World world, IPosition position, ItemStack stack) {
+				return Util.make(new LightningKnifeEntity(world), (projectile) -> {
+					projectile.setPos(position.x(), position.y(), position.z());
+					projectile.setItem(stack);
+				});
+			}
+
+			@Override
+			protected float getUncertainty() {
+				return 1.5F;
+			}
+		});
+		DispenserBlock.registerBehavior(AetherItems.HAMMER_OF_NOTCH.get(), new ProjectileDispenseBehavior()
+		{
+			@Override
+			public ItemStack execute(IBlockSource blockSource, ItemStack stack) {
+				World world = blockSource.getLevel();
+				IPosition iposition = DispenserBlock.getDispensePosition(blockSource);
+				Direction direction = blockSource.getBlockState().getValue(DispenserBlock.FACING);
+				ProjectileEntity projectileentity = this.getProjectile(world, iposition, stack);
+				projectileentity.shoot(direction.getStepX(), (float) direction.getStepY(), direction.getStepZ(), this.getPower(), this.getUncertainty());
+				world.addFreshEntity(projectileentity);
+				int damage = stack.getDamageValue();
+				stack.setDamageValue(damage + 1);
+				if (stack.getDamageValue() >= stack.getMaxDamage()) {
+					stack.shrink(1);
+				}
+				return stack;
+			}
+
+			@Override
+			protected ProjectileEntity getProjectile(World world, IPosition position, ItemStack stack) {
+				HammerProjectileEntity hammerProjectile = new HammerProjectileEntity(world);
+				hammerProjectile.setPos(position.x(), position.y(), position.z());
+				return hammerProjectile;
+			}
+
+			@Override
+			protected float getUncertainty() {
+				return 1.0F;
+			}
+		});
+		DispenserBlock.registerBehavior(AetherItems.SKYROOT_WATER_BUCKET.get(), new DefaultDispenseItemBehavior()
+		{
+			private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
+
+			@Override
+			public ItemStack execute(IBlockSource source, ItemStack stack) {
+				SkyrootWaterBucketItem bucketItem = (SkyrootWaterBucketItem) stack.getItem();
+				BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+				World world = source.getLevel();
+				if (bucketItem.tryPlaceContainedLiquid(null, world, blockpos, null)) {
+					return new ItemStack(AetherItems.SKYROOT_BUCKET.get());
+				} else {
+					return this.defaultDispenseItemBehavior.dispense(source, stack);
+				}
+			}
+		});
+		DispenserBlock.registerBehavior(AetherItems.SKYROOT_BUCKET.get(), new DefaultDispenseItemBehavior()
+		{
+			private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
+
+			@Override
+			public ItemStack execute(IBlockSource source, ItemStack stack) {
+				IWorld iworld = source.getLevel();
+				BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+				BlockState blockstate = iworld.getBlockState(blockpos);
+				Block block = blockstate.getBlock();
+				if (block instanceof IBucketPickupHandler) {
+					Fluid fluid = ((IBucketPickupHandler)block).takeLiquid(iworld, blockpos, blockstate);
+					if (!(fluid instanceof FlowingFluid)) {
+						return super.execute(source, stack);
+					} else {
+						if (fluid == Fluids.WATER) {
+							Item item = AetherItems.SKYROOT_WATER_BUCKET.get();
+							stack.shrink(1);
+							if (stack.isEmpty()) {
+								return new ItemStack(item);
+							} else {
+								if (source.<DispenserTileEntity>getEntity().addItem(new ItemStack(item)) < 0) {
+									this.defaultDispenseItemBehavior.dispense(source, new ItemStack(item));
+								}
+								return stack;
+							}
+						} else {
+							return super.execute(source, stack);
+						}
+					}
+				} else {
+					return super.execute(source, stack);
+				}
+			}
+		});
+		DispenserBlock.registerBehavior(AetherItems.AMBROSIUM_SHARD.get(), new OptionalDispenseBehavior()
+		{
+			@Override
+			protected ItemStack execute(IBlockSource source, ItemStack stack) {
+				this.setSuccess(true);
+				World world = source.getLevel();
+				BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+				BlockState blockstate = world.getBlockState(blockpos);
+				if (blockstate.getBlock().is(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)) {
+					world.setBlockAndUpdate(blockpos, AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get().defaultBlockState());
+					stack.shrink(1);
+				} else {
+					this.setSuccess(false);
+				}
+				return stack;
+			}
+		});
+		DispenserBlock.registerBehavior(AetherItems.SWET_BALL.get(), new OptionalDispenseBehavior()
+		{
+			@Override
+			protected ItemStack execute(IBlockSource source, ItemStack stack) {
+				this.setSuccess(true);
+				World world = source.getLevel();
+				BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+				if (!ISwetBallConversion.convertBlockWithoutContext(world, blockpos, stack)) {
+					this.setSuccess(false);
+				}
+				return stack;
+			}
+		});
+		IDispenseItemBehavior dispenseSpawnEgg = new DefaultDispenseItemBehavior()
+		{
 			@Override
 			public ItemStack execute(IBlockSource source, ItemStack stack) {
 				Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
-				EntityType<?> entitytype = ((SpawnEggItem)stack.getItem()).getType(stack.getTag());
-				entitytype.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
+				EntityType<?> entityType = ((SpawnEggItem)stack.getItem()).getType(stack.getTag());
+				entityType.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
 				stack.shrink(1);
 				return stack;
 			}
 		};
-
-		for (RegistryObject<Item> item : AetherItems.ITEMS.getEntries())
-		{
-			if (item.get() instanceof SpawnEggItem)
-			{
+		for (RegistryObject<Item> item : AetherItems.ITEMS.getEntries()) {
+			if (item.get() instanceof SpawnEggItem) {
 				DispenserBlock.registerBehavior(item.get(), dispenseSpawnEgg);
 			}
 		}
-
-		DispenserBlock.registerBehavior(Items.FIRE_CHARGE, new OptionalDispenseBehavior() {
+		DispenserBlock.registerBehavior(Items.FIRE_CHARGE, new OptionalDispenseBehavior()
+		{
 			@Override
 			public ItemStack execute(IBlockSource source, ItemStack stack) {
 				World world = source.getLevel();
@@ -206,7 +337,8 @@ public class Aether
 				source.getLevel().levelEvent(this.isSuccess()? 1018 : 1001, source.getPos(), 0);
 			}
 		});
-		DispenserBlock.registerBehavior(Items.FLINT_AND_STEEL, new OptionalDispenseBehavior() {
+		DispenserBlock.registerBehavior(Items.FLINT_AND_STEEL, new OptionalDispenseBehavior()
+		{
 			@Override
 			protected ItemStack execute(IBlockSource source, ItemStack stack) {
 				World world = source.getLevel();
@@ -238,7 +370,6 @@ public class Aether
 						stack.setCount(0);
 					}
 				}
-
 				return stack;
 			}
 		});

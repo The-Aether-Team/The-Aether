@@ -25,6 +25,10 @@ public class LightningKnifeEntity extends ProjectileItemEntity
 		super(AetherEntityTypes.LIGHTNING_KNIFE.get(), owner, worldIn);
 	}
 
+	public LightningKnifeEntity(World worldIn) {
+		super(AetherEntityTypes.LIGHTNING_KNIFE.get(), worldIn);
+	}
+
 	@Override
 	protected void onHit(RayTraceResult result) {
 		if (!this.level.isClientSide) {

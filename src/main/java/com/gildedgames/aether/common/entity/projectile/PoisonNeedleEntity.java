@@ -14,13 +14,11 @@ public class PoisonNeedleEntity extends AbstractDartEntity
     public PoisonNeedleEntity(EntityType<? extends PoisonNeedleEntity> type, World worldIn) {
         super(type, worldIn);
         this.setBaseDamage(1.0D);
-        this.setNoGravity(false);
     }
 
     public PoisonNeedleEntity(World worldIn, LivingEntity shooter) {
         super(AetherEntityTypes.POISON_NEEDLE.get(), shooter, worldIn);
         this.setBaseDamage(1.0D);
-        this.setNoGravity(false);
     }
 
     @Override
