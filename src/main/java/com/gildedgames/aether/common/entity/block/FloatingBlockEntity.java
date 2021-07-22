@@ -79,14 +79,11 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
     @Override
     public void tick() {
         if (this.blockState.isAir()) {
-            this.getCarriedEntityList().clear();
             this.remove();
         } else {
             this.time++;
             Block block = this.blockState.getBlock();
-            this.getCarriedEntityList().clear();
-            List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox().expandTowards(0.0D, 0.1D, 0.0D)));
-            this.getCarriedEntityList().addAll(list);
+            this.handleCarriedEntities();
             if (!this.isNoGravity()) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.04D, 0.0D));
             }
@@ -108,14 +105,12 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
                         if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                             this.dropItem();
                         }
-                        this.getCarriedEntityList().clear();
                         this.remove();
                     }
                 } else {
                     BlockState blockstate = this.level.getBlockState(blockPos);
                     this.setDeltaMovement(this.getDeltaMovement().multiply(0.7D, 1.5D, 0.7D));
                     if (!blockstate.is(Blocks.MOVING_PISTON)) {
-                        this.getCarriedEntityList().clear();
                         this.remove();
                         if (!this.cancelDrop) {
                             boolean canBeReplaced = blockstate.canBeReplaced(new DirectionalPlaceContext(this.level, blockPos, Direction.UP, ItemStack.EMPTY, Direction.DOWN));
@@ -144,6 +139,12 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
             this.setDeltaMovement(this.getDeltaMovement().scale(0.98D));
             this.floatEntities();
         }
+    }
+
+    @Override
+    public void remove() {
+        this.resetCarriedEntities();
+        super.remove();
     }
 
     private void dropItem() {
@@ -181,16 +182,31 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
 
     private void floatEntities() {
         for (Entity entity : this.getCarriedEntityList()) {
+            entity.setNoGravity(true);
             entity.setOnGround(true);
             entity.fallDistance *= 0.0F;
             entity.setPos(entity.getX(), getY() + 1.0D, entity.getZ());
         }
     }
 
-    @Override
-    public void remove() {
+    private void handleCarriedEntities() {
+        List<Entity> list = this.level.getEntities(this, this.getBoundingBox().expandTowards(0.0D, 0.1D, 0.0D));
+        if (!list.equals(this.getCarriedEntityList())) {
+            Aether.LOGGER.info(true);
+            this.resetCarriedEntities();
+        }
+        for (Entity entity : list) {
+            if (!this.getCarriedEntityList().contains(entity)) {
+                this.getCarriedEntityList().add(entity);
+            }
+        }
+    }
+
+    private void resetCarriedEntities() {
+        for (Entity entity : this.getCarriedEntityList()) {
+            entity.setNoGravity(false);
+        }
         this.getCarriedEntityList().clear();
-        super.remove();
     }
 
     public List<Entity> getCarriedEntityList() {
