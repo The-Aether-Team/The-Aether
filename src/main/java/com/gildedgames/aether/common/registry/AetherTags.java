@@ -48,7 +48,6 @@ public class AetherTags
 
 		public static final ITag.INamedTag<Item> BANNED_IN_AETHER = tag("banned_in_aether");
 		public static final ITag.INamedTag<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
-		public static final ITag.INamedTag<Item> AETHER_PORTAL_ACTIVATION_BUCKETS = tag("aether_portal_activation_buckets");
 		public static final ITag.INamedTag<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 		public static final ITag.INamedTag<Item> SKYROOT_STICKS = tag("skyroot_stick");
 		public static final ITag.INamedTag<Item> SKYROOT_TOOLS = tag("skyroot_tools");

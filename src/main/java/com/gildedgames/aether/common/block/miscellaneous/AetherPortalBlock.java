@@ -15,6 +15,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.state.EnumProperty;
@@ -24,7 +26,6 @@ import net.minecraft.util.*;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.*;
@@ -32,8 +33,8 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
@@ -199,15 +200,24 @@ public class AetherPortalBlock extends Block
 	}
 
 	@SubscribeEvent
-	public static void onBucketRightClicked(FillBucketEvent event) {
-		RayTraceResult rayTraceResult = event.getTarget();
-		if (rayTraceResult instanceof BlockRayTraceResult)  {
-			BlockRayTraceResult hitVec = (BlockRayTraceResult) rayTraceResult;
-			BlockPos pos = hitVec.getBlockPos().relative(hitVec.getDirection());
-			if (event.getEmptyBucket().getItem().is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_BUCKETS)) {
-				if (!AetherConfig.COMMON.disable_aether_portal.get()) {
-					Hand hand = event.getEmptyBucket().getItem() == event.getPlayer().getOffhandItem().getItem() ? Hand.OFF_HAND : Hand.MAIN_HAND;
-					if (fillPortalBlocks(event.getWorld(), pos, event.getPlayer(), hand, event.getEmptyBucket())) {
+	public static void onNeighborNotify(BlockEvent.NeighborNotifyEvent event) {
+		BlockPos pos = event.getPos();
+		World world = (World) event.getWorld();
+		BlockState blockstate = world.getBlockState(pos);
+		FluidState fluidstate = world.getFluidState(pos);
+		if (fluidstate.getType() == Fluids.WATER && !blockstate.isAir(world, pos)) {
+			if (world.dimension() == World.OVERWORLD || world.dimension() == AetherDimensions.AETHER_WORLD) {
+				boolean tryPortal = false;
+				for (Direction direction : Direction.values()) {
+					if (world.getBlockState(pos.relative(direction)).getBlock().is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)) {
+						if (AetherBlocks.AETHER_PORTAL.get().isPortal(world, pos) != null) {
+							tryPortal = true;
+							break;
+						}
+					}
+				}
+				if (tryPortal) {
+					if (AetherBlocks.AETHER_PORTAL.get().trySpawnPortal(world, pos)) {
 						event.setCanceled(true);
 					}
 				}

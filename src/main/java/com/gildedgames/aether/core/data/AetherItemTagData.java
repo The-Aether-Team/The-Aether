@@ -53,9 +53,6 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(Items.SOUL_TORCH)
                 .add(Items.FIRE_CHARGE);
         tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS);
-        tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_BUCKETS)
-                .add(Items.WATER_BUCKET)
-                .add(AetherItems.SKYROOT_WATER_BUCKET.get());
         tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS)
                 .add(Items.FLINT)
                 .addTag(Tags.Items.DUSTS_GLOWSTONE)

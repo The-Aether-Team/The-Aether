@@ -217,8 +217,8 @@ public class Aether
 			@Override
 			public ItemStack execute(IBlockSource source, ItemStack stack) {
 				SkyrootWaterBucketItem bucketItem = (SkyrootWaterBucketItem) stack.getItem();
-				BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
 				World world = source.getLevel();
+				BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
 				if (bucketItem.tryPlaceContainedLiquid(null, world, blockpos, null)) {
 					return new ItemStack(AetherItems.SKYROOT_BUCKET.get());
 				} else {

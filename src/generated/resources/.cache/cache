@@ -1213,7 +1213,6 @@ eb63088b6df7e0f3d78ff3e43d59e289e6677d27 data/aether/tags/entity_types/no_skyroo
 8d6c9296865148dd7bd9a1a7bd93162b92f9573c data/aether/tags/items/aerclouds.json
 36c4998736ba1b2f6f0dd59363b4fd9f1977f8cf data/aether/tags/items/aerogel.json
 c6ee5014148eca27283bde75333809c4f2d13051 data/aether/tags/items/aether_dirt.json
-15abb62625454f10b6e653236021c665d9960192 data/aether/tags/items/aether_portal_activation_buckets.json
 74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/aether/tags/items/aether_portal_activation_items.json
 b8d3d3798a4ff0dae36c060868da6b632a764fba data/aether/tags/items/banned_in_aether.json
 e1eea720d2116c752c51cbe5ac4bc5450a94b0e0 data/aether/tags/items/book_of_lore_materials.json
