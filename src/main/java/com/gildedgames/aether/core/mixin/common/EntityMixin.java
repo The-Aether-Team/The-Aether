@@ -17,10 +17,10 @@ public abstract class EntityMixin
 {
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;baseTick()V"), method = "tick", cancellable = true)
     private void tick(CallbackInfo ci) {
-        Entity entity = (Entity) (Object) this;
-        List<Entity> entityList = Lists.newArrayList(entity.level.getEntities(entity, entity.getBoundingBox().expandTowards(0.0D, -0.1D, 0.0D)));
-        List<EntityType<?>> entityTypesList = new ArrayList<>();
-        entityList.forEach(e -> entityTypesList.add(e.getType()));
-        entity.setNoGravity(entityTypesList.contains(AetherEntityTypes.FLOATING_BLOCK.get()));
+//        Entity entity = (Entity) (Object) this;
+//        List<Entity> entityList = Lists.newArrayList(entity.level.getEntities(entity, entity.getBoundingBox().expandTowards(0.0D, -0.1D, 0.0D)));
+//        List<EntityType<?>> entityTypesList = new ArrayList<>();
+//        entityList.forEach(e -> entityTypesList.add(e.getType()));
+//        entity.setNoGravity(entityTypesList.contains(AetherEntityTypes.FLOATING_BLOCK.get()));
     }
 }
