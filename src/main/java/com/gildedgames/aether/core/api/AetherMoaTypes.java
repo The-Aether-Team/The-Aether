@@ -26,7 +26,7 @@ public class AetherMoaTypes
 				
 				moaType("blue", new MoaType.Properties().eggColor(0x7777FF).maxJumps(3).moaSpeed(0.1F)),
 				moaType("white", new MoaType.Properties().eggColor(0xFFFFFF).maxJumps(4).moaSpeed(0.1F)),
-				moaType("black", new MoaType.Properties().eggColor(0x222222).maxJumps(8).moaSpeed(0.1F).saddleTexture("textures/entity/moa/black_saddle.png")),
+				moaType("black", new MoaType.Properties().eggColor(0x222222).maxJumps(8).moaSpeed(0.1F).saddleTexture("textures/entity/mobs/moa/black_saddle.png")),
 				moaType("orange", new MoaType.Properties().eggColor(-0xC3D78).maxJumps(2).moaSpeed(0.3F)),
 				
 			});

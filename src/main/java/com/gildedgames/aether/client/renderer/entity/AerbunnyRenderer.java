@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
 
 public class AerbunnyRenderer extends MobRenderer<AerbunnyEntity, AerbunnyModel> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/aerbunny/aerbunny.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerbunny/aerbunny.png");
 
     public AerbunnyRenderer(EntityRendererManager manager) {
         super(manager, new AerbunnyModel(), 0.3F);

@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 
 public class FlyingCowWingsLayer extends LayerRenderer<FlyingCowEntity, CowModel<FlyingCowEntity>> {
-    private static final ResourceLocation WINGS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/flying_cow/wings.png");
+    private static final ResourceLocation WINGS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/flying_cow/wings.png");
 
     private FlyingCowWingModel wingsModel = new FlyingCowWingModel();
 

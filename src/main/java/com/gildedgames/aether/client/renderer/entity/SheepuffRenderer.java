@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class SheepuffRenderer extends MobRenderer<SheepuffEntity, SheepuffModel> {
-    private static final ResourceLocation SHEEPUFF_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/sheepuff/sheepuff.png");
+    private static final ResourceLocation SHEEPUFF_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff.png");
     
     public SheepuffRenderer(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new SheepuffModel(), 0.7F);

@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 
 public class PhygSaddleLayer extends LayerRenderer<PhygEntity, PigModel<PhygEntity>> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/pig/pig_saddle.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/mobs/pig/pig_saddle.png");
     private final PigModel<PhygEntity> pigModel = new PigModel<>(0.5F);
     public PhygSaddleLayer(IEntityRenderer<PhygEntity, PigModel<PhygEntity>> entityRendererIn) {
         super(entityRendererIn);

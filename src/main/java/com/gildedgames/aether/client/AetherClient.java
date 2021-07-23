@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client;
 
+import com.gildedgames.aether.client.registry.AetherAtlases;
 import com.gildedgames.aether.client.renderer.accessory.layer.RepulsionShieldLayer;
 import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
 import com.gildedgames.aether.client.renderer.player.layer.EnchantedDartLayer;
@@ -32,7 +33,7 @@ public class AetherClient
             AetherRendering.registerBlockRenderLayers();
             AetherRendering.registerItemModelProperties();
             AetherRendering.registerGuiFactories();
-            AetherRendering.registerWoodTypeAtlases();
+            AetherAtlases.registerWoodTypeAtlases();
 
             DimensionRenderInfo.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), new AetherSkyRenderInfo());
         });

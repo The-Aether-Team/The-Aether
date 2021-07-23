@@ -12,8 +12,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class MimicRenderer extends MobRenderer<MimicEntity, MimicModel> {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mimic/normal.png");
-	private static final ResourceLocation XMAS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mimic/christmas.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/mimic/normal.png");
+	private static final ResourceLocation XMAS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/mimic/christmas.png");
 
 	private boolean isChristmas;
 	

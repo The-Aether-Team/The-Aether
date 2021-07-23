@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
 public class CockatriceRenderer extends MobRenderer<CockatriceEntity, CockatriceModel>{
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/cockatrice/cockatrice.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/cockatrice/cockatrice.png");
 
     public CockatriceRenderer(EntityRendererManager rendererManager) {
         super(rendererManager, new CockatriceModel(), 0.7F);

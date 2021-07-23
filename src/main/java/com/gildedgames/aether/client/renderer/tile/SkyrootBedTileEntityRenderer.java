@@ -78,7 +78,7 @@ public class SkyrootBedTileEntityRenderer extends TileEntityRenderer<SkyrootBedT
         matrixStackIn.translate(0.5D, 0.5D, 0.5D);
         matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(180.0F + direction.toYRot()));
         matrixStackIn.translate(-0.5D, -0.5D, -0.5D);
-        IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.entitySolid(new ResourceLocation(Aether.MODID, "textures/entity/bed/skyroot_bed.png")));
+        IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.entitySolid(new ResourceLocation(Aether.MODID, "textures/entity/tiles/bed/skyroot_bed.png")));
         this.HEAD.render(matrixStackIn, ivertexbuilder, combinedLightIn, combinedOverlayIn);
         this.FOOT.render(matrixStackIn, ivertexbuilder, combinedLightIn, combinedOverlayIn);
         this.LEGS[0].render(matrixStackIn, ivertexbuilder, combinedLightIn, combinedOverlayIn);

@@ -15,7 +15,7 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.util.ResourceLocation;
 
 public class SheepuffCoatLayer extends LayerRenderer<SheepuffEntity, SheepuffModel> {
-    private static final ResourceLocation FUR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/sheepuff/sheepuff_fur.png");
+    private static final ResourceLocation FUR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff_fur.png");
 
     private SheepuffWoolModel woolModel = new SheepuffWoolModel();
     private SheepuffedModel puffedModel = new SheepuffedModel();

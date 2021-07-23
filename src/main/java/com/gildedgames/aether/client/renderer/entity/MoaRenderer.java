@@ -15,8 +15,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
 public class MoaRenderer extends MobRenderer<MoaEntity, MoaModel>{
-	private static final ResourceLocation MOS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/moa/mos.png");
-	private static final ResourceLocation RAPTOR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/moa/raptor.png");
+	private static final ResourceLocation MOS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/mos.png");
+	private static final ResourceLocation RAPTOR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/raptor.png");
 	
 	public MoaRenderer(EntityRendererManager rendererManager) {
 		super(rendererManager, new MoaModel(0.0F), 0.7F);

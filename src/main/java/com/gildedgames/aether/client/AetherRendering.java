@@ -150,10 +150,6 @@ public class AetherRendering
                 -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb") ? 1.0F : 0.0F);
     }
 
-    public static void registerWoodTypeAtlases() {
-        Atlases.addWoodType(AetherWoodTypes.SKYROOT);
-    }
-
     private static void render(Supplier<? extends Block> block, RenderType render) {
         RenderTypeLookup.setRenderLayer(block.get(), render);
     }

@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 
 public class PhygWingsLayer extends LayerRenderer<PhygEntity, PigModel<PhygEntity>> {
-    private static final ResourceLocation WINGS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/phyg/wings.png");
+    private static final ResourceLocation WINGS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/phyg/wings.png");
 
     private PhygWingModel wingsModel = new PhygWingModel();
 
