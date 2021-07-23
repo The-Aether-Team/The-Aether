@@ -23,6 +23,8 @@ import net.minecraft.item.Items;
 import net.minecraft.loot.*;
 import net.minecraft.loot.conditions.*;
 import net.minecraft.loot.functions.ApplyBonus;
+import net.minecraft.loot.functions.CopyName;
+import net.minecraft.loot.functions.CopyNbt;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
@@ -157,6 +159,13 @@ public class AetherLootTableProvider extends LootTableProvider
                     .apply(DoubleDrops.builder());
         }
 
+        protected static LootTable.Builder droppingNameableBlockEntityTable(Block block) {
+            return LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                    .add(ItemLootEntry.lootTableItem(block)
+                            .apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY))))
+            );
+        }
+
         protected static LootTable.Builder droppingBerryBush(Block block, Item drop) {
             return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
                     .add(applyExplosionDecay(block, ItemLootEntry.lootTableItem(drop)
@@ -171,6 +180,16 @@ public class AetherLootTableProvider extends LootTableProvider
                                             BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
                                     new BlockPos(0, -1, 0))))))
                     .apply(DoubleDrops.builder())
+            );
+        }
+
+        protected static LootTable.Builder droppingTreasureChest(Block block) {
+            return LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                    .add(ItemLootEntry.lootTableItem(block)
+                            .apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY))
+                            .apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY)
+                                    .copy("Locked", "BlockEntityTag.Locked")
+                                    .copy("Kind", "BlockEntityTag.Kind"))))
             );
         }
 

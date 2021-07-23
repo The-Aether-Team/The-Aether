@@ -97,9 +97,9 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropSelf(AetherBlocks.ZANITE_BLOCK);
             dropSelf(AetherBlocks.ENCHANTED_GRAVITITE);
 
-            dropSelf(AetherBlocks.ALTAR);
-            dropSelf(AetherBlocks.FREEZER);
-            dropSelf(AetherBlocks.INCUBATOR);
+            this.add(AetherBlocks.ALTAR.get(), AetherBlockLootTableProvider::droppingNameableBlockEntityTable);
+            this.add(AetherBlocks.FREEZER.get(), AetherBlockLootTableProvider::droppingNameableBlockEntityTable);
+            this.add(AetherBlocks.INCUBATOR.get(), AetherBlockLootTableProvider::droppingNameableBlockEntityTable);
 
             drop(AetherBlocks.AMBROSIUM_WALL_TORCH, AetherBlocks.AMBROSIUM_TORCH);
             dropSelf(AetherBlocks.AMBROSIUM_TORCH);
@@ -107,8 +107,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             drop(AetherBlocks.SKYROOT_WALL_SIGN, AetherBlocks.SKYROOT_SIGN);
             dropSelf(AetherBlocks.SKYROOT_SIGN);
 
-            this.add(AetherBlocks.BERRY_BUSH.get(),
-                    (bush) -> droppingBerryBush(bush, AetherItems.BLUE_BERRY.get()));
+            this.add(AetherBlocks.BERRY_BUSH.get(), (bush) -> droppingBerryBush(bush, AetherItems.BLUE_BERRY.get()));
             dropSelfDouble(AetherBlocks.BERRY_BUSH_STEM);
 
             dropSelf(AetherBlocks.PURPLE_FLOWER);
@@ -143,13 +142,12 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropNone(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE);
 
             dropNone(AetherBlocks.CHEST_MIMIC);
-            dropSelf(AetherBlocks.TREASURE_CHEST);
+            this.add(AetherBlocks.TREASURE_CHEST.get(), AetherBlockLootTableProvider::droppingTreasureChest);
 
             dropSelf(AetherBlocks.PILLAR);
             dropSelf(AetherBlocks.PILLAR_TOP);
 
-            this.add(AetherBlocks.PRESENT.get(),
-                    AetherBlockLootTableProvider::droppingPresentLoot);
+            this.add(AetherBlocks.PRESENT.get(), AetherBlockLootTableProvider::droppingPresentLoot);
 
             dropSelf(AetherBlocks.SKYROOT_FENCE);
             dropSelf(AetherBlocks.SKYROOT_FENCE_GATE);
@@ -190,7 +188,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropSelf(AetherBlocks.HOLYSTONE_BRICK_SLAB);
             dropSelf(AetherBlocks.AEROGEL_SLAB);
 
-            dropSelf(AetherBlocks.SUN_ALTAR);
+            this.add(AetherBlocks.SUN_ALTAR.get(), AetherBlockLootTableProvider::droppingNameableBlockEntityTable);
 
             this.add(AetherBlocks.SKYROOT_BOOKSHELF.get(),
                     (bookshelf) -> createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ConstantRange.exactly(3)));

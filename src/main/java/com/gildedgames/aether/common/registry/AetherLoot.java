@@ -24,9 +24,9 @@ public class AetherLoot
 
 	public static final LootConditionType CONFIG_ENABLED = LootConditionManager.register(new ResourceLocation(Aether.MODID, "config_enabled").toString(), new ConfigEnabled.Serializer());
 
+	public static final LootFunctionType DOUBLE_DROPS = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "double_drops").toString(), new DoubleDrops.Serializer());
 	public static final LootFunctionType SPAWN_ENTITY = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "spawn_entity").toString(), new SpawnTNT.Serializer());
 	public static final LootFunctionType SPAWN_XP = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "spawn_xp").toString(), new SpawnXP.Serializer());
-	public static final LootFunctionType DOUBLE_DROPS = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "double_drops").toString(), new DoubleDrops.Serializer());
 
 	public static final ResourceLocation ENTITIES_SHEEPUFF_WHITE = register("entities/sheepuff/white");
 	public static final ResourceLocation ENTITIES_SHEEPUFF_ORANGE = register("entities/sheepuff/orange");
