@@ -16,16 +16,19 @@ public class FallPathNavigator extends GroundPathNavigator {
 		super(p_i45875_1_, p_i45875_2_);
 	}
 
+	@Override
 	protected PathFinder createPathFinder(int p_179679_1_) {
 		this.nodeEvaluator = new WalkAndSwimNodeProcessor();
 		this.nodeEvaluator.setCanPassDoors(true);
 		return new PathFinder(this.nodeEvaluator, p_179679_1_);
 	}
 
+	@Override
 	protected boolean canUpdatePath() {
 		return this.canFloat() && this.isInLiquid() || !this.mob.isPassenger();
 	}
 
+	@Override
 	protected Vector3d getTempMobPos() {
 		return new Vector3d(this.mob.getX(), (double) this.getSurfaceY(), this.mob.getZ());
 	}
@@ -51,10 +54,12 @@ public class FallPathNavigator extends GroundPathNavigator {
 		}
 	}
 
+	@Override
 	public Path createPath(Entity p_75494_1_, int p_75494_2_) {
 		return this.createPath(p_75494_1_.blockPosition(), p_75494_2_);
 	}
 
+	@Override
 	public void tick() {
 		++this.tick;
 		if (this.hasDelayedRecomputation) {
