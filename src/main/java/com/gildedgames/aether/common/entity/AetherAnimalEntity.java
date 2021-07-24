@@ -1,10 +1,7 @@
 package com.gildedgames.aether.common.entity;
 
-import java.util.Random;
-
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherItems;
-
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -14,7 +11,10 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public abstract class AetherAnimalEntity extends AnimalEntity {
+
 
 	protected AetherAnimalEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
 		super(type, worldIn);
