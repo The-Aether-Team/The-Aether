@@ -1,11 +1,10 @@
 package com.gildedgames.aether.common.entity;
 
-import java.util.Optional;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IJumpingMount;
 import net.minecraft.entity.MoverType;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.datasync.DataParameter;
@@ -15,6 +14,8 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public abstract class MountableEntity extends AetherAnimalEntity implements IJumpingMount {
 	public static final DataParameter<Boolean> RIDER_SNEAKING = EntityDataManager.defineId(MountableEntity.class, DataSerializers.BOOLEAN);
@@ -143,25 +144,25 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 				if (this.hasEffect(Effects.JUMP)) {
 					this.push(0.0, 0.1 * (this.getEffect(Effects.JUMP).getAmplifier() + 1), 0.0);
 				}
-				
+
 				this.setMountJumping(true);
 				this.hasImpulse = true;
 				this.jumpPower = 0.0F;
-				
-				if (!this.level.isClientSide) {
-					this.move(MoverType.SELF, this.getDeltaMovement());
-				}
 			}
-			
+
 			this.setDeltaMovement(this.getDeltaMovement().x() * 0.35, this.getDeltaMovement().y(), this.getDeltaMovement().z() * 0.35F);
-			
+
 			this.maxUpStep = 1.0F;
-			
+
+			this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
+
 			if (!this.level.isClientSide) {
 				this.flyingSpeed = this.getSpeed() * 0.6F;
 				super.travel(new Vector3d(strafe, vertical, forward));
+
+				this.move(MoverType.SELF, this.getDeltaMovement());
 			}
-			
+
 			if (this.onGround) {
 				this.jumpPower = 0.0F;
 				this.setMountJumping(false);
