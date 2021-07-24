@@ -95,6 +95,11 @@ public class FlyingCowEntity extends SaddleableEntity {
     }
 
     @Override
+    public int getMaxFallDistance() {
+        return this.isOnGround() ? super.getMaxFallDistance() : 14;
+    }
+
+    @Override
     public void handleStartJump(int jumpPower) {
         this.setMountJumping(true);
         this.onMountedJump();

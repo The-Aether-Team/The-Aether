@@ -1,5 +1,7 @@
 package com.gildedgames.aether.common.entity.pathfinding;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.network.DebugPacketSender;
@@ -24,12 +26,29 @@ public class FallPathNavigator extends GroundPathNavigator {
 		return this.canFloat() && this.isInLiquid() || !this.mob.isPassenger();
 	}
 
-	public boolean isStableDestination(BlockPos p_188555_1_) {
-		return !this.level.getBlockState(p_188555_1_.below()).isAir();
+	protected Vector3d getTempMobPos() {
+		return new Vector3d(this.mob.getX(), (double) this.getSurfaceY(), this.mob.getZ());
 	}
 
-	protected Vector3d getTempMobPos() {
-		return this.mob.position();
+	private int getSurfaceY() {
+		if (this.mob.isInWater() && this.canFloat()) {
+			int i = MathHelper.floor(this.mob.getY());
+			Block block = this.level.getBlockState(new BlockPos(this.mob.getX(), (double) i, this.mob.getZ())).getBlock();
+			int j = 0;
+
+			while (block == Blocks.WATER) {
+				++i;
+				block = this.level.getBlockState(new BlockPos(this.mob.getX(), (double) i, this.mob.getZ())).getBlock();
+				++j;
+				if (j > 16) {
+					return MathHelper.floor(this.mob.getY());
+				}
+			}
+
+			return i;
+		} else {
+			return MathHelper.floor(this.mob.getY() + 0.5D);
+		}
 	}
 
 	public Path createPath(Entity p_75494_1_, int p_75494_2_) {
@@ -56,7 +75,7 @@ public class FallPathNavigator extends GroundPathNavigator {
 			if (!this.isDone()) {
 				Vector3d vector3d1 = this.path.getNextEntityPos(this.mob);
 				BlockPos blockpos = new BlockPos(vector3d1);
-				this.mob.getMoveControl().setWantedPosition(vector3d1.x, this.level.getBlockState(blockpos.below()).isAir() ? vector3d1.y : WalkNodeProcessor.getFloorLevel(this.level, blockpos), vector3d1.z, this.speedModifier);
+				this.mob.getMoveControl().setWantedPosition(vector3d1.x, WalkNodeProcessor.getFloorLevel(this.level, blockpos), vector3d1.z, this.speedModifier);
 			}
 		}
 	}

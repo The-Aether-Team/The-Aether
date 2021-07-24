@@ -2,14 +2,14 @@ package com.gildedgames.aether.common.entity.ai;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.ai.goal.RandomWalkingGoal;
 import net.minecraft.util.math.vector.Vector3d;
 
 import javax.annotation.Nullable;
 
-public class FallingRandomWalkingGoal extends WaterAvoidingRandomWalkingGoal {
+public class FallingRandomWalkingGoal extends RandomWalkingGoal {
 	public FallingRandomWalkingGoal(CreatureEntity creatureEntity, double speed) {
-		super(creatureEntity, speed, 0.001F);
+		super(creatureEntity, speed, creatureEntity.isOnGround() ? 120 : 10);
 	}
 
 	@Nullable
@@ -20,7 +20,7 @@ public class FallingRandomWalkingGoal extends WaterAvoidingRandomWalkingGoal {
 		} else {
 			Vector3d vector3d = RandomPositionGenerator.getLandPos(this.mob, 12, 12);
 
-			return this.mob.getRandom().nextFloat() >= this.probability && vector3d != null ? vector3d : super.getPosition();
+			return vector3d != null ? vector3d : super.getPosition();
 		}
 	}
 }

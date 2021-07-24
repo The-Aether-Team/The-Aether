@@ -295,6 +295,11 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     }
 
     @Override
+    public int getMaxFallDistance() {
+        return !this.isOnGround() && this.getPuffed() ? 20 : super.getMaxFallDistance();
+    }
+
+    @Override
     public void aiStep() {
         if (this.level.isClientSide) {
             this.sheepTimer = Math.max(0, this.sheepTimer - 1);
