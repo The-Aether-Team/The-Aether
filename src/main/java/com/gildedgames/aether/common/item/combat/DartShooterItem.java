@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.item.combat;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.entity.projectile.combat.AbstractDartEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.AbstractDartEntity;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.LivingEntity;

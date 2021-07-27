@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.player.layer;
 
-import com.gildedgames.aether.common.entity.projectile.combat.PoisonDartEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.PoisonDartEntity;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

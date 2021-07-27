@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.capability.capabilities.player;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.ColdParachuteEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.GoldenParachuteEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
@@ -27,6 +28,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class AetherPlayer implements IAetherPlayer
@@ -40,6 +43,8 @@ public class AetherPlayer implements IAetherPlayer
 	public boolean isInAetherPortal = false;
 	public int aetherPortalTimer = 0;
 	public float prevPortalAnimTime, portalAnimTime = 0.0F;
+
+	private boolean isHitting;
 
 	private boolean isMoving;
 
@@ -57,6 +62,8 @@ public class AetherPlayer implements IAetherPlayer
 
 	private int projectileImpactedMaximum = 0;
 	private int projectileImpactedTimer = 0;
+
+	private List<CloudMinionEntity> cloudMinions = new ArrayList<>(2);
 
 	private float savedHealth = 0.0F;
 	private int lifeShardCount = 0;
@@ -140,6 +147,7 @@ public class AetherPlayer implements IAetherPlayer
 		this.handleRemoveDarts();
 		this.tickDownRemedy();
 		this.tickDownProjectileImpact();
+		this.checkToRemoveCloudMinions();
 		this.handleSavedHealth();
 		this.handleLifeShardModifier();
 	}
@@ -299,6 +307,10 @@ public class AetherPlayer implements IAetherPlayer
 		}
 	}
 
+	private void checkToRemoveCloudMinions() {
+		this.getCloudMinionEntities().removeIf(cloudMinion -> !cloudMinion.isAlive());
+	}
+
 	private void handleSavedHealth() {
 		if (this.getSavedHealth() > 0.0F) {
 			ModifiableAttributeInstance health = this.getPlayer().getAttribute(Attributes.MAX_HEALTH);
@@ -375,6 +387,16 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public float getPrevPortalAnimTime() {
 		return this.prevPortalAnimTime;
+	}
+
+	@Override
+	public void setHitting(boolean isHitting) {
+		this.isHitting = isHitting;
+	}
+
+	@Override
+	public boolean isHitting() {
+		return this.isHitting;
 	}
 
 	@Override
@@ -482,6 +504,18 @@ public class AetherPlayer implements IAetherPlayer
 	}
 
 	@Override
+	public void setCloudMinions(CloudMinionEntity cloudMinionRight, CloudMinionEntity cloudMinionLeft) {
+		this.sendCloudMinionPacket(cloudMinionRight, cloudMinionLeft);
+		this.cloudMinions.add(0, cloudMinionRight);
+		this.cloudMinions.add(1, cloudMinionLeft);
+	}
+
+	@Override
+	public List<CloudMinionEntity> getCloudMinionEntities() {
+		return this.cloudMinions;
+	}
+
+	@Override
 	public void setSavedHealth(float health) {
 		this.savedHealth = health;
 	}
@@ -547,6 +581,12 @@ public class AetherPlayer implements IAetherPlayer
 	private void sendProjectileImpactedPacket(int maximum, int timer) {
 		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
 			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), maximum, timer), (ServerPlayerEntity) this.getPlayer());
+		}
+	}
+
+	private void sendCloudMinionPacket(CloudMinionEntity cloudMinionRight, CloudMinionEntity cloudMinionLeft) {
+		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), (ServerPlayerEntity) this.getPlayer());
 		}
 	}
 

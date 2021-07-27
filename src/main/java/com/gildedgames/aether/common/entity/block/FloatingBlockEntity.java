@@ -192,7 +192,6 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
     private void handleCarriedEntities() {
         List<Entity> list = this.level.getEntities(this, this.getBoundingBox().expandTowards(0.0D, 0.1D, 0.0D));
         if (!list.equals(this.getCarriedEntityList())) {
-            Aether.LOGGER.info(true);
             this.resetCarriedEntities();
         }
         for (Entity entity : list) {

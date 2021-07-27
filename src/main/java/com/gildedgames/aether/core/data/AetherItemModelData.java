@@ -165,8 +165,8 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.COLD_PARACHUTE, "miscellaneous/");
         item(AetherItems.GOLDEN_PARACHUTE, "miscellaneous/");
 
-        item(AetherItems.NATURE_STAFF, "miscellaneous/");
-        item(AetherItems.CLOUD_STAFF, "miscellaneous/");
+        handheldItem(AetherItems.NATURE_STAFF, "miscellaneous/");
+        handheldItem(AetherItems.CLOUD_STAFF, "miscellaneous/");
 
         moaEggItem(AetherItems.BLUE_MOA_EGG, "miscellaneous/");
         moaEggItem(AetherItems.WHITE_MOA_EGG, "miscellaneous/");

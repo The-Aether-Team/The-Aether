@@ -5,6 +5,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import com.gildedgames.aether.core.network.packet.client.*;
 import com.gildedgames.aether.core.network.packet.server.ExtendedAttackPacket;
+import com.gildedgames.aether.core.network.packet.server.HittingPacket;
 import com.gildedgames.aether.core.network.packet.server.JumpPacket;
 import com.gildedgames.aether.core.network.packet.server.MovementPacket;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -31,6 +32,8 @@ public class AetherPacketHandler
 	
 	public static synchronized void register() {
 		// CLIENT
+		register(CloudMinionPacket.class, CloudMinionPacket::decode);
+		register(CloudParticlePacket.class, CloudParticlePacket::decode);
 		register(EnchantedDartCountPacket.class, EnchantedDartCountPacket::decode);
 		register(FlameParticlePacket.class, FlameParticlePacket::decode);
 		register(GoldenDartCountPacket.class, GoldenDartCountPacket::decode);
@@ -47,6 +50,7 @@ public class AetherPacketHandler
 
 		// SERVER
 		register(ExtendedAttackPacket.class, ExtendedAttackPacket::decode);
+		register(HittingPacket.class, HittingPacket::decode);
 		register(JumpPacket.class, JumpPacket::decode);
 		register(MovementPacket.class, MovementPacket::decode);
 	}

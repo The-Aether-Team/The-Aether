@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.entity.projectile.combat;
+package com.gildedgames.aether.common.entity.projectile.dart;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.google.common.collect.Lists;

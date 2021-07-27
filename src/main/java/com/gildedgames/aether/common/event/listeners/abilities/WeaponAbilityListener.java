@@ -1,9 +1,9 @@
 package com.gildedgames.aether.common.event.listeners.abilities;
 
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
-import com.gildedgames.aether.common.entity.projectile.combat.EnchantedDartEntity;
-import com.gildedgames.aether.common.entity.projectile.combat.GoldenDartEntity;
-import com.gildedgames.aether.common.entity.projectile.combat.PoisonDartEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDartEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.GoldenDartEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.PoisonDartEntity;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;

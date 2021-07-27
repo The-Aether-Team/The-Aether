@@ -269,7 +269,7 @@ abd327f0be632d7fdfecdaeba37274fc358c2efe assets/aether/models/item/carved_slab.j
 78200595f7ac9d858ced69b42b30f7df4c2aa134 assets/aether/models/item/carved_stone.json
 c56654b2642590f76dce49cd4cac2326c9acfd2e assets/aether/models/item/carved_wall.json
 f76d462c5d639b2a4a6a95c0d783e43cd9abcf32 assets/aether/models/item/chainmail_gloves.json
-b19a6fd02afe52c9999d71bfff041c40e2507a56 assets/aether/models/item/cloud_staff.json
+c5121356f5e6d9493ee03638117ef01a290c4438 assets/aether/models/item/cloud_staff.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/aether/models/item/cockatrice_spawn_egg.json
 1e3d58d5e42db8430bdc228d923bc6cb79087621 assets/aether/models/item/cold_aercloud.json
 62e292b1c0cfc3ca3437222036ca8800397c25a7 assets/aether/models/item/cold_parachute.json
@@ -366,7 +366,7 @@ a961a07c09e1221eedc53648a370680babec55e0 assets/aether/models/item/music_disc_ae
 2dca84ab9b2aa97b92a6137a53ca254a2d4eb522 assets/aether/models/item/music_disc_ascending_dawn.json
 bffe667fe2505b9152fe3ba434344a61e21069de assets/aether/models/item/music_disc_legacy.json
 20d5eec34ab05ef728b1a1d067a2c1adc22eb218 assets/aether/models/item/music_disc_welcoming_skies.json
-e466f8d8015f6941c22407da63c76794aa70a2e2 assets/aether/models/item/nature_staff.json
+3b4295cac28cc5582ea1443efafcdaf2f69dc462 assets/aether/models/item/nature_staff.json
 b037e8decaa29f6b9b275f3080c2a8a1bbae88ef assets/aether/models/item/neptune_boots.json
 a4ef6763465f83266499a591863c2e848091f961 assets/aether/models/item/neptune_chestplate.json
 31eb4a1ad140f67e5425dfe7073116589b0e7c35 assets/aether/models/item/neptune_gloves.json

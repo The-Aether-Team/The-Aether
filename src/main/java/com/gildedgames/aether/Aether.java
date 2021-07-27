@@ -4,7 +4,7 @@ import com.gildedgames.aether.client.AetherClient;
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
-import com.gildedgames.aether.common.entity.projectile.combat.*;
+import com.gildedgames.aether.common.entity.projectile.weapon.*;
 import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
 import com.gildedgames.aether.common.item.miscellaneous.bucket.SkyrootWaterBucketItem;
 import com.gildedgames.aether.core.AetherConfig;

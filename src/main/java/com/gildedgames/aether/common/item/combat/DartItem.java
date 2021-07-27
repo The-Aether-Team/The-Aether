@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.combat;
 
-import com.gildedgames.aether.common.entity.projectile.combat.AbstractDartEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.AbstractDartEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

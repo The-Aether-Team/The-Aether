@@ -101,7 +101,7 @@ public class MimicEntity extends CreatureEntity {
 				this.level.addParticle(ParticleTypes.POOF, this.getX(0.0D) - d0 * 10.0D, this.getRandomY() - d1 * 10.0D, this.getRandomZ(1.0D) - d2 * 10.0D, d0, d1, d2);
 			}
 		} else {
-			this.level.broadcastEntityEvent(this, (byte)20);
+			this.level.broadcastEntityEvent(this, (byte) 20);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.block.util.dispenser;
 
-import com.gildedgames.aether.common.entity.projectile.combat.AbstractDartEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.AbstractDartEntity;
 import com.gildedgames.aether.common.item.combat.DartItem;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IBlockSource;

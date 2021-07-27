@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.entity.projectile.combat;
+package com.gildedgames.aether.common.entity.projectile.dart;
 
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;

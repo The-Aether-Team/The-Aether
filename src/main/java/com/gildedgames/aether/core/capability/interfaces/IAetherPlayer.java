@@ -1,11 +1,14 @@
 package com.gildedgames.aether.core.capability.interfaces;
 
+import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
+
+import java.util.List;
 
 public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 {
@@ -35,6 +38,9 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 	float getPortalAnimTime();
 	float getPrevPortalAnimTime();
 
+	void setHitting(boolean isHitting);
+	boolean isHitting();
+
 	void setMoving(boolean isMoving);
 	boolean isMoving();
 
@@ -57,6 +63,9 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 	int getProjectileImpactedMaximum();
 	void setProjectileImpactedTimer(int timer);
 	int getProjectileImpactedTimer();
+
+	void setCloudMinions(CloudMinionEntity cloudMinionRight, CloudMinionEntity cloudMinionLeft);
+	List<CloudMinionEntity> getCloudMinionEntities();
 
 	void setSavedHealth(float health);
 	float getSavedHealth();

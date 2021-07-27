@@ -1,9 +1,9 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.entity.projectile.combat.AbstractDartEntity;
-import com.gildedgames.aether.common.entity.projectile.combat.EnchantedDartEntity;
-import com.gildedgames.aether.common.entity.projectile.combat.GoldenDartEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.AbstractDartEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDartEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.GoldenDartEntity;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
