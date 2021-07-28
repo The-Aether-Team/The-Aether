@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.function.Supplier;
@@ -39,9 +40,40 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
                 .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()));
     }
 
+    public ItemModelBuilder lanceItem(Supplier<? extends Item> item, String location) {
+        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/handheld"))
+                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
+                .transforms()
+                .transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT).rotation(0.0F, -90.0F, 45.0F).translation(0.0F, 1.0F, -5.0F).scale(0.85F, 0.85F, 0.85F).end()
+                .transform(ModelBuilder.Perspective.THIRDPERSON_LEFT).rotation(0.0F, 90.0F, -45.0F).translation(0.0F, 1.0F, -5.0F).scale(0.85F, 0.85F, 0.85F).end()
+                .end();
+    }
+
+    public ItemModelBuilder nameableWeapon(Supplier<? extends Item> item, String location, String renamedVariant) {
+        withExistingParent(renamedVariant, mcLoc("item/handheld")).texture("layer0", modLoc("item/" + location + renamedVariant));
+        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/handheld"))
+                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
+                .override().predicate(new ResourceLocation(Aether.MODID, "named"), 1).model(getExistingFile(modLoc("item/" + renamedVariant))).end();
+    }
+
     public ItemModelBuilder dartShooterItem(Supplier<? extends Item> item, String location) {
-        return withExistingParent(item.get().getRegistryName().getPath(), modLoc("item/dart_shooter"))
-                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()));
+        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/handheld"))
+                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
+                .transforms()
+                .transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT).rotation(0.0F, -90.0F, 45.0F).translation(0.0F, 1.5F, -1.0F).scale(0.85F, 0.85F, 0.85F).end()
+                .transform(ModelBuilder.Perspective.THIRDPERSON_LEFT).rotation(0.0F, 90.0F, -45.0F).translation(0.0F, 1.5F, -1.0F).scale(0.85F, 0.85F, 0.85F).end()
+                .end();
+    }
+
+    public ItemModelBuilder bowItem(Supplier<? extends Item> item, String location) {
+        withExistingParent(item.get().getRegistryName().getPath() + "_pulling_0", mcLoc("item/bow")).texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath() + "_pulling_0"));
+        withExistingParent(item.get().getRegistryName().getPath() + "_pulling_1", mcLoc("item/bow")).texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath() + "_pulling_1"));
+        withExistingParent(item.get().getRegistryName().getPath() + "_pulling_2", mcLoc("item/bow")).texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath() + "_pulling_2"));
+        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/bow"))
+                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
+                .override().predicate(new ResourceLocation("pulling"), 1).model(getExistingFile(modLoc("item/" + item.get().getRegistryName().getPath() + "_pulling_0"))).end()
+                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 0.65F).model(getExistingFile(modLoc("item/" + item.get().getRegistryName().getPath() + "_pulling_1"))).end()
+                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 0.9F).model(getExistingFile(modLoc("item/" + item.get().getRegistryName().getPath() + "_pulling_2"))).end();
     }
 
     public ItemModelBuilder dyedItem(Supplier<? extends Item> item, String location) {

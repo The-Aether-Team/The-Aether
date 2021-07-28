@@ -6,8 +6,9 @@
   "overrides": [
     {
       "predicate": {
-        "named": 1
-      }, "model": "aether:item/green_candy_cane_sword"
+        "aether:named": 1.0
+      },
+      "model": "aether:item/green_candy_cane_sword"
     }
   ]
 }

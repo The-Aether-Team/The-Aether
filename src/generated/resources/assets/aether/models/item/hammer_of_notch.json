@@ -6,8 +6,9 @@
   "overrides": [
     {
       "predicate": {
-        "named": 1
-      }, "model": "aether:item/hammer_of_jeb"
+        "aether:named": 1.0
+      },
+      "model": "aether:item/hammer_of_jeb"
     }
   ]
 }

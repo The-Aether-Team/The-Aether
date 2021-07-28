@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/bow",
+  "textures": {
+    "layer0": "aether:item/weapons/phoenix_bow_pulling_2"
+  }
+}
