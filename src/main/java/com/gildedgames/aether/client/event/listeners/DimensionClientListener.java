@@ -1,6 +1,9 @@
 package com.gildedgames.aether.client.event.listeners;
 
 import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.core.AetherConfig;
+import com.gildedgames.aether.core.capability.capabilities.eternal_day.EternalDay;
+import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.world.ClientWorld;
@@ -20,12 +23,12 @@ public class DimensionClientListener
     public static void onRenderFogColor(EntityViewRenderEvent.FogColors event) {
         ActiveRenderInfo renderInfo = event.getInfo();
         ClientWorld world = (ClientWorld) renderInfo.getEntity().level;
-        if(world.dimension() == AetherDimensions.AETHER_WORLD) {
+        if (world.dimension() == AetherDimensions.AETHER_WORLD) {
             double height = renderInfo.getPosition().y;
             ClientWorld.ClientWorldInfo worldInfo = world.getLevelData();
             double d0 = height * worldInfo.getClearColorScale();
             FluidState fluidState = renderInfo.getFluidInCamera();
-            if(d0 < 1.0D && !fluidState.is(FluidTags.LAVA)) { // Reverse implementation of FogRenderer.updateFogColor.
+            if (d0 < 1.0D && !fluidState.is(FluidTags.LAVA)) { // Reverse implementation of FogRenderer.updateFogColor.
                 if (d0 < 0.0D) {
                     d0 = 0.0D;
                 }
@@ -34,18 +37,6 @@ public class DimensionClientListener
                     event.setRed((float) ((double) event.getRed() / d0));
                     event.setGreen((float) ((double) event.getGreen() / d0));
                     event.setBlue((float) ((double) event.getBlue() / d0));
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onWorldTick(TickEvent.RenderTickEvent event) {
-        ClientWorld world = Minecraft.getInstance().level;
-        if (world != null) {
-            if (world.dimension() == AetherDimensions.AETHER_WORLD) {
-                if (event.side == LogicalSide.CLIENT) {
-                    world.setDayTime(6000);
                 }
             }
         }
