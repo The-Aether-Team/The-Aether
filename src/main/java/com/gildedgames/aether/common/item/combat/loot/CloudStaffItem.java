@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.item.combat.loot;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -39,6 +38,7 @@ public class CloudStaffItem extends Item
                     aetherPlayer.setCloudMinions(cloudMinionRight, cloudMinionLeft);
                 }
             } else if (playerIn.isShiftKeyDown()) {
+                playerIn.swing(hand);
                 for (CloudMinionEntity cloudMinionEntity : aetherPlayer.getCloudMinionEntities()) {
                     cloudMinionEntity.setLifeSpan(0);
                 }

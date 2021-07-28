@@ -25,7 +25,6 @@ public class LightningKnifeItem extends Item
 	@Override
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand hand) {
 		ItemStack heldItem = playerIn.getItemInHand(hand);
-		playerIn.swing(hand);
 		if (!worldIn.isClientSide) {
 			if (!playerIn.abilities.instabuild && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, heldItem) == 0) {
 				heldItem.shrink(1);

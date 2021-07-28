@@ -24,7 +24,6 @@ public class HammerOfNotchItem extends SwordItem
     @Override
     public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand hand) {
         ItemStack heldItem = playerIn.getItemInHand(hand);
-        playerIn.swing(hand);
         if (!worldIn.isClientSide) {
             if (!playerIn.abilities.instabuild) {
                 playerIn.getCooldowns().addCooldown(this, 200);
