@@ -61,7 +61,9 @@ public class CloudStaffItem extends Item
                         if (cloudMinionLeft != null) {
                             cloudMinionLeft.setShouldShoot(true);
                         }
-                        aetherPlayer.getPlayer().getCooldowns().addCooldown(this, 40);
+                        if (!aetherPlayer.getPlayer().abilities.instabuild) {
+                            aetherPlayer.getPlayer().getCooldowns().addCooldown(this, 40);
+                        }
                     }
                 }
             });
