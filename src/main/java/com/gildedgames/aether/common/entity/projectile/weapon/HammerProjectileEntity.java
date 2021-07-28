@@ -7,6 +7,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -21,6 +24,8 @@ import java.util.List;
 
 public class HammerProjectileEntity extends ThrowableEntity
 {
+    private static final DataParameter<Boolean> DATA_JEB_ID = EntityDataManager.defineId(HammerProjectileEntity.class, DataSerializers.BOOLEAN);
+
     private int ticksInAir = 0;
 
     public HammerProjectileEntity(EntityType<? extends HammerProjectileEntity> type, World worldIn) {
@@ -33,6 +38,11 @@ public class HammerProjectileEntity extends ThrowableEntity
 
     public HammerProjectileEntity(World world) {
         super(AetherEntityTypes.HAMMER_PROJECTILE.get(), world);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        this.entityData.define(DATA_JEB_ID, false);
     }
 
     @Override
@@ -107,8 +117,13 @@ public class HammerProjectileEntity extends ThrowableEntity
         return 0.0F;
     }
 
-    @Override
-    protected void defineSynchedData() { }
+    public void setIsJeb(boolean isJeb) {
+        this.entityData.set(DATA_JEB_ID, isJeb);
+    }
+
+    public boolean getIsJeb() {
+        return this.entityData.get(DATA_JEB_ID);
+    }
 
     @Override
     public IPacket<?> getAddEntityPacket() {

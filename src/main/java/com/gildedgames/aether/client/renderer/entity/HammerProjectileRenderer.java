@@ -16,8 +16,8 @@ import net.minecraft.util.math.vector.Vector3f;
 
 public class HammerProjectileRenderer extends EntityRenderer<HammerProjectileEntity>
 {
-    public static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(Aether.MODID, "textures/entity/projectile/notch_wave.png");
-    private static final RenderType RENDER_TYPE = RenderType.entityCutout(TEXTURE_LOCATION);
+    public static final ResourceLocation NOTCH_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/notch_wave.png");
+    public static final ResourceLocation JEB_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/jeb_wave.png");
 
     public HammerProjectileRenderer(EntityRendererManager renderManager) {
         super(renderManager);
@@ -29,7 +29,7 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectileEnt
         matrixStackIn.pushPose();
         matrixStackIn.mulPose(this.entityRenderDispatcher.cameraOrientation());
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F));
-        IVertexBuilder vertex = bufferIn.getBuffer(RENDER_TYPE);
+        IVertexBuilder vertex = bufferIn.getBuffer(RenderType.entityCutout(this.getTextureLocation(entityIn)));
         MatrixStack.Entry matrixstack$entry = matrixStackIn.last();
         Matrix4f matrix4f = matrixstack$entry.pose();
         Matrix3f matrix3f = matrixstack$entry.normal();
@@ -47,6 +47,6 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectileEnt
 
     @Override
     public ResourceLocation getTextureLocation(HammerProjectileEntity entity) {
-        return TEXTURE_LOCATION;
+        return !entity.getIsJeb() ? NOTCH_WAVE_TEXTURE : JEB_WAVE_TEXTURE;
     }
 }

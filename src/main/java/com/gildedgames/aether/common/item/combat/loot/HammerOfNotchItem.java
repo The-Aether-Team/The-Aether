@@ -31,6 +31,9 @@ public class HammerOfNotchItem extends SwordItem
             }
             HammerProjectileEntity hammerProjectile = new HammerProjectileEntity(playerIn, worldIn);
             hammerProjectile.shoot(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.5F, 1.0F);
+            if (heldItem.getHoverName().getString().equalsIgnoreCase("hammer of jeb")) {
+                hammerProjectile.setIsJeb(true);
+            }
             worldIn.addFreshEntity(hammerProjectile);
         }
         worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(), AetherSoundEvents.ITEM_HAMMER_OF_NOTCH_SHOOT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F), false);

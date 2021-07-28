@@ -5,6 +5,7 @@ import com.gildedgames.aether.common.entity.projectile.crystal.AbstractCrystalEn
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -22,7 +23,7 @@ public abstract class AbstractCrystalRenderer<T extends AbstractCrystalEntity> e
     public void render(T p_225623_1_, float p_225623_2_, float p_225623_3_, MatrixStack p_225623_4_, IRenderTypeBuffer p_225623_5_, int p_225623_6_) {
         p_225623_4_.pushPose();
         p_225623_4_.translate(0.0D, 0.25D, 0.0D);
-        IVertexBuilder iVertexBuilder = p_225623_5_.getBuffer(this.model.renderType(this.getTextureLocation(p_225623_1_)));
+        IVertexBuilder iVertexBuilder = p_225623_5_.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(p_225623_1_)));
         float f = (float) p_225623_1_.tickCount + p_225623_3_;
         p_225623_4_.mulPose(Vector3f.XP.rotationDegrees(f * 0.1F * 360.0F));
         this.model.main[0].render(p_225623_4_, iVertexBuilder, p_225623_6_, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
