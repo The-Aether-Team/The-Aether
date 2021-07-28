@@ -12,8 +12,8 @@ import javax.annotation.Nullable;
 import java.util.OptionalInt;
 import java.util.Random;
 
-public class GoldenOakTree extends Tree {
-
+public class GoldenOakTree extends Tree
+{
 	@Nullable
 	@Override
 	protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getConfiguredFeature(Random randomIn, boolean largeHive) {

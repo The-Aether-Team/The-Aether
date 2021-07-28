@@ -102,7 +102,7 @@ public class CloudMinionEntity extends FlyingEntity
         super.tick();
         this.setLifeSpan(this.getLifeSpan() - 1);
         if (this.getLifeSpan() <= 0) {
-            this.deathAnim();
+            this.spawnExplosionParticles();
             this.remove();
         } else {
             if (this.getOwner() != null) {
@@ -133,7 +133,7 @@ public class CloudMinionEntity extends FlyingEntity
                         this.approachOwner();
                     }
                 } else {
-                    this.deathAnim();
+                    this.spawnExplosionParticles();
                     this.remove();
                 }
             } else {
@@ -142,7 +142,7 @@ public class CloudMinionEntity extends FlyingEntity
         }
     }
 
-    private void deathAnim() {
+    private void spawnExplosionParticles() {
         if (this.level.isClientSide) {
             for (int i = 0; i < 20; ++i) {
                 double d0 = this.random.nextGaussian() * 0.02D;

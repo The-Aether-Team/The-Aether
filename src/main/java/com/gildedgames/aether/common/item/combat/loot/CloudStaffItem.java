@@ -9,6 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
@@ -37,6 +38,7 @@ public class CloudStaffItem extends Item
                     worldIn.addFreshEntity(cloudMinionLeft);
                     aetherPlayer.setCloudMinions(cloudMinionRight, cloudMinionLeft);
                 }
+                this.spawnExplosionParticles(playerIn);
             } else if (playerIn.isShiftKeyDown()) {
                 playerIn.swing(hand);
                 for (CloudMinionEntity cloudMinionEntity : aetherPlayer.getCloudMinionEntities()) {
@@ -69,6 +71,17 @@ public class CloudStaffItem extends Item
             });
         }
         return super.onEntitySwing(stack, entity);
+    }
+
+    private void spawnExplosionParticles(PlayerEntity playerEntity) {
+        if (playerEntity.level.isClientSide) {
+            for (int i = 0; i < 20; ++i) {
+                double d0 = playerEntity.random.nextGaussian() * 0.02D;
+                double d1 = playerEntity.random.nextGaussian() * 0.02D;
+                double d2 = playerEntity.random.nextGaussian() * 0.02D;
+                playerEntity.level.addParticle(ParticleTypes.POOF, playerEntity.getX(0.0D) - d0 * 10.0D, playerEntity.getRandomY() - d1 * 10.0D, playerEntity.getRandomZ(1.0D) - d2 * 10.0D, d0, d1, d2);
+            }
+        }
     }
 
     @Override
