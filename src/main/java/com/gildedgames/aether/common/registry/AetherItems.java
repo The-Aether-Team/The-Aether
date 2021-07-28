@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.registry;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.item.accessories.abilities.IIceAccessory;
+import com.gildedgames.aether.common.item.accessories.cape.AgilityCapeItem;
 import com.gildedgames.aether.common.item.accessories.cape.CapeItem;
 import com.gildedgames.aether.common.item.accessories.cape.InvisibilityCloakItem;
 import com.gildedgames.aether.common.item.accessories.cape.ValkyrieCapeItem;
@@ -251,7 +252,7 @@ public class AetherItems
 	public static final RegistryObject<Item> INVISIBILITY_CLOAK = ITEMS.register("invisibility_cloak",
 			() -> new InvisibilityCloakItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> AGILITY_CAPE = ITEMS.register("agility_cape",
-			() -> new CapeItem("agility_cape", new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new AgilityCapeItem("agility_cape", new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> VALKYRIE_CAPE = ITEMS.register("valkyrie_cape",
 			() -> new ValkyrieCapeItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 

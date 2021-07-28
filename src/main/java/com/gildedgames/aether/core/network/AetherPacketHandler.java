@@ -42,6 +42,7 @@ public class AetherPacketHandler
 		register(PhoenixParticlePacket.class, PhoenixParticlePacket::decode);
 		register(PoisonDartCountPacket.class, PoisonDartCountPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
+		register(ResetMaxUpStepPacket.class, ResetMaxUpStepPacket::decode);
 		register(SetLifeShardPacket.class, SetLifeShardPacket::decode);
 		register(SetProjectileImpactedPacket.class, SetProjectileImpactedPacket::decode);
 		register(SetRemedyPacket.class, SetRemedyPacket::decode);

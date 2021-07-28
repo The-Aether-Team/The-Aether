@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.event.listeners.abilities;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.item.accessories.abilities.IZaniteAccessory;
 import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -43,16 +44,6 @@ public class AccessoryAbilityListener
     public static void onMiningSpeed(PlayerEvent.BreakSpeed event) {
         CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.ZANITE_RING.get(), event.getPlayer()).ifPresent((triple) -> IZaniteAccessory.handleMiningSpeed(event, triple));
         CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.ZANITE_PENDANT.get(), event.getPlayer()).ifPresent((triple) -> IZaniteAccessory.handleMiningSpeed(event, triple));
-    }
-
-    @SubscribeEvent
-    public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
-        if (CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.AGILITY_CAPE.get(), livingEntity).isPresent()) {
-            livingEntity.maxUpStep = !livingEntity.isCrouching() ? 1.0F : 0.6F;
-        } else {
-            livingEntity.maxUpStep = 0.6F;
-        }
     }
 
     @SubscribeEvent

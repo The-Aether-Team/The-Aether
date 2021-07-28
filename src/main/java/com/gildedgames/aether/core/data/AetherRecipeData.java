@@ -228,6 +228,11 @@ public class AetherRecipeData extends AetherRecipeProvider
         makePendant(AetherItems.GOLDEN_PENDANT, Items.GOLD_INGOT).save(consumer);
         makePendant(AetherItems.ZANITE_PENDANT, AetherItems.ZANITE_GEMSTONE.get()).save(consumer);
 
+        makeCape(AetherItems.RED_CAPE, Blocks.RED_WOOL.asItem()).save(consumer);
+        makeCape(AetherItems.BLUE_CAPE, Blocks.BLUE_WOOL.asItem()).save(consumer);
+        makeCape(AetherItems.YELLOW_CAPE, Blocks.YELLOW_WOOL.asItem()).save(consumer);
+        makeCape(AetherItems.WHITE_CAPE, Blocks.WHITE_WOOL.asItem()).save(consumer);
+
         makeGlovesWithTag(AetherItems.LEATHER_GLOVES, Tags.Items.LEATHER, "leather").save(consumer);
         makeGlovesWithTag(AetherItems.IRON_GLOVES, Tags.Items.INGOTS_IRON, "iron").save(consumer);
         makeGlovesWithTag(AetherItems.GOLDEN_GLOVES, Tags.Items.INGOTS_GOLD, "gold").save(consumer);
