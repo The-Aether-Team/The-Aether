@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.event.listeners.abilities;
 
+import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.ExtendedAttackPacket;
@@ -20,14 +21,14 @@ public class ToolAbilityClientListener
 {
     @SubscribeEvent
     public static void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
-        if (event.getItemStack().getItem().is(AetherTags.Items.VALKYRIE_TOOLS)) {
+        if (event.getItemStack().getItem().is(AetherTags.Items.VALKYRIE_TOOLS) || event.getItemStack().getItem() == AetherItems.VALKYRIE_LANCE.get()) {
             handleExtendedReach(event.getPlayer());
         }
     }
 
     @SubscribeEvent
     public static void onPlayerLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-        if (event.getItemStack().getItem().is(AetherTags.Items.VALKYRIE_TOOLS)) {
+        if (event.getItemStack().getItem().is(AetherTags.Items.VALKYRIE_TOOLS) || event.getItemStack().getItem() == AetherItems.VALKYRIE_LANCE.get()) {
             event.setCanceled(handleExtendedReach(event.getPlayer()));
         }
     }
