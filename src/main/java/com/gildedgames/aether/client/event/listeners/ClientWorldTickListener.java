@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.event.listeners;
 
+import com.gildedgames.aether.client.AetherClient;
 import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
@@ -22,9 +23,13 @@ import net.minecraft.client.world.ClientWorld.ClientWorldInfo;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class ClientWorldTickListener {
+
+    private static long world_tick;
+    private static long last_world_tick;
     @SubscribeEvent
     public static void onWorldTick(TickEvent.RenderTickEvent event) {
         ClientWorld world = Minecraft.getInstance().level;
+
         if (world != null) {
             if (world.dimension() == AetherDimensions.AETHER_WORLD) {
                 if (event.side == LogicalSide.CLIENT) {
@@ -37,6 +42,7 @@ public class ClientWorldTickListener {
             if (player != null) {
                 player.setNoGravity(true);
                 player.noPhysics = true;
+                player.setInvisible(true);
             }
 
         }

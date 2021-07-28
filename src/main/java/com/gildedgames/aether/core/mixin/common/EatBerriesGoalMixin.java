@@ -33,24 +33,26 @@ public abstract class EatBerriesGoalMixin extends MoveToBlockGoal
         }
     }
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ForgeEventFactory;getMobGriefingEvent(Lnet/minecraft/world/World;Lnet/minecraft/entity/Entity;)Z", shift = At.Shift.AFTER), method = "onReachedTarget", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "onReachedTarget", cancellable = true)
     private void onReachedTarget(CallbackInfo ci) {
-        BlockState blockstate = this.mob.level.getBlockState(this.blockPos);
-        if (blockstate.is(AetherBlocks.BERRY_BUSH.get())) {
-            boolean flag = this.mob.level.getBlockState(this.blockPos.below()).is(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get());
-            int j = 1 + this.mob.level.random.nextInt(3) + (flag ? 1 : 0);
-            ItemStack itemstack = this.mob.getItemBySlot(EquipmentSlotType.MAINHAND);
-            if (itemstack.isEmpty()) {
-                this.mob.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(AetherItems.BLUE_BERRY.get()));
-                --j;
-            }
+        if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.mob.level, this.mob)) {
+            BlockState blockstate = this.mob.level.getBlockState(this.blockPos);
+            if (blockstate.is(AetherBlocks.BERRY_BUSH.get())) {
+                boolean flag = this.mob.level.getBlockState(this.blockPos.below()).is(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get());
+                int j = 1 + this.mob.level.random.nextInt(3) + (flag ? 1 : 0);
+                ItemStack itemstack = this.mob.getItemBySlot(EquipmentSlotType.MAINHAND);
+                if (itemstack.isEmpty()) {
+                    this.mob.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(AetherItems.BLUE_BERRY.get()));
+                    --j;
+                }
 
-            if (j > 0) {
-                Block.popResource(this.mob.level, this.blockPos, new ItemStack(AetherItems.BLUE_BERRY.get(), j));
-            }
+                if (j > 0) {
+                    Block.popResource(this.mob.level, this.blockPos, new ItemStack(AetherItems.BLUE_BERRY.get(), j));
+                }
 
-            this.mob.playSound(SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, 1.0F, 1.0F);
-            this.mob.level.setBlock(this.blockPos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState(), 2);
+                this.mob.playSound(SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, 1.0F, 1.0F);
+                this.mob.level.setBlock(this.blockPos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState(), 2);
+            }
         }
     }
 }

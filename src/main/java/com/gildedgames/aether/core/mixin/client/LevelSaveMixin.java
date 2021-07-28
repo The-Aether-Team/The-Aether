@@ -2,6 +2,9 @@ package com.gildedgames.aether.core.mixin.client;
 
 import net.minecraft.world.storage.SaveFormat;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * this is done specifically so you can edit the world file
@@ -13,10 +16,12 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(SaveFormat.LevelSave.class)
 public class LevelSaveMixin {
 
-    private void checkLock() {
+    @Inject(at = @At("HEAD"), method = "checkLock", cancellable = true)
+    private void checkLock(CallbackInfo info) {
         // levels are always going to be valid on the clientside.
         // on the serverside, levels can still be locked to prevent servers
         // from accidentally overwriting the wrong files.
         // shouldn't really matter too much clientside.
+        info.cancel();
     }
 }

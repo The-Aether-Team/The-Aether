@@ -52,6 +52,7 @@ public class GuiListener
 
 		if (event.getGui() instanceof DirtMessageScreen ||
 		event.getGui() instanceof WorkingScreen ||
+		event.getGui() instanceof WinGameScreen ||
 		event.getGui() instanceof MainMenuScreen &&
 		!(event.getGui() instanceof AetherMainMenuScreen)) {
 			if (GuiListener.load_level == true) {
