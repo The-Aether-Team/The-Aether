@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.event.listeners;
 
+import com.gildedgames.aether.common.item.accessories.cape.ColoredCapeItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -43,7 +44,6 @@ public class BlockListener
                     player.swing(hand);
                     if (!world.isClientSide) {
                         if (!player.abilities.instabuild) {
-                            player.swing(hand);
                             player.setItemInHand(hand, new ItemStack(AetherItems.SKYROOT_BUCKET.get()));
                         }
 
@@ -67,6 +67,15 @@ public class BlockListener
                         player.awardStat(Stats.USE_CAULDRON);
                         cauldron.setWaterLevel(world, pos, blockState, 0);
                         world.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    }
+                }
+            } else if (heldStack.getItem() instanceof ColoredCapeItem) {
+                if (waterLevel > 0) {
+                    player.swing(hand);
+                    if (!world.isClientSide) {
+                        player.setItemInHand(hand, new ItemStack(AetherItems.WHITE_CAPE.get()));
+                        player.awardStat(Stats.CLEAN_ARMOR);
+                        cauldron.setWaterLevel(world, pos, blockState, waterLevel - 1);
                     }
                 }
             }

@@ -3,10 +3,7 @@ package com.gildedgames.aether.common.registry;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.item.accessories.abilities.IIceAccessory;
-import com.gildedgames.aether.common.item.accessories.cape.AgilityCapeItem;
-import com.gildedgames.aether.common.item.accessories.cape.CapeItem;
-import com.gildedgames.aether.common.item.accessories.cape.InvisibilityCloakItem;
-import com.gildedgames.aether.common.item.accessories.cape.ValkyrieCapeItem;
+import com.gildedgames.aether.common.item.accessories.cape.*;
 import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.common.item.accessories.gloves.LeatherGlovesItem;
 import com.gildedgames.aether.common.item.accessories.gloves.ZaniteGlovesItem;
@@ -240,15 +237,15 @@ public class AetherItems
 			() -> new GlovesItem(1.5D, "valkyrie_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_VALKYRIE, new Item.Properties().durability(1041).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
 	public static final RegistryObject<Item> RED_CAPE = ITEMS.register("red_cape",
-			() -> new CapeItem("red_cape", new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new ColoredCapeItem("red_cape", new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> BLUE_CAPE = ITEMS.register("blue_cape",
-			() -> new CapeItem("blue_cape", new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new ColoredCapeItem("blue_cape", new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> YELLOW_CAPE = ITEMS.register("yellow_cape",
-			() -> new CapeItem("yellow_cape", new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new ColoredCapeItem("yellow_cape", new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> WHITE_CAPE = ITEMS.register("white_cape",
 			() -> new CapeItem("white_cape", new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> SWET_CAPE = ITEMS.register("swet_cape",
-			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+			() -> new AccessoryItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES))); //TODO
 	public static final RegistryObject<Item> INVISIBILITY_CLOAK = ITEMS.register("invisibility_cloak",
 			() -> new InvisibilityCloakItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> AGILITY_CAPE = ITEMS.register("agility_cape",
