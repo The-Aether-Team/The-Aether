@@ -1,10 +1,7 @@
 package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.gui.screen.inventory.AltarScreen;
-import com.gildedgames.aether.client.gui.screen.inventory.FreezerScreen;
-import com.gildedgames.aether.client.gui.screen.inventory.IncubatorScreen;
-import com.gildedgames.aether.client.gui.screen.inventory.LoreBookScreen;
+import com.gildedgames.aether.client.gui.screen.inventory.*;
 import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicTileEntityRenderer;
@@ -127,6 +124,7 @@ public class AetherRendering
     }
 
     public static void registerGuiFactories() {
+        ScreenManager.register(AetherContainerTypes.ACCESSORIES.get(), AccessoriesScreen::new);
         ScreenManager.register(AetherContainerTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
         ScreenManager.register(AetherContainerTypes.ALTAR.get(), AltarScreen::new);
         ScreenManager.register(AetherContainerTypes.FREEZER.get(), FreezerScreen::new);

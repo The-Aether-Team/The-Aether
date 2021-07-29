@@ -4,16 +4,12 @@ import com.gildedgames.aether.Aether;
 
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import com.gildedgames.aether.core.network.packet.client.*;
-import com.gildedgames.aether.core.network.packet.server.ExtendedAttackPacket;
-import com.gildedgames.aether.core.network.packet.server.HittingPacket;
-import com.gildedgames.aether.core.network.packet.server.JumpPacket;
-import com.gildedgames.aether.core.network.packet.server.MovementPacket;
+import com.gildedgames.aether.core.network.packet.server.*;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -37,6 +33,7 @@ public class AetherPacketHandler
 		register(EnchantedDartCountPacket.class, EnchantedDartCountPacket::decode);
 		register(FlameParticlePacket.class, FlameParticlePacket::decode);
 		register(GoldenDartCountPacket.class, GoldenDartCountPacket::decode);
+		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
 		register(InebriationParticlePacket.class, InebriationParticlePacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PhoenixParticlePacket.class, PhoenixParticlePacket::decode);
@@ -54,6 +51,8 @@ public class AetherPacketHandler
 		register(HittingPacket.class, HittingPacket::decode);
 		register(JumpPacket.class, JumpPacket::decode);
 		register(MovementPacket.class, MovementPacket::decode);
+		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
+		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
 	}
 
 	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<PacketBuffer, MSG> decoder) {
