@@ -16,12 +16,20 @@ public interface IEternalDay extends INBTSerializable<CompoundNBT>
         return world.getCapability(AetherCapabilities.ETERNAL_DAY_CAPABILITY);
     }
 
+    void syncToClient();
+
     void serverTick(ServerWorld world);
     void clientTick(ClientWorld world);
 
     void setEternalDay(boolean isEternalDay);
     boolean getEternalDay();
 
+    void setCheckTime(boolean shouldCheckTime);
+    boolean getCheckTime();
+
     void setAetherTime(long time);
     long getAetherTime();
+
+    void setServerWorldTime(long time);
+    long getServerWorldTime();
 }

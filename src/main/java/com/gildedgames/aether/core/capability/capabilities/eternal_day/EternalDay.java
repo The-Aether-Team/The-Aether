@@ -4,10 +4,14 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.AetherTimePacket;
+import com.gildedgames.aether.core.network.packet.client.CheckTimePacket;
+import com.gildedgames.aether.core.network.packet.client.EternalDayPacket;
+import com.gildedgames.aether.core.network.packet.client.ServerTimePacket;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.GameRules;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -15,13 +19,13 @@ public class EternalDay implements IEternalDay
 {
     private final World world;
 
-    private boolean isEternalDay;
-    private long time;
+    private boolean isEternalDay = true;
+    private boolean shouldCheckTime = true;
+    private long aetherTime = 18000L;
+    private long serverWorldTime;
 
     public EternalDay(World world) {
         this.world = world;
-        this.isEternalDay = true;
-        this.time = 6000L;
     }
 
     @Override
@@ -33,7 +37,9 @@ public class EternalDay implements IEternalDay
     public CompoundNBT serializeNBT() {
         CompoundNBT nbt = new CompoundNBT();
         nbt.putBoolean("EternalDay", this.getEternalDay());
+        nbt.putBoolean("CheckTime", this.getCheckTime());
         nbt.putLong("Time", this.getAetherTime());
+        nbt.putLong("ServerWorldTime", this.getServerWorldTime());
         return nbt;
     }
 
@@ -42,67 +48,135 @@ public class EternalDay implements IEternalDay
         if (nbt.contains("EternalDay")) {
             this.setEternalDay(nbt.getBoolean("EternalDay"));
         }
+        if (nbt.contains("CheckTime")) {
+            this.setCheckTime(nbt.getBoolean("CheckTime"));
+        }
         if (nbt.contains("Time")) {
             this.setAetherTime(nbt.getLong("Time"));
         }
+        if (nbt.contains("ServerWorldTime")) {
+            this.setServerWorldTime(nbt.getLong("ServerWorldTime"));
+        }
     }
 
-    //TODO: It seems like a better idea to not let packets handle this stuff for performance reasons and instead try to just find a way to keep the aether's time synced between client and server through
-    //however vanilla does it, but don't let it be overridden by other serverWorld times.
+    @Override
+    public void syncToClient() {
+        this.setEternalDay(this.getEternalDay());
+        this.setCheckTime(this.getCheckTime());
+        this.setAetherTime(this.getAetherTime());
+        this.setServerWorldTime(this.getServerWorldTime());
+    }
 
     @Override
     public void serverTick(ServerWorld world) {
         if (world.dimension() == AetherDimensions.AETHER_WORLD) {
-            world.setDayTime(6000L);
-            Aether.LOGGER.info(world.getDayTime());
+            if (!AetherConfig.COMMON.disable_eternal_day.get()) {
+                Aether.LOGGER.info("s_0");
+                if (this.getCheckTime()) {
+                    Aether.LOGGER.info("s_1");
+                    if (!this.getEternalDay()) {
+                        Aether.LOGGER.info("s_2");
+                        if ((world.getDayTime() % 24000) != (this.getAetherTime() % 72000)) {
+                            Aether.LOGGER.info("s_3");
+                            this.setServerWorldTime(world.getDayTime());
+                            this.setAetherTime((long) MathHelper.approach(this.getAetherTime(), world.getDayTime(), 10.0F));
+                        } else {
+                            Aether.LOGGER.info("s_4");
+                            this.setCheckTime(false);
+                        }
+                    }
+                }
+            }
         }
-
-        //Aether.LOGGER.info("Server: " + this.getEternalDay());
-        //Aether.LOGGER.info("Server: " + this.getAetherTime());
-//            if (!this.getEternalDay() || AetherConfig.COMMON.disable_eternal_day.get()) {
-//                if (serverWorld.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
-//                    if (serverWorld.getGameTime() % 3 == 0) {
-//                        this.setAetherTime(this.getAetherTime() + 1L);
-//                    }
-//                }
-//            }
-
     }
 
     @Override
     public void clientTick(ClientWorld world) {
-        //Aether.LOGGER.info("Client: " + this.getEternalDay());
-        //Aether.LOGGER.info("Client: " + this.getAetherTime());
-//        if (!this.getEternalDay() || AetherConfig.COMMON.disable_eternal_day.get()) {
-//            if (world.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
-//                if (world.getGameTime() % 3 == 0) {
-//                    this.setAetherTime(this.getAetherTime() + 1L);
-//                }
-//            }
-//        }
         if (world.dimension() == AetherDimensions.AETHER_WORLD) {
-            world.setDayTime(this.getAetherTime());
-            //Aether.LOGGER.info(world.getDayTime());
+            if (!AetherConfig.COMMON.disable_eternal_day.get()) {
+                Aether.LOGGER.info("c_0");
+                if (this.getCheckTime()) {
+                    Aether.LOGGER.info("c_1");
+                    if (!this.getEternalDay()) {
+                        Aether.LOGGER.info("c_2");
+                        if ((this.getServerWorldTime() % 24000) != (this.getAetherTime() % 72000)) {
+                            Aether.LOGGER.info("c_3");
+                            world.setDayTime(this.getAetherTime());
+                        }
+                    } else {
+                        Aether.LOGGER.info("c_4");
+                        world.setDayTime(18000L);
+                    }
+                }
+            }
         }
     }
 
     @Override
     public void setEternalDay(boolean isEternalDay) {
+        this.sendEternalDay(isEternalDay);
         this.isEternalDay = isEternalDay;
     }
 
     @Override
     public boolean getEternalDay() {
-        return isEternalDay;
+        return this.isEternalDay;
+    }
+
+    @Override
+    public void setCheckTime(boolean shouldCheckTime) {
+        this.sendCheckTime(shouldCheckTime);
+        this.shouldCheckTime = shouldCheckTime;
+    }
+
+    @Override
+    public boolean getCheckTime() {
+        return this.shouldCheckTime;
     }
 
     @Override
     public void setAetherTime(long time) {
-        this.time = time;
+        this.sendAetherTime(time);
+        this.aetherTime = time;
     }
 
     @Override
     public long getAetherTime() {
-        return this.time;
+        return this.aetherTime;
+    }
+
+    @Override
+    public void setServerWorldTime(long time) {
+        this.sendServerWorldTime(time);
+        this.serverWorldTime = time;
+    }
+
+    @Override
+    public long getServerWorldTime() {
+        return this.serverWorldTime;
+    }
+
+    private void sendEternalDay(boolean eternalDay) {
+        if (this.getWorld() instanceof ServerWorld) {
+            AetherPacketHandler.sendToAll(new EternalDayPacket(eternalDay));
+        }
+    }
+
+    private void sendCheckTime(boolean checkTime) {
+        if (this.getWorld() instanceof ServerWorld) {
+            AetherPacketHandler.sendToAll(new CheckTimePacket(checkTime));
+        }
+    }
+
+    private void sendAetherTime(long time) {
+        if (this.getWorld() instanceof ServerWorld) {
+            AetherPacketHandler.sendToAll(new AetherTimePacket(time));
+        }
+    }
+
+    private void sendServerWorldTime(long time) {
+        if (this.getWorld() instanceof ServerWorld) {
+            AetherPacketHandler.sendToAll(new ServerTimePacket(time));
+        }
     }
 }

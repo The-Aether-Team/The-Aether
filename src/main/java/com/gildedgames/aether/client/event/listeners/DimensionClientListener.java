@@ -1,19 +1,13 @@
 package com.gildedgames.aether.client.event.listeners;
 
 import com.gildedgames.aether.common.registry.AetherDimensions;
-import com.gildedgames.aether.core.AetherConfig;
-import com.gildedgames.aether.core.capability.capabilities.eternal_day.EternalDay;
-import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.tags.FluidTags;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)

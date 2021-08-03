@@ -160,7 +160,6 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
             int i = MathHelper.ceil(p_225503_1_ - 1.0F);
             if (i > 0) {
                 List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox()));
-                Aether.LOGGER.info(list);
                 boolean flag = this.blockState.is(BlockTags.ANVIL);
                 DamageSource damagesource = flag ? DamageSource.ANVIL : DamageSource.FALLING_BLOCK;
                 for (Entity entity : list) {

@@ -97,16 +97,16 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         /**
          * This code determines the current angle of the sun and moon and determines whether they should be visible or not.
          */
-        float timeFactor = world.getDayTime() % 24000;
+        float timeFactor = world.getDayTime() % 72000;
         float sunOpacity = 1.0F;
         float moonOpacity = 0.0F;
-        if(timeFactor > 23800) {
-            timeFactor -= 23800;
+        if (timeFactor > 71400) {
+            timeFactor -= 71400;
             sunOpacity = timeFactor * 0.005F;
             moonOpacity = 1.0F - timeFactor * 0.005F;
         }
-        else if(timeFactor > 12800) {
-            timeFactor -= 12800;
+        else if (timeFactor > 38400) {
+            timeFactor -= 38400;
             sunOpacity = 1.0F - timeFactor * 0.005F;
             moonOpacity = timeFactor * 0.005F;
         }

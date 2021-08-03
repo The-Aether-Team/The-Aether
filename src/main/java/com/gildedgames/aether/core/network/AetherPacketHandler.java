@@ -4,16 +4,12 @@ import com.gildedgames.aether.Aether;
 
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import com.gildedgames.aether.core.network.packet.client.*;
-import com.gildedgames.aether.core.network.packet.server.ExtendedAttackPacket;
-import com.gildedgames.aether.core.network.packet.server.HittingPacket;
-import com.gildedgames.aether.core.network.packet.server.JumpPacket;
-import com.gildedgames.aether.core.network.packet.server.MovementPacket;
+import com.gildedgames.aether.core.network.packet.server.*;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -32,9 +28,12 @@ public class AetherPacketHandler
 	
 	public static synchronized void register() {
 		// CLIENT
+		register(AetherTimePacket.class, AetherTimePacket::decode);
+		register(CheckTimePacket.class, CheckTimePacket::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
 		register(CloudParticlePacket.class, CloudParticlePacket::decode);
 		register(EnchantedDartCountPacket.class, EnchantedDartCountPacket::decode);
+		register(EternalDayPacket.class, EternalDayPacket::decode);
 		register(FlameParticlePacket.class, FlameParticlePacket::decode);
 		register(GoldenDartCountPacket.class, GoldenDartCountPacket::decode);
 		register(InebriationParticlePacket.class, InebriationParticlePacket::decode);
@@ -43,6 +42,7 @@ public class AetherPacketHandler
 		register(PoisonDartCountPacket.class, PoisonDartCountPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(ResetMaxUpStepPacket.class, ResetMaxUpStepPacket::decode);
+		register(ServerTimePacket.class, ServerTimePacket::decode);
 		register(SetLifeShardPacket.class, SetLifeShardPacket::decode);
 		register(SetProjectileImpactedPacket.class, SetProjectileImpactedPacket::decode);
 		register(SetRemedyPacket.class, SetRemedyPacket::decode);
