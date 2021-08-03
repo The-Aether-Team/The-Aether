@@ -30,6 +30,19 @@ public class EternalDayListener
     }
 
     @SubscribeEvent
+    public static void onChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        if (event.getPlayer() != null && event.getPlayer().level instanceof ServerWorld) {
+            ServerWorld world = (ServerWorld) event.getPlayer().level;
+            MinecraftServer server = world.getServer();
+            for (ServerWorld serverworld : server.getAllLevels()) {
+                if (serverworld.dimension() == AetherDimensions.AETHER_WORLD) {
+                    IEternalDay.get(world).ifPresent(IEternalDay::syncToClient);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         world = event.world;
         if (event.side == LogicalSide.SERVER) {
