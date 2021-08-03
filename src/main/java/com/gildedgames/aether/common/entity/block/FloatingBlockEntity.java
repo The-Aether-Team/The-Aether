@@ -3,21 +3,17 @@ package com.gildedgames.aether.common.entity.block;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.util.FloatingBlock;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.*;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.DirectionalPlaceContext;
 import net.minecraft.item.ItemStack;
@@ -41,7 +37,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -160,7 +155,6 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
             int i = MathHelper.ceil(p_225503_1_ - 1.0F);
             if (i > 0) {
                 List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox()));
-                Aether.LOGGER.info(list);
                 boolean flag = this.blockState.is(BlockTags.ANVIL);
                 DamageSource damagesource = flag ? DamageSource.ANVIL : DamageSource.FALLING_BLOCK;
                 for (Entity entity : list) {

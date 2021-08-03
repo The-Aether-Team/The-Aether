@@ -7,6 +7,7 @@
   "mixins": [
     "common.AbstractArrowEntityMixin",
     "common.CropsBlockMixin",
+    "common.DimensionTypeMixin",
     "common.EatBerriesGoalMixin",
     "common.FindPollinationTargetGoalMixin",
     "common.FoxEntityMixin",

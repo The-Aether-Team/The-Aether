@@ -28,9 +28,12 @@ public class AetherPacketHandler
 	
 	public static synchronized void register() {
 		// CLIENT
+		register(AetherTimePacket.class, AetherTimePacket::decode);
+		register(CheckTimePacket.class, CheckTimePacket::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
 		register(CloudParticlePacket.class, CloudParticlePacket::decode);
 		register(EnchantedDartCountPacket.class, EnchantedDartCountPacket::decode);
+		register(EternalDayPacket.class, EternalDayPacket::decode);
 		register(FlameParticlePacket.class, FlameParticlePacket::decode);
 		register(GoldenDartCountPacket.class, GoldenDartCountPacket::decode);
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
@@ -40,6 +43,7 @@ public class AetherPacketHandler
 		register(PoisonDartCountPacket.class, PoisonDartCountPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(ResetMaxUpStepPacket.class, ResetMaxUpStepPacket::decode);
+		register(ServerTimePacket.class, ServerTimePacket::decode);
 		register(SetLifeShardPacket.class, SetLifeShardPacket::decode);
 		register(SetProjectileImpactedPacket.class, SetProjectileImpactedPacket::decode);
 		register(SetRemedyPacket.class, SetRemedyPacket::decode);
