@@ -71,17 +71,12 @@ public class EternalDay implements IEternalDay
     public void serverTick(ServerWorld world) {
         if (world.dimension() == AetherDimensions.AETHER_WORLD) {
             if (!AetherConfig.COMMON.disable_eternal_day.get()) {
-                Aether.LOGGER.info("s_0");
                 if (this.getCheckTime()) {
-                    Aether.LOGGER.info("s_1");
                     if (!this.getEternalDay()) {
-                        Aether.LOGGER.info("s_2");
                         if ((world.getDayTime() % 24000) != (this.getAetherTime() % 72000)) {
-                            Aether.LOGGER.info("s_3");
                             this.setServerWorldTime(world.getDayTime());
                             this.setAetherTime((long) MathHelper.approach(this.getAetherTime(), world.getDayTime(), 10.0F));
                         } else {
-                            Aether.LOGGER.info("s_4");
                             this.setCheckTime(false);
                         }
                     }
@@ -94,17 +89,12 @@ public class EternalDay implements IEternalDay
     public void clientTick(ClientWorld world) {
         if (world.dimension() == AetherDimensions.AETHER_WORLD) {
             if (!AetherConfig.COMMON.disable_eternal_day.get()) {
-                Aether.LOGGER.info("c_0");
                 if (this.getCheckTime()) {
-                    Aether.LOGGER.info("c_1");
                     if (!this.getEternalDay()) {
-                        Aether.LOGGER.info("c_2");
                         if ((this.getServerWorldTime() % 24000) != (this.getAetherTime() % 72000)) {
-                            Aether.LOGGER.info("c_3");
                             world.setDayTime(this.getAetherTime());
                         }
                     } else {
-                        Aether.LOGGER.info("c_4");
                         world.setDayTime(18000L);
                     }
                 }
