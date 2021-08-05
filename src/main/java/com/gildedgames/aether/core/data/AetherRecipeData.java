@@ -15,6 +15,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Items;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
@@ -428,6 +429,26 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .unlockedBy("has_diamond", has(Tags.Items.GEMS_DIAMOND))
                 .group("jukebox")
                 .save(consumer, name("skyroot_jukebox"));
+
+        ShapedRecipeBuilder.shaped(Blocks.JUKEBOX, 1)
+                .pattern("PPP")
+                .pattern("PGP")
+                .pattern("PPP")
+                .define('P', ItemTags.PLANKS)
+                .define('G', AetherBlocks.ENCHANTED_GRAVITITE.get())
+                .unlockedBy("has_gravitite", has(AetherBlocks.ENCHANTED_GRAVITITE.get()))
+                .group("jukebox")
+                .save(consumer, name("gravitite_jukebox"));
+
+        ShapedRecipeBuilder.shaped(Blocks.JUKEBOX, 1)
+                .pattern("SSS")
+                .pattern("SGS")
+                .pattern("SSS")
+                .define('S', AetherTags.Items.PLANKS_CRAFTING)
+                .define('G', AetherBlocks.ENCHANTED_GRAVITITE.get())
+                .unlockedBy("has_gravitite", has(AetherBlocks.ENCHANTED_GRAVITITE.get()))
+                .group("jukebox")
+                .save(consumer, name("skyroot_gravitite_jukebox"));
 
         ShapedRecipeBuilder.shaped(Blocks.LOOM, 1)
                 .pattern("TT")
