@@ -45,7 +45,12 @@ public class AccessoryButton extends ImageButton
         if (this.parentGui instanceof CreativeScreen) {
             CreativeScreen screen = (CreativeScreen) this.parentGui;
             if (screen.getSelectedTab() == ItemGroup.TAB_INVENTORY.getId()) {
+                this.active = true;
+                this.visible = true;
                 super.render(matrixStack, p_230430_2_, p_230430_3_, p_230430_4_);
+            } else {
+                this.active = false;
+                this.visible = false;
             }
         } else if (this.parentGui instanceof AccessoriesScreen) {
             AccessoriesScreen screen = (AccessoriesScreen) this.parentGui;
