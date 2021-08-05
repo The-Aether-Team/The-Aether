@@ -44,7 +44,7 @@ public class FloatingBlock extends Block
 	
 	private void floatBlock(World worldIn, BlockPos pos) {
 		if (!worldIn.isClientSide) {
-			FloatingBlockEntity floatingblockentity = new FloatingBlockEntity(worldIn, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, worldIn.getBlockState(pos));
+			FloatingBlockEntity floatingblockentity = new FloatingBlockEntity(worldIn, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, worldIn.getBlockState(pos));
 			worldIn.removeBlock(pos, false);
 			worldIn.addFreshEntity(floatingblockentity);
 		}
