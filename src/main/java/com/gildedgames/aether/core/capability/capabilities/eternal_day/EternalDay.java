@@ -73,9 +73,9 @@ public class EternalDay implements IEternalDay
             if (!AetherConfig.COMMON.disable_eternal_day.get()) {
                 if (this.getCheckTime()) {
                     if (!this.getEternalDay()) {
-                        if ((world.getDayTime() % 24000) != (this.getAetherTime() % 72000)) {
-                            this.setServerWorldTime(world.getDayTime());
-                            this.setAetherTime((long) MathHelper.approach(this.getAetherTime(), world.getDayTime(), 10.0F));
+                        long dayTime = world.getDayTime() % 72000;
+                        if (dayTime != this.getAetherTime()) {
+                            this.setAetherTime((long) MathHelper.approach(this.getAetherTime(), dayTime, 10.0F));
                         } else {
                             this.setCheckTime(false);
                         }
@@ -91,7 +91,8 @@ public class EternalDay implements IEternalDay
             if (!AetherConfig.COMMON.disable_eternal_day.get()) {
                 if (this.getCheckTime()) {
                     if (!this.getEternalDay()) {
-                        if ((this.getServerWorldTime() % 24000) != (this.getAetherTime() % 72000)) {
+                        long dayTime = this.getServerWorldTime() % 72000;
+                        if (dayTime != this.getAetherTime()) {
                             world.setDayTime(this.getAetherTime());
                         }
                     } else {

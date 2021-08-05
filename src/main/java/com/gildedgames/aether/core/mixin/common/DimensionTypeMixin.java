@@ -2,7 +2,6 @@ package com.gildedgames.aether.core.mixin.common;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.event.listeners.capability.EternalDayListener;
-import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -31,11 +30,6 @@ public class DimensionTypeMixin
     private void timeOfDay(long p_236032_1_, CallbackInfoReturnable<Float> cir) {
         if (this.effectsLocation.equals(new ResourceLocation(Aether.MODID, "the_aether"))) {
             double time = (double) this.fixedTime.orElse(p_236032_1_);
-            World world = EternalDayListener.world;
-            if (world != null) {
-                IEternalDay eternalDay = IEternalDay.get(world).orElse(null);
-                time = eternalDay.getEternalDay() && !AetherConfig.COMMON.disable_eternal_day.get() ? (double) eternalDay.getAetherTime() : (double) this.fixedTime.orElse(p_236032_1_);
-            }
             double d0 = MathHelper.frac(time / 72000.0D - 0.25D);
             double d1 = 0.5D - Math.cos(d0 * Math.PI) / 2.0D;
             cir.setReturnValue((float)(d0 * 2.0D + d1) / 3.0F);
@@ -49,7 +43,8 @@ public class DimensionTypeMixin
             World world = EternalDayListener.world;
             if (world != null) {
                 IEternalDay eternalDay = IEternalDay.get(world).orElse(null);
-                time = eternalDay.getEternalDay() && !AetherConfig.COMMON.disable_eternal_day.get() ? eternalDay.getAetherTime() : this.fixedTime.orElse(p_236032_1_);
+                eternalDay.setServerWorldTime(world.getDayTime());
+                time = eternalDay.getServerWorldTime();
             }
             cir.setReturnValue((int) (time / 72000L % 8L + 8L) % 8);
         }
