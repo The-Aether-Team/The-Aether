@@ -220,21 +220,21 @@ public class AetherBlocks
 			() -> new AerogelStairsBlock(() -> AEROGEL.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking((state, reader, pos) -> false)));
 
 	public static final RegistryObject<SlabBlock> SKYROOT_SLAB = register("skyroot_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get())));
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get()).strength(2.0F, 3.0F)));
 	public static final RegistryObject<SlabBlock> CARVED_SLAB = register("carved_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.CARVED_STONE.get()).strength(2.0F)));
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.CARVED_STONE.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> ANGELIC_SLAB = register("angelic_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.ANGELIC_STONE.get()).strength(2.0F)));
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.ANGELIC_STONE.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> HELLFIRE_SLAB = register("hellfire_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.HELLFIRE_STONE.get()).strength(2.0F)));
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.HELLFIRE_STONE.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> HOLYSTONE_SLAB = register("holystone_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE.get()).strength(2.0F)));
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> MOSSY_HOLYSTONE_SLAB = register("mossy_holystone_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get()).strength(2.0F)));
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> ICESTONE_SLAB = register("icestone_slab",
-			() -> new IcestoneSlabBlock(AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get()).strength(2.0F)));
+			() -> new IcestoneSlabBlock(AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> HOLYSTONE_BRICK_SLAB = register("holystone_brick_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get()).strength(2.0F)));
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> AEROGEL_SLAB = register("aerogel_slab",
 			() -> new AerogelSlabBlock(AbstractBlock.Properties.copy(AetherBlocks.AEROGEL.get()).strength(1.5F, 2000.0F).isViewBlocking((state, reader, pos) -> false)));
 
