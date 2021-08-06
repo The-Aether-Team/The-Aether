@@ -74,7 +74,7 @@ jobs:
 
             WORKDIR /home/container
 
-            COPY ./libs/test.jar /mods/test.jar
+            COPY ./test.jar /mods/test.jar
             COPY ./entrypoint.sh /entrypoint.sh
             " > Dockerfile
       - setup_remote_docker:
