@@ -37,11 +37,29 @@ jobs:
   deploy:
     docker:
       - image: cimg/base:2021.07
-    
     steps:
       - attach_workspace:
           at: ~/project
       - run: ls -a 
+      # Docker image source from: https://github.com/pterodactyl/images/tree/java
+      - run: |
+            echo "
+            #!/bin/bash
+            cd /home/container
+
+            # Output Current Java Version
+            java -version
+
+            # Make internal Docker IP address available to processes.
+            export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
+
+            # Replace Startup Variables
+            MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
+            echo ":/home/container$ ${MODIFIED_STARTUP}"
+
+            # Run the Server
+            eval ${MODIFIED_STARTUP}
+            " > entrypoint.sh
       - run: |
             echo "
             FROM openjdk:8-jre-slim
@@ -60,7 +78,7 @@ jobs:
             COPY ./libs/test.jar /mods/test.jar
             COPY ./entrypoint.sh /entrypoint.sh
             " > Dockerfile
-      - run: cat Dockerfile
+      - run: docker build .
     
 
 workflows:
