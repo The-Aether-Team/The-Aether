@@ -88,6 +88,8 @@ workflows:
     jobs:
       - build
       - deploy:
+          context:
+            - docker
           # filters:
           #   branches:
           #     only: 
