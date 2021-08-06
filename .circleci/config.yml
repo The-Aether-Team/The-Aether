@@ -41,25 +41,26 @@ jobs:
     
     steps:
       - attach_workspace:
-          at: ~/
-      - run: ls -a
+          at: ~/libs
+      - run: cd libs && ls -a 
       - run: |
-            echo \
-            "FROM        openjdk:8-jre-slim
+            echo "
+            FROM openjdk:8-jre-slim
             RUN apt-get update -y \
             && apt-get install -y curl ca-certificates openssl git tar sqlite fontconfig tzdata iproute2 \
             && useradd -d /home/container -m container
             
             USER container
-            ENV  USER=container HOME=/home/container
+            ENV USER=container HOME=/home/container
 
-            USER        container
-            ENV         USER=container HOME=/home/container
+            USER container
+            ENV USER=container HOME=/home/container
 
-            WORKDIR     /home/container
+            WORKDIR /home/container
 
-            COPY        ./libs/test.jar /mods/
-            COPY        ./entrypoint.sh /entrypoint.sh" > Dockerfile
+            COPY ./libs/test.jar /mods/test.jar
+            COPY ./entrypoint.sh /entrypoint.sh
+            " > Dockerfile
       - run: cat Dockerfile
     
 
