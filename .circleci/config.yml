@@ -40,7 +40,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/project
-      - run: ls -a 
       # Docker image source from: https://github.com/pterodactyl/images/tree/java
       - run: |
             echo "
@@ -80,8 +79,9 @@ jobs:
             " > Dockerfile
       - setup_remote_docker:
           version: 19.03.13
-      - run: docker build .
-    
+      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run: docker build -t gildedgames/aether-server:$CIRCLE_BRANCH .
+      - run: docker push gildedgames/aether-server:$CIRCLE_BRANCH 
 
 workflows:
   build-and-deploy:
