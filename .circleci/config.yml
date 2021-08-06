@@ -1,9 +1,9 @@
 version: 2.1
 
 parameters:
-  artifact:
+  artifact-name:
     type: string
-    default: aether-$CIRCLE_BRANCH.jar
+    default: aether
 
 jobs:
   build:
@@ -31,13 +31,13 @@ jobs:
       # - run: gradle test
       # - run: gradle build
       - run: mkdir -p ~/project/build/libs
-      - run: echo "test" > ~/project/build/libs/<< pipeline.parameters.artifact >>
+      - run: echo "test" > ~/project/build/libs/<< pipeline.parameters.artifact-name >>-$CIRCLE_BRANCH.jar
       - store_artifacts:
           path: ~/project/build/libs
       - persist_to_workspace:
           root: ~/project/build/libs
           paths: 
-            - << pipeline.parameters.artifact >>
+            - << pipeline.parameters.artifact-name >>-*.jar
 
   deploy:
     docker:
@@ -59,7 +59,7 @@ jobs:
       - setup_remote_docker:
           version: 19.03.13
       - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-      - run: docker build --build-arg ARTIFACT=<< pipeline.parameters.artifact >> -t gildedgames/aether-server:$CIRCLE_BRANCH .
+      - run: docker build --build-arg ARTIFACT=<< pipeline.parameters.artifact-name >>-$CIRCLE_BRANCH.jar -t gildedgames/aether-server:$CIRCLE_BRANCH .
       - run: docker push gildedgames/aether-server:$CIRCLE_BRANCH 
 
 workflows:
