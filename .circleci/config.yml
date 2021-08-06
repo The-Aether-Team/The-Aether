@@ -60,7 +60,7 @@ jobs:
             eval ${MODIFIED_STARTUP}
             " > entrypoint.sh
       - run: |
-            echo "
+            echo '
             FROM openjdk:8-jre-slim
             RUN apt-get update -y \
             && apt-get install -y curl ca-certificates openssl git tar sqlite fontconfig tzdata iproute2 \
@@ -77,8 +77,9 @@ jobs:
             COPY ./test.jar /mods/test.jar
             COPY ./entrypoint.sh /entrypoint.sh
 
-            CMD [\"/bin/bash\", \"/entrypoint.sh\"]
-            " > Dockerfile
+            CMD ["/bin/bash", "/entrypoint.sh"]
+            ' > Dockerfile
+      - run: ls -a
       - setup_remote_docker:
           version: 19.03.13
       - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
