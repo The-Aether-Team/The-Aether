@@ -6,7 +6,6 @@ jobs:
       - image: cimg/openjdk:8.0.282
     # machine:
     #   image: ubuntu-2004:202104-01
-    working_directory: ~/repo
 
     environment:
       JVM_OPTS: -Xmx3200m
@@ -26,14 +25,14 @@ jobs:
       #     key: v3-dependencies-{{ checksum "build.gradle" }}
       # - run: gradle test
       # - run: gradle build
-      - run: mkdir -p ~/repo/build/libs
-      - run: echo "test" > ~/repo/build/libs/test.jar
+      - run: mkdir -p ~/project/build/libs
+      - run: echo "test" > ~/project/build/libs/test.jar
       - store_artifacts:
-          path: ~/repo/build/libs
+          path: ~/project/build/libs
       - persist_to_workspace:
-          root: /home/circleci/repo
+          root: ~/project/build/libs
           paths: 
-            - build/libs/test.jar
+            - test.jar
 
   deploy:
     docker:
@@ -41,7 +40,7 @@ jobs:
     
     steps:
       - attach_workspace:
-          at: ~/
+          at: ~/project
       - run: ls -a 
       - run: |
             echo "
