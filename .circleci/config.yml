@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   artifact:
     type: string
-    default: aether-{CIRCLE_BRANCH}.jar
+    default: aether-$CIRCLE_BRANCH.jar
 
 jobs:
   build:
