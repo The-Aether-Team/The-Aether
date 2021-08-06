@@ -78,6 +78,8 @@ jobs:
             COPY ./libs/test.jar /mods/test.jar
             COPY ./entrypoint.sh /entrypoint.sh
             " > Dockerfile
+      - setup_remote_docker:
+          version: 19.03.13
       - run: docker build .
     
 
