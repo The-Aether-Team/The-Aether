@@ -46,6 +46,7 @@ jobs:
       - attach_workspace:
           at: ~/project
       - run: |
+            SSH_CONFIG_DIR=/home/circleci/.ssh
             echo "Using SSH Config Dir '$SSH_CONFIG_DIR'"
             git --version 
 
