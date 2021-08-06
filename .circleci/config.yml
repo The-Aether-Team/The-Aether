@@ -31,9 +31,9 @@ jobs:
       - store_artifacts:
           path: ~/repo/build/libs
       - persist_to_workspace:
-          root: ~/repo/build/
+          root: ~/repo/build
           paths: 
-            - libs
+            - libs/test.jar
 
   deploy:
     docker:
@@ -41,8 +41,8 @@ jobs:
     
     steps:
       - attach_workspace:
-          at: ~/libs
-      - run: cd libs && ls -a 
+          at: ~/
+      - run: ls -a 
       - run: |
             echo "
             FROM openjdk:8-jre-slim
