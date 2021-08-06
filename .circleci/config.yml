@@ -76,6 +76,8 @@ jobs:
 
             COPY ./test.jar /mods/test.jar
             COPY ./entrypoint.sh /entrypoint.sh
+
+            CMD ["/bin/bash", "/entrypoint.sh"]
             " > Dockerfile
       - setup_remote_docker:
           version: 19.03.13
