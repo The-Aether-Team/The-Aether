@@ -2,10 +2,10 @@ version: 2.1
 
 jobs:
   build:
-    # docker:
-    #   - image: cimg/openjdk:8.0.282
-    machine:
-      image: ubuntu-2004:202104-01
+    docker:
+      - image: cimg/openjdk:8.0.282
+    # machine:
+    #   image: ubuntu-2004:202104-01
     working_directory: ~/repo
 
     environment:
