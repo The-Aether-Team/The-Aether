@@ -42,8 +42,7 @@ jobs:
           at: ~/project
       # Docker image source from: https://github.com/pterodactyl/images/tree/java
       - run: |
-            echo "
-            #!/bin/bash
+            echo "#!/bin/bash
             cd /home/container
 
             # Output Current Java Version
@@ -60,14 +59,11 @@ jobs:
             eval ${MODIFIED_STARTUP}
             " > entrypoint.sh
       - run: |
-            echo '
-            FROM openjdk:8-jre-slim
+            echo 'FROM openjdk:8-slim
+
             RUN apt-get update -y \
             && apt-get install -y curl ca-certificates openssl git tar sqlite fontconfig tzdata iproute2 \
             && useradd -d /home/container -m container
-            
-            USER container
-            ENV USER=container HOME=/home/container
 
             USER container
             ENV USER=container HOME=/home/container
