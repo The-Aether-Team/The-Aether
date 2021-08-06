@@ -451,6 +451,8 @@ public class AetherLangData extends LanguageProvider
 
 
         addAdvancement("enter_aether", "Hostile Paradise");
+        addAdvancement("read_lore", "The More You Know!");
+        addAdvancement("loreception", "Lore-Ception!");
         addAdvancement("blue_aercloud", "To Infinity and Beyond!");
         addAdvancement("incubator", "Now You're Family");
         addAdvancement("altar", "Do You Believe in Magic?");
@@ -459,19 +461,19 @@ public class AetherLangData extends LanguageProvider
         addAdvancement("bronze_dungeon", "Like a Bossaru!");
         addAdvancement("silver_dungeon", "Dethroned");
         addAdvancement("gold_dungeon", "Extinguished");
-        addAdvancement("loreception", "Lore-Ception!");
 
 
         addAdvancementDesc("enter_aether", "Enter the Aether");
+        addAdvancementDesc("read_lore", "Read a Book of Lore");
+        addAdvancementDesc("loreception", "Put a Book of Lore inside a Book of Lore");
         addAdvancementDesc("blue_aercloud", "Bounce on a Blue Aercloud");
-        addAdvancementDesc("incubator", "Incubate a moa");
+        addAdvancementDesc("incubator", "Incubate a Moa");
         addAdvancementDesc("altar", "Craft an Altar");
         addAdvancementDesc("gravitite_tools", "Craft a Gravitite tool");
         addAdvancementDesc("mount_phyg", "Fly on a Phyg");
         addAdvancementDesc("bronze_dungeon", "Defeat the Bronze Dungeon boss");
         addAdvancementDesc("silver_dungeon", "Defeat the Silver Dungeon boss");
         addAdvancementDesc("gold_dungeon", "Defeat the Golden Dungeon boss");
-        addAdvancementDesc("loreception", "Put a Book of Lore inside a Book of Lore");
 
 
         addMenuText("minecraft", "Normal Theme");

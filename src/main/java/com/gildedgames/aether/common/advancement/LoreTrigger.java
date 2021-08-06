@@ -46,6 +46,10 @@ public class LoreTrigger extends AbstractCriterionTrigger<LoreTrigger.Instance>
             return forItem(predicate);
         }
 
+        public static LoreTrigger.Instance forAny() {
+            return forItem(ItemPredicate.ANY);
+        }
+
         public boolean test(ItemStack stack) {
             return this.item.matches(stack);
         }

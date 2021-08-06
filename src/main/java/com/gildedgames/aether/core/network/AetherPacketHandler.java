@@ -54,6 +54,7 @@ public class AetherPacketHandler
 		register(ExtendedAttackPacket.class, ExtendedAttackPacket::decode);
 		register(HittingPacket.class, HittingPacket::decode);
 		register(JumpPacket.class, JumpPacket::decode);
+		register(LoreExistsPacket.class, LoreExistsPacket::decode);
 		register(MovementPacket.class, MovementPacket::decode);
 		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
