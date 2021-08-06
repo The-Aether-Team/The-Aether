@@ -12,7 +12,6 @@ jobs:
       JVM_OPTS: -Xmx3200m
       _JAVA_OPTIONS: -Xmx3200m
       GRADLE_OPTS: -Dorg.gradle.daemon=false
-
     steps:
       - checkout
       - restore_cache:
@@ -21,13 +20,37 @@ jobs:
             - v3-dependencies-
 
       - run: gradle dependencies
-
       - save_cache:
           paths:
             - ~/repo/.gradle
           key: v3-dependencies-{{ checksum "build.gradle" }}
-
       - run: gradle test
       - run: gradle build
       - store_artifacts:
-              path: ~/repo/build/libs
+          path: ~/repo/build/libs
+      - persist_to_workspace:
+          root: ~/repo/build/
+          paths: 
+            - libs
+
+  deploy:
+    docker:
+      - image: cimg/base:2021.07
+    
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: ls -a
+    
+
+workflows:
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          # filters:
+          #   branches:
+          #     only: 
+          #       - "main"
+          requires:
+            - build
