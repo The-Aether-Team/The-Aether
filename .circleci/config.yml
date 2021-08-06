@@ -31,9 +31,9 @@ jobs:
       - store_artifacts:
           path: ~/repo/build/libs
       - persist_to_workspace:
-          root: /home/circleci/repo/build/libs
+          root: /home/circleci/repo
           paths: 
-            - /*
+            - /build/libs/test.jar
 
   deploy:
     docker:
