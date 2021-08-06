@@ -1,5 +1,10 @@
 version: 2.1
 
+parameters:
+  artifact:
+    type: string
+    default: aether-{CIRCLE_BRANCH}.jar
+
 jobs:
   build:
     docker:
@@ -26,13 +31,13 @@ jobs:
       # - run: gradle test
       # - run: gradle build
       - run: mkdir -p ~/project/build/libs
-      - run: echo "test" > ~/project/build/libs/test.jar
+      - run: echo "test" > ~/project/build/libs/<< pipeline.parameters.artifact >>
       - store_artifacts:
           path: ~/project/build/libs
       - persist_to_workspace:
           root: ~/project/build/libs
           paths: 
-            - test.jar
+            - << pipeline.parameters.artifact >>
 
   deploy:
     docker:
@@ -40,48 +45,12 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/project
-      # Docker image source from: https://github.com/pterodactyl/images/tree/java
-      - run: |
-            echo "#!/bin/bash
-            cd /home/container
-
-            # Output Current Java Version
-            java -version
-
-            # Make internal Docker IP address available to processes.
-            export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
-
-            # Replace Startup Variables
-            printenv 
-            echo Startup command: $STARTUP
-            MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
-            echo `:/home/container$ ${MODIFIED_STARTUP}`
-
-            # Run the Server
-            eval ${MODIFIED_STARTUP}
-            " > entrypoint.sh
-      - run: |
-            echo 'FROM openjdk:8-slim
-
-            RUN apt-get update -y \
-            && apt-get install -y curl ca-certificates openssl git tar sqlite fontconfig tzdata iproute2 \
-            && useradd -d /home/container -m container
-
-            USER container
-            ENV USER=container HOME=/home/container
-
-            WORKDIR /home/container
-
-            COPY ./test.jar /mods/test.jar
-            COPY ./entrypoint.sh /entrypoint.sh
-
-            CMD ["/bin/bash", "/entrypoint.sh"]
-            ' > Dockerfile
+      - run: git clone git@github.com:Gilded-Games/pterodactyl-server-images.git
       - run: ls -a
       - setup_remote_docker:
           version: 19.03.13
       - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-      - run: docker build -t gildedgames/aether-server:$CIRCLE_BRANCH .
+      - run: docker build --build-arg ARTIFACT=<< pipeline.parameters.artifact >> -t gildedgames/aether-server:$CIRCLE_BRANCH .
       - run: docker push gildedgames/aether-server:$CIRCLE_BRANCH 
 
 workflows:
