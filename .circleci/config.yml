@@ -53,9 +53,9 @@ jobs:
 
             # Replace Startup Variables
             printenv 
-            echo Startup command: ${STARTUP}
+            echo Startup command: $STARTUP
             MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
-            echo ":/home/container$ ${MODIFIED_STARTUP}"
+            echo `:/home/container$ ${MODIFIED_STARTUP}`
 
             # Run the Server
             eval ${MODIFIED_STARTUP}
