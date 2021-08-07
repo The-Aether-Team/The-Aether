@@ -40,8 +40,8 @@ jobs:
             - << pipeline.parameters.artifact-name >>-*.jar
 
   deploy:
-    docker:
-      - image: cimg/base:2021.07
+    machine:
+        image: ubuntu-2004:202104-01
     steps:
       - run:
           name: Install OpenVPN
