@@ -74,17 +74,22 @@ jobs:
             echo "route 169.254.0.0 255.255.0.0 net_gateway" >> $CLIENT_PATH.ovpn
             
             sudo openvpn3-autoload --directory .openvpn3/autoload
+            
+      - run: 
+          name: Wait for the connection to be established and check
+          command: |
+            while [ $(sudo openvpn3 sessions-list|grep -c "Client connected") == 0 ]; do
+              echo "Attempting to connect..."
+              sleep 1;
+            done
+            echo "VPN Connected"
+            
+            sudo openvpn3 sessions-list
+            echo "Public IP is now $(curl checkip.amazonaws.com)"
 
       - run:
           name: Run commands in our infrastructure
           command: |
-            echo "Public IP is now $(curl checkip.amazonaws.com)"
-            sudo openvpn3 sessions-list
-            sleep 60
-
-            echo "Public IP is now $(curl checkip.amazonaws.com)"
-            sudo openvpn3 sessions-list
-
             INSTANCE_NUMBER=6 # TODO: Create a way of selecting this from servers endpoint
 
             curl "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}/reinstall" -H "Authorization: Bearer ${DEPLOY_KEY}"
