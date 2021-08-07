@@ -94,7 +94,7 @@ jobs:
 
             REINSTALL_RESPONSE=$(curl -s -o /dev/null -I -X POST -w "%{http_code}" \
             "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}/reinstall" \
-            -H "Authorization: Bearer ${DEPLOY_KEY}" == 204)
+            -H "Authorization: Bearer ${DEPLOY_KEY}")
             
             echo $REINSTALL_RESPONSE
 
