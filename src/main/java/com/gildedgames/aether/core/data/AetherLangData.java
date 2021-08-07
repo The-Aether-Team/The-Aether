@@ -21,8 +21,12 @@ public class AetherLangData extends LanguageProvider
         add(key.get().getDescriptionId() + ".desc", name);
     }
 
-    private void addSubtitle(String category, String name, String description) {
-        add("subtitles." + category + "." + name, description);
+    private void addSubtitle(String category, String key, String name) {
+        add("subtitles." + category + "." + key, name);
+    }
+
+    private void addDeath(String key, String name) {
+        add("death.attack." + key, name);
     }
 
     public void addContainerType(Supplier<? extends ContainerType<?>> key, String name) {
@@ -575,6 +579,13 @@ public class AetherLangData extends LanguageProvider
         addSubtitle("entity", "cloud_crystal.explode", "Crystal explodes");
 
         addSubtitle("entity", "dart.hit", "Dart hits");
+
+
+
+        addDeath("inebriation", "%1$s was inebriated");
+        addDeath("inebriation.player", "%1$s was inebriated by %2$s");
+        addDeath("ice_crystal", "%1$s was chilled by %2$s's Ice Crystal");
+
 
 
         addMenuText("minecraft", "Normal Theme");
