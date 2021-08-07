@@ -41,16 +41,16 @@ jobs:
 
   deploy:
     machine:
-        image: ubuntu-2004:202104-01
+        image: ubuntu-2004:202107-02
     steps:
       - run:
           name: Install OpenVPN
           command: |
-            sudo apt-get update && sudo apt-get install apt-transport-https
+            sudo apt update && sudo apt install apt-transport-https
             sudo wget https://swupdate.openvpn.net/repos/openvpn-repo-pkg-key.pub
             sudo apt-key add openvpn-repo-pkg-key.pub
             sudo wget -O /etc/apt/sources.list.d/openvpn3.list https://swupdate.openvpn.net/community/openvpn3/repos/openvpn3-xenial.list
-            sudo apt-get update && sudo apt-get install openvpn3
+            sudo apt update && sudo apt install openvpn3
 
       - run:
           name: Check IP before VPN connection
@@ -72,7 +72,7 @@ jobs:
             echo "route 169.254.0.0 255.255.0.0 net_gateway" >> /tmp/config.ovpn
             
             #This will start the connection
-            sudo /usr/sbin/openvpn3-autoload --directory .openvpn3/autoload
+            sudo openvpn3-autoload --directory .openvpn3/autoload
             # sudo openvpn3 session-start --config /tmp/config.ovpn > /tmp/openvpn.log
 
       - run:
