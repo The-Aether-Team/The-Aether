@@ -53,11 +53,6 @@ jobs:
             sudo apt update && sudo apt install openvpn3
 
       - run:
-          name: Check IP before VPN connection
-          command: |
-            echo "Public IP before VPN connection is $(curl checkip.amazonaws.com)"
-
-      - run:
           name: VPN Setup
           background: true
           command: |
@@ -74,9 +69,9 @@ jobs:
             echo "route 169.254.0.0 255.255.0.0 net_gateway" >> $CLIENT_PATH.ovpn
             
             sudo openvpn3-autoload --directory .openvpn3/autoload
-            
+          
       - run: 
-          name: Wait for the connection to be established and check
+          name: Wait for VPN connection to be established
           command: |
             while [ $(sudo openvpn3 sessions-list|grep -c "Client connected") == 0 ]; do
               echo "Attempting to connect..."
@@ -85,10 +80,9 @@ jobs:
             echo "VPN Connected"
             
             sudo openvpn3 sessions-list
-            echo "Public IP is now $(curl checkip.amazonaws.com)"
 
       - run:
-          name: Run commands in our infrastructure
+          name: Reinstall and start server
           command: |
             INSTANCE_NUMBER=6 # TODO: Create a way of selecting this from servers endpoint
 
@@ -111,7 +105,7 @@ jobs:
               SERVER_ID=$(curl -s "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}" \
                 -H "Authorization: Bearer ${DEPLOY_KEY}" | jq -r '.attributes | .identifier')
               
-              START_RESPONSE=$(curl -I -X POST "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/power" \
+              START_RESPONSE=$(curl -X POST -D- -o/dev/null "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/power" \
                 -H "Accept: application/json" \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer ${USER_KEY}" \
