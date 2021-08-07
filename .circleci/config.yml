@@ -7,10 +7,8 @@ parameters:
 
 jobs:
   build:
-    docker:
-      - image: cimg/openjdk:8.0.282
-    # machine:
-    #   image: ubuntu-2004:202104-01
+    machine:
+      image: ubuntu-2004:202104-01
 
     environment:
       JVM_OPTS: -Xmx3200m
@@ -18,20 +16,18 @@ jobs:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     steps:
       - checkout
-      # - restore_cache:
-      #     keys:
-      #       - v3-dependencies-{{ checksum "build.gradle" }}
-      #       - v3-dependencies-
+      - restore_cache:
+          keys:
+            - v3-dependencies-{{ checksum "build.gradle" }}
+            - v3-dependencies-
 
-      # - run: gradle dependencies
-      # - save_cache:
-      #     paths:
-      #       - ~/repo/.gradle
-      #     key: v3-dependencies-{{ checksum "build.gradle" }}
-      # - run: gradle test
-      # - run: gradle build
-      - run: mkdir -p ~/project/build/libs
-      - run: echo "test" > ~/project/build/libs/<< pipeline.parameters.artifact-name >>-${CIRCLE_BRANCH}.jar
+      - run: gradle dependencies
+      - save_cache:
+          paths:
+            - ~/repo/.gradle
+          key: v3-dependencies-{{ checksum "build.gradle" }}
+      - run: gradle test
+      - run: gradle build
       - store_artifacts:
           path: ~/project/build/libs
       - persist_to_workspace:
