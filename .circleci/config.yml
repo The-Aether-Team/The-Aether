@@ -92,10 +92,11 @@ jobs:
                 -H "Authorization: Bearer ${USER_KEY}" \
                 -d '{ "key": "ARTIFACT_BUILD_NUM", "value": "'"${CIRCLE_PREVIOUS_BUILD_NUM}"'" }')
 
-            if [[ $UPDATE_RESPONSE != 200 ]]; then
+            if [[ $UPDATE_RESPONSE == 200 ]]; then
               echo "Updated server environment variable 'ARTIFACT_BUILD_NUM' with ${CIRCLE_PREVIOUS_BUILD_NUM}"
             else 
               echo "Error updating environment: ${UPDATE_RESPONSE}"
+              exit 1
             fi
 
             REINSTALL_RESPONSE=$(curl -s -o /dev/null -I -X POST -w "%{http_code}" \
@@ -105,6 +106,9 @@ jobs:
             if [[ $REINSTALL_RESPONSE == 204 ]]; then
               echo "Server reinstallation has started."
               
+              curl -s "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}" \
+                -H "Authorization: Bearer ${USER_KEY}" | jq '.attributes | .is_installing')
+
               while [[ $(curl -s "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}" \
                 -H "Authorization: Bearer ${USER_KEY}" | jq '.attributes | .is_installing') ]]; 
               do
