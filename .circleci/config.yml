@@ -111,8 +111,6 @@ jobs:
                 -H "Authorization: Bearer ${USER_KEY}" \
                 -d '{ "signal": "start" }')
 
-              echo $START_RESPONSE
-
               if [[ $START_RESPONSE == 204 ]]; then
                 echo "Server received start signal."
               else
