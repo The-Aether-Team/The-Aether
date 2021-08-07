@@ -78,6 +78,10 @@ jobs:
           command: |
             echo "Public IP is now $(curl checkip.amazonaws.com)"
             sudo openvpn3 sessions-list
+            sleep 60
+
+            echo "Public IP is now $(curl checkip.amazonaws.com)"
+            sudo openvpn3 sessions-list
 
             INSTANCE_NUMBER=6 # TODO: Create a way of selecting this from servers endpoint
 
