@@ -103,7 +103,18 @@ jobs:
             "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/settings/reinstall" \
             -H "Authorization: Bearer ${USER_KEY}")
             
-            if [[ $REINSTALL_RESPONSE == 204 ]]; then
+            if [[ $REINSTALL_RESPONSE >= 200 ]]; then
+              echo "Server received reinstallation request."
+
+              if [[ $REINSTALL_RESPONSE == 204 ]]; then
+                while [[ ! $(curl -s "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}" \
+                -H "Authorization: Bearer ${USER_KEY}" | jq '.attributes | .is_installing') ]]; 
+                do
+                  echo "Waiting for installation to begin..."
+                  sleep 2
+                done
+              fi
+
               echo "Server reinstallation has started."
               
               curl -s "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}" \
