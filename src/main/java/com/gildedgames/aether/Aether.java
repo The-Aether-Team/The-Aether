@@ -148,6 +148,7 @@ public class Aether
 			generator.addProvider(new AetherBlockStateData(generator, helper));
 			generator.addProvider(new AetherItemModelData(generator, helper));
 			generator.addProvider(new AetherLangData(generator));
+			generator.addProvider(new AetherSoundData(generator, helper));
 		}
 		if (event.includeServer()) {
 			generator.addProvider(new AetherRecipeData(generator));

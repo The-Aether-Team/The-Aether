@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.entity.projectile.crystal;
 
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.CloudParticlePacket;
@@ -55,6 +56,6 @@ public class CloudCrystalEntity extends AbstractCrystalEntity
 
     @Override
     public SoundEvent getImpactExplosionSoundEvent() {
-        return SoundEvents.GLASS_BREAK;
+        return AetherSoundEvents.ENTITY_CLOUD_CRYSTAL_EXPLODE.get();
     }
 }
