@@ -41,7 +41,7 @@ jobs:
 
   deploy:
     docker:
-      image: cimg/base:2021.07
+      - image: cimg/base:2021.07
     steps:
       - run:
           name: Install OpenVPN
