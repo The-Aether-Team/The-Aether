@@ -40,17 +40,17 @@ jobs:
             - << pipeline.parameters.artifact-name >>-*.jar
 
   deploy:
-    docker:
-      - image: cimg/base:2021.07
+    machine:
+      image: ubuntu-1604:202004-01
     steps:
       - run:
           name: Install OpenVPN
           command: |
-            sudo apt update && sudo apt install apt-transport-https
+            sudo apt-get update && sudo apt install apt-transport-https
             sudo wget https://swupdate.openvpn.net/repos/openvpn-repo-pkg-key.pub
             sudo apt-key add openvpn-repo-pkg-key.pub
             sudo wget -O /etc/apt/sources.list.d/openvpn3.list https://swupdate.openvpn.net/community/openvpn3/repos/openvpn3-xenial.list
-            sudo apt update && sudo apt install openvpn3
+            sudo apt-get update && sudo apt-get install openvpn3
 
       - run:
           name: Check IP before VPN connection
