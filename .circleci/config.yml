@@ -84,26 +84,35 @@ jobs:
       - run:
           name: Reinstall and start server
           command: |
-            INSTANCE_NUMBER=6 # TODO: Create a way of selecting this from servers endpoint
+            SERVER_ID=86e78832
+
+            UPDATE_RESPONSE=$(curl -X PUT -s -o /dev/null -w "%{http_code}" "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/startup/variable" \
+                -H "Accept: application/json" \
+                -H "Content-Type: application/json" \
+                -H "Authorization: Bearer ${USER_KEY}" \
+                -d '{ "key": "ARTIFACT_BUILD_NUM", "value": "'"${CIRCLE_PREVIOUS_BUILD_NUM}"'" }')
+
+            if [[ $UPDATE_RESPONSE != 200 ]]; then
+              echo "Updated server environment variable 'ARTIFACT_BUILD_NUM' with ${CIRCLE_PREVIOUS_BUILD_NUM}"
+            else 
+              echo "Error updating environment: ${UPDATE_RESPONSE}"
+            fi
 
             REINSTALL_RESPONSE=$(curl -s -o /dev/null -I -X POST -w "%{http_code}" \
-            "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}/reinstall" \
-            -H "Authorization: Bearer ${DEPLOY_KEY}")
+            "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/settings/reinstall" \
+            -H "Authorization: Bearer ${USER_KEY}")
             
             if [[ $REINSTALL_RESPONSE == 204 ]]; then
               echo "Server reinstallation has started."
               
-              while [[ $(curl -s "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}" \
-                -H "Authorization: Bearer ${DEPLOY_KEY}" | jq '.attributes | .status') != "null" ]]; 
+              while [[ $(curl -s "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}" \
+                -H "Authorization: Bearer ${USER_KEY}" | jq '.attributes | .is_installing') ]]; 
               do
                 echo "Waiting for installation..."
                 sleep 10
               done
 
               echo "Sending start signal to server."
-
-              SERVER_ID=$(curl -s "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}" \
-                -H "Authorization: Bearer ${DEPLOY_KEY}" | jq -r '.attributes | .identifier')
               
               START_RESPONSE=$(curl -X POST -s -o /dev/null -w "%{http_code}" "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/power" \
                 -H "Accept: application/json" \
