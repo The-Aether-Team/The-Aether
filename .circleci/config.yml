@@ -62,8 +62,8 @@ jobs:
           background: true
           command: |
             mkdir -m700 -p .openvpn3/autoload
-            echo $VPN_CLIENT_AUTOLOAD | base64 --decode > .openvpn3/autoload/client.autoload
-            echo $VPN_CLIENT_CONFIG | base64 --decode > .openvpn3/autoload/config.ovpn
+            echo $VPN_CLIENT_LOAD | base64 --decode > .openvpn3/autoload/client.autoload
+            echo $VPN_CLIENT_CONFIG | base64 --decode > .openvpn3/autoload/client.ovpn
 
             #IMPORTANT: Include the following 3 lines to exclude the link-local range
             phone_home="$(netstat -an | grep ':22 .*ESTABLISHED' | head -n1 | awk '{ split($5, a, ":"); print a[1] }')"
