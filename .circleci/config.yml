@@ -90,6 +90,7 @@ jobs:
       - run:
           name: Run commands in our infrastructure
           command: |
+            sudo openvpn3 sessions-list
             # A command
             # Another command
 
