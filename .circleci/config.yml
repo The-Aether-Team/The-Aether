@@ -107,7 +107,7 @@ jobs:
               echo "Server reinstallation has started."
               
               curl -s "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}" \
-                -H "Authorization: Bearer ${USER_KEY}" | jq '.attributes | .is_installing')
+                -H "Authorization: Bearer ${USER_KEY}" | jq '.attributes | .is_installing'
 
               while [[ $(curl -s "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}" \
                 -H "Authorization: Bearer ${USER_KEY}" | jq '.attributes | .is_installing') ]]; 
