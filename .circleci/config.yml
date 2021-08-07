@@ -111,7 +111,7 @@ jobs:
               SERVER_ID=$(curl -s "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}" \
                 -H "Authorization: Bearer ${DEPLOY_KEY}" | jq -r '.attributes | .identifier')
               
-              START_RESPONSE=$(curl -s -X POST "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/power" \
+              START_RESPONSE=$(curl -I -X POST "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/power" \
                 -H "Accept: application/json" \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer ${USER_KEY}" \
