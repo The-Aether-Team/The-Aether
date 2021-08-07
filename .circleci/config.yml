@@ -92,6 +92,9 @@ jobs:
           command: |
             INSTANCE_NUMBER=6 # TODO: Create a way of selecting this from servers endpoint
 
+
+            echo "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}/reinstall"
+
             curl "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}/reinstall" -H "Authorization: Bearer ${DEPLOY_KEY}"
 
       - run:
