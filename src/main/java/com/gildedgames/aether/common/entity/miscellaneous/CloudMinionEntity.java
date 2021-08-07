@@ -124,8 +124,7 @@ public class CloudMinionEntity extends FlyingEntity
                             if (!this.level.isClientSide) {
                                 this.level.addFreshEntity(crystal);
                             }
-                            //TODO: Change to special sound event.
-                            this.playSound(AetherSoundEvents.ENTITY_ZEPHYR_SHOOT.get(), 0.75F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                            this.playSound(AetherSoundEvents.ENTITY_CLOUD_MINION_SHOOT.get(), 0.75F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 
                             this.setShouldShoot(false);
                         }

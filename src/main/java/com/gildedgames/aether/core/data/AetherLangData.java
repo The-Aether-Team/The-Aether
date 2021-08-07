@@ -21,6 +21,10 @@ public class AetherLangData extends LanguageProvider
         add(key.get().getDescriptionId() + ".desc", name);
     }
 
+    private void addSubtitle(String category, String name, String description) {
+        add("subtitles." + category + "." + name, description);
+    }
+
     public void addContainerType(Supplier<? extends ContainerType<?>> key, String name) {
         add("container." + key.get().getRegistryName().toString().replace(":", "."), name);
     }
@@ -474,6 +478,103 @@ public class AetherLangData extends LanguageProvider
         addAdvancementDesc("bronze_dungeon", "Defeat the Bronze Dungeon boss");
         addAdvancementDesc("silver_dungeon", "Defeat the Silver Dungeon boss");
         addAdvancementDesc("gold_dungeon", "Defeat the Golden Dungeon boss");
+
+
+        addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");
+        addSubtitle("block", "aether_portal.trigger", "Aether Portal noise intensifies");
+        addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
+
+        addSubtitle("item", "dart_shooter.shoot", "Dart Shooter fired");
+        addSubtitle("item", "lightning_knife.shoot", "Lightning Knife flies");
+        addSubtitle("item", "hammer_of_notch.shoot", "Hammer fired");
+
+        addSubtitle("item", "armor.equip_zanite", "Zanite armor clanks");
+        addSubtitle("item", "armor.equip_gravitite", "Gravitite armor clangs");
+        addSubtitle("item", "armor.equip_valkyrie", "Valkyrie armor clinks");
+        addSubtitle("item", "armor.equip_neptune", "Neptune armor jingles");
+        addSubtitle("item", "armor.equip_phoenix", "Phoenix armor clinks");
+        addSubtitle("item", "armor.equip_obsidian", "Obsidian armor clanks");
+        addSubtitle("item", "armor.equip_sentry", "Sentry armor clanks");
+
+        addSubtitle("item", "accessory.equip_generic", "Accessory equips");
+        addSubtitle("item", "accessory.equip_iron_ring", "Iron Ring jingles");
+        addSubtitle("item", "accessory.equip_gold_ring", "Gold Ring jingles");
+        addSubtitle("item", "accessory.equip_zanite_ring", "Zanite Ring jingles");
+        addSubtitle("item", "accessory.equip_ice_ring", "Ice Ring jingles");
+        addSubtitle("item", "accessory.equip_iron_pendant", "Iron Pendant jingles");
+        addSubtitle("item", "accessory.equip_gold_pendant", "Gold Pendant jingles");
+        addSubtitle("item", "accessory.equip_zanite_pendant", "Zanite Pendant jingles");
+        addSubtitle("item", "accessory.equip_ice_pendant", "Ice Pendant jingles");
+        addSubtitle("item", "accessory.equip_cape", "Cape rustles");
+
+        addSubtitle("entity", "phyg.ambient", "Phyg oinks");
+        addSubtitle("entity", "phyg.death", "Phyg dies");
+        addSubtitle("entity", "phyg.hurt", "Phyg hurts");
+        addSubtitle("entity", "phyg.saddle", "Saddle equips");
+        addSubtitle("entity", "phyg.step", "Footsteps");
+
+        addSubtitle("entity", "flying_cow.ambient", "Flying Cow moos");
+        addSubtitle("entity", "flying_cow.death", "Flying Cow dies");
+        addSubtitle("entity", "flying_cow.hurt", "Flying Cow hurts");
+        addSubtitle("entity", "flying_cow.milk", "Flying Cow gets milked");
+        addSubtitle("entity", "flying_cow.step", "Footsteps");
+
+        addSubtitle("entity", "sheepuff.ambient", "Sheepuff baahs");
+        addSubtitle("entity", "sheepuff.death", "Sheepuff dies");
+        addSubtitle("entity", "sheepuff.hurt", "Sheepuff hurts");
+        addSubtitle("entity", "sheepuff.step", "Footsteps");
+
+        addSubtitle("entity", "moa.ambient", "Moa calls");
+        addSubtitle("entity", "moa.death", "Moa dies");
+        addSubtitle("entity", "moa.hurt", "Moa hurts");
+        addSubtitle("entity", "moa.flap", "Moa flaps");
+        addSubtitle("entity", "moa.egg", "Moa plops");
+
+        addSubtitle("entity", "aerwhale.ambient", "Aerwhale whistles");
+        addSubtitle("entity", "aerwhale.death", "Aerwhale cries");
+
+        addSubtitle("entity", "aerbunny.death", "Aerbunny dies");
+        addSubtitle("entity", "aerbunny.hurt", "Aerbunny squeals");
+        addSubtitle("entity", "aerbunny.lift", "Aerbunny squeaks");
+
+        addSubtitle("entity", "swet.attack", "Swet attacks");
+        addSubtitle("entity", "swet.death", "Swet dies");
+        addSubtitle("entity", "swet.hurt", "Swet hurts");
+        addSubtitle("entity", "swet.jump", "Swet squishes");
+        addSubtitle("entity", "swet.squish", "Swet squishes");
+
+        addSubtitle("entity", "aechor_plant.shoot", "Aechor Plant shoots");
+
+        addSubtitle("entity", "cockatrice.shoot", "Cockatrice shoots");
+        addSubtitle("entity", "cockatrice.ambient", "Cockatrice calls");
+        addSubtitle("entity", "cockatrice.death", "Cockatrice dies");
+        addSubtitle("entity", "cockatrice.hurt", "Cockatrice hurts");
+        addSubtitle("entity", "cockatrice.flap", "Cockatrice flaps");
+
+        addSubtitle("entity", "zephyr.shoot", "Zephyr spits");
+        addSubtitle("entity", "zephyr.ambient", "Zephyr blows");
+        addSubtitle("entity", "zephyr.death", "Zephyr dies");
+        addSubtitle("entity", "zephyr.hurt", "Zephyr hurts");
+
+        addSubtitle("entity", "sentry.death", "Sentry dies");
+        addSubtitle("entity", "sentry.hurt", "Sentry hurts");
+        addSubtitle("entity", "sentry.jump", "Sentry squishes");
+
+        addSubtitle("entity", "mimic.death", "Mimic dies");
+        addSubtitle("entity", "mimic.hurt", "Mimic hurts");
+
+        addSubtitle("entity", "slider.awaken", "Slider awakens");
+        addSubtitle("entity", "slider.collide", "Slider smashes");
+        addSubtitle("entity", "slider.move", "Slider slides");
+        addSubtitle("entity", "slider.death", "Slider breaks");
+
+        addSubtitle("entity", "sun_spirit.shoot", "Sun Spirit shoots");
+
+        addSubtitle("entity", "cloud_minion.shoot", "Cloud Minion spits");
+
+        addSubtitle("entity", "cloud_crystal.explode", "Crystal explodes");
+
+        addSubtitle("entity", "dart.hit", "Dart hits");
 
 
         addMenuText("minecraft", "Normal Theme");
