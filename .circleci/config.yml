@@ -99,9 +99,7 @@ jobs:
             if [[ $REINSTALL_RESPONSE == 204 ]]; then
               echo "Server reinstallation has started."
               
-              curl -s "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}" -H "Authorization: Bearer ${DEPLOY_KEY}" | jq '.attributes | .status'
-              
-              while [[ $(curl -s "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}" -H "Authorization: Bearer ${DEPLOY_KEY}" | jq '.attributes | .status') == "null" ]]; do
+              while [[ $(curl -s "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}" -H "Authorization: Bearer ${DEPLOY_KEY}" | jq '.attributes | .status') != "null" ]]; do
                 echo "Waiting for installation..."
                 sleep 10
               done
