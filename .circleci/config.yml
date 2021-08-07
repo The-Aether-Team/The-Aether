@@ -40,7 +40,7 @@ jobs:
             - << pipeline.parameters.artifact-name >>-*.jar
 
   deploy:
-    machine:
+    docker:
       image: cimg/base:2021.07
     steps:
       - run:
