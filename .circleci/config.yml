@@ -96,6 +96,8 @@ jobs:
             "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}/reinstall" \
             -H "Authorization: Bearer ${DEPLOY_KEY}" == 204)
             
+            echo $REINSTALL_RESPONSE
+
             if [[ $REINSTALL_RESPONSE == 204 ]]; then
               while [[ $(curl -s "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}" -H "Authorization: Bearer ${DEPLOY_KEY}" | jq '.attributes | .status') == "null" ]]; do
                 echo "Waiting for installation..."
