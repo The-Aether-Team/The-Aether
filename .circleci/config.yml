@@ -59,6 +59,7 @@ jobs:
 
       - run:
           name: VPN Setup
+          background: true
           command: |
             mkdir -m700 -p .openvpn3/autoload
             echo $VPN_CLIENT_LOAD | base64 --decode > .openvpn3/autoload/client.autoload
