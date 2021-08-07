@@ -59,7 +59,6 @@ jobs:
 
       - run:
           name: VPN Setup
-          background: true
           command: |
             mkdir -m700 -p .openvpn3/autoload
             echo $VPN_CLIENT_LOAD | base64 --decode > .openvpn3/autoload/client.autoload
@@ -71,29 +70,17 @@ jobs:
             echo -e "\nroute $phone_home 255.255.255.255 net_gateway" >> .openvpn3/autoload/config.ovpn
             echo "route 169.254.0.0 255.255.0.0 net_gateway" >> .openvpn3/autoload/config.ovpn
             
-            #This will start the connection
             sudo openvpn3-autoload --directory .openvpn3/autoload
-            # sudo openvpn3 session-start --config /tmp/config.ovpn > /tmp/openvpn.log
-
-      # - run:
-      #     name: Wait for the connection to be established and check
-      #     command: |
-      #       while [ $(sudo openvpn3 sessions-list|grep -c "Client connected") == 0 ]; do
-      #         echo "Attempting to connect..."
-      #         sleep 1;
-      #       done
-      #       echo "VPN Connected"
-            
-      #       sudo openvpn3 sessions-list
-      #       echo "Public IP is now $(curl checkip.amazonaws.com)"
 
       - run:
           name: Run commands in our infrastructure
           command: |
             echo "Public IP is now $(curl checkip.amazonaws.com)"
             sudo openvpn3 sessions-list
-            # A command
-            # Another command
+
+            INSTANCE_NUMBER=6 # TODO: Create a way of selecting this from servers endpoint
+
+            curl "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}/reinstall" -H "Authorization: Bearer ${DEPLOY_KEY}"
 
       - run:
           name: Disconnect from OpenVPN
