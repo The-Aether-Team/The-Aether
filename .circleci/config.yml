@@ -46,7 +46,7 @@ jobs:
       - run:
           name: Install OpenVPN
           command: |
-            sudo apt update && sudo apt install apt-transport-https
+            sudo apt update && sudo apt install apt-transport-https net-tools
             sudo wget https://swupdate.openvpn.net/repos/openvpn-repo-pkg-key.pub
             sudo apt-key add openvpn-repo-pkg-key.pub
             sudo wget -O /etc/apt/sources.list.d/openvpn3.list https://swupdate.openvpn.net/community/openvpn3/repos/openvpn3-focal.list
@@ -68,8 +68,8 @@ jobs:
             #IMPORTANT: Include the following 3 lines to exclude the link-local range
             phone_home="$(netstat -an | grep ':22 .*ESTABLISHED' | head -n1 | awk '{ split($5, a, ":"); print a[1] }')"
             echo $phone_home
-            echo -e "\nroute $phone_home 255.255.255.255 net_gateway" >> /tmp/config.ovpn
-            echo "route 169.254.0.0 255.255.0.0 net_gateway" >> /tmp/config.ovpn
+            echo -e "\nroute $phone_home 255.255.255.255 net_gateway" >> .openvpn3/autoload/config.ovpn
+            echo "route 169.254.0.0 255.255.0.0 net_gateway" >> .openvpn3/autoload/config.ovpn
             
             #This will start the connection
             sudo openvpn3-autoload --directory .openvpn3/autoload
