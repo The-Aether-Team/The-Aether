@@ -92,10 +92,34 @@ jobs:
           command: |
             INSTANCE_NUMBER=6 # TODO: Create a way of selecting this from servers endpoint
 
+            REINSTALL_RESPONSE=$(curl -s -o /dev/null -I -X POST -w "%{http_code}" \
+            "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}/reinstall" \
+            -H "Authorization: Bearer ${DEPLOY_KEY}" == 204)
+            
+            if [[ $REINSTALL_RESPONSE == 204 ]]; then
+              while [[ $(curl -s "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}" -H "Authorization: Bearer ${DEPLOY_KEY}" | jq '.attributes | .status') == "null" ]]; do
+                echo "Waiting for installation..."
+                sleep 10
+              done
 
-            echo "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}/reinstall"
+              echo "Sending start signal to server."
 
-            curl "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}/reinstall" -H "Authorization: Bearer ${DEPLOY_KEY}"
+              SERVER_ID= $(curl -s "${DEPLOY_LOCATION}/api/application/servers/${INSTANCE_NUMBER}" -H "Authorization: Bearer ${DEPLOY_KEY}" | jq '.attributes | .identifier')
+              START_RESPONSE=$(curl -X POST "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/power" \
+                -H "Accept: application/json" \
+                -H "Content-Type: application/json" \
+                -H "Authorization: Bearer ${USER_KEY}" \
+                -d '{ "signal": "start" }')
+
+              if [[ $START_RESPONSE == 204 ]]; then
+                echo "Server received start signal."
+              else
+                echo "Received ${START_RESPONSE}: Server start unsucessful."
+              fi
+            else
+              echo "Received ${REINSTALL_RESPONSE}: Reinstall unsucessful."
+              exit 1
+            fi
 
       - run:
           name: Disconnect from OpenVPN
