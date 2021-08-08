@@ -154,9 +154,9 @@ workflows:
       - deploy:
           context:
             - vpn
-          # filters:
-          #   branches:
-          #     only: 
-          #       - "main"
+          filters:
+            branches:
+              only: 
+                - "1.16"
           requires:
             - build
