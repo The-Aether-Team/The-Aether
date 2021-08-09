@@ -1,7 +1,6 @@
 package com.gildedgames.aether.core.capability.interfaces;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -19,7 +18,6 @@ public interface IEternalDay extends INBTSerializable<CompoundNBT>
     void syncToClient();
 
     void serverTick(ServerWorld world);
-    void clientTick(ClientWorld world);
 
     void setEternalDay(boolean isEternalDay);
     boolean getEternalDay();

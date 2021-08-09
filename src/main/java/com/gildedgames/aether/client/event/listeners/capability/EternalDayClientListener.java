@@ -1,5 +1,7 @@
 package com.gildedgames.aether.client.event.listeners.capability;
 
+import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -17,7 +19,22 @@ public class EternalDayClientListener
         if (event.side == LogicalSide.CLIENT) {
             ClientWorld world = Minecraft.getInstance().level;
             if (world != null) {
-                IEternalDay.get(world).ifPresent(eternalDay -> eternalDay.clientTick(world));
+                IEternalDay.get(world).ifPresent(eternalDay -> {
+                    if (world.dimension() == AetherDimensions.AETHER_WORLD) {
+                        if (!AetherConfig.COMMON.disable_eternal_day.get()) {
+                            if (eternalDay.getCheckTime()) {
+                                if (!eternalDay.getEternalDay()) {
+                                    long dayTime = eternalDay.getServerWorldTime() % 72000;
+                                    if (dayTime != eternalDay.getAetherTime()) {
+                                        world.setDayTime(eternalDay.getAetherTime());
+                                    }
+                                } else {
+                                    world.setDayTime(18000L);
+                                }
+                            }
+                        }
+                    }
+                });
             }
         }
     }

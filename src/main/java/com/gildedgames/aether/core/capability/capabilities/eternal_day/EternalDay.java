@@ -1,6 +1,5 @@
 package com.gildedgames.aether.core.capability.capabilities.eternal_day;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
@@ -9,7 +8,6 @@ import com.gildedgames.aether.core.network.packet.client.AetherTimePacket;
 import com.gildedgames.aether.core.network.packet.client.CheckTimePacket;
 import com.gildedgames.aether.core.network.packet.client.EternalDayPacket;
 import com.gildedgames.aether.core.network.packet.client.ServerTimePacket;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -79,24 +77,6 @@ public class EternalDay implements IEternalDay
                         } else {
                             this.setCheckTime(false);
                         }
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
-    public void clientTick(ClientWorld world) {
-        if (world.dimension() == AetherDimensions.AETHER_WORLD) {
-            if (!AetherConfig.COMMON.disable_eternal_day.get()) {
-                if (this.getCheckTime()) {
-                    if (!this.getEternalDay()) {
-                        long dayTime = this.getServerWorldTime() % 72000;
-                        if (dayTime != this.getAetherTime()) {
-                            world.setDayTime(this.getAetherTime());
-                        }
-                    } else {
-                        world.setDayTime(18000L);
                     }
                 }
             }
