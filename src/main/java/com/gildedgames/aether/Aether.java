@@ -107,13 +107,17 @@ public class Aether
 
 	public void commonSetup(FMLCommonSetupEvent event) {
 		AetherCapabilities.register();
+		AetherPacketHandler.register();
+
+
 
 		AetherFeatures.registerConfiguredFeatures();
 
 		AetherStructures.registerStructures();
 		AetherStructures.registerConfiguredStructures();
+
+
 		event.enqueueWork(() -> {
-			AetherPacketHandler.register();
 
 			AetherBlocks.registerPots();
 			AetherBlocks.registerAxeStrippingBlocks();

@@ -25,6 +25,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -78,7 +79,9 @@ public class AetherCapabilities
 
 		@SubscribeEvent
 		public static void attachWorldCapabilities(AttachCapabilitiesEvent<World> event) {
-			event.addCapability(new ResourceLocation(Aether.MODID, "eternal_day"), new EternalDayProvider(new EternalDay(event.getObject())));
+			if (event.getObject() instanceof ServerWorld) {
+				event.addCapability(new ResourceLocation(Aether.MODID, "eternal_day"), new EternalDayProvider(new EternalDay(event.getObject())));
+			}
 		}
 	}
 }

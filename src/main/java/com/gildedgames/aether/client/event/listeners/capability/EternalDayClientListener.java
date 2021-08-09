@@ -14,27 +14,30 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class EternalDayClientListener
 {
+    public static boolean isEternalDay;
+    public static boolean shouldCheckTime;
+    public static long aetherTime;
+    public static long serverWorldTime;
+
     @SubscribeEvent
     public static void onWorldTick(TickEvent.RenderTickEvent event) {
         if (event.side == LogicalSide.CLIENT) {
             ClientWorld world = Minecraft.getInstance().level;
             if (world != null) {
-                IEternalDay.get(world).ifPresent(eternalDay -> {
-                    if (world.dimension() == AetherDimensions.AETHER_WORLD) {
-                        if (!AetherConfig.COMMON.disable_eternal_day.get()) {
-                            if (eternalDay.getCheckTime()) {
-                                if (!eternalDay.getEternalDay()) {
-                                    long dayTime = eternalDay.getServerWorldTime() % 72000;
-                                    if (dayTime != eternalDay.getAetherTime()) {
-                                        world.setDayTime(eternalDay.getAetherTime());
-                                    }
-                                } else {
-                                    world.setDayTime(18000L);
+                if (world.dimension() == AetherDimensions.AETHER_WORLD) {
+                    if (!AetherConfig.COMMON.disable_eternal_day.get()) {
+                        if (shouldCheckTime) {
+                            if (!isEternalDay) {
+                                long dayTime = serverWorldTime % 72000;
+                                if (dayTime != aetherTime) {
+                                    world.setDayTime(aetherTime);
                                 }
+                            } else {
+                                world.setDayTime(18000L);
                             }
                         }
                     }
-                });
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.gildedgames.aether.core.network.packet.client;
 
+import com.gildedgames.aether.client.event.listeners.capability.EternalDayClientListener;
 import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import net.minecraft.client.Minecraft;
@@ -28,8 +29,7 @@ public class CheckTimePacket extends AetherPacket
     @Override
     public void execute(PlayerEntity playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            World world = Minecraft.getInstance().level;
-            IEternalDay.get(world).ifPresent(eternalDay -> eternalDay.setCheckTime(this.shouldCheckTime));
+            EternalDayClientListener.shouldCheckTime = this.shouldCheckTime;
         }
     }
 }
