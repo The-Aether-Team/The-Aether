@@ -109,31 +109,25 @@ public class Aether
 		AetherCapabilities.register();
 		AetherPacketHandler.register();
 
-
+		AetherBlocks.registerPots();
+		AetherBlocks.registerAxeStrippingBlocks();
+		AetherBlocks.registerHoeTillingBlocks();
+		AetherBlocks.registerFlammability();
+		AetherBlocks.registerWoodTypes();
+		AetherBlocks.registerFreezables();
 
 		AetherFeatures.registerConfiguredFeatures();
 
 		AetherStructures.registerStructures();
 		AetherStructures.registerConfiguredStructures();
 
+		AetherEntityTypes.registerSpawnPlacements();
 
-		event.enqueueWork(() -> {
+		AetherItems.registerAbilities();
 
-			AetherBlocks.registerPots();
-			AetherBlocks.registerAxeStrippingBlocks();
-			AetherBlocks.registerHoeTillingBlocks();
-			AetherBlocks.registerFlammability();
-			AetherBlocks.registerWoodTypes();
-			AetherBlocks.registerFreezables();
-
-			AetherEntityTypes.registerSpawnPlacements();
-
-			AetherItems.registerAbilities();
-
-			registerDispenserBehaviors();
-			registerComposting();
-			registerFuels();
-		});
+		registerDispenserBehaviors();
+		registerComposting();
+		registerFuels();
 	}
 
 	public void curiosSetup(InterModEnqueueEvent event) {
