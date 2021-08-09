@@ -13,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 public class LoreTrigger extends AbstractCriterionTrigger<LoreTrigger.Instance>
 {
     private static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "lore_entry");
+    public static final LoreTrigger INSTANCE = new LoreTrigger();
 
     public ResourceLocation getId() {
         return ID;

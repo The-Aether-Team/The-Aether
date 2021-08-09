@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.event.listeners;
 
+import com.gildedgames.aether.common.advancement.MountTrigger;
 import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
 import com.gildedgames.aether.common.registry.AetherAdvancements;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -25,7 +26,7 @@ public class EntityListener
         Entity rider = event.getEntityMounting();
         Entity mount = event.getEntityBeingMounted();
         if (event.getEntityBeingMounted() != null && rider instanceof ServerPlayerEntity) {
-            AetherAdvancements.MOUNT_ENTITY.trigger((ServerPlayerEntity) rider, mount);
+            MountTrigger.INSTANCE.trigger((ServerPlayerEntity) rider, mount);
         }
     }
 

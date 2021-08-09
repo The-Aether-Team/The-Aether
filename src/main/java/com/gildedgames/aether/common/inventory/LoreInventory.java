@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.inventory;
 
+import com.gildedgames.aether.common.advancement.LoreTrigger;
 import com.gildedgames.aether.common.inventory.container.LoreBookContainer;
 import com.gildedgames.aether.common.registry.AetherAdvancements;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
@@ -31,7 +32,7 @@ public class LoreInventory extends Inventory
                 }
             } else if (this.playerEntity instanceof ServerPlayerEntity) {
                 if (this.container.getLoreEntryExists()) {
-                    AetherAdvancements.LORE_ENTRY.trigger((ServerPlayerEntity) playerEntity, stack);
+                    LoreTrigger.INSTANCE.trigger((ServerPlayerEntity) playerEntity, stack);
                 }
             }
         }

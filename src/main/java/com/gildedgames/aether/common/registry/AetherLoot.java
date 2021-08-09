@@ -13,6 +13,7 @@ import net.minecraft.loot.*;
 import net.minecraft.loot.conditions.LootConditionManager;
 import net.minecraft.loot.functions.LootFunctionManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 
 public class AetherLoot
 {
@@ -22,11 +23,11 @@ public class AetherLoot
 		p_237455_0_.required(LootParameters.BLOCK_STATE).required(LootParameters.ORIGIN).required(LootParameters.TOOL);
 	});
 
-	public static final LootConditionType CONFIG_ENABLED = LootConditionManager.register(new ResourceLocation(Aether.MODID, "config_enabled").toString(), new ConfigEnabled.Serializer());
+	public static final LootConditionType CONFIG_ENABLED = new LootConditionType(new ConfigEnabled.Serializer());
 
-	public static final LootFunctionType DOUBLE_DROPS = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "double_drops").toString(), new DoubleDrops.Serializer());
-	public static final LootFunctionType SPAWN_ENTITY = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "spawn_entity").toString(), new SpawnTNT.Serializer());
-	public static final LootFunctionType SPAWN_XP = LootFunctionManager.register(new ResourceLocation(Aether.MODID, "spawn_xp").toString(), new SpawnXP.Serializer());
+	public static final LootFunctionType DOUBLE_DROPS = new LootFunctionType(new DoubleDrops.Serializer());
+	public static final LootFunctionType SPAWN_TNT = new LootFunctionType(new SpawnTNT.Serializer());
+	public static final LootFunctionType SPAWN_XP = new LootFunctionType(new SpawnXP.Serializer());
 
 	public static final ResourceLocation ENTITIES_SHEEPUFF_WHITE = register("entities/sheepuff/white");
 	public static final ResourceLocation ENTITIES_SHEEPUFF_ORANGE = register("entities/sheepuff/orange");
@@ -89,5 +90,10 @@ public class AetherLoot
 		}
 	}
 
-	public static void load() { }
+	public static void init() {
+		Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(Aether.MODID, "config_enabled").toString(), CONFIG_ENABLED);
+		Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Aether.MODID, "double_drops").toString(), DOUBLE_DROPS);
+		Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Aether.MODID, "spawn_tnt").toString(), SPAWN_TNT);
+		Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Aether.MODID, "spawn_xp").toString(), SPAWN_XP);
+	}
 }
