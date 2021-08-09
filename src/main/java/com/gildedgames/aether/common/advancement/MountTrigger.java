@@ -15,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 public class MountTrigger extends AbstractCriterionTrigger<MountTrigger.Instance>
 {
     private static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "mount_entity");
+    public static final MountTrigger INSTANCE = new MountTrigger();
 
     public ResourceLocation getId() {
         return ID;

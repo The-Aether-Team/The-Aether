@@ -98,6 +98,9 @@ public class Aether
 			register.register(modEventBus);
 		}
 
+		AetherLoot.init();
+		AetherAdvancements.init();
+
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
 	}
@@ -118,10 +121,7 @@ public class Aether
 
 			AetherItems.registerAbilities();
 
-			AetherLoot.load();
-
 			AetherFeatures.registerConfiguredFeatures();
-			AetherAdvancements.init();
 
 			AetherStructures.registerStructures();
 			AetherStructures.registerConfiguredStructures();
