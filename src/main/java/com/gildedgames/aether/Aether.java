@@ -107,6 +107,11 @@ public class Aether
 
 	public void commonSetup(FMLCommonSetupEvent event) {
 		AetherCapabilities.register();
+
+		AetherFeatures.registerConfiguredFeatures();
+
+		AetherStructures.registerStructures();
+		AetherStructures.registerConfiguredStructures();
 		event.enqueueWork(() -> {
 			AetherPacketHandler.register();
 
@@ -120,11 +125,6 @@ public class Aether
 			AetherEntityTypes.registerSpawnPlacements();
 
 			AetherItems.registerAbilities();
-
-			AetherFeatures.registerConfiguredFeatures();
-
-			AetherStructures.registerStructures();
-			AetherStructures.registerConfiguredStructures();
 
 			registerDispenserBehaviors();
 			registerComposting();
