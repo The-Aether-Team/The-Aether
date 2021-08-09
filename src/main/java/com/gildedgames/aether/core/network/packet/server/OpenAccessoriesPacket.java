@@ -40,7 +40,7 @@ public class OpenAccessoriesPacket extends AetherPacket
                 NetworkHooks.openGui(player, new AccessoriesProvider());
                 if (!stack.isEmpty()) {
                     player.inventory.setCarried(stack);
-                    AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(stack), player);
+                    AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(player.getId(), stack), player);
                 }
             }
         }

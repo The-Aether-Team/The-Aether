@@ -39,7 +39,7 @@ public class OpenInventoryPacket extends AetherPacket
                 player.doCloseContainer();
                 if (!stack.isEmpty()) {
                     player.inventory.setCarried(stack);
-                    AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(stack), player);
+                    AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(player.getId(), stack), player);
                 }
             }
         }
