@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IJumpingMount;
 import net.minecraft.entity.MoverType;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.datasync.DataParameter;
@@ -147,19 +148,18 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IJum
 				this.setMountJumping(true);
 				this.hasImpulse = true;
 				this.jumpPower = 0.0F;
-				
-				if (!this.level.isClientSide) {
-					this.move(MoverType.SELF, this.getDeltaMovement());
-				}
 			}
 			
 			this.setDeltaMovement(this.getDeltaMovement().x() * 0.35, this.getDeltaMovement().y(), this.getDeltaMovement().z() * 0.35F);
 			
 			this.maxUpStep = 1.0F;
+
+			this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
 			
 			if (!this.level.isClientSide) {
 				this.flyingSpeed = this.getSpeed() * 0.6F;
 				super.travel(new Vector3d(strafe, vertical, forward));
+				this.move(MoverType.SELF, this.getDeltaMovement());
 			}
 			
 			if (this.onGround) {

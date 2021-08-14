@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.AetherAnimalEntity;
 import com.gildedgames.aether.common.entity.ai.EatAetherGrassGoal;
+import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.google.common.collect.Maps;
 
@@ -38,6 +39,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
@@ -48,16 +50,19 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-@SuppressWarnings("deprecation")
 public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     public static final DataParameter<Byte> FLEECE_COLOR = EntityDataManager.defineId(SheepuffEntity.class, DataSerializers.BYTE);
     public static final DataParameter<Boolean> SHEARED = EntityDataManager.<Boolean>defineId(SheepuffEntity.class, DataSerializers.BOOLEAN);
     public static final DataParameter<Boolean> PUFFY = EntityDataManager.defineId(SheepuffEntity.class, DataSerializers.BOOLEAN);
+
+    protected final FallPathNavigator fallNavigation;
+    protected final GroundPathNavigator groundNavigation;
 
     private int sheepTimer, amountEaten;
     private EatAetherGrassGoal eatGrassGoal;
@@ -83,6 +88,8 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
 
     public SheepuffEntity(EntityType<? extends SheepuffEntity> type, World worldIn) {
         super(type, worldIn);
+        this.fallNavigation = new FallPathNavigator(this, worldIn);
+        this.groundNavigation = new GroundPathNavigator(this, worldIn);
     }
 
     public SheepuffEntity(World worldIn) {
@@ -252,12 +259,10 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     @Override
     protected void jumpFromGround()
     {
-        if(this.getPuffed())
-        {
-            this.setDeltaMovement(getDeltaMovement().x + this.random.nextGaussian() * 0.5, 1.8,  getDeltaMovement().z + random.nextGaussian() * 0.5);
+        if (this.getPuffed()) {
+            this.setDeltaMovement(getDeltaMovement().x, 1.8, getDeltaMovement().z);
         }
-        else
-        {
+        else {
             this.setDeltaMovement(getDeltaMovement().x, 0.41999998688697815, getDeltaMovement().z);
         }
     }
@@ -266,28 +271,45 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
     public void tick() {
         super.tick();
 
-        if(this.getPuffed())
-        {
+        if (this.getPuffed()) {
             this.fallDistance = 0;
 
-            if(this.getDeltaMovement().y < -0.05)
-            {
+            if (this.getDeltaMovement().y < -0.05) {
                 this.setDeltaMovement(getDeltaMovement().x, -0.05, getDeltaMovement().z);
             }
+            this.navigation = fallNavigation;
+        } else {
+            this.navigation = groundNavigation;
         }
 
-        if(this.amountEaten >= 2 && !this.getSheared() && !this.getPuffed())
-        {
+        if (this.amountEaten >= 2 && !this.getSheared() && !this.getPuffed()) {
             this.setPuffed(true);
             this.amountEaten = 0;
         }
 
-        if(this.amountEaten == 1 && this.getSheared() && !this.getPuffed())
-        {
+        if (this.amountEaten == 1 && this.getSheared() && !this.getPuffed()) {
             this.setSheared(false);
             this.setFleeceColor(DyeColor.WHITE);
             this.amountEaten = 0;
         }
+    }
+
+    @Override
+    public void travel(Vector3d vector3d1) {
+        float f = this.flyingSpeed;
+        if (this.isEffectiveAi() && this.getPuffed()) {
+            this.flyingSpeed = this.getSpeed() * (0.24F / (0.91F * 0.91F * 0.91F));
+            super.travel(vector3d1);
+            this.flyingSpeed = f;
+        } else {
+            this.flyingSpeed = f;
+            super.travel(vector3d1);
+        }
+    }
+
+    @Override
+    public int getMaxFallDistance() {
+        return !this.isOnGround() && this.getPuffed() ? 20 : super.getMaxFallDistance();
     }
 
     @Override
