@@ -10,8 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class AetherEffects
 {
-	public static final DeferredRegister<Effect> EFFECTS =
-			DeferredRegister.create(ForgeRegistries.POTIONS, Aether.MODID);
+	public static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, Aether.MODID);
 
 	public static final RegistryObject<Effect> INEBRIATION = EFFECTS.register("inebriation", InebriationEffect::new);
 }

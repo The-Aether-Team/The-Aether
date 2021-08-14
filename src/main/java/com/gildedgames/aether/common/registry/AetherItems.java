@@ -158,8 +158,8 @@ public class AetherItems
 	public static final RegistryObject<Item> BLUE_BERRY = ITEMS.register("blue_berry", () -> new Item(new Item.Properties().food(new Food.Builder().fast().nutrition(2).build()).tab(AetherItemGroups.AETHER_FOOD)));
 	public static final RegistryObject<Item> ENCHANTED_BERRY = ITEMS.register("enchanted_berry", () -> new Item(new Item.Properties().rarity(Rarity.RARE).food(new Food.Builder().fast().nutrition(8).build()).tab(AetherItemGroups.AETHER_FOOD)));
 	public static final RegistryObject<Item> WHITE_APPLE = ITEMS.register("white_apple", () -> new Item(new Item.Properties().food(new Food.Builder().fast().nutrition(0).build()).tab(AetherItemGroups.AETHER_FOOD)));
-	public static final RegistryObject<Item> BLUE_GUMMY_SWET = ITEMS.register("blue_gummy_swet", () -> new GummySwetItem(new Item.Properties().food(new Food.Builder().fast().nutrition(20).build()).tab(AetherItemGroups.AETHER_FOOD)));
-	public static final RegistryObject<Item> GOLDEN_GUMMY_SWET = ITEMS.register("golden_gummy_swet", () -> new GummySwetItem(new Item.Properties().food(new Food.Builder().fast().nutrition(20).build()).tab(AetherItemGroups.AETHER_FOOD)));
+	public static final RegistryObject<Item> BLUE_GUMMY_SWET = ITEMS.register("blue_gummy_swet", GummySwetItem::new);
+	public static final RegistryObject<Item> GOLDEN_GUMMY_SWET = ITEMS.register("golden_gummy_swet", GummySwetItem::new);
 	public static final RegistryObject<Item> HEALING_STONE = ITEMS.register("healing_stone", HealingStoneItem::new);
 	public static final RegistryObject<Item> CANDY_CANE = ITEMS.register("candy_cane", () -> new Item(new Item.Properties().food(new Food.Builder().fast().nutrition(2).build()).tab(AetherItemGroups.AETHER_FOOD)));
 	public static final RegistryObject<Item> GINGERBREAD_MAN = ITEMS.register("gingerbread_man", () -> new Item(new Item.Properties().food(new Food.Builder().fast().nutrition(2).build()).tab(AetherItemGroups.AETHER_FOOD)));
@@ -213,9 +213,9 @@ public class AetherItems
 	// Misc
 	public static final RegistryObject<Item> VICTORY_MEDAL = ITEMS.register("victory_medal", () -> new Item(new Item.Properties().stacksTo(10).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
 
-	public static final RegistryObject<Item> BRONZE_DUNGEON_KEY = ITEMS.register("bronze_dungeon_key", () -> new DungeonKeyItem(AetherDungeonTypes.BRONZE, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> SILVER_DUNGEON_KEY = ITEMS.register("silver_dungeon_key", () -> new DungeonKeyItem(AetherDungeonTypes.SILVER, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> GOLD_DUNGEON_KEY = ITEMS.register("gold_dungeon_key", () -> new DungeonKeyItem(AetherDungeonTypes.GOLD, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> BRONZE_DUNGEON_KEY = ITEMS.register("bronze_dungeon_key", () -> new DungeonKeyItem(() -> AetherDungeonTypes.BRONZE, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> SILVER_DUNGEON_KEY = ITEMS.register("silver_dungeon_key", () -> new DungeonKeyItem(() -> AetherDungeonTypes.SILVER, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> GOLD_DUNGEON_KEY = ITEMS.register("gold_dungeon_key", () -> new DungeonKeyItem(() -> AetherDungeonTypes.GOLD, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune", () -> new MusicDiscItem(1, AetherSoundEvents.ITEM_MUSIC_DISC_AETHER_TUNE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> MUSIC_DISC_ASCENDING_DAWN  = ITEMS.register("music_disc_ascending_dawn", () -> new MusicDiscItem(2, AetherSoundEvents.ITEM_MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC)));

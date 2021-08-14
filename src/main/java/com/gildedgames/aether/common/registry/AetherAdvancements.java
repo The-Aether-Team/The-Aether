@@ -6,9 +6,6 @@ import net.minecraft.advancements.CriteriaTriggers;
 
 public class AetherAdvancements
 {
-	public static final MountTrigger MOUNT_ENTITY = CriteriaTriggers.register(new MountTrigger());
-	public static final LoreTrigger LORE_ENTRY = CriteriaTriggers.register(new LoreTrigger());
-	
     public static void init() {
         CriteriaTriggers.register(MountTrigger.INSTANCE);
         CriteriaTriggers.register(LoreTrigger.INSTANCE);

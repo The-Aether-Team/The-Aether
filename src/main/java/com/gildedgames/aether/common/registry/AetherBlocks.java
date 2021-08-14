@@ -34,11 +34,7 @@ import com.gildedgames.aether.common.block.natural.EnchantedAetherGrassBlock;
 import com.gildedgames.aether.common.block.natural.IcestoneBlock;
 import com.gildedgames.aether.common.block.natural.LeavesWithParticlesBlock;
 import com.gildedgames.aether.common.block.natural.PinkAercloudBlock;
-import com.gildedgames.aether.common.block.util.AetherDoubleDropBlock;
-import com.gildedgames.aether.common.block.util.AetherDoubleDropsLeaves;
-import com.gildedgames.aether.common.block.util.AetherDoubleDropsOreBlock;
-import com.gildedgames.aether.common.block.util.AetherDoubleDropsRotatedPillarBlock;
-import com.gildedgames.aether.common.block.util.FloatingBlock;
+import com.gildedgames.aether.common.block.util.*;
 import com.gildedgames.aether.common.block.utility.AltarBlock;
 import com.gildedgames.aether.common.block.utility.FreezerBlock;
 import com.gildedgames.aether.common.block.utility.IncubatorBlock;
@@ -49,30 +45,7 @@ import com.gildedgames.aether.common.world.gen.tree.GoldenOakTree;
 import com.gildedgames.aether.common.world.gen.tree.SkyrootTree;
 import com.google.common.collect.ImmutableMap;
 
-import net.minecraft.block.BedBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.block.FenceBlock;
-import net.minecraft.block.FenceGateBlock;
-import net.minecraft.block.FireBlock;
-import net.minecraft.block.FlowerBlock;
-import net.minecraft.block.FlowerPotBlock;
-import net.minecraft.block.GlassBlock;
-import net.minecraft.block.PressurePlateBlock;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.block.StoneButtonBlock;
-import net.minecraft.block.TorchBlock;
-import net.minecraft.block.TrapDoorBlock;
-import net.minecraft.block.WallBlock;
-import net.minecraft.block.WallTorchBlock;
-import net.minecraft.block.WoodButtonBlock;
-import net.minecraft.block.WoodType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.EntityType;
@@ -325,7 +298,6 @@ public class AetherBlocks
 	public static void registerFreezables() {
 		IIcestoneBlock.registerDefaultFreezables();
 	}
-
 
 	private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {
 		RegistryObject<T> register = BLOCKS.register(name, block);

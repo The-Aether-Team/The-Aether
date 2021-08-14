@@ -133,20 +133,23 @@ public class AetherEntityTypes
 
 	@SubscribeEvent
 	public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
-		event.put(AetherEntityTypes.PHYG.get(), PhygEntity.registerAttributes().build());
-		event.put(AetherEntityTypes.FLYING_COW.get(), FlyingCowEntity.registerAttributes().build());
-		event.put(AetherEntityTypes.SHEEPUFF.get(), SheepuffEntity.registerAttributes().build());
-		event.put(AetherEntityTypes.MOA.get(), MoaEntity.registerAttributes().build());
-		event.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.registerAttributes().build());
-		event.put(AetherEntityTypes.AERBUNNY.get(), AerbunnyEntity.registerAttributes().build());
+		event.put(AetherEntityTypes.PHYG.get(), PhygEntity.createMobAttributes().build());
+		event.put(AetherEntityTypes.FLYING_COW.get(), FlyingCowEntity.createMobAttributes().build());
+		event.put(AetherEntityTypes.SHEEPUFF.get(), SheepuffEntity.createMobAttributes().build());
+		event.put(AetherEntityTypes.MOA.get(), MoaEntity.createMobAttributes().build());
+		event.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.createMobAttributes().build());
+		event.put(AetherEntityTypes.AERBUNNY.get(), AerbunnyEntity.createMobAttributes().build());
 
-		event.put(AetherEntityTypes.WHIRLWIND.get(), WhirlwindEntity.registerAttributes().build());
-		event.put(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantEntity.registerAttributes().build());
-		event.put(AetherEntityTypes.COCKATRICE.get(), CockatriceEntity.registerAttributes().build());
-		event.put(AetherEntityTypes.ZEPHYR.get(), ZephyrEntity.registerAttributes().build());
+		//event.put(AetherEntityTypes.SWET.get(), SwetEntity.registerAttributes().build());
+		event.put(AetherEntityTypes.WHIRLWIND.get(), WhirlwindEntity.createMobAttributes().build());
+		event.put(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantEntity.createMobAttributes().build());
+		event.put(AetherEntityTypes.COCKATRICE.get(), CockatriceEntity.createMobAttributes().build());
+		event.put(AetherEntityTypes.ZEPHYR.get(), ZephyrEntity.createMobAttributes().build());
 
-		event.put(AetherEntityTypes.SENTRY.get(), SentryEntity.registerAttributes().build());
-		event.put(AetherEntityTypes.MIMIC.get(), MimicEntity.registerAttributes().build());
+		event.put(AetherEntityTypes.SENTRY.get(), SentryEntity.createMobAttributes().build());
+		event.put(AetherEntityTypes.MIMIC.get(), MimicEntity.createMobAttributes().build());
+		//event.put(AetherEntityTypes.VALKYRIE.get(), ValkyrieEntity.createMobAttributes().build());
+		//event.put(AetherEntityTypes.FIRE_MINION.get(), FireMinionEntity.registerAttributes().build());
 
 		event.put(AetherEntityTypes.CLOUD_MINION.get(), CloudMinionEntity.registerAttributes().build());
 	}

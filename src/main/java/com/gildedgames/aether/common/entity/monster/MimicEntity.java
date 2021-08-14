@@ -42,7 +42,7 @@ public class MimicEntity extends CreatureEntity {
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 	}
 
-	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+	public static AttributeModifierMap.MutableAttribute createMobAttributes() {
 		return CreatureEntity.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 40.0D)
 				.add(Attributes.ATTACK_DAMAGE, 3.0D)

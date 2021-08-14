@@ -4,6 +4,7 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.ExtendedAttackPacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
@@ -11,10 +12,13 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import top.theillusivec4.curios.api.CuriosApi;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class ToolAbilityClientListener
@@ -58,7 +62,6 @@ public class ToolAbilityClientListener
     }
 
     @SubscribeEvent
-    @SuppressWarnings("resource")
     public static void onRenderHand(RenderHandEvent event) {
         if (Minecraft.getInstance().player != null) {
             CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.INVISIBILITY_CLOAK.get(), Minecraft.getInstance().player).ifPresent((triple) -> event.setCanceled(true));

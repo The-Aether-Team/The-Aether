@@ -32,9 +32,9 @@ public class ValkyrieEntity extends MonsterEntity
         super(type, worldIn);
     }
 
-    public ValkyrieEntity(World worldIn) {
-        this(AetherEntityTypes.VALKYRIE.get(), worldIn);
-    }
+//    public ValkyrieEntity(World worldIn) {
+//        this(AetherEntityTypes.VALKYRIE.get(), worldIn);
+//    }
 
     @Override
     protected void registerGoals() {
@@ -43,7 +43,7 @@ public class ValkyrieEntity extends MonsterEntity
         this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 8.0F, 8.0F));
     }
 
-    public static AttributeModifierMap.MutableAttribute createMonsterAttributes() {
+    public static AttributeModifierMap.MutableAttribute createMobAttributes() {
         return MobEntity.createMobAttributes()
                 .add(Attributes.FOLLOW_RANGE, 8.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.5)
