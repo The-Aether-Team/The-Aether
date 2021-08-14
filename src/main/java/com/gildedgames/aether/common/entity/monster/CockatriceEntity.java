@@ -46,8 +46,8 @@ public class CockatriceEntity extends MonsterEntity implements IRangedAttackMob 
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
     }
 
-    public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return CreatureEntity.createMobAttributes()
+    public static AttributeModifierMap.MutableAttribute createMonsterAttributes() {
+        return MobEntity.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
                 .add(Attributes.FOLLOW_RANGE, 35.0D);

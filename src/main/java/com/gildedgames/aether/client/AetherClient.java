@@ -38,7 +38,7 @@ public class AetherClient
     public static void clientComplete(FMLLoadCompleteEvent event) {
         event.enqueueWork(() -> {
             for (PlayerRenderer render : Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().values()) {
-                render.addLayer(new RepulsionShieldLayer<>(render, new BipedModel(1.1F)));
+                render.addLayer(new RepulsionShieldLayer<>(render, new BipedModel<>(1.1F)));
             }
         });
     }

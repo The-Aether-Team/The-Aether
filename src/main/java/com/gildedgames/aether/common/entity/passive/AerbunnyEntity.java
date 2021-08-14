@@ -36,6 +36,10 @@ public class AerbunnyEntity extends AetherAnimalEntity {
         super(type, worldIn);
     }
 
+    public AerbunnyEntity(World worldIn) {
+        this(AetherEntityTypes.AERBUNNY.get(), worldIn);
+    }
+
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new SwimGoal(this));
@@ -46,7 +50,7 @@ public class AerbunnyEntity extends AetherAnimalEntity {
         this.goalSelector.addGoal(5, new HopGoal(this));
     }
 
-    public static AttributeModifierMap.MutableAttribute registerAttributes() {
+    public static AttributeModifierMap.MutableAttribute createMobAttributes() {
         return FlyingEntity.createMobAttributes()
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .add(Attributes.MAX_HEALTH, 5.0D);

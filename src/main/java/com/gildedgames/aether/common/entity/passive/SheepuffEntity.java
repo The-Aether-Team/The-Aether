@@ -1,18 +1,32 @@
 package com.gildedgames.aether.common.entity.passive;
 
-import com.gildedgames.aether.common.entity.AetherAnimalEntity;
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.common.entity.ai.EatAetherGrassGoal;
+import java.util.Map;
+import java.util.Random;
+
+import javax.annotation.Nullable;
+
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.entity.AetherAnimalEntity;
+import com.gildedgames.aether.common.entity.ai.EatAetherGrassGoal;
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.google.common.collect.Maps;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IShearable;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.BreedGoal;
+import net.minecraft.entity.ai.goal.FollowParentGoal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.PanicGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.TemptGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeColor;
@@ -24,17 +38,20 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
+import net.minecraft.util.IItemProvider;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
@@ -100,8 +117,8 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable {
         super.customServerAiStep();
     }
 
-    public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return AetherAnimalEntity.createMobAttributes()
+    public static AttributeModifierMap.MutableAttribute createMobAttributes() {
+        return MobEntity.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 8.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.23000000417232513D);
     }

@@ -1,11 +1,22 @@
 package com.gildedgames.aether.common.entity.monster;
 
-import com.gildedgames.aether.common.registry.AetherBlocks;
+import java.util.List;
+import java.util.Random;
+
+import javax.annotation.Nullable;
+
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
+import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.core.api.AetherRankings;
+
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.CreeperEntity;
@@ -18,16 +29,20 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.*;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.GameRules;
+import net.minecraft.world.IServerWorld;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Random;
 
 public class WhirlwindEntity extends MobEntity {
     public static final DataParameter<Boolean> IS_EVIL = EntityDataManager.defineId(WhirlwindEntity.class, DataSerializers.BOOLEAN);
@@ -40,6 +55,10 @@ public class WhirlwindEntity extends MobEntity {
 
     public WhirlwindEntity(EntityType<? extends MobEntity> type, World worldIn) {
         super(type, worldIn);
+    }
+
+    public WhirlwindEntity(World worldIn) {
+        this(AetherEntityTypes.WHIRLWIND.get(), worldIn);
     }
 
     @Override
@@ -68,7 +87,7 @@ public class WhirlwindEntity extends MobEntity {
                 && MobEntity.checkMobSpawnRules(typeIn, worldIn, reason, pos, randomIn);
     }
 
-    public static AttributeModifierMap.MutableAttribute registerAttributes() {
+    public static AttributeModifierMap.MutableAttribute createMobAttributes() {
         return MobEntity.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.025D + 0.025D)

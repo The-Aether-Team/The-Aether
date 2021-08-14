@@ -52,7 +52,7 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true, false));
 	}
 
-	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+	public static AttributeModifierMap.MutableAttribute createMobAttributes() {
 		return FlyingEntity.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 5.0D)
 				.add(Attributes.FOLLOW_RANGE, 100.0D);

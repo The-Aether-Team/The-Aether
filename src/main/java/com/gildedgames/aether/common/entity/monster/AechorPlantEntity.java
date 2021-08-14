@@ -1,9 +1,19 @@
 package com.gildedgames.aether.common.entity.monster;
 
+import java.util.Random;
+
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
 import com.gildedgames.aether.common.registry.AetherBlocks;
-import net.minecraft.entity.*;
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
+
+import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.IRangedAttackMob;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -14,16 +24,17 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-import java.util.Random;
-
 public class AechorPlantEntity extends CreatureEntity implements IRangedAttackMob {
 
     public float sinage;
     public int size/*, poisonRemaining*/;
 
-
     public AechorPlantEntity(EntityType<? extends AechorPlantEntity> type, World worldIn) {
         super(type, worldIn);
+    }
+
+    public AechorPlantEntity(World worldIn) {
+        this(AetherEntityTypes.AECHOR_PLANT.get(), worldIn);
     }
 
     @Override
@@ -32,8 +43,8 @@ public class AechorPlantEntity extends CreatureEntity implements IRangedAttackMo
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
     }
 
-    public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return CreatureEntity.createMobAttributes()
+    public static AttributeModifierMap.MutableAttribute createMobAttributes() {
+        return MobEntity.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 15.0F)
                 .add(Attributes.MOVEMENT_SPEED, 0.0F)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0F);

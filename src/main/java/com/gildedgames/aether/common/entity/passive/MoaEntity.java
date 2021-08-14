@@ -6,32 +6,29 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.util.*;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
-import org.apache.logging.log4j.LogManager;
-
-import com.gildedgames.aether.core.api.AetherAPI;
-import com.gildedgames.aether.core.api.MoaType;
-import com.gildedgames.aether.core.api.AetherMoaTypes;
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.core.api.AetherAPI;
+import com.gildedgames.aether.core.api.AetherMoaTypes;
+import com.gildedgames.aether.core.api.MoaType;
+
+import org.apache.logging.log4j.LogManager;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.MoverType;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.PanicGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -39,10 +36,20 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.ResourceLocationException;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
@@ -126,8 +133,8 @@ public class MoaEntity extends SaddleableEntity {
 		this.entityData.define(SITTING, false);
 	}
 
-	public static AttributeModifierMap.MutableAttribute registerAttributes() {
-		return AnimalEntity.createMobAttributes()
+	public static AttributeModifierMap.MutableAttribute createMobAttributes() {
+		return MobEntity.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 35.0D)
 				.add(Attributes.MOVEMENT_SPEED, 1.0D);
 	}

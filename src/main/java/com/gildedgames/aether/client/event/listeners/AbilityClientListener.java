@@ -66,6 +66,7 @@ public class AbilityClientListener
     }
 
     @SubscribeEvent
+    @SuppressWarnings("resource")
     public static void onRenderHand(RenderHandEvent event) {
         if (Minecraft.getInstance().player != null) {
             CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.INVISIBILITY_CLOAK.get(), Minecraft.getInstance().player).ifPresent((triple) -> event.setCanceled(true));

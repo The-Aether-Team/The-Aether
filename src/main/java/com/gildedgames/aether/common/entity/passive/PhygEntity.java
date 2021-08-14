@@ -1,21 +1,30 @@
 package com.gildedgames.aether.common.entity.passive;
 
+import javax.annotation.Nullable;
+
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.BreedGoal;
+import net.minecraft.entity.ai.goal.FollowParentGoal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.PanicGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.TemptGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-
-import javax.annotation.Nullable;
 
 //TODO: Can't figure out how to let the player sneak without dismounting the entity.
 public class PhygEntity extends SaddleableEntity {
@@ -25,6 +34,10 @@ public class PhygEntity extends SaddleableEntity {
 
     public PhygEntity(EntityType<? extends PhygEntity> type, World worldIn) {
         super(type, worldIn);
+    }
+
+    public PhygEntity(World worldIn) {
+        this(AetherEntityTypes.PHYG.get(), worldIn);
     }
 
     @Override
@@ -39,8 +52,8 @@ public class PhygEntity extends SaddleableEntity {
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
     }
 
-    public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return SaddleableEntity.createMobAttributes()
+    public static AttributeModifierMap.MutableAttribute createMobAttributes() {
+        return MobEntity.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D);
     }
