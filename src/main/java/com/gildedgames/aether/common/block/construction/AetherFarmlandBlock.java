@@ -55,7 +55,7 @@ public class AetherFarmlandBlock extends FarmlandBlock
         if (!worldIn.isClientSide && net.minecraftforge.common.ForgeHooks.onFarmlandTrample(worldIn, pos, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), fallDistance, entityIn)) { // Forge: Move logic to Entity#canTrample
             turnToDirt(worldIn.getBlockState(pos), worldIn, pos);
         }
-        super.fallOn(worldIn, pos, entityIn, fallDistance);
+        entityIn.causeFallDamage(fallDistance, 1.0F);
     }
 
     public static void turnToDirt(BlockState state, World worldIn, BlockPos pos) {

@@ -56,9 +56,10 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 				LivingEntity livingEntity = (LivingEntity)entity;
 				boolean isPlayer = livingEntity instanceof PlayerEntity;
 
-				if (isPlayer && ((PlayerEntity)entity).inventory.armor.get(0).getItem() == AetherItems.SENTRY_BOOTS.get()) {
-					return;
-				}
+				//TODO: Was this a thing?
+//				if (isPlayer && ((PlayerEntity)entity).inventory.armor.get(0).getItem() == AetherItems.SENTRY_BOOTS.get()) {
+//					return;
+//				}
 
 				if (!livingEntity.isBlocking()) {
 					entity.setDeltaMovement(entity.getDeltaMovement().x, entity.getDeltaMovement().y + 0.5, entity.getDeltaMovement().z);

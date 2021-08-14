@@ -13,16 +13,16 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.fml.ModList;
-import top.theillusivec4.colytra.common.ElytraNBT;
+import top.theillusivec4.caelus.client.ClientMixinHooks;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
@@ -54,13 +54,13 @@ public class CapeItem extends AccessoryItem
             CapeModel cape = new CapeModel();
             if (!livingEntity.isInvisible()) {
                 ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlotType.CHEST);
-                boolean hasColytra = ModList.get().isLoaded("colytra") && !ElytraNBT.getElytra(itemstack).isEmpty();
                 boolean hasCape = livingEntity instanceof AbstractClientPlayerEntity
                         && ((AbstractClientPlayerEntity) livingEntity).isCapeLoaded()
                         && ((AbstractClientPlayerEntity) livingEntity).getCloakTextureLocation() != null
                         && ((AbstractClientPlayerEntity) livingEntity).isModelPartShown(PlayerModelPart.CAPE);
+                boolean isCapeDisabled = ModList.get().isLoaded("caelus") && livingEntity instanceof PlayerEntity && !ClientMixinHooks.canRenderCape((PlayerEntity) livingEntity);
 
-                if (!(itemstack.getItem() instanceof ElytraItem) && !hasColytra && !hasCape) {
+                if (!(itemstack.getItem() instanceof ElytraItem) && !hasCape && !isCapeDisabled) {
                     cape.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                     matrixStack.pushPose();
                     matrixStack.translate(0.0D, 0.0D, 0.125D);

@@ -187,58 +187,81 @@ public class AetherBlocks
 	public static final RegistryObject<Block> TRAPPED_LIGHT_HELLFIRE_STONE = register("trapped_light_hellfire_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.NETHER).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never).lightLevel((state) -> 11)));
 	//new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_LIGHT_HELLFIRE_STONE.getDefaultState(), Block.Properties.from(Blocks.BEDROCK).setLightLevel((state) -> 11)));
 
-	public static final RegistryObject<Block> CHEST_MIMIC = register("chest_mimic", () -> new ChestMimicBlock(Block.Properties.copy(Blocks.CHEST).harvestTool(ToolType.AXE)));
-	public static final RegistryObject<Block> TREASURE_CHEST = register("treasure_chest", () -> new TreasureChestBlock(Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F)));
+	public static final RegistryObject<Block> CHEST_MIMIC = register("chest_mimic", () -> new ChestMimicBlock(AbstractBlock.Properties.copy(Blocks.CHEST).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<Block> TREASURE_CHEST = register("treasure_chest", () -> new TreasureChestBlock(AbstractBlock.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F)));
 
-	public static final RegistryObject<RotatedPillarBlock> PILLAR = register("pillar", () -> new RotatedPillarBlock(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
-	public static final RegistryObject<RotatedPillarBlock> PILLAR_TOP = register("pillar_top", () -> new RotatedPillarBlock(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
+	public static final RegistryObject<RotatedPillarBlock> PILLAR = register("pillar",
+			() -> new RotatedPillarBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
+	public static final RegistryObject<RotatedPillarBlock> PILLAR_TOP = register("pillar_top",
+			() -> new RotatedPillarBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> PRESENT = register("present", () -> new Block(Block.Properties.of(Material.GRASS, MaterialColor.COLOR_GREEN).strength(0.6F).sound(SoundType.GRASS)));
+	public static final RegistryObject<Block> PRESENT = register("present",
+			() -> new Block(AbstractBlock.Properties.of(Material.GRASS, MaterialColor.COLOR_GREEN).strength(0.6F).sound(SoundType.GRASS)));
 
-	public static final RegistryObject<FenceBlock> SKYROOT_FENCE = register("skyroot_fence", () -> new FenceBlock(Block.Properties.copy(Blocks.OAK_FENCE).harvestTool(ToolType.AXE)));
-	public static final RegistryObject<FenceGateBlock> SKYROOT_FENCE_GATE = register("skyroot_fence_gate", () -> new FenceGateBlock(Block.Properties.copy(Blocks.OAK_FENCE_GATE).harvestTool(ToolType.AXE)));
-	public static final RegistryObject<Block> SKYROOT_DOOR = register("skyroot_door", () -> new DoorBlock(Block.Properties.copy(Blocks.OAK_DOOR)));
-	public static final RegistryObject<Block> SKYROOT_TRAPDOOR = register("skyroot_trapdoor", () -> new TrapDoorBlock(Block.Properties.copy(Blocks.OAK_TRAPDOOR)));
-	public static final RegistryObject<Block> SKYROOT_BUTTON = register("skyroot_button", () -> new WoodButtonBlock(Block.Properties.copy(Blocks.OAK_BUTTON)));
-	public static final RegistryObject<Block> SKYROOT_PRESSURE_PLATE = register("skyroot_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Block.Properties.copy(Blocks.OAK_PRESSURE_PLATE)));
+	public static final RegistryObject<FenceBlock> SKYROOT_FENCE = register("skyroot_fence", () -> new FenceBlock(AbstractBlock.Properties.copy(Blocks.OAK_FENCE).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<FenceGateBlock> SKYROOT_FENCE_GATE = register("skyroot_fence_gate", () -> new FenceGateBlock(AbstractBlock.Properties.copy(Blocks.OAK_FENCE_GATE).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<Block> SKYROOT_DOOR = register("skyroot_door", () -> new DoorBlock(AbstractBlock.Properties.copy(Blocks.OAK_DOOR)));
+	public static final RegistryObject<Block> SKYROOT_TRAPDOOR = register("skyroot_trapdoor", () -> new TrapDoorBlock(AbstractBlock.Properties.copy(Blocks.OAK_TRAPDOOR)));
+	public static final RegistryObject<Block> SKYROOT_BUTTON = register("skyroot_button", () -> new WoodButtonBlock(AbstractBlock.Properties.copy(Blocks.OAK_BUTTON)));
+	public static final RegistryObject<Block> SKYROOT_PRESSURE_PLATE = register("skyroot_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, AbstractBlock.Properties.copy(Blocks.OAK_PRESSURE_PLATE)));
 
-	public static final RegistryObject<Block> HOLYSTONE_BUTTON = register("holystone_button", () -> new StoneButtonBlock(Block.Properties.copy(Blocks.STONE_BUTTON)));
-	public static final RegistryObject<Block> HOLYSTONE_PRESSURE_PLATE = register("holystone_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(Material.STONE, MaterialColor.WOOL).requiresCorrectToolForDrops().noCollission().strength(0.5F)));
+	public static final RegistryObject<Block> HOLYSTONE_BUTTON = register("holystone_button", () -> new StoneButtonBlock(AbstractBlock.Properties.copy(Blocks.STONE_BUTTON)));
+	public static final RegistryObject<Block> HOLYSTONE_PRESSURE_PLATE = register("holystone_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, AbstractBlock.Properties.of(Material.STONE, MaterialColor.WOOL).requiresCorrectToolForDrops().noCollission().strength(0.5F)));
 
-	public static final RegistryObject<WallBlock> CARVED_WALL = register("carved_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.CARVED_STONE.get())));
-	public static final RegistryObject<WallBlock> ANGELIC_WALL = register("angelic_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get())));
-	public static final RegistryObject<WallBlock> HELLFIRE_WALL = register("hellfire_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get())));
-	public static final RegistryObject<WallBlock> HOLYSTONE_WALL = register("holystone_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE.get())));
-	public static final RegistryObject<WallBlock> MOSSY_HOLYSTONE_WALL = register("mossy_holystone_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get())));
-	public static final RegistryObject<WallBlock> ICESTONE_WALL = register("icestone_wall", () -> new IcestoneWallBlock(Block.Properties.copy(AetherBlocks.ICESTONE.get())));
-	public static final RegistryObject<WallBlock> HOLYSTONE_BRICK_WALL = register("holystone_brick_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get())));
-	public static final RegistryObject<WallBlock> AEROGEL_WALL = register("aerogel_wall", () -> new AerogelWallBlock(Block.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking(AetherBlocks::never)));
+	public static final RegistryObject<WallBlock> CARVED_WALL = register("carved_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.CARVED_STONE.get())));
+	public static final RegistryObject<WallBlock> ANGELIC_WALL = register("angelic_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.ANGELIC_STONE.get())));
+	public static final RegistryObject<WallBlock> HELLFIRE_WALL = register("hellfire_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.HELLFIRE_STONE.get())));
+	public static final RegistryObject<WallBlock> HOLYSTONE_WALL = register("holystone_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE.get())));
+	public static final RegistryObject<WallBlock> MOSSY_HOLYSTONE_WALL = register("mossy_holystone_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get())));
+	public static final RegistryObject<WallBlock> ICESTONE_WALL = register("icestone_wall", () -> new IcestoneWallBlock(AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get())));
+	public static final RegistryObject<WallBlock> HOLYSTONE_BRICK_WALL = register("holystone_brick_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get())));
+	public static final RegistryObject<WallBlock> AEROGEL_WALL = register("aerogel_wall", () -> new AerogelWallBlock(AbstractBlock.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking((state, reader, pos) -> false)));
 
-	public static final RegistryObject<StairsBlock> SKYROOT_STAIRS = register("skyroot_stairs", () -> new StairsBlock(() -> SKYROOT_PLANKS.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get())));
-	public static final RegistryObject<StairsBlock> CARVED_STAIRS = register("carved_stairs", () -> new StairsBlock(() -> CARVED_STONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.CARVED_STONE.get())));
-	public static final RegistryObject<StairsBlock> ANGELIC_STAIRS = register("angelic_stairs", () -> new StairsBlock(() -> ANGELIC_STONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get())));
-	public static final RegistryObject<StairsBlock> HELLFIRE_STAIRS = register("hellfire_stairs", () -> new StairsBlock(() -> HELLFIRE_STONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get())));
-	public static final RegistryObject<StairsBlock> HOLYSTONE_STAIRS = register("holystone_stairs", () -> new StairsBlock(() -> HOLYSTONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.HOLYSTONE.get())));
-	public static final RegistryObject<StairsBlock> MOSSY_HOLYSTONE_STAIRS = register("mossy_holystone_stairs", () -> new StairsBlock(() -> MOSSY_HOLYSTONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get())));
-	public static final RegistryObject<StairsBlock> ICESTONE_STAIRS = register("icestone_stairs", () -> new IcestoneStairsBlock(() -> ICESTONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.ICESTONE.get())));
-	public static final RegistryObject<StairsBlock> HOLYSTONE_BRICK_STAIRS = register("holystone_brick_stairs", () -> new StairsBlock(() -> HOLYSTONE_BRICKS.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get())));
-	public static final RegistryObject<StairsBlock> AEROGEL_STAIRS = register("aerogel_stairs", () -> new AerogelStairsBlock(() -> AEROGEL.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking(AetherBlocks::never)));
+	public static final RegistryObject<StairsBlock> SKYROOT_STAIRS = register("skyroot_stairs",
+			() -> new StairsBlock(() -> SKYROOT_PLANKS.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get())));
+	public static final RegistryObject<StairsBlock> CARVED_STAIRS = register("carved_stairs",
+			() -> new StairsBlock(() -> CARVED_STONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.CARVED_STONE.get())));
+	public static final RegistryObject<StairsBlock> ANGELIC_STAIRS = register("angelic_stairs",
+			() -> new StairsBlock(() -> ANGELIC_STONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.ANGELIC_STONE.get())));
+	public static final RegistryObject<StairsBlock> HELLFIRE_STAIRS = register("hellfire_stairs",
+			() -> new StairsBlock(() -> HELLFIRE_STONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.HELLFIRE_STONE.get())));
+	public static final RegistryObject<StairsBlock> HOLYSTONE_STAIRS = register("holystone_stairs",
+			() -> new StairsBlock(() -> HOLYSTONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE.get())));
+	public static final RegistryObject<StairsBlock> MOSSY_HOLYSTONE_STAIRS = register("mossy_holystone_stairs",
+			() -> new StairsBlock(() -> MOSSY_HOLYSTONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get())));
+	public static final RegistryObject<StairsBlock> ICESTONE_STAIRS = register("icestone_stairs",
+			() -> new IcestoneStairsBlock(() -> ICESTONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get())));
+	public static final RegistryObject<StairsBlock> HOLYSTONE_BRICK_STAIRS = register("holystone_brick_stairs",
+			() -> new StairsBlock(() -> HOLYSTONE_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get())));
+	public static final RegistryObject<StairsBlock> AEROGEL_STAIRS = register("aerogel_stairs",
+			() -> new AerogelStairsBlock(() -> AEROGEL.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking((state, reader, pos) -> false)));
 
-	public static final RegistryObject<SlabBlock> SKYROOT_SLAB = register("skyroot_slab", () -> new SlabBlock(Block.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get())));
-	public static final RegistryObject<SlabBlock> CARVED_SLAB = register("carved_slab", () -> new SlabBlock(Block.Properties.copy(AetherBlocks.CARVED_STONE.get()).strength(2.0F)));
-	public static final RegistryObject<SlabBlock> ANGELIC_SLAB = register("angelic_slab", () -> new SlabBlock(Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get()).strength(2.0F)));
-	public static final RegistryObject<SlabBlock> HELLFIRE_SLAB = register("hellfire_slab", () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get()).strength(2.0F)));
-	public static final RegistryObject<SlabBlock> HOLYSTONE_SLAB = register("holystone_slab", () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE.get()).strength(2.0F)));
-	public static final RegistryObject<SlabBlock> MOSSY_HOLYSTONE_SLAB = register("mossy_holystone_slab", () -> new SlabBlock(Block.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get()).strength(2.0F)));
-	public static final RegistryObject<SlabBlock> ICESTONE_SLAB = register("icestone_slab", () -> new IcestoneSlabBlock(Block.Properties.copy(AetherBlocks.ICESTONE.get()).strength(2.0F)));
-	public static final RegistryObject<SlabBlock> HOLYSTONE_BRICK_SLAB = register("holystone_brick_slab", () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get()).strength(2.0F)));
-	public static final RegistryObject<SlabBlock> AEROGEL_SLAB = register("aerogel_slab", () -> new AerogelSlabBlock(Block.Properties.copy(AetherBlocks.AEROGEL.get()).strength(1.5F, 2000.0F).isViewBlocking(AetherBlocks::never)));
+	public static final RegistryObject<SlabBlock> SKYROOT_SLAB = register("skyroot_slab",
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get()).strength(2.0F, 3.0F)));
+	public static final RegistryObject<SlabBlock> CARVED_SLAB = register("carved_slab",
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.CARVED_STONE.get()).strength(2.0F, 6.0F)));
+	public static final RegistryObject<SlabBlock> ANGELIC_SLAB = register("angelic_slab",
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.ANGELIC_STONE.get()).strength(2.0F, 6.0F)));
+	public static final RegistryObject<SlabBlock> HELLFIRE_SLAB = register("hellfire_slab",
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.HELLFIRE_STONE.get()).strength(2.0F, 6.0F)));
+	public static final RegistryObject<SlabBlock> HOLYSTONE_SLAB = register("holystone_slab",
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE.get()).strength(2.0F, 6.0F)));
+	public static final RegistryObject<SlabBlock> MOSSY_HOLYSTONE_SLAB = register("mossy_holystone_slab",
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get()).strength(2.0F, 6.0F)));
+	public static final RegistryObject<SlabBlock> ICESTONE_SLAB = register("icestone_slab",
+			() -> new IcestoneSlabBlock(AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get()).strength(2.0F, 6.0F)));
+	public static final RegistryObject<SlabBlock> HOLYSTONE_BRICK_SLAB = register("holystone_brick_slab",
+			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get()).strength(2.0F, 6.0F)));
+	public static final RegistryObject<SlabBlock> AEROGEL_SLAB = register("aerogel_slab",
+			() -> new AerogelSlabBlock(AbstractBlock.Properties.copy(AetherBlocks.AEROGEL.get()).strength(1.5F, 2000.0F).isViewBlocking((state, reader, pos) -> false)));
 
-	public static final RegistryObject<Block> SUN_ALTAR = register("sun_altar", () -> new SunAltarBlock(Block.Properties.of(Material.STONE, MaterialColor.NETHER).strength(2.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> SUN_ALTAR = register("sun_altar",
+			() -> new SunAltarBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.NETHER).strength(2.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE)));
 
-	public static final RegistryObject<Block> SKYROOT_BOOKSHELF = register("skyroot_bookshelf", () -> new BookshelfBlock(Block.Properties.copy(Blocks.BOOKSHELF).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<Block> SKYROOT_BOOKSHELF = register("skyroot_bookshelf", () -> new BookshelfBlock(AbstractBlock.Properties.copy(Blocks.BOOKSHELF).harvestTool(ToolType.AXE)));
 
-	public static final RegistryObject<BedBlock> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(Block.Properties.copy(Blocks.CYAN_BED).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<BedBlock> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(AbstractBlock.Properties.copy(Blocks.CYAN_BED).harvestTool(ToolType.AXE)));
+
 
 	public static void registerPots() {
 		FlowerPotBlock pot = (FlowerPotBlock) Blocks.FLOWER_POT;
@@ -299,9 +322,13 @@ public class AetherBlocks
 		WoodType.register(AetherWoodTypes.SKYROOT);
 	}
 
-	private static <B extends Block> RegistryObject<B> baseRegister(String name, Supplier<? extends B> block,
-			Function<RegistryObject<B>, Supplier<? extends Item>> item) {
-		RegistryObject<B> register = BLOCKS.register(name, block);
+	public static void registerFreezables() {
+		IIcestoneBlock.registerDefaultFreezables();
+	}
+
+
+	private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {
+		RegistryObject<T> register = BLOCKS.register(name, block);
 		AetherItems.ITEMS.register(name, item.apply(register));
 		return register;
 	}

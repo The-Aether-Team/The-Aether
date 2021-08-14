@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.block.utility;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.tile.SkyrootBedTileEntity;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import net.minecraft.block.*;
@@ -46,7 +45,6 @@ public class SkyrootBedBlock extends BedBlock
                 player.displayClientMessage(new TranslationTextComponent("block.minecraft.bed.occupied"), true);
                 return ActionResultType.SUCCESS;
             } else {
-                Aether.LOGGER.info("went to bed");
                 player.startSleepInBed(pos).ifLeft((result) -> {
                     if (result != null) {
                         player.displayClientMessage(result.getMessage(), true);

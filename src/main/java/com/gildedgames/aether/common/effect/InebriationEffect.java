@@ -1,12 +1,10 @@
 package com.gildedgames.aether.common.effect;
 
 import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.InebriationParticlePacket;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 import net.minecraft.util.DamageSource;
@@ -45,7 +43,9 @@ public class InebriationEffect extends Effect
         entityLivingBaseIn.yRot = (float)((double)entityLivingBaseIn.yRot + rotationDirection);
         entityLivingBaseIn.xRot = (float)((double)entityLivingBaseIn.xRot + rotationDirection);
 
-        entityLivingBaseIn.level.addParticle(new ItemParticleData(ParticleTypes.ITEM, Items.RED_DYE.getDefaultInstance()), entityLivingBaseIn.getX(), entityLivingBaseIn.getY() + entityLivingBaseIn.getBbHeight() * 0.8, entityLivingBaseIn.getZ(), 0.0, 0.0, 0.0);
+        if (!entityLivingBaseIn.level.isClientSide) {
+            AetherPacketHandler.sendToAll(new InebriationParticlePacket(entityLivingBaseIn.getId()));
+        }
     }
 
     @Override
@@ -63,7 +63,7 @@ public class InebriationEffect extends Effect
     public List<ItemStack> getCurativeItems() {
         ArrayList<ItemStack> curatives = new ArrayList<>();
         curatives.add(new ItemStack(AetherItems.SKYROOT_REMEDY_BUCKET.get()));
-        curatives.add(new ItemStack(AetherItems.WHITE_APPLE.get())); //TODO: This doesn't work?
+        curatives.add(new ItemStack(AetherItems.WHITE_APPLE.get()));
         return curatives;
     }
 }

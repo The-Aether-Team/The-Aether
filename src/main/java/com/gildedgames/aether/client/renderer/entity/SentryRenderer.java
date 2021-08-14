@@ -11,8 +11,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class SentryRenderer extends MobRenderer<SentryEntity, SlimeModel<SentryEntity>> {
 
-	private static final ResourceLocation SENTRY_TEXTURES     = new ResourceLocation(Aether.MODID, "textures/entity/sentry/sentry.png");
-	private static final ResourceLocation SENTRY_TEXTURES_LIT = new ResourceLocation(Aether.MODID, "textures/entity/sentry/sentry_lit.png");
+	private static final ResourceLocation SENTRY_TEXTURES = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/sentry.png");
+	private static final ResourceLocation SENTRY_TEXTURES_LIT = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/sentry_lit.png");
 	
 	public SentryRenderer(EntityRendererManager rendererManager) {
 		super(rendererManager, new SlimeModel<>(0), 0.3F);

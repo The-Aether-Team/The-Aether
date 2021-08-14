@@ -308,6 +308,15 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + materialIn.getRegistryName().getPath(), has(materialIn));
     }
 
+    public ShapedRecipeBuilder makeCape(Supplier<? extends Item> capeOut, Item materialIn) {
+        return ShapedRecipeBuilder.shaped(capeOut.get())
+                .pattern("MM")
+                .pattern("MM")
+                .pattern("MM")
+                .define('M', materialIn)
+                .unlockedBy("has_" + materialIn.getRegistryName().getPath(), has(materialIn));
+    }
+
     public CookingRecipeBuilder smeltingRecipe(IItemProvider result, IItemProvider ingredient, float exp) {
         return CookingRecipeBuilder.smelting(Ingredient.of(new ItemStack(ingredient, 1)), result, exp, 200)
                 .unlockedBy("has_" + ingredient.asItem().getRegistryName(), has(ingredient));

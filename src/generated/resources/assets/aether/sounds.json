@@ -1,0 +1,709 @@
+{
+  "block.aether_portal.ambient": {
+    "subtitle": "subtitles.block.aether_portal.ambient",
+    "sounds": [
+      {
+        "name": "portal/portal",
+        "attenuation_distance": 10
+      }
+    ]
+  },
+  "block.aether_portal.travel": {
+    "sounds": [
+      "portal/travel"
+    ]
+  },
+  "block.aether_portal.trigger": {
+    "subtitle": "subtitles.block.aether_portal.trigger",
+    "sounds": [
+      "portal/trigger"
+    ]
+  },
+  "block.dungeon_trap.trigger": {
+    "subtitle": "subtitles.block.dungeon_trap.trigger",
+    "sounds": [
+      "aether:block/dungeon_trap/trigger1",
+      "aether:block/dungeon_trap/trigger2",
+      "aether:block/dungeon_trap/trigger3",
+      "aether:block/dungeon_trap/trigger4",
+      "aether:block/dungeon_trap/trigger5",
+      "aether:block/dungeon_trap/trigger6"
+    ]
+  },
+  "item.dart_shooter.shoot": {
+    "subtitle": "subtitles.item.dart_shooter.shoot",
+    "sounds": [
+      "random/bow"
+    ]
+  },
+  "item.lightning_knife.shoot": {
+    "subtitle": "subtitles.item.lightning_knife.shoot",
+    "sounds": [
+      "random/bow"
+    ]
+  },
+  "item.hammer_of_notch.shoot": {
+    "subtitle": "subtitles.item.hammer_of_notch.shoot",
+    "sounds": [
+      "mob/ghast/fireball4"
+    ]
+  },
+  "item.armor.equip_zanite": {
+    "subtitle": "subtitles.item.armor.equip_zanite",
+    "sounds": [
+      "item/armor/equip_iron1",
+      "item/armor/equip_iron2",
+      "item/armor/equip_iron3",
+      "item/armor/equip_iron4",
+      "item/armor/equip_iron5",
+      "item/armor/equip_iron6"
+    ]
+  },
+  "item.armor.equip_gravitite": {
+    "subtitle": "subtitles.item.armor.equip_gravitite",
+    "sounds": [
+      "item/armor/equip_diamond1",
+      "item/armor/equip_diamond2",
+      "item/armor/equip_diamond3",
+      "item/armor/equip_diamond4",
+      "item/armor/equip_diamond5",
+      "item/armor/equip_diamond6"
+    ]
+  },
+  "item.armor.equip_valkyrie": {
+    "subtitle": "subtitles.item.armor.equip_valkyrie",
+    "sounds": [
+      "item/armor/equip_diamond1",
+      "item/armor/equip_diamond2",
+      "item/armor/equip_diamond3",
+      "item/armor/equip_diamond4",
+      "item/armor/equip_diamond5",
+      "item/armor/equip_diamond6"
+    ]
+  },
+  "item.armor.equip_neptune": {
+    "subtitle": "subtitles.item.armor.equip_neptune",
+    "sounds": [
+      "item/armor/equip_diamond1",
+      "item/armor/equip_diamond2",
+      "item/armor/equip_diamond3",
+      "item/armor/equip_diamond4",
+      "item/armor/equip_diamond5",
+      "item/armor/equip_diamond6"
+    ]
+  },
+  "item.armor.equip_phoenix": {
+    "subtitle": "subtitles.item.armor.equip_phoenix",
+    "sounds": [
+      "item/armor/equip_diamond1",
+      "item/armor/equip_diamond2",
+      "item/armor/equip_diamond3",
+      "item/armor/equip_diamond4",
+      "item/armor/equip_diamond5",
+      "item/armor/equip_diamond6"
+    ]
+  },
+  "item.armor.equip_obsidian": {
+    "subtitle": "subtitles.item.armor.equip_obsidian",
+    "sounds": [
+      "item/armor/equip_diamond1",
+      "item/armor/equip_diamond2",
+      "item/armor/equip_diamond3",
+      "item/armor/equip_diamond4",
+      "item/armor/equip_diamond5",
+      "item/armor/equip_diamond6"
+    ]
+  },
+  "item.armor.equip_sentry": {
+    "subtitle": "subtitles.item.armor.equip_sentry",
+    "sounds": [
+      "item/armor/equip_diamond1",
+      "item/armor/equip_diamond2",
+      "item/armor/equip_diamond3",
+      "item/armor/equip_diamond4",
+      "item/armor/equip_diamond5",
+      "item/armor/equip_diamond6"
+    ]
+  },
+  "item.accessory.equip_generic": {
+    "subtitle": "subtitles.item.accessory.equip_generic",
+    "sounds": [
+      "item/armor/equip_generic1",
+      "item/armor/equip_generic2",
+      "item/armor/equip_generic3",
+      "item/armor/equip_generic4",
+      "item/armor/equip_generic5",
+      "item/armor/equip_generic6"
+    ]
+  },
+  "item.accessory.equip_iron_ring": {
+    "subtitle": "subtitles.item.accessory.equip_iron_ring",
+    "sounds": [
+      "item/armor/equip_iron1",
+      "item/armor/equip_iron2",
+      "item/armor/equip_iron3",
+      "item/armor/equip_iron4",
+      "item/armor/equip_iron5",
+      "item/armor/equip_iron6"
+    ]
+  },
+  "item.accessory.equip_gold_ring": {
+    "subtitle": "subtitles.item.accessory.equip_gold_ring",
+    "sounds": [
+      "item/armor/equip_gold1",
+      "item/armor/equip_gold2",
+      "item/armor/equip_gold3",
+      "item/armor/equip_gold4",
+      "item/armor/equip_gold5",
+      "item/armor/equip_gold6"
+    ]
+  },
+  "item.accessory.equip_zanite_ring": {
+    "subtitle": "subtitles.item.accessory.equip_zanite_ring",
+    "sounds": [
+      "item/armor/equip_iron1",
+      "item/armor/equip_iron2",
+      "item/armor/equip_iron3",
+      "item/armor/equip_iron4",
+      "item/armor/equip_iron5",
+      "item/armor/equip_iron6"
+    ]
+  },
+  "item.accessory.equip_ice_ring": {
+    "subtitle": "subtitles.item.accessory.equip_ice_ring",
+    "sounds": [
+      "item/armor/equip_generic1",
+      "item/armor/equip_generic2",
+      "item/armor/equip_generic3",
+      "item/armor/equip_generic4",
+      "item/armor/equip_generic5",
+      "item/armor/equip_generic6"
+    ]
+  },
+  "item.accessory.equip_iron_pendant": {
+    "subtitle": "subtitles.item.accessory.equip_iron_pendant",
+    "sounds": [
+      "item/armor/equip_iron1",
+      "item/armor/equip_iron2",
+      "item/armor/equip_iron3",
+      "item/armor/equip_iron4",
+      "item/armor/equip_iron5",
+      "item/armor/equip_iron6"
+    ]
+  },
+  "item.accessory.equip_gold_pendant": {
+    "subtitle": "subtitles.item.accessory.equip_gold_pendant",
+    "sounds": [
+      "item/armor/equip_gold1",
+      "item/armor/equip_gold2",
+      "item/armor/equip_gold3",
+      "item/armor/equip_gold4",
+      "item/armor/equip_gold5",
+      "item/armor/equip_gold6"
+    ]
+  },
+  "item.accessory.equip_zanite_pendant": {
+    "subtitle": "subtitles.item.accessory.equip_zanite_pendant",
+    "sounds": [
+      "item/armor/equip_iron1",
+      "item/armor/equip_iron2",
+      "item/armor/equip_iron3",
+      "item/armor/equip_iron4",
+      "item/armor/equip_iron5",
+      "item/armor/equip_iron6"
+    ]
+  },
+  "item.accessory.equip_ice_pendant": {
+    "subtitle": "subtitles.item.accessory.equip_ice_pendant",
+    "sounds": [
+      "item/armor/equip_generic1",
+      "item/armor/equip_generic2",
+      "item/armor/equip_generic3",
+      "item/armor/equip_generic4",
+      "item/armor/equip_generic5",
+      "item/armor/equip_generic6"
+    ]
+  },
+  "item.accessory.equip_cape": {
+    "subtitle": "subtitles.item.accessory.equip_cape",
+    "sounds": [
+      "item/armor/equip_leather1",
+      "item/armor/equip_leather2",
+      "item/armor/equip_leather3",
+      "item/armor/equip_leather4",
+      "item/armor/equip_leather5",
+      "item/armor/equip_leather6"
+    ]
+  },
+  "item.music_disc.aether_tune": {
+    "sounds": [
+      {
+        "name": "aether:item/records/aether_tune",
+        "stream": true
+      }
+    ]
+  },
+  "item.music_disc.ascending_dawn": {
+    "sounds": [
+      {
+        "name": "aether:item/records/ascending_dawn",
+        "stream": true
+      }
+    ]
+  },
+  "item.music_disc.welcoming_skies": {
+    "sounds": [
+      {
+        "name": "aether:item/records/welcoming_skies",
+        "stream": true
+      }
+    ]
+  },
+  "item.music_disc.legacy": {
+    "sounds": [
+      {
+        "name": "aether:item/records/legacy",
+        "stream": true
+      }
+    ]
+  },
+  "entity.phyg.ambient": {
+    "subtitle": "subtitles.entity.phyg.ambient",
+    "sounds": [
+      "mob/pig/say1",
+      "mob/pig/say2",
+      "mob/pig/say3"
+    ]
+  },
+  "entity.phyg.death": {
+    "subtitle": "subtitles.entity.phyg.death",
+    "sounds": [
+      "mob/pig/death"
+    ]
+  },
+  "entity.phyg.hurt": {
+    "subtitle": "subtitles.entity.phyg.hurt",
+    "sounds": [
+      "mob/pig/say1",
+      "mob/pig/say2",
+      "mob/pig/say3"
+    ]
+  },
+  "entity.phyg.saddle": {
+    "subtitle": "subtitles.entity.phyg.saddle",
+    "sounds": [
+      "mob/horse/leather"
+    ]
+  },
+  "entity.phyg.step": {
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "mob/pig/step1",
+      "mob/pig/step2",
+      "mob/pig/step3",
+      "mob/pig/step4",
+      "mob/pig/step5"
+    ]
+  },
+  "entity.flying_cow.ambient": {
+    "subtitle": "subtitles.entity.flying_cow.ambient",
+    "sounds": [
+      "mob/cow/say1",
+      "mob/cow/say2",
+      "mob/cow/say3",
+      "mob/cow/say4"
+    ]
+  },
+  "entity.flying_cow.death": {
+    "subtitle": "subtitles.entity.flying_cow.death",
+    "sounds": [
+      "mob/cow/hurt1",
+      "mob/cow/hurt2",
+      "mob/cow/hurt3"
+    ]
+  },
+  "entity.flying_cow.hurt": {
+    "subtitle": "subtitles.entity.flying_cow.hurt",
+    "sounds": [
+      "mob/cow/hurt1",
+      "mob/cow/hurt2",
+      "mob/cow/hurt3"
+    ]
+  },
+  "entity.flying_cow.milk": {
+    "subtitle": "subtitles.entity.flying_cow.milk",
+    "sounds": [
+      "entity/cow/milk1",
+      "entity/cow/milk2",
+      "entity/cow/milk3"
+    ]
+  },
+  "entity.flying_cow.step": {
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "mob/cow/step1",
+      "mob/cow/step2",
+      "mob/cow/step3",
+      "mob/cow/step4"
+    ]
+  },
+  "entity.sheepuff.ambient": {
+    "subtitle": "subtitles.entity.sheepuff.ambient",
+    "sounds": [
+      "mob/sheep/say1",
+      "mob/sheep/say2",
+      "mob/sheep/say3"
+    ]
+  },
+  "entity.sheepuff.death": {
+    "subtitle": "subtitles.entity.sheepuff.death",
+    "sounds": [
+      "mob/sheep/say1",
+      "mob/sheep/say2",
+      "mob/sheep/say3"
+    ]
+  },
+  "entity.sheepuff.hurt": {
+    "subtitle": "subtitles.entity.sheepuff.hurt",
+    "sounds": [
+      "mob/sheep/say1",
+      "mob/sheep/say2",
+      "mob/sheep/say3"
+    ]
+  },
+  "entity.sheepuff.shear": {
+    "subtitle": "subtitles.item.shears.shear",
+    "sounds": [
+      "mob/sheep/shear"
+    ]
+  },
+  "entity.sheepuff.step": {
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "mob/sheep/step1",
+      "mob/sheep/step2",
+      "mob/sheep/step3",
+      "mob/sheep/step4",
+      "mob/sheep/step5"
+    ]
+  },
+  "entity.moa.ambient": {
+    "subtitle": "subtitles.entity.moa.ambient",
+    "sounds": [
+      "aether:entity/moa/say"
+    ]
+  },
+  "entity.moa.death": {
+    "subtitle": "subtitles.entity.moa.death",
+    "sounds": [
+      "aether:entity/moa/say"
+    ]
+  },
+  "entity.moa.hurt": {
+    "subtitle": "subtitles.entity.moa.hurt",
+    "sounds": [
+      "aether:entity/moa/say"
+    ]
+  },
+  "entity.moa.flap": {
+    "subtitle": "subtitles.entity.moa.flap",
+    "sounds": [
+      "mob/bat/takeoff"
+    ]
+  },
+  "entity.moa.egg": {
+    "subtitle": "subtitles.entity.moa.egg",
+    "sounds": [
+      "mob/chicken/plop"
+    ]
+  },
+  "entity.aerwhale.ambient": {
+    "subtitle": "subtitles.entity.aerwhale.ambient",
+    "sounds": [
+      "aether:entity/aerwhale/call"
+    ]
+  },
+  "entity.aerwhale.death": {
+    "subtitle": "subtitles.entity.aerwhale.death",
+    "sounds": [
+      "aether:entity/aerwhale/death"
+    ]
+  },
+  "entity.aerwhale.hurt": {
+    "subtitle": "subtitles.entity.aerwhale.death",
+    "sounds": [
+      "aether:entity/aerwhale/death"
+    ]
+  },
+  "entity.aerbunny.death": {
+    "subtitle": "subtitles.entity.aerbunny.death",
+    "sounds": [
+      "aether:entity/aerbunny/death"
+    ]
+  },
+  "entity.aerbunny.hurt": {
+    "subtitle": "subtitles.entity.aerbunny.hurt",
+    "sounds": [
+      "aether:entity/aerbunny/hurt"
+    ]
+  },
+  "entity.aerbunny.lift": {
+    "subtitle": "subtitles.entity.aerbunny.lift",
+    "sounds": [
+      "aether:entity/aerbunny/lift"
+    ]
+  },
+  "entity.swet.attack": {
+    "subtitle": "subtitles.entity.swet.attack",
+    "sounds": [
+      "mob/slime/attack1",
+      "mob/slime/attack2"
+    ]
+  },
+  "entity.swet.death": {
+    "subtitle": "subtitles.entity.swet.death",
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ]
+  },
+  "entity.swet.hurt": {
+    "subtitle": "subtitles.entity.swet.hurt",
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ]
+  },
+  "entity.swet.jump": {
+    "subtitle": "subtitles.entity.swet.squish",
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ]
+  },
+  "entity.swet.squish": {
+    "subtitle": "subtitles.entity.swet.squish",
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ]
+  },
+  "entity.aechor_plant.shoot": {
+    "subtitle": "subtitles.entity.aechor_plant.shoot",
+    "sounds": [
+      "random/bow"
+    ]
+  },
+  "entity.cockatrice.shoot": {
+    "subtitle": "subtitles.entity.cockatrice.shoot",
+    "sounds": [
+      "random/bow"
+    ]
+  },
+  "entity.cockatrice.ambient": {
+    "subtitle": "subtitles.entity.cockatrice.ambient",
+    "sounds": [
+      "aether:entity/moa/say"
+    ]
+  },
+  "entity.cockatrice.death": {
+    "subtitle": "subtitles.entity.cockatrice.death",
+    "sounds": [
+      "aether:entity/moa/say"
+    ]
+  },
+  "entity.cockatrice.hurt": {
+    "subtitle": "subtitles.entity.cockatrice.hurt",
+    "sounds": [
+      "aether:entity/moa/say"
+    ]
+  },
+  "entity.cockatrice.flap": {
+    "subtitle": "subtitles.entity.cockatrice.flap",
+    "sounds": [
+      "mob/bat/takeoff"
+    ]
+  },
+  "entity.zephyr.shoot": {
+    "subtitle": "subtitles.entity.zephyr.shoot",
+    "sounds": [
+      "aether:entity/zephyr/shoot"
+    ]
+  },
+  "entity.zephyr.ambient": {
+    "subtitle": "subtitles.entity.zephyr.ambient",
+    "sounds": [
+      "aether:entity/zephyr/call"
+    ]
+  },
+  "entity.zephyr.death": {
+    "subtitle": "subtitles.entity.zephyr.death",
+    "sounds": [
+      "aether:entity/zephyr/call"
+    ]
+  },
+  "entity.zephyr.hurt": {
+    "subtitle": "subtitles.entity.zephyr.hurt",
+    "sounds": [
+      "aether:entity/zephyr/call"
+    ]
+  },
+  "entity.sentry.death": {
+    "subtitle": "subtitles.entity.sentry.death",
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ]
+  },
+  "entity.sentry.hurt": {
+    "subtitle": "subtitles.entity.sentry.hurt",
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ]
+  },
+  "entity.sentry.jump": {
+    "subtitle": "subtitles.entity.sentry.jump",
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ]
+  },
+  "entity.mimic.death": {
+    "subtitle": "subtitles.entity.mimic.death",
+    "sounds": [
+      "block/chest/close",
+      "block/chest/close2",
+      "block/chest/close3"
+    ]
+  },
+  "entity.mimic.hurt": {
+    "subtitle": "subtitles.entity.mimic.hurt",
+    "sounds": [
+      "dig/wood1",
+      "dig/wood2",
+      "dig/wood3",
+      "dig/wood4"
+    ]
+  },
+  "entity.slider.awaken": {
+    "subtitle": "subtitles.entity.slider.awaken",
+    "sounds": [
+      "aether:entity/slider/awaken"
+    ]
+  },
+  "entity.slider.collide": {
+    "subtitle": "subtitles.entity.slider.collide",
+    "sounds": [
+      "aether:entity/slider/collide"
+    ]
+  },
+  "entity.slider.move": {
+    "subtitle": "subtitles.entity.slider.move",
+    "sounds": [
+      "aether:entity/slider/move"
+    ]
+  },
+  "entity.slider.death": {
+    "subtitle": "subtitles.entity.slider.death",
+    "sounds": [
+      "aether:entity/slider/death"
+    ]
+  },
+  "entity.sun_spirit.shoot": {
+    "subtitle": "subtitles.entity.sun_spirit.shoot",
+    "sounds": [
+      "mob/ghast/fireball4"
+    ]
+  },
+  "entity.cloud_minion.shoot": {
+    "subtitle": "subtitles.entity.cloud_minion.shoot",
+    "sounds": [
+      "aether:entity/zephyr/shoot"
+    ]
+  },
+  "entity.cloud_crystal.explode": {
+    "subtitle": "subtitles.entity.cloud_crystal.explode",
+    "sounds": [
+      "random/glass1",
+      "random/glass2",
+      "random/glass3"
+    ]
+  },
+  "entity.dart.hit": {
+    "subtitle": "subtitles.entity.dart.hit",
+    "sounds": [
+      "aether:entity/projectile/shoot"
+    ]
+  },
+  "ui.toast.aether_general": {
+    "sounds": [
+      {
+        "name": "aether:achievement/achievement_gen",
+        "stream": true
+      }
+    ]
+  },
+  "ui.toast.aether_bronze": {
+    "sounds": [
+      {
+        "name": "aether:achievement/achievement_bronze",
+        "stream": true
+      }
+    ]
+  },
+  "ui.toast.aether_silver": {
+    "sounds": [
+      {
+        "name": "aether:achievement/achievement_silver",
+        "stream": true
+      }
+    ]
+  },
+  "music.menu": {
+    "sounds": [
+      {
+        "name": "aether:music/menu",
+        "stream": true
+      }
+    ]
+  },
+  "music.aether": {
+    "sounds": [
+      {
+        "name": "aether:music/aether1",
+        "stream": true
+      },
+      {
+        "name": "aether:music/aether2",
+        "stream": true
+      },
+      {
+        "name": "aether:music/aether3",
+        "stream": true
+      },
+      {
+        "name": "aether:music/aether4",
+        "stream": true
+      },
+      {
+        "name": "aether:music/aether5",
+        "stream": true
+      }
+    ]
+  }
+}

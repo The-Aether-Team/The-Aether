@@ -1,43 +1,162 @@
-# Java Gradle CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-java/ for more details
-#
-version: 2
+version: 2.1
+
+parameters:
+  artifact-name:
+    type: string
+    default: aether
+
 jobs:
   build:
-    docker:
-      # specify the version you desire here
-      - image: cimg/openjdk:8.0.282
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    working_directory: ~/repo
+    machine:
+      image: ubuntu-2004:202104-01
 
     environment:
-      # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
-      TERM: dumb
-
+      _JAVA_OPTIONS: -Xmx3200m
+      GRADLE_OPTS: -Dorg.gradle.daemon=false
     steps:
       - checkout
-      # Download and cache dependencies
       - restore_cache:
           keys:
-            - v2-dependencies-{{ checksum "build.gradle" }}
-            # fallback to using the latest cache if no exact match is found
-            - v2-dependencies-
+            - v3-dependencies-{{ checksum "build.gradle" }}
+            - v3-dependencies-
 
       - run: gradle dependencies
-
       - save_cache:
           paths:
             - ~/repo/.gradle
-          key: v2-dependencies-{{ checksum "build.gradle" }}
-
+          key: v3-dependencies-{{ checksum "build.gradle" }}
       - run: gradle test
       - run: gradle build
       - store_artifacts:
-              path: ~/repo/build/libs
+          path: ~/project/build/libs
+      - persist_to_workspace:
+          root: ~/project/build/libs
+          paths: 
+            - << pipeline.parameters.artifact-name >>-*.jar
+
+  deploy:
+    machine:
+        image: ubuntu-2004:202107-02
+    steps:
+      - run:
+          name: Install OpenVPN
+          command: |
+            sudo apt update && sudo apt install apt-transport-https net-tools
+            sudo wget https://swupdate.openvpn.net/repos/openvpn-repo-pkg-key.pub
+            sudo apt-key add openvpn-repo-pkg-key.pub
+            sudo wget -O /etc/apt/sources.list.d/openvpn3.list https://swupdate.openvpn.net/community/openvpn3/repos/openvpn3-focal.list
+            sudo apt update && sudo apt install openvpn3
+
+      - run:
+          name: VPN Setup
+          background: true
+          command: |
+            mkdir -m700 -p .openvpn3/autoload
+            CLIENT_PATH=~/project/.openvpn3/autoload/client
+
+            echo $VPN_CLIENT_LOAD | base64 --decode > $CLIENT_PATH.autoload
+            echo $VPN_CLIENT_CONFIG | base64 --decode > $CLIENT_PATH.ovpn
+
+            #IMPORTANT: Include the following 3 lines to exclude the link-local range
+            phone_home="$(netstat -an | grep ':22 .*ESTABLISHED' | head -n1 | awk '{ split($5, a, ":"); print a[1] }')"
+            echo $phone_home
+            echo -e "\nroute $phone_home 255.255.255.255 net_gateway" >> $CLIENT_PATH.ovpn
+            echo "route 169.254.0.0 255.255.0.0 net_gateway" >> $CLIENT_PATH.ovpn
+            
+            sudo openvpn3-autoload --directory .openvpn3/autoload
+          
+      - run: 
+          name: Wait for VPN connection to be established
+          command: |
+            while [ $(sudo openvpn3 sessions-list|grep -c "Client connected") == 0 ]; do
+              echo "Attempting to connect..."
+              sleep 1;
+            done
+            echo "VPN Connected"
+            
+            sudo openvpn3 sessions-list
+
+      - run:
+          name: Reinstall and start server
+          command: |
+            SERVER_ID=9170ca89
+
+            UPDATE_RESPONSE=$(curl -X PUT -s -o /dev/null -w "%{http_code}" "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/startup/variable" \
+                -H "Accept: application/json" \
+                -H "Content-Type: application/json" \
+                -H "Authorization: Bearer ${USER_KEY}" \
+                -d '{ "key": "ARTIFACT_BUILD_NUM", "value": "'"${CIRCLE_PREVIOUS_BUILD_NUM}"'" }')
+
+            if [[ $UPDATE_RESPONSE == 200 ]]; then
+              echo "Updated server environment variable 'ARTIFACT_BUILD_NUM' with ${CIRCLE_PREVIOUS_BUILD_NUM}"
+            else 
+              echo "Error updating environment: ${UPDATE_RESPONSE}"
+              exit 1
+            fi
+
+            REINSTALL_RESPONSE=$(curl -s -o /dev/null -I -X POST -w "%{http_code}" \
+            "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/settings/reinstall" \
+            -H "Authorization: Bearer ${USER_KEY}")
+            
+            if (( $REINSTALL_RESPONSE >= 200 )); then
+              echo "Server received reinstallation request."
+
+              if (( $REINSTALL_RESPONSE == 204 )); then
+                while [[ ! $(curl -s "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}" \
+                -H "Authorization: Bearer ${USER_KEY}" | jq '.attributes | .is_installing') ]]; 
+                do
+                  echo "Waiting for installation to begin..."
+                  sleep 2
+                done
+              fi
+
+              echo "Server reinstallation has started."
+              
+              while [[ $(curl -s "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}" \
+                -H "Authorization: Bearer ${USER_KEY}" | jq '.attributes | .is_installing') == true ]]; 
+              do
+                echo "Waiting for installation..."
+                sleep 10
+              done
+
+              echo "Sending start signal to server."
+              
+              START_RESPONSE=$(curl -X POST -s -o /dev/null -w "%{http_code}" "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/power" \
+                -H "Accept: application/json" \
+                -H "Content-Type: application/json" \
+                -H "Authorization: Bearer ${USER_KEY}" \
+                -d '{ "signal": "start" }')
+
+              if (( $START_RESPONSE == 204 )); then
+                echo "Server received start signal."
+              else
+                echo "Server start unsucessful. Response: ${START_RESPONSE}"
+                exit 1
+              fi
+            else
+              echo "Received ${REINSTALL_RESPONSE}: Reinstall unsucessful."
+              exit 1
+            fi
+
+      - run:
+          name: Disconnect from OpenVPN
+          command: |
+            SESSION_PATH=$(sudo openvpn3 sessions-list | grep Path | awk -F': ' '{print $2}')
+            echo $SESSION_PATH
+            sudo openvpn3 session-manage --session-path $SESSION_PATH --disconnect
+          when: always
+
+workflows:
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          context:
+            - vpn
+          filters:
+            branches:
+              only: 
+                - "1.16"
+          requires:
+            - build

@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.item.materials;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 
 import com.gildedgames.aether.common.registry.AetherTags;
@@ -30,7 +29,7 @@ public class AmbrosiumShardItem extends Item
 		if (blockstate.getBlock().is(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)) {
 			world.setBlockAndUpdate(blockpos, AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get().defaultBlockState());
 			if (playerentity != null) {
-				if (!playerentity.isCreative()) {
+				if (!playerentity.abilities.instabuild) {
 					context.getItemInHand().shrink(1);
 				}
 				return ActionResultType.SUCCESS;

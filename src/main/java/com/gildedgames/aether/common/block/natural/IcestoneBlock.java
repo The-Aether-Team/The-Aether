@@ -11,23 +11,22 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class IcestoneBlock extends Block
+public class IcestoneBlock extends Block implements IIcestoneBlock
 {
 	public IcestoneBlock(AbstractBlock.Properties properties) {
 		super(properties);
-		IIcestoneBlock.registerDefaultFreezables();
 	}
 	
 	@Override
 	public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
 		super.onPlace(state, worldIn, pos, oldState, isMoving);
-		worldIn.getBlockTicks().scheduleTick(pos, this, 10);
+		worldIn.getBlockTicks().scheduleTick(pos, this, 5);
 	}
 
 	@Override
 	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
 		super.tick(state, worldIn, pos, random);
-		IIcestoneBlock.freezeFluids(worldIn, pos);
-		worldIn.getBlockTicks().scheduleTick(pos, this, 10);
+		freezeFluids(worldIn, pos);
+		worldIn.getBlockTicks().scheduleTick(pos, this, 5);
 	}
 }

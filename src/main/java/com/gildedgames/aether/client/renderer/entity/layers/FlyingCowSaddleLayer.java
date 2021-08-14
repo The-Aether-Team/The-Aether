@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 
 public class FlyingCowSaddleLayer extends LayerRenderer<FlyingCowEntity, CowModel<FlyingCowEntity>> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/flying_cow/saddle.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/flying_cow/saddle.png");
     private final CowModel<FlyingCowEntity> cowModel = new CowModel<>();
     public FlyingCowSaddleLayer(IEntityRenderer<FlyingCowEntity, CowModel<FlyingCowEntity>> entityRendererIn) {
         super(entityRendererIn);

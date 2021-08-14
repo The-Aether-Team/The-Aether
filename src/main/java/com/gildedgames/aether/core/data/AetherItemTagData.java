@@ -47,10 +47,16 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.STONE_CRAFTING)
                 .addTag(ItemTags.STONE_CRAFTING_MATERIALS)
                 .add(AetherBlocks.HOLYSTONE.get().asItem());
+        tag(AetherTags.Items.BANNED_IN_AETHER)
+                .add(Items.FLINT_AND_STEEL)
+                .add(Items.TORCH)
+                .add(Items.SOUL_TORCH)
+                .add(Items.FIRE_CHARGE);
         tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS);
-        tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_BUCKETS)
-                .add(Items.WATER_BUCKET)
-                .add(AetherItems.SKYROOT_WATER_BUCKET.get());
+        tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS)
+                .add(Items.FLINT)
+                .addTag(Tags.Items.DUSTS_GLOWSTONE)
+                .add(AetherItems.AMBROSIUM_SHARD.get());
         tag(AetherTags.Items.SKYROOT_STICKS)
                 .add(AetherItems.SKYROOT_STICK.get());
         tag(AetherTags.Items.SKYROOT_TOOLS)
@@ -82,15 +88,6 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherItems.ZANITE_AXE.get())
                 .add(AetherItems.GRAVITITE_AXE.get())
                 .add(AetherItems.VALKYRIE_AXE.get());
-        tag(AetherTags.Items.BANNED_IN_AETHER)
-                .add(Items.FLINT_AND_STEEL)
-                .add(Items.TORCH)
-                .add(Items.SOUL_TORCH)
-                .add(Items.FIRE_CHARGE);
-        tag(AetherTags.Items.DUNGEON_KEYS)
-                .add(AetherItems.BRONZE_DUNGEON_KEY.get())
-                .add(AetherItems.SILVER_DUNGEON_KEY.get())
-                .add(AetherItems.GOLD_DUNGEON_KEY.get());
         tag(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS)
                 .addTag(AetherTags.Items.DUNGEON_KEYS)
                 .add(AetherItems.VICTORY_MEDAL.get())
@@ -101,6 +98,12 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(Items.WITHER_SKELETON_SKULL)
                 .add(Items.DRAGON_HEAD)
                 .add(Items.NETHER_STAR);
+        tag(AetherTags.Items.PIG_DROPS)
+                .add(Items.PORKCHOP);
+        tag(AetherTags.Items.DUNGEON_KEYS)
+                .add(AetherItems.BRONZE_DUNGEON_KEY.get())
+                .add(AetherItems.SILVER_DUNGEON_KEY.get())
+                .add(AetherItems.GOLD_DUNGEON_KEY.get());
         tag(AetherTags.Items.ACCEPTED_MUSIC_DISCS)
                 .add(Items.MUSIC_DISC_11)
                 .add(Items.MUSIC_DISC_13)
@@ -112,10 +115,10 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(Items.MUSIC_DISC_STRAD)
                 .add(Items.MUSIC_DISC_WAIT)
                 .add(Items.MUSIC_DISC_WARD);
-        tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS)
-                .add(Items.FLINT)
-                .addTag(Tags.Items.DUSTS_GLOWSTONE)
-                .add(AetherItems.AMBROSIUM_SHARD.get());
+        tag(AetherTags.Items.SAVE_NBT_IN_RECIPE)
+                .add(AetherItems.ENCHANTED_DART_SHOOTER.get())
+                .add(AetherItems.ICE_RING.get())
+                .add(AetherItems.ICE_PENDANT.get());
 
         //vanilla
         tag(ItemTags.STONE_BRICKS)
@@ -182,7 +185,8 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.SKYROOT_BED.get().asItem());
         tag(ItemTags.PIGLIN_LOVED)
                 .add(AetherItems.GOLDEN_RING.get())
-                .add(AetherItems.GOLDEN_PENDANT.get());
+                .add(AetherItems.GOLDEN_PENDANT.get())
+                .add(AetherItems.GOLDEN_GLOVES.get());
         tag(ItemTags.MUSIC_DISCS)
                 .add(AetherItems.MUSIC_DISC_AETHER_TUNE.get())
                 .add(AetherItems.MUSIC_DISC_ASCENDING_DAWN.get())

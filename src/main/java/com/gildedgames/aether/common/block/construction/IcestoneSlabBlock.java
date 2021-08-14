@@ -9,7 +9,7 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class IcestoneSlabBlock extends SlabBlock
+public class IcestoneSlabBlock extends SlabBlock implements IIcestoneBlock
 {
     public IcestoneSlabBlock(Properties properties) {
         super(properties);
@@ -24,7 +24,7 @@ public class IcestoneSlabBlock extends SlabBlock
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         super.tick(state, worldIn, pos, random);
-        IIcestoneBlock.freezeFluids(worldIn, pos);
+        freezeFluids(worldIn, pos);
         worldIn.getBlockTicks().scheduleTick(pos, this, 10);
     }
 }

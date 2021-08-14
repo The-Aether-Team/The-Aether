@@ -69,7 +69,8 @@ public abstract class SaddleableEntity extends MountableEntity {
 	public boolean canBeSaddled() {
 		return true;
 	}
-	
+
+	//TODO: This probably needs refactoring.
 	@Override
 	public ActionResultType mobInteract(PlayerEntity player, Hand hand) { //idk what to do here
 		LogManager.getLogger(this.getClass()).debug("SaddleableEntity processInteract");
@@ -81,7 +82,7 @@ public abstract class SaddleableEntity extends MountableEntity {
 		ItemStack heldItem = player.getItemInHand(hand);
 		if (!this.isSaddled()) {
 			if (heldItem.getItem() == Items.SADDLE && !this.isBaby()) {
-				if (!player.isCreative()) {
+				if (!player.abilities.instabuild) {
 					heldItem.shrink(1);
 				}
 				

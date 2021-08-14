@@ -15,6 +15,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Items;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
@@ -198,16 +199,21 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
                 .save(consumer);
 
-        ShapelessRecipeBuilder.shapeless(AetherBlocks.SKYROOT_BUTTON.get(), 1)
-                .requires(AetherBlocks.SKYROOT_PLANKS.get())
-                .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
-                .group("wooden_button")
+        ShapedRecipeBuilder.shaped(AetherItems.POISON_DART.get(), 8)
+                .pattern("DDD")
+                .pattern("DPD")
+                .pattern("DDD")
+                .define('D', AetherItems.GOLDEN_DART.get())
+                .define('P', AetherItems.SKYROOT_POISON_BUCKET.get())
+                .unlockedBy("has_golden_dart", has(AetherItems.GOLDEN_DART.get()))
+                .unlockedBy("has_poison_bucket", has(AetherItems.SKYROOT_POISON_BUCKET.get()))
                 .save(consumer);
 
-        ShapelessRecipeBuilder.shapeless(AetherBlocks.HOLYSTONE_BUTTON.get(), 1)
-                .requires(AetherBlocks.HOLYSTONE.get())
-                .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
-                .group("button")
+        ShapelessRecipeBuilder.shapeless(AetherItems.POISON_DART_SHOOTER.get(), 1)
+                .requires(AetherItems.GOLDEN_DART_SHOOTER.get())
+                .requires(AetherItems.SKYROOT_POISON_BUCKET.get())
+                .unlockedBy("has_golden_dart_shooter", has(AetherItems.GOLDEN_DART_SHOOTER.get()))
+                .unlockedBy("has_poison_bucket", has(AetherItems.SKYROOT_POISON_BUCKET.get()))
                 .save(consumer);
 
         makeHelmet(AetherItems.ZANITE_HELMET, AetherItems.ZANITE_GEMSTONE).save(consumer);
@@ -227,6 +233,11 @@ public class AetherRecipeData extends AetherRecipeProvider
         makePendant(AetherItems.IRON_PENDANT, Items.IRON_INGOT).save(consumer);
         makePendant(AetherItems.GOLDEN_PENDANT, Items.GOLD_INGOT).save(consumer);
         makePendant(AetherItems.ZANITE_PENDANT, AetherItems.ZANITE_GEMSTONE.get()).save(consumer);
+
+        makeCape(AetherItems.RED_CAPE, Blocks.RED_WOOL.asItem()).save(consumer);
+        makeCape(AetherItems.BLUE_CAPE, Blocks.BLUE_WOOL.asItem()).save(consumer);
+        makeCape(AetherItems.YELLOW_CAPE, Blocks.YELLOW_WOOL.asItem()).save(consumer);
+        makeCape(AetherItems.WHITE_CAPE, Blocks.WHITE_WOOL.asItem()).save(consumer);
 
         makeGlovesWithTag(AetherItems.LEATHER_GLOVES, Tags.Items.LEATHER, "leather").save(consumer);
         makeGlovesWithTag(AetherItems.IRON_GLOVES, Tags.Items.INGOTS_IRON, "iron").save(consumer);
@@ -313,6 +324,18 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('S', AetherBlocks.SKYROOT_PLANKS.get())
                 .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
                 .group("wooden_trapdoor")
+                .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(AetherBlocks.SKYROOT_BUTTON.get(), 1)
+                .requires(AetherBlocks.SKYROOT_PLANKS.get())
+                .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
+                .group("wooden_button")
+                .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(AetherBlocks.HOLYSTONE_BUTTON.get(), 1)
+                .requires(AetherBlocks.HOLYSTONE.get())
+                .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
+                .group("button")
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(AetherBlocks.SKYROOT_PRESSURE_PLATE.get(), 1)
@@ -406,6 +429,26 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .unlockedBy("has_diamond", has(Tags.Items.GEMS_DIAMOND))
                 .group("jukebox")
                 .save(consumer, name("skyroot_jukebox"));
+
+        ShapedRecipeBuilder.shaped(Blocks.JUKEBOX, 1)
+                .pattern("PPP")
+                .pattern("PGP")
+                .pattern("PPP")
+                .define('P', ItemTags.PLANKS)
+                .define('G', AetherBlocks.ENCHANTED_GRAVITITE.get())
+                .unlockedBy("has_gravitite", has(AetherBlocks.ENCHANTED_GRAVITITE.get()))
+                .group("jukebox")
+                .save(consumer, name("gravitite_jukebox"));
+
+        ShapedRecipeBuilder.shaped(Blocks.JUKEBOX, 1)
+                .pattern("SSS")
+                .pattern("SGS")
+                .pattern("SSS")
+                .define('S', AetherTags.Items.PLANKS_CRAFTING)
+                .define('G', AetherBlocks.ENCHANTED_GRAVITITE.get())
+                .unlockedBy("has_gravitite", has(AetherBlocks.ENCHANTED_GRAVITITE.get()))
+                .group("jukebox")
+                .save(consumer, name("skyroot_gravitite_jukebox"));
 
         ShapedRecipeBuilder.shaped(Blocks.LOOM, 1)
                 .pattern("TT")

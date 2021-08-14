@@ -7,13 +7,12 @@ import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import com.google.common.cache.LoadingCache;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.pattern.BlockPattern;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -25,10 +24,8 @@ import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Direction.AxisDirection;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.*;
@@ -36,9 +33,8 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
@@ -95,7 +91,7 @@ public class AetherPortalBlock extends Block
 					aetherPlayer.ifPresent(handler -> {
 						handler.setInPortal(true);
 						int waitTime = handler.getPortalTimer();
-						if(waitTime >= entity.getPortalWaitTime()) {
+						if (waitTime >= entity.getPortalWaitTime()) {
 							handleTeleportation(entity);
 							handler.setPortalTimer(0);
 						}
@@ -125,7 +121,7 @@ public class AetherPortalBlock extends Block
 				if (destination != null && minecraftserver.isNetherEnabled() && !entity.isPassenger()) {
 					entity.level.getProfiler().push("aether_portal");
 					entity.setPortalCooldown();
-					entity.changeDimension(destination, new AetherTeleporter(destination));
+					entity.changeDimension(destination, new AetherTeleporter(destination, true));
 					entity.level.getProfiler().pop();
 				}
 			}
@@ -195,22 +191,35 @@ public class AetherPortalBlock extends Block
         BlockRayTraceResult hitVec = event.getHitVec();
         BlockPos pos = hitVec.getBlockPos().relative(hitVec.getDirection());
 		if (event.getItemStack().getItem().is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS)) {
-			if (fillPortalBlocks(event.getWorld(), pos, event.getPlayer(), event.getHand(), event.getItemStack())) {
-				event.setCanceled(true);
+			if (!AetherConfig.COMMON.disable_aether_portal.get()) {
+				if (fillPortalBlocks(event.getWorld(), pos, event.getPlayer(), event.getHand(), event.getItemStack())) {
+					event.setCanceled(true);
+				}
 			}
 		}
 	}
 
 	@SubscribeEvent
-	public static void onBucketRightClicked(FillBucketEvent event) {
-		RayTraceResult rayTraceResult = event.getTarget();
-		if (rayTraceResult instanceof BlockRayTraceResult)  {
-			BlockRayTraceResult hitVec = (BlockRayTraceResult) rayTraceResult;
-			BlockPos pos = hitVec.getBlockPos().relative(hitVec.getDirection());
-			if (event.getEmptyBucket().getItem().is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_BUCKETS)) {
-				Hand hand = event.getEmptyBucket().getItem() == event.getPlayer().getOffhandItem().getItem() ? Hand.OFF_HAND : Hand.MAIN_HAND;
-				if (fillPortalBlocks(event.getWorld(), pos, event.getPlayer(), hand, event.getEmptyBucket())) {
-					event.setCanceled(true);
+	public static void onNeighborNotify(BlockEvent.NeighborNotifyEvent event) {
+		BlockPos pos = event.getPos();
+		World world = (World) event.getWorld();
+		BlockState blockstate = world.getBlockState(pos);
+		FluidState fluidstate = world.getFluidState(pos);
+		if (fluidstate.getType() == Fluids.WATER && !blockstate.isAir(world, pos)) {
+			if (world.dimension() == World.OVERWORLD || world.dimension() == AetherDimensions.AETHER_WORLD) {
+				boolean tryPortal = false;
+				for (Direction direction : Direction.values()) {
+					if (world.getBlockState(pos.relative(direction)).getBlock().is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)) {
+						if (AetherBlocks.AETHER_PORTAL.get().isPortal(world, pos) != null) {
+							tryPortal = true;
+							break;
+						}
+					}
+				}
+				if (tryPortal) {
+					if (AetherBlocks.AETHER_PORTAL.get().trySpawnPortal(world, pos)) {
+						event.setCanceled(true);
+					}
 				}
 			}
 		}
@@ -240,6 +249,35 @@ public class AetherPortalBlock extends Block
 						} else {
 							player.setItemInHand(hand, stack.hasContainerItem() ? stack.getContainerItem() : ItemStack.EMPTY);
 						}
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static boolean fillPortalBlocksWithoutContext(World world, BlockPos pos, ItemStack stack) {
+		if (world.dimension() == World.OVERWORLD || world.dimension() == AetherDimensions.AETHER_WORLD) {
+			boolean tryPortal = false;
+			for (Direction direction : Direction.values()) {
+				if (world.getBlockState(pos.relative(direction)).getBlock().is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)) {
+					if (AetherBlocks.AETHER_PORTAL.get().isPortal(world, pos) != null) {
+						tryPortal = true;
+						break;
+					}
+				}
+			}
+			if (tryPortal) {
+				if (AetherBlocks.AETHER_PORTAL.get().trySpawnPortal(world, pos)) {
+					if (stack.isDamageableItem()) {
+						int damage = stack.getDamageValue();
+						stack.setDamageValue(damage + 1);
+						if (stack.getDamageValue() >= stack.getMaxDamage()) {
+							stack.shrink(1);
+						}
+					} else {
+						stack.shrink(1);
 					}
 					return true;
 				}
@@ -390,7 +428,10 @@ public class AetherPortalBlock extends Block
 				BlockPos blockpos = this.bottomLeft.relative(this.rightDir, i);
 
 				for (int j = 0; j < this.height; ++j) {
-					this.world.setBlock(blockpos.above(j), AetherBlocks.AETHER_PORTAL.get().defaultBlockState().setValue(AetherPortalBlock.AXIS, this.axis), 18);
+					if (this.world instanceof World) {
+						World world = (World) this.world;
+						world.setBlockAndUpdate(blockpos.above(j), AetherBlocks.AETHER_PORTAL.get().defaultBlockState().setValue(AetherPortalBlock.AXIS, this.axis));
+					}
 				}
 			}
 

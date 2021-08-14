@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class ZephyrRenderer extends MobRenderer<ZephyrEntity, ZephyrModel> {
-    private static final ResourceLocation ZEPHYR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/zephyr/zephyr_main.png");
+    private static final ResourceLocation ZEPHYR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr_main.png");
     public ZephyrRenderer(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new ZephyrModel(), 0.5F);
         addLayer(new ZephyrTransparencyLayer(this));

@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class AechorPlantRenderer extends MobRenderer<AechorPlantEntity, AechorPlantModel<AechorPlantEntity>> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/aechor_plant/aechor_plant.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aechor_plant/aechor_plant.png");
 
     public AechorPlantRenderer(EntityRendererManager renderManager) {
         super(renderManager, new AechorPlantModel(), 0.3F);

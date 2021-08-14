@@ -91,8 +91,18 @@ public class AetherAdvancementData extends AdvancementProvider
                     .rewards(new AdvancementRewards(0, new ResourceLocation[]{AetherLoot.ENTER_AETHER}, new ResourceLocation[0], FunctionObject.CacheableFunction.NONE))
                     .save(consumer, "aether:enter_aether");
 
-            Advancement loreception = Advancement.Builder.advancement()
+            Advancement moreYouKnow = Advancement.Builder.advancement()
                     .parent(enterAether)
+                    .display(AetherItems.BOOK_OF_LORE.get(),
+                            new TranslationTextComponent("advancement.aether.read_lore"),
+                            new TranslationTextComponent("advancement.aether.read_lore.desc"),
+                            null,
+                            FrameType.TASK, true, true, false)
+                    .addCriterion("lore_book_entry", LoreTrigger.Instance.forAny())
+                    .save(consumer, "aether:read_lore");
+
+            Advancement loreception = Advancement.Builder.advancement()
+                    .parent(moreYouKnow)
                     .display(AetherItems.BOOK_OF_LORE.get(),
                             new TranslationTextComponent("advancement.aether.loreception"),
                             new TranslationTextComponent("advancement.aether.loreception.desc"),

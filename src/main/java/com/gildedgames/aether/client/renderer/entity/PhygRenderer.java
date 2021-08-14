@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.model.PigModel;
 import net.minecraft.util.ResourceLocation;
 
 public class PhygRenderer extends MobRenderer<PhygEntity, PigModel<PhygEntity>> {
-	private static final ResourceLocation PHYG_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/phyg/phyg.png");
+	private static final ResourceLocation PHYG_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/phyg/phyg.png");
 
 	public PhygRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new PigModel<>(0.0F), 0.7F);

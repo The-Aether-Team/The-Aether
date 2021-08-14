@@ -45,21 +45,23 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 .add(EntityType.SMALL_FIREBALL)
                 .add(EntityType.FIREBALL)
                 .add(EntityType.SNOWBALL)
+                .add(EntityType.LLAMA_SPIT)
+                .add(EntityType.TRIDENT)
+                .add(EntityType.SHULKER_BULLET)
                 .add(AetherEntityTypes.GOLDEN_DART.get())
                 .add(AetherEntityTypes.POISON_DART.get())
                 .add(AetherEntityTypes.ENCHANTED_DART.get())
                 .add(AetherEntityTypes.POISON_NEEDLE.get())
-                .add(AetherEntityTypes.ZEPHYR_SNOWBALL.get());
+                .add(AetherEntityTypes.ZEPHYR_SNOWBALL.get())
+                .add(AetherEntityTypes.LIGHTNING_KNIFE.get())
+                .add(AetherEntityTypes.HAMMER_PROJECTILE.get());
 
         //vanilla
-        tag(EntityTypeTags.ARROWS)
-                .add(AetherEntityTypes.PHOENIX_ARROW.get())
-                .add(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW.get());
         tag(EntityTypeTags.IMPACT_PROJECTILES)
                 .add(AetherEntityTypes.GOLDEN_DART.get())
                 .add(AetherEntityTypes.POISON_DART.get())
                 .add(AetherEntityTypes.ENCHANTED_DART.get())
-                .add(AetherEntityTypes.LIGHTNING_KNIFE.get()) //TODO: Lightning knife doesnt work with this.
+                .add(AetherEntityTypes.LIGHTNING_KNIFE.get())
                 .add(AetherEntityTypes.HAMMER_PROJECTILE.get());
     }
 

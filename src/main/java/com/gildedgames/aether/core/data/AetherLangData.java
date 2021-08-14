@@ -21,6 +21,14 @@ public class AetherLangData extends LanguageProvider
         add(key.get().getDescriptionId() + ".desc", name);
     }
 
+    private void addSubtitle(String category, String key, String name) {
+        add("subtitles." + category + "." + key, name);
+    }
+
+    private void addDeath(String key, String name) {
+        add("death.attack." + key, name);
+    }
+
     public void addContainerType(Supplier<? extends ContainerType<?>> key, String name) {
         add("container." + key.get().getRegistryName().toString().replace(":", "."), name);
     }
@@ -57,8 +65,16 @@ public class AetherLangData extends LanguageProvider
         add("aether." + key, name);
     }
 
+    public void addKeyInfo(String key, String name) {
+        add("key.aether." + key, name);
+    }
+
     public void addCuriosIdentifier(String key, String name) {
         add("curios.identifier." + key, name);
+    }
+
+    public void addCuriosModifier(String key, String name) {
+        add("curios.modifiers." + key, name);
     }
 
     public void addItemLore(Supplier<? extends Item> key, String name) {
@@ -247,7 +263,7 @@ public class AetherLangData extends LanguageProvider
         addItem(AetherItems.PIG_SLAYER, "Pig Slayer");
         addItem(AetherItems.CANDY_CANE_SWORD, "Candy Cane Sword");
 
-        addItem(AetherItems.NOTCH_HAMMER, "Hammer of Notch");
+        addItem(AetherItems.HAMMER_OF_NOTCH, "Hammer of Notch");
 
         addItem(AetherItems.LIGHTNING_KNIFE, "Lightning Knife");
 
@@ -417,8 +433,6 @@ public class AetherLangData extends LanguageProvider
         addEntityType(AetherEntityTypes.GOLDEN_DART, "Golden Dart");
         addEntityType(AetherEntityTypes.POISON_DART, "Poison Dart");
         addEntityType(AetherEntityTypes.ENCHANTED_DART, "Enchanted Dart");
-        addEntityType(AetherEntityTypes.PHOENIX_ARROW, "Phoenix Arrow");
-        addEntityType(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW, "Spectral Phoenix Arrow");
         addEntityType(AetherEntityTypes.HAMMER_PROJECTILE, "Hammer Projectile");
 
 
@@ -445,31 +459,142 @@ public class AetherLangData extends LanguageProvider
 
 
         addAdvancement("enter_aether", "Hostile Paradise");
-        addAdvancement("blue_aercloud", "To infinity and beyond!");
-        addAdvancement("incubator", "Now you're family");
-        addAdvancement("altar", "Do you believe in magic?");
-        addAdvancement("gravitite_tools", "Pink is the new blue");
-        addAdvancement("mount_phyg", "When Phygs fly");
+        addAdvancement("read_lore", "The More You Know!");
+        addAdvancement("loreception", "Lore-Ception!");
+        addAdvancement("blue_aercloud", "To Infinity and Beyond!");
+        addAdvancement("incubator", "Now You're Family");
+        addAdvancement("altar", "Do You Believe in Magic?");
+        addAdvancement("gravitite_tools", "Pink is the New Blue");
+        addAdvancement("mount_phyg", "When Phygs Fly");
         addAdvancement("bronze_dungeon", "Like a Bossaru!");
         addAdvancement("silver_dungeon", "Dethroned");
         addAdvancement("gold_dungeon", "Extinguished");
-        addAdvancement("loreception", "Lore-ception!");
 
 
         addAdvancementDesc("enter_aether", "Enter the Aether");
+        addAdvancementDesc("read_lore", "Read a Book of Lore");
+        addAdvancementDesc("loreception", "Put a Book of Lore inside a Book of Lore");
         addAdvancementDesc("blue_aercloud", "Bounce on a Blue Aercloud");
-        addAdvancementDesc("incubator", "Incubate a moa");
+        addAdvancementDesc("incubator", "Incubate a Moa");
         addAdvancementDesc("altar", "Craft an Altar");
         addAdvancementDesc("gravitite_tools", "Craft a Gravitite tool");
         addAdvancementDesc("mount_phyg", "Fly on a Phyg");
         addAdvancementDesc("bronze_dungeon", "Defeat the Bronze Dungeon boss");
         addAdvancementDesc("silver_dungeon", "Defeat the Silver Dungeon boss");
         addAdvancementDesc("gold_dungeon", "Defeat the Golden Dungeon boss");
-        addAdvancementDesc("loreception", "Put a Book of Lore inside a Book of Lore");
+
+
+        addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");
+        addSubtitle("block", "aether_portal.trigger", "Aether Portal noise intensifies");
+        addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
+
+        addSubtitle("item", "dart_shooter.shoot", "Dart Shooter fired");
+        addSubtitle("item", "lightning_knife.shoot", "Lightning Knife flies");
+        addSubtitle("item", "hammer_of_notch.shoot", "Hammer fired");
+
+        addSubtitle("item", "armor.equip_zanite", "Zanite armor clanks");
+        addSubtitle("item", "armor.equip_gravitite", "Gravitite armor clangs");
+        addSubtitle("item", "armor.equip_valkyrie", "Valkyrie armor clinks");
+        addSubtitle("item", "armor.equip_neptune", "Neptune armor jingles");
+        addSubtitle("item", "armor.equip_phoenix", "Phoenix armor clinks");
+        addSubtitle("item", "armor.equip_obsidian", "Obsidian armor clanks");
+        addSubtitle("item", "armor.equip_sentry", "Sentry armor clanks");
+
+        addSubtitle("item", "accessory.equip_generic", "Accessory equips");
+        addSubtitle("item", "accessory.equip_iron_ring", "Iron Ring jingles");
+        addSubtitle("item", "accessory.equip_gold_ring", "Gold Ring jingles");
+        addSubtitle("item", "accessory.equip_zanite_ring", "Zanite Ring jingles");
+        addSubtitle("item", "accessory.equip_ice_ring", "Ice Ring jingles");
+        addSubtitle("item", "accessory.equip_iron_pendant", "Iron Pendant jingles");
+        addSubtitle("item", "accessory.equip_gold_pendant", "Gold Pendant jingles");
+        addSubtitle("item", "accessory.equip_zanite_pendant", "Zanite Pendant jingles");
+        addSubtitle("item", "accessory.equip_ice_pendant", "Ice Pendant jingles");
+        addSubtitle("item", "accessory.equip_cape", "Cape rustles");
+
+        addSubtitle("entity", "phyg.ambient", "Phyg oinks");
+        addSubtitle("entity", "phyg.death", "Phyg dies");
+        addSubtitle("entity", "phyg.hurt", "Phyg hurts");
+        addSubtitle("entity", "phyg.saddle", "Saddle equips");
+        addSubtitle("entity", "phyg.step", "Footsteps");
+
+        addSubtitle("entity", "flying_cow.ambient", "Flying Cow moos");
+        addSubtitle("entity", "flying_cow.death", "Flying Cow dies");
+        addSubtitle("entity", "flying_cow.hurt", "Flying Cow hurts");
+        addSubtitle("entity", "flying_cow.milk", "Flying Cow gets milked");
+        addSubtitle("entity", "flying_cow.step", "Footsteps");
+
+        addSubtitle("entity", "sheepuff.ambient", "Sheepuff baahs");
+        addSubtitle("entity", "sheepuff.death", "Sheepuff dies");
+        addSubtitle("entity", "sheepuff.hurt", "Sheepuff hurts");
+        addSubtitle("entity", "sheepuff.step", "Footsteps");
+
+        addSubtitle("entity", "moa.ambient", "Moa calls");
+        addSubtitle("entity", "moa.death", "Moa dies");
+        addSubtitle("entity", "moa.hurt", "Moa hurts");
+        addSubtitle("entity", "moa.flap", "Moa flaps");
+        addSubtitle("entity", "moa.egg", "Moa plops");
+
+        addSubtitle("entity", "aerwhale.ambient", "Aerwhale whistles");
+        addSubtitle("entity", "aerwhale.death", "Aerwhale cries");
+
+        addSubtitle("entity", "aerbunny.death", "Aerbunny dies");
+        addSubtitle("entity", "aerbunny.hurt", "Aerbunny squeals");
+        addSubtitle("entity", "aerbunny.lift", "Aerbunny squeaks");
+
+        addSubtitle("entity", "swet.attack", "Swet attacks");
+        addSubtitle("entity", "swet.death", "Swet dies");
+        addSubtitle("entity", "swet.hurt", "Swet hurts");
+        addSubtitle("entity", "swet.jump", "Swet squishes");
+        addSubtitle("entity", "swet.squish", "Swet squishes");
+
+        addSubtitle("entity", "aechor_plant.shoot", "Aechor Plant shoots");
+
+        addSubtitle("entity", "cockatrice.shoot", "Cockatrice shoots");
+        addSubtitle("entity", "cockatrice.ambient", "Cockatrice calls");
+        addSubtitle("entity", "cockatrice.death", "Cockatrice dies");
+        addSubtitle("entity", "cockatrice.hurt", "Cockatrice hurts");
+        addSubtitle("entity", "cockatrice.flap", "Cockatrice flaps");
+
+        addSubtitle("entity", "zephyr.shoot", "Zephyr spits");
+        addSubtitle("entity", "zephyr.ambient", "Zephyr blows");
+        addSubtitle("entity", "zephyr.death", "Zephyr dies");
+        addSubtitle("entity", "zephyr.hurt", "Zephyr hurts");
+
+        addSubtitle("entity", "sentry.death", "Sentry dies");
+        addSubtitle("entity", "sentry.hurt", "Sentry hurts");
+        addSubtitle("entity", "sentry.jump", "Sentry squishes");
+
+        addSubtitle("entity", "mimic.death", "Mimic dies");
+        addSubtitle("entity", "mimic.hurt", "Mimic hurts");
+
+        addSubtitle("entity", "slider.awaken", "Slider awakens");
+        addSubtitle("entity", "slider.collide", "Slider smashes");
+        addSubtitle("entity", "slider.move", "Slider slides");
+        addSubtitle("entity", "slider.death", "Slider breaks");
+
+        addSubtitle("entity", "sun_spirit.shoot", "Sun Spirit shoots");
+
+        addSubtitle("entity", "cloud_minion.shoot", "Cloud Minion spits");
+
+        addSubtitle("entity", "cloud_crystal.explode", "Crystal explodes");
+
+        addSubtitle("entity", "dart.hit", "Dart hits");
+
+
+
+        addDeath("inebriation", "%1$s was inebriated");
+        addDeath("inebriation.player", "%1$s was inebriated by %2$s");
+        addDeath("ice_crystal", "%1$s was chilled by %2$s's Ice Crystal");
+
 
 
         addMenuText("minecraft", "Normal Theme");
         addMenuText("aether", "Aether Theme");
+
+
+        addGuiText("pro_tip", "Pro Tip:");
+        addGuiText("ascending", "Ascending to the Aether");
+        addGuiText("descending", "Descending from the Aether");
 
 
         addLoreBookText("previous", "Prev.");
@@ -479,12 +604,27 @@ public class AetherLangData extends LanguageProvider
         addLoreBookText("item", "Item:");
 
 
+        addMessage("hammer_of_notch_cooldown", "Cooldown");
+
+
+        addMessage("life_shard_limit", "You can only use a total of %s Life Shards.");
         addMessage("bronze_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
         addMessage("silver_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
         addMessage("gold_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Golden Key.");
 
 
-        addCuriosIdentifier("shield", "Shield");
+        addKeyInfo("category", "Aether");
+        addKeyInfo("open_accessories.desc", "Open/Close Accessories Inventory");
+
+
+        addCuriosIdentifier("aether_pendant", "Pendant");
+        addCuriosIdentifier("aether_cape", "Cape");
+        addCuriosIdentifier("aether_ring", "Ring");
+        addCuriosIdentifier("aether_shield", "Shield");
+        addCuriosIdentifier("aether_gloves", "Gloves");
+        addCuriosIdentifier("aether_accessory", "Accessory");
+
+        addCuriosModifier("aether_gloves", "When on hands:");
 
 
         addItemLore(AetherItems.AECHOR_PETAL, "The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.");
@@ -604,7 +744,7 @@ public class AetherLangData extends LanguageProvider
         addItemLore(AetherItems.NEPTUNE_GLOVES, "Found in Silver Dungeons, these gloves are requires to complete the Neptune Armor set, which allows for underwater walking.");
         addItemLore(AetherItems.NEPTUNE_HELMET, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
         addItemLore(AetherItems.NEPTUNE_LEGGINGS, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
-        addItemLore(AetherItems.NOTCH_HAMMER, "A mighty hammer which shoots heavy projectiles at mobs. It's said that Notch actually held this hammer.");
+        addItemLore(AetherItems.HAMMER_OF_NOTCH, "A mighty hammer which shoots heavy projectiles at mobs. It's said that Notch actually held this hammer.");
         addItemLore(AetherItems.OBSIDIAN_BOOTS, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addItemLore(AetherItems.OBSIDIAN_CHESTPLATE, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addItemLore(AetherItems.OBSIDIAN_GLOVES, "Needed to complete the Obsidian Armor set, you can convert Phoenix Gloves into Obsidian by standing in water while wearing them.");

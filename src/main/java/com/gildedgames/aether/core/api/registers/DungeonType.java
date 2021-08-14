@@ -1,19 +1,14 @@
 package com.gildedgames.aether.core.api.registers;
 
-import org.apache.commons.lang3.Validate;
-
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistryEntry;
-
-public class DungeonType extends ForgeRegistryEntry<DungeonType>
+public class DungeonType
 {
-	private final ResourceLocation lootTable;
-	
-	public DungeonType(ResourceLocation lootTable) {
-		this.lootTable = Validate.notNull(lootTable, "A dungeon's loot table was null.");
+	private final String registryName;
+
+	public DungeonType(String registryName) {
+		this.registryName = registryName;
 	}
-	
-	public ResourceLocation getLootTable() {
-		return this.lootTable;
+
+	public String getRegistryName() {
+		return this.registryName;
 	}
 }

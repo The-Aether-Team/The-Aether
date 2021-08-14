@@ -6,7 +6,8 @@ import org.apache.commons.lang3.Validate;
 
 import java.util.function.Supplier;
 
-public class DungeonKeyItem extends Item {
+public class DungeonKeyItem extends Item
+{
     private final Supplier<DungeonType> dungeonTypeGetter;
 
     public DungeonKeyItem(Supplier<DungeonType> dungeonTypeGetter, Item.Properties properties) {

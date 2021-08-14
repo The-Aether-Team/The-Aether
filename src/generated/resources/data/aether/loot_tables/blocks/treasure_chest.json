@@ -6,6 +6,28 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_name",
+              "source": "block_entity"
+            },
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "Locked",
+                  "target": "BlockEntityTag.Locked",
+                  "op": "replace"
+                },
+                {
+                  "source": "Kind",
+                  "target": "BlockEntityTag.Kind",
+                  "op": "replace"
+                }
+              ]
+            }
+          ],
           "name": "aether:treasure_chest"
         }
       ],

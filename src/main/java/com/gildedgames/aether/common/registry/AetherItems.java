@@ -3,23 +3,45 @@ package com.gildedgames.aether.common.registry;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.item.accessories.abilities.IIceAccessory;
-import com.gildedgames.aether.common.item.accessories.cape.CapeItem;
-import com.gildedgames.aether.common.item.accessories.cape.InvisibilityCloakItem;
-import com.gildedgames.aether.common.item.accessories.cape.ValkyrieCapeItem;
+import com.gildedgames.aether.common.item.accessories.cape.*;
 import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.common.item.accessories.gloves.LeatherGlovesItem;
 import com.gildedgames.aether.common.item.accessories.gloves.ZaniteGlovesItem;
 import com.gildedgames.aether.common.item.accessories.gloves.GoldGlovesItem;
-import com.gildedgames.aether.common.item.accessories.misc.GoldenFeatherItem;
-import com.gildedgames.aether.common.item.accessories.misc.IronBubbleItem;
-import com.gildedgames.aether.common.item.accessories.misc.RegenerationStoneItem;
-import com.gildedgames.aether.common.item.accessories.misc.RepulsionShieldItem;
+import com.gildedgames.aether.common.item.accessories.miscellaneous.GoldenFeatherItem;
+import com.gildedgames.aether.common.item.accessories.miscellaneous.IronBubbleItem;
+import com.gildedgames.aether.common.item.accessories.miscellaneous.RegenerationStoneItem;
+import com.gildedgames.aether.common.item.accessories.miscellaneous.RepulsionShieldItem;
 import com.gildedgames.aether.common.item.accessories.pendant.IcePendantItem;
 import com.gildedgames.aether.common.item.accessories.pendant.PendantItem;
 import com.gildedgames.aether.common.item.accessories.pendant.ZanitePendantItem;
 import com.gildedgames.aether.common.item.accessories.ring.IceRingItem;
 import com.gildedgames.aether.common.item.accessories.ring.RingItem;
+import com.gildedgames.aether.common.item.combat.loot.*;
+import com.gildedgames.aether.common.item.food.WhiteAppleItem;
 import com.gildedgames.aether.common.item.materials.AmbrosiumShardItem;
+import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
+import com.gildedgames.aether.common.item.miscellaneous.bucket.*;
+import com.gildedgames.aether.common.item.tools.gravitite.GravititeAxeItem;
+import com.gildedgames.aether.common.item.tools.gravitite.GravititeHoeItem;
+import com.gildedgames.aether.common.item.tools.gravitite.GravititePickaxeItem;
+import com.gildedgames.aether.common.item.tools.gravitite.GravititeShovelItem;
+import com.gildedgames.aether.common.item.tools.holystone.HolystoneAxeItem;
+import com.gildedgames.aether.common.item.tools.holystone.HolystoneHoeItem;
+import com.gildedgames.aether.common.item.tools.holystone.HolystonePickaxeItem;
+import com.gildedgames.aether.common.item.tools.holystone.HolystoneShovelItem;
+import com.gildedgames.aether.common.item.tools.skyroot.SkyrootAxeItem;
+import com.gildedgames.aether.common.item.tools.skyroot.SkyrootHoeItem;
+import com.gildedgames.aether.common.item.tools.skyroot.SkyrootPickaxeItem;
+import com.gildedgames.aether.common.item.tools.skyroot.SkyrootShovelItem;
+import com.gildedgames.aether.common.item.tools.valkyrie.ValkyrieAxeItem;
+import com.gildedgames.aether.common.item.tools.valkyrie.ValkyrieHoeItem;
+import com.gildedgames.aether.common.item.tools.valkyrie.ValkyriePickaxeItem;
+import com.gildedgames.aether.common.item.tools.valkyrie.ValkyrieShovelItem;
+import com.gildedgames.aether.common.item.tools.zanite.ZaniteAxeItem;
+import com.gildedgames.aether.common.item.tools.zanite.ZaniteHoeItem;
+import com.gildedgames.aether.common.item.tools.zanite.ZanitePickaxeItem;
+import com.gildedgames.aether.common.item.tools.zanite.ZaniteShovelItem;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.gildedgames.aether.common.item.accessories.ring.ZaniteRingItem;
@@ -30,8 +52,6 @@ import com.gildedgames.aether.common.item.food.GummySwetItem;
 import com.gildedgames.aether.common.item.materials.SwetBallItem;
 import com.gildedgames.aether.common.item.combat.*;
 import com.gildedgames.aether.common.item.miscellaneous.LoreBookItem;
-import com.gildedgames.aether.common.item.tools.*;
-import com.gildedgames.aether.core.registry.AetherParachuteTypes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.util.SoundEvents;
@@ -67,10 +87,10 @@ public class AetherItems
 	public static final RegistryObject<ShovelItem> GRAVITITE_SHOVEL = ITEMS.register("gravitite_shovel", GravititeShovelItem::new);
 	public static final RegistryObject<HoeItem> GRAVITITE_HOE = ITEMS.register("gravitite_hoe", GravititeHoeItem::new);
 
-	public static final RegistryObject<PickaxeItem> VALKYRIE_PICKAXE = ITEMS.register("valkyrie_pickaxe", () -> new ValkyriePickaxeItem(1, -2.8f));
-	public static final RegistryObject<AxeItem> VALKYRIE_AXE = ITEMS.register("valkyrie_axe", () -> new ValkyrieAxeItem(5.0f, -3.0f));
-	public static final RegistryObject<ShovelItem> VALKYRIE_SHOVEL = ITEMS.register("valkyrie_shovel", () -> new ValkyrieShovelItem(1.5f, -3.0f));
-	public static final RegistryObject<HoeItem> VALKYRIE_HOE = ITEMS.register("valkyrie_hoe", () -> new ValkyrieHoeItem(0, 0));
+	public static final RegistryObject<PickaxeItem> VALKYRIE_PICKAXE = ITEMS.register("valkyrie_pickaxe", () -> new ValkyriePickaxeItem(2, -2.8F));
+	public static final RegistryObject<AxeItem> VALKYRIE_AXE = ITEMS.register("valkyrie_axe", () -> new ValkyrieAxeItem(6.0F, -3.0F));
+	public static final RegistryObject<ShovelItem> VALKYRIE_SHOVEL = ITEMS.register("valkyrie_shovel", () -> new ValkyrieShovelItem(2.5F, -3.0F));
+	public static final RegistryObject<HoeItem> VALKYRIE_HOE = ITEMS.register("valkyrie_hoe", () -> new ValkyrieHoeItem(-3, 0.0F));
 
 	// Weapons
 	public static final RegistryObject<SwordItem> SKYROOT_SWORD = ITEMS.register("skyroot_sword", SkyrootSwordItem::new);
@@ -78,7 +98,7 @@ public class AetherItems
 	public static final RegistryObject<SwordItem> ZANITE_SWORD = ITEMS.register("zanite_sword", ZaniteSwordItem::new);
 	public static final RegistryObject<SwordItem> GRAVITITE_SWORD = ITEMS.register("gravitite_sword", GravititeSwordItem::new);
 
-	public static final RegistryObject<Item> VALKYRIE_LANCE = ITEMS.register("valkyrie_lance", () -> new ValkyrieLanceItem(ItemTier.DIAMOND, 3, -2.4F));
+	public static final RegistryObject<Item> VALKYRIE_LANCE = ITEMS.register("valkyrie_lance", () -> new ValkyrieLanceItem(ItemTier.DIAMOND, 4, -2.4F));
 
 	public static final RegistryObject<SwordItem> FLAMING_SWORD = ITEMS.register("flaming_sword", FlamingSwordItem::new);
 	public static final RegistryObject<SwordItem> LIGHTNING_SWORD = ITEMS.register("lightning_sword", LightningSwordItem::new);
@@ -87,13 +107,13 @@ public class AetherItems
 	public static final RegistryObject<SwordItem> PIG_SLAYER = ITEMS.register("pig_slayer", PigSlayerItem::new);
 	public static final RegistryObject<SwordItem> CANDY_CANE_SWORD = ITEMS.register("candy_cane_sword", CandyCaneSwordItem::new);
 
-	public static final RegistryObject<SwordItem> NOTCH_HAMMER = ITEMS.register("notch_hammer", NotchHammerItem::new);
+	public static final RegistryObject<SwordItem> HAMMER_OF_NOTCH = ITEMS.register("hammer_of_notch", HammerOfNotchItem::new);
 
 	public static final RegistryObject<Item> LIGHTNING_KNIFE = ITEMS.register("lightning_knife", LightningKnifeItem::new);
 
-	public static final RegistryObject<Item> GOLDEN_DART = ITEMS.register("golden_dart", () -> new DartItem(new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
-	public static final RegistryObject<Item> POISON_DART = ITEMS.register("poison_dart", () -> new DartItem(new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
-	public static final RegistryObject<Item> ENCHANTED_DART = ITEMS.register("enchanted_dart", () -> new DartItem(new Item.Properties().rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS)));
+	public static final RegistryObject<Item> GOLDEN_DART = ITEMS.register("golden_dart", () -> new DartItem(AetherEntityTypes.GOLDEN_DART::get, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
+	public static final RegistryObject<Item> POISON_DART = ITEMS.register("poison_dart", () -> new DartItem(AetherEntityTypes.POISON_DART::get, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
+	public static final RegistryObject<Item> ENCHANTED_DART = ITEMS.register("enchanted_dart", () -> new DartItem(AetherEntityTypes.ENCHANTED_DART::get, new Item.Properties().rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS)));
 
 	public static final RegistryObject<Item> GOLDEN_DART_SHOOTER = ITEMS.register("golden_dart_shooter", () -> new DartShooterItem(GOLDEN_DART, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_WEAPONS)));
 	public static final RegistryObject<Item> POISON_DART_SHOOTER = ITEMS.register("poison_dart_shooter", () -> new DartShooterItem(POISON_DART, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_WEAPONS)));
@@ -208,18 +228,18 @@ public class AetherItems
 	public static final RegistryObject<Item> SKYROOT_REMEDY_BUCKET = ITEMS.register("skyroot_remedy_bucket", () -> new SkyrootRemedyBucketItem(new Item.Properties().craftRemainder(SKYROOT_BUCKET.get()).stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> SKYROOT_MILK_BUCKET = ITEMS.register("skyroot_milk_bucket", () -> new SkyrootMilkBucketItem(new Item.Properties().craftRemainder(SKYROOT_BUCKET.get()).stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
 
-	public static final RegistryObject<Item> COLD_PARACHUTE = ITEMS.register("cold_parachute", () -> new ParachuteItem(AetherParachuteTypes.COLD_PARACHUTE, new Item.Properties().stacksTo(1).durability(1).tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> GOLDEN_PARACHUTE = ITEMS.register("golden_parachute", () -> new ParachuteItem(AetherParachuteTypes.GOLDEN_PARACHUTE, new Item.Properties().stacksTo(1).durability(20).tab(AetherItemGroups.AETHER_MISC)));
-
-	public static final RegistryObject<Item> NATURE_STAFF = ITEMS.register("nature_staff", () -> new Item(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> CLOUD_STAFF = ITEMS.register("cloud_staff", () -> new Item(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> COLD_PARACHUTE = ITEMS.register("cold_parachute", () -> new ParachuteItem(AetherEntityTypes.COLD_PARACHUTE::get, new Item.Properties().durability(1).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> GOLDEN_PARACHUTE = ITEMS.register("golden_parachute", () -> new ParachuteItem(AetherEntityTypes.GOLDEN_PARACHUTE::get, new Item.Properties().durability(20).tab(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<Item> BLUE_MOA_EGG = ITEMS.register("blue_moa_egg", () -> new MoaEggItem(0x7777FF, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> WHITE_MOA_EGG = ITEMS.register("white_moa_egg", () -> new MoaEggItem(0xFFFFFF, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> BLACK_MOA_EGG = ITEMS.register("black_moa_egg", () -> new MoaEggItem(0x222222, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> ORANGE_MOA_EGG = ITEMS.register("orange_moa_egg", () -> new MoaEggItem(-0xC3D78, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
 
-	public static final RegistryObject<Item> LIFE_SHARD = ITEMS.register("life_shard", () -> new Item(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> NATURE_STAFF = ITEMS.register("nature_staff", () -> new Item(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> CLOUD_STAFF = ITEMS.register("cloud_staff", CloudStaffItem::new);
+
+	public static final RegistryObject<Item> LIFE_SHARD = ITEMS.register("life_shard", () -> new LifeShardItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<Item> BOOK_OF_LORE = ITEMS.register("book_of_lore", () -> new LoreBookItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
 
@@ -239,6 +259,8 @@ public class AetherItems
 	public static final RegistryObject<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.ZEPHYR_TYPE, 0xDFDFDF, 0x99CFE8, new Item.Properties().tab(ItemGroup.TAB_MISC)));
 
 	public static void registerAbilities() {
+		ISwetBallConversion.registerDefaultConversions();
+		ISwetBallConversion.registerBiomeConversions();
 		IIceAccessory.registerDefaultFreezables();
 	}
 }

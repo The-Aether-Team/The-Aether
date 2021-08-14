@@ -49,13 +49,16 @@ public class AetherItemModelData extends AetherItemModelProvider
         handheldItem(AetherItems.ZANITE_SWORD, "weapons/");
         handheldItem(AetherItems.GRAVITITE_SWORD, "weapons/");
 
-        handheldItem(AetherItems.VALKYRIE_LANCE, "weapons/");
+        lanceItem(AetherItems.VALKYRIE_LANCE, "weapons/");
 
         handheldItem(AetherItems.FLAMING_SWORD, "weapons/");
         handheldItem(AetherItems.LIGHTNING_SWORD, "weapons/");
         handheldItem(AetherItems.HOLY_SWORD, "weapons/");
         handheldItem(AetherItems.VAMPIRE_BLADE, "weapons/");
         handheldItem(AetherItems.PIG_SLAYER, "weapons/");
+        nameableWeapon(AetherItems.CANDY_CANE_SWORD, "weapons/", "green_candy_cane_sword");
+
+        nameableWeapon(AetherItems.HAMMER_OF_NOTCH, "weapons/", "hammer_of_jeb");
 
         handheldItem(AetherItems.LIGHTNING_KNIFE, "weapons/");
 
@@ -63,9 +66,11 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.POISON_DART, "weapons/");
         item(AetherItems.ENCHANTED_DART, "weapons/");
 
-        item(AetherItems.GOLDEN_DART_SHOOTER, "weapons/");
-        item(AetherItems.POISON_DART_SHOOTER, "weapons/");
-        item(AetherItems.ENCHANTED_DART_SHOOTER, "weapons/");
+        dartShooterItem(AetherItems.GOLDEN_DART_SHOOTER, "weapons/");
+        dartShooterItem(AetherItems.POISON_DART_SHOOTER, "weapons/");
+        dartShooterItem(AetherItems.ENCHANTED_DART_SHOOTER, "weapons/");
+
+        bowItem(AetherItems.PHOENIX_BOW, "weapons/");
 
         item(AetherItems.ZANITE_HELMET, "armor/");
         item(AetherItems.ZANITE_CHESTPLATE, "armor/");
@@ -167,8 +172,8 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.COLD_PARACHUTE, "miscellaneous/");
         item(AetherItems.GOLDEN_PARACHUTE, "miscellaneous/");
 
-        item(AetherItems.NATURE_STAFF, "miscellaneous/");
-        item(AetherItems.CLOUD_STAFF, "miscellaneous/");
+        handheldItem(AetherItems.NATURE_STAFF, "miscellaneous/");
+        handheldItem(AetherItems.CLOUD_STAFF, "miscellaneous/");
 
         moaEggItem(AetherItems.BLUE_MOA_EGG, "miscellaneous/");
         moaEggItem(AetherItems.WHITE_MOA_EGG, "miscellaneous/");

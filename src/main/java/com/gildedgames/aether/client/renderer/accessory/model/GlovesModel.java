@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.renderer.accessory.model;
 
+import com.gildedgames.aether.common.item.accessories.gloves.LeatherGlovesItem;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
@@ -94,12 +95,23 @@ public class GlovesModel extends BipedModel<LivingEntity>
             //TODO: toggle.
             boolean isSleeve = false;
 
+            float red = 1.0F;
+            float green = 1.0F;
+            float blue = 1.0F;
+
+            if (glovesStack.getItem() instanceof LeatherGlovesItem) {
+                int i = ((LeatherGlovesItem) glovesStack.getItem()).getColor(glovesStack);
+                red = (float) (i >> 16 & 255) / 255.0F;
+                green = (float) (i >> 8 & 255) / 255.0F;
+                blue = (float) (i & 255) / 255.0F;
+            }
+
             if (!isSleeve) {
                 armModel.xRot = 0.0F;
-                armModel.render(matrixStack, ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(glovesTexture), false, glovesStack.isEnchanted()), light, OverlayTexture.NO_OVERLAY);
+                armModel.render(matrixStack, ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(glovesTexture), false, glovesStack.isEnchanted()), light, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
             } else {
                 sleeveModel.xRot = 0.0F;
-                sleeveModel.render(matrixStack, ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(glovesTexture), false, glovesStack.isEnchanted()), light, OverlayTexture.NO_OVERLAY);
+                sleeveModel.render(matrixStack, ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(glovesTexture), false, glovesStack.isEnchanted()), light, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
             }
         }
     }

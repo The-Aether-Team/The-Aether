@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MM",
+    "MM",
+    "MM"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:blue_wool"
+    }
+  },
+  "result": {
+    "item": "aether:blue_cape"
+  }
+}

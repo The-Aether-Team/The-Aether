@@ -20,7 +20,6 @@ public class AetherBlockStateData extends AetherBlockStateProvider
 
     @Override
     protected void registerStatesAndModels() {
-        //TODO: If the double block system is changed to not be blockstate based, a couple of these and the stuff in AetherBlockStateProvider have to be changed.
         grass(AetherBlocks.AETHER_GRASS_BLOCK, AetherBlocks.AETHER_DIRT);
         enchantedGrass(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK, AetherBlocks.AETHER_GRASS_BLOCK, AetherBlocks.AETHER_DIRT);
         randomBlockDoubleDrops(AetherBlocks.AETHER_DIRT, "natural/");

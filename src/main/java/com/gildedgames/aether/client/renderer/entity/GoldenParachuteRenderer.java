@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import com.gildedgames.aether.common.entity.block.GoldenParachuteEntity;
+import com.gildedgames.aether.common.entity.miscellaneous.GoldenParachuteEntity;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
@@ -31,7 +31,7 @@ public class GoldenParachuteRenderer extends EntityRenderer<GoldenParachuteEntit
     }
 
     @Override
-    public ResourceLocation getTextureLocation(GoldenParachuteEntity entity) {
+    public ResourceLocation getTextureLocation(GoldenParachuteEntity p_110775_1_) {
         return AtlasTexture.LOCATION_BLOCKS;
     }
 }
