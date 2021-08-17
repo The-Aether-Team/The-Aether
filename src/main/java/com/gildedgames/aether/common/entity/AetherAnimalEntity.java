@@ -14,8 +14,8 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public abstract class AetherAnimalEntity extends AnimalEntity {
-
+public abstract class AetherAnimalEntity extends AnimalEntity
+{
 	protected AetherAnimalEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
@@ -30,9 +30,7 @@ public abstract class AetherAnimalEntity extends AnimalEntity {
 		return stack.getItem() == AetherItems.BLUE_BERRY.get();
 	}
 
-	//Copied from AnimalEntity, changed to check for Aether grass.
 	public static boolean canAetherAnimalSpawn(EntityType<? extends AetherAnimalEntity> animal, IWorld worldIn, SpawnReason reason, BlockPos pos, Random random) {
 		return worldIn.getBlockState(pos.below()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get() && worldIn.getRawBrightness(pos, 0) > 8;
 	}
-
 }

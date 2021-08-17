@@ -1,224 +1,278 @@
 package com.gildedgames.aether.common.entity;
 
-import java.util.Optional;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IJumpingMount;
-import net.minecraft.entity.MoverType;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
-public abstract class MountableEntity extends AetherAnimalEntity implements IJumpingMount {
-	public static final DataParameter<Boolean> RIDER_SNEAKING = EntityDataManager.defineId(MountableEntity.class, DataSerializers.BOOLEAN);
-	
-	protected float jumpPower;
+import javax.annotation.Nullable;
+
+public abstract class MountableEntity extends AetherAnimalEntity implements IRideable, IEquipable
+{
+	private static final DataParameter<Boolean> DATA_SADDLE_ID = EntityDataManager.defineId(MountableEntity.class, DataSerializers.BOOLEAN);
+	protected boolean playerTriedToCrouch;
+	protected boolean playerJumped;
 	protected boolean mountJumping;
-	protected boolean playStepSound = false;
-	protected boolean canJumpMidAir = false;
-	
+
 	protected MountableEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
-	
+
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
+		this.entityData.define(DATA_SADDLE_ID, false);
+	}
 
-		this.entityData.define(RIDER_SNEAKING, false);
-	}
-	
-	@Override
-	public boolean canRiderInteract() {
-		return true;
-	}
-	
-	@Override
-	protected boolean canRide(Entity entityIn) {
-		return true;
-	}
-	
-	@Override
-	public boolean rideableUnderWater() {
-		return true;
-	}
-	
-	public boolean isRiderSneaking() {
-		return this.entityData.get(RIDER_SNEAKING);
-	}
-	
-	public void setRiderSneaking(boolean isRiderSneaking) {
-		this.entityData.set(RIDER_SNEAKING, isRiderSneaking);
-	}
-	
-	public boolean isMountJumping() {
-		return this.mountJumping;
-	}
-	
-	public void setMountJumping(boolean isMountJumping) {
-		this.mountJumping = isMountJumping;
-	}
-	
 	@Override
 	public void tick() {
 		this.riderTick();
 		super.tick();
 	}
-	
-	public void riderTick() {
-		if (this.level.isClientSide) {
-			return;
-		}
-		
-		if (this.isVehicle() && this.getVehicle() != null) {
-			Entity passenger = this.getPassengers().get(0);
-			
-			if (passenger.isShiftKeyDown()) {
-				if (this.onGround) {
-					passenger.setShiftKeyDown(false);
-					passenger.stopRiding();
-					
-					return;
-				}
-				
-				this.setRiderSneaking(true);
-				passenger.setShiftKeyDown(false);
-			}
-			else {
-				this.setRiderSneaking(false);
-			}
-		}
-		else {
-			this.setRiderSneaking(false);
-		}
-	}
-	
-	@Override
-	public void travel(Vector3d positionIn) {
-		Optional<PlayerEntity> optionalEntity = this.getPassengers().stream().filter(entity -> entity instanceof PlayerEntity).map(PlayerEntity.class::cast).findFirst();
-		
-		if (optionalEntity.isPresent()) {
-			PlayerEntity player = optionalEntity.get();
-			
-			this.yRotO = this.yRot = player.yRot;
-			this.xRotO = this.xRot = player.xRot;
-			
-			this.yHeadRot = player.yHeadRot;
-			
-			float strafe = player.xxa;
-			float vertical = player.yya;
-			float forward = player.zza;
-			
-			if (forward < 0.0F) {
-				forward *= 0.25F;
-			}
-			
-			float f;
-			
-			{
-				double d1 = player.getX() - this.getX();
-				double d2 = player.getZ() - this.getZ();
-				
-				f = (float)(MathHelper.atan2(d2, d1) * (180.0 / Math.PI)) - 90.0F;
-			}
-			
-			if (player.xxa != 0.0F && player.level.isClientSide) {
-				this.yRot = this.updateRotation(this.yRot, f, 40.0F);
-			}
-			
-//			if (AetherAPI.get(player).map(IAetherPlayer::isJumping).orElse(false)) {
-//				this.onMountedJump(strafe, forward);
-//			}
-			
-			if (this.jumpPower > 0.0F && !this.isMountJumping() && (this.onGround || this.canJumpMidAir)) {
-				this.setDeltaMovement(this.getDeltaMovement().x(), this.getMountJumpStrength() * this.jumpPower, this.getDeltaMovement().z());
-				
-				if (this.hasEffect(Effects.JUMP)) {
-					this.push(0.0, 0.1 * (this.getEffect(Effects.JUMP).getAmplifier() + 1), 0.0);
-				}
-				
-				this.setMountJumping(true);
-				this.hasImpulse = true;
-				this.jumpPower = 0.0F;
-			}
-			
-			this.setDeltaMovement(this.getDeltaMovement().x() * 0.35, this.getDeltaMovement().y(), this.getDeltaMovement().z() * 0.35F);
-			
-			this.maxUpStep = 1.0F;
 
-			this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
-			
+	public void riderTick() {
+		if (this.getControllingPassenger() instanceof PlayerEntity) {
+			PlayerEntity playerEntity = (PlayerEntity) this.getControllingPassenger();
+			IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> {
+				if (aetherPlayer.isJumping() && !this.isMountJumping() && this.onGround) {
+					this.playerJumped = true;
+				}
+			});
+			if (playerEntity.level.isClientSide && playerEntity instanceof ClientPlayerEntity && !this.isOnGround()) {
+				ClientPlayerEntity clientPlayerEntity = (ClientPlayerEntity) playerEntity;
+				this.playerTriedToCrouch = clientPlayerEntity.input.shiftKeyDown;
+				clientPlayerEntity.input.shiftKeyDown = false;
+			}
+		}
+	}
+
+	@Override
+	public void travel(Vector3d vector3d) {
+		if (this.isAlive()) {
+			if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof PlayerEntity) {
+				PlayerEntity entity = (PlayerEntity) this.getControllingPassenger();
+				this.yRot = entity.yRot;
+				this.yRotO = this.yRot;
+				this.xRot = entity.xRot * 0.5F;
+				this.setRot(this.yRot, this.xRot);
+				this.yBodyRot = this.yRot;
+				this.yHeadRot = this.yBodyRot;
+				float f = entity.xxa * 0.5F;
+				float f1 = entity.zza;
+				if (f1 <= 0.0F) {
+					f1 *= 0.25F;
+				}
+				if (this.playerJumped && !this.isMountJumping() && this.onGround) {
+					double jumpStrength = this.getMountJumpStrength() * (double)this.getBlockJumpFactor();
+					this.setDeltaMovement(this.getDeltaMovement().x(), jumpStrength, this.getDeltaMovement().z());
+					if (this.hasEffect(Effects.JUMP)) {
+						this.push(0.0, 0.1 * (this.getEffect(Effects.JUMP).getAmplifier() + 1), 0.0);
+					}
+					this.setMountJumping(true);
+					this.hasImpulse = true;
+					net.minecraftforge.common.ForgeHooks.onLivingJump(this);
+					this.playerJumped = false;
+				}
+				this.maxUpStep = 1.0F;
+				this.flyingSpeed = this.getSteeringSpeed() * 0.25F;
+				if (this.isControlledByLocalInstance()) {
+					float speed = this.getSteeringSpeed();
+					this.setSpeed(speed);
+					this.travelWithInput(new Vector3d(f, vector3d.y, f1));
+					this.lerpSteps = 0;
+				} else {
+					this.calculateEntityAnimation(this, false);
+					this.setDeltaMovement(Vector3d.ZERO);
+				}
+				if (this.onGround) {
+					this.playerJumped = false;
+					this.setMountJumping(false);
+				}
+			} else {
+				this.maxUpStep = 0.5F;
+				this.flyingSpeed = 0.02F;
+				this.travelWithInput(vector3d);
+			}
+		}
+	}
+
+	@Override
+	public void travelWithInput(Vector3d vector3d) {
+		super.travel(vector3d);
+	}
+
+	@Override
+	public ActionResultType mobInteract(PlayerEntity playerEntity, Hand hand) {
+		boolean flag = this.isFood(playerEntity.getItemInHand(hand));
+		if (!flag && this.isSaddled() && !this.isVehicle() && !playerEntity.isSecondaryUseActive()) {
 			if (!this.level.isClientSide) {
-				this.flyingSpeed = this.getSpeed() * 0.6F;
-				super.travel(new Vector3d(strafe, vertical, forward));
-				this.move(MoverType.SELF, this.getDeltaMovement());
+				playerEntity.startRiding(this);
 			}
-			
-			if (this.onGround) {
-				this.jumpPower = 0.0F;
-				this.setMountJumping(false);
+			return ActionResultType.sidedSuccess(this.level.isClientSide);
+		} else {
+			ActionResultType actionresulttype = super.mobInteract(playerEntity, hand);
+			if (!actionresulttype.consumesAction()) {
+				ItemStack itemstack = playerEntity.getItemInHand(hand);
+				return itemstack.getItem() == Items.SADDLE ? itemstack.interactLivingEntity(playerEntity, this, hand) : ActionResultType.PASS;
+			} else {
+				return actionresulttype;
 			}
-			
-			this.animationSpeedOld = this.animationSpeed;
-			double d0 = this.getX() - this.xo;
-			double d1 = this.getZ() - this.zo;
-			float f4 = 4.0F * MathHelper.sqrt(d0 * d0 + d1 * d1);
-			
-			if (f4 > 1.0F) {
-				f4 = 1.0F;
-			}
-			
-			this.animationSpeed += (f4 - this.animationSpeed) * 0.4F;
-			this.animationPosition += this.animationSpeed;
 		}
-		else {
-			this.maxUpStep = 0.5F;
-			this.flyingSpeed = 0.02F;
-			super.travel(positionIn);
+	}
+
+	@Override
+	public Vector3d getDismountLocationForPassenger(LivingEntity livingEntity) {
+		Direction direction = this.getMotionDirection();
+		if (direction.getAxis() != Direction.Axis.Y) {
+			int[][] aint = TransportationHelper.offsetsForDirection(direction);
+			BlockPos blockpos = this.blockPosition();
+			BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+			for (Pose pose : livingEntity.getDismountPoses()) {
+				AxisAlignedBB axisalignedbb = livingEntity.getLocalBoundsForPose(pose);
+				for (int[] aint1 : aint) {
+					blockpos$mutable.set(blockpos.getX() + aint1[0], blockpos.getY(), blockpos.getZ() + aint1[1]);
+					double d0 = this.level.getBlockFloorHeight(blockpos$mutable);
+					if (TransportationHelper.isBlockFloorValid(d0)) {
+						Vector3d vector3d = Vector3d.upFromBottomCenterOf(blockpos$mutable, d0);
+						if (TransportationHelper.canDismountTo(this.level, livingEntity, axisalignedbb.move(vector3d))) {
+							livingEntity.setPose(pose);
+							return vector3d;
+						}
+					}
+				}
+			}
 		}
-		
+		return super.getDismountLocationForPassenger(livingEntity);
 	}
-	
-	private float updateRotation(float angle, float targetAngle, float maxIncrease) {
-		float f = MathHelper.wrapDegrees(targetAngle - angle);
-		
-		f = MathHelper.clamp(f, -maxIncrease, maxIncrease);
-		
-		return angle + f;
+
+	@Override
+	protected void dropEquipment() {
+		super.dropEquipment();
+		if (this.isSaddled()) {
+			this.spawnAtLocation(Items.SADDLE);
+		}
 	}
-	
+
+	@Nullable
+	@Override
+	public Entity getControllingPassenger() {
+		return this.getPassengers().isEmpty() ? null : this.getPassengers().get(0);
+	}
+
+	@Override
+	public boolean canBeControlledByRider() {
+		Entity entity = this.getControllingPassenger();
+		return entity instanceof PlayerEntity && this.isSaddled();
+	}
+
+	@Override
+	protected boolean canRide(Entity entityIn) {
+		return true;
+	}
+
+	@Override
+	public boolean rideableUnderWater() {
+		return true;
+	}
+
+	@Override
+	public void equipSaddle(@Nullable SoundCategory soundCategory) {
+		this.setSaddled(true);
+		if (soundCategory != null && this.getSaddledSound() != null) {
+			this.level.playSound(null, this, this.getSaddledSound(), soundCategory, 0.5F, 1.0F);
+		}
+	}
+
+	@Override
+	public boolean isSaddleable() {
+		return this.isAlive() && !this.isBaby();
+	}
+
+	@Override
+	public boolean isSaddled() {
+		return this.entityData.get(DATA_SADDLE_ID);
+	}
+
+	public void setSaddled(boolean isSaddled) {
+		this.entityData.set(DATA_SADDLE_ID, isSaddled);
+	}
+
+	public boolean canJump() {
+		return this.isSaddled();
+	}
+
+	public boolean isMountJumping() {
+		return this.mountJumping;
+	}
+
+	public void setMountJumping(boolean isMountJumping) {
+		this.mountJumping = isMountJumping;
+	}
+
 	protected double getMountJumpStrength() {
-		return 1.0;
+		return 1.8D;
 	}
-	
+
 	@Override
-	public void onPlayerJump(int jumpPowerIn) {
-		if (jumpPowerIn < 0) {
-			jumpPowerIn = 0;
-		}
-		
-		if (jumpPowerIn >= 90) {
-			this.jumpPower = 1.0F;
-		}
-		else {
-			this.jumpPower = 0.4F + 0.4F * jumpPowerIn / 90.0F;
-		}
+	public float getSteeringSpeed() {
+		return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.625F;
 	}
-	
+
 	@Override
-	public void handleStartJump(int jumpPower) {
-		this.setMountJumping(true);
+	public boolean boost() {
+		return false;
 	}
-	
+
+	@Nullable
+	protected SoundEvent getSaddledSound() {
+		return null;
+	}
+
 	@Override
-	public void handleStopJump() {}
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
+		this.setSaddled(compound.getBoolean("Saddled"));
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
+		compound.putBoolean("Saddled", this.isSaddled());
+	}
+
+
+
+	/*
+	@Override
+	public boolean hurt(DamageSource source, float amount) {
+		if (source.getDirectEntity() instanceof PlayerEntity && !this.getPassengers().isEmpty() && this.getPassengers().get(0) == source.getDirectEntity()) {
+			return false;
+		}
+
+		return super.hurt(source, amount);
+	}
+
+	@Override
+	public boolean isInWall() {
+		if (!this.getPassengers().isEmpty()) {
+			return false;
+		}
+		return super.isInWall();
+	}
+	 */
 	
 }

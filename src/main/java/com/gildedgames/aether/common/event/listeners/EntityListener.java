@@ -1,8 +1,8 @@
 package com.gildedgames.aether.common.event.listeners;
 
 import com.gildedgames.aether.common.advancement.MountTrigger;
+import com.gildedgames.aether.common.entity.MountableEntity;
 import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
-import com.gildedgames.aether.common.registry.AetherAdvancements;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -25,8 +25,11 @@ public class EntityListener
     public static void onMountEntity(EntityMountEvent event) {
         Entity rider = event.getEntityMounting();
         Entity mount = event.getEntityBeingMounted();
-        if (event.getEntityBeingMounted() != null && rider instanceof ServerPlayerEntity) {
+        if (mount != null && rider instanceof ServerPlayerEntity) {
             MountTrigger.INSTANCE.trigger((ServerPlayerEntity) rider, mount);
+        }
+        if (event.isDismounting() && mount instanceof MountableEntity && !mount.isOnGround()) {
+            event.setCanceled(true);
         }
     }
 

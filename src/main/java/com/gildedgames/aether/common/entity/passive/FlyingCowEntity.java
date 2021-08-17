@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.entity.passive;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.entity.MountableEntity;
 import com.gildedgames.aether.common.entity.ai.FallingRandomWalkingGoal;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
@@ -20,7 +21,6 @@ import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.PanicGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -36,7 +36,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class FlyingCowEntity extends SaddleableEntity {
+public class FlyingCowEntity extends MountableEntity {
     public float wingFold;
     public float wingAngle;
     protected int ticks;
@@ -83,14 +83,15 @@ public class FlyingCowEntity extends SaddleableEntity {
             aimingForFold = 1.0F;
         }
         this.ticks++;
-
         this.wingAngle = this.wingFold * (float) Math.sin(this.ticks / 31.83098862F);
         this.wingFold += (aimingForFold - this.wingFold) / 5.0F;
-        this.fallDistance = 0.0F;
 
         this.fallDistance = 0.0F;
-        if (this.getDeltaMovement().y < -0.1 && !this.isRiderSneaking()) {
-            this.setDeltaMovement(getDeltaMovement().x, -0.1, getDeltaMovement().z);
+        if (this.getControllingPassenger() instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) this.getControllingPassenger();
+            if (this.getDeltaMovement().y < -0.1 && !playerEntity.isShiftKeyDown()) {
+                this.setDeltaMovement(getDeltaMovement().x, -0.1, getDeltaMovement().z);
+            }
         }
     }
 
@@ -112,17 +113,17 @@ public class FlyingCowEntity extends SaddleableEntity {
         return this.isOnGround() ? super.getMaxFallDistance() : 14;
     }
 
-    @Override
-    public void handleStartJump(int jumpPower) {
-        this.setMountJumping(true);
-        this.onMountedJump();
-    }
-
-    public void onMountedJump() {
-        if(this.onGround) {
-            this.setDeltaMovement(this.getDeltaMovement().x(), 2.0F, this.getDeltaMovement().z());
-        }
-    }
+//    @Override
+//    public void handleStartJump(int jumpPower) {
+//        this.setMountJumping(true);
+//        this.onMountedJump();
+//    }
+//
+//    public void onMountedJump() {
+//        if(this.onGround) {
+//            this.setDeltaMovement(this.getDeltaMovement().x(), 2.0F, this.getDeltaMovement().z());
+//        }
+//    }
 
     @Override
     public ActionResultType mobInteract(PlayerEntity player, Hand hand) {

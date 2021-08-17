@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.entity.MountableEntity;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -54,7 +55,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 
-public class MoaEntity extends SaddleableEntity {	
+public class MoaEntity extends MountableEntity {
 	public static final DataParameter<String> MOA_TYPE = EntityDataManager.defineId(MoaEntity.class, DataSerializers.STRING);
 	public static final DataParameter<Integer> REMAINING_JUMPS = EntityDataManager.defineId(MoaEntity.class, DataSerializers.INT);
 	public static final DataParameter<Byte> AMOUNT_FED = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BYTE);
@@ -75,7 +76,7 @@ public class MoaEntity extends SaddleableEntity {
 
 	{
 		this.maxUpStep = 1.0F;
-		this.canJumpMidAir = true;
+		//this.canJumpMidAir = true;
 	}
 
 	public MoaEntity(EntityType<? extends MoaEntity> type, World worldIn) {
@@ -384,10 +385,10 @@ public class MoaEntity extends SaddleableEntity {
 		return super.mobInteract(player, hand);
 	}
 	
-	@Override
-	public boolean canBeSaddled() {
-		return !this.isBaby() && this.isPlayerGrown();
-	}
+//	@Override
+//	public boolean canBeSaddled() {
+//		return !this.isBaby() && this.isPlayerGrown();
+//	}
 	
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
@@ -462,38 +463,38 @@ public class MoaEntity extends SaddleableEntity {
 		return this.isSitting()? 0.25 : 1.25;
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	@Override
-	public void onPlayerJump(int jumpPowerIn) {
-		if (this.getRemainingJumps() > 0) {
-			LogManager.getLogger(MoaEntity.class).debug("Set moa jump power to {}", jumpPowerIn);
-			if (jumpPowerIn < 0) {
-				jumpPowerIn = 0;
-			}
-			
-			if (jumpPowerIn >= 90) {
-				this.jumpPower = 1.0F;
-			}
-			else {
-				this.jumpPower = 0.7F + 0.3F * jumpPowerIn / 90.0F;
-			}
-		}
-	}
+//	@OnlyIn(Dist.CLIENT)
+//	@Override
+//	public void onPlayerJump(int jumpPowerIn) {
+//		if (this.getRemainingJumps() > 0) {
+//			LogManager.getLogger(MoaEntity.class).debug("Set moa jump power to {}", jumpPowerIn);
+//			if (jumpPowerIn < 0) {
+//				jumpPowerIn = 0;
+//			}
+//
+//			if (jumpPowerIn >= 90) {
+//				this.jumpPower = 1.0F;
+//			}
+//			else {
+//				this.jumpPower = 0.7F + 0.3F * jumpPowerIn / 90.0F;
+//			}
+//		}
+//	}
 
 	@Override
 	public boolean canJump() {
 		return this.getRemainingJumps() > 0 && super.canJump();
 	}
 	
-	@Override
-	public void handleStartJump(int jumpPower) {
-		super.handleStartJump(jumpPower);
-		this.onMountedJump();
-	}
-	
-	@Override
-	public void handleStopJump() {
-		super.handleStopJump();
-	}
+//	@Override
+//	public void handleStartJump(int jumpPower) {
+//		super.handleStartJump(jumpPower);
+//		this.onMountedJump();
+//	}
+//
+//	@Override
+//	public void handleStopJump() {
+//		super.handleStopJump();
+//	}
 	
 }
