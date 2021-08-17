@@ -39,7 +39,6 @@ public class FallPathNavigator extends GroundPathNavigator
             int i = MathHelper.floor(this.mob.getY());
             Block block = this.level.getBlockState(new BlockPos(this.mob.getX(), i, this.mob.getZ())).getBlock();
             int j = 0;
-
             while (block == Blocks.WATER) {
                 ++i;
                 block = this.level.getBlockState(new BlockPos(this.mob.getX(), i, this.mob.getZ())).getBlock();
@@ -48,7 +47,6 @@ public class FallPathNavigator extends GroundPathNavigator
                     return MathHelper.floor(this.mob.getY());
                 }
             }
-
             return i;
         } else {
             return MathHelper.floor(this.mob.getY() + 0.5D);
@@ -66,7 +64,6 @@ public class FallPathNavigator extends GroundPathNavigator
         if (this.hasDelayedRecomputation) {
             this.recomputePath();
         }
-
         if (!this.isDone()) {
             if (this.canUpdatePath()) {
                 this.followThePath();
@@ -76,7 +73,6 @@ public class FallPathNavigator extends GroundPathNavigator
                     this.path.advance();
                 }
             }
-
             DebugPacketSender.sendPathFindingPacket(this.level, this.mob, this.path, this.maxDistanceToWaypoint);
             if (!this.isDone() && this.path != null) {
                 Vector3d vector3d1 = this.path.getNextEntityPos(this.mob);
