@@ -253,26 +253,4 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("Saddled", this.isSaddled());
 	}
-
-
-
-	/*
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		if (source.getDirectEntity() instanceof PlayerEntity && !this.getPassengers().isEmpty() && this.getPassengers().get(0) == source.getDirectEntity()) {
-			return false;
-		}
-
-		return super.hurt(source, amount);
-	}
-
-	@Override
-	public boolean isInWall() {
-		if (!this.getPassengers().isEmpty()) {
-			return false;
-		}
-		return super.isInWall();
-	}
-	 */
-	
 }

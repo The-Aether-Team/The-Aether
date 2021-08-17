@@ -47,6 +47,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class PhygEntity extends MountableEntity
 {
+    public float wingFold;
+    public float wingAngle;
+
     public PhygEntity(EntityType<? extends PhygEntity> type, World worldIn) {
         super(type, worldIn);
     }

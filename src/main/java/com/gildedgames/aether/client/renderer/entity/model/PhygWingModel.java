@@ -5,6 +5,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.util.math.MathHelper;
 
 public class PhygWingModel extends EntityModel<PhygEntity>
 {
@@ -12,8 +13,6 @@ public class PhygWingModel extends EntityModel<PhygEntity>
     private final ModelRenderer leftWingOuter;
     private final ModelRenderer rightWingInner;
     private final ModelRenderer rightWingOuter;
-    private float wingFold;
-    private float wingAngle;
 
     public PhygWingModel() {
         this.leftWingInner = new ModelRenderer(this, 0, 0);
@@ -36,17 +35,17 @@ public class PhygWingModel extends EntityModel<PhygEntity>
     public void setupAnim(PhygEntity phyg, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float aimingForFold;
         if (phyg.isOnGround()) {
-            this.wingAngle *= 0.8F;
+            phyg.wingAngle *= 0.8F;
             aimingForFold = 0.1F;
         } else {
             aimingForFold = 1.0F;
         }
-        this.wingAngle = this.wingFold * (float) Math.sin(ageInTicks / 31.83098862F);
-        this.wingFold += (aimingForFold - this.wingFold) / 15.0F;
-        float wingBend = -((float) Math.acos(this.wingFold));
+        phyg.wingAngle = phyg.wingFold * MathHelper.sin(ageInTicks / 31.83098862F);
+        phyg.wingFold += (aimingForFold - phyg.wingFold) / 15.0F;
+        float wingBend = -((float) Math.acos(phyg.wingFold));
 
-        this.leftWingInner.zRot = -(this.wingAngle + wingBend + ((float) Math.PI / 2.0F));
-        this.leftWingOuter.zRot = -(this.wingAngle - wingBend + ((float) Math.PI / 2.0F)) - this.leftWingInner.zRot;
+        this.leftWingInner.zRot = -(phyg.wingAngle + wingBend + ((float) Math.PI / 2.0F));
+        this.leftWingOuter.zRot = -(phyg.wingAngle - wingBend + ((float) Math.PI / 2.0F)) - this.leftWingInner.zRot;
         this.rightWingInner.zRot = -this.leftWingInner.zRot;
         this.rightWingOuter.zRot = -this.leftWingOuter.zRot;
     }
