@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.event.listeners;
 
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.advancement.MountTrigger;
 import com.gildedgames.aether.common.entity.MountableEntity;
 import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
@@ -41,7 +42,11 @@ public class EntityListener
             Hand hand = event.getHand();
             ItemStack heldStack = player.getItemInHand(hand);
             if (heldStack.getItem() == AetherItems.SKYROOT_BUCKET.get()) {
-                player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
+                if (target instanceof FlyingCowEntity) {
+                    player.playSound(AetherSoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);
+                } else  {
+                    player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
+                }
                 ItemStack filledBucket = DrinkHelper.createFilledResult(heldStack, player, AetherItems.SKYROOT_MILK_BUCKET.get().getDefaultInstance());
                 player.swing(hand);
                 player.setItemInHand(hand, filledBucket);

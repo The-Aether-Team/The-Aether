@@ -98,7 +98,7 @@ public class FlyingCowEntity extends MountableEntity
     public ActionResultType mobInteract(PlayerEntity playerEntity, Hand hand) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
         if (itemstack.getItem() == Items.BUCKET && !this.isBaby()) {
-            playerEntity.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
+            playerEntity.playSound(AetherSoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);
             ItemStack itemstack1 = DrinkHelper.createFilledResult(itemstack, playerEntity, Items.MILK_BUCKET.getDefaultInstance());
             playerEntity.setItemInHand(hand, itemstack1);
             return ActionResultType.sidedSuccess(this.level.isClientSide);
