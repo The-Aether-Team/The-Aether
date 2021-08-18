@@ -76,7 +76,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, ne
         p_203402_0_.put(DyeColor.RED, Blocks.RED_WOOL);
         p_203402_0_.put(DyeColor.BLACK, Blocks.BLACK_WOOL);
     });
-    private static final Map<DyeColor, float[]> COLORARRAY_BY_COLOR = Maps.newEnumMap(Arrays.stream(DyeColor.values()).collect(Collectors.toMap((DyeColor p_200204_0_) -> p_200204_0_, SheepuffEntity::createSheepColor)));
+    private static final Map<DyeColor, float[]> COLOR_ARRAY_BY_COLOR = Maps.newEnumMap(Arrays.stream(DyeColor.values()).collect(Collectors.toMap((DyeColor p_200204_0_) -> p_200204_0_, SheepuffEntity::createSheepColor)));
 
     private int eatAnimationTick, amountEaten;
     private EatAetherGrassGoal eatBlockGoal;
@@ -93,7 +93,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, ne
 
     @OnlyIn(Dist.CLIENT)
     public static float[] getColorArray(DyeColor p_175513_0_) {
-        return COLORARRAY_BY_COLOR.get(p_175513_0_);
+        return COLOR_ARRAY_BY_COLOR.get(p_175513_0_);
     }
 
     public SheepuffEntity(EntityType<? extends SheepuffEntity> type, World worldIn) {
