@@ -33,10 +33,10 @@ public class AetherEntityTypes
 	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, Aether.MODID);
 
 	// Passive Mobs
-	public static final EntityType<PhygEntity> PHYG_TYPE = EntityType.Builder.<PhygEntity>of(PhygEntity::new, EntityClassification.CREATURE).sized(0.9F, 0.9F).build("phyg");
+	public static final EntityType<PhygEntity> PHYG_TYPE = EntityType.Builder.<PhygEntity>of(PhygEntity::new, EntityClassification.CREATURE).sized(0.9F, 0.9F).clientTrackingRange(10).build("phyg");
 	public static final RegistryObject<EntityType<PhygEntity>> PHYG = ENTITIES.register("phyg", () -> PHYG_TYPE);
 
-	public static final EntityType<FlyingCowEntity> FLYING_COW_TYPE = EntityType.Builder.<FlyingCowEntity>of(FlyingCowEntity::new, EntityClassification.CREATURE).sized(0.9F, 1.4F).build("flying_cow");
+	public static final EntityType<FlyingCowEntity> FLYING_COW_TYPE = EntityType.Builder.<FlyingCowEntity>of(FlyingCowEntity::new, EntityClassification.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build("flying_cow");
 	public static final RegistryObject<EntityType<FlyingCowEntity>> FLYING_COW = ENTITIES.register("flying_cow", () -> FLYING_COW_TYPE);
 
 	public static final EntityType<SheepuffEntity> SHEEPUFF_TYPE = EntityType.Builder.<SheepuffEntity>of(SheepuffEntity::new, EntityClassification.CREATURE).sized(0.9F, 1.4F).build("sheepuff");
