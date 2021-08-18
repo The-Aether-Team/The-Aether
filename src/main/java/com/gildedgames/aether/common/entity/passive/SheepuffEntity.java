@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.AetherAnimalEntity;
 import com.gildedgames.aether.common.entity.ai.EatAetherGrassGoal;
@@ -41,7 +40,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.GroundPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -52,8 +50,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.IForgeShearable;
 
-public class SheepuffEntity extends AetherAnimalEntity implements IShearable, net.minecraftforge.common.IForgeShearable
+public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IForgeShearable
 {
     private static final DataParameter<Byte> DATA_WOOL_COLOR_ID = EntityDataManager.defineId(SheepuffEntity.class, DataSerializers.BYTE);
     private static final DataParameter<Boolean> DATA_PUFFED_ID = EntityDataManager.defineId(SheepuffEntity.class, DataSerializers.BOOLEAN);
@@ -81,6 +80,9 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, ne
     private int eatAnimationTick, amountEaten;
     private EatAetherGrassGoal eatBlockGoal;
 
+    protected final FallPathNavigator fallNavigation;
+    protected final GroundPathNavigator groundNavigation;
+
     private static float[] createSheepColor(DyeColor p_192020_0_) {
         if (p_192020_0_ == DyeColor.WHITE) {
             return new float[]{0.9019608F, 0.9019608F, 0.9019608F};
@@ -98,6 +100,8 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, ne
 
     public SheepuffEntity(EntityType<? extends SheepuffEntity> type, World worldIn) {
         super(type, worldIn);
+        this.fallNavigation = new FallPathNavigator(this, worldIn);
+        this.groundNavigation = new GroundPathNavigator(this, worldIn);
     }
 
     public SheepuffEntity(World worldIn) {
@@ -116,12 +120,6 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, ne
         this.goalSelector.addGoal(6, new FallingRandomWalkingGoal(this, 1.0)); //originally was water avoiding goal.
         this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-    }
-
-    //TODO: Does not always work properly. sometimes the sheepuff just flies off in a random direction into the void.
-    @Override
-    protected PathNavigator createNavigation(World world) {
-        return new FallPathNavigator(this, world);
     }
 
     public static AttributeModifierMap.MutableAttribute createMobAttributes() {
@@ -192,12 +190,12 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, ne
     @Override
     public void tick() {
         super.tick();
-        Aether.LOGGER.info(this.amountEaten);
         if (this.getPuffed()) {
             this.fallDistance = 0.0F;
             if (this.getDeltaMovement().y < -0.05) {
                 this.setDeltaMovement(this.getDeltaMovement().x, -0.05, this.getDeltaMovement().z);
             }
+            this.navigation = fallNavigation;
         } else {
             if (!this.isSheared()) {
                 if (this.amountEaten >= 2) {
@@ -211,6 +209,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, ne
                     this.amountEaten = 0;
                 }
             }
+            this.navigation = groundNavigation;
         }
     }
 
@@ -230,7 +229,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, ne
     @Override
     protected void jumpFromGround() {
         if (this.getPuffed()) {
-            this.setDeltaMovement(this.getDeltaMovement().x, 1.8, this.getDeltaMovement().z);
+            this.push(0.0, 1.8, 0.0);
         } else {
             super.jumpFromGround();
         }
