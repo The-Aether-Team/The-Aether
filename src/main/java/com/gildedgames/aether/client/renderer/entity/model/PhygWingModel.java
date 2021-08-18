@@ -18,13 +18,16 @@ public class PhygWingModel extends EntityModel<PhygEntity>
         this.leftWingInner = new ModelRenderer(this, 0, 0);
         this.leftWingInner.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, true); //USED FOR ROTATION AND SIZE
         this.leftWingInner.setPos(-4.0F, 12.0F, -4.0F); //USED FOR POSITION
+
         this.leftWingOuter = new ModelRenderer(this, 20, 0);
         this.leftWingOuter.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, true);
         this.leftWingOuter.setPos(0.0F, -16.0F, 0.0F);
         this.leftWingInner.addChild(this.leftWingOuter);
+
         this.rightWingInner = new ModelRenderer(this, 0, 0);
         this.rightWingInner.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, false);
         this.rightWingInner.setPos(4.0F, 12.0F, -4.0F);
+
         this.rightWingOuter = new ModelRenderer(this, 20, 0);
         this.rightWingOuter.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, false);
         this.rightWingOuter.setPos(0.0F, -16.0F, 0.0F);

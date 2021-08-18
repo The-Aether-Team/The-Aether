@@ -39,7 +39,7 @@ public class AetherEntityTypes
 	public static final EntityType<FlyingCowEntity> FLYING_COW_TYPE = EntityType.Builder.<FlyingCowEntity>of(FlyingCowEntity::new, EntityClassification.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build("flying_cow");
 	public static final RegistryObject<EntityType<FlyingCowEntity>> FLYING_COW = ENTITIES.register("flying_cow", () -> FLYING_COW_TYPE);
 
-	public static final EntityType<SheepuffEntity> SHEEPUFF_TYPE = EntityType.Builder.<SheepuffEntity>of(SheepuffEntity::new, EntityClassification.CREATURE).sized(0.9F, 1.4F).build("sheepuff");
+	public static final EntityType<SheepuffEntity> SHEEPUFF_TYPE = EntityType.Builder.<SheepuffEntity>of(SheepuffEntity::new, EntityClassification.CREATURE).sized(0.9F, 1.3F).clientTrackingRange(10).build("sheepuff");
 	public static final RegistryObject<EntityType<SheepuffEntity>> SHEEPUFF = ENTITIES.register("sheepuff", () -> SHEEPUFF_TYPE);
 
 	public static final EntityType<MoaEntity> MOA_TYPE = EntityType.Builder.<MoaEntity>of(MoaEntity::new, EntityClassification.CREATURE).sized(1.0F,  2.0F).build("moa");
