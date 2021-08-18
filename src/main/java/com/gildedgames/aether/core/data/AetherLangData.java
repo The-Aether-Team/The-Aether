@@ -520,6 +520,7 @@ public class AetherLangData extends LanguageProvider
         addSubtitle("entity", "flying_cow.ambient", "Flying Cow moos");
         addSubtitle("entity", "flying_cow.death", "Flying Cow dies");
         addSubtitle("entity", "flying_cow.hurt", "Flying Cow hurts");
+        addSubtitle("entity", "flying_cow.saddle", "Saddle equips");
         addSubtitle("entity", "flying_cow.milk", "Flying Cow gets milked");
         addSubtitle("entity", "flying_cow.step", "Footsteps");
 

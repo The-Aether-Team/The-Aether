@@ -330,6 +330,12 @@
       "mob/cow/hurt3"
     ]
   },
+  "entity.flying_cow.saddle": {
+    "subtitle": "subtitles.entity.flying_cow.saddle",
+    "sounds": [
+      "mob/horse/leather"
+    ]
+  },
   "entity.flying_cow.milk": {
     "subtitle": "subtitles.entity.flying_cow.milk",
     "sounds": [

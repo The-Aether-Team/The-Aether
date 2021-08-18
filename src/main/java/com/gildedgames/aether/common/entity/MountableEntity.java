@@ -232,6 +232,10 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 		return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.625F;
 	}
 
+	public boolean playerTriedToCrouch() {
+		return this.playerTriedToCrouch;
+	}
+
 	@Override
 	public boolean boost() {
 		return false;

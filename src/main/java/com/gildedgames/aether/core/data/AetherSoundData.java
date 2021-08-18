@@ -289,6 +289,10 @@ public class AetherSoundData extends SoundDefinitionsProvider
                         sound("minecraft:mob/cow/hurt3")
                 ).subtitle("subtitles.entity.flying_cow.hurt")
         );
+        this.add(AetherSoundEvents.ENTITY_FLYING_COW_SADDLE,
+                definition().with(sound("minecraft:mob/horse/leather"))
+                        .subtitle("subtitles.entity.flying_cow.saddle")
+        );
         this.add(AetherSoundEvents.ENTITY_FLYING_COW_MILK,
                 definition().with(
                         sound("minecraft:entity/cow/milk1"),

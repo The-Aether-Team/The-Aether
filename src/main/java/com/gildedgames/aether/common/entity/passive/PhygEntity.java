@@ -65,7 +65,7 @@ public class PhygEntity extends MountableEntity
         this.goalSelector.addGoal(3, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.2, Ingredient.of(AetherItems.BLUE_BERRY.get()), false));
         this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1));
-        this.goalSelector.addGoal(6, new FallingRandomWalkingGoal(this, 1.0)); //TODO: Seems to be bugged because the phyg will not stop walking around. It might be a fallpathnavigator issue though.
+        this.goalSelector.addGoal(6, new FallingRandomWalkingGoal(this, 1.0));
         this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
     }

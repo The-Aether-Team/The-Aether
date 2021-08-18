@@ -58,6 +58,7 @@ public class AetherSoundEvents
 	public static final RegistryObject<SoundEvent> ENTITY_FLYING_COW_AMBIENT = register("entity.flying_cow.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_FLYING_COW_DEATH = register("entity.flying_cow.death");
 	public static final RegistryObject<SoundEvent> ENTITY_FLYING_COW_HURT = register("entity.flying_cow.hurt");
+	public static final RegistryObject<SoundEvent> ENTITY_FLYING_COW_SADDLE = register("entity.flying_cow.saddle");
 	public static final RegistryObject<SoundEvent> ENTITY_FLYING_COW_MILK = register("entity.flying_cow.milk");
 	public static final RegistryObject<SoundEvent> ENTITY_FLYING_COW_STEP = register("entity.flying_cow.step");
 
