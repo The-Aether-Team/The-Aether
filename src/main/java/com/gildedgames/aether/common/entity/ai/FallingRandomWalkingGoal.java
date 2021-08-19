@@ -12,7 +12,7 @@ public class FallingRandomWalkingGoal extends RandomWalkingGoal
     protected final float probability;
 
     public FallingRandomWalkingGoal(CreatureEntity creatureEntity, double speed) {
-        this(creatureEntity, speed, creatureEntity.isOnGround() ? 120 : 0.001F);
+        this(creatureEntity, speed, 0.001F);
     }
 
     public FallingRandomWalkingGoal(CreatureEntity creatureEntity, double speed, float probability) {
@@ -23,13 +23,13 @@ public class FallingRandomWalkingGoal extends RandomWalkingGoal
     @Nullable
     protected Vector3d getPosition() {
         if (this.mob.isInWaterOrBubble()) {
-            Vector3d vector3d = RandomPositionGenerator.getLandPos(this.mob, 15, 7);
+            Vector3d vector3d = RandomPositionGenerator.getLandPos(this.mob, 15, this.mob.getMaxFallDistance());
             return vector3d == null ? super.getPosition() : vector3d;
         } else if (!this.mob.isOnGround()) {
-            Vector3d vector3d = RandomPositionGenerator.getLandPos(this.mob, 12, 12);
+            Vector3d vector3d = RandomPositionGenerator.getLandPos(this.mob, 12, this.mob.getMaxFallDistance());
             return vector3d != null ? vector3d : super.getPosition();
         } else {
-            return this.mob.getRandom().nextFloat() >= this.probability ? RandomPositionGenerator.getLandPos(this.mob, 10, 7) : super.getPosition();
+            return this.mob.getRandom().nextFloat() >= this.probability ? RandomPositionGenerator.getLandPos(this.mob, 10, this.mob.getMaxFallDistance()) : super.getPosition();
         }
     }
 }

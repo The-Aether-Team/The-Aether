@@ -13,6 +13,7 @@ import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.AetherAnimalEntity;
 import com.gildedgames.aether.common.entity.ai.EatAetherGrassGoal;
 import com.gildedgames.aether.common.entity.ai.FallingRandomWalkingGoal;
+import com.gildedgames.aether.common.entity.ai.controller.FallingMovementController;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -43,7 +44,6 @@ import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -88,7 +88,6 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
             return new float[]{0.9019608F, 0.9019608F, 0.9019608F};
         } else {
             float[] afloat = p_192020_0_.getTextureDiffuseColors();
-            float f = 0.75F;
             return new float[]{afloat[0] * 0.75F, afloat[1] * 0.75F, afloat[2] * 0.75F};
         }
     }
@@ -100,6 +99,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
 
     public SheepuffEntity(EntityType<? extends SheepuffEntity> type, World worldIn) {
         super(type, worldIn);
+        this.moveControl = new FallingMovementController(this);
         this.fallNavigation = new FallPathNavigator(this, worldIn);
         this.groundNavigation = new GroundPathNavigator(this, worldIn);
     }
@@ -195,7 +195,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
             if (this.getDeltaMovement().y < -0.05) {
                 this.setDeltaMovement(this.getDeltaMovement().x, -0.05, this.getDeltaMovement().z);
             }
-            this.navigation = fallNavigation;
+            this.navigation = this.fallNavigation;
         } else {
             if (!this.isSheared()) {
                 if (this.amountEaten >= 2) {
@@ -209,29 +209,15 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
                     this.amountEaten = 0;
                 }
             }
-            this.navigation = groundNavigation;
-        }
-    }
-
-    @Override
-    public void travel(Vector3d vector3d1) {
-        float f = this.flyingSpeed;
-        if (this.isEffectiveAi() && this.getPuffed()) {
-            this.flyingSpeed = this.getSpeed() * (0.24F / (0.91F * 0.91F * 0.91F));
-            super.travel(vector3d1);
-            this.flyingSpeed = f;
-        } else {
-            this.flyingSpeed = f;
-            super.travel(vector3d1);
+            this.navigation = this.groundNavigation;
         }
     }
 
     @Override
     protected void jumpFromGround() {
+        super.jumpFromGround();
         if (this.getPuffed()) {
             this.push(0.0, 1.8, 0.0);
-        } else {
-            super.jumpFromGround();
         }
     }
 
