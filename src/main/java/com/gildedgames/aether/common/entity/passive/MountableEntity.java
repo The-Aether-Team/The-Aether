@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.entity;
+package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.client.entity.player.ClientPlayerEntity;

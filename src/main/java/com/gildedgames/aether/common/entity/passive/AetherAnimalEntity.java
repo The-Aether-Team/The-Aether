@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.entity;
+package com.gildedgames.aether.common.entity.passive;
 
 import java.util.Random;
 

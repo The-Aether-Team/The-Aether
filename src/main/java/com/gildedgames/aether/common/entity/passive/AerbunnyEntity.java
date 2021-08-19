@@ -2,7 +2,6 @@ package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.entity.AetherAnimalEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
