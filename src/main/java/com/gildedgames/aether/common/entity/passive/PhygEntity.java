@@ -69,7 +69,6 @@ public class PhygEntity extends MountableEntity
     @Override
     public void tick() {
         super.tick();
-        this.fallDistance = 0.0F;
         if (this.getDeltaMovement().y < -0.1 && !this.playerTriedToCrouch) {
             this.setDeltaMovement(this.getDeltaMovement().x, -0.1, this.getDeltaMovement().z);
         }
@@ -115,6 +114,11 @@ public class PhygEntity extends MountableEntity
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(AetherSoundEvents.ENTITY_PHYG_STEP.get(), 0.15F, 1.0F);
+    }
+
+    @Override
+    protected int calculateFallDamage(float distance, float damageMultiplier) {
+        return 0;
     }
 
     @Override

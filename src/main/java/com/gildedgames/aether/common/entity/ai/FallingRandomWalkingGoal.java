@@ -12,11 +12,15 @@ public class FallingRandomWalkingGoal extends RandomWalkingGoal
     protected final float probability;
 
     public FallingRandomWalkingGoal(CreatureEntity creatureEntity, double speed) {
-        this(creatureEntity, speed, 0.001F);
+        this(creatureEntity, speed, 120, 0.001F);
     }
 
-    public FallingRandomWalkingGoal(CreatureEntity creatureEntity, double speed, float probability) {
-        super(creatureEntity, speed);
+    public FallingRandomWalkingGoal(CreatureEntity creatureEntity, double speed, int interval) {
+        this(creatureEntity, speed, interval, 0.001F);
+    }
+
+    public FallingRandomWalkingGoal(CreatureEntity creatureEntity, double speed, int interval, float probability) {
+        super(creatureEntity, speed, interval);
         this.probability = probability;
     }
 

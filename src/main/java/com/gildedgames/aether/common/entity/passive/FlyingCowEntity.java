@@ -73,7 +73,6 @@ public class FlyingCowEntity extends MountableEntity
     @Override
     public void tick() {
         super.tick();
-        this.fallDistance = 0.0F;
         if (this.getDeltaMovement().y < -0.1 && !this.playerTriedToCrouch) {
             this.setDeltaMovement(this.getDeltaMovement().x, -0.1, this.getDeltaMovement().z);
         }
@@ -142,6 +141,11 @@ public class FlyingCowEntity extends MountableEntity
     @Override
     public float getSteeringSpeed() {
         return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.75F;
+    }
+
+    @Override
+    protected int calculateFallDamage(float distance, float damageMultiplier) {
+        return 0;
     }
 
     @Override

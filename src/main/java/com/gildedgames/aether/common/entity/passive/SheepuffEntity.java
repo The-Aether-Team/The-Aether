@@ -369,6 +369,11 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
     }
 
     @Override
+    protected int calculateFallDamage(float distance, float damageMultiplier) {
+        return this.getPuffed() ? 0 : super.calculateFallDamage(distance, damageMultiplier);
+    }
+
+    @Override
     public int getMaxFallDistance() {
         return !this.isOnGround() && this.getPuffed() ? 20 : super.getMaxFallDistance();
     }
