@@ -4,14 +4,16 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.model.AerbunnyModel;
 import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
 
-public class AerbunnyRenderer extends MobRenderer<AerbunnyEntity, AerbunnyModel> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerbunny/aerbunny.png");
+public class AerbunnyRenderer extends MobRenderer<AerbunnyEntity, AerbunnyModel>
+{
+    private static final ResourceLocation AERBUNNY_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerbunny/aerbunny.png");
 
     public AerbunnyRenderer(EntityRendererManager manager) {
         super(manager, new AerbunnyModel(), 0.3F);
@@ -19,6 +21,11 @@ public class AerbunnyRenderer extends MobRenderer<AerbunnyEntity, AerbunnyModel>
 
     @Override
     protected void scale(AerbunnyEntity aerbunny, MatrixStack matrixStack, float scale) {
+        if (aerbunny.isBaby()) {
+            matrixStack.scale(0.5F, 0.5F, 0.5F);
+            matrixStack.translate(0.0F, 18.0F, 0.0F);
+        }
+
         if (!aerbunny.isPassenger()) {
             matrixStack.translate(0, 0.2D, 0);
         }
@@ -43,12 +50,10 @@ public class AerbunnyRenderer extends MobRenderer<AerbunnyEntity, AerbunnyModel>
                 matrixStack.mulPose(Vector3f.XN.rotationDegrees((float)(aerbunny.getDeltaMovement().y * 30.0D)));
             }
         }
-
-        this.model.puffiness = (float)(aerbunny.getVehicle() != null ? aerbunny.getPuffinessClient() : aerbunny.getPuffiness()) / 10.0F;
     }
 
     @Override
     public ResourceLocation getTextureLocation(AerbunnyEntity p_110775_1_) {
-        return TEXTURE;
+        return AERBUNNY_TEXTURE;
     }
 }

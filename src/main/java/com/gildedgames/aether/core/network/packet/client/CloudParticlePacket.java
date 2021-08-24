@@ -36,7 +36,7 @@ public class CloudParticlePacket extends AetherPacket
                     double d0 = (world.getRandom().nextFloat() - 0.5F) * 0.5D;
                     double d1 = (world.getRandom().nextFloat() - 0.5F) * 0.5D;
                     double d2 = (world.getRandom().nextFloat() - 0.5F) * 0.5D;
-                    world.addParticle(AetherParticleTypes.FREEZER.get(), entity.getX(), entity.getY(), entity.getZ(), d0 * 0.5D, d1 * 0.5D, d2 * 0.5D);
+                    world.addParticle(AetherParticleTypes.FROZEN.get(), entity.getX(), entity.getY(), entity.getZ(), d0 * 0.5D, d1 * 0.5D, d2 * 0.5D);
                 }
             }
         }

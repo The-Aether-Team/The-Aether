@@ -9,18 +9,16 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class FreezerParticle extends SpriteTexturedParticle
+public class FrozenParticle extends SpriteTexturedParticle
 {
     IAnimatedSprite animatedSprite;
     float snowDigParticleScale;
 
-    public FreezerParticle(ClientWorld worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, IAnimatedSprite sprite)
-    {
+    public FrozenParticle(ClientWorld worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, IAnimatedSprite sprite) {
         this(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeed, ySpeed, zSpeed, 1.0F, sprite);
     }
 
-    public FreezerParticle(ClientWorld worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, float scale, IAnimatedSprite sprite)
-    {
+    public FrozenParticle(ClientWorld worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, float scale, IAnimatedSprite sprite) {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeed, ySpeed, zSpeed);
         this.xd *= 0.10000000149011612D;
         this.yd *= 0.10000000149011612D;
@@ -49,8 +47,7 @@ public class FreezerParticle extends SpriteTexturedParticle
     }
 
     @Override
-    public void tick()
-    {
+    public void tick() {
         this.xo = this.x;
         this.yo = this.y;
         this.zo = this.z;
@@ -91,9 +88,9 @@ public class FreezerParticle extends SpriteTexturedParticle
 
         @Override
         public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            FreezerParticle freezerParticle = new FreezerParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
-            freezerParticle.pickSprite(this.spriteSet);
-            return freezerParticle;
+            FrozenParticle frozenParticle = new FrozenParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
+            frozenParticle.pickSprite(this.spriteSet);
+            return frozenParticle;
         }
     }
 }
