@@ -102,12 +102,14 @@ public class AerbunnyEntity extends AetherAnimalEntity
             }
             if (this.level instanceof ServerWorld) {
                 //TODO: doesn't seem to work, might be because this is not actually spawning in the right position.
-                ServerWorld serverWorld = (ServerWorld) this.level;
-                double d1 = (float) this.getX() + this.random.nextFloat() * 0.1F;
-                double d2 = (float) this.getY() + this.getBbHeight() + 0.125F;
-                double d3 = (float) this.getZ() + this.random.nextFloat() * 0.1F;
-                float f1 = this.random.nextFloat() * 360.0F;
-                serverWorld.sendParticles(ParticleTypes.POOF, -Math.sin(Math.PI / 180 * f1) * 0.75D, d2 - 0.25D, Math.cos(Math.PI / 180 * f1) * 0.75D, 3, d1, 0.125D, d3, 0.0F);
+                ServerWorld world = (ServerWorld) this.level;
+                for (int i = 0; i < 3; i++) {
+                    double d1 = (float) this.getX() + this.random.nextFloat() * 0.1F;
+                    double d2 = (float) this.getY() + this.getBbHeight() + 0.125F;
+                    double d3 = (float) this.getZ() + this.random.nextFloat() * 0.1F;
+                    float f1 = this.random.nextFloat() * 360.0F;
+                    world.addParticle(ParticleTypes.POOF, -Math.sin(Math.PI / 180 * f1) * 0.75D, d2 - 0.25D, Math.cos(Math.PI / 180 * f1) * 0.75D, d1, 0.125D, d3);
+                }
             }
         }
     }
@@ -178,14 +180,16 @@ public class AerbunnyEntity extends AetherAnimalEntity
     private void spawnExplosionParticle() {
         if (this.level instanceof ServerWorld) {
             ServerWorld world = (ServerWorld) this.level;
-            double d0 = this.random.nextGaussian() * 0.02D;
-            double d1 = this.random.nextGaussian() * 0.02D;
-            double d2 = this.random.nextGaussian() * 0.02D;
-            double d3 = 10.0D;
-            double x = this.getX() + (double) (this.random.nextFloat() * this.getBbWidth() * 2.0F) - (this.getBbWidth() - d0 * d3);
-            double y = this.getY() + (double) (this.random.nextFloat() * this.getBbHeight()) - d1 * d3;
-            double z = this.getZ() + (double) (this.random.nextFloat() * this.getBbWidth() * 2.0F) - (this.getBbWidth() - d2 * d3);
-            world.sendParticles(ParticleTypes.POOF, x, y, z, 5, d0, d1, d2, 0.0F);
+            for (int i = 0; i < 5; i++) {
+                double d0 = this.random.nextGaussian() * 0.02D;
+                double d1 = this.random.nextGaussian() * 0.02D;
+                double d2 = this.random.nextGaussian() * 0.02D;
+                double d3 = 10.0D;
+                double x = this.getX() + (double) (this.random.nextFloat() * this.getBbWidth() * 2.0F) - (this.getBbWidth() - d0 * d3);
+                double y = this.getY() + (double) (this.random.nextFloat() * this.getBbHeight()) - d1 * d3;
+                double z = this.getZ() + (double) (this.random.nextFloat() * this.getBbWidth() * 2.0F) - (this.getBbWidth() - d2 * d3);
+                world.addParticle(ParticleTypes.POOF, x, y, z, d0, d1, d2);
+            }
         }
     }
 

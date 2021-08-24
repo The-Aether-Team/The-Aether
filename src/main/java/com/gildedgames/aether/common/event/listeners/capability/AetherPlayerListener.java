@@ -17,7 +17,6 @@ public class AetherPlayerListener
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         PlayerEntity player = event.getPlayer();
         IAetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-            aetherPlayer.sync();
             if (AetherConfig.COMMON.start_with_portal.get()) {
                 aetherPlayer.givePortalItem();
             } else {

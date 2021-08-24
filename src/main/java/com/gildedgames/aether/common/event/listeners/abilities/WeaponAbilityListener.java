@@ -108,15 +108,13 @@ public class WeaponAbilityListener
     public static void onDartHurt(LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
-            if (!playerEntity.level.isClientSide) {
-                Entity source = event.getSource().getDirectEntity();
-                if (source instanceof GoldenDartEntity) {
-                    IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setGoldenDartCount(aetherPlayer.getGoldenDartCount() + 1));
-                } else if (source instanceof PoisonDartEntity || source instanceof PoisonNeedleEntity) {
-                    IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setPoisonDartCount(aetherPlayer.getPoisonDartCount() + 1));
-                } else if (source instanceof EnchantedDartEntity) {
-                    IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setEnchantedDartCount(aetherPlayer.getEnchantedDartCount() + 1));
-                }
+            Entity source = event.getSource().getDirectEntity();
+            if (source instanceof GoldenDartEntity) {
+                IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setGoldenDartCount(aetherPlayer.getGoldenDartCount() + 1));
+            } else if (source instanceof PoisonDartEntity || source instanceof PoisonNeedleEntity) {
+                IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setPoisonDartCount(aetherPlayer.getPoisonDartCount() + 1));
+            } else if (source instanceof EnchantedDartEntity) {
+                IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setEnchantedDartCount(aetherPlayer.getEnchantedDartCount() + 1));
             }
         }
     }

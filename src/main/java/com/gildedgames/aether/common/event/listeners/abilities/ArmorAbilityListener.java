@@ -1,8 +1,6 @@
 package com.gildedgames.aether.common.event.listeners.abilities;
 
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.client.PhoenixParticlePacket;
 import com.gildedgames.aether.core.util.EquipmentUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -12,7 +10,9 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SEntityVelocityPacket;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -54,8 +54,13 @@ public class ArmorAbilityListener
                 Vector3d movement = entity.getDeltaMovement().multiply(defaultBoost, 0.25F, defaultBoost);
                 entity.move(MoverType.SELF, movement);
             }
-            if (!entity.level.isClientSide) {
-                AetherPacketHandler.sendToAll(new PhoenixParticlePacket(entity.getId()));
+            if (entity.level instanceof ServerWorld) {
+                ServerWorld world = (ServerWorld) entity.level;
+                world.addParticle(ParticleTypes.FLAME,
+                        entity.getX() + (world.getRandom().nextGaussian() / 5.0D),
+                        entity.getY() + (world.getRandom().nextGaussian() / 3.0D),
+                        entity.getZ() + (world.getRandom().nextGaussian() / 5.0D),
+                        0.0D, 0.0D, 0.0D);
             }
         }
 

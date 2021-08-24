@@ -9,7 +9,6 @@ import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.SetVehiclePacket;
-import com.gildedgames.aether.core.network.packet.client.SmokeParticlePacket;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -101,7 +100,16 @@ public class DimensionListener
             FluidState fluidstate = world.getFluidState(pos);
             if (world.dimension() == AetherDimensions.AETHER_WORLD && fluidstate.getType().is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
                 world.setBlockAndUpdate(pos, AetherBlocks.AEROGEL.get().defaultBlockState());
-                AetherPacketHandler.sendToAll(new SmokeParticlePacket(pos));
+                if (world instanceof ServerWorld) {
+                    ServerWorld serverWorld = (ServerWorld) world;
+                    double x = pos.getX() + 0.5;
+                    double y = pos.getY() + 1;
+                    double z = pos.getZ() + 0.5;
+                    for (int i = 0; i < 10; i++) {
+                        serverWorld.addParticle(ParticleTypes.LARGE_SMOKE, x, y, z, 0.0D,0.0D, 0.0D);
+                    }
+                }
+                world.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 event.setCanceled(true);
             }
         }

@@ -5,6 +5,7 @@ import com.gildedgames.aether.core.capability.AetherCapabilities;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -18,9 +19,9 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 		return player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
 	}
 
-	void copyFrom(IAetherPlayer other, boolean isWasDeath);
+	void defineSynchedData();
 
-	void sync();
+	void copyFrom(IAetherPlayer other, boolean isWasDeath);
 
 	void onUpdate();
 

@@ -4,15 +4,15 @@ import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 
 import com.gildedgames.aether.common.registry.AetherTags;
-import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.client.FlameParticlePacket;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -32,7 +32,19 @@ public class PigSlayerItem extends SwordItem
 			if (target.getHealth() > 0.0F) {
 				target.hurt(DamageSource.mobAttack(attacker), 9999);
 			}
-			AetherPacketHandler.sendToAll(new FlameParticlePacket(target.getId()));
+			if (target.level instanceof ServerWorld) {
+				ServerWorld world = (ServerWorld) target.level;
+				for (int i = 0; i < 20; i++) {
+					double d0 = world.getRandom().nextGaussian() * 0.02;
+					double d1 = world.getRandom().nextGaussian() * 0.02;
+					double d2 = world.getRandom().nextGaussian() * 0.02;
+					double d3 = 5.0D;
+					double x = target.getX() + (world.getRandom().nextFloat() * target.getBbWidth() * 2.0) - target.getBbWidth() - d0 * d3;
+					double y = target.getY() + (world.getRandom().nextFloat() * target.getBbHeight()) - d1 * d3;
+					double z = target.getZ() + (world.getRandom().nextFloat() * target.getBbWidth() * 2.0) - target.getBbWidth() - d2 * d3;
+					world.addParticle(ParticleTypes.FLAME, x, y, z, d0, d1, d2);
+				}
+			}
 		}
 		return super.hurtEnemy(stack, target, attacker);
 	}

@@ -31,24 +31,13 @@ public class AetherPacketHandler
 		register(AetherTimePacket.class, AetherTimePacket::decode);
 		register(CheckTimePacket.class, CheckTimePacket::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
-		register(CloudParticlePacket.class, CloudParticlePacket::decode);
-		register(EnchantedDartCountPacket.class, EnchantedDartCountPacket::decode);
 		register(EternalDayPacket.class, EternalDayPacket::decode);
-		register(FlameParticlePacket.class, FlameParticlePacket::decode);
-		register(GoldenDartCountPacket.class, GoldenDartCountPacket::decode);
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
-		register(InebriationParticlePacket.class, InebriationParticlePacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
-		register(PhoenixParticlePacket.class, PhoenixParticlePacket::decode);
-		register(PoisonDartCountPacket.class, PoisonDartCountPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(ResetMaxUpStepPacket.class, ResetMaxUpStepPacket::decode);
 		register(ServerTimePacket.class, ServerTimePacket::decode);
-		register(SetLifeShardPacket.class, SetLifeShardPacket::decode);
-		register(SetProjectileImpactedPacket.class, SetProjectileImpactedPacket::decode);
-		register(SetRemedyPacket.class, SetRemedyPacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
-		register(SmokeParticlePacket.class, SmokeParticlePacket::decode);
 
 		// SERVER
 		register(ExtendedAttackPacket.class, ExtendedAttackPacket::decode);

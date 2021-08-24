@@ -22,13 +22,11 @@ public class LifeShardItem extends Item
             IAetherPlayer aetherPlayer = IAetherPlayer.get(playerEntity).orElseThrow(() -> new IllegalStateException("Player " + playerEntity.getName().getContents() + " has no AetherPlayer capability!"));
             if (aetherPlayer.getLifeShardCount() < aetherPlayer.getLifeShardLimit()) {
                 playerEntity.swing(hand);
-                if (!world.isClientSide) {
-                    if (!playerEntity.abilities.instabuild) {
-                        itemstack.shrink(1);
-                    }
-                    aetherPlayer.addToLifeShardCount(1);
-                    return ActionResult.sidedSuccess(itemstack, world.isClientSide());
+                if (!world.isClientSide && !playerEntity.abilities.instabuild) {
+                    itemstack.shrink(1);
                 }
+                aetherPlayer.addToLifeShardCount(1);
+                return ActionResult.success(itemstack);
             } else if (aetherPlayer.getLifeShardCount() >= aetherPlayer.getLifeShardLimit()) {
                 playerEntity.displayClientMessage(new TranslationTextComponent("aether.life_shard_limit", aetherPlayer.getLifeShardLimit()), true);
             }

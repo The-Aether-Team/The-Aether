@@ -23,6 +23,9 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -45,38 +48,37 @@ public class AetherPlayer implements IAetherPlayer
 	public float prevPortalAnimTime, portalAnimTime = 0.0F;
 
 	private boolean isHitting;
-
 	private boolean isMoving;
-
 	private boolean isJumping;
 
-	private int goldenDartCount = 0;
-	private int poisonDartCount = 0;
-	private int enchantedDartCount = 0;
+	private static final DataParameter<Integer> DATA_GOLDEN_DART_COUNT_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
+	private static final DataParameter<Integer> DATA_POISON_DART_COUNT_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
+	private static final DataParameter<Integer> DATA_ENCHANTED_DART_COUNT_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
 	private int removeGoldenDartTime;
 	private int removePoisonDartTime;
 	private int removeEnchantedDartTime;
 
-	private int remedyMaximum = 0;
-	private int remedyTimer = 0;
+	private static final DataParameter<Integer> DATA_REMEDY_MAXIMUM_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
+	private static final DataParameter<Integer> DATA_REMEDY_TIMER_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
 
-	private int projectileImpactedMaximum = 0;
-	private int projectileImpactedTimer = 0;
+	private static final DataParameter<Integer> DATA_IMPACTED_MAXIMUM_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
+	private static final DataParameter<Integer> DATA_IMPACTED_TIMER_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
 
 	private List<CloudMinionEntity> cloudMinions = new ArrayList<>(2);
 
 	private float savedHealth = 0.0F;
-	private int lifeShardCount = 0;
+	private static final DataParameter<Integer> DATA_LIFE_SHARD_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
 	
 	public AetherPlayer(PlayerEntity player) {
 		this.player = player;
+		this.defineSynchedData();
 	}
 	
 	@Override
 	public PlayerEntity getPlayer() {
 		return this.player;
 	}
-	
+
 	@Override
 	public CompoundNBT serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
@@ -99,26 +101,38 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public void deserializeNBT(CompoundNBT nbt) {
 		if (nbt.contains("CanGetPortal")) {
-			this.canGetPortal = nbt.getBoolean("CanGetPortal");
+			this.setCanGetPortal(nbt.getBoolean("CanGetPortal"));
 		}
 		if (nbt.contains("RemedyMaximum")) {
-			this.remedyMaximum = nbt.getInt("RemedyMaximum");
+			this.setRemedyMaximum(nbt.getInt("RemedyMaximum"));
 		}
 		if (nbt.contains("RemedyTimer")) {
-			this.remedyTimer = nbt.getInt("RemedyTimer");
+			this.setRemedyTimer(nbt.getInt("RemedyTimer"));
 		}
 		if (nbt.contains("ProjectileImpactedMaximum")) {
-			this.projectileImpactedMaximum = nbt.getInt("ProjectileImpactedMaximum");
+			this.setProjectileImpactedMaximum(nbt.getInt("ProjectileImpactedMaximum"));
 		}
 		if (nbt.contains("ProjectileImpactedTimer")) {
-			this.projectileImpactedTimer = nbt.getInt("ProjectileImpactedTimer");
+			this.setProjectileImpactedTimer(nbt.getInt("ProjectileImpactedTimer"));
 		}
 		if (nbt.contains("SavedHealth")) {
-			this.savedHealth = nbt.getFloat("SavedHealth");
+			this.setSavedHealth(nbt.getFloat("SavedHealth"));
 		}
 		if (nbt.contains("LifeShardCount")) {
-			this.lifeShardCount = nbt.getInt("LifeShardCount");
+			this.setLifeShardCount(nbt.getInt("LifeShardCount"));
 		}
+	}
+
+	@Override
+	public void defineSynchedData() {
+		this.getPlayer().getEntityData().define(DATA_GOLDEN_DART_COUNT_ID, 0);
+		this.getPlayer().getEntityData().define(DATA_POISON_DART_COUNT_ID, 0);
+		this.getPlayer().getEntityData().define(DATA_ENCHANTED_DART_COUNT_ID, 0);
+		this.getPlayer().getEntityData().define(DATA_REMEDY_MAXIMUM_ID, 0);
+		this.getPlayer().getEntityData().define(DATA_REMEDY_TIMER_ID, 0);
+		this.getPlayer().getEntityData().define(DATA_IMPACTED_MAXIMUM_ID, 0);
+		this.getPlayer().getEntityData().define(DATA_IMPACTED_TIMER_ID, 0);
+		this.getPlayer().getEntityData().define(DATA_LIFE_SHARD_ID, 0);
 	}
 
 	@Override
@@ -131,13 +145,6 @@ public class AetherPlayer implements IAetherPlayer
 		}
 		this.setCanGetPortal(other.canGetPortal());
 		this.setLifeShardCount(other.getLifeShardCount());
-	}
-
-	@Override
-	public void sync() {
-		this.sendRemedyPacket(this.remedyMaximum, this.remedyTimer);
-		this.sendProjectileImpactedPacket(this.projectileImpactedMaximum, this.projectileImpactedTimer);
-		this.sendLifeShardPacket(this.lifeShardCount);
 	}
 
 	@Override
@@ -165,7 +172,6 @@ public class AetherPlayer implements IAetherPlayer
 					if (mc.screen instanceof ContainerScreen) {
 						player.closeContainer();
 					}
-
 					mc.setScreen(null);
 				}
 
@@ -187,13 +193,11 @@ public class AetherPlayer implements IAetherPlayer
 		}
 		else {
 			if (player.level.isClientSide) {
-				if (this.portalAnimTime > 0.0F)
-				{
+				if (this.portalAnimTime > 0.0F) {
 					this.portalAnimTime -= 0.05F;
 				}
 
-				if (this.portalAnimTime < 0.0F)
-				{
+				if (this.portalAnimTime < 0.0F) {
 					this.portalAnimTime = 0.0F;
 				}
 			}
@@ -254,56 +258,55 @@ public class AetherPlayer implements IAetherPlayer
 	}
 
 	private void handleRemoveDarts() {
-		int goldenDarts = this.getGoldenDartCount();
-		if (goldenDarts > 0) {
-			if (this.removeGoldenDartTime <= 0) {
-				this.removeGoldenDartTime = 20 * (30 - goldenDarts);
-			}
+		if (!this.getPlayer().level.isClientSide) {
+			if (this.getGoldenDartCount() > 0) {
+				if (this.removeGoldenDartTime <= 0) {
+					this.removeGoldenDartTime = 20 * (30 - this.getGoldenDartCount());
+				}
 
-			--this.removeGoldenDartTime;
-			if (this.removeGoldenDartTime <= 0) {
-				this.setGoldenDartCount(goldenDarts - 1);
+				--this.removeGoldenDartTime;
+				if (this.removeGoldenDartTime <= 0) {
+					this.setGoldenDartCount(this.getGoldenDartCount() - 1);
+				}
 			}
-		}
-		int poisonDarts = this.getPoisonDartCount();
-		if (poisonDarts > 0) {
-			if (this.removePoisonDartTime <= 0) {
-				this.removePoisonDartTime = 20 * (30 - poisonDarts);
-			}
+			if (this.getPoisonDartCount() > 0) {
+				if (this.removePoisonDartTime <= 0) {
+					this.removePoisonDartTime = 20 * (30 - this.getPoisonDartCount());
+				}
 
-			--this.removePoisonDartTime;
-			if (this.removePoisonDartTime <= 0) {
-				this.setPoisonDartCount(poisonDarts - 1);
+				--this.removePoisonDartTime;
+				if (this.removePoisonDartTime <= 0) {
+					this.setPoisonDartCount(this.getPoisonDartCount() - 1);
+				}
 			}
-		}
-		int enchantedDarts = this.getEnchantedDartCount();
-		if (enchantedDarts > 0) {
-			if (this.removeEnchantedDartTime <= 0) {
-				this.removeEnchantedDartTime = 20 * (30 - enchantedDarts);
-			}
+			if (this.getEnchantedDartCount() > 0) {
+				if (this.removeEnchantedDartTime <= 0) {
+					this.removeEnchantedDartTime = 20 * (30 - this.getEnchantedDartCount());
+				}
 
-			--this.removeEnchantedDartTime;
-			if (this.removeEnchantedDartTime <= 0) {
-				this.setEnchantedDartCount(enchantedDarts - 1);
+				--this.removeEnchantedDartTime;
+				if (this.removeEnchantedDartTime <= 0) {
+					this.setEnchantedDartCount(this.getEnchantedDartCount() - 1);
+				}
 			}
 		}
 	}
 
 	private void tickDownRemedy() {
-		if (this.remedyTimer > 0) {
-			this.remedyTimer--;
+		if (this.getRemedyTimer() > 0) {
+			this.setRemedyTimer(this.getRemedyTimer() - 1);
 		} else {
-			this.remedyMaximum = 0;
-			this.remedyTimer = 0;
+			this.setRemedyMaximum(0);
+			this.setRemedyTimer(0);
 		}
 	}
 
 	private void tickDownProjectileImpact() {
-		if (this.projectileImpactedTimer > 0) {
-			this.projectileImpactedTimer--;
+		if (this.getProjectileImpactedTimer() > 0) {
+			this.setProjectileImpactedTimer(this.getProjectileImpactedTimer() - 1);
 		} else {
-			this.projectileImpactedMaximum = 0;
-			this.projectileImpactedTimer = 0;
+			this.setProjectileImpactedMaximum(0);
+			this.setProjectileImpactedTimer(0);
 		}
 	}
 
@@ -421,86 +424,72 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public void setGoldenDartCount(int count) {
-		this.sendGoldenDartPacket(count);
-		this.goldenDartCount = count;
+		this.getPlayer().getEntityData().set(DATA_GOLDEN_DART_COUNT_ID, count);
 	}
 
 	@Override
 	public int getGoldenDartCount() {
-		this.sendGoldenDartPacket(this.goldenDartCount);
-		return this.goldenDartCount;
+		return this.getPlayer().getEntityData().get(DATA_GOLDEN_DART_COUNT_ID);
 	}
 
 	@Override
 	public void setPoisonDartCount(int count) {
-		this.sendPoisonDartPacket(count);
-		this.poisonDartCount = count;
+		this.getPlayer().getEntityData().set(DATA_POISON_DART_COUNT_ID, count);
 	}
 
 	@Override
 	public int getPoisonDartCount() {
-		this.sendPoisonDartPacket(this.poisonDartCount);
-		return this.poisonDartCount;
+		return this.getPlayer().getEntityData().get(DATA_POISON_DART_COUNT_ID);
 	}
 
 	@Override
 	public void setEnchantedDartCount(int count) {
-		this.sendEnchantedDartPacket(count);
-		this.enchantedDartCount = count;
+		this.getPlayer().getEntityData().set(DATA_ENCHANTED_DART_COUNT_ID, count);
 	}
 
 	@Override
 	public int getEnchantedDartCount() {
-		this.sendEnchantedDartPacket(this.enchantedDartCount);
-		return this.enchantedDartCount;
+		return this.getPlayer().getEntityData().get(DATA_ENCHANTED_DART_COUNT_ID);
 	}
 
 	@Override
 	public void setRemedyMaximum(int remedyMaximum) {
-		this.sendRemedyPacket(remedyMaximum, this.remedyTimer);
-		this.remedyMaximum = remedyMaximum;
+		this.getPlayer().getEntityData().set(DATA_REMEDY_MAXIMUM_ID, remedyMaximum);
 	}
 
 	@Override
 	public int getRemedyMaximum() {
-		this.sendRemedyPacket(this.remedyMaximum, this.remedyTimer);
-		return remedyMaximum;
+		return this.getPlayer().getEntityData().get(DATA_REMEDY_MAXIMUM_ID);
 	}
 
 	@Override
 	public void setRemedyTimer(int timer) {
-		this.sendRemedyPacket(this.remedyMaximum, timer);
-		this.remedyTimer = timer;
+		this.getPlayer().getEntityData().set(DATA_REMEDY_TIMER_ID, timer);
 	}
 
 	@Override
 	public int getRemedyTimer() {
-		this.sendRemedyPacket(this.remedyMaximum, this.remedyTimer);
-		return this.remedyTimer;
+		return this.getPlayer().getEntityData().get(DATA_REMEDY_TIMER_ID);
 	}
 
 	@Override
 	public void setProjectileImpactedMaximum(int projectileImpactedMaximum) {
-		this.sendProjectileImpactedPacket(projectileImpactedMaximum, this.projectileImpactedTimer);
-		this.projectileImpactedMaximum = projectileImpactedMaximum;
+		this.getPlayer().getEntityData().set(DATA_IMPACTED_MAXIMUM_ID, projectileImpactedMaximum);
 	}
 
 	@Override
 	public int getProjectileImpactedMaximum() {
-		this.sendProjectileImpactedPacket(this.projectileImpactedMaximum, this.projectileImpactedTimer);
-		return this.projectileImpactedMaximum;
+		return this.getPlayer().getEntityData().get(DATA_IMPACTED_MAXIMUM_ID);
 	}
 
 	@Override
 	public void setProjectileImpactedTimer(int projectileImpactedTimer) {
-		this.sendProjectileImpactedPacket(this.projectileImpactedMaximum, projectileImpactedTimer);
-		this.projectileImpactedTimer = projectileImpactedTimer;
+		this.getPlayer().getEntityData().set(DATA_IMPACTED_TIMER_ID, projectileImpactedTimer);
 	}
 
 	@Override
 	public int getProjectileImpactedTimer() {
-		this.sendProjectileImpactedPacket(this.projectileImpactedMaximum, this.projectileImpactedTimer);
-		return this.projectileImpactedTimer;
+		return this.getPlayer().getEntityData().get(DATA_IMPACTED_TIMER_ID);
 	}
 
 	@Override
@@ -527,21 +516,18 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public void addToLifeShardCount(int amountToAdd) {
-		int newAmount = this.lifeShardCount + amountToAdd;
-		this.sendLifeShardPacket(newAmount);
-		this.lifeShardCount = newAmount;
+		int newAmount = this.getLifeShardCount() + amountToAdd;
+		this.getPlayer().getEntityData().set(DATA_LIFE_SHARD_ID, newAmount);
 	}
 
 	@Override
 	public void setLifeShardCount(int amount) {
-		this.sendLifeShardPacket(amount);
-		this.lifeShardCount = amount;
+		this.getPlayer().getEntityData().set(DATA_LIFE_SHARD_ID, amount);
 	}
 
 	@Override
 	public int getLifeShardCount() {
-		this.sendLifeShardPacket(this.lifeShardCount);
-		return this.lifeShardCount;
+		return this.getPlayer().getEntityData().get(DATA_LIFE_SHARD_ID);
 	}
 
 	@Override
@@ -554,45 +540,9 @@ public class AetherPlayer implements IAetherPlayer
 		return new AttributeModifier(LIFE_SHARD_HEALTH_ID, "Life Shard health increase", this.getLifeShardCount() * 2.0F, AttributeModifier.Operation.ADDITION);
 	}
 
-	private void sendGoldenDartPacket(int count) {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new GoldenDartCountPacket(this.getPlayer().getId(), count), (ServerPlayerEntity) this.getPlayer());
-		}
-	}
-
-	private void sendPoisonDartPacket(int count) {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new PoisonDartCountPacket(this.getPlayer().getId(), count), (ServerPlayerEntity) this.getPlayer());
-		}
-	}
-
-	private void sendEnchantedDartPacket(int count) {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new EnchantedDartCountPacket(this.getPlayer().getId(), count), (ServerPlayerEntity) this.getPlayer());
-		}
-	}
-
-	private void sendRemedyPacket(int maximum, int timer) {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new SetRemedyPacket(this.getPlayer().getId(), maximum, timer), (ServerPlayerEntity) this.getPlayer());
-		}
-	}
-
-	private void sendProjectileImpactedPacket(int maximum, int timer) {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new SetProjectileImpactedPacket(this.getPlayer().getId(), maximum, timer), (ServerPlayerEntity) this.getPlayer());
-		}
-	}
-
 	private void sendCloudMinionPacket(CloudMinionEntity cloudMinionRight, CloudMinionEntity cloudMinionLeft) {
 		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
 			AetherPacketHandler.sendToPlayer(new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), (ServerPlayerEntity) this.getPlayer());
-		}
-	}
-
-	private void sendLifeShardPacket(int amount) {
-		if (this.getPlayer() instanceof ServerPlayerEntity && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new SetLifeShardPacket(this.getPlayer().getId(), amount), (ServerPlayerEntity) this.getPlayer());
 		}
 	}
 }

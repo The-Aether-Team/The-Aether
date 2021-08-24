@@ -3,8 +3,6 @@ package com.gildedgames.aether.common.entity.projectile.crystal;
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.client.CloudParticlePacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -14,6 +12,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.*;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class CloudCrystalEntity extends AbstractCrystalEntity
 {
@@ -42,15 +41,14 @@ public class CloudCrystalEntity extends AbstractCrystalEntity
 
     @Override
     public void spawnExplosionParticles() {
-        if (this.level.isClientSide) {
-            for (int i = 0; i < 20; ++i) {
+        if (this.level instanceof ServerWorld) {
+            ServerWorld world = (ServerWorld) this.level;
+            for (int i = 0; i < 20; i++) {
                 double d0 = (this.random.nextFloat() - 0.5F) * 0.5D;
                 double d1 = (this.random.nextFloat() - 0.5F) * 0.5D;
                 double d2 = (this.random.nextFloat() - 0.5F) * 0.5D;
-                this.level.addParticle(AetherParticleTypes.FROZEN.get(), this.getX(), this.getY(), this.getZ(), d0 * 0.5D, d1 * 0.5D, d2 * 0.5D);
+                world.addParticle(AetherParticleTypes.FROZEN.get(), this.getX(), this.getY(), this.getZ(), d0 * 0.5D, d1 * 0.5D, d2 * 0.5D);
             }
-        } else {
-            AetherPacketHandler.sendToAll(new CloudParticlePacket(this.getId()));
         }
     }
 

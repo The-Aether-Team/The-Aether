@@ -3,13 +3,9 @@ package com.gildedgames.aether.core.mixin.common;
 import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.PhoenixArrowPacket;
-import com.gildedgames.aether.core.network.packet.client.PhoenixParticlePacket;
-import net.minecraft.client.gui.screen.WorkingScreen;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.world.server.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,16 +30,27 @@ public class AbstractArrowEntityMixin
                     if (this.inGround) {
                         if (this.inGroundTime % 5 == 0) {
                             for (int i = 0; i < 1; i++) {
-                                AetherPacketHandler.sendToAll(new PhoenixParticlePacket(arrow.getId()));
+                                this.spawnParticles(arrow);
                             }
                         }
                     } else {
                         for (int i = 0; i < 2; i++) {
-                            AetherPacketHandler.sendToAll(new PhoenixParticlePacket(arrow.getId()));
+                            this.spawnParticles(arrow);
                         }
                     }
                 }
             }
         });
+    }
+
+    private void spawnParticles(AbstractArrowEntity arrow) {
+        if (arrow.level instanceof ServerWorld) {
+            ServerWorld world = (ServerWorld) arrow.level;
+            world.addParticle(ParticleTypes.FLAME,
+                    arrow.getX() + (world.getRandom().nextGaussian() / 5.0D),
+                    arrow.getY() + (world.getRandom().nextGaussian() / 3.0D),
+                    arrow.getZ() + (world.getRandom().nextGaussian() / 5.0D),
+                    0.0D, 0.0D, 0.0D);
+        }
     }
 }

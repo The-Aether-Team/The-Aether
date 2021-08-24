@@ -67,7 +67,10 @@ public class MimicEntity extends CreatureEntity {
 		}
 		if (source.getDirectEntity() instanceof LivingEntity && this.hurtTime == 0) {
 			if (this.level instanceof ServerWorld) {
-				((ServerWorld) this.level).sendParticles(new BlockParticleData(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState()), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 20, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05);
+				ServerWorld world = (ServerWorld) this.level;
+				for (int i = 0; i < 20; i++) {
+					world.sendParticles(new BlockParticleData(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState()), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 1, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05F);
+				}
 			}
 			
 			LivingEntity attacker = (LivingEntity) source.getDirectEntity();
