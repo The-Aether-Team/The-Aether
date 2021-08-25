@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.event.listeners.capability;
 
-import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
@@ -16,13 +15,7 @@ public class AetherPlayerListener
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         PlayerEntity player = event.getPlayer();
-        IAetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-            if (AetherConfig.COMMON.start_with_portal.get()) {
-                aetherPlayer.givePortalItem();
-            } else {
-                aetherPlayer.setCanGetPortal(false);
-            }
-        });
+        IAetherPlayer.get(player).ifPresent(IAetherPlayer::onLogin);
     }
 
     @SubscribeEvent

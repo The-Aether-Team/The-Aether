@@ -1,34 +1,28 @@
 package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.FallingRandomWalkingGoal;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.JumpController;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.*;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
@@ -68,10 +62,10 @@ public class AerbunnyEntity extends AetherAnimalEntity
         this.entityData.define(DATA_PUFFINESS_ID, 0);
     }
 
-    //TODO: Need to stop desync when entering water.
     @Override
     public void tick() {
         super.tick();
+        Aether.LOGGER.info(this.getVehicle());
         this.setPuffiness(this.getPuffiness() - 1);
         if (this.getPuffiness() < 0) {
             this.setPuffiness(0);
@@ -100,17 +94,15 @@ public class AerbunnyEntity extends AetherAnimalEntity
                     }
                 });
             }
-            if (this.level instanceof ServerWorld) {
-                //TODO: doesn't seem to work, might be because this is not actually spawning in the right position.
-                ServerWorld world = (ServerWorld) this.level;
-                for (int i = 0; i < 3; i++) {
-                    double d1 = (float) this.getX() + this.random.nextFloat() * 0.1F;
-                    double d2 = (float) this.getY() + this.getBbHeight() + 0.125F;
-                    double d3 = (float) this.getZ() + this.random.nextFloat() * 0.1F;
-                    float f1 = this.random.nextFloat() * 360.0F;
-                    world.sendParticles(ParticleTypes.POOF, -Math.sin(Math.PI / 180 * f1) * 0.75D, d2 - 0.25D, Math.cos(Math.PI / 180 * f1) * 0.75D, 1, d1, 0.125D, d3, 0.0F);
-                }
-            }
+        }
+    }
+
+    @Override
+    public void baseTick() {
+        super.baseTick();
+        if (this.isAlive() && this.isEyeInFluid(FluidTags.WATER) && !this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).is(Blocks.BUBBLE_COLUMN)
+                && this.isPassenger() && this.getVehicle() != null && !this.getVehicle().canBeRiddenInWater(this) && this.level.isClientSide) {
+            this.stopRiding();
         }
     }
 
@@ -159,8 +151,11 @@ public class AerbunnyEntity extends AetherAnimalEntity
         if (this.isPassenger()) {
             this.navigation.recomputePath();
             this.stopRiding();
+            IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(null));
         } else {
-            this.startRiding(player);
+            if (this.startRiding(player)) {
+                IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(this.getUUID()));
+            }
         }
         return ActionResultType.SUCCESS;
     }

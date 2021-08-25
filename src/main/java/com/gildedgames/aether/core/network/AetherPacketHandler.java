@@ -35,6 +35,7 @@ public class AetherPacketHandler
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
+		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
 		register(ResetMaxUpStepPacket.class, ResetMaxUpStepPacket::decode);
 		register(ServerTimePacket.class, ServerTimePacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);

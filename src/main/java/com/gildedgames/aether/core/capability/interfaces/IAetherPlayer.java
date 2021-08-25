@@ -10,6 +10,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 {
@@ -20,6 +21,8 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 	}
 
 	void defineSynchedData();
+
+	void onLogin();
 
 	void copyFrom(IAetherPlayer other, boolean isWasDeath);
 
@@ -64,6 +67,9 @@ public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
 	int getProjectileImpactedMaximum();
 	void setProjectileImpactedTimer(int timer);
 	int getProjectileImpactedTimer();
+
+	void setAerbunny(UUID uuid);
+	UUID getAerbunny();
 
 	void setCloudMinions(CloudMinionEntity cloudMinionRight, CloudMinionEntity cloudMinionLeft);
 	List<CloudMinionEntity> getCloudMinionEntities();

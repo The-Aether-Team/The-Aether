@@ -1,9 +1,11 @@
 package com.gildedgames.aether.core.capability.capabilities.player;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.ColdParachuteEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.GoldenParachuteEntity;
+import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.AetherConfig;
@@ -14,6 +16,7 @@ import com.gildedgames.aether.core.network.packet.client.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
@@ -28,11 +31,13 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class AetherPlayer implements IAetherPlayer
@@ -64,7 +69,9 @@ public class AetherPlayer implements IAetherPlayer
 	private static final DataParameter<Integer> DATA_IMPACTED_MAXIMUM_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> DATA_IMPACTED_TIMER_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
 
-	private List<CloudMinionEntity> cloudMinions = new ArrayList<>(2);
+	private static final DataParameter<Optional<UUID>> DATA_AERBUNNY_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.OPTIONAL_UUID);
+
+	private final List<CloudMinionEntity> cloudMinions = new ArrayList<>(2);
 
 	private float savedHealth = 0.0F;
 	private static final DataParameter<Integer> DATA_LIFE_SHARD_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
@@ -87,6 +94,9 @@ public class AetherPlayer implements IAetherPlayer
 		nbt.putInt("RemedyTimer", this.getRemedyTimer());
 		nbt.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
 		nbt.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
+		if (this.getAerbunny() != null) {
+			nbt.putUUID("Aerbunny", this.getAerbunny());
+		}
 		nbt.putFloat("SavedHealth", this.getSavedHealth());
 		nbt.putInt("LifeShardCount", this.getLifeShardCount());
 
@@ -115,6 +125,9 @@ public class AetherPlayer implements IAetherPlayer
 		if (nbt.contains("ProjectileImpactedTimer")) {
 			this.setProjectileImpactedTimer(nbt.getInt("ProjectileImpactedTimer"));
 		}
+		if (nbt.contains("Aerbunny")) {
+			this.setAerbunny(nbt.getUUID("Aerbunny"));
+		}
 		if (nbt.contains("SavedHealth")) {
 			this.setSavedHealth(nbt.getFloat("SavedHealth"));
 		}
@@ -132,7 +145,14 @@ public class AetherPlayer implements IAetherPlayer
 		this.getPlayer().getEntityData().define(DATA_REMEDY_TIMER_ID, 0);
 		this.getPlayer().getEntityData().define(DATA_IMPACTED_MAXIMUM_ID, 0);
 		this.getPlayer().getEntityData().define(DATA_IMPACTED_TIMER_ID, 0);
+		this.getPlayer().getEntityData().define(DATA_AERBUNNY_ID, Optional.empty());
 		this.getPlayer().getEntityData().define(DATA_LIFE_SHARD_ID, 0);
+	}
+
+	@Override
+	public void onLogin() {
+		this.handleGivePortal();
+		this.remountAerbunny();
 	}
 
 	@Override
@@ -149,6 +169,7 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public void onUpdate() {
+		Aether.LOGGER.info(this.getAerbunny());
 		this.handleAetherPortal();
 		this.activateParachute();
 		this.handleRemoveDarts();
@@ -157,6 +178,14 @@ public class AetherPlayer implements IAetherPlayer
 		this.checkToRemoveCloudMinions();
 		this.handleSavedHealth();
 		this.handleLifeShardModifier();
+	}
+
+	private void handleGivePortal() {
+		if (AetherConfig.COMMON.start_with_portal.get()) {
+			this.givePortalItem();
+		} else {
+			this.setCanGetPortal(false);
+		}
 	}
 
 	/**
@@ -307,6 +336,22 @@ public class AetherPlayer implements IAetherPlayer
 		} else {
 			this.setProjectileImpactedMaximum(0);
 			this.setProjectileImpactedTimer(0);
+		}
+	}
+
+	private void remountAerbunny() {
+		if (this.getAerbunny() != null) {
+			if (this.getPlayer().level instanceof ServerWorld) {
+				ServerWorld serverWorld = (ServerWorld) this.getPlayer().level;
+				Entity entity = serverWorld.getEntity(this.getAerbunny());
+				if (entity instanceof AerbunnyEntity) {
+					AerbunnyEntity aerbunny = (AerbunnyEntity) entity;
+					aerbunny.startRiding(this.getPlayer());
+					if (this.getPlayer() instanceof ServerPlayerEntity) {
+						AetherPacketHandler.sendToPlayer(new RemountAerbunnyPacket(this.getPlayer().getId(), aerbunny.getId()), (ServerPlayerEntity) this.getPlayer());
+					}
+				}
+			}
 		}
 	}
 
@@ -490,6 +535,16 @@ public class AetherPlayer implements IAetherPlayer
 	@Override
 	public int getProjectileImpactedTimer() {
 		return this.getPlayer().getEntityData().get(DATA_IMPACTED_TIMER_ID);
+	}
+
+	@Override
+	public void setAerbunny(UUID uuid) {
+		this.getPlayer().getEntityData().set(DATA_AERBUNNY_ID, Optional.ofNullable(uuid));
+	}
+
+	@Override
+	public UUID getAerbunny() {
+		return this.getPlayer().getEntityData().get(DATA_AERBUNNY_ID).orElse(null);
 	}
 
 	@Override
