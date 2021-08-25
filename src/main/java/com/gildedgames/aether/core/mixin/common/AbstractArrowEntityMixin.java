@@ -46,11 +46,11 @@ public class AbstractArrowEntityMixin
     private void spawnParticles(AbstractArrowEntity arrow) {
         if (arrow.level instanceof ServerWorld) {
             ServerWorld world = (ServerWorld) arrow.level;
-            world.addParticle(ParticleTypes.FLAME,
+            world.sendParticles(ParticleTypes.FLAME,
                     arrow.getX() + (world.getRandom().nextGaussian() / 5.0D),
                     arrow.getY() + (world.getRandom().nextGaussian() / 3.0D),
                     arrow.getZ() + (world.getRandom().nextGaussian() / 5.0D),
-                    0.0D, 0.0D, 0.0D);
+                    1, 0.0D, 0.0D, 0.0D, 0.0F);
         }
     }
 }

@@ -47,7 +47,7 @@ public class CloudCrystalEntity extends AbstractCrystalEntity
                 double d0 = (this.random.nextFloat() - 0.5F) * 0.5D;
                 double d1 = (this.random.nextFloat() - 0.5F) * 0.5D;
                 double d2 = (this.random.nextFloat() - 0.5F) * 0.5D;
-                world.addParticle(AetherParticleTypes.FROZEN.get(), this.getX(), this.getY(), this.getZ(), d0 * 0.5D, d1 * 0.5D, d2 * 0.5D);
+                world.sendParticles(AetherParticleTypes.FROZEN.get(), this.getX(), this.getY(), this.getZ(), 1, d0 * 0.5D, d1 * 0.5D, d2 * 0.5D, 0.0F);
             }
         }
     }

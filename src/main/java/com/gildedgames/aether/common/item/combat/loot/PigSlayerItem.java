@@ -42,7 +42,7 @@ public class PigSlayerItem extends SwordItem
 					double x = target.getX() + (world.getRandom().nextFloat() * target.getBbWidth() * 2.0) - target.getBbWidth() - d0 * d3;
 					double y = target.getY() + (world.getRandom().nextFloat() * target.getBbHeight()) - d1 * d3;
 					double z = target.getZ() + (world.getRandom().nextFloat() * target.getBbWidth() * 2.0) - target.getBbWidth() - d2 * d3;
-					world.addParticle(ParticleTypes.FLAME, x, y, z, d0, d1, d2);
+					world.sendParticles(ParticleTypes.FLAME, x, y, z, 1, d0, d1, d2, 0.0F);
 				}
 			}
 		}

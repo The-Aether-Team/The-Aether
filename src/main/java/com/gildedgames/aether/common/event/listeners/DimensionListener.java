@@ -106,7 +106,7 @@ public class DimensionListener
                     double y = pos.getY() + 1;
                     double z = pos.getZ() + 0.5;
                     for (int i = 0; i < 10; i++) {
-                        serverWorld.addParticle(ParticleTypes.LARGE_SMOKE, x, y, z, 0.0D,0.0D, 0.0D);
+                        serverWorld.sendParticles(ParticleTypes.LARGE_SMOKE, x, y, z, 1, 0.0D,0.0D, 0.0D, 0.0F);
                     }
                 }
                 world.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1.0F, 1.0F);

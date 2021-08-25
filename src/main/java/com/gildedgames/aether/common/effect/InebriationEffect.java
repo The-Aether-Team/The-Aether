@@ -47,11 +47,11 @@ public class InebriationEffect extends Effect
 
         if (entityLivingBaseIn.level instanceof ServerWorld) {
             ServerWorld world = (ServerWorld) entityLivingBaseIn.level;
-            world.addParticle(new ItemParticleData(ParticleTypes.ITEM, Items.RED_DYE.getDefaultInstance()),
+            world.sendParticles(new ItemParticleData(ParticleTypes.ITEM, Items.RED_DYE.getDefaultInstance()),
                     entityLivingBaseIn.getX(),
                     entityLivingBaseIn.getY() + entityLivingBaseIn.getBbHeight() * 0.8,
                     entityLivingBaseIn.getZ(),
-                    0.0, 0.0, 0.0);
+                    1, 0.0, 0.0, 0.0, 0.0F);
         }
     }
 
