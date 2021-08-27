@@ -91,7 +91,6 @@ public class AerbunnyEntity extends AetherAnimalEntity
                 });
             } else if (player.isFallFlying()) {
                 this.stopRiding();
-                IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(null));
             }
         }
     }
@@ -102,9 +101,6 @@ public class AerbunnyEntity extends AetherAnimalEntity
         if (this.isAlive() && this.isEyeInFluid(FluidTags.WATER) && !this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).is(Blocks.BUBBLE_COLUMN)
                 && this.isPassenger() && this.getVehicle() != null && !this.getVehicle().canBeRiddenInWater(this) && this.level.isClientSide) {
             this.stopRiding();
-            if (this.getVehicle() instanceof PlayerEntity) {
-                IAetherPlayer.get((PlayerEntity) this.getVehicle()).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(null));
-            }
         }
     }
 

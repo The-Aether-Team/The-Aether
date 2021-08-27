@@ -1,6 +1,5 @@
 package com.gildedgames.aether.core.capability.capabilities.player;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.ColdParachuteEntity;
@@ -70,6 +69,7 @@ public class AetherPlayer implements IAetherPlayer
 	private static final DataParameter<Integer> DATA_IMPACTED_TIMER_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.INT);
 
 	private static final DataParameter<Optional<UUID>> DATA_AERBUNNY_ID = EntityDataManager.defineId(PlayerEntity.class, DataSerializers.OPTIONAL_UUID);
+	private int aerbunnyCheck;
 
 	private final List<CloudMinionEntity> cloudMinions = new ArrayList<>(2);
 
@@ -174,6 +174,7 @@ public class AetherPlayer implements IAetherPlayer
 		this.handleRemoveDarts();
 		this.tickDownRemedy();
 		this.tickDownProjectileImpact();
+		this.checkToRemoveAerbunny();
 		this.checkToRemoveCloudMinions();
 		this.handleSavedHealth();
 		this.handleLifeShardModifier();
@@ -348,6 +349,27 @@ public class AetherPlayer implements IAetherPlayer
 					aerbunny.startRiding(this.getPlayer());
 					if (this.getPlayer() instanceof ServerPlayerEntity) {
 						AetherPacketHandler.sendToPlayer(new RemountAerbunnyPacket(this.getPlayer().getId(), aerbunny.getId()), (ServerPlayerEntity) this.getPlayer());
+					}
+				}
+			}
+		}
+	}
+
+	private void checkToRemoveAerbunny() {
+		if (this.getAerbunny() != null) {
+			if (this.getPlayer().level instanceof ServerWorld) {
+				ServerWorld serverWorld = (ServerWorld) this.getPlayer().level;
+				Entity entity = serverWorld.getEntity(this.getAerbunny());
+				if (entity instanceof AerbunnyEntity) {
+					AerbunnyEntity aerbunny = (AerbunnyEntity) entity;
+					if (aerbunny.getVehicle() == null) {
+						this.aerbunnyCheck++;
+					} else {
+						this.aerbunnyCheck = 0;
+					}
+					if (this.aerbunnyCheck == 50) {
+						this.setAerbunny(null);
+						this.aerbunnyCheck = 0;
 					}
 				}
 			}
