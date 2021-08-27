@@ -3,7 +3,6 @@ package com.gildedgames.aether.common.registry;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.monster.dungeon.MimicEntity;
 import com.gildedgames.aether.common.entity.monster.dungeon.SentryEntity;
-import com.gildedgames.aether.common.entity.monster.dungeon.boss.SunSpiritEntity;
 import com.gildedgames.aether.common.entity.passive.AetherAnimalEntity;
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
