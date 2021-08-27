@@ -169,7 +169,6 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public void onUpdate() {
-		Aether.LOGGER.info(this.getAerbunny());
 		this.handleAetherPortal();
 		this.activateParachute();
 		this.handleRemoveDarts();

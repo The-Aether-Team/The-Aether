@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.entity.passive;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.FallingRandomWalkingGoal;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
@@ -30,8 +29,6 @@ import java.util.EnumSet;
 public class AerbunnyEntity extends AetherAnimalEntity
 {
     public static final DataParameter<Integer> DATA_PUFFINESS_ID = EntityDataManager.defineId(AerbunnyEntity.class, DataSerializers.INT);
-    private int jumps;
-    private int jumpTicks;
 
     public AerbunnyEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
         super(type, worldIn);
@@ -65,7 +62,6 @@ public class AerbunnyEntity extends AetherAnimalEntity
     @Override
     public void tick() {
         super.tick();
-        Aether.LOGGER.info(this.getVehicle());
         this.setPuffiness(this.getPuffiness() - 1);
         if (this.getPuffiness() < 0) {
             this.setPuffiness(0);
@@ -93,6 +89,9 @@ public class AerbunnyEntity extends AetherAnimalEntity
                         }
                     }
                 });
+            } else if (player.isFallFlying()) {
+                this.stopRiding();
+                IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(null));
             }
         }
     }
@@ -103,33 +102,17 @@ public class AerbunnyEntity extends AetherAnimalEntity
         if (this.isAlive() && this.isEyeInFluid(FluidTags.WATER) && !this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).is(Blocks.BUBBLE_COLUMN)
                 && this.isPassenger() && this.getVehicle() != null && !this.getVehicle().canBeRiddenInWater(this) && this.level.isClientSide) {
             this.stopRiding();
+            if (this.getVehicle() instanceof PlayerEntity) {
+                IAetherPlayer.get((PlayerEntity) this.getVehicle()).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(null));
+            }
         }
     }
 
-    //TODO: Organize.
     @Override
     public void aiStep() {
-
-        if (this.onGround) {
-            this.jumps = 1;
-            this.jumpTicks = 10;
-        }
-        else if (this.jumpTicks > 0) {
-            --this.jumpTicks;
-        }
-
-        if (this.jumping && !this.isInWater() && !this.isInLava() && !this.onGround && this.jumpTicks == 0 && this.jumps > 0) {
-            if(this.getDeltaMovement().x != 0.0F || this.getDeltaMovement().z != 0.0F) {
-                this.jumpFromGround();
-            }
-            this.jumpTicks = 10;
-        }
-
         if (this.getDeltaMovement().y < -0.1D) {
             this.setDeltaMovement(getDeltaMovement().x, -0.1D, getDeltaMovement().z);
         }
-
-
         super.aiStep();
     }
 
@@ -147,24 +130,26 @@ public class AerbunnyEntity extends AetherAnimalEntity
     }
 
     private ActionResultType ridePlayer(PlayerEntity player) {
-        this.level.playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundCategory.NEUTRAL, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-        if (this.isPassenger()) {
-            this.navigation.recomputePath();
-            this.stopRiding();
-            IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(null));
-        } else {
-            if (this.startRiding(player)) {
-                IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(this.getUUID()));
+        if (!this.isBaby()) {
+            this.level.playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundCategory.NEUTRAL, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            if (this.isPassenger()) {
+                this.navigation.recomputePath();
+                this.stopRiding();
+                IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(null));
+            } else {
+                if (this.startRiding(player)) {
+                    IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(this.getUUID()));
+                }
             }
+            return ActionResultType.SUCCESS;
         }
-        return ActionResultType.SUCCESS;
+        return ActionResultType.PASS;
     }
 
     @Override
     protected void jumpFromGround() {
         super.jumpFromGround();
         this.puff();
-        --this.jumps;
     }
 
     private void puff() {
@@ -211,9 +196,9 @@ public class AerbunnyEntity extends AetherAnimalEntity
         return true;
     }
 
-    @Override //TODO: Change based on if the player is sneaking.
+    @Override
     public double getMyRidingOffset() {
-        return 0.4D;
+        return this.getVehicle() != null && this.getVehicle().isCrouching() ? 0.4D : 0.575D;
     }
 
     @Override
@@ -237,14 +222,12 @@ public class AerbunnyEntity extends AetherAnimalEntity
         return AetherEntityTypes.AERBUNNY.get().create(this.level);
     }
 
+    public static class HopGoal extends Goal
+    {
+        private final AerbunnyEntity aerbunny;
 
-
-
-    //TODO: Rewrite and possibly edit other stuff like move controller and navigator.
-    public static class HopGoal extends Goal {
-        private AerbunnyEntity aerbunny;
         public HopGoal(AerbunnyEntity entity) {
-            aerbunny = entity;
+            this.aerbunny = entity;
             setFlags(EnumSet.of(Flag.JUMP));
         }
 
@@ -255,7 +238,7 @@ public class AerbunnyEntity extends AetherAnimalEntity
 
         @Override
         public void tick() {
-            if(aerbunny.getDeltaMovement().x != 0.0F || aerbunny.getDeltaMovement().z != 0.0F) {
+            if (this.aerbunny.getDeltaMovement().x != 0.0F || aerbunny.getDeltaMovement().z != 0.0F) {
                 this.aerbunny.jumpControl.jump();
             }
         }
