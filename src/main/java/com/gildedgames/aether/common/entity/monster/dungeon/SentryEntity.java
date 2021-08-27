@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.entity.monster;
+package com.gildedgames.aether.common.entity.monster.dungeon;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;

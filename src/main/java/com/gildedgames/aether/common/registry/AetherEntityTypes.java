@@ -1,6 +1,9 @@
 package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.entity.monster.dungeon.MimicEntity;
+import com.gildedgames.aether.common.entity.monster.dungeon.SentryEntity;
+import com.gildedgames.aether.common.entity.monster.dungeon.boss.SunSpiritEntity;
 import com.gildedgames.aether.common.entity.passive.AetherAnimalEntity;
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
@@ -42,14 +45,14 @@ public class AetherEntityTypes
 	public static final EntityType<SheepuffEntity> SHEEPUFF_TYPE = EntityType.Builder.<SheepuffEntity>of(SheepuffEntity::new, EntityClassification.CREATURE).sized(0.9F, 1.3F).clientTrackingRange(10).build("sheepuff");
 	public static final RegistryObject<EntityType<SheepuffEntity>> SHEEPUFF = ENTITIES.register("sheepuff", () -> SHEEPUFF_TYPE);
 
+	public static final EntityType<AerbunnyEntity> AERBUNNY_TYPE = EntityType.Builder.<AerbunnyEntity>of(AerbunnyEntity::new, EntityClassification.CREATURE).sized(0.4F, 0.4F).clientTrackingRange(8).build("aerbunny");
+	public static final RegistryObject<EntityType<AerbunnyEntity>> AERBUNNY = ENTITIES.register("aerbunny", () -> AERBUNNY_TYPE);
+
 	public static final EntityType<MoaEntity> MOA_TYPE = EntityType.Builder.<MoaEntity>of(MoaEntity::new, EntityClassification.CREATURE).sized(1.0F,  2.0F).build("moa");
 	public static final RegistryObject<EntityType<MoaEntity>> MOA = ENTITIES.register("moa", () -> MOA_TYPE);
 
 	public static final EntityType<AerwhaleEntity> AERWHALE_TYPE = EntityType.Builder.<AerwhaleEntity>of(AerwhaleEntity::new, EntityClassification.CREATURE).sized(3.0F, 3.0F).fireImmune().build("aerwhale");
 	public static final RegistryObject<EntityType<AerwhaleEntity>> AERWHALE = ENTITIES.register("aerwhale", () -> AERWHALE_TYPE);
-
-	public static final EntityType<AerbunnyEntity> AERBUNNY_TYPE = EntityType.Builder.<AerbunnyEntity>of(AerbunnyEntity::new, EntityClassification.CREATURE).sized(0.4F, 0.4F).build("aerbunny");
-	public static final RegistryObject<EntityType<AerbunnyEntity>> AERBUNNY = ENTITIES.register("aerbunny", () -> AERBUNNY_TYPE);
 
 	// Hostile Mobs
 	//Swet
@@ -66,6 +69,8 @@ public class AetherEntityTypes
 	public static final EntityType<ZephyrEntity> ZEPHYR_TYPE = EntityType.Builder.<ZephyrEntity>of(ZephyrEntity::new, EntityClassification.MONSTER).sized(4.0F, 4.0F).build("zephyr");
 	public static final RegistryObject<EntityType<ZephyrEntity>> ZEPHYR = ENTITIES.register("zephyr", () -> ZEPHYR_TYPE);
 
+	// Dungeon
+
 	public static final EntityType<SentryEntity> SENTRY_TYPE = EntityType.Builder.<SentryEntity>of(SentryEntity::new, EntityClassification.MONSTER).sized(2.0F, 2.0F).build("sentry");
 	public static final RegistryObject<EntityType<SentryEntity>> SENTRY = ENTITIES.register("sentry", () -> SENTRY_TYPE);
 
@@ -76,6 +81,10 @@ public class AetherEntityTypes
 	//public static final RegistryObject<EntityType<ValkyrieEntity>> VALKYRIE = ENTITIES.register("valkyrie", () -> VALKYRIE_TYPE);
 
 	//public static final EntityType<FireMinionEntity> FIRE_MINION = entity("fire_minion", EntityType.Builder.<FireMinionEntity>create(FireMinionEntity::new, EntityClassification.MONSTER).size(??????));
+
+
+
+	// Miscellaneous
 
 	public static final EntityType<CloudMinionEntity> CLOUD_MINION_TYPE = EntityType.Builder.<CloudMinionEntity>of(CloudMinionEntity::new, EntityClassification.MISC).sized(0.75F, 0.75F).build("cloud_minion");
 	public static final RegistryObject<EntityType<CloudMinionEntity>> CLOUD_MINION = ENTITIES.register("cloud_minion", () -> CLOUD_MINION_TYPE);
