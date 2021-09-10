@@ -104,7 +104,12 @@ public class MoaEntity extends MountableEntity {
 		super.registerGoals();
 
 		this.goalSelector.addGoal(0, new SwimGoal(this));
-		this.goalSelector.addGoal(1, new PanicGoal(this, 1.4));
+		/*
+		//the second number in panic goal increases or decreases speed...
+		I don't quite know how fast you would like this. But I've slowed it down for now.
+		It's faster than random walking, while not being too fast.
+		 */
+		this.goalSelector.addGoal(1, new PanicGoal(this, 0.35));
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.3F));
 		//TODO this.goalSelector.addGoal(2, new TemptGoal(this, 1.25, Ingredient.fromItems(AetherItems.NATURE_STAFF), false));
 		this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 6.0F));
@@ -293,8 +298,10 @@ public class MoaEntity extends MountableEntity {
 				}
 			}
 			else {
+				// if the moa didn't just spawn in, lay the egg.
+				if(this.tickCount != 1){
 				this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-				this.spawnAtLocation(this.getMoaType().getItemStack());
+				this.spawnAtLocation(this.getMoaType().getItemStack());}
 				
 				this.secsUntilEgg = this.getRandomEggTime();
 			}

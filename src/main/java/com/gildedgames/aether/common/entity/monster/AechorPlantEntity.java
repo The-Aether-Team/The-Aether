@@ -70,6 +70,12 @@ public class AechorPlantEntity extends CreatureEntity implements IRangedAttackMo
     public void tick() {
         super.tick();
 
+        // This should only apply when the entity is loaded, almost instantly.
+        if(this.tickCount == 1){
+            //sets their position to X.5 and Z.5, effectively centering the aechor plant.
+            this.setPos(Math.floor(this.getX()) + 0.5, this.getY(), Math.floor(this.getZ()) + 0.5);
+        }
+
         if (this.level.getBlockState(this.blockPosition().below()).getBlock() != AetherBlocks.AETHER_GRASS_BLOCK.get()) {
             this.setHealth(0.0F);
         }

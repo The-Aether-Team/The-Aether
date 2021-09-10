@@ -67,7 +67,12 @@ public class SentryEntity extends SlimeEntity {
 	
 	@Override
 	public void tick() {
-		if (this.level.getNearestPlayer(this.getX(), this.getY(), this.getZ(), 8.0, EntityPredicates.NO_CREATIVE_OR_SPECTATOR) != null) {
+		/*
+		 Changed from no creative or spectators to no spectators. This is one method of having the mob hop around, as the reason it wasn't earlier seems to have been it wasn't awake.
+		 This keeps the sentries awake so the AI can continue to work.
+		 Alternatives include removing the awake check in the sentry's hop goal.
+		*/
+		if (this.level.getNearestPlayer(this.getX(), this.getY(), this.getZ(), 8.0, EntityPredicates.NO_SPECTATORS) != null) {
 			if (!this.isAwake()) {
 				if (this.timeSpotted >= 24) {
 					this.setAwake(true);

@@ -1,5 +1,7 @@
 package com.gildedgames.aether.common.effect;
 
+import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -26,10 +28,13 @@ public class InebriationEffect extends Effect
 
     @Override
     public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
-        if (this.effectDuration % 50 == 0) {
-            entityLivingBaseIn.hurt(new DamageSource("inebriation").bypassArmor(), 1.0F);
+        // Check for if the entitytype is immune to inebriation or not.
+            if (!Aether.INEBRIATIONIMMUNE.contains(entityLivingBaseIn.getType())) {
+                if (this.effectDuration % 50 == 0) {
+                    entityLivingBaseIn.hurt(new DamageSource("inebriation").bypassArmor(), 1.0F);
+                }
+            this.distractEntity(entityLivingBaseIn);
         }
-        this.distractEntity(entityLivingBaseIn);
     }
 
     private void distractEntity(LivingEntity entityLivingBaseIn) {
