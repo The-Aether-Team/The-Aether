@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class MoaType extends ForgeRegistryEntry<MoaType> {
-	private static final ResourceLocation DEFAULT_SADDLE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/flying_cow_saddle.png");
+	private static final ResourceLocation DEFAULT_SADDLE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/saddle.png");
 	
 	private final int hexColor;
 	private final ItemGroup group;

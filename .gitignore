@@ -27,3 +27,4 @@ logs
 forge*changelog.txt
 .vscode/
 /Users/
+src/generated/resources/.cache/cache
