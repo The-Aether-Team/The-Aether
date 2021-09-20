@@ -244,6 +244,7 @@ public class AetherItems
 	public static final RegistryObject<Item> BOOK_OF_LORE = ITEMS.register("book_of_lore", () -> new LoreBookItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<Item> AETHER_PORTAL_FRAME = ITEMS.register("aether_portal_frame", () -> new AetherPortalItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> MOA_DEBUG_STICK = ITEMS.register("moa_debug_stick", () -> new MoaDebugStick(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 
 	public static final RegistryObject<SpawnEggItem> AECHOR_PLANT_SPAWN_EGG = ITEMS.register("aechor_plant_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.AECHOR_PLANT_TYPE, 0x076178, 0x4BC69E, new Item.Properties().tab(ItemGroup.TAB_MISC)));
 	public static final RegistryObject<SpawnEggItem> AERBUNNY_SPAWN_EGG = ITEMS.register("aerbunny_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.AERBUNNY_TYPE, 0xe2fcff, 0xffdff9, new Item.Properties().tab(ItemGroup.TAB_MISC)));

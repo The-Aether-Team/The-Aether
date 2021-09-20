@@ -35,6 +35,10 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
                 .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()));
     }
 
+    public ItemModelBuilder withExistingParent(Supplier<? extends Item> item, ResourceLocation lookalike) {
+        return withExistingParent(item.get().getRegistryName().getPath(), lookalike);
+    }
+
     public ItemModelBuilder handheldItem(Supplier<? extends Item> item, String location) {
         return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/handheld"))
                 .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()));
