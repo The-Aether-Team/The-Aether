@@ -11,7 +11,8 @@ import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
-public class MoaSaddleLayer extends LayerRenderer<MoaEntity, MoaModel> {
+public class MoaSaddleLayer extends LayerRenderer<MoaEntity, MoaModel>
+{
 	private final MoaModel moaModel = new MoaModel(0.25F);
 	
 	public MoaSaddleLayer(IEntityRenderer<MoaEntity, MoaModel> entityRendererIn) {
@@ -24,9 +25,8 @@ public class MoaSaddleLayer extends LayerRenderer<MoaEntity, MoaModel> {
 			this.getParentModel().copyPropertiesTo(this.moaModel);
 			this.moaModel.prepareMobModel(moa, limbSwing, limbSwingAmount, partialTicks);
 			this.moaModel.setupAnim(moa, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.entityCutoutNoCull(moa.getMoaType().getSaddleTexture()));
-			this.moaModel.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+			IVertexBuilder iVertexBuilder = bufferIn.getBuffer(RenderType.entityCutoutNoCull(moa.getMoaType().getSaddleTexture()));
+			this.moaModel.renderToBuffer(matrixStackIn, iVertexBuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 		}
 	}
-	
 }

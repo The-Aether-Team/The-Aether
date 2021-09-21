@@ -52,6 +52,7 @@ import com.gildedgames.aether.common.item.food.GummySwetItem;
 import com.gildedgames.aether.common.item.materials.SwetBallItem;
 import com.gildedgames.aether.common.item.combat.*;
 import com.gildedgames.aether.common.item.miscellaneous.LoreBookItem;
+import com.gildedgames.aether.core.registry.AetherMoaTypes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.util.SoundEvents;
@@ -231,10 +232,10 @@ public class AetherItems
 	public static final RegistryObject<Item> COLD_PARACHUTE = ITEMS.register("cold_parachute", () -> new ParachuteItem(AetherEntityTypes.COLD_PARACHUTE::get, new Item.Properties().durability(1).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> GOLDEN_PARACHUTE = ITEMS.register("golden_parachute", () -> new ParachuteItem(AetherEntityTypes.GOLDEN_PARACHUTE::get, new Item.Properties().durability(20).tab(AetherItemGroups.AETHER_MISC)));
 
-	public static final RegistryObject<Item> BLUE_MOA_EGG = ITEMS.register("blue_moa_egg", () -> new MoaEggItem(0x7777FF, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> WHITE_MOA_EGG = ITEMS.register("white_moa_egg", () -> new MoaEggItem(0xFFFFFF, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> BLACK_MOA_EGG = ITEMS.register("black_moa_egg", () -> new MoaEggItem(0x222222, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> ORANGE_MOA_EGG = ITEMS.register("orange_moa_egg", () -> new MoaEggItem(-0xC3D78, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> BLUE_MOA_EGG = ITEMS.register("blue_moa_egg", () -> new MoaEggItem(() -> AetherMoaTypes.BLUE, 0x7777FF, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> WHITE_MOA_EGG = ITEMS.register("white_moa_egg", () -> new MoaEggItem(() -> AetherMoaTypes.WHITE, 0xFFFFFF, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> BLACK_MOA_EGG = ITEMS.register("black_moa_egg", () -> new MoaEggItem(() -> AetherMoaTypes.BLACK, 0x222222, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> ORANGE_MOA_EGG = ITEMS.register("orange_moa_egg", () -> new MoaEggItem(() -> AetherMoaTypes.ORANGE, -0xC3D78, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<Item> NATURE_STAFF = ITEMS.register("nature_staff", () -> new Item(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> CLOUD_STAFF = ITEMS.register("cloud_staff", CloudStaffItem::new);

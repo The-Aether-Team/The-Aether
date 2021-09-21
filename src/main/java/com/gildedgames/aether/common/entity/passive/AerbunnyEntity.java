@@ -41,6 +41,7 @@ public class AerbunnyEntity extends AetherAnimalEntity
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new SwimGoal(this));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(AetherItems.BLUE_BERRY.get()), false));
         this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 6.0F));
