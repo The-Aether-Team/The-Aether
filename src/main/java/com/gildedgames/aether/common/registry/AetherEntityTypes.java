@@ -1,21 +1,34 @@
 package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.entity.passive.AetherAnimalEntity;
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.ColdParachuteEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.GoldenParachuteEntity;
-import com.gildedgames.aether.common.entity.passive.*;
-
-import com.gildedgames.aether.common.entity.monster.*;
-import com.gildedgames.aether.common.entity.projectile.*;
+import com.gildedgames.aether.common.entity.monster.AechorPlantEntity;
+import com.gildedgames.aether.common.entity.monster.CockatriceEntity;
+import com.gildedgames.aether.common.entity.monster.FireMinionEntity;
+import com.gildedgames.aether.common.entity.monster.MimicEntity;
+import com.gildedgames.aether.common.entity.monster.SentryEntity;
+import com.gildedgames.aether.common.entity.monster.WhirlwindEntity;
+import com.gildedgames.aether.common.entity.monster.ZephyrEntity;
+import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;
+import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
+import com.gildedgames.aether.common.entity.passive.AetherAnimalEntity;
+import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
+import com.gildedgames.aether.common.entity.passive.MoaEntity;
+import com.gildedgames.aether.common.entity.passive.PhygEntity;
+import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
+import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
+import com.gildedgames.aether.common.entity.projectile.ZephyrSnowballEntity;
 import com.gildedgames.aether.common.entity.projectile.crystal.CloudCrystalEntity;
-import com.gildedgames.aether.common.entity.projectile.weapon.*;
 import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDartEntity;
 import com.gildedgames.aether.common.entity.projectile.dart.GoldenDartEntity;
 import com.gildedgames.aether.common.entity.projectile.dart.PoisonDartEntity;
+import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectileEntity;
+import com.gildedgames.aether.common.entity.projectile.weapon.LightningKnifeEntity;
+
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
@@ -75,7 +88,8 @@ public class AetherEntityTypes
 	//public static final EntityType<ValkyrieEntity> VALKYRIE_TYPE = EntityType.Builder.<ValkyrieEntity>of(ValkyrieEntity::new, EntityClassification.MONSTER).sized(0.8F, 1.95F).build("valkyrie");
 	//public static final RegistryObject<EntityType<ValkyrieEntity>> VALKYRIE = ENTITIES.register("valkyrie", () -> VALKYRIE_TYPE);
 
-	//public static final EntityType<FireMinionEntity> FIRE_MINION = entity("fire_minion", EntityType.Builder.<FireMinionEntity>create(FireMinionEntity::new, EntityClassification.MONSTER).size(??????));
+	public static final EntityType<FireMinionEntity> FIRE_MINION_TYPE = EntityType.Builder.<FireMinionEntity>of(FireMinionEntity::new, EntityClassification.MONSTER).sized(0.8F, 1.95F).build("fire_minion");
+	public static final RegistryObject<EntityType<FireMinionEntity>> FIRE_MINION = ENTITIES.register("fire_minion", () -> FIRE_MINION_TYPE);
 
 	public static final EntityType<CloudMinionEntity> CLOUD_MINION_TYPE = EntityType.Builder.<CloudMinionEntity>of(CloudMinionEntity::new, EntityClassification.MISC).sized(0.75F, 0.75F).build("cloud_minion");
 	public static final RegistryObject<EntityType<CloudMinionEntity>> CLOUD_MINION = ENTITIES.register("cloud_minion", () -> CLOUD_MINION_TYPE);
@@ -149,7 +163,7 @@ public class AetherEntityTypes
 		event.put(AetherEntityTypes.SENTRY.get(), SentryEntity.createMobAttributes().build());
 		event.put(AetherEntityTypes.MIMIC.get(), MimicEntity.createMobAttributes().build());
 		//event.put(AetherEntityTypes.VALKYRIE.get(), ValkyrieEntity.createMobAttributes().build());
-		//event.put(AetherEntityTypes.FIRE_MINION.get(), FireMinionEntity.registerAttributes().build());
+		event.put(AetherEntityTypes.FIRE_MINION.get(), FireMinionEntity.createMobAttributes().build());
 
 		event.put(AetherEntityTypes.CLOUD_MINION.get(), CloudMinionEntity.registerAttributes().build());
 	}

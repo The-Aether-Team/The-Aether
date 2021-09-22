@@ -3,20 +3,24 @@ package com.gildedgames.aether.client;
 import com.gildedgames.aether.client.registry.AetherAtlases;
 import com.gildedgames.aether.client.registry.AetherKeys;
 import com.gildedgames.aether.client.renderer.accessory.layer.RepulsionShieldLayer;
-import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
 import com.gildedgames.aether.client.renderer.player.layer.EnchantedDartLayer;
 import com.gildedgames.aether.client.renderer.player.layer.GoldenDartLayer;
 import com.gildedgames.aether.client.renderer.player.layer.PoisonDartLayer;
+import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
 import com.gildedgames.aether.common.registry.AetherDimensions;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.world.DimensionRenderInfo;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+@OnlyIn(Dist.CLIENT)
 public class AetherClient
 {
     public static void clientInitialization() {

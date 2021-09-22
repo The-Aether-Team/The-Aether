@@ -4,6 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -13,7 +14,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Matrix3f;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class HammerProjectileRenderer extends EntityRenderer<HammerProjectileEntity>
 {
     public static final ResourceLocation NOTCH_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/notch_wave.png");

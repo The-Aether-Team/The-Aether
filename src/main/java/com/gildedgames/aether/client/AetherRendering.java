@@ -1,9 +1,37 @@
 package com.gildedgames.aether.client;
 
+import java.util.function.Supplier;
+
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.gui.screen.inventory.*;
-import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
-import com.gildedgames.aether.client.renderer.entity.*;
+import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
+import com.gildedgames.aether.client.gui.screen.inventory.AltarScreen;
+import com.gildedgames.aether.client.gui.screen.inventory.FreezerScreen;
+import com.gildedgames.aether.client.gui.screen.inventory.IncubatorScreen;
+import com.gildedgames.aether.client.gui.screen.inventory.LoreBookScreen;
+import com.gildedgames.aether.client.renderer.entity.AechorPlantRenderer;
+import com.gildedgames.aether.client.renderer.entity.AerbunnyRenderer;
+import com.gildedgames.aether.client.renderer.entity.AerwhaleRenderer;
+import com.gildedgames.aether.client.renderer.entity.CloudMinionRenderer;
+import com.gildedgames.aether.client.renderer.entity.CockatriceRenderer;
+import com.gildedgames.aether.client.renderer.entity.ColdParachuteRenderer;
+import com.gildedgames.aether.client.renderer.entity.EnchantedDartRenderer;
+import com.gildedgames.aether.client.renderer.entity.FireMinionRenderer;
+import com.gildedgames.aether.client.renderer.entity.FloatingBlockRenderer;
+import com.gildedgames.aether.client.renderer.entity.FlyingCowRenderer;
+import com.gildedgames.aether.client.renderer.entity.GoldenDartRenderer;
+import com.gildedgames.aether.client.renderer.entity.GoldenParachuteRenderer;
+import com.gildedgames.aether.client.renderer.entity.HammerProjectileRenderer;
+import com.gildedgames.aether.client.renderer.entity.IceCrystalRenderer;
+import com.gildedgames.aether.client.renderer.entity.LightningKnifeRenderer;
+import com.gildedgames.aether.client.renderer.entity.MimicRenderer;
+import com.gildedgames.aether.client.renderer.entity.MoaRenderer;
+import com.gildedgames.aether.client.renderer.entity.PhygRenderer;
+import com.gildedgames.aether.client.renderer.entity.PoisonDartRenderer;
+import com.gildedgames.aether.client.renderer.entity.SentryRenderer;
+import com.gildedgames.aether.client.renderer.entity.SheepuffRenderer;
+import com.gildedgames.aether.client.renderer.entity.TNTPresentRenderer;
+import com.gildedgames.aether.client.renderer.entity.WhirlwindRenderer;
+import com.gildedgames.aether.client.renderer.entity.ZephyrRenderer;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicTileEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.CustomItemStackTileEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.SkyrootBedTileEntityRenderer;
@@ -11,7 +39,13 @@ import com.gildedgames.aether.client.renderer.tile.TreasureChestTileEntityRender
 import com.gildedgames.aether.common.entity.tile.ChestMimicTileEntity;
 import com.gildedgames.aether.common.entity.tile.SkyrootBedTileEntity;
 import com.gildedgames.aether.common.entity.tile.TreasureChestTileEntity;
-import com.gildedgames.aether.common.registry.*;
+import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
+import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.common.registry.AetherContainerTypes;
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
+import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
@@ -24,11 +58,12 @@ import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
-import java.util.function.Supplier;
-
+@OnlyIn(Dist.CLIENT)
 public class AetherRendering
 {
     public static void registerColors() {
@@ -88,6 +123,7 @@ public class AetherRendering
         RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR.get(), ZephyrRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY.get(), SentryRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC.get(), MimicRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FIRE_MINION.get(), FireMinionRenderer::new);
 
         RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.CLOUD_MINION.get(), CloudMinionRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.COLD_PARACHUTE.get(), ColdParachuteRenderer::new);

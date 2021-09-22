@@ -4,13 +4,17 @@ import com.gildedgames.aether.client.renderer.entity.model.CrystalModel;
 import com.gildedgames.aether.common.entity.projectile.crystal.AbstractCrystalEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public abstract class AbstractCrystalRenderer<T extends AbstractCrystalEntity> extends EntityRenderer<T>
 {
     private final CrystalModel<AbstractCrystalEntity> model = new CrystalModel<>();

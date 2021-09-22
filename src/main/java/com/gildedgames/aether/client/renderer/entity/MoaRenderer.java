@@ -3,17 +3,20 @@ package com.gildedgames.aether.client.renderer.entity;
 import java.util.UUID;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.core.api.AetherMoaTypes;
 import com.gildedgames.aether.client.renderer.entity.layers.MoaSaddleLayer;
 import com.gildedgames.aether.client.renderer.entity.model.MoaModel;
 import com.gildedgames.aether.common.entity.passive.MoaEntity;
+import com.gildedgames.aether.core.api.AetherMoaTypes;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class MoaRenderer extends MobRenderer<MoaEntity, MoaModel>{
 	private static final ResourceLocation MOS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/mos.png");
 	private static final ResourceLocation RAPTOR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/raptor.png");

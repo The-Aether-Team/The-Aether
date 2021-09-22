@@ -3,19 +3,23 @@ package com.gildedgames.aether.client.renderer.entity.model;
 import com.gildedgames.aether.common.entity.monster.AechorPlantEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.entity.Entity;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class AechorPlantModel<T extends Entity> extends EntityModel<AechorPlantEntity> {
-
-    private final ModelRenderer[] Petal = new ModelRenderer[10];
-    private final ModelRenderer[] Leaf = new ModelRenderer[10];
-    private final ModelRenderer[] StamenStem = new ModelRenderer[3];
-    private final ModelRenderer[] StamenTip = new ModelRenderer[3];
-    private final ModelRenderer[] Thorn = new ModelRenderer[4];
-    private final ModelRenderer Stem = new ModelRenderer(this, 24, 13);
-    private final ModelRenderer Head = new ModelRenderer(this, 0, 12);
+@OnlyIn(Dist.CLIENT)
+public class AechorPlantModel<T extends Entity> extends EntityModel<AechorPlantEntity>
+{
+    public ModelRenderer[] Petal = new ModelRenderer[10];
+    public ModelRenderer[] Leaf = new ModelRenderer[10];
+    public ModelRenderer[] StamenStem = new ModelRenderer[3];
+    public ModelRenderer[] StamenTip = new ModelRenderer[3];
+    public ModelRenderer[] Thorn = new ModelRenderer[4];
+    public ModelRenderer Stem = new ModelRenderer(this, 24, 13);
+    public ModelRenderer Head = new ModelRenderer(this, 0, 12);
 
     public float sinage;
     public float sinage2;

@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.registry;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.AetherRendering;
@@ -86,9 +87,9 @@ public class AetherBlocks
 	public static final RegistryObject<Block> PINK_AERCLOUD = register("pink_aercloud", () -> new PinkAercloudBlock(Block.Properties.of(Material.ICE, MaterialColor.COLOR_PINK).strength(0.2F).sound(SoundType.WOOL).harvestTool(ToolType.HOE).noOcclusion()));
 
 	public static final RegistryObject<Block> ICESTONE = register("icestone", () -> new IcestoneBlock(Block.Properties.of(Material.STONE, MaterialColor.ICE).strength(3.0F).randomTicks().sound(SoundType.GLASS).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> AMBROSIUM_ORE = register("ambrosium_ore", () -> new AetherDoubleDropsOreBlock(0, 2, Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(3.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(0).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> ZANITE_ORE = register("zanite_ore", () -> new AetherOreBlock(3, 5, Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(3.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> GRAVITITE_ORE = register("gravitite_ore", () -> new FloatingBlock(false, Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> AMBROSIUM_ORE = register("ambrosium_ore", () -> new AetherDoubleDropsOreBlock(0, 2, Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> ZANITE_ORE = register("zanite_ore", () -> new AetherOreBlock(3, 5, Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> GRAVITITE_ORE = register("gravitite_ore", () -> new FloatingBlock(false, Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
 
 	public static final RegistryObject<Block> SKYROOT_LEAVES = register("skyroot_leaves", () -> new AetherDoubleDropsLeaves(Block.Properties.of(Material.LEAVES, MaterialColor.GRASS).strength(0.2F).randomTicks().harvestTool(ToolType.HOE).sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never)));
 	public static final RegistryObject<Block> GOLDEN_OAK_LEAVES = register("golden_oak_leaves", () -> new LeavesWithParticlesBlock(AetherParticleTypes.GOLDEN_OAK_LEAVES, Block.Properties.of(Material.LEAVES, MaterialColor.GOLD).strength(0.2F).randomTicks().harvestTool(ToolType.HOE).sound(SoundType.GRASS)));
@@ -112,9 +113,9 @@ public class AetherBlocks
 	public static final RegistryObject<Block> ZANITE_BLOCK = register("zanite_block", () -> new Block(Block.Properties.of(Material.METAL, MaterialColor.COLOR_PURPLE).strength(5.0F, 6.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 	public static final RegistryObject<Block> ENCHANTED_GRAVITITE = register("enchanted_gravitite", () -> new FloatingBlock(true, Block.Properties.of(Material.METAL, MaterialColor.COLOR_PINK).strength(5.0F, 6.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
-	public static final RegistryObject<Block> ALTAR = register("altar", () -> new AltarBlock(Block.Properties.of(Material.STONE, MaterialColor.WOOD).strength(2.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
-	public static final RegistryObject<Block> FREEZER = register("freezer", () -> new FreezerBlock(Block.Properties.of(Material.STONE, MaterialColor.WOOD).strength(2.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
-	public static final RegistryObject<Block> INCUBATOR = register("incubator", () -> new IncubatorBlock(Block.Properties.of(Material.STONE, MaterialColor.WOOD).strength(2.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> ALTAR = register("altar", () -> new AltarBlock(Block.Properties.of(Material.STONE, MaterialColor.WOOD).strength(2.0F).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> FREEZER = register("freezer", () -> new FreezerBlock(Block.Properties.of(Material.STONE, MaterialColor.WOOD).strength(2.0F).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> INCUBATOR = register("incubator", () -> new IncubatorBlock(Block.Properties.of(Material.STONE, MaterialColor.WOOD).strength(2.0F).harvestTool(ToolType.PICKAXE)));
 
 	public static final RegistryObject<Block> AMBROSIUM_WALL_TORCH = BLOCKS.register("ambrosium_wall_torch", () -> new WallTorchBlock(Block.Properties.copy(Blocks.WALL_TORCH), ParticleTypes.SMOKE));
 	public static final RegistryObject<Block> AMBROSIUM_TORCH = register("ambrosium_torch", () -> new TorchBlock(Block.Properties.copy(Blocks.TORCH), ParticleTypes.SMOKE));
@@ -135,105 +136,101 @@ public class AetherBlocks
 	public static final RegistryObject<FlowerPotBlock> POTTED_SKYROOT_SAPLING = BLOCKS.register("potted_skyroot_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, SKYROOT_SAPLING, Block.Properties.copy(Blocks.FLOWER_POT)));
 	public static final RegistryObject<FlowerPotBlock> POTTED_GOLDEN_OAK_SAPLING = BLOCKS.register("potted_golden_oak_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, GOLDEN_OAK_SAPLING, Block.Properties.copy(Blocks.FLOWER_POT)));
 
-	public static final RegistryObject<Block> CARVED_STONE = register("carved_stone", () -> new Block(Block.Properties.of(Material.STONE).strength(0.5F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> SENTRY_STONE = register("sentry_stone", () -> new Block(Block.Properties.copy(AetherBlocks.CARVED_STONE.get()).lightLevel((state) -> 11)));
-	public static final RegistryObject<Block> ANGELIC_STONE = register("angelic_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.SAND).strength(0.5F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> LIGHT_ANGELIC_STONE = register("light_angelic_stone", () -> new Block(Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get()).lightLevel((state) -> 11)));
-	public static final RegistryObject<Block> HELLFIRE_STONE = register("hellfire_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.NETHER).strength(0.5F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> LIGHT_HELLFIRE_STONE = register("light_hellfire_stone", () -> new Block(Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get()).lightLevel((state) -> 11)));
+	public static final RegistryObject<Block> CARVED_STONE = register("carved_stone", () -> new Block(Block.Properties.of(Material.STONE).strength(0.5F).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> SENTRY_STONE = register("sentry_stone", () -> new Block(Block.Properties.copy(CARVED_STONE.get()).lightLevel((state) -> 11)));
+	public static final RegistryObject<Block> ANGELIC_STONE = register("angelic_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.SAND).strength(0.5F).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> LIGHT_ANGELIC_STONE = register("light_angelic_stone", () -> new Block(Block.Properties.copy(ANGELIC_STONE.get()).lightLevel((state) -> 11)));
+	public static final RegistryObject<Block> HELLFIRE_STONE = register("hellfire_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.NETHER).strength(0.5F).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> LIGHT_HELLFIRE_STONE = register("light_hellfire_stone", () -> new Block(Block.Properties.copy(HELLFIRE_STONE.get()).lightLevel((state) -> 11)));
 
 	public static final RegistryObject<Block> LOCKED_CARVED_STONE = register("locked_carved_stone", () -> new Block(Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never)));
-	public static final RegistryObject<Block> LOCKED_SENTRY_STONE = register("locked_sentry_stone", () -> new Block(Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never).lightLevel((state) -> 11)));
+	public static final RegistryObject<Block> LOCKED_SENTRY_STONE = register("locked_sentry_stone", () -> new Block(Block.Properties.copy(LOCKED_CARVED_STONE.get()).lightLevel((state) -> 11)));
 	public static final RegistryObject<Block> LOCKED_ANGELIC_STONE = register("locked_angelic_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.SAND).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never)));
-	public static final RegistryObject<Block> LOCKED_LIGHT_ANGELIC_STONE = register("locked_light_angelic_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.SAND).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never).lightLevel((state) -> 11)));
+	public static final RegistryObject<Block> LOCKED_LIGHT_ANGELIC_STONE = register("locked_light_angelic_stone", () -> new Block(Block.Properties.copy(LOCKED_ANGELIC_STONE.get()).lightLevel((state) -> 11)));
 	public static final RegistryObject<Block> LOCKED_HELLFIRE_STONE = register("locked_hellfire_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.NETHER).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never)));
-	public static final RegistryObject<Block> LOCKED_LIGHT_HELLFIRE_STONE = register("locked_light_hellfire_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.NETHER).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never).lightLevel((state) -> 11)));
+	public static final RegistryObject<Block> LOCKED_LIGHT_HELLFIRE_STONE = register("locked_light_hellfire_stone", () -> new Block(Block.Properties.copy(LOCKED_HELLFIRE_STONE.get()).lightLevel((state) -> 11)));
 
-	public static final RegistryObject<Block> TRAPPED_CARVED_STONE = register("trapped_carved_stone", () -> new TrappedBlock(AetherEntityTypes.SENTRY::get, () -> LOCKED_CARVED_STONE.get().defaultBlockState(), Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never)));
-	public static final RegistryObject<Block> TRAPPED_SENTRY_STONE = register("trapped_sentry_stone", () -> new TrappedBlock(AetherEntityTypes.SENTRY::get, () -> LOCKED_SENTRY_STONE.get().defaultBlockState(), Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never).lightLevel((state) -> 11)));
-	public static final RegistryObject<Block> TRAPPED_ANGELIC_STONE = register("trapped_angelic_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.SAND).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never)));
-	//new TrappedBlock(() -> AetherEntityTypes.VALKYRIE, () -> LOCKED_ANGELIC_STONE.getDefaultState(), Block.Properties.from(Blocks.BEDROCK)));
-	public static final RegistryObject<Block> TRAPPED_LIGHT_ANGELIC_STONE = register("trapped_light_angelic_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.SAND).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never).lightLevel((state) -> 11)));
-	//new TrappedBlock(() -> AetherEntityTypes.VALKYRIE, () -> LOCKED_LIGHT_ANGELIC_STONE.getDefaultState(), Block.Properties.from(Blocks.BEDROCK).setLightLevel((state) -> 11)));
-	public static final RegistryObject<Block> TRAPPED_HELLFIRE_STONE = register("trapped_hellfire_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.NETHER).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never)));
-	//new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_HELLFIRE_STONE.getDefaultState(), Block.Properties.from(Blocks.BEDROCK)));
-	public static final RegistryObject<Block> TRAPPED_LIGHT_HELLFIRE_STONE = register("trapped_light_hellfire_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.NETHER).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never).lightLevel((state) -> 11)));
-	//new TrappedBlock(() -> AetherEntityTypes.FIRE_MINION, () -> LOCKED_LIGHT_HELLFIRE_STONE.getDefaultState(), Block.Properties.from(Blocks.BEDROCK).setLightLevel((state) -> 11)));
+	public static final RegistryObject<Block> TRAPPED_CARVED_STONE = register("trapped_carved_stone", () -> new TrappedBlock(AetherEntityTypes.SENTRY::get, () -> LOCKED_CARVED_STONE.get().defaultBlockState(), Block.Properties.copy(LOCKED_CARVED_STONE.get())));
+	public static final RegistryObject<Block> TRAPPED_SENTRY_STONE = register("trapped_sentry_stone", () -> new TrappedBlock(AetherEntityTypes.SENTRY::get, () -> LOCKED_SENTRY_STONE.get().defaultBlockState(), Block.Properties.copy(LOCKED_SENTRY_STONE.get())));
+	public static final RegistryObject<Block> TRAPPED_ANGELIC_STONE = register("trapped_angelic_stone", () -> new Block(Block.Properties.copy(LOCKED_ANGELIC_STONE.get()))); // TODO
+	public static final RegistryObject<Block> TRAPPED_LIGHT_ANGELIC_STONE = register("trapped_light_angelic_stone", () -> new Block(Block.Properties.copy(LOCKED_LIGHT_ANGELIC_STONE.get()))); // TODO
+	public static final RegistryObject<Block> TRAPPED_HELLFIRE_STONE = register("trapped_hellfire_stone", () -> new Block(Block.Properties.copy(LOCKED_HELLFIRE_STONE.get()))); // TODO
+	public static final RegistryObject<Block> TRAPPED_LIGHT_HELLFIRE_STONE = register("trapped_light_hellfire_stone", () -> new Block(Block.Properties.copy(LOCKED_LIGHT_HELLFIRE_STONE.get()))); // TODO
 
-	public static final RegistryObject<Block> CHEST_MIMIC = register("chest_mimic", () -> new ChestMimicBlock(AbstractBlock.Properties.copy(Blocks.CHEST).harvestTool(ToolType.AXE)));
-	public static final RegistryObject<Block> TREASURE_CHEST = register("treasure_chest", () -> new TreasureChestBlock(AbstractBlock.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F)));
+	public static final RegistryObject<Block> CHEST_MIMIC = register("chest_mimic", () -> new ChestMimicBlock(Block.Properties.copy(Blocks.CHEST).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<Block> TREASURE_CHEST = register("treasure_chest", () -> new TreasureChestBlock(Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F)));
 
 	public static final RegistryObject<RotatedPillarBlock> PILLAR = register("pillar",
-			() -> new RotatedPillarBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
+			() -> new RotatedPillarBlock(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
 	public static final RegistryObject<RotatedPillarBlock> PILLAR_TOP = register("pillar_top",
-			() -> new RotatedPillarBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
+			() -> new RotatedPillarBlock(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
 
 	public static final RegistryObject<Block> PRESENT = register("present",
-			() -> new Block(AbstractBlock.Properties.of(Material.GRASS, MaterialColor.COLOR_GREEN).strength(0.6F).sound(SoundType.GRASS)));
+			() -> new Block(Block.Properties.of(Material.GRASS, MaterialColor.COLOR_GREEN).strength(0.6F).sound(SoundType.GRASS)));
 
-	public static final RegistryObject<FenceBlock> SKYROOT_FENCE = register("skyroot_fence", () -> new FenceBlock(AbstractBlock.Properties.copy(Blocks.OAK_FENCE).harvestTool(ToolType.AXE)));
-	public static final RegistryObject<FenceGateBlock> SKYROOT_FENCE_GATE = register("skyroot_fence_gate", () -> new FenceGateBlock(AbstractBlock.Properties.copy(Blocks.OAK_FENCE_GATE).harvestTool(ToolType.AXE)));
-	public static final RegistryObject<Block> SKYROOT_DOOR = register("skyroot_door", () -> new DoorBlock(AbstractBlock.Properties.copy(Blocks.OAK_DOOR)));
-	public static final RegistryObject<Block> SKYROOT_TRAPDOOR = register("skyroot_trapdoor", () -> new TrapDoorBlock(AbstractBlock.Properties.copy(Blocks.OAK_TRAPDOOR)));
-	public static final RegistryObject<Block> SKYROOT_BUTTON = register("skyroot_button", () -> new WoodButtonBlock(AbstractBlock.Properties.copy(Blocks.OAK_BUTTON)));
-	public static final RegistryObject<Block> SKYROOT_PRESSURE_PLATE = register("skyroot_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, AbstractBlock.Properties.copy(Blocks.OAK_PRESSURE_PLATE)));
+	public static final RegistryObject<FenceBlock> SKYROOT_FENCE = register("skyroot_fence", () -> new FenceBlock(Block.Properties.copy(Blocks.OAK_FENCE).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<FenceGateBlock> SKYROOT_FENCE_GATE = register("skyroot_fence_gate", () -> new FenceGateBlock(Block.Properties.copy(Blocks.OAK_FENCE_GATE).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<Block> SKYROOT_DOOR = register("skyroot_door", () -> new DoorBlock(Block.Properties.copy(Blocks.OAK_DOOR)));
+	public static final RegistryObject<Block> SKYROOT_TRAPDOOR = register("skyroot_trapdoor", () -> new TrapDoorBlock(Block.Properties.copy(Blocks.OAK_TRAPDOOR)));
+	public static final RegistryObject<Block> SKYROOT_BUTTON = register("skyroot_button", () -> new WoodButtonBlock(Block.Properties.copy(Blocks.OAK_BUTTON)));
+	public static final RegistryObject<Block> SKYROOT_PRESSURE_PLATE = register("skyroot_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Block.Properties.copy(Blocks.OAK_PRESSURE_PLATE)));
 
-	public static final RegistryObject<Block> HOLYSTONE_BUTTON = register("holystone_button", () -> new StoneButtonBlock(AbstractBlock.Properties.copy(Blocks.STONE_BUTTON)));
-	public static final RegistryObject<Block> HOLYSTONE_PRESSURE_PLATE = register("holystone_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, AbstractBlock.Properties.of(Material.STONE, MaterialColor.WOOL).requiresCorrectToolForDrops().noCollission().strength(0.5F)));
+	public static final RegistryObject<Block> HOLYSTONE_BUTTON = register("holystone_button", () -> new StoneButtonBlock(Block.Properties.copy(Blocks.STONE_BUTTON)));
+	public static final RegistryObject<Block> HOLYSTONE_PRESSURE_PLATE = register("holystone_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(Material.STONE, MaterialColor.WOOL).requiresCorrectToolForDrops().noCollission().strength(0.5F)));
 
-	public static final RegistryObject<WallBlock> CARVED_WALL = register("carved_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.CARVED_STONE.get())));
-	public static final RegistryObject<WallBlock> ANGELIC_WALL = register("angelic_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.ANGELIC_STONE.get())));
-	public static final RegistryObject<WallBlock> HELLFIRE_WALL = register("hellfire_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.HELLFIRE_STONE.get())));
-	public static final RegistryObject<WallBlock> HOLYSTONE_WALL = register("holystone_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE.get())));
-	public static final RegistryObject<WallBlock> MOSSY_HOLYSTONE_WALL = register("mossy_holystone_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get())));
-	public static final RegistryObject<WallBlock> ICESTONE_WALL = register("icestone_wall", () -> new IcestoneWallBlock(AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get())));
-	public static final RegistryObject<WallBlock> HOLYSTONE_BRICK_WALL = register("holystone_brick_wall", () -> new WallBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get())));
-	public static final RegistryObject<WallBlock> AEROGEL_WALL = register("aerogel_wall", () -> new AerogelWallBlock(AbstractBlock.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking((state, reader, pos) -> false)));
+	public static final RegistryObject<WallBlock> CARVED_WALL = register("carved_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.CARVED_STONE.get())));
+	public static final RegistryObject<WallBlock> ANGELIC_WALL = register("angelic_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get())));
+	public static final RegistryObject<WallBlock> HELLFIRE_WALL = register("hellfire_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get())));
+	public static final RegistryObject<WallBlock> HOLYSTONE_WALL = register("holystone_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE.get())));
+	public static final RegistryObject<WallBlock> MOSSY_HOLYSTONE_WALL = register("mossy_holystone_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get())));
+	public static final RegistryObject<WallBlock> ICESTONE_WALL = register("icestone_wall", () -> new IcestoneWallBlock(Block.Properties.copy(AetherBlocks.ICESTONE.get())));
+	public static final RegistryObject<WallBlock> HOLYSTONE_BRICK_WALL = register("holystone_brick_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get())));
+	public static final RegistryObject<WallBlock> AEROGEL_WALL = register("aerogel_wall", () -> new AerogelWallBlock(Block.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking((state, reader, pos) -> false)));
 
 	public static final RegistryObject<StairsBlock> SKYROOT_STAIRS = register("skyroot_stairs",
-			() -> new StairsBlock(() -> SKYROOT_PLANKS.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get())));
+			() -> new StairsBlock(() -> SKYROOT_PLANKS.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get())));
 	public static final RegistryObject<StairsBlock> CARVED_STAIRS = register("carved_stairs",
-			() -> new StairsBlock(() -> CARVED_STONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.CARVED_STONE.get())));
+			() -> new StairsBlock(() -> CARVED_STONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.CARVED_STONE.get())));
 	public static final RegistryObject<StairsBlock> ANGELIC_STAIRS = register("angelic_stairs",
-			() -> new StairsBlock(() -> ANGELIC_STONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.ANGELIC_STONE.get())));
+			() -> new StairsBlock(() -> ANGELIC_STONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get())));
 	public static final RegistryObject<StairsBlock> HELLFIRE_STAIRS = register("hellfire_stairs",
-			() -> new StairsBlock(() -> HELLFIRE_STONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.HELLFIRE_STONE.get())));
+			() -> new StairsBlock(() -> HELLFIRE_STONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get())));
 	public static final RegistryObject<StairsBlock> HOLYSTONE_STAIRS = register("holystone_stairs",
-			() -> new StairsBlock(() -> HOLYSTONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE.get())));
+			() -> new StairsBlock(() -> HOLYSTONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.HOLYSTONE.get())));
 	public static final RegistryObject<StairsBlock> MOSSY_HOLYSTONE_STAIRS = register("mossy_holystone_stairs",
-			() -> new StairsBlock(() -> MOSSY_HOLYSTONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get())));
+			() -> new StairsBlock(() -> MOSSY_HOLYSTONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get())));
 	public static final RegistryObject<StairsBlock> ICESTONE_STAIRS = register("icestone_stairs",
-			() -> new IcestoneStairsBlock(() -> ICESTONE.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get())));
+			() -> new IcestoneStairsBlock(() -> ICESTONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.ICESTONE.get())));
 	public static final RegistryObject<StairsBlock> HOLYSTONE_BRICK_STAIRS = register("holystone_brick_stairs",
-			() -> new StairsBlock(() -> HOLYSTONE_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get())));
+			() -> new StairsBlock(() -> HOLYSTONE_BRICKS.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get())));
 	public static final RegistryObject<StairsBlock> AEROGEL_STAIRS = register("aerogel_stairs",
-			() -> new AerogelStairsBlock(() -> AEROGEL.get().defaultBlockState(), AbstractBlock.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking((state, reader, pos) -> false)));
+			() -> new AerogelStairsBlock(() -> AEROGEL.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking((state, reader, pos) -> false)));
 
 	public static final RegistryObject<SlabBlock> SKYROOT_SLAB = register("skyroot_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get()).strength(2.0F, 3.0F)));
+			() -> new SlabBlock(Block.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get()).strength(2.0F, 3.0F)));
 	public static final RegistryObject<SlabBlock> CARVED_SLAB = register("carved_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.CARVED_STONE.get()).strength(2.0F, 6.0F)));
+			() -> new SlabBlock(Block.Properties.copy(AetherBlocks.CARVED_STONE.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> ANGELIC_SLAB = register("angelic_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.ANGELIC_STONE.get()).strength(2.0F, 6.0F)));
+			() -> new SlabBlock(Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> HELLFIRE_SLAB = register("hellfire_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.HELLFIRE_STONE.get()).strength(2.0F, 6.0F)));
+			() -> new SlabBlock(Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> HOLYSTONE_SLAB = register("holystone_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE.get()).strength(2.0F, 6.0F)));
+			() -> new SlabBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> MOSSY_HOLYSTONE_SLAB = register("mossy_holystone_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get()).strength(2.0F, 6.0F)));
+			() -> new SlabBlock(Block.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> ICESTONE_SLAB = register("icestone_slab",
-			() -> new IcestoneSlabBlock(AbstractBlock.Properties.copy(AetherBlocks.ICESTONE.get()).strength(2.0F, 6.0F)));
+			() -> new IcestoneSlabBlock(Block.Properties.copy(AetherBlocks.ICESTONE.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> HOLYSTONE_BRICK_SLAB = register("holystone_brick_slab",
-			() -> new SlabBlock(AbstractBlock.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get()).strength(2.0F, 6.0F)));
+			() -> new SlabBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get()).strength(2.0F, 6.0F)));
 	public static final RegistryObject<SlabBlock> AEROGEL_SLAB = register("aerogel_slab",
-			() -> new AerogelSlabBlock(AbstractBlock.Properties.copy(AetherBlocks.AEROGEL.get()).strength(1.5F, 2000.0F).isViewBlocking((state, reader, pos) -> false)));
+			() -> new AerogelSlabBlock(Block.Properties.copy(AetherBlocks.AEROGEL.get()).strength(1.5F, 2000.0F).isViewBlocking((state, reader, pos) -> false)));
 
 	public static final RegistryObject<Block> SUN_ALTAR = register("sun_altar",
-			() -> new SunAltarBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.NETHER).strength(2.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE)));
+			() -> new SunAltarBlock(Block.Properties.of(Material.STONE, MaterialColor.NETHER).strength(2.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE)));
 
-	public static final RegistryObject<Block> SKYROOT_BOOKSHELF = register("skyroot_bookshelf", () -> new BookshelfBlock(AbstractBlock.Properties.copy(Blocks.BOOKSHELF).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<Block> SKYROOT_BOOKSHELF = register("skyroot_bookshelf", () -> new BookshelfBlock(Block.Properties.copy(Blocks.BOOKSHELF).harvestTool(ToolType.AXE)));
 
-	public static final RegistryObject<BedBlock> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(AbstractBlock.Properties.copy(Blocks.CYAN_BED).harvestTool(ToolType.AXE)));
+	public static final RegistryObject<BedBlock> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(Block.Properties.copy(Blocks.CYAN_BED).harvestTool(ToolType.AXE)));
 
 
 	public static void registerPots() {
@@ -260,8 +257,7 @@ public class AetherBlocks
 				.putAll(HoeItem.TILLABLES)
 				.put(AetherBlocks.AETHER_DIRT.get(), AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())
 				.put(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())
-				.put(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(),
-						AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())
+				.put(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())
 				.build();
 	}
 

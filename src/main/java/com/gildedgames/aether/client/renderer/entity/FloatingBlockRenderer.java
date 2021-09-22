@@ -1,7 +1,10 @@
 package com.gildedgames.aether.client.renderer.entity;
 
+import java.util.Random;
+
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -13,15 +16,13 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MoverType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.Random;
-
+@OnlyIn(Dist.CLIENT)
 public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity>
 {
 	public FloatingBlockRenderer(EntityRendererManager renderManager) {

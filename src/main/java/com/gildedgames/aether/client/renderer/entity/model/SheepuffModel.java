@@ -1,10 +1,13 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
 import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
+
 import net.minecraft.client.renderer.entity.model.QuadrupedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.passive.SheepEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class SheepuffModel extends QuadrupedModel<SheepuffEntity>
 {
     private float headXRot;

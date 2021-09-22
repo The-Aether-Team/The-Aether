@@ -4,11 +4,15 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.model.AerbunnyModel;
 import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class AerbunnyRenderer extends MobRenderer<AerbunnyEntity, AerbunnyModel>
 {
     private static final ResourceLocation AERBUNNY_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerbunny/aerbunny.png");

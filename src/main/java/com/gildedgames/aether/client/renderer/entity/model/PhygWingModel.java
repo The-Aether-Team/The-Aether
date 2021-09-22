@@ -3,35 +3,39 @@ package com.gildedgames.aether.client.renderer.entity.model;
 import com.gildedgames.aether.common.entity.passive.PhygEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class PhygWingModel extends EntityModel<PhygEntity>
 {
-    private final ModelRenderer leftWingInner;
-    private final ModelRenderer leftWingOuter;
-    private final ModelRenderer rightWingInner;
-    private final ModelRenderer rightWingOuter;
+    public ModelRenderer leftWingInner;
+    public ModelRenderer leftWingOuter;
+    public ModelRenderer rightWingInner;
+    public ModelRenderer rightWingOuter;
 
     public PhygWingModel() {
-        this.leftWingInner = new ModelRenderer(this, 0, 0);
-        this.leftWingInner.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, true); //USED FOR ROTATION AND SIZE
-        this.leftWingInner.setPos(-4.0F, 12.0F, -4.0F); //USED FOR POSITION
+        leftWingInner = new ModelRenderer(this, 0, 0);
+        leftWingInner.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, true); //USED FOR ROTATION AND SIZE
+        leftWingInner.setPos(-4.0F, 12.0F, -4.0F); //USED FOR POSITION
 
-        this.leftWingOuter = new ModelRenderer(this, 20, 0);
-        this.leftWingOuter.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, true);
-        this.leftWingOuter.setPos(0.0F, -16.0F, 0.0F);
-        this.leftWingInner.addChild(this.leftWingOuter);
+        leftWingOuter = new ModelRenderer(this, 20, 0);
+        leftWingOuter.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, true);
+        leftWingOuter.setPos(0.0F, -16.0F, 0.0F);
+        leftWingInner.addChild(this.leftWingOuter);
 
-        this.rightWingInner = new ModelRenderer(this, 0, 0);
-        this.rightWingInner.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, false);
-        this.rightWingInner.setPos(4.0F, 12.0F, -4.0F);
+        rightWingInner = new ModelRenderer(this, 0, 0);
+        rightWingInner.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, false);
+        rightWingInner.setPos(4.0F, 12.0F, -4.0F);
 
-        this.rightWingOuter = new ModelRenderer(this, 20, 0);
-        this.rightWingOuter.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, false);
-        this.rightWingOuter.setPos(0.0F, -16.0F, 0.0F);
-        this.rightWingInner.addChild(this.rightWingOuter);
+        rightWingOuter = new ModelRenderer(this, 20, 0);
+        rightWingOuter.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, false);
+        rightWingOuter.setPos(0.0F, -16.0F, 0.0F);
+        rightWingInner.addChild(this.rightWingOuter);
     }
 
     @Override
@@ -47,15 +51,13 @@ public class PhygWingModel extends EntityModel<PhygEntity>
         phyg.wingFold += (aimingForFold - phyg.wingFold) / 15.0F;
         float wingBend = -((float) Math.acos(phyg.wingFold));
 
-        this.leftWingInner.zRot = -(phyg.wingAngle + wingBend + ((float) Math.PI / 2.0F));
-        this.leftWingOuter.zRot = -(phyg.wingAngle - wingBend + ((float) Math.PI / 2.0F)) - this.leftWingInner.zRot;
-        this.rightWingInner.zRot = -this.leftWingInner.zRot;
-        this.rightWingOuter.zRot = -this.leftWingOuter.zRot;
+        leftWingInner.zRot = -(rightWingInner.zRot = phyg.wingAngle + wingBend + ((float) Math.PI / 2.0F));
+        leftWingOuter.zRot = -(rightWingOuter.zRot = phyg.wingAngle - wingBend + ((float) Math.PI / 2.0F)) - this.leftWingInner.zRot;
     }
 
     @Override
     public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-        this.leftWingInner.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-        this.rightWingInner.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+        leftWingInner.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+        rightWingInner.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
     }
 }

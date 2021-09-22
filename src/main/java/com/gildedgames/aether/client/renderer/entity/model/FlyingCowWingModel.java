@@ -7,13 +7,16 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class FlyingCowWingModel extends EntityModel<FlyingCowEntity>
 {
-    private final ModelRenderer leftWingInner;
-    private final ModelRenderer leftWingOuter;
-    private final ModelRenderer rightWingInner;
-    private final ModelRenderer rightWingOuter;
+    public ModelRenderer leftWingInner;
+    public ModelRenderer leftWingOuter;
+    public ModelRenderer rightWingInner;
+    public ModelRenderer rightWingOuter;
 
     public FlyingCowWingModel() {
         this.leftWingInner = new ModelRenderer(this, 0, 0);

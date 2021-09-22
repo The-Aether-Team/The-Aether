@@ -2,6 +2,7 @@ package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.common.entity.projectile.weapon.LightningKnifeEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -12,7 +13,10 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class LightningKnifeRenderer extends EntityRenderer<LightningKnifeEntity>
 {
 	public LightningKnifeRenderer(EntityRendererManager renderManager) {
