@@ -39,7 +39,8 @@ Looking to contribute to the project? We ask that you read over our [Contributor
 Not sure what to help with? Take a look at our issue tracker for some ideas! [Here's a quick link](https://github.com/Gilded-Games/The-Aether/labels/status%2Fhelp-wanted) which shows all the currently open issues that we'd love some help on.
 
 ## :scroll: License information
-If you're wanting to create a gameplay video/review, extension or addon, parody, or any other fan work of your own for the Aether, go for it! We love seeing the content our community creates, and we hope to make it as welcoming as possible for everyone. We ask however that if you are using code or assets from The Aether project that you adhere to the licenses below, and that you please don't advertise using our brand. If you're interested in sponsoring The Aether project or Gilded Games or wish to otherwise use our brand, please [contact us](mailto:support@gildedgames.com).
+If you're wanting to create a gameplay video/review, extension or addon, parody, or any other fan work of your own for the Aether, go for it! We love seeing the content our community creates, and we hope to make it as welcoming as possible for everyone. We ask however that if you are using code or assets from The Aether project that you adhere to the licenses below, and that you please don't advertise using our brand (our specific logo assets, team name, official social media posts).
+If you're interested in sponsoring The Aether project or Gilded Games or wish to otherwise use our brand, please [contact us](mailto:support@gildedgames.com).
 
 The source code of The Aether mod for Minecraft 1.7+ is under the [LGPL v3.0](https://www.gnu.org/licenses/lgpl-3.0.en.html) license. **All assets of The Aether for Minecraft 1.7+ (found in the [resources folder](https://github.com/Gilded-Games/The-Aether/tree/1.16/src/main/resources/assets)) are unlicensed and all rights are reserved to them by Gilded Games.** 
 
