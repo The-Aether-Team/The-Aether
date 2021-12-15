@@ -32,7 +32,7 @@ public class HolidayTreeFeature extends Feature<NoFeatureConfig>
     @Override
     public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
         Calendar calendar = Calendar.getInstance();
-        if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DAY_OF_MONTH) >= 24 && calendar.get(Calendar.DAY_OF_MONTH) <= 26) {
+        if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER || calendar.get(Calendar.MONTH) == Calendar.JANUARY) {
 
             Rotation rotation = Rotation.getRandom(rand);
             TemplateManager templatemanager = reader.getLevel().getServer().getStructureManager();
