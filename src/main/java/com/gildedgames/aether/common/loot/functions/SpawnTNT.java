@@ -41,7 +41,7 @@ public class SpawnTNT extends LootFunction
 
     @Override
     public LootFunctionType getType() {
-        return AetherLoot.SPAWN_ENTITY;
+        return AetherLoot.SPAWN_TNT;
     }
 
     public static class Serializer extends LootFunction.Serializer<SpawnTNT>

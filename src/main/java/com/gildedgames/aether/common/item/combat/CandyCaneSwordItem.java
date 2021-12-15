@@ -19,10 +19,7 @@ public class CandyCaneSwordItem extends SwordItem
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (target.deathTime > 0) {
-            return true;
-        }
-        if(random.nextBoolean() && attacker instanceof PlayerEntity && !attacker.level.isClientSide && target.hurtTime > 0) {
+        if (!attacker.level.isClientSide && attacker instanceof PlayerEntity && target.level.getRandom().nextBoolean()) {
             target.spawnAtLocation(AetherItems.CANDY_CANE.get());
         }
         return super.hurtEnemy(stack, target, attacker);

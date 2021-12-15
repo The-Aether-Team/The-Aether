@@ -26,14 +26,15 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AetherStructures {
-
+public class AetherStructures
+{
     public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Aether.MODID);
 
     public static final RegistryObject<Structure<NoFeatureConfig>> BRONZE_DUNGEON = STRUCTURES.register("bronze_dungeon", () -> new BronzeDungeonStructure(NoFeatureConfig.CODEC));
     public static final RegistryObject<Structure<NoFeatureConfig>> GOLD_DUNGEON = STRUCTURES.register("gold_dungeon", () -> new GoldDungeonStructure(NoFeatureConfig.CODEC));
 
-    public static final class ConfiguredStructures {
+    public static final class ConfiguredStructures
+    {
         public static final StructureFeature<?, ?> BRONZE_DUNGEON = AetherStructures.BRONZE_DUNGEON.get().configured(IFeatureConfig.NONE);
         public static final StructureFeature<?, ?> GOLD_DUNGEON = AetherStructures.GOLD_DUNGEON.get().configured(IFeatureConfig.NONE);
     }
@@ -52,7 +53,7 @@ public class AetherStructures {
     }
 
     public static void addDimensionalSpacing(final WorldEvent.Load event) {
-        if(event.getWorld() instanceof ServerWorld) {
+        if (event.getWorld() instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)event.getWorld();
 
             if (serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator && serverWorld.dimension().equals(World.OVERWORLD)) {
@@ -69,7 +70,7 @@ public class AetherStructures {
     private static <F extends Structure<?>> void setupStructure(F structure, StructureSeparationSettings structureSeparationSettings, boolean transformSurroundingLand) {
         Structure.STRUCTURES_REGISTRY.put(structure.getRegistryName().toString(), structure);
 
-        if(transformSurroundingLand) {
+        if (transformSurroundingLand) {
             Structure.NOISE_AFFECTING_FEATURES =
                     ImmutableList.<Structure<?>>builder()
                             .addAll(Structure.NOISE_AFFECTING_FEATURES)

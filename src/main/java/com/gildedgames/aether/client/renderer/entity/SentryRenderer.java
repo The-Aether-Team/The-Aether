@@ -4,15 +4,19 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.layers.SentryLayer;
 import com.gildedgames.aether.common.entity.monster.SentryEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.SlimeModel;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class SentryRenderer extends MobRenderer<SentryEntity, SlimeModel<SentryEntity>> {
 
-	private static final ResourceLocation SENTRY_TEXTURES     = new ResourceLocation(Aether.MODID, "textures/entity/sentry/sentry.png");
-	private static final ResourceLocation SENTRY_TEXTURES_LIT = new ResourceLocation(Aether.MODID, "textures/entity/sentry/sentry_lit.png");
+	private static final ResourceLocation SENTRY_TEXTURES = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/sentry.png");
+	private static final ResourceLocation SENTRY_TEXTURES_LIT = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/sentry_lit.png");
 	
 	public SentryRenderer(EntityRendererManager rendererManager) {
 		super(rendererManager, new SlimeModel<>(0), 0.3F);

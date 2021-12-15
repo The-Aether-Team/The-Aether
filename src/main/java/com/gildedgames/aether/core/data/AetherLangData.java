@@ -18,7 +18,15 @@ public class AetherLangData extends LanguageProvider
     }
 
     private void addDiscDesc(Supplier<? extends Item> key, String name) {
-        add("item.aether." + key.get().getDescriptionId() + ".desc", name);
+        add(key.get().getDescriptionId() + ".desc", name);
+    }
+
+    private void addSubtitle(String category, String key, String name) {
+        add("subtitles." + category + "." + key, name);
+    }
+
+    private void addDeath(String key, String name) {
+        add("death.attack." + key, name);
     }
 
     public void addContainerType(Supplier<? extends ContainerType<?>> key, String name) {
@@ -41,16 +49,32 @@ public class AetherLangData extends LanguageProvider
         add("advancement.aether." + key + ".desc", name);
     }
 
+    public void addGuiText(String key, String name) {
+        add("gui.aether." + key, name);
+    }
+
+    public void addMenuText(String key, String name) {
+        addGuiText("menu." + key, name);
+    }
+
     public void addLoreBookText(String key, String name) {
-        add("gui.aether.book_of_lore." + key, name);
+        addGuiText("book_of_lore." + key, name);
     }
 
     public void addMessage(String key, String name) {
         add("aether." + key, name);
     }
 
+    public void addKeyInfo(String key, String name) {
+        add("key.aether." + key, name);
+    }
+
     public void addCuriosIdentifier(String key, String name) {
         add("curios.identifier." + key, name);
+    }
+
+    public void addCuriosModifier(String key, String name) {
+        add("curios.modifiers." + key, name);
     }
 
     public void addItemLore(Supplier<? extends Item> key, String name) {
@@ -169,6 +193,7 @@ public class AetherLangData extends LanguageProvider
         addBlock(AetherBlocks.HELLFIRE_WALL, "Hellfire Wall");
         addBlock(AetherBlocks.HOLYSTONE_WALL, "Holystone Wall");
         addBlock(AetherBlocks.MOSSY_HOLYSTONE_WALL, "Mossy Holystone Wall");
+        addBlock(AetherBlocks.ICESTONE_WALL, "Icestone Wall");
         addBlock(AetherBlocks.HOLYSTONE_BRICK_WALL, "Holystone Brick Wall");
         addBlock(AetherBlocks.AEROGEL_WALL, "Aerogel Wall");
 
@@ -178,6 +203,7 @@ public class AetherLangData extends LanguageProvider
         addBlock(AetherBlocks.HELLFIRE_STAIRS, "Hellfire Stairs");
         addBlock(AetherBlocks.HOLYSTONE_STAIRS, "Holystone Stairs");
         addBlock(AetherBlocks.MOSSY_HOLYSTONE_STAIRS, "Mossy Holystone Stairs");
+        addBlock(AetherBlocks.ICESTONE_STAIRS, "Icestone Stairs");
         addBlock(AetherBlocks.HOLYSTONE_BRICK_STAIRS, "Holystone Brick Stairs");
         addBlock(AetherBlocks.AEROGEL_STAIRS, "Aerogel Stairs");
 
@@ -187,6 +213,7 @@ public class AetherLangData extends LanguageProvider
         addBlock(AetherBlocks.HELLFIRE_SLAB, "Hellfire Slab");
         addBlock(AetherBlocks.HOLYSTONE_SLAB, "Holystone Slab");
         addBlock(AetherBlocks.MOSSY_HOLYSTONE_SLAB, "Mossy Holystone Slab");
+        addBlock(AetherBlocks.ICESTONE_SLAB, "Icestone Slab");
         addBlock(AetherBlocks.HOLYSTONE_BRICK_SLAB, "Holystone Brick Slab");
         addBlock(AetherBlocks.AEROGEL_SLAB, "Aerogel Slab");
 
@@ -236,7 +263,7 @@ public class AetherLangData extends LanguageProvider
         addItem(AetherItems.PIG_SLAYER, "Pig Slayer");
         addItem(AetherItems.CANDY_CANE_SWORD, "Candy Cane Sword");
 
-        addItem(AetherItems.NOTCH_HAMMER, "Hammer of Notch");
+        addItem(AetherItems.HAMMER_OF_NOTCH, "Hammer of Notch");
 
         addItem(AetherItems.LIGHTNING_KNIFE, "Lightning Knife");
 
@@ -361,9 +388,18 @@ public class AetherLangData extends LanguageProvider
 
         addItem(AetherItems.NATURE_STAFF, "Nature Staff");
         addItem(AetherItems.CLOUD_STAFF, "Cloud Staff");
+
+        addItem(AetherItems.BLUE_MOA_EGG, "Blue Moa Egg");
+        addItem(AetherItems.WHITE_MOA_EGG, "White Moa Egg");
+        addItem(AetherItems.BLACK_MOA_EGG, "Black Moa Egg");
+        addItem(AetherItems.ORANGE_MOA_EGG, "Orange Moa Egg");
+
         addItem(AetherItems.LIFE_SHARD, "Life Shard");
 
         addItem(AetherItems.BOOK_OF_LORE, "Book of Lore");
+
+        addItem(AetherItems.AETHER_PORTAL_FRAME, "Aether Portal Frame");
+        addItem(AetherItems.MOA_DEBUG_STICK, "Moa Debug Stick");
 
         addItem(AetherItems.AECHOR_PLANT_SPAWN_EGG, "Aechor Plant Spawn Egg");
         addItem(AetherItems.AERBUNNY_SPAWN_EGG, "Aerbunny Spawn Egg");
@@ -398,8 +434,6 @@ public class AetherLangData extends LanguageProvider
         addEntityType(AetherEntityTypes.GOLDEN_DART, "Golden Dart");
         addEntityType(AetherEntityTypes.POISON_DART, "Poison Dart");
         addEntityType(AetherEntityTypes.ENCHANTED_DART, "Enchanted Dart");
-        addEntityType(AetherEntityTypes.PHOENIX_ARROW, "Phoenix Arrow");
-        addEntityType(AetherEntityTypes.SPECTRAL_PHOENIX_ARROW, "Spectral Phoenix Arrow");
         addEntityType(AetherEntityTypes.HAMMER_PROJECTILE, "Hammer Projectile");
 
 
@@ -426,27 +460,143 @@ public class AetherLangData extends LanguageProvider
 
 
         addAdvancement("enter_aether", "Hostile Paradise");
-        addAdvancement("blue_aercloud", "To infinity and beyond!");
-        addAdvancement("incubator", "Now you're family");
-        addAdvancement("altar", "Do you believe in magic?");
-        addAdvancement("gravitite_tools", "Pink is the new blue");
-        addAdvancement("mount_phyg", "When Phygs fly");
+        addAdvancement("read_lore", "The More You Know!");
+        addAdvancement("loreception", "Lore-Ception!");
+        addAdvancement("blue_aercloud", "To Infinity and Beyond!");
+        addAdvancement("incubator", "Now You're Family");
+        addAdvancement("altar", "Do You Believe in Magic?");
+        addAdvancement("gravitite_tools", "Pink is the New Blue");
+        addAdvancement("mount_phyg", "When Phygs Fly");
         addAdvancement("bronze_dungeon", "Like a Bossaru!");
         addAdvancement("silver_dungeon", "Dethroned");
         addAdvancement("gold_dungeon", "Extinguished");
-        addAdvancement("loreception", "Lore-ception!");
 
 
         addAdvancementDesc("enter_aether", "Enter the Aether");
+        addAdvancementDesc("read_lore", "Read a Book of Lore");
+        addAdvancementDesc("loreception", "Put a Book of Lore inside a Book of Lore");
         addAdvancementDesc("blue_aercloud", "Bounce on a Blue Aercloud");
-        addAdvancementDesc("incubator", "Incubate a moa");
+        addAdvancementDesc("incubator", "Incubate a Moa");
         addAdvancementDesc("altar", "Craft an Altar");
         addAdvancementDesc("gravitite_tools", "Craft a Gravitite tool");
         addAdvancementDesc("mount_phyg", "Fly on a Phyg");
         addAdvancementDesc("bronze_dungeon", "Defeat the Bronze Dungeon boss");
         addAdvancementDesc("silver_dungeon", "Defeat the Silver Dungeon boss");
         addAdvancementDesc("gold_dungeon", "Defeat the Golden Dungeon boss");
-        addAdvancementDesc("loreception", "Put a Book of Lore inside a Book of Lore");
+
+
+        addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");
+        addSubtitle("block", "aether_portal.trigger", "Aether Portal noise intensifies");
+        addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
+
+        addSubtitle("item", "dart_shooter.shoot", "Dart Shooter fired");
+        addSubtitle("item", "lightning_knife.shoot", "Lightning Knife flies");
+        addSubtitle("item", "hammer_of_notch.shoot", "Hammer fired");
+
+        addSubtitle("item", "armor.equip_zanite", "Zanite armor clanks");
+        addSubtitle("item", "armor.equip_gravitite", "Gravitite armor clangs");
+        addSubtitle("item", "armor.equip_valkyrie", "Valkyrie armor clinks");
+        addSubtitle("item", "armor.equip_neptune", "Neptune armor jingles");
+        addSubtitle("item", "armor.equip_phoenix", "Phoenix armor clinks");
+        addSubtitle("item", "armor.equip_obsidian", "Obsidian armor clanks");
+        addSubtitle("item", "armor.equip_sentry", "Sentry armor clanks");
+
+        addSubtitle("item", "accessory.equip_generic", "Accessory equips");
+        addSubtitle("item", "accessory.equip_iron_ring", "Iron Ring jingles");
+        addSubtitle("item", "accessory.equip_gold_ring", "Gold Ring jingles");
+        addSubtitle("item", "accessory.equip_zanite_ring", "Zanite Ring jingles");
+        addSubtitle("item", "accessory.equip_ice_ring", "Ice Ring jingles");
+        addSubtitle("item", "accessory.equip_iron_pendant", "Iron Pendant jingles");
+        addSubtitle("item", "accessory.equip_gold_pendant", "Gold Pendant jingles");
+        addSubtitle("item", "accessory.equip_zanite_pendant", "Zanite Pendant jingles");
+        addSubtitle("item", "accessory.equip_ice_pendant", "Ice Pendant jingles");
+        addSubtitle("item", "accessory.equip_cape", "Cape rustles");
+
+        addSubtitle("entity", "phyg.ambient", "Phyg oinks");
+        addSubtitle("entity", "phyg.death", "Phyg dies");
+        addSubtitle("entity", "phyg.hurt", "Phyg hurts");
+        addSubtitle("entity", "phyg.saddle", "Saddle equips");
+        addSubtitle("entity", "phyg.step", "Footsteps");
+
+        addSubtitle("entity", "flying_cow.ambient", "Flying Cow moos");
+        addSubtitle("entity", "flying_cow.death", "Flying Cow dies");
+        addSubtitle("entity", "flying_cow.hurt", "Flying Cow hurts");
+        addSubtitle("entity", "flying_cow.saddle", "Saddle equips");
+        addSubtitle("entity", "flying_cow.milk", "Flying Cow gets milked");
+        addSubtitle("entity", "flying_cow.step", "Footsteps");
+
+        addSubtitle("entity", "sheepuff.ambient", "Sheepuff baahs");
+        addSubtitle("entity", "sheepuff.death", "Sheepuff dies");
+        addSubtitle("entity", "sheepuff.hurt", "Sheepuff hurts");
+        addSubtitle("entity", "sheepuff.step", "Footsteps");
+
+        addSubtitle("entity", "moa.ambient", "Moa calls");
+        addSubtitle("entity", "moa.death", "Moa dies");
+        addSubtitle("entity", "moa.hurt", "Moa hurts");
+        addSubtitle("entity", "moa.flap", "Moa flaps");
+        addSubtitle("entity", "moa.egg", "Moa plops");
+
+        addSubtitle("entity", "aerwhale.ambient", "Aerwhale whistles");
+        addSubtitle("entity", "aerwhale.death", "Aerwhale cries");
+
+        addSubtitle("entity", "aerbunny.death", "Aerbunny dies");
+        addSubtitle("entity", "aerbunny.hurt", "Aerbunny squeals");
+        addSubtitle("entity", "aerbunny.lift", "Aerbunny squeaks");
+
+        addSubtitle("entity", "swet.attack", "Swet attacks");
+        addSubtitle("entity", "swet.death", "Swet dies");
+        addSubtitle("entity", "swet.hurt", "Swet hurts");
+        addSubtitle("entity", "swet.jump", "Swet squishes");
+        addSubtitle("entity", "swet.squish", "Swet squishes");
+
+        addSubtitle("entity", "aechor_plant.shoot", "Aechor Plant shoots");
+
+        addSubtitle("entity", "cockatrice.shoot", "Cockatrice shoots");
+        addSubtitle("entity", "cockatrice.ambient", "Cockatrice calls");
+        addSubtitle("entity", "cockatrice.death", "Cockatrice dies");
+        addSubtitle("entity", "cockatrice.hurt", "Cockatrice hurts");
+        addSubtitle("entity", "cockatrice.flap", "Cockatrice flaps");
+
+        addSubtitle("entity", "zephyr.shoot", "Zephyr spits");
+        addSubtitle("entity", "zephyr.ambient", "Zephyr blows");
+        addSubtitle("entity", "zephyr.death", "Zephyr dies");
+        addSubtitle("entity", "zephyr.hurt", "Zephyr hurts");
+
+        addSubtitle("entity", "sentry.death", "Sentry dies");
+        addSubtitle("entity", "sentry.hurt", "Sentry hurts");
+        addSubtitle("entity", "sentry.jump", "Sentry squishes");
+
+        addSubtitle("entity", "mimic.death", "Mimic dies");
+        addSubtitle("entity", "mimic.hurt", "Mimic hurts");
+
+        addSubtitle("entity", "slider.awaken", "Slider awakens");
+        addSubtitle("entity", "slider.collide", "Slider smashes");
+        addSubtitle("entity", "slider.move", "Slider slides");
+        addSubtitle("entity", "slider.death", "Slider breaks");
+
+        addSubtitle("entity", "sun_spirit.shoot", "Sun Spirit shoots");
+
+        addSubtitle("entity", "cloud_minion.shoot", "Cloud Minion spits");
+
+        addSubtitle("entity", "cloud_crystal.explode", "Crystal explodes");
+
+        addSubtitle("entity", "dart.hit", "Dart hits");
+
+
+
+        addDeath("inebriation", "%1$s was inebriated");
+        addDeath("inebriation.player", "%1$s was inebriated by %2$s");
+        addDeath("ice_crystal", "%1$s was chilled by %2$s's Ice Crystal");
+
+
+
+        addMenuText("minecraft", "Normal Theme");
+        addMenuText("aether", "Aether Theme");
+
+
+        addGuiText("pro_tip", "Pro Tip:");
+        addGuiText("ascending", "Ascending to the Aether");
+        addGuiText("descending", "Descending from the Aether");
 
 
         addLoreBookText("previous", "Prev.");
@@ -456,12 +606,27 @@ public class AetherLangData extends LanguageProvider
         addLoreBookText("item", "Item:");
 
 
+        addMessage("hammer_of_notch_cooldown", "Cooldown");
+
+
+        addMessage("life_shard_limit", "You can only use a total of %s Life Shards.");
         addMessage("bronze_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
         addMessage("silver_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
         addMessage("gold_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Golden Key.");
 
 
-        addCuriosIdentifier("shield", "Shield");
+        addKeyInfo("category", "Aether");
+        addKeyInfo("open_accessories.desc", "Open/Close Accessories Inventory");
+
+
+        addCuriosIdentifier("aether_pendant", "Pendant");
+        addCuriosIdentifier("aether_cape", "Cape");
+        addCuriosIdentifier("aether_ring", "Ring");
+        addCuriosIdentifier("aether_shield", "Shield");
+        addCuriosIdentifier("aether_gloves", "Gloves");
+        addCuriosIdentifier("aether_accessory", "Accessory");
+
+        addCuriosModifier("aether_gloves", "When on hands:");
 
 
         addItemLore(AetherItems.AECHOR_PETAL, "The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.");
@@ -482,12 +647,12 @@ public class AetherLangData extends LanguageProvider
         addBlockLore(AetherBlocks.ANGELIC_STAIRS, "Crafted from Angelic Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addBlockLore(AetherBlocks.BERRY_BUSH, "These bushes can be found all over the Aether. They provide Blue Berries when broken, and then turn into bare stems. If placed on Enchanted Aether Grass the drops are doubled.");
         addBlockLore(AetherBlocks.BERRY_BUSH_STEM, "This is the result of harvesting the Blue Berries from a Berry Bush. It can take some time for them to grow back.");
-        //addItemLore(AetherItems.BLACK_MOA_EGG, "An Egg laid by a Black Moa. Hatching this provides a Black Moa with 8 mid-air jumps, the best and most rare one!");
+        addItemLore(AetherItems.BLACK_MOA_EGG, "An Egg laid by a Black Moa. Hatching this provides a Black Moa with 8 mid-air jumps, the best and most rare one!");
         addBlockLore(AetherBlocks.BLUE_AERCLOUD, "A pale blue cloud found close to the ground. It has very bouncy properties, and can help you reach high places.");
         addItemLore(AetherItems.BLUE_BERRY, "Harvested from Berry Bushes, this is the most common food source in the Aether. It has very weak hunger restoration. You can enchant these in an Altar for much better hunger restoration.");
         addItemLore(AetherItems.BLUE_CAPE, "A Blue Cape that has a silky feeling to it. It's crafted using Blue Wool.");
         addItemLore(AetherItems.BLUE_GUMMY_SWET, "A sweet smelling gummy, it can be found in random chests in Bronze and Silver dungeons. It restores the player’s hunger to full. Very useful for boss fights.");
-        //addItemLore(AetherItems.BLUE_MOA_EGG, "An Egg laid by a Blue Moa. Hatching this provides a Blue Moa with 3 mid-air jumps. The most common Moa.");
+        addItemLore(AetherItems.BLUE_MOA_EGG, "An Egg laid by a Blue Moa. Hatching this provides a Blue Moa with 3 mid-air jumps. The most common Moa.");
         addItemLore(AetherItems.BOOK_OF_LORE, "A large book containing many lore entries written by the wise Lorist. It describes every object in detail.");
         addItemLore(AetherItems.BRONZE_DUNGEON_KEY, "A dull key that is dropped from the Slider after being defeated. You can use it to claim the treasure you earned!");
         addItemLore(AetherItems.CANDY_CANE, "Found in presents under Holiday trees! They can be used to repair Candy Cane swords, and are a very tasty treat.");
@@ -498,7 +663,7 @@ public class AetherLangData extends LanguageProvider
         addBlockLore(AetherBlocks.CARVED_WALL, "Crafted from Carved Stone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addItemLore(AetherItems.CHAINMAIL_GLOVES, "A very rare part of chain armor, it is needed to complete the Chain Armor set.");
         addBlockLore(AetherBlocks.CHEST_MIMIC, "It may look like a normal chest, but it really isn't. As soon as you right click on it, a chest mimic will pop out! These appear in Bronze and Silver dungeons.");
-        //addItemLore(AetherItems.CLOUD_STAFF, "A staff with a light and fluffy top. It summons small Cloud Sentries to fight next to the user for a short period of time by shooting large Iceballs.");
+        addItemLore(AetherItems.CLOUD_STAFF, "A staff with a light and fluffy top. It summons small Cloud Sentries to fight next to the user for a short period of time by shooting large Iceballs.");
         addBlockLore(AetherBlocks.COLD_AERCLOUD, "A cold cloud found in the skies of the Aether. It can be used to make Parachutes, and break drops that would otherwise be very dangerous.");
         addItemLore(AetherItems.COLD_PARACHUTE, "A quickly made parachute. It's fluffy to the touch and is made from Cold Aerclouds. It has one use.");
         addBlockLore(AetherBlocks.CRYSTAL_FRUIT_LEAVES, "Crystal Leaves that are home to White Apples.");
@@ -566,7 +731,7 @@ public class AetherLangData extends LanguageProvider
         addItemLore(AetherItems.IRON_PENDANT, "An aesthetic accessory made of iron.");
         addItemLore(AetherItems.IRON_RING, "An aesthetic accessory made of iron.");
         addItemLore(AetherItems.LEATHER_GLOVES, "Dyeable gloves to match your leather tunic! This is needed to complete the Leather armor set.");
-        //addItemLore(AetherItems.LIFE_SHARD, "A very rare item found in Gold Dungeons. Using this will give you an extra permanent heart! The feeling of using it is very strange, and hard to describe.");
+        addItemLore(AetherItems.LIFE_SHARD, "A very rare item found in Gold Dungeons. Using this will give you an extra permanent heart! The feeling of using it is very strange, and hard to describe.");
         addBlockLore(AetherBlocks.LIGHT_ANGELIC_STONE, "The Light version of Angelic Stone. It is less common than Angelic Stone, but it looks really nice as a decorative block.");
         addBlockLore(AetherBlocks.LIGHT_HELLFIRE_STONE, "The Light version of Hellfire Stone. It can be found in Gold Dungeons along with Hellfire stone, but like it's counterpart, it cannot be collected until the boss is defeated.");
         addItemLore(AetherItems.LIGHTNING_KNIFE, "Small knives that when thrown, summon lightning bolts where they land.");
@@ -575,19 +740,19 @@ public class AetherLangData extends LanguageProvider
         addBlockLore(AetherBlocks.MOSSY_HOLYSTONE_SLAB, "Crafted from Mossy Holystone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
         addBlockLore(AetherBlocks.MOSSY_HOLYSTONE_STAIRS, "Crafted from Mossy Holystone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addBlockLore(AetherBlocks.MOSSY_HOLYSTONE_WALL, "Crafted from Mossy Holystone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
-        //addBlockLore(AetherItems.NATURE_STAFF, "A staff that can allow for commanding tamed Moas. It can allow them to sit on the ground.");
+        addItemLore(AetherItems.NATURE_STAFF, "A staff that can allow for commanding tamed Moas. It can allow them to sit on the ground.");
         addItemLore(AetherItems.NEPTUNE_BOOTS, "Found in Silver Dungeons, this armor allows for water walking. The full set is a much better replacement for the Depth Strider enchantment.");
         addItemLore(AetherItems.NEPTUNE_CHESTPLATE, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
         addItemLore(AetherItems.NEPTUNE_GLOVES, "Found in Silver Dungeons, these gloves are requires to complete the Neptune Armor set, which allows for underwater walking.");
         addItemLore(AetherItems.NEPTUNE_HELMET, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
         addItemLore(AetherItems.NEPTUNE_LEGGINGS, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
-        addItemLore(AetherItems.NOTCH_HAMMER, "A mighty hammer which shoots heavy projectiles at mobs. It's said that Notch actually held this hammer.");
+        addItemLore(AetherItems.HAMMER_OF_NOTCH, "A mighty hammer which shoots heavy projectiles at mobs. It's said that Notch actually held this hammer.");
         addItemLore(AetherItems.OBSIDIAN_BOOTS, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addItemLore(AetherItems.OBSIDIAN_CHESTPLATE, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addItemLore(AetherItems.OBSIDIAN_GLOVES, "Needed to complete the Obsidian Armor set, you can convert Phoenix Gloves into Obsidian by standing in water while wearing them.");
         addItemLore(AetherItems.OBSIDIAN_HELMET, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addItemLore(AetherItems.OBSIDIAN_LEGGINGS, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
-        //addItemLore(AetherItems.ORANGE_MOA_EGG, "An Egg laid by an Orange Moa. Hatching this provides an Orange Moa with 2 mid-air jumps, but extreme speed. This Moa is quite common.");
+        addItemLore(AetherItems.ORANGE_MOA_EGG, "An Egg laid by an Orange Moa. Hatching this provides an Orange Moa with 2 mid-air jumps, but extreme speed. This Moa is quite common.");
         addItemLore(AetherItems.PHOENIX_BOOTS, "Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.");
         addItemLore(AetherItems.PHOENIX_BOW, "Found as a dungeon loot, this bow is very heated, and can shoot flaming arrows! It's warm to the touch.");
         addItemLore(AetherItems.PHOENIX_CHESTPLATE, "Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.");
@@ -649,7 +814,7 @@ public class AetherLangData extends LanguageProvider
         addItemLore(AetherItems.WHITE_APPLE, "One of the only known cures for the Aether's deadly poison. You can find them on Crystal Trees.");
         addItemLore(AetherItems.WHITE_CAPE, "A light and fluffy cape that is made from White Wool.");
         addBlockLore(AetherBlocks.WHITE_FLOWER, "These extremely good smelling roses can make great gifts to a friend or loved one. They spawn in large groups around the Aether.");
-        //addItemLore(AetherItems.WHITE_MOA_EGG, "An Egg laid by a White Moa. Hatching this provides a White Moa with 4 mid-air jumps. This Moa is decently rare.");
+        addItemLore(AetherItems.WHITE_MOA_EGG, "An Egg laid by a White Moa. Hatching this provides a White Moa with 4 mid-air jumps. This Moa is decently rare.");
         addItemLore(AetherItems.YELLOW_CAPE, "A bright Yellow Cape that is crafted using Yellow Wool.");
         addItemLore(AetherItems.ZANITE_AXE, "One of Aether's mid-tier tools, you can mine wood faster than stone, and it will get even faster as the tool is worn down.");
         addBlockLore(AetherBlocks.ZANITE_BLOCK, "A block of compacted Zanite Gemstones. They can power beacons, and just have a sleek look to them.");

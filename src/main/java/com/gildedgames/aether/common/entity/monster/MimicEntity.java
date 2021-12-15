@@ -42,7 +42,7 @@ public class MimicEntity extends CreatureEntity {
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 	}
 
-	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+	public static AttributeModifierMap.MutableAttribute createMobAttributes() {
 		return CreatureEntity.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 40.0D)
 				.add(Attributes.ATTACK_DAMAGE, 3.0D)
@@ -67,7 +67,10 @@ public class MimicEntity extends CreatureEntity {
 		}
 		if (source.getDirectEntity() instanceof LivingEntity && this.hurtTime == 0) {
 			if (this.level instanceof ServerWorld) {
-				((ServerWorld) this.level).sendParticles(new BlockParticleData(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState()), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 20, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05);
+				ServerWorld world = (ServerWorld) this.level;
+				for (int i = 0; i < 20; i++) {
+					world.sendParticles(new BlockParticleData(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState()), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 1, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05F);
+				}
 			}
 			
 			LivingEntity attacker = (LivingEntity) source.getDirectEntity();
@@ -101,7 +104,7 @@ public class MimicEntity extends CreatureEntity {
 				this.level.addParticle(ParticleTypes.POOF, this.getX(0.0D) - d0 * 10.0D, this.getRandomY() - d1 * 10.0D, this.getRandomZ(1.0D) - d2 * 10.0D, d0, d1, d2);
 			}
 		} else {
-			this.level.broadcastEntityEvent(this, (byte)20);
+			this.level.broadcastEntityEvent(this, (byte) 20);
 		}
 	}
 }

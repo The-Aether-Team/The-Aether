@@ -1,30 +1,46 @@
 package com.gildedgames.aether.common.entity.passive;
 
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-
 import javax.annotation.Nullable;
 
-//TODO: Can't figure out how to let the player sneak without dismounting the entity.
-public class PhygEntity extends SaddleableEntity {
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.entity.ai.FallingRandomWalkingGoal;
+import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
+import com.gildedgames.aether.common.registry.AetherItems;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.BreedGoal;
+import net.minecraft.entity.ai.goal.FollowParentGoal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.PanicGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.TemptGoal;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+public class PhygEntity extends MountableEntity
+{
     public float wingFold;
     public float wingAngle;
-    public int ticks;
 
     public PhygEntity(EntityType<? extends PhygEntity> type, World worldIn) {
         super(type, worldIn);
+    }
+
+    public PhygEntity(World worldIn) {
+        this(AetherEntityTypes.PHYG.get(), worldIn);
     }
 
     @Override
@@ -34,54 +50,47 @@ public class PhygEntity extends SaddleableEntity {
         this.goalSelector.addGoal(3, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.2, Ingredient.of(AetherItems.BLUE_BERRY.get()), false));
         this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1));
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1.0));
+        this.goalSelector.addGoal(6, new FallingRandomWalkingGoal(this, 1.0));
         this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
     }
 
-    public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return SaddleableEntity.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20.0D)
+    @Override
+    protected PathNavigator createNavigation(World world) {
+        return new FallPathNavigator(this, world);
+    }
+
+    public static AttributeModifierMap.MutableAttribute createMobAttributes() {
+        return MobEntity.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D);
     }
 
     @Override
     public void tick() {
         super.tick();
-        float aimingForFold;
-        if (this.onGround) {
-            this.wingAngle *= 0.8F;
-            aimingForFold = 0.1F;
-        }
-        else {
-            aimingForFold = 1.0F;
-        }
-        ticks++;
-        this.wingAngle = this.wingFold * (float) Math.sin(this.ticks / 31.83098862F);
-        this.wingFold += (aimingForFold - this.wingFold) / 5.0F;
-
-        this.fallDistance = 0.0F;
-        if (this.getDeltaMovement().y < -0.1 && !this.isRiderSneaking()) {
-            this.setDeltaMovement(getDeltaMovement().x, -0.1, getDeltaMovement().z);
+        if (this.getDeltaMovement().y < -0.1 && !this.playerTriedToCrouch) {
+            this.setDeltaMovement(this.getDeltaMovement().x, -0.1, this.getDeltaMovement().z);
         }
     }
 
     @Override
-    public void handleStartJump(int jumpPower) {
-        this.setMountJumping(true);
-        this.onMountedJump();
-    }
-
-    public void onMountedJump() {
-        if(this.onGround) {
-            this.setDeltaMovement(this.getDeltaMovement().x(), 2.0F, this.getDeltaMovement().z());
+    public void travel(Vector3d vector3d) {
+        float f = this.flyingSpeed;
+        if (this.isEffectiveAi() && !this.isOnGround() && this.getPassengers().isEmpty()) {
+            this.flyingSpeed = this.getSpeed() * (0.24F / (0.91F * 0.91F * 0.91F));
+            super.travel(vector3d);
+            this.flyingSpeed = f;
+        } else {
+            this.flyingSpeed = f;
+            super.travel(vector3d);
         }
     }
 
     @Nullable
     @Override
-    public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
-        return AetherEntityTypes.PHYG.get().create(this.level);
+    protected SoundEvent getAmbientSound() {
+        return AetherSoundEvents.ENTITY_PHYG_AMBIENT.get();
     }
 
     @Nullable
@@ -98,7 +107,33 @@ public class PhygEntity extends SaddleableEntity {
 
     @Nullable
     @Override
-    protected SoundEvent getAmbientSound() {
-        return AetherSoundEvents.ENTITY_PHYG_AMBIENT.get();
+    protected SoundEvent getSaddledSound() {
+        return AetherSoundEvents.ENTITY_PHYG_SADDLE.get();
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(AetherSoundEvents.ENTITY_PHYG_STEP.get(), 0.15F, 1.0F);
+    }
+
+    @Override
+    protected int calculateFallDamage(float distance, float damageMultiplier) {
+        return 0;
+    }
+
+    @Override
+    public int getMaxFallDistance() {
+        return this.isOnGround() ? super.getMaxFallDistance() : 14;
+    }
+
+    @Nullable
+    @Override
+    public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
+        return AetherEntityTypes.PHYG.get().create(world);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public Vector3d getLeashOffset() {
+        return new Vector3d(0.0D, 0.6F * this.getEyeHeight(), this.getBbWidth() * 0.4F);
     }
 }

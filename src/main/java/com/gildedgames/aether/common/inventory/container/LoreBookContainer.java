@@ -2,9 +2,9 @@ package com.gildedgames.aether.common.inventory.container;
 
 import com.gildedgames.aether.common.inventory.LoreInventory;
 import com.gildedgames.aether.common.registry.AetherContainerTypes;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -12,16 +12,19 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class LoreBookContainer extends Container
 {
-    private final IInventory bookInventory;
+    private final LoreInventory bookInventory;
+
+    private boolean loreEntryExists;
 
     public LoreBookContainer(int id, PlayerInventory playerInventory) {
         this(id, playerInventory, new LoreInventory(playerInventory.player));
     }
 
-    public LoreBookContainer(int id, PlayerInventory playerInventory, IInventory bookInventory) {
+    public LoreBookContainer(int id, PlayerInventory playerInventory, LoreInventory bookInventory) {
         super(AetherContainerTypes.BOOK_OF_LORE.get(), id);
         checkContainerSize(bookInventory, 1);
         this.bookInventory = bookInventory;
+        bookInventory.setContainer(this);
         bookInventory.startOpen(playerInventory.player);
 
         this.addSlot(new Slot(bookInventory, 0, 83, 63));
@@ -84,6 +87,14 @@ public class LoreBookContainer extends Container
         this.bookInventory.stopOpen(playerIn);
     }
 
+    public boolean getLoreEntryExists() {
+        return this.loreEntryExists;
+    }
+
+    public void setLoreEntryExists(boolean exists) {
+        this.loreEntryExists = exists;
+    }
+
     @OnlyIn(Dist.CLIENT)
     public String getLoreEntryKey(ItemStack stack) {
         return "lore." + stack.getItem().getRegistryName().getNamespace() + "." + stack.getDescriptionId()
@@ -93,5 +104,10 @@ public class LoreBookContainer extends Container
                 .replace("tile.", "")
                 .replace(".name", "")
                 .replace(".", "_");
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public boolean loreEntryExists(ItemStack stack) {
+        return I18n.exists(getLoreEntryKey(stack));
     }
 }

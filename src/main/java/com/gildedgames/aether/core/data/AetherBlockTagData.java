@@ -30,6 +30,14 @@ public class AetherBlockTagData extends BlockTagsProvider
     @SuppressWarnings("unchecked")
     protected void addTags() {
         //aether
+        tag(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)
+                .add(Blocks.GLOWSTONE);
+        tag(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)
+                .add(AetherBlocks.AETHER_GRASS_BLOCK.get());
+        tag(AetherTags.Blocks.AETHER_ISLAND_BLOCKS)
+                .add(AetherBlocks.AETHER_DIRT.get())
+                .add(AetherBlocks.AETHER_GRASS_BLOCK.get())
+                .add(AetherBlocks.HOLYSTONE.get());
         tag(AetherTags.Blocks.AETHER_DIRT)
                 .add(AetherBlocks.AETHER_GRASS_BLOCK.get())
                 .add(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get())
@@ -37,10 +45,6 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(AetherTags.Blocks.HOLYSTONE)
                 .add(AetherBlocks.HOLYSTONE.get())
                 .add(AetherBlocks.MOSSY_HOLYSTONE.get());
-        tag(AetherTags.Blocks.AETHER_ISLAND_BLOCKS)
-                .add(AetherBlocks.AETHER_DIRT.get())
-                .add(AetherBlocks.AETHER_GRASS_BLOCK.get())
-                .add(AetherBlocks.HOLYSTONE.get());
         tag(AetherTags.Blocks.AERCLOUDS)
                 .add(AetherBlocks.COLD_AERCLOUD.get())
                 .add(AetherBlocks.BLUE_AERCLOUD.get())
@@ -80,8 +84,6 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .add(AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get())
                 .add(AetherBlocks.TRAPPED_HELLFIRE_STONE.get())
                 .add(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE.get());
-        tag(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)
-                .add(Blocks.GLOWSTONE);
 
         //vanilla
         tag(BlockTags.STONE_BRICKS)
@@ -120,6 +122,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .add(AetherBlocks.HELLFIRE_STAIRS.get())
                 .add(AetherBlocks.HOLYSTONE_STAIRS.get())
                 .add(AetherBlocks.MOSSY_HOLYSTONE_STAIRS.get())
+                .add(AetherBlocks.ICESTONE_STAIRS.get())
                 .add(AetherBlocks.HOLYSTONE_BRICK_STAIRS.get())
                 .add(AetherBlocks.AEROGEL_STAIRS.get());
         tag(BlockTags.SLABS)
@@ -129,6 +132,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .add(AetherBlocks.HELLFIRE_SLAB.get())
                 .add(AetherBlocks.HOLYSTONE_SLAB.get())
                 .add(AetherBlocks.MOSSY_HOLYSTONE_SLAB.get())
+                .add(AetherBlocks.ICESTONE_SLAB.get())
                 .add(AetherBlocks.HOLYSTONE_BRICK_SLAB.get())
                 .add(AetherBlocks.AEROGEL_SLAB.get());
         tag(BlockTags.WALLS)
@@ -137,6 +141,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .add(AetherBlocks.HELLFIRE_WALL.get())
                 .add(AetherBlocks.HOLYSTONE_WALL.get())
                 .add(AetherBlocks.MOSSY_HOLYSTONE_WALL.get())
+                .add(AetherBlocks.ICESTONE_WALL.get())
                 .add(AetherBlocks.HOLYSTONE_BRICK_WALL.get())
                 .add(AetherBlocks.AEROGEL_WALL.get());
         tag(BlockTags.LEAVES)

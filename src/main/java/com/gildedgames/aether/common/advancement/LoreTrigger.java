@@ -13,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 public class LoreTrigger extends AbstractCriterionTrigger<LoreTrigger.Instance>
 {
     private static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "lore_entry");
+    public static final LoreTrigger INSTANCE = new LoreTrigger();
 
     public ResourceLocation getId() {
         return ID;
@@ -44,6 +45,10 @@ public class LoreTrigger extends AbstractCriterionTrigger<LoreTrigger.Instance>
         public static LoreTrigger.Instance forItem(IItemProvider item) {
             ItemPredicate predicate = new ItemPredicate(null, item.asItem(), MinMaxBounds.IntBound.ANY, MinMaxBounds.IntBound.ANY, EnchantmentPredicate.NONE, EnchantmentPredicate.NONE, null, NBTPredicate.ANY);
             return forItem(predicate);
+        }
+
+        public static LoreTrigger.Instance forAny() {
+            return forItem(ItemPredicate.ANY);
         }
 
         public boolean test(ItemStack stack) {

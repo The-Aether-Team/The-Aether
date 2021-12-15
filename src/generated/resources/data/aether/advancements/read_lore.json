@@ -1,0 +1,29 @@
+{
+  "parent": "aether:enter_aether",
+  "display": {
+    "icon": {
+      "item": "aether:book_of_lore"
+    },
+    "title": {
+      "translate": "advancement.aether.read_lore"
+    },
+    "description": {
+      "translate": "advancement.aether.read_lore.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "lore_book_entry": {
+      "trigger": "aether:lore_entry",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "lore_book_entry"
+    ]
+  ]
+}

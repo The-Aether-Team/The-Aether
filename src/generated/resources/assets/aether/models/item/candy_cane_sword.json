@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "aether:item/weapons/candy_cane_sword"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "aether:named": 1.0
+      },
+      "model": "aether:item/green_candy_cane_sword"
+    }
+  ]
+}

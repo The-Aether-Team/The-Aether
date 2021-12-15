@@ -7,13 +7,17 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class MoaModel extends EntityModel<MoaEntity> {
-	private final ModelRenderer head, body;
-	private final ModelRenderer legs, legs2;
-	private final ModelRenderer wings, wings2;
-	private final ModelRenderer jaw, neck;
-	private final ModelRenderer feather1, feather2, feather3;
+@OnlyIn(Dist.CLIENT)
+public class MoaModel extends EntityModel<MoaEntity>
+{
+	public ModelRenderer head, body;
+	public ModelRenderer legs, legs2;
+	public ModelRenderer wings, wings2;
+	public ModelRenderer jaw, neck;
+	public ModelRenderer feather1, feather2, feather3;
 
 	public MoaModel(float scale) {
 		this.head = new ModelRenderer(this, 0, 13);

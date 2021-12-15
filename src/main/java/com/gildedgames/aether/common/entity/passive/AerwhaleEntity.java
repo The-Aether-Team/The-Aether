@@ -58,7 +58,7 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 //		this.goalSelector.addGoal(5, new AerwhaleEntity.TravelCourseGoal(this));
 	}
 
-	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+	public static AttributeModifierMap.MutableAttribute createMobAttributes() {
 		return FlyingEntity.createMobAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 1.0D)
 				.add(Attributes.MAX_HEALTH, 20.0D);

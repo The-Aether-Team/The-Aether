@@ -1,33 +1,47 @@
 package com.gildedgames.aether.common.item.combat;
 
-import com.gildedgames.aether.common.entity.projectile.AbstractDartEntity;
-import com.gildedgames.aether.common.entity.projectile.EnchantedDartEntity;
-import com.gildedgames.aether.common.entity.projectile.GoldenDartEntity;
-import com.gildedgames.aether.common.entity.projectile.PoisonDartEntity;
-import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.common.entity.projectile.dart.AbstractDartEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
+import java.util.function.Supplier;
 
 public class DartItem extends Item
 {
-    public DartItem(Properties properties) {
+    protected final Supplier<EntityType<?>> dartEntity;
+
+    public DartItem(Supplier<EntityType<?>> dartEntity, Properties properties) {
         super(properties);
+        this.dartEntity = dartEntity;
     }
 
-    public AbstractDartEntity createDart(World world, ItemStack stack, LivingEntity shooter) {
-        Item item = stack.getItem();
-        if(item == AetherItems.ENCHANTED_DART.get()) {
-            return new EnchantedDartEntity(world, shooter);
+    public AbstractDartEntity createDart(World world, LivingEntity shooter) {
+        Entity entity = this.dartEntity.get().create(world);
+        if (entity instanceof AbstractDartEntity) {
+            AbstractDartEntity dartEntity = (AbstractDartEntity) entity;
+            dartEntity.setPos(shooter.getX(), shooter.getEyeY() - 0.1D, shooter.getZ());
+            dartEntity.setOwner(shooter);
+            return dartEntity;
+        } else {
+            return null;
         }
-        else if(item == AetherItems.POISON_DART.get()) {
-            return new PoisonDartEntity(world, shooter);
+    }
+
+    public AbstractDartEntity createDart(World world) {
+        Entity entity = this.dartEntity.get().create(world);
+        if (entity instanceof AbstractDartEntity) {
+            return (AbstractDartEntity) entity;
+        } else {
+            return null;
         }
-        else {
-            return new GoldenDartEntity(world, shooter);
-        }
+    }
+
+    public boolean isInfinite(ItemStack dartShooter) {
+        int enchant = net.minecraft.enchantment.EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY_ARROWS, dartShooter);
+        return enchant > 0 && this.getClass() == DartItem.class;
     }
 }

@@ -7,13 +7,17 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class MimicModel extends EntityModel<MimicEntity> {
-	private final ModelRenderer upperBody;
-	private final ModelRenderer lowerBody;
-	private final ModelRenderer leftLeg;
-	private final ModelRenderer rightLeg;
-	private final ModelRenderer knob;
+@OnlyIn(Dist.CLIENT)
+public class MimicModel extends EntityModel<MimicEntity>
+{
+	public ModelRenderer upperBody;
+	public ModelRenderer lowerBody;
+	public ModelRenderer leftLeg;
+	public ModelRenderer rightLeg;
+	public ModelRenderer knob;
 	
 	public MimicModel() {
 		this.texWidth = 128;

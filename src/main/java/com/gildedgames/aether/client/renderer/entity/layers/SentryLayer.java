@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.model.SlimeModel;
 import net.minecraft.util.ResourceLocation;
 
 public class SentryLayer<T extends SentryEntity, M extends SlimeModel<T>> extends AbstractEyesLayer<T, M> {
-	private static final RenderType RENDER_TYPE = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/sentry/eye.png"));
+	private static final RenderType RENDER_TYPE = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/eye.png"));
 	
 	public SentryLayer(IEntityRenderer<T, M> entityRenderer) {
 		super(entityRenderer);

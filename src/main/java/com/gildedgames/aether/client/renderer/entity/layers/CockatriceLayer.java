@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.util.ResourceLocation;
 
 public class CockatriceLayer<T extends CockatriceEntity, M extends EntityModel<T>> extends AbstractEyesLayer<T, M> {
-    private static final RenderType RENDER_TYPE = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/cockatrice/cockatrice_emissive.png"));
+    private static final RenderType RENDER_TYPE = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/mobs/cockatrice/cockatrice_emissive.png"));
 
     public CockatriceLayer(IEntityRenderer<T, M> entityRenderer) {
         super(entityRenderer);

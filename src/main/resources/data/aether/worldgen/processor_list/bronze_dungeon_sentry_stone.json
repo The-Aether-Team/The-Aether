@@ -1,0 +1,22 @@
+{
+  "processors": [
+    {
+      "rules": [
+        {
+          "input_predicate": {
+            "block": "aether:carved_stone",
+            "probability": 0.1,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "output_state": {
+            "Name": "aether:sentry_stone"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    }
+  ]
+}

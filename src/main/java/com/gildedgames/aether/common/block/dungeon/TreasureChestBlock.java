@@ -2,10 +2,12 @@ package com.gildedgames.aether.common.block.dungeon;
 
 import com.gildedgames.aether.common.entity.tile.TreasureChestTileEntity;
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.piglin.PiglinTasks;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.IInventory;
@@ -13,6 +15,7 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
@@ -26,6 +29,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -85,10 +89,36 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestTileEnti
 	public void setPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity livingEntity, ItemStack stack) {
 		if (stack.hasCustomHoverName()) {
 			TileEntity tileentity = world.getBlockEntity(pos);
-			if (tileentity instanceof ChestTileEntity) {
-				((ChestTileEntity)tileentity).setCustomName(stack.getHoverName());
+			if (tileentity instanceof TreasureChestTileEntity) {
+				((TreasureChestTileEntity) tileentity).setCustomName(stack.getHoverName());
 			}
 		}
+	}
+
+	@Override
+	public float getDestroyProgress(BlockState state, PlayerEntity player, IBlockReader world, BlockPos pos) {
+		TileEntity tileEntity = world.getBlockEntity(pos);
+		if (tileEntity instanceof TreasureChestTileEntity) {
+			TreasureChestTileEntity treasureChest = (TreasureChestTileEntity) tileEntity;
+			float f = treasureChest.getLocked() ? state.getDestroySpeed(world, pos) : 3.0F;
+			if (f == -1.0F) {
+				return 0.0F;
+			} else {
+				int i = net.minecraftforge.common.ForgeHooks.canHarvestBlock(state, player, world, pos) ? 30 : 100;
+				return player.getDigSpeed(state, pos) / f / (float) i;
+			}
+		}
+		return super.getDestroyProgress(state, player, world, pos);
+	}
+
+	@Override
+	public float getExplosionResistance(BlockState state, IBlockReader world, BlockPos pos, Explosion explosion) {
+		TileEntity tileEntity = world.getBlockEntity(pos);
+		if (tileEntity instanceof TreasureChestTileEntity) {
+			TreasureChestTileEntity treasureChest = (TreasureChestTileEntity) tileEntity;
+			return treasureChest.getLocked() ? super.getExplosionResistance(state, world, pos, explosion) : 3.0F;
+		}
+		return super.getExplosionResistance(state, world, pos, explosion);
 	}
 
 	@Override
@@ -99,25 +129,48 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestTileEnti
 				InventoryHelper.dropContents(world, pos, (IInventory)tileentity);
 				world.updateNeighbourForOutputSignal(pos, this);
 			}
-
 			super.onRemove(state, world, pos, stateOther, flag);
 		}
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity entity, Hand hand, BlockRayTraceResult rayTraceResult) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
 		if (world.isClientSide) {
 			return ActionResultType.SUCCESS;
 		} else {
-			INamedContainerProvider inamedcontainerprovider = this.getMenuProvider(state, world, pos);
-			if (inamedcontainerprovider != null) {
-				entity.openMenu(inamedcontainerprovider);
-				entity.awardStat(this.getOpenChestStat());
-				PiglinTasks.angerNearbyPiglins(entity, true);
+			TileEntity tileEntity = world.getBlockEntity(pos);
+			if (tileEntity instanceof TreasureChestTileEntity) {
+				TreasureChestTileEntity treasureChest = (TreasureChestTileEntity) tileEntity;
+				INamedContainerProvider inamedcontainerprovider = this.getMenuProvider(state, world, pos);
+				if (treasureChest.getLocked()) {
+					ItemStack stack = player.getMainHandItem();
+					if (treasureChest.tryUnlock(player)) {
+						if (player instanceof ServerPlayerEntity) {
+							ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) player;
+							CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
+							player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+						}
+						stack.shrink(1);
+					}
+				} else if (inamedcontainerprovider != null) {
+					player.openMenu(inamedcontainerprovider);
+					player.awardStat(this.getOpenChestStat());
+					PiglinTasks.angerNearbyPiglins(player, true);
+				}
 			}
-
 			return ActionResultType.CONSUME;
 		}
+	}
+
+	@Override
+	public ItemStack getCloneItemStack(IBlockReader reader, BlockPos pos, BlockState state) {
+		ItemStack stack = super.getCloneItemStack(reader, pos, state);
+		TreasureChestTileEntity treasureChestTileEntity = (TreasureChestTileEntity) reader.getBlockEntity(pos);
+		CompoundNBT compound = new CompoundNBT();
+		compound.putBoolean("Locked", treasureChestTileEntity.getLocked());
+		compound.putString("Kind", treasureChestTileEntity.getKind());
+		stack.addTagElement("BlockEntityTag", compound);
+		return stack;
 	}
 
 	protected Stat<ResourceLocation> getOpenChestStat() {

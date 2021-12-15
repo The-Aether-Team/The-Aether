@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class MoaType extends ForgeRegistryEntry<MoaType> {
-	private static final ResourceLocation DEFAULT_SADDLE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/moa/saddle.png");
+	private static final ResourceLocation DEFAULT_SADDLE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/saddle.png");
 	
 	private final int hexColor;
 	private final ItemGroup group;
@@ -38,7 +38,7 @@ public class MoaType extends ForgeRegistryEntry<MoaType> {
 	public @Nonnull ResourceLocation getMoaTexture() {
 		ResourceLocation texture = this.texture;
 		if (texture == null) {
-			this.texture = texture = new ResourceLocation(this.getRegistryName().getNamespace(), "textures/entity/moa/" + this.getRegistryName().getPath() + ".png");
+			this.texture = texture = new ResourceLocation(this.getRegistryName().getNamespace(), "textures/entity/mobs/moa/" + this.getRegistryName().getPath() + ".png");
 		}
 		return texture;
 	}

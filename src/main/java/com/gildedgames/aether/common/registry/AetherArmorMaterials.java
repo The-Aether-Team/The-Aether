@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.registry;
 
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import net.minecraft.block.Blocks;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
@@ -14,19 +15,19 @@ import java.util.function.Supplier;
 
 public enum AetherArmorMaterials implements IArmorMaterial
 {
-	ZANITE("zanite", 15, new int[] { 2, 5, 6, 2 }, 9, SoundEvents.ARMOR_EQUIP_IRON, 0.0F,
+	ZANITE("zanite", 15, new int[] { 2, 5, 6, 2 }, 9, AetherSoundEvents.ITEM_ARMOR_EQUIP_ZANITE, 0.0F,
 			() -> Ingredient.of(AetherItems.ZANITE_GEMSTONE.get())),
-	GRAVITITE("gravitite", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ARMOR_EQUIP_DIAMOND, 2.0F,
+	GRAVITITE("gravitite", 33, new int[] { 3, 6, 8, 3 }, 10, AetherSoundEvents.ITEM_ARMOR_EQUIP_GRAVITITE, 2.0F,
 			() -> Ingredient.of(AetherBlocks.ENCHANTED_GRAVITITE.get())),
-	VALKYRIE("valkyrie", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ARMOR_EQUIP_DIAMOND, 0.0F,
+	NEPTUNE("neptune", 37, new int[] { 3, 6, 8, 3 }, 15, AetherSoundEvents.ITEM_ARMOR_EQUIP_NEPTUNE, 3.0F,
 			() -> Ingredient.EMPTY),
-	NEPTUNE("neptune", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ARMOR_EQUIP_DIAMOND, 0.0F,
+	PHOENIX("phoenix", 37, new int[] { 3, 6, 8, 3 }, 15, AetherSoundEvents.ITEM_ARMOR_EQUIP_PHOENIX, 3.0F,
 			() -> Ingredient.EMPTY),
-	PHOENIX("phoenix", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ARMOR_EQUIP_DIAMOND, 0.0F,
+	OBSIDIAN("obsidian", 37, new int[] { 3, 6, 8, 3 }, 15, AetherSoundEvents.ITEM_ARMOR_EQUIP_OBSIDIAN, 3.0F,
 			() -> Ingredient.EMPTY),
-	OBSIDIAN("obsidian", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ARMOR_EQUIP_DIAMOND, 0.0F,
-			() -> Ingredient.of(Blocks.OBSIDIAN)),
-	SENTRY("sentry", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ARMOR_EQUIP_DIAMOND, 0.0F,
+	VALKYRIE("valkyrie", 37, new int[] { 3, 6, 8, 3 }, 15, AetherSoundEvents.ITEM_ARMOR_EQUIP_VALKYRIE, 3.0F,
+			() -> Ingredient.EMPTY),
+	SENTRY("sentry", 37, new int[] { 3, 6, 8, 3 }, 15, AetherSoundEvents.ITEM_ARMOR_EQUIP_SENTRY, 3.0F,
 			() -> Ingredient.EMPTY);
 
 	private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
@@ -34,11 +35,11 @@ public enum AetherArmorMaterials implements IArmorMaterial
 	private final int maxDamageFactor;
 	private final int[] damageReductionAmountArray;
 	private final int enchantability;
-	private final SoundEvent soundEvent;
+	private final Supplier<SoundEvent> soundEvent;
 	private final float toughness;
 	private final LazyValue<Ingredient> repairMaterial;
 
-	AetherArmorMaterials(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness, Supplier<Ingredient> repairMaterial) {
+	AetherArmorMaterials(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, Supplier<SoundEvent> soundEvent, float toughness, Supplier<Ingredient> repairMaterial) {
 		this.name = name;
 		this.maxDamageFactor = maxDamageFactor;
 		this.damageReductionAmountArray = damageReductionAmountArray;
@@ -61,7 +62,7 @@ public enum AetherArmorMaterials implements IArmorMaterial
 	}
 
 	public SoundEvent getEquipSound() {
-		return this.soundEvent;
+		return this.soundEvent.get();
 	}
 
 	public Ingredient getRepairIngredient() {

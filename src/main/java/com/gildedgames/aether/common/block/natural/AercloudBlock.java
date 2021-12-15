@@ -36,7 +36,7 @@ public class AercloudBlock extends BreakableBlock implements IAetherDoubleDropBl
 	
 	@Override
 	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
-		entity.fallDistance = 0.0F;
+		entity.fallDistance *= 0.0F;
 
 		if (entity.getDeltaMovement().y < 0.0) {
 			entity.setDeltaMovement(entity.getDeltaMovement().multiply(1.0, 0.005, 1.0));

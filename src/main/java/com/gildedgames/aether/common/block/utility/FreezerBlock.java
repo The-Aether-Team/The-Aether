@@ -50,7 +50,7 @@ public class FreezerBlock extends AbstractFurnaceBlock
 			world.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
 
 			for (int i = 0; i < 10; ++i) {
-				world.addParticle(AetherParticleTypes.FREEZER.get(), x, y, z, 0.0, 0.0, 0.0);
+				world.addParticle(AetherParticleTypes.FROZEN.get(), x, y, z, 0.0, 0.0, 0.0);
 			}
 
 			world.playLocalSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);

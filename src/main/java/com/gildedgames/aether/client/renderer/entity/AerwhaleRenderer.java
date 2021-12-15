@@ -6,6 +6,7 @@ import com.gildedgames.aether.client.renderer.entity.model.BaseAerwhaleModel;
 import com.gildedgames.aether.client.renderer.entity.model.OldAerwhaleModel;
 import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -13,10 +14,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleModel> {
-    private static final ResourceLocation AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/aerwhale/aerwhale.png");
-    private static final ResourceLocation OLD_AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/aerwhale/old_aerwhale.png");
+@OnlyIn(Dist.CLIENT)
+public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleModel>
+{
+    private static final ResourceLocation AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale.png");
+    private static final ResourceLocation OLD_AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/old_aerwhale.png");
 
     private final AerwhaleModel regularModel;
     private final OldAerwhaleModel oldModel;

@@ -1,53 +1,60 @@
 package com.gildedgames.aether.common.entity.passive;
 
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.util.*;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
-import org.apache.logging.log4j.LogManager;
-
-import com.gildedgames.aether.core.api.AetherAPI;
-import com.gildedgames.aether.core.api.MoaType;
-import com.gildedgames.aether.core.api.AetherMoaTypes;
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.core.api.AetherAPI;
+import com.gildedgames.aether.core.api.AetherMoaTypes;
+import com.gildedgames.aether.core.api.MoaType;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.MoverType;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.PanicGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.ResourceLocationException;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 
-public class MoaEntity extends SaddleableEntity {	
+public class MoaEntity extends MountableEntity {
 	public static final DataParameter<String> MOA_TYPE = EntityDataManager.defineId(MoaEntity.class, DataSerializers.STRING);
 	public static final DataParameter<Integer> REMAINING_JUMPS = EntityDataManager.defineId(MoaEntity.class, DataSerializers.INT);
 	public static final DataParameter<Byte> AMOUNT_FED = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BYTE);
@@ -68,7 +75,8 @@ public class MoaEntity extends SaddleableEntity {
 
 	{
 		this.maxUpStep = 1.0F;
-		this.canJumpMidAir = true;
+		//this.canJumpMidAir = true;
+		this.secsUntilEgg = this.getRandomEggTime();
 	}
 
 	public MoaEntity(EntityType<? extends MoaEntity> type, World worldIn) {
@@ -126,8 +134,8 @@ public class MoaEntity extends SaddleableEntity {
 		this.entityData.define(SITTING, false);
 	}
 
-	public static AttributeModifierMap.MutableAttribute registerAttributes() {
-		return AnimalEntity.createMobAttributes()
+	public static AttributeModifierMap.MutableAttribute createMobAttributes() {
+		return MobEntity.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 35.0D)
 				.add(Attributes.MOVEMENT_SPEED, 1.0D);
 	}
@@ -344,10 +352,10 @@ public class MoaEntity extends SaddleableEntity {
 	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		
-		if (!stack.isEmpty() && this.isPlayerGrown()) {
-			if (this.isBaby() && this.isHungry()) {
-				if (this.getAmountFed() < 3 && stack.getItem() == AetherItems.AECHOR_PETAL.get()) {
-					if (!player.isCreative()) {
+		if (!stack.isEmpty()) {
+			if (stack.getItem() == AetherItems.AECHOR_PETAL.get()) {
+				if (this.isPlayerGrown() && this.isBaby() && this.isHungry() && this.getAmountFed() < 3) {
+					if (!player.abilities.instabuild) {
 						stack.shrink(1);
 					}
 					
@@ -359,10 +367,10 @@ public class MoaEntity extends SaddleableEntity {
 					else {
 						this.resetHunger();
 					}
+					return ActionResultType.SUCCESS;
 				}
-			}
-			
-//			if (stack.getItem() == AetherItems.NATURE_STAFF) {
+			}	
+//			else if (stack.getItem() == AetherItems.NATURE_STAFF.get()) {
 //				stack.damageItem(2, player, p -> p.sendBreakAnimation(hand));
 //				
 //				this.setSitting(!this.isSitting());
@@ -370,17 +378,75 @@ public class MoaEntity extends SaddleableEntity {
 //					this.spawnExplosionParticle();
 //				}
 //				
-//				return true;
+//				return ActionResultType.SUCCESS;
 //			}
+			else if (stack.getItem() == AetherItems.MOA_DEBUG_STICK.get()) {
+				if (this.isBaby()) {
+					this.setAge(0);
+					this.addParticlesAroundSelf(ParticleTypes.ENCHANTED_HIT);
+					this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.FIRECHARGE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
+				} else if (!this.isPlayerGrown()) {
+					this.setPlayerGrown(true);
+					UUID ownerUUID = player.getUUID();
+					CompoundNBT tag = stack.getTag();
+					if (tag != null) {
+						if (tag.contains("OwnerUUID", 8)) {
+							String str = tag.getString("OwnerUUID");
+							if (str.isEmpty()) {
+								ownerUUID = UUID.randomUUID();
+							} else {
+								try {
+									ownerUUID = UUID.fromString(str);
+								} catch (IllegalArgumentException e) {
+									/* do nothing */
+								}
+							}
+						} else if (tag.hasUUID("OwnerUUID")) {
+							ownerUUID = tag.getUUID("OwnerUUID");
+						}
+					}
+					this.setOwnerUUID(ownerUUID);
+					this.addParticlesAroundSelf(ParticleTypes.HEART);
+					this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
+				} else {
+					Iterator<MoaType> moaTypes = AetherAPI.getMoaTypes().iterator();
+					MoaType currType = moaTypes.next();
+					MoaType lastType = null;
+					MoaType firstType = currType;
+					while (moaTypes.hasNext() && currType != this.moaType) {
+						lastType = currType;
+						currType = moaTypes.next();
+					}
+					if (currType == this.moaType) {
+						if (player.isCrouching()) {
+							if (lastType == null) {
+								if (moaTypes.hasNext()) {
+									do {
+										lastType = moaTypes.next();
+									} while (moaTypes.hasNext());
+									this.setMoaType(lastType);
+								}
+							} else {
+								this.setMoaType(lastType);
+							}
+						} else {
+							this.setMoaType(moaTypes.hasNext()? moaTypes.next() : firstType);
+						}
+					}
+					this.addParticlesAroundSelf(ParticleTypes.LARGE_SMOKE);
+					this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.FIRECHARGE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
+				}
+				return ActionResultType.SUCCESS;
+			}
 		}
 		
 		return super.mobInteract(player, hand);
 	}
 	
-	@Override
-	public boolean canBeSaddled() {
-		return !this.isBaby() && this.isPlayerGrown();
-	}
+//	@Override
+//	public boolean canBeSaddled() {
+//		return !this.isBaby() && this.isPlayerGrown();
+//	}
 	
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
@@ -455,38 +521,50 @@ public class MoaEntity extends SaddleableEntity {
 		return this.isSitting()? 0.25 : 1.25;
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	@Override
-	public void onPlayerJump(int jumpPowerIn) {
-		if (this.getRemainingJumps() > 0) {
-			LogManager.getLogger(MoaEntity.class).debug("Set moa jump power to {}", jumpPowerIn);
-			if (jumpPowerIn < 0) {
-				jumpPowerIn = 0;
-			}
-			
-			if (jumpPowerIn >= 90) {
-				this.jumpPower = 1.0F;
-			}
-			else {
-				this.jumpPower = 0.7F + 0.3F * jumpPowerIn / 90.0F;
-			}
-		}
-	}
+//	@OnlyIn(Dist.CLIENT)
+//	@Override
+//	public void onPlayerJump(int jumpPowerIn) {
+//		if (this.getRemainingJumps() > 0) {
+//			LogManager.getLogger(MoaEntity.class).debug("Set moa jump power to {}", jumpPowerIn);
+//			if (jumpPowerIn < 0) {
+//				jumpPowerIn = 0;
+//			}
+//
+//			if (jumpPowerIn >= 90) {
+//				this.jumpPower = 1.0F;
+//			}
+//			else {
+//				this.jumpPower = 0.7F + 0.3F * jumpPowerIn / 90.0F;
+//			}
+//		}
+//	}
 
 	@Override
 	public boolean canJump() {
 		return this.getRemainingJumps() > 0 && super.canJump();
 	}
 	
-	@Override
-	public void handleStartJump(int jumpPower) {
-		super.handleStartJump(jumpPower);
-		this.onMountedJump();
-	}
-	
-	@Override
-	public void handleStopJump() {
-		super.handleStopJump();
+//	@Override
+//	public void handleStartJump(int jumpPower) {
+//		super.handleStartJump(jumpPower);
+//		this.onMountedJump();
+//	}
+//
+//	@Override
+//	public void handleStopJump() {
+//		super.handleStopJump();
+//	}
+
+	@OnlyIn(Dist.CLIENT)
+	protected void addParticlesAroundSelf(IParticleData p_213718_1_) {
+		for (int i = 0; i < 5; ++i) {
+			double d0 = this.random.nextGaussian() * 0.02D;
+			double d1 = this.random.nextGaussian() * 0.02D;
+			double d2 = this.random.nextGaussian() * 0.02D;
+			this.level.addParticle(p_213718_1_, this.getRandomX(1.0D), this.getRandomY() + 1.0D, this.getRandomZ(1.0D), d0,
+					d1, d2);
+		}
+
 	}
 	
 }

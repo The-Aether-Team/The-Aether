@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "jukebox",
+  "pattern": [
+    "SSS",
+    "SGS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "tag": "aether:planks_crafting"
+    },
+    "G": {
+      "item": "aether:enchanted_gravitite"
+    }
+  },
+  "result": {
+    "item": "minecraft:jukebox"
+  }
+}

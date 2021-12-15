@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(WorldRenderer.class)
-public abstract class WorldRendererMixin {
-
+public class WorldRendererMixin
+{
     @Shadow
     private ClientWorld level;
 
@@ -19,13 +19,9 @@ public abstract class WorldRendererMixin {
      * Code injection to fix Minecraft's issue of turning the horizon black when the player is below y=63.
      * The method checks if the world key is the same as the Aether's, and if it is, it returns 1.
      */
-    @ModifyVariable(
-            method = "renderSky(Lcom/mojang/blaze3d/matrix/MatrixStack;F)V",
-            at = @At(value = "STORE"),
-            ordinal = 0
-    )
+    @ModifyVariable(at = @At(value = "STORE"), method = "renderSky(Lcom/mojang/blaze3d/matrix/MatrixStack;F)V", ordinal = 0)
     private double onRenderSky(double d0) {
-        if (level.dimension() == AetherDimensions.AETHER_WORLD) {
+        if (this.level.dimension() == AetherDimensions.AETHER_WORLD) {
             return 1.0D;
         }
         return d0;

@@ -9,7 +9,7 @@
           "weight": 18,
           "functions": [
             {
-              "function": "aether:spawn_entity"
+              "function": "aether:spawn_tnt"
             }
           ],
           "name": "minecraft:air"

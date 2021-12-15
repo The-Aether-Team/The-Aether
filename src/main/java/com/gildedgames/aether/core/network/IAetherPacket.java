@@ -15,9 +15,7 @@ public interface IAetherPacket
     class AetherPacket implements IAetherPacket
     {
         @Override
-        public void encode(PacketBuffer buf) {
-
-        }
+        public void encode(PacketBuffer buf) { }
 
         @Override
         public boolean handle(Supplier<NetworkEvent.Context> context) {
@@ -25,8 +23,6 @@ public interface IAetherPacket
             return true;
         }
 
-        public void execute(PlayerEntity player) {
-
-        }
+        public void execute(PlayerEntity player) { }
     }
 }

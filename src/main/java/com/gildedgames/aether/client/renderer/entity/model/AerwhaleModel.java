@@ -4,19 +4,23 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class AerwhaleModel extends BaseAerwhaleModel {
-	private final ModelRenderer frontBody;
-	private final ModelRenderer rightFin;
-	private final ModelRenderer bottomPartHead;
-	private final ModelRenderer leftFin;
-	private final ModelRenderer bottomPartMiddlebody;
-	private final ModelRenderer head;
-	private final ModelRenderer middleFin;
-	private final ModelRenderer backFinRight;
-	private final ModelRenderer backBody;
-	private final ModelRenderer backFinLeft;
-	private final ModelRenderer middleBody;
+@OnlyIn(Dist.CLIENT)
+public class AerwhaleModel extends BaseAerwhaleModel
+{
+	public ModelRenderer frontBody;
+	public ModelRenderer rightFin;
+	public ModelRenderer bottomPartHead;
+	public ModelRenderer leftFin;
+	public ModelRenderer bottomPartMiddlebody;
+	public ModelRenderer head;
+	public ModelRenderer middleFin;
+	public ModelRenderer backFinRight;
+	public ModelRenderer backBody;
+	public ModelRenderer backFinLeft;
+	public ModelRenderer middleBody;
 
 	public AerwhaleModel() {
 		this.texWidth = 512;

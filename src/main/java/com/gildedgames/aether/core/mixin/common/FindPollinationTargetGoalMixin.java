@@ -21,24 +21,22 @@ public class FindPollinationTargetGoalMixin
         this.beeEntity = outer;
     }
 
-    @Inject(at = @At("HEAD"), method = "tick", cancellable = true)
+    @Inject(at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", shift = At.Shift.AFTER), method = "tick", cancellable = true)
     private void tick(CallbackInfo ci) {
-        if (this.beeEntity.random.nextInt(30) == 0) {
-            for (int i = 1; i <= 2; ++i) {
-                BlockPos blockpos = this.beeEntity.blockPosition().below(i);
-                BlockState blockstate = this.beeEntity.level.getBlockState(blockpos);
-                Block block = blockstate.getBlock();
-                boolean flag = false;
-                if (block.is(BlockTags.BEE_GROWABLES)) {
-                    if (block == AetherBlocks.BERRY_BUSH_STEM.get()) {
-                        flag = true;
-                    }
+        for (int i = 1; i <= 2; ++i) {
+            BlockPos blockpos = this.beeEntity.blockPosition().below(i);
+            BlockState blockstate = this.beeEntity.level.getBlockState(blockpos);
+            Block block = blockstate.getBlock();
+            boolean flag = false;
+            if (block.is(BlockTags.BEE_GROWABLES)) {
+                if (block == AetherBlocks.BERRY_BUSH_STEM.get()) {
+                    flag = true;
+                }
 
-                    if (flag) {
-                        this.beeEntity.level.levelEvent(2005, blockpos, 0);
-                        this.beeEntity.level.setBlockAndUpdate(blockpos, AetherBlocks.BERRY_BUSH.get().defaultBlockState());
-                        this.beeEntity.incrementNumCropsGrownSincePollination();
-                    }
+                if (flag) {
+                    this.beeEntity.level.levelEvent(2005, blockpos, 0);
+                    this.beeEntity.level.setBlockAndUpdate(blockpos, AetherBlocks.BERRY_BUSH.get().defaultBlockState());
+                    this.beeEntity.incrementNumCropsGrownSincePollination();
                 }
             }
         }

@@ -49,13 +49,16 @@ public class AetherItemModelData extends AetherItemModelProvider
         handheldItem(AetherItems.ZANITE_SWORD, "weapons/");
         handheldItem(AetherItems.GRAVITITE_SWORD, "weapons/");
 
-        handheldItem(AetherItems.VALKYRIE_LANCE, "weapons/");
+        lanceItem(AetherItems.VALKYRIE_LANCE, "weapons/");
 
         handheldItem(AetherItems.FLAMING_SWORD, "weapons/");
         handheldItem(AetherItems.LIGHTNING_SWORD, "weapons/");
         handheldItem(AetherItems.HOLY_SWORD, "weapons/");
         handheldItem(AetherItems.VAMPIRE_BLADE, "weapons/");
         handheldItem(AetherItems.PIG_SLAYER, "weapons/");
+        nameableWeapon(AetherItems.CANDY_CANE_SWORD, "weapons/", "green_candy_cane_sword");
+
+        nameableWeapon(AetherItems.HAMMER_OF_NOTCH, "weapons/", "hammer_of_jeb");
 
         handheldItem(AetherItems.LIGHTNING_KNIFE, "weapons/");
 
@@ -63,9 +66,11 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.POISON_DART, "weapons/");
         item(AetherItems.ENCHANTED_DART, "weapons/");
 
-        item(AetherItems.GOLDEN_DART_SHOOTER, "weapons/");
-        item(AetherItems.POISON_DART_SHOOTER, "weapons/");
-        item(AetherItems.ENCHANTED_DART_SHOOTER, "weapons/");
+        dartShooterItem(AetherItems.GOLDEN_DART_SHOOTER, "weapons/");
+        dartShooterItem(AetherItems.POISON_DART_SHOOTER, "weapons/");
+        dartShooterItem(AetherItems.ENCHANTED_DART_SHOOTER, "weapons/");
+
+        bowItem(AetherItems.PHOENIX_BOW, "weapons/");
 
         item(AetherItems.ZANITE_HELMET, "armor/");
         item(AetherItems.ZANITE_CHESTPLATE, "armor/");
@@ -167,8 +172,14 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.COLD_PARACHUTE, "miscellaneous/");
         item(AetherItems.GOLDEN_PARACHUTE, "miscellaneous/");
 
-        item(AetherItems.NATURE_STAFF, "miscellaneous/");
-        item(AetherItems.CLOUD_STAFF, "miscellaneous/");
+        handheldItem(AetherItems.NATURE_STAFF, "miscellaneous/");
+        handheldItem(AetherItems.CLOUD_STAFF, "miscellaneous/");
+
+        moaEggItem(AetherItems.BLUE_MOA_EGG, "miscellaneous/");
+        moaEggItem(AetherItems.WHITE_MOA_EGG, "miscellaneous/");
+        moaEggItem(AetherItems.BLACK_MOA_EGG, "miscellaneous/");
+        moaEggItem(AetherItems.ORANGE_MOA_EGG, "miscellaneous/");
+
         item(AetherItems.LIFE_SHARD, "miscellaneous/");
 
         item(AetherItems.MUSIC_DISC_AETHER_TUNE, "miscellaneous/");
@@ -177,6 +188,9 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.MUSIC_DISC_LEGACY, "miscellaneous/");
 
         item(AetherItems.BOOK_OF_LORE, "miscellaneous/");
+
+        item(AetherItems.AETHER_PORTAL_FRAME, "miscellaneous/");
+        withExistingParent(AetherItems.MOA_DEBUG_STICK, modLoc("item/"+AetherItems.NATURE_STAFF.getId().getPath()));
 
         eggItem(AetherItems.PHYG_SPAWN_EGG);
         eggItem(AetherItems.FLYING_COW_SPAWN_EGG);
@@ -283,6 +297,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemWallBlock(AetherBlocks.HELLFIRE_WALL, AetherBlocks.HELLFIRE_STONE, "dungeon/");
         itemWallBlock(AetherBlocks.HOLYSTONE_WALL, AetherBlocks.HOLYSTONE, "natural/");
         itemWallBlock(AetherBlocks.MOSSY_HOLYSTONE_WALL, AetherBlocks.MOSSY_HOLYSTONE, "natural/");
+        itemWallBlock(AetherBlocks.ICESTONE_WALL, AetherBlocks.ICESTONE, "natural/");
         itemWallBlock(AetherBlocks.HOLYSTONE_BRICK_WALL, AetherBlocks.HOLYSTONE_BRICKS, "construction/");
         itemWallBlock(AetherBlocks.AEROGEL_WALL, AetherBlocks.AEROGEL, "construction/");
 
@@ -292,6 +307,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.HELLFIRE_STAIRS);
         itemBlock(AetherBlocks.HOLYSTONE_STAIRS);
         itemBlock(AetherBlocks.MOSSY_HOLYSTONE_STAIRS);
+        itemBlock(AetherBlocks.ICESTONE_STAIRS);
         itemBlock(AetherBlocks.HOLYSTONE_BRICK_STAIRS);
         itemBlock(AetherBlocks.AEROGEL_STAIRS);
 
@@ -301,6 +317,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.HELLFIRE_SLAB);
         itemBlock(AetherBlocks.HOLYSTONE_SLAB);
         itemBlock(AetherBlocks.MOSSY_HOLYSTONE_SLAB);
+        itemBlock(AetherBlocks.ICESTONE_SLAB);
         itemBlock(AetherBlocks.HOLYSTONE_BRICK_SLAB);
         itemBlock(AetherBlocks.AEROGEL_SLAB);
 

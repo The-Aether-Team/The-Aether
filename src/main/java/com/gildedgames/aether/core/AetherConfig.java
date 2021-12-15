@@ -10,6 +10,7 @@ public class AetherConfig
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
         public final ConfigValue<Boolean> edible_ambrosium;
+        public final ConfigValue<Boolean> healing_gummy_swets;
         public final ConfigValue<Integer> maximum_life_shards;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
 
@@ -24,7 +25,7 @@ public class AetherConfig
         public final ConfigValue<Boolean> admin_sun_altar;
 
         public final ConfigValue<Boolean> disable_aether_portal;
-        public final ConfigValue<Boolean> activate_with_skyroot_bucket;
+        public final ConfigValue<Boolean> disable_falling_to_overworld;
         public final ConfigValue<Boolean> disable_eternal_day;
 
         public Common(ForgeConfigSpec.Builder builder) {
@@ -38,6 +39,9 @@ public class AetherConfig
             edible_ambrosium = builder
                     .comment("Ambrosium Shards can be eaten to restore a half heart of health")
                     .define("Ambrosium Shards are edible", false);
+            healing_gummy_swets = builder
+                    .comment("Gummy Swets when eaten restore full health instead of full hunger")
+                    .define("Gummy Swets restore health", false);
             maximum_life_shards = builder
                     .comment("Determines the limit of the amount of Life Shards a player can consume to increase their health")
                     .define("Maximum consumable Life Shards", 10);
@@ -49,10 +53,10 @@ public class AetherConfig
             builder.push("Loot");
             spawn_golden_feather = builder
                     .comment("Allows the Golden Feather to spawn in the Silver Dungeon loot table")
-                    .define("Golden Feather in loot", true);
+                    .define("Golden Feather in loot", false);
             spawn_valkyrie_cape = builder
                     .comment("Allows the Valkyrie Cape to spawn in the Silver Dungeon loot table")
-                    .define("Valkyrie Cape in loot", false);
+                    .define("Valkyrie Cape in loot", true);
             builder.pop();
 
             builder.push("World Generation");
@@ -82,9 +86,9 @@ public class AetherConfig
             disable_aether_portal = builder
                     .comment("Prevents the Aether Portal from being created normally in the mod")
                     .define("Disables Aether Portal creation", false);
-            activate_with_skyroot_bucket = builder
-                    .comment("The Aether Portal can only be activated with an item tagged as a Skyroot Bucket")
-                    .define("Aether Portals activate with Skyroot Buckets", false);
+            disable_falling_to_overworld = builder
+                    .comment("Prevents the player from falling back to the Overworld when they fall out of the Aether")
+                    .define("Disables falling into the Overworld", false);
             disable_eternal_day = builder
                     .comment("Removes eternal day so that the Aether has a normal daylight cycle even before defeating the Sun Spirit")
                     .define("Disables eternal day", false);
@@ -99,6 +103,8 @@ public class AetherConfig
         public final ConfigValue<Boolean> enable_aether_menu;
         public final ConfigValue<Boolean> enable_aether_menu_button;
         public final ConfigValue<Boolean> enable_trivia;
+
+        public final ConfigValue<Boolean> disable_menu_music;
 
         public final ConfigValue<Boolean> install_resource_packs;
 
@@ -122,6 +128,12 @@ public class AetherConfig
             enable_trivia = builder
                     .comment("Adds random trivia and tips to the bottom of loading screens")
                     .define("Enables random trivia", true);
+            builder.pop();
+
+            builder.push("Audio");
+            disable_menu_music = builder
+                    .comment("Disables the Aether's menu music in case another mod implements its own")
+                    .define("Disables menu music", false);
             builder.pop();
 
             builder.push("Resource Pack");
