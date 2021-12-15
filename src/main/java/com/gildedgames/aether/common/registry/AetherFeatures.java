@@ -42,8 +42,9 @@ public class AetherFeatures {
     public static final RegistryObject<Feature<NoFeatureConfig>> PINK_AERCLOUD = FEATURES.register("pink_aercloud", () -> new PinkAercloudFeature(NoFeatureConfig.CODEC));
 
     public static final RegistryObject<Feature<NoFeatureConfig>> CRYSTAL_TREE = FEATURES.register("crystal_tree", () -> new CrystalTreeFeature(NoFeatureConfig.CODEC));
+    public static final RegistryObject<Feature<NoFeatureConfig>> HOLIDAY_TREE = FEATURES.register("holiday_tree", () -> new HolidayTreeFeature(NoFeatureConfig.CODEC));
 
-    public static final RegistryObject<Feature<NoFeatureConfig>> HOLYSTONE_SPHERE = FEATURES.register("holystone_sphere", () -> new HolystoneSphereFeature(NoFeatureConfig.CODEC));
+    public static final RegistryObject<Feature<NoFeatureConfig>> HOLYSTONE_SPHERE = FEATURES.register("holystone_sphere", () -> new HolystoneSphereFeature(NoFeatureConfig.CODEC)); // This is for Gold Dungeons
     
     public static final RegistryObject<Feature<BlockStateFeatureConfig>> LAKE = FEATURES.register("lake", () -> new AetherLakeFeature(BlockStateFeatureConfig.CODEC));
 
@@ -58,6 +59,8 @@ public class AetherFeatures {
         register("pink_aercloud", PINK_AERCLOUD.get().configured(IFeatureConfig.NONE).range(160).squared().chance(7));
 
         register("crystal_tree", CRYSTAL_TREE.get().configured(IFeatureConfig.NONE).chance(30));
+        register("holiday_tree", HOLIDAY_TREE.get().configured(IFeatureConfig.NONE).chance(60));
+
         register("water_lake", LAKE.get().configured(new BlockStateFeatureConfig(Blocks.WATER.defaultBlockState())).decorated(Placement.WATER_LAKE.configured(new ChanceConfig(4))));
 
         register("tree_skyroot", Feature.TREE.configured(
