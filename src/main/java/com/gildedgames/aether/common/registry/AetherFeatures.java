@@ -46,8 +46,9 @@ public class AetherFeatures
     public static final RegistryObject<Feature<NoFeatureConfig>> PINK_AERCLOUD = FEATURES.register("pink_aercloud", () -> new PinkAercloudFeature(NoFeatureConfig.CODEC));
 
     public static final RegistryObject<Feature<NoFeatureConfig>> CRYSTAL_TREE = FEATURES.register("crystal_tree", () -> new CrystalTreeFeature(NoFeatureConfig.CODEC));
+    public static final RegistryObject<Feature<NoFeatureConfig>> HOLIDAY_TREE = FEATURES.register("holiday_tree", () -> new HolidayTreeFeature(NoFeatureConfig.CODEC));
 
-    public static final RegistryObject<Feature<NoFeatureConfig>> HOLYSTONE_SPHERE = FEATURES.register("holystone_sphere", () -> new HolystoneSphereFeature(NoFeatureConfig.CODEC));
+    public static final RegistryObject<Feature<NoFeatureConfig>> HOLYSTONE_SPHERE = FEATURES.register("holystone_sphere", () -> new HolystoneSphereFeature(NoFeatureConfig.CODEC)); // This is for Gold Dungeons
 
     public static final class States
     {
@@ -110,9 +111,10 @@ public class AetherFeatures
         register("pink_aercloud", AetherFeatures.PINK_AERCLOUD.get().configured(IFeatureConfig.NONE).range(160).squared().chance(7));
 
 
-        register("crystal_tree", AetherFeatures.CRYSTAL_TREE.get().configured(IFeatureConfig.NONE).chance(30));
         register("tree_skyroot", Feature.TREE.configured(Configs.SKYROOT_TREE_CONFIG).decorated(Features.Placements.HEIGHTMAP_SQUARE));
         register("tree_golden_oak", Feature.TREE.configured(Configs.GOLDEN_OAK_TREE_CONFIG).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(0, 0.03F, 1))));
+        register("crystal_tree", AetherFeatures.CRYSTAL_TREE.get().configured(IFeatureConfig.NONE).chance(30));
+        register("holiday_tree", AetherFeatures.HOLIDAY_TREE.get().configured(IFeatureConfig.NONE).chance(60));
 
         register("ore_aether_dirt", Feature.ORE.configured(new OreFeatureConfig(Tests.HOLYSTONE, States.AETHER_DIRT, 33)).range(256).squared().count(10));
         register("ore_icestone", Feature.ORE.configured(new OreFeatureConfig(Tests.HOLYSTONE, States.ICESTONE, 16)).range(256).squared().count(10));
