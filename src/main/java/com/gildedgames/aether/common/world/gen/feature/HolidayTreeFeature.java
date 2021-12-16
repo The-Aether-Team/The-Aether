@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.world.gen.feature;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.core.AetherConfig;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Mirror;
@@ -32,7 +33,7 @@ public class HolidayTreeFeature extends Feature<NoFeatureConfig>
     @Override
     public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
         Calendar calendar = Calendar.getInstance();
-        if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER || calendar.get(Calendar.MONTH) == Calendar.JANUARY) {
+        if ((AetherConfig.COMMON.generate_holiday_tree_seasonally.get() && (calendar.get(Calendar.MONTH) == Calendar.DECEMBER || calendar.get(Calendar.MONTH) == Calendar.JANUARY)) || AetherConfig.COMMON.generate_holiday_tree_always.get()) {
 
             Rotation rotation = Rotation.getRandom(rand);
             TemplateManager templatemanager = reader.getLevel().getServer().getStructureManager();
