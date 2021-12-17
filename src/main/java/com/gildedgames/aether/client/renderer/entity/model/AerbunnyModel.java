@@ -79,7 +79,7 @@ public class AerbunnyModel extends EntityModel<AerbunnyEntity>
     @Override
     public void prepareMobModel(AerbunnyEntity aerbunny, float p_212843_2_, float p_212843_3_, float p_212843_4_) {
         super.prepareMobModel(aerbunny, p_212843_2_, p_212843_3_, p_212843_4_);
-        this.puffiness = (float) (aerbunny.getVehicle() != null ? aerbunny.getPuffiness() : aerbunny.getPuffiness()) / 10.0F;
+        this.puffiness = (float) aerbunny.getPuffiness() / 10.0F;
     }
 
     @Override
