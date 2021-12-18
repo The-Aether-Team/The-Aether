@@ -6,13 +6,7 @@ import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.ColdParachuteEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.GoldenParachuteEntity;
-import com.gildedgames.aether.common.entity.monster.AechorPlantEntity;
-import com.gildedgames.aether.common.entity.monster.CockatriceEntity;
-import com.gildedgames.aether.common.entity.monster.FireMinionEntity;
-import com.gildedgames.aether.common.entity.monster.MimicEntity;
-import com.gildedgames.aether.common.entity.monster.SentryEntity;
-import com.gildedgames.aether.common.entity.monster.WhirlwindEntity;
-import com.gildedgames.aether.common.entity.monster.ZephyrEntity;
+import com.gildedgames.aether.common.entity.monster.*;
 import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;
 import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
 import com.gildedgames.aether.common.entity.passive.AetherAnimalEntity;
@@ -29,9 +23,7 @@ import com.gildedgames.aether.common.entity.projectile.dart.PoisonDartEntity;
 import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectileEntity;
 import com.gildedgames.aether.common.entity.projectile.weapon.LightningKnifeEntity;
 
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityType;
+import net.minecraft.entity.*;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -65,7 +57,8 @@ public class AetherEntityTypes
 	public static final RegistryObject<EntityType<AerbunnyEntity>> AERBUNNY = ENTITIES.register("aerbunny", () -> AERBUNNY_TYPE);
 
 	// Hostile Mobs
-	//Swet
+	public static final EntityType<SwetEntity> SWET_TYPE = EntityType.Builder.of(SwetEntity::new, EntityClassification.MONSTER).sized(0.8F, 0.8F).build("swet");
+	public static final RegistryObject<EntityType<SwetEntity>> SWET = ENTITIES.register("swet", () -> SWET_TYPE);
 
 	public static final EntityType<WhirlwindEntity> WHIRLWIND_TYPE = EntityType.Builder.<WhirlwindEntity>of(WhirlwindEntity::new, EntityClassification.MONSTER).sized(0.6F, 0.8F).build("whirlwind");
 	public static final RegistryObject<EntityType<WhirlwindEntity>> WHIRLWIND = ENTITIES.register("whirlwind", () -> WHIRLWIND_TYPE);
@@ -139,6 +132,7 @@ public class AetherEntityTypes
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.MOA.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.AERBUNNY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
 
+		EntitySpawnPlacementRegistry.register(AetherEntityTypes.SWET.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::checkMobSpawnRules);
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.WHIRLWIND.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WhirlwindEntity::canWhirlwindSpawn);
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.AECHOR_PLANT.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AechorPlantEntity::canAechorSpawn);
 		EntitySpawnPlacementRegistry.register(AetherEntityTypes.COCKATRICE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CockatriceEntity::canCockatriceSpawn);
@@ -154,7 +148,7 @@ public class AetherEntityTypes
 		event.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.createMobAttributes().build());
 		event.put(AetherEntityTypes.AERBUNNY.get(), AerbunnyEntity.createMobAttributes().build());
 
-		//event.put(AetherEntityTypes.SWET.get(), SwetEntity.registerAttributes().build());
+		event.put(AetherEntityTypes.SWET.get(), SwetEntity.createMobAttributes().build());
 		event.put(AetherEntityTypes.WHIRLWIND.get(), WhirlwindEntity.createMobAttributes().build());
 		event.put(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantEntity.createMobAttributes().build());
 		event.put(AetherEntityTypes.COCKATRICE.get(), CockatriceEntity.createMobAttributes().build());

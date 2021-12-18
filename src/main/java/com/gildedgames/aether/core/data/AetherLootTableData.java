@@ -1,5 +1,6 @@
 package com.gildedgames.aether.core.data;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.loot.conditions.ConfigEnabled;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.provider.AetherLootTableProvider;
@@ -334,6 +335,31 @@ public class AetherLootTableData extends AetherLootTableProvider
                             )
                     )
             );
+
+            this.add(AetherEntityTypes.SWET.get(), LootTable.lootTable());
+            this.add(new ResourceLocation(Aether.MODID, "entities/swet/blue"), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(AetherItems.SWET_BALL.get())
+                                    .apply(SetCount.setCount(RandomValueRange.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
+                            )
+                    )
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(AetherBlocks.BLUE_AERCLOUD.get())
+                                    .apply(SetCount.setCount(RandomValueRange.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
+                            )
+                    )
+            );
+            this.add(new ResourceLocation(Aether.MODID, "entities/swet/gold"), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                            .add(ItemLootEntry.lootTableItem(Blocks.GLOWSTONE)
+                                    .apply(SetCount.setCount(RandomValueRange.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))
+                            )
+                    )
+            );
+            this.add(AetherEntityTypes.FIRE_MINION.get(), LootTable.lootTable());
         }
 
         private static LootTable.Builder sheepLootTableBuilderWithDrop(IItemProvider wool) {

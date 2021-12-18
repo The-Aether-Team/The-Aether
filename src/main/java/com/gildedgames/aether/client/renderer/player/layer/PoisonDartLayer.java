@@ -33,7 +33,7 @@ public class PoisonDartLayer<T extends LivingEntity, M extends PlayerModel<T>> e
     protected int numStuck(T entity) {
         if (entity instanceof PlayerEntity) {
             IAetherPlayer aetherPlayer = IAetherPlayer.get((PlayerEntity) entity).orElse(null);
-            return aetherPlayer.getPoisonDartCount();
+            return aetherPlayer != null ? aetherPlayer.getPoisonDartCount() : 0;
         } else {
             return 0;
         }
