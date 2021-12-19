@@ -45,6 +45,11 @@ public class MoaEntity extends MountableEntity
 	public static final DataParameter<Boolean> DATA_PLAYER_GROWN_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
 	public static final DataParameter<Boolean> DATA_SITTING_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
 
+	public float wingRotation;
+	public float prevWingRotation;
+	public float destPos;
+	public float prevDestPos;
+
 	public int eggTime = this.random.nextInt(50) + 775;
 
 	public MoaEntity(EntityType<? extends MoaEntity> type, World worldIn) {
@@ -92,6 +97,14 @@ public class MoaEntity extends MountableEntity
 		this.entityData.define(DATA_SITTING_ID, false);
 	}
 
+	@Override
+	public void tick() {
+		super.tick();
+		if (this.getDeltaMovement().y < -0.1 && !this.playerTriedToCrouch) {
+			this.setDeltaMovement(this.getDeltaMovement().x, -0.1, this.getDeltaMovement().z);
+		}
+	}
+	
 	public MoaType getMoaType() {
 		return AetherMoaTypes.MOA_TYPES.get(this.entityData.get(DATA_MOA_TYPE_ID));
 	}
@@ -267,7 +280,6 @@ public class MoaEntity extends MountableEntity
 //	protected float jumpPower;
 //	protected boolean mountJumping;
 //
-//	public float wingRotation, prevWingRotation, destPos, prevDestPos;
 //	protected int ticksOffGround, ticksUntilFlap, secsUntilFlying, secsUntilWalking, secsUntilHungry, secsUntilEgg;
 //
 //	@Override
@@ -299,19 +311,6 @@ public class MoaEntity extends MountableEntity
 //					--this.ticksUntilFlap;
 //				}
 //			}
-//
-//			this.prevWingRotation = this.wingRotation;
-//			this.prevDestPos = this.destPos;
-//
-//			if (this.onGround) {
-//				this.destPos = 0.0F;
-//			}
-//			else {
-//				this.destPos += 0.2;
-//				this.destPos = MathHelper.clamp(this.destPos, 0.01F, 1.0F);
-//			}
-//
-//			this.wingRotation += 1.233F;
 //		}
 //
 //		fall: {

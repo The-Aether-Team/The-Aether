@@ -7,6 +7,7 @@ import com.gildedgames.aether.common.entity.passive.MoaEntity;
 
 import com.gildedgames.aether.core.registry.AetherMoaTypes;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
@@ -22,13 +23,12 @@ public class MoaRenderer extends MobRenderer<MoaEntity, MoaModel>
 		super(rendererManager, new MoaModel(0.0F), 0.7F);
 		this.addLayer(new MoaSaddleLayer(this));
 	}
-	
-//	@Override
-//	protected float getBob(MoaEntity moa, float partialTicks) {
-//		float f1 = moa.prevWingRotation + (moa.wingRotation - moa.prevWingRotation) * partialTicks;
-//		float f2 = moa.prevDestPos + (moa.destPos - moa.prevDestPos) * partialTicks;
-//		return (MathHelper.sin(f1) + 1.0F) * f2;
-//	}
+
+	@Override
+	public void render(MoaEntity moa, float p_225623_2_, float p_225623_3_, MatrixStack p_225623_4_, IRenderTypeBuffer p_225623_5_, int p_225623_6_) {
+		super.render(moa, p_225623_2_, p_225623_3_, p_225623_4_, p_225623_5_, p_225623_6_);
+		this.model.setupWingsAnimation(moa);
+	}
 
 	@Override
 	protected void scale(MoaEntity moa, MatrixStack matrixStackIn, float partialTickTime) {
