@@ -87,12 +87,12 @@ public class MoaType
         }
 
         public MoaType.Properties saddleTexture(String saddleTexture) {
-            this.texture = new ResourceLocation(Aether.MODID, saddleTexture);
+            this.saddleTexture = new ResourceLocation(Aether.MODID, saddleTexture);
             return this;
         }
 
         public MoaType.Properties saddleTexture(String id, String saddleTexture) {
-            this.texture = new ResourceLocation(id, saddleTexture);
+            this.saddleTexture = new ResourceLocation(id, saddleTexture);
             return this;
         }
 
