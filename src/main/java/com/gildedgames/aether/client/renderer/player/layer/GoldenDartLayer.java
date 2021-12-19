@@ -33,7 +33,7 @@ public class GoldenDartLayer<T extends LivingEntity, M extends PlayerModel<T>> e
     protected int numStuck(T entity) {
         if (entity instanceof PlayerEntity) {
             IAetherPlayer aetherPlayer = IAetherPlayer.get((PlayerEntity) entity).orElse(null);
-            return aetherPlayer.getGoldenDartCount();
+            return aetherPlayer != null ? aetherPlayer.getGoldenDartCount() : 0;
         } else {
             return 0;
         }

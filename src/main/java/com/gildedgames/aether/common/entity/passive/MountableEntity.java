@@ -64,6 +64,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 	public void travel(Vector3d vector3d) {
 		if (this.isAlive()) {
 			if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof PlayerEntity) {
+				boolean slime = this.isSlime();
 				PlayerEntity entity = (PlayerEntity) this.getControllingPassenger();
 				this.yRot = entity.yRot;
 				this.yRotO = this.yRot;
@@ -76,16 +77,20 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 				if (f1 <= 0.0F) {
 					f1 *= 0.25F;
 				}
-				if (this.playerJumped && !this.isMountJumping() && this.onGround) {
-					double jumpStrength = this.getMountJumpStrength() * (double)this.getBlockJumpFactor();
-					this.setDeltaMovement(this.getDeltaMovement().x(), jumpStrength, this.getDeltaMovement().z());
-					if (this.hasEffect(Effects.JUMP)) {
-						this.push(0.0, 0.1 * (this.getEffect(Effects.JUMP).getAmplifier() + 1), 0.0);
+				if(this.onGround) {
+					if (this.playerJumped && !this.isMountJumping()) {
+						double jumpStrength = slime ? this.getMountJumpStrength() : this.getMountJumpStrength() * (double) this.getBlockJumpFactor();
+						this.setDeltaMovement(this.getDeltaMovement().x(), jumpStrength, this.getDeltaMovement().z());
+						if (this.hasEffect(Effects.JUMP)) {
+							this.push(0.0, 0.1 * (this.getEffect(Effects.JUMP).getAmplifier() + 1), 0.0);
+						}
+						this.setMountJumping(true);
+						this.hasImpulse = true;
+						net.minecraftforge.common.ForgeHooks.onLivingJump(this);
+						this.playerJumped = false;
+					} else if(slime && !this.playerJumped && (this.getDeltaMovement().x != 0 || this.getDeltaMovement().z != 0)) {
+						this.setDeltaMovement(this.getDeltaMovement().x(), 0.42F, this.getDeltaMovement().z);
 					}
-					this.setMountJumping(true);
-					this.hasImpulse = true;
-					net.minecraftforge.common.ForgeHooks.onLivingJump(this);
-					this.playerJumped = false;
 				}
 				this.maxUpStep = 1.0F;
 				this.flyingSpeed = this.getSteeringSpeed() * 0.25F;
@@ -225,6 +230,10 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 
 	protected double getMountJumpStrength() {
 		return 1.8D;
+	}
+
+	protected boolean isSlime() {
+		return false;
 	}
 
 	@Override

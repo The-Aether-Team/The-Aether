@@ -33,7 +33,7 @@ public class EnchantedDartLayer<T extends LivingEntity, M extends PlayerModel<T>
     protected int numStuck(T entity) {
         if (entity instanceof PlayerEntity) {
             IAetherPlayer aetherPlayer = IAetherPlayer.get((PlayerEntity) entity).orElse(null);
-            return aetherPlayer.getEnchantedDartCount();
+            return aetherPlayer != null ? aetherPlayer.getEnchantedDartCount() : 0;
         } else {
             return 0;
         }
