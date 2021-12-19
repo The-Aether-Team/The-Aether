@@ -1,10 +1,9 @@
 package com.gildedgames.aether.common.entity.monster;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.passive.MountableEntity;
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.common.registry.AetherLoot;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -21,9 +20,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -271,8 +268,20 @@ public class SwetEntity extends MountableEntity {
     }
 
     @Override
+    public void addAdditionalSaveData(CompoundNBT compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putByte("SwetType", this.getSwetType());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundNBT compound) {
+        super.readAdditionalSaveData(compound);
+        this.setSwetType(compound.getByte("SwetType"));
+    }
+
+    @Override
     protected ResourceLocation getDefaultLootTable() {
-        return this.getSwetType() == 1 ? new ResourceLocation(Aether.MODID, "entities/swet/blue") : new ResourceLocation(Aether.MODID, "entities/swet/gold");
+        return this.getSwetType() == 1 ? AetherLoot.ENTITIES_SWET_BLUE : AetherLoot.ENTITIES_SWET_GOLD;
     }
 
     static class ConsumeGoal extends Goal {

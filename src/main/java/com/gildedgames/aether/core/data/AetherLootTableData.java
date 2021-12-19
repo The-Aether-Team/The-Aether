@@ -1,6 +1,5 @@
 package com.gildedgames.aether.core.data;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.loot.conditions.ConfigEnabled;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.provider.AetherLootTableProvider;
@@ -337,7 +336,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             );
 
             this.add(AetherEntityTypes.SWET.get(), LootTable.lootTable());
-            this.add(new ResourceLocation(Aether.MODID, "entities/swet/blue"), LootTable.lootTable()
+            this.add(AetherLoot.ENTITIES_SWET_BLUE, LootTable.lootTable()
                     .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
                             .add(ItemLootEntry.lootTableItem(AetherItems.SWET_BALL.get())
                                     .apply(SetCount.setCount(RandomValueRange.between(1.0F, 1.0F)))
@@ -351,7 +350,7 @@ public class AetherLootTableData extends AetherLootTableProvider
                             )
                     )
             );
-            this.add(new ResourceLocation(Aether.MODID, "entities/swet/gold"), LootTable.lootTable()
+            this.add(AetherLoot.ENTITIES_SWET_GOLD, LootTable.lootTable()
                     .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
                             .add(ItemLootEntry.lootTableItem(Blocks.GLOWSTONE)
                                     .apply(SetCount.setCount(RandomValueRange.between(1.0F, 1.0F)))

@@ -10,8 +10,6 @@ import com.gildedgames.aether.common.loot.functions.SpawnXP;
 import com.google.common.collect.Sets;
 
 import net.minecraft.loot.*;
-import net.minecraft.loot.conditions.LootConditionManager;
-import net.minecraft.loot.functions.LootFunctionManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 
@@ -45,6 +43,9 @@ public class AetherLoot
 	public static final ResourceLocation ENTITIES_SHEEPUFF_GREEN = register("entities/sheepuff/green");
 	public static final ResourceLocation ENTITIES_SHEEPUFF_RED = register("entities/sheepuff/red");
 	public static final ResourceLocation ENTITIES_SHEEPUFF_BLACK = register("entities/sheepuff/black");
+
+	public static final ResourceLocation ENTITIES_SWET_BLUE = register("entities/swet/blue");
+	public static final ResourceLocation ENTITIES_SWET_GOLD = register("entities/swet/gold");
 
 	public static final ResourceLocation BRONZE_DUNGEON = register("chests/dungeon/bronze/bronze_dungeon");
 	public static final ResourceLocation BRONZE_DUNGEON_SUB_1 = register("chests/dungeon/bronze/bronze_dungeon_sub_1");
