@@ -1,11 +1,11 @@
 package com.gildedgames.aether.common.block.construction;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BookshelfBlock extends Block
 {
@@ -14,7 +14,7 @@ public class BookshelfBlock extends Block
 	}
 	
 	@Override
-	public float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos) {
+	public float getEnchantPowerBonus(BlockState state, LevelReader world, BlockPos pos) {
 		return 1;
 	}
 }

@@ -5,46 +5,46 @@ import com.gildedgames.aether.common.registry.AetherLoot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootFunction;
-import net.minecraft.loot.LootFunctionType;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
 
-public class SpawnTNT extends LootFunction
+public class SpawnTNT extends LootItemConditionalFunction
 {
-    protected SpawnTNT(ILootCondition[] conditionsIn) {
+    protected SpawnTNT(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
     @Override
     protected ItemStack run(ItemStack stack, LootContext context) {
-        ServerWorld world = context.getLevel();
-        Vector3d vector3d = context.getParamOrNull(LootParameters.ORIGIN);
+        ServerLevel world = context.getLevel();
+        Vec3 vector3d = context.getParamOrNull(LootContextParams.ORIGIN);
         if (vector3d != null) {
             TNTPresentEntity tnt = new TNTPresentEntity(world, vector3d.x(), vector3d.y(), vector3d.z());
             world.addFreshEntity(tnt);
-            world.playSound(null, new BlockPos(vector3d), SoundEvents.TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            world.playSound(null, new BlockPos(vector3d), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
         return stack;
     }
 
-    public static LootFunction.Builder<?> builder() {
-        return LootFunction.simpleBuilder(SpawnTNT::new);
+    public static LootItemConditionalFunction.Builder<?> builder() {
+        return LootItemConditionalFunction.simpleBuilder(SpawnTNT::new);
     }
 
     @Override
-    public LootFunctionType getType() {
+    public LootItemFunctionType getType() {
         return AetherLoot.SPAWN_TNT;
     }
 
-    public static class Serializer extends LootFunction.Serializer<SpawnTNT>
+    public static class Serializer extends LootItemConditionalFunction.Serializer<SpawnTNT>
     {
         @Override
         public void serialize(JsonObject object, SpawnTNT functionClazz, JsonSerializationContext serializationContext) {
@@ -52,7 +52,7 @@ public class SpawnTNT extends LootFunction
         }
 
         @Override
-        public SpawnTNT deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditionsIn) {
+        public SpawnTNT deserialize(JsonObject object, JsonDeserializationContext deserializationContext, LootItemCondition[] conditionsIn) {
             return new SpawnTNT(conditionsIn);
         }
     }

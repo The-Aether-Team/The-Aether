@@ -1,25 +1,25 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
 import com.gildedgames.aether.common.entity.monster.AechorPlantEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.Entity;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class AechorPlantModel<T extends Entity> extends EntityModel<AechorPlantEntity>
 {
-    public ModelRenderer[] Petal = new ModelRenderer[10];
-    public ModelRenderer[] Leaf = new ModelRenderer[10];
-    public ModelRenderer[] StamenStem = new ModelRenderer[3];
-    public ModelRenderer[] StamenTip = new ModelRenderer[3];
-    public ModelRenderer[] Thorn = new ModelRenderer[4];
-    public ModelRenderer Stem = new ModelRenderer(this, 24, 13);
-    public ModelRenderer Head = new ModelRenderer(this, 0, 12);
+    public ModelPart[] Petal = new ModelPart[10];
+    public ModelPart[] Leaf = new ModelPart[10];
+    public ModelPart[] StamenStem = new ModelPart[3];
+    public ModelPart[] StamenTip = new ModelPart[3];
+    public ModelPart[] Thorn = new ModelPart[4];
+    public ModelPart Stem = new ModelPart(this, 24, 13);
+    public ModelPart Head = new ModelPart(this, 0, 12);
 
     public float sinage;
     public float sinage2;
@@ -31,28 +31,28 @@ public class AechorPlantModel<T extends Entity> extends EntityModel<AechorPlantE
     public AechorPlantModel(float size) {
 
         for (int i = 0; i < 10; i++) {
-            Petal[i] = new ModelRenderer(this, 0, 0);
+            Petal[i] = new ModelPart(this, 0, 0);
 
             if (i % 2 == 0) {
-                Petal[i] = new ModelRenderer(this, 28, 2);
+                Petal[i] = new ModelPart(this, 28, 2);
                 Petal[i].addBox(-4.0F, -1.0F, -12.0F, 8, 0.5F, 10, Math.abs(size - 0.25F));
                 Petal[i].setPos(0.0F, 1.0F, 0.0F);
             } else {
-                Petal[i] = new ModelRenderer(this, 0, 0);
+                Petal[i] = new ModelPart(this, 0, 0);
                 Petal[i].addBox(-4.0F, -1.0F, -12.0F, 8, 0.5F, 10, Math.abs(size - 0.25F));
             }
 
-            Leaf[i] = new ModelRenderer(this, 38, 13);
+            Leaf[i] = new ModelPart(this, 38, 13);
             Leaf[i].addBox(-2.0F, -1.0F, -9.5F, 4, 1, 8, Math.abs(size - 0.15F));
             Leaf[i].setPos(0.0F, 1.0F, 0.0F);
 
         }
         for (int i = 0; i < 3; i++) {
-            StamenStem[i] = new ModelRenderer(this, 36, 13);
+            StamenStem[i] = new ModelPart(this, 36, 13);
             StamenStem[i].addBox(0.0F, -9.0F, -1.5F, 1, 6, 1, Math.abs(size - 0.25F));
             StamenStem[i].setPos(0.0F, 1.0F, 0.0F);
 
-            StamenTip[i] = new ModelRenderer(this, 32, 15);
+            StamenTip[i] = new ModelPart(this, 32, 15);
             StamenTip[i].addBox(0.0F, -10.0F, -1.5F, 1, 1, 1, Math.abs(size + 0.125F));
             StamenTip[i].setPos(0.0F, 1.0F, 0.0F);
         }
@@ -64,7 +64,7 @@ public class AechorPlantModel<T extends Entity> extends EntityModel<AechorPlantE
         Stem.setPos(0.0F, 1.0F, 0.0F);
 
         for (int i = 0; i < 4; i++) {
-            Thorn[i] = new ModelRenderer(this, 32, 13);
+            Thorn[i] = new ModelPart(this, 32, 13);
             Thorn[i].setPos(0.0F, 1.0F, 0.0F);
         }
 
@@ -75,7 +75,7 @@ public class AechorPlantModel<T extends Entity> extends EntityModel<AechorPlantE
     }
 
     @Override
-    public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
         for (int i = 0; i < 10; i++) {
             Petal[i].render(matrixStack, buffer, packedLight, packedOverlay);
             Leaf[i].render(matrixStack, buffer, packedLight, packedOverlay);

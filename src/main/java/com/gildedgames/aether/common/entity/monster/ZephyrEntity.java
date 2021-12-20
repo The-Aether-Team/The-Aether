@@ -3,44 +3,44 @@ package com.gildedgames.aether.common.entity.monster;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.entity.projectile.ZephyrSnowballEntity;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.FlyingMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.GhastEntity;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 
 import java.util.EnumSet;
 import java.util.Random;
 
-public class ZephyrEntity extends FlyingEntity implements IMob {
-	public static final DataParameter<Integer> ATTACK_CHARGE = EntityDataManager.defineId(ZephyrEntity.class, DataSerializers.INT);
-	public static final DataParameter<Boolean> IS_ATTACKING = EntityDataManager.defineId(ZephyrEntity.class, DataSerializers.BOOLEAN);
+public class ZephyrEntity extends FlyingMob implements Enemy {
+	public static final EntityDataAccessor<Integer> ATTACK_CHARGE = SynchedEntityData.defineId(ZephyrEntity.class, EntityDataSerializers.INT);
+	public static final EntityDataAccessor<Boolean> IS_ATTACKING = SynchedEntityData.defineId(ZephyrEntity.class, EntityDataSerializers.BOOLEAN);
 
-	public ZephyrEntity(EntityType<? extends ZephyrEntity> type, World worldIn) {
+	public ZephyrEntity(EntityType<? extends ZephyrEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.moveControl = new ZephyrEntity.MoveHelperController(this);
 	}
 
-	public ZephyrEntity(World worldIn) {
+	public ZephyrEntity(Level worldIn) {
 		this(AetherEntityTypes.ZEPHYR.get(), worldIn);
 	}
 
@@ -49,11 +49,11 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 		this.goalSelector.addGoal(5, new ZephyrEntity.RandomFlyGoal(this));
 		this.goalSelector.addGoal(7, new ZephyrEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(7, new ZephyrEntity.SnowballAttackGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true, false));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
 	}
 
-	public static AttributeModifierMap.MutableAttribute createMobAttributes() {
-		return FlyingEntity.createMobAttributes()
+	public static AttributeSupplier.Builder createMobAttributes() {
+		return FlyingMob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 5.0D)
 				.add(Attributes.FOLLOW_RANGE, 100.0D);
 	}
@@ -132,9 +132,9 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT.get();
 	}
 
-	public static boolean canZephyrSpawn(EntityType<? extends ZephyrEntity> zephyr, IWorld worldIn, SpawnReason reason,
+	public static boolean canZephyrSpawn(EntityType<? extends ZephyrEntity> zephyr, LevelAccessor worldIn, MobSpawnType reason,
 		BlockPos pos, Random random) {
-		AxisAlignedBB boundingBox = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 4, pos.getY() + 4, pos.getZ() + 4);
+		AABB boundingBox = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 4, pos.getY() + 4, pos.getZ() + 4);
 		return worldIn.getDifficulty() != Difficulty.PEACEFUL && random.nextInt(65) == 0 //TODO: change the bounds of nextInt to a config value.
 			&& worldIn.getEntitiesOfClass(ZephyrEntity.class, boundingBox).size() == 0
 			&& !worldIn.containsAnyLiquid(boundingBox) && worldIn.getMaxLocalRawBrightness(pos) > 8
@@ -185,13 +185,13 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 		public void tick() {
 			LivingEntity target = parentEntity.getTarget();
 			if (target.distanceToSqr(this.parentEntity) < 64*64 && this.parentEntity.canSee(target)) {
-				World world = this.parentEntity.level;
+				Level world = this.parentEntity.level;
 				++this.attackTimer;
 				if (this.attackTimer == 10) {
 					this.parentEntity.playSound(this.parentEntity.getAmbientSound(), 3.0F, (world.random.nextFloat() - world.random.nextFloat()) * 0.2F + 1.0F);
 				}
 				else if (this.attackTimer == 20) {
-					Vector3d look = this.parentEntity.getViewVector(1.0F);
+					Vec3 look = this.parentEntity.getViewVector(1.0F);
 					double accelX = target.getX() - (this.parentEntity.getX() + look.x * 4.0);
 					double accelY = target.getY(0.5)  - (0.5 + this.parentEntity.getY(0.5));
 					double accelZ = target.getZ() - (this.parentEntity.getZ() + look.z * 4.0);
@@ -227,7 +227,7 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 		 */
 		@Override
 		public boolean canUse() {
-			MovementController movementcontroller = this.parentEntity.getMoveControl();
+			MoveControl movementcontroller = this.parentEntity.getMoveControl();
 			if (!movementcontroller.hasWanted()) {
 				return true;
 			}
@@ -264,7 +264,7 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 	/**
 	 * Copy of {@link GhastEntity.MoveHelperController} but changed GhastEntity to ZephyrEntity
 	 */
-	static class MoveHelperController extends MovementController {
+	static class MoveHelperController extends MoveControl {
 		private final ZephyrEntity parentEntity;
 		private int courseChangeCooldown;
 
@@ -275,17 +275,17 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 
 		@Override
 		public void tick() {
-			if (this.operation == MovementController.Action.MOVE_TO) {
+			if (this.operation == MoveControl.Operation.MOVE_TO) {
 				if (this.courseChangeCooldown-- <= 0) {
 					this.courseChangeCooldown += this.parentEntity.getRandom().nextInt(5) + 2;
-					Vector3d vec3d = new Vector3d(this.wantedX - this.parentEntity.getX(), this.wantedY - this.parentEntity.getY(), this.wantedZ - this.parentEntity.getZ());
+					Vec3 vec3d = new Vec3(this.wantedX - this.parentEntity.getX(), this.wantedY - this.parentEntity.getY(), this.wantedZ - this.parentEntity.getZ());
 					double d0 = vec3d.length();
 					vec3d = vec3d.normalize();
-					if (this.isNotColliding(vec3d, MathHelper.ceil(d0))) {
+					if (this.isNotColliding(vec3d, Mth.ceil(d0))) {
 						this.parentEntity.setDeltaMovement(this.parentEntity.getDeltaMovement().add(vec3d.scale(0.1)));
 					}
 					else {
-						this.operation = MovementController.Action.WAIT;
+						this.operation = MoveControl.Operation.WAIT;
 					}
 				}
 
@@ -295,8 +295,8 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 		/**
 		 * Checks if entity bounding box is not colliding with terrain
 		 */
-		private boolean isNotColliding(Vector3d pos, int distance) {
-			AxisAlignedBB axisalignedbb = this.parentEntity.getBoundingBox();
+		private boolean isNotColliding(Vec3 pos, int distance) {
+			AABB axisalignedbb = this.parentEntity.getBoundingBox();
 
 			for (int i = 1; i < distance; ++i) {
 				axisalignedbb = axisalignedbb.move(pos);
@@ -336,8 +336,8 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 		@Override
 		public void tick() {
 			if (this.parentEntity.getTarget() == null) {
-				Vector3d vec3d = this.parentEntity.getDeltaMovement();
-				this.parentEntity.yRot = -((float)MathHelper.atan2(vec3d.x, vec3d.z)) * (180.0F / (float)Math.PI);
+				Vec3 vec3d = this.parentEntity.getDeltaMovement();
+				this.parentEntity.yRot = -((float)Mth.atan2(vec3d.x, vec3d.z)) * (180.0F / (float)Math.PI);
 				this.parentEntity.yBodyRot = this.parentEntity.yRot;
 			}
 			else {
@@ -345,7 +345,7 @@ public class ZephyrEntity extends FlyingEntity implements IMob {
 				if (livingentity.distanceToSqr(this.parentEntity) < 64*64) {
 					double x = livingentity.getX() - this.parentEntity.getX();
 					double z = livingentity.getZ() - this.parentEntity.getZ();
-					this.parentEntity.yRot = -((float)MathHelper.atan2(x, z)) * (180.0F / (float)Math.PI);
+					this.parentEntity.yRot = -((float)Mth.atan2(x, z)) * (180.0F / (float)Math.PI);
 					this.parentEntity.yBodyRot = this.parentEntity.yRot;
 				}
 			}

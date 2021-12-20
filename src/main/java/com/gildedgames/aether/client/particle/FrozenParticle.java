@@ -1,24 +1,24 @@
 package com.gildedgames.aether.client.particle;
 
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.Camera;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class FrozenParticle extends SpriteTexturedParticle
+public class FrozenParticle extends TextureSheetParticle
 {
-    IAnimatedSprite animatedSprite;
+    SpriteSet animatedSprite;
     float snowDigParticleScale;
 
-    public FrozenParticle(ClientWorld worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, IAnimatedSprite sprite) {
+    public FrozenParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite) {
         this(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeed, ySpeed, zSpeed, 1.0F, sprite);
     }
 
-    public FrozenParticle(ClientWorld worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, float scale, IAnimatedSprite sprite) {
+    public FrozenParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, float scale, SpriteSet sprite) {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeed, ySpeed, zSpeed);
         this.xd *= 0.10000000149011612D;
         this.yd *= 0.10000000149011612D;
@@ -39,9 +39,9 @@ public class FrozenParticle extends SpriteTexturedParticle
     }
 
     @Override
-    public void render(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks) {
+    public void render(VertexConsumer buffer, Camera renderInfo, float partialTicks) {
         float f = ((float) this.age + partialTicks) / (float) this.age * 32.0F;
-        f = MathHelper.clamp(f, 0.0F, 1.0F);
+        f = Mth.clamp(f, 0.0F, 1.0F);
         this.quadSize = this.snowDigParticleScale * f;
         super.render(buffer, renderInfo, partialTicks);
     }
@@ -73,21 +73,21 @@ public class FrozenParticle extends SpriteTexturedParticle
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory<BasicParticleType>
+    public static class Factory implements ParticleProvider<SimpleParticleType>
     {
-        private final IAnimatedSprite spriteSet;
+        private final SpriteSet spriteSet;
 
-        public Factory(IAnimatedSprite spriteSetIn) {
+        public Factory(SpriteSet spriteSetIn) {
             this.spriteSet = spriteSetIn;
         }
 
         @Override
-        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             FrozenParticle frozenParticle = new FrozenParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
             frozenParticle.pickSprite(this.spriteSet);
             return frozenParticle;

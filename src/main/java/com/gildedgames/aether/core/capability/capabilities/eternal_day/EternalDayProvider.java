@@ -2,14 +2,14 @@ package com.gildedgames.aether.core.capability.capabilities.eternal_day;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class EternalDayProvider implements ICapabilityProvider, INBTSerializable<CompoundNBT>
+public class EternalDayProvider implements ICapabilityProvider, INBTSerializable<CompoundTag>
 {
     private final IEternalDay eternalDay;
 
@@ -18,12 +18,12 @@ public class EternalDayProvider implements ICapabilityProvider, INBTSerializable
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
+    public CompoundTag serializeNBT() {
         return eternalDay.serializeNBT();
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         eternalDay.deserializeNBT(nbt);
     }
 

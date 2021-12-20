@@ -1,8 +1,8 @@
 package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
-import net.minecraft.block.WoodType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.resources.ResourceLocation;
 
 public class AetherWoodTypes
 {

@@ -2,36 +2,36 @@ package com.gildedgames.aether.common.world.gen.feature;
 
 import com.gildedgames.aether.core.AetherConfig;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
+import net.minecraft.world.level.levelgen.feature.Feature;
 
 import java.util.Random;
 
-public class AetherGrassFeature extends Feature<BlockClusterFeatureConfig>
+public class AetherGrassFeature extends Feature<RandomPatchConfiguration>
 {
-    public AetherGrassFeature(Codec<BlockClusterFeatureConfig> codec) {
+    public AetherGrassFeature(Codec<RandomPatchConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, BlockClusterFeatureConfig config) {
+    public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, RandomPatchConfiguration config) {
         if (AetherConfig.COMMON.generate_tall_grass.get()) {
             BlockState blockstate = config.stateProvider.getState(rand, pos);
             BlockPos blockpos;
             if (config.project) {
-                blockpos = reader.getHeightmapPos(Heightmap.Type.WORLD_SURFACE_WG, pos);
+                blockpos = reader.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos);
             } else {
                 blockpos = pos;
             }
 
             int i = 0;
-            BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+            BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
 
             for (int j = 0; j < config.tries; ++j) {
                 blockpos$mutable.setWithOffset(blockpos, rand.nextInt(config.xspread + 1) - rand.nextInt(config.xspread + 1), rand.nextInt(config.yspread + 1) - rand.nextInt(config.yspread + 1), rand.nextInt(config.zspread + 1) - rand.nextInt(config.zspread + 1));

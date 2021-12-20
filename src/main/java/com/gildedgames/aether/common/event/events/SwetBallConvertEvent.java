@@ -2,25 +2,25 @@ package com.gildedgames.aether.common.event.events;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
 
 @Cancelable
 public class SwetBallConvertEvent extends PlayerEvent
 {
-	private final IWorld world;
+	private final LevelAccessor world;
 	private final BlockPos pos;
 	private final ItemStack itemStack;
 	private final BlockState oldBlockState;
 	@Nonnull
 	private BlockState newBlockState;
 	
-	public SwetBallConvertEvent(PlayerEntity player, IWorld world, BlockPos pos, ItemStack itemStack, BlockState oldBlockState, @Nonnull BlockState newBlockState) {
+	public SwetBallConvertEvent(Player player, LevelAccessor world, BlockPos pos, ItemStack itemStack, BlockState oldBlockState, @Nonnull BlockState newBlockState) {
 		super(player);
 		this.world = world;
 		this.pos = pos;
@@ -29,7 +29,7 @@ public class SwetBallConvertEvent extends PlayerEvent
 		this.newBlockState = newBlockState;
 	}
 
-	public IWorld getWorld() {
+	public LevelAccessor getWorld() {
 		return this.world;
 	}
 

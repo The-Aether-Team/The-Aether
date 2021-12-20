@@ -4,15 +4,20 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.AetherConfig;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.*;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.context.UseOnContext;
 
 public class AmbrosiumShardItem extends Item
 {
@@ -21,9 +26,9 @@ public class AmbrosiumShardItem extends Item
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context) {
-		PlayerEntity playerentity = context.getPlayer();
-		World world = context.getLevel();
+	public InteractionResult useOn(UseOnContext context) {
+		Player playerentity = context.getPlayer();
+		Level world = context.getLevel();
 		BlockPos blockpos = context.getClickedPos();
 		BlockState blockstate = world.getBlockState(blockpos);
 		if (blockstate.getBlock().is(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)) {
@@ -32,29 +37,29 @@ public class AmbrosiumShardItem extends Item
 				if (!playerentity.abilities.instabuild) {
 					context.getItemInHand().shrink(1);
 				}
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 		}
 		return super.useOn(context);
 	}
 	
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		if (AetherConfig.COMMON.edible_ambrosium.get()) {
 			ItemStack itemstack = playerIn.getItemInHand(handIn);
 			if (playerIn.getHealth() < playerIn.getMaxHealth() && !playerIn.isCreative()) {
 				playerIn.startUsingItem(handIn);
-				return ActionResult.consume(itemstack);
+				return InteractionResultHolder.consume(itemstack);
 			} else {
-				return ActionResult.fail(itemstack);
+				return InteractionResultHolder.fail(itemstack);
 			}
 		} else {
-			return ActionResult.pass(playerIn.getItemInHand(handIn));
+			return InteractionResultHolder.pass(playerIn.getItemInHand(handIn));
 		}
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack stackIn, World worldIn, LivingEntity playerIn) {
+	public ItemStack finishUsingItem(ItemStack stackIn, Level worldIn, LivingEntity playerIn) {
 		if (AetherConfig.COMMON.edible_ambrosium.get()) {
 			playerIn.heal(1);
 			stackIn.shrink(1);
@@ -62,8 +67,8 @@ public class AmbrosiumShardItem extends Item
 		return stackIn;
 	}
 
-	public UseAction getUseAnimation(ItemStack stackIn) {
-		return AetherConfig.COMMON.edible_ambrosium.get() ? UseAction.EAT : UseAction.NONE;
+	public UseAnim getUseAnimation(ItemStack stackIn) {
+		return AetherConfig.COMMON.edible_ambrosium.get() ? UseAnim.EAT : UseAnim.NONE;
 	}
 
 	public int getUseDuration(ItemStack stackIn) {

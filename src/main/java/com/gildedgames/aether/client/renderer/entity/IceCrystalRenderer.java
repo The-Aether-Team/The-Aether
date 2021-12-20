@@ -3,8 +3,8 @@ package com.gildedgames.aether.client.renderer.entity;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.projectile.crystal.AbstractCrystalEntity;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -13,7 +13,7 @@ public class IceCrystalRenderer<T extends AbstractCrystalEntity> extends Abstrac
 {
     private static final ResourceLocation ICE_CRYSTAL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/crystals/ice_ball.png");
 
-    public IceCrystalRenderer(EntityRendererManager renderManager) {
+    public IceCrystalRenderer(EntityRenderDispatcher renderManager) {
         super(renderManager);
     }
 

@@ -1,13 +1,15 @@
 package com.gildedgames.aether.client.gui.button;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+
+import net.minecraft.client.gui.components.Button.OnPress;
 
 public class AetherMenuButton extends Button
 {
@@ -15,7 +17,7 @@ public class AetherMenuButton extends Button
 	public int initialX;
 	public int renderOffset;
 	
-	public AetherMenuButton(int xPos, int yPos, int width, int height, ITextComponent message, IPressable callback) {
+	public AetherMenuButton(int xPos, int yPos, int width, int height, Component message, OnPress callback) {
 		super(xPos, yPos, width, height, message, callback);
 		this.initialX = xPos;
 	}
@@ -29,12 +31,12 @@ public class AetherMenuButton extends Button
 	}
 
 	@Override
-	public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float p_230431_4_) {
+	public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float p_230431_4_) {
 		Minecraft minecraft = Minecraft.getInstance();
-	    FontRenderer fontrenderer = minecraft.font;
-	    minecraft.getTextureManager().bind(AETHER_WIDGETS);
-	    RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
-	    int i = this.getYImage(this.isHovered());
+	    Font fontrenderer = minecraft.font;
+	    minecraft.getTextureManager().bindForSetup(AETHER_WIDGETS);
+	    RenderSystem.clearColor(1.0F, 1.0F, 1.0F, this.alpha); // might not be the correct mapping was color4f
+	    int i = this.getYImage(this.isHovered);
 	    RenderSystem.enableBlend();
 	    RenderSystem.defaultBlendFunc();
 	    RenderSystem.enableDepthTest();

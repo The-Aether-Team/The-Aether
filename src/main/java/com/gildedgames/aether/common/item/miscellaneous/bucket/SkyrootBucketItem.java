@@ -1,17 +1,30 @@
 package com.gildedgames.aether.common.item.miscellaneous.bucket;
 
 import com.gildedgames.aether.common.registry.AetherItems;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IBucketPickupHandler;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 public class SkyrootBucketItem extends Item
 {
@@ -20,30 +33,30 @@ public class SkyrootBucketItem extends Item
     }
 
     @Override
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack itemstack = playerIn.getItemInHand(handIn);
-        RayTraceResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
-        if (raytraceresult.getType() != RayTraceResult.Type.BLOCK) {
-            return ActionResult.pass(itemstack);
+        HitResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.SOURCE_ONLY);
+        if (raytraceresult.getType() != HitResult.Type.BLOCK) {
+            return InteractionResultHolder.pass(itemstack);
         } else {
-            BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult) raytraceresult;
+            BlockHitResult blockraytraceresult = (BlockHitResult) raytraceresult;
             BlockPos blockpos = blockraytraceresult.getBlockPos();
             Direction direction = blockraytraceresult.getDirection();
             BlockPos blockpos1 = blockpos.relative(direction);
             if (worldIn.mayInteract(playerIn, blockpos) && playerIn.mayUseItemAt(blockpos1, direction, itemstack)) {
                 BlockState blockstate1 = worldIn.getBlockState(blockpos);
-                if (blockstate1.getBlock() instanceof IBucketPickupHandler) {
-                    Fluid fluid = ((IBucketPickupHandler)blockstate1.getBlock()).takeLiquid(worldIn, blockpos, blockstate1);
+                if (blockstate1.getBlock() instanceof BucketPickup) {
+                    Fluid fluid = ((BucketPickup)blockstate1.getBlock()).takeLiquid(worldIn, blockpos, blockstate1);
                     if (fluid == Fluids.WATER) {
                         playerIn.awardStat(Stats.ITEM_USED.get(this));
                         SoundEvent soundevent = SoundEvents.BUCKET_FILL;
                         playerIn.playSound(soundevent, 1.0F, 1.0F);
-                        ItemStack itemstack1 = DrinkHelper.createFilledResult(itemstack, playerIn, new ItemStack(AetherItems.SKYROOT_WATER_BUCKET.get()));
-                        return ActionResult.sidedSuccess(itemstack1, worldIn.isClientSide());
+                        ItemStack itemstack1 = ItemUtils.createFilledResult(itemstack, playerIn, new ItemStack(AetherItems.SKYROOT_WATER_BUCKET.get()));
+                        return InteractionResultHolder.sidedSuccess(itemstack1, worldIn.isClientSide());
                     }
                 }
             }
         }
-        return ActionResult.fail(itemstack);
+        return InteractionResultHolder.fail(itemstack);
     }
 }

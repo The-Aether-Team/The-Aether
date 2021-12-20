@@ -3,11 +3,11 @@ package com.gildedgames.aether.client.renderer.entity;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.model.AechorPlantModel;
 import com.gildedgames.aether.common.entity.monster.AechorPlantEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,11 +16,11 @@ public class AechorPlantRenderer extends MobRenderer<AechorPlantEntity, AechorPl
 {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aechor_plant/aechor_plant.png");
 
-    public AechorPlantRenderer(EntityRendererManager renderManager) {
+    public AechorPlantRenderer(EntityRenderDispatcher renderManager) {
         super(renderManager, new AechorPlantModel(), 0.3F);
     }
 
-    protected void scale(AechorPlantEntity aechorPlant, MatrixStack matrixStackIn, float partialTickTime) {
+    protected void scale(AechorPlantEntity aechorPlant, PoseStack matrixStackIn, float partialTickTime) {
         float f1 = (float)Math.sin((double)aechorPlant.sinage);
         float f3;
 

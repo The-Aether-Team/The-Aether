@@ -15,53 +15,53 @@ import com.gildedgames.aether.core.api.AetherAPI;
 import com.gildedgames.aether.core.api.AetherMoaTypes;
 import com.gildedgames.aether.core.api.MoaType;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.ResourceLocationException;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.AgableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.ResourceLocationException;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 
 public class MoaEntity extends MountableEntity {
-	public static final DataParameter<String> MOA_TYPE = EntityDataManager.defineId(MoaEntity.class, DataSerializers.STRING);
-	public static final DataParameter<Integer> REMAINING_JUMPS = EntityDataManager.defineId(MoaEntity.class, DataSerializers.INT);
-	public static final DataParameter<Byte> AMOUNT_FED = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BYTE);
-	public static final DataParameter<Boolean> PLAYER_GROWN = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
-	public static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.OPTIONAL_UUID);
-	public static final DataParameter<Boolean> HUNGRY = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
-	public static final DataParameter<Boolean> SITTING = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
+	public static final EntityDataAccessor<String> MOA_TYPE = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.STRING);
+	public static final EntityDataAccessor<Integer> REMAINING_JUMPS = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.INT);
+	public static final EntityDataAccessor<Byte> AMOUNT_FED = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.BYTE);
+	public static final EntityDataAccessor<Boolean> PLAYER_GROWN = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.BOOLEAN);
+	public static final EntityDataAccessor<Optional<UUID>> OWNER_UUID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+	public static final EntityDataAccessor<Boolean> HUNGRY = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.BOOLEAN);
+	public static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.BOOLEAN);
 
 	protected final Random rand = new Random();
 	
@@ -79,24 +79,24 @@ public class MoaEntity extends MountableEntity {
 		this.secsUntilEgg = this.getRandomEggTime();
 	}
 
-	public MoaEntity(EntityType<? extends MoaEntity> type, World worldIn) {
+	public MoaEntity(EntityType<? extends MoaEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
-	public MoaEntity(World worldIn) {
+	public MoaEntity(Level worldIn) {
 		super(AetherEntityTypes.MOA.get(), worldIn);
 
 		this.secsUntilEgg = this.getRandomEggTime();
 	}
 
-	public MoaEntity(World worldIn, MoaType moaType) {
+	public MoaEntity(Level worldIn, MoaType moaType) {
 		this(worldIn);
 		this.setMoaType(moaType);
 	}
 
 	@Nullable
 	@Override
-	public AgeableEntity getBreedOffspring(ServerWorld serverWorld, AgeableEntity ageableEntity) {
+	public AgableMob getBreedOffspring(ServerLevel serverWorld, AgableMob ageableEntity) {
 		return new MoaEntity(this.level, this.getMoaType());
 	}
 
@@ -108,13 +108,13 @@ public class MoaEntity extends MountableEntity {
 	protected void registerGoals() {
 		super.registerGoals();
 
-		this.goalSelector.addGoal(0, new SwimGoal(this));
+		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 1.4));
-		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.3F));
+		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.3F));
 		//TODO this.goalSelector.addGoal(2, new TemptGoal(this, 1.25, Ingredient.fromItems(AetherItems.NATURE_STAFF), false));
-		this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
+		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
+		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
 		this.goalSelector.addGoal(7, new BreedGoal(this, 0.25F));
 	}
 
@@ -134,8 +134,8 @@ public class MoaEntity extends MountableEntity {
 		this.entityData.define(SITTING, false);
 	}
 
-	public static AttributeModifierMap.MutableAttribute createMobAttributes() {
-		return MobEntity.createMobAttributes()
+	public static AttributeSupplier.Builder createMobAttributes() {
+		return Mob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 35.0D)
 				.add(Attributes.MOVEMENT_SPEED, 1.0D);
 	}
@@ -147,7 +147,7 @@ public class MoaEntity extends MountableEntity {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public float getWalkTargetValue(BlockPos pos, IWorldReader worldIn) {
+	public float getWalkTargetValue(BlockPos pos, LevelReader worldIn) {
 		return worldIn.getBlockState(pos.below()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get() ? 10.0F : worldIn.getBrightness(pos) - 0.5F;
 	}
 	
@@ -220,12 +220,12 @@ public class MoaEntity extends MountableEntity {
 	}
 	
 	@Override
-	public void move(MoverType typeIn, Vector3d pos) {
+	public void move(MoverType typeIn, Vec3 pos) {
 		if (!this.isSitting()) {
 			super.move(typeIn, pos);
 		}
 		else {
-			super.move(typeIn, new Vector3d(0, pos.y(), 0));
+			super.move(typeIn, new Vec3(0, pos.y(), 0));
 		}
 	}
 	
@@ -241,7 +241,7 @@ public class MoaEntity extends MountableEntity {
 		updateWingRotation: {
 			if (!this.onGround) {
 				if (this.ticksUntilFlap == 0) {
-					this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
+					this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
 					this.ticksUntilFlap = 8;
 				}
 				else {
@@ -257,7 +257,7 @@ public class MoaEntity extends MountableEntity {
 			}
 			else {			
 				this.destPos += 0.2;
-				this.destPos = MathHelper.clamp(this.destPos, 0.01F, 1.0F);
+				this.destPos = Mth.clamp(this.destPos, 0.01F, 1.0F);
 			}
 			
 			this.wingRotation += 1.233F;
@@ -266,7 +266,7 @@ public class MoaEntity extends MountableEntity {
 		fall: {
 //			boolean blockBeneath = !this.world.isAirBlock(this.getPositionUnderneath());
 
-			Vector3d vec3d = this.getDeltaMovement();
+			Vec3 vec3d = this.getDeltaMovement();
 			if (!this.onGround && vec3d.y < 0.0) {
 				this.setDeltaMovement(vec3d.multiply(1.0, 0.6, 1.0));
 			}
@@ -329,7 +329,7 @@ public class MoaEntity extends MountableEntity {
 					jumpPower = 0.7F;
 				}
 				this.setDeltaMovement(this.getDeltaMovement().x(), jumpPower, this.getDeltaMovement().z());
-				this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
+				this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
 				
 				if (!this.level.isClientSide) {
 					this.setRemainingJumps(this.getRemainingJumps() - 1);
@@ -349,7 +349,7 @@ public class MoaEntity extends MountableEntity {
 	}
 
 	@Override
-	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		
 		if (!stack.isEmpty()) {
@@ -367,7 +367,7 @@ public class MoaEntity extends MountableEntity {
 					else {
 						this.resetHunger();
 					}
-					return ActionResultType.SUCCESS;
+					return InteractionResult.SUCCESS;
 				}
 			}	
 //			else if (stack.getItem() == AetherItems.NATURE_STAFF.get()) {
@@ -384,11 +384,11 @@ public class MoaEntity extends MountableEntity {
 				if (this.isBaby()) {
 					this.setAge(0);
 					this.addParticlesAroundSelf(ParticleTypes.ENCHANTED_HIT);
-					this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.FIRECHARGE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
+					this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F, false);
 				} else if (!this.isPlayerGrown()) {
 					this.setPlayerGrown(true);
 					UUID ownerUUID = player.getUUID();
-					CompoundNBT tag = stack.getTag();
+					CompoundTag tag = stack.getTag();
 					if (tag != null) {
 						if (tag.contains("OwnerUUID", 8)) {
 							String str = tag.getString("OwnerUUID");
@@ -407,7 +407,7 @@ public class MoaEntity extends MountableEntity {
 					}
 					this.setOwnerUUID(ownerUUID);
 					this.addParticlesAroundSelf(ParticleTypes.HEART);
-					this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
+					this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0F, 1.0F, false);
 				} else {
 					Iterator<MoaType> moaTypes = AetherAPI.getMoaTypes().iterator();
 					MoaType currType = moaTypes.next();
@@ -434,9 +434,9 @@ public class MoaEntity extends MountableEntity {
 						}
 					}
 					this.addParticlesAroundSelf(ParticleTypes.LARGE_SMOKE);
-					this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.FIRECHARGE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
+					this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F, false);
 				}
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 		}
 		
@@ -449,7 +449,7 @@ public class MoaEntity extends MountableEntity {
 //	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		
 		this.setPlayerGrown(compound.getBoolean("PlayerGrown"));
@@ -475,7 +475,7 @@ public class MoaEntity extends MountableEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		
 		compound.putBoolean("PlayerGrown", this.isPlayerGrown());
@@ -556,7 +556,7 @@ public class MoaEntity extends MountableEntity {
 //	}
 
 	@OnlyIn(Dist.CLIENT)
-	protected void addParticlesAroundSelf(IParticleData p_213718_1_) {
+	protected void addParticlesAroundSelf(ParticleOptions p_213718_1_) {
 		for (int i = 0; i < 5; ++i) {
 			double d0 = this.random.nextGaussian() * 0.02D;
 			double d1 = this.random.nextGaussian() * 0.02D;

@@ -1,64 +1,64 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
 import com.gildedgames.aether.common.entity.monster.CockatriceEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class CockatriceModel extends EntityModel<CockatriceEntity>
 {
-    public ModelRenderer head, body;
-    public ModelRenderer legs, legs2;
-    public ModelRenderer wings, wings2;
-    public ModelRenderer jaw, neck;
-    public ModelRenderer feather1, feather2, feather3;
+    public ModelPart head, body;
+    public ModelPart legs, legs2;
+    public ModelPart wings, wings2;
+    public ModelPart jaw, neck;
+    public ModelPart feather1, feather2, feather3;
 
     public CockatriceModel() {
-        this.head = new ModelRenderer(this, 0, 13);
+        this.head = new ModelPart(this, 0, 13);
         this.head.addBox(-2.0F, -4.0F, -6.0F, 4, 4, 8, 0.0F);
         this.head.setPos(0.0F, -8 + 16, -4.0F);
 
-        this.jaw = new ModelRenderer(this, 24, 13);
+        this.jaw = new ModelPart(this, 24, 13);
         this.jaw.addBox(-2.0F, -1.0F, -6.0F, 4, 1, 8, -0.1F);
         this.jaw.setPos(0.0F, -8 + 16, -4.0F);
 
-        this.body = new ModelRenderer(this, 0, 0);
+        this.body = new ModelPart(this, 0, 0);
         this.body.addBox(-3.0F, -3.0F, 0.0F, 6, 8, 5, 0.0F);
         this.body.setPos(0.0F, 16, 0.0F);
 
-        this.legs = new ModelRenderer(this, 22, 0);
+        this.legs = new ModelPart(this, 22, 0);
         this.legs.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2);
         this.legs.setPos(-2.0F, 16, 1.0F);
 
-        this.legs2 = new ModelRenderer(this, 22, 0);
+        this.legs2 = new ModelPart(this, 22, 0);
         this.legs2.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2);
         this.legs2.setPos(2.0F, 16, 1.0F);
 
-        this.wings = new ModelRenderer(this, 52, 0);
+        this.wings = new ModelPart(this, 52, 0);
         this.wings.addBox(-1.0F, -0.0F, -1.0F, 1, 8, 4);
         this.wings.setPos(-3.0F, (16), 2.0F);
 
-        this.wings2 = new ModelRenderer(this, 52, 0);
+        this.wings2 = new ModelPart(this, 52, 0);
         this.wings2.addBox(0.0F, -0.0F, -1.0F, 1, 8, 4);
         this.wings2.setPos(3.0F, -4 + 16, 0.0F);
 
-        this.neck = new ModelRenderer(this, 44, 0);
+        this.neck = new ModelPart(this, 44, 0);
         this.neck.addBox(-1.0F, -6.0F, -1.0F, 2, 6, 2);
         this.neck.setPos(0.0F, -2 + 16, -4.0F);
 
-        this.feather1 = new ModelRenderer(this, 30, 0);
+        this.feather1 = new ModelPart(this, 30, 0);
         this.feather1.addBox(-1.0F, -5.0F, 5.0F, 2, 1, 5, -0.3F);
         this.feather1.setPos(0.0F, 1 + 16, 1.0F);
-        this.feather2 = new ModelRenderer(this, 30, 0);
+        this.feather2 = new ModelPart(this, 30, 0);
         this.feather2.addBox(-1.0F, -5.0F, 5.0F, 2, 1, 5, -0.3F);
         this.feather2.setPos(0.0F, 1 + 16, 1.0F);
-        this.feather3 = new ModelRenderer(this, 30, 0);
+        this.feather3 = new ModelPart(this, 30, 0);
         this.feather3.addBox(-1.0F, -5.0F, 5.0F, 2, 1, 5, -0.3F);
         this.feather3.setPos(0.0F, 1 + 16, 1.0F);
         this.feather1.y += 0.5F;
@@ -76,8 +76,8 @@ public class CockatriceModel extends EntityModel<CockatriceEntity>
 
         this.body.xRot = 1.570796F;
 
-        this.legs.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.legs2.xRot = MathHelper.cos((float)(limbSwing * 0.6662F + Math.PI)) * 1.4F * limbSwingAmount;
+        this.legs.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.legs2.xRot = Mth.cos((float)(limbSwing * 0.6662F + Math.PI)) * 1.4F * limbSwingAmount;
 
         if (ageInTicks > 0.001F) {
             this.wings.z = -1F;
@@ -115,7 +115,7 @@ public class CockatriceModel extends EntityModel<CockatriceEntity>
     }
 
     @Override
-    public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
         this.legs.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
         this.legs2.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
 

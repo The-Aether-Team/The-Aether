@@ -2,18 +2,18 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import net.minecraft.block.Blocks;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyValue;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
-public enum AetherArmorMaterials implements IArmorMaterial
+public enum AetherArmorMaterials implements ArmorMaterial
 {
 	ZANITE("zanite", 15, new int[] { 2, 5, 6, 2 }, 9, AetherSoundEvents.ITEM_ARMOR_EQUIP_ZANITE, 0.0F,
 			() -> Ingredient.of(AetherItems.ZANITE_GEMSTONE.get())),
@@ -37,7 +37,7 @@ public enum AetherArmorMaterials implements IArmorMaterial
 	private final int enchantability;
 	private final Supplier<SoundEvent> soundEvent;
 	private final float toughness;
-	private final LazyValue<Ingredient> repairMaterial;
+	private final LazyLoadedValue<Ingredient> repairMaterial;
 
 	AetherArmorMaterials(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, Supplier<SoundEvent> soundEvent, float toughness, Supplier<Ingredient> repairMaterial) {
 		this.name = name;
@@ -46,14 +46,14 @@ public enum AetherArmorMaterials implements IArmorMaterial
 		this.enchantability = enchantability;
 		this.soundEvent = soundEvent;
 		this.toughness = toughness;
-		this.repairMaterial = new LazyValue<>(repairMaterial);
+		this.repairMaterial = new LazyLoadedValue<>(repairMaterial);
 	}
 
-	public int getDurabilityForSlot(EquipmentSlotType slotIn) {
+	public int getDurabilityForSlot(EquipmentSlot slotIn) {
 		return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
 	}
 
-	public int getDefenseForSlot(EquipmentSlotType slotIn) {
+	public int getDefenseForSlot(EquipmentSlot slotIn) {
 		return this.damageReductionAmountArray[slotIn.getIndex()];
 	}
 

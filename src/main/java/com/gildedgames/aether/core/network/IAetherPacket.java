@@ -1,21 +1,21 @@
 package com.gildedgames.aether.core.network;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
 public interface IAetherPacket
 {
-    void encode(PacketBuffer buf);
+    void encode(FriendlyByteBuf buf);
 
     boolean handle(Supplier<NetworkEvent.Context> context);
 
     class AetherPacket implements IAetherPacket
     {
         @Override
-        public void encode(PacketBuffer buf) { }
+        public void encode(FriendlyByteBuf buf) { }
 
         @Override
         public boolean handle(Supplier<NetworkEvent.Context> context) {
@@ -23,6 +23,6 @@ public interface IAetherPacket
             return true;
         }
 
-        public void execute(PlayerEntity player) { }
+        public void execute(Player player) { }
     }
 }

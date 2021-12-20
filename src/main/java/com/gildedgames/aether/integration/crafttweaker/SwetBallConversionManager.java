@@ -6,9 +6,9 @@ import com.gildedgames.aether.integration.crafttweaker.actions.conversion.AddBio
 import com.gildedgames.aether.integration.crafttweaker.actions.conversion.AddDefaultConversionAction;
 import com.gildedgames.aether.integration.crafttweaker.actions.conversion.RemoveBiomeConversionAction;
 import com.gildedgames.aether.integration.crafttweaker.actions.conversion.RemoveDefaultConversionAction;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.resources.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 
 @ZenRegister

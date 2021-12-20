@@ -5,8 +5,8 @@ import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.World;
 
 public class AetherTimePacket extends AetherPacket
@@ -18,17 +18,17 @@ public class AetherTimePacket extends AetherPacket
     }
 
     @Override
-    public void encode(PacketBuffer buf) {
+    public void encode(FriendlyByteBuf buf) {
         buf.writeLong(this.aetherTime);
     }
 
-    public static AetherTimePacket decode(PacketBuffer buf) {
+    public static AetherTimePacket decode(FriendlyByteBuf buf) {
         long aetherTime = buf.readLong();
         return new AetherTimePacket(aetherTime);
     }
 
     @Override
-    public void execute(PlayerEntity playerEntity) {
+    public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().level.isClientSide) {
             EternalDayClientListener.aetherTime = this.aetherTime;
         }

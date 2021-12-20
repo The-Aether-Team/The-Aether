@@ -1,21 +1,23 @@
 package com.gildedgames.aether.client.renderer.tile;
 
 import com.gildedgames.aether.client.registry.AetherAtlases;
-import net.minecraft.client.renderer.model.RenderMaterial;
-import net.minecraft.client.renderer.tileentity.ChestTileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.state.properties.ChestType;
-import net.minecraft.tileentity.IChestLid;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.renderer.blockentity.ChestRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.level.block.state.properties.ChestType;
+import net.minecraft.world.level.block.entity.LidBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class TreasureChestTileEntityRenderer<T extends TileEntity & IChestLid> extends ChestTileEntityRenderer<T> {
+public class TreasureChestTileEntityRenderer<T extends BlockEntity & LidBlockEntity> extends ChestRenderer<T> {
 
-	public TreasureChestTileEntityRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
-		super(rendererDispatcherIn);
+	public TreasureChestTileEntityRenderer(BlockEntityRendererProvider.Context p_173607_) {
+		super(p_173607_);
 	}
 
+
 	@Override
-	protected RenderMaterial getMaterial(T tileEntity, ChestType chestType) {
+	protected Material getMaterial(T tileEntity, ChestType chestType) {
 		switch (chestType) {
 		case LEFT:
 			return AetherAtlases.TREASURE_CHEST_LEFT_MATERIAL;

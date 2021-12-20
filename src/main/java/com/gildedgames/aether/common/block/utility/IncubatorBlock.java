@@ -2,65 +2,66 @@ package com.gildedgames.aether.common.block.utility;
 
 import com.gildedgames.aether.common.entity.tile.IncubatorTileEntity;
 
-import net.minecraft.block.AbstractFurnaceBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ContainerBlock;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import org.jetbrains.annotations.Nullable;
 
-public class IncubatorBlock extends ContainerBlock {
+public class IncubatorBlock extends BaseEntityBlock {
 	public static final BooleanProperty LIT = AbstractFurnaceBlock.LIT;
 
-	public IncubatorBlock(AbstractBlock.Properties builder) {
+	public IncubatorBlock(BlockBehaviour.Properties builder) {
 		super(builder);
 		this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false));
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
 		builder.add(LIT);
 	}
 
+	@Nullable
 	@Override
-	public TileEntity newBlockEntity(IBlockReader worldIn) {
-		return new IncubatorTileEntity();
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new IncubatorTileEntity(blockPos, blockState);
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
 		if (worldIn.isClientSide) {
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 		else {
 			this.interactWith(worldIn, pos, player);
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 	}
 
-	protected void interactWith(World worldIn, BlockPos pos, PlayerEntity player) {
+	protected void interactWith(Level worldIn, BlockPos pos, Player player) {
 		if (!worldIn.isClientSide) { 
-			TileEntity tileentity = worldIn.getBlockEntity(pos);
+			BlockEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof IncubatorTileEntity) {
-				NetworkHooks.openGui((ServerPlayerEntity) player, (IncubatorTileEntity) tileentity);
+				//NetworkHooks.openGui((ServerPlayer) player, (IncubatorTileEntity) tileentity);
 			}
 		}
 	}
@@ -74,9 +75,9 @@ public class IncubatorBlock extends ContainerBlock {
 	*/
 
 	@Override
-	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		if (stack.hasCustomHoverName()) {
-			TileEntity tileentity = worldIn.getBlockEntity(pos);
+			BlockEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof IncubatorTileEntity) {
 				((IncubatorTileEntity)tileentity).setCustomName(stack.getHoverName());
 			}
@@ -85,11 +86,11 @@ public class IncubatorBlock extends ContainerBlock {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			TileEntity tileentity = worldIn.getBlockEntity(pos);
+			BlockEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof IncubatorTileEntity) {
-				InventoryHelper.dropContents(worldIn, pos, (IncubatorTileEntity)tileentity);
+				Containers.dropContents(worldIn, pos, (IncubatorTileEntity)tileentity);
 				worldIn.updateNeighbourForOutputSignal(pos, this);
 			}
 
@@ -105,14 +106,14 @@ public class IncubatorBlock extends ContainerBlock {
 
 	@Deprecated
 	@Override
-	public int getAnalogOutputSignal(BlockState blockState, World worldIn, BlockPos pos) {
-		return Container.getRedstoneSignalFromBlockEntity(worldIn.getBlockEntity(pos));
+	public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
+		return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(worldIn.getBlockEntity(pos));
 	}
 
 	@Deprecated
 	@Override
-	public BlockRenderType getRenderShape(BlockState state) {
-		return BlockRenderType.MODEL;
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.MODEL;
 	}
 
 }

@@ -2,25 +2,28 @@ package com.gildedgames.aether.common.inventory.container;
 
 import com.gildedgames.aether.common.inventory.LoreInventory;
 import com.gildedgames.aether.common.registry.AetherContainerTypes;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.inventory.container.*;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class LoreBookContainer extends Container
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+
+public class LoreBookContainer extends AbstractContainerMenu
 {
     private final LoreInventory bookInventory;
 
     private boolean loreEntryExists;
 
-    public LoreBookContainer(int id, PlayerInventory playerInventory) {
+    public LoreBookContainer(int id, Inventory playerInventory) {
         this(id, playerInventory, new LoreInventory(playerInventory.player));
     }
 
-    public LoreBookContainer(int id, PlayerInventory playerInventory, LoreInventory bookInventory) {
+    public LoreBookContainer(int id, Inventory playerInventory, LoreInventory bookInventory) {
         super(AetherContainerTypes.BOOK_OF_LORE.get(), id);
         checkContainerSize(bookInventory, 1);
         this.bookInventory = bookInventory;
@@ -40,17 +43,17 @@ public class LoreBookContainer extends Container
         }
     }
 
-    public static LoreBookContainer create(int id, PlayerInventory playerInventory) {
+    public static LoreBookContainer create(int id, Inventory playerInventory) {
         return new LoreBookContainer(id, playerInventory);
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerIn) {
+    public boolean stillValid(Player playerIn) {
         return this.bookInventory.stillValid(playerIn);
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
@@ -81,7 +84,7 @@ public class LoreBookContainer extends Container
     }
 
     @Override
-    public void removed(PlayerEntity playerIn) {
+    public void removed(Player playerIn) {
         playerIn.drop(this.bookInventory.getItem(0), false);
         super.removed(playerIn);
         this.bookInventory.stopOpen(playerIn);

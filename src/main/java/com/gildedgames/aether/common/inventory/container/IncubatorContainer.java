@@ -8,30 +8,30 @@ import com.gildedgames.aether.common.entity.tile.IncubatorTileEntity;
 import com.gildedgames.aether.common.inventory.container.slot.IncubatorEggSlot;
 import com.gildedgames.aether.common.inventory.container.slot.IncubatorFuelSlot;
 import com.gildedgames.aether.common.registry.AetherContainerTypes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class IncubatorContainer extends Container {
-	public final IInventory incubatorInventory;
-	public final IIntArray incubatorData;
+public class IncubatorContainer extends AbstractContainerMenu {
+	public final Container incubatorInventory;
+	public final ContainerData incubatorData;
 	public final Consumer<UUID> playerUUIDAcceptor;
-	public final World world;
+	public final Level world;
 
-	public IncubatorContainer(int id, PlayerInventory playerInventoryIn) {
-		this(id, playerInventoryIn, new Inventory(2), new IntArray(3), (uuid) -> {});
+	public IncubatorContainer(int id, Inventory playerInventoryIn) {
+		this(id, playerInventoryIn, new SimpleContainer(2), new SimpleContainerData(3), (uuid) -> {});
 	}
 	
-	public IncubatorContainer(int id, PlayerInventory playerInventoryIn, IInventory incubatorInventoryIn, IIntArray incubatorDataIn, Consumer<UUID> playerUUIDConsumerIn) {
+	public IncubatorContainer(int id, Inventory playerInventoryIn, Container incubatorInventoryIn, ContainerData incubatorDataIn, Consumer<UUID> playerUUIDConsumerIn) {
 		super(AetherContainerTypes.INCUBATOR.get(), id);
 		checkContainerSize(incubatorInventoryIn, 2);
 		checkContainerDataCount(incubatorDataIn, 3);
@@ -60,7 +60,7 @@ public class IncubatorContainer extends Container {
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		return incubatorInventory.stillValid(playerIn);
 	}
 	
@@ -74,7 +74,7 @@ public class IncubatorContainer extends Container {
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		if (slot != null && slot.hasItem()) {

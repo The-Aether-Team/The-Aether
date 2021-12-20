@@ -10,9 +10,9 @@ import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.PlayerRenderer;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.world.DimensionRenderInfo;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -41,14 +41,14 @@ public class AetherClient
             AetherRendering.registerGuiFactories();
             AetherAtlases.registerWoodTypeAtlases();
 
-            DimensionRenderInfo.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), new AetherSkyRenderInfo());
+            DimensionSpecialEffects.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), new AetherSkyRenderInfo());
         });
     }
 
     public static void clientComplete(FMLLoadCompleteEvent event) {
         event.enqueueWork(() -> {
             for (PlayerRenderer render : Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().values()) {
-                render.addLayer(new RepulsionShieldLayer<>(render, new BipedModel<>(1.1F)));
+                render.addLayer(new RepulsionShieldLayer<>(render, new HumanoidModel<>(1.1F)));
                 render.addLayer(new GoldenDartLayer<>(render));
                 render.addLayer(new PoisonDartLayer<>(render));
                 render.addLayer(new EnchantedDartLayer<>(render));

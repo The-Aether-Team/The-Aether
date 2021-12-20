@@ -2,8 +2,8 @@ package com.gildedgames.aether.integration.crafttweaker.actions.conversion;
 
 import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
 import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class AddDefaultConversionAction implements IRuntimeAction
 {

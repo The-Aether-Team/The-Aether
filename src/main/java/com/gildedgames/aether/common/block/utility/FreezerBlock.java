@@ -5,43 +5,43 @@ import java.util.Random;
 import com.gildedgames.aether.common.entity.tile.FreezerTileEntity;
 
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
-import net.minecraft.block.AbstractFurnaceBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class FreezerBlock extends AbstractFurnaceBlock
 {
-	public FreezerBlock(AbstractBlock.Properties properties) {
+	public FreezerBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 	}
 	
 	@Override
-	public TileEntity newBlockEntity(IBlockReader worldIn) {
-		return new FreezerTileEntity();
+	public BlockEntity newBlockEntity( BlockPos pos, BlockState state) {
+		return new FreezerTileEntity(pos, state);
 	}
 	
 	@Override
-	protected void openContainer(World worldIn, BlockPos pos, PlayerEntity player) {
+	protected void openContainer(Level worldIn, BlockPos pos, Player player) {
 		if (!worldIn.isClientSide) { 
-			TileEntity tileentity = worldIn.getBlockEntity(pos);
+			BlockEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof FreezerTileEntity) {
-				player.openMenu((INamedContainerProvider) tileentity);
+				player.openMenu((MenuProvider) tileentity);
 			}
 		}
 	}
 	
 	@Override
-	public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
+	public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
 		if (state.getValue(LIT)) {
 			double x = pos.getX() + 0.5;
 			double y = pos.getY() + 1.0 + (rand.nextFloat() * 6.0) / 16.0;
@@ -53,7 +53,7 @@ public class FreezerBlock extends AbstractFurnaceBlock
 				world.addParticle(AetherParticleTypes.FROZEN.get(), x, y, z, 0.0, 0.0, 0.0);
 			}
 
-			world.playLocalSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+			world.playLocalSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 		}
 	}
 }

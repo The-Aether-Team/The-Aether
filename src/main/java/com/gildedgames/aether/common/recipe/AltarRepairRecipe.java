@@ -3,13 +3,18 @@ package com.gildedgames.aether.common.recipe;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.item.crafting.*;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 
 public class AltarRepairRecipe extends AbstractCookingRecipe
 {
@@ -21,7 +26,7 @@ public class AltarRepairRecipe extends AbstractCookingRecipe
     }
 
     @Override
-    public ItemStack assemble(IInventory inventory) {
+    public ItemStack assemble(Container inventory) {
         return this.ingredient.getItems()[0];
     }
 
@@ -36,30 +41,30 @@ public class AltarRepairRecipe extends AbstractCookingRecipe
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return AetherRecipes.ENCHANTING.get();
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return AetherRecipes.RecipeTypes.ENCHANTING;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AltarRepairRecipe>
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AltarRepairRecipe>
     {
         public AltarRepairRecipe fromJson(ResourceLocation recipeLocation, JsonObject jsonObject) {
-            Ingredient ingredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(jsonObject, "ingredient"));
-            int cookingTime = JSONUtils.getAsInt(jsonObject, "repairTime", 200);
+            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(jsonObject, "ingredient"));
+            int cookingTime = GsonHelper.getAsInt(jsonObject, "repairTime", 200);
             return new AltarRepairRecipe(recipeLocation, ingredient, cookingTime);
         }
 
-        public AltarRepairRecipe fromNetwork(ResourceLocation recipeLocation, PacketBuffer buffer) {
+        public AltarRepairRecipe fromNetwork(ResourceLocation recipeLocation, FriendlyByteBuf buffer) {
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
             int cookingTime = buffer.readVarInt();
             return new AltarRepairRecipe(recipeLocation, ingredient, cookingTime);
         }
 
-        public void toNetwork(PacketBuffer buffer, AltarRepairRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, AltarRepairRecipe recipe) {
             recipe.ingredient.toNetwork(buffer);
             buffer.writeVarInt(recipe.cookingTime);
         }

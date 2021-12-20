@@ -1,13 +1,15 @@
 package com.gildedgames.aether.common.item.miscellaneous;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class LifeShardItem extends Item
 {
@@ -16,7 +18,7 @@ public class LifeShardItem extends Item
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
         if (!playerEntity.isCreative()) {
             IAetherPlayer aetherPlayer = IAetherPlayer.get(playerEntity).orElseThrow(() -> new IllegalStateException("Player " + playerEntity.getName().getContents() + " has no AetherPlayer capability!"));
@@ -26,11 +28,11 @@ public class LifeShardItem extends Item
                     itemstack.shrink(1);
                 }
                 aetherPlayer.addToLifeShardCount(1);
-                return ActionResult.success(itemstack);
+                return InteractionResultHolder.success(itemstack);
             } else if (aetherPlayer.getLifeShardCount() >= aetherPlayer.getLifeShardLimit()) {
-                playerEntity.displayClientMessage(new TranslationTextComponent("aether.life_shard_limit", aetherPlayer.getLifeShardLimit()), true);
+                playerEntity.displayClientMessage(new TranslatableComponent("aether.life_shard_limit", aetherPlayer.getLifeShardLimit()), true);
             }
         }
-        return ActionResult.pass(itemstack);
+        return InteractionResultHolder.pass(itemstack);
     }
 }

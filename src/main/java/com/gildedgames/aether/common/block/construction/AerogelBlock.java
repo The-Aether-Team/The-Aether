@@ -1,23 +1,23 @@
 package com.gildedgames.aether.common.block.construction;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BreakableBlock;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.HalfTransparentBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
 
-import net.minecraft.block.AbstractBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
-public class AerogelBlock extends BreakableBlock
+public class AerogelBlock extends HalfTransparentBlock
 {
-	public AerogelBlock(AbstractBlock.Properties properties) {
+	public AerogelBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	public int getLightBlock(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
 		return 3;
 	}
 	
@@ -27,7 +27,7 @@ public class AerogelBlock extends BreakableBlock
 	}
 
 	@Override
-	public VoxelShape getVisualShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
-		return VoxelShapes.empty();
+	public VoxelShape getVisualShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
+		return Shapes.empty();
 	}
 }

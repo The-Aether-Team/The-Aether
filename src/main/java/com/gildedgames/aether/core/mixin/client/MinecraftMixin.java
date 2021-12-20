@@ -4,8 +4,8 @@ import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.BackgroundMusicSelector;
-import net.minecraft.client.audio.BackgroundMusicTracks;
+import net.minecraft.sounds.Music;
+import net.minecraft.sounds.Musics;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,10 +16,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MinecraftMixin
 {
     @Inject(at = @At(value = "RETURN", ordinal = 2), method = "getSituationalMusic()Lnet/minecraft/client/audio/BackgroundMusicSelector;", cancellable = true)
-    public void onGetSituationalMusic_Dimension(CallbackInfoReturnable<BackgroundMusicSelector> cir) {
+    public void onGetSituationalMusic_Dimension(CallbackInfoReturnable<Music> cir) {
         Minecraft minecraft = (Minecraft) (Object) this;
         if (minecraft.player.level.dimension() == AetherDimensions.AETHER_WORLD) {
-            cir.setReturnValue(minecraft.level.getBiomeManager().getNoiseBiomeAtPosition(minecraft.player.blockPosition()).getBackgroundMusic().orElse(BackgroundMusicTracks.GAME));
+            cir.setReturnValue(minecraft.level.getBiomeManager().getNoiseBiomeAtPosition(minecraft.player.blockPosition()).getBackgroundMusic().orElse(Musics.GAME));
         }
     }
 
@@ -31,7 +31,7 @@ public class MinecraftMixin
      * the config.
      */
     @Inject(at = @At(value = "RETURN", ordinal = 4), method = "getSituationalMusic()Lnet/minecraft/client/audio/BackgroundMusicSelector;", cancellable = true)
-    public void onGetSituationalMusic_Menu(CallbackInfoReturnable<BackgroundMusicSelector> cir) {
+    public void onGetSituationalMusic_Menu(CallbackInfoReturnable<Music> cir) {
         if (AetherConfig.CLIENT.enable_aether_menu.get() && !AetherConfig.CLIENT.disable_menu_music.get()) {
             cir.setReturnValue(AetherMainMenuScreen.MENU);
         }

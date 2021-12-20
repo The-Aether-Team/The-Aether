@@ -1,15 +1,14 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.NotificationModUpdateScreen;
-import net.minecraftforge.fml.ForgeI18n;
+import net.minecraftforge.client.loading.ClientModLoader;
+import net.minecraftforge.common.ForgeI18n;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.VersionChecker;
-import net.minecraftforge.fml.client.ClientModLoader;
 import net.minecraftforge.fml.loading.FMLConfig;
 import net.minecraftforge.versions.forge.ForgeVersion;
 
@@ -25,10 +24,10 @@ public class AetherNotificationModUpdateScreen extends NotificationModUpdateScre
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void render(MatrixStack mStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack mStack, int mouseX, int mouseY, float partialTicks) {
 		if (this.showNotification != null && this.showNotification.shouldDraw() && FMLConfig.runVersionCheck() && Minecraft.getInstance().screen != null) {
-			Minecraft.getInstance().getTextureManager().bind(VERSION_CHECK_ICONS);
-			RenderSystem.color4f(1, 1, 1, 1);
+			Minecraft.getInstance().getTextureManager().bindForSetup(VERSION_CHECK_ICONS);
+			RenderSystem.clearColor(1, 1, 1, 1);
 
 			this.width = Minecraft.getInstance().screen.width;
 			this.height = Minecraft.getInstance().screen.height;

@@ -3,13 +3,13 @@ package com.gildedgames.aether.common.item.tools.holystone;
 import com.gildedgames.aether.common.item.tools.abilities.IHolystoneToolItem;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItemTiers;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class HolystonePickaxeItem extends PickaxeItem implements IHolystoneToolItem
 {
@@ -18,7 +18,7 @@ public class HolystonePickaxeItem extends PickaxeItem implements IHolystoneToolI
 	}
 	
 	@Override
-	public boolean mineBlock(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+	public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 		spawnAmbrosiumDrops(worldIn, pos);
 		return super.mineBlock(stack, worldIn, state, pos, entityLiving);
 	}

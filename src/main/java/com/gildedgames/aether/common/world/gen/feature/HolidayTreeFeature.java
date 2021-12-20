@@ -4,51 +4,57 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.core.AetherConfig;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.gen.feature.template.*;
 
 import java.util.Calendar;
 import java.util.Random;
 
-public class HolidayTreeFeature extends Feature<NoFeatureConfig>
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockRotProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+
+public class HolidayTreeFeature extends Feature<NoneFeatureConfiguration>
 {
     private static final ResourceLocation TREE = new ResourceLocation(Aether.MODID, "holiday_tree/holiday_tree");
     private static final ResourceLocation DECORATION = new ResourceLocation(Aether.MODID, "holiday_tree/holiday_decorated_tree");
 
-    public HolidayTreeFeature(Codec<NoFeatureConfig> codec) {
+    public HolidayTreeFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+    public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, NoneFeatureConfiguration config) {
         Calendar calendar = Calendar.getInstance();
         if ((AetherConfig.COMMON.generate_holiday_tree_seasonally.get() && (calendar.get(Calendar.MONTH) == Calendar.DECEMBER || calendar.get(Calendar.MONTH) == Calendar.JANUARY)) || AetherConfig.COMMON.generate_holiday_tree_always.get()) {
 
             Rotation rotation = Rotation.getRandom(rand);
-            TemplateManager templatemanager = reader.getLevel().getServer().getStructureManager();
-            Template tree = templatemanager.getOrCreate(TREE);
-            Template decor = templatemanager.getOrCreate(DECORATION);
+            StructureManager templatemanager = reader.getLevel().getServer().getStructureManager();
+            StructureTemplate tree = templatemanager.getOrCreate(TREE);
+            StructureTemplate decor = templatemanager.getOrCreate(DECORATION);
             ChunkPos chunkpos = new ChunkPos(pos);
-            MutableBoundingBox mutableboundingbox = new MutableBoundingBox(chunkpos.getMinBlockX(), 0, chunkpos.getMinBlockZ(), chunkpos.getMaxBlockX(), 256, chunkpos.getMaxBlockZ());
-            PlacementSettings placementsettings = (new PlacementSettings()).setRotation(rotation).setBoundingBox(mutableboundingbox).setRandom(rand).addProcessor(BlockIgnoreStructureProcessor.STRUCTURE_AND_AIR);
+            BoundingBox mutableboundingbox = new BoundingBox(chunkpos.getMinBlockX(), 0, chunkpos.getMinBlockZ(), chunkpos.getMaxBlockX(), 256, chunkpos.getMaxBlockZ());
+            StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(rotation).setBoundingBox(mutableboundingbox).setRandom(rand).addProcessor(BlockIgnoreProcessor.STRUCTURE_AND_AIR);
 
             BlockPos size = tree.getSize(rotation);
             int rx = Math.floorDiv(size.getX(), 2);
             int rz = Math.floorDiv(size.getZ(), 2);
             int x = rand.nextInt(16 - size.getX());
             int z = rand.nextInt(16 - size.getZ());
-            int y = reader.getHeight(Heightmap.Type.OCEAN_FLOOR_WG, pos.getX() + x + rx, pos.getZ() + z + rz);
+            int y = reader.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, pos.getX() + x + rx, pos.getZ() + z + rz);
             if (y <= 48) return true;
 
             pos = pos.offset(x, y, z);
@@ -56,7 +62,7 @@ public class HolidayTreeFeature extends Feature<NoFeatureConfig>
             for (int i = -rx*2; i < rx*2 + 1; i++) {
                 for (int j = -rz*2; j < rz*2 + 1; j++) {
                     if (i * i + j * j <= 3.5 * rx * rx) {
-                        y = reader.getHeight(Heightmap.Type.OCEAN_FLOOR_WG, pos.getX() + rx + i, pos.getZ() + rz + j);
+                        y = reader.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, pos.getX() + rx + i, pos.getZ() + rz + j);
                         if (y <= 48) continue;
                         BlockPos pos1 = new BlockPos(pos.getX() + rx + i, y, pos.getZ() + rz + j);
 
@@ -71,7 +77,7 @@ public class HolidayTreeFeature extends Feature<NoFeatureConfig>
 
             BlockPos blockpos1 = tree.getZeroPositionWithTransform(pos, Mirror.NONE, rotation);
             tree.placeInWorld(reader, blockpos1, blockpos1, placementsettings, rand, 4);
-            IntegrityProcessor integrityprocessor = new IntegrityProcessor(0.2F);
+            BlockRotProcessor integrityprocessor = new BlockRotProcessor(0.2F);
             placementsettings.clearProcessors().addProcessor(integrityprocessor);
             decor.placeInWorld(reader, blockpos1, blockpos1, placementsettings, rand, 4);
         }

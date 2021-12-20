@@ -1,7 +1,9 @@
 package com.gildedgames.aether.common.item.miscellaneous;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class MoaDebugStick extends Item
 {

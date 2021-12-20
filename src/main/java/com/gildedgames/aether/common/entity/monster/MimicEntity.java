@@ -2,48 +2,48 @@ package com.gildedgames.aether.common.entity.monster;
 
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.MoveTowardsRestrictionGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particles.BlockParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
-public class MimicEntity extends CreatureEntity {
+public class MimicEntity extends PathfinderMob {
 
-	public MimicEntity(EntityType<? extends MimicEntity> type, World worldIn) {
+	public MimicEntity(EntityType<? extends MimicEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
-	public MimicEntity(World worldIn) {
+	public MimicEntity(Level worldIn) {
 		super(AetherEntityTypes.MIMIC.get(), worldIn);
 	}
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new SwimGoal(this));
+		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(2,  new MeleeAttackGoal(this, 1.0, false));
 		this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
-		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 
-	public static AttributeModifierMap.MutableAttribute createMobAttributes() {
-		return CreatureEntity.createMobAttributes()
+	public static AttributeSupplier.Builder createMobAttributes() {
+		return PathfinderMob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 40.0D)
 				.add(Attributes.ATTACK_DAMAGE, 3.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
@@ -66,15 +66,15 @@ public class MimicEntity extends CreatureEntity {
 			return false;
 		}
 		if (source.getDirectEntity() instanceof LivingEntity && this.hurtTime == 0) {
-			if (this.level instanceof ServerWorld) {
-				ServerWorld world = (ServerWorld) this.level;
+			if (this.level instanceof ServerLevel) {
+				ServerLevel world = (ServerLevel) this.level;
 				for (int i = 0; i < 20; i++) {
-					world.sendParticles(new BlockParticleData(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState()), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 1, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05F);
+					world.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState()), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 1, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05F);
 				}
 			}
 			
 			LivingEntity attacker = (LivingEntity) source.getDirectEntity();
-			if (!(attacker instanceof PlayerEntity) || !((PlayerEntity) attacker).isCreative()) {
+			if (!(attacker instanceof Player) || !((Player) attacker).isCreative()) {
 				this.setTarget(attacker);
 			}
 		}

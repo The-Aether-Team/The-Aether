@@ -4,17 +4,17 @@ import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
 import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.google.common.collect.Maps;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Map;
@@ -66,9 +66,9 @@ public interface ISwetBallConversion
         }
     }
 
-    default ActionResultType convertBlock(ItemUseContext context) {
-        PlayerEntity player = context.getPlayer();
-        World world = context.getLevel();
+    default InteractionResult convertBlock(UseOnContext context) {
+        Player player = context.getPlayer();
+        Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
         ItemStack heldItem = context.getItemInHand();
         BlockState oldBlockState = world.getBlockState(pos);
@@ -96,14 +96,14 @@ public interface ISwetBallConversion
                 if (player != null && !player.abilities.instabuild) {
                     heldItem.shrink(1);
                 }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
 
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
     }
 
-    static boolean convertBlockWithoutContext(World world, BlockPos pos, ItemStack stack) {
+    static boolean convertBlockWithoutContext(Level world, BlockPos pos, ItemStack stack) {
         BlockState oldBlockState = world.getBlockState(pos);
         BlockState newBlockState = oldBlockState;
 

@@ -2,20 +2,25 @@ package com.gildedgames.aether.common.item.combat.loot;
 
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.*;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.Tiers;
+
 @Mod.EventBusSubscriber
 public class FlamingSwordItem extends SwordItem
 {
 	public FlamingSwordItem() {
-		super(ItemTier.DIAMOND, 4, -2.4f, new Item.Properties().durability(502).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+		super(Tiers.DIAMOND, 4, -2.4f, new Item.Properties().durability(502).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
 	}
 
 	@Override
@@ -25,7 +30,7 @@ public class FlamingSwordItem extends SwordItem
 
 	@SubscribeEvent
 	public static void onEntityAttack(AttackEntityEvent event) {
-		PlayerEntity player = event.getPlayer();
+		Player player = event.getPlayer();
 		Entity target = event.getTarget();
 		if (player.getMainHandItem().getItem() == AetherItems.FLAMING_SWORD.get()) {
 			if (target.isAttackable() && !target.skipAttackInteraction(player)) {

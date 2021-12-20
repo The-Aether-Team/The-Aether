@@ -7,12 +7,12 @@ import com.gildedgames.aether.client.renderer.entity.layers.MoaSaddleLayer;
 import com.gildedgames.aether.client.renderer.entity.model.MoaModel;
 import com.gildedgames.aether.common.entity.passive.MoaEntity;
 import com.gildedgames.aether.core.api.AetherMoaTypes;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -21,7 +21,7 @@ public class MoaRenderer extends MobRenderer<MoaEntity, MoaModel>{
 	private static final ResourceLocation MOS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/mos.png");
 	private static final ResourceLocation RAPTOR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/raptor.png");
 	
-	public MoaRenderer(EntityRendererManager rendererManager) {
+	public MoaRenderer(EntityRenderDispatcher rendererManager) {
 		super(rendererManager, new MoaModel(0.0F), 0.7F);
 		
 		this.addLayer(new MoaSaddleLayer(this));
@@ -31,11 +31,11 @@ public class MoaRenderer extends MobRenderer<MoaEntity, MoaModel>{
 	protected float getBob(MoaEntity moa, float partialTicks) {
 		float f1 = moa.prevWingRotation + (moa.wingRotation - moa.prevWingRotation) * partialTicks;
 		float f2 = moa.prevDestPos + (moa.destPos - moa.prevDestPos) * partialTicks;
-		return (MathHelper.sin(f1) + 1.0F) * f2;
+		return (Mth.sin(f1) + 1.0F) * f2;
 	}
 
 	@Override
-	protected void scale(MoaEntity moa, MatrixStack matrixStackIn, float partialTickTime) {
+	protected void scale(MoaEntity moa, PoseStack matrixStackIn, float partialTickTime) {
 		float moaScale = moa.isBaby()? 1.0F : 1.8F;
 		matrixStackIn.scale(moaScale, moaScale, moaScale);
 	}

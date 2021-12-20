@@ -6,9 +6,9 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.model.MimicModel;
 import com.gildedgames.aether.common.entity.monster.MimicEntity;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -20,7 +20,7 @@ public class MimicRenderer extends MobRenderer<MimicEntity, MimicModel> {
 
 	private boolean isChristmas;
 	
-	public MimicRenderer(EntityRendererManager rendererManager) {
+	public MimicRenderer(EntityRenderDispatcher rendererManager) {
 		super(rendererManager, new MimicModel(), 1.0F);
 		Calendar calendar = Calendar.getInstance();
 		if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DAY_OF_MONTH) >= 24 && calendar.get(Calendar.DAY_OF_MONTH) <= 26) {

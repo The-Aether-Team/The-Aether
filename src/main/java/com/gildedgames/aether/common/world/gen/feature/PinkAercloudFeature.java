@@ -4,22 +4,22 @@ import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProp
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.core.AetherConfig;
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.Random;
 
-public class PinkAercloudFeature extends Feature<NoFeatureConfig>
+public class PinkAercloudFeature extends Feature<NoneFeatureConfiguration>
 {
-    public PinkAercloudFeature(Codec<NoFeatureConfig> codec) {
+    public PinkAercloudFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+    public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, NoneFeatureConfiguration config) {
         if (AetherConfig.COMMON.generate_pink_aerclouds.get()) {
             BlockPos origin = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
             BlockPos position = new BlockPos(origin.getX() + 8, origin.getY(), origin.getZ() + 8);

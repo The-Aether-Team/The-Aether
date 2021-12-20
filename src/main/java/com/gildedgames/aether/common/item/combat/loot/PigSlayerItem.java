@@ -4,26 +4,31 @@ import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 
 import com.gildedgames.aether.common.registry.AetherTags;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.*;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.Tiers;
+
 @Mod.EventBusSubscriber
 public class PigSlayerItem extends SwordItem
 {
 	public PigSlayerItem() {
-		super(ItemTier.IRON, 3, -2.4f, new Item.Properties().durability(200).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+		super(Tiers.IRON, 3, -2.4f, new Item.Properties().durability(200).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
 	}
 
 	@Override
@@ -32,8 +37,8 @@ public class PigSlayerItem extends SwordItem
 			if (target.getHealth() > 0.0F) {
 				target.hurt(DamageSource.mobAttack(attacker), 9999);
 			}
-			if (target.level instanceof ServerWorld) {
-				ServerWorld world = (ServerWorld) target.level;
+			if (target.level instanceof ServerLevel) {
+				ServerLevel world = (ServerLevel) target.level;
 				for (int i = 0; i < 20; i++) {
 					double d0 = world.getRandom().nextGaussian() * 0.02;
 					double d1 = world.getRandom().nextGaussian() * 0.02;
@@ -54,9 +59,9 @@ public class PigSlayerItem extends SwordItem
 		if (event.getSource() instanceof EntityDamageSource) {
 			LivingEntity entity = event.getEntityLiving();
 			EntityDamageSource source = (EntityDamageSource) event.getSource();
-			if (source.getDirectEntity() instanceof PlayerEntity) {
-				PlayerEntity player = (PlayerEntity) source.getDirectEntity();
-				ItemStack stack = player.getItemInHand(Hand.MAIN_HAND);
+			if (source.getDirectEntity() instanceof Player) {
+				Player player = (Player) source.getDirectEntity();
+				ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 				Item item = stack.getItem();
 				if (item == AetherItems.PIG_SLAYER.get() && entity.getType().is(AetherTags.Entities.PIGS)) {
 					if (entity.getRandom().nextInt(4) == 0) {

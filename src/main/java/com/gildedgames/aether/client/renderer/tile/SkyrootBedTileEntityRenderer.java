@@ -4,40 +4,40 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.utility.SkyrootBedBlock;
 import com.gildedgames.aether.common.entity.tile.SkyrootBedTileEntity;
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.block.BedBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.client.renderer.tileentity.DualBrightnessCallback;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.state.properties.BedPart;
-import net.minecraft.tileentity.TileEntityMerger;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.World;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.blockentity.BrightnessCombiner;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.level.block.state.properties.BedPart;
+import net.minecraft.world.level.block.DoubleBlockCombiner;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.Level;
 
-public class SkyrootBedTileEntityRenderer extends TileEntityRenderer<SkyrootBedTileEntity>
+public class SkyrootBedTileEntityRenderer extends BlockEntityRenderer<SkyrootBedTileEntity>
 {
-    private final ModelRenderer HEAD;
-    private final ModelRenderer FOOT;
-    private final ModelRenderer[] LEGS = new ModelRenderer[4];
+    private final ModelPart HEAD;
+    private final ModelPart FOOT;
+    private final ModelPart[] LEGS = new ModelPart[4];
 
-    public SkyrootBedTileEntityRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
+    public SkyrootBedTileEntityRenderer(BlockEntityRenderDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
-        this.HEAD = new ModelRenderer(64, 64, 0, 0);
+        this.HEAD = new ModelPart(64, 64, 0, 0);
         this.HEAD.addBox(0.0F, 0.0F, 0.0F, 16.0F, 16.0F, 6.0F, 0.0F);
-        this.FOOT = new ModelRenderer(64, 64, 0, 22);
+        this.FOOT = new ModelPart(64, 64, 0, 22);
         this.FOOT.addBox(0.0F, 0.0F, 0.0F, 16.0F, 16.0F, 6.0F, 0.0F);
-        this.LEGS[0] = new ModelRenderer(64, 64, 50, 0);
-        this.LEGS[1] = new ModelRenderer(64, 64, 50, 6);
-        this.LEGS[2] = new ModelRenderer(64, 64, 50, 12);
-        this.LEGS[3] = new ModelRenderer(64, 64, 50, 18);
+        this.LEGS[0] = new ModelPart(64, 64, 50, 0);
+        this.LEGS[1] = new ModelPart(64, 64, 50, 6);
+        this.LEGS[2] = new ModelPart(64, 64, 50, 12);
+        this.LEGS[3] = new ModelPart(64, 64, 50, 18);
         this.LEGS[0].addBox(0.0F, 6.0F, -16.0F, 3.0F, 3.0F, 3.0F);
         this.LEGS[1].addBox(0.0F, 6.0F, 0.0F, 3.0F, 3.0F, 3.0F);
         this.LEGS[2].addBox(-16.0F, 6.0F, -16.0F, 3.0F, 3.0F, 3.0F);
@@ -52,12 +52,12 @@ public class SkyrootBedTileEntityRenderer extends TileEntityRenderer<SkyrootBedT
         this.LEGS[3].zRot = (float)Math.PI;
     }
 
-    public void render(SkyrootBedTileEntity tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        World world = tileEntityIn.getLevel();
+    public void render(SkyrootBedTileEntity tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+        Level world = tileEntityIn.getLevel();
         if (world != null) {
             BlockState blockstate = tileEntityIn.getBlockState();
-            TileEntityMerger.ICallbackWrapper<? extends SkyrootBedTileEntity> icallbackwrapper = TileEntityMerger.combineWithNeigbour(AetherTileEntityTypes.SKYROOT_BED.get(), SkyrootBedBlock::getBlockType, SkyrootBedBlock::getConnectedDirection, ChestBlock.FACING, blockstate, world, tileEntityIn.getBlockPos(), (p_228846_0_, p_228846_1_) -> false);
-            int i = icallbackwrapper.apply(new DualBrightnessCallback<>()).get(combinedLightIn);
+            DoubleBlockCombiner.NeighborCombineResult<? extends SkyrootBedTileEntity> icallbackwrapper = DoubleBlockCombiner.combineWithNeigbour(AetherTileEntityTypes.SKYROOT_BED.get(), SkyrootBedBlock::getBlockType, SkyrootBedBlock::getConnectedDirection, ChestBlock.FACING, blockstate, world, tileEntityIn.getBlockPos(), (p_228846_0_, p_228846_1_) -> false);
+            int i = icallbackwrapper.apply(new BrightnessCombiner<>()).get(combinedLightIn);
             this.renderModel(matrixStackIn, bufferIn, blockstate.getValue(SkyrootBedBlock.PART) == BedPart.HEAD, blockstate.getValue(BedBlock.FACING), i, combinedOverlayIn, false);
         } else {
             this.renderModel(matrixStackIn, bufferIn, true, Direction.SOUTH, combinedLightIn, combinedOverlayIn, false);
@@ -65,7 +65,7 @@ public class SkyrootBedTileEntityRenderer extends TileEntityRenderer<SkyrootBedT
         }
     }
 
-    private void renderModel(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, boolean isHead, Direction direction, int combinedLightIn, int combinedOverlayIn, boolean isFoot) {
+    private void renderModel(PoseStack matrixStackIn, MultiBufferSource bufferIn, boolean isHead, Direction direction, int combinedLightIn, int combinedOverlayIn, boolean isFoot) {
         this.HEAD.visible = isHead;
         this.FOOT.visible = !isHead;
         this.LEGS[0].visible = !isHead;
@@ -78,7 +78,7 @@ public class SkyrootBedTileEntityRenderer extends TileEntityRenderer<SkyrootBedT
         matrixStackIn.translate(0.5D, 0.5D, 0.5D);
         matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(180.0F + direction.toYRot()));
         matrixStackIn.translate(-0.5D, -0.5D, -0.5D);
-        IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.entitySolid(new ResourceLocation(Aether.MODID, "textures/entity/tiles/bed/skyroot_bed.png")));
+        VertexConsumer ivertexbuilder = bufferIn.getBuffer(RenderType.entitySolid(new ResourceLocation(Aether.MODID, "textures/entity/tiles/bed/skyroot_bed.png")));
         this.HEAD.render(matrixStackIn, ivertexbuilder, combinedLightIn, combinedOverlayIn);
         this.FOOT.render(matrixStackIn, ivertexbuilder, combinedLightIn, combinedOverlayIn);
         this.LEGS[0].render(matrixStackIn, ivertexbuilder, combinedLightIn, combinedOverlayIn);

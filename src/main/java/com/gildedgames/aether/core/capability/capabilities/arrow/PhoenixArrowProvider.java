@@ -2,14 +2,14 @@ package com.gildedgames.aether.core.capability.capabilities.arrow;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class PhoenixArrowProvider implements ICapabilityProvider, INBTSerializable<CompoundNBT>
+public class PhoenixArrowProvider implements ICapabilityProvider, INBTSerializable<CompoundTag>
 {
     private final IPhoenixArrow phoenixArrow;
 
@@ -18,12 +18,12 @@ public class PhoenixArrowProvider implements ICapabilityProvider, INBTSerializab
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
+    public CompoundTag serializeNBT() {
         return phoenixArrow.serializeNBT();
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         phoenixArrow.deserializeNBT(nbt);
     }
 

@@ -2,17 +2,17 @@ package com.gildedgames.aether.common.event.listeners.abilities;
 
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.util.EquipmentUtil;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SEntityVelocityPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -39,7 +39,7 @@ public class ArmorAbilityListener
                 if (depthStriderModifier > 0.0F) {
                     defaultBoost += depthStriderModifier * 0.15F;
                 }
-                Vector3d movement = entity.getDeltaMovement().multiply(defaultBoost, 1.0F, defaultBoost);
+                Vec3 movement = entity.getDeltaMovement().multiply(defaultBoost, 1.0F, defaultBoost);
                 entity.move(MoverType.SELF, movement);
             }
         } else if (EquipmentUtil.hasFullPhoenixSet(entity)) {
@@ -51,11 +51,11 @@ public class ArmorAbilityListener
                 if (depthStriderModifier > 0.0F) {
                     defaultBoost += depthStriderModifier * 1.5F;
                 }
-                Vector3d movement = entity.getDeltaMovement().multiply(defaultBoost, 0.25F, defaultBoost);
+                Vec3 movement = entity.getDeltaMovement().multiply(defaultBoost, 0.25F, defaultBoost);
                 entity.move(MoverType.SELF, movement);
             }
-            if (entity.level instanceof ServerWorld) {
-                ServerWorld world = (ServerWorld) entity.level;
+            if (entity.level instanceof ServerLevel) {
+                ServerLevel world = (ServerLevel) entity.level;
                 world.sendParticles(ParticleTypes.FLAME,
                         entity.getX() + (world.getRandom().nextGaussian() / 5.0D),
                         entity.getY() + (world.getRandom().nextGaussian() / 3.0D),
@@ -65,8 +65,8 @@ public class ArmorAbilityListener
         }
 
         if (entity.isInWaterRainOrBubble()) {
-            for (EquipmentSlotType equipmentslottype : EquipmentSlotType.values()) {
-                if (equipmentslottype.getType() == EquipmentSlotType.Group.ARMOR) {
+            for (EquipmentSlot equipmentslottype : EquipmentSlot.values()) {
+                if (equipmentslottype.getType() == EquipmentSlot.Type.ARMOR) {
                     ItemStack equippedStack = entity.getItemBySlot(equipmentslottype);
                     if (equippedStack.getItem() == AetherItems.PHOENIX_HELMET.get()) {
                         breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_HELMET.get()), equipmentslottype);
@@ -87,12 +87,12 @@ public class ArmorAbilityListener
     public static void onEntityJump(LivingEvent.LivingJumpEvent event) {
         LivingEntity entity = event.getEntityLiving();
         if (EquipmentUtil.hasFullGravititeSet(entity)) {
-            if (entity instanceof PlayerEntity) {
-                PlayerEntity player = (PlayerEntity) entity;
+            if (entity instanceof Player) {
+                Player player = (Player) entity;
                 if (!player.isShiftKeyDown()) {
                     player.push(0.0, 1.0, 0.0);
-                    if (player instanceof ServerPlayerEntity) {
-                        ((ServerPlayerEntity) player).connection.send(new SEntityVelocityPacket(player));
+                    if (player instanceof ServerPlayer) {
+                        ((ServerPlayer) player).connection.send(new ClientboundSetEntityMotionPacket(player));
                     }
                 }
             }
@@ -102,7 +102,7 @@ public class ArmorAbilityListener
     @SubscribeEvent
     public static void onEntityFall(LivingFallEvent event) {
         LivingEntity entity = event.getEntityLiving();
-        if (entity.getItemBySlot(EquipmentSlotType.FEET).getItem() == AetherItems.SENTRY_BOOTS.get() || EquipmentUtil.hasFullGravititeSet(entity) || EquipmentUtil.hasFullValkyrieSet(entity)) {
+        if (entity.getItemBySlot(EquipmentSlot.FEET).getItem() == AetherItems.SENTRY_BOOTS.get() || EquipmentUtil.hasFullGravititeSet(entity) || EquipmentUtil.hasFullValkyrieSet(entity)) {
             event.setCanceled(true);
         }
     }
@@ -126,7 +126,7 @@ public class ArmorAbilityListener
         }
     }
 
-    private static void breakPhoenixArmor(LivingEntity entity, ItemStack equippedStack, ItemStack outcomeStack, EquipmentSlotType equipmentslottype) {
+    private static void breakPhoenixArmor(LivingEntity entity, ItemStack equippedStack, ItemStack outcomeStack, EquipmentSlot equipmentslottype) {
         if (entity.level.getGameTime() % 10 == 0) {
             equippedStack.hurtAndBreak(1, entity, (p) -> p.broadcastBreakEvent(equipmentslottype));
             if (entity.getItemBySlot(equipmentslottype).isEmpty()) {
@@ -141,7 +141,7 @@ public class ArmorAbilityListener
 
     private static void breakPhoenixGloves(LivingEntity entity, ImmutableTriple<String, Integer, ItemStack> triple, ItemStack outcomeStack) {
         if (entity.level.getGameTime() % 10 == 0) {
-            triple.getRight().hurtAndBreak(1, entity, (p) -> p.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
+            triple.getRight().hurtAndBreak(1, entity, (p) -> p.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             if (!CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.PHOENIX_GLOVES.get(), entity).isPresent()) {
                 EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(triple.getRight()), outcomeStack);
                 if (triple.getRight().hasTag()) {

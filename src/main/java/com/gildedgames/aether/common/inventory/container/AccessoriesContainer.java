@@ -2,23 +2,23 @@ package com.gildedgames.aether.common.inventory.container;
 
 import com.gildedgames.aether.common.registry.AetherContainerTypes;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.CraftingResultSlot;
-import net.minecraft.inventory.container.PlayerContainer;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.inventory.container.WorkbenchContainer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.RecipeBookCategory;
-import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.ResultSlot;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.CraftingMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.inventory.RecipeBookType;
+import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
@@ -31,19 +31,19 @@ import top.theillusivec4.curios.common.inventory.CurioSlot;
 import javax.annotation.Nonnull;
 import java.util.Map;
 
-public class AccessoriesContainer extends PlayerContainer
+public class AccessoriesContainer extends InventoryMenu
 {
     private static final ResourceLocation[] ARMOR_SLOT_TEXTURES = new ResourceLocation[] {
-            PlayerContainer.EMPTY_ARMOR_SLOT_BOOTS,
-            PlayerContainer.EMPTY_ARMOR_SLOT_LEGGINGS,
-            PlayerContainer.EMPTY_ARMOR_SLOT_CHESTPLATE,
-            PlayerContainer.EMPTY_ARMOR_SLOT_HELMET
+            InventoryMenu.EMPTY_ARMOR_SLOT_BOOTS,
+            InventoryMenu.EMPTY_ARMOR_SLOT_LEGGINGS,
+            InventoryMenu.EMPTY_ARMOR_SLOT_CHESTPLATE,
+            InventoryMenu.EMPTY_ARMOR_SLOT_HELMET
     };
-    private static final EquipmentSlotType[] VALID_EQUIPMENT_SLOTS = new EquipmentSlotType[] {
-            EquipmentSlotType.HEAD,
-            EquipmentSlotType.CHEST,
-            EquipmentSlotType.LEGS,
-            EquipmentSlotType.FEET
+    private static final EquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EquipmentSlot[] {
+            EquipmentSlot.HEAD,
+            EquipmentSlot.CHEST,
+            EquipmentSlot.LEGS,
+            EquipmentSlot.FEET
     };
     private static final String[] AETHER_IDENTIFIERS = new String[] {
             "aether_pendant",
@@ -56,18 +56,18 @@ public class AccessoriesContainer extends PlayerContainer
 
     public final LazyOptional<ICuriosItemHandler> curiosHandler;
 
-    private final PlayerEntity player;
+    private final Player player;
 
-    private final CraftingInventory craftMatrix = new CraftingInventory(this, 2, 2);
-    private final CraftResultInventory craftResult = new CraftResultInventory();
+    private final CraftingContainer craftMatrix = new CraftingContainer(this, 2, 2);
+    private final ResultContainer craftResult = new ResultContainer();
 
     public boolean hasButton;
 
-    public AccessoriesContainer(int containerId, PlayerInventory playerInventory) {
+    public AccessoriesContainer(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, true);
     }
 
-    public AccessoriesContainer(int containerId, PlayerInventory playerInventory, boolean hasButton) {
+    public AccessoriesContainer(int containerId, Inventory playerInventory, boolean hasButton) {
         super(playerInventory, playerInventory.player.level.isClientSide, playerInventory.player);
         this.menuType = AetherContainerTypes.ACCESSORIES.get();
         this.containerId = containerId;
@@ -77,7 +77,7 @@ public class AccessoriesContainer extends PlayerContainer
         this.curiosHandler = CuriosApi.getCuriosHelper().getCuriosHandler(this.player);
         this.hasButton = hasButton;
 
-        this.addSlot(new CraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 154, 28));
+        this.addSlot(new ResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 154, 28));
 
         for (int i = 0; i < 2; ++i) {
             for (int j = 0; j < 2; ++j) {
@@ -86,7 +86,7 @@ public class AccessoriesContainer extends PlayerContainer
         }
 
         for (int k = 0; k < 4; ++k) {
-            final EquipmentSlotType equipmentslottype = VALID_EQUIPMENT_SLOTS[k];
+            final EquipmentSlot equipmentslottype = VALID_EQUIPMENT_SLOTS[k];
             this.addSlot(new Slot(playerInventory, 36 + (3 - k), 59, 8 + k * 18)
             {
                 @Override
@@ -100,7 +100,7 @@ public class AccessoriesContainer extends PlayerContainer
                 }
 
                 @Override
-                public boolean mayPickup(PlayerEntity p_82869_1_) {
+                public boolean mayPickup(Player p_82869_1_) {
                     ItemStack itemstack = this.getItem();
                     return (itemstack.isEmpty() || p_82869_1_.isCreative() || !EnchantmentHelper.hasBindingCurse(itemstack)) && super.mayPickup(p_82869_1_);
                 }
@@ -108,7 +108,7 @@ public class AccessoriesContainer extends PlayerContainer
                 @Override
                 @OnlyIn(Dist.CLIENT)
                 public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-                    return Pair.of(PlayerContainer.BLOCK_ATLAS, ARMOR_SLOT_TEXTURES[equipmentslottype.getIndex()]);
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, ARMOR_SLOT_TEXTURES[equipmentslottype.getIndex()]);
                 }
             });
         }
@@ -128,7 +128,7 @@ public class AccessoriesContainer extends PlayerContainer
             @Override
             @OnlyIn(Dist.CLIENT)
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-                return Pair.of(PlayerContainer.BLOCK_ATLAS, PlayerContainer.EMPTY_ARMOR_SLOT_SHIELD);
+                return Pair.of(InventoryMenu.BLOCK_ATLAS, InventoryMenu.EMPTY_ARMOR_SLOT_SHIELD);
             }
         });
 
@@ -165,12 +165,12 @@ public class AccessoriesContainer extends PlayerContainer
     }
 
     @Override
-    public void slotsChanged(@Nonnull IInventory inventoryIn) {
-        WorkbenchContainer.slotChangedCraftingGrid(this.containerId, this.player.level, this.player, this.craftMatrix, this.craftResult);
+    public void slotsChanged(@Nonnull Container inventoryIn) {
+        CraftingMenu.slotChangedCraftingGrid(this.containerId, this.player.level, this.player, this.craftMatrix, this.craftResult);
     }
 
     @Override
-    public void removed(@Nonnull PlayerEntity playerIn) {
+    public void removed(@Nonnull Player playerIn) {
         super.removed(playerIn);
         this.craftResult.clearContent();
         if (!playerIn.level.isClientSide) {
@@ -179,20 +179,20 @@ public class AccessoriesContainer extends PlayerContainer
     }
 
     @Override
-    public boolean stillValid(@Nonnull PlayerEntity playerIn) {
+    public boolean stillValid(@Nonnull Player playerIn) {
         return true;
     }
 
     @Nonnull
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
 
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
-            EquipmentSlotType entityequipmentslot = MobEntity.getEquipmentSlotForItem(itemstack);
+            EquipmentSlot entityequipmentslot = Mob.getEquipmentSlotForItem(itemstack);
             if (index == 0) {
                 if (!this.moveItemStackTo(itemstack1, 9, 45, true)) {
                     return ItemStack.EMPTY;
@@ -206,7 +206,7 @@ public class AccessoriesContainer extends PlayerContainer
                 if (!this.moveItemStackTo(itemstack1, 9, 45, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (entityequipmentslot.getType() == EquipmentSlotType.Group.ARMOR && !this.slots.get(8 - entityequipmentslot.getIndex()).hasItem()) {
+            } else if (entityequipmentslot.getType() == EquipmentSlot.Type.ARMOR && !this.slots.get(8 - entityequipmentslot.getIndex()).hasItem()) {
                 int i = 8 - entityequipmentslot.getIndex();
                 if (!this.moveItemStackTo(itemstack1, i, i + 1, false)) {
                     return ItemStack.EMPTY;
@@ -215,7 +215,7 @@ public class AccessoriesContainer extends PlayerContainer
                 if (!this.moveItemStackTo(itemstack1, 46, this.slots.size(), false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (entityequipmentslot == EquipmentSlotType.OFFHAND && !(this.slots.get(45)).hasItem()) {
+            } else if (entityequipmentslot == EquipmentSlot.OFFHAND && !(this.slots.get(45)).hasItem()) {
                 if (!this.moveItemStackTo(itemstack1, 45, 46, false)) {
                     return ItemStack.EMPTY;
                 }
@@ -251,12 +251,12 @@ public class AccessoriesContainer extends PlayerContainer
 
     @Nonnull
     @Override
-    public RecipeBookCategory getRecipeBookType() {
-        return RecipeBookCategory.CRAFTING;
+    public RecipeBookType getRecipeBookType() {
+        return RecipeBookType.CRAFTING;
     }
 
     @Override
-    public void fillCraftSlotsStackedContents(RecipeItemHelper recipeItemHelper) {
+    public void fillCraftSlotsStackedContents(StackedContents recipeItemHelper) {
         this.craftMatrix.fillStackedContents(recipeItemHelper);
     }
 
@@ -267,7 +267,7 @@ public class AccessoriesContainer extends PlayerContainer
     }
 
     @Override
-    public boolean recipeMatches(IRecipe<? super CraftingInventory> iRecipe) {
+    public boolean recipeMatches(Recipe<? super CraftingContainer> iRecipe) {
         return iRecipe.matches(this.craftMatrix, this.player.level);
     }
 

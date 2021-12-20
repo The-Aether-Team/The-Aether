@@ -6,11 +6,11 @@ import com.gildedgames.aether.core.network.packet.server.HittingPacket;
 import com.gildedgames.aether.core.network.packet.server.JumpPacket;
 import com.gildedgames.aether.core.network.packet.server.MovementPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.MovementInput;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.client.player.Input;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.InputUpdateEvent;
+import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
@@ -19,9 +19,9 @@ import org.lwjgl.glfw.GLFW;
 public class AetherPlayerClientListener
 {
     @SubscribeEvent
-    public static void onMove(InputUpdateEvent event) {
+    public static void onMove(MovementInputUpdateEvent event) {
         IAetherPlayer.get(event.getPlayer()).ifPresent((aetherPlayer) -> {
-            MovementInput input = event.getMovementInput();
+            Input input = event.getInput();
             boolean isJumping = input.jumping;
             if (isJumping != aetherPlayer.isJumping()) {
                 AetherPacketHandler.sendToServer(new JumpPacket(event.getPlayer().getId(), isJumping));
@@ -37,7 +37,7 @@ public class AetherPlayerClientListener
 
     @SubscribeEvent
     public static void onClick(InputEvent.MouseInputEvent event) {
-        PlayerEntity player = Minecraft.getInstance().player;
+        Player player = Minecraft.getInstance().player;
         if (player != null) {
             IAetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 boolean isLeftClick = event.getButton() == GLFW.GLFW_MOUSE_BUTTON_1;

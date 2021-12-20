@@ -10,59 +10,59 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.core.api.AetherRankings;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class WhirlwindEntity extends MobEntity {
-    public static final DataParameter<Boolean> IS_EVIL = EntityDataManager.defineId(WhirlwindEntity.class, DataSerializers.BOOLEAN);
-    public static final DataParameter<Integer> COLOR_DATA = EntityDataManager.defineId(WhirlwindEntity.class, DataSerializers.INT);
+public class WhirlwindEntity extends Mob {
+    public static final EntityDataAccessor<Boolean> IS_EVIL = SynchedEntityData.defineId(WhirlwindEntity.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Integer> COLOR_DATA = SynchedEntityData.defineId(WhirlwindEntity.class, EntityDataSerializers.INT);
 
     public int lifeLeft;
     public int actionTimer;
     public float movementAngle;
     public float movementCurve;
 
-    public WhirlwindEntity(EntityType<? extends MobEntity> type, World worldIn) {
+    public WhirlwindEntity(EntityType<? extends Mob> type, Level worldIn) {
         super(type, worldIn);
     }
 
-    public WhirlwindEntity(World worldIn) {
+    public WhirlwindEntity(Level worldIn) {
         this(AetherEntityTypes.WHIRLWIND.get(), worldIn);
     }
 
     @Override
-    public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
         this.movementAngle = this.random.nextFloat() * 360F;
         this.movementCurve = (this.random.nextFloat() - this.random.nextFloat()) * 0.1F;
         this.lifeLeft = this.random.nextInt(512) + 512;
@@ -80,15 +80,15 @@ public class WhirlwindEntity extends MobEntity {
         this.entityData.define(COLOR_DATA, 0xFFFFFF);
     }
 
-    public static boolean canWhirlwindSpawn(EntityType<? extends WhirlwindEntity> typeIn, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
+    public static boolean canWhirlwindSpawn(EntityType<? extends WhirlwindEntity> typeIn, LevelAccessor worldIn, MobSpawnType reason, BlockPos pos, Random randomIn) {
         return randomIn.nextInt(450) == 0
                 && worldIn.getBlockState(pos.below()).getBlock() == AetherBlocks.AETHER_GRASS_BLOCK.get()
                 && worldIn.getMaxLocalRawBrightness(pos) > 8
-                && MobEntity.checkMobSpawnRules(typeIn, worldIn, reason, pos, randomIn);
+                && Mob.checkMobSpawnRules(typeIn, worldIn, reason, pos, randomIn);
     }
 
-    public static AttributeModifierMap.MutableAttribute createMobAttributes() {
-        return MobEntity.createMobAttributes()
+    public static AttributeSupplier.Builder createMobAttributes() {
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.025D + 0.025D)
                 .add(Attributes.FOLLOW_RANGE, 35.0D);
@@ -112,7 +112,7 @@ public class WhirlwindEntity extends MobEntity {
 
     @Override
     public void aiStep() {
-        PlayerEntity closestPlayer = this.findClosestPlayer();
+        Player closestPlayer = this.findClosestPlayer();
 
         if(this.isEvil()) {
             if(closestPlayer != null && !closestPlayer.hasImpulse) {
@@ -139,19 +139,19 @@ public class WhirlwindEntity extends MobEntity {
 
             if(this.actionTimer >= 128) {
                 if(this.isEvil()) {
-                    CreeperEntity entitycreeper = new CreeperEntity(EntityType.CREEPER, this.level);
+                    Creeper entitycreeper = new Creeper(EntityType.CREEPER, this.level);
 
                     entitycreeper.moveTo(this.getX(), this.getY() + 0.5D, this.getZ(), this.random.nextFloat() * 360F, 0.0F);
                     entitycreeper.setDeltaMovement((double)(this.random.nextFloat() - this.random.nextFloat()) * 0.125D, entitycreeper.getDeltaMovement().y, (double)(this.random.nextFloat() - this.random.nextFloat()) * 0.125D);
 
                     this.level.addFreshEntity(entitycreeper);
                     this.actionTimer = 0;
-                    this.level.playSound(null, this.blockPosition(), SoundEvents.ITEM_PICKUP, SoundCategory.HOSTILE, 0.5F, 1.0F);
+                    this.level.playSound(null, this.blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.HOSTILE, 0.5F, 1.0F);
                 }
                 else if (this.random.nextInt(4) == 0) {
                     this.spawnAtLocation(this.getRandomDrop(), 1);
                     this.actionTimer = 0;
-                    this.level.playSound(null, this.blockPosition(), SoundEvents.ITEM_PICKUP, SoundCategory.HOSTILE, 0.5F, 1.0F);
+                    this.level.playSound(null, this.blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.HOSTILE, 0.5F, 1.0F);
                 }
             }
         }
@@ -192,7 +192,7 @@ public class WhirlwindEntity extends MobEntity {
                     if(!this.isEvil()) {
                         this.lifeLeft /= 2;
                         this.setEvil(true);
-                        this.level.playSound(null, this.blockPosition(), SoundEvents.FIRE_EXTINGUISH, SoundCategory.HOSTILE, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F,1.0F);
+                        this.level.playSound(null, this.blockPosition(), SoundEvents.FIRE_EXTINGUISH, SoundSource.HOSTILE, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F,1.0F);
                     }
                 }
             }
@@ -206,11 +206,11 @@ public class WhirlwindEntity extends MobEntity {
             }
 
             if (this.level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING) && !level.isClientSide) {
-                int i2 = (MathHelper.floor(this.getX()) - 1) + this.random.nextInt(3);
-                int j2 = MathHelper.floor(this.getY()) + this.random.nextInt(5);
-                int k2 = (MathHelper.floor(this.getZ()) - 1) + this.random.nextInt(3);
+                int i2 = (Mth.floor(this.getX()) - 1) + this.random.nextInt(3);
+                int j2 = Mth.floor(this.getY()) + this.random.nextInt(5);
+                int k2 = (Mth.floor(this.getZ()) - 1) + this.random.nextInt(3);
 
-                if(this.level.getBlockState(new BlockPos.Mutable().set(i2, j2, k2)).getBlock() instanceof LeavesBlock) {
+                if(this.level.getBlockState(new BlockPos.MutableBlockPos().set(i2, j2, k2)).getBlock() instanceof LeavesBlock) {
                     this.level.destroyBlock(new BlockPos(i2, j2, k2), false);
                 }
             }
@@ -221,12 +221,12 @@ public class WhirlwindEntity extends MobEntity {
      * This method is called when a player right-clicks the entity.
      */
     @Override
-    public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
         if (heldItem.getItem() instanceof DyeItem && !AetherRankings.getRanksOf(player.getUUID()).isEmpty()) {
             this.setColorData(((DyeItem) heldItem.getItem()).getDyeColor().getColorValue());
 
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
         return super.mobInteract(player, hand);
     }
@@ -307,16 +307,16 @@ public class WhirlwindEntity extends MobEntity {
     }
 
     @Override
-    public boolean checkSpawnRules(IWorld worldIn, SpawnReason spawnReasonIn) {
+    public boolean checkSpawnRules(LevelAccessor worldIn, MobSpawnType spawnReasonIn) {
         return this.level.isUnobstructed(this) && this.level.getBlockCollisions(this, this.getBoundingBox()).count() == 0 && !this.level.containsAnyLiquid(this.getBoundingBox());
     }
 
-    public PlayerEntity findClosestPlayer() {
+    public Player findClosestPlayer() {
         return this.level.getNearestPlayer(this, 16D);
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundNBT nbttagcompound) {
+    public void addAdditionalSaveData(CompoundTag nbttagcompound) {
         super.addAdditionalSaveData(nbttagcompound);
         nbttagcompound.putFloat("movementAngle", this.movementAngle);
         nbttagcompound.putFloat("movementCurve", this.movementCurve);
@@ -326,7 +326,7 @@ public class WhirlwindEntity extends MobEntity {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT nbttagcompound) {
+    public void readAdditionalSaveData(CompoundTag nbttagcompound) {
         super.readAdditionalSaveData(nbttagcompound);
         this.movementAngle = nbttagcompound.getFloat("movementAngle");
         this.movementCurve = nbttagcompound.getFloat("movementCurve");

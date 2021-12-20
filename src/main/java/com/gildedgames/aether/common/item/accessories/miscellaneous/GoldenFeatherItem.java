@@ -2,8 +2,10 @@ package com.gildedgames.aether.common.item.accessories.miscellaneous;
 
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.gildedgames.aether.common.item.accessories.abilities.ISlowFallAccessory;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class GoldenFeatherItem extends AccessoryItem implements ISlowFallAccessory
 {

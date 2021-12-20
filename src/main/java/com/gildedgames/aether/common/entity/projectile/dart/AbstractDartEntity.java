@@ -4,35 +4,35 @@ import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.play.server.SChangeGameStatePacket;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.Arrays;
 
-public abstract class AbstractDartEntity extends AbstractArrowEntity
+public abstract class AbstractDartEntity extends AbstractArrow
 {
     private int ticksInAir = 0;
 
-    protected AbstractDartEntity(EntityType<? extends AbstractArrowEntity> type, World worldIn) {
+    protected AbstractDartEntity(EntityType<? extends AbstractArrow> type, Level worldIn) {
         super(type, worldIn);
     }
 
-    public AbstractDartEntity(EntityType<? extends AbstractArrowEntity> type, LivingEntity shooter, World worldIn) {
+    public AbstractDartEntity(EntityType<? extends AbstractArrow> type, LivingEntity shooter, Level worldIn) {
         super(type, shooter, worldIn);
     }
 
@@ -48,10 +48,10 @@ public abstract class AbstractDartEntity extends AbstractArrowEntity
     }
 
     @Override
-    protected void onHitEntity(EntityRayTraceResult result) {
+    protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         float f = (float)this.getDeltaMovement().length();
-        int i = MathHelper.ceil(MathHelper.clamp((double)f * this.getBaseDamage(), 0.0D, 2.147483647E9D));
+        int i = Mth.ceil(Mth.clamp((double)f * this.getBaseDamage(), 0.0D, 2.147483647E9D));
 
         Entity entity1 = this.getOwner();
         DamageSource damagesource;
@@ -79,7 +79,7 @@ public abstract class AbstractDartEntity extends AbstractArrowEntity
                 LivingEntity livingentity = (LivingEntity)entity;
 
                 if (this.knockback > 0) {
-                    Vector3d vector3d = this.getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale((double)this.knockback * 0.6D);
+                    Vec3 vector3d = this.getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale((double)this.knockback * 0.6D);
                     if (vector3d.lengthSqr() > 0.0D) {
                         livingentity.push(vector3d.x, 0.1D, vector3d.z);
                     }
@@ -91,8 +91,8 @@ public abstract class AbstractDartEntity extends AbstractArrowEntity
                 }
 
                 this.doPostHurtEffects(livingentity);
-                if (livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
-                    ((ServerPlayerEntity)entity1).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
+                if (livingentity != entity1 && livingentity instanceof Player && entity1 instanceof ServerPlayer && !this.isSilent()) {
+                    ((ServerPlayer)entity1).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
                 }
             }
 
@@ -104,7 +104,7 @@ public abstract class AbstractDartEntity extends AbstractArrowEntity
             this.yRot += 180.0F;
             this.yRotO += 180.0F;
             if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D) {
-                if (this.pickup == AbstractArrowEntity.PickupStatus.ALLOWED) {
+                if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
                     this.spawnAtLocation(this.getPickupItem(), 0.1F);
                 }
 
@@ -115,7 +115,7 @@ public abstract class AbstractDartEntity extends AbstractArrowEntity
     }
 
     @Override
-    protected void onHitBlock(BlockRayTraceResult result) {
+    protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
         this.setNoGravity(false);
     }
@@ -126,7 +126,7 @@ public abstract class AbstractDartEntity extends AbstractArrowEntity
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

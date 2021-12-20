@@ -1,26 +1,26 @@
 package com.gildedgames.aether.common.item.accessories;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.block.DispenserBlock;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.IEntityRenderer;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.dispenser.IDispenseItemBehavior;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.enchantment.IVanishable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
@@ -33,17 +33,19 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
-public class AccessoryItem extends Item implements ICurioItem, IVanishable
+import net.minecraft.world.item.Item.Properties;
+
+public class AccessoryItem extends Item implements ICurioItem, Vanishable
 {
-    public static final IDispenseItemBehavior DISPENSE_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior() {
-        protected ItemStack execute(IBlockSource p_82487_1_, ItemStack p_82487_2_) {
+    public static final DispenseItemBehavior DISPENSE_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior() {
+        protected ItemStack execute(BlockSource p_82487_1_, ItemStack p_82487_2_) {
             return AccessoryItem.dispenseAccessory(p_82487_1_, p_82487_2_) ? p_82487_2_ : super.execute(p_82487_1_, p_82487_2_);
         }
     };
 
-    public static boolean dispenseAccessory(IBlockSource blockSource, ItemStack stack) {
+    public static boolean dispenseAccessory(BlockSource blockSource, ItemStack stack) {
         BlockPos blockpos = blockSource.getPos().relative(blockSource.getBlockState().getValue(DispenserBlock.FACING));
-        List<LivingEntity> list = blockSource.getLevel().getEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(blockpos), EntityPredicates.NO_SPECTATORS.and(new EntityPredicates.ArmoredMob(stack)));
+        List<LivingEntity> list = blockSource.getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(blockpos), EntitySelector.NO_SPECTATORS.and(new EntitySelector.MobCanWearArmorEntitySelector(stack)));
         if (list.isEmpty()) {
             return false;
         } else {
@@ -89,18 +91,18 @@ public class AccessoryItem extends Item implements ICurioItem, IVanishable
     }
 
     @Override
-    public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
+    public void render(String identifier, int index, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
         EntityRenderer<?> entityRenderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(livingEntity);
-        if (entityRenderer instanceof IEntityRenderer<?, ?>) {
-            EntityModel<?> model = ((IEntityRenderer<?, ?>) entityRenderer).getModel();
-            if (model instanceof BipedModel<?>) {
-                BipedModel<?> bipedModel = (BipedModel<?>) model;
+        if (entityRenderer instanceof RenderLayerParent<?, ?>) {
+            EntityModel<?> model = ((RenderLayerParent<?, ?>) entityRenderer).getModel();
+            if (model instanceof HumanoidModel<?>) {
+                HumanoidModel<?> bipedModel = (HumanoidModel<?>) model;
                 this.renderModel(bipedModel, identifier, index, matrixStack, renderTypeBuffer, light, livingEntity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack);
             }
         }
     }
 
-    public void renderModel(BipedModel<?> model, String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) { }
+    public void renderModel(HumanoidModel<?> model, String identifier, int index, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) { }
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {

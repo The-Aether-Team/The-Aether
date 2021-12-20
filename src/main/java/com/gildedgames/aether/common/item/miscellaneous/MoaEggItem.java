@@ -1,8 +1,10 @@
 package com.gildedgames.aether.common.item.miscellaneous;
 
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class MoaEggItem extends Item
 {

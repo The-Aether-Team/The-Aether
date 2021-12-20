@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.tools.abilities;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public interface IZaniteToolItem
 {

@@ -4,13 +4,13 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
-import net.minecraft.data.BlockTagsProvider;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.ItemTagsProvider;
-import net.minecraft.data.TagsProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.tags.ITag;
+import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.tags.Tag;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -221,7 +221,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.ZANITE_BLOCK.get().asItem());
     }
 
-    protected TagsProvider.Builder<Item> tag(ITag.INamedTag<Item> tag) {
+    protected TagsProvider.TagAppender<Item> tag(Tag.Named<Item> tag) {
         return super.tag(tag);
     }
 }

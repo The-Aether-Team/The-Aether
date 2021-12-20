@@ -4,8 +4,8 @@ import com.gildedgames.aether.client.event.listeners.capability.EternalDayClient
 import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.World;
 
 public class CheckTimePacket extends AetherPacket
@@ -17,17 +17,17 @@ public class CheckTimePacket extends AetherPacket
     }
 
     @Override
-    public void encode(PacketBuffer buf) {
+    public void encode(FriendlyByteBuf buf) {
         buf.writeBoolean(this.shouldCheckTime);
     }
 
-    public static CheckTimePacket decode(PacketBuffer buf) {
+    public static CheckTimePacket decode(FriendlyByteBuf buf) {
         boolean shouldCheckTime = buf.readBoolean();
         return new CheckTimePacket(shouldCheckTime);
     }
 
     @Override
-    public void execute(PlayerEntity playerEntity) {
+    public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             EternalDayClientListener.shouldCheckTime = this.shouldCheckTime;
         }

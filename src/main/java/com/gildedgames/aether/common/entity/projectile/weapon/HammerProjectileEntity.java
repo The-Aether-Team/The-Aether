@@ -1,42 +1,42 @@
 package com.gildedgames.aether.common.entity.projectile.weapon;
 
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.List;
 
-public class HammerProjectileEntity extends ThrowableEntity
+public class HammerProjectileEntity extends ThrowableProjectile
 {
-    private static final DataParameter<Boolean> DATA_JEB_ID = EntityDataManager.defineId(HammerProjectileEntity.class, DataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_JEB_ID = SynchedEntityData.defineId(HammerProjectileEntity.class, EntityDataSerializers.BOOLEAN);
 
     private int ticksInAir = 0;
 
-    public HammerProjectileEntity(EntityType<? extends HammerProjectileEntity> type, World worldIn) {
+    public HammerProjectileEntity(EntityType<? extends HammerProjectileEntity> type, Level worldIn) {
         super(type, worldIn);
     }
 
-    public HammerProjectileEntity(LivingEntity owner, World world) {
+    public HammerProjectileEntity(LivingEntity owner, Level world) {
         super(AetherEntityTypes.HAMMER_PROJECTILE.get(), owner, world);
     }
 
-    public HammerProjectileEntity(World world) {
+    public HammerProjectileEntity(Level world) {
         super(AetherEntityTypes.HAMMER_PROJECTILE.get(), world);
     }
 
@@ -59,17 +59,17 @@ public class HammerProjectileEntity extends ThrowableEntity
         }
     }
 
-    public void shoot(PlayerEntity player, float rotationPitch, float rotationYaw, float v, float velocity, float inaccuracy) {
-        float x = -MathHelper.sin(rotationYaw * ((float)Math.PI / 180F)) * MathHelper.cos(rotationPitch * ((float)Math.PI / 180F));
-        float y = -MathHelper.sin((rotationPitch + v) * ((float)Math.PI / 180F));
-        float z = MathHelper.cos(rotationYaw * ((float)Math.PI / 180F)) * MathHelper.cos(rotationPitch * ((float)Math.PI / 180F));
+    public void shoot(Player player, float rotationPitch, float rotationYaw, float v, float velocity, float inaccuracy) {
+        float x = -Mth.sin(rotationYaw * ((float)Math.PI / 180F)) * Mth.cos(rotationPitch * ((float)Math.PI / 180F));
+        float y = -Mth.sin((rotationPitch + v) * ((float)Math.PI / 180F));
+        float z = Mth.cos(rotationYaw * ((float)Math.PI / 180F)) * Mth.cos(rotationPitch * ((float)Math.PI / 180F));
         this.shoot(x, y, z, velocity, inaccuracy);
-        Vector3d playerMotion = player.getDeltaMovement();
+        Vec3 playerMotion = player.getDeltaMovement();
         this.setDeltaMovement(this.getDeltaMovement().add(playerMotion.x, player.isOnGround() ? 0.0D : playerMotion.y, playerMotion.z));
     }
 
     @Override
-    protected void onHit(RayTraceResult result) {
+    protected void onHit(HitResult result) {
         super.onHit(result);
         if (!this.level.isClientSide) {
             this.remove();
@@ -85,7 +85,7 @@ public class HammerProjectileEntity extends ThrowableEntity
     }
 
     @Override
-    protected void onHitEntity(EntityRayTraceResult result) {
+    protected void onHitEntity(EntityHitResult result) {
         if (!this.level.isClientSide) {
             Entity target = result.getEntity();
             launchTarget(target);
@@ -93,7 +93,7 @@ public class HammerProjectileEntity extends ThrowableEntity
     }
 
     @Override
-    protected void onHitBlock(BlockRayTraceResult p_230299_1_) {
+    protected void onHitBlock(BlockHitResult p_230299_1_) {
         super.onHitBlock(p_230299_1_);
         if (!this.level.isClientSide) {
             List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate(3.0D));
@@ -126,7 +126,7 @@ public class HammerProjectileEntity extends ThrowableEntity
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

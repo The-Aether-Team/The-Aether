@@ -3,15 +3,15 @@ package com.gildedgames.aether.client.renderer.entity.model;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.google.common.collect.ImmutableList;
 
-import net.minecraft.client.renderer.entity.model.SegmentedModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.model.ListModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class CloudMinionModel extends SegmentedModel<CloudMinionEntity>
+public class CloudMinionModel extends ListModel<CloudMinionEntity>
 {
-    public ModelRenderer main = new ModelRenderer(this);
+    public ModelPart main = new ModelPart(this);
 
     public CloudMinionModel() {
         this.main.texOffs(0, 0).addBox(-4.5F, 14.0F, -4.5F, 9, 9, 9, 0.0F);
@@ -23,7 +23,7 @@ public class CloudMinionModel extends SegmentedModel<CloudMinionEntity>
     }
 
     @Override
-    public Iterable<ModelRenderer> parts() {
+    public Iterable<ModelPart> parts() {
         return ImmutableList.of(this.main);
     }
 

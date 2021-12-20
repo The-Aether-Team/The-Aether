@@ -6,11 +6,11 @@ import com.gildedgames.aether.client.renderer.entity.model.BaseZephyrModel;
 import com.gildedgames.aether.client.renderer.entity.model.OldZephyrModel;
 import com.gildedgames.aether.client.renderer.entity.model.ZephyrModel;
 import com.gildedgames.aether.common.entity.monster.ZephyrEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,7 +24,7 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, BaseZephyrModel>
     private final OldZephyrModel oldModel;
     private final ZephyrTransparencyLayer transparencyLayer;
 
-    public ZephyrRenderer(EntityRendererManager renderManagerIn) {
+    public ZephyrRenderer(EntityRenderDispatcher renderManagerIn) {
         super(renderManagerIn, new ZephyrModel(), 0.5F);
         addLayer(this.transparencyLayer = new ZephyrTransparencyLayer(this));
         this.regularModel = (ZephyrModel) this.model;
@@ -32,7 +32,7 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, BaseZephyrModel>
     }
 
     @Override
-    protected void scale(ZephyrEntity zephyr, MatrixStack matrixStackIn, float partialTickTime) {
+    protected void scale(ZephyrEntity zephyr, PoseStack matrixStackIn, float partialTickTime) {
         float f1 = ((float) zephyr.getAttackCharge() + partialTickTime) / 20.0F;
         if (f1 < 0.0F)
         {

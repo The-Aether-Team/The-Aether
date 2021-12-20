@@ -1,12 +1,12 @@
 package com.gildedgames.aether.core.capability.interfaces;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public interface ICapeEntity extends INBTSerializable<CompoundNBT>
+public interface ICapeEntity extends INBTSerializable<CompoundTag>
 {
     LivingEntity getEntity();
 

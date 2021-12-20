@@ -3,15 +3,15 @@ package com.gildedgames.aether.common.item.food;
 import com.gildedgames.aether.common.registry.AetherFoods;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.core.AetherConfig;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
 
 public class GummySwetItem extends Item
 {
@@ -19,39 +19,39 @@ public class GummySwetItem extends Item
 		super(new Item.Properties().food(AetherFoods.GUMMY_SWET).tab(AetherItemGroups.AETHER_FOOD));
 	}
 
-	public ActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
 		ItemStack itemstack = playerEntity.getItemInHand(hand);
 		if (this.isEdible()) {
 			if (playerEntity.canEat(this.getFoodProperties().canAlwaysEat())) {
 				playerEntity.startUsingItem(hand);
-				return ActionResult.consume(itemstack);
+				return InteractionResultHolder.consume(itemstack);
 			} else {
-				return ActionResult.fail(itemstack);
+				return InteractionResultHolder.fail(itemstack);
 			}
 		} else {
 			if (playerEntity.getHealth() < playerEntity.getMaxHealth() && !playerEntity.isCreative()) {
 				playerEntity.startUsingItem(hand);
-				return ActionResult.consume(itemstack);
+				return InteractionResultHolder.consume(itemstack);
 			} else {
-				return ActionResult.fail(itemstack);
+				return InteractionResultHolder.fail(itemstack);
 			}
 		}
 	}
 
-	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity livingEntity) {
+	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity livingEntity) {
 		if (this.isEdible()) {
 			return livingEntity.eat(world, stack);
 		} else {
 			livingEntity.heal(livingEntity.getMaxHealth());
-			if (livingEntity instanceof PlayerEntity && !((PlayerEntity) livingEntity).abilities.instabuild) {
+			if (livingEntity instanceof Player && !((Player) livingEntity).abilities.instabuild) {
 				stack.shrink(1);
 			}
 			return stack;
 		}
 	}
 
-	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.EAT;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.EAT;
 	}
 
 	public int getUseDuration(ItemStack stack) {

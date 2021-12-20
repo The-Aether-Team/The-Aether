@@ -1,27 +1,27 @@
 package com.gildedgames.aether.common.effect;
 
 import com.gildedgames.aether.common.registry.AetherItems;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InebriationEffect extends Effect
+public class InebriationEffect extends MobEffect
 {
     private int effectDuration;
 
     private double rotationDirection, motionDirection;
 
     public InebriationEffect() {
-        super(EffectType.HARMFUL, 5319035);
+        super(MobEffectCategory.HARMFUL, 5319035);
     }
 
     @Override
@@ -45,9 +45,9 @@ public class InebriationEffect extends Effect
         entityLivingBaseIn.yRot = (float)((double)entityLivingBaseIn.yRot + rotationDirection);
         entityLivingBaseIn.xRot = (float)((double)entityLivingBaseIn.xRot + rotationDirection);
 
-        if (entityLivingBaseIn.level instanceof ServerWorld) {
-            ServerWorld world = (ServerWorld) entityLivingBaseIn.level;
-            world.sendParticles(new ItemParticleData(ParticleTypes.ITEM, Items.RED_DYE.getDefaultInstance()),
+        if (entityLivingBaseIn.level instanceof ServerLevel) {
+            ServerLevel world = (ServerLevel) entityLivingBaseIn.level;
+            world.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, Items.RED_DYE.getDefaultInstance()),
                     entityLivingBaseIn.getX(),
                     entityLivingBaseIn.getY() + entityLivingBaseIn.getBbHeight() * 0.8,
                     entityLivingBaseIn.getZ(),

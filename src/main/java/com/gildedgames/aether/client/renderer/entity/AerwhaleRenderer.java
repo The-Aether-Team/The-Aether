@@ -5,15 +5,15 @@ import com.gildedgames.aether.client.renderer.entity.model.AerwhaleModel;
 import com.gildedgames.aether.client.renderer.entity.model.BaseAerwhaleModel;
 import com.gildedgames.aether.client.renderer.entity.model.OldAerwhaleModel;
 import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -26,7 +26,7 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
     private final AerwhaleModel regularModel;
     private final OldAerwhaleModel oldModel;
     
-    public AerwhaleRenderer(EntityRendererManager renderManagerIn) {
+    public AerwhaleRenderer(EntityRenderDispatcher renderManagerIn) {
         super(renderManagerIn, new AerwhaleModel(), 0.5F);
         this.regularModel = (AerwhaleModel) this.model;
         this.oldModel = new OldAerwhaleModel();
@@ -36,7 +36,7 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
     private static Object _staticData;
 
     @Override
-    protected void scale(AerwhaleEntity aerwhale, MatrixStack matrixStackIn, float partialTickTime) {
+    protected void scale(AerwhaleEntity aerwhale, PoseStack matrixStackIn, float partialTickTime) {
         matrixStackIn.translate(0, 1.2, 0);
 //        if (_staticData == null) {
 //        	_staticData = new float[] {aerwhale.rotationYaw, aerwhale.rotationPitch};
@@ -45,9 +45,9 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
 //        float prevRotationYaw = prevRotations[0];
 //        float prevRotationPitch = prevRotations[1];
         
-        Vector3d look = aerwhale.getDeltaMovement().normalize();//getLook(partialTickTime);
+        Vec3 look = aerwhale.getDeltaMovement().normalize();//getLook(partialTickTime);
         
-        float yaw = (float)(MathHelper.atan2(look.z, look.x) * 180.0 / Math.PI);
+        float yaw = (float)(Mth.atan2(look.z, look.x) * 180.0 / Math.PI);
         float pitch = -(float)(Math.atan(look.y) * 73.0);
 //        yaw = MathHelper.lerp(partialTickTime, aerwhale.prevRotationYaw, yaw);
 //        float yaw = MathHelper.lerp(partialTickTime, aerwhale.prevRotationYaw, aerwhale.rotationYaw);
@@ -67,7 +67,7 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
     }
 
     @Override
-    public void render(AerwhaleEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+    public void render(AerwhaleEntity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
     	super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
     }
     

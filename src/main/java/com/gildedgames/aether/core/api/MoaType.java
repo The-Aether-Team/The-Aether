@@ -6,17 +6,17 @@ import javax.annotation.Nullable;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class MoaType extends ForgeRegistryEntry<MoaType> {
 	private static final ResourceLocation DEFAULT_SADDLE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/saddle.png");
 	
 	private final int hexColor;
-	private final ItemGroup group;
+	private final CreativeModeTab group;
 	private final int maxJumps;
 	private final float moaSpeed;
 	private ResourceLocation texture;
@@ -26,7 +26,7 @@ public class MoaType extends ForgeRegistryEntry<MoaType> {
 		this(propertiesIn.hexColor, propertiesIn.group, propertiesIn.maxJumps, propertiesIn.moaSpeed, propertiesIn.texture, propertiesIn.saddleTexture);
 	}
 	
-	protected MoaType(int hexColor, ItemGroup group, int maxJumps, float moaSpeed, ResourceLocation texture, ResourceLocation saddleTexture) {
+	protected MoaType(int hexColor, CreativeModeTab group, int maxJumps, float moaSpeed, ResourceLocation texture, ResourceLocation saddleTexture) {
 		this.hexColor = hexColor;
 		this.group = group;
 		this.maxJumps = maxJumps;
@@ -52,7 +52,7 @@ public class MoaType extends ForgeRegistryEntry<MoaType> {
 	}
 	
 	@Nullable 
-	public ItemGroup getGroup() {
+	public CreativeModeTab getGroup() {
 		return this.group;
 	}
 	
@@ -75,7 +75,7 @@ public class MoaType extends ForgeRegistryEntry<MoaType> {
 	
 	public static class Properties {
 		private int hexColor;
-		private ItemGroup group = AetherItemGroups.AETHER_MISC;
+		private CreativeModeTab group = AetherItemGroups.AETHER_MISC;
 		private int maxJumps = 3;
 		private float moaSpeed = 0.1F;
 		private ResourceLocation texture;
@@ -97,7 +97,7 @@ public class MoaType extends ForgeRegistryEntry<MoaType> {
 			return this;
 		}
 		
-		public MoaType.Properties group(ItemGroup group) {
+		public MoaType.Properties group(CreativeModeTab group) {
 			this.group = group;
 			return this;
 		}

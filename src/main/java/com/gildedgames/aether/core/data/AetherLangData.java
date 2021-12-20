@@ -2,11 +2,11 @@ package com.gildedgames.aether.core.data;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.*;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import java.util.function.Supplier;
@@ -29,7 +29,7 @@ public class AetherLangData extends LanguageProvider
         add("death.attack." + key, name);
     }
 
-    public void addContainerType(Supplier<? extends ContainerType<?>> key, String name) {
+    public void addContainerType(Supplier<? extends MenuType<?>> key, String name) {
         add("container." + key.get().getRegistryName().toString().replace(":", "."), name);
     }
 
@@ -37,7 +37,7 @@ public class AetherLangData extends LanguageProvider
         add("container.aether." + key, name);
     }
 
-    private void addItemGroup(ItemGroup group, String name) {
+    private void addItemGroup(CreativeModeTab group, String name) {
         add(group.getDisplayName().getString(), name);
     }
 

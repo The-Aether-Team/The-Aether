@@ -3,36 +3,40 @@ package com.gildedgames.aether.common.entity.projectile.crystal;
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.BlazeEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Blaze;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.*;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 
 public class CloudCrystalEntity extends AbstractCrystalEntity
 {
-    public CloudCrystalEntity(EntityType<? extends AbstractCrystalEntity> entityType, World world) {
+    public CloudCrystalEntity(EntityType<? extends AbstractCrystalEntity> entityType, Level world) {
         super(entityType, world);
     }
 
-    public CloudCrystalEntity(World world) {
+    public CloudCrystalEntity(Level world) {
         super(AetherEntityTypes.CLOUD_CRYSTAL.get(), world);
     }
 
     @Override
-    protected void onHitEntity(EntityRayTraceResult result) {
+    protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity) {
             LivingEntity livingEntity = (LivingEntity) entity;
-            float bonus = entity instanceof BlazeEntity ? 3.0F : 0.0F;
+            float bonus = entity instanceof Blaze ? 3.0F : 0.0F;
             if (livingEntity.hurt(new IndirectEntityDamageSource("ice_crystal", this, this.getOwner()).setProjectile(), 5.0F + bonus)) {
-                livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, 10));
-                this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundCategory.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
+                this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
                 this.spawnExplosionParticles();
                 this.remove();
             }
@@ -41,8 +45,8 @@ public class CloudCrystalEntity extends AbstractCrystalEntity
 
     @Override
     public void spawnExplosionParticles() {
-        if (this.level instanceof ServerWorld) {
-            ServerWorld world = (ServerWorld) this.level;
+        if (this.level instanceof ServerLevel) {
+            ServerLevel world = (ServerLevel) this.level;
             for (int i = 0; i < 20; i++) {
                 double d0 = (this.random.nextFloat() - 0.5F) * 0.5D;
                 double d1 = (this.random.nextFloat() - 0.5F) * 0.5D;

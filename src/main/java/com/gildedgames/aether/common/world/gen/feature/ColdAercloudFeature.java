@@ -3,22 +3,22 @@ package com.gildedgames.aether.common.world.gen.feature;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.Random;
 
-public class ColdAercloudFeature extends Feature<NoFeatureConfig>
+public class ColdAercloudFeature extends Feature<NoneFeatureConfiguration>
 {
-    public ColdAercloudFeature(Codec<NoFeatureConfig> codec) {
+    public ColdAercloudFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+    public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, NoneFeatureConfiguration config) {
         BlockPos origin = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
         BlockPos position = new BlockPos(origin.getX() + 8, origin.getY(), origin.getZ() + 8);
 

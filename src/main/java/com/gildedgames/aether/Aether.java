@@ -20,24 +20,24 @@ import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.common.registry.AetherFeatures;
 import com.gildedgames.aether.core.data.AetherLootTableData;
-import net.minecraft.block.*;
+import net.minecraft.world.level.block.*;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.dispenser.*;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.projectile.*;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.*;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.DispenserTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.redstone.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.level.entity.*;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.DispenserBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -46,20 +46,42 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.SlotTypePreset;
 
 import java.util.Random;
+
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.SmallFireball;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.TntBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 @Mod(Aether.MODID)
 public class Aether
@@ -164,10 +186,10 @@ public class Aether
 		DispenserBlock.registerBehavior(AetherItems.GOLDEN_DART.get(), new DispenseDartBehavior(AetherItems.GOLDEN_DART));
 		DispenserBlock.registerBehavior(AetherItems.POISON_DART.get(), new DispenseDartBehavior(AetherItems.POISON_DART));
 		DispenserBlock.registerBehavior(AetherItems.ENCHANTED_DART.get(), new DispenseDartBehavior(AetherItems.ENCHANTED_DART));
-		DispenserBlock.registerBehavior(AetherItems.LIGHTNING_KNIFE.get(), new ProjectileDispenseBehavior()
+		DispenserBlock.registerBehavior(AetherItems.LIGHTNING_KNIFE.get(), new AbstractProjectileDispenseBehavior()
 		{
 			@Override
-			protected ProjectileEntity getProjectile(World world, IPosition position, ItemStack stack) {
+			protected Projectile getProjectile(Level world, Position position, ItemStack stack) {
 				return Util.make(new LightningKnifeEntity(world), (projectile) -> {
 					projectile.setPos(position.x(), position.y(), position.z());
 					projectile.setItem(stack);
@@ -179,14 +201,14 @@ public class Aether
 				return 1.5F;
 			}
 		});
-		DispenserBlock.registerBehavior(AetherItems.HAMMER_OF_NOTCH.get(), new ProjectileDispenseBehavior()
+		DispenserBlock.registerBehavior(AetherItems.HAMMER_OF_NOTCH.get(), new AbstractProjectileDispenseBehavior()
 		{
 			@Override
-			public ItemStack execute(IBlockSource blockSource, ItemStack stack) {
-				World world = blockSource.getLevel();
-				IPosition iposition = DispenserBlock.getDispensePosition(blockSource);
+			public ItemStack execute(BlockSource blockSource, ItemStack stack) {
+				Level world = blockSource.getLevel();
+				Position iposition = DispenserBlock.getDispensePosition(blockSource);
 				Direction direction = blockSource.getBlockState().getValue(DispenserBlock.FACING);
-				ProjectileEntity projectileentity = this.getProjectile(world, iposition, stack);
+				Projectile projectileentity = this.getProjectile(world, iposition, stack);
 				projectileentity.shoot(direction.getStepX(), (float) direction.getStepY(), direction.getStepZ(), this.getPower(), this.getUncertainty());
 				world.addFreshEntity(projectileentity);
 				int damage = stack.getDamageValue();
@@ -198,7 +220,7 @@ public class Aether
 			}
 
 			@Override
-			protected ProjectileEntity getProjectile(World world, IPosition position, ItemStack stack) {
+			protected Projectile getProjectile(Level world, Position position, ItemStack stack) {
 				HammerProjectileEntity hammerProjectile = new HammerProjectileEntity(world);
 				hammerProjectile.setPos(position.x(), position.y(), position.z());
 				return hammerProjectile;
@@ -214,9 +236,9 @@ public class Aether
 			private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
 
 			@Override
-			public ItemStack execute(IBlockSource source, ItemStack stack) {
+			public ItemStack execute(BlockSource source, ItemStack stack) {
 				SkyrootWaterBucketItem bucketItem = (SkyrootWaterBucketItem) stack.getItem();
-				World world = source.getLevel();
+				Level world = source.getLevel();
 				BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
 				if (bucketItem.tryPlaceContainedLiquid(null, world, blockpos, null)) {
 					return new ItemStack(AetherItems.SKYROOT_BUCKET.get());
@@ -225,50 +247,50 @@ public class Aether
 				}
 			}
 		});
-		DispenserBlock.registerBehavior(AetherItems.SKYROOT_BUCKET.get(), new DefaultDispenseItemBehavior()
+//		DispenserBlock.registerBehavior(AetherItems.SKYROOT_BUCKET.get(), new DefaultDispenseItemBehavior()
+//		{
+//			private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
+//
+//			@Override
+//			public ItemStack execute(BlockSource source, ItemStack stack) {
+//				LevelAccessor iworld = source.getLevel();
+//				BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+//				BlockState blockstate = iworld.getBlockState(blockpos);
+//				Block block = blockstate.getBlock();
+//				if (block instanceof BucketPickup) {
+//					Fluid fluid = ((BucketPickup)block).takeLiquid(iworld, blockpos, blockstate);
+//					if (!(fluid instanceof FlowingFluid)) {
+//						return super.execute(source, stack);
+//					} else {
+//						if (fluid == Fluids.WATER) {
+//							Item item = AetherItems.SKYROOT_WATER_BUCKET.get();
+//							stack.shrink(1);
+//							if (stack.isEmpty()) {
+//								return new ItemStack(item);
+//							} else {
+//								if (source.<DispenserBlockEntity>getEntity().addItem(new ItemStack(item)) < 0) {
+//									this.defaultDispenseItemBehavior.dispense(source, new ItemStack(item));
+//								}
+//								return stack;
+//							}
+//						} else {
+//							return super.execute(source, stack);
+//						}
+//					}
+//				} else {
+//					return super.execute(source, stack);
+//				}
+//			}
+//		});
+		DispenserBlock.registerBehavior(AetherItems.AMBROSIUM_SHARD.get(), new OptionalDispenseItemBehavior()
 		{
-			private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
-
 			@Override
-			public ItemStack execute(IBlockSource source, ItemStack stack) {
-				IWorld iworld = source.getLevel();
-				BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
-				BlockState blockstate = iworld.getBlockState(blockpos);
-				Block block = blockstate.getBlock();
-				if (block instanceof IBucketPickupHandler) {
-					Fluid fluid = ((IBucketPickupHandler)block).takeLiquid(iworld, blockpos, blockstate);
-					if (!(fluid instanceof FlowingFluid)) {
-						return super.execute(source, stack);
-					} else {
-						if (fluid == Fluids.WATER) {
-							Item item = AetherItems.SKYROOT_WATER_BUCKET.get();
-							stack.shrink(1);
-							if (stack.isEmpty()) {
-								return new ItemStack(item);
-							} else {
-								if (source.<DispenserTileEntity>getEntity().addItem(new ItemStack(item)) < 0) {
-									this.defaultDispenseItemBehavior.dispense(source, new ItemStack(item));
-								}
-								return stack;
-							}
-						} else {
-							return super.execute(source, stack);
-						}
-					}
-				} else {
-					return super.execute(source, stack);
-				}
-			}
-		});
-		DispenserBlock.registerBehavior(AetherItems.AMBROSIUM_SHARD.get(), new OptionalDispenseBehavior()
-		{
-			@Override
-			protected ItemStack execute(IBlockSource source, ItemStack stack) {
+			protected ItemStack execute(BlockSource source, ItemStack stack) {
 				this.setSuccess(true);
-				World world = source.getLevel();
+				Level world = source.getLevel();
 				BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
 				BlockState blockstate = world.getBlockState(blockpos);
-				if (blockstate.getBlock().is(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)) {
+				if (blockstate.is(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)) {
 					world.setBlockAndUpdate(blockpos, AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get().defaultBlockState());
 					stack.shrink(1);
 				} else {
@@ -277,12 +299,12 @@ public class Aether
 				return stack;
 			}
 		});
-		DispenserBlock.registerBehavior(AetherItems.SWET_BALL.get(), new OptionalDispenseBehavior()
+		DispenserBlock.registerBehavior(AetherItems.SWET_BALL.get(), new OptionalDispenseItemBehavior()
 		{
 			@Override
-			protected ItemStack execute(IBlockSource source, ItemStack stack) {
+			protected ItemStack execute(BlockSource source, ItemStack stack) {
 				this.setSuccess(true);
-				World world = source.getLevel();
+				Level world = source.getLevel();
 				BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
 				if (!ISwetBallConversion.convertBlockWithoutContext(world, blockpos, stack)) {
 					this.setSuccess(false);
@@ -290,13 +312,13 @@ public class Aether
 				return stack;
 			}
 		});
-		IDispenseItemBehavior dispenseSpawnEgg = new DefaultDispenseItemBehavior()
+		DispenseItemBehavior dispenseSpawnEgg = new DefaultDispenseItemBehavior()
 		{
 			@Override
-			public ItemStack execute(IBlockSource source, ItemStack stack) {
+			public ItemStack execute(BlockSource source, ItemStack stack) {
 				Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
 				EntityType<?> entityType = ((SpawnEggItem)stack.getItem()).getType(stack.getTag());
-				entityType.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
+				entityType.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
 				stack.shrink(1);
 				return stack;
 			}
@@ -306,18 +328,18 @@ public class Aether
 				DispenserBlock.registerBehavior(item.get(), dispenseSpawnEgg);
 			}
 		}
-		DispenserBlock.registerBehavior(Items.FIRE_CHARGE, new OptionalDispenseBehavior()
+		DispenserBlock.registerBehavior(Items.FIRE_CHARGE, new OptionalDispenseItemBehavior()
 		{
 			@Override
-			public ItemStack execute(IBlockSource source, ItemStack stack) {
-				World world = source.getLevel();
+			public ItemStack execute(BlockSource source, ItemStack stack) {
+				Level world = source.getLevel();
 				if (world.dimension() == AetherDimensions.AETHER_WORLD) {
 					this.setSuccess(false);
 				}
 				else {
 					this.setSuccess(true);
 					Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
-					IPosition iposition = DispenserBlock.getDispensePosition(source);
+					Position iposition = DispenserBlock.getDispensePosition(source);
 					double d0 = iposition.x() + direction.getStepX() * 0.3F;
 					double d1 = iposition.y() + direction.getStepY() * 0.3F;
 					double d2 = iposition.z() + direction.getStepZ() * 0.3F;
@@ -325,22 +347,22 @@ public class Aether
 					double d3 = random.nextGaussian() * 0.05 + direction.getStepX();
 					double d4 = random.nextGaussian() * 0.05 + direction.getStepY();
 					double d5 = random.nextGaussian() * 0.05 + direction.getStepZ();
-					world.addFreshEntity(Util.make(new SmallFireballEntity(world, d0, d1, d2, d3, d4, d5), (entity) -> entity.setItem(stack)));
+					world.addFreshEntity(Util.make(new SmallFireball(world, d0, d1, d2, d3, d4, d5), (entity) -> entity.setItem(stack)));
 					stack.shrink(1);
 				}
 				return stack;
 			}
 
 			@Override
-			protected void playSound(IBlockSource source) {
+			protected void playSound(BlockSource source) {
 				source.getLevel().levelEvent(this.isSuccess()? 1018 : 1001, source.getPos(), 0);
 			}
 		});
-		DispenserBlock.registerBehavior(Items.FLINT_AND_STEEL, new OptionalDispenseBehavior()
+		DispenserBlock.registerBehavior(Items.FLINT_AND_STEEL, new OptionalDispenseItemBehavior()
 		{
 			@Override
-			protected ItemStack execute(IBlockSource source, ItemStack stack) {
-				World world = source.getLevel();
+			protected ItemStack execute(BlockSource source, ItemStack stack) {
+				Level world = source.getLevel();
 				if (world.dimension() == AetherDimensions.AETHER_WORLD) {
 					this.setSuccess(false);
 				}
@@ -349,15 +371,15 @@ public class Aether
 					BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
 					BlockState blockstate = world.getBlockState(blockpos);
 					Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
-					if (AbstractFireBlock.canBePlacedAt(world, blockpos, direction)) {
+					if (BaseFireBlock.canBePlacedAt(world, blockpos, direction)) {
 						world.setBlockAndUpdate(blockpos, Blocks.FIRE.defaultBlockState());
 					}
 					else if (CampfireBlock.canLight(blockstate)) {
 						world.setBlockAndUpdate(blockpos, blockstate.setValue(BlockStateProperties.LIT, true));
 					}
 					else if (blockstate.isFlammable(world, blockpos, source.getBlockState().getValue(DispenserBlock.FACING).getOpposite())) {
-						blockstate.catchFire(world, blockpos, source.getBlockState().getValue(DispenserBlock.FACING).getOpposite(), null);
-						if (blockstate.getBlock() instanceof TNTBlock) {
+						blockstate.onCaughtFire(world, blockpos, source.getBlockState().getValue(DispenserBlock.FACING).getOpposite(), null);
+						if (blockstate.getBlock() instanceof TntBlock) {
 							world.removeBlock(blockpos, false);
 						}
 					}

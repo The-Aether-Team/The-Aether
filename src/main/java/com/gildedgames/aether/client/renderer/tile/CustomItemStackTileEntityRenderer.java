@@ -2,30 +2,32 @@ package com.gildedgames.aether.client.renderer.tile;
 
 import java.util.function.Supplier;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class CustomItemStackTileEntityRenderer extends ItemStackTileEntityRenderer {
-	private final Supplier<? extends TileEntity> tileEntityCreator;
-	private /*final*/ TileEntity tileEntity;
+public class CustomItemStackTileEntityRenderer extends BlockEntityWithoutLevelRenderer {
+	//private final Supplier<? extends BlockEntity> tileEntityCreator;
+	private /*final*/ BlockEntity tileEntity;
 	
-	public CustomItemStackTileEntityRenderer(Supplier<? extends TileEntity> tileEntityCreator) {
-		this.tileEntityCreator = tileEntityCreator;
+	public CustomItemStackTileEntityRenderer(BlockEntityRenderDispatcher p_172550_, EntityModelSet p_172551_) {
+		super(p_172550_, p_172551_);
 	}
 
 	@Override
-	public void renderByItem(ItemStack itemStackIn, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
-		TileEntity tileEntity = this.tileEntity;
-		if (tileEntity == null) {
-			this.tileEntity = tileEntity = tileEntityCreator.get();
-		}
-		TileEntityRendererDispatcher.instance.renderItem(tileEntity, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
+	public void renderByItem(ItemStack itemStackIn, ItemTransforms.TransformType transformType, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+//		BlockEntity tileEntity = this.tileEntity;
+//		if (tileEntity == null) {
+//			this.tileEntity = tileEntity = tileEntityCreator.get();
+//		}
+
+		//BlockEntityRenderDispatcher.instance.renderItem(tileEntity, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 	}
 	
 }
