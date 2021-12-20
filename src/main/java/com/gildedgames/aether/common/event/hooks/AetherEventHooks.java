@@ -6,10 +6,8 @@ import com.gildedgames.aether.common.event.events.AetherBannedItemEvent;
 
 import com.gildedgames.aether.common.event.events.FreezeEvent;
 import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
-import net.minecraft.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Direction;

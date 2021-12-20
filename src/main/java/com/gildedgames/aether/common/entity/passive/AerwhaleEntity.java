@@ -12,7 +12,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.entity.monster.GhastEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionResult;
@@ -45,8 +44,8 @@ public class AerwhaleEntity extends FlyingMob implements Enemy {
 
 	public AerwhaleEntity(Level worldIn) {
 		this(AetherEntityTypes.AERWHALE.get(), worldIn);
-		this.yRot = 360.0F * this.random.nextFloat();
-		this.xRot = 90.0F * this.random.nextFloat() - 45.0F;
+		this.setYRot(360.0F * this.random.nextFloat());
+		this.setXRot(90.0F * this.random.nextFloat() - 45.0F);
 		this.moveControl = new AerwhaleEntity.MoveHelperController(this);
 	}
 	
@@ -84,7 +83,7 @@ public class AerwhaleEntity extends FlyingMob implements Enemy {
 		this.clearFire();
 		
 		if (this.getY() < -64) {
-			this.remove();
+			this.discard();
 		}
 	}
 	
@@ -95,9 +94,10 @@ public class AerwhaleEntity extends FlyingMob implements Enemy {
 			Entity entity = passengers.get(0);
 			if (entity instanceof Player) {
 				Player player = (Player)entity;
-				
-				this.motionYaw = this.yRotO = this.yRot = player.yRot;
-				this.motionPitch = this.xRotO = this.xRot = player.xRot;
+				this.setYRot(player.getYRot());
+				this.motionYaw = this.yRotO = this.getYRot();
+				this.setXRot(player.getXRot());
+				this.motionPitch = this.xRotO = this.getXRot();
 				
 				this.motionYaw = this.yHeadRot = player.yHeadRot;
 				
@@ -106,8 +106,8 @@ public class AerwhaleEntity extends FlyingMob implements Enemy {
 				if (IAetherPlayer.get(player).map(IAetherPlayer::isJumping).orElse(false)) {
 					this.setDeltaMovement(new Vec3(0.0, 0.0, 0.0));
 				} else {
-					double d0 = Math.toRadians(player.yRot - 90.0);
-					double d1 = Math.toRadians(-player.xRot);
+					double d0 = Math.toRadians(player.getYRot() - 90.0);
+					double d1 = Math.toRadians(-player.getXRot());
 					double d2 = Math.cos(d1);
 					this.setDeltaMovement(
 						0.98 * (this.getDeltaMovement().x + 0.05 * Math.cos(d0) * d2),
@@ -126,7 +126,7 @@ public class AerwhaleEntity extends FlyingMob implements Enemy {
 				this.animationSpeedOld = this.animationSpeed;
 				double d0 = this.getX() - this.xo;
 				double d1 = this.getZ() - this.zo;
-				float f4 = 4.0F * Mth.sqrt(d0*d0 + d1*d1);
+				float f4 = 4.0F * Mth.sqrt((float) (d0*d0 + d1*d1));
 				
 				if (f4 > 1.0F) {
 					f4 = 1.0F;
@@ -211,9 +211,9 @@ public class AerwhaleEntity extends FlyingMob implements Enemy {
 							return;
 						}
 
-						this.parentEntity.yRotO = this.parentEntity.yRot;
-						this.parentEntity.yRot = (float)(Mth.atan2(dz, dx) * (180F / (float)Math.PI)) - 90.0F;
-						this.parentEntity.xRot = -(float)(Math.atan(dy) * 73.0);
+						this.parentEntity.yRotO = this.parentEntity.getYRot();
+						this.parentEntity.setYRot((float)(Mth.atan2(dz, dx) * (180F / (float)Math.PI)) - 90.0F);
+						this.parentEntity.setXRot(-(float)(Math.atan(dy) * 73.0));
 					}
 					else {
 						this.operation = MoveControl.Operation.WAIT;

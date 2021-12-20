@@ -20,9 +20,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkHooks;
-
-import java.util.Arrays;
+import net.minecraftforge.network.NetworkHooks;
 
 public abstract class AbstractDartEntity extends AbstractArrow
 {
@@ -43,7 +41,7 @@ public abstract class AbstractDartEntity extends AbstractArrow
             ++this.ticksInAir;
         }
         if (this.ticksInAir > 500) {
-            this.remove();
+            this.discard();
         }
     }
 
@@ -78,8 +76,8 @@ public abstract class AbstractDartEntity extends AbstractArrow
             if (entity instanceof LivingEntity) {
                 LivingEntity livingentity = (LivingEntity)entity;
 
-                if (this.knockback > 0) {
-                    Vec3 vector3d = this.getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale((double)this.knockback * 0.6D);
+                if (this.getKnockback() > 0) {
+                    Vec3 vector3d = this.getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale((double)this.getKnockback() * 0.6D);
                     if (vector3d.lengthSqr() > 0.0D) {
                         livingentity.push(vector3d.x, 0.1D, vector3d.z);
                     }
@@ -97,18 +95,18 @@ public abstract class AbstractDartEntity extends AbstractArrow
             }
 
             this.playSound(this.getDefaultHitGroundSoundEvent(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
-            this.remove();
+            this.discard();
         } else {
             entity.setRemainingFireTicks(k);
             this.setDeltaMovement(this.getDeltaMovement().scale(-0.1D));
-            this.yRot += 180.0F;
+            this.setYRot(this.getYRot() + 180.0F);
             this.yRotO += 180.0F;
             if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D) {
                 if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
                     this.spawnAtLocation(this.getPickupItem(), 0.1F);
                 }
 
-                this.remove();
+                this.discard();
             }
         }
         this.setNoGravity(false);

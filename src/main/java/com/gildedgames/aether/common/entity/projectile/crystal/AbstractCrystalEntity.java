@@ -8,16 +8,15 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.level.block.entity.TheEndGatewayBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraftforge.network.NetworkHooks;
 
 public abstract class AbstractCrystalEntity extends Projectile
 {
@@ -36,7 +35,7 @@ public abstract class AbstractCrystalEntity extends Projectile
         }
         if (this.ticksInAir > this.getLifeSpan()) {
             this.spawnExplosionParticles();
-            this.remove();
+            this.remove(RemovalReason.DISCARDED);
         }
         HitResult raytraceresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
         boolean flag = false;
@@ -47,9 +46,9 @@ public abstract class AbstractCrystalEntity extends Projectile
                 this.handleInsidePortal(blockpos);
                 flag = true;
             } else if (blockstate.is(Blocks.END_GATEWAY)) {
-                BlockEntity tileentity = this.level.getBlockEntity(blockpos);
-                if (tileentity instanceof TheEndGatewayBlockEntity && TheEndGatewayBlockEntity.canEntityTeleport(this)) {
-                    ((TheEndGatewayBlockEntity)tileentity).teleportEntity(this);
+                BlockEntity blockentity = this.level.getBlockEntity(blockpos);
+                if (blockentity instanceof TheEndGatewayBlockEntity && TheEndGatewayBlockEntity.canEntityTeleport(this)) {
+                    TheEndGatewayBlockEntity.teleportEntity(this.level, blockpos, blockstate, this, (TheEndGatewayBlockEntity)blockentity);
                 }
                 flag = true;
             }
@@ -71,7 +70,7 @@ public abstract class AbstractCrystalEntity extends Projectile
     protected void onHitBlock(BlockHitResult p_230299_1_) {
         super.onHitBlock(p_230299_1_);
         this.spawnExplosionParticles();
-        this.remove();
+        this.discard();
     }
 
     public void spawnExplosionParticles() { }

@@ -5,11 +5,10 @@ import com.gildedgames.aether.common.entity.ai.FallingRandomWalkingGoal;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -18,7 +17,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
@@ -33,7 +31,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
@@ -84,17 +81,17 @@ public class AerbunnyEntity extends AetherAnimalEntity
         }
         if (this.getVehicle() instanceof Player) {
             Player player = (Player) this.getVehicle();
-            this.yRot = player.yRot;
-            this.yRotO = this.yRot;
-            this.xRot = player.xRot * 0.5F;
-            this.setRot(this.yRot, this.xRot);
-            this.yBodyRot = this.yRot;
+            this.setYRot(player.getYRot());
+            this.yRotO = this.getYRot();
+            this.setXRot(player.getXRot() * 0.5F);
+            this.setRot(this.getYRot(), this.getXRot());
+            this.yBodyRot = this.getYRot();
             this.yHeadRot = this.yBodyRot;
 
             player.fallDistance = 0.0F;
 
             if (!player.isOnGround() && !player.isFallFlying()) {
-                if (!player.abilities.flying) {
+                if (!player.getAbilities().flying) {
                     player.setDeltaMovement(player.getDeltaMovement().add(0.0D, 0.05D, 0.0D));
                 }
                 IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
@@ -230,7 +227,7 @@ public class AerbunnyEntity extends AetherAnimalEntity
 
     @Nullable
     @Override
-    public AgableMob getBreedOffspring(ServerLevel p_241840_1_, AgableMob p_241840_2_) {
+    public AgeableMob getBreedOffspring(ServerLevel p_241840_1_, AgeableMob p_241840_2_) {
         return AetherEntityTypes.AERBUNNY.get().create(this.level);
     }
 

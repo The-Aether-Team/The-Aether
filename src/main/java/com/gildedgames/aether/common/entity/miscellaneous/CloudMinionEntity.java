@@ -19,7 +19,7 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 
 public class CloudMinionEntity extends FlyingMob
 {
@@ -42,8 +42,8 @@ public class CloudMinionEntity extends FlyingMob
         this.noPhysics = true;
         this.setPositionFromOwner();
         this.setPos(this.targetX, this.targetY, this.targetZ);
-        this.xRot = this.getOwner().xRot;
-        this.yRot = this.getOwner().yRot;
+        this.setXRot(this.getOwner().getXRot());
+        this.setYRot(this.getOwner().getYRot());
     }
 
     protected void defineSynchedData() {
@@ -65,7 +65,7 @@ public class CloudMinionEntity extends FlyingMob
             this.targetY = this.getOwner().getY() + 1.0D;
             this.targetZ = this.getOwner().getZ();
         } else {
-            double yaw = this.getOwner().yRot;
+            double yaw = this.getOwner().getYRot();
             if (this.getSide() == HumanoidArm.RIGHT) {
                 yaw -= 90.0D;
             } else {
@@ -103,7 +103,7 @@ public class CloudMinionEntity extends FlyingMob
         this.setLifeSpan(this.getLifeSpan() - 1);
         if (this.getLifeSpan() <= 0) {
             this.spawnExplosionParticles();
-            this.remove();
+            this.remove(RemovalReason.DISCARDED);
         } else {
             if (this.getOwner() != null) {
                 if (this.getOwner().isAlive()) {
@@ -111,15 +111,15 @@ public class CloudMinionEntity extends FlyingMob
                     if (this.atShoulder()) {
                         Vec3 motion = this.getDeltaMovement();
                         this.setDeltaMovement(motion.multiply(0.65D, 0.65D, 0.65D));
-                        this.yRot = this.getOwner().yRot + (this.getSide() == HumanoidArm.RIGHT ? 1.0F : -1.0F);
-                        this.xRot = this.getOwner().xRot;
+                        this.setYRot(this.getOwner().getYRot() + (this.getSide() == HumanoidArm.RIGHT ? 1.0F : -1.0F));
+                        this.setXRot(this.getOwner().getXRot());
                         this.setYHeadRot(this.getOwner().getYHeadRot());
                         if (this.shouldShoot()) {
                             float offset = this.getSide() == HumanoidArm.RIGHT ? 2.0F : -2.0F;
-                            float rotation = Mth.wrapDegrees(this.yRot + offset);
+                            float rotation = Mth.wrapDegrees(this.getYRot() + offset);
                             CloudCrystalEntity crystal = new CloudCrystalEntity(this.level);
                             crystal.setPos(this.getX(), this.getY(), this.getZ());
-                            crystal.shootFromRotation(this, this.xRot, rotation, 0.0F, 1.0F, 1.0F);
+                            crystal.shootFromRotation(this, this.getXRot(), rotation, 0.0F, 1.0F, 1.0F);
                             crystal.setOwner(this.getOwner());
                             if (!this.level.isClientSide) {
                                 this.level.addFreshEntity(crystal);
@@ -133,10 +133,10 @@ public class CloudMinionEntity extends FlyingMob
                     }
                 } else {
                     this.spawnExplosionParticles();
-                    this.remove();
+                    this.remove(RemovalReason.KILLED);
                 }
             } else {
-                this.remove();
+                this.remove(RemovalReason.DISCARDED);
             }
         }
     }
