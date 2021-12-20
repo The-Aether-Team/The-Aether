@@ -6,7 +6,7 @@ import com.gildedgames.aether.client.renderer.entity.model.CockatriceModel;
 import com.gildedgames.aether.common.entity.monster.CockatriceEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -17,8 +17,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class CockatriceRenderer extends MobRenderer<CockatriceEntity, CockatriceModel>{
     private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/cockatrice/cockatrice.png");
 
-    public CockatriceRenderer(EntityRenderDispatcher rendererManager) {
-        super(rendererManager, new CockatriceModel(), 0.7F);
+    public CockatriceRenderer(EntityRendererProvider.Context context) {
+        super(context, new CockatriceModel(context.bakeLayer(CockatriceModel.LAYER_LOCATION)), 0.7F);
         this.addLayer(new CockatriceLayer<>(this));
     }
 
