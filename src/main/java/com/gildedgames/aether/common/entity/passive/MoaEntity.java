@@ -39,6 +39,7 @@ import java.util.UUID;
 	//Fixing the issues with using isOnGround not properly detecting if the Moa and other MountableEntities are on the ground.
 	//Implement visual HUD for Moa jumps.
 	//Make isSaddleable() and the Nature Staff functionality dependent on isPlayerGrown().
+	//Make MoaEntity and other MountableEntities affected by Slowfall and other movement modifiers.
 
 public class MoaEntity extends MountableEntity
 {
