@@ -58,7 +58,7 @@ public class AccessoryItem extends Item implements ICurioItem, Vanishable
                     IDynamicStackHandler stackHandler = entry.getValue().getStacks();
                     for (int i = 0; i < stackHandler.getSlots(); i++) {
                         String id = entry.getKey();
-                        SlotContext slotContext = new SlotContext(id, livingentity, i);
+                        SlotContext slotContext = new SlotContext(id, livingentity, i, true, true);
                         if (curiosHelper.isStackValid(slotContext, itemStack) && curio.canEquip(id, livingentity) && curio.canEquipFromUse(slotContext)) {
                             ItemStack present = stackHandler.getStackInSlot(i);
                             if (present.isEmpty()) {
@@ -90,7 +90,7 @@ public class AccessoryItem extends Item implements ICurioItem, Vanishable
         return new ICurio.SoundInfo(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GENERIC.get(), 1.0f, 1.0f);
     }
 
-    @Override
+    @Override //TODO: Fix this for 1.18
     public void render(String identifier, int index, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
         EntityRenderer<?> entityRenderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(livingEntity);
         if (entityRenderer instanceof RenderLayerParent<?, ?>) {

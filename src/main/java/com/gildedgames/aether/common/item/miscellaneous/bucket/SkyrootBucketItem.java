@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.item.miscellaneous.bucket;
 
 import com.gildedgames.aether.common.registry.AetherItems;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.entity.player.Player;
@@ -42,8 +43,9 @@ public class SkyrootBucketItem extends Item
             if (worldIn.mayInteract(playerIn, blockpos) && playerIn.mayUseItemAt(blockpos1, direction, itemstack)) {
                 BlockState blockstate1 = worldIn.getBlockState(blockpos);
                 if (blockstate1.getBlock() instanceof BucketPickup) {
-                    Fluid fluid = ((BucketPickup)blockstate1.getBlock()).takeLiquid(worldIn, blockpos, blockstate1);
-                    if (fluid == Fluids.WATER) {
+                    BucketPickup bucketPickup = (BucketPickup)blockstate1.getBlock();
+                    ItemStack itemStack1 = bucketPickup.pickupBlock(worldIn, blockpos, blockstate1);
+                    if (itemStack1.getItem() == Items.WATER_BUCKET) {
                         playerIn.awardStat(Stats.ITEM_USED.get(this));
                         SoundEvent soundevent = SoundEvents.BUCKET_FILL;
                         playerIn.playSound(soundevent, 1.0F, 1.0F);

@@ -37,7 +37,7 @@ public class SkyrootRemedyBucketItem extends Item
                 aetherPlayer.setRemedyMaximum(200);
                 aetherPlayer.setRemedyTimer(200);
             });
-            if (!player.abilities.instabuild) {
+            if (!player.getAbilities().instabuild) {
                 stack.shrink(1);
             }
         }
@@ -56,6 +56,6 @@ public class SkyrootRemedyBucketItem extends Item
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        return ItemUtils.useDrink(worldIn, playerIn, handIn);
+        return ItemUtils.startUsingInstantly(worldIn, playerIn, handIn);
     }
 }
