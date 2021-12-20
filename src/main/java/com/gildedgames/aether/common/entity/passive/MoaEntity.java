@@ -61,7 +61,7 @@ public class MoaEntity extends MountableEntity
 	}
 
 	public MoaEntity(World worldIn) {
-		super(AetherEntityTypes.MOA.get(), worldIn);
+		this(AetherEntityTypes.MOA.get(), worldIn);
 		this.maxUpStep = 1.0F;
 	}
 
