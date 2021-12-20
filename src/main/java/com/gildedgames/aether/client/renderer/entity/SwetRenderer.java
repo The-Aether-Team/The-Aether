@@ -29,7 +29,7 @@ public class SwetRenderer extends MobRenderer<SwetEntity, SlimeModel<SwetEntity>
             scale += (swet.getPassengers().get(0).getBbWidth() + swet.getPassengers().get(0).getBbHeight()) * 0.75F;
         }
 
-        matrixStackIn.scale(width * scale, height * scale, width * scale);
+        matrixStackIn.scale((width * scale) * swet.getScale(), (height * scale) * swet.getScale(), (width * scale) * swet.getScale());
     }
 
     @Override

@@ -43,6 +43,9 @@ public class SwetEntity extends MountableEntity {
     public float swetHeight = 1.0F;
     public float swetWidth = 1.0F;
 
+    public float waterDamageScale = 0.0F;
+    public float oldWaterDamageScale = 0.0F;
+
     public SwetEntity(EntityType<? extends MountableEntity> type, World level) {
         super(type, level);
         this.moveControl = new SwetEntity.MoveHelperController(this);
@@ -90,8 +93,17 @@ public class SwetEntity extends MountableEntity {
 
     @Override
     public void tick() {
+        if (this.oldWaterDamageScale != this.waterDamageScale) {
+            this.refreshDimensions();
+            this.oldWaterDamageScale = waterDamageScale;
+        }
+
         if(this.isInWater()) {
-            this.dissolveSwet();
+            if(waterDamageScale >= 1.0F) {
+                this.dissolveSwet();
+            }else {
+                this.waterDamageScale = this.waterDamageScale + 0.02F;
+            }
         }
 
         super.tick();
@@ -158,7 +170,7 @@ public class SwetEntity extends MountableEntity {
         this.yRotO = this.yRot = entity.yRot;
         this.setDeltaMovement(entity.getDeltaMovement());
 
-        this.setPos(entity.getX(), entity.getY() + 0.01, entity.getZ());
+        this.moveTo(entity.getX(), entity.getY() + (0.01 * (1.0F - waterDamageScale)), entity.getZ());
 
         entity.startRiding(this);
 
@@ -268,15 +280,27 @@ public class SwetEntity extends MountableEntity {
     }
 
     @Override
+    public float getScale() {
+        return super.getScale() - super.getScale() * waterDamageScale;
+    }
+
+    @Override
+    public EntitySize getDimensions(Pose p_213305_1_) {
+        return super.getDimensions(p_213305_1_).scale(getScale());
+    }
+
+    @Override
     public void addAdditionalSaveData(CompoundNBT compound) {
         super.addAdditionalSaveData(compound);
         compound.putByte("SwetType", this.getSwetType());
+        compound.putFloat("WaterDamageScale", waterDamageScale);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundNBT compound) {
         super.readAdditionalSaveData(compound);
         this.setSwetType(compound.getByte("SwetType"));
+        this.waterDamageScale = compound.getFloat("WaterDamageScale");
     }
 
     @Override
