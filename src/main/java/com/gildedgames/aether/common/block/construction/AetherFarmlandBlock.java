@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.block.construction;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
-import net.minecraft.block.*;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.tags.FluidTags;
@@ -13,8 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
 import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -56,11 +54,11 @@ public class AetherFarmlandBlock extends FarmBlock
     }
 
     @Override
-    public void fallOn(Level worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
+    public void fallOn(Level worldIn, BlockState state, BlockPos pos, Entity entityIn, float fallDistance) {
         if (!worldIn.isClientSide && net.minecraftforge.common.ForgeHooks.onFarmlandTrample(worldIn, pos, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), fallDistance, entityIn)) { // Forge: Move logic to Entity#canTrample
             turnToDirt(worldIn.getBlockState(pos), worldIn, pos);
         }
-        entityIn.causeFallDamage(fallDistance, 1.0F);
+        entityIn.causeFallDamage(fallDistance, 1.0F, DamageSource.FALL);
     }
 
     public static void turnToDirt(BlockState state, Level worldIn, BlockPos pos) {

@@ -6,13 +6,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.ClipContext;
@@ -21,8 +19,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
-
-import net.minecraft.world.item.Item.Properties;
 
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -56,7 +52,7 @@ public class SkyrootWaterBucketItem extends Item
                 BlockPos blockpos2 = canBlockContainFluid(worldIn, blockpos, blockstate) ? blockpos : blockpos1;
                 if (this.tryPlaceContainedLiquid(playerIn, worldIn, blockpos2, blockraytraceresult)) {
                     playerIn.awardStat(Stats.ITEM_USED.get(this));
-                    return InteractionResultHolder.sidedSuccess(!playerIn.abilities.instabuild ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : itemstack, worldIn.isClientSide());
+                    return InteractionResultHolder.sidedSuccess(!playerIn.getAbilities().instabuild ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : itemstack, worldIn.isClientSide());
                 } else {
                     return InteractionResultHolder.fail(itemstack);
                 }

@@ -7,7 +7,6 @@ import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.item.*;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
@@ -68,7 +67,7 @@ public class PigSlayerItem extends SwordItem
 						ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
 						for (ItemEntity drop : event.getDrops()) {
 							ItemStack droppedStack = drop.getItem();
-							if (droppedStack.getItem().is(AetherTags.Items.PIG_DROPS)) {
+							if (droppedStack.getItem().getTags().contains(AetherTags.Items.PIG_DROPS.getName())) {
 								ItemEntity dropEntity = new ItemEntity(entity.level, drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy());
 								dropEntity.setDefaultPickUpDelay();
 								newDrops.add(dropEntity);

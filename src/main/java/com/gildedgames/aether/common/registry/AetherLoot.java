@@ -9,9 +9,6 @@ import com.gildedgames.aether.common.loot.functions.SpawnTNT;
 import com.gildedgames.aether.common.loot.functions.SpawnXP;
 import com.google.common.collect.Sets;
 
-import net.minecraft.loot.*;
-import net.minecraft.loot.conditions.LootConditionManager;
-import net.minecraft.loot.functions.LootFunctionManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
 

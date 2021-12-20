@@ -9,8 +9,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class LifeShardItem extends Item
 {
     public LifeShardItem(Properties properties) {
@@ -24,7 +22,7 @@ public class LifeShardItem extends Item
             IAetherPlayer aetherPlayer = IAetherPlayer.get(playerEntity).orElseThrow(() -> new IllegalStateException("Player " + playerEntity.getName().getContents() + " has no AetherPlayer capability!"));
             if (aetherPlayer.getLifeShardCount() < aetherPlayer.getLifeShardLimit()) {
                 playerEntity.swing(hand);
-                if (!world.isClientSide && !playerEntity.abilities.instabuild) {
+                if (!world.isClientSide && !playerEntity.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
                 aetherPlayer.addToLifeShardCount(1);

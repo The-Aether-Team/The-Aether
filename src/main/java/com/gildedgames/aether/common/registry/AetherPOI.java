@@ -2,9 +2,9 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class AetherPOI
 {

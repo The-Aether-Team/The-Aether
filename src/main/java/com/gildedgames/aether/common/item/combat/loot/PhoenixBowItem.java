@@ -7,7 +7,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.item.*;
 
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;

@@ -25,7 +25,7 @@ public class AetherPortalItem extends Item
         if (player != null) {
             if (createPortalFrame(context.getLevel(), context.getClickedPos().relative(context.getClickedFace()), player.getDirection().getAxis())) {
                 player.swing(context.getHand());
-                if (!player.abilities.instabuild) {
+                if (!player.getAbilities().instabuild) {
                     context.getItemInHand().shrink(1);
                 }
                 return InteractionResult.CONSUME;

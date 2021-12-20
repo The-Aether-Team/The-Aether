@@ -5,7 +5,6 @@ import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.item.Food;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
@@ -43,7 +42,7 @@ public class GummySwetItem extends Item
 			return livingEntity.eat(world, stack);
 		} else {
 			livingEntity.heal(livingEntity.getMaxHealth());
-			if (livingEntity instanceof Player && !((Player) livingEntity).abilities.instabuild) {
+			if (livingEntity instanceof Player && !((Player) livingEntity).getAbilities().instabuild) {
 				stack.shrink(1);
 			}
 			return stack;

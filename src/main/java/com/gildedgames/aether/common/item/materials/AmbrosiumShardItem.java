@@ -7,7 +7,6 @@ import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.item.*;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
@@ -31,10 +30,10 @@ public class AmbrosiumShardItem extends Item
 		Level world = context.getLevel();
 		BlockPos blockpos = context.getClickedPos();
 		BlockState blockstate = world.getBlockState(blockpos);
-		if (blockstate.getBlock().is(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)) {
+		if (blockstate.is(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)) {
 			world.setBlockAndUpdate(blockpos, AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get().defaultBlockState());
 			if (playerentity != null) {
-				if (!playerentity.abilities.instabuild) {
+				if (!playerentity.getAbilities().instabuild) {
 					context.getItemInHand().shrink(1);
 				}
 				return InteractionResult.SUCCESS;

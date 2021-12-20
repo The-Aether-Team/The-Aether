@@ -13,6 +13,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -75,7 +76,7 @@ public class WeaponAbilityListener
                     ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
                     for (ItemEntity drop : event.getDrops()) {
                         ItemStack droppedStack = drop.getItem();
-                        if (!droppedStack.getItem().is(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS)) {
+                        if (!droppedStack.getItem().getTags().contains(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS.getName())) {
                             ItemEntity dropEntity = new ItemEntity(entity.level, drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy());
                             dropEntity.setDefaultPickUpDelay();
                             newDrops.add(dropEntity);
@@ -93,10 +94,10 @@ public class WeaponAbilityListener
     }
 
     @SubscribeEvent
-    public static void onArrowHit(ProjectileImpactEvent.Arrow event) {
-        if (event.getRayTraceResult().getType() == HitResult.Type.ENTITY) {
+    public static void onArrowHit(ProjectileImpactEvent event) {
+        if (event.getRayTraceResult().getType() == HitResult.Type.ENTITY && event.getProjectile() instanceof AbstractArrow) {
             Entity impactedEntity = ((EntityHitResult) event.getRayTraceResult()).getEntity();
-            IPhoenixArrow.get(event.getArrow()).ifPresent(phoenixArrow -> {
+            IPhoenixArrow.get((AbstractArrow) event.getProjectile()).ifPresent(phoenixArrow -> {
                 if (phoenixArrow.isPhoenixArrow() && phoenixArrow.getFireTime() > 0) {
                     impactedEntity.setSecondsOnFire(phoenixArrow.getFireTime());
                 }

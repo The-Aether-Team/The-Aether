@@ -6,6 +6,7 @@ import com.gildedgames.aether.common.inventory.container.AccessoriesContainer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -19,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 import top.theillusivec4.curios.Curios;
 import top.theillusivec4.curios.client.gui.RenderButton;
 import top.theillusivec4.curios.common.inventory.CosmeticCurioSlot;
@@ -55,11 +56,11 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesContai
     }
 
     public void updateRenderButtons() {
-        this.buttons.removeIf(widget -> widget instanceof RenderButton);
-        this.children.removeIf(widget -> widget instanceof RenderButton);
+        this.renderables.removeIf(widget -> widget instanceof RenderButton);
+        this.children().removeIf(widget -> widget instanceof RenderButton);
         for (Slot inventorySlot : this.menu.slots) {
             if (inventorySlot instanceof CurioSlot && !(inventorySlot instanceof CosmeticCurioSlot)) {
-                this.addButton(new RenderButton((CurioSlot) inventorySlot, this.getGuiLeft() + inventorySlot.x + 11, this.getGuiTop() + inventorySlot.y - 3, 8, 8, 75, 0, 8,
+                this.addWidget(new RenderButton((CurioSlot) inventorySlot, this.getGuiLeft() + inventorySlot.x + 11, this.getGuiTop() + inventorySlot.y - 3, 8, 8, 75, 0, 8,
                         CURIO_INVENTORY, (button) -> NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new CPacketToggleRender(((CurioSlot) inventorySlot).getIdentifier(), inventorySlot.getSlotIndex()))));
             }
         }
@@ -70,17 +71,17 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesContai
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         boolean isButtonHovered = false;
-        for (AbstractWidget button : this.buttons) {
+        for (Widget button : this.renderables) {
             if (button instanceof RenderButton) {
                 ((RenderButton) button).renderButtonOverlay(matrixStack, mouseX, mouseY, partialTicks);
-                if (button.isHovered()) {
+                if (((RenderButton) button).isHoveredOrFocused()) {
                     isButtonHovered = true;
                 }
             }
         }
         this.isRenderButtonHovered = isButtonHovered;
         LocalPlayer clientPlayer = Minecraft.getInstance().player;
-        if (!this.isRenderButtonHovered && clientPlayer != null && clientPlayer.inventory.getCarried().isEmpty() && this.getSlotUnderMouse() != null) {
+        if (!this.isRenderButtonHovered && clientPlayer != null && clientPlayer.getInventory().getSelected().isEmpty() && this.getSlotUnderMouse() != null) {
             Slot slot = this.getSlotUnderMouse();
             if (slot instanceof CurioSlot && !slot.hasItem()) {
                 CurioSlot slotCurio = (CurioSlot) slot;
@@ -95,7 +96,7 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesContai
         Minecraft mc = this.minecraft;
         if (mc != null) {
             LocalPlayer clientPlayer = mc.player;
-            if (clientPlayer != null && clientPlayer.inventory.getCarried().isEmpty()) {
+            if (clientPlayer != null && clientPlayer.getInventory().getSelected().isEmpty()) {
                 if (this.isRenderButtonHovered) {
                     this.renderTooltip(matrixStack, new TranslatableComponent("gui.curios.toggle"), mouseX, mouseY);
                 } else if (this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
@@ -128,8 +129,8 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesContai
     @Override
     protected void renderBg(@Nonnull PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         if (this.minecraft != null && this.minecraft.player != null) {
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.getMinecraft().getTextureManager().bind(ACCESSORIES_INVENTORY);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            this.getMinecraft().getTextureManager().bindForSetup(ACCESSORIES_INVENTORY);
             int i = this.getGuiLeft();
             int j = this.getGuiTop();
             this.blit(matrixStack, i, j, 0, 0, this.getXSize(), this.getYSize());

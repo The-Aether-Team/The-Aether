@@ -2,7 +2,6 @@ package com.gildedgames.aether.common.advancement;
 
 import com.gildedgames.aether.Aether;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.criterion.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.advancements.critereon.DeserializationContext;

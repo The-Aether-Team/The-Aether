@@ -5,11 +5,8 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.item.*;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.level.Level;
-
-import net.minecraft.world.item.Item.Properties;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -28,7 +25,7 @@ public class SkyrootMilkBucketItem extends MilkBucketItem
             CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
             serverplayerentity.awardStat(Stats.ITEM_USED.get(this));
         }
-        if (entityLiving instanceof Player && !((Player)entityLiving).abilities.instabuild) {
+        if (entityLiving instanceof Player && !((Player)entityLiving).getAbilities().instabuild) {
             stack.shrink(1);
         }
         return stack.isEmpty() ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : stack;

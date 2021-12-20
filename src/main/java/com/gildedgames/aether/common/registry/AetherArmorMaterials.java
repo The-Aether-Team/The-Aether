@@ -1,13 +1,11 @@
 package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import net.minecraft.block.Blocks;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 

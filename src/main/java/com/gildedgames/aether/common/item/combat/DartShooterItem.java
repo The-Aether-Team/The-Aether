@@ -3,11 +3,9 @@ package com.gildedgames.aether.common.item.combat;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.projectile.dart.AbstractDartEntity;
 import com.google.common.collect.ImmutableSet;
-import net.minecraft.enchantment.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.item.*;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
@@ -16,8 +14,6 @@ import net.minecraft.world.level.Level;
 
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-
-import net.minecraft.world.item.Item.Properties;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -41,17 +37,17 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable
     public ItemStack finishUsingItem(ItemStack heldItem, Level worldIn, LivingEntity livingEntity) {
         if (livingEntity instanceof Player) {
             Player playerentity = (Player) livingEntity;
-            boolean ammoExists = playerentity.abilities.instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, heldItem) > 0;
+            boolean ammoExists = playerentity.getAbilities().instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, heldItem) > 0;
             ItemStack ammoItem = playerentity.getProjectile(heldItem);
             if (!ammoItem.isEmpty() || ammoExists) {
                 if (ammoItem.isEmpty()) {
                     ammoItem = new ItemStack(this.dartType.get());
                 }
-                boolean shouldNotPickupAmmo = playerentity.abilities.instabuild || (ammoItem.getItem() instanceof DartItem && ((DartItem) ammoItem.getItem()).isInfinite(heldItem));
+                boolean shouldNotPickupAmmo = playerentity.getAbilities().instabuild || (ammoItem.getItem() instanceof DartItem && ((DartItem) ammoItem.getItem()).isInfinite(heldItem));
                 if (!worldIn.isClientSide) {
                     DartItem dartItem = (DartItem) (ammoItem.getItem() instanceof DartItem ? ammoItem.getItem() : this.dartType.get());
                     AbstractDartEntity abstractDartEntity = dartItem.createDart(worldIn, playerentity);
-                    abstractDartEntity.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot, 0.0F, 1.0F, 1.0F);
+                    abstractDartEntity.shootFromRotation(playerentity, playerentity.getXRot(), playerentity.getYRot(), 0.0F, 1.0F, 1.0F);
                     abstractDartEntity.setNoGravity(true);
 
                     int powerModifier = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, heldItem);
@@ -64,17 +60,17 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable
                         abstractDartEntity.setKnockback(punchModifier);
                     }
 
-                    if (shouldNotPickupAmmo || playerentity.abilities.instabuild) {
+                    if (shouldNotPickupAmmo || playerentity.getAbilities().instabuild) {
                         abstractDartEntity.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                     }
 
                     worldIn.addFreshEntity(abstractDartEntity);
                 }
                 worldIn.playSound(null, playerentity.getX(), playerentity.getY(), playerentity.getZ(), AetherSoundEvents.ITEM_DART_SHOOTER_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
-                if (!shouldNotPickupAmmo && !playerentity.abilities.instabuild) {
+                if (!shouldNotPickupAmmo && !playerentity.getAbilities().instabuild) {
                     ammoItem.shrink(1);
                     if (ammoItem.isEmpty()) {
-                        playerentity.inventory.removeItem(ammoItem);
+                        playerentity.getInventory().removeItem(ammoItem);
                     }
                 }
                 playerentity.awardStat(Stats.ITEM_USED.get(this));
@@ -98,7 +94,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable
         ItemStack heldItem = playerIn.getItemInHand(hand);
         boolean hasAmmo = !playerIn.getProjectile(heldItem).isEmpty();
 
-        if (playerIn.abilities.instabuild || hasAmmo) {
+        if (playerIn.getAbilities().instabuild || hasAmmo) {
             playerIn.startUsingItem(hand);
             return InteractionResultHolder.consume(heldItem);
         } else {

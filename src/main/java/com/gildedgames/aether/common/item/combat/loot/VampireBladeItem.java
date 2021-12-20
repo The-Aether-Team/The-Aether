@@ -3,7 +3,6 @@ package com.gildedgames.aether.common.item.combat.loot;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.item.*;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
