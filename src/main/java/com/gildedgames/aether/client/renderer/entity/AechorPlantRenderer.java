@@ -6,6 +6,7 @@ import com.gildedgames.aether.common.entity.monster.AechorPlantEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,8 +17,8 @@ public class AechorPlantRenderer extends MobRenderer<AechorPlantEntity, AechorPl
 {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aechor_plant/aechor_plant.png");
 
-    public AechorPlantRenderer(EntityRenderDispatcher renderManager) {
-        super(renderManager, new AechorPlantModel(), 0.3F);
+    public AechorPlantRenderer(EntityRendererProvider.Context context) {
+        super(context, new AechorPlantModel(context.bakeLayer(ModelLayers)), 0.3F);
     }
 
     protected void scale(AechorPlantEntity aechorPlant, PoseStack matrixStackIn, float partialTickTime) {

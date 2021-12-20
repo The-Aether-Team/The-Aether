@@ -5,6 +5,7 @@ import com.gildedgames.aether.client.renderer.entity.layers.PhygWingsLayer;
 import com.gildedgames.aether.common.entity.passive.PhygEntity;
 
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.SaddleLayer;
 import net.minecraft.client.model.PigModel;
@@ -17,10 +18,10 @@ public class PhygRenderer extends MobRenderer<PhygEntity, PigModel<PhygEntity>>
 {
 	private static final ResourceLocation PHYG_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/phyg/phyg.png");
 
-	public PhygRenderer(EntityRenderDispatcher renderManagerIn) {
-		super(renderManagerIn, new PigModel<>(0.0F), 0.7F);
+	public PhygRenderer(EntityRendererProvider.Context context) {
+		super(context, new PigModel(), 0.7F);
 		this.addLayer(new PhygWingsLayer(this));
-		this.addLayer(new SaddleLayer<>(this, new PigModel<>(0.5F), new ResourceLocation("textures/entity/pig/pig_saddle.png")));
+		this.addLayer(new SaddleLayer(this, new PigModel(), new ResourceLocation("textures/entity/pig/pig_saddle.png")));
 	}
 
 	@Override
