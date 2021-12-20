@@ -293,7 +293,7 @@ public class SwetEntity extends MountableEntity {
     public void addAdditionalSaveData(CompoundNBT compound) {
         super.addAdditionalSaveData(compound);
         compound.putByte("SwetType", this.getSwetType());
-        compound.putFloat("WaterDamageScale", waterDamageScale);
+        compound.putFloat("WaterDamageScale", this.waterDamageScale);
     }
 
     @Override
@@ -333,11 +333,11 @@ public class SwetEntity extends MountableEntity {
                     chosenDegrees = (float)this.swet.getRandom().nextInt(360);
 
                     if (this.jumps == 0) {
-                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.64999999403953552D, 0));
+                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.64999999403953552D * (1.0F - this.swet.waterDamageScale), 0));
                     } else if (this.jumps == 1) {
-                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.74999998807907104D, 0));
+                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.74999998807907104D * (1.0F - this.swet.waterDamageScale), 0));
                     } else if (this.jumps == 2) {
-                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 1.55D, 0));
+                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 1.55D * (1.0F - this.swet.waterDamageScale), 0));
                     } else {
                         this.swet.getPassengers().get(0).stopRiding();
                         this.swet.dissolveSwet();
@@ -351,11 +351,11 @@ public class SwetEntity extends MountableEntity {
                 if (!this.swet.wasOnGround) {
                     if (this.swet.getJumpTimer() < 6) {
                         if (this.jumps == 1) {
-                            this.moveHorizontal(0.0F, 0.2F, chosenDegrees);
+                            this.moveHorizontal(0.0F, 0.2F * (1.0F - this.swet.waterDamageScale), chosenDegrees);
                         } else if (this.jumps == 2) {
-                            this.moveHorizontal(0.0F, 0.3F, chosenDegrees);
+                            this.moveHorizontal(0.0F, 0.3F * (1.0F - this.swet.waterDamageScale), chosenDegrees);
                         } else if (this.jumps == 3) {
-                            this.moveHorizontal(0.0F, 0.6F, chosenDegrees);
+                            this.moveHorizontal(0.0F, 0.6F * (1.0F - this.swet.waterDamageScale), chosenDegrees);
                         }
                     }
                 }
