@@ -10,7 +10,6 @@ import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.api.registers.MoaType;
 import com.gildedgames.aether.core.registry.AetherMoaTypes;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -26,8 +25,10 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -36,19 +37,22 @@ import java.util.UUID;
 
 public class MoaEntity extends MountableEntity
 {
-	public static final DataParameter<String> DATA_MOA_TYPE_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.STRING);
-	public static final DataParameter<Optional<UUID>> DATA_RIDER_UUID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.OPTIONAL_UUID);
-	public static final DataParameter<Optional<UUID>> DATA_LAST_RIDER_UUID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.OPTIONAL_UUID);
-	public static final DataParameter<Integer> DATA_REMAINING_JUMPS_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.INT);
-	public static final DataParameter<Boolean> DATA_HUNGRY_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
-	public static final DataParameter<Integer> DATA_AMOUNT_FED_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.INT);
-	public static final DataParameter<Boolean> DATA_PLAYER_GROWN_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
-	public static final DataParameter<Boolean> DATA_SITTING_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<String> DATA_MOA_TYPE_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.STRING);
+	private static final DataParameter<Optional<UUID>> DATA_RIDER_UUID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.OPTIONAL_UUID);
+	private static final DataParameter<Optional<UUID>> DATA_LAST_RIDER_UUID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.OPTIONAL_UUID);
+	private static final DataParameter<Integer> DATA_REMAINING_JUMPS_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.INT);
+	private static final DataParameter<Boolean> DATA_HUNGRY_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> DATA_AMOUNT_FED_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.INT);
+	private static final DataParameter<Boolean> DATA_PLAYER_GROWN_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> DATA_SITTING_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
 
 	public float wingRotation;
 	public float prevWingRotation;
 	public float destPos;
 	public float prevDestPos;
+
+	private int jumpCooldown;
+	private int flapCooldown;
 
 	public int eggTime = this.random.nextInt(50) + 775;
 
@@ -65,9 +69,9 @@ public class MoaEntity extends MountableEntity
 	protected void registerGoals() {
 		super.registerGoals();
 		this.goalSelector.addGoal(0, new SwimGoal(this));
-		this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
-		this.goalSelector.addGoal(2, new TemptGoal(this, 1.25, Ingredient.of(AetherItems.NATURE_STAFF.get()), false));
-		this.goalSelector.addGoal(3, new FallingRandomWalkingGoal(this, 1.0));
+		this.goalSelector.addGoal(1, new PanicGoal(this, 0.65F));
+		this.goalSelector.addGoal(2, new TemptGoal(this, 1.0F, Ingredient.of(AetherItems.NATURE_STAFF.get()), false));
+		this.goalSelector.addGoal(3, new FallingRandomWalkingGoal(this, 0.35F));
 		this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 6.0F));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 	}
@@ -103,8 +107,74 @@ public class MoaEntity extends MountableEntity
 		if (this.getDeltaMovement().y < -0.1 && !this.playerTriedToCrouch) {
 			this.setDeltaMovement(this.getDeltaMovement().x, -0.1, this.getDeltaMovement().z);
 		}
+		if (this.isOnGround()) {
+			this.setRemainingJumps(this.getMaxJumps());
+		}
+		if (this.getJumpCooldown() > 0) {
+			this.setJumpCooldown(this.getJumpCooldown() - 1);
+			this.setPlayerJumped(false);
+		} else if (this.getJumpCooldown() == 0) {
+			this.setMountJumping(false);
+		}
+
+		if (!this.level.isClientSide && this.isAlive() && !this.isBaby() && this.getPassengers().isEmpty() && --this.eggTime <= 0) {
+			this.playSound(AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+			this.spawnAtLocation(this.getMoaType().getEgg());
+			this.eggTime = this.random.nextInt(50) + 775;
+		}
 	}
-	
+
+	@Override
+	public void riderTick() {
+		super.riderTick();
+		if (this.getControllingPassenger() instanceof PlayerEntity) {
+			if (this.getFlapCooldown() > 0) {
+				this.setFlapCooldown(this.getFlapCooldown() - 1);
+			} else if (this.getFlapCooldown() == 0) {
+				if (!this.isOnGround()) {
+					this.level.playSound(null, this, AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.random.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.random.nextFloat(), 0.0F, 0.3F));
+					this.setFlapCooldown(15);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void travel(Vector3d vector3d) {
+		if (!this.isSitting()) {
+			super.travel(vector3d);
+		} else { //TODO: Test
+			if (this.isAlive()) {
+				if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof PlayerEntity) {
+					PlayerEntity entity = (PlayerEntity) this.getControllingPassenger();
+					this.yRot = entity.yRot;
+					this.yRotO = this.yRot;
+					this.xRot = entity.xRot * 0.5F;
+					this.setRot(this.yRot, this.xRot);
+					this.yBodyRot = this.yRot;
+					this.yHeadRot = this.yBodyRot;
+					if (this.isControlledByLocalInstance()) {
+						this.travelWithInput(new Vector3d(0, vector3d.y(), 0));
+						this.lerpSteps = 0;
+					} else {
+						this.calculateEntityAnimation(this, false);
+						this.setDeltaMovement(Vector3d.ZERO);
+					}
+				} else {
+					this.travelWithInput(new Vector3d(0, vector3d.y(), 0));
+				}
+			}
+		}
+	}
+
+	@Override
+	public void onJump() {
+		super.onJump();
+		this.setJumpCooldown(10);
+		this.setRemainingJumps(this.getRemainingJumps() - 1);
+		this.setFlapCooldown(0);
+	}
+
 	public MoaType getMoaType() {
 		return AetherMoaTypes.MOA_TYPES.get(this.entityData.get(DATA_MOA_TYPE_ID));
 	}
@@ -171,6 +241,22 @@ public class MoaEntity extends MountableEntity
 		this.entityData.set(DATA_SITTING_ID, isSitting);
 	}
 
+	public int getJumpCooldown() {
+		return this.jumpCooldown;
+	}
+
+	public void setJumpCooldown(int jumpCooldown) {
+		this.jumpCooldown = jumpCooldown;
+	}
+
+	public int getFlapCooldown() {
+		return this.flapCooldown;
+	}
+
+	public void setFlapCooldown(int flapCooldown) {
+		this.flapCooldown = flapCooldown;
+	}
+
 	public int getMaxJumps() {
 		return this.getMoaType().getMaxJumps();
 	}
@@ -204,12 +290,28 @@ public class MoaEntity extends MountableEntity
 		return false;
 	}
 
-	@Override //TODO: This feels too fast.
+	@Override
 	public float getSpeed() {
 		return this.getMoaType().getSpeed();
 	}
 
-	@Override //TODO: This feels too fast.
+	@Override
+	public boolean canJump() {
+		return this.getRemainingJumps() > 0 && this.getJumpCooldown() == 0;
+	}
+
+	@Override
+	public boolean isSaddleable() {
+		return super.isSaddleable();
+				//&& this.isPlayerGrown();
+	}
+
+	@Override
+	protected double getMountJumpStrength() {
+		return this.isOnGround() ? 0.9D : 0.75D;
+	}
+
+	@Override
 	public float getSteeringSpeed() {
 		return this.getMoaType().getSpeed();
 	}
@@ -276,56 +378,12 @@ public class MoaEntity extends MountableEntity
 
 
 
-
-//	protected float jumpPower;
-//	protected boolean mountJumping;
-//
 //	protected int ticksOffGround, ticksUntilFlap, secsUntilFlying, secsUntilWalking, secsUntilHungry, secsUntilEgg;
-//
-//	@Override
-//	public void move(MoverType typeIn, Vector3d pos) {
-//		if (!this.isSitting()) {
-//			super.move(typeIn, pos);
-//		}
-//		else {
-//			super.move(typeIn, new Vector3d(0, pos.y(), 0));
-//		}
-//	}
 //
 //	@SuppressWarnings("unused")
 //	@Override
 //	public void tick() {
 //		super.tick();
-//
-//		if (this.jumping) {
-//			this.push(0.0, 0.05, 0.0);
-//		}
-//
-//		updateWingRotation: {
-//			if (!this.onGround) {
-//				if (this.ticksUntilFlap == 0) {
-//					this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
-//					this.ticksUntilFlap = 8;
-//				}
-//				else {
-//					--this.ticksUntilFlap;
-//				}
-//			}
-//		}
-//
-//		fall: {
-////			boolean blockBeneath = !this.world.isAirBlock(this.getPositionUnderneath());
-//
-//			Vector3d vec3d = this.getDeltaMovement();
-//			if (!this.onGround && vec3d.y < 0.0) {
-//				this.setDeltaMovement(vec3d.multiply(1.0, 0.6, 1.0));
-//			}
-//
-//			if (this.onGround) {
-//				this.setRemainingJumps(this.getMaxJumps());
-//			}
-//		}
-//
 //		if (this.secsUntilHungry > 0) {
 //			if (this.tickCount % 20 == 0) {
 //				--this.secsUntilHungry;
@@ -340,22 +398,6 @@ public class MoaEntity extends MountableEntity
 //				this.level.addParticle(ParticleTypes.ANGRY_VILLAGER, this.getX() + (this.rand.nextDouble() - 0.5) * this.getBbWidth(), this.getY() + 1, this.getZ() + (this.rand.nextDouble() - 0.5) * this.getBbWidth(), 0.0, 0.0, 0.0);
 //			}
 //		}
-//
-//		if (!this.level.isClientSide && !this.isBaby() && this.getPassengers().isEmpty()) {
-//			if (this.secsUntilEgg > 0) {
-//				if (this.tickCount % 20 == 0) {
-//					--this.secsUntilEgg;
-//				}
-//			}
-//			else {
-//				this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-//				this.spawnAtLocation(this.getMoaType().getItemStack());
-//
-//				this.secsUntilEgg = this.getRandomEggTime();
-//			}
-//		}
-//
-//		this.fallDistance = 0.0F;
 //	}
 //
 //	public void resetHunger() {
@@ -425,47 +467,4 @@ public class MoaEntity extends MountableEntity
 //		return super.mobInteract(player, hand);
 //	}
 //
-//
-//	@Override
-//	protected void jumpFromGround() {
-//		if (!this.isSitting() && this.getPassengers().isEmpty()) {
-//			super.jumpFromGround();
-//		}
-//	}
-//
-//
-////	@OnlyIn(Dist.CLIENT)
-////	@Override
-////	public void onPlayerJump(int jumpPowerIn) {
-////		if (this.getRemainingJumps() > 0) {
-////			LogManager.getLogger(MoaEntity.class).debug("Set moa jump power to {}", jumpPowerIn);
-////			if (jumpPowerIn < 0) {
-////				jumpPowerIn = 0;
-////			}
-////
-////			if (jumpPowerIn >= 90) {
-////				this.jumpPower = 1.0F;
-////			}
-////			else {
-////				this.jumpPower = 0.7F + 0.3F * jumpPowerIn / 90.0F;
-////			}
-////		}
-////	}
-//
-//	@Override
-//	public boolean canJump() {
-//		return this.getRemainingJumps() > 0 && super.canJump();
-//	}
-//
-////	@Override
-////	public void handleStartJump(int jumpPower) {
-////		super.handleStartJump(jumpPower);
-////		this.onMountedJump();
-////	}
-////
-////	@Override
-////	public void handleStopJump() {
-////		super.handleStopJump();
-////	}
-	
 }

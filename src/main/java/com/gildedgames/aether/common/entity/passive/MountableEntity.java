@@ -24,9 +24,9 @@ import javax.annotation.Nullable;
 public abstract class MountableEntity extends AetherAnimalEntity implements IRideable, IEquipable
 {
 	private static final DataParameter<Boolean> DATA_SADDLE_ID = EntityDataManager.defineId(MountableEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> DATA_PLAYER_JUMPED_ID = EntityDataManager.defineId(MountableEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> DATA_MOUNT_JUMPING_ID = EntityDataManager.defineId(MountableEntity.class, DataSerializers.BOOLEAN);
 	protected boolean playerTriedToCrouch;
-	protected boolean playerJumped;
-	protected boolean mountJumping;
 
 	protected MountableEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -36,6 +36,8 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(DATA_SADDLE_ID, false);
+		this.entityData.define(DATA_PLAYER_JUMPED_ID, false);
+		this.entityData.define(DATA_MOUNT_JUMPING_ID, false);
 	}
 
 	@Override
@@ -48,8 +50,8 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 		if (this.getControllingPassenger() instanceof PlayerEntity) {
 			PlayerEntity playerEntity = (PlayerEntity) this.getControllingPassenger();
 			IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> {
-				if (aetherPlayer.isJumping() && !this.isMountJumping() && this.onGround) {
-					this.playerJumped = true;
+				if (aetherPlayer.isJumping() && !this.isMountJumping()) {
+					this.setPlayerJumped(true);
 				}
 			});
 			if (playerEntity.level.isClientSide && playerEntity instanceof ClientPlayerEntity && !this.isOnGround()) {
@@ -76,7 +78,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 				if (f1 <= 0.0F) {
 					f1 *= 0.25F;
 				}
-				if (this.playerJumped && !this.isMountJumping() && this.onGround) {
+				if (this.getPlayerJumped() && !this.isMountJumping() && this.canJump()) {
 					double jumpStrength = this.getMountJumpStrength() * (double)this.getBlockJumpFactor();
 					this.setDeltaMovement(this.getDeltaMovement().x(), jumpStrength, this.getDeltaMovement().z());
 					if (this.hasEffect(Effects.JUMP)) {
@@ -84,8 +86,8 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 					}
 					this.setMountJumping(true);
 					this.hasImpulse = true;
-					net.minecraftforge.common.ForgeHooks.onLivingJump(this);
-					this.playerJumped = false;
+					this.setPlayerJumped(false);
+					this.onJump();
 				}
 				this.maxUpStep = 1.0F;
 				this.flyingSpeed = this.getSteeringSpeed() * 0.25F;
@@ -99,7 +101,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 					this.setDeltaMovement(Vector3d.ZERO);
 				}
 				if (this.onGround) {
-					this.playerJumped = false;
+					this.setPlayerJumped(false);
 					this.setMountJumping(false);
 				}
 			} else {
@@ -107,12 +109,17 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 				this.flyingSpeed = 0.02F;
 				this.travelWithInput(vector3d);
 			}
+			this.fallDistance = 0;
 		}
 	}
 
 	@Override
 	public void travelWithInput(Vector3d vector3d) {
 		super.travel(vector3d);
+	}
+
+	public void onJump() {
+		net.minecraftforge.common.ForgeHooks.onLivingJump(this);
 	}
 
 	@Override
@@ -185,11 +192,6 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 	}
 
 	@Override
-	public boolean rideableUnderWater() {
-		return true;
-	}
-
-	@Override
 	public void equipSaddle(@Nullable SoundCategory soundCategory) {
 		this.setSaddled(true);
 		if (soundCategory != null && this.getSaddledSound() != null) {
@@ -211,16 +213,24 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 		this.entityData.set(DATA_SADDLE_ID, isSaddled);
 	}
 
-	public boolean canJump() {
-		return this.isSaddled();
+	public boolean getPlayerJumped() {
+		return this.entityData.get(DATA_PLAYER_JUMPED_ID);
+	}
+
+	public void setPlayerJumped(boolean playerJumped) {
+		this.entityData.set(DATA_PLAYER_JUMPED_ID, playerJumped);
 	}
 
 	public boolean isMountJumping() {
-		return this.mountJumping;
+		return this.entityData.get(DATA_MOUNT_JUMPING_ID);
 	}
 
 	public void setMountJumping(boolean isMountJumping) {
-		this.mountJumping = isMountJumping;
+		this.entityData.set(DATA_MOUNT_JUMPING_ID, isMountJumping);
+	}
+
+	public boolean canJump() {
+		return this.isSaddled() && this.isOnGround();
 	}
 
 	protected double getMountJumpStrength() {
