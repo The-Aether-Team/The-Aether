@@ -23,10 +23,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -34,6 +33,12 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Optional;
 import java.util.UUID;
+
+//TODO:
+	//Raising system, which depends on the Incubator.
+	//Fixing the issues with using isOnGround not properly detecting if the Moa and other MountableEntities are on the ground.
+	//Implement visual HUD for Moa jumps.
+	//Make isSaddleable() and the Nature Staff functionality dependent on isPlayerGrown().
 
 public class MoaEntity extends MountableEntity
 {
@@ -143,7 +148,7 @@ public class MoaEntity extends MountableEntity
 	public void travel(Vector3d vector3d) {
 		if (!this.isSitting()) {
 			super.travel(vector3d);
-		} else { //TODO: Test
+		} else {
 			if (this.isAlive()) {
 				if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof PlayerEntity) {
 					PlayerEntity entity = (PlayerEntity) this.getControllingPassenger();
@@ -172,8 +177,63 @@ public class MoaEntity extends MountableEntity
 		super.onJump();
 		this.setJumpCooldown(10);
 		this.setRemainingJumps(this.getRemainingJumps() - 1);
+		if (!this.isOnGround()) {
+			this.spawnExplosionParticle();
+		}
 		this.setFlapCooldown(0);
 	}
+
+	@Override
+	public ActionResultType mobInteract(PlayerEntity playerEntity, Hand hand) {
+		ItemStack itemstack = playerEntity.getItemInHand(hand);
+		if (itemstack.getItem() == AetherItems.NATURE_STAFF.get()) {
+			itemstack.hurtAndBreak(2, playerEntity, (p) -> p.broadcastBreakEvent(hand));
+			this.setSitting(!this.isSitting());
+			this.spawnExplosionParticle();
+			return ActionResultType.sidedSuccess(this.level.isClientSide);
+		} else {
+			return super.mobInteract(playerEntity, hand);
+		}
+	}
+
+	public void spawnExplosionParticle() {
+		for (int i = 0; i < 20; ++i) {
+			double d0 = this.random.nextGaussian() * 0.02D;
+			double d1 = this.random.nextGaussian() * 0.02D;
+			double d2 = this.random.nextGaussian() * 0.02D;
+			double d3 = 10.0D;
+			double d4 = this.getX() + ((double) this.random.nextFloat() * this.getBbWidth() * 2.0D) - this.getBbWidth() - d0 * d3;
+			double d5 = this.getY() + ((double) this.random.nextFloat() * this.getBbHeight()) - d1 * d3;
+			double d6 = this.getZ() + ((double) this.random.nextFloat() * this.getBbWidth() * 2.0D) - this.getBbWidth() - d2 * d3;
+			this.level.addParticle(ParticleTypes.POOF, d4, d5, d6, d0, d1, d2);
+		}
+	}
+
+	//	@Override
+//	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+//		ItemStack stack = player.getItemInHand(hand);
+//
+//		if (!stack.isEmpty() && this.isPlayerGrown()) {
+//			if (this.isBaby() && this.isHungry()) {
+//				if (this.getAmountFed() < 3 && stack.getItem() == AetherItems.AECHOR_PETAL.get()) {
+//					if (!player.abilities.instabuild) {
+//						stack.shrink(1);
+//					}
+//
+//					this.increaseAmountFed(1);
+//
+//					if (this.getAmountFed() >= 3) {
+//						this.setAge(0);
+//					}
+//					else {
+//						this.resetHunger();
+//					}
+//				}
+//			}
+//		}
+//
+//		return super.mobInteract(player, hand);
+//	}
 
 	public MoaType getMoaType() {
 		return AetherMoaTypes.MOA_TYPES.get(this.entityData.get(DATA_MOA_TYPE_ID));
@@ -303,7 +363,6 @@ public class MoaEntity extends MountableEntity
 	@Override
 	public boolean isSaddleable() {
 		return super.isSaddleable();
-				//&& this.isPlayerGrown();
 	}
 
 	@Override
@@ -430,41 +489,6 @@ public class MoaEntity extends MountableEntity
 //		}
 //	}
 //
-//	@Override
-//	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
-//		ItemStack stack = player.getItemInHand(hand);
-//
-//		if (!stack.isEmpty() && this.isPlayerGrown()) {
-//			if (this.isBaby() && this.isHungry()) {
-//				if (this.getAmountFed() < 3 && stack.getItem() == AetherItems.AECHOR_PETAL.get()) {
-//					if (!player.abilities.instabuild) {
-//						stack.shrink(1);
-//					}
-//
-//					this.increaseAmountFed(1);
-//
-//					if (this.getAmountFed() >= 3) {
-//						this.setAge(0);
-//					}
-//					else {
-//						this.resetHunger();
-//					}
-//				}
-//			}
-//
-////			if (stack.getItem() == AetherItems.NATURE_STAFF) {
-////				stack.damageItem(2, player, p -> p.sendBreakAnimation(hand));
-////
-////				this.setSitting(!this.isSitting());
-////				if (!this.world.isRemote) {
-////					this.spawnExplosionParticle();
-////				}
-////
-////				return true;
-////			}
-//		}
-//
-//		return super.mobInteract(player, hand);
-//	}
+
 //
 }

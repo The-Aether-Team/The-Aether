@@ -34,6 +34,9 @@ public class MoaRenderer extends MobRenderer<MoaEntity, MoaModel>
 	protected void scale(MoaEntity moa, MatrixStack matrixStackIn, float partialTickTime) {
 		float moaScale = moa.isBaby() ? 1.0F : 1.8F;
 		matrixStackIn.scale(moaScale, moaScale, moaScale);
+		if (moa.isSitting()) {
+			matrixStackIn.translate(0, 0.5D, 0);
+		}
 	}
 
 	@Override
