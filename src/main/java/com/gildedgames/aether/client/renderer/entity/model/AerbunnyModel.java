@@ -6,6 +6,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -27,57 +29,37 @@ public class AerbunnyModel extends EntityModel<AerbunnyEntity>
     public ModelPart leftBackLeg;
     public float puffiness;
 
-    public AerbunnyModel() {
-        this.head = new ModelPart(this, 0, 0);
-        this.head.addBox(-2.0F, -1.0F, -4.0F, 4.0F, 4.0F, 6.0F, 0.0F);
-        this.head.setPos(0.0F, 15.0F, -4.0F);
+    public AerbunnyModel(ModelPart model) {
+        this.head = model.getChild("head");
+        this.rightEar = model.getChild("right_ear");
+        this.leftEar = model.getChild("left_ear");
+        this.rightWhiskers = model.getChild("right_whiskers");
+        this.leftWhiskers = model.getChild("left_whiskers");
+        this.body = model.getChild("body");
+        this.puff = model.getChild("puff");
+        this.tail = model.getChild("tail");
+        this.rightFrontLeg = model.getChild("right_front_leg");
+        this.leftFrontLeg = model.getChild("left_front_leg");
+        this.rightBackLeg = model.getChild("right_back_leg");
+        this.leftBackLeg = model.getChild("left_back_leg");
+    }
 
-        this.rightEar = new ModelPart(this, 14, 0);
-        this.rightEar.addBox(-2.0F, -5.0F, -3.0F, 1.0F, 4.0F, 2.0F, 0.0F);
-        this.head.addChild(this.rightEar);
-
-        this.leftEar = new ModelPart(this, 14, 0);
-        this.leftEar.addBox(1.0F, -5.0F, -3.0F, 1.0F, 4.0F, 2.0F, 0.0F);
-        this.head.addChild(this.leftEar);
-
-        this.rightWhiskers = new ModelPart(this, 20, 0);
-        this.rightWhiskers.addBox(-4.0F, 0.0F, -3.0F, 2.0F, 3.0F, 2.0F, 0.0F);
-        this.head.addChild(this.rightWhiskers);
-
-        this.leftWhiskers = new ModelPart(this, 20, 0);
-        this.leftWhiskers.addBox(2.0F, 0.0F, -3.0F, 2.0F, 3.0F, 2.0F, 0.0F);
-        this.head.addChild(this.leftWhiskers);
-
-        this.body = new ModelPart(this, 0, 10);
-        this.body.addBox(-3.0F, -4.0F, -3.0F, 6.0F, 8.0F, 6.0F, 0.0F);
-        this.body.setPos(0.0F, 16.0F, 0.0F);
-
-        this.puff = new ModelPart(this, 29, 0);
-        this.puff.addBox(-3.5F, -3.5F, -3.5F, 7.0F, 7.0F, 7.0F, 0.0F);
-
-        this.tail = new ModelPart(this, 0, 24);
-        this.tail.addBox(-2.0F, 4.0F, -2.0F, 4.0F, 3.0F, 4.0F, 0.0F);
-        this.body.addChild(this.tail);
-
-        this.rightFrontLeg = new ModelPart(this, 24, 16);
-        this.rightFrontLeg.addBox(0.0F, 0.0F, -1.0F, 2.0F, 2.0F, 2.0F);
-        this.rightFrontLeg.setPos(-3.0F, -3.0F, -3.0F);
-        this.body.addChild(this.rightFrontLeg);
-
-        this.leftFrontLeg = new ModelPart(this, 24, 16);
-        this.leftFrontLeg.addBox(-2.0F, 0.0F, -1.0F, 2.0F, 2.0F, 2.0F);
-        this.leftFrontLeg.setPos(3.0F, -3.0F, -3.0F);
-        this.body.addChild(this.leftFrontLeg);
-
-        this.rightBackLeg = new ModelPart(this, 16, 24);
-        this.rightBackLeg.addBox(0.0F, 0.0F, -4.0F, 2.0F, 2.0F, 4.0F);
-        this.rightBackLeg.setPos(-3.0F, 4.0F, -3.0F);
-        this.body.addChild(this.rightBackLeg);
-
-        this.leftBackLeg = new ModelPart(this, 16, 24);
-        this.leftBackLeg.addBox(-2.0F, 0.0F, -4.0F, 2.0F, 2.0F, 4.0F);
-        this.leftBackLeg.setPos(3.0F, 4.0F, -3.0F);
-        this.body.addChild(this.leftBackLeg);
+    public static LayerDefinition createBodyLayer(CubeDeformation cubeDeformation) {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
+        PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -1.0F, -4.0F, 4.0F, 4.0F, 6.0F), PartPose.offset(0.0F, 15.0F, -4.0F));
+        head.addOrReplaceChild("right_ear", CubeListBuilder.create().texOffs(14, 0).addBox(-2.0F, -5.0F, -3.0F, 1.0F, 4.0F, 2.0F), PartPose.ZERO);
+        head.addOrReplaceChild("left_ear", CubeListBuilder.create().texOffs(14, 0).addBox(1.0F, -5.0F, -3.0F, 1.0F, 4.0F, 2.0F), PartPose.ZERO);
+        head.addOrReplaceChild("right_whiskers", CubeListBuilder.create().texOffs(20, 0).addBox(-4.0F, 0.0F, -3.0F, 2.0F, 3.0F, 2.0F), PartPose.ZERO);
+        head.addOrReplaceChild("left_whiskers", CubeListBuilder.create().texOffs(20, 0).addBox(2.0F, 0.0F, -3.0F, 2.0F, 3.0F, 2.0F), PartPose.ZERO);
+        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 10).addBox(-3.0F, -4.0F, -3.0F, 6.0F, 8.0F, 6.0F), PartPose.offset(0.0F, 16.0F, 0.0F));
+        partdefinition.addOrReplaceChild("puff", CubeListBuilder.create().texOffs(29, 0).addBox(-3.5F, -3.5F, -3.5F, 7.0F, 7.0F, 7.0F), PartPose.ZERO);
+        body.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(0, 24).addBox(-2.0F, 4.0F, -2.0F, 4.0F, 3.0F, 4.0F), PartPose.ZERO);
+        body.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(24, 16).addBox(0.0F, 0.0F, -1.0F, 2.0F, 2.0F, 2.0F), PartPose.offset(-3.0F, -3.0F, -3.0F));
+        body.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(24, 16).addBox(-2.0F, 0.0F, -1.0F, 2.0F, 2.0F, 2.0F), PartPose.offset(3.0F, -3.0F, -3.0F));
+        body.addOrReplaceChild("right_back_leg", CubeListBuilder.create().texOffs(16, 24).addBox(0.0F, 0.0F, -4.0F, 2.0F, 2.0F, 4.0F), PartPose.offset(-3.0F, 4.0F, -3.0F));
+        body.addOrReplaceChild("left_back_leg", CubeListBuilder.create().texOffs(16, 24).addBox(-2.0F, 0.0F, -4.0F, 2.0F, 2.0F, 4.0F), PartPose.offset(3.0F, 4.0F, -3.0F));
+        return LayerDefinition.create(meshdefinition, 64, 32);
     }
 
     @Override

@@ -8,7 +8,7 @@ import com.gildedgames.aether.client.renderer.entity.model.ZephyrModel;
 import com.gildedgames.aether.common.entity.monster.ZephyrEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -24,8 +24,8 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, BaseZephyrModel>
     private final OldZephyrModel oldModel;
     private final ZephyrTransparencyLayer transparencyLayer;
 
-    public ZephyrRenderer(EntityRenderDispatcher renderManagerIn) {
-        super(renderManagerIn, new ZephyrModel(), 0.5F);
+    public ZephyrRenderer(EntityRendererProvider.Context renderer) {
+        super(renderer, new ZephyrModel(renderer.bakeLayer()), 0.5F);
         addLayer(this.transparencyLayer = new ZephyrTransparencyLayer(this));
         this.regularModel = (ZephyrModel) this.model;
         this.oldModel = new OldZephyrModel();
