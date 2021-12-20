@@ -36,11 +36,9 @@ public class AetherRendering
 
         colors.register((color, itemProvider) -> itemProvider > 0 ? -1 : ((IDyeableArmorItem) color.getItem()).getColor(color), AetherItems.LEATHER_GLOVES.get());
 
-        //TODO: Once Moa Eggs are fully functional this code can probably be simplified similar to spawn eggs.
-        colors.register((color, itemProvider) -> ((MoaEggItem) color.getItem()).getColor(itemProvider), AetherItems.BLUE_MOA_EGG.get());
-        colors.register((color, itemProvider) -> ((MoaEggItem) color.getItem()).getColor(itemProvider), AetherItems.WHITE_MOA_EGG.get());
-        colors.register((color, itemProvider) -> ((MoaEggItem) color.getItem()).getColor(itemProvider), AetherItems.BLACK_MOA_EGG.get());
-        colors.register((color, itemProvider) -> ((MoaEggItem) color.getItem()).getColor(itemProvider), AetherItems.ORANGE_MOA_EGG.get());
+        for (MoaEggItem moaEggItem : MoaEggItem.moaEggs()) {
+            colors.register((color, itemProvider) -> moaEggItem.getColor(itemProvider), moaEggItem);
+        }
     }
 
     public static void registerBlockRenderLayers() {
