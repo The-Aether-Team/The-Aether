@@ -44,7 +44,7 @@ public class AerbunnyModel extends EntityModel<AerbunnyEntity>
         this.leftBackLeg = model.getChild("left_back_leg");
     }
 
-    public static LayerDefinition createBodyLayer(CubeDeformation cubeDeformation) {
+    public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
         PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -1.0F, -4.0F, 4.0F, 4.0F, 6.0F), PartPose.offset(0.0F, 15.0F, -4.0F));

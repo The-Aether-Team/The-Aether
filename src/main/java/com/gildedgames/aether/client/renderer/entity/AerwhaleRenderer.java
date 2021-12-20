@@ -7,8 +7,10 @@ import com.gildedgames.aether.client.renderer.entity.model.OldAerwhaleModel;
 import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -26,8 +28,8 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
     private final AerwhaleModel regularModel;
     private final OldAerwhaleModel oldModel;
     
-    public AerwhaleRenderer(EntityRenderDispatcher renderManagerIn) {
-        super(renderManagerIn, new AerwhaleModel(), 0.5F);
+    public AerwhaleRenderer(EntityRendererProvider.Context renderer) {
+        super(renderer, new AerwhaleModel(renderer.bakeLayer()), 0.5F);
         this.regularModel = (AerwhaleModel) this.model;
         this.oldModel = new OldAerwhaleModel();
     }

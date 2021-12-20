@@ -6,6 +6,11 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -19,32 +24,23 @@ public class MimicModel extends EntityModel<MimicEntity>
 	public ModelPart rightLeg;
 	public ModelPart knob;
 	
-	public MimicModel() {
-		this.texWidth = 128;
-		this.texHeight = 64;
-		
-		this.upperBody = new ModelPart(this, 0, 10);
-		this.upperBody.setPos(-8.0F, 0.0F, 8.0F);
-		this.upperBody.addBox(0.0F, 0.0F, 0.0F, 16, 6, 16);
-		this.upperBody.xRot = (float) Math.PI;
-		
-		this.lowerBody = new ModelPart(this, 0, 38);
-		this.lowerBody.setPos(-8.0F, 0.0F, -8.0F);
-		this.lowerBody.addBox(0.0F, 0.0F, 0.0F, 16, 10, 16);
-		
-		this.leftLeg = new ModelPart(this, 64, 0);
-		this.leftLeg.setPos(1.5F, 9.0F, 0.0F);
-		this.leftLeg.addBox(0.0F, 0.0F, -3.0F, 6, 15, 6);
-		
-		this.rightLeg = new ModelPart(this, 64, 0);
-		this.rightLeg.mirror = true;
-		this.rightLeg.setPos(-2.5F, 9.0F, 0.0F);
-		this.rightLeg.addBox(-5.1F, 0.0F, -3.0F, 6, 15, 6);
-		
-		this.knob = new ModelPart(this, 0, 0);
-		this.knob.setPos(0.0F, 0.0F, 0.0F);
-		this.knob.addBox(7.0F, -2.0F, 16.0F, 2, 4, 1);
-		this.upperBody.addChild(knob);
+	public MimicModel(ModelPart root) {
+		this.upperBody = root.getChild("upper_body");
+		this.lowerBody = root.getChild("lower_body");
+		this.leftLeg = root.getChild("left_leg");
+		this.rightLeg = root.getChild("right_leg");
+		this.knob = root.getChild("knob");
+	}
+
+	public static LayerDefinition createBodyLayer() {
+		MeshDefinition meshdefinition = new MeshDefinition();
+		PartDefinition partdefinition = meshdefinition.getRoot();
+		PartDefinition upperBody = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(0, 10).addBox(0.0F, 0.0F, 0.0F, 16, 6, 16), PartPose.offsetAndRotation(-8.0F, 0.0F, 8.0F, (float)Math.PI, 0.0F, 0.0F));
+		partdefinition.addOrReplaceChild("lower_body", CubeListBuilder.create().texOffs(0, 38).addBox(0.0F, 0.0F, 0.0F, 16, 10, 16), PartPose.offset(-8.0F, 0.0F, -8.0F));
+		partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(64, 0).addBox(0.0F, 0.0F, -3.0F, 6, 15, 6), PartPose.offset(1.5F, 9.0F, 0.0F));
+		partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(64, 0).addBox(-5.1F, 0.0F, -3.0F, 6, 15, 6).mirror(), PartPose.offset(-2.5F, 9.0F, 0.0F));
+		upperBody.addOrReplaceChild("knob", CubeListBuilder.create().texOffs(0, 0).addBox(7.0F, -2.0F, 16.0F, 2, 4, 1), PartPose.ZERO);
+		return LayerDefinition.create(meshdefinition, 128, 64);
 	}
 
 	@Override

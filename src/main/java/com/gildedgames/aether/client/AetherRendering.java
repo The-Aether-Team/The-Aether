@@ -159,7 +159,7 @@ public class AetherRendering
         event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.AERBUNNY.getId(), "main"), AerbunnyModel::createBodyLayer);
         event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.AECHOR_PLANT.getId(), "main"), AechorPlantModel::createMainLayer);
         event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.COCKATRICE.getId(), "main"), CockatriceModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.ZEPHYR.getId(), "main"), ZephyrModel::createMainLayer);
+        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.ZEPHYR.getId(), "main"), ZephyrModel::createBodyLayer);
         event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.SENTRY.getId(), "main"), SlimeModel::createOuterBodyLayer);
         event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.MIMIC.getId(), "main"), MimicModel::createBodyLayer);
         event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.FIRE_MINION.getId(), "main"), SunSpiritModel::createBodyLayer);
