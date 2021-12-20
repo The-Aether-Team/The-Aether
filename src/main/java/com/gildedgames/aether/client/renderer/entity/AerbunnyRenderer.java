@@ -1,6 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.AerbunnyModel;
 import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -18,7 +19,7 @@ public class AerbunnyRenderer extends MobRenderer<AerbunnyEntity, AerbunnyModel>
     private static final ResourceLocation AERBUNNY_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerbunny/aerbunny.png");
 
     public AerbunnyRenderer(EntityRendererProvider.Context renderer) {
-        super(renderer, new AerbunnyModel(renderer.bakeLayer()), 0.3F);
+        super(renderer, new AerbunnyModel(renderer.bakeLayer(AetherModelLayers.AERBUNNY)), 0.3F);
     }
 
     @Override

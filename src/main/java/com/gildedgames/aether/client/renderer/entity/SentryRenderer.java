@@ -1,11 +1,12 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.SentryLayer;
 import com.gildedgames.aether.common.entity.monster.SentryEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.model.SlimeModel;
 import net.minecraft.resources.ResourceLocation;
@@ -18,8 +19,8 @@ public class SentryRenderer extends MobRenderer<SentryEntity, SlimeModel<SentryE
 	private static final ResourceLocation SENTRY_TEXTURES = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/sentry.png");
 	private static final ResourceLocation SENTRY_TEXTURES_LIT = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/sentry_lit.png");
 	
-	public SentryRenderer(EntityRenderDispatcher rendererManager) {
-		super(rendererManager, new SlimeModel<>(0), 0.3F);
+	public SentryRenderer(EntityRendererProvider.Context renderer) {
+		super(renderer, new SlimeModel<>(renderer.bakeLayer(AetherModelLayers.SENTRY)), 0.3F);
 		this.addLayer(new SentryLayer<>(this));
 	}
 

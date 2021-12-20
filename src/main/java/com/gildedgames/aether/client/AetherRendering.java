@@ -37,6 +37,7 @@ import com.gildedgames.aether.client.renderer.tile.ChestMimicTileEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.CustomItemStackTileEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.SkyrootBedTileEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.TreasureChestTileEntityRenderer;
+import com.gildedgames.aether.common.entity.projectile.ZephyrSnowballEntity;
 import com.gildedgames.aether.common.entity.tile.ChestMimicTileEntity;
 import com.gildedgames.aether.common.entity.tile.SkyrootBedTileEntity;
 import com.gildedgames.aether.common.entity.tile.TreasureChestTileEntity;
@@ -52,6 +53,7 @@ import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -118,12 +120,11 @@ public class AetherRendering
     @OnlyIn(Dist.CLIENT)
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event)
     {
-        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
-        event.registerEntityRenderer(AetherEntityTypes.PHYG_TYPE, m -> PhygRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.FLYING_COW.get(), m -> FlyingCowRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.PHYG_TYPE, PhygRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.FLYING_COW.get(), FlyingCowRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.SHEEPUFF.get(), SheepuffRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.MOA.get(), MoaRenderer::new);
+//        event.registerEntityRenderer(AetherEntityTypes.MOA.get(), MoaRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.AERWHALE.get(), AerwhaleRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.AERBUNNY.get(), AerbunnyRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.WHIRLWIND.get(), WhirlwindRenderer::new);
@@ -139,7 +140,7 @@ public class AetherRendering
         event.registerEntityRenderer(AetherEntityTypes.GOLDEN_PARACHUTE.get(), GoldenParachuteRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.FLOATING_BLOCK.get(), FloatingBlockRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.TNT_PRESENT.get(), TNTPresentRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), m -> new ThrownItemRenderer<>(m, itemRenderer));
+        event.registerEntityRenderer(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.CLOUD_CRYSTAL.get(), IceCrystalRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.GOLDEN_DART.get(), GoldenDartRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.POISON_DART.get(), PoisonDartRenderer::new);
@@ -151,36 +152,25 @@ public class AetherRendering
 
     public static void registerLayerProviders(EntityRenderersEvent.RegisterLayerDefinitions event) {
 
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.PHYG.getId(), "main"), () -> PigModel.createBodyLayer(new CubeDeformation(1.0f)));
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.FLYING_COW.getId(), "main"),  CowModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.SHEEPUFF.getId(), "main"), SheepuffModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.MOA.getId(), "main"), MoaModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.AERWHALE.getId(), "main"), AerwhaleModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.AERBUNNY.getId(), "main"), AerbunnyModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.AECHOR_PLANT.getId(), "main"), AechorPlantModel::createMainLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.COCKATRICE.getId(), "main"), CockatriceModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.ZEPHYR.getId(), "main"), ZephyrModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.SENTRY.getId(), "main"), SlimeModel::createOuterBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.MIMIC.getId(), "main"), MimicModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.FIRE_MINION.getId(), "main"), SunSpiritModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.PHYG, () -> PigModel.createBodyLayer(new CubeDeformation(1.0f)));
+        event.registerLayerDefinition(AetherModelLayers.FLYING_COW,  CowModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.SHEEPUFF, SheepuffModel::createBodyLayer);
+//        event.registerLayerDefinition(AetherModelLayers.MOA, MoaModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.AERWHALE, AerwhaleModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.AERBUNNY, AerbunnyModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.AECHOR_PLANT, AechorPlantModel::createMainLayer);
+        event.registerLayerDefinition(AetherModelLayers.COCKATRICE, CockatriceModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.ZEPHYR, ZephyrModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.SENTRY, SlimeModel::createOuterBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.MIMIC, MimicModel::createBodyLayer);
+//        event.registerLayerDefinition(AetherModelLayers.SLIDER, SliderModel::createBodyLayer);
+//        event.registerLayerDefinition(AetherModelLayers.VALKYRIE, ValkyrieModel::createBodyLayer);
+//        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_QUEEN, ValkyrieModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.SUN_SPIRIT, SunSpiritModel::createBodyLayer);
 
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.CLOUD_MINION.getId(), "main"), CloudMinionModel::createMainLayer);
-//        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.COLD_PARACHUTE.getId(), "main"), Parachu::createBodyLayer);
-//        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.FLOATING_BLOCK.getId(), "main"), CloudMinionModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(AetherEntityTypes.CLOUD_CRYSTAL.getId(), "main"), CloudMinionModel::createMainLayer);
-//        event.registerEntityRenderer(AetherEntityTypes.CLOUD_MINION.get(), CloudMinionRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.COLD_PARACHUTE.get(), ColdParachuteRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.GOLDEN_PARACHUTE.get(), GoldenParachuteRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.FLOATING_BLOCK.get(), FloatingBlockRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.TNT_PRESENT.get(), TNTPresentRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), m -> new ThrownItemRenderer<>(m, itemRenderer));
-//        event.registerEntityRenderer(AetherEntityTypes.CLOUD_CRYSTAL.get(), IceCrystalRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.GOLDEN_DART.get(), GoldenDartRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.POISON_DART.get(), PoisonDartRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.ENCHANTED_DART.get(), EnchantedDartRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.POISON_NEEDLE.get(), PoisonDartRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.LIGHTNING_KNIFE.get(), LightningKnifeRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.HAMMER_PROJECTILE.get(), HammerProjectileRenderer::new);
+        event.registerLayerDefinition(AetherModelLayers.CLOUD_MINION, CloudMinionModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.CLOUD_CRYSTAL, CrystalModel::createMainLayer);
+
 
     }
 

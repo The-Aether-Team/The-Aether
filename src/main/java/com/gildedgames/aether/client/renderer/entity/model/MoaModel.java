@@ -20,7 +20,7 @@ public class MoaModel extends EntityModel<MoaEntity>
 	public ModelPart feather1, feather2, feather3;
 
 	public MoaModel(float scale) {
-		this.head = new ModelPart(this, 0, 13);
+		/*this.head = new ModelPart(this, 0, 13);
 		this.head.addBox(-2.0F, -4.0F, -6.0F, 4, 4, 8, 0.0F);
 		this.head.setPos(0.0F, -8 + 16, -4.0F);
 
@@ -63,7 +63,7 @@ public class MoaModel extends EntityModel<MoaEntity>
 		this.feather3.setPos(0.0F, 1 + 16, 1.0F);
 		this.feather1.y += 0.5F;
 		this.feather2.y += 0.5F;
-		this.feather3.y += 0.5F;
+		this.feather3.y += 0.5F;*/
 	}
 	
 	private boolean renderLegs;

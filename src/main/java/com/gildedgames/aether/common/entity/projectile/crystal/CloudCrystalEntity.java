@@ -38,7 +38,7 @@ public class CloudCrystalEntity extends AbstractCrystalEntity
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
                 this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
                 this.spawnExplosionParticles();
-                this.remove();
+                this.discard();
             }
         }
     }

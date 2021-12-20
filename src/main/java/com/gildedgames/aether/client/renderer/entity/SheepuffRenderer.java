@@ -1,11 +1,12 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.SheepuffWoolLayer;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffModel;
 import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
 
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,8 +17,8 @@ public class SheepuffRenderer extends MobRenderer<SheepuffEntity, SheepuffModel>
 {
     private static final ResourceLocation SHEEPUFF_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff.png");
     
-    public SheepuffRenderer(EntityRenderDispatcher renderManagerIn) {
-        super(renderManagerIn, new SheepuffModel(), 0.7F);
+    public SheepuffRenderer(EntityRendererProvider.Context renderer) {
+        super(renderer, new SheepuffModel(renderer.bakeLayer(AetherModelLayers.SHEEPUFF)), 0.7F);
         this.addLayer(new SheepuffWoolLayer(this));
     }
 

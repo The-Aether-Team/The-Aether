@@ -8,7 +8,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Matrix3f;
@@ -23,8 +23,8 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectileEnt
     public static final ResourceLocation NOTCH_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/notch_wave.png");
     public static final ResourceLocation JEB_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/jeb_wave.png");
 
-    public HammerProjectileRenderer(EntityRenderDispatcher renderManager) {
-        super(renderManager);
+    public HammerProjectileRenderer(EntityRendererProvider.Context renderer) {
+        super(renderer);
         this.shadowRadius = 0.0F;
     }
 

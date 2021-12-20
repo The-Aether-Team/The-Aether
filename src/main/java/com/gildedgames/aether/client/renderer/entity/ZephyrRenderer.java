@@ -1,6 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.ZephyrTransparencyLayer;
 import com.gildedgames.aether.client.renderer.entity.model.BaseZephyrModel;
 import com.gildedgames.aether.client.renderer.entity.model.OldZephyrModel;
@@ -25,7 +26,7 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, BaseZephyrModel>
     private final ZephyrTransparencyLayer transparencyLayer;
 
     public ZephyrRenderer(EntityRendererProvider.Context renderer) {
-        super(renderer, new ZephyrModel(renderer.bakeLayer()), 0.5F);
+        super(renderer, new ZephyrModel(renderer.bakeLayer(AetherModelLayers.ZEPHYR)), 0.5F);
         addLayer(this.transparencyLayer = new ZephyrTransparencyLayer(this));
         this.regularModel = (ZephyrModel) this.model;
         this.oldModel = new OldZephyrModel();

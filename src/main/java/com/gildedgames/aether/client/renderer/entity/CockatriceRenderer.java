@@ -1,6 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.CockatriceLayer;
 import com.gildedgames.aether.client.renderer.entity.model.CockatriceModel;
 import com.gildedgames.aether.common.entity.monster.CockatriceEntity;
@@ -18,7 +19,7 @@ public class CockatriceRenderer extends MobRenderer<CockatriceEntity, Cockatrice
     private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/cockatrice/cockatrice.png");
 
     public CockatriceRenderer(EntityRendererProvider.Context context) {
-        super(context, new CockatriceModel(context.bakeLayer(CockatriceModel.LAYER_LOCATION)), 0.7F);
+        super(context, new CockatriceModel(context.bakeLayer(AetherModelLayers.COCKATRICE)), 0.7F);
         this.addLayer(new CockatriceLayer<>(this));
     }
 
