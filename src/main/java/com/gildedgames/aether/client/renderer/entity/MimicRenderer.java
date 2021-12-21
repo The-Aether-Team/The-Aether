@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.renderer.entity;
 import java.util.Calendar;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.AetherModelLayers;
+import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.MimicModel;
 import com.gildedgames.aether.common.entity.monster.dungeon.MimicEntity;
 
