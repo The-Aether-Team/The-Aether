@@ -21,7 +21,7 @@ public class WorldRendererMixin
      * Code injection to fix Minecraft's issue of turning the horizon black when the player is below y=63.
      * The method checks if the world key is the same as the Aether's, and if it is, it returns 1.
      */
-    @ModifyVariable(at = @At(value = "STORE"), method = "renderSky", ordinal = 0)
+    @ModifyVariable(at = @At(value = "STORE"), method = "renderSky", ordinal = 0) //TODO: Figure out what replaced this.
     private double onRenderSky(double d0) {
         if (this.level.dimension() == AetherDimensions.AETHER_WORLD) {
             return 1.0D;

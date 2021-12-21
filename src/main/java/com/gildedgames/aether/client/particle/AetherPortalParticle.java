@@ -9,14 +9,14 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class AetherPortalParticle extends PortalParticle {
-
+public class AetherPortalParticle extends PortalParticle
+{
 	protected AetherPortalParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
 		
 		float f = this.random.nextFloat() * 0.6F + 0.4F;
 		
-		this.rCol = this.gCol = this.bCol = 1.0F * f;
+		this.rCol = this.gCol = this.bCol = f;
 		this.rCol *= 0.2F;
 		this.gCol *= 0.2F;
 	}
@@ -31,11 +31,9 @@ public class AetherPortalParticle extends PortalParticle {
 		
 		@Override
 		public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-			 AetherPortalParticle portalparticle = new AetherPortalParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
-	         portalparticle.pickSprite(this.spriteSet);
-	         return portalparticle;
+			 AetherPortalParticle portalParticle = new AetherPortalParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
+			 portalParticle.pickSprite(this.spriteSet);
+	         return portalParticle;
 		}
-
 	}
-
 }
