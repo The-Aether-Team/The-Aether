@@ -9,7 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 
 public class OpenAccessoriesPacket extends AetherPacket
 {
@@ -35,11 +35,11 @@ public class OpenAccessoriesPacket extends AetherPacket
             Entity entity = playerEntity.level.getEntity(this.playerID);
             if (entity instanceof ServerPlayer) {
                 ServerPlayer player = (ServerPlayer) entity;
-                ItemStack stack = player.inventory.getCarried();
-                player.inventory.setCarried(ItemStack.EMPTY);
+                ItemStack stack = player.getInventory().getSelected();
+                player.getInventory().setPickedItem(ItemStack.EMPTY);
                 NetworkHooks.openGui(player, new AccessoriesProvider());
                 if (!stack.isEmpty()) {
-                    player.inventory.setCarried(stack);
+                    player.getInventory().setPickedItem(stack);
                     AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(player.getId(), stack), player);
                 }
             }
