@@ -1,6 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity.layers;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.ZephyrRenderer;
 import com.gildedgames.aether.client.renderer.entity.model.BaseZephyrModel;
 import com.gildedgames.aether.client.renderer.entity.model.ZephyrModel;
@@ -8,6 +9,7 @@ import com.gildedgames.aether.common.entity.monster.ZephyrEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -19,11 +21,12 @@ public class ZephyrTransparencyLayer extends RenderLayer<ZephyrEntity, BaseZephy
     private static final ResourceLocation LAYER_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr_layer.png");
 
     private final ZephyrRenderer zephyrRenderer;
-    private final BaseZephyrModel zephyrModel = new ZephyrModel();
+    private final BaseZephyrModel zephyrModel;
 
-    public ZephyrTransparencyLayer(RenderLayerParent<ZephyrEntity, BaseZephyrModel> entityRendererIn) {
+    public ZephyrTransparencyLayer(RenderLayerParent<ZephyrEntity, BaseZephyrModel> entityRendererIn, EntityModelSet modelSet) {
         super(entityRendererIn);
         zephyrRenderer = (ZephyrRenderer) entityRendererIn;
+        zephyrModel= new ZephyrModel(modelSet.bakeLayer(AetherModelLayers.ZEPHYR_TRANSPARENCY));
     }
 
     @Override

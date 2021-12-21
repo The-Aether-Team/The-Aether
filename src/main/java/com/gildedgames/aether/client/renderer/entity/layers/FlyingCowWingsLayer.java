@@ -1,10 +1,12 @@
 package com.gildedgames.aether.client.renderer.entity.layers;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.FlyingCowWingModel;
 import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -16,10 +18,11 @@ import net.minecraft.resources.ResourceLocation;
 public class FlyingCowWingsLayer extends RenderLayer<FlyingCowEntity, CowModel<FlyingCowEntity>>
 {
     private static final ResourceLocation FLYING_COW_WINGS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow_wings.png");
-    private final FlyingCowWingModel wings = new FlyingCowWingModel();
+    private final FlyingCowWingModel wings;
 
-    public FlyingCowWingsLayer(RenderLayerParent<FlyingCowEntity, CowModel<FlyingCowEntity>> entityRendererIn) {
+    public FlyingCowWingsLayer(RenderLayerParent<FlyingCowEntity, CowModel<FlyingCowEntity>> entityRendererIn, EntityModelSet modelSet) {
         super(entityRendererIn);
+        wings = new FlyingCowWingModel(modelSet.bakeLayer(AetherModelLayers.FLYING_COW_WINGS));
     }
 
     @Override

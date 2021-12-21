@@ -4,6 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -18,43 +20,44 @@ public class OldAerwhaleModel extends BaseAerwhaleModel
 	public ModelPart backFinRight;
 	public ModelPart rightFin;
 	
-	public OldAerwhaleModel() {
-		this.texWidth = 192;
-		this.texHeight = 96;
+	public OldAerwhaleModel(ModelPart root) {
+		this.middleBody = root.getChild("middle_body"); // 0 , 0
+//		this.middleBody.setPos(0.0F, -1.0F, 14.0F);
+//		this.middleBody.addBox(-9.0F, -6.0F, 1.0F, 15.0F, 15.0F, 15.0F);
 		
-		this.middleBody = new ModelPart(this, 0, 0);
-		this.middleBody.setPos(0.0F, -1.0F, 14.0F);
-		this.middleBody.addBox(-9.0F, -6.0F, 1.0F, 15.0F, 15.0F, 15.0F);
-		
-		this.head = new ModelPart(this, 60, 0);
-		this.head.setPos(0.0F, 0.0F, 0.0F);
-		this.head.addBox(-12.0F, -9.0F, -14.0F, 21.0F, 18.0F, 30.0F);
-		
-		this.backBody = new ModelPart(this, 0, 30);
-		this.backBody.setPos(0.0F, 5.0F, 38.0F);
-		this.backBody.addBox(-6.0F, -9.0F, -8.5F, 9.0F, 9.0F, 12.0F);
-		
-		this.backFinRight = new ModelPart(this, 0, 51);
-		this.backFinRight.setPos(-5.0F, 2.2F, 38.0F);
-		this.backFinRight.addBox(-4.0F, 0.0F, -6.0F, 24.0F, 3.0F, 12.0F);
-		this.backFinRight.xRot = 0.10471975511965977F;
-		this.backFinRight.yRot = -2.5497515042385164F;
-		
-		this.backFinLeft = new ModelPart(this, 0, 51);
-		this.backFinLeft.setPos(3.0F, 2.2F, 38.0F);
-		this.backFinLeft.addBox(-4.0F, 0.0F, -6.0F, 24.0F, 3.0F, 12.0F);
-		this.backFinLeft.xRot = -0.10471975511965977F;
-		this.backFinLeft.yRot = -0.593411945678072F;
-		
-		this.rightFin = new ModelPart(this, 0, 66);
-		this.rightFin.setPos(-10.0F, 4.0F, 10.0F);
-		this.rightFin.addBox(-12.0F, 1.4F, -6.0F, 12.0F, 3.0F, 6.0F);
-		this.rightFin.yRot = 0.17453292519943295F;
-		
-		this.leftFin = new ModelPart(this, 0, 66);
-		this.leftFin.setPos(7.0F, 4.0F, 10.0F);
-		this.leftFin.addBox(0.0F, 1.4F, -6.0F, 12.0F, 3.0F, 6.0F);
-		this.leftFin.yRot = -0.17453292519943295F;
+		this.head = root.getChild("head");
+		this.backBody = root.getChild("back_body");
+		this.backFinRight = root.getChild("back_fin_right");
+		this.backFinLeft = root.getChild("back_fin_left");
+		this.rightFin = root.getChild("fin_right");
+		this.leftFin = root.getChild("fin_left");
+	}
+
+	public static LayerDefinition createMainLayer() {
+		MeshDefinition meshdefinition = new MeshDefinition();
+		PartDefinition partdefinition = meshdefinition.getRoot();
+		partdefinition.addOrReplaceChild("middle_body", CubeListBuilder.create().texOffs(0, 0)
+				.addBox(-9.0F, -6.0F, 1.0F, 15.0F, 15.0F, 15.0F), PartPose.ZERO);
+
+		partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(60, 0)
+				.addBox(-12.0F, -9.0F, -14.0F, 21.0F, 18.0F, 30.0F), PartPose.ZERO);
+
+		partdefinition.addOrReplaceChild("back_body", CubeListBuilder.create().texOffs(0, 30)
+				.addBox(-6.0F, -9.0F, -8.5F, 9.0F, 9.0F, 12.0F), PartPose.offset(3.0F, 2.2F, 38.0F));
+
+		partdefinition.addOrReplaceChild("back_fin_right", CubeListBuilder.create().texOffs(0, 51)
+				.addBox(-4.0F, 0.0F, -6.0F, 24.0F, 3.0F, 12.0F), PartPose.offsetAndRotation(-5.0F, 2.2F, 38.0F,  -0.10471975511965977F,  -2.5497515042385164F, 0.0F));
+
+		partdefinition.addOrReplaceChild("back_fin_left", CubeListBuilder.create().texOffs(0, 51)
+				.addBox(-4.0F, 0.0F, -6.0F, 24.0F, 3.0F, 12.0F), PartPose.offsetAndRotation(3.0F, 2.2F, 38.0F,  0.10471975511965977F,  -0.593411945678072F, 0.0F));
+
+		partdefinition.addOrReplaceChild("fin_right", CubeListBuilder.create().texOffs(0, 66)
+				.addBox(-12.0F, 1.4F, -6.0F, 12.0F, 3.0F, 6.0F), PartPose.offsetAndRotation(-10.0F, 4.0F, 10.0F,  0.0F, 0.17453292519943295F, 0.0F));
+
+		partdefinition.addOrReplaceChild("fin_left", CubeListBuilder.create().texOffs(0, 66)
+				.addBox(0.0F, 1.4F, -6.0F, 12.0F, 3.0F, 6.0F), PartPose.offsetAndRotation(7.0F, 4.0F, 10.0F,  0.0F, -0.17453292519943295F, 0.0F));
+
+		return LayerDefinition.create(meshdefinition, 192, 96);
 	}
 
 	@Override

@@ -6,40 +6,43 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class FlyingCowWingModel extends EntityModel<FlyingCowEntity>
-{
+public class FlyingCowWingModel extends EntityModel<FlyingCowEntity> {
     public ModelPart leftWingInner;
     public ModelPart leftWingOuter;
     public ModelPart rightWingInner;
     public ModelPart rightWingOuter;
 
-    public FlyingCowWingModel() {
-        this.leftWingInner = new ModelPart(this, 0, 0);
-        this.leftWingInner.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, true);
-        this.leftWingInner.setPos(-4.0F, 2.0F, -4.0F);
+    public FlyingCowWingModel(ModelPart root) {
+        leftWingInner = root.getChild("left_wing_inner");
+        leftWingOuter = leftWingInner.getChild("left_wing_outer");
+        rightWingInner = root.getChild("left_wing_inner");
+        rightWingOuter = rightWingInner.getChild("right_wing_outer");
+    }
 
-        this.leftWingOuter = new ModelPart(this, 20, 0);
-        this.leftWingOuter.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, true);
-        this.leftWingOuter.setPos(0.0F, -16.0F, 0.0F);
-        this.leftWingInner.addChild(this.leftWingOuter);
+    public static LayerDefinition createMainLayer() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
+        PartDefinition leftWingInnerDef = partdefinition.addOrReplaceChild("left_wing_inner", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(-4.0F, 12.0F, -4.0F));
+        leftWingInnerDef.addOrReplaceChild("left_wing_outer", CubeListBuilder.create().texOffs(20, 0).mirror().addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(0.0F, -16.0F, 0.0F));
+        PartDefinition rightWingInnerDef = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(4.0F, 12.0F, -4.0F));
+        rightWingInnerDef.addOrReplaceChild("right_wing_outer", CubeListBuilder.create().texOffs(20, 0).addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(0.0F, -16.0F, 0.0F));
 
-        this.rightWingInner = new ModelPart(this, 0, 0);
-        this.rightWingInner.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, false);
-        this.rightWingInner.setPos(4.0F, 2.0F, -4.0F);
-
-        this.rightWingOuter = new ModelPart(this, 20, 0);
-        this.rightWingOuter.addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F, 0.0F, false);
-        this.rightWingOuter.setPos(0.0F, -16.0F, 0.0F);
-        this.rightWingInner.addChild(this.rightWingOuter);
+        return LayerDefinition.create(meshdefinition, 64, 32);
     }
 
     @Override
-    public void setupAnim(FlyingCowEntity flyingCow, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(FlyingCowEntity flyingCow, float limbSwing, float limbSwingAmount, float ageInTicks,
+                          float netHeadYaw, float headPitch) {
         float aimingForFold;
         if (flyingCow.isOnGround()) {
             flyingCow.wingAngle *= 0.8F;
@@ -58,7 +61,8 @@ public class FlyingCowWingModel extends EntityModel<FlyingCowEntity>
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn,
+                               int packedOverlayIn, float red, float green, float blue, float alpha) {
         this.leftWingInner.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
         this.rightWingInner.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
     }
