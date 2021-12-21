@@ -20,7 +20,7 @@ public class FlyingCowRenderer extends MobRenderer<FlyingCowEntity, CowModel<Fly
     
     public FlyingCowRenderer(EntityRendererProvider.Context renderer) {
         super(renderer, new CowModel<>(renderer.bakeLayer(AetherModelLayers.FLYING_COW)), 0.7F);
-        this.addLayer(new FlyingCowWingsLayer(this));
+        this.addLayer(new FlyingCowWingsLayer(this, renderer.getModelSet()));
         this.addLayer(new SaddleLayer<>(this, new CowModel<>(renderer.bakeLayer(AetherModelLayers.FLYING_COW)), new ResourceLocation(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow_saddle.png")));
     }
 

@@ -1,11 +1,13 @@
 package com.gildedgames.aether.client.renderer.entity.layers;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffModel;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffWoolModel;
 import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
@@ -15,11 +17,16 @@ import net.minecraft.resources.ResourceLocation;
 public class SheepuffWoolLayer extends RenderLayer<SheepuffEntity, SheepuffModel>
 {
     private static final ResourceLocation SHEEPUFF_WOOL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff_wool.png");
-    private final SheepuffWoolModel woolModel = new SheepuffWoolModel(0.0F, 1.75F);
-    private final SheepuffWoolModel puffedModel = new SheepuffWoolModel(2.0F, 3.75F);
+    private final SheepuffWoolModel woolModel;
+    private final SheepuffWoolModel puffedModel;
 
-    public SheepuffWoolLayer(RenderLayerParent<SheepuffEntity, SheepuffModel> entityRendererIn) {
+    // woolModel (0.0F, 1.75F);
+    // puffedModel (2.0F, 3.75F);
+
+    public SheepuffWoolLayer(RenderLayerParent<SheepuffEntity, SheepuffModel> entityRendererIn, EntityModelSet modelSet) {
         super(entityRendererIn);
+        woolModel = new SheepuffWoolModel(modelSet.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL));
+        puffedModel = new SheepuffWoolModel(modelSet.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL_PUFFEED));
     }
 
     @Override
@@ -48,6 +55,7 @@ public class SheepuffWoolLayer extends RenderLayer<SheepuffEntity, SheepuffModel
             if (sheepuff.getPuffed()) {
                 coloredCutoutModelCopyLayerRender(this.getParentModel(), this.puffedModel, SHEEPUFF_WOOL_TEXTURE, matrixStackIn, bufferIn, packedLightIn, sheepuff, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, f, f1, f2);
             } else {
+                coloredCutoutModelCopyLayerRender(this.getParentModel(), this.puffedModel, SHEEPUFF_WOOL_TEXTURE, matrixStackIn, bufferIn, packedLightIn, sheepuff, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, f, f1, f2);
                 coloredCutoutModelCopyLayerRender(this.getParentModel(), this.woolModel, SHEEPUFF_WOOL_TEXTURE, matrixStackIn, bufferIn, packedLightIn, sheepuff, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, f, f1, f2);
             }
         }

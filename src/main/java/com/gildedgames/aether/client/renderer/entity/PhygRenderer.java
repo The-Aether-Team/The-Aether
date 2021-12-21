@@ -20,7 +20,7 @@ public class PhygRenderer extends MobRenderer<PhygEntity, PigModel<PhygEntity>>
 
 	public PhygRenderer(EntityRendererProvider.Context context) {
 		super(context, new PigModel(context.bakeLayer(AetherModelLayers.PHYG)), 0.7F);
-		this.addLayer(new PhygWingsLayer(this));
+		this.addLayer(new PhygWingsLayer(this, context.getModelSet()));
 		this.addLayer(new SaddleLayer(this, new PigModel(context.bakeLayer(AetherModelLayers.PHYG)), new ResourceLocation("textures/entity/pig/pig_saddle.png")));
 	}
 

@@ -17,9 +17,9 @@ public class SheepuffRenderer extends MobRenderer<SheepuffEntity, SheepuffModel>
 {
     private static final ResourceLocation SHEEPUFF_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff.png");
     
-    public SheepuffRenderer(EntityRendererProvider.Context renderer) {
-        super(renderer, new SheepuffModel(renderer.bakeLayer(AetherModelLayers.SHEEPUFF)), 0.7F);
-        this.addLayer(new SheepuffWoolLayer(this));
+    public SheepuffRenderer(EntityRendererProvider.Context context) {
+        super(context, new SheepuffModel(context.bakeLayer(AetherModelLayers.SHEEPUFF)), 0.7F);
+        this.addLayer(new SheepuffWoolLayer(this, context.getModelSet()));
     }
 
     @Override

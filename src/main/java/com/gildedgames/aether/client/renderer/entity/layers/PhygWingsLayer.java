@@ -1,10 +1,12 @@
 package com.gildedgames.aether.client.renderer.entity.layers;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.PhygWingModel;
 import com.gildedgames.aether.common.entity.passive.PhygEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -16,10 +18,11 @@ import net.minecraft.resources.ResourceLocation;
 public class PhygWingsLayer extends RenderLayer<PhygEntity, PigModel<PhygEntity>>
 {
     private static final ResourceLocation PHYG_WINGS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/phyg/phyg_wings.png");
-    private final PhygWingModel wings = new PhygWingModel();
+    private final PhygWingModel wings;
 
-    public PhygWingsLayer(RenderLayerParent<PhygEntity, PigModel<PhygEntity>> entityRendererIn) {
+    public PhygWingsLayer(RenderLayerParent<PhygEntity, PigModel<PhygEntity>> entityRendererIn, EntityModelSet modelSet) {
         super(entityRendererIn);
+        wings = new PhygWingModel(modelSet.bakeLayer(AetherModelLayers.PHYG_WINGS));
     }
 
     @Override

@@ -4,6 +4,8 @@ import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
 
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -12,31 +14,22 @@ public class SheepuffWoolModel extends QuadrupedModel<SheepuffEntity>
 {
     private float headXRot;
 
-    public SheepuffWoolModel(float heightChange, float scale) {
-        super(12, 0.0F, false, 8.0F, 4.0F, 2.0F, 2.0F, 24);
-        this.head = new ModelPart(this, 0, 0);
-        this.head.addBox(-3.0F, -4.0F, -4.0F, 6, 6, 6, 0.6F);
-        this.head.setPos(0.0F, 6.0F, -8.0F);
+    public SheepuffWoolModel(ModelPart root) {
+        super(root, false, 8.0F, 4.0F, 2.0F, 2.0F, 24);
+    }
 
-        this.body = new ModelPart(this, 28, 8);
-        this.body.addBox(-4.0F, -10.0F + heightChange, -7.0F, 8, 16, 6, scale); //1.75F default scale
-        this.body.setPos(0.0F, 5.0F, 2.0F);
 
-        this.leg0 = new ModelPart(this, 0, 16);
-        this.leg0.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.leg0.setPos(-3.0F, 12.0F, 7.0F);
-
-        this.leg1 = new ModelPart(this, 0, 16);
-        this.leg1.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.leg1.setPos(3.0F, 12.0F, 7.0F);
-
-        this.leg2 = new ModelPart(this, 0, 16);
-        this.leg2.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.leg2.setPos(-3.0F, 12.0F, -5.0F);
-
-        this.leg3 = new ModelPart(this, 0, 16);
-        this.leg3.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.leg3.setPos(3.0F, 12.0F, -5.0F);
+    public static LayerDefinition createFurLayer() {
+        MeshDefinition meshDef = new MeshDefinition();
+        PartDefinition partDef = meshDef.getRoot();
+        partDef.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -4.0F, -4.0F, 6.0F, 6.0F, 6.0F, new CubeDeformation(0.6F)), PartPose.offset(0.0F, 6.0F, -8.0F));
+        partDef.addOrReplaceChild("body", CubeListBuilder.create().texOffs(28, 8).addBox(-4.0F, -10.0F, -7.0F, 8.0F, 16.0F, 6.0F, new CubeDeformation(1.75F)), PartPose.offsetAndRotation(0.0F, 5.0F, 2.0F, 1.5707964F, 0.0F, 0.0F));
+        CubeListBuilder cubeBuilder = CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.5F));
+        partDef.addOrReplaceChild("right_hind_leg", cubeBuilder, PartPose.offset(-3.0F, 12.0F, 7.0F));
+        partDef.addOrReplaceChild("left_hind_leg", cubeBuilder, PartPose.offset(3.0F, 12.0F, 7.0F));
+        partDef.addOrReplaceChild("right_front_leg", cubeBuilder, PartPose.offset(-3.0F, 12.0F, -5.0F));
+        partDef.addOrReplaceChild("left_front_leg", cubeBuilder, PartPose.offset(3.0F, 12.0F, -5.0F));
+        return LayerDefinition.create(meshDef, 64, 32);
     }
 
     public void prepareMobModel(SheepuffEntity entityIn, float limbSwing, float limbSwingAmount, float partialTick) {

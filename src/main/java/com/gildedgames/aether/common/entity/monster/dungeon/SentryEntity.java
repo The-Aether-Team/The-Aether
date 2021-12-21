@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.entity.monster;
+package com.gildedgames.aether.common.entity.monster.dungeon;
 
 import javax.annotation.Nullable;
 
