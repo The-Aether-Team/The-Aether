@@ -10,26 +10,30 @@ import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.api.registers.MoaType;
 import com.gildedgames.aether.core.registry.AetherMoaTypes;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.util.*;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -43,14 +47,14 @@ import java.util.UUID;
 
 public class MoaEntity extends MountableEntity
 {
-	private static final DataParameter<String> DATA_MOA_TYPE_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.STRING);
-	private static final DataParameter<Optional<UUID>> DATA_RIDER_UUID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.OPTIONAL_UUID);
-	private static final DataParameter<Optional<UUID>> DATA_LAST_RIDER_UUID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.OPTIONAL_UUID);
-	private static final DataParameter<Integer> DATA_REMAINING_JUMPS_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.INT);
-	private static final DataParameter<Boolean> DATA_HUNGRY_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Integer> DATA_AMOUNT_FED_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.INT);
-	private static final DataParameter<Boolean> DATA_PLAYER_GROWN_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> DATA_SITTING_ID = EntityDataManager.defineId(MoaEntity.class, DataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<String> DATA_MOA_TYPE_ID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.STRING);
+	private static final EntityDataAccessor<Optional<UUID>> DATA_RIDER_UUID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+	private static final EntityDataAccessor<Optional<UUID>> DATA_LAST_RIDER_UUID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+	private static final EntityDataAccessor<Integer> DATA_REMAINING_JUMPS_ID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> DATA_HUNGRY_ID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> DATA_AMOUNT_FED_ID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> DATA_PLAYER_GROWN_ID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_SITTING_ID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.BOOLEAN);
 
 	public float wingRotation;
 	public float prevWingRotation;
@@ -62,11 +66,11 @@ public class MoaEntity extends MountableEntity
 
 	public int eggTime = this.random.nextInt(50) + 775;
 
-	public MoaEntity(EntityType<? extends MoaEntity> type, World worldIn) {
+	public MoaEntity(EntityType<? extends MoaEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
-	public MoaEntity(World worldIn) {
+	public MoaEntity(Level worldIn) {
 		this(AetherEntityTypes.MOA.get(), worldIn);
 		this.maxUpStep = 1.0F;
 	}
@@ -74,21 +78,21 @@ public class MoaEntity extends MountableEntity
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(0, new SwimGoal(this));
+		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 0.65F));
 		this.goalSelector.addGoal(2, new TemptGoal(this, 1.0F, Ingredient.of(AetherItems.NATURE_STAFF.get()), false));
 		this.goalSelector.addGoal(3, new FallingRandomWalkingGoal(this, 0.35F));
-		this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
+		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
 	}
 
 	@Override
-	protected PathNavigator createNavigation(World world) {
+	protected PathNavigation createNavigation(Level world) {
 		return new FallPathNavigator(this, world);
 	}
 
-	public static AttributeModifierMap.MutableAttribute createMobAttributes() {
-		return MobEntity.createMobAttributes()
+	public static AttributeSupplier.Builder createMobAttributes() {
+		return Mob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 35.0D)
 				.add(Attributes.MOVEMENT_SPEED, 1.0D);
 	}
@@ -133,12 +137,12 @@ public class MoaEntity extends MountableEntity
 	@Override
 	public void riderTick() {
 		super.riderTick();
-		if (this.getControllingPassenger() instanceof PlayerEntity) {
+		if (this.getControllingPassenger() instanceof Player) {
 			if (this.getFlapCooldown() > 0) {
 				this.setFlapCooldown(this.getFlapCooldown() - 1);
 			} else if (this.getFlapCooldown() == 0) {
 				if (!this.isOnGround()) {
-					this.level.playSound(null, this, AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.random.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.random.nextFloat(), 0.0F, 0.3F));
+					this.level.playSound(null, this, AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.random.nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.random.nextFloat(), 0.0F, 0.3F));
 					this.setFlapCooldown(15);
 				}
 			}
@@ -146,28 +150,27 @@ public class MoaEntity extends MountableEntity
 	}
 
 	@Override
-	public void travel(Vector3d vector3d) {
+	public void travel(Vec3 vector3d) {
 		if (!this.isSitting()) {
 			super.travel(vector3d);
 		} else {
 			if (this.isAlive()) {
-				if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof PlayerEntity) {
-					PlayerEntity entity = (PlayerEntity) this.getControllingPassenger();
-					this.yRot = entity.yRot;
-					this.yRotO = this.yRot;
-					this.xRot = entity.xRot * 0.5F;
-					this.setRot(this.yRot, this.xRot);
-					this.yBodyRot = this.yRot;
+				if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player entity) {
+					this.setYRot(entity.getYRot());
+					this.yRotO = this.getYRot();
+					this.setXRot(entity.getXRot() * 0.5F);
+					this.setRot(this.getYRot(), this.getXRot());
+					this.yBodyRot = this.getYRot();
 					this.yHeadRot = this.yBodyRot;
 					if (this.isControlledByLocalInstance()) {
-						this.travelWithInput(new Vector3d(0, vector3d.y(), 0));
+						this.travelWithInput(new Vec3(0, vector3d.y(), 0));
 						this.lerpSteps = 0;
 					} else {
 						this.calculateEntityAnimation(this, false);
-						this.setDeltaMovement(Vector3d.ZERO);
+						this.setDeltaMovement(Vec3.ZERO);
 					}
 				} else {
-					this.travelWithInput(new Vector3d(0, vector3d.y(), 0));
+					this.travelWithInput(new Vec3(0, vector3d.y(), 0));
 				}
 			}
 		}
@@ -185,13 +188,13 @@ public class MoaEntity extends MountableEntity
 	}
 
 	@Override
-	public ActionResultType mobInteract(PlayerEntity playerEntity, Hand hand) {
+	public InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
 		ItemStack itemstack = playerEntity.getItemInHand(hand);
 		if (itemstack.getItem() == AetherItems.NATURE_STAFF.get()) {
 			itemstack.hurtAndBreak(2, playerEntity, (p) -> p.broadcastBreakEvent(hand));
 			this.setSitting(!this.isSitting());
 			this.spawnExplosionParticle();
-			return ActionResultType.sidedSuccess(this.level.isClientSide);
+			return InteractionResult.sidedSuccess(this.level.isClientSide);
 		} else {
 			return super.mobInteract(playerEntity, hand);
 		}
@@ -393,7 +396,7 @@ public class MoaEntity extends MountableEntity
 
 	@Nullable
 	@Override
-	public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+	public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
 		return null;
 	}
 
@@ -403,7 +406,7 @@ public class MoaEntity extends MountableEntity
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		this.setMoaType(AetherMoaTypes.MOA_TYPES.get(compound.getString("MoaType")));
 		if (compound.hasUUID("Rider")) {
@@ -420,7 +423,7 @@ public class MoaEntity extends MountableEntity
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putString("MoaType", this.getMoaType().getRegistryName());
 		if (this.getRider() != null) {
