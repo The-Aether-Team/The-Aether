@@ -62,7 +62,7 @@ public class FreezerTileEntity extends AbstractFurnaceBlockEntity
 		freezingMap.put(item, burnTimeIn);
 	}
 
-//	@Override
+//	@Override //TODO: Fix to add new parameters for new burn method.
 //	public void burn(@Nullable Recipe<?> p_214007_1_) {
 //		if (p_214007_1_ != null && this.canBurn(p_214007_1_)) {
 //			ItemStack itemstack = this.items.get(0);

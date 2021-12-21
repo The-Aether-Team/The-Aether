@@ -75,9 +75,9 @@ public class AetherLootTableProvider extends LootTableProvider
             super.add(block.get(), noDrop());
         }
 
-//        public void dropDoubleWithSilk(Supplier<? extends Block> block, Supplier<? extends ItemLike> drop) {
-//            add(block.get(), (result) -> droppingDoubleWithSilkTouch(result, drop.get()));
-//        }
+        public void dropDoubleWithSilk(Supplier<? extends Block> block, Supplier<? extends ItemLike> drop) {
+            add(block.get(), (result) -> droppingDoubleWithSilkTouch(result, drop.get()));
+        }
 
         public void dropSelfDouble(Supplier<? extends Block> block) {
             super.add(block.get(), droppingDouble(block.get()));
@@ -107,13 +107,13 @@ public class AetherLootTableProvider extends LootTableProvider
             this.dropPottedContents(block.get());
         }
 
-//        protected static LootTable.Builder droppingDoubleWithSilkTouch(Block block, ItemLike noSilkTouch) {
-//            return droppingDoubleWithSilkTouch(block, applyExplosionCondition(block, LootItem.lootTableItem(noSilkTouch)));
-//        }
+        protected static LootTable.Builder droppingDoubleWithSilkTouch(Block block, ItemLike noSilkTouch) {
+            return droppingDoubleWithSilkTouch(block, applyExplosionCondition(block, LootItem.lootTableItem(noSilkTouch)));
+        }
 
-//        protected static LootTable.Builder droppingDoubleWithSilkTouch(Block block, LootPoolEntryContainer.Builder<?> builder) {
-//            return droppingDouble(block, HAS_SILK_TOUCH, builder);
-//        }
+        protected static LootTable.Builder droppingDoubleWithSilkTouch(Block block, LootPoolEntryContainer.Builder<?> builder) {
+            return droppingDouble(block, HAS_SILK_TOUCH, builder);
+        }
 
         protected static LootTable.Builder droppingDouble(ItemLike item) {
             return LootTable.lootTable().withPool(applyExplosionCondition(item, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
@@ -127,14 +127,14 @@ public class AetherLootTableProvider extends LootTableProvider
                     .apply(DoubleDrops.builder());
         }
 
-//        protected static LootTable.Builder droppingWithChancesAndSkyrootSticks(Block block, Block sapling, float... chances) {
-//            return createSilkTouchOrShearsDispatchTable(block, applyExplosionCondition(block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, chances)))
-//                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(HAS_SHEARS_OR_SILK_TOUCH.invert())
-//                            .add(applyExplosionDecay(block,
-//                                    LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-//                                    .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
-//                    .apply(DoubleDrops.builder());
-//        }
+        protected static LootTable.Builder droppingWithChancesAndSkyrootSticks(Block block, Block sapling, float... chances) {
+            return createSilkTouchOrShearsDispatchTable(block, applyExplosionCondition(block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, chances)))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(HAS_SHEARS_OR_SILK_TOUCH.invert())
+                            .add(applyExplosionDecay(block,
+                                    LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                                    .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
+                    .apply(DoubleDrops.builder());
+        }
 
         protected static LootTable.Builder droppingDoubleItemsWithFortune(Block block, Item item) {
             return createSilkTouchDispatchTable(block, applyExplosionDecay(block, LootItem.lootTableItem(item)
@@ -149,26 +149,26 @@ public class AetherLootTableProvider extends LootTableProvider
                     .apply(DoubleDrops.builder());
         }
 
-//        protected static LootTable.Builder droppingWithFruitAndSkyrootSticks(Block block, Item fruit) {
-//            return createSilkTouchOrShearsDispatchTable(block, applyExplosionDecay(block, LootItem.lootTableItem(fruit)))
-//                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(HAS_SHEARS_OR_SILK_TOUCH.invert())
-//                            .add(applyExplosionDecay(block,
-//                                    LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-//                                    .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
-//                    .apply(DoubleDrops.builder());
-//        }
+        protected static LootTable.Builder droppingWithFruitAndSkyrootSticks(Block block, Item fruit) {
+            return createSilkTouchOrShearsDispatchTable(block, applyExplosionDecay(block, LootItem.lootTableItem(fruit)))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(HAS_SHEARS_OR_SILK_TOUCH.invert())
+                            .add(applyExplosionDecay(block,
+                                    LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                                    .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
+                    .apply(DoubleDrops.builder());
+        }
 
         protected static LootTable.Builder droppingDoubleGoldenOak(Block original, Block block, Item item) {
             return LootTable.lootTable()
-//                    .withPool(applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(original)
-//                            .when(HAS_SILK_TOUCH))))
-//                    .withPool(applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(block)
-//                            .when(HAS_SILK_TOUCH.invert()))))
-//                    .withPool(applyExplosionDecay(item, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(item)
-//                            .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
-//                            .when(HAS_SILK_TOUCH.invert())
-//                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
-//                            .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))
+                    .withPool(applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(original)
+                            .when(HAS_SILK_TOUCH))))
+                    .withPool(applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(block)
+                            .when(HAS_SILK_TOUCH.invert()))))
+                    .withPool(applyExplosionDecay(item, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(item)
+                            .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
+                            .when(HAS_SILK_TOUCH.invert())
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
+                            .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))
                     .apply(DoubleDrops.builder());
         }
 

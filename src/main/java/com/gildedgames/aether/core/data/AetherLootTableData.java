@@ -75,11 +75,10 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropDoubleWithFortune(AetherBlocks.AMBROSIUM_ORE, AetherItems.AMBROSIUM_SHARD);
             dropWithFortune(AetherBlocks.ZANITE_ORE, AetherItems.ZANITE_GEMSTONE);
             dropSelf(AetherBlocks.GRAVITITE_ORE);
-// TODO: REIMPLEMENT LEAVE ODDS
-//            this.add(AetherBlocks.SKYROOT_LEAVES.get(),
-//                    (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.SKYROOT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-//            this.add(AetherBlocks.GOLDEN_OAK_LEAVES.get(),
-//                    (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+            this.add(AetherBlocks.SKYROOT_LEAVES.get(),
+                    (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.SKYROOT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+            this.add(AetherBlocks.GOLDEN_OAK_LEAVES.get(),
+                    (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
             this.add(AetherBlocks.CRYSTAL_LEAVES.get(),
                     AetherBlockLootTableProvider::droppingWithSkyrootSticks);
             this.add(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get(),
