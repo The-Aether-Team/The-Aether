@@ -36,7 +36,7 @@ public class CloudMinionPacket extends AetherPacket
 
     @Override
     public void execute(Player playerEntity) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level != null) {
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Level world = Minecraft.getInstance().player.level;
             Entity entity = world.getEntity(this.entityID);
             Entity cloudMinionRight = world.getEntity(this.rightCloudMinionID);

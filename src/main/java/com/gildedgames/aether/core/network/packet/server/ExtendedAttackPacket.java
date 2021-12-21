@@ -9,7 +9,6 @@ import net.minecraftforge.common.ForgeMod;
 
 import java.util.UUID;
 
-
 public class ExtendedAttackPacket extends AetherPacket
 {
     private final UUID playerUUID;
@@ -33,7 +32,7 @@ public class ExtendedAttackPacket extends AetherPacket
 
     @Override
     public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.level != null && playerEntity.getServer() != null) {
+        if (playerEntity != null && playerEntity.getServer() != null) {
             ServerPlayer player = playerEntity.getServer().getPlayerList().getPlayer(this.playerUUID);
             Entity target = playerEntity.level.getEntity(this.targetEntityID);
             if (player != null && target != null) {

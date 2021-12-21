@@ -31,10 +31,9 @@ public class OpenAccessoriesPacket extends AetherPacket
 
     @Override
     public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.level != null && playerEntity.getServer() != null) {
+        if (playerEntity != null && playerEntity.getServer() != null) {
             Entity entity = playerEntity.level.getEntity(this.playerID);
-            if (entity instanceof ServerPlayer) {
-                ServerPlayer player = (ServerPlayer) entity;
+            if (entity instanceof ServerPlayer player) {
                 ItemStack stack = player.getInventory().getSelected();
                 player.getInventory().setPickedItem(ItemStack.EMPTY);
                 NetworkHooks.openGui(player, new AccessoriesProvider());

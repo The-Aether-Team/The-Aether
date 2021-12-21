@@ -36,12 +36,10 @@ public class LoreExistsPacket extends AetherPacket
 
     @Override
     public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.level != null && playerEntity.getServer() != null) {
+        if (playerEntity != null && playerEntity.getServer() != null) {
             Entity entity = playerEntity.level.getEntity(this.playerID);
-            if (entity instanceof ServerPlayer) {
-                ServerPlayer player = (ServerPlayer) entity;
-                if (player.containerMenu instanceof LoreBookContainer) {
-                    LoreBookContainer container = (LoreBookContainer) player.containerMenu;
+            if (entity instanceof ServerPlayer player) {
+                if (player.containerMenu instanceof LoreBookContainer container) {
                     container.setLoreEntryExists(this.exists);
                 }
             }

@@ -6,8 +6,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 
-import static com.gildedgames.aether.core.network.IAetherPacket.*;
-
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 
 public class ClientGrabItemPacket extends AetherPacket
@@ -33,11 +31,11 @@ public class ClientGrabItemPacket extends AetherPacket
 
     @Override
     public void execute(Player playerEntity) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level != null) {
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Entity entity = Minecraft.getInstance().player.level.getEntity(this.entityID);
             if (entity instanceof Player) {
                 Player player = (Player) entity;
-                player.inventory.setCarried(this.stack);
+                player.containerMenu.setCarried(this.stack); //TODO: Make sure this works. setCarried was previously handled in Inventory and now its not.
             }
         }
     }

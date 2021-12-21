@@ -31,7 +31,7 @@ public class HittingPacket extends AetherPacket
 
     @Override
     public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.level != null && playerEntity.getServer() != null) {
+        if (playerEntity != null && playerEntity.getServer() != null) {
             Entity entity = playerEntity.level.getEntity(this.playerID);
             if (entity instanceof ServerPlayer) {
                 IAetherPlayer.get((ServerPlayer) entity).ifPresent(aetherPlayer -> aetherPlayer.setHitting(this.isHitting));

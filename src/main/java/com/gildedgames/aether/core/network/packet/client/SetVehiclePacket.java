@@ -30,7 +30,7 @@ public class SetVehiclePacket extends AetherPacket
 
     @Override
     public void execute(Player player) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level != null) {
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Entity passenger = Minecraft.getInstance().player.level.getEntity(this.passengerID);
             Entity vehicle = Minecraft.getInstance().player.level.getEntity(this.vehicleID);
             if (passenger != null && vehicle != null) {

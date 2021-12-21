@@ -26,7 +26,7 @@ public class ResetMaxUpStepPacket extends AetherPacket
 
     @Override
     public void execute(Player playerEntity) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level != null) {
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Entity entity = Minecraft.getInstance().player.level.getEntity(this.entityID);
             if (entity != null) {
                 entity.maxUpStep = 0.6F;

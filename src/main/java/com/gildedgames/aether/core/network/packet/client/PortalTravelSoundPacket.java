@@ -19,7 +19,7 @@ public class PortalTravelSoundPacket extends AetherPacket
 
     @Override
     public void execute(Player playerEntity) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level != null) {
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             ServerSoundUtil.playPortalSound(Minecraft.getInstance().player);
         }
     }
