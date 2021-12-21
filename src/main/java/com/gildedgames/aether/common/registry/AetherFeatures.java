@@ -5,8 +5,10 @@ import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProp
 import com.gildedgames.aether.common.world.gen.feature.*;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.Block;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
@@ -47,6 +49,7 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.placement.ChanceDecoratorConfiguration;
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import net.minecraft.world.level.levelgen.placement.FrequencyWithExtraChanceDecoratorConfiguration;
+import net.minecraftforge.registries.RegistryObject;
 
 public class AetherFeatures
 {
@@ -92,13 +95,13 @@ public class AetherFeatures
         public static final TreeConfiguration SKYROOT_TREE_CONFIG = (new TreeConfiguration.TreeConfigurationBuilder(
                 new SimpleStateProvider(States.SKYROOT_LOG),
                 new SimpleStateProvider(States.SKYROOT_LEAVES),
-                new BlobFoliagePlacer(UniformInt.fixed(2), UniformInt.fixed(0), 3),
+                new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
                 new StraightTrunkPlacer(4, 2, 0),
                 new TwoLayersFeatureSize(1, 0, 1))).ignoreVines().build();
         public static final TreeConfiguration GOLDEN_OAK_TREE_CONFIG = (new TreeConfiguration.TreeConfigurationBuilder(
                 new SimpleStateProvider(States.GOLDEN_OAK_LOG),
                 new SimpleStateProvider(States.GOLDEN_OAK_LEAVES),
-                new FancyFoliagePlacer(UniformInt.fixed(2), UniformInt.fixed(4), 4),
+                new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
                 new FancyTrunkPlacer(3, 11, 0),
                 new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4)))).ignoreVines().heightmap(Heightmap.Types.MOTION_BLOCKING).build();
 
@@ -147,8 +150,8 @@ public class AetherFeatures
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name), feature);
     }
 
-//    public static final class Configured
-//    {
+    public static final class Configured
+    {
 //        public static final ConfiguredFeature<?, ?> GRASS_PATCH = register("grass_patch", AetherFeatures.GRASS_PATCH.get().configured(Features.Configs.DEFAULT_GRASS_CONFIG).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE).decorated(Placement.COUNT_NOISE.configured(new NoiseDependant(-0.8D, 5, 10))));
 //        public static final ConfiguredFeature<?, ?> TALL_GRASS_PATCH = register("tall_grass_patch", AetherFeatures.GRASS_PATCH.get().configured(Features.Configs.TALL_GRASS_CONFIG).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP).squared().decorated(Placement.COUNT_NOISE.configured(new NoiseDependant(-0.8D, 0, 7))));
 //
@@ -175,8 +178,8 @@ public class AetherFeatures
 //
 //        public static final ConfiguredFeature<?, ?> FLOWER_PATCH = register("aether_skylands_flowers", Feature.FLOWER.configured(Configs.FLOWER_PATCH_CONFIG).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(2));
 //
-//        private static <FC extends IFeatureConfig> ConfiguredFeature<FC, ?> register(String name, ConfiguredFeature<FC, ?> feature) {
-//            return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name), feature);
-//        }
-//    }
+        private static <FC extends FeatureConfiguration> ConfiguredFeature<FC, ?> register(String name, ConfiguredFeature<FC, ?> feature) {
+            return Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name), feature);
+        }
+    }
 }

@@ -4,19 +4,20 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.core.AetherConfig;
 import com.mojang.serialization.Codec;
+import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.gen.feature.template.*;
 
 import java.util.Calendar;
 import java.util.Random;
@@ -37,7 +38,10 @@ public class HolidayTreeFeature extends Feature<NoneFeatureConfiguration>
     }
 
     @Override
-    public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, NoneFeatureConfiguration config) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        BlockPos pos = context.origin();
+        Random rand = context.random();
+        WorldGenLevel reader = context.level();
         Calendar calendar = Calendar.getInstance();
         if ((AetherConfig.COMMON.generate_holiday_tree_seasonally.get() && (calendar.get(Calendar.MONTH) == Calendar.DECEMBER || calendar.get(Calendar.MONTH) == Calendar.JANUARY)) || AetherConfig.COMMON.generate_holiday_tree_always.get()) {
 
@@ -49,7 +53,7 @@ public class HolidayTreeFeature extends Feature<NoneFeatureConfiguration>
             BoundingBox mutableboundingbox = new BoundingBox(chunkpos.getMinBlockX(), 0, chunkpos.getMinBlockZ(), chunkpos.getMaxBlockX(), 256, chunkpos.getMaxBlockZ());
             StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(rotation).setBoundingBox(mutableboundingbox).setRandom(rand).addProcessor(BlockIgnoreProcessor.STRUCTURE_AND_AIR);
 
-            BlockPos size = tree.getSize(rotation);
+            Vec3i size = tree.getSize(rotation);
             int rx = Math.floorDiv(size.getX(), 2);
             int rz = Math.floorDiv(size.getZ(), 2);
             int x = rand.nextInt(16 - size.getX());

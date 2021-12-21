@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.Random;
@@ -19,7 +20,10 @@ public class PinkAercloudFeature extends Feature<NoneFeatureConfiguration>
     }
 
     @Override
-    public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, NoneFeatureConfiguration config) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        BlockPos pos = context.origin();
+        WorldGenLevel reader = context.level();
+        Random rand = context.random();
         if (AetherConfig.COMMON.generate_pink_aerclouds.get()) {
             BlockPos origin = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
             BlockPos position = new BlockPos(origin.getX() + 8, origin.getY(), origin.getZ() + 8);

@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.Feature;
 
@@ -20,25 +21,22 @@ public class AetherGrassFeature extends Feature<RandomPatchConfiguration>
     }
 
     @Override
-    public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, RandomPatchConfiguration config) {
+    public boolean place(FeaturePlaceContext<RandomPatchConfiguration> context) {
+        BlockPos blockpos = context.origin();
+        WorldGenLevel reader = context.level();
+        Random random = context.random();
+        RandomPatchConfiguration config = context.config();
         if (AetherConfig.COMMON.generate_tall_grass.get()) {
-            BlockState blockstate = config.stateProvider.getState(rand, pos);
-            BlockPos blockpos;
-            if (config.project) {
-                blockpos = reader.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos);
-            } else {
-                blockpos = pos;
-            }
 
             int i = 0;
             BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
 
-            for (int j = 0; j < config.tries; ++j) {
-                blockpos$mutable.setWithOffset(blockpos, rand.nextInt(config.xspread + 1) - rand.nextInt(config.xspread + 1), rand.nextInt(config.yspread + 1) - rand.nextInt(config.yspread + 1), rand.nextInt(config.zspread + 1) - rand.nextInt(config.zspread + 1));
-                BlockPos blockpos1 = blockpos$mutable.below();
-                BlockState blockstate1 = reader.getBlockState(blockpos1);
-                if ((reader.isEmptyBlock(blockpos$mutable) || config.canReplace && reader.getBlockState(blockpos$mutable).getMaterial().isReplaceable()) && blockstate.canSurvive(reader, blockpos$mutable) && (config.whitelist.isEmpty() || config.whitelist.contains(blockstate1.getBlock())) && !config.blacklist.contains(blockstate1) && (!config.needWater || reader.getFluidState(blockpos1.west()).is(FluidTags.WATER) || reader.getFluidState(blockpos1.east()).is(FluidTags.WATER) || reader.getFluidState(blockpos1.north()).is(FluidTags.WATER) || reader.getFluidState(blockpos1.south()).is(FluidTags.WATER))) {
-                    config.blockPlacer.place(reader, blockpos$mutable, blockstate, rand);
+            int xzSpread = config.xzSpread() + 1;
+            int ySpread = config.ySpread() + 1;
+
+            for (int j = 0; j < config.tries(); ++j) {
+                blockpos$mutable.setWithOffset(blockpos, random.nextInt(xzSpread) - random.nextInt(xzSpread), random.nextInt(ySpread) - random.nextInt(ySpread), random.nextInt(xzSpread) - random.nextInt(xzSpread));
+                if (config.feature().get().place(reader, context.chunkGenerator(), random, blockpos$mutable)) {
                     ++i;
                 }
             }

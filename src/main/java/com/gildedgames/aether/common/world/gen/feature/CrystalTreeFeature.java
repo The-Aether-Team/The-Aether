@@ -2,18 +2,18 @@ package com.gildedgames.aether.common.world.gen.feature;
 
 import com.gildedgames.aether.Aether;
 import com.mojang.serialization.Codec;
+import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.gen.feature.template.*;
 
 import java.util.Random;
 
@@ -33,7 +33,10 @@ public class CrystalTreeFeature extends Feature<NoneFeatureConfiguration>
     }
 
     @Override
-    public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, NoneFeatureConfiguration config) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        WorldGenLevel reader = context.level();
+        BlockPos pos = context.origin();
+        Random rand = context.random();
         Rotation rotation = Rotation.getRandom(rand);
         StructureManager templatemanager = reader.getLevel().getServer().getStructureManager();
         StructureTemplate tree = templatemanager.getOrCreate(TREE);
@@ -41,9 +44,9 @@ public class CrystalTreeFeature extends Feature<NoneFeatureConfiguration>
         ChunkPos chunkpos = new ChunkPos(pos);
         BoundingBox mutableboundingbox = new BoundingBox(chunkpos.getMinBlockX(), 0, chunkpos.getMinBlockZ(), chunkpos.getMaxBlockX(), 256, chunkpos.getMaxBlockZ());
         StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(rotation).setBoundingBox(mutableboundingbox).setRandom(rand).addProcessor(BlockIgnoreProcessor.STRUCTURE_AND_AIR);
-        BlockPos blockpos = tree.getSize(rotation);
-        int x = rand.nextInt(16 - blockpos.getX());
-        int z = rand.nextInt(16 - blockpos.getZ());
+        Vec3i vec3i = tree.getSize(rotation);
+        int x = rand.nextInt(16 - vec3i.getX());
+        int z = rand.nextInt(16 - vec3i.getZ());
 
         int y = Math.max(Math.min(reader.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, pos.getX() + x, pos.getZ() + z) + rand.nextInt(20)+40, 200), 100);
 
