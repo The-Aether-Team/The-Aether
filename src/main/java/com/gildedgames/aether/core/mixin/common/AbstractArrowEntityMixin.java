@@ -44,8 +44,7 @@ public class AbstractArrowEntityMixin
     }
 
     private void spawnParticles(AbstractArrow arrow) {
-        if (arrow.level instanceof ServerLevel) {
-            ServerLevel world = (ServerLevel) arrow.level;
+        if (arrow.level instanceof ServerLevel world) {
             world.sendParticles(ParticleTypes.FLAME,
                     arrow.getX() + (world.getRandom().nextGaussian() / 5.0D),
                     arrow.getY() + (world.getRandom().nextGaussian() / 3.0D),

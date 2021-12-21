@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-@Mixin(Bee.BeeGoToKnownFlowerGoal.class)
+@Mixin(Bee.BeeGrowCropGoal.class)
 public class FindPollinationTargetGoalMixin
 {
     @Unique
@@ -30,15 +30,14 @@ public class FindPollinationTargetGoalMixin
             BlockState blockstate = this.beeEntity.level.getBlockState(blockpos);
             Block block = blockstate.getBlock();
             boolean flag = false;
-            if (block.getTags().contains(BlockTags.BEE_GROWABLES)) {
+            if (blockstate.is(BlockTags.BEE_GROWABLES)) {
                 if (block == AetherBlocks.BERRY_BUSH_STEM.get()) {
                     flag = true;
                 }
-
                 if (flag) {
                     this.beeEntity.level.levelEvent(2005, blockpos, 0);
                     this.beeEntity.level.setBlockAndUpdate(blockpos, AetherBlocks.BERRY_BUSH.get().defaultBlockState());
-                    // this.beeEntity.incrementNumCropsGrownSincePollination(); this function is not public
+                    this.beeEntity.incrementNumCropsGrownSincePollination();
                 }
             }
         }
