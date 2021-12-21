@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.entity.passive;
 
-import com.gildedgames.aether.core.api.AetherAPI;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
@@ -30,8 +29,6 @@ import net.minecraft.world.level.Level;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
-
-import net.minecraft.world.entity.ai.goal.Goal.Flag;
 
 public class AerwhaleEntity extends FlyingMob implements Enemy {
 	public float motionYaw, motionPitch;

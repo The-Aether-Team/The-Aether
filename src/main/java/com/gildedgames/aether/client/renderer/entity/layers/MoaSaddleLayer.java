@@ -28,5 +28,4 @@ public class MoaSaddleLayer extends RenderLayer<MoaEntity, MoaModel> {
 			this.moaModel.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 		}
 	}
-	
 }

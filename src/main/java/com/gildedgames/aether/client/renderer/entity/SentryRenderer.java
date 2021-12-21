@@ -1,26 +1,21 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.SentryLayer;
-import com.gildedgames.aether.common.entity.monster.SentryEntity;
-import com.mojang.blaze3d.vertex.PoseStack;
-
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import com.gildedgames.aether.common.entity.monster.dungeon.SentryEntity;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.model.SlimeModel;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.client.renderer.entity.model.SlimeModel;
+import net.minecraft.util.ResourceLocation;
 
-@OnlyIn(Dist.CLIENT)
 public class SentryRenderer extends MobRenderer<SentryEntity, SlimeModel<SentryEntity>> {
 
 	private static final ResourceLocation SENTRY_TEXTURES = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/sentry.png");
 	private static final ResourceLocation SENTRY_TEXTURES_LIT = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/sentry_lit.png");
 	
-	public SentryRenderer(EntityRendererProvider.Context renderer) {
-		super(renderer, new SlimeModel<>(renderer.bakeLayer(AetherModelLayers.SENTRY)), 0.3F);
+	public SentryRenderer(EntityRendererManager rendererManager) {
+		super(rendererManager, new SlimeModel<>(0), 0.3F);
 		this.addLayer(new SentryLayer<>(this));
 	}
 
@@ -30,7 +25,7 @@ public class SentryRenderer extends MobRenderer<SentryEntity, SlimeModel<SentryE
 	}
 
 	@Override
-	protected void scale(SentryEntity entitylivingbaseIn, PoseStack matrixStackIn, float partialTickTime) {
+	protected void scale(SentryEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
 //		GL11.glScalef(1.75F, 1.75F, 1.75F);
 		float f = 0.879F;
 		matrixStackIn.scale(f, f, f);

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.block.dungeon;
 
-import com.gildedgames.aether.common.entity.monster.MimicEntity;
+import com.gildedgames.aether.common.entity.monster.dungeon.MimicEntity;
 import com.gildedgames.aether.common.entity.tile.ChestMimicTileEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
