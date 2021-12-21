@@ -2,9 +2,7 @@ package com.gildedgames.aether.core.util;
 
 import com.gildedgames.aether.Aether;
 import com.google.common.collect.Lists;
-import joptsimple.internal.Strings;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;

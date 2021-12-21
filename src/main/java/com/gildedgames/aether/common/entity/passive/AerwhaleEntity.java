@@ -64,7 +64,7 @@ public class AerwhaleEntity extends FlyingMob implements Enemy {
 	public boolean checkSpawnRules(LevelAccessor worldIn, MobSpawnType spawnReasonIn) {
 		BlockPos pos = new BlockPos(Mth.floor(this.getX()), Mth.floor(this.getBoundingBox().minY), Mth.floor(this.getZ()));
 		
-		return this.random.nextInt(65) == 0 && !worldIn.getBlockCollisions(this, this.getBoundingBox()).findAny().isPresent()
+		return this.random.nextInt(65) == 0 && !worldIn.getBlockCollisions(this, this.getBoundingBox()).iterator().hasNext()
 			&& !worldIn.containsAnyLiquid(this.getBoundingBox()) && worldIn.getMaxLocalRawBrightness(pos) > 8
 			&& super.checkSpawnRules(worldIn, spawnReasonIn);
 	}

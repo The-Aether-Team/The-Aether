@@ -1,12 +1,9 @@
 package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
-<<<<<<< HEAD
 import com.gildedgames.aether.common.entity.monster.dungeon.MimicEntity;
 import com.gildedgames.aether.common.entity.monster.dungeon.SentryEntity;
 import com.gildedgames.aether.common.entity.passive.AetherAnimalEntity;
-=======
->>>>>>> feat/entity_work_merge
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
@@ -15,13 +12,10 @@ import com.gildedgames.aether.common.entity.miscellaneous.GoldenParachuteEntity;
 import com.gildedgames.aether.common.entity.monster.AechorPlantEntity;
 import com.gildedgames.aether.common.entity.monster.CockatriceEntity;
 import com.gildedgames.aether.common.entity.monster.FireMinionEntity;
-import com.gildedgames.aether.common.entity.monster.MimicEntity;
-import com.gildedgames.aether.common.entity.monster.SentryEntity;
 import com.gildedgames.aether.common.entity.monster.WhirlwindEntity;
 import com.gildedgames.aether.common.entity.monster.ZephyrEntity;
 import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;
 import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
-import com.gildedgames.aether.common.entity.passive.AetherAnimalEntity;
 import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
 import com.gildedgames.aether.common.entity.passive.MoaEntity;
 import com.gildedgames.aether.common.entity.passive.PhygEntity;

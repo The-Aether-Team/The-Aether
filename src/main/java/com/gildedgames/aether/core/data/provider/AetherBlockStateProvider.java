@@ -2,7 +2,6 @@ package com.gildedgames.aether.core.data.provider;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
-import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;

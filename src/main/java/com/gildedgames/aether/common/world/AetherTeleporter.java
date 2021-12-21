@@ -6,7 +6,6 @@ import com.gildedgames.aether.common.registry.AetherPOI;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.PortalTravelSoundPacket;
-import net.minecraft.block.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -178,7 +177,7 @@ public class AetherTeleporter implements ITeleporter
             return null;
         }
         else if(!this.hasFrame) {
-            return new PortalInfo(new Vec3(entity.getX(), 255D, entity.getZ()), Vec3.ZERO, entity.yRot, entity.xRot); //For falling out of the Aether
+            return new PortalInfo(new Vec3(entity.getX(), 255D, entity.getZ()), Vec3.ZERO, entity.getYRot(), entity.getXRot()); //For falling out of the Aether
         }
         else {
             WorldBorder border = destWorld.getWorldBorder();
@@ -201,7 +200,7 @@ public class AetherTeleporter implements ITeleporter
                     vector3d = new Vec3(0.5D, 0.0D, 0.0D);
                 }
 
-                return PortalShape.createPortalInfo(destWorld, result, axis, vector3d, entity.getDimensions(entity.getPose()), entity.getDeltaMovement(), entity.yRot, entity.xRot);
+                return PortalShape.createPortalInfo(destWorld, result, axis, vector3d, entity.getDimensions(entity.getPose()), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot());
             }).orElse(null);
         }
     }

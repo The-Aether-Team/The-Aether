@@ -7,7 +7,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.DimensionType;
 
 public class AetherTags
 {

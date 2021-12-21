@@ -12,7 +12,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.util.*;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
@@ -36,8 +35,8 @@ import net.minecraft.world.entity.vehicle.DismountHelper;
 public abstract class MountableEntity extends AetherAnimalEntity implements ItemSteerable, Saddleable
 {
 	private static final EntityDataAccessor<Boolean> DATA_SADDLE_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> DATA_PLAYER_JUMPED_ID = EntityDataManager.defineId(MountableEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> DATA_MOUNT_JUMPING_ID = EntityDataManager.defineId(MountableEntity.class, DataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_PLAYER_JUMPED_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_MOUNT_JUMPING_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
 	protected boolean playerTriedToCrouch;
 
 	protected MountableEntity(EntityType<? extends Animal> type, Level worldIn) {
