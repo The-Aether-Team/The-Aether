@@ -2,8 +2,8 @@ package com.gildedgames.aether.integration.crafttweaker.actions.freezable;
 
 import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
 import com.gildedgames.aether.common.item.accessories.abilities.IIceAccessory;
-import net.minecraft.block.Block;
-import net.minecraft.fluid.Fluid;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 
 public class AddIceAccessoryFreezableAction implements IRuntimeAction
 {

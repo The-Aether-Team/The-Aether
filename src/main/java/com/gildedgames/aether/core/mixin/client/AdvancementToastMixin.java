@@ -2,13 +2,13 @@ package com.gildedgames.aether.core.mixin.client;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.client.gui.toasts.AdvancementToast;
-import net.minecraft.client.gui.toasts.IToast;
-import net.minecraft.client.gui.toasts.ToastGui;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.gui.components.toasts.AdvancementToast;
+import net.minecraft.client.gui.components.toasts.Toast;
+import net.minecraft.client.gui.components.toasts.ToastComponent;
+import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,20 +30,20 @@ public class AdvancementToastMixin
      * Injector mixin to play the Aether's advancement sounds when the player gets an Aether advancement.
      */
     @Inject(at = @At("HEAD"), method = "render(Lcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/gui/toasts/ToastGui;J)Lnet/minecraft/client/gui/toasts/IToast$Visibility;")
-    private void onRender(MatrixStack p_230444_1_, ToastGui p_230444_2_, long p_230444_3_, CallbackInfoReturnable<IToast.Visibility> cir) {
+    private void onRender(PoseStack p_230444_1_, ToastComponent p_230444_2_, long p_230444_3_, CallbackInfoReturnable<Toast.Visibility> cir) {
         if (!this.playedSound) {
             ResourceLocation enterAether = new ResourceLocation(Aether.MODID, "enter_aether");
             if (this.advancement.getId().equals(enterAether) || (this.advancement.getParent() != null && this.advancement.getParent().getId().equals(enterAether))) {
                 this.playedSound = true;
                 switch (this.advancement.getId().getPath()) {
                     case "like_a_bossaru":
-                        p_230444_2_.getMinecraft().getSoundManager().play(SimpleSound.forUI(AetherSoundEvents.UI_TOAST_AETHER_BRONZE.get(), 1.0F, 1.0F));
+                        p_230444_2_.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_BRONZE.get(), 1.0F, 1.0F));
                         break;
                     case "dethroned":
-                        p_230444_2_.getMinecraft().getSoundManager().play(SimpleSound.forUI(AetherSoundEvents.UI_TOAST_AETHER_SILVER.get(), 1.0F, 1.0F));
+                        p_230444_2_.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_SILVER.get(), 1.0F, 1.0F));
                         break;
                     default:
-                        p_230444_2_.getMinecraft().getSoundManager().play(SimpleSound.forUI(AetherSoundEvents.UI_TOAST_AETHER_GENERAL.get(), 1.0F, 1.0F));
+                        p_230444_2_.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_GENERAL.get(), 1.0F, 1.0F));
                         break;
                 }
             }

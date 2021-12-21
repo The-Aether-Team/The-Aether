@@ -2,22 +2,25 @@ package com.gildedgames.aether.core.mixin.common;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import net.minecraft.block.*;
-import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(BeeEntity.FindPollinationTargetGoal.class)
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+
+@Mixin(Bee.BeeGrowCropGoal.class)
 public class FindPollinationTargetGoalMixin
 {
     @Unique
-    private BeeEntity beeEntity;
+    private Bee beeEntity;
 
     @Inject(at = @At("RETURN"), method = "<init>")
-    private void init(BeeEntity outer, CallbackInfo ci) {
+    private void init(Bee outer, CallbackInfo ci) {
         this.beeEntity = outer;
     }
 

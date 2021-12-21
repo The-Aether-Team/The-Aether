@@ -3,10 +3,10 @@ package com.gildedgames.aether.core.mixin.common;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.event.listeners.capability.EternalDayListener;
 import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.DimensionType;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,7 +30,7 @@ public class DimensionTypeMixin
     private void timeOfDay(long p_236032_1_, CallbackInfoReturnable<Float> cir) {
         if (this.effectsLocation.equals(new ResourceLocation(Aether.MODID, "the_aether"))) {
             double time = (double) this.fixedTime.orElse(p_236032_1_);
-            double d0 = MathHelper.frac(time / 72000.0D - 0.25D);
+            double d0 = Mth.frac(time / 72000.0D - 0.25D);
             double d1 = 0.5D - Math.cos(d0 * Math.PI) / 2.0D;
             cir.setReturnValue((float)(d0 * 2.0D + d1) / 3.0F);
         }
@@ -40,7 +40,7 @@ public class DimensionTypeMixin
     private void moonPhase(long p_236032_1_, CallbackInfoReturnable<Integer> cir) {
         if (this.effectsLocation.equals(new ResourceLocation(Aether.MODID, "the_aether"))) {
             long time = this.fixedTime.orElse(p_236032_1_);
-            World world = EternalDayListener.world;
+            Level world = EternalDayListener.world;
             if (world != null) {
                 IEternalDay eternalDay = IEternalDay.get(world).orElse(null);
                 eternalDay.setServerWorldTime(world.getDayTime());

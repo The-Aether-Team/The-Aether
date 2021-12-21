@@ -2,10 +2,10 @@ package com.gildedgames.aether.core.network.packet.server;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.UUID;
 
@@ -20,23 +20,23 @@ public class MovementPacket extends AetherPacket
     }
 
     @Override
-    public void encode(PacketBuffer buf) {
+    public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID);
         buf.writeBoolean(this.isMoving);
     }
 
-    public static MovementPacket decode(PacketBuffer buf) {
+    public static MovementPacket decode(FriendlyByteBuf buf) {
         int playerID = buf.readInt();
         boolean isMoving = buf.readBoolean();
         return new MovementPacket(playerID, isMoving);
     }
 
     @Override
-    public void execute(PlayerEntity playerEntity) {
+    public void execute(Player playerEntity) {
         if (playerEntity != null && playerEntity.level != null && playerEntity.getServer() != null) {
             Entity entity = playerEntity.level.getEntity(this.playerID);
-            if (entity instanceof ServerPlayerEntity) {
-                IAetherPlayer.get((ServerPlayerEntity) entity).ifPresent(aetherPlayer -> aetherPlayer.setMoving(this.isMoving));
+            if (entity instanceof ServerPlayer) {
+                IAetherPlayer.get((ServerPlayer) entity).ifPresent(aetherPlayer -> aetherPlayer.setMoving(this.isMoving));
             }
         }
     }

@@ -3,14 +3,14 @@ package com.gildedgames.aether.core.capability.capabilities.player;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class AetherPlayerProvider implements ICapabilityProvider, INBTSerializable<CompoundNBT>
+public class AetherPlayerProvider implements ICapabilityProvider, INBTSerializable<CompoundTag>
 {
 	private final IAetherPlayer aetherPlayer;
 	
@@ -19,12 +19,12 @@ public class AetherPlayerProvider implements ICapabilityProvider, INBTSerializab
 	}
 	
 	@Override
-	public CompoundNBT serializeNBT() {
+	public CompoundTag serializeNBT() {
 		return aetherPlayer.serializeNBT();
 	}
 
 	@Override
-	public void deserializeNBT(CompoundNBT nbt) {
+	public void deserializeNBT(CompoundTag nbt) {
 		aetherPlayer.deserializeNBT(nbt);
 	}
 	

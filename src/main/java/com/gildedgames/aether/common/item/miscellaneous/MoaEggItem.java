@@ -3,7 +3,7 @@ package com.gildedgames.aether.common.item.miscellaneous;
 import com.gildedgames.aether.core.api.registers.MoaType;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 

@@ -1,29 +1,29 @@
 package com.gildedgames.aether.common.block.natural;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 
 public class BlueAercloudBlock extends AercloudBlock
 {
-	protected static VoxelShape SHAPE = VoxelShapes.empty();
+	protected static VoxelShape SHAPE = Shapes.empty();
 
-	public BlueAercloudBlock(AbstractBlock.Properties properties) {
+	public BlueAercloudBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 	}
 	
 	@Override
-	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		entity.fallDistance *= 0.0F;
-		Vector3d motion = entity.getDeltaMovement();
+		Vec3 motion = entity.getDeltaMovement();
 
 		if (entity.isShiftKeyDown()) {
 			if (motion.y < 0) {
@@ -46,7 +46,7 @@ public class BlueAercloudBlock extends AercloudBlock
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 }

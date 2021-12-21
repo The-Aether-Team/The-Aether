@@ -1,12 +1,14 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
 import com.gildedgames.aether.common.entity.passive.MoaEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.util.Mth;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 //TODO: Will have to review this all when all the moa functionality is completed, of course.
 public class MoaModel extends EntityModel<MoaEntity>
@@ -141,8 +143,8 @@ public class MoaModel extends EntityModel<MoaEntity>
 			this.rightLeg.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
 			this.leftLeg.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
 		}
-        this.rightTailFeather.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
-        this.middleTailFeather.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
-        this.leftTailFeather.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
+		this.rightTailFeather.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
+		this.middleTailFeather.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
+		this.leftTailFeather.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
 	}
 }

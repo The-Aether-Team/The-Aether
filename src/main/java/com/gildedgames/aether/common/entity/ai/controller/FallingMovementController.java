@@ -1,23 +1,23 @@
 package com.gildedgames.aether.common.entity.ai.controller;
 
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.MovementController;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 
-public class FallingMovementController extends MovementController
+public class FallingMovementController extends MoveControl
 {
-    public FallingMovementController(MobEntity mobEntity) {
+    public FallingMovementController(Mob mobEntity) {
         super(mobEntity);
     }
 
     @Override
     public void tick() {
-        if (this.operation == MovementController.Action.JUMPING) {
+        if (this.operation == MoveControl.Operation.JUMPING) {
             this.mob.setSpeed((float) (this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
             if (this.mob.isOnGround()) {
-                this.operation = MovementController.Action.WAIT;
+                this.operation = MoveControl.Operation.WAIT;
             } else {
-                this.operation = MovementController.Action.MOVE_TO;
+                this.operation = MoveControl.Operation.MOVE_TO;
             }
         } else {
             super.tick();

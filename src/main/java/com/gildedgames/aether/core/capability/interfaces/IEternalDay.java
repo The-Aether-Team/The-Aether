@@ -1,23 +1,23 @@
 package com.gildedgames.aether.core.capability.interfaces;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public interface IEternalDay extends INBTSerializable<CompoundNBT>
+public interface IEternalDay extends INBTSerializable<CompoundTag>
 {
-    World getWorld();
+    Level getWorld();
 
-    static LazyOptional<IEternalDay> get(World world) {
+    static LazyOptional<IEternalDay> get(Level world) {
         return world.getCapability(AetherCapabilities.ETERNAL_DAY_CAPABILITY);
     }
 
     void syncToClient();
 
-    void serverTick(ServerWorld world);
+    void serverTick(ServerLevel world);
 
     void setEternalDay(boolean isEternalDay);
     boolean getEternalDay();

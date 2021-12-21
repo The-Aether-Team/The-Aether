@@ -4,47 +4,47 @@ import com.gildedgames.aether.common.registry.AetherLoot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootFunction;
-import net.minecraft.loot.LootFunctionType;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
 
-public class SpawnXP extends LootFunction
+public class SpawnXP extends LootItemConditionalFunction
 {
-    protected SpawnXP(ILootCondition[] conditionsIn) {
+    protected SpawnXP(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
     @Override
     protected ItemStack run(ItemStack stack, LootContext context) {
-        ServerWorld world = context.getLevel();
-        Vector3d vector3d = context.getParamOrNull(LootParameters.ORIGIN);
+        ServerLevel world = context.getLevel();
+        Vec3 vector3d = context.getParamOrNull(LootContextParams.ORIGIN);
         if (vector3d != null) {
             int randomNumber = (int) ((4 * world.random.nextDouble()) + 6);
             while(randomNumber > 0) {
-                int i = ExperienceOrbEntity.getExperienceValue(randomNumber);
+                int i = ExperienceOrb.getExperienceValue(randomNumber);
                 randomNumber -= i;
-                world.addFreshEntity(new ExperienceOrbEntity(world, vector3d.x() + 0.5D, vector3d.y() + 0.5D, vector3d.z() + 0.5D, i));
+                world.addFreshEntity(new ExperienceOrb(world, vector3d.x() + 0.5D, vector3d.y() + 0.5D, vector3d.z() + 0.5D, i));
             }
         }
         return stack;
     }
 
-    public static LootFunction.Builder<?> builder() {
-        return LootFunction.simpleBuilder(SpawnXP::new);
+    public static LootItemConditionalFunction.Builder<?> builder() {
+        return LootItemConditionalFunction.simpleBuilder(SpawnXP::new);
     }
 
     @Override
-    public LootFunctionType getType() {
+    public LootItemFunctionType getType() {
         return AetherLoot.SPAWN_XP;
     }
 
-    public static class Serializer extends LootFunction.Serializer<SpawnXP>
+    public static class Serializer extends LootItemConditionalFunction.Serializer<SpawnXP>
     {
         @Override
         public void serialize(JsonObject object, SpawnXP functionClazz, JsonSerializationContext serializationContext) {
@@ -52,7 +52,7 @@ public class SpawnXP extends LootFunction
         }
 
         @Override
-        public SpawnXP deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditionsIn) {
+        public SpawnXP deserialize(JsonObject object, JsonDeserializationContext deserializationContext, LootItemCondition[] conditionsIn) {
             return new SpawnXP(conditionsIn);
         }
     }

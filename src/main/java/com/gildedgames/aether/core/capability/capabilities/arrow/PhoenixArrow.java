@@ -1,35 +1,35 @@
 package com.gildedgames.aether.core.capability.capabilities.arrow;
 
 import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.nbt.CompoundTag;
 
 public class PhoenixArrow implements IPhoenixArrow
 {
-    private final AbstractArrowEntity arrow;
+    private final AbstractArrow arrow;
 
     private boolean isPhoenixArrow;
     private int fireTime;
 
-    public PhoenixArrow(AbstractArrowEntity arrow) {
+    public PhoenixArrow(AbstractArrow arrow) {
         this.arrow = arrow;
     }
 
     @Override
-    public AbstractArrowEntity getArrow() {
+    public AbstractArrow getArrow() {
         return this.arrow;
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag nbt = new CompoundTag();
         nbt.putBoolean("PhoenixArrow", this.isPhoenixArrow());
         nbt.putInt("FireTime", this.getFireTime());
         return nbt;
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         if (nbt.contains("PhoenixArrow")) {
             this.setPhoenixArrow(nbt.getBoolean("PhoenixArrow"));
         }

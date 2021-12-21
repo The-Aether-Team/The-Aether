@@ -5,12 +5,12 @@ import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.ExtendedAttackPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -25,28 +25,28 @@ public class ToolAbilityClientListener
 {
     @SubscribeEvent
     public static void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
-        if (event.getItemStack().getItem().is(AetherTags.Items.VALKYRIE_TOOLS) || event.getItemStack().getItem() == AetherItems.VALKYRIE_LANCE.get()) {
+        if (event.getItemStack().is(AetherTags.Items.VALKYRIE_TOOLS) || event.getItemStack().getItem() == AetherItems.VALKYRIE_LANCE.get()) {
             handleExtendedReach(event.getPlayer());
         }
     }
 
     @SubscribeEvent
     public static void onPlayerLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-        if (event.getItemStack().getItem().is(AetherTags.Items.VALKYRIE_TOOLS) || event.getItemStack().getItem() == AetherItems.VALKYRIE_LANCE.get()) {
+        if (event.getItemStack().is(AetherTags.Items.VALKYRIE_TOOLS) || event.getItemStack().getItem() == AetherItems.VALKYRIE_LANCE.get()) {
             event.setCanceled(handleExtendedReach(event.getPlayer()));
         }
     }
 
-    private static boolean handleExtendedReach(PlayerEntity player) {
+    private static boolean handleExtendedReach(Player player) {
         double reach = player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue();
-        Vector3d eyePos = player.getEyePosition(1.0F);
-        Vector3d lookVec = player.getLookAngle();
-        Vector3d reachVec = eyePos.add(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
-        AxisAlignedBB playerBox = player.getBoundingBox().expandTowards(lookVec.scale(reach)).inflate(1.0D, 1.0D, 1.0D);
-        EntityRayTraceResult traceResult = ProjectileHelper.getEntityHitResult(player, eyePos, reachVec, playerBox, (target) -> !target.isSpectator() && target.isPickable(), reach * reach);
+        Vec3 eyePos = player.getEyePosition(1.0F);
+        Vec3 lookVec = player.getLookAngle();
+        Vec3 reachVec = eyePos.add(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
+        AABB playerBox = player.getBoundingBox().expandTowards(lookVec.scale(reach)).inflate(1.0D, 1.0D, 1.0D);
+        EntityHitResult traceResult = ProjectileUtil.getEntityHitResult(player, eyePos, reachVec, playerBox, (target) -> !target.isSpectator() && target.isPickable(), reach * reach);
         if (traceResult != null) {
             Entity target = traceResult.getEntity();
-            Vector3d hitVec = traceResult.getLocation();
+            Vec3 hitVec = traceResult.getLocation();
             double distance = eyePos.distanceToSqr(hitVec);
             if (distance < reach * reach) {
                 AetherPacketHandler.sendToServer(new ExtendedAttackPacket(player.getUUID(), target.getId()));

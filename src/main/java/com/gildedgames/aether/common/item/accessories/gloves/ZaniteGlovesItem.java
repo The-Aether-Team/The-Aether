@@ -3,13 +3,15 @@ package com.gildedgames.aether.common.item.accessories.gloves;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.UUID;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ZaniteGlovesItem extends GlovesItem
 {

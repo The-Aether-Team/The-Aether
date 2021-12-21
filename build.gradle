@@ -15,7 +15,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.0.14', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
@@ -28,7 +28,7 @@ version = project.mc_version + '-v' + project.aether_version
 group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'aether'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
+java.toolchain.languageVersion = JavaLanguageVersion.of(17) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
 minecraft {
     mappings channel: 'official', version: project.mappings
@@ -106,14 +106,14 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}:api")
     compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
 
-    compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
+   // compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
 
-    compileOnly fg.deobf("curse.maven:colytra-280200:${project.colytra_version}")
+    //compileOnly fg.deobf("curse.maven:colytra-280200:${project.colytra_version}")
     compileOnly fg.deobf("curse.maven:curious-elytra-317716:${project.curiouselytra_version}")
 
-    runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
+    //runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 
-    runtimeOnly fg.deobf("curse.maven:shutup-experimental-settings-407174:${project.shutupexperimentalsettings_version}")
+    //runtimeOnly fg.deobf("curse.maven:shutup-experimental-settings-407174:${project.shutupexperimentalsettings_version}")
 
     //compileOnly fileTree(dir: 'libs', include: '*.jar')
 }

@@ -2,17 +2,17 @@ package com.gildedgames.aether.common.advancement;
 
 import com.gildedgames.aether.Aether;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.loot.ConditionArraySerializer;
-import net.minecraft.loot.LootContext;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.SerializationContext;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.resources.ResourceLocation;
 
-public class MountTrigger extends AbstractCriterionTrigger<MountTrigger.Instance>
+public class MountTrigger extends SimpleCriterionTrigger<MountTrigger.Instance>
 {
     private static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "mount_entity");
     public static final MountTrigger INSTANCE = new MountTrigger();
@@ -22,27 +22,27 @@ public class MountTrigger extends AbstractCriterionTrigger<MountTrigger.Instance
     }
 
     @Override
-    protected MountTrigger.Instance createInstance(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
-        EntityPredicate.AndPredicate predicate = EntityPredicate.AndPredicate.fromJson(json, "entity", conditionsParser);
+    protected MountTrigger.Instance createInstance(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
+        EntityPredicate.Composite predicate = EntityPredicate.Composite.fromJson(json, "entity", conditionsParser);
         return new MountTrigger.Instance(entityPredicate, predicate);
     }
 
-    public void trigger(ServerPlayerEntity player, Entity entity) {
+    public void trigger(ServerPlayer player, Entity entity) {
         LootContext lootcontext = EntityPredicate.createContext(player, entity);
         this.trigger(player, (instance) -> instance.test(lootcontext));
     }
 
-    public static class Instance extends CriterionInstance
+    public static class Instance extends AbstractCriterionTriggerInstance
     {
-        private final EntityPredicate.AndPredicate entity;
+        private final EntityPredicate.Composite entity;
 
-        public Instance(EntityPredicate.AndPredicate playerPredicate, EntityPredicate.AndPredicate entity) {
+        public Instance(EntityPredicate.Composite playerPredicate, EntityPredicate.Composite entity) {
             super(MountTrigger.ID, playerPredicate);
             this.entity = entity;
         }
 
         public static MountTrigger.Instance forEntity(EntityPredicate.Builder entity) {
-            return new MountTrigger.Instance(EntityPredicate.AndPredicate.ANY, EntityPredicate.AndPredicate.wrap(entity.build()));
+            return new MountTrigger.Instance(EntityPredicate.Composite.ANY, EntityPredicate.Composite.wrap(entity.build()));
         }
 
         public boolean test(LootContext context) {
@@ -50,7 +50,7 @@ public class MountTrigger extends AbstractCriterionTrigger<MountTrigger.Instance
         }
 
         @Override
-        public JsonObject serializeToJson(ConditionArraySerializer conditions) {
+        public JsonObject serializeToJson(SerializationContext conditions) {
             JsonObject jsonobject = super.serializeToJson(conditions);
             jsonobject.add("entity", this.entity.toJson(conditions));
             return jsonobject;

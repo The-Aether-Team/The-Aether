@@ -1,40 +1,48 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
+import javax.annotation.Nullable;
+
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.monster.SlimeEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.BlockParticleData;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.Level;
 
-public class SentryEntity extends SlimeEntity {
-	public static final DataParameter<Boolean> SENTRY_AWAKE = EntityDataManager.defineId(SentryEntity.class, DataSerializers.BOOLEAN);
+public class SentryEntity extends Slime {
+	public static final EntityDataAccessor<Boolean> SENTRY_AWAKE = SynchedEntityData.defineId(SentryEntity.class, EntityDataSerializers.BOOLEAN);
 	
 	public float timeSpotted = 0.0F;
 	
-	public SentryEntity(EntityType<? extends SentryEntity> type, World worldIn) {
+	public SentryEntity(EntityType<? extends SentryEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
-	public SentryEntity(World worldIn) {
+	public SentryEntity(Level worldIn) {
 		super(AetherEntityTypes.SENTRY.get(), worldIn);
 	}
 
@@ -44,12 +52,12 @@ public class SentryEntity extends SlimeEntity {
 		this.goalSelector.addGoal(2, new SentryEntity.AttackGoal(this));
 		this.goalSelector.addGoal(3, new SentryEntity.FaceRandomGoal(this));
 		this.goalSelector.addGoal(5, new SentryEntity.HopGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (entity) -> Math.abs(entity.getY() - this.getY()) <= 4.0));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, (entity) -> Math.abs(entity.getY() - this.getY()) <= 4.0));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
 	}
 
-	public static AttributeModifierMap.MutableAttribute createMobAttributes() {
-		return MobEntity.createMobAttributes().add(Attributes.ATTACK_DAMAGE);
+	public static AttributeSupplier.Builder createMobAttributes() {
+		return Mob.createMobAttributes().add(Attributes.ATTACK_DAMAGE);
 	}
 	
 	@Override
@@ -59,15 +67,15 @@ public class SentryEntity extends SlimeEntity {
 	}
 	
 	@Override
-	public void playerTouch(PlayerEntity entityIn) {
-		if (EntityPredicates.NO_CREATIVE_OR_SPECTATOR.test(entityIn)) {
+	public void playerTouch(Player entityIn) {
+		if (EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(entityIn)) {
 			this.explodeAt(entityIn);
 		}
 	}
 	
 	@Override
 	public void tick() {
-		if (this.level.getNearestPlayer(this.getX(), this.getY(), this.getZ(), 8.0, EntityPredicates.NO_CREATIVE_OR_SPECTATOR) != null) {
+		if (this.level.getNearestPlayer(this.getX(), this.getY(), this.getZ(), 8.0, EntitySelector.NO_CREATIVE_OR_SPECTATOR) != null) {
 			if (!this.isAwake()) {
 				if (this.timeSpotted >= 24) {
 					this.setAwake(true);
@@ -88,8 +96,8 @@ public class SentryEntity extends SlimeEntity {
 //	}
 	
 	@Override
-	protected IParticleData getParticleType() {
-		return new BlockParticleData(ParticleTypes.BLOCK, AetherBlocks.SENTRY_STONE.get().defaultBlockState());
+	protected ParticleOptions getParticleType() {
+		return new BlockParticleOption(ParticleTypes.BLOCK, AetherBlocks.SENTRY_STONE.get().defaultBlockState());
 	}
 	
 	@Override
@@ -105,7 +113,7 @@ public class SentryEntity extends SlimeEntity {
 		if (this.isAwake() && this.canSee(entityIn) && entityIn.hurt(DamageSource.mobAttack(this), 1.0F) && this.tickCount > 20) {
 			entityIn.push(0.5, 0.5, 0.5);
 			
-			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 0.1F, Explosion.Mode.DESTROY);
+			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 0.1F, Explosion.BlockInteraction.DESTROY);
 			this.setHealth(0.0F);
 			this.playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 0.2F*(this.random.nextFloat() - this.random.nextFloat()) + 1);
 			this.doEnchantDamageEffects(this, entityIn);
@@ -119,20 +127,29 @@ public class SentryEntity extends SlimeEntity {
 		}
 	}
 
-	/* Do we need this..?
+	// This is here to override the slime's default finalizeSpawn behaviour
+	// which randomizes the size of the spawned slime, since we don't want
+	// that to happen for Sentries.
+	// The code is just the MobEntity finalizeSpawn behaviour.
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		this.getAttribute(Attributes.FOLLOW_RANGE).applyModifier(new AttributeModifier("Random spawn bonus", this.rand.nextGaussian() * 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
-		if (this.rand.nextFloat() < 0.05F) {
+	public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor p_213386_1_, DifficultyInstance p_213386_2_,
+			MobSpawnType p_213386_3_, @Nullable SpawnGroupData p_213386_4_, @Nullable CompoundTag p_213386_5_) {
+		this.setSize(2, true); // 2 because internal size is 1 greater than displayed size in the nbt
+		// BEGIN CODE FROM MobEntity.finalizeSpawn()
+		this.getAttribute(Attributes.FOLLOW_RANGE).addPermanentModifier(new AttributeModifier("Random spawn bonus", this.random.nextGaussian() * 0.05D, AttributeModifier.Operation.MULTIPLY_BASE));
+		if (this.random.nextFloat() < 0.05F) {
 			this.setLeftHanded(true);
-		}
-		else {
+		} else {
 			this.setLeftHanded(false);
 		}
-
-		return spawnDataIn;
+		return p_213386_4_;
+		// END CODE FROM MobEntity.finalizeSpawn()
 	}
-	*/
+
+	@Override
+	public boolean isTiny() {
+		return this.getSize() < 1;
+	 }
 	
 	public void setAwake(boolean isAwake) {
 		this.entityData.set(SENTRY_AWAKE, isAwake);
@@ -155,7 +172,7 @@ public class SentryEntity extends SlimeEntity {
 		super.remove(keepData);
 	}
 	
-	public static class AttackGoal extends SlimeEntity.AttackGoal {
+	public static class AttackGoal extends Slime.SlimeAttackGoal {
 		private final SentryEntity sentry;
 		
 		public AttackGoal(SentryEntity sentryIn) {
@@ -181,7 +198,7 @@ public class SentryEntity extends SlimeEntity {
 		
 	}
 	
-	public static class FaceRandomGoal extends SlimeEntity.FaceRandomGoal {
+	public static class FaceRandomGoal extends Slime.SlimeRandomDirectionGoal {
 		private final SentryEntity sentry;
 		
 		public FaceRandomGoal(SentryEntity sentryIn) {
@@ -207,7 +224,7 @@ public class SentryEntity extends SlimeEntity {
 		
 	}
 	
-	public static class FloatGoal extends SlimeEntity.FloatGoal {
+	public static class FloatGoal extends Slime.SlimeFloatGoal {
 		private final SentryEntity sentry;
 		
 		public FloatGoal(SentryEntity sentryIn) {
@@ -233,7 +250,7 @@ public class SentryEntity extends SlimeEntity {
 		
 	}
 	
-	public static class HopGoal extends SlimeEntity.HopGoal {
+	public static class HopGoal extends Slime.SlimeKeepOnJumpingGoal {
 		private final SentryEntity sentry;
 		
 		public HopGoal(SentryEntity sentryIn) {

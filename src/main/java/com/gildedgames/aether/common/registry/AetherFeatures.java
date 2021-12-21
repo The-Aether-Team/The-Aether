@@ -5,24 +5,24 @@ import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProp
 import com.gildedgames.aether.common.world.gen.feature.*;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
-import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
-import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.blockplacers.SimpleBlockPlacer;
+import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.feature.template.BlockMatchRuleTest;
-import net.minecraft.world.gen.feature.template.RuleTest;
-import net.minecraft.world.gen.foliageplacer.BlobFoliagePlacer;
-import net.minecraft.world.gen.foliageplacer.FancyFoliagePlacer;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
+import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer;
 import net.minecraft.world.gen.placement.*;
-import net.minecraft.world.gen.trunkplacer.FancyTrunkPlacer;
-import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -30,24 +30,43 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.OptionalInt;
 
+import net.minecraft.data.worldgen.Features;
+import net.minecraft.util.UniformInt;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoiseDependantDecoratorConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.RangeDecoratorConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SpringConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
+import net.minecraft.world.level.levelgen.placement.ChanceDecoratorConfiguration;
+import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
+import net.minecraft.world.level.levelgen.placement.FrequencyWithExtraChanceDecoratorConfiguration;
+
 public class AetherFeatures
 {
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Aether.MODID);
 
-    public static final RegistryObject<Feature<BlockClusterFeatureConfig>> GRASS_PATCH = FEATURES.register("grass_patch", () -> new AetherGrassFeature(BlockClusterFeatureConfig.CODEC));
+    public static final RegistryObject<Feature<RandomPatchConfiguration>> GRASS_PATCH = FEATURES.register("grass_patch", () -> new AetherGrassFeature(RandomPatchConfiguration.CODEC));
 
-    public static final RegistryObject<Feature<NoFeatureConfig>> QUICKSOIL = FEATURES.register("quicksoil", () -> new QuicksoilFeature(NoFeatureConfig.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> QUICKSOIL = FEATURES.register("quicksoil", () -> new QuicksoilFeature(NoneFeatureConfiguration.CODEC));
 
-    public static final RegistryObject<Feature<BlockStateFeatureConfig>> LAKE = FEATURES.register("lake", () -> new AetherLakeFeature(BlockStateFeatureConfig.CODEC));
+    public static final RegistryObject<Feature<BlockStateConfiguration>> LAKE = FEATURES.register("lake", () -> new AetherLakeFeature(BlockStateConfiguration.CODEC));
 
-    public static final RegistryObject<Feature<NoFeatureConfig>> COLD_AERCLOUD = FEATURES.register("cold_aercloud", () -> new ColdAercloudFeature(NoFeatureConfig.CODEC));
-    public static final RegistryObject<Feature<NoFeatureConfig>> BLUE_AERCLOUD = FEATURES.register("blue_aercloud", () -> new BlueAercloudFeature(NoFeatureConfig.CODEC));
-    public static final RegistryObject<Feature<NoFeatureConfig>> GOLD_AERCLOUD = FEATURES.register("gold_aercloud", () -> new GoldAercloudFeature(NoFeatureConfig.CODEC));
-    public static final RegistryObject<Feature<NoFeatureConfig>> PINK_AERCLOUD = FEATURES.register("pink_aercloud", () -> new PinkAercloudFeature(NoFeatureConfig.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> COLD_AERCLOUD = FEATURES.register("cold_aercloud", () -> new ColdAercloudFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLUE_AERCLOUD = FEATURES.register("blue_aercloud", () -> new BlueAercloudFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> GOLD_AERCLOUD = FEATURES.register("gold_aercloud", () -> new GoldAercloudFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> PINK_AERCLOUD = FEATURES.register("pink_aercloud", () -> new PinkAercloudFeature(NoneFeatureConfiguration.CODEC));
 
-    public static final RegistryObject<Feature<NoFeatureConfig>> CRYSTAL_TREE = FEATURES.register("crystal_tree", () -> new CrystalTreeFeature(NoFeatureConfig.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> CRYSTAL_TREE = FEATURES.register("crystal_tree", () -> new CrystalTreeFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> HOLIDAY_TREE = FEATURES.register("holiday_tree", () -> new HolidayTreeFeature(NoneFeatureConfiguration.CODEC));
 
-    public static final RegistryObject<Feature<NoFeatureConfig>> HOLYSTONE_SPHERE = FEATURES.register("holystone_sphere", () -> new HolystoneSphereFeature(NoFeatureConfig.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> HOLYSTONE_SPHERE = FEATURES.register("holystone_sphere", () -> new HolystoneSphereFeature(NoneFeatureConfiguration.CODEC)); // This is for Gold Dungeons
 
     public static final class States
     {
@@ -70,20 +89,20 @@ public class AetherFeatures
 
     public static final class Configs
     {
-        public static final BaseTreeFeatureConfig SKYROOT_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(
-                new SimpleBlockStateProvider(States.SKYROOT_LOG),
-                new SimpleBlockStateProvider(States.SKYROOT_LEAVES),
-                new BlobFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(0), 3),
+        public static final TreeConfiguration SKYROOT_TREE_CONFIG = (new TreeConfiguration.TreeConfigurationBuilder(
+                new SimpleStateProvider(States.SKYROOT_LOG),
+                new SimpleStateProvider(States.SKYROOT_LEAVES),
+                new BlobFoliagePlacer(UniformInt.fixed(2), UniformInt.fixed(0), 3),
                 new StraightTrunkPlacer(4, 2, 0),
-                new TwoLayerFeature(1, 0, 1))).ignoreVines().build();
-        public static final BaseTreeFeatureConfig GOLDEN_OAK_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(
-                new SimpleBlockStateProvider(States.GOLDEN_OAK_LOG),
-                new SimpleBlockStateProvider(States.GOLDEN_OAK_LEAVES),
-                new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 4),
+                new TwoLayersFeatureSize(1, 0, 1))).ignoreVines().build();
+        public static final TreeConfiguration GOLDEN_OAK_TREE_CONFIG = (new TreeConfiguration.TreeConfigurationBuilder(
+                new SimpleStateProvider(States.GOLDEN_OAK_LOG),
+                new SimpleStateProvider(States.GOLDEN_OAK_LEAVES),
+                new FancyFoliagePlacer(UniformInt.fixed(2), UniformInt.fixed(4), 4),
                 new FancyTrunkPlacer(3, 11, 0),
-                new TwoLayerFeature(0, 0, 0, OptionalInt.of(4)))).ignoreVines().heightmap(Heightmap.Type.MOTION_BLOCKING).build();
+                new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4)))).ignoreVines().heightmap(Heightmap.Types.MOTION_BLOCKING).build();
 
-        public static final BlockClusterFeatureConfig FLOWER_PATCH_CONFIG = (new BlockClusterFeatureConfig.Builder((new WeightedBlockStateProvider())
+        public static final RandomPatchConfiguration FLOWER_PATCH_CONFIG = (new RandomPatchConfiguration.GrassConfigurationBuilder((new WeightedStateProvider())
                         .add(States.PURPLE_FLOWER, 1)
                         .add(States.WHITE_FLOWER, 1)
                         .add(States.BERRY_BUSH, 1), SimpleBlockPlacer.INSTANCE))
@@ -92,39 +111,40 @@ public class AetherFeatures
 
     public static final class Tests
     {
-        public static final RuleTest HOLYSTONE = new BlockMatchRuleTest(AetherBlocks.HOLYSTONE.get());
+        public static final RuleTest HOLYSTONE = new BlockMatchTest(AetherBlocks.HOLYSTONE.get());
     }
 
     public static void registerConfiguredFeatures() {
-        register("grass_patch", AetherFeatures.GRASS_PATCH.get().configured(Features.Configs.DEFAULT_GRASS_CONFIG).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE).decorated(Placement.COUNT_NOISE.configured(new NoiseDependant(-0.8D, 5, 10))));
-        register("tall_grass_patch", AetherFeatures.GRASS_PATCH.get().configured(Features.Configs.TALL_GRASS_CONFIG).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP).squared().decorated(Placement.COUNT_NOISE.configured(new NoiseDependant(-0.8D, 0, 7))));
+        register("grass_patch", AetherFeatures.GRASS_PATCH.get().configured(Features.Configs.DEFAULT_GRASS_CONFIG).decorated(Features.Decorators.HEIGHTMAP_DOUBLE_SQUARE).decorated(FeatureDecorator.COUNT_NOISE.configured(new NoiseDependantDecoratorConfiguration(-0.8D, 5, 10))));
+        register("tall_grass_patch", AetherFeatures.GRASS_PATCH.get().configured(Features.Configs.TALL_GRASS_CONFIG).decorated(Features.Decorators.ADD_32).decorated(Features.Decorators.HEIGHTMAP).squared().decorated(FeatureDecorator.COUNT_NOISE.configured(new NoiseDependantDecoratorConfiguration(-0.8D, 0, 7))));
 
-        register("quicksoil", AetherFeatures.QUICKSOIL.get().configured(IFeatureConfig.NONE).decorated(Placement.RANGE_VERY_BIASED.configured(new TopSolidRangeConfig(63, 0, 70))).squared().count(10));
+        register("quicksoil", AetherFeatures.QUICKSOIL.get().configured(FeatureConfiguration.NONE).decorated(FeatureDecorator.RANGE_VERY_BIASED.configured(new RangeDecoratorConfiguration(63, 0, 70))).squared().count(10));
 
-        register("water_lake", AetherFeatures.LAKE.get().configured(new BlockStateFeatureConfig(Blocks.WATER.defaultBlockState())).decorated(Placement.WATER_LAKE.configured(new ChanceConfig(4))));
-        register("spring_water", Feature.SPRING.configured(new LiquidsConfig(Fluids.WATER.defaultFluidState(), true, 4, 1, ImmutableSet.of(AetherBlocks.HOLYSTONE.get(), AetherBlocks.AETHER_DIRT.get()))).decorated(Placement.RANGE_BIASED.configured(new TopSolidRangeConfig(8, 8, 256))).squared().count(50));
+        register("water_lake", AetherFeatures.LAKE.get().configured(new BlockStateConfiguration(Blocks.WATER.defaultBlockState())).decorated(FeatureDecorator.WATER_LAKE.configured(new ChanceDecoratorConfiguration(4))));
+        register("spring_water", Feature.SPRING.configured(new SpringConfiguration(Fluids.WATER.defaultFluidState(), true, 4, 1, ImmutableSet.of(AetherBlocks.HOLYSTONE.get(), AetherBlocks.AETHER_DIRT.get()))).decorated(FeatureDecorator.RANGE_BIASED.configured(new RangeDecoratorConfiguration(8, 8, 256))).squared().count(50));
 
-        register("cold_aercloud", AetherFeatures.COLD_AERCLOUD.get().configured(IFeatureConfig.NONE).range(128).squared().chance(5));
-        register("blue_aercloud", AetherFeatures.BLUE_AERCLOUD.get().configured(IFeatureConfig.NONE).range(96).squared().chance(5));
-        register("gold_aercloud", AetherFeatures.GOLD_AERCLOUD.get().configured(IFeatureConfig.NONE).range(160).squared().chance(5));
-        register("pink_aercloud", AetherFeatures.PINK_AERCLOUD.get().configured(IFeatureConfig.NONE).range(160).squared().chance(7));
+        register("cold_aercloud", AetherFeatures.COLD_AERCLOUD.get().configured(FeatureConfiguration.NONE).range(128).squared().chance(5));
+        register("blue_aercloud", AetherFeatures.BLUE_AERCLOUD.get().configured(FeatureConfiguration.NONE).range(96).squared().chance(5));
+        register("gold_aercloud", AetherFeatures.GOLD_AERCLOUD.get().configured(FeatureConfiguration.NONE).range(160).squared().chance(5));
+        register("pink_aercloud", AetherFeatures.PINK_AERCLOUD.get().configured(FeatureConfiguration.NONE).range(160).squared().chance(7));
 
 
-        register("crystal_tree", AetherFeatures.CRYSTAL_TREE.get().configured(IFeatureConfig.NONE).chance(30));
-        register("tree_skyroot", Feature.TREE.configured(Configs.SKYROOT_TREE_CONFIG).decorated(Features.Placements.HEIGHTMAP_SQUARE));
-        register("tree_golden_oak", Feature.TREE.configured(Configs.GOLDEN_OAK_TREE_CONFIG).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(0, 0.03F, 1))));
+        register("tree_skyroot", Feature.TREE.configured(Configs.SKYROOT_TREE_CONFIG).decorated(Features.Decorators.HEIGHTMAP_SQUARE));
+        register("tree_golden_oak", Feature.TREE.configured(Configs.GOLDEN_OAK_TREE_CONFIG).decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.03F, 1))));
+        register("crystal_tree", AetherFeatures.CRYSTAL_TREE.get().configured(FeatureConfiguration.NONE).chance(30));
+        register("holiday_tree", AetherFeatures.HOLIDAY_TREE.get().configured(FeatureConfiguration.NONE).chance(60));
 
-        register("ore_aether_dirt", Feature.ORE.configured(new OreFeatureConfig(Tests.HOLYSTONE, States.AETHER_DIRT, 33)).range(256).squared().count(10));
-        register("ore_icestone", Feature.ORE.configured(new OreFeatureConfig(Tests.HOLYSTONE, States.ICESTONE, 16)).range(256).squared().count(10));
-        register("ore_ambrosium", Feature.ORE.configured(new OreFeatureConfig(Tests.HOLYSTONE, States.AMBROSIUM_ORE, 16)).range(256).squared().count(10));
-        register("ore_zanite", Feature.ORE.configured(new OreFeatureConfig(Tests.HOLYSTONE, States.ZANITE_ORE, 8)).range(256).squared().count(10));
-        register("ore_gravitite", Feature.ORE.configured(new OreFeatureConfig(Tests.HOLYSTONE, States.GRAVITITE_ORE, 6)).range(256).squared().count(10));
+        register("ore_aether_dirt", Feature.ORE.configured(new OreConfiguration(Tests.HOLYSTONE, States.AETHER_DIRT, 33)).range(256).squared().count(10));
+        register("ore_icestone", Feature.ORE.configured(new OreConfiguration(Tests.HOLYSTONE, States.ICESTONE, 16)).range(256).squared().count(10));
+        register("ore_ambrosium", Feature.ORE.configured(new OreConfiguration(Tests.HOLYSTONE, States.AMBROSIUM_ORE, 16)).range(256).squared().count(10));
+        register("ore_zanite", Feature.ORE.configured(new OreConfiguration(Tests.HOLYSTONE, States.ZANITE_ORE, 8)).range(256).squared().count(10));
+        register("ore_gravitite", Feature.ORE.configured(new OreConfiguration(Tests.HOLYSTONE, States.GRAVITITE_ORE, 6)).range(256).squared().count(10));
 
-        register("aether_skylands_flowers", Feature.FLOWER.configured(Configs.FLOWER_PATCH_CONFIG).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(2));
+        register("aether_skylands_flowers", Feature.FLOWER.configured(Configs.FLOWER_PATCH_CONFIG).decorated(Features.Decorators.ADD_32).decorated(Features.Decorators.HEIGHTMAP_SQUARE).count(2));
     }
 
-    private static <FC extends IFeatureConfig> void register(String name, ConfiguredFeature<FC, ?> feature) {
-        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name), feature);
+    private static <FC extends FeatureConfiguration> void register(String name, ConfiguredFeature<FC, ?> feature) {
+        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name), feature);
     }
 
 //    public static final class Configured

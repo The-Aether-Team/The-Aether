@@ -9,25 +9,28 @@ import com.gildedgames.aether.common.loot.functions.SpawnTNT;
 import com.gildedgames.aether.common.loot.functions.SpawnXP;
 import com.google.common.collect.Sets;
 
-import net.minecraft.loot.*;
-import net.minecraft.loot.conditions.LootConditionManager;
-import net.minecraft.loot.functions.LootFunctionManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
 public class AetherLoot
 {
 	private static final Set<ResourceLocation> LOOT_TABLES = Sets.newHashSet();
 
-	public static final LootParameterSet STRIPPING = LootParameterSets.register("aether:stripping", (p_237455_0_) -> {
-		p_237455_0_.required(LootParameters.BLOCK_STATE).required(LootParameters.ORIGIN).required(LootParameters.TOOL);
+	public static final LootContextParamSet STRIPPING = LootContextParamSets.register("aether:stripping", (p_237455_0_) -> {
+		p_237455_0_.required(LootContextParams.BLOCK_STATE).required(LootContextParams.ORIGIN).required(LootContextParams.TOOL);
 	});
 
-	public static final LootConditionType CONFIG_ENABLED = new LootConditionType(new ConfigEnabled.Serializer());
+	public static final LootItemConditionType CONFIG_ENABLED = new LootItemConditionType(new ConfigEnabled.Serializer());
 
-	public static final LootFunctionType DOUBLE_DROPS = new LootFunctionType(new DoubleDrops.Serializer());
-	public static final LootFunctionType SPAWN_TNT = new LootFunctionType(new SpawnTNT.Serializer());
-	public static final LootFunctionType SPAWN_XP = new LootFunctionType(new SpawnXP.Serializer());
+	public static final LootItemFunctionType DOUBLE_DROPS = new LootItemFunctionType(new DoubleDrops.Serializer());
+	public static final LootItemFunctionType SPAWN_TNT = new LootItemFunctionType(new SpawnTNT.Serializer());
+	public static final LootItemFunctionType SPAWN_XP = new LootItemFunctionType(new SpawnXP.Serializer());
 
 	public static final ResourceLocation ENTITIES_SHEEPUFF_WHITE = register("entities/sheepuff/white");
 	public static final ResourceLocation ENTITIES_SHEEPUFF_ORANGE = register("entities/sheepuff/orange");

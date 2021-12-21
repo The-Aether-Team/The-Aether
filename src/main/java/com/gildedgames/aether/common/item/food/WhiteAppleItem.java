@@ -5,15 +5,13 @@ import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class WhiteAppleItem extends Item
 {
@@ -22,15 +20,15 @@ public class WhiteAppleItem extends Item
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
         if (!worldIn.isClientSide) entityLiving.curePotionEffects(new ItemStack(AetherItems.WHITE_APPLE.get()));
-        if (entityLiving instanceof ServerPlayerEntity) {
-            ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) entityLiving;
+        if (entityLiving instanceof ServerPlayer) {
+            ServerPlayer serverplayerentity = (ServerPlayer) entityLiving;
             CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
             serverplayerentity.awardStat(Stats.ITEM_USED.get(this));
         }
-        if (entityLiving instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) entityLiving;
+        if (entityLiving instanceof Player) {
+            Player player = (Player) entityLiving;
             IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
                 aetherPlayer.setRemedyMaximum(300);
                 aetherPlayer.setRemedyTimer(300);

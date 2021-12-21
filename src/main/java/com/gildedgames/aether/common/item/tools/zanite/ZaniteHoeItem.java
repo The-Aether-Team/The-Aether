@@ -3,10 +3,10 @@ package com.gildedgames.aether.common.item.tools.zanite;
 import com.gildedgames.aether.common.item.tools.abilities.IZaniteToolItem;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItemTiers;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.HoeItem;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.HoeItem;
 
 public class ZaniteHoeItem extends HoeItem implements IZaniteToolItem
 {

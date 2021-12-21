@@ -8,60 +8,66 @@ import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 
 public class PhygEntity extends MountableEntity
 {
     public float wingFold;
     public float wingAngle;
 
-    public PhygEntity(EntityType<? extends PhygEntity> type, World worldIn) {
+    public PhygEntity(EntityType<? extends PhygEntity> type, Level worldIn) {
         super(type, worldIn);
     }
 
-    public PhygEntity(World worldIn) {
+    public PhygEntity(Level worldIn) {
         this(AetherEntityTypes.PHYG.get(), worldIn);
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new SwimGoal(this));
+        this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(3, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.2, Ingredient.of(AetherItems.BLUE_BERRY.get()), false));
         this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1));
         this.goalSelector.addGoal(6, new FallingRandomWalkingGoal(this, 1.0));
-        this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-        this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
     }
 
     @Override
-    protected PathNavigator createNavigation(World world) {
+    protected PathNavigation createNavigation(Level world) {
         return new FallPathNavigator(this, world);
     }
 
-    public static AttributeModifierMap.MutableAttribute createMobAttributes() {
-        return MobEntity.createMobAttributes()
+    public static AttributeSupplier.Builder createMobAttributes() {
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D);
     }
@@ -75,7 +81,7 @@ public class PhygEntity extends MountableEntity
     }
 
     @Override
-    public void travel(Vector3d vector3d) {
+    public void travel(Vec3 vector3d) {
         float f = this.flyingSpeed;
         if (this.isEffectiveAi() && !this.isOnGround() && this.getPassengers().isEmpty()) {
             this.flyingSpeed = this.getSpeed() * (0.24F / (0.91F * 0.91F * 0.91F));
@@ -128,12 +134,12 @@ public class PhygEntity extends MountableEntity
 
     @Nullable
     @Override
-    public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
+    public AgableMob getBreedOffspring(ServerLevel world, AgableMob entity) {
         return AetherEntityTypes.PHYG.get().create(world);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public Vector3d getLeashOffset() {
-        return new Vector3d(0.0D, 0.6F * this.getEyeHeight(), this.getBbWidth() * 0.4F);
+    public Vec3 getLeashOffset() {
+        return new Vec3(0.0D, 0.6F * this.getEyeHeight(), this.getBbWidth() * 0.4F);
     }
 }

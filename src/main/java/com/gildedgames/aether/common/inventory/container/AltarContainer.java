@@ -4,21 +4,21 @@ import com.gildedgames.aether.common.registry.AetherRecipes.RecipeTypes;
 import com.gildedgames.aether.common.entity.tile.AltarTileEntity;
 import com.gildedgames.aether.common.registry.AetherContainerTypes;
 
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.AbstractFurnaceContainer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.RecipeBookCategory;
-import net.minecraft.util.IIntArray;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractFurnaceMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.RecipeBookType;
+import net.minecraft.world.inventory.ContainerData;
 
-public class AltarContainer extends AbstractFurnaceContainer
+public class AltarContainer extends AbstractFurnaceMenu
 {
-	public AltarContainer(int windowId, PlayerInventory playerInventory) {
-		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING, RecipeBookCategory.FURNACE, windowId, playerInventory);
+	public AltarContainer(int windowId, Inventory playerInventory) {
+		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING, RecipeBookType.FURNACE, windowId, playerInventory);
 	}
 
-	public AltarContainer(int windowId, PlayerInventory playerInventory, IInventory enchantingInventory, IIntArray furnaceData) {
-		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING, RecipeBookCategory.FURNACE, windowId, playerInventory, enchantingInventory, furnaceData);
+	public AltarContainer(int windowId, Inventory playerInventory, Container enchantingInventory, ContainerData furnaceData) {
+		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING, RecipeBookType.FURNACE, windowId, playerInventory, enchantingInventory, furnaceData);
 	}
 
 	@Override

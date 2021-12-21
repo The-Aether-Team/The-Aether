@@ -1,18 +1,18 @@
 package com.gildedgames.aether.core.mixin.client;
 
 import com.gildedgames.aether.common.registry.AetherDimensions;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.multiplayer.ClientLevel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-@Mixin(WorldRenderer.class)
+@Mixin(LevelRenderer.class)
 public class WorldRendererMixin
 {
     @Shadow
-    private ClientWorld level;
+    private ClientLevel level;
 
     /**
      * {@link net.minecraft.client.renderer.WorldRenderer#renderSky(MatrixStack, float)}

@@ -4,11 +4,11 @@ import com.gildedgames.aether.common.inventory.provider.AccessoriesProvider;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import com.gildedgames.aether.core.network.packet.client.ClientGrabItemPacket;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class OpenAccessoriesPacket extends AetherPacket
@@ -20,21 +20,21 @@ public class OpenAccessoriesPacket extends AetherPacket
     }
 
     @Override
-    public void encode(PacketBuffer buf) {
+    public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID);
     }
 
-    public static OpenAccessoriesPacket decode(PacketBuffer buf) {
+    public static OpenAccessoriesPacket decode(FriendlyByteBuf buf) {
         int playerID = buf.readInt();
         return new OpenAccessoriesPacket(playerID);
     }
 
     @Override
-    public void execute(PlayerEntity playerEntity) {
+    public void execute(Player playerEntity) {
         if (playerEntity != null && playerEntity.level != null && playerEntity.getServer() != null) {
             Entity entity = playerEntity.level.getEntity(this.playerID);
-            if (entity instanceof ServerPlayerEntity) {
-                ServerPlayerEntity player = (ServerPlayerEntity) entity;
+            if (entity instanceof ServerPlayer) {
+                ServerPlayer player = (ServerPlayer) entity;
                 ItemStack stack = player.inventory.getCarried();
                 player.inventory.setCarried(ItemStack.EMPTY);
                 NetworkHooks.openGui(player, new AccessoriesProvider());

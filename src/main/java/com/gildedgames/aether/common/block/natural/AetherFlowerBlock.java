@@ -1,24 +1,26 @@
 package com.gildedgames.aether.common.block.natural;
 
-import net.minecraft.block.FlowerBlock;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 
 import java.util.function.Supplier;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class AetherFlowerBlock extends FlowerBlock
 {
-    private final Supplier<Effect> suspiciousStewEffect;
+    private final Supplier<MobEffect> suspiciousStewEffect;
     private final int effectDuration;
 
-    public AetherFlowerBlock(Supplier<Effect> effect, int effectDuration, Properties properties) {
-        super(Effects.POISON, effectDuration, properties);
+    public AetherFlowerBlock(Supplier<MobEffect> effect, int effectDuration, Properties properties) {
+        super(MobEffects.POISON, effectDuration, properties);
         this.suspiciousStewEffect = effect;
         this.effectDuration = effectDuration;
     }
 
     @Override
-    public Effect getSuspiciousStewEffect() {
+    public MobEffect getSuspiciousStewEffect() {
         return this.suspiciousStewEffect.get();
     }
 

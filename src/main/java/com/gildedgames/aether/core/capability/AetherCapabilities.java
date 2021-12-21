@@ -18,14 +18,14 @@ import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayerPr
 import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayerStorage;
 import com.gildedgames.aether.core.capability.interfaces.*;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -65,21 +65,21 @@ public class AetherCapabilities
 		public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
 			if (event.getObject() instanceof LivingEntity) {
 				event.addCapability(new ResourceLocation(Aether.MODID, "cape_entity"), new CapeEntityProvider(new CapeEntity((LivingEntity) event.getObject())));
-				if (event.getObject() instanceof PlayerEntity) {
-					event.addCapability(new ResourceLocation(Aether.MODID, "aether_player"), new AetherPlayerProvider(new AetherPlayer((PlayerEntity) event.getObject())));
+				if (event.getObject() instanceof Player) {
+					event.addCapability(new ResourceLocation(Aether.MODID, "aether_player"), new AetherPlayerProvider(new AetherPlayer((Player) event.getObject())));
 				}
 			}
-			if (event.getObject() instanceof AbstractArrowEntity) {
-				event.addCapability(new ResourceLocation(Aether.MODID, "phoenix_arrow"), new PhoenixArrowProvider(new PhoenixArrow((AbstractArrowEntity) event.getObject())));
+			if (event.getObject() instanceof AbstractArrow) {
+				event.addCapability(new ResourceLocation(Aether.MODID, "phoenix_arrow"), new PhoenixArrowProvider(new PhoenixArrow((AbstractArrow) event.getObject())));
 			}
-			if (event.getObject() instanceof LightningBoltEntity) {
-				event.addCapability(new ResourceLocation(Aether.MODID, "lightning_tracker"), new LightningTrackerProvider(new LightningTracker((LightningBoltEntity) event.getObject())));
+			if (event.getObject() instanceof LightningBolt) {
+				event.addCapability(new ResourceLocation(Aether.MODID, "lightning_tracker"), new LightningTrackerProvider(new LightningTracker((LightningBolt) event.getObject())));
 			}
 		}
 
 		@SubscribeEvent
-		public static void attachWorldCapabilities(AttachCapabilitiesEvent<World> event) {
-			if (event.getObject() instanceof ServerWorld) {
+		public static void attachWorldCapabilities(AttachCapabilitiesEvent<Level> event) {
+			if (event.getObject() instanceof ServerLevel) {
 				event.addCapability(new ResourceLocation(Aether.MODID, "eternal_day"), new EternalDayProvider(new EternalDay(event.getObject())));
 			}
 		}

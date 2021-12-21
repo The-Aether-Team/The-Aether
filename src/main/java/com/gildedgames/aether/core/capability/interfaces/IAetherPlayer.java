@@ -2,21 +2,20 @@ package com.gildedgames.aether.core.capability.interfaces;
 
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface IAetherPlayer extends INBTSerializable<CompoundNBT>
+public interface IAetherPlayer extends INBTSerializable<CompoundTag>
 {
-	PlayerEntity getPlayer();
+	Player getPlayer();
 
-	static LazyOptional<IAetherPlayer> get(PlayerEntity player) {
+	static LazyOptional<IAetherPlayer> get(Player player) {
 		return player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
 	}
 

@@ -9,18 +9,19 @@ import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
 import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -43,9 +44,9 @@ public class WeaponAbilityListener
         if (event.getSource() instanceof EntityDamageSource) {
             LivingEntity entity = event.getEntityLiving();
             EntityDamageSource source = (EntityDamageSource) event.getSource();
-            if (source.getDirectEntity() instanceof PlayerEntity) {
-                PlayerEntity player = (PlayerEntity) source.getDirectEntity();
-                ItemStack stack = player.getItemInHand(Hand.MAIN_HAND);
+            if (source.getDirectEntity() instanceof Player) {
+                Player player = (Player) source.getDirectEntity();
+                ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
                 Item item = stack.getItem();
                 if (item == AetherItems.SKYROOT_SWORD.get() && !entity.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
                     NonNullList<Item> inventory = NonNullList.create();
@@ -67,15 +68,15 @@ public class WeaponAbilityListener
         if (event.getSource() instanceof EntityDamageSource) {
             LivingEntity entity = event.getEntityLiving();
             EntityDamageSource source = (EntityDamageSource) event.getSource();
-            if (source.getDirectEntity() instanceof PlayerEntity) {
-                PlayerEntity player = (PlayerEntity) source.getDirectEntity();
-                ItemStack stack = player.getItemInHand(Hand.MAIN_HAND);
+            if (source.getDirectEntity() instanceof Player) {
+                Player player = (Player) source.getDirectEntity();
+                ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
                 Item item = stack.getItem();
                 if (item == AetherItems.SKYROOT_SWORD.get() && !entity.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
                     ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
                     for (ItemEntity drop : event.getDrops()) {
                         ItemStack droppedStack = drop.getItem();
-                        if (!droppedStack.getItem().is(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS)) {
+                        if (!droppedStack.getItem().getTags().contains(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS.getName())) {
                             ItemEntity dropEntity = new ItemEntity(entity.level, drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy());
                             dropEntity.setDefaultPickUpDelay();
                             newDrops.add(dropEntity);
@@ -93,10 +94,10 @@ public class WeaponAbilityListener
     }
 
     @SubscribeEvent
-    public static void onArrowHit(ProjectileImpactEvent.Arrow event) {
-        if (event.getRayTraceResult().getType() == RayTraceResult.Type.ENTITY) {
-            Entity impactedEntity = ((EntityRayTraceResult) event.getRayTraceResult()).getEntity();
-            IPhoenixArrow.get(event.getArrow()).ifPresent(phoenixArrow -> {
+    public static void onArrowHit(ProjectileImpactEvent event) {
+        if (event.getRayTraceResult().getType() == HitResult.Type.ENTITY && event.getProjectile() instanceof AbstractArrow) {
+            Entity impactedEntity = ((EntityHitResult) event.getRayTraceResult()).getEntity();
+            IPhoenixArrow.get((AbstractArrow) event.getProjectile()).ifPresent(phoenixArrow -> {
                 if (phoenixArrow.isPhoenixArrow() && phoenixArrow.getFireTime() > 0) {
                     impactedEntity.setSecondsOnFire(phoenixArrow.getFireTime());
                 }
@@ -106,8 +107,8 @@ public class WeaponAbilityListener
 
     @SubscribeEvent
     public static void onDartHurt(LivingHurtEvent event) {
-        if (event.getEntityLiving() instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
+        if (event.getEntityLiving() instanceof Player) {
+            Player playerEntity = (Player) event.getEntityLiving();
             Entity source = event.getSource().getDirectEntity();
             if (source instanceof GoldenDartEntity) {
                 IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setGoldenDartCount(aetherPlayer.getGoldenDartCount() + 1));

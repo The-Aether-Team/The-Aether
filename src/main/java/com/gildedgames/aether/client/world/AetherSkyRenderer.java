@@ -1,23 +1,23 @@
 package com.gildedgames.aether.client.world;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferBuilder;
 import net.minecraft.client.renderer.FogRenderer;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldVertexBufferUploader;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.BufferUploader;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexBuffer;
-import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexBuffer;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import com.mojang.math.Matrix4f;
+import net.minecraft.world.phys.Vec3;
+import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ISkyRenderHandler;
@@ -29,7 +29,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
     private static final ResourceLocation MOON_LOCATION = new ResourceLocation("textures/environment/moon_phases.png");
     private static final ResourceLocation SUN_LOCATION = new ResourceLocation("textures/environment/sun.png");
 
-    private final VertexFormat skyFormat = DefaultVertexFormats.POSITION;
+    private final VertexFormat skyFormat = DefaultVertexFormat.POSITION;
     private VertexBuffer starBuffer, skyBuffer;
 
     public AetherSkyRenderer() {
@@ -38,15 +38,15 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
     }
 
     @Override
-    public void render(int ticks, float partialTicks, MatrixStack matrixStack, ClientWorld world, Minecraft mc) {
+    public void render(int ticks, float partialTicks, PoseStack matrixStack, ClientLevel world, Minecraft mc) {
         TextureManager textureManager = Minecraft.getInstance().getTextureManager();
         RenderSystem.disableTexture();
-        Vector3d worldSkyColor = world.getSkyColor(Minecraft.getInstance().gameRenderer.getMainCamera().getBlockPosition(), partialTicks);
+        Vec3 worldSkyColor = world.getSkyColor(Minecraft.getInstance().gameRenderer.getMainCamera().getBlockPosition(), partialTicks);
         float x = (float)worldSkyColor.x;
         float y = (float)worldSkyColor.y;
         float z = (float)worldSkyColor.z;
         FogRenderer.levelFogColor();
-        BufferBuilder bufferbuilder = Tessellator.getInstance().getBuilder();
+        BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
         RenderSystem.depthMask(false);
         RenderSystem.enableFog();
         RenderSystem.color3f(x, y, z);
@@ -66,26 +66,26 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
             RenderSystem.shadeModel(7425);
             matrixStack.pushPose();
             matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
-            float celestialAngle = MathHelper.sin(world.getSunAngle(partialTicks)) < 0.0F ? 180.0F : 0.0F;
+            float celestialAngle = Mth.sin(world.getSunAngle(partialTicks)) < 0.0F ? 180.0F : 0.0F;
             matrixStack.mulPose(Vector3f.ZP.rotationDegrees(celestialAngle));
             matrixStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
             float sunRed = sunRiseRGBA[0];
             float sunGreen = sunRiseRGBA[1];
             float sunBlue = sunRiseRGBA[2];
             Matrix4f matrix4f = matrixStack.last().pose();
-            bufferbuilder.begin(6, DefaultVertexFormats.POSITION_COLOR);
+            bufferbuilder.begin(6, DefaultVertexFormat.POSITION_COLOR);
             bufferbuilder.vertex(matrix4f, 0.0F, 100.0F, 0.0F).color(sunRed, sunGreen, sunBlue, sunRiseRGBA[3]).endVertex();
             int i = 16;
 
             for(int j = 0; j <= 16; ++j) {
                 float f7 = (float)j * ((float)Math.PI * 2F) / 16.0F;
-                float f8 = MathHelper.sin(f7);
-                float f9 = MathHelper.cos(f7);
+                float f8 = Mth.sin(f7);
+                float f9 = Mth.cos(f7);
                 bufferbuilder.vertex(matrix4f, f8 * 120.0F, f9 * 120.0F, -f9 * 40.0F * sunRiseRGBA[3]).color(sunRiseRGBA[0], sunRiseRGBA[1], sunRiseRGBA[2], 0.0F).endVertex();
             }
 
             bufferbuilder.end();
-            WorldVertexBufferUploader.end(bufferbuilder);
+            BufferUploader.end(bufferbuilder);
             matrixStack.popPose();
             RenderSystem.shadeModel(7424);
         }
@@ -119,13 +119,13 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         float f12;
         f12 = 30.0F;
         textureManager.bind(SUN_LOCATION);
-        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+        bufferbuilder.begin(7, DefaultVertexFormat.POSITION_TEX);
         bufferbuilder.vertex(matrix4f1, -f12, 100.0F, -f12).uv(0.0F, 0.0F).endVertex();
         bufferbuilder.vertex(matrix4f1, f12, 100.0F, -f12).uv(1.0F, 0.0F).endVertex();
         bufferbuilder.vertex(matrix4f1, f12, 100.0F, f12).uv(1.0F, 1.0F).endVertex();
         bufferbuilder.vertex(matrix4f1, -f12, 100.0F, f12).uv(0.0F, 1.0F).endVertex();
         bufferbuilder.end();
-        WorldVertexBufferUploader.end(bufferbuilder);
+        BufferUploader.end(bufferbuilder);
 
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, moonOpacity);
         f12 = 20.0F;
@@ -137,13 +137,13 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         float f14 = (float) (i1 + 0) / 2.0F;
         float f15 = (float) (l + 1) / 4.0F;
         float f16 = (float) (i1 + 1) / 2.0F;
-        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+        bufferbuilder.begin(7, DefaultVertexFormat.POSITION_TEX);
         bufferbuilder.vertex(matrix4f1, -f12, -100.0F, f12).uv(f15, f16).endVertex();
         bufferbuilder.vertex(matrix4f1, f12, -100.0F, f12).uv(f13, f16).endVertex();
         bufferbuilder.vertex(matrix4f1, f12, -100.0F, -f12).uv(f13, f14).endVertex();
         bufferbuilder.vertex(matrix4f1, -f12, -100.0F, -f12).uv(f15, f14).endVertex();
         bufferbuilder.end();
-        WorldVertexBufferUploader.end(bufferbuilder);
+        BufferUploader.end(bufferbuilder);
         RenderSystem.disableTexture();
 
         float starBrightness = world.getStarBrightness(partialTicks);
@@ -176,7 +176,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
     }
 
     private void createLightSky() {
-        Tessellator tessellator = Tessellator.getInstance();
+        Tesselator tessellator = Tesselator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuilder();
         if (this.skyBuffer != null) {
             this.skyBuffer.close();
@@ -191,7 +191,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
     private void drawSkyHemisphere(BufferBuilder p_174968_1_, float p_174968_2_, boolean p_174968_3_) {
         int i = 64;
         int j = 6;
-        p_174968_1_.begin(7, DefaultVertexFormats.POSITION);
+        p_174968_1_.begin(7, DefaultVertexFormat.POSITION);
 
         for(int k = -384; k <= 384; k += 64) {
             for(int l = -384; l <= 384; l += 64) {
@@ -212,7 +212,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
     }
 
     private void createStars() {
-        Tessellator tessellator = Tessellator.getInstance();
+        Tesselator tessellator = Tesselator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuilder();
         if (this.starBuffer != null) {
             this.starBuffer.close();
@@ -226,7 +226,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
 
     private void drawStars(BufferBuilder p_180444_1_) {
         Random random = new Random(10842L);
-        p_180444_1_.begin(7, DefaultVertexFormats.POSITION);
+        p_180444_1_.begin(7, DefaultVertexFormat.POSITION);
 
         for(int i = 0; i < 1500; ++i) {
             double d0 = (double)(random.nextFloat() * 2.0F - 1.0F);

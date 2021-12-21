@@ -4,22 +4,22 @@ import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProp
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.Random;
 
-public class QuicksoilFeature extends Feature<NoFeatureConfig>
+public class QuicksoilFeature extends Feature<NoneFeatureConfiguration>
 {
-    public QuicksoilFeature(Codec<NoFeatureConfig> codec) {
+    public QuicksoilFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+    public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, NoneFeatureConfiguration config) {
         boolean doesProtrude = (
                 (reader.getBlockState(pos.west(3)).isAir() ||
                         reader.getBlockState(pos.north(3)).isAir() ||

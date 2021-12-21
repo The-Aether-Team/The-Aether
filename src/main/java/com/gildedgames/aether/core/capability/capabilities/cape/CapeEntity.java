@@ -1,9 +1,9 @@
 package com.gildedgames.aether.core.capability.capabilities.cape;
 
 import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.nbt.CompoundTag;
 
 public class CapeEntity implements ICapeEntity
 {
@@ -29,12 +29,12 @@ public class CapeEntity implements ICapeEntity
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        return new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        return new CompoundTag();
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) { }
+    public void deserializeNBT(CompoundTag nbt) { }
 
     @Override
     public void onUpdate() {

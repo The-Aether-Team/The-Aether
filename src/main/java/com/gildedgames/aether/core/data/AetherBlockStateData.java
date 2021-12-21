@@ -2,8 +2,8 @@ package com.gildedgames.aether.core.data;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.core.data.provider.AetherBlockStateProvider;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.block.TrapDoorBlock;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 

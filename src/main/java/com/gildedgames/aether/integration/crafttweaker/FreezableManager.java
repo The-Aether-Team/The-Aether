@@ -7,7 +7,7 @@ import com.gildedgames.aether.integration.crafttweaker.actions.freezable.AddIceA
 import com.gildedgames.aether.integration.crafttweaker.actions.freezable.AddIcestoneFreezableAction;
 import com.gildedgames.aether.integration.crafttweaker.actions.freezable.RemoveIceAccessoryFreezableAction;
 import com.gildedgames.aether.integration.crafttweaker.actions.freezable.RemoveIcestoneFreezableAction;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import org.openzen.zencode.java.ZenCodeType;
 
 @ZenRegister

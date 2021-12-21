@@ -1,8 +1,8 @@
 package com.gildedgames.aether.client.event.listeners;
 
 import com.gildedgames.aether.Aether;
-import net.minecraft.inventory.container.PlayerContainer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,7 +13,7 @@ public class TextureStitchListener
 {
     @SubscribeEvent
     public static void onTextureStitch(TextureStitchEvent.Pre event) {
-        if (event.getMap().location() == PlayerContainer.BLOCK_ATLAS) {
+        if (event.getAtlas().location() == InventoryMenu.BLOCK_ATLAS) {
             event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/cape"));
             event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/gloves"));
             event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/misc"));

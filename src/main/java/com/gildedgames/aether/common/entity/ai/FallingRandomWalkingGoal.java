@@ -1,39 +1,39 @@
 package com.gildedgames.aether.common.entity.ai;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.entity.ai.goal.RandomWalkingGoal;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.util.RandomPos;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
-public class FallingRandomWalkingGoal extends RandomWalkingGoal
+public class FallingRandomWalkingGoal extends RandomStrollGoal
 {
     protected final float probability;
 
-    public FallingRandomWalkingGoal(CreatureEntity creatureEntity, double speed) {
+    public FallingRandomWalkingGoal(PathfinderMob creatureEntity, double speed) {
         this(creatureEntity, speed, 120, 0.001F);
     }
 
-    public FallingRandomWalkingGoal(CreatureEntity creatureEntity, double speed, int interval) {
+    public FallingRandomWalkingGoal(PathfinderMob creatureEntity, double speed, int interval) {
         this(creatureEntity, speed, interval, 0.001F);
     }
 
-    public FallingRandomWalkingGoal(CreatureEntity creatureEntity, double speed, int interval, float probability) {
+    public FallingRandomWalkingGoal(PathfinderMob creatureEntity, double speed, int interval, float probability) {
         super(creatureEntity, speed, interval);
         this.probability = probability;
     }
 
     @Nullable
-    protected Vector3d getPosition() {
+    protected Vec3 getPosition() {
         if (this.mob.isInWaterOrBubble()) {
-            Vector3d vector3d = RandomPositionGenerator.getLandPos(this.mob, 15, this.mob.getMaxFallDistance());
+            Vec3 vector3d = RandomPos.getLandPos(this.mob, 15, this.mob.getMaxFallDistance());
             return vector3d == null ? super.getPosition() : vector3d;
         } else if (!this.mob.isOnGround()) {
-            Vector3d vector3d = RandomPositionGenerator.getLandPos(this.mob, 12, this.mob.getMaxFallDistance());
+            Vec3 vector3d = RandomPos.getLandPos(this.mob, 12, this.mob.getMaxFallDistance());
             return vector3d != null ? vector3d : super.getPosition();
         } else {
-            return this.mob.getRandom().nextFloat() >= this.probability ? RandomPositionGenerator.getLandPos(this.mob, 10, this.mob.getMaxFallDistance()) : super.getPosition();
+            return this.mob.getRandom().nextFloat() >= this.probability ? RandomPos.getLandPos(this.mob, 10, this.mob.getMaxFallDistance()) : super.getPosition();
         }
     }
 }

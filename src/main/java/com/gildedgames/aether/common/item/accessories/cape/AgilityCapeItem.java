@@ -2,9 +2,11 @@ package com.gildedgames.aether.common.item.accessories.cape;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.ResetMaxUpStepPacket;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class AgilityCapeItem extends CapeItem
 {

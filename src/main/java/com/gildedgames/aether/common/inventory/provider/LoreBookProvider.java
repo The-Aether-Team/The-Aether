@@ -1,27 +1,27 @@
 package com.gildedgames.aether.common.inventory.provider;
 
 import com.gildedgames.aether.common.inventory.container.LoreBookContainer;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class LoreBookProvider implements INamedContainerProvider
+public class LoreBookProvider implements MenuProvider
 {
     @Nonnull
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.aether.book_of_lore");
+    public Component getDisplayName() {
+        return new TranslatableComponent("container.aether.book_of_lore");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int i, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity playerEntity) {
+    public AbstractContainerMenu createMenu(int i, @Nonnull Inventory playerInventory, @Nonnull Player playerEntity) {
         return new LoreBookContainer(i, playerInventory);
     }
 }

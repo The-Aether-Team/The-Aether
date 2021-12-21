@@ -1,15 +1,15 @@
 package com.gildedgames.aether.common.item.miscellaneous;
 
 import com.gildedgames.aether.common.entity.miscellaneous.AbstractParachuteEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
 
 import java.util.function.Supplier;
 
@@ -23,7 +23,7 @@ public class ParachuteItem extends Item
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
         if (!playerEntity.isOnGround() && !playerEntity.isInWater() && !playerEntity.isInLava() && !playerEntity.isShiftKeyDown()) {
             Entity entity = this.parachuteEntity.get().create(world);
@@ -34,7 +34,7 @@ public class ParachuteItem extends Item
                     if (playerEntity.getVehicle() instanceof AbstractParachuteEntity) {
                         playerEntity.getVehicle().ejectPassengers();
                     } else {
-                        return ActionResult.pass(itemstack);
+                        return InteractionResultHolder.pass(itemstack);
                     }
                 }
                 if (!world.isClientSide) {
@@ -44,9 +44,9 @@ public class ParachuteItem extends Item
                 }
                 parachuteEntity.spawnExplosionParticle();
                 playerEntity.awardStat(Stats.ITEM_USED.get(this));
-                return ActionResult.sidedSuccess(itemstack, world.isClientSide());
+                return InteractionResultHolder.sidedSuccess(itemstack, world.isClientSide());
             }
         }
-        return ActionResult.pass(itemstack);
+        return InteractionResultHolder.pass(itemstack);
     }
 }

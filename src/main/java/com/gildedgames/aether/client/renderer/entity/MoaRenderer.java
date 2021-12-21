@@ -4,13 +4,15 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.layers.MoaSaddleLayer;
 import com.gildedgames.aether.client.renderer.entity.model.MoaModel;
 import com.gildedgames.aether.common.entity.passive.MoaEntity;
+import com.gildedgames.aether.core.api.AetherMoaTypes;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import com.gildedgames.aether.core.registry.AetherMoaTypes;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.UUID;
 
@@ -18,7 +20,7 @@ public class MoaRenderer extends MobRenderer<MoaEntity, MoaModel>
 {
 	private static final ResourceLocation MOS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/mos.png");
 	private static final ResourceLocation RAPTOR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/raptor.png");
-	
+
 	public MoaRenderer(EntityRendererManager rendererManager) {
 		super(rendererManager, new MoaModel(0.0F), 0.7F);
 		this.addLayer(new MoaSaddleLayer(this));

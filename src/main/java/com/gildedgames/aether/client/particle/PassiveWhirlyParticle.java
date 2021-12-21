@@ -2,21 +2,21 @@ package com.gildedgames.aether.client.particle;
 
 import com.gildedgames.aether.common.entity.monster.WhirlwindEntity;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.EntityPredicate;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class PassiveWhirlyParticle extends SpriteTexturedParticle {
+public class PassiveWhirlyParticle extends TextureSheetParticle {
     WhirlwindEntity whirlwind;
-    IAnimatedSprite animatedSprite;
-    public PassiveWhirlyParticle(ClientWorld worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, IAnimatedSprite sprite) {
+    SpriteSet animatedSprite;
+    public PassiveWhirlyParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, SpriteSet sprite) {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
         this.animatedSprite = sprite;
-        whirlwind = worldIn.getNearestEntity(WhirlwindEntity.class, EntityPredicate.DEFAULT, null, xCoordIn, yCoordIn, zCoordIn, new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1));
+        whirlwind = worldIn.getNearestEntity(WhirlwindEntity.class, TargetingConditions.DEFAULT, null, xCoordIn, yCoordIn, zCoordIn, new AABB(x, y, z, x + 1, y + 1, z + 1));
         this.setPos(whirlwind.getX(), whirlwind.getY(), whirlwind.getZ());
         this.xd = xSpeedIn + (Math.random() * 2.0D - 1.0D) * 0.05000000074505806D;
         this.yd = ySpeedIn + (Math.random() * 2.0D - 1.0D) * 0.05000000074505806D;
@@ -43,7 +43,7 @@ public class PassiveWhirlyParticle extends SpriteTexturedParticle {
             float f = (float)(whirlwind.getX() - this.x);
             float f1 = (float)(whirlwind.getY() - this.y);
             float f2 = (float)(whirlwind.getZ() - this.z);
-            float d16 = MathHelper.sqrt(f * f + f1 * f1 + f2 * f2);
+            float d16 = Mth.sqrt(f * f + f1 * f1 + f2 * f2);
 
             double d18 = this.getBoundingBox().minY - this.y;
             double d21 = Math.atan2(whirlwind.getX() - this.x, whirlwind.getZ() - this.z) / 0.01745329424738884D;
@@ -64,20 +64,20 @@ public class PassiveWhirlyParticle extends SpriteTexturedParticle {
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory<BasicParticleType> {
-        private final IAnimatedSprite spriteSet;
+    public static class Factory implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet spriteSet;
 
-        public Factory(IAnimatedSprite spriteSetIn) {
+        public Factory(SpriteSet spriteSetIn) {
             this.spriteSet = spriteSetIn;
         }
 
         @Override
-        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             PassiveWhirlyParticle whirlyParticle = new PassiveWhirlyParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
             whirlyParticle.pickSprite(this.spriteSet);
             return whirlyParticle;

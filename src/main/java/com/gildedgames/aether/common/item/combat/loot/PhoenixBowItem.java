@@ -3,11 +3,13 @@ package com.gildedgames.aether.common.item.combat.loot;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.*;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.Item;
 
 public class PhoenixBowItem extends BowItem
 {
@@ -16,7 +18,7 @@ public class PhoenixBowItem extends BowItem
     }
 
     @Override
-    public AbstractArrowEntity customArrow(AbstractArrowEntity arrow) {
+    public AbstractArrow customArrow(AbstractArrow arrow) {
         IPhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
             phoenixArrow.setPhoenixArrow(true);
             int defaultTime = 20;
