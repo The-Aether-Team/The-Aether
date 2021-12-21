@@ -19,12 +19,11 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherLoot;
 import com.google.common.collect.Maps;
 
+import net.minecraft.world.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -42,7 +41,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.util.*;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
@@ -58,14 +56,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgableMob;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.Shearable;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.FollowParentGoal;
@@ -206,7 +196,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
             float f = ((float) (this.eatAnimationTick - 4) - p_70890_1_) / 32.0F;
             return ((float) Math.PI / 5.0F) + 0.21991149F * Mth.sin(f * 28.7F);
         } else {
-            return this.eatAnimationTick > 0 ? ((float) Math.PI / 5.0F) : this.xRot * ((float) Math.PI / 180.0F);
+            return this.eatAnimationTick > 0 ? ((float) Math.PI / 5.0F) : this.getXRot() * ((float) Math.PI / 180.0F);
         }
     }
 
@@ -262,7 +252,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
                     player.swing(hand);
                     if (!player.level.isClientSide) {
                         this.setColor(color);
-                        if (!player.abilities.instabuild) {
+                        if (!player.getAbilities().instabuild) {
                             itemstack.shrink(2);
                         }
                     }
@@ -270,7 +260,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
                     player.swing(hand);
                     if (!player.level.isClientSide) {
                         this.setColor(color);
-                        if (!player.abilities.instabuild) {
+                        if (!player.getAbilities().instabuild) {
                             itemstack.shrink(1);
                         }
                     }
@@ -404,7 +394,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
 
     @Nullable
     @Override
-    public AgableMob getBreedOffspring(ServerLevel world, AgableMob entity) {
+    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
         SheepuffEntity sheepuffParent = (SheepuffEntity) entity;
         SheepuffEntity sheepuffBaby = AetherEntityTypes.SHEEPUFF.get().create(world);
         sheepuffBaby.setColor(this.getOffspringColor(this, sheepuffParent));

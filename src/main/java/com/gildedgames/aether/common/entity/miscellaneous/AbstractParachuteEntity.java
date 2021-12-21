@@ -122,11 +122,6 @@ public abstract class AbstractParachuteEntity extends Entity
 	}
 
     @Override
-    protected boolean isMovementNoisy() {
-        return false;
-    }
-
-    @Override
     public boolean isPickable() {
         return !this.isRemoved();
     }

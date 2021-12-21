@@ -4,10 +4,8 @@ import com.gildedgames.aether.client.event.listeners.capability.EternalDayClient
 import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.World;
 
 public class AetherTimePacket extends AetherPacket
 {

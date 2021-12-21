@@ -8,7 +8,6 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.google.common.collect.Lists;
 
-import net.minecraft.block.*;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -30,15 +29,13 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.core.Direction;
-import net.minecraft.util.math.*;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -50,6 +47,7 @@ import net.minecraft.world.level.block.ConcretePowderBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.network.NetworkHooks;
 
 public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpawnData
 {
@@ -85,7 +83,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
     @Override
     public void tick() {
         if (this.blockState.isAir()) {
-            this.remove();
+            this.remove(RemovalReason.DISCARDED);
         } else {
             this.time++;
             Block block = this.blockState.getBlock();
@@ -111,13 +109,13 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
                         if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                             this.dropItem();
                         }
-                        this.remove();
+                        this.remove(RemovalReason.DISCARDED);
                     }
                 } else {
                     BlockState blockstate = this.level.getBlockState(blockPos);
                     this.setDeltaMovement(this.getDeltaMovement().multiply(0.7D, 1.5D, 0.7D));
                     if (!blockstate.is(Blocks.MOVING_PISTON)) {
-                        this.remove();
+                        this.remove(RemovalReason.KILLED);
                         if (!this.cancelDrop) {
                             boolean canBeReplaced = blockstate.canBeReplaced(new DirectionalPlaceContext(this.level, blockPos, Direction.UP, ItemStack.EMPTY, Direction.DOWN));
                             boolean canSurvive = this.blockState.canSurvive(this.level, blockPos);
@@ -148,9 +146,9 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
     }
 
     @Override
-    public void remove() {
+    public void remove(Entity.RemovalReason reason) {
         this.resetCarriedEntities();
-        super.remove();
+        super.remove(reason);
     }
 
     private void dropItem() {
@@ -169,7 +167,7 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
                 boolean flag = this.blockState.is(BlockTags.ANVIL);
                 DamageSource damagesource = flag ? DamageSource.ANVIL : DamageSource.FALLING_BLOCK;
                 for (Entity entity : list) {
-                    if (!(entity instanceof ItemEntity) || !((ItemEntity) entity).getItem().getItem().is(ItemTags.ANVIL)) {
+                    if (!(entity instanceof ItemEntity) || !((ItemEntity) entity).getItem().is(ItemTags.ANVIL)) {
                         entity.hurt(damagesource, (float) Math.min(Mth.floor((float) i * 2.0F), 40));
                     }
                 }
@@ -245,13 +243,8 @@ public class FloatingBlockEntity extends Entity implements IEntityAdditionalSpaw
     }
 
     @Override
-    protected boolean isMovementNoisy() {
-        return false;
-    }
-
-    @Override
     public boolean isPickable() {
-        return !this.removed;
+        return !this.isRemoved();
     }
 
     @Override

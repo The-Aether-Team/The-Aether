@@ -14,7 +14,6 @@ import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
-import net.minecraft.loot.*;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
@@ -34,13 +33,13 @@ import javax.annotation.Nonnull;
 
 import com.gildedgames.aether.core.data.provider.AetherLootTableProvider.AetherBlockLootTableProvider;
 
-import net.minecraft.world.level.storage.loot.ConstantIntValue;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.RandomValueBounds;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootTableReference;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 public class AetherLootTableData extends AetherLootTableProvider
 {
@@ -76,11 +75,11 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropDoubleWithFortune(AetherBlocks.AMBROSIUM_ORE, AetherItems.AMBROSIUM_SHARD);
             dropWithFortune(AetherBlocks.ZANITE_ORE, AetherItems.ZANITE_GEMSTONE);
             dropSelf(AetherBlocks.GRAVITITE_ORE);
-
-            this.add(AetherBlocks.SKYROOT_LEAVES.get(),
-                    (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.SKYROOT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-            this.add(AetherBlocks.GOLDEN_OAK_LEAVES.get(),
-                    (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+// TODO: REIMPLEMENT LEAVE ODDS
+//            this.add(AetherBlocks.SKYROOT_LEAVES.get(),
+//                    (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.SKYROOT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+//            this.add(AetherBlocks.GOLDEN_OAK_LEAVES.get(),
+//                    (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
             this.add(AetherBlocks.CRYSTAL_LEAVES.get(),
                     AetherBlockLootTableProvider::droppingWithSkyrootSticks);
             this.add(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get(),
@@ -201,7 +200,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             this.add(AetherBlocks.SUN_ALTAR.get(), AetherBlockLootTableProvider::droppingNameableBlockEntityTable);
 
             this.add(AetherBlocks.SKYROOT_BOOKSHELF.get(),
-                    (bookshelf) -> createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ConstantIntValue.exactly(3)));
+                    (bookshelf) -> createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ConstantValue.exactly(3)));
 
             this.add(AetherBlocks.SKYROOT_BED.get(),
                     (bed) -> createSinglePropConditionTable(bed, BedBlock.PART, BedPart.HEAD));
@@ -218,43 +217,43 @@ public class AetherLootTableData extends AetherLootTableProvider
         @Override
         protected void addTables() {
             this.add(AetherEntityTypes.PHYG.get(), LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(Items.PORKCHOP)
-                                    .apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 3.0F)))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
                                     .apply(SmeltItemFunction.smelted().when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(RandomValueBounds.between(0.0F, 1.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                             )
                     )
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(Items.FEATHER)
-                                    .apply(SetItemCountFunction.setCount(RandomValueBounds.between(0.0F, 1.0F)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(RandomValueBounds.between(0.0F, 1.0F)))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                             )
                     )
             );
 
             this.add(AetherEntityTypes.FLYING_COW.get(), LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(Items.LEATHER)
-                                    .apply(SetItemCountFunction.setCount(RandomValueBounds.between(0.0F, 2.0F)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(RandomValueBounds.between(0.0F, 1.0F)))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                             )
                     )
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(Items.BEEF)
-                                    .apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 3.0F)))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
                                     .apply(SmeltItemFunction.smelted().when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(RandomValueBounds.between(0.0F, 1.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                             )
                     )
             );
 
             this.add(AetherEntityTypes.SHEEPUFF.get(), LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(Items.MUTTON)
-                                    .apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 2.0F)))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
                                     .apply(SmeltItemFunction.smelted().when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(RandomValueBounds.between(0.0F, 1.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                             )
                     )
             );
@@ -276,19 +275,19 @@ public class AetherLootTableData extends AetherLootTableProvider
             this.add(AetherLoot.ENTITIES_SHEEPUFF_YELLOW, sheepLootTableBuilderWithDrop(Blocks.YELLOW_WOOL));
 
             this.add(AetherEntityTypes.MOA.get(), LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(Items.FEATHER)
-                                    .apply(SetItemCountFunction.setCount(RandomValueBounds.between(2.0F, 3.0F)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(RandomValueBounds.between(0.0F, 2.0F)))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 3.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 2.0F)))
                             )
                     )
             );
 
             this.add(AetherEntityTypes.AERBUNNY.get(), LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(Items.STRING)
-                                    .apply(SetItemCountFunction.setCount(RandomValueBounds.between(0.0F, 2.0F)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(RandomValueBounds.between(0.0F, 1.0F)))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                             )
                     )
             );
@@ -297,50 +296,50 @@ public class AetherLootTableData extends AetherLootTableProvider
             this.add(AetherEntityTypes.WHIRLWIND.get(), LootTable.lootTable());
 
             this.add(AetherEntityTypes.AECHOR_PLANT.get(), LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(AetherItems.AECHOR_PETAL.get())
-                                    .apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 1.0F)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(RandomValueBounds.between(0.0F, 1.0F)))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                             )
                     )
             );
 
             this.add(AetherEntityTypes.COCKATRICE.get(), LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(Items.FEATHER)
-                                    .apply(SetItemCountFunction.setCount(RandomValueBounds.between(2.0F, 3.0F)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(RandomValueBounds.between(0.0F, 2.0F)))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 3.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 2.0F)))
                             )
                     )
             );
 
             this.add(AetherEntityTypes.ZEPHYR.get(), LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(AetherBlocks.COLD_AERCLOUD.get())
-                                    .apply(SetItemCountFunction.setCount(RandomValueBounds.between(0.0F, 2.0F)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(RandomValueBounds.between(0.0F, 1.0F)))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                             )
                     )
             );
 
             this.add(AetherEntityTypes.SENTRY.get(), LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(AetherBlocks.CARVED_STONE.get()).setWeight(4)
-                                    .apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 1.0F)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(RandomValueBounds.between(0.0F, 1.0F)))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                             )
                             .add(LootItem.lootTableItem(AetherBlocks.SENTRY_STONE.get()).setWeight(1)
-                                    .apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 1.0F)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(RandomValueBounds.between(0.0F, 1.0F)))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                             )
                     )
             );
 
             this.add(AetherEntityTypes.MIMIC.get(), LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(Blocks.CHEST)
-                                    .apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 1.0F)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(RandomValueBounds.between(0.0F, 1.0F)))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                             )
                     )
             );
@@ -348,8 +347,8 @@ public class AetherLootTableData extends AetherLootTableProvider
 
         private static LootTable.Builder sheepLootTableBuilderWithDrop(ItemLike wool) {
             return LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(LootItem.lootTableItem(wool)))
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(LootTableReference.lootTableReference(AetherEntityTypes.SHEEPUFF.get().getDefaultLootTable())));
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(wool)))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootTableReference.lootTableReference(AetherEntityTypes.SHEEPUFF.get().getDefaultLootTable())));
         }
 
         @Override
@@ -363,16 +362,16 @@ public class AetherLootTableData extends AetherLootTableProvider
         @Override
         public void accept(@Nonnull BiConsumer<ResourceLocation, LootTable.Builder> builder) {
             builder.accept(AetherLoot.BRONZE_DUNGEON, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(3.0F, 5.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(3.0F, 5.0F))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_PICKAXE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_AXE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_SWORD.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_SHOVEL.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.SWET_CAPE.get()).setWeight(1))
-                            .add(LootItem.lootTableItem(AetherItems.AMBROSIUM_SHARD.get()).setWeight(1).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 10.0F))))
-                            .add(LootItem.lootTableItem(AetherItems.GOLDEN_DART.get()).setWeight(1).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 5.0F))))
-                            .add(LootItem.lootTableItem(AetherItems.POISON_DART.get()).setWeight(1).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 3.0F))))
-                            .add(LootItem.lootTableItem(AetherItems.ENCHANTED_DART.get()).setWeight(1).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 3.0F))))
+                            .add(LootItem.lootTableItem(AetherItems.AMBROSIUM_SHARD.get()).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 10.0F))))
+                            .add(LootItem.lootTableItem(AetherItems.GOLDEN_DART.get()).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 5.0F))))
+                            .add(LootItem.lootTableItem(AetherItems.POISON_DART.get()).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+                            .add(LootItem.lootTableItem(AetherItems.ENCHANTED_DART.get()).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
                             .add(LootTableReference.lootTableReference(AetherLoot.BRONZE_DUNGEON_SUB_1).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.SKYROOT_POISON_BUCKET.get()).setWeight(1))
                             .add(LootTableReference.lootTableReference(AetherLoot.BRONZE_DUNGEON_SUB_2).setWeight(1))
@@ -382,35 +381,35 @@ public class AetherLootTableData extends AetherLootTableProvider
                     )
             );
             builder.accept(AetherLoot.BRONZE_DUNGEON_SUB_1, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.MUSIC_DISC_AETHER_TUNE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(19))
                     )
             );
             builder.accept(AetherLoot.BRONZE_DUNGEON_SUB_2, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(Items.MUSIC_DISC_CAT).setWeight(1))
                             .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(9))
                     )
             );
             builder.accept(AetherLoot.BRONZE_DUNGEON_SUB_3, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.IRON_RING.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(3))
                     )
             );
             builder.accept(AetherLoot.BRONZE_DUNGEON_SUB_4, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.GOLDEN_RING.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(9))
                     )
             );
             builder.accept(AetherLoot.BRONZE_DUNGEON_REWARD, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(5.0F, 6.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(5.0F, 6.0F))
                             .add(LootTableReference.lootTableReference(AetherLoot.BRONZE_DUNGEON_REWARD_SUB_1).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.PHOENIX_BOW.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.FLAMING_SWORD.get()).setWeight(1))
-                            .add(LootItem.lootTableItem(AetherItems.LIGHTNING_KNIFE.get()).setWeight(1)).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 20.0F)))
+                            .add(LootItem.lootTableItem(AetherItems.LIGHTNING_KNIFE.get()).setWeight(1)).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 20.0F)))
                             .add(LootItem.lootTableItem(AetherItems.VALKYRIE_LANCE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.AGILITY_CAPE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.SENTRY_BOOTS.get()).setWeight(1))
@@ -420,23 +419,23 @@ public class AetherLootTableData extends AetherLootTableProvider
                     )
             );
             builder.accept(AetherLoot.BRONZE_DUNGEON_REWARD_SUB_1, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
-                            .add(LootItem.lootTableItem(AetherItems.BLUE_GUMMY_SWET.get()).setWeight(1).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 7.0F))))
-                            .add(LootItem.lootTableItem(AetherItems.GOLDEN_GUMMY_SWET.get()).setWeight(1).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 7.0F))))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
+                            .add(LootItem.lootTableItem(AetherItems.BLUE_GUMMY_SWET.get()).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 7.0F))))
+                            .add(LootItem.lootTableItem(AetherItems.GOLDEN_GUMMY_SWET.get()).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 7.0F))))
                     )
             );
 
             builder.accept(AetherLoot.SILVER_DUNGEON, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(3.0F, 5.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(3.0F, 5.0F))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_PICKAXE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.SKYROOT_BUCKET.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.GOLDEN_DART_SHOOTER.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.BLUE_MOA_EGG.get()).setWeight(1))
                             .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_SUB_1).setWeight(1))
-                            .add(LootItem.lootTableItem(AetherItems.AMBROSIUM_SHARD.get()).setWeight(1)).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 10.0F)))
-                            .add(LootItem.lootTableItem(AetherItems.GOLDEN_DART.get()).setWeight(1)).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 5.0F)))
-                            .add(LootItem.lootTableItem(AetherItems.POISON_DART.get()).setWeight(1)).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 3.0F)))
-                            .add(LootItem.lootTableItem(AetherItems.ENCHANTED_DART.get()).setWeight(1)).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 3.0F)))
+                            .add(LootItem.lootTableItem(AetherItems.AMBROSIUM_SHARD.get()).setWeight(1)).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 10.0F)))
+                            .add(LootItem.lootTableItem(AetherItems.GOLDEN_DART.get()).setWeight(1)).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 5.0F)))
+                            .add(LootItem.lootTableItem(AetherItems.POISON_DART.get()).setWeight(1)).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                            .add(LootItem.lootTableItem(AetherItems.ENCHANTED_DART.get()).setWeight(1)).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
                             .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_SUB_2).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.SKYROOT_POISON_BUCKET.get()).setWeight(1))
                             .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_SUB_3).setWeight(1))
@@ -444,55 +443,55 @@ public class AetherLootTableData extends AetherLootTableProvider
                             .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_SUB_5).setWeight(1))
                             .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_SUB_6).setWeight(1))
                             .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_SUB_7).setWeight(1))
-                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(1)).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 4.0F)))
+                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(1)).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
                     )
             );
             builder.accept(AetherLoot.SILVER_DUNGEON_SUB_1, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.WHITE_MOA_EGG.get()).setWeight(1))
                     )
             );
             builder.accept(AetherLoot.SILVER_DUNGEON_SUB_2, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.MUSIC_DISC_AETHER_TUNE.get()).setWeight(1))
-                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(19)).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 4.0F)))
+                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(19)).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
                     )
             );
             builder.accept(AetherLoot.SILVER_DUNGEON_SUB_3, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.MUSIC_DISC_ASCENDING_DAWN.get()).setWeight(1))
-                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(9)).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 4.0F)))
+                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(9)).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
                     )
             );
             builder.accept(AetherLoot.SILVER_DUNGEON_SUB_4, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_BOOTS.get()).setWeight(200))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_HELMET.get()).setWeight(100))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_LEGGINGS.get()).setWeight(50))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_CHESTPLATE.get()).setWeight(25))
-                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(25)).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 4.0F)))
+                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(25)).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
                     )
             );
             builder.accept(AetherLoot.SILVER_DUNGEON_SUB_5, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.IRON_PENDANT.get()).setWeight(1))
-                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(3)).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 4.0F)))
+                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(3)).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
                     )
             );
             builder.accept(AetherLoot.SILVER_DUNGEON_SUB_6, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.GOLDEN_PENDANT.get()).setWeight(1))
-                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(9)).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 4.0F)))
+                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(9)).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
                     )
             );
             builder.accept(AetherLoot.SILVER_DUNGEON_SUB_7, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_RING.get()).setWeight(1))
-                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(14)).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 4.0F)))
+                            .add(LootItem.lootTableItem(AetherBlocks.AMBROSIUM_TORCH.get()).setWeight(14)).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
                     )
             );
             builder.accept(AetherLoot.SILVER_DUNGEON_REWARD, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(5.0F, 6.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(5.0F, 6.0F))
                             .add(LootTableReference.lootTableReference(AetherLoot.SILVER_DUNGEON_REWARD_SUB_1).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.LIGHTNING_SWORD.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.VALKYRIE_AXE.get()).setWeight(1))
@@ -515,20 +514,20 @@ public class AetherLootTableData extends AetherLootTableProvider
                     )
             );
             builder.accept(AetherLoot.SILVER_DUNGEON_REWARD_SUB_1, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
-                            .add(LootItem.lootTableItem(AetherItems.BLUE_GUMMY_SWET.get()).setWeight(1).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 15.0F))))
-                            .add(LootItem.lootTableItem(AetherItems.GOLDEN_GUMMY_SWET.get()).setWeight(1).apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 15.0F))))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
+                            .add(LootItem.lootTableItem(AetherItems.BLUE_GUMMY_SWET.get()).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 15.0F))))
+                            .add(LootItem.lootTableItem(AetherItems.GOLDEN_GUMMY_SWET.get()).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 15.0F))))
                     )
             );
             builder.accept(AetherLoot.SILVER_DUNGEON_REWARD_SUB_2, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.VALKYRIE_CAPE.get()).setWeight(1).when(ConfigEnabled.isEnabled(AetherConfig.COMMON.spawn_valkyrie_cape)))
                             .add(LootItem.lootTableItem(AetherItems.GOLDEN_FEATHER.get()).setWeight(1).when(ConfigEnabled.isEnabled(AetherConfig.COMMON.spawn_golden_feather)))
                     )
             );
 
             builder.accept(AetherLoot.GOLD_DUNGEON_REWARD, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(5.0F, 6.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(5.0F, 6.0F))
                             .add(LootItem.lootTableItem(AetherItems.IRON_BUBBLE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.VAMPIRE_BLADE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.PIG_SLAYER.get()).setWeight(1))
@@ -542,32 +541,32 @@ public class AetherLootTableData extends AetherLootTableProvider
                     )
             );
             builder.accept(AetherLoot.GOLD_DUNGEON_REWARD_SUB_1, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.PHOENIX_HELMET.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.PHOENIX_CHESTPLATE.get()).setWeight(1))
                     )
             );
             builder.accept(AetherLoot.GOLD_DUNGEON_REWARD_SUB_2, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.PHOENIX_BOOTS.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.PHOENIX_GLOVES.get()).setWeight(1))
                     )
             );
             builder.accept(AetherLoot.GOLD_DUNGEON_REWARD_SUB_3, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.GRAVITITE_HELMET.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.GRAVITITE_LEGGINGS.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.GRAVITITE_CHESTPLATE.get()).setWeight(1))
                     )
             );
             builder.accept(AetherLoot.GOLD_DUNGEON_REWARD_SUB_4, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.GRAVITITE_BOOTS.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.GRAVITITE_GLOVES.get()).setWeight(1))
                     )
             );
             builder.accept(AetherLoot.GOLD_DUNGEON_REWARD_SUB_5, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(RandomValueBounds.between(1.0F, 1.0F))
+                    .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                             .add(LootItem.lootTableItem(AetherItems.PHOENIX_LEGGINGS.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.CHAINMAIL_GLOVES.get()).setWeight(1))
                     )
@@ -579,8 +578,8 @@ public class AetherLootTableData extends AetherLootTableProvider
     {
         public void accept(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
             builder.accept(AetherLoot.ENTER_AETHER, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(LootItem.lootTableItem(AetherItems.GOLDEN_PARACHUTE.get())).when(ConfigEnabled.isEnabled(AetherConfig.COMMON.enable_startup_loot)))
-                    .withPool(LootPool.lootPool().setRolls(ConstantIntValue.exactly(1)).add(LootItem.lootTableItem(AetherItems.BOOK_OF_LORE.get())).when(ConfigEnabled.isEnabled(AetherConfig.COMMON.enable_startup_loot)))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(AetherItems.GOLDEN_PARACHUTE.get())).when(ConfigEnabled.isEnabled(AetherConfig.COMMON.enable_startup_loot)))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(AetherItems.BOOK_OF_LORE.get())).when(ConfigEnabled.isEnabled(AetherConfig.COMMON.enable_startup_loot)))
             );
         }
     }
@@ -591,7 +590,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             builder.accept(AetherLoot.STRIP_GOLDEN_OAK, LootTable.lootTable()
                     .withPool(LootPool.lootPool().add(LootItem.lootTableItem(AetherItems.GOLDEN_AMBER.get())
                             .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
-                            .apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 2.0F)))
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
                             .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))));
         }
     }

@@ -1,7 +1,6 @@
 package com.gildedgames.aether.common.event.events;
 
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;

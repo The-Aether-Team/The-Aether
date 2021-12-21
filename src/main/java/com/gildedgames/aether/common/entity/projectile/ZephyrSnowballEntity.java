@@ -24,7 +24,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 
 public class ZephyrSnowballEntity extends Fireball {
 	private int ticksInAir;
@@ -78,7 +78,7 @@ public class ZephyrSnowballEntity extends Fireball {
 				entity.setDeltaMovement(entity.getDeltaMovement().x + (this.getDeltaMovement().x * 1.5F), entity.getDeltaMovement().y, entity.getDeltaMovement().z + (this.getDeltaMovement().z * 1.5F));
 			}
 		}
-		this.remove();
+		this.discard();
 	}
 
 	@Override
@@ -128,7 +128,7 @@ public class ZephyrSnowballEntity extends Fireball {
 			this.setPos(d0, d1, d2);
 		}
 		else {
-			this.remove();
+			this.discard();
 			return;
 		}
 		/* END SLIGHTLY MODIFIED super.tick() CODE */
@@ -137,7 +137,7 @@ public class ZephyrSnowballEntity extends Fireball {
 		}
 
 		if (this.ticksInAir > 400) {
-			this.remove();
+			this.discard();
 		}
 	}
 

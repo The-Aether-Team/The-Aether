@@ -48,10 +48,10 @@ public class SentryEntity extends Slime {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(1, new SentryEntity.FloatGoal(this));
-		this.goalSelector.addGoal(2, new SentryEntity.AttackGoal(this));
-		this.goalSelector.addGoal(3, new SentryEntity.FaceRandomGoal(this));
-		this.goalSelector.addGoal(5, new SentryEntity.HopGoal(this));
+//		this.goalSelector.addGoal(1, new SentryEntity.FloatGoal(this));
+//		this.goalSelector.addGoal(2, new SentryEntity.AttackGoal(this));
+//		this.goalSelector.addGoal(3, new SentryEntity.FaceRandomGoal(this));
+//		this.goalSelector.addGoal(5, new SentryEntity.HopGoal(this));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, (entity) -> Math.abs(entity.getY() - this.getY()) <= 4.0));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
 	}
@@ -110,7 +110,7 @@ public class SentryEntity extends Slime {
 	}
 
 	protected void explodeAt(LivingEntity entityIn) {
-		if (this.isAwake() && this.canSee(entityIn) && entityIn.hurt(DamageSource.mobAttack(this), 1.0F) && this.tickCount > 20) {
+		if (this.isAwake() && this.hasLineOfSight(entityIn) && entityIn.hurt(DamageSource.mobAttack(this), 1.0F) && this.tickCount > 20) {
 			entityIn.push(0.5, 0.5, 0.5);
 			
 			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 0.1F, Explosion.BlockInteraction.DESTROY);
@@ -164,116 +164,109 @@ public class SentryEntity extends Slime {
 	public EntityType<? extends SentryEntity> getType() {
 		return (EntityType<? extends SentryEntity>) super.getType();
 	}
-	
-	@SuppressWarnings("deprecation")
-	@Override
-	public void remove(boolean keepData) {
-		this.removed = true;
-		super.remove(keepData);
-	}
-	
-	public static class AttackGoal extends Slime.SlimeAttackGoal {
-		private final SentryEntity sentry;
-		
-		public AttackGoal(SentryEntity sentryIn) {
-			super(sentryIn);
-			this.sentry = sentryIn;
-		}
-		
-		/**
-		 * Returns whether the EntityAIBase should begin execution.
-		 */
-		@Override
-		public boolean canUse() {
-			return this.sentry.isAwake() && super.canUse();
-		}
-		
-		/**
-		 * Returns whether an in-progress EntityAIBase should continue executing
-		 */
-		@Override
-		public boolean canContinueToUse() {
-			return this.sentry.isAwake() && super.canContinueToUse();
-		}
-		
-	}
-	
-	public static class FaceRandomGoal extends Slime.SlimeRandomDirectionGoal {
-		private final SentryEntity sentry;
-		
-		public FaceRandomGoal(SentryEntity sentryIn) {
-			super(sentryIn);
-			this.sentry = sentryIn;
-		}
-		
-		/**
-		 * Returns whether the EntityAIBase should begin execution.
-		 */
-		@Override
-		public boolean canUse() {
-			return this.sentry.isAwake() && super.canUse();
-		}
-		
-		/**
-		 * Returns whether an in-progress EntityAIBase should continue executing
-		 */
-		@Override
-		public boolean canContinueToUse() {
-			return this.sentry.isAwake() && super.canContinueToUse();
-		}
-		
-	}
-	
-	public static class FloatGoal extends Slime.SlimeFloatGoal {
-		private final SentryEntity sentry;
-		
-		public FloatGoal(SentryEntity sentryIn) {
-			super(sentryIn);
-			this.sentry = sentryIn;
-		}
-		
-		/**
-		 * Returns whether the EntityAIBase should begin execution.
-		 */
-		@Override
-		public boolean canUse() {
-			return this.sentry.isAwake() && super.canUse();
-		}
-		
-		/**
-		 * Returns whether an in-progress EntityAIBase should continue executing
-		 */
-		@Override
-		public boolean canContinueToUse() {
-			return this.sentry.isAwake() && super.canContinueToUse();
-		}
-		
-	}
-	
-	public static class HopGoal extends Slime.SlimeKeepOnJumpingGoal {
-		private final SentryEntity sentry;
-		
-		public HopGoal(SentryEntity sentryIn) {
-			super(sentryIn);
-			this.sentry = sentryIn;
-		}
-		
-		/**
-		 * Returns whether the EntityAIBase should begin execution.
-		 */
-		@Override
-		public boolean canUse() {
-			return this.sentry.isAwake() && super.canUse();
-		}
-		
-		/**
-		 * Returns whether an in-progress EntityAIBase should continue executing
-		 */
-		@Override
-		public boolean canContinueToUse() {
-			return this.sentry.isAwake() && super.canContinueToUse();
-		}
-		
-	}
+
+//	public static class AttackGoal extends Slime {
+//		private final SentryEntity sentry;
+//
+//		public AttackGoal(SentryEntity sentryIn) {
+//			super(sentryIn);
+//			this.sentry = sentryIn;
+//		}
+//
+//		/**
+//		 * Returns whether the EntityAIBase should begin execution.
+//		 */
+//		@Override
+//		public boolean canUse() {
+//			return this.sentry.isAwake() && super.canUse();
+//		}
+//
+//		/**
+//		 * Returns whether an in-progress EntityAIBase should continue executing
+//		 */
+//		@Override
+//		public boolean canContinueToUse() {
+//			return this.sentry.isAwake() && super.canContinueToUse();
+//		}
+//
+//	}
+//
+//	public static class FaceRandomGoal extends Slime.SlimeRandomDirectionGoal {
+//		private final SentryEntity sentry;
+//
+//		public FaceRandomGoal(SentryEntity sentryIn) {
+//			super(sentryIn);
+//			this.sentry = sentryIn;
+//		}
+//
+//		/**
+//		 * Returns whether the EntityAIBase should begin execution.
+//		 */
+//		@Override
+//		public boolean canUse() {
+//			return this.sentry.isAwake() && super.canUse();
+//		}
+//
+//		/**
+//		 * Returns whether an in-progress EntityAIBase should continue executing
+//		 */
+//		@Override
+//		public boolean canContinueToUse() {
+//			return this.sentry.isAwake() && super.canContinueToUse();
+//		}
+//
+//	}
+//
+//	public static class FloatGoal extends Slime.SlimeFloatGoal {
+//		private final SentryEntity sentry;
+//
+//		public FloatGoal(SentryEntity sentryIn) {
+//			super(sentryIn);
+//			this.sentry = sentryIn;
+//		}
+//
+//		/**
+//		 * Returns whether the EntityAIBase should begin execution.
+//		 */
+//		@Override
+//		public boolean canUse() {
+//			return this.sentry.isAwake() && super.canUse();
+//		}
+//
+//		/**
+//		 * Returns whether an in-progress EntityAIBase should continue executing
+//		 */
+//		@Override
+//		public boolean canContinueToUse() {
+//			return this.sentry.isAwake() && super.canContinueToUse();
+//		}
+//
+//	}
+//
+//	public static class HopGoal extends Slime.SlimeKeepOnJumpingGoal {
+//		private final SentryEntity sentry;
+//
+//		public HopGoal(SentryEntity sentryIn) {
+//			super(sentryIn);
+//			this.sentry = sentryIn;
+//		}
+//
+//		/**
+//		 * Returns whether the EntityAIBase should begin execution.
+//		 */
+//		@Override
+//		public boolean canUse() {
+//			return this.sentry.isAwake() && super.canUse();
+//		}
+//
+//		/**
+//		 * Returns whether an in-progress EntityAIBase should continue executing
+//		 */
+//		@Override
+//		public boolean canContinueToUse() {
+//			return this.sentry.isAwake() && super.canContinueToUse();
+//		}
+//
+//	}
 	
 }

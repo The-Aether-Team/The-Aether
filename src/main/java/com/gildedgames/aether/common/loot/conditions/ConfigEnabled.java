@@ -37,7 +37,7 @@ public class ConfigEnabled implements LootItemCondition
         return () -> new ConfigEnabled(config);
     }
 
-    public static class Serializer implements Serializer<ConfigEnabled>
+    public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<ConfigEnabled>
     {
         public void serialize(JsonObject object, ConfigEnabled condition, JsonSerializationContext context) {
             object.addProperty("config", condition.config.getPath().toString());

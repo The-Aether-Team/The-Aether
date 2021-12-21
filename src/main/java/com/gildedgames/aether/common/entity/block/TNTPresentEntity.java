@@ -9,7 +9,6 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
-import net.minecraft.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
@@ -35,7 +34,6 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -46,6 +44,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.Pose;
+import net.minecraftforge.network.NetworkHooks;
 
 public class TNTPresentEntity extends Entity
 {
@@ -74,13 +73,8 @@ public class TNTPresentEntity extends Entity
     }
 
     @Override
-    protected boolean isMovementNoisy() {
-        return false;
-    }
-
-    @Override
     public boolean isPickable() {
-        return !this.removed;
+        return !this.isRemoved();
     }
 
     @Override
@@ -97,7 +91,7 @@ public class TNTPresentEntity extends Entity
 
         --this.fuse;
         if (this.fuse <= 0) {
-            this.remove();
+            this.discard();
             if (!this.level.isClientSide) {
                 this.explode();
             }
@@ -234,12 +228,12 @@ public class TNTPresentEntity extends Entity
             for (int k2 = 0; k2 < list.size(); ++k2) {
                 Entity entity = list.get(k2);
                 if (!entity.ignoreExplosion()) {
-                    double d12 = Mth.sqrt(entity.distanceToSqr(vector3d)) / f2;
+                    double d12 = Mth.sqrt((float)entity.distanceToSqr(vector3d)) / f2;
                     if (d12 <= 1.0D) {
                         double d5 = entity.getX() - this.x;
                         double d7 = (entity instanceof PrimedTnt ? entity.getY() : entity.getEyeY()) - this.y;
                         double d9 = entity.getZ() - this.z;
-                        double d13 = Mth.sqrt(d5 * d5 + d7 * d7 + d9 * d9);
+                        double d13 = Mth.sqrt((float) (d5 * d5 + d7 * d7 + d9 * d9));
                         if (d13 != 0.0D) {
                             d5 = d5 / d13;
                             d7 = d7 / d13;
@@ -255,7 +249,7 @@ public class TNTPresentEntity extends Entity
                             entity.setDeltaMovement(entity.getDeltaMovement().add(d5 * d11, d7 * d11, d9 * d11));
                             if (entity instanceof Player) {
                                 Player playerentity = (Player) entity;
-                                if (!playerentity.isSpectator() && (!playerentity.isCreative() || !playerentity.abilities.flying)) {
+                                if (!playerentity.isSpectator() && (!playerentity.isCreative() || !playerentity.getAbilities().flying)) {
                                     this.hitPlayers.put(playerentity, new Vec3(d5 * d10, d7 * d10, d9 * d10));
                                 }
                             }
@@ -286,11 +280,11 @@ public class TNTPresentEntity extends Entity
 
                 for (BlockPos blockpos : this.toBlow) {
                     BlockState blockstate = this.level.getBlockState(blockpos);
-                    if (!blockstate.isAir(this.level, blockpos)) {
+                    if (!blockstate.isAir()) {
                         BlockPos blockpos1 = blockpos.immutable();
                         this.level.getProfiler().push("explosion_blocks");
                         if (blockstate.canDropFromExplosion(this.level, blockpos, this) && this.level instanceof ServerLevel) {
-                            BlockEntity tileentity = blockstate.hasTileEntity() ? this.level.getBlockEntity(blockpos) : null;
+                            BlockEntity tileentity = blockstate.hasBlockEntity() ? this.level.getBlockEntity(blockpos) : null;
                             LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel)this.level)).withRandom(this.level.random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockpos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, tileentity).withOptionalParameter(LootContextParams.THIS_ENTITY, this.source);
                             if (this.blockInteraction == Explosion.BlockInteraction.DESTROY) {
                                 lootcontext$builder.withParameter(LootContextParams.EXPLOSION_RADIUS, this.radius);

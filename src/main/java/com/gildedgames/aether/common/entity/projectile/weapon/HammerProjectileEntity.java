@@ -18,7 +18,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class HammerProjectileEntity extends ThrowableProjectile
             ++this.ticksInAir;
         }
         if (this.ticksInAir > 500) {
-            this.remove();
+            this.discard();
         }
         if (this.level.isClientSide) {
             this.level.addParticle(ParticleTypes.CLOUD, this.getX(), this.getY() + 0.2, this.getZ(), 0.0, 0.0, 0.0);
@@ -72,7 +72,7 @@ public class HammerProjectileEntity extends ThrowableProjectile
     protected void onHit(HitResult result) {
         super.onHit(result);
         if (!this.level.isClientSide) {
-            this.remove();
+            this.discard();
         } else {
             for(int j = 0; j < 8; j++) {
                 this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);

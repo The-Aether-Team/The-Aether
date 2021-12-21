@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.data.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.level.ItemLike;
@@ -336,12 +335,12 @@ public class AetherRecipeProvider extends RecipeProvider
 
     public SingleItemRecipeBuilder stonecuttingRecipe(Supplier<Block> input, ItemLike result) {
         return SingleItemRecipeBuilder.stonecutting(Ingredient.of(input.get()), result)
-                .unlocks("has_" + input.get().getRegistryName(), has(input.get()));
+                .unlockedBy("has_" + input.get().getRegistryName(), has(input.get()));
     }
 
     public SingleItemRecipeBuilder stonecuttingRecipe(Supplier<Block> input, ItemLike result, int resultAmount) {
         return SingleItemRecipeBuilder.stonecutting(Ingredient.of(input.get()), result, resultAmount)
-                .unlocks("has_" + input.get().getRegistryName(), has(input.get()));
+                .unlockedBy("has_" + input.get().getRegistryName(), has(input.get()));
     }
 
     public UpgradeRecipeBuilder smithingRecipe(Supplier<Item> input, Supplier<Item> upgradeItem, Supplier<Item> result) {

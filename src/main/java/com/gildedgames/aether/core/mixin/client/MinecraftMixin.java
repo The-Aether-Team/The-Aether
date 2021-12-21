@@ -6,7 +6,6 @@ import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.Musics;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

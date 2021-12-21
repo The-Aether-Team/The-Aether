@@ -8,8 +8,8 @@ import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
@@ -32,7 +32,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 
@@ -134,7 +133,7 @@ public class PhygEntity extends MountableEntity
 
     @Nullable
     @Override
-    public AgableMob getBreedOffspring(ServerLevel world, AgableMob entity) {
+    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
         return AetherEntityTypes.PHYG.get().create(world);
     }
 

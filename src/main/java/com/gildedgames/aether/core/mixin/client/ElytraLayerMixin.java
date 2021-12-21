@@ -4,7 +4,6 @@ import com.gildedgames.aether.common.item.accessories.cape.CapeItem;
 import net.minecraft.client.renderer.entity.layers.ElytraLayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

@@ -2,7 +2,6 @@ package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -80,11 +79,11 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 		if (this.isAlive()) {
 			if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player) {
 				Player entity = (Player) this.getControllingPassenger();
-				this.yRot = entity.yRot;
-				this.yRotO = this.yRot;
-				this.xRot = entity.xRot * 0.5F;
-				this.setRot(this.yRot, this.xRot);
-				this.yBodyRot = this.yRot;
+				this.setYRot(entity.getYRot());
+				this.yRotO = this.getYRot();
+				this.setXRot(entity.getXRot() * 0.5F);
+				this.setRot(this.getYRot(), this.getXRot());
+				this.yBodyRot = this.getYRot();
 				this.yHeadRot = this.yBodyRot;
 				float f = entity.xxa * 0.5F;
 				float f1 = entity.zza;

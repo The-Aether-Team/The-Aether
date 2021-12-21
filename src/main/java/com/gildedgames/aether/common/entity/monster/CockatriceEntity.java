@@ -4,10 +4,8 @@ import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -81,7 +79,7 @@ public class CockatriceEntity extends Monster implements RangedAttackMob {
         double d0 = target.getX() - this.getX();
         double d1 = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0F) - needle.getY();
         double d2 = target.getZ() - this.getZ();
-        double d3 = Mth.sqrt(d0 * d0 + d2 * d2);
+        double d3 = Mth.sqrt((float)(d0 * d0 + d2 * d2));
         needle.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.0F, (float)(14 - this.level.getDifficulty().getId() * 4));
         this.playSound(AetherSoundEvents.ENTITY_COCKATRICE_SHOOT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
         this.level.addFreshEntity(needle);
@@ -139,7 +137,7 @@ public class CockatriceEntity extends Monster implements RangedAttackMob {
     }
 
     @Override
-    public boolean causeFallDamage(float distance, float damageMultiplier) {
+    public boolean causeFallDamage(float p_147187_, float p_147188_, DamageSource p_147189_) {
         return false;
     }
 

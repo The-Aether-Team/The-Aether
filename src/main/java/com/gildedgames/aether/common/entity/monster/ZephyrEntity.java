@@ -12,7 +12,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.entity.monster.GhastEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -98,7 +97,7 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 	public void aiStep() {
 		super.aiStep();
 		if (this.getY() < -2 || this.getY() > 255) {
-			this.remove();
+			this.discard();
 		}
 	}
 
@@ -141,9 +140,6 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 			&& checkMobSpawnRules(zephyr, worldIn, reason, pos, random);
 	}
 
-	/**
-	 * Copy of {@link GhastEntity.FireballAttackGoal} but changed GhastEntity to ZephyrEntity
-	 */
 	static class SnowballAttackGoal extends Goal {
 		private final ZephyrEntity parentEntity;
 		public int attackTimer;
@@ -184,7 +180,7 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 		@Override
 		public void tick() {
 			LivingEntity target = parentEntity.getTarget();
-			if (target.distanceToSqr(this.parentEntity) < 64*64 && this.parentEntity.canSee(target)) {
+			if (target.distanceToSqr(this.parentEntity) < 64*64 && this.parentEntity.hasLineOfSight(target)) {
 				Level world = this.parentEntity.level;
 				++this.attackTimer;
 				if (this.attackTimer == 10) {
@@ -210,9 +206,6 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 		}
 	}
 
-	/**
-	 * Copy of {@link GhastEntity.RandomFlyGoal} but changed GhastEntity to ZephyrEntity
-	 */
 	static class RandomFlyGoal extends Goal {
 		private final ZephyrEntity parentEntity;
 
@@ -261,9 +254,6 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 		}
 	}
 
-	/**
-	 * Copy of {@link GhastEntity.MoveHelperController} but changed GhastEntity to ZephyrEntity
-	 */
 	static class MoveHelperController extends MoveControl {
 		private final ZephyrEntity parentEntity;
 		private int courseChangeCooldown;
@@ -310,9 +300,6 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 
 	}
 
-	/**
-	 * Copy of {@link GhastEntity.LookAroundGoal} but changed GhastEntity to ZephyrEntity
-	 */
 	static class LookAroundGoal extends Goal {
 		private final ZephyrEntity parentEntity;
 
@@ -337,16 +324,16 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 		public void tick() {
 			if (this.parentEntity.getTarget() == null) {
 				Vec3 vec3d = this.parentEntity.getDeltaMovement();
-				this.parentEntity.yRot = -((float)Mth.atan2(vec3d.x, vec3d.z)) * (180.0F / (float)Math.PI);
-				this.parentEntity.yBodyRot = this.parentEntity.yRot;
+				this.parentEntity.setYRot(-((float)Mth.atan2(vec3d.x, vec3d.z)) * (180.0F / (float)Math.PI));
+				this.parentEntity.yBodyRot = this.parentEntity.getYRot();
 			}
 			else {
 				LivingEntity livingentity = this.parentEntity.getTarget();
 				if (livingentity.distanceToSqr(this.parentEntity) < 64*64) {
 					double x = livingentity.getX() - this.parentEntity.getX();
 					double z = livingentity.getZ() - this.parentEntity.getZ();
-					this.parentEntity.yRot = -((float)Mth.atan2(x, z)) * (180.0F / (float)Math.PI);
-					this.parentEntity.yBodyRot = this.parentEntity.yRot;
+					this.parentEntity.setYRot(-((float)Mth.atan2(x, z)) * (180.0F / (float)Math.PI));
+					this.parentEntity.yBodyRot = this.parentEntity.getYRot();
 				}
 			}
 

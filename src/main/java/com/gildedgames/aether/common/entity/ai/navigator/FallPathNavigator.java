@@ -3,7 +3,6 @@ package com.gildedgames.aether.common.entity.ai.navigator;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.network.protocol.game.DebugPackets;
-import net.minecraft.pathfinding.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;

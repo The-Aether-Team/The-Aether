@@ -6,7 +6,6 @@ import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.World;
 
 public class CheckTimePacket extends AetherPacket
 {

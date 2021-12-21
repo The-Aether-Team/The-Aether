@@ -13,7 +13,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 
 public class LightningKnifeEntity extends ThrowableItemProjectile
 {
@@ -40,7 +40,7 @@ public class LightningKnifeEntity extends ThrowableItemProjectile
 					this.level.addFreshEntity(lightningBolt);
 				}
 			}
-			this.remove();
+			this.discard();
 		}
 		super.onHit(result);
 	}

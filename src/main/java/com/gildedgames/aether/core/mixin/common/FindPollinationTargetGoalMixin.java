@@ -1,7 +1,6 @@
 package com.gildedgames.aether.core.mixin.common;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
-import net.minecraft.block.*;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.core.BlockPos;
@@ -13,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-@Mixin(Bee.BeeGrowCropGoal.class)
+@Mixin(Bee.BeeGoToKnownFlowerGoal.class)
 public class FindPollinationTargetGoalMixin
 {
     @Unique
@@ -31,7 +30,7 @@ public class FindPollinationTargetGoalMixin
             BlockState blockstate = this.beeEntity.level.getBlockState(blockpos);
             Block block = blockstate.getBlock();
             boolean flag = false;
-            if (block.is(BlockTags.BEE_GROWABLES)) {
+            if (block.getTags().contains(BlockTags.BEE_GROWABLES)) {
                 if (block == AetherBlocks.BERRY_BUSH_STEM.get()) {
                     flag = true;
                 }
@@ -39,7 +38,7 @@ public class FindPollinationTargetGoalMixin
                 if (flag) {
                     this.beeEntity.level.levelEvent(2005, blockpos, 0);
                     this.beeEntity.level.setBlockAndUpdate(blockpos, AetherBlocks.BERRY_BUSH.get().defaultBlockState());
-                    this.beeEntity.incrementNumCropsGrownSincePollination();
+                    // this.beeEntity.incrementNumCropsGrownSincePollination(); this function is not public
                 }
             }
         }

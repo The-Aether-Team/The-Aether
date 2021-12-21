@@ -8,8 +8,8 @@ import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 
+import net.minecraft.world.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
@@ -33,12 +33,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-
-import net.minecraft.world.entity.AgableMob;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.Pose;
 
 public class FlyingCowEntity extends MountableEntity
 {
@@ -161,7 +155,7 @@ public class FlyingCowEntity extends MountableEntity
 
     @Nullable
     @Override
-    public AgableMob getBreedOffspring(ServerLevel world, AgableMob entity) {
+    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
         return AetherEntityTypes.FLYING_COW.get().create(world);
     }
 
