@@ -22,13 +22,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import com.mojang.math.Vector3f;
 import net.minecraftforge.fml.ModList;
-import top.theillusivec4.caelus.client.ClientMixinHooks;
+import top.theillusivec4.caelus.mixin.util.ClientMixinHooks;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import javax.annotation.Nonnull;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class CapeItem extends AccessoryItem
 {
@@ -45,10 +43,10 @@ public class CapeItem extends AccessoryItem
         return new ICurio.SoundInfo(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_CAPE.get(), 1.0f, 1.0f);
     }
 
-    @Override
+    /*@Override  TODO: Is this necessary?
     public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
         return true;
-    }
+    }*/
 
     @Override
     public void renderModel(HumanoidModel<?> model, String identifier, int index, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {

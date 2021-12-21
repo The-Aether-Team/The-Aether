@@ -24,7 +24,7 @@ public class SkyrootPoisonBucketItem extends Item
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
         if (!worldIn.isClientSide) entityLiving.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION.get(), 500, 0, false, false));
-        if (entityLiving instanceof Player && !((Player) entityLiving).abilities.instabuild) {
+        if (entityLiving instanceof Player && !((Player) entityLiving).getAbilities().instabuild) {
             stack.shrink(1);
         }
         return stack.isEmpty() ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : stack;
@@ -42,6 +42,6 @@ public class SkyrootPoisonBucketItem extends Item
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        return ItemUtils.useDrink(worldIn, playerIn, handIn);
+        return ItemUtils.startUsingInstantly(worldIn, playerIn, handIn);
     }
 }
