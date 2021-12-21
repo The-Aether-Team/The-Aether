@@ -9,9 +9,9 @@ import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class TreasureChestTileEntityRenderer<T extends BlockEntity & LidBlockEntity> extends ChestRenderer<T> {
+public class TreasureChestRenderer<T extends BlockEntity & LidBlockEntity> extends ChestRenderer<T> {
 
-	public TreasureChestTileEntityRenderer(BlockEntityRendererProvider.Context p_173607_) {
+	public TreasureChestRenderer(BlockEntityRendererProvider.Context p_173607_) {
 		super(p_173607_);
 	}
 

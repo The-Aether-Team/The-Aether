@@ -4,13 +4,10 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
 import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.client.renderer.entity.*;
-import com.gildedgames.aether.client.renderer.tile.ChestMimicTileEntityRenderer;
+import com.gildedgames.aether.client.renderer.tile.ChestMimicBlockEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.CustomItemStackTileEntityRenderer;
-import com.gildedgames.aether.client.renderer.tile.SkyrootBedTileEntityRenderer;
-import com.gildedgames.aether.client.renderer.tile.TreasureChestTileEntityRenderer;
-import com.gildedgames.aether.common.entity.tile.ChestMimicTileEntity;
-import com.gildedgames.aether.common.entity.tile.SkyrootBedTileEntity;
-import com.gildedgames.aether.common.entity.tile.TreasureChestTileEntity;
+import com.gildedgames.aether.client.renderer.tile.SkyrootBedRenderer;
+import com.gildedgames.aether.client.renderer.tile.TreasureChestRenderer;
 import com.gildedgames.aether.common.registry.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -18,12 +15,14 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
@@ -71,48 +70,46 @@ public class AetherRendering
         render(AetherBlocks.POTTED_GOLDEN_OAK_SAPLING, cutout);
     }
 
-    public static void registerEntityRenderers() {
+    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.PHYG.get(), PhygRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLYING_COW.get(), FlyingCowRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SHEEPUFF.get(), SheepuffRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.AERBUNNY.get(), AerbunnyRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MOA.get(), MoaRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.AERWHALE.get(), AerwhaleRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.PHYG.get(), PhygRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.FLYING_COW.get(), FlyingCowRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.SHEEPUFF.get(), SheepuffRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.AERBUNNY.get(), AerbunnyRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.MOA.get(), MoaRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.AERWHALE.get(), AerwhaleRenderer::new);
 
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.WHIRLWIND.get(), WhirlwindRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.COCKATRICE.get(), CockatriceRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR.get(), ZephyrRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.WHIRLWIND.get(), WhirlwindRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.COCKATRICE.get(), CockatriceRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.ZEPHYR.get(), ZephyrRenderer::new);
 
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY.get(), SentryRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC.get(), MimicRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.SENTRY.get(), SentryRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.MIMIC.get(), MimicRenderer::new);
 
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.CLOUD_MINION.get(), CloudMinionRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.COLD_PARACHUTE.get(), ColdParachuteRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.GOLDEN_PARACHUTE.get(), GoldenParachuteRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLOATING_BLOCK.get(), FloatingBlockRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.TNT_PRESENT.get(), TNTPresentRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.CLOUD_MINION.get(), CloudMinionRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.COLD_PARACHUTE.get(), ColdParachuteRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.GOLDEN_PARACHUTE.get(), GoldenParachuteRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.FLOATING_BLOCK.get(), FloatingBlockRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.TNT_PRESENT.get(), TNTPresentRenderer::new);
 
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), m -> new SpriteRenderer<>(m, itemRenderer));
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.CLOUD_CRYSTAL.get(), IceCrystalRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.GOLDEN_DART.get(), GoldenDartRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.POISON_DART.get(), PoisonDartRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ENCHANTED_DART.get(), EnchantedDartRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.POISON_NEEDLE.get(), PoisonDartRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.LIGHTNING_KNIFE.get(), LightningKnifeRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.HAMMER_PROJECTILE.get(), HammerProjectileRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), m -> new SpriteRenderer<>(m, itemRenderer));
+        event.registerEntityRenderer(AetherEntityTypes.CLOUD_CRYSTAL.get(), IceCrystalRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.GOLDEN_DART.get(), GoldenDartRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.POISON_DART.get(), PoisonDartRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.ENCHANTED_DART.get(), EnchantedDartRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.POISON_NEEDLE.get(), PoisonDartRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.LIGHTNING_KNIFE.get(), LightningKnifeRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.HAMMER_PROJECTILE.get(), HammerProjectileRenderer::new);
+
+        event.registerBlockEntityRenderer(AetherTileEntityTypes.CHEST_MIMIC.get(), ChestMimicBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(AetherTileEntityTypes.TREASURE_CHEST.get(), TreasureChestRenderer::new);
+        event.registerBlockEntityRenderer(AetherTileEntityTypes.SKYROOT_BED.get(), SkyrootBedRenderer::new);
+        event.registerBlockEntityRenderer(AetherTileEntityTypes.SKYROOT_SIGN.get(), SignRenderer::new);
     }
 
-    public static void registerTileEntityRenderers() {
-        ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.CHEST_MIMIC.get(), ChestMimicTileEntityRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.TREASURE_CHEST.get(), TreasureChestTileEntityRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.SKYROOT_BED.get(), SkyrootBedTileEntityRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.SKYROOT_SIGN.get(), SignTileEntityRenderer::new);
-    }
-
-    public static CustomItemStackTileEntityRenderer chestMimicRenderer() {
+    /*public static CustomItemStackTileEntityRenderer chestMimicRenderer() {
         return new CustomItemStackTileEntityRenderer(ChestMimicTileEntity::new);
     }
 
@@ -122,7 +119,7 @@ public class AetherRendering
 
     public static CustomItemStackTileEntityRenderer skyrootBedRenderer() {
         return new CustomItemStackTileEntityRenderer(SkyrootBedTileEntity::new);
-    }
+    }*/
 
     public static void registerGuiFactories() {
         ScreenManager.register(AetherContainerTypes.ACCESSORIES.get(), AccessoriesScreen::new);

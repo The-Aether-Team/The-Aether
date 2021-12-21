@@ -27,11 +27,10 @@ public class AetherClient
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(AetherClient::clientSetup);
         modEventBus.addListener(AetherClient::clientComplete);
+        modEventBus.addListener(AetherRendering::registerEntityRenderers);
     }
 
     public static void clientSetup(FMLClientSetupEvent event) {
-        AetherRendering.registerEntityRenderers();
-        AetherRendering.registerTileEntityRenderers();
 
         event.enqueueWork(() -> {
             AetherKeys.registerKeys();

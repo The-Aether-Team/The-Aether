@@ -27,7 +27,7 @@ import org.apache.logging.log4j.LogManager;
 
 import java.util.Calendar;
 
-public class ChestMimicTileEntityRenderer<T extends BlockEntity> implements BlockEntityRenderer<T>
+public class ChestMimicBlockEntityRenderer<T extends BlockEntity> implements BlockEntityRenderer<T>
 {
 	private final ModelPart singleLid;
 	private final ModelPart singleBottom;
@@ -40,7 +40,7 @@ public class ChestMimicTileEntityRenderer<T extends BlockEntity> implements Bloc
 	private final ModelPart leftLock;
 	private boolean isChristmas;
 
-	public ChestMimicTileEntityRenderer(BlockEntityRendererProvider.Context context) {
+	public ChestMimicBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
 		Calendar calendar = Calendar.getInstance();
 		if (calendar.get(Calendar.MONTH) + 1 == 12 && calendar.get(Calendar.DATE) >= 24 && calendar.get(Calendar.DATE) <= 26) {
 			this.isChristmas = true;
@@ -93,7 +93,7 @@ public class ChestMimicTileEntityRenderer<T extends BlockEntity> implements Bloc
 			}
 			matrixStackIn.popPose();
 		} else {
-			LogManager.getLogger(ChestMimicTileEntityRenderer.class).warn("Invalid block used with ChestMimicTileEntityRenderer!");
+			LogManager.getLogger(ChestMimicBlockEntityRenderer.class).warn("Invalid block used with ChestMimicTileEntityRenderer!");
 		}
 	}
 
