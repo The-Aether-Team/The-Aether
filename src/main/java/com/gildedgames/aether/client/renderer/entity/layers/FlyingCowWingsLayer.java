@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity.layers;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.AetherModelLayers;
+import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.FlyingCowWingModel;
 import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
 import com.mojang.blaze3d.vertex.PoseStack;

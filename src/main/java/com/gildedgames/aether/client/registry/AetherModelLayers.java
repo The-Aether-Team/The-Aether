@@ -1,10 +1,11 @@
-package com.gildedgames.aether.client;
+package com.gildedgames.aether.client.registry;
 
 import com.gildedgames.aether.Aether;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
 
-public class AetherModelLayers {
+public class AetherModelLayers
+{
     public static final ModelLayerLocation AECHOR_PLANT = register("aechor_plant");
     public static final ModelLayerLocation AERBUNNY = register("aerbunny");
     public static final ModelLayerLocation AERWHALE = register("aerwhale");
