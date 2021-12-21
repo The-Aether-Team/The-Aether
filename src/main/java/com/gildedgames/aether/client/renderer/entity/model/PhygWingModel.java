@@ -45,7 +45,6 @@ public class PhygWingModel extends EntityModel<PhygEntity>
     public void setupAnim(PhygEntity phyg, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float aimingForFold;
         if (phyg.isOnGround()) {
-            phyg.wingAngle *= 0.8F;
             aimingForFold = 0.1F;
         } else {
             aimingForFold = 1.0F;

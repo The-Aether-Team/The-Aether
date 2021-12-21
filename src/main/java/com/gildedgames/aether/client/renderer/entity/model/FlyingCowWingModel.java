@@ -45,7 +45,6 @@ public class FlyingCowWingModel extends EntityModel<FlyingCowEntity> {
                           float netHeadYaw, float headPitch) {
         float aimingForFold;
         if (flyingCow.isOnGround()) {
-            flyingCow.wingAngle *= 0.8F;
             aimingForFold = 0.1F;
         } else {
             aimingForFold = 1.0F;

@@ -1,92 +1,46 @@
 package com.gildedgames.aether.client;
 
-import java.util.function.Supplier;
-
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
-import com.gildedgames.aether.client.gui.screen.inventory.AltarScreen;
-import com.gildedgames.aether.client.gui.screen.inventory.FreezerScreen;
-import com.gildedgames.aether.client.gui.screen.inventory.IncubatorScreen;
-import com.gildedgames.aether.client.gui.screen.inventory.LoreBookScreen;
-import com.gildedgames.aether.client.renderer.entity.AechorPlantRenderer;
-import com.gildedgames.aether.client.renderer.entity.AerbunnyRenderer;
-import com.gildedgames.aether.client.renderer.entity.AerwhaleRenderer;
-import com.gildedgames.aether.client.renderer.entity.CloudMinionRenderer;
-import com.gildedgames.aether.client.renderer.entity.CockatriceRenderer;
-import com.gildedgames.aether.client.renderer.entity.ColdParachuteRenderer;
-import com.gildedgames.aether.client.renderer.entity.EnchantedDartRenderer;
-import com.gildedgames.aether.client.renderer.entity.FireMinionRenderer;
-import com.gildedgames.aether.client.renderer.entity.FloatingBlockRenderer;
-import com.gildedgames.aether.client.renderer.entity.FlyingCowRenderer;
-import com.gildedgames.aether.client.renderer.entity.GoldenDartRenderer;
-import com.gildedgames.aether.client.renderer.entity.GoldenParachuteRenderer;
-import com.gildedgames.aether.client.renderer.entity.HammerProjectileRenderer;
-import com.gildedgames.aether.client.renderer.entity.IceCrystalRenderer;
-import com.gildedgames.aether.client.renderer.entity.LightningKnifeRenderer;
-import com.gildedgames.aether.client.renderer.entity.MimicRenderer;
-import com.gildedgames.aether.client.renderer.entity.MoaRenderer;
-import com.gildedgames.aether.client.renderer.entity.PhygRenderer;
-import com.gildedgames.aether.client.renderer.entity.PoisonDartRenderer;
-import com.gildedgames.aether.client.renderer.entity.SentryRenderer;
-import com.gildedgames.aether.client.renderer.entity.SheepuffRenderer;
-import com.gildedgames.aether.client.renderer.entity.TNTPresentRenderer;
-import com.gildedgames.aether.client.renderer.entity.WhirlwindRenderer;
-import com.gildedgames.aether.client.renderer.entity.ZephyrRenderer;
-import com.gildedgames.aether.client.renderer.entity.model.*;
+import com.gildedgames.aether.client.gui.screen.inventory.*;
+import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
+import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicTileEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.CustomItemStackTileEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.SkyrootBedTileEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.TreasureChestTileEntityRenderer;
-import com.gildedgames.aether.common.entity.projectile.ZephyrSnowballEntity;
 import com.gildedgames.aether.common.entity.tile.ChestMimicTileEntity;
 import com.gildedgames.aether.common.entity.tile.SkyrootBedTileEntity;
 import com.gildedgames.aether.common.entity.tile.TreasureChestTileEntity;
-import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
-import com.gildedgames.aether.common.registry.AetherBlocks;
-import com.gildedgames.aether.common.registry.AetherContainerTypes;
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
-
-import net.minecraft.client.model.CowModel;
-import net.minecraft.client.model.PigModel;
-import net.minecraft.client.model.SlimeModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.world.entity.projectile.Snowball;
-import net.minecraft.world.level.block.Block;
+import com.gildedgames.aether.common.registry.*;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.color.item.ItemColors;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.client.renderer.blockentity.SignRenderer;
-import net.minecraft.world.item.DyeableLeatherItem;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
+import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
+import net.minecraft.item.IDyeableArmorItem;
+import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
-@Mod.EventBusSubscriber(value= Dist.CLIENT, bus= Mod.EventBusSubscriber.Bus.MOD)
+import java.util.function.Supplier;
+
 public class AetherRendering
 {
     public static void registerColors() {
         ItemColors colors = Minecraft.getInstance().getItemColors();
 
-        colors.register((color, itemProvider) -> itemProvider > 0 ? -1 : ((DyeableLeatherItem) color.getItem()).getColor(color), AetherItems.LEATHER_GLOVES.get());
+        colors.register((color, itemProvider) -> itemProvider > 0 ? -1 : ((IDyeableArmorItem) color.getItem()).getColor(color), AetherItems.LEATHER_GLOVES.get());
 
-        //TODO: Once Moa Eggs are fully functional this code can probably be simplified similar to spawn eggs.
-        colors.register((color, itemProvider) -> ((MoaEggItem) color.getItem()).getColor(itemProvider), AetherItems.BLUE_MOA_EGG.get());
-        colors.register((color, itemProvider) -> ((MoaEggItem) color.getItem()).getColor(itemProvider), AetherItems.WHITE_MOA_EGG.get());
-        colors.register((color, itemProvider) -> ((MoaEggItem) color.getItem()).getColor(itemProvider), AetherItems.BLACK_MOA_EGG.get());
-        colors.register((color, itemProvider) -> ((MoaEggItem) color.getItem()).getColor(itemProvider), AetherItems.ORANGE_MOA_EGG.get());
+        for (MoaEggItem moaEggItem : MoaEggItem.moaEggs()) {
+            colors.register((color, itemProvider) -> moaEggItem.getColor(itemProvider), moaEggItem);
+        }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void registerBlockRenderLayers() {
         RenderType cutout = RenderType.cutout();
         RenderType translucent = RenderType.translucent();
@@ -117,110 +71,86 @@ public class AetherRendering
         render(AetherBlocks.POTTED_GOLDEN_OAK_SAPLING, cutout);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event)
-    {
+    public static void registerEntityRenderers() {
+        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
-        event.registerEntityRenderer(AetherEntityTypes.PHYG_TYPE, PhygRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.FLYING_COW.get(), FlyingCowRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.SHEEPUFF.get(), SheepuffRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.MOA.get(), MoaRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.AERWHALE.get(), AerwhaleRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.AERBUNNY.get(), AerbunnyRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.WHIRLWIND.get(), WhirlwindRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.COCKATRICE.get(), CockatriceRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.ZEPHYR.get(), ZephyrRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.SENTRY.get(), SentryRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.MIMIC.get(), MimicRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.FIRE_MINION.get(), FireMinionRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.PHYG.get(), PhygRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLYING_COW.get(), FlyingCowRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SHEEPUFF.get(), SheepuffRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.AERBUNNY.get(), AerbunnyRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MOA.get(), MoaRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.AERWHALE.get(), AerwhaleRenderer::new);
 
-        event.registerEntityRenderer(AetherEntityTypes.CLOUD_MINION.get(), CloudMinionRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.COLD_PARACHUTE.get(), ColdParachuteRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.GOLDEN_PARACHUTE.get(), GoldenParachuteRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.FLOATING_BLOCK.get(), FloatingBlockRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.TNT_PRESENT.get(), TNTPresentRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.CLOUD_CRYSTAL.get(), IceCrystalRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.GOLDEN_DART.get(), GoldenDartRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.POISON_DART.get(), PoisonDartRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.ENCHANTED_DART.get(), EnchantedDartRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.POISON_NEEDLE.get(), PoisonDartRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.LIGHTNING_KNIFE.get(), LightningKnifeRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.HAMMER_PROJECTILE.get(), HammerProjectileRenderer::new);
-    }
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.WHIRLWIND.get(), WhirlwindRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.COCKATRICE.get(), CockatriceRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR.get(), ZephyrRenderer::new);
 
-    public static void registerLayerProviders(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.SENTRY.get(), SentryRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.MIMIC.get(), MimicRenderer::new);
 
-        event.registerLayerDefinition(AetherModelLayers.PHYG, () -> PigModel.createBodyLayer(new CubeDeformation(1.0f)));
-        event.registerLayerDefinition(AetherModelLayers.FLYING_COW,  CowModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.SHEEPUFF, SheepuffModel::createBodyLayer);
-//        event.registerLayerDefinition(AetherModelLayers.MOA, MoaModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.AERWHALE, AerwhaleModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.AERBUNNY, AerbunnyModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.AECHOR_PLANT, AechorPlantModel::createMainLayer);
-        event.registerLayerDefinition(AetherModelLayers.COCKATRICE, CockatriceModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.ZEPHYR, ZephyrModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.SENTRY, SlimeModel::createOuterBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.MIMIC, MimicModel::createBodyLayer);
-//        event.registerLayerDefinition(AetherModelLayers.SLIDER, SliderModel::createBodyLayer);
-//        event.registerLayerDefinition(AetherModelLayers.VALKYRIE, ValkyrieModel::createBodyLayer);
-//        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_QUEEN, ValkyrieModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.SUN_SPIRIT, SunSpiritModel::createBodyLayer);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.CLOUD_MINION.get(), CloudMinionRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.COLD_PARACHUTE.get(), ColdParachuteRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.GOLDEN_PARACHUTE.get(), GoldenParachuteRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.FLOATING_BLOCK.get(), FloatingBlockRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.TNT_PRESENT.get(), TNTPresentRenderer::new);
 
-        event.registerLayerDefinition(AetherModelLayers.CLOUD_MINION, CloudMinionModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.CLOUD_CRYSTAL, CrystalModel::createMainLayer);
-
-
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), m -> new SpriteRenderer<>(m, itemRenderer));
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.CLOUD_CRYSTAL.get(), IceCrystalRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.GOLDEN_DART.get(), GoldenDartRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.POISON_DART.get(), PoisonDartRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.ENCHANTED_DART.get(), EnchantedDartRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.POISON_NEEDLE.get(), PoisonDartRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.LIGHTNING_KNIFE.get(), LightningKnifeRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AetherEntityTypes.HAMMER_PROJECTILE.get(), HammerProjectileRenderer::new);
     }
 
     public static void registerTileEntityRenderers() {
-        // https://mcforge.readthedocs.io/en/1.18.x/blockentities/ber/
-//        ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.CHEST_MIMIC.get(), ChestMimicTileEntityRenderer::new);
-//        ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.TREASURE_CHEST.get(), TreasureChestTileEntityRenderer::new);
-//        ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.SKYROOT_BED.get(), SkyrootBedTileEntityRenderer::new);
-//        ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.SKYROOT_SIGN.get(), SignRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.CHEST_MIMIC.get(), ChestMimicTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.TREASURE_CHEST.get(), TreasureChestTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.SKYROOT_BED.get(), SkyrootBedTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(AetherTileEntityTypes.SKYROOT_SIGN.get(), SignTileEntityRenderer::new);
     }
 
-//    public static CustomItemStackTileEntityRenderer chestMimicRenderer() {
-//        return new CustomItemStackTileEntityRenderer(new ChestMimicTileEntity());
-//    }
-//
-//    public static CustomItemStackTileEntityRenderer treasureChestRenderer() {
-//        return new CustomItemStackTileEntityRenderer(TreasureChestTileEntity::new);
-//    }
-//
-//    public static CustomItemStackTileEntityRenderer skyrootBedRenderer() {
-//        return new CustomItemStackTileEntityRenderer(SkyrootBedTileEntity::new);
-//    }
+    public static CustomItemStackTileEntityRenderer chestMimicRenderer() {
+        return new CustomItemStackTileEntityRenderer(ChestMimicTileEntity::new);
+    }
+
+    public static CustomItemStackTileEntityRenderer treasureChestRenderer() {
+        return new CustomItemStackTileEntityRenderer(TreasureChestTileEntity::new);
+    }
+
+    public static CustomItemStackTileEntityRenderer skyrootBedRenderer() {
+        return new CustomItemStackTileEntityRenderer(SkyrootBedTileEntity::new);
+    }
 
     public static void registerGuiFactories() {
-        MenuScreens.register(AetherContainerTypes.ACCESSORIES.get(), AccessoriesScreen::new);
-        MenuScreens.register(AetherContainerTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
-        MenuScreens.register(AetherContainerTypes.ALTAR.get(), AltarScreen::new);
-        MenuScreens.register(AetherContainerTypes.FREEZER.get(), FreezerScreen::new);
-        MenuScreens.register(AetherContainerTypes.INCUBATOR.get(), IncubatorScreen::new);
+        ScreenManager.register(AetherContainerTypes.ACCESSORIES.get(), AccessoriesScreen::new);
+        ScreenManager.register(AetherContainerTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
+        ScreenManager.register(AetherContainerTypes.ALTAR.get(), AltarScreen::new);
+        ScreenManager.register(AetherContainerTypes.FREEZER.get(), FreezerScreen::new);
+        ScreenManager.register(AetherContainerTypes.INCUBATOR.get(), IncubatorScreen::new);
     }
 
     public static void registerItemModelProperties() {
-//        ItemProperties.register(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pulling"), (stack, world, living)
-//                -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F);
-//        ItemProperties.register(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pull"), (stack, world, living) -> {
-//            if (living == null) {
-//                return 0.0F;
-//            } else {
-//                return living.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration() - living.getUseItemRemainingTicks()) / 20.0F;
-//            }
-//        });
-//
-//        ItemProperties.register(AetherItems.CANDY_CANE_SWORD.get(), new ResourceLocation(Aether.MODID, "named"), (stack, world, living)
-//                -> stack.getHoverName().getString().equalsIgnoreCase("green candy cane sword") ? 1.0F : 0.0F);
-//
-//        ItemProperties.register(AetherItems.HAMMER_OF_NOTCH.get(), new ResourceLocation(Aether.MODID, "named"), (stack, world, living)
-//                -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb") ? 1.0F : 0.0F);
+        ItemModelsProperties.register(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pulling"), (stack, world, living)
+                -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F);
+        ItemModelsProperties.register(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pull"), (stack, world, living) -> {
+            if (living == null) {
+                return 0.0F;
+            } else {
+                return living.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration() - living.getUseItemRemainingTicks()) / 20.0F;
+            }
+        });
+
+        ItemModelsProperties.register(AetherItems.CANDY_CANE_SWORD.get(), new ResourceLocation(Aether.MODID, "named"), (stack, world, living)
+                -> stack.getHoverName().getString().equalsIgnoreCase("green candy cane sword") ? 1.0F : 0.0F);
+
+        ItemModelsProperties.register(AetherItems.HAMMER_OF_NOTCH.get(), new ResourceLocation(Aether.MODID, "named"), (stack, world, living)
+                -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb") ? 1.0F : 0.0F);
     }
 
     private static void render(Supplier<? extends Block> block, RenderType render) {
-        ItemBlockRenderTypes.setRenderLayer(block.get(), render);
+        RenderTypeLookup.setRenderLayer(block.get(), render);
     }
 }

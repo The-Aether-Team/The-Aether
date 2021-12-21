@@ -533,6 +533,7 @@ public class AetherLangData extends LanguageProvider
         addSubtitle("entity", "moa.ambient", "Moa calls");
         addSubtitle("entity", "moa.death", "Moa dies");
         addSubtitle("entity", "moa.hurt", "Moa hurts");
+        addSubtitle("entity", "moa.saddle", "Saddle equips");
         addSubtitle("entity", "moa.flap", "Moa flaps");
         addSubtitle("entity", "moa.egg", "Moa plops");
 

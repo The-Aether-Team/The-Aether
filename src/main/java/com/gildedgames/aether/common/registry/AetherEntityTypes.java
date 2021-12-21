@@ -1,6 +1,12 @@
 package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
+<<<<<<< HEAD
+import com.gildedgames.aether.common.entity.monster.dungeon.MimicEntity;
+import com.gildedgames.aether.common.entity.monster.dungeon.SentryEntity;
+import com.gildedgames.aether.common.entity.passive.AetherAnimalEntity;
+=======
+>>>>>>> feat/entity_work_merge
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
@@ -79,6 +85,8 @@ public class AetherEntityTypes
 	public static final EntityType<ZephyrEntity> ZEPHYR_TYPE = EntityType.Builder.<ZephyrEntity>of(ZephyrEntity::new, MobCategory.MONSTER).sized(4.0F, 4.0F).build("zephyr");
 	public static final RegistryObject<EntityType<ZephyrEntity>> ZEPHYR = ENTITIES.register("zephyr", () -> ZEPHYR_TYPE);
 
+	// Dungeon
+
 	public static final EntityType<SentryEntity> SENTRY_TYPE = EntityType.Builder.<SentryEntity>of(SentryEntity::new, MobCategory.MONSTER).sized(2.0F, 2.0F).build("sentry");
 	public static final RegistryObject<EntityType<SentryEntity>> SENTRY = ENTITIES.register("sentry", () -> SENTRY_TYPE);
 
@@ -90,6 +98,9 @@ public class AetherEntityTypes
 
 	public static final EntityType<FireMinionEntity> FIRE_MINION_TYPE = EntityType.Builder.<FireMinionEntity>of(FireMinionEntity::new, MobCategory.MONSTER).sized(0.8F, 1.95F).build("fire_minion");
 	public static final RegistryObject<EntityType<FireMinionEntity>> FIRE_MINION = ENTITIES.register("fire_minion", () -> FIRE_MINION_TYPE);
+
+
+	// Miscellaneous
 
 	public static final EntityType<CloudMinionEntity> CLOUD_MINION_TYPE = EntityType.Builder.<CloudMinionEntity>of(CloudMinionEntity::new, MobCategory.MISC).sized(0.75F, 0.75F).build("cloud_minion");
 	public static final RegistryObject<EntityType<CloudMinionEntity>> CLOUD_MINION = ENTITIES.register("cloud_minion", () -> CLOUD_MINION_TYPE);
