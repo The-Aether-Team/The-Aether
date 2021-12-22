@@ -42,11 +42,10 @@ public class InebriationEffect extends MobEffect
         entityLivingBaseIn.setDeltaMovement(entityLivingBaseIn.getDeltaMovement().add(this.motionDirection, 0, this.motionDirection));
         this.rotationDirection = 0.125D * newRotD + (1.0D - 0.125D) * this.rotationDirection;
 
-        entityLivingBaseIn.yRot = (float)((double)entityLivingBaseIn.yRot + rotationDirection);
-        entityLivingBaseIn.xRot = (float)((double)entityLivingBaseIn.xRot + rotationDirection);
+        entityLivingBaseIn.setYRot((float) ((double) entityLivingBaseIn.getYRot() + rotationDirection));
+        entityLivingBaseIn.setXRot((float) ((double) entityLivingBaseIn.getXRot() + rotationDirection));
 
-        if (entityLivingBaseIn.level instanceof ServerLevel) {
-            ServerLevel world = (ServerLevel) entityLivingBaseIn.level;
+        if (entityLivingBaseIn.level instanceof ServerLevel world) {
             world.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, Items.RED_DYE.getDefaultInstance()),
                     entityLivingBaseIn.getX(),
                     entityLivingBaseIn.getY() + entityLivingBaseIn.getBbHeight() * 0.8,
