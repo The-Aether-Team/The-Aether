@@ -45,6 +45,7 @@ import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableConditio
 import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
@@ -199,11 +200,11 @@ public class AetherLootTableProvider extends LootTableProvider
         protected static LootTable.Builder droppingTreasureChest(Block block) {
             return LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                     .add(LootItem.lootTableItem(block)
-                            .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY)))));
-//                            .apply(CopyNbtFunction.copyData(CopyNbtFunction.DataSource.BLOCK_ENTITY)
-//                                    .copy("Locked", "BlockEntityTag.Locked")
-//                                    .copy("Kind", "BlockEntityTag.Kind"))))
-//            );
+                            .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+                            .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                                    .copy("Locked", "BlockEntityTag.Locked")
+                                    .copy("Kind", "BlockEntityTag.Kind"))))
+            );
         }
 
         protected static LootTable.Builder droppingPresentLoot(Block block) {

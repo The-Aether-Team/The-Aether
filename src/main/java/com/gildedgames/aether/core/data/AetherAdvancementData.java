@@ -2,7 +2,6 @@ package com.gildedgames.aether.core.data;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.advancement.LoreTrigger;
-import com.gildedgames.aether.common.advancement.MountTrigger;
 import com.gildedgames.aether.common.registry.*;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
@@ -12,10 +11,8 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
-import net.minecraft.advancements.critereon.ChangeDimensionTrigger;
-import net.minecraft.advancements.critereon.EnterBlockTrigger;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.data.advancements.AdvancementProvider;
@@ -127,7 +124,7 @@ public class AetherAdvancementData extends AdvancementProvider
                             new TranslatableComponent("advancement.aether.mount_phyg.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .addCriterion("mount_phyg", MountTrigger.Instance.forEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.PHYG.get())))
+                    .addCriterion("mount_phyg", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(AetherEntityTypes.PHYG.get()).build()))) //TODO: Test
                     .save(consumer, "aether:mount_phyg");
 
             Advancement craftIncubator = Advancement.Builder.advancement()

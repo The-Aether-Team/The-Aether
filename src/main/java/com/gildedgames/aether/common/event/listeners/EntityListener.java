@@ -1,7 +1,6 @@
 package com.gildedgames.aether.common.event.listeners;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.advancement.MountTrigger;
 import com.gildedgames.aether.common.entity.passive.MountableEntity;
 import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
 import com.gildedgames.aether.common.registry.AetherItems;
