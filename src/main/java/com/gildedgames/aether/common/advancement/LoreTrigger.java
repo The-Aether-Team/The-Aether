@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.advancement;
 
 import com.gildedgames.aether.Aether;
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -49,8 +50,8 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance>
             return new LoreTrigger.Instance(EntityPredicate.Composite.ANY, itemConditions);
         }
 
-        public static LoreTrigger.Instance forItem(ItemLike item) {
-            ItemPredicate predicate = new ItemPredicate(null, item.asItem(), MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, EnchantmentPredicate.NONE, EnchantmentPredicate.NONE, null, NbtPredicate.ANY);
+        public static LoreTrigger.Instance forItem(ItemLike item) { //TODO: Make sure the change to ImmutableSet.of() works.
+            ItemPredicate predicate = new ItemPredicate(null, ImmutableSet.of(item.asItem()), MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, EnchantmentPredicate.NONE, EnchantmentPredicate.NONE, null, NbtPredicate.ANY);
             return forItem(predicate);
         }
 
