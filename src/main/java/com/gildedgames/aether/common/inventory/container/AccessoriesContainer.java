@@ -166,7 +166,7 @@ public class AccessoriesContainer extends InventoryMenu
 
     @Override
     public void slotsChanged(@Nonnull Container inventoryIn) {
-        CraftingMenu.slotChangedCraftingGrid(this.containerId, this.player.level, this.player, this.craftMatrix, this.craftResult);
+        CraftingMenu.slotChangedCraftingGrid(this, this.player.level, this.player, this.craftMatrix, this.craftResult);
     }
 
     @Override
@@ -174,7 +174,7 @@ public class AccessoriesContainer extends InventoryMenu
         super.removed(playerIn);
         this.craftResult.clearContent();
         if (!playerIn.level.isClientSide) {
-            this.clearContainer(playerIn, playerIn.level, this.craftMatrix);
+            this.clearContainer(playerIn, this.craftMatrix);
         }
     }
 
@@ -241,9 +241,9 @@ public class AccessoriesContainer extends InventoryMenu
                 return ItemStack.EMPTY;
             }
 
-            ItemStack itemstack2 = slot.onTake(playerIn, itemstack1);
+            /*ItemStack itemstack2 = */slot.onTake(playerIn, itemstack1); //TODO: Fix this if broken, slot.onTake returns void now.
             if (index == 0) {
-                playerIn.drop(itemstack2, false);
+                playerIn.drop(itemstack1, false);
             }
         }
         return itemstack;
