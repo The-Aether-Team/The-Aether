@@ -3,19 +3,14 @@ package com.gildedgames.aether.core.capability;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.core.capability.capabilities.arrow.PhoenixArrow;
 import com.gildedgames.aether.core.capability.capabilities.arrow.PhoenixArrowProvider;
-import com.gildedgames.aether.core.capability.capabilities.arrow.PhoenixArrowStorage;
 import com.gildedgames.aether.core.capability.capabilities.cape.CapeEntity;
 import com.gildedgames.aether.core.capability.capabilities.cape.CapeEntityProvider;
-import com.gildedgames.aether.core.capability.capabilities.cape.CapeEntityStorage;
 import com.gildedgames.aether.core.capability.capabilities.eternal_day.EternalDay;
 import com.gildedgames.aether.core.capability.capabilities.eternal_day.EternalDayProvider;
-import com.gildedgames.aether.core.capability.capabilities.eternal_day.EternalDayStorage;
 import com.gildedgames.aether.core.capability.capabilities.lightning.LightningTracker;
 import com.gildedgames.aether.core.capability.capabilities.lightning.LightningTrackerProvider;
-import com.gildedgames.aether.core.capability.capabilities.lightning.LightningTrackerStorage;
 import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayer;
 import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayerProvider;
-import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayerStorage;
 import com.gildedgames.aether.core.capability.interfaces.*;
 
 import net.minecraft.world.entity.Entity;
@@ -27,35 +22,35 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 public class AetherCapabilities
 {
-	@CapabilityInject(ICapeEntity.class)
-	public static final Capability<ICapeEntity> CAPE_ENTITY_CAPABILITY = null;
+	public static final Capability<ICapeEntity> CAPE_ENTITY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+	});
+	public static final Capability<IAetherPlayer> AETHER_PLAYER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+	});
 
-	@CapabilityInject(IAetherPlayer.class)
-	public static final Capability<IAetherPlayer> AETHER_PLAYER_CAPABILITY = null;
+	public static final Capability<IPhoenixArrow> PHOENIX_ARROW_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+	});
 
-	@CapabilityInject(IPhoenixArrow.class)
-	public static final Capability<IPhoenixArrow> PHOENIX_ARROW_CAPABILITY = null;
+	public static final Capability<ILightningTracker> LIGHTNING_TRACKER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+	});
 
-	@CapabilityInject(ILightningTracker.class)
-	public static final Capability<ILightningTracker> LIGHTNING_TRACKER_CAPABILITY = null;
+	public static final Capability<IEternalDay> ETERNAL_DAY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+	});
 
-	@CapabilityInject(IEternalDay.class)
-	public static final Capability<IEternalDay> ETERNAL_DAY_CAPABILITY = null;
-
-	public static void register() {
-		CapabilityManager.INSTANCE.register(ICapeEntity.class, new CapeEntityStorage(), () -> null);
-		CapabilityManager.INSTANCE.register(IAetherPlayer.class, new AetherPlayerStorage(), () -> null);
-		CapabilityManager.INSTANCE.register(IPhoenixArrow.class, new PhoenixArrowStorage(), () -> null);
-		CapabilityManager.INSTANCE.register(ILightningTracker.class, new LightningTrackerStorage(), () -> null);
-		CapabilityManager.INSTANCE.register(IEternalDay.class, new EternalDayStorage(), () -> null);
+	public static void register(RegisterCapabilitiesEvent event) {
+		event.register(ICapeEntity.class);
+		event.register(IAetherPlayer.class);
+		event.register(IPhoenixArrow.class);
+		event.register(ILightningTracker.class);
+		event.register(IEternalDay.class);
 	}
 	
 	@EventBusSubscriber(modid = Aether.MODID)

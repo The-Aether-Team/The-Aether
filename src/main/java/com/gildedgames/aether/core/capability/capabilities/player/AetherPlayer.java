@@ -238,12 +238,12 @@ public class AetherPlayer implements IAetherPlayer
 
 	@OnlyIn(Dist.CLIENT)
 	private void playPortalSound(Minecraft mc) {
-		mc.getSoundManager().play(SimpleSoundInstance.forLocalAmbience(AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER.get(), this.getPlayer().random.nextFloat() * 0.4F + 0.8F, 0.25F));
+		mc.getSoundManager().play(SimpleSoundInstance.forLocalAmbience(AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER.get(), this.getPlayer().getRandom().nextFloat() * 0.4F + 0.8F, 0.25F));
 	}
 
 	private void activateParachute() {
 		Player player = this.getPlayer();
-		Inventory inventory = this.getPlayer().inventory;
+		Inventory inventory = this.getPlayer().getInventory();
 		Level world = player.level;
 		if (!player.isCreative() && !player.isShiftKeyDown()) {
 			if (player.getDeltaMovement().y() < -1.5D) {

@@ -86,12 +86,14 @@ public class CapeEntity implements ICapeEntity
     }
 
     private void tickPassenger(Entity passenger) {
-        if (!passenger.removed) {
-            if (passenger.level.getChunkSource().isEntityTickingChunk(passenger)) {
+        if (!passenger.isRemoved()) {
+            /*if (passenger.level.getChunkSource().isEntityTickingChunk(passenger)) { TODO: Not sure if the replacement code works.
                 if (passenger.inChunk) {
                     this.rideTick();
                 }
-            }
+            }*/
+            if(!passenger.touchingUnloadedChunk())
+                this.rideTick();
         }
     }
 

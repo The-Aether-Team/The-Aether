@@ -95,6 +95,7 @@ public class Aether
 		modEventBus.addListener(this::commonSetup);
 		modEventBus.addListener(this::curiosSetup);
 		modEventBus.addListener(this::dataSetup);
+		modEventBus.addListener(AetherCapabilities::register);
 
 		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 		forgeBus.addListener(EventPriority.NORMAL, AetherStructures::addDimensionalSpacing);
@@ -128,7 +129,6 @@ public class Aether
 	}
 
 	public void commonSetup(FMLCommonSetupEvent event) {
-		AetherCapabilities.register();
 		AetherPacketHandler.register();
 
 		AetherBlocks.registerPots();
