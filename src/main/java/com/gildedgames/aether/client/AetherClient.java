@@ -10,9 +10,11 @@ import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -46,11 +48,13 @@ public class AetherClient
 
     public static void clientComplete(FMLLoadCompleteEvent event) {
         event.enqueueWork(() -> {
-            for (PlayerRenderer render : Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().values()) {
-                render.addLayer(new RepulsionShieldLayer<>(render, new HumanoidModel<>(1.1F)));
-                render.addLayer(new GoldenDartLayer<>(render));
-                render.addLayer(new PoisonDartLayer<>(render));
-                render.addLayer(new EnchantedDartLayer<>(render));
+            for (EntityRenderer<? extends Player> render : Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().values()) {
+                if(render instanceof PlayerRenderer r) {
+//                    r.addLayer(new RepulsionShieldLayer<>(r, new HumanoidModel<>(1.1F)));
+                    r.addLayer(new GoldenDartLayer<>(r));
+                    r.addLayer(new PoisonDartLayer<>(r));
+                    r.addLayer(new EnchantedDartLayer<>(r));
+                }
             }
         });
     }
