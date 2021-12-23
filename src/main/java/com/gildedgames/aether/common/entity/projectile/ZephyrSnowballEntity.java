@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Fireball;
+import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -26,7 +27,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkHooks;
 
-public class ZephyrSnowballEntity extends Fireball {
+public class ZephyrSnowballEntity extends Fireball implements ItemSupplier {
 	private int ticksInAir;
 
 	public ZephyrSnowballEntity(EntityType<? extends ZephyrSnowballEntity> type, Level worldIn) {
@@ -147,7 +148,6 @@ public class ZephyrSnowballEntity extends Fireball {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public ItemStack getItem() {
 		return new ItemStack(Items.SNOWBALL);
 	}

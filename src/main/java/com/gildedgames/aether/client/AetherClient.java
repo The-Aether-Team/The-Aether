@@ -30,6 +30,7 @@ public class AetherClient
         modEventBus.addListener(AetherClient::clientSetup);
         modEventBus.addListener(AetherClient::clientComplete);
         modEventBus.addListener(AetherRendering::registerEntityRenderers);
+        modEventBus.addListener(AetherRendering::registerLayerDefinitions);
     }
 
     public static void clientSetup(FMLClientSetupEvent event) {
