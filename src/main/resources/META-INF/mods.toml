@@ -22,12 +22,12 @@ description = '''
 [[dependencies.aether]]
     modId = "curios"
     mandatory = true
-    versionRange = "[1.16.4-,)"
+    versionRange = "[1.18.1-,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.aether]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "[1.16.4]"
+    versionRange = "[1.18.1]"
     ordering = "NONE"
     side = "BOTH"
