@@ -25,15 +25,16 @@ public class DoubleDrops extends LootItemConditionalFunction
 
 	@Override
 	protected ItemStack run(ItemStack stack, LootContext context) {
-		ItemStack tool = context.getParamOrNull(LootContextParams.TOOL);
-		if (tool != null && tool.getItem().is(AetherTags.Items.SKYROOT_TOOLS) && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) == 0) {
-			BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
-			if (state != null && (!(state.getBlock() instanceof IAetherDoubleDropBlock) || state.getValue(AetherBlockStateProperties.DOUBLE_DROPS))) {
-				if (tool.getToolTypes().contains(state.getHarvestTool())) {
-					stack.setCount(2 * stack.getCount());
-				}
-			}
-		}
+		//TODO: Needs to be made to work with the new tag system for determining harvest tools/efficiency tools.
+//		ItemStack tool = context.getParamOrNull(LootContextParams.TOOL);
+//		if (tool != null && tool.getItem().is(AetherTags.Items.SKYROOT_TOOLS) && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) == 0) {
+//			BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
+//			if (state != null && (!(state.getBlock() instanceof IAetherDoubleDropBlock) || state.getValue(AetherBlockStateProperties.DOUBLE_DROPS))) {
+//				if (tool.getToolTypes().contains(state.getHarvestTool())) {
+//					stack.setCount(2 * stack.getCount());
+//				}
+//			}
+//		}
 		return stack;
 	}
 

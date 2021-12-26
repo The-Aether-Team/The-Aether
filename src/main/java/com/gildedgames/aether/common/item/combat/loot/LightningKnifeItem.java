@@ -26,11 +26,11 @@ public class LightningKnifeItem extends Item
 	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand hand) {
 		ItemStack heldItem = playerIn.getItemInHand(hand);
 		if (!worldIn.isClientSide) {
-			if (!playerIn.abilities.instabuild && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, heldItem) == 0) {
+			if (!playerIn.getAbilities().instabuild && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, heldItem) == 0) {
 				heldItem.shrink(1);
 			}
 			LightningKnifeEntity lightningKnife = new LightningKnifeEntity(playerIn, worldIn);
-			lightningKnife.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 0.8F, 1.0F);
+			lightningKnife.shootFromRotation(playerIn, playerIn.getXRot(), playerIn.getYRot(), 0.0F, 0.8F, 1.0F);
 			worldIn.addFreshEntity(lightningKnife);
 		}
 		worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(), AetherSoundEvents.ITEM_LIGHTNING_KNIFE_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F), false);

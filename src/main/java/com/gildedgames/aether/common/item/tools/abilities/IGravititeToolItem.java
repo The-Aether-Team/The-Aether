@@ -22,22 +22,23 @@ public interface IGravititeToolItem
 		BlockState state = world.getBlockState(pos);
 		Player player = context.getPlayer();
 		InteractionHand hand = context.getHand();
-		if (player != null) {
-			if ((destroySpeed == efficiency || ForgeHooks.isToolEffective(world, pos, heldItem)) && world.isEmptyBlock(pos.above())) {
-				if (world.getBlockEntity(pos) == null && state.getDestroySpeed(world, pos) != -1.0F) {
-					if (!world.isClientSide) {
-						FloatingBlockEntity entity = new FloatingBlockEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, state);
-						if (world.getBlockState(pos).is(BlockTags.ANVIL)) {
-							entity.setHurtsEntities(true);
-						}
-						world.removeBlock(pos, false);
-						world.addFreshEntity(entity);
-						heldItem.hurtAndBreak(4, player, (p) -> p.broadcastBreakEvent(hand));
-					}
-					return InteractionResult.sidedSuccess(world.isClientSide);
-				}
-			}
-		}
+		//TODO: Make work with new effective tool tags.
+//		if (player != null) {
+//			if ((destroySpeed == efficiency || ForgeHooks.isToolEffective(world, pos, heldItem)) && world.isEmptyBlock(pos.above())) {
+//				if (world.getBlockEntity(pos) == null && state.getDestroySpeed(world, pos) != -1.0F) {
+//					if (!world.isClientSide) {
+//						FloatingBlockEntity entity = new FloatingBlockEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, state);
+//						if (world.getBlockState(pos).is(BlockTags.ANVIL)) {
+//							entity.setHurtsEntities(true);
+//						}
+//						world.removeBlock(pos, false);
+//						world.addFreshEntity(entity);
+//						heldItem.hurtAndBreak(4, player, (p) -> p.broadcastBreakEvent(hand));
+//					}
+//					return InteractionResult.sidedSuccess(world.isClientSide);
+//				}
+//			}
+//		}
 		return InteractionResult.PASS;
 	}
 }

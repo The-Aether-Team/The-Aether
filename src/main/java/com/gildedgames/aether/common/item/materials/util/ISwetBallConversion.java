@@ -93,7 +93,7 @@ public interface ISwetBallConversion
             newBlockState = event.getNewBlockState();
             if (newBlockState != oldBlockState && world.getBlockState(pos.above()).isAir()) {
                 world.setBlockAndUpdate(pos, newBlockState);
-                if (player != null && !player.abilities.instabuild) {
+                if (player != null && !player.getAbilities().instabuild) {
                     heldItem.shrink(1);
                 }
                 return InteractionResult.SUCCESS;

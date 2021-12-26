@@ -11,21 +11,16 @@ public interface IZaniteToolItem
 			
 			if (maxDamage - 50 <= current && current <= maxDamage) {
 				return 12.0F;
-			}
-			else if (maxDamage - 110 <= current && current <= maxDamage - 51) {
+			} else if (maxDamage - 110 <= current && current <= maxDamage - 51) {
 				return 8.0F;
-			}
-			else if (maxDamage - 200 <= current && current <= maxDamage - 111) {
+			} else if (maxDamage - 200 <= current && current <= maxDamage - 111) {
 				return 6.0F;
-			}
-			else if (maxDamage - 239 <= current && current <= maxDamage - 201) {
+			} else if (maxDamage - 239 <= current && current <= maxDamage - 201) {
 				return 4.0F;
-			}
-			else {
+			} else {
 				return 2.0F;
 			}
-		}
-		else {
+		} else {
 			return 1.0F;
 		}
 	}

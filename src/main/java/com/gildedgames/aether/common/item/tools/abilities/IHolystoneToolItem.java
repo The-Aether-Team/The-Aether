@@ -16,8 +16,7 @@ public interface IHolystoneToolItem
 
 	default void spawnAmbrosiumDrops(Level world, BlockPos pos) {
 		if (!world.isClientSide && this.shouldDropAmbrosium(world.random)) {
-			ItemEntity itementity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ());
-			itementity.setItem(new ItemStack(AetherItems.AMBROSIUM_SHARD.get()));
+			ItemEntity itementity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(AetherItems.AMBROSIUM_SHARD.get()));
 			world.addFreshEntity(itementity);
 		}
 	}

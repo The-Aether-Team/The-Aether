@@ -5,6 +5,9 @@ import com.gildedgames.aether.common.registry.AetherItemTiers;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.crafting.RecipeType;
+
+import javax.annotation.Nullable;
 
 public class SkyrootShovelItem extends ShovelItem
 {
@@ -13,7 +16,7 @@ public class SkyrootShovelItem extends ShovelItem
     }
 
     @Override
-    public int getBurnTime(ItemStack itemStack) {
+    public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
         return 200;
     }
 }

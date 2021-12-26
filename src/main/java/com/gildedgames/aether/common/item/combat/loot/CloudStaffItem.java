@@ -29,7 +29,7 @@ public class CloudStaffItem extends Item
             if (aetherPlayer.getCloudMinionEntities().isEmpty()) {
                 playerIn.swing(hand);
                 if (!worldIn.isClientSide) {
-                    if (!playerIn.abilities.instabuild) {
+                    if (!playerIn.getAbilities().instabuild) {
                         heldItem.hurtAndBreak(1, playerIn, (p) -> p.broadcastBreakEvent(hand));
                     }
                     CloudMinionEntity cloudMinionRight = new CloudMinionEntity(worldIn, playerIn, HumanoidArm.RIGHT);
@@ -63,7 +63,7 @@ public class CloudStaffItem extends Item
                         if (cloudMinionLeft != null) {
                             cloudMinionLeft.setShouldShoot(true);
                         }
-                        if (!aetherPlayer.getPlayer().abilities.instabuild) {
+                        if (!aetherPlayer.getPlayer().getAbilities().instabuild) {
                             aetherPlayer.getPlayer().getCooldowns().addCooldown(this, 40);
                         }
                     }
@@ -76,9 +76,9 @@ public class CloudStaffItem extends Item
     private void spawnExplosionParticles(Player playerEntity) {
         if (playerEntity.level.isClientSide) {
             for (int i = 0; i < 20; ++i) {
-                double d0 = playerEntity.random.nextGaussian() * 0.02D;
-                double d1 = playerEntity.random.nextGaussian() * 0.02D;
-                double d2 = playerEntity.random.nextGaussian() * 0.02D;
+                double d0 = playerEntity.getRandom().nextGaussian() * 0.02D;
+                double d1 = playerEntity.getRandom().nextGaussian() * 0.02D;
+                double d2 = playerEntity.getRandom().nextGaussian() * 0.02D;
                 playerEntity.level.addParticle(ParticleTypes.POOF, playerEntity.getX(0.0D) - d0 * 10.0D, playerEntity.getRandomY() - d1 * 10.0D, playerEntity.getRandomZ(1.0D) - d2 * 10.0D, d0, d1, d2);
             }
         }
