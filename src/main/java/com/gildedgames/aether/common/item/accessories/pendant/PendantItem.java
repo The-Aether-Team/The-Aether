@@ -39,20 +39,20 @@ public class PendantItem extends AccessoryItem
         return new ICurio.SoundInfo(this.equipSound.get(), 1.0f, 1.0f);
     }
 
-    @Override
-    public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-        return true;
-    }
-
-    @Override
-    public void renderModel(HumanoidModel<?> model, String identifier, int index, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-        PendantModel pendant = new PendantModel();
-
-        ICurio.RenderHelper.followBodyRotations(livingEntity, pendant);
-
-        VertexConsumer vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(this.getPendantTexture()), false, stack.isEnchanted());
-        pendant.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-    }
+//    @Override
+//    public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
+//        return true;
+//    }
+//
+//    @Override
+//    public void renderModel(HumanoidModel<?> model, String identifier, int index, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
+//        PendantModel pendant = new PendantModel();
+//
+//        ICurio.RenderHelper.followBodyRotations(livingEntity, pendant);
+//
+//        VertexConsumer vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(this.getPendantTexture()), false, stack.isEnchanted());
+//        pendant.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+//    }
 
     public void setRenderTexture(String modId, String registryName) {
         this.PENDANT_LOCATION = new ResourceLocation(modId, "textures/models/accessory/pendant/" + registryName + "_accessory.png");

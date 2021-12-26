@@ -90,17 +90,17 @@ public class AccessoryItem extends Item implements ICurioItem, Vanishable
         return new ICurio.SoundInfo(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GENERIC.get(), 1.0f, 1.0f);
     }
 
-    @Override //TODO: Fix this for 1.18
-    public void render(String identifier, int index, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-        EntityRenderer<?> entityRenderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(livingEntity);
-        if (entityRenderer instanceof RenderLayerParent<?, ?>) {
-            EntityModel<?> model = ((RenderLayerParent<?, ?>) entityRenderer).getModel();
-            if (model instanceof HumanoidModel<?>) {
-                HumanoidModel<?> bipedModel = (HumanoidModel<?>) model;
-                this.renderModel(bipedModel, identifier, index, matrixStack, renderTypeBuffer, light, livingEntity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack);
-            }
-        }
-    }
+//    @Override //TODO: Fix this for 1.18
+//    public void render(String identifier, int index, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
+//        EntityRenderer<?> entityRenderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(livingEntity);
+//        if (entityRenderer instanceof RenderLayerParent<?, ?>) {
+//            EntityModel<?> model = ((RenderLayerParent<?, ?>) entityRenderer).getModel();
+//            if (model instanceof HumanoidModel<?>) {
+//                HumanoidModel<?> bipedModel = (HumanoidModel<?>) model;
+//                this.renderModel(bipedModel, identifier, index, matrixStack, renderTypeBuffer, light, livingEntity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack);
+//            }
+//        }
+//    }
 
     public void renderModel(HumanoidModel<?> model, String identifier, int index, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) { }
 
