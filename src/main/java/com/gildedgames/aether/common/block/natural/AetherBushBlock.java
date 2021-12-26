@@ -17,7 +17,6 @@ public class AetherBushBlock extends BushBlock
 	
 	@Override
 	protected boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos) {
-		Block block = state.getBlock();
-		return block.is(AetherTags.Blocks.AETHER_DIRT) || super.mayPlaceOn(state, worldIn, pos);
+		return state.is(AetherTags.Blocks.AETHER_DIRT) || super.mayPlaceOn(state, worldIn, pos);
 	}
 }

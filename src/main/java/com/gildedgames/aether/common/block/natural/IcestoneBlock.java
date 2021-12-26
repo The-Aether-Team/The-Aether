@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.ticks.ScheduledTick;
 
 import java.util.Random;
 
@@ -20,13 +21,15 @@ public class IcestoneBlock extends Block implements IIcestoneBlock
 	@Override
 	public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
 		super.onPlace(state, worldIn, pos, oldState, isMoving);
-		worldIn.getBlockTicks().scheduleTick(pos, this, 5);
+		ScheduledTick<Block> scheduledTick = new ScheduledTick<>(this, pos, 5, 0);
+		worldIn.getBlockTicks().schedule(scheduledTick);
 	}
 
 	@Override
 	public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
 		super.tick(state, worldIn, pos, random);
 		freezeFluids(worldIn, pos);
-		worldIn.getBlockTicks().scheduleTick(pos, this, 5);
+		ScheduledTick<Block> scheduledTick = new ScheduledTick<>(this, pos, 5, 0);
+		worldIn.getBlockTicks().schedule(scheduledTick);
 	}
 }

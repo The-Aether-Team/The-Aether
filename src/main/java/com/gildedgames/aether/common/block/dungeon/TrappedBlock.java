@@ -31,9 +31,9 @@ public class TrappedBlock extends Block
 		this.entityTypeSupplier = entityTypeSupplier;
 		this.untrappedVariantSupplier = untrappedVariantSupplier;
 	}
-	
+
 	@Override
-	public void stepOn(Level world, BlockPos pos, Entity entityIn) {
+	public void stepOn(Level world, BlockPos pos, BlockState state, Entity entityIn) {
 		Random random = new Random();
 		if (entityIn instanceof Player) {
 			world.setBlockAndUpdate(pos, untrappedVariantSupplier.get());

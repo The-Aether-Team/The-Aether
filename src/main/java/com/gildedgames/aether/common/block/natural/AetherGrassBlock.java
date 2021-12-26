@@ -33,12 +33,12 @@ public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlo
 		builder.add(DOUBLE_DROPS);
 	}
 	
-	@Override
-	public void onPlantGrow(BlockState state, LevelAccessor world, BlockPos pos, BlockPos source) {
-		if (state.is(AetherTags.Blocks.AETHER_DIRT)) {
-			world.setBlock(pos, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS) ? AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)) : AetherBlocks.AETHER_DIRT.get().defaultBlockState(), 2);
-		}
-	}
+//	@Override
+//	public void onPlantGrow(BlockState state, LevelAccessor world, BlockPos pos, BlockPos source) {
+//		if (state.is(AetherTags.Blocks.AETHER_DIRT)) {
+//			world.setBlock(pos, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS) ? AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)) : AetherBlocks.AETHER_DIRT.get().defaultBlockState(), 2);
+//		}
+//	}
 
 	@Override
 	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {

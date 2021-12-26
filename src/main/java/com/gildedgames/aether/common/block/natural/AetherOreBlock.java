@@ -19,8 +19,8 @@ public class AetherOreBlock extends OreBlock implements IAetherDoubleDropBlock
 		this.maxExpDropped = maxExpDropped;
 	}
 	
-	@Override
-	protected int xpOnDrop(Random rand) {
-		return Mth.nextInt(rand, minExpDropped, maxExpDropped);
-	}
+//	@Override
+//	protected int xpOnDrop(Random rand) {
+//		return Mth.nextInt(rand, minExpDropped, maxExpDropped);
+//	}
 }

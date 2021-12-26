@@ -75,14 +75,13 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestTileEnti
 		return RenderShape.ENTITYBLOCK_ANIMATED;
 	}
 
-//	@Override
-//	public BlockState updateShape(BlockState state, Direction direction, BlockState stateOther, LevelAccessor world, BlockPos pos, BlockPos posOther) {
-//		if (state.getValue(WATERLOGGED)) {
-//			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
-//		}
-//
-//		return super.updateShape(state, direction, stateOther, world, pos, posOther);
-//	}
+	@Override
+	public BlockState updateShape(BlockState state, Direction direction, BlockState stateOther, LevelAccessor world, BlockPos pos, BlockPos posOther) {
+		if (state.getValue(WATERLOGGED)) {
+			world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+		}
+		return super.updateShape(state, direction, stateOther, world, pos, posOther);
+	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {

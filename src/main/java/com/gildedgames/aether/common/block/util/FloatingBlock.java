@@ -24,7 +24,7 @@ public class FloatingBlock extends Block
 	@Override
 	public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
 		super.onPlace(state, worldIn, pos, oldState, isMoving);
-		worldIn.getBlockTicks().scheduleTick(pos, this, 2);
+		worldIn.scheduleTick(pos, this, this.getDelayAfterPlace());
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class FloatingBlock extends Block
 				this.floatBlock(worldIn, pos);
 			}
 		}
-		worldIn.getBlockTicks().scheduleTick(pos, this, 2);
+		//worldIn.getBlockTicks().scheduleTick(pos, this, 2); //TODO: Not sure what to do with this. Check FallingBlock.
 	}
 	
 	private void floatBlock(Level worldIn, BlockPos pos) {
@@ -53,4 +53,8 @@ public class FloatingBlock extends Block
 	public void onLand(Level worldIn, BlockPos pos, BlockState blockState, BlockState blockState1, FloatingBlockEntity fallingBlockEntity) { }
 
 	public void onBroken(Level worldIn, BlockPos pos, FloatingBlockEntity fallingBlockEntity) { }
+
+	protected int getDelayAfterPlace() {
+		return 2;
+	}
 }
