@@ -45,11 +45,11 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookContainer>
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - (this.imageHeight)) / 2;
 
-        this.previousButton = this.addButton(new LorePageButton(i + 14, j + 169, 20, 20, new TextComponent("<"), (p_214201_1_) -> {
+        this.previousButton = this.addWidget(new LorePageButton(i + 14, j + 169, 20, 20, new TextComponent("<"), (p_214201_1_) -> {
             if (this.currentPageNumber > 0) currentPageNumber--;
         }));
 
-        this.nextButton = this.addButton(new LorePageButton(i + 221, j + 169, 20, 20, new TextComponent(">"), (p_214201_1_) -> {
+        this.nextButton = this.addWidget(new LorePageButton(i + 221, j + 169, 20, 20, new TextComponent(">"), (p_214201_1_) -> {
             if (this.currentPageNumber < this.pages.size() - 1) currentPageNumber++;
         }));
     }
@@ -133,14 +133,14 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookContainer>
 
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        //RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F); //TODO
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - (this.imageHeight)) / 2;
 
-        this.getMinecraft().getTextureManager().bind(TEXTURE_LORE_BACKING);
+        this.getMinecraft().getTextureManager().bindForSetup(TEXTURE_LORE_BACKING);
         blit(matrixStack, i, j - 4, 0, 0, this.imageWidth, this.imageHeight + 56, 256, 256);
 
-        this.getMinecraft().getTextureManager().bind(TEXTURE_LORE_BOOK);
+        this.getMinecraft().getTextureManager().bindForSetup(TEXTURE_LORE_BOOK);
         blit(matrixStack, i + 12, j + 2, 0, 0, this.imageWidth, this.imageHeight + 56, 256, 256);
     }
 

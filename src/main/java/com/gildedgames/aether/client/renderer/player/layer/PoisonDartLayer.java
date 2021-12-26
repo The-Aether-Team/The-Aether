@@ -5,6 +5,7 @@ import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.StuckInBodyLayer;
 import net.minecraft.client.model.PlayerModel;
@@ -22,11 +23,10 @@ import java.util.Random;
 public class PoisonDartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends StuckInBodyLayer<T, M>
 {
     private final EntityRenderDispatcher dispatcher;
-    private PoisonDartEntity dart;
 
-    public PoisonDartLayer(LivingEntityRenderer<T, M> renderer) {
+    public PoisonDartLayer(EntityRendererProvider.Context context, LivingEntityRenderer<T, M> renderer) {
         super(renderer);
-        this.dispatcher = renderer.getDispatcher();
+        this.dispatcher = context.getEntityRenderDispatcher();
     }
 
     @Override
@@ -68,12 +68,12 @@ public class PoisonDartLayer<T extends LivingEntity, M extends PlayerModel<T>> e
     @Override
     protected void renderStuckItem(PoseStack p_225632_1_, MultiBufferSource p_225632_2_, int p_225632_3_, Entity p_225632_4_, float p_225632_5_, float p_225632_6_, float p_225632_7_, float p_225632_8_) {
         float f = Mth.sqrt(p_225632_5_ * p_225632_5_ + p_225632_7_ * p_225632_7_);
-        this.dart = new PoisonDartEntity(p_225632_4_.level);
-        this.dart.setPos(p_225632_4_.getX(), p_225632_4_.getY(), p_225632_4_.getZ());
-        this.dart.yRot = (float)(Math.atan2(p_225632_5_, p_225632_7_) * (double)(180F / (float)Math.PI));
-        this.dart.xRot = (float)(Math.atan2(p_225632_6_, f) * (double)(180F / (float)Math.PI));
-        this.dart.yRotO = this.dart.yRot;
-        this.dart.xRotO = this.dart.xRot;
-        this.dispatcher.render(this.dart, 0.0D, 0.0D, 0.0D, 0.0F, p_225632_8_, p_225632_1_, p_225632_2_, p_225632_3_);
+        PoisonDartEntity dart = new PoisonDartEntity(p_225632_4_.level);
+        dart.setPos(p_225632_4_.getX(), p_225632_4_.getY(), p_225632_4_.getZ());
+        dart.setYRot((float)(Math.atan2(p_225632_5_, p_225632_7_) * (double)(180F / (float)Math.PI)));
+        dart.setXRot((float)(Math.atan2(p_225632_6_, f) * (double)(180F / (float)Math.PI)));
+        dart.yRotO = dart.getYRot();
+        dart.xRotO = dart.getXRot();
+        this.dispatcher.render(dart, 0.0D, 0.0D, 0.0D, 0.0F, p_225632_8_, p_225632_1_, p_225632_2_, p_225632_3_);
     }
 }

@@ -48,7 +48,7 @@ public class GuiListener
 		Minecraft minecraft = Minecraft.getInstance();
 		Player entity = minecraft.player;
 		if (event.phase == TickEvent.Phase.END) {
-			if (entity != null && entity.level != null) {
+			if (entity != null) {
 				if (AetherKeys.openAccessoryInventory.consumeClick() && minecraft.isWindowActive()) {
 					AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(entity.getId()));
 					shouldAddButton = false;

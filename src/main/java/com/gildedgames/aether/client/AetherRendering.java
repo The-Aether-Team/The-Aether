@@ -4,6 +4,9 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.*;
+import com.gildedgames.aether.client.renderer.player.layer.EnchantedDartLayer;
+import com.gildedgames.aether.client.renderer.player.layer.GoldenDartLayer;
+import com.gildedgames.aether.client.renderer.player.layer.PoisonDartLayer;
 import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicBlockEntityRenderer;
@@ -21,6 +24,7 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeableLeatherItem;
@@ -132,6 +136,19 @@ public class AetherRendering
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR, ZephyrModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_CLASSIC, OldZephyrModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_TRANSPARENCY, ZephyrModel::createBodyLayer);
+    }
+
+    public static void addPlayerLayers(EntityRenderersEvent.AddLayers event) {
+        String[] types = new String[] { "default", "slim" };
+        for (String type : types) {
+            PlayerRenderer playerRenderer =  event.getSkin(type);
+            if (playerRenderer != null) {
+//                    r.addLayer(new RepulsionShieldLayer<>(r, new HumanoidModel<>(1.1F)));
+//                playerRenderer.addLayer(new GoldenDartLayer<>(playerRenderer));
+//                playerRenderer.addLayer(new PoisonDartLayer<>(playerRenderer));
+//                playerRenderer.addLayer(new EnchantedDartLayer<>(playerRenderer));
+            }
+        }
     }
 
     /*public static CustomItemStackTileEntityRenderer chestMimicRenderer() {

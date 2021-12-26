@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -28,13 +29,12 @@ public class AetherClient
     public static void clientInitialization() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(AetherClient::clientSetup);
-        modEventBus.addListener(AetherClient::clientComplete);
         modEventBus.addListener(AetherRendering::registerEntityRenderers);
         modEventBus.addListener(AetherRendering::registerLayerDefinitions);
+        modEventBus.addListener(AetherRendering::addPlayerLayers);
     }
 
     public static void clientSetup(FMLClientSetupEvent event) {
-
         event.enqueueWork(() -> {
             AetherKeys.registerKeys();
             AetherRendering.registerColors();
@@ -44,19 +44,6 @@ public class AetherClient
             AetherAtlases.registerWoodTypeAtlases();
 
             DimensionSpecialEffects.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), new AetherSkyRenderInfo());
-        });
-    }
-
-    public static void clientComplete(FMLLoadCompleteEvent event) {
-        event.enqueueWork(() -> {
-            for (EntityRenderer<? extends Player> render : Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().values()) {
-                if(render instanceof PlayerRenderer r) {
-//                    r.addLayer(new RepulsionShieldLayer<>(r, new HumanoidModel<>(1.1F)));
-                    r.addLayer(new GoldenDartLayer<>(r));
-                    r.addLayer(new PoisonDartLayer<>(r));
-                    r.addLayer(new EnchantedDartLayer<>(r));
-                }
-            }
         });
     }
 }

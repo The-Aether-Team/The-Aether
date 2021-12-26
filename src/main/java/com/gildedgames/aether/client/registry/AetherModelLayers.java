@@ -39,7 +39,6 @@ public class AetherModelLayers
         return register(new ResourceLocation(Aether.MODID, name), type);
     }
 
-
     private static ModelLayerLocation register(ResourceLocation identifier, String type) {
         return new ModelLayerLocation(identifier, type);
     }
