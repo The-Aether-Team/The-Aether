@@ -18,8 +18,7 @@
     "client.ElytraLayerMixin",
     "client.MinecraftMixin",
     "client.SplashesMixin",
-    "client.TippedArrowRendererMixin",
-    "client.WorldRendererMixin"
+    "client.TippedArrowRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

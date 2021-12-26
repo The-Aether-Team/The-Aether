@@ -10,22 +10,20 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-@Mixin(LevelRenderer.class)
-public class WorldRendererMixin
-{
-    @Shadow
-    private ClientLevel level;
+import javax.annotation.Nullable;
 
-    /**
-     * {@link net.minecraft.client.renderer.LevelRenderer#renderSky(PoseStack, Matrix4f, float, Runnable)}
-     * Code injection to fix Minecraft's issue of turning the horizon black when the player is below y=63.
-     * The method checks if the world key is the same as the Aether's, and if it is, it returns 1.
-     */
-    @ModifyVariable(at = @At(value = "STORE"), method = "renderSky", ordinal = 1) //TODO: The error this is throwing might just be IDEA being incorrect. Test once the mod actually can compile.
-    private double onRenderSky(double d0) {
-        if (this.level.dimension() == AetherDimensions.AETHER_WORLD) {
-            return 1.0D;
-        }
-        return d0;
-    }
-}
+//@Mixin(LevelRenderer.class)
+//public class WorldRendererMixin
+//{
+//    @Nullable
+//    @Shadow
+//    private ClientLevel level;
+//
+//    @ModifyVariable(at = @At(value = "STORE", ordinal = 0, args = { "log=true" }), method = "renderSky", ordinal = 1) //TODO: The error this is throwing might just be IDEA being incorrect. Test once the mod actually can compile.
+//    public double renderSky(double d0) {
+//        if (this.level != null && this.level.dimension() == AetherDimensions.AETHER_WORLD) {
+//            return 1.0D;
+//        }
+//        return d0;
+//    }
+//}
