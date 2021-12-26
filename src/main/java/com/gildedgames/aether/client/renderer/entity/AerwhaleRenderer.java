@@ -30,7 +30,7 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
     public AerwhaleRenderer(EntityRendererProvider.Context renderer) {
         super(renderer, new AerwhaleModel(renderer.bakeLayer(AetherModelLayers.AERWHALE)), 0.5F);
         this.regularModel = (AerwhaleModel) this.model;
-        this.oldModel = new OldAerwhaleModel();
+        this.oldModel = new OldAerwhaleModel(renderer.bakeLayer(AetherModelLayers.AERWHALE_CLASSIC));
     }
     
     private Object _data;

@@ -1,6 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.MoaSaddleLayer;
 import com.gildedgames.aether.client.renderer.entity.model.MoaModel;
 import com.gildedgames.aether.common.entity.passive.MoaEntity;
@@ -18,10 +19,9 @@ public class MoaRenderer extends MobRenderer<MoaEntity, MoaModel>
 	private static final ResourceLocation MOS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/mos.png");
 	private static final ResourceLocation RAPTOR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/raptor.png");
 
-	//TODO: Use new system stuff.
-	public MoaRenderer(EntityRendererProvider.Context rendererManager) {
-		super(rendererManager, new MoaModel(0.0F), 0.7F);
-		this.addLayer(new MoaSaddleLayer(this));
+	public MoaRenderer(EntityRendererProvider.Context context) {
+		super(context, new MoaModel(context.bakeLayer(AetherModelLayers.MOA)), 0.7F);
+		this.addLayer(new MoaSaddleLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
 	}
 
 	@Override
