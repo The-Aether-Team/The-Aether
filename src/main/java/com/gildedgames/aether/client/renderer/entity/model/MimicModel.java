@@ -25,7 +25,7 @@ public class MimicModel extends EntityModel<MimicEntity> {
 		this.lowerBody = root.getChild("lower_body");
 		this.leftLeg = root.getChild("left_leg");
 		this.rightLeg = root.getChild("right_leg");
-		this.knob = root.getChild("knob");
+		this.knob = this.upperBody.getChild("knob");
 	}
 
 	public static LayerDefinition createBodyLayer() {

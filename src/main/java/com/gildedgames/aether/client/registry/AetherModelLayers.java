@@ -23,7 +23,7 @@ public class AetherModelLayers
     public static final ModelLayerLocation SENTRY = register("sentry");
     public static final ModelLayerLocation SHEEPUFF = register("sheepuff");
     public static final ModelLayerLocation SHEEPUFF_WOOL = register("sheepuff", "outer");
-    public static final ModelLayerLocation SHEEPUFF_WOOL_PUFFEED = register("sheepuff", "outer_puffed");
+    public static final ModelLayerLocation SHEEPUFF_WOOL_PUFFED = register("sheepuff", "outer_puffed");
     public static final ModelLayerLocation SLIDER = register("slider");
     public static final ModelLayerLocation SUN_SPIRIT = register("sun_spirit");
     public static final ModelLayerLocation SWET = register("swet");

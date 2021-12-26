@@ -26,7 +26,7 @@ public class SheepuffWoolLayer extends RenderLayer<SheepuffEntity, SheepuffModel
     public SheepuffWoolLayer(RenderLayerParent<SheepuffEntity, SheepuffModel> entityRendererIn, EntityModelSet modelSet) {
         super(entityRendererIn);
         woolModel = new SheepuffWoolModel(modelSet.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL));
-        puffedModel = new SheepuffWoolModel(modelSet.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL_PUFFEED));
+        puffedModel = new SheepuffWoolModel(modelSet.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL_PUFFED));
     }
 
     @Override

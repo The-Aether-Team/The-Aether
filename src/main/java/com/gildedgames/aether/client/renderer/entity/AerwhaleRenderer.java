@@ -25,12 +25,12 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
     private static final ResourceLocation OLD_AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/old_aerwhale.png");
 
     private final AerwhaleModel regularModel;
-    //private final OldAerwhaleModel oldModel;
+    private final OldAerwhaleModel oldModel;
     
     public AerwhaleRenderer(EntityRendererProvider.Context renderer) {
         super(renderer, new AerwhaleModel(renderer.bakeLayer(AetherModelLayers.AERWHALE)), 0.5F);
         this.regularModel = (AerwhaleModel) this.model;
-        //this.oldModel = new OldAerwhaleModel(renderer.bakeLayer(AetherModelLayers.AERWHALE_CLASSIC));
+        this.oldModel = new OldAerwhaleModel(renderer.bakeLayer(AetherModelLayers.AERWHALE_CLASSIC));
     }
     
     private Object _data;
