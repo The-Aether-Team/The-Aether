@@ -11,7 +11,7 @@ import com.gildedgames.aether.common.entity.miscellaneous.ColdParachuteEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.GoldenParachuteEntity;
 import com.gildedgames.aether.common.entity.monster.AechorPlantEntity;
 import com.gildedgames.aether.common.entity.monster.CockatriceEntity;
-import com.gildedgames.aether.common.entity.monster.FireMinionEntity;
+import com.gildedgames.aether.common.entity.monster.dungeon.FireMinionEntity;
 import com.gildedgames.aether.common.entity.monster.WhirlwindEntity;
 import com.gildedgames.aether.common.entity.monster.ZephyrEntity;
 import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;

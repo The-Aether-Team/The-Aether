@@ -59,7 +59,7 @@ public class AechorPlantEntity extends PathfinderMob implements RangedAttackMob 
         double x = target.getX() - this.getX();
         double y = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0F) - needle.getY();
         double z = target.getZ() - this.getZ();
-        double distance = Mth.sqrt(x * x + z * z);
+        double distance = Mth.sqrt((float) (x * x + z * z));
         needle.shoot(x, y + distance * 0.20000000298023224D, z, 1.0F, (float)(14 - this.level.getDifficulty().getId() * 4));
         this.playSound(AetherSoundEvents.ENTITY_COCKATRICE_SHOOT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
         this.level.addFreshEntity(needle);
@@ -98,7 +98,7 @@ public class AechorPlantEntity extends PathfinderMob implements RangedAttackMob 
                 double d2 = Mth.absMax(d0, d1);
 
                 if (d2 >= 0.009999999776482582D) {
-                    d2 = Mth.sqrt(d2);
+                    d2 = Mth.sqrt((float) d2);
                     d0 = d0 / d2;
                     d1 = d1 / d2;
 
@@ -112,8 +112,8 @@ public class AechorPlantEntity extends PathfinderMob implements RangedAttackMob 
                     d1 = d1 * d3;
                     d0 = d0 * 0.05000000074505806D;
                     d1 = d1 * 0.05000000074505806D;
-                    d0 = d0 * (double) (1.0F - entityIn.pushthrough);
-                    d1 = d1 * (double) (1.0F - entityIn.pushthrough);
+//                    d0 = d0 * (double) (1.0F - entityIn.pushthrough); //TODO: What is pushthrough?
+//                    d1 = d1 * (double) (1.0F - entityIn.pushthrough);
 
                     if (!entityIn.isVehicle()) {
                         entityIn.push(-d0, 0.0D, -d1);

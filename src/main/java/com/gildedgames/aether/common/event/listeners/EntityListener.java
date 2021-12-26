@@ -25,9 +25,6 @@ public class EntityListener
     public static void onMountEntity(EntityMountEvent event) {
         Entity rider = event.getEntityMounting();
         Entity mount = event.getEntityBeingMounted();
-        if (mount != null && rider instanceof ServerPlayer) {
-            MountTrigger.INSTANCE.trigger((ServerPlayer) rider, mount);
-        }
         if (event.isDismounting() && rider.isShiftKeyDown() && mount instanceof MountableEntity && !mount.isOnGround()) {
             event.setCanceled(true);
         }

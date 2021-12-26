@@ -61,7 +61,7 @@ public class DimensionListener
         BlockState state = world.getBlockState(pos);
 
         if (player.getCommandSenderWorld().dimension() == AetherDimensions.AETHER_WORLD) {
-            if (stack.getItem().is(AetherTags.Items.BANNED_IN_AETHER)) {
+            if (stack.is(AetherTags.Items.BANNED_IN_AETHER)) {
                 if (AetherEventHooks.isItemBanned(stack)) {
                     AetherEventHooks.onItemBanned(world, pos, face, stack);
                     event.setCanceled(true);
@@ -144,7 +144,7 @@ public class DimensionListener
             if (world.dimension() == AetherDimensions.AETHER_WORLD) {
                 if (event.phase == TickEvent.Phase.END) {
                     if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
-                        List<Entity> loadedEntities = (world).getEntities(null, Objects::nonNull);
+                        List<Entity> loadedEntities = (List<Entity>) world.getEntities(null, Objects::nonNull);
                         for (Entity entity : loadedEntities) {
                             if (entity.getY() <= 0 && !entity.isPassenger()) {
                                 fallFromAether(entity);

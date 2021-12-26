@@ -27,7 +27,7 @@ public class ToolAbilityListener
         ItemStack stack = event.getItemStack();
         if (stack.getItem() instanceof AxeItem) {
             BlockState blockState = world.getBlockState(event.getPos());
-            if (blockState.getBlock().is(AetherTags.Blocks.GOLDEN_OAK_LOGS)) {
+            if (blockState.is(AetherTags.Blocks.GOLDEN_OAK_LOGS)) {
                 if (world.getServer() != null) {
                     Vec3 vector = event.getHitVec().getLocation();
                     LootContext.Builder lootContext = new LootContext.Builder((ServerLevel) world)

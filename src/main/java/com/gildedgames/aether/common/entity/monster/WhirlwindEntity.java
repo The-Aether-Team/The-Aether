@@ -187,7 +187,7 @@ public class WhirlwindEntity extends Mob {
                 entity.setDeltaMovement(-Math.cos(0.01745329424738884D * d19) * (d15 + 0.25D) * 0.10000000149011612D, entity.getDeltaMovement().y, Math.sin(0.01745329424738884D * d19) * (d15 + 0.25D) * 0.10000000149011612D);
 
                 if(entity instanceof WhirlwindEntity) {
-                    entity.remove();
+                    entity.discard();
 
                     if(!this.isEvil()) {
                         this.lifeLeft /= 2;
@@ -224,17 +224,17 @@ public class WhirlwindEntity extends Mob {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
         if (heldItem.getItem() instanceof DyeItem && !AetherRankings.getRanksOf(player.getUUID()).isEmpty()) {
-            this.setColorData(((DyeItem) heldItem.getItem()).getDyeColor().getColorValue());
+//            this.setColorData(((DyeItem) heldItem.getItem()).getDyeColor().getColorValue());
 
             return InteractionResult.SUCCESS;
         }
         return super.mobInteract(player, hand);
     }
 
-    @Override
-    public boolean isMovementNoisy() {
-        return false;
-    }
+//    @Override
+//    public boolean isMovementNoisy() {
+//        return false;
+//    }
 
     @OnlyIn(Dist.CLIENT)
     public void updateParticles() {
@@ -308,7 +308,8 @@ public class WhirlwindEntity extends Mob {
 
     @Override
     public boolean checkSpawnRules(LevelAccessor worldIn, MobSpawnType spawnReasonIn) {
-        return this.level.isUnobstructed(this) && this.level.getBlockCollisions(this, this.getBoundingBox()).count() == 0 && !this.level.containsAnyLiquid(this.getBoundingBox());
+        return this.level.isUnobstructed(this) //&& this.level.getBlockCollisions(this, this.getBoundingBox()).count() == 0
+                && !this.level.containsAnyLiquid(this.getBoundingBox());
     }
 
     public Player findClosestPlayer() {

@@ -31,6 +31,7 @@ import top.theillusivec4.curios.common.inventory.CurioSlot;
 import javax.annotation.Nonnull;
 import java.util.Map;
 
+//TODO: See Curios' container.
 public class AccessoriesContainer extends InventoryMenu
 {
     private static final ResourceLocation[] ARMOR_SLOT_TEXTURES = new ResourceLocation[] {
