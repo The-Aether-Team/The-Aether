@@ -20,7 +20,7 @@ public class AbstractArrowEntityMixin
     @Shadow
     protected int inGroundTime;
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/ProjectileEntity;tick()V", shift = At.Shift.AFTER), method = "tick", cancellable = true)
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/Projectile;tick()V", shift = At.Shift.AFTER), method = "tick")
     private void tick(CallbackInfo ci) {
         AbstractArrow arrow = (AbstractArrow) (Object) this;
         IPhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {

@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 
@@ -34,7 +35,8 @@ public class AetherMenuButton extends Button
 	public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float p_230431_4_) {
 		Minecraft minecraft = Minecraft.getInstance();
 	    Font fontrenderer = minecraft.font;
-	    minecraft.getTextureManager().bindForSetup(AETHER_WIDGETS);
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderTexture(0, AETHER_WIDGETS);
 	    RenderSystem.clearColor(1.0F, 1.0F, 1.0F, this.alpha); // might not be the correct mapping was color4f
 	    int i = this.getYImage(this.isHovered);
 	    RenderSystem.enableBlend();

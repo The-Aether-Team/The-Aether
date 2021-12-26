@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -137,10 +138,12 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookContainer>
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - (this.imageHeight)) / 2;
 
-        this.getMinecraft().getTextureManager().bindForSetup(TEXTURE_LORE_BACKING);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, TEXTURE_LORE_BACKING);
         blit(matrixStack, i, j - 4, 0, 0, this.imageWidth, this.imageHeight + 56, 256, 256);
 
-        this.getMinecraft().getTextureManager().bindForSetup(TEXTURE_LORE_BOOK);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, TEXTURE_LORE_BOOK);
         blit(matrixStack, i + 12, j + 2, 0, 0, this.imageWidth, this.imageHeight + 56, 256, 256);
     }
 
