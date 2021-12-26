@@ -12,11 +12,9 @@ import net.minecraft.world.level.BlockGetter;
 
 public class SkyrootWallSignBlock extends WallSignBlock
 {
-    public SkyrootWallSignBlock(BlockBehaviour.Properties propertiesIn, WoodType woodTypeIn)
-    {
+    public SkyrootWallSignBlock(BlockBehaviour.Properties propertiesIn, WoodType woodTypeIn) {
         super(propertiesIn, woodTypeIn);
     }
-
 
     public BlockEntity newBlockEntity(BlockPos p_154556_, BlockState p_154557_) {
         return new SkyrootSignTileEntity(p_154556_, p_154557_);

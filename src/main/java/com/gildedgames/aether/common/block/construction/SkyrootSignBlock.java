@@ -18,9 +18,7 @@ public class SkyrootSignBlock extends StandingSignBlock
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos p_154556_, BlockState p_154557_)
-    {
+    public BlockEntity newBlockEntity(BlockPos p_154556_, BlockState p_154557_) {
         return new SkyrootSignTileEntity(p_154556_, p_154557_);
     }
-
 }
