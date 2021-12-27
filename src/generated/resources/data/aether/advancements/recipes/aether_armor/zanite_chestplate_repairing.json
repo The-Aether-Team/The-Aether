@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:zanite_chestplate"
+            "items": [
+              "aether:zanite_chestplate"
+            ]
           }
         ]
       }

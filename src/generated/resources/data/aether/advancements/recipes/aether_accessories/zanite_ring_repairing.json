@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:zanite_ring"
+            "items": [
+              "aether:zanite_ring"
+            ]
           }
         ]
       }

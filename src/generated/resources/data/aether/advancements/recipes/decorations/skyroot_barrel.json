@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:skyroot_planks"
+            "items": [
+              "aether:skyroot_planks"
+            ]
           }
         ]
       }
@@ -21,7 +23,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:skyroot_slab"
+            "items": [
+              "aether:skyroot_slab"
+            ]
           }
         ]
       }

@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:gravitite_hoe"
+            "items": [
+              "aether:gravitite_hoe"
+            ]
           }
         ]
       }

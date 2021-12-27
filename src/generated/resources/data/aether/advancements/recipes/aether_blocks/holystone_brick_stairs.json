@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:holystone_bricks"
+            "items": [
+              "aether:holystone_bricks"
+            ]
           }
         ]
       }

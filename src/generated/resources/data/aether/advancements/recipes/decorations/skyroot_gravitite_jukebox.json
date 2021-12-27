@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:enchanted_gravitite"
+            "items": [
+              "aether:enchanted_gravitite"
+            ]
           }
         ]
       }

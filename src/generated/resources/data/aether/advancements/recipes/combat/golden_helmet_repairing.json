@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:golden_helmet"
+            "items": [
+              "minecraft:golden_helmet"
+            ]
           }
         ]
       }

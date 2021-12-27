@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:gravitite_pickaxe"
+            "items": [
+              "aether:gravitite_pickaxe"
+            ]
           }
         ]
       }
