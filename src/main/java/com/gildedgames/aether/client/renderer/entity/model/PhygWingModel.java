@@ -26,16 +26,16 @@ public class PhygWingModel extends EntityModel<PhygEntity>
     public PhygWingModel(ModelPart root) {
         leftWingInner = root.getChild("left_wing_inner");
         leftWingOuter = leftWingInner.getChild("left_wing_outer");
-        rightWingInner = root.getChild("left_wing_inner");
+        rightWingInner = root.getChild("right_wing_inner");
         rightWingOuter = rightWingInner.getChild("right_wing_outer");
     }
 
     public static LayerDefinition createMainLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
-        PartDefinition leftWingInnerDef = partdefinition.addOrReplaceChild("left_wing_inner", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(-4.0F, 12.0F, -4.0F));
+        PartDefinition root = meshdefinition.getRoot();
+        PartDefinition leftWingInnerDef = root.addOrReplaceChild("left_wing_inner", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(-4.0F, 12.0F, -4.0F));
         leftWingInnerDef.addOrReplaceChild("left_wing_outer", CubeListBuilder.create().texOffs(20, 0).mirror().addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(0.0F, -16.0F, 0.0F));
-        PartDefinition rightWingInnerDef = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(4.0F, 12.0F, -4.0F));
+        PartDefinition rightWingInnerDef = root.addOrReplaceChild("right_wing_inner", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(4.0F, 12.0F, -4.0F));
         rightWingInnerDef.addOrReplaceChild("right_wing_outer", CubeListBuilder.create().texOffs(20, 0).addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(0.0F, -16.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 64, 32);

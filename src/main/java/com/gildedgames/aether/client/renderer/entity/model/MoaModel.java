@@ -33,13 +33,13 @@ public class MoaModel extends EntityModel<MoaEntity>
 
 	public MoaModel(ModelPart root) {
 		this.head = root.getChild("head");
-		this.jaw = root.getChild("jaw");
-		this.neck = root.getChild("neck");
+		this.jaw = head.getChild("jaw");
+		this.neck = head.getChild("neck");
 		this.body = root.getChild("body");
 		this.rightLeg = root.getChild("right_leg");
 		this.leftLeg = root.getChild("left_leg");
-		this.rightWing = root.getChild("right_wing");
-		this.leftWing = root.getChild("left_wing");
+		this.rightWing = body.getChild("right_wing");
+		this.leftWing = body.getChild("left_wing");
 		this.rightTailFeather = root.getChild("right_tail_feather");
 		this.middleTailFeather = root.getChild("middle_tail_feather");
 		this.leftTailFeather = root.getChild("left_tail_feather");

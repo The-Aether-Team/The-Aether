@@ -77,16 +77,16 @@ public class AechorPlantModel<T extends Entity> extends EntityModel<AechorPlantE
         partdefinition.addOrReplaceChild("stem", CubeListBuilder.create().texOffs(24, 13)
                 .addBox(-1.0F, 0.0F, -1.0F, 2, 6, 2), PartPose.offset(0.0F, 1.0F, 0.0F));
 
-        partdefinition.addOrReplaceChild("thorn_1", CubeListBuilder.create().texOffs(24, 13)
+        partdefinition.addOrReplaceChild("thorn_0", CubeListBuilder.create().texOffs(24, 13)
                 .addBox(-1.75F, 1.25F, -1F, 1, 1, 1, new CubeDeformation(-0.25f)), PartPose.offset(0.0F, 1.0F, 0.0F));
 
-        partdefinition.addOrReplaceChild("thorn_2", CubeListBuilder.create().texOffs(24, 13)
+        partdefinition.addOrReplaceChild("thorn_1", CubeListBuilder.create().texOffs(24, 13)
                 .addBox(-1.0F, 0.0F, -1.0F, 2, 6, 2, new CubeDeformation(-0.25f)), PartPose.offset(0.0F, 1.0F, 0.0F));
 
-        partdefinition.addOrReplaceChild("thorn_3", CubeListBuilder.create().texOffs(24, 13)
+        partdefinition.addOrReplaceChild("thorn_2", CubeListBuilder.create().texOffs(24, 13)
                 .addBox(0.75F, 1.25F, 0F, 1, 1, 1, new CubeDeformation(-0.25f)), PartPose.offset(0.0F, 1.0F, 0.0F));
 
-        partdefinition.addOrReplaceChild("thorn_4", CubeListBuilder.create().texOffs(24, 13)
+        partdefinition.addOrReplaceChild("thorn_3", CubeListBuilder.create().texOffs(24, 13)
                 .addBox(0F, 2.25F, -1.75F, 1, 1, 1, new CubeDeformation(-0.25f)), PartPose.offset(0.0F, 1.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 64, 32);

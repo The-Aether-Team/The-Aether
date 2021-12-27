@@ -25,9 +25,9 @@ public class CrystalModel<T extends Entity> extends EntityModel<T>
     public static LayerDefinition createMainLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
-        partdefinition.addOrReplaceChild("crystal_1", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8), PartPose.ZERO);
-        partdefinition.addOrReplaceChild("crystal_2", CubeListBuilder.create().texOffs(32, 0).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8), PartPose.ZERO);
-        partdefinition.addOrReplaceChild("crystal_3", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8), PartPose.ZERO);
+        partdefinition.addOrReplaceChild("crystal_0", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8), PartPose.ZERO);
+        partdefinition.addOrReplaceChild("crystal_1", CubeListBuilder.create().texOffs(32, 0).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8), PartPose.ZERO);
+        partdefinition.addOrReplaceChild("crystal_2", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8), PartPose.ZERO);
         return LayerDefinition.create(meshdefinition, 64, 32);
     }
 
