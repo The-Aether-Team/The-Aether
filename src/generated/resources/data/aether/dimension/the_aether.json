@@ -1,0 +1,12 @@
+{
+  "type": "aether:aether_type",
+  "generator": {
+    "biome_source": {
+      "biome": "aether:floating_forest",
+      "type": "minecraft:fixed"
+    },
+    "seed": 0,
+    "settings": "aether:skyland_generation",
+    "type": "minecraft:noise"
+  }
+}
