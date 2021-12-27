@@ -124,7 +124,7 @@ public class AetherFeatures
 //        register("tree_golden_oak", Feature.TREE.configured(Configs.GOLDEN_OAK_TREE_CONFIG).decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.03F, 1))));
 //        register("crystal_tree", AetherFeatures.CRYSTAL_TREE.get().configured(FeatureConfiguration.NONE).chance(30));
 //        register("holiday_tree", AetherFeatures.HOLIDAY_TREE.get().configured(FeatureConfiguration.NONE).chance(60));
-//
+// see: OrePlacements
 //        register("ore_aether_dirt", Feature.ORE.configured(new OreConfiguration(Tests.HOLYSTONE, States.AETHER_DIRT, 33)).range(256).squared().count(10));
 //        register("ore_icestone", Feature.ORE.configured(new OreConfiguration(Tests.HOLYSTONE, States.ICESTONE, 16)).range(256).squared().count(10));
 //        register("ore_ambrosium", Feature.ORE.configured(new OreConfiguration(Tests.HOLYSTONE, States.AMBROSIUM_ORE, 16)).range(256).squared().count(10));
