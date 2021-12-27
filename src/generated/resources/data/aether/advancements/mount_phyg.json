@@ -17,13 +17,15 @@
   },
   "criteria": {
     "mount_phyg": {
-      "trigger": "aether:mount_entity",
+      "trigger": "minecraft:started_riding",
       "conditions": {
-        "entity": [
+        "player": [
           {
             "condition": "minecraft:entity_properties",
             "predicate": {
-              "type": "aether:phyg"
+              "vehicle": {
+                "type": "aether:phyg"
+              }
             },
             "entity": "this"
           }

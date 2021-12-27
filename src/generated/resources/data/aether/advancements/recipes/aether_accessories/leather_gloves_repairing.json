@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:leather_gloves"
+            "items": [
+              "aether:leather_gloves"
+            ]
           }
         ]
       }

@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:skyroot_sword"
+            "items": [
+              "aether:skyroot_sword"
+            ]
           }
         ]
       }

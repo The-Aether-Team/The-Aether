@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:golden_amber"
+            "items": [
+              "aether:golden_amber"
+            ]
           }
         ]
       }

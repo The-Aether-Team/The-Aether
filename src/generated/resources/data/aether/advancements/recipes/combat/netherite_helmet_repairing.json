@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:netherite_helmet"
+            "items": [
+              "minecraft:netherite_helmet"
+            ]
           }
         ]
       }

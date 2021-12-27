@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:pillar_top"
+            "items": [
+              "aether:pillar_top"
+            ]
           }
         ]
       }

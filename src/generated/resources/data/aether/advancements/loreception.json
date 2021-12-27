@@ -20,7 +20,9 @@
       "trigger": "aether:lore_entry",
       "conditions": {
         "item": {
-          "item": "aether:book_of_lore"
+          "items": [
+            "aether:book_of_lore"
+          ]
         }
       }
     }

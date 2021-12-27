@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:chainmail_leggings"
+            "items": [
+              "minecraft:chainmail_leggings"
+            ]
           }
         ]
       }

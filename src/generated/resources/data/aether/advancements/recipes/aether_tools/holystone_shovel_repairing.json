@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:holystone_shovel"
+            "items": [
+              "aether:holystone_shovel"
+            ]
           }
         ]
       }

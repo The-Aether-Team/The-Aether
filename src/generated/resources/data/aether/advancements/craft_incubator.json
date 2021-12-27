@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:incubator"
+            "items": [
+              "aether:incubator"
+            ]
           }
         ]
       }

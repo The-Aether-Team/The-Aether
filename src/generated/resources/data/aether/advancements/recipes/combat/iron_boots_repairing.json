@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:iron_boots"
+            "items": [
+              "minecraft:iron_boots"
+            ]
           }
         ]
       }
