@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.particles.ParticleTypes;
@@ -144,8 +145,7 @@ public class DimensionListener
             if (world.dimension() == AetherDimensions.AETHER_WORLD) {
                 if (event.phase == TickEvent.Phase.END) {
                     if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
-                        List<Entity> loadedEntities = (List<Entity>) world.getEntities(null, Objects::nonNull);
-                        for (Entity entity : loadedEntities) {
+                        for (Entity entity : world.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
                             if (entity.getY() <= 0 && !entity.isPassenger()) {
                                 fallFromAether(entity);
                             }
