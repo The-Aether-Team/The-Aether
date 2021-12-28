@@ -1,13 +1,21 @@
 package com.gildedgames.aether.core.data.provider;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
+import com.gildedgames.aether.core.data.AetherFeatureData;
+import com.google.common.collect.ImmutableList;
+import net.minecraft.data.worldgen.SurfaceRuleData;
 import net.minecraft.sounds.Music;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeGenerationSettings;
-import net.minecraft.world.level.biome.BiomeSpecialEffects;
-import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.biome.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.Noises;
+import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
 public class AetherBiomeProvider {
     public static Biome makeDefaultBiome() {
@@ -40,8 +48,10 @@ public class AetherBiomeProvider {
                         .addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(AetherEntityTypes.AERWHALE_TYPE, 2, 1, 1))
                         .build(),
                 new BiomeGenerationSettings.Builder()
-                        //TODO When features are fixed:
-                        // .addFeature()
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatureData.COLD_AERCLOUD_FEATURE)
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatureData.BLUE_AERCLOUD_FEATURE)
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatureData.GOLDEN_AERCLOUD_FEATURE)
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatureData.PINK_AERCLOUD_FEATURE)
                         .build(),
                 Biome.TemperatureModifier.NONE
         );
@@ -68,5 +78,28 @@ public class AetherBiomeProvider {
                 .temperatureAdjustment(temperatureModifier)
                 .build()
                 ;
+    }
+
+
+    private static final SurfaceRules.RuleSource GRASS_BLOCK = makeStateRule(AetherBlocks.AETHER_GRASS_BLOCK.get());
+    private static final SurfaceRules.RuleSource DIRT = makeStateRule(AetherBlocks.AETHER_DIRT.get());
+    private static final SurfaceRules.RuleSource QUICKSOIL = makeStateRule(AetherBlocks.QUICKSOIL.get());
+    private static final SurfaceRules.RuleSource HOLYSTONE = makeStateRule(AetherBlocks.HOLYSTONE.get());
+
+    private static SurfaceRules.RuleSource makeStateRule(Block p_194811_) {
+        return SurfaceRules.state(p_194811_.defaultBlockState());
+    }
+
+    public static SurfaceRules.RuleSource aetherSurfaceRules() {
+        SurfaceRules.ConditionSource surfacerules$conditionsource6 = SurfaceRules.waterBlockCheck(-1, 0);
+
+        SurfaceRules.RuleSource underwaterGrassToDirt = SurfaceRules.sequence(SurfaceRules.ifTrue(surfacerules$conditionsource6, GRASS_BLOCK), DIRT);
+
+        return SurfaceRules.sequence(SurfaceRules.ifTrue(surfaceNoiseAbove(1.0D), HOLYSTONE),
+                SurfaceRules.ifTrue(surfaceNoiseAbove(-1.0D), underwaterGrassToDirt), HOLYSTONE);
+    }
+
+    private static SurfaceRules.ConditionSource surfaceNoiseAbove(double p_194809_) {
+        return SurfaceRules.noiseCondition(Noises.SURFACE, p_194809_ / 8.25D, Double.MAX_VALUE);
     }
 }
