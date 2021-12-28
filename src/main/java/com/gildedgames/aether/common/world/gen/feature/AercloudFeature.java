@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.world.gen.feature;
 
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
@@ -11,21 +12,23 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 
 import java.util.Random;
 
-public class BlueAercloudFeature extends Feature<NoneFeatureConfiguration>
+public class AercloudFeature extends Feature<AercloudConfiguration>
 {
-    public BlueAercloudFeature(Codec<NoneFeatureConfiguration> codec) {
+    public AercloudFeature(Codec<AercloudConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+    public boolean place(FeaturePlaceContext<AercloudConfiguration> context) {
         BlockPos pos = context.origin();
         WorldGenLevel reader = context.level();
         Random rand = context.random();
         BlockPos origin = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
         BlockPos position = new BlockPos(origin.getX() + 8, origin.getY(), origin.getZ() + 8);
 
-        for (int amount = 0; amount < 8; ++amount) {
+        AercloudConfiguration config = context.config();
+
+        for (int amount = 0; amount < config.bounds(); ++amount) {
             int xOffset = rand.nextInt(2);
             int yOffset = (rand.nextBoolean() ? rand.nextInt(3) - 1 : 0);
             int zOffset = rand.nextInt(2);
@@ -39,7 +42,7 @@ public class BlueAercloudFeature extends Feature<NoneFeatureConfiguration>
 
                         if (reader.isEmptyBlock(newPosition)) {
                             if (Math.abs(x - position.getX()) + Math.abs(y - position.getY()) + Math.abs(z - position.getZ()) < 4 + rand.nextInt(2)) {
-                                this.setBlock(reader, newPosition, AetherBlocks.BLUE_AERCLOUD.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
+                                this.setBlock(reader, newPosition, config.block().getState(rand, position));
                             }
                         }
                     }

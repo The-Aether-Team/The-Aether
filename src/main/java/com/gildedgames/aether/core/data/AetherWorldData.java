@@ -3,6 +3,7 @@ package com.gildedgames.aether.core.data;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.core.data.provider.AetherBiomeProvider;
 import com.gildedgames.aether.core.data.provider.SmartRegistryWriteOps;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -70,7 +71,7 @@ public final class AetherWorldData extends SmartRegistryWriteOps<JsonElement> {
                 ),
                 AetherBlocks.HOLYSTONE.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true),
                 Blocks.WATER.defaultBlockState(),
-                SurfaceRuleData.overworldLike(false, false, false),
+                AetherBiomeProvider.aetherSurfaceRules(),
                 Integer.MIN_VALUE, // seaLevel
                 false, // disableMobGeneration
                 false, // aquifersEnabled
