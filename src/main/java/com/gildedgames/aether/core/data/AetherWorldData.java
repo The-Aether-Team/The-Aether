@@ -23,6 +23,8 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.*;
 
+import java.util.Collections;
+import java.util.Optional;
 import java.util.OptionalLong;
 
 public final class AetherWorldData extends SmartRegistryWriteOps<JsonElement> {
@@ -55,7 +57,7 @@ public final class AetherWorldData extends SmartRegistryWriteOps<JsonElement> {
         );
 
         NoiseGeneratorSettings worldNoiseSettings = new NoiseGeneratorSettings(
-                new StructureSettings(false),
+                new StructureSettings(Optional.empty(), Collections.emptyMap()),
                 new NoiseSettings(
                         0,
                         256,
