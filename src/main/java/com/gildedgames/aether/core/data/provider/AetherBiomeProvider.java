@@ -48,6 +48,26 @@ public class AetherBiomeProvider {
                         .addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(AetherEntityTypes.AERWHALE_TYPE, 2, 1, 1))
                         .build(),
                 new BiomeGenerationSettings.Builder()
+                        // TODO GenerationStep.Decoration.RAW_GENERATION
+                        //  "aether:quicksoil"
+                        //  "aether:crystal_tree"
+                        // TODO GenerationStep.Decoration.LAKES
+                        //  "aether:water_lake"
+                        // TODO GenerationStep.Decoration.UNDERGROUND_ORES
+                        //   "aether:ore_aether_dirt",
+                        //   "aether:ore_icestone",
+                        //   "aether:ore_ambrosium",
+                        //   "aether:ore_zanite",
+                        //   "aether:ore_gravitite"
+                        // TODO GenerationStep.Decoration.FLUID_SPRINGS
+                        //   "aether:spring_water"
+                        // TODO GenerationStep.Decoration.VEGETAL_DECORATION
+                        //   "aether:grass_patch",
+                        //   "aether:tall_grass_patch",
+                        //   "aether:aether_skylands_flowers",
+                        //   "aether:tree_skyroot",
+                        //   "aether:tree_golden_oak",
+                        //   "aether:holiday_tree"
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatureData.COLD_AERCLOUD_FEATURE)
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatureData.BLUE_AERCLOUD_FEATURE)
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatureData.GOLDEN_AERCLOUD_FEATURE)
