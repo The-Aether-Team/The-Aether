@@ -1,7 +1,5 @@
 package com.gildedgames.aether.common.world.gen.feature;
 
-import com.gildedgames.aether.common.registry.AetherBlocks;
-import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.world.gen.configuration.SimpleDiskConfiguration;
 import com.gildedgames.aether.core.util.BlockLogic;
 import com.gildedgames.aether.core.util.BlockPlacers;
@@ -20,14 +18,11 @@ public class SimpleDiskFeature extends Feature<SimpleDiskConfiguration> {
     public boolean place(FeaturePlaceContext<SimpleDiskConfiguration> context) {
         BlockPos pos = context.origin();
         WorldGenLevel reader = context.level();
+        SimpleDiskConfiguration config = context.config();
 
-        boolean doesProtrude = BlockLogic.doesAirExistNearby(pos, context.config().clearanceRadius(), reader) &&
-                (reader.getBlockState(pos).is(AetherTags.Blocks.HOLYSTONE) ||
-                        reader.getBlockState(pos).getBlock() == AetherBlocks.AETHER_DIRT.get());
+        if (BlockLogic.doesAirExistNearby(pos, config.clearanceRadius(), reader))
+            BlockPlacers.placeDisk(pos, config.radius().sample(context.random()), reader, config.block(), context.random());
 
-        if (doesProtrude)
-            BlockPlacers.placeDisk(pos, context.config().radius(), reader, context.config().block(), context.random());
-
-        return doesProtrude;
+        return true;
     }
 }

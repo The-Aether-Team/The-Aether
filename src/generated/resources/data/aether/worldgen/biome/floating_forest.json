@@ -5,7 +5,10 @@
       {
         "feature": {
           "config": {
-            "radius": 3.4641016,
+            "radius": {
+              "min_inclusive": 3.4641016,
+              "max_exclusive": 5.0
+            },
             "block": {
               "state": {
                 "Properties": {
@@ -21,23 +24,44 @@
         },
         "placement": [
           {
-            "count": 10,
-            "type": "minecraft:count"
-          },
-          {
             "type": "minecraft:in_square"
           },
           {
-            "height": {
-              "min_inclusive": {
-                "absolute": 10
-              },
-              "max_inclusive": {
-                "absolute": 70
-              },
-              "type": "minecraft:trapezoid"
+            "heightmap": "WORLD_SURFACE_WG",
+            "type": "minecraft:heightmap"
+          },
+          {
+            "type": "aether:elevation_adjustment",
+            "value": {
+              "type": "minecraft:uniform",
+              "value": {
+                "min_inclusive": -4,
+                "max_inclusive": -2
+              }
+            }
+          },
+          {
+            "minimum": 47,
+            "maximum": 70,
+            "type": "aether:elevation_filter"
+          },
+          {
+            "predicate": {
+              "predicates": [
+                {
+                  "blocks": [
+                    "aether:aether_dirt"
+                  ],
+                  "type": "minecraft:matching_blocks"
+                },
+                {
+                  "tag": "aether:holystone",
+                  "type": "minecraft:matching_block_tag"
+                }
+              ],
+              "type": "minecraft:any_of"
             },
-            "type": "minecraft:height_range"
+            "type": "minecraft:block_predicate_filter"
           }
         ]
       }
@@ -54,8 +78,8 @@
             "targets": [
               {
                 "target": {
-                  "block": "aether:holystone",
-                  "predicate_type": "minecraft:block_match"
+                  "tag": "aether:holystone",
+                  "predicate_type": "minecraft:tag_match"
                 },
                 "state": {
                   "Properties": {
@@ -101,8 +125,8 @@
             "targets": [
               {
                 "target": {
-                  "block": "aether:holystone",
-                  "predicate_type": "minecraft:block_match"
+                  "tag": "aether:holystone",
+                  "predicate_type": "minecraft:tag_match"
                 },
                 "state": {
                   "Name": "aether:icestone"
@@ -145,8 +169,8 @@
             "targets": [
               {
                 "target": {
-                  "block": "aether:holystone",
-                  "predicate_type": "minecraft:block_match"
+                  "tag": "aether:holystone",
+                  "predicate_type": "minecraft:tag_match"
                 },
                 "state": {
                   "Properties": {
@@ -192,8 +216,8 @@
             "targets": [
               {
                 "target": {
-                  "block": "aether:holystone",
-                  "predicate_type": "minecraft:block_match"
+                  "tag": "aether:holystone",
+                  "predicate_type": "minecraft:tag_match"
                 },
                 "state": {
                   "Name": "aether:zanite_ore"
@@ -236,8 +260,8 @@
             "targets": [
               {
                 "target": {
-                  "block": "aether:holystone",
-                  "predicate_type": "minecraft:block_match"
+                  "tag": "aether:holystone",
+                  "predicate_type": "minecraft:tag_match"
                 },
                 "state": {
                   "Name": "aether:gravitite_ore"
@@ -280,8 +304,8 @@
             "targets": [
               {
                 "target": {
-                  "block": "aether:holystone",
-                  "predicate_type": "minecraft:block_match"
+                  "tag": "aether:holystone",
+                  "predicate_type": "minecraft:tag_match"
                 },
                 "state": {
                   "Name": "aether:gravitite_ore"

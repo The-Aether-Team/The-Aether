@@ -40,7 +40,7 @@ public class AetherBiomeProvider {
                         .build(),
                 new BiomeGenerationSettings.Builder()
                         // TODO GenerationStep.Decoration.RAW_GENERATION
-                        .addFeature(GenerationStep.Decoration.RAW_GENERATION, AetherFeatureData.QUICKSOIL_FEATURE)
+                        .addFeature(GenerationStep.Decoration.RAW_GENERATION, AetherFeatureData.QUICKSOIL_SHELF_FEATURE)
                         //  "aether:crystal_tree"
                         // TODO GenerationStep.Decoration.LAKES
                         //  "aether:water_lake"

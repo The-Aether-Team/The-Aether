@@ -7,6 +7,7 @@ import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
 import com.gildedgames.aether.common.entity.projectile.weapon.*;
 import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
 import com.gildedgames.aether.common.item.miscellaneous.bucket.SkyrootWaterBucketItem;
+import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.core.data.*;
@@ -19,24 +20,14 @@ import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.common.registry.AetherFeatures;
-import com.gildedgames.aether.core.data.AetherLootTableData;
-import net.minecraft.world.level.block.*;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.world.level.redstone.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.level.entity.*;
-import net.minecraft.world.level.material.FlowingFluid;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -57,7 +48,6 @@ import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
-import top.theillusivec4.curios.api.SlotTypePreset;
 
 import java.util.Random;
 
@@ -74,9 +64,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.BaseFireBlock;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -123,6 +111,7 @@ public class Aether
 
 		AetherLoot.init();
 		AetherAdvancements.init();
+		PlacementModifiers.init();
 
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
