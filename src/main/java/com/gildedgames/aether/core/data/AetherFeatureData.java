@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
@@ -24,6 +25,8 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStatePr
 import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.placement.*;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
+import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 
 import java.util.OptionalInt;
 
@@ -79,4 +82,28 @@ public class AetherFeatureData {
     public static final PlacedFeature FLOWER_FEATURE = FLOWER_FEATURE_BASE.placed(InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
     public static final PlacedFeature QUICKSOIL_FEATURE = QUICKSOIL_BASE.placed(CountPlacement.of(10), InSquarePlacement.spread(), HeightRangePlacement.triangle(VerticalAnchor.absolute(10), VerticalAnchor.absolute(70))); // TODO Improve cliff detection mechanism
+
+    public static final RuleTest HOLYSTONE = new BlockMatchTest(AetherBlocks.HOLYSTONE.get());
+
+    public static final ConfiguredFeature<OreConfiguration, ?> ORE_DIRT_FEATURE_BASE = Feature.ORE.configured(new OreConfiguration(HOLYSTONE, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), 33));
+    public static final ConfiguredFeature<OreConfiguration, ?> ORE_ICESTONE_FEATURE_BASE = Feature.ORE.configured(new OreConfiguration(HOLYSTONE, AetherBlocks.ICESTONE.get().defaultBlockState(), 16));
+    public static final ConfiguredFeature<OreConfiguration, ?> ORE_AMBROSIUM_FEATURE_BASE = Feature.ORE.configured(new OreConfiguration(HOLYSTONE, AetherFeatureDataProvider.getDoubleDrops(AetherBlocks.AMBROSIUM_ORE), 16));
+    public static final ConfiguredFeature<OreConfiguration, ?> ORE_ZANITE_FEATURE_BASE = Feature.ORE.configured(new OreConfiguration(HOLYSTONE, AetherBlocks.ZANITE_ORE.get().defaultBlockState(), 8));
+    public static final ConfiguredFeature<OreConfiguration, ?> ORE_GRAVITITE_DENSE_FEATURE_BASE = Feature.ORE.configured(new OreConfiguration(HOLYSTONE, AetherBlocks.GRAVITITE_ORE.get().defaultBlockState(), 3, 0.5f));
+    public static final ConfiguredFeature<OreConfiguration, ?> ORE_GRAVITITE_COMMON_FEATURE_BASE = Feature.ORE.configured(new OreConfiguration(HOLYSTONE, AetherBlocks.GRAVITITE_ORE.get().defaultBlockState(), 6, 0.9f));
+
+
+    public static final PlacedFeature ORE_DIRT_FEATURE = ORE_DIRT_FEATURE_BASE.placed(
+            AetherFeatureDataProvider.commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.belowTop(0))));
+    public static final PlacedFeature ORE_ICESTONE_FEATURE = ORE_ICESTONE_FEATURE_BASE.placed(
+            AetherFeatureDataProvider.commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.belowTop(0))));
+    public static final PlacedFeature ORE_AMBROSIUM_FEATURE = ORE_AMBROSIUM_FEATURE_BASE.placed(
+            AetherFeatureDataProvider.commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.belowTop(0))));
+    public static final PlacedFeature ORE_ZANITE_FEATURE = ORE_ZANITE_FEATURE_BASE.placed(
+            AetherFeatureDataProvider.commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.belowTop(0))));
+    public static final PlacedFeature ORE_GRAVITITE_DENSE_FEATURE = ORE_GRAVITITE_DENSE_FEATURE_BASE.placed(
+            AetherFeatureDataProvider.commonOrePlacement(3, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(0), VerticalAnchor.belowTop(0))));
+    public static final PlacedFeature ORE_GRAVITITE_COMMON_FEATURE = ORE_GRAVITITE_COMMON_FEATURE_BASE.placed(
+            AetherFeatureDataProvider.commonOrePlacement(7, HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.belowTop(0))));
+    
 }

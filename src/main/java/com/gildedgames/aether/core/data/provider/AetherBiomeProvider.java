@@ -66,6 +66,12 @@ public class AetherBiomeProvider {
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatureData.SKYROOT_TREE_FEATURE)
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatureData.GOLDEN_OAK_TREE_FEATURE)
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatureData.FLOWER_FEATURE)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatureData.ORE_DIRT_FEATURE)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatureData.ORE_ICESTONE_FEATURE)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatureData.ORE_AMBROSIUM_FEATURE)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatureData.ORE_ZANITE_FEATURE)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatureData.ORE_GRAVITITE_DENSE_FEATURE)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatureData.ORE_GRAVITITE_COMMON_FEATURE)
                         .build(),
                 Biome.TemperatureModifier.NONE
         );

@@ -47,7 +47,278 @@
     [],
     [],
     [],
-    [],
+    [
+      {
+        "feature": {
+          "config": {
+            "targets": [
+              {
+                "target": {
+                  "block": "aether:holystone",
+                  "predicate_type": "minecraft:block_match"
+                },
+                "state": {
+                  "Properties": {
+                    "double_drops": "false"
+                  },
+                  "Name": "aether:aether_dirt"
+                }
+              }
+            ],
+            "size": 33,
+            "discard_chance_on_air_exposure": 0.0
+          },
+          "type": "minecraft:ore"
+        },
+        "placement": [
+          {
+            "count": 10,
+            "type": "minecraft:count"
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "height": {
+              "min_inclusive": {
+                "above_bottom": 0
+              },
+              "max_inclusive": {
+                "below_top": 0
+              },
+              "type": "minecraft:uniform"
+            },
+            "type": "minecraft:height_range"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "config": {
+            "targets": [
+              {
+                "target": {
+                  "block": "aether:holystone",
+                  "predicate_type": "minecraft:block_match"
+                },
+                "state": {
+                  "Name": "aether:icestone"
+                }
+              }
+            ],
+            "size": 16,
+            "discard_chance_on_air_exposure": 0.0
+          },
+          "type": "minecraft:ore"
+        },
+        "placement": [
+          {
+            "count": 10,
+            "type": "minecraft:count"
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "height": {
+              "min_inclusive": {
+                "above_bottom": 0
+              },
+              "max_inclusive": {
+                "below_top": 0
+              },
+              "type": "minecraft:uniform"
+            },
+            "type": "minecraft:height_range"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "config": {
+            "targets": [
+              {
+                "target": {
+                  "block": "aether:holystone",
+                  "predicate_type": "minecraft:block_match"
+                },
+                "state": {
+                  "Properties": {
+                    "double_drops": "true"
+                  },
+                  "Name": "aether:ambrosium_ore"
+                }
+              }
+            ],
+            "size": 16,
+            "discard_chance_on_air_exposure": 0.0
+          },
+          "type": "minecraft:ore"
+        },
+        "placement": [
+          {
+            "count": 10,
+            "type": "minecraft:count"
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "height": {
+              "min_inclusive": {
+                "above_bottom": 0
+              },
+              "max_inclusive": {
+                "below_top": 0
+              },
+              "type": "minecraft:uniform"
+            },
+            "type": "minecraft:height_range"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "config": {
+            "targets": [
+              {
+                "target": {
+                  "block": "aether:holystone",
+                  "predicate_type": "minecraft:block_match"
+                },
+                "state": {
+                  "Name": "aether:zanite_ore"
+                }
+              }
+            ],
+            "size": 8,
+            "discard_chance_on_air_exposure": 0.0
+          },
+          "type": "minecraft:ore"
+        },
+        "placement": [
+          {
+            "count": 10,
+            "type": "minecraft:count"
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "height": {
+              "min_inclusive": {
+                "above_bottom": 0
+              },
+              "max_inclusive": {
+                "below_top": 0
+              },
+              "type": "minecraft:uniform"
+            },
+            "type": "minecraft:height_range"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "config": {
+            "targets": [
+              {
+                "target": {
+                  "block": "aether:holystone",
+                  "predicate_type": "minecraft:block_match"
+                },
+                "state": {
+                  "Name": "aether:gravitite_ore"
+                }
+              }
+            ],
+            "size": 3,
+            "discard_chance_on_air_exposure": 0.5
+          },
+          "type": "minecraft:ore"
+        },
+        "placement": [
+          {
+            "count": 3,
+            "type": "minecraft:count"
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "height": {
+              "min_inclusive": {
+                "above_bottom": 0
+              },
+              "max_inclusive": {
+                "below_top": 0
+              },
+              "type": "minecraft:trapezoid"
+            },
+            "type": "minecraft:height_range"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "config": {
+            "targets": [
+              {
+                "target": {
+                  "block": "aether:holystone",
+                  "predicate_type": "minecraft:block_match"
+                },
+                "state": {
+                  "Name": "aether:gravitite_ore"
+                }
+              }
+            ],
+            "size": 6,
+            "discard_chance_on_air_exposure": 0.9
+          },
+          "type": "minecraft:ore"
+        },
+        "placement": [
+          {
+            "count": 7,
+            "type": "minecraft:count"
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "height": {
+              "min_inclusive": {
+                "above_bottom": 0
+              },
+              "max_inclusive": {
+                "below_top": 0
+              },
+              "type": "minecraft:uniform"
+            },
+            "type": "minecraft:height_range"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      }
+    ],
     [],
     [],
     [
