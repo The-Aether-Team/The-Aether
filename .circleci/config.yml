@@ -150,17 +150,13 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - build:
-          filters:
-            branches:
-              ignore:
-                - "1.18"
+      - build
       - deploy:
           context:
             - vpn
           filters:
             branches:
               only: 
-                - "1.16"
+                - "1.18"
           requires:
             - build
