@@ -5,9 +5,11 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherFeatures;
 import com.gildedgames.aether.core.data.provider.AetherFeatureDataProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
+import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -16,12 +18,14 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.placement.*;
@@ -56,11 +60,11 @@ public class AetherFeatureData {
             new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
             new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))).build());
 
-//    public static final RandomPatchConfiguration FLOWER_PATCH_CONFIG = (new RandomPatchConfiguration.GrassConfigurationBuilder((new WeightedStateProvider())
-//            .add(States.PURPLE_FLOWER, 1)
-//            .add(States.WHITE_FLOWER, 1)
-//            .add(States.BERRY_BUSH, 1), SimpleBlockPlacer.INSTANCE))
-//            .tries(64).whitelist(ImmutableSet.of(AetherBlocks.AETHER_GRASS_BLOCK.get())).build();
+    public static final ConfiguredFeature<RandomPatchConfiguration, ?> FLOWER_FEATURE_BASE = Feature.FLOWER.configured(AetherFeatureDataProvider.grassPatch(
+            new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+                    .add(AetherBlocks.PURPLE_FLOWER.get().defaultBlockState(), 2)
+                    .add(AetherBlocks.WHITE_FLOWER.get().defaultBlockState(), 2)
+                    .add(getDoubleDrops(AetherBlocks.BERRY_BUSH.get()), 1)), 64));
 
     public static final PlacedFeature COLD_AERCLOUD_FEATURE = COLD_AERCLOUD_FEATURE_BASE.placed(
             AetherFeatureDataProvider.createAercloudPlacements(128, 5));
@@ -78,6 +82,7 @@ public class AetherFeatureData {
 
     public static final PlacedFeature GOLDEN_OAK_TREE_FEATURE = GOLDEN_OAK_FEATURE_BASE.placed(VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 1), AetherBlocks.GOLDEN_OAK_SAPLING.get()));
 
+    public static final PlacedFeature FLOWER_FEATURE = FLOWER_FEATURE_BASE.placed(InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
     public static BlockState getDoubleDrops(Block block) {
         return getDoubleDrops(block.defaultBlockState());
