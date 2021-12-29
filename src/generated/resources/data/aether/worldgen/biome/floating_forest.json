@@ -10,7 +10,207 @@
     [],
     [],
     [],
-    [],
+    [
+      {
+        "feature": {
+          "config": {
+            "decorators": [],
+            "ignore_vines": true,
+            "force_dirt": false,
+            "dirt_provider": {
+              "state": {
+                "Name": "minecraft:dirt"
+              },
+              "type": "minecraft:simple_state_provider"
+            },
+            "minimum_size": {
+              "limit": 1,
+              "lower_size": 0,
+              "upper_size": 1,
+              "type": "minecraft:two_layers_feature_size"
+            },
+            "trunk_provider": {
+              "state": {
+                "Properties": {
+                  "double_drops": "true",
+                  "axis": "y"
+                },
+                "Name": "aether:skyroot_log"
+              },
+              "type": "minecraft:simple_state_provider"
+            },
+            "trunk_placer": {
+              "base_height": 4,
+              "height_rand_a": 2,
+              "height_rand_b": 0,
+              "type": "minecraft:straight_trunk_placer"
+            },
+            "foliage_provider": {
+              "state": {
+                "Properties": {
+                  "persistent": "false",
+                  "double_drops": "true",
+                  "distance": "7"
+                },
+                "Name": "aether:skyroot_leaves"
+              },
+              "type": "minecraft:simple_state_provider"
+            },
+            "foliage_placer": {
+              "radius": 2,
+              "offset": 0,
+              "height": 3,
+              "type": "minecraft:blob_foliage_placer"
+            }
+          },
+          "type": "minecraft:tree"
+        },
+        "placement": [
+          {
+            "count": {
+              "distribution": [
+                {
+                  "data": 6,
+                  "weight": 9
+                },
+                {
+                  "data": 7,
+                  "weight": 1
+                }
+              ],
+              "type": "minecraft:weighted_list"
+            },
+            "type": "minecraft:count"
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "max_water_depth": 0,
+            "type": "minecraft:surface_water_depth_filter"
+          },
+          {
+            "heightmap": "OCEAN_FLOOR",
+            "type": "minecraft:heightmap"
+          },
+          {
+            "type": "minecraft:biome"
+          },
+          {
+            "predicate": {
+              "state": {
+                "Properties": {
+                  "stage": "0"
+                },
+                "Name": "aether:skyroot_sapling"
+              },
+              "type": "minecraft:would_survive"
+            },
+            "type": "minecraft:block_predicate_filter"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "config": {
+            "decorators": [],
+            "ignore_vines": false,
+            "force_dirt": false,
+            "dirt_provider": {
+              "state": {
+                "Name": "minecraft:dirt"
+              },
+              "type": "minecraft:simple_state_provider"
+            },
+            "minimum_size": {
+              "limit": 0,
+              "lower_size": 0,
+              "upper_size": 0,
+              "min_clipped_height": 4,
+              "type": "minecraft:two_layers_feature_size"
+            },
+            "trunk_provider": {
+              "state": {
+                "Properties": {
+                  "double_drops": "true",
+                  "axis": "y"
+                },
+                "Name": "aether:golden_oak_log"
+              },
+              "type": "minecraft:simple_state_provider"
+            },
+            "trunk_placer": {
+              "base_height": 3,
+              "height_rand_a": 11,
+              "height_rand_b": 0,
+              "type": "minecraft:fancy_trunk_placer"
+            },
+            "foliage_provider": {
+              "state": {
+                "Properties": {
+                  "persistent": "false",
+                  "double_drops": "true",
+                  "distance": "7"
+                },
+                "Name": "aether:golden_oak_leaves"
+              },
+              "type": "minecraft:simple_state_provider"
+            },
+            "foliage_placer": {
+              "radius": 2,
+              "offset": 4,
+              "height": 4,
+              "type": "minecraft:fancy_foliage_placer"
+            }
+          },
+          "type": "minecraft:tree"
+        },
+        "placement": [
+          {
+            "count": {
+              "distribution": [
+                {
+                  "data": 1,
+                  "weight": 9
+                },
+                {
+                  "data": 2,
+                  "weight": 1
+                }
+              ],
+              "type": "minecraft:weighted_list"
+            },
+            "type": "minecraft:count"
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "max_water_depth": 0,
+            "type": "minecraft:surface_water_depth_filter"
+          },
+          {
+            "heightmap": "OCEAN_FLOOR",
+            "type": "minecraft:heightmap"
+          },
+          {
+            "type": "minecraft:biome"
+          },
+          {
+            "predicate": {
+              "state": {
+                "Properties": {
+                  "stage": "0"
+                },
+                "Name": "aether:golden_oak_sapling"
+              },
+              "type": "minecraft:would_survive"
+            },
+            "type": "minecraft:block_predicate_filter"
+          }
+        ]
+      }
+    ],
     [
       {
         "feature": {

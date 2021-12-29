@@ -1,9 +1,13 @@
 package com.gildedgames.aether.core.data.provider;
 
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
+import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.placement.*;
 
