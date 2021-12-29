@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.registry;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
+import com.gildedgames.aether.common.world.gen.configuration.SimpleDiskConfiguration;
 import com.gildedgames.aether.common.world.gen.feature.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.resources.ResourceLocation;
@@ -27,7 +28,7 @@ public class AetherFeatures
 //
 //    public static final RegistryObject<Feature<RandomPatchConfiguration>> GRASS_PATCH = FEATURES.register("grass_patch", () -> new AetherGrassFeature(RandomPatchConfiguration.CODEC));
 //
-//    public static final RegistryObject<Feature<NoneFeatureConfiguration>> QUICKSOIL = FEATURES.register("quicksoil", () -> new QuicksoilFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<SimpleDiskConfiguration>> SIMPLE_DISK = FEATURES.register("simple_disk", () -> new SimpleDiskFeature(SimpleDiskConfiguration.CODEC));
 //
 //    public static final RegistryObject<Feature<BlockStateConfiguration>> LAKE = FEATURES.register("lake", () -> new AetherLakeFeature(BlockStateConfiguration.CODEC));
 

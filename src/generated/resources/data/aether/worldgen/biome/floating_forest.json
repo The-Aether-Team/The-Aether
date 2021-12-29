@@ -1,7 +1,47 @@
 {
   "carvers": {},
   "features": [
-    [],
+    [
+      {
+        "feature": {
+          "config": {
+            "radius": 3.4641016,
+            "block": {
+              "state": {
+                "Properties": {
+                  "double_drops": "true"
+                },
+                "Name": "aether:quicksoil"
+              },
+              "type": "minecraft:simple_state_provider"
+            },
+            "clearance_radius": 3
+          },
+          "type": "aether:simple_disk"
+        },
+        "placement": [
+          {
+            "count": 10,
+            "type": "minecraft:count"
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "height": {
+              "min_inclusive": {
+                "absolute": 10
+              },
+              "max_inclusive": {
+                "absolute": 70
+              },
+              "type": "minecraft:trapezoid"
+            },
+            "type": "minecraft:height_range"
+          }
+        ]
+      }
+    ],
     [],
     [],
     [],

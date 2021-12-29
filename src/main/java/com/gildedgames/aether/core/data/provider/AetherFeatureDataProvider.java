@@ -3,6 +3,7 @@ package com.gildedgames.aether.core.data.provider;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import net.minecraft.data.worldgen.features.FeatureUtils;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -12,6 +13,7 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class AetherFeatureDataProvider {
 
@@ -28,5 +30,17 @@ public class AetherFeatureDataProvider {
 
     public static RandomPatchConfiguration grassPatch(BlockStateProvider p_195203_, int p_195204_) {
         return FeatureUtils.simpleRandomPatchConfiguration(p_195204_, Feature.SIMPLE_BLOCK.configured(new SimpleBlockConfiguration(p_195203_)).onlyWhenEmpty());
+    }
+
+    public static BlockState getDoubleDrops(Supplier<? extends Block> block) {
+        return getDoubleDrops(block.get());
+    }
+
+    public static BlockState getDoubleDrops(Block block) {
+        return getDoubleDrops(block.defaultBlockState());
+    }
+
+    public static BlockState getDoubleDrops(BlockState blockState) {
+        return blockState.setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
     }
 }
