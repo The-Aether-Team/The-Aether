@@ -1,31 +1,25 @@
 package com.gildedgames.aether.common.world.gen.feature;
 
-import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
-import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.Random;
 
-public class AercloudFeature extends Feature<AercloudConfiguration>
-{
+public class AercloudFeature extends Feature<AercloudConfiguration> {
     public AercloudFeature(Codec<AercloudConfiguration> codec) {
         super(codec);
     }
 
     @Override
     public boolean place(FeaturePlaceContext<AercloudConfiguration> context) {
-        BlockPos pos = context.origin();
         WorldGenLevel reader = context.level();
         Random rand = context.random();
-        BlockPos origin = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
-        BlockPos position = new BlockPos(origin.getX() + 8, origin.getY(), origin.getZ() + 8);
-
+        boolean direction = rand.nextBoolean();
+        BlockPos position = context.origin().offset(-rand.nextInt(8), 0, (direction ? 8 : 0) - rand.nextInt(8));
         AercloudConfiguration config = context.config();
 
         for (int amount = 0; amount < config.bounds(); ++amount) {
@@ -33,7 +27,11 @@ public class AercloudFeature extends Feature<AercloudConfiguration>
             int yOffset = (rand.nextBoolean() ? rand.nextInt(3) - 1 : 0);
             int zOffset = rand.nextInt(2);
 
-            position = position.offset(xOffset, yOffset, zOffset);
+            if (direction) {
+                position = position.offset(xOffset, yOffset, -zOffset);
+            } else {
+                position = position.offset(xOffset, yOffset, zOffset);
+            }
 
             for (int x = position.getX(); x < position.getX() + rand.nextInt(2) + 3; ++x) {
                 for (int y = position.getY(); y < position.getY() + rand.nextInt(1) + 2; ++y) {
