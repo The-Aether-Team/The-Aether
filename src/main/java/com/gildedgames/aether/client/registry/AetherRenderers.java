@@ -1,21 +1,12 @@
-package com.gildedgames.aether.client;
+package com.gildedgames.aether.client.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.gui.screen.inventory.*;
-import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.*;
-import com.gildedgames.aether.client.renderer.player.layer.EnchantedDartLayer;
-import com.gildedgames.aether.client.renderer.player.layer.GoldenDartLayer;
-import com.gildedgames.aether.client.renderer.player.layer.PoisonDartLayer;
-import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicBlockEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.SkyrootBedRenderer;
 import com.gildedgames.aether.client.renderer.tile.TreasureChestRenderer;
 import com.gildedgames.aether.common.registry.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.item.ItemColors;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.SlimeModel;
@@ -25,26 +16,17 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.function.Supplier;
 
-public class AetherRendering
+@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class AetherRenderers
 {
-    public static void registerColors() {
-        ItemColors colors = Minecraft.getInstance().getItemColors();
-
-        colors.register((color, itemProvider) -> itemProvider > 0 ? -1 : ((DyeableLeatherItem) color.getItem()).getColor(color), AetherItems.LEATHER_GLOVES.get());
-
-        for (MoaEggItem moaEggItem : MoaEggItem.moaEggs()) {
-            colors.register((color, itemProvider) -> moaEggItem.getColor(itemProvider), moaEggItem);
-        }
-    }
-
     public static void registerBlockRenderLayers() {
         RenderType cutout = RenderType.cutout();
         RenderType translucent = RenderType.translucent();
@@ -75,6 +57,7 @@ public class AetherRendering
         registerBlockRenderer(AetherBlocks.POTTED_GOLDEN_OAK_SAPLING, cutout);
     }
 
+    @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(AetherEntityTypes.PHYG.get(), PhygRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.FLYING_COW.get(), FlyingCowRenderer::new);
@@ -112,6 +95,7 @@ public class AetherRendering
         event.registerBlockEntityRenderer(AetherTileEntityTypes.SKYROOT_SIGN.get(), SignRenderer::new);
     }
 
+    @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(AetherModelLayers.AECHOR_PLANT, AechorPlantModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.AERBUNNY, AerbunnyModel::createBodyLayer);
@@ -141,6 +125,7 @@ public class AetherRendering
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_TRANSPARENCY, ZephyrModel::createBodyLayer);
     }
 
+    @SubscribeEvent
     public static void addPlayerLayers(EntityRenderersEvent.AddLayers event) {
         String[] types = new String[] { "default", "slim" };
         for (String type : types) {
@@ -166,31 +151,7 @@ public class AetherRendering
         return new CustomItemStackTileEntityRenderer(SkyrootBedTileEntity::new);
     }*/
 
-    public static void registerGuiFactories() {
-        MenuScreens.register(AetherContainerTypes.ACCESSORIES.get(), AccessoriesScreen::new);
-        MenuScreens.register(AetherContainerTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
-        MenuScreens.register(AetherContainerTypes.ALTAR.get(), AltarScreen::new);
-        MenuScreens.register(AetherContainerTypes.FREEZER.get(), FreezerScreen::new);
-        MenuScreens.register(AetherContainerTypes.INCUBATOR.get(), IncubatorScreen::new);
-    }
 
-    public static void registerItemModelProperties() {
-        ItemProperties.register(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pulling"), (stack, world, living, i)
-                -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F);
-        ItemProperties.register(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pull"), (stack, world, living, i) -> {
-            if (living == null) {
-                return 0.0F;
-            } else {
-                return living.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration() - living.getUseItemRemainingTicks()) / 20.0F;
-            }
-        });
-
-        ItemProperties.register(AetherItems.CANDY_CANE_SWORD.get(), new ResourceLocation(Aether.MODID, "named"), (stack, world, living, i)
-                -> stack.getHoverName().getString().equalsIgnoreCase("green candy cane sword") ? 1.0F : 0.0F);
-
-        ItemProperties.register(AetherItems.HAMMER_OF_NOTCH.get(), new ResourceLocation(Aether.MODID, "named"), (stack, world, living, i)
-                -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb") ? 1.0F : 0.0F);
-    }
 
     private static void registerBlockRenderer(Supplier<? extends Block> block, RenderType render) {
         ItemBlockRenderTypes.setRenderLayer(block.get(), render);
