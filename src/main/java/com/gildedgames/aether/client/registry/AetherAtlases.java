@@ -2,7 +2,6 @@ package com.gildedgames.aether.client.registry;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherWoodTypes;
-import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
@@ -23,17 +22,8 @@ public class AetherAtlases
 		return new Material(Sheets.CHEST_SHEET, new ResourceLocation(Aether.MODID, "entity/tiles/chest/" + chestName));
 	}
 
-	public static Material getSignMaterial(WoodType woodType) {
-		ResourceLocation location = new ResourceLocation(woodType.name());
-		return new Material(Sheets.SIGN_SHEET, new ResourceLocation(location.getNamespace(), "entity/tiles/signs/" + location.getPath()));
-	}
-
-	public static void addWoodType(WoodType woodType) {
-		Sheets.SIGN_MATERIALS.put(woodType, getSignMaterial(woodType));
-	}
-
 	public static void registerWoodTypeAtlases() {
-		addWoodType(AetherWoodTypes.SKYROOT);
+		Sheets.addWoodType(AetherWoodTypes.SKYROOT);
 	}
 	
 	@SubscribeEvent
