@@ -80,8 +80,6 @@ jobs:
       - run:
           name: Reinstall and start server
           command: |
-            SERVER_ID=9170ca89
-
             UPDATE_RESPONSE=$(curl -X PUT -s -o /dev/null -w "%{http_code}" "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/startup/variable" \
                 -H "Accept: application/json" \
                 -H "Content-Type: application/json" \
