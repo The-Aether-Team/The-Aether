@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import javax.annotation.Nullable;
 
+//TODO: Update this class to follow mapping conventions whenever it is fixed.
 //@Mixin(LevelRenderer.class)
 //public class WorldRendererMixin
 //{

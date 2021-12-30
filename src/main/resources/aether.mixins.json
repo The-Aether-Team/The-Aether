@@ -6,10 +6,10 @@
   "refmap": "aether.refmap.json",
   "mixins": [
     "common.AbstractArrowMixin",
+    "common.BeeGrowCropGoalMixin",
     "common.CropBlockMixin",
     "common.DimensionTypeMixin",
     "common.FoxEatBerriesGoalMixin",
-    "common.BeeGrowCropGoalMixin",
     "common.PiglinAiMixin"
   ],
   "client": [
