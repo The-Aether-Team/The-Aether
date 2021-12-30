@@ -23,7 +23,7 @@ public class FindPollinationTargetGoalMixin
         this.beeEntity = outer;
     }
 
-    @Inject(at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", shift = At.Shift.AFTER), method = "tick", cancellable = true)
+    @Inject(at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", shift = At.Shift.AFTER), method = "tick")
     private void tick(CallbackInfo ci) {
         for (int i = 1; i <= 2; ++i) {
             BlockPos blockpos = this.beeEntity.blockPosition().below(i);

@@ -53,8 +53,10 @@ public class PhygWingModel extends EntityModel<PhygEntity>
         phyg.wingFold += (aimingForFold - phyg.wingFold) / 15.0F;
         float wingBend = -((float) Math.acos(phyg.wingFold));
 
-        leftWingInner.zRot = -(rightWingInner.zRot = phyg.wingAngle + wingBend + ((float) Math.PI / 2.0F));
-        leftWingOuter.zRot = -(rightWingOuter.zRot = phyg.wingAngle - wingBend + ((float) Math.PI / 2.0F)) - this.leftWingInner.zRot;
+        this.leftWingInner.zRot = -(phyg.wingAngle + wingBend + ((float) Math.PI / 2.0F));
+        this.leftWingOuter.zRot = -(phyg.wingAngle - wingBend + ((float) Math.PI / 2.0F)) - this.leftWingInner.zRot;
+        this.rightWingInner.zRot = -this.leftWingInner.zRot;
+        this.rightWingOuter.zRot = -this.leftWingOuter.zRot;
     }
 
     @Override
