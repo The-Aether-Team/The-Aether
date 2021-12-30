@@ -16,6 +16,7 @@
     "client.AdvancementToastMixin",
     "client.ClientRecipeBookMixin",
     "client.ElytraLayerMixin",
+    "client.LevelRendererMixin",
     "client.MinecraftMixin",
     "client.SplashesMixin",
     "client.TippedArrowRendererMixin"
