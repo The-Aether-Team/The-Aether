@@ -12,12 +12,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(TippableArrowRenderer.class)
-public class TippedArrowRendererMixin
+public class TippableArrowRendererMixin
 {
     @Unique
     private static final ResourceLocation FLAMING_ARROW_LOCATION = new ResourceLocation(Aether.MODID, "textures/entity/projectile/flaming_arrow.png");
 
-    @Inject(at = @At("HEAD"), method = "getTextureLocation", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "getTextureLocation*", cancellable = true)
     private void getTextureLocation(Arrow entity, CallbackInfoReturnable<ResourceLocation> cir) {
         IPhoenixArrow.get(entity).ifPresent(phoenixArrow -> {
             if (phoenixArrow.isPhoenixArrow()) {

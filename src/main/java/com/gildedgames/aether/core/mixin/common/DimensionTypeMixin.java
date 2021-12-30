@@ -27,9 +27,9 @@ public class DimensionTypeMixin
     private ResourceLocation effectsLocation;
 
     @Inject(at = @At("HEAD"), method = "timeOfDay", cancellable = true)
-    private void timeOfDay(long p_236032_1_, CallbackInfoReturnable<Float> cir) {
+    private void timeOfDay(long dayTime, CallbackInfoReturnable<Float> cir) {
         if (this.effectsLocation.equals(new ResourceLocation(Aether.MODID, "the_aether"))) {
-            double time = (double) this.fixedTime.orElse(p_236032_1_);
+            double time = (double) this.fixedTime.orElse(dayTime);
             double d0 = Mth.frac(time / 72000.0D - 0.25D);
             double d1 = 0.5D - Math.cos(d0 * Math.PI) / 2.0D;
             cir.setReturnValue((float)(d0 * 2.0D + d1) / 3.0F);
@@ -37,13 +37,13 @@ public class DimensionTypeMixin
     }
 
     @Inject(at = @At("HEAD"), method = "moonPhase", cancellable = true)
-    private void moonPhase(long p_236032_1_, CallbackInfoReturnable<Integer> cir) {
+    private void moonPhase(long dayTime, CallbackInfoReturnable<Integer> cir) {
         if (this.effectsLocation.equals(new ResourceLocation(Aether.MODID, "the_aether"))) {
-            long time = this.fixedTime.orElse(p_236032_1_);
-            Level world = EternalDayListener.world;
-            if (world != null) {
-                IEternalDay eternalDay = IEternalDay.get(world).orElse(null);
-                eternalDay.setServerWorldTime(world.getDayTime());
+            long time = this.fixedTime.orElse(dayTime);
+            Level level = EternalDayListener.world;
+            if (level != null) {
+                IEternalDay eternalDay = IEternalDay.get(level).orElse(null);
+                eternalDay.setServerWorldTime(level.getDayTime());
                 time = eternalDay.getServerWorldTime();
             }
             cir.setReturnValue((int) (time / 72000L % 8L + 8L) % 8);
