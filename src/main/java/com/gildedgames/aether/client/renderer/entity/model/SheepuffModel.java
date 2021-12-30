@@ -1,11 +1,14 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
 import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
-
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -30,6 +33,7 @@ public class SheepuffModel extends QuadrupedModel<SheepuffEntity>
         super.prepareMobModel(sheepuff, limbSwing, limbSwingAmount, partialTick);
         this.head.y = 6.0F + sheepuff.getHeadRotationPointY(partialTick) * 9.0F;
         this.headXRot = sheepuff.getHeadEatAngleScale(partialTick);
+        this.body.xRot = ((float) Math.PI / 2F);
     }
 
     @Override
