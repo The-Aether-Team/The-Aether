@@ -1,6 +1,5 @@
 package com.gildedgames.aether;
 
-import com.gildedgames.aether.client.AetherClient;
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
@@ -14,7 +13,6 @@ import com.gildedgames.aether.core.data.*;
 import com.gildedgames.aether.common.entity.tile.AltarTileEntity;
 import com.gildedgames.aether.common.entity.tile.FreezerTileEntity;
 import com.gildedgames.aether.common.registry.AetherAdvancements;
-import com.gildedgames.aether.core.capability.AetherCapabilities;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.common.registry.*;
@@ -29,12 +27,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -83,12 +79,9 @@ public class Aether
 		modEventBus.addListener(this::commonSetup);
 		modEventBus.addListener(this::curiosSetup);
 		modEventBus.addListener(this::dataSetup);
-		modEventBus.addListener(AetherCapabilities::register);
 
 		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 		forgeBus.addListener(EventPriority.NORMAL, AetherStructures::addDimensionalSpacing);
-
-		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> AetherClient::clientInitialization);
 		
 		DeferredRegister<?>[] registers = {
 				AetherBlocks.BLOCKS,
