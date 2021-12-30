@@ -55,6 +55,7 @@ import com.gildedgames.aether.core.registry.AetherMoaTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.ChatFormatting;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -258,18 +259,18 @@ public class AetherItems
 
 	public static final RegistryObject<Item> AETHER_PORTAL_FRAME = ITEMS.register("aether_portal_frame", () -> new AetherPortalItem(new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
 
-	public static final RegistryObject<SpawnEggItem> AECHOR_PLANT_SPAWN_EGG = ITEMS.register("aechor_plant_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.AECHOR_PLANT_TYPE, 0x076178, 0x4BC69E, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
-	public static final RegistryObject<SpawnEggItem> AERBUNNY_SPAWN_EGG = ITEMS.register("aerbunny_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.AERBUNNY_TYPE, 0xe2fcff, 0xffdff9, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
-	public static final RegistryObject<SpawnEggItem> AERWHALE_SPAWN_EGG = ITEMS.register("aerwhale_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.AERWHALE_TYPE, 0x79B7D1, 0xE0D25C, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
-	public static final RegistryObject<SpawnEggItem> COCKATRICE_SPAWN_EGG = ITEMS.register("cockatrice_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.COCKATRICE_TYPE, 0x6CB15C, 0x6C579D, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
-	public static final RegistryObject<SpawnEggItem> FLYING_COW_SPAWN_EGG = ITEMS.register("flying_cow_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.FLYING_COW_TYPE, 0xD8D8D8, 0xFFD939, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
-	public static final RegistryObject<SpawnEggItem> MIMIC_SPAWN_EGG = ITEMS.register("mimic_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.MIMIC_TYPE, 0xB18132,0x605A4E, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
-	public static final RegistryObject<SpawnEggItem> MOA_SPAWN_EGG = ITEMS.register("moa_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.MOA_TYPE, 0x87BFEF, 0x7A7A7A, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
-	public static final RegistryObject<SpawnEggItem> PHYG_SPAWN_EGG = ITEMS.register("phyg_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.PHYG_TYPE, 0xFFC1D0, 0xFFD939, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
-	public static final RegistryObject<SpawnEggItem> SENTRY_SPAWN_EGG = ITEMS.register("sentry_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.SENTRY_TYPE, 0x808080,0x3A8AEC, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
-	public static final RegistryObject<SpawnEggItem> SHEEPUFF_SPAWN_EGG = ITEMS.register("sheepuff_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.SHEEPUFF_TYPE, 0xE2FCFF, 0xCB9090, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
-	public static final RegistryObject<SpawnEggItem> WHIRLWIND_SPAWN_EGG = ITEMS.register("whirlwind_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.WHIRLWIND_TYPE, 0x9fc3f7, 0xffffff, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
-	public static final RegistryObject<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg", () -> new SpawnEggItem(AetherEntityTypes.ZEPHYR_TYPE, 0xDFDFDF, 0x99CFE8, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> AECHOR_PLANT_SPAWN_EGG = ITEMS.register("aechor_plant_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.AECHOR_PLANT, 0x076178, 0x4BC69E, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> AERBUNNY_SPAWN_EGG = ITEMS.register("aerbunny_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.AERBUNNY, 0xe2fcff, 0xffdff9, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> AERWHALE_SPAWN_EGG = ITEMS.register("aerwhale_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.AERWHALE, 0x79B7D1, 0xE0D25C, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> COCKATRICE_SPAWN_EGG = ITEMS.register("cockatrice_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.COCKATRICE, 0x6CB15C, 0x6C579D, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> FLYING_COW_SPAWN_EGG = ITEMS.register("flying_cow_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.FLYING_COW, 0xD8D8D8, 0xFFD939, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> MIMIC_SPAWN_EGG = ITEMS.register("mimic_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.MIMIC, 0xB18132,0x605A4E, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> MOA_SPAWN_EGG = ITEMS.register("moa_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.MOA, 0x87BFEF, 0x7A7A7A, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> PHYG_SPAWN_EGG = ITEMS.register("phyg_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.PHYG, 0xFFC1D0, 0xFFD939, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> SENTRY_SPAWN_EGG = ITEMS.register("sentry_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.SENTRY, 0x808080,0x3A8AEC, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> SHEEPUFF_SPAWN_EGG = ITEMS.register("sheepuff_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.SHEEPUFF, 0xE2FCFF, 0xCB9090, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> WHIRLWIND_SPAWN_EGG = ITEMS.register("whirlwind_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.WHIRLWIND, 0x9fc3f7, 0xffffff, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.ZEPHYR, 0xDFDFDF, 0x99CFE8, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 
 	public static void registerAbilities() {
 		ISwetBallConversion.registerDefaultConversions();
