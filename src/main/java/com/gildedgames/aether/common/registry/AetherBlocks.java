@@ -1,88 +1,37 @@
 package com.gildedgames.aether.common.registry;
 
-import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.Supplier;
-
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
-import com.gildedgames.aether.common.block.construction.AerogelBlock;
-import com.gildedgames.aether.common.block.construction.AerogelSlabBlock;
-import com.gildedgames.aether.common.block.construction.AerogelStairsBlock;
-import com.gildedgames.aether.common.block.construction.AerogelWallBlock;
-import com.gildedgames.aether.common.block.construction.AetherFarmlandBlock;
-import com.gildedgames.aether.common.block.construction.BookshelfBlock;
-import com.gildedgames.aether.common.block.construction.IcestoneSlabBlock;
-import com.gildedgames.aether.common.block.construction.IcestoneStairsBlock;
-import com.gildedgames.aether.common.block.construction.IcestoneWallBlock;
-import com.gildedgames.aether.common.block.construction.SkyrootSignBlock;
-import com.gildedgames.aether.common.block.construction.SkyrootWallSignBlock;
+import com.gildedgames.aether.common.block.construction.*;
 import com.gildedgames.aether.common.block.dungeon.ChestMimicBlock;
 import com.gildedgames.aether.common.block.dungeon.TrappedBlock;
 import com.gildedgames.aether.common.block.dungeon.TreasureChestBlock;
 import com.gildedgames.aether.common.block.miscellaneous.AetherPortalBlock;
-import com.gildedgames.aether.common.block.natural.AercloudBlock;
-import com.gildedgames.aether.common.block.natural.AetherFlowerBlock;
-import com.gildedgames.aether.common.block.natural.AetherGrassBlock;
-import com.gildedgames.aether.common.block.natural.AetherLogBlock;
-import com.gildedgames.aether.common.block.natural.AetherOreBlock;
-import com.gildedgames.aether.common.block.natural.BerryBushBlock;
-import com.gildedgames.aether.common.block.natural.BerryBushStemBlock;
-import com.gildedgames.aether.common.block.natural.BlueAercloudBlock;
-import com.gildedgames.aether.common.block.natural.EnchantedAetherGrassBlock;
-import com.gildedgames.aether.common.block.natural.IcestoneBlock;
-import com.gildedgames.aether.common.block.natural.LeavesWithParticlesBlock;
-import com.gildedgames.aether.common.block.natural.PinkAercloudBlock;
+import com.gildedgames.aether.common.block.natural.*;
 import com.gildedgames.aether.common.block.util.*;
-import com.gildedgames.aether.common.block.utility.AltarBlock;
-import com.gildedgames.aether.common.block.utility.FreezerBlock;
-import com.gildedgames.aether.common.block.utility.IncubatorBlock;
-import com.gildedgames.aether.common.block.utility.SkyrootBedBlock;
-import com.gildedgames.aether.common.block.utility.SunAltarBlock;
+import com.gildedgames.aether.common.block.utility.*;
 import com.gildedgames.aether.common.item.block.BurnableBlockItem;
+import com.gildedgames.aether.common.item.block.SkyrootBedItem;
 import com.gildedgames.aether.common.world.gen.tree.GoldenOakTree;
 import com.gildedgames.aether.common.world.gen.tree.SkyrootTree;
-
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.BedItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.SignItem;
-import net.minecraft.world.item.StandingAndWallBlockItem;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-
-import net.minecraft.world.level.block.BedBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.FenceBlock;
-import net.minecraft.world.level.block.FenceGateBlock;
-import net.minecraft.world.level.block.FlowerBlock;
-import net.minecraft.world.level.block.FlowerPotBlock;
-import net.minecraft.world.level.block.GlassBlock;
-import net.minecraft.world.level.block.PressurePlateBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.SaplingBlock;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.StoneButtonBlock;
-import net.minecraft.world.level.block.TorchBlock;
-import net.minecraft.world.level.block.TrapDoorBlock;
-import net.minecraft.world.level.block.WallBlock;
-import net.minecraft.world.level.block.WallTorchBlock;
-import net.minecraft.world.level.block.WoodButtonBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class AetherBlocks
 {
@@ -247,7 +196,7 @@ public class AetherBlocks
 
 	public static final RegistryObject<Block> SKYROOT_BOOKSHELF = register("skyroot_bookshelf", () -> new BookshelfBlock(Block.Properties.copy(Blocks.BOOKSHELF) ));
 
-	public static final RegistryObject<BedBlock> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(Block.Properties.copy(Blocks.CYAN_BED) ));
+	public static final RegistryObject<BedBlock> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(Block.Properties.copy(Blocks.CYAN_BED)));
 
 
 	public static void registerPots() {
@@ -360,7 +309,7 @@ public class AetherBlocks
 				return new BedItem(block, new Item.Properties().fireResistant().tab(AetherItemGroups.AETHER_BLOCKS));
 			}
 			else if (block == SKYROOT_BED.get()) {
-				return new BedItem(block, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_BLOCKS)/*.setISTER(() -> AetherRendering::skyrootBedRenderer)*/);
+				return new SkyrootBedItem(block, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_BLOCKS)/*.setISTER(() -> AetherRendering::skyrootBedRenderer)*/);
 			}
 			else {
 				return new BlockItem(block, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
