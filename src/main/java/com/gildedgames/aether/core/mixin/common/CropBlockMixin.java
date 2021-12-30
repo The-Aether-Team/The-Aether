@@ -11,10 +11,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(CropBlock.class)
-public class CropsBlockMixin
+public class CropBlockMixin
 {
     @Inject(at = @At("HEAD"), method = "mayPlaceOn", cancellable = true)
-    private void mayPlaceOn(BlockState state, BlockGetter world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+    private void mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (state.is(AetherBlocks.AETHER_FARMLAND.get())) {
             cir.setReturnValue(true);
         }

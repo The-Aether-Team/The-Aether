@@ -114,7 +114,7 @@ public class MoaEntity extends MountableEntity
 	@Override
 	public void tick() {
 		super.tick();
-		if (this.getDeltaMovement().y < -0.1 && !this.playerTriedToCrouch) {
+		if (this.getDeltaMovement().y < -0.1 && !this.playerTriedToCrouch()) {
 			this.setDeltaMovement(this.getDeltaMovement().x, -0.1, this.getDeltaMovement().z);
 		}
 		if (this.isOnGround()) {

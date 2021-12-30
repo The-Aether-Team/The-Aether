@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import javax.annotation.Nullable;
 
+//TODO: Update this class to follow mapping conventions whenever it is fixed.
 //@Mixin(LevelRenderer.class)
 //public class WorldRendererMixin
 //{
@@ -19,7 +20,7 @@ import javax.annotation.Nullable;
 //    @Shadow
 //    private ClientLevel level;
 //
-//    @ModifyVariable(at = @At(value = "STORE", ordinal = 0, args = { "log=true" }), method = "renderSky", ordinal = 1) //TODO: The error this is throwing might just be IDEA being incorrect. Test once the mod actually can compile.
+//    @ModifyVariable(at = @At(value = "STORE", ordinal = 0, args = { "log=true" }), method = "renderSky", ordinal = 1)
 //    public double renderSky(double d0) {
 //        if (this.level != null && this.level.dimension() == AetherDimensions.AETHER_WORLD) {
 //            return 1.0D;

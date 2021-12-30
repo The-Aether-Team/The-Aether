@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.theillusivec4.curios.api.CuriosApi;
 
 @Mixin(PiglinAi.class)
-public class PiglinTasksMixin
+public class PiglinAiMixin
 {
     @Inject(at = @At("HEAD"), method = "isWearingGold", cancellable = true)
     private static void isWearingGold(LivingEntity player, CallbackInfoReturnable<Boolean> cir) {

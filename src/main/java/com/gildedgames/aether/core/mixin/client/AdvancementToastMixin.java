@@ -30,15 +30,15 @@ public class AdvancementToastMixin
      * Injector mixin to play the Aether's advancement sounds when the player gets an Aether advancement.
      */
     @Inject(at = @At("HEAD"), method = "render")
-    private void onRender(PoseStack p_230444_1_, ToastComponent p_230444_2_, long p_230444_3_, CallbackInfoReturnable<Toast.Visibility> cir) {
+    private void render(PoseStack poseStack, ToastComponent toastComponent, long timeSinceLastVisible, CallbackInfoReturnable<Toast.Visibility> cir) {
         if (!this.playedSound) {
             ResourceLocation enterAether = new ResourceLocation(Aether.MODID, "enter_aether");
             if (this.advancement.getId().equals(enterAether) || (this.advancement.getParent() != null && this.advancement.getParent().getId().equals(enterAether))) {
                 this.playedSound = true;
                 switch (this.advancement.getId().getPath()) {
-                    case "like_a_bossaru" -> p_230444_2_.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_BRONZE.get(), 1.0F, 1.0F));
-                    case "dethroned" -> p_230444_2_.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_SILVER.get(), 1.0F, 1.0F));
-                    default -> p_230444_2_.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_GENERAL.get(), 1.0F, 1.0F));
+                    case "like_a_bossaru" -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_BRONZE.get(), 1.0F, 1.0F));
+                    case "dethroned" -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_SILVER.get(), 1.0F, 1.0F));
+                    default -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_GENERAL.get(), 1.0F, 1.0F));
                 }
             }
         }

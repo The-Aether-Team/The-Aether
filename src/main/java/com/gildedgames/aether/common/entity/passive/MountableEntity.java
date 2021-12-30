@@ -37,7 +37,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 	private static final EntityDataAccessor<Boolean> DATA_SADDLE_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_PLAYER_JUMPED_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_MOUNT_JUMPING_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
-	protected boolean playerTriedToCrouch;
+	private static final EntityDataAccessor<Boolean> DATA_PLAYER_CROUCHED_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
 
 	protected MountableEntity(EntityType<? extends Animal> type, Level worldIn) {
 		super(type, worldIn);
@@ -49,6 +49,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 		this.entityData.define(DATA_SADDLE_ID, false);
 		this.entityData.define(DATA_PLAYER_JUMPED_ID, false);
 		this.entityData.define(DATA_MOUNT_JUMPING_ID, false);
+		this.entityData.define(DATA_PLAYER_CROUCHED_ID, false);
 	}
 
 	@Override
@@ -65,11 +66,6 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 					this.setPlayerJumped(true);
 				}
 			});
-			if (playerEntity.level.isClientSide && playerEntity instanceof LocalPlayer && !this.isOnGround()) {
-				LocalPlayer clientPlayerEntity = (LocalPlayer) playerEntity;
-				this.playerTriedToCrouch = clientPlayerEntity.input.shiftKeyDown;
-				clientPlayerEntity.input.shiftKeyDown = false;
-			}
 		}
 	}
 
@@ -254,7 +250,11 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 	}
 
 	public boolean playerTriedToCrouch() {
-		return this.playerTriedToCrouch;
+		return this.entityData.get(DATA_PLAYER_CROUCHED_ID);
+	}
+
+	public void setPlayerTriedToCrouch(boolean playerTriedToCrouch) {
+		this.entityData.set(DATA_PLAYER_CROUCHED_ID, playerTriedToCrouch);
 	}
 
 	@Override

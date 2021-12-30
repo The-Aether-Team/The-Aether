@@ -18,27 +18,27 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class PhygWingModel extends EntityModel<PhygEntity>
 {
-    public ModelPart leftWingInner;
-    public ModelPart leftWingOuter;
-    public ModelPart rightWingInner;
-    public ModelPart rightWingOuter;
+    private final ModelPart leftWingInner;
+    private final ModelPart leftWingOuter;
+    private final ModelPart rightWingInner;
+    private final ModelPart rightWingOuter;
 
     public PhygWingModel(ModelPart root) {
-        leftWingInner = root.getChild("left_wing_inner");
-        leftWingOuter = leftWingInner.getChild("left_wing_outer");
-        rightWingInner = root.getChild("right_wing_inner");
-        rightWingOuter = rightWingInner.getChild("right_wing_outer");
+        this.leftWingInner = root.getChild("left_wing_inner");
+        this.leftWingOuter = this.leftWingInner.getChild("left_wing_outer");
+        this.rightWingInner = root.getChild("right_wing_inner");
+        this.rightWingOuter = this.rightWingInner.getChild("right_wing_outer");
     }
 
     public static LayerDefinition createMainLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition root = meshdefinition.getRoot();
-        PartDefinition leftWingInnerDef = root.addOrReplaceChild("left_wing_inner", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(-4.0F, 12.0F, -4.0F));
+        MeshDefinition meshDefinition = new MeshDefinition();
+        PartDefinition partDefinition = meshDefinition.getRoot();
+        PartDefinition leftWingInnerDef = partDefinition.addOrReplaceChild("left_wing_inner", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(-4.0F, 12.0F, -4.0F));
         leftWingInnerDef.addOrReplaceChild("left_wing_outer", CubeListBuilder.create().texOffs(20, 0).mirror().addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(0.0F, -16.0F, 0.0F));
-        PartDefinition rightWingInnerDef = root.addOrReplaceChild("right_wing_inner", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(4.0F, 12.0F, -4.0F));
+        PartDefinition rightWingInnerDef = partDefinition.addOrReplaceChild("right_wing_inner", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(4.0F, 12.0F, -4.0F));
         rightWingInnerDef.addOrReplaceChild("right_wing_outer", CubeListBuilder.create().texOffs(20, 0).addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(0.0F, -16.0F, 0.0F));
 
-        return LayerDefinition.create(meshdefinition, 64, 32);
+        return LayerDefinition.create(meshDefinition, 64, 32);
     }
 
     @Override
@@ -53,13 +53,15 @@ public class PhygWingModel extends EntityModel<PhygEntity>
         phyg.wingFold += (aimingForFold - phyg.wingFold) / 15.0F;
         float wingBend = -((float) Math.acos(phyg.wingFold));
 
-        leftWingInner.zRot = -(rightWingInner.zRot = phyg.wingAngle + wingBend + ((float) Math.PI / 2.0F));
-        leftWingOuter.zRot = -(rightWingOuter.zRot = phyg.wingAngle - wingBend + ((float) Math.PI / 2.0F)) - this.leftWingInner.zRot;
+        this.leftWingInner.zRot = -(phyg.wingAngle + wingBend + ((float) Math.PI / 2.0F));
+        this.leftWingOuter.zRot = -(phyg.wingAngle - wingBend + ((float) Math.PI / 2.0F)) - this.leftWingInner.zRot;
+        this.rightWingInner.zRot = -this.leftWingInner.zRot;
+        this.rightWingOuter.zRot = -this.leftWingOuter.zRot;
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-        leftWingInner.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-        rightWingInner.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        this.leftWingInner.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.rightWingInner.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

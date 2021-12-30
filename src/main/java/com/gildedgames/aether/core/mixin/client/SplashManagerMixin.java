@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Mixin(SplashManager.class)
-public class SplashesMixin
+public class SplashManagerMixin
 {
     @Inject(at = @At("HEAD"), method = "getSplash", cancellable = true)
     private void getSplash(CallbackInfoReturnable<String> cir) {

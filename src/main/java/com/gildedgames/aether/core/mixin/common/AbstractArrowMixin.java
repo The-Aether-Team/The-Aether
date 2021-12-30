@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractArrow.class)
-public class AbstractArrowEntityMixin
+public class AbstractArrowMixin
 {
     @Shadow
     protected boolean inGround;
@@ -44,11 +44,11 @@ public class AbstractArrowEntityMixin
     }
 
     private void spawnParticles(AbstractArrow arrow) {
-        if (arrow.level instanceof ServerLevel world) {
-            world.sendParticles(ParticleTypes.FLAME,
-                    arrow.getX() + (world.getRandom().nextGaussian() / 5.0D),
-                    arrow.getY() + (world.getRandom().nextGaussian() / 3.0D),
-                    arrow.getZ() + (world.getRandom().nextGaussian() / 5.0D),
+        if (arrow.level instanceof ServerLevel level) {
+            level.sendParticles(ParticleTypes.FLAME,
+                    arrow.getX() + (level.getRandom().nextGaussian() / 5.0D),
+                    arrow.getY() + (level.getRandom().nextGaussian() / 3.0D),
+                    arrow.getZ() + (level.getRandom().nextGaussian() / 5.0D),
                     1, 0.0D, 0.0D, 0.0D, 0.0F);
         }
     }

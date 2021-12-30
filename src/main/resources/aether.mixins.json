@@ -5,20 +5,21 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "aether.refmap.json",
   "mixins": [
-    "common.AbstractArrowEntityMixin",
-    "common.CropsBlockMixin",
+    "common.AbstractArrowMixin",
+    "common.BeeGrowCropGoalMixin",
+    "common.CropBlockMixin",
     "common.DimensionTypeMixin",
-    "common.EatBerriesGoalMixin",
-    "common.FindPollinationTargetGoalMixin",
-    "common.PiglinTasksMixin"
+    "common.FoxEatBerriesGoalMixin",
+    "common.PiglinAiMixin"
   ],
   "client": [
     "client.AdvancementToastMixin",
     "client.ClientRecipeBookMixin",
     "client.ElytraLayerMixin",
+    "client.LocalPlayerMixin",
     "client.MinecraftMixin",
-    "client.SplashesMixin",
-    "client.TippedArrowRendererMixin"
+    "client.SplashManagerMixin",
+    "client.TippableArrowRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

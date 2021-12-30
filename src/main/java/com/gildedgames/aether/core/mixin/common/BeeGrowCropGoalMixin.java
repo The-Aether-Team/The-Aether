@@ -13,21 +13,21 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 @Mixin(Bee.BeeGrowCropGoal.class)
-public class FindPollinationTargetGoalMixin
+public class BeeGrowCropGoalMixin
 {
     @Unique
-    private Bee beeEntity;
+    private Bee bee;
 
     @Inject(at = @At("RETURN"), method = "<init>")
     private void init(Bee outer, CallbackInfo ci) {
-        this.beeEntity = outer;
+        this.bee = outer;
     }
 
-    @Inject(at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", shift = At.Shift.AFTER), method = "tick", cancellable = true)
+    @Inject(at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", shift = At.Shift.AFTER), method = "tick")
     private void tick(CallbackInfo ci) {
         for (int i = 1; i <= 2; ++i) {
-            BlockPos blockpos = this.beeEntity.blockPosition().below(i);
-            BlockState blockstate = this.beeEntity.level.getBlockState(blockpos);
+            BlockPos blockpos = this.bee.blockPosition().below(i);
+            BlockState blockstate = this.bee.level.getBlockState(blockpos);
             Block block = blockstate.getBlock();
             boolean flag = false;
             if (blockstate.is(BlockTags.BEE_GROWABLES)) {
@@ -35,9 +35,9 @@ public class FindPollinationTargetGoalMixin
                     flag = true;
                 }
                 if (flag) {
-                    this.beeEntity.level.levelEvent(2005, blockpos, 0);
-                    this.beeEntity.level.setBlockAndUpdate(blockpos, AetherBlocks.BERRY_BUSH.get().defaultBlockState());
-                    this.beeEntity.incrementNumCropsGrownSincePollination();
+                    this.bee.level.levelEvent(2005, blockpos, 0);
+                    this.bee.level.setBlockAndUpdate(blockpos, AetherBlocks.BERRY_BUSH.get().defaultBlockState());
+                    this.bee.incrementNumCropsGrownSincePollination();
                 }
             }
         }
