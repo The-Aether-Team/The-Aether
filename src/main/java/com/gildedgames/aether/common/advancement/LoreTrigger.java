@@ -50,7 +50,7 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance>
             return new LoreTrigger.Instance(EntityPredicate.Composite.ANY, itemConditions);
         }
 
-        public static LoreTrigger.Instance forItem(ItemLike item) { //TODO: Make sure the change to ImmutableSet.of() works.
+        public static LoreTrigger.Instance forItem(ItemLike item) {
             ItemPredicate predicate = new ItemPredicate(null, ImmutableSet.of(item.asItem()), MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, EnchantmentPredicate.NONE, EnchantmentPredicate.NONE, null, NbtPredicate.ANY);
             return forItem(predicate);
         }
