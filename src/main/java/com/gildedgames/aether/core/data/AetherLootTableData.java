@@ -282,6 +282,8 @@ public class AetherLootTableData extends AetherLootTableProvider
                     )
             );
 
+            this.add(AetherEntityTypes.AERWHALE.get(), LootTable.lootTable());
+
             this.add(AetherEntityTypes.AERBUNNY.get(), LootTable.lootTable()
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(Items.STRING)
@@ -291,7 +293,6 @@ public class AetherLootTableData extends AetherLootTableProvider
                     )
             );
 
-            this.add(AetherEntityTypes.AERWHALE.get(), LootTable.lootTable());
             this.add(AetherEntityTypes.WHIRLWIND.get(), LootTable.lootTable());
 
             this.add(AetherEntityTypes.AECHOR_PLANT.get(), LootTable.lootTable()
@@ -342,6 +343,8 @@ public class AetherLootTableData extends AetherLootTableProvider
                             )
                     )
             );
+
+            this.add(AetherEntityTypes.FIRE_MINION.get(), LootTable.lootTable());
         }
 
         private static LootTable.Builder sheepLootTableBuilderWithDrop(ItemLike wool) {

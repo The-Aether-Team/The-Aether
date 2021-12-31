@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1.0,
+        "max": 1.0
+      },
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aether:config_enabled",
+              "config": "[Loot, Valkyrie Cape in loot]"
+            }
+          ],
+          "name": "aether:valkyrie_cape"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aether:config_enabled",
+              "config": "[Loot, Golden Feather in loot]"
+            }
+          ],
+          "name": "aether:golden_feather"
+        }
+      ]
+    }
+  ]
+}
