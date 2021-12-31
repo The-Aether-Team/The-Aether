@@ -37,8 +37,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
 import java.util.OptionalInt;
 
-public class AetherFeatureData {
-
+public class AetherFeatureData
+{
     public static final ConfiguredFeature<AercloudConfiguration, ?> COLD_AERCLOUD_FEATURE_BASE = AetherFeatures.AERCLOUD.get()
             .configured(AetherFeatureDataProvider.createAercloudConfig(16, AetherBlocks.COLD_AERCLOUD.get().defaultBlockState()));
     public static final ConfiguredFeature<AercloudConfiguration, ?> BLUE_AERCLOUD_FEATURE_BASE = AetherFeatures.AERCLOUD.get()
@@ -111,5 +111,4 @@ public class AetherFeatureData {
             AetherFeatureDataProvider.commonOrePlacement(3, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(0), VerticalAnchor.belowTop(0))));
     public static final PlacedFeature ORE_GRAVITITE_COMMON_FEATURE = ORE_GRAVITITE_COMMON_FEATURE_BASE.placed(
             AetherFeatureDataProvider.commonOrePlacement(7, HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.belowTop(0))));
-    
 }

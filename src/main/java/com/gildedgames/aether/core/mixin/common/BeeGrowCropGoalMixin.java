@@ -26,17 +26,17 @@ public class BeeGrowCropGoalMixin
     @Inject(at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", shift = At.Shift.AFTER), method = "tick")
     private void tick(CallbackInfo ci) {
         for (int i = 1; i <= 2; ++i) {
-            BlockPos blockpos = this.bee.blockPosition().below(i);
-            BlockState blockstate = this.bee.level.getBlockState(blockpos);
-            Block block = blockstate.getBlock();
-            boolean flag = false;
-            if (blockstate.is(BlockTags.BEE_GROWABLES)) {
+            BlockPos blockPos = this.bee.blockPosition().below(i);
+            BlockState blockState = this.bee.level.getBlockState(blockPos);
+            Block block = blockState.getBlock();
+            boolean isStem = false;
+            if (blockState.is(BlockTags.BEE_GROWABLES)) {
                 if (block == AetherBlocks.BERRY_BUSH_STEM.get()) {
-                    flag = true;
+                    isStem = true;
                 }
-                if (flag) {
-                    this.bee.level.levelEvent(2005, blockpos, 0);
-                    this.bee.level.setBlockAndUpdate(blockpos, AetherBlocks.BERRY_BUSH.get().defaultBlockState());
+                if (isStem) {
+                    this.bee.level.levelEvent(2005, blockPos, 0);
+                    this.bee.level.setBlockAndUpdate(blockPos, AetherBlocks.BERRY_BUSH.get().defaultBlockState());
                     this.bee.incrementNumCropsGrownSincePollination();
                 }
             }

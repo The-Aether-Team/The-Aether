@@ -12,7 +12,6 @@ import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.*;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.data.advancements.AdvancementProvider;
@@ -22,9 +21,11 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -38,16 +39,19 @@ public class AetherAdvancementData extends AdvancementProvider
     private final DataGenerator generator;
     public final List<Consumer<Consumer<Advancement>>> advancements = ImmutableList.of(new RegisterAdvancements());
 
-    public AetherAdvancementData(DataGenerator generatorIn) {
-        super(generatorIn);
+    public AetherAdvancementData(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
+        super(generatorIn, existingFileHelper);
         this.generator = generatorIn;
     }
 
+    @Nonnull
+    @Override
     public String getName() {
         return "Aether Advancements";
     }
 
-    public void run(HashCache cache) {
+    @Override
+    public void run(@Nonnull HashCache cache) {
         Path path = this.generator.getOutputFolder();
         Set<ResourceLocation> set = Sets.newHashSet();
         Consumer<Advancement> consumer = (advancement) -> {
@@ -124,7 +128,7 @@ public class AetherAdvancementData extends AdvancementProvider
                             new TranslatableComponent("advancement.aether.mount_phyg.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .addCriterion("mount_phyg", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(AetherEntityTypes.PHYG.get()).build()))) //TODO: Test
+                    .addCriterion("mount_phyg", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(AetherEntityTypes.PHYG.get()).build())))
                     .save(consumer, "aether:mount_phyg");
 
             Advancement craftIncubator = Advancement.Builder.advancement()

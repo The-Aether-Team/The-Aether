@@ -5,11 +5,12 @@ import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class LightningTrackerProvider implements ICapabilityProvider, INBTSerializable<CompoundTag>
+import javax.annotation.Nonnull;
+
+public class LightningTrackerProvider implements ICapabilitySerializable<CompoundTag>
 {
     private final ILightningTracker lightningTracker;
 
@@ -19,17 +20,18 @@ public class LightningTrackerProvider implements ICapabilityProvider, INBTSerial
 
     @Override
     public CompoundTag serializeNBT() {
-        return lightningTracker.serializeNBT();
+        return this.lightningTracker.serializeNBT();
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        lightningTracker.deserializeNBT(nbt);
+        this.lightningTracker.deserializeNBT(nbt);
     }
 
     @SuppressWarnings("unchecked")
+    @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
         if (cap == AetherCapabilities.LIGHTNING_TRACKER_CAPABILITY) {
             return LazyOptional.of(() -> (T) this.lightningTracker);
         }

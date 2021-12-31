@@ -43,8 +43,8 @@ public class DimensionTypeMixin
             Level level = EternalDayListener.world;
             if (level != null) {
                 IEternalDay eternalDay = IEternalDay.get(level).orElse(null);
-                eternalDay.setServerWorldTime(level.getDayTime());
-                time = eternalDay.getServerWorldTime();
+                eternalDay.setServerLevelTime(level.getDayTime());
+                time = eternalDay.getServerLevelTime();
             }
             cir.setReturnValue((int) (time / 72000L % 8L + 8L) % 8);
         }

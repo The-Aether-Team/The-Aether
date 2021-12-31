@@ -154,13 +154,13 @@ public class Aether
 		}
 		if (event.includeServer()) {
 			generator.addProvider(new AetherRecipeData(generator));
-			//FIXME generator.addProvider(new AetherLootTableData(generator));
+			generator.addProvider(new AetherLootTableData(generator));
 			AetherBlockTagData blockTags = new AetherBlockTagData(generator, helper);
 			generator.addProvider(blockTags);
 			generator.addProvider(new AetherItemTagData(generator, blockTags, helper));
 			generator.addProvider(new AetherEntityTagData(generator, helper));
 			generator.addProvider(new AetherFluidTagData(generator, helper));
-			generator.addProvider(new AetherAdvancementData(generator));
+			generator.addProvider(new AetherAdvancementData(generator, helper));
 			generator.addProvider(new AetherWorldData(generator));
 		}
 	}

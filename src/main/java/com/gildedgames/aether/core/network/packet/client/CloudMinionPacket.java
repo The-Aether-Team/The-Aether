@@ -4,7 +4,6 @@ import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
@@ -38,13 +37,10 @@ public class CloudMinionPacket extends AetherPacket
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Level world = Minecraft.getInstance().player.level;
-            Entity entity = world.getEntity(this.entityID);
-            Entity cloudMinionRight = world.getEntity(this.rightCloudMinionID);
-            Entity cloudMinionLeft = world.getEntity(this.leftCloudMinionID);
-            if (entity instanceof Player && cloudMinionRight instanceof CloudMinionEntity && cloudMinionLeft instanceof CloudMinionEntity) {
-                IAetherPlayer.get((Player) entity).ifPresent(aetherPlayer -> {
-                    if (aetherPlayer.getCloudMinionEntities().isEmpty()) {
-                        aetherPlayer.setCloudMinions((CloudMinionEntity) cloudMinionRight, (CloudMinionEntity) cloudMinionLeft);
+            if (world.getEntity(this.entityID) instanceof Player player && world.getEntity(this.rightCloudMinionID) instanceof CloudMinionEntity cloudMinionRight && world.getEntity(this.leftCloudMinionID) instanceof CloudMinionEntity cloudMinionLeft) {
+                IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                    if (aetherPlayer.getCloudMinions().isEmpty()) {
+                        aetherPlayer.setCloudMinions(cloudMinionRight, cloudMinionLeft);
                     }
                 });
             }
