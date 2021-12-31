@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.*;
 
-import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalLong;
 import java.util.function.Function;
@@ -57,7 +57,10 @@ public abstract class AetherWorldProvider extends SmartRegistryWriteOps<JsonElem
 
     protected NoiseGeneratorSettings aetherNoiseSettings() {
         return new NoiseGeneratorSettings(
-                new StructureSettings(Optional.empty(), Collections.emptyMap()),
+                new StructureSettings(Optional.empty(), Map.of(
+                        //AetherStructures.BRONZE_DUNGEON_INSTANCE, new StructureFeatureConfiguration(6, 4, 16811681)//,
+                        //AetherStructures.GOLD_DUNGEON.get(), new StructureFeatureConfiguration(24, 12, 120320420)
+                )),
                 new NoiseSettings(
                         0,
                         128,
