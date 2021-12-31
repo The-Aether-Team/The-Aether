@@ -8,7 +8,8 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
-public class AetherBiomeProvider {
+public class AetherBiomeProvider
+{
     public static Biome makeDefaultBiome() {
         return fullDefinition(
                 Biome.Precipitation.NONE,

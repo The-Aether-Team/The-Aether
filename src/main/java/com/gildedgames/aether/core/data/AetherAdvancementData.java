@@ -22,6 +22,7 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,8 +39,8 @@ public class AetherAdvancementData extends AdvancementProvider
     private final DataGenerator generator;
     public final List<Consumer<Consumer<Advancement>>> advancements = ImmutableList.of(new RegisterAdvancements());
 
-    public AetherAdvancementData(DataGenerator generatorIn) {
-        super(generatorIn);
+    public AetherAdvancementData(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
+        super(generatorIn, existingFileHelper);
         this.generator = generatorIn;
     }
 

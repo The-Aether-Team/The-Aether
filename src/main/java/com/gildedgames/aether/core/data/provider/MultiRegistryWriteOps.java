@@ -18,7 +18,8 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.function.Function;
 
-public abstract class MultiRegistryWriteOps<Format> extends RegistryWriteOps<Format> implements DataProvider {
+public abstract class MultiRegistryWriteOps<Format> extends RegistryWriteOps<Format> implements DataProvider
+{
     protected final String modId;
     protected final DataGenerator generator;
     protected final Function<Format, String> fileWriter;

@@ -49,7 +49,8 @@ import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
-// TODO: reimplement loot that requires silk touch
+import javax.annotation.Nonnull;
+
 public class AetherLootTableProvider extends LootTableProvider
 {
     public AetherLootTableProvider(DataGenerator dataGeneratorIn) {
@@ -67,8 +68,7 @@ public class AetherLootTableProvider extends LootTableProvider
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationtracker) {
-    }
+    protected void validate(@Nonnull Map<ResourceLocation, LootTable> map, @Nonnull ValidationContext validationtracker) { }
 
     public static class AetherBlockLootTableProvider extends BlockLoot
     {

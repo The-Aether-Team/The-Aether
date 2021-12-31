@@ -20,6 +20,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
+import javax.annotation.Nonnull;
 import java.util.function.Consumer;
 
 public class AetherRecipeData extends AetherRecipeProvider
@@ -29,7 +30,7 @@ public class AetherRecipeData extends AetherRecipeProvider
     }
 
     @Override
-    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildCraftingRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
         makeWood(AetherBlocks.SKYROOT_WOOD, AetherBlocks.SKYROOT_LOG).save(consumer);
         makeWood(AetherBlocks.GOLDEN_OAK_WOOD, AetherBlocks.GOLDEN_OAK_LOG).save(consumer);
         makeWood(AetherBlocks.STRIPPED_SKYROOT_WOOD, AetherBlocks.STRIPPED_SKYROOT_LOG).save(consumer);
