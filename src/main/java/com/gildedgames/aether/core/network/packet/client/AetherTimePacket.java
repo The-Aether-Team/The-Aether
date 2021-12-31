@@ -1,7 +1,6 @@
 package com.gildedgames.aether.core.network.packet.client;
 
 import com.gildedgames.aether.client.event.listeners.capability.EternalDayClientListener;
-import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
@@ -27,7 +26,7 @@ public class AetherTimePacket extends AetherPacket
 
     @Override
     public void execute(Player playerEntity) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().level.isClientSide) {
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             EternalDayClientListener.aetherTime = this.aetherTime;
         }
     }

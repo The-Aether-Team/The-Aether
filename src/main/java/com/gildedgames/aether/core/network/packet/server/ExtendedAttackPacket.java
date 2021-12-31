@@ -33,12 +33,12 @@ public class ExtendedAttackPacket extends AetherPacket
     @Override
     public void execute(Player playerEntity) {
         if (playerEntity != null && playerEntity.getServer() != null) {
-            ServerPlayer player = playerEntity.getServer().getPlayerList().getPlayer(this.playerUUID);
+            ServerPlayer serverPlayer = playerEntity.getServer().getPlayerList().getPlayer(this.playerUUID);
             Entity target = playerEntity.level.getEntity(this.targetEntityID);
-            if (player != null && target != null) {
-                double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
-                if (player.distanceToSqr(target) < reach * reach) {
-                    player.attack(target);
+            if (serverPlayer != null && target != null) {
+                double reach = serverPlayer.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
+                if (serverPlayer.distanceToSqr(target) < reach * reach) {
+                    serverPlayer.attack(target);
                 }
             }
         }
