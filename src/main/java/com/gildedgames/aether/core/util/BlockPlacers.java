@@ -6,7 +6,10 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 
 import java.util.Random;
 
-public final class BlockPlacers {
+public class BlockPlacers
+{
+    private BlockPlacers() { }
+
     public static void placeDisk(BlockPos center, float radius, WorldGenLevel level, BlockStateProvider blockProvider, Random random) {
         float radiusSq = radius * radius;
 
@@ -60,8 +63,5 @@ public final class BlockPlacers {
     @SuppressWarnings("UnusedReturnValue") // Retain the boolean feedback from setting block
     public static boolean placeProvidedBlock(WorldGenLevel level, BlockStateProvider provider, BlockPos pos, Random random) {
         return level.setBlock(pos, provider.getState(random, pos), 2);
-    }
-
-    private BlockPlacers() {
     }
 }
