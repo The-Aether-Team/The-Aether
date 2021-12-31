@@ -17,6 +17,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
+//TODO: Port over changes from the feature/ranking_system branch that's off of 1.16.
 public class AetherRankings {
 	
 	private static final Map<UUID, Set<AetherRank>> RANKS;

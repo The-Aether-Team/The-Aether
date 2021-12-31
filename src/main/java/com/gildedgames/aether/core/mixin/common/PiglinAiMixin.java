@@ -17,8 +17,8 @@ public class PiglinAiMixin
     private static void isWearingGold(LivingEntity player, CallbackInfoReturnable<Boolean> cir) {
         IItemHandlerModifiable curiosHandler = CuriosApi.getCuriosHelper().getEquippedCurios(player).orElse(null);
         for (int i = 0; i < curiosHandler.getSlots(); i++) {
-            ItemStack stack = curiosHandler.getStackInSlot(i);
-            if (stack.makesPiglinsNeutral(player)) {
+            ItemStack itemStack = curiosHandler.getStackInSlot(i);
+            if (itemStack.makesPiglinsNeutral(player)) {
                cir.setReturnValue(true);
             }
         }

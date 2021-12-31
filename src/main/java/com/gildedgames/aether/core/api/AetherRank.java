@@ -1,5 +1,6 @@
 package com.gildedgames.aether.core.api;
 
+//TODO: Port over changes from the feature/ranking_system branch that's off of 1.16.
 public enum AetherRank {
 	NONE(false, false),
 	CONTRIBUTOR(true, false),

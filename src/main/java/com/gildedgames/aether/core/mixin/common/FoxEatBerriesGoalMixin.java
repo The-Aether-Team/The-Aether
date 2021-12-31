@@ -42,10 +42,10 @@ public abstract class FoxEatBerriesGoalMixin extends MoveToBlockGoal
     }
 
     private void pickBlueBerries() {
-        boolean flag = this.mob.level.getBlockState(this.blockPos.below()).is(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get());
-        int j = 1 + this.mob.level.random.nextInt(3) + (flag ? 1 : 0);
-        ItemStack itemstack = this.mob.getItemBySlot(EquipmentSlot.MAINHAND);
-        if (itemstack.isEmpty()) {
+        boolean onEnchantedGrass = this.mob.level.getBlockState(this.blockPos.below()).is(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get());
+        int j = 1 + this.mob.level.random.nextInt(3) + (onEnchantedGrass ? 1 : 0);
+        ItemStack itemStack = this.mob.getItemBySlot(EquipmentSlot.MAINHAND);
+        if (itemStack.isEmpty()) {
             this.mob.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(AetherItems.BLUE_BERRY.get()));
             --j;
         }

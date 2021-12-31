@@ -9,7 +9,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 public interface IEternalDay extends INBTSerializable<CompoundTag>
 {
-    Level getWorld();
+    Level getLevel();
 
     static LazyOptional<IEternalDay> get(Level world) {
         return world.getCapability(AetherCapabilities.ETERNAL_DAY_CAPABILITY);
@@ -28,6 +28,6 @@ public interface IEternalDay extends INBTSerializable<CompoundTag>
     void setAetherTime(long time);
     long getAetherTime();
 
-    void setServerWorldTime(long time);
-    long getServerWorldTime();
+    void setServerLevelTime(long time);
+    long getServerLevelTime();
 }

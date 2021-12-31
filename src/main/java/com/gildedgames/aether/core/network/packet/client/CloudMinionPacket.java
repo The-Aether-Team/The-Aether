@@ -43,7 +43,7 @@ public class CloudMinionPacket extends AetherPacket
             Entity cloudMinionLeft = world.getEntity(this.leftCloudMinionID);
             if (entity instanceof Player && cloudMinionRight instanceof CloudMinionEntity && cloudMinionLeft instanceof CloudMinionEntity) {
                 IAetherPlayer.get((Player) entity).ifPresent(aetherPlayer -> {
-                    if (aetherPlayer.getCloudMinionEntities().isEmpty()) {
+                    if (aetherPlayer.getCloudMinions().isEmpty()) {
                         aetherPlayer.setCloudMinions((CloudMinionEntity) cloudMinionRight, (CloudMinionEntity) cloudMinionLeft);
                     }
                 });

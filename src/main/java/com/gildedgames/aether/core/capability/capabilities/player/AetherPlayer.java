@@ -100,6 +100,7 @@ public class AetherPlayer implements IAetherPlayer
 		nbt.putFloat("SavedHealth", this.getSavedHealth());
 		nbt.putInt("LifeShardCount", this.getLifeShardCount());
 
+		//(leftover reference code)
 		//Set<AetherRank> ranks = AetherRankings.getRanksOf(this.player.getUniqueID());
 //		if (ranks.stream().anyMatch(AetherRank::hasHalo)) {
 //			nbt.putBoolean("Halo", this.shouldRenderHalo);
@@ -244,22 +245,22 @@ public class AetherPlayer implements IAetherPlayer
 	private void activateParachute() {
 		Player player = this.getPlayer();
 		Inventory inventory = this.getPlayer().getInventory();
-		Level world = player.level;
+		Level level = player.level;
 		if (!player.isCreative() && !player.isShiftKeyDown()) {
 			if (player.getDeltaMovement().y() < -1.5D) {
 				if (inventory.contains(new ItemStack(AetherItems.COLD_PARACHUTE.get()))) {
 					for (ItemStack stack : inventory.items) {
 						Item item = stack.getItem();
 						if (item == AetherItems.COLD_PARACHUTE.get()) {
-							ColdParachuteEntity parachuteEntity = AetherEntityTypes.COLD_PARACHUTE.get().create(world);
-							if (parachuteEntity != null) {
-								parachuteEntity.setPos(player.getX(), player.getY() - 1.0D, player.getZ());
-								if (!world.isClientSide) {
-									world.addFreshEntity(parachuteEntity);
-									player.startRiding(parachuteEntity);
+							ColdParachuteEntity coldParachute = AetherEntityTypes.COLD_PARACHUTE.get().create(level);
+							if (coldParachute != null) {
+								coldParachute.setPos(player.getX(), player.getY() - 1.0D, player.getZ());
+								if (!level.isClientSide) {
+									level.addFreshEntity(coldParachute);
+									player.startRiding(coldParachute);
 									stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
 								}
-								parachuteEntity.spawnExplosionParticle();
+								coldParachute.spawnExplosionParticle();
 								break;
 							}
 						}
@@ -268,15 +269,15 @@ public class AetherPlayer implements IAetherPlayer
 					for (ItemStack stack : inventory.items) {
 						Item item = stack.getItem();
 						if (item == AetherItems.GOLDEN_PARACHUTE.get()) {
-							GoldenParachuteEntity parachuteEntity = AetherEntityTypes.GOLDEN_PARACHUTE.get().create(world);
-							if (parachuteEntity != null) {
-								parachuteEntity.setPos(player.getX(), player.getY() - 1.0D, player.getZ());
-								if (!world.isClientSide) {
-									world.addFreshEntity(parachuteEntity);
-									player.startRiding(parachuteEntity);
+							GoldenParachuteEntity goldenParachute = AetherEntityTypes.GOLDEN_PARACHUTE.get().create(level);
+							if (goldenParachute != null) {
+								goldenParachute.setPos(player.getX(), player.getY() - 1.0D, player.getZ());
+								if (!level.isClientSide) {
+									level.addFreshEntity(goldenParachute);
+									player.startRiding(goldenParachute);
 									stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
 								}
-								parachuteEntity.spawnExplosionParticle();
+								goldenParachute.spawnExplosionParticle();
 								break;
 							}
 						}
@@ -339,45 +340,32 @@ public class AetherPlayer implements IAetherPlayer
 		}
 	}
 
+	//TODO: Can we just kill the aerbunny, save all its data, and respawn it when the player rejoins? Or is that too much to track.
 	private void remountAerbunny() {
-		if (this.getAerbunny() != null) {
-			if (this.getPlayer().level instanceof ServerLevel) {
-				ServerLevel serverWorld = (ServerLevel) this.getPlayer().level;
-				Entity entity = serverWorld.getEntity(this.getAerbunny());
-				if (entity instanceof AerbunnyEntity) {
-					AerbunnyEntity aerbunny = (AerbunnyEntity) entity;
-					aerbunny.startRiding(this.getPlayer());
-					if (this.getPlayer() instanceof ServerPlayer) {
-						AetherPacketHandler.sendToPlayer(new RemountAerbunnyPacket(this.getPlayer().getId(), aerbunny.getId()), (ServerPlayer) this.getPlayer());
-					}
-				}
+		if (this.getAerbunny() != null && this.getPlayer().level instanceof ServerLevel serverLevel && serverLevel.getEntity(this.getAerbunny()) instanceof AerbunnyEntity aerbunny) {
+			aerbunny.startRiding(this.getPlayer());
+			if (this.getPlayer() instanceof ServerPlayer serverPlayer) {
+				AetherPacketHandler.sendToPlayer(new RemountAerbunnyPacket(this.getPlayer().getId(), aerbunny.getId()), serverPlayer);
 			}
 		}
 	}
 
 	private void checkToRemoveAerbunny() {
-		if (this.getAerbunny() != null) {
-			if (this.getPlayer().level instanceof ServerLevel) {
-				ServerLevel serverWorld = (ServerLevel) this.getPlayer().level;
-				Entity entity = serverWorld.getEntity(this.getAerbunny());
-				if (entity instanceof AerbunnyEntity) {
-					AerbunnyEntity aerbunny = (AerbunnyEntity) entity;
-					if (aerbunny.getVehicle() == null) {
-						this.aerbunnyCheck++;
-					} else {
-						this.aerbunnyCheck = 0;
-					}
-					if (this.aerbunnyCheck == 50) {
-						this.setAerbunny(null);
-						this.aerbunnyCheck = 0;
-					}
-				}
+		if (this.getAerbunny() != null && this.getPlayer().level instanceof ServerLevel serverLevel && serverLevel.getEntity(this.getAerbunny()) instanceof AerbunnyEntity aerbunny) {
+			if (aerbunny.getVehicle() == null) {
+				this.aerbunnyCheck++;
+			} else {
+				this.aerbunnyCheck = 0;
+			}
+			if (this.aerbunnyCheck == 50) {
+				this.setAerbunny(null);
+				this.aerbunnyCheck = 0;
 			}
 		}
 	}
 
 	private void checkToRemoveCloudMinions() {
-		this.getCloudMinionEntities().removeIf(cloudMinion -> !cloudMinion.isAlive());
+		this.getCloudMinions().removeIf(cloudMinion -> !cloudMinion.isAlive());
 	}
 
 	private void handleSavedHealth() {
@@ -576,7 +564,7 @@ public class AetherPlayer implements IAetherPlayer
 	}
 
 	@Override
-	public List<CloudMinionEntity> getCloudMinionEntities() {
+	public List<CloudMinionEntity> getCloudMinions() {
 		return this.cloudMinions;
 	}
 
@@ -617,8 +605,8 @@ public class AetherPlayer implements IAetherPlayer
 	}
 
 	private void sendCloudMinionPacket(CloudMinionEntity cloudMinionRight, CloudMinionEntity cloudMinionLeft) {
-		if (this.getPlayer() instanceof ServerPlayer && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), (ServerPlayer) this.getPlayer());
+		if (this.getPlayer() instanceof ServerPlayer serverPlayer && !this.getPlayer().level.isClientSide) {
+			AetherPacketHandler.sendToPlayer(new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
 		}
 	}
 }

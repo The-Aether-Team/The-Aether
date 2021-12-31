@@ -26,7 +26,7 @@ public class CloudStaffItem extends Item
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand hand) {
         ItemStack heldItem = playerIn.getItemInHand(hand);
         IAetherPlayer.get(playerIn).ifPresent(aetherPlayer -> {
-            if (aetherPlayer.getCloudMinionEntities().isEmpty()) {
+            if (aetherPlayer.getCloudMinions().isEmpty()) {
                 playerIn.swing(hand);
                 if (!worldIn.isClientSide) {
                     if (!playerIn.getAbilities().instabuild) {
@@ -41,7 +41,7 @@ public class CloudStaffItem extends Item
                 this.spawnExplosionParticles(playerIn);
             } else if (playerIn.isShiftKeyDown()) {
                 playerIn.swing(hand);
-                for (CloudMinionEntity cloudMinionEntity : aetherPlayer.getCloudMinionEntities()) {
+                for (CloudMinionEntity cloudMinionEntity : aetherPlayer.getCloudMinions()) {
                     cloudMinionEntity.setLifeSpan(0);
                 }
             }
@@ -53,13 +53,13 @@ public class CloudStaffItem extends Item
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         if (entity instanceof Player) {
             IAetherPlayer.get((Player) entity).ifPresent(aetherPlayer -> {
-                if (!aetherPlayer.getCloudMinionEntities().isEmpty()) {
+                if (!aetherPlayer.getCloudMinions().isEmpty()) {
                     if (!aetherPlayer.getPlayer().getCooldowns().isOnCooldown(this) && aetherPlayer.isHitting()) {
-                        CloudMinionEntity cloudMinionRight = aetherPlayer.getCloudMinionEntities().get(0);
+                        CloudMinionEntity cloudMinionRight = aetherPlayer.getCloudMinions().get(0);
                         if (cloudMinionRight != null) {
                             cloudMinionRight.setShouldShoot(true);
                         }
-                        CloudMinionEntity cloudMinionLeft = aetherPlayer.getCloudMinionEntities().get(1);
+                        CloudMinionEntity cloudMinionLeft = aetherPlayer.getCloudMinions().get(1);
                         if (cloudMinionLeft != null) {
                             cloudMinionLeft.setShouldShoot(true);
                         }
