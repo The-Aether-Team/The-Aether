@@ -15,7 +15,6 @@ import com.gildedgames.aether.core.network.packet.client.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
