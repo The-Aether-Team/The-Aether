@@ -57,6 +57,7 @@ public class AetherLootTableProvider extends LootTableProvider
         super(dataGeneratorIn);
     }
 
+    @Nonnull
     @Override
     protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> getTables() {
         return ImmutableList.of(

@@ -13,6 +13,7 @@ import net.minecraft.tags.Tag;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AetherBlockTagData extends BlockTagsProvider
@@ -21,13 +22,14 @@ public class AetherBlockTagData extends BlockTagsProvider
         super(generatorIn, Aether.MODID, existingFileHelper);
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "Aether Block Tags";
     }
 
-    @Override
     @SuppressWarnings("unchecked")
+    @Override
     protected void addTags() {
         //aether
         tag(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)
@@ -217,7 +219,8 @@ public class AetherBlockTagData extends BlockTagsProvider
                 .add(AetherBlocks.ZANITE_BLOCK.get());
     }
 
-    protected TagsProvider.TagAppender<Block> tag(Tag.Named<Block> tag) {
+    @Nonnull
+    protected TagsProvider.TagAppender<Block> tag(@Nonnull Tag.Named<Block> tag) {
         return super.tag(tag);
     }
 }

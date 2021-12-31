@@ -2,13 +2,7 @@ package com.gildedgames.aether.core.data;
 
 import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.core.data.provider.AetherLanguageProvider;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
-
-import java.util.function.Supplier;
 
 public class AetherLangData extends AetherLanguageProvider
 {

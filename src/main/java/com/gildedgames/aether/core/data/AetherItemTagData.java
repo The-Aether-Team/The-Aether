@@ -15,6 +15,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AetherItemTagData extends ItemTagsProvider
@@ -23,6 +24,7 @@ public class AetherItemTagData extends ItemTagsProvider
         super(dataGenerator, blockTagProvider, Aether.MODID, existingFileHelper);
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "Aether Item Tags";
@@ -224,7 +226,8 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.ZANITE_BLOCK.get().asItem());
     }
 
-    protected TagsProvider.TagAppender<Item> tag(Tag.Named<Item> tag) {
+    @Nonnull
+    protected TagsProvider.TagAppender<Item> tag(@Nonnull Tag.Named<Item> tag) {
         return super.tag(tag);
     }
 }

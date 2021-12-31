@@ -205,6 +205,7 @@ public class AetherLootTableData extends AetherLootTableProvider
                     (bed) -> createSinglePropConditionTable(bed, BedBlock.PART, BedPart.HEAD));
         }
 
+        @Nonnull
         @Override
         protected Iterable<Block> getKnownBlocks() {
             return AetherBlocks.BLOCKS.getEntries().stream().map(Supplier::get).collect(Collectors.toList());
@@ -353,6 +354,7 @@ public class AetherLootTableData extends AetherLootTableProvider
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootTableReference.lootTableReference(AetherEntityTypes.SHEEPUFF.get().getDefaultLootTable())));
         }
 
+        @Nonnull
         @Override
         protected Iterable<EntityType<?>> getKnownEntities() {
             return AetherEntityTypes.ENTITIES.getEntries().stream().map(Supplier::get).collect(Collectors.toList());

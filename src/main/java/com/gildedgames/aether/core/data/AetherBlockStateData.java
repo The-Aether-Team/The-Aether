@@ -7,12 +7,15 @@ import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import javax.annotation.Nonnull;
+
 public class AetherBlockStateData extends AetherBlockStateProvider
 {
     public AetherBlockStateData(DataGenerator generator, ExistingFileHelper fileHelper) {
         super(generator, fileHelper);
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "Aether Block States";
