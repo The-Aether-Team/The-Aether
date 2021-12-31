@@ -43,6 +43,7 @@ public class ConfigEnabled implements LootItemCondition
             object.addProperty("config", condition.config.getPath().toString());
         }
 
+        //TODO: There has to be a better way to do this, I want to look at this again and see if I can specify mod ID anywhere here.
         public ConfigEnabled deserialize(JsonObject object, JsonDeserializationContext context) {
             List<String> path = Arrays.asList(GsonHelper.getAsString(object, "config").replace("[", "").replace("]", "").split(", "));
             return new ConfigEnabled(AetherConfig.COMMON_SPEC.getValues().get(path));
