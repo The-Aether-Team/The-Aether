@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.world.gen.configuration.BronzeDungeonConfiguration;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.PlainVillagePools;
@@ -10,7 +11,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfigura
 
 public class AetherConfiguredStructures {
     public static ConfiguredStructureFeature<?, ?> CONFIGURED_BRONZE_DUNGEON = AetherStructures.BRONZE_DUNGEON.get()
-            .configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
+            .configured(new BronzeDungeonConfiguration(100));
     public static ConfiguredStructureFeature<?, ?> CONFIGURED_GOLD_DUNGEON = AetherStructures.GOLD_DUNGEON.get()
             .configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
 

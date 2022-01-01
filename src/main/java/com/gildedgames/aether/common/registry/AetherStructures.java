@@ -1,16 +1,13 @@
 package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.world.structure.BronzeDungeonStructure;
+import com.gildedgames.aether.common.world.gen.configuration.BronzeDungeonConfiguration;
+import com.gildedgames.aether.common.world.structure.bronze.BronzeStructureFeature;
 import com.gildedgames.aether.common.world.structure.GoldDungeonStructure;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.PlainVillagePools;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
-import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.StructureSettings;
@@ -25,7 +22,7 @@ import java.util.Map;
 public class AetherStructures {
     public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Aether.MODID);
 
-    public static final RegistryObject<StructureFeature<JigsawConfiguration>> BRONZE_DUNGEON = STRUCTURES.register("bronze_dungeon", BronzeDungeonStructure::new);
+    public static final RegistryObject<StructureFeature<BronzeDungeonConfiguration>> BRONZE_DUNGEON = STRUCTURES.register("bronze_dungeon", BronzeStructureFeature::new);
     public static final RegistryObject<StructureFeature<JigsawConfiguration>> GOLD_DUNGEON = STRUCTURES.register("gold_dungeon", GoldDungeonStructure::new);
 
     public static void initStructures() {
