@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 public class DimensionClientListener
 {
     @SubscribeEvent
-    public static void onRenderFogColor(EntityViewRenderEvent.FogColors event) {
+    public static void onRenderFogColor(EntityViewRenderEvent.FogColors event) { //TODO: Determine if this code is necessary anymore.
         Camera renderInfo = event.getCamera();
         ClientLevel world = (ClientLevel) renderInfo.getEntity().level;
         if (world.dimension() == AetherDimensions.AETHER_WORLD) {
@@ -28,7 +28,7 @@ public class DimensionClientListener
                     d0 = 0.0D;
                 }
                 d0 = d0 * d0;
-                if(d0 != 0.0D) {
+                if (d0 != 0.0D) {
                     event.setRed((float) ((double) event.getRed() / d0));
                     event.setGreen((float) ((double) event.getGreen() / d0));
                     event.setBlue((float) ((double) event.getBlue() / d0));

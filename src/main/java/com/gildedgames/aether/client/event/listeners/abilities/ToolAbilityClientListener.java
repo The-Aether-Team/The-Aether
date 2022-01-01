@@ -55,16 +55,4 @@ public class ToolAbilityClientListener
         }
         return false;
     }
-
-    @SubscribeEvent
-    public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
-        CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.INVISIBILITY_CLOAK.get(), event.getPlayer()).ifPresent((triple) -> event.setCanceled(true));
-    }
-
-    @SubscribeEvent
-    public static void onRenderHand(RenderHandEvent event) {
-        if (Minecraft.getInstance().player != null) {
-            CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.INVISIBILITY_CLOAK.get(), Minecraft.getInstance().player).ifPresent((triple) -> event.setCanceled(true));
-        }
-    }
 }
