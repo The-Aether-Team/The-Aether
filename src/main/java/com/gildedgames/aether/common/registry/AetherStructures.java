@@ -29,7 +29,7 @@ public class AetherStructures {
     public static final RegistryObject<StructureFeature<JigsawConfiguration>> GOLD_DUNGEON = STRUCTURES.register("gold_dungeon", GoldDungeonStructure::new);
 
     public static void initStructures() {
-        setupMapSpacingAndLand(AetherStructures.BRONZE_DUNGEON.get(), new StructureFeatureConfiguration(6, 4, 16811681), true);
+        setupMapSpacingAndLand(AetherStructures.BRONZE_DUNGEON.get(), new StructureFeatureConfiguration(12, 8, 16811681), true);
         setupMapSpacingAndLand(AetherStructures.GOLD_DUNGEON.get(), new StructureFeatureConfiguration(24, 12, 120320420), false);
     }
 

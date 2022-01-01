@@ -1,19 +1,16 @@
 package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.world.structure.AetherStructurePieces;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.levelgen.StructureSettings;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
@@ -38,6 +35,7 @@ public final class AetherStructureIngress {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addListener(EventPriority.NORMAL, AetherStructureIngress::addDimensionalSpacing);
         //forgeBus.addListener(EventPriority.NORMAL, /*StructureFeature*/::setupStructureSpawns);
+        AetherStructurePieces.init();
     }
 
     public static void setup(final FMLCommonSetupEvent event) {

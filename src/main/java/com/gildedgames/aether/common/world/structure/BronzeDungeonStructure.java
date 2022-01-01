@@ -3,12 +3,10 @@ package com.gildedgames.aether.common.world.structure;
 import com.gildedgames.aether.Aether;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
-import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.NoiseAffectingStructureFeature;
-import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 
@@ -25,8 +23,7 @@ public class BronzeDungeonStructure extends NoiseAffectingStructureFeature<Jigsa
     }
 
     private static boolean shouldPlace(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
-        NoiseColumn column = context.chunkGenerator().getBaseColumn(context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ(), context.heightAccessor());
-        return !column.getBlock(40).isAir() && !column.getBlock(80).isAir();
+        return context.chunkGenerator().getFirstOccupiedHeight(context.chunkPos().getMiddleBlockX(), context.chunkPos().getMiddleBlockZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor()) > 60;
     }
 
     private static Optional<PieceGenerator<JigsawConfiguration>> placePieces(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
@@ -53,6 +50,6 @@ public class BronzeDungeonStructure extends NoiseAffectingStructureFeature<Jigsa
                 context.registryAccess()
         );
 
-        return JigsawPlacement.addPieces(newContext, PoolElementStructurePiece::new, context.chunkPos().getMiddleBlockPosition(60), false, false);
+        return BuryingJigsawPiece.addPieces(newContext, BuryingJigsawPiece::new, context.chunkPos().getMiddleBlockPosition(39), false, false);
     }
 }
