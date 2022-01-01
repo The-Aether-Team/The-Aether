@@ -1,6 +1,5 @@
 package com.gildedgames.aether.core.network.packet.server;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.inventory.provider.AccessoriesProvider;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;

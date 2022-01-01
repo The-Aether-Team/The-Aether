@@ -12,7 +12,6 @@ import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.client.gui.components.AbstractWidget;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Inventory;
@@ -83,7 +82,7 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesContai
         }
         this.isRenderButtonHovered = isButtonHovered;
         LocalPlayer clientPlayer = Minecraft.getInstance().player;
-        if (!this.isRenderButtonHovered && clientPlayer != null && clientPlayer.getInventory().getSelected().isEmpty() && this.getSlotUnderMouse() != null) {
+        if (!this.isRenderButtonHovered && clientPlayer != null && clientPlayer.inventoryMenu.getCarried().isEmpty() && this.getSlotUnderMouse() != null) {
             Slot slot = this.getSlotUnderMouse();
             if (slot instanceof CurioSlot curioSlot && !slot.hasItem()) {
                 this.renderTooltip(poseStack, new TextComponent(curioSlot.getSlotName()), mouseX, mouseY);
@@ -97,7 +96,7 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesContai
         Minecraft mc = this.minecraft;
         if (mc != null) {
             LocalPlayer clientPlayer = mc.player;
-            if (clientPlayer != null && clientPlayer.getInventory().getSelected().isEmpty()) {
+            if (clientPlayer != null && clientPlayer.inventoryMenu.getCarried().isEmpty()) {
                 if (this.isRenderButtonHovered) {
                     this.renderTooltip(matrixStack, new TranslatableComponent("gui.curios.toggle"), mouseX, mouseY);
                 } else if (this.hoveredSlot != null && this.hoveredSlot.hasItem()) {

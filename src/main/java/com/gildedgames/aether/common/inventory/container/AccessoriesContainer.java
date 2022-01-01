@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.inventory.container;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherContainerTypes;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -76,9 +75,9 @@ public class AccessoriesContainer extends InventoryMenu
         super(playerInventory, playerInventory.player.level.isClientSide, playerInventory.player);
         this.menuType = AetherContainerTypes.ACCESSORIES.get();
         this.containerId = containerId;
+        this.remoteSlots.clear();
         this.lastSlots.clear();
         this.slots.clear();
-        this.remoteSlots.clear();
         this.player = playerInventory.player;
         this.curiosHandler = CuriosApi.getCuriosHelper().getCuriosHandler(this.player);
         this.hasButton = hasButton;
@@ -171,7 +170,7 @@ public class AccessoriesContainer extends InventoryMenu
     }
 
     @Override
-    public void slotsChanged(@Nonnull Container inventoryIn) { //TODO: This doesn't work. and seems to be the source of the error. May also still be able to use CraftingMenu.slotChangedCraftingGrid()
+    public void slotsChanged(@Nonnull Container inventoryIn) {
         if (!this.player.level.isClientSide) {
             ServerPlayer playerMP = (ServerPlayer) this.player;
             ItemStack itemStack = ItemStack.EMPTY;
