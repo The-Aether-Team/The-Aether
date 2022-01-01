@@ -78,6 +78,7 @@ public class AccessoriesContainer extends InventoryMenu
         this.containerId = containerId;
         this.lastSlots.clear();
         this.slots.clear();
+        this.remoteSlots.clear();
         this.player = playerInventory.player;
         this.curiosHandler = CuriosApi.getCuriosHelper().getCuriosHandler(this.player);
         this.hasButton = hasButton;
