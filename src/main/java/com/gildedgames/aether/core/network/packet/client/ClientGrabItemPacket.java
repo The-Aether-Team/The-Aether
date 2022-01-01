@@ -30,9 +30,9 @@ public class ClientGrabItemPacket extends AetherPacket
     }
 
     @Override
-    public void execute(Player playerEntity) {
+    public void execute(Player playerEntity) { //TODO: This doesn't work. Wait for a fix on Curios' end for this behavior being bugged.
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().player.level.getEntity(this.entityID) instanceof LocalPlayer localPlayer) {
-            localPlayer.inventoryMenu.setCarried(this.stack); //TODO: Make sure this works. setCarried was previously handled in Inventory and now its not. This can't be verified until the addWidget code in GuiListener is fixed.
+            localPlayer.inventoryMenu.setCarried(this.stack);
         }
     }
 }

@@ -29,9 +29,9 @@ public class OpenAccessoriesPacket extends AetherPacket
     }
 
     @Override
-    public void execute(Player playerEntity) {
+    public void execute(Player playerEntity) { //TODO: This doesn't work. Wait for a fix on Curios' end for this behavior being bugged.
         if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
-            ItemStack itemStack = serverPlayer.inventoryMenu.getCarried();//TODO: Make sure this works. setCarried was previously handled in Inventory and now its not. This can't be verified until the addWidget code in GuiListener is fixed.
+            ItemStack itemStack = serverPlayer.inventoryMenu.getCarried();
             serverPlayer.inventoryMenu.setCarried(ItemStack.EMPTY);
             NetworkHooks.openGui(serverPlayer, new AccessoriesProvider());
             if (!itemStack.isEmpty()) {
