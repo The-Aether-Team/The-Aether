@@ -93,6 +93,18 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 		return true;
 	}
 
+	/**
+	 * The purpose of this method override is to fix the weird movement from flying mobs.
+	 */
+	@Override
+	public void travel(Vec3 pTravelVector) {
+		if (this.isEffectiveAi() || this.isControlledByLocalInstance()) {
+			super.travel(pTravelVector);
+		} else {
+			this.calculateEntityAnimation(this, false);
+		}
+	}
+
 	@Override
 	public void aiStep() {
 		super.aiStep();
