@@ -30,11 +30,12 @@ public class OpenInventoryPacket extends AetherPacket
     @Override
     public void execute(Player playerEntity) {
         if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
-            ItemStack itemStack = serverPlayer.containerMenu.getCarried(); //TODO: Make sure this works. setCarried was previously handled in Inventory and now its not. This can't be verified until the addWidget code in GuiListener is fixed.
-            serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
+            ItemStack itemStack = serverPlayer.inventoryMenu.getCarried(); //TODO: Make sure this works. setCarried was previously handled in Inventory and now its not. This can't be verified until the addWidget code in GuiListener is fixed.
+            //might have to switch containermenu to inventorymenu
+            serverPlayer.inventoryMenu.setCarried(ItemStack.EMPTY);
             serverPlayer.doCloseContainer();
             if (!itemStack.isEmpty()) {
-                serverPlayer.containerMenu.setCarried(itemStack);
+                serverPlayer.inventoryMenu.setCarried(itemStack);
                 AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(serverPlayer.getId(), itemStack), serverPlayer);
             }
         }

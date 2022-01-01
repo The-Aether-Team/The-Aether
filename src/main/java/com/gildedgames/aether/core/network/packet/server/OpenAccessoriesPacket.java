@@ -1,5 +1,6 @@
 package com.gildedgames.aether.core.network.packet.server;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.inventory.provider.AccessoriesProvider;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
@@ -31,11 +32,11 @@ public class OpenAccessoriesPacket extends AetherPacket
     @Override
     public void execute(Player playerEntity) {
         if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
-            ItemStack itemStack = serverPlayer.getInventory().getSelected();
-            serverPlayer.getInventory().setPickedItem(ItemStack.EMPTY);
+            ItemStack itemStack = serverPlayer.inventoryMenu.getCarried();//TODO: Make sure this works. setCarried was previously handled in Inventory and now its not. This can't be verified until the addWidget code in GuiListener is fixed.
+            serverPlayer.inventoryMenu.setCarried(ItemStack.EMPTY);
             NetworkHooks.openGui(serverPlayer, new AccessoriesProvider());
             if (!itemStack.isEmpty()) {
-                serverPlayer.getInventory().setPickedItem(itemStack);
+                serverPlayer.inventoryMenu.setCarried(itemStack);
                 AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(serverPlayer.getId(), itemStack), serverPlayer);
             }
         }
