@@ -1,7 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
 import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
-
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -30,6 +29,7 @@ public class SheepuffModel extends QuadrupedModel<SheepuffEntity>
         super.prepareMobModel(sheepuff, limbSwing, limbSwingAmount, partialTick);
         this.head.y = 6.0F + sheepuff.getHeadRotationPointY(partialTick) * 9.0F;
         this.headXRot = sheepuff.getHeadEatAngleScale(partialTick);
+        this.body.xRot = ((float) Math.PI / 2F);
     }
 
     @Override
