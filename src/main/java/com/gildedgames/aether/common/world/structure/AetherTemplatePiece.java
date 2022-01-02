@@ -19,7 +19,7 @@ public abstract class AetherTemplatePiece extends TemplateStructurePiece {
         super(type, depth, structureManager, location, location.toString(), placeSettings, pos);
     }
 
-    public AetherTemplatePiece(StructurePieceType type, StructurePieceSerializationContext context, CompoundTag tag) {
-        super(type, tag, context.structureManager(), v -> new StructurePlaceSettings());
+    public AetherTemplatePiece(StructurePieceType type, StructurePieceSerializationContext context, CompoundTag tag, StructurePlaceSettings settings) {
+        super(type, tag, context.structureManager(), v -> settings);
     }
 }

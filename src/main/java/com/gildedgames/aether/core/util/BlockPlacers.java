@@ -1,12 +1,15 @@
 package com.gildedgames.aether.core.util;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 import java.util.Random;
+import java.util.function.BiPredicate;
 
 public final class BlockPlacers {
     public static void placeDisk(BlockPos center, float radius, WorldGenLevel level, BlockStateProvider blockProvider, Random random) {
@@ -64,21 +67,45 @@ public final class BlockPlacers {
         return level.setBlock(pos, provider.getState(random, pos), 2);
     }
 
-    public static void fill(WorldGenLevel level, BlockState state, BoundingBox structureBox, BoundingBox chunkBox) {
+    public static void fillBox(WorldGenLevel level, BlockState state, BoundingBox structureBox, BoundingBox chunkBox) {
         if (!structureBox.intersects(chunkBox)) return;
 
         int xStart = Math.max(structureBox.minX(), chunkBox.minX());
         int yStart = Math.max(structureBox.minY(), chunkBox.minY());
         int zStart = Math.max(structureBox.minZ(), chunkBox.minZ());
 
-        int xSpan = Math.min(structureBox.maxX(), chunkBox.maxX()) - xStart;
-        int ySpan = Math.min(structureBox.maxY(), chunkBox.maxY()) - yStart;
-        int zSpan = Math.min(structureBox.maxZ(), chunkBox.maxZ()) - zStart;
+        int xEnd = Math.min(structureBox.maxX(), chunkBox.maxX());
+        int yEnd = Math.min(structureBox.maxY(), chunkBox.maxY());
+        int zEnd = Math.min(structureBox.maxZ(), chunkBox.maxZ());
 
-        for (int z = 0; z < zSpan; z++)
-            for (int y = 0; y < ySpan; y++)
-                for (int x = 0; x < xSpan; x++)
-                    level.setBlock(new BlockPos(xStart + x, yStart + y, zStart + z), state, 2);
+        for (int z = zStart; z <= zEnd; z++)
+            for (int y = yStart; y <= yEnd; y++)
+                for (int x = xStart; x <= xEnd; x++)
+                    level.setBlock(new BlockPos(x, y, z), state, 2);
+    }
+
+    public static void fillBoxWithShell(WorldGenLevel level, BlockStateProvider shell, BlockState interior, BiPredicate<BoundingBox, BlockPos> isInterior, BoundingBox structureBox, BoundingBox chunkBox, Random random) {
+        if (!structureBox.intersects(chunkBox)) return;
+
+        int xStart = Math.max(structureBox.minX(), chunkBox.minX());
+        int yStart = Math.max(structureBox.minY(), chunkBox.minY());
+        int zStart = Math.max(structureBox.minZ(), chunkBox.minZ());
+
+        int xEnd = Math.min(structureBox.maxX(), chunkBox.maxX());
+        int yEnd = Math.min(structureBox.maxY(), chunkBox.maxY());
+        int zEnd = Math.min(structureBox.maxZ(), chunkBox.maxZ());
+
+        for (int z = zStart; z <= zEnd; z++)
+            for (int y = yStart; y <= yEnd; y++)
+                for (int x = xStart; x <= xEnd; x++) {
+                    BlockPos pos = new BlockPos(x, y, z);
+
+                    level.setBlock(pos, isInterior.test(structureBox, pos) ? interior : shell.getState(random, pos), 2);
+                }
+    }
+
+    public static void shelledTunnel(WorldGenLevel level, BlockStateProvider shell, Direction.Axis axis, BoundingBox structureBox, BoundingBox chunkBox, Random random) {
+        fillBoxWithShell(level, shell, Blocks.AIR.defaultBlockState(), BlockLogic.getShellingDirection(axis), structureBox, chunkBox, random);
     }
 
     private BlockPlacers() {

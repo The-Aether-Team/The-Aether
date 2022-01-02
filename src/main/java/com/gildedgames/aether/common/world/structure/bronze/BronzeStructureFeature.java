@@ -32,6 +32,10 @@ public class BronzeStructureFeature extends NoiseAffectingStructureFeature<Bronz
         if (!shouldPlace(placementContext))
             return Optional.empty();
 
-        return Optional.of((pieceBuilder, context) -> pieceBuilder.addPiece(new SliderBossRoom(context.structureManager(), context.config().recursionDepth(), new StructurePlaceSettings(), context.chunkPos().getMiddleBlockPosition(39))));
+        return Optional.of((pieceBuilder, context) -> {
+            var bossRoom = new SliderBossRoom(context.structureManager(), context.config().recursionDepth(), new StructurePlaceSettings(), context.chunkPos().getMiddleBlockPosition(39));
+            pieceBuilder.addPiece(bossRoom);
+            bossRoom.addChildren(bossRoom, pieceBuilder, context.random());
+        });
     }
 }
