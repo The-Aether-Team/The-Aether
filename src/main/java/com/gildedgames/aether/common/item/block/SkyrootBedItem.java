@@ -24,24 +24,18 @@ public class SkyrootBedItem extends BlockItem {
 	@Override
 	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
 		consumer.accept(new IItemRenderProperties() {
-			BlockEntityWithoutLevelRenderer myRenderer;
+			final BlockEntityWithoutLevelRenderer myRenderer = new BlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels()) {
+				private final SkyrootBedTileEntity blockEntity = new SkyrootBedTileEntity(BlockPos.ZERO, AetherBlocks.SKYROOT_BED.get().defaultBlockState());
+
+				@Override
+				public void renderByItem(@Nonnull ItemStack stack, @Nonnull ItemTransforms.TransformType transformType, @Nonnull PoseStack matrix, @Nonnull MultiBufferSource buffer, int x, int y) {
+					Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(blockEntity, matrix, buffer, x, y);
+
+				}
+			};
 
 			@Override
 			public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-				if (Minecraft.getInstance().getEntityRenderDispatcher() != null && myRenderer == null) {
-					myRenderer = new BlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels()) {
-						private SkyrootBedTileEntity blockEntity;
-
-						@Override
-						public void renderByItem(@Nonnull ItemStack stack, @Nonnull ItemTransforms.TransformType transformType, @Nonnull PoseStack matrix, @Nonnull MultiBufferSource buffer, int x, int y) {
-							if (blockEntity == null) {
-								blockEntity = new SkyrootBedTileEntity(BlockPos.ZERO, AetherBlocks.SKYROOT_BED.get().defaultBlockState());
-							}
-							Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(blockEntity, matrix, buffer, x, y);
-						}
-					};
-				}
-
 				return myRenderer;
 			}
 		});
