@@ -71,7 +71,7 @@ public interface IAetherPlayer extends INBTSerializable<CompoundTag>
 	UUID getAerbunny();
 
 	void setCloudMinions(CloudMinionEntity cloudMinionRight, CloudMinionEntity cloudMinionLeft);
-	List<CloudMinionEntity> getCloudMinionEntities();
+	List<CloudMinionEntity> getCloudMinions();
 
 	void setSavedHealth(float health);
 	float getSavedHealth();

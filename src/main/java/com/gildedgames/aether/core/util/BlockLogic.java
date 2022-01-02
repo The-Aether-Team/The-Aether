@@ -3,14 +3,14 @@ package com.gildedgames.aether.core.util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 
-public final class BlockLogic {
+public class BlockLogic
+{
+    private BlockLogic() { }
+
     public static boolean doesAirExistNearby(BlockPos center, int radius, WorldGenLevel level) {
         return level.isEmptyBlock(center.north(radius))
                 || level.isEmptyBlock(center.south(radius))
                 || level.isEmptyBlock(center.west(radius))
                 || level.isEmptyBlock(center.east(radius));
-    }
-
-    private BlockLogic() {
     }
 }

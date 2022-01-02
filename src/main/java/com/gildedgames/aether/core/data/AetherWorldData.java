@@ -16,11 +16,17 @@ import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 
-public final class AetherWorldData extends AetherWorldProvider {
+public class AetherWorldData extends AetherWorldProvider
+{
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create(); // If desired, custom formatting rules can be set up here
 
     public AetherWorldData(DataGenerator generator) {
         super(generator, JsonOps.INSTANCE, GSON::toJson);
+    }
+
+    @Override
+    public String getName() {
+        return "Aether World Data";
     }
 
     @Override
@@ -32,10 +38,5 @@ public final class AetherWorldData extends AetherWorldProvider {
         NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(RegistryAccess.builtin().registryOrThrow(Registry.NOISE_REGISTRY), new FixedBiomeSource(AetherBiomeData.FLOATING_FOREST), 0L, () -> worldNoiseSettings);
 
         this.serialize(Registry.LEVEL_STEM_REGISTRY, new ResourceLocation(Aether.MODID, "the_aether"), new LevelStem(() -> dimensionType, aetherChunkGen), LevelStem.CODEC);
-    }
-
-    @Override
-    public String getName() {
-        return "Aether World Data";
     }
 }

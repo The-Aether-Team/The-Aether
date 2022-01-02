@@ -79,9 +79,6 @@ public class Aether
 		modEventBus.addListener(this::commonSetup);
 		modEventBus.addListener(this::curiosSetup);
 		modEventBus.addListener(this::dataSetup);
-
-		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-		forgeBus.addListener(EventPriority.NORMAL, AetherStructures::addDimensionalSpacing);
 		
 		DeferredRegister<?>[] registers = {
 				AetherBlocks.BLOCKS,
@@ -94,8 +91,7 @@ public class Aether
 				AetherSoundEvents.SOUNDS,
 				AetherContainerTypes.CONTAINERS,
 				AetherTileEntityTypes.TILE_ENTITIES,
-				AetherRecipes.RECIPE_SERIALIZERS,
-				AetherStructures.STRUCTURES
+				AetherRecipes.RECIPE_SERIALIZERS
 		};
 
 		for (DeferredRegister<?> register : registers) {
@@ -108,6 +104,8 @@ public class Aether
 
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
+
+		AetherStructureIngress.registerEvents(modEventBus);
 	}
 
 	public void commonSetup(FMLCommonSetupEvent event) {
@@ -121,9 +119,6 @@ public class Aether
 		AetherBlocks.registerFreezables();
 
 		AetherFeatures.registerConfiguredFeatures();
-
-		AetherStructures.registerStructures();
-		AetherStructures.registerConfiguredStructures();
 
 		AetherEntityTypes.registerSpawnPlacements();
 
@@ -154,13 +149,13 @@ public class Aether
 		}
 		if (event.includeServer()) {
 			generator.addProvider(new AetherRecipeData(generator));
-			//FIXME generator.addProvider(new AetherLootTableData(generator));
+			generator.addProvider(new AetherLootTableData(generator));
 			AetherBlockTagData blockTags = new AetherBlockTagData(generator, helper);
 			generator.addProvider(blockTags);
 			generator.addProvider(new AetherItemTagData(generator, blockTags, helper));
 			generator.addProvider(new AetherEntityTagData(generator, helper));
 			generator.addProvider(new AetherFluidTagData(generator, helper));
-			generator.addProvider(new AetherAdvancementData(generator));
+			generator.addProvider(new AetherAdvancementData(generator, helper));
 			generator.addProvider(new AetherWorldData(generator));
 		}
 	}

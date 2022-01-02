@@ -15,8 +15,8 @@ import net.minecraft.world.level.levelgen.placement.*;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class AetherFeatureDataProvider {
-
+public class AetherFeatureDataProvider
+{
     public static AercloudConfiguration createAercloudConfig(int bounds, BlockState blockState) {
         return new AercloudConfiguration(bounds,
                 BlockStateProvider.simple(blockState.setValue(AetherBlockStateProperties.DOUBLE_DROPS, true)));

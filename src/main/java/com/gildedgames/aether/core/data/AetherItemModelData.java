@@ -6,12 +6,15 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import javax.annotation.Nonnull;
+
 public class AetherItemModelData extends AetherItemModelProvider
 {
     public AetherItemModelData(DataGenerator generator, ExistingFileHelper fileHelper) {
         super(generator, fileHelper);
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "Aether Item Models";

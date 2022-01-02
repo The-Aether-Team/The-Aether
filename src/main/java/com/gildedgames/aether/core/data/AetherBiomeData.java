@@ -5,6 +5,7 @@ import com.gildedgames.aether.core.data.provider.AetherBiomeProvider;
 import net.minecraft.world.level.biome.Biome;
 
 // This class should never be accessed outside DataGen
-final class AetherBiomeData {
+class AetherBiomeData
+{
     final static Biome FLOATING_FOREST = AetherBiomeProvider.makeDefaultBiome().setRegistryName(Aether.MODID, "floating_forest");
 }

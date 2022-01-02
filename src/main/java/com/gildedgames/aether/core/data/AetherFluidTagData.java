@@ -10,6 +10,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.tags.Tag;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AetherFluidTagData extends FluidTagsProvider
@@ -18,6 +19,7 @@ public class AetherFluidTagData extends FluidTagsProvider
         super(generatorIn, Aether.MODID, existingFileHelper);
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "Aether Fluid Tags";
@@ -30,7 +32,8 @@ public class AetherFluidTagData extends FluidTagsProvider
                 .add(Fluids.FLOWING_LAVA);
     }
 
-    protected TagsProvider.TagAppender<Fluid> tag(Tag.Named<Fluid> tag) {
+    @Nonnull
+    protected TagsProvider.TagAppender<Fluid> tag(@Nonnull Tag.Named<Fluid> tag) {
         return super.tag(tag);
     }
 }

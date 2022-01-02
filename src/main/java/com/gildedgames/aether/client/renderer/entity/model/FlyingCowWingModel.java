@@ -16,11 +16,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class FlyingCowWingModel extends EntityModel<FlyingCowEntity> {
-    public ModelPart leftWingInner;
-    public ModelPart leftWingOuter;
-    public ModelPart rightWingInner;
-    public ModelPart rightWingOuter;
+public class FlyingCowWingModel extends EntityModel<FlyingCowEntity>
+{
+    private final ModelPart leftWingInner;
+    private final ModelPart leftWingOuter;
+    private final ModelPart rightWingInner;
+    private final ModelPart rightWingOuter;
 
     public FlyingCowWingModel(ModelPart root) {
         this.leftWingInner = root.getChild("left_wing_inner");
@@ -30,19 +31,18 @@ public class FlyingCowWingModel extends EntityModel<FlyingCowEntity> {
     }
 
     public static LayerDefinition createMainLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
-        PartDefinition leftWingInnerDef = partdefinition.addOrReplaceChild("left_wing_inner", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(-4.0F, 12.0F, -4.0F));
+        MeshDefinition meshDefinition = new MeshDefinition();
+        PartDefinition partDefinition = meshDefinition.getRoot();
+        PartDefinition leftWingInnerDef = partDefinition.addOrReplaceChild("left_wing_inner", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(-4.0F, 2.0F, -4.0F));
         leftWingInnerDef.addOrReplaceChild("left_wing_outer", CubeListBuilder.create().texOffs(20, 0).mirror().addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(0.0F, -16.0F, 0.0F));
-        PartDefinition rightWingInnerDef = partdefinition.addOrReplaceChild("right_wing_inner", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(4.0F, 12.0F, -4.0F));
+        PartDefinition rightWingInnerDef = partDefinition.addOrReplaceChild("right_wing_inner", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(4.0F, 2.0F, -4.0F));
         rightWingInnerDef.addOrReplaceChild("right_wing_outer", CubeListBuilder.create().texOffs(20, 0).addBox(-1.0F, -16.0F, 0.0F, 2.0F, 16.0F, 8.0F), PartPose.offset(0.0F, -16.0F, 0.0F));
 
-        return LayerDefinition.create(meshdefinition, 64, 32);
+        return LayerDefinition.create(meshDefinition, 64, 32);
     }
 
     @Override
-    public void setupAnim(FlyingCowEntity flyingCow, float limbSwing, float limbSwingAmount, float ageInTicks,
-                          float netHeadYaw, float headPitch) {
+    public void setupAnim(FlyingCowEntity flyingCow, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float aimingForFold;
         if (flyingCow.isOnGround()) {
             aimingForFold = 0.1F;
@@ -60,9 +60,8 @@ public class FlyingCowWingModel extends EntityModel<FlyingCowEntity> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn,
-                               int packedOverlayIn, float red, float green, float blue, float alpha) {
-        this.leftWingInner.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-        this.rightWingInner.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        this.leftWingInner.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.rightWingInner.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

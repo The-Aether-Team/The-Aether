@@ -11,6 +11,7 @@ import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.Tag;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AetherEntityTagData extends EntityTypeTagsProvider
@@ -19,6 +20,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
         super(generatorIn, Aether.MODID, existingFileHelper);
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "Aether Entity Tags";
@@ -65,7 +67,8 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 .add(AetherEntityTypes.HAMMER_PROJECTILE.get());
     }
 
-    protected TagsProvider.TagAppender<EntityType<?>> tag(Tag.Named<EntityType<?>> tag) {
+    @Nonnull
+    protected TagsProvider.TagAppender<EntityType<?>> tag(@Nonnull Tag.Named<EntityType<?>> tag) {
         return super.tag(tag);
     }
 }

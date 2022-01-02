@@ -15,20 +15,20 @@ import net.minecraft.server.level.ServerLevel;
 
 public class EternalDay implements IEternalDay
 {
-    private final Level world;
+    private final Level level;
 
     private boolean isEternalDay = true;
     private boolean shouldCheckTime = true;
     private long aetherTime = 18000L;
-    private long serverWorldTime;
+    private long serverLevelTime;
 
-    public EternalDay(Level world) {
-        this.world = world;
+    public EternalDay(Level level) {
+        this.level = level;
     }
 
     @Override
-    public Level getWorld() {
-        return this.world;
+    public Level getLevel() {
+        return this.level;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class EternalDay implements IEternalDay
         nbt.putBoolean("EternalDay", this.getEternalDay());
         nbt.putBoolean("CheckTime", this.getCheckTime());
         nbt.putLong("Time", this.getAetherTime());
-        nbt.putLong("ServerWorldTime", this.getServerWorldTime());
+        nbt.putLong("ServerLevelTime", this.getServerLevelTime());
         return nbt;
     }
 
@@ -52,8 +52,8 @@ public class EternalDay implements IEternalDay
         if (nbt.contains("Time")) {
             this.setAetherTime(nbt.getLong("Time"));
         }
-        if (nbt.contains("ServerWorldTime")) {
-            this.setServerWorldTime(nbt.getLong("ServerWorldTime"));
+        if (nbt.contains("ServerLevelTime")) {
+            this.setServerLevelTime(nbt.getLong("ServerLevelTime"));
         }
     }
 
@@ -62,16 +62,16 @@ public class EternalDay implements IEternalDay
         this.setEternalDay(this.getEternalDay());
         this.setCheckTime(this.getCheckTime());
         this.setAetherTime(this.getAetherTime());
-        this.setServerWorldTime(this.getServerWorldTime());
+        this.setServerLevelTime(this.getServerLevelTime());
     }
 
     @Override
-    public void serverTick(ServerLevel world) {
-        if (world.dimension() == AetherDimensions.AETHER_WORLD) {
+    public void serverTick(ServerLevel level) {
+        if (level.dimension() == AetherDimensions.AETHER_WORLD) {
             if (!AetherConfig.COMMON.disable_eternal_day.get()) {
                 if (this.getCheckTime()) {
                     if (!this.getEternalDay()) {
-                        long dayTime = world.getDayTime() % 72000;
+                        long dayTime = level.getDayTime() % 72000;
                         if (dayTime != this.getAetherTime()) {
                             this.setAetherTime((long) Mth.approach(this.getAetherTime(), dayTime, 10.0F));
                         } else {
@@ -117,36 +117,36 @@ public class EternalDay implements IEternalDay
     }
 
     @Override
-    public void setServerWorldTime(long time) {
-        this.sendServerWorldTime(time);
-        this.serverWorldTime = time;
+    public void setServerLevelTime(long time) {
+        this.sendServerLevelTime(time);
+        this.serverLevelTime = time;
     }
 
     @Override
-    public long getServerWorldTime() {
-        return this.serverWorldTime;
+    public long getServerLevelTime() {
+        return this.serverLevelTime;
     }
 
     private void sendEternalDay(boolean eternalDay) {
-        if (this.getWorld() instanceof ServerLevel) {
+        if (this.getLevel() instanceof ServerLevel) {
             AetherPacketHandler.sendToAll(new EternalDayPacket(eternalDay));
         }
     }
 
     private void sendCheckTime(boolean checkTime) {
-        if (this.getWorld() instanceof ServerLevel) {
+        if (this.getLevel() instanceof ServerLevel) {
             AetherPacketHandler.sendToAll(new CheckTimePacket(checkTime));
         }
     }
 
     private void sendAetherTime(long time) {
-        if (this.getWorld() instanceof ServerLevel) {
+        if (this.getLevel() instanceof ServerLevel) {
             AetherPacketHandler.sendToAll(new AetherTimePacket(time));
         }
     }
 
-    private void sendServerWorldTime(long time) {
-        if (this.getWorld() instanceof ServerLevel) {
+    private void sendServerLevelTime(long time) {
+        if (this.getLevel() instanceof ServerLevel) {
             AetherPacketHandler.sendToAll(new ServerTimePacket(time));
         }
     }

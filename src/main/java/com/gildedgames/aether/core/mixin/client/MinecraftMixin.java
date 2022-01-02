@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MinecraftMixin
 {
     @Inject(at = @At(value = "RETURN", ordinal = 2), method = "getSituationalMusic", cancellable = true)
-    public void onGetSituationalMusic_Dimension(CallbackInfoReturnable<Music> cir) {
+    public void getSituationalMusic_Dimension(CallbackInfoReturnable<Music> cir) {
         Minecraft minecraft = (Minecraft) (Object) this;
         if (minecraft.player != null && minecraft.level != null && minecraft.player.level.dimension() == AetherDimensions.AETHER_WORLD) {
             cir.setReturnValue(minecraft.level.getBiomeManager().getNoiseBiomeAtPosition(minecraft.player.blockPosition()).getBackgroundMusic().orElse(Musics.GAME));
@@ -30,7 +30,7 @@ public class MinecraftMixin
      * the config.
      */
     @Inject(at = @At(value = "RETURN", ordinal = 4), method = "getSituationalMusic", cancellable = true)
-    public void onGetSituationalMusic_Menu(CallbackInfoReturnable<Music> cir) {
+    public void getSituationalMusic_Menu(CallbackInfoReturnable<Music> cir) {
         if (AetherConfig.CLIENT.enable_aether_menu.get() && !AetherConfig.CLIENT.disable_menu_music.get()) {
             cir.setReturnValue(AetherMainMenuScreen.MENU);
         }

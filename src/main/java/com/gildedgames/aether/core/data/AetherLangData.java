@@ -1,92 +1,13 @@
 package com.gildedgames.aether.core.data;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.*;
-import net.minecraft.world.level.block.Block;
+import com.gildedgames.aether.core.data.provider.AetherLanguageProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraftforge.common.data.LanguageProvider;
 
-import java.util.function.Supplier;
-
-public class AetherLangData extends LanguageProvider
+public class AetherLangData extends AetherLanguageProvider
 {
     public AetherLangData(DataGenerator gen) {
-        super(gen, Aether.MODID, "en_us");
-    }
-
-    private void addDiscDesc(Supplier<? extends Item> key, String name) {
-        add(key.get().getDescriptionId() + ".desc", name);
-    }
-
-    private void addSubtitle(String category, String key, String name) {
-        add("subtitles." + category + "." + key, name);
-    }
-
-    private void addDeath(String key, String name) {
-        add("death.attack." + key, name);
-    }
-
-    public void addContainerType(Supplier<? extends MenuType<?>> key, String name) {
-        add("container." + key.get().getRegistryName().toString().replace(":", "."), name);
-    }
-
-    public void addContainerType(String key, String name) {
-        add("container.aether." + key, name);
-    }
-
-    private void addItemGroup(CreativeModeTab group, String name) {
-        add(group.getDisplayName().getString(), name);
-    }
-
-    public void addAdvancement(String key, String name) {
-        add("advancement.aether." + key, name);
-    }
-
-    public void addAdvancementDesc(String key, String name) {
-        add("advancement.aether." + key + ".desc", name);
-    }
-
-    public void addGuiText(String key, String name) {
-        add("gui.aether." + key, name);
-    }
-
-    public void addMenuText(String key, String name) {
-        addGuiText("menu." + key, name);
-    }
-
-    public void addLoreBookText(String key, String name) {
-        addGuiText("book_of_lore." + key, name);
-    }
-
-    public void addMessage(String key, String name) {
-        add("aether." + key, name);
-    }
-
-    public void addKeyInfo(String key, String name) {
-        add("key.aether." + key, name);
-    }
-
-    public void addCuriosIdentifier(String key, String name) {
-        add("curios.identifier." + key, name);
-    }
-
-    public void addCuriosModifier(String key, String name) {
-        add("curios.modifiers." + key, name);
-    }
-
-    public void addItemLore(Supplier<? extends Item> key, String name) {
-        addLore(key.get().getDescriptionId().replace("item.", "").replace("aether.", ""), name);
-    }
-
-    public void addBlockLore(Supplier<? extends Block> key, String name) {
-        addLore(key.get().getDescriptionId().replace("block.", "").replace("aether.", ""), name);
-    }
-
-    public void addLore(String key, String name) {
-        add("lore.aether." + key, name);
+        super(gen);
     }
 
     @Override
@@ -635,6 +556,7 @@ public class AetherLangData extends LanguageProvider
         addBlockLore(AetherBlocks.AEROGEL_STAIRS, "Crafted from Aerogel. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addBlockLore(AetherBlocks.AEROGEL_WALL, "Crafted from Aerogel. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addBlockLore(AetherBlocks.AETHER_DIRT, "A pale dirt. It can be found in the Aether, and can also be used to grow the native trees. It can grow into grass with enough light.");
+        addItemLore(AetherItems.AETHER_PORTAL_FRAME, "A portable frame containing the power to travel to the Aether or back to the Overworld. Not something you're likely to find naturally.");
         addBlockLore(AetherBlocks.AETHER_GRASS_BLOCK, "Grass found in the Aether dimension. It can be used to grow the trees native to the Aether. It is much more pale than normal Grass.");
         addItemLore(AetherItems.AGILITY_CAPE, "A slightly rare cape, it can be seen in Bronze and Silver Dungeons. It makes the wearer's legs stronger, therefore they can walk up blocks instantly.");
         addBlockLore(AetherBlocks.ALTAR, "Used to enchant items and repair armor. They are powered by Ambrosium Shards. The enchanting process can take some time, but if you place an Enchanted Gravitite block under it, the process is sped up by a huge amount.");
@@ -689,6 +611,7 @@ public class AetherLangData extends LanguageProvider
         addBlockLore(AetherBlocks.GOLDEN_OAK_LEAVES, "These golden Leaves generate with Golden Oak trees. They spawn golden particles in a radius of 5 blocks. They yield Golden Oak Saplings when decayed.");
         addBlockLore(AetherBlocks.GOLDEN_OAK_LOG, "Skyroot Log which contains Golden Amber inside. When broken with an Axe they drop Skyroot Logs, and if the Axe is Gravitite, they will drop Golden Amber.");
         addBlockLore(AetherBlocks.GOLDEN_OAK_SAPLING, "These large saplings when planted will grow into huge Golden Oak trees! You can use Bone Meal to speed up the process.");
+        addBlockLore(AetherBlocks.GOLDEN_OAK_WOOD, "Skyroot Log which contains Golden Amber Inside. When broken with an Axe they drop Skyroot Logs, and if the Axe is Gravitite, they will drop Golden Amber. Crafted to have bark on all sides.");
         addItemLore(AetherItems.GOLDEN_PARACHUTE, "The best parachute in the Aether. It has 20 uses and is made with Golden Aerclouds.");
         addItemLore(AetherItems.GOLDEN_PENDANT, "An aesthetic accessory made of gold.");
         addItemLore(AetherItems.GOLDEN_RING, "An aesthetic accessory made of gold.");
@@ -702,6 +625,7 @@ public class AetherLangData extends LanguageProvider
         addItemLore(AetherItems.GRAVITITE_PICKAXE, "Part of Aether's best tool tier, when mining with this powerful tool, you can right-click on any stone block and it will levitate into the air! You can mine any ore with this Pickaxe.");
         addItemLore(AetherItems.GRAVITITE_SHOVEL, "Part of Aether's best tool tier, this shovel has the special ability to make dirt blocks, or sand levitate! When combined with enchantments such as Efficiency, it will instantly break Aether Dirt!");
         addItemLore(AetherItems.GRAVITITE_SWORD, "Part of Aether's best tool tier, when attacking with this powerful weapon, anything you hit will be flung into the air, causing lots of damage! Use this to your advantage, as it works even while your sword is cooling down!");
+        addItemLore(AetherItems.GRAVITITE_HOE, "Part of Aether's best tool tier, this hoe not only can make weirdly specific blocks float, but it can also till dirt which totally justifies it's existence.");
         addItemLore(AetherItems.HEALING_STONE, "Obtained from enchanting Holystone, it can be used as a reliable healing source, providing Regeneration. It has a surprisingly juicy flavor.");
         addBlockLore(AetherBlocks.HELLFIRE_SLAB, "Crafted from Hellfire Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
         addBlockLore(AetherBlocks.HELLFIRE_STONE, "A warm, red stone that makes up 90%% of Gold Dungeon interior. It cannot be destroyed until the Sun Spirit is defeated.");
@@ -715,7 +639,10 @@ public class AetherLangData extends LanguageProvider
         addBlockLore(AetherBlocks.HOLYSTONE_BRICK_SLAB, "Crafted from Holystone Bricks. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
         addBlockLore(AetherBlocks.HOLYSTONE_BRICK_STAIRS, "Crafted from Holystone Bricks. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addBlockLore(AetherBlocks.HOLYSTONE_BRICK_WALL, "Crafted from Holystone Bricks. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
+        addBlockLore(AetherBlocks.HOLYSTONE_BUTTON, "Crafted from Holystone, a button used to activate mechanisms and redstone.");
+        addItemLore(AetherItems.HOLYSTONE_HOE, "One of Aether's stone tools, It has more durability than the Skyroot hoe, as well as dropping random Ambrosium Shards. Which makes it more useful than most hoes.");
         addItemLore(AetherItems.HOLYSTONE_PICKAXE, "One of Aether's stone tools, it can mine Zanite, and will randomly drop Ambrosium Shards while mining.");
+        addBlockLore(AetherBlocks.HOLYSTONE_PRESSURE_PLATE, "Crafted from Holystone, a pressure plate used to activate mechanisms and redstone.");
         addItemLore(AetherItems.HOLYSTONE_SHOVEL, "One of Aether's stone tools, it can mine Quicksoil, and all other blocks a Stone Shovel can mine, except it drops random Ambrosium Shards.");
         addBlockLore(AetherBlocks.HOLYSTONE_SLAB, "Crafted from Holystone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
         addBlockLore(AetherBlocks.HOLYSTONE_STAIRS, "Crafted from Holystone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
@@ -724,6 +651,9 @@ public class AetherLangData extends LanguageProvider
         addItemLore(AetherItems.ICE_PENDANT, "A pendant which allows you to freeze water, and lava when walked on.");
         addItemLore(AetherItems.ICE_RING, "A ring which allows you to freeze water, and lava when walked on.");
         addBlockLore(AetherBlocks.ICESTONE, "Icestone is a common ore that can be used as fuel for a Freezer. It can be used to freeze nearby liquids such as Lava and Water.");
+        addBlockLore(AetherBlocks.ICESTONE_SLAB, "Crafted from Icestone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
+        addBlockLore(AetherBlocks.ICESTONE_STAIRS, "Crafted from Icestone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
+        addBlockLore(AetherBlocks.ICESTONE_WALL, "Crafted from Icestone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addBlockLore(AetherBlocks.INCUBATOR, "Used to incubate Moa's. You use Ambrosium Torches for the fuel. The process can take quite some time, but it is worth the wait once your Moa of choice hatches!");
         addItemLore(AetherItems.INVISIBILITY_CLOAK, "A cloak that makes the wearer completely invisible! Since mobs cannot see you, they cannot attack you. Sneak up on your enemies with it!");
         addItemLore(AetherItems.IRON_BUBBLE, "A common dungeon loot. It allows for the wearer to breathe underwater for a longer time than normal.");
@@ -779,22 +709,30 @@ public class AetherLangData extends LanguageProvider
         addBlockLore(AetherBlocks.SKYROOT_BED, "Crafted with cyan wool and skyroot planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
         addBlockLore(AetherBlocks.SKYROOT_BOOKSHELF, "Crafted from Skyroot Planks and Books. Bookshelves can be used to enhance the enchanting capabilities of an enchanting table.");
         addItemLore(AetherItems.SKYROOT_BUCKET, "A hand crafted bucket, used to contain Aechor poison, a nice Remedy or even just plain Water!");
+        addBlockLore(AetherBlocks.SKYROOT_BUTTON, "Crafted from Skyroot Planks, a button used to activate mechanisms and redstone.");
+        addBlockLore(AetherBlocks.SKYROOT_DOOR, "Crafted from Skyroot Planks, an ornate door helpful for keeping an enclosed and safe space without worry of monsters wandering in.");
         addBlockLore(AetherBlocks.SKYROOT_FENCE, "Crafted from Skyroot planks and Sticks. Great for keeping your livestock safe from wandering predators!");
         addBlockLore(AetherBlocks.SKYROOT_FENCE_GATE, "Crafted from Sticks and Skyroot planks. Gives a homely entrance and exit to your precious enclosures.");
+        addItemLore(AetherItems.SKYROOT_HOE, "One of Aether's wooden tools, used to till dirt to allow for planting of crops. Famously underappreciated.");
         addBlockLore(AetherBlocks.SKYROOT_LEAVES, "These leaves generate with Skyroot Trees. They can drop Skyroot Saplings when decaying.");
         addBlockLore(AetherBlocks.SKYROOT_LOG, "These spawn with Skyroot Trees. They can be double dropped with Skyroot Axes. When put in a crafting table they will provide 4 Skyroot Planks.");
         addItemLore(AetherItems.SKYROOT_MILK_BUCKET, "A bucket full of fresh Milk, drink it to heal potion effects.");
         addItemLore(AetherItems.SKYROOT_PICKAXE, "One of Aether's wooden tools, when mining Holystone or Ambrosium ore, it will double the drops. This is even better when combined with an enchantment such as Fortune when mining Ambrosium Shards!");
         addBlockLore(AetherBlocks.SKYROOT_PLANKS, "Skyroot Planks can be made into various tools, blocks and items. They are crafted from Skyroot Logs, and make a great building material.");
+        addBlockLore(AetherBlocks.SKYROOT_PRESSURE_PLATE, "Crafted from Skyroot Planks. A wooden pressure plate used to activate mechanisms and restone.");
         addItemLore(AetherItems.SKYROOT_POISON_BUCKET, "A Skyroot Bucket that has been filled with a deadly poison. Better not drink it! It can be used to craft Poison Darts and Dart Shooters. Enchant it to cure the poison in it.");
         addItemLore(AetherItems.SKYROOT_REMEDY_BUCKET, "A Skyroot Bucket containing a soothing remedy. It has a strong smell. Drinking this cures deadly poison, and prevents it for a short time.");
         addBlockLore(AetherBlocks.SKYROOT_SAPLING, "These small green saplings will grow into Skyroot Trees. They can be grown faster with Bone Meal.");
         addItemLore(AetherItems.SKYROOT_SHOVEL, "One of Aether's wooden tools, it doubles Aether dirt and Quicksoil drops.");
+        addBlockLore(AetherBlocks.SKYROOT_SIGN, "Crafted from Skyroot Planks and Sticks. A helpful sign perfect for writing messages and directions on.");
         addBlockLore(AetherBlocks.SKYROOT_SLAB, "Crafted from Skyroot. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
         addBlockLore(AetherBlocks.SKYROOT_STAIRS, "Crafted from Skyroot Planks. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addItemLore(AetherItems.SKYROOT_STICK, "Crafted from Skyroot Planks. Used to create various aether tools and items. Nothing else too special about it.");
         addItemLore(AetherItems.SKYROOT_SWORD, "One of Aether's wooden tools, it has a low amount of durability, and doubles mob drops. It makes an excellent food collected when combined with enchantments such as Looting and Fire Aspect.");
+        addBlockLore(AetherBlocks.SKYROOT_TRAPDOOR, "Crafted from Skyroot Planks. A Trapdoor useful for covering entryways one block wide. Often used to add extra protection to staircases.");
         addItemLore(AetherItems.SKYROOT_WATER_BUCKET, "A Skyroot Bucket that is filled to the brim with Water.");
+        addBlockLore(AetherBlocks.STRIPPED_SKYROOT_LOG, "A Skyroot Log that has had its bark stripped away with an Axe. When put in a crafting table they will provide 4 Skyroot Planks.");
+        addBlockLore(AetherBlocks.STRIPPED_SKYROOT_WOOD, "A Skyroot Log that has had its bark stripped away with an Axe. When put in a crafting table they will provide 4 Skyroot Planks. Crafted to be smooth on all sides.");
         addBlockLore(AetherBlocks.SUN_ALTAR, "An Altar containing the power to control the Sun itself! It is dropped by the Sun Spirit after you defeat him. Use it to control the time of day.");
         addItemLore(AetherItems.SWET_CAPE, "A common cape that is found in Bronze Dungeons. It allows for the wearer to ride Swets, as they become friendly when they see someone wearing it.");
         addItemLore(AetherItems.SWET_BALL, "A gooey orb that is dropped from Blue Swets. It can be used to fertilize soils. Another use is to put it alongside string to make a lead.");
@@ -805,6 +743,7 @@ public class AetherLangData extends LanguageProvider
         addItemLore(AetherItems.VALKYRIE_CHESTPLATE, "An armor unique to the Silver Dungeon, when fully worn, you are granted temporary flight. Quite useful for getting to high places.");
         addItemLore(AetherItems.VALKYRIE_GLOVES, "An armor unique to the Silver Dungeon. The gloves are needed to complete the armor set, which grants temporary flight.");
         addItemLore(AetherItems.VALKYRIE_HELMET, "An armor unique to the Silver Dungeon, when fully worn, you are granted temporary flight. Quite useful for getting to high places.");
+        addItemLore(AetherItems.VALKYRIE_HOE, "A tool unique to the Silver Dungeon, This hoe has incredibly far reach, allowing you to pointlessly till dirt from a safe distance.");
         addItemLore(AetherItems.VALKYRIE_LANCE, "A tool unique to the Silver Dungeon, this long range weapon is very good for defeating Zephyrs, and Valkyrie Queens.");
         addItemLore(AetherItems.VALKYRIE_LEGGINGS, "An armor unique to the Silver Dungeon, when fully worn, you are granted temporary flight. Quite useful for getting to high places.");
         addItemLore(AetherItems.VALKYRIE_PICKAXE, "A tool unique to the Silver Dungeon, this pickaxe is very useful when it comes to mining blocks from under islands, as it has a very far reach, almost double the normal reach! It is also quite useful for fighting the Slider.");
@@ -822,6 +761,7 @@ public class AetherLangData extends LanguageProvider
         addItemLore(AetherItems.ZANITE_CHESTPLATE, "Part of the Zanite Armor set, the protection it grants increases as the durability decreases.");
         addItemLore(AetherItems.ZANITE_GEMSTONE, "Aether's version of Iron. These shiny purple gems can be made into tools and armor, that increase in strength when used.");
         addItemLore(AetherItems.ZANITE_GLOVES, "Part of the Zanite Armor set, it is needed to complete the Zanite Armor set.");
+        addItemLore(AetherItems.ZANITE_HOE, "One of Aether's mid-tier tools, it has more durability than the Holystone hoe, and it will get even faster at mining very oddly specific blocks as the tool is worn down.");
         addItemLore(AetherItems.ZANITE_HELMET, "Part of the Zanite Armor set, the protection it grants increases as the durability decreases.");
         addItemLore(AetherItems.ZANITE_LEGGINGS, "Part of the Zanite Armor set, the protection it grants increases as the durability decreases.");
         addBlockLore(AetherBlocks.ZANITE_ORE, "A slightly rare ore that drops Zanite Gemstones when broken with Stone tools.");

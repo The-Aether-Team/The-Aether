@@ -1,14 +1,13 @@
 package com.gildedgames.aether.core.network.packet.client;
 
 import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;
-import com.gildedgames.aether.core.network.IAetherPacket;
+import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 
-public class RemountAerbunnyPacket extends IAetherPacket.AetherPacket
+public class RemountAerbunnyPacket extends AetherPacket
 {
     private final int entityID;
     private final int aerbunnyID;
@@ -34,11 +33,8 @@ public class RemountAerbunnyPacket extends IAetherPacket.AetherPacket
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Level world = Minecraft.getInstance().player.level;
-            Entity entity = world.getEntity(this.entityID);
-            Entity entity1 = world.getEntity(this.aerbunnyID);
-            if (entity instanceof Player && entity1 instanceof AerbunnyEntity) {
-                AerbunnyEntity aerbunny = (AerbunnyEntity) entity1;
-                aerbunny.startRiding(entity);
+            if (world.getEntity(this.entityID) instanceof Player player && world.getEntity(this.aerbunnyID) instanceof AerbunnyEntity aerbunny) {
+                aerbunny.startRiding(player);
             }
         }
     }

@@ -6,7 +6,8 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class AetherConfig
 {
-    public static class Common {
+    public static class Common
+    {
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
         public final ConfigValue<Boolean> edible_ambrosium;
@@ -96,7 +97,8 @@ public class AetherConfig
         }
     }
 
-    public static class Client {
+    public static class Client
+    {
         public final ConfigValue<Boolean> legacy_models;
         public final ConfigValue<Boolean> disable_aether_skybox;
 
