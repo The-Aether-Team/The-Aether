@@ -73,6 +73,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 	public void travel(Vec3 vector3d) {
 		if (this.isAlive()) {
 			if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player) {
+				boolean slime = this.isSlime();
 				Player entity = (Player) this.getControllingPassenger();
 				this.setYRot(entity.getYRot());
 				this.yRotO = this.getYRot();
@@ -242,6 +243,10 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 
 	protected double getMountJumpStrength() {
 		return 1.8D;
+	}
+
+	protected boolean isSlime() {
+		return false;
 	}
 
 	@Override
