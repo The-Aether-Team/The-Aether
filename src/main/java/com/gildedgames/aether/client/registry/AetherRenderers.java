@@ -1,12 +1,18 @@
 package com.gildedgames.aether.client.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.renderer.entity.model.*;
 import com.gildedgames.aether.client.renderer.entity.*;
+import com.gildedgames.aether.client.renderer.entity.model.*;
+import com.gildedgames.aether.client.renderer.player.layer.EnchantedDartLayer;
+import com.gildedgames.aether.client.renderer.player.layer.GoldenDartLayer;
+import com.gildedgames.aether.client.renderer.player.layer.PoisonDartLayer;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicBlockEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.SkyrootBedRenderer;
 import com.gildedgames.aether.client.renderer.tile.TreasureChestRenderer;
-import com.gildedgames.aether.common.registry.*;
+import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
+import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.SlimeModel;
@@ -14,6 +20,7 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.level.block.Block;
@@ -127,14 +134,14 @@ public class AetherRenderers
 
     @SubscribeEvent
     public static void addPlayerLayers(EntityRenderersEvent.AddLayers event) {
-        String[] types = new String[] { "default", "slim" };
+        EntityRenderDispatcher renderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+        String[] types = new String[]{"default", "slim"};
         for (String type : types) {
             PlayerRenderer playerRenderer =  event.getSkin(type);
             if (playerRenderer != null) {
-//                    r.addLayer(new RepulsionShieldLayer<>(r, new HumanoidModel<>(1.1F)));
-//                playerRenderer.addLayer(new GoldenDartLayer<>(playerRenderer));
-//                playerRenderer.addLayer(new PoisonDartLayer<>(playerRenderer));
-//                playerRenderer.addLayer(new EnchantedDartLayer<>(playerRenderer));
+                playerRenderer.addLayer(new EnchantedDartLayer(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new GoldenDartLayer(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new PoisonDartLayer(renderDispatcher, playerRenderer));
             }
         }
     }
