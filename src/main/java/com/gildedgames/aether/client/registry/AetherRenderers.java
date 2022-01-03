@@ -3,20 +3,26 @@ package com.gildedgames.aether.client.registry;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.model.*;
 import com.gildedgames.aether.client.renderer.entity.*;
+import com.gildedgames.aether.client.renderer.tile.AetherBlockEntityWithoutLevelRenderer;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicBlockEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.SkyrootBedRenderer;
 import com.gildedgames.aether.client.renderer.tile.TreasureChestRenderer;
+import com.gildedgames.aether.common.entity.tile.SkyrootBedBlockEntity;
 import com.gildedgames.aether.common.registry.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -139,19 +145,21 @@ public class AetherRenderers
         }
     }
 
-    /*public static CustomItemStackTileEntityRenderer chestMimicRenderer() {
-        return new CustomItemStackTileEntityRenderer(ChestMimicTileEntity::new);
+//    public static CustomItemStackTileEntityRenderer chestMimicRenderer() {
+//        return new CustomItemStackTileEntityRenderer(ChestMimicTileEntity::new);
+//    }
+//
+//    public static CustomItemStackTileEntityRenderer treasureChestRenderer() {
+//        return new CustomItemStackTileEntityRenderer(TreasureChestTileEntity::new);
+//    }
+
+    public static BlockEntityWithoutLevelRenderer skyrootBedRenderer() {
+        return blockEntityWithoutLevelRenderer(new SkyrootBedBlockEntity(BlockPos.ZERO, AetherBlocks.SKYROOT_BED.get().defaultBlockState()));
     }
 
-    public static CustomItemStackTileEntityRenderer treasureChestRenderer() {
-        return new CustomItemStackTileEntityRenderer(TreasureChestTileEntity::new);
+    public static BlockEntityWithoutLevelRenderer blockEntityWithoutLevelRenderer(BlockEntity blockEntity) {
+        return new AetherBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels(), blockEntity);
     }
-
-    public static CustomItemStackTileEntityRenderer skyrootBedRenderer() {
-        return new CustomItemStackTileEntityRenderer(SkyrootBedTileEntity::new);
-    }*/
-
-
 
     private static void registerBlockRenderer(Supplier<? extends Block> block, RenderType render) {
         ItemBlockRenderTypes.setRenderLayer(block.get(), render);

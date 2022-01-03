@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
+import com.gildedgames.aether.client.registry.AetherRenderers;
 import com.gildedgames.aether.client.renderer.tile.AetherBlockEntityWithoutLevelRenderer;
 import com.gildedgames.aether.common.block.construction.*;
 import com.gildedgames.aether.common.block.dungeon.ChestMimicBlock;
@@ -12,10 +13,9 @@ import com.gildedgames.aether.common.block.natural.*;
 import com.gildedgames.aether.common.block.util.*;
 import com.gildedgames.aether.common.block.utility.*;
 import com.gildedgames.aether.common.item.block.BurnableBlockItem;
-import com.gildedgames.aether.common.item.block.SkyrootBedItem;
+import com.gildedgames.aether.common.item.block.EntityBlockItem;
 import com.gildedgames.aether.common.world.gen.tree.GoldenOakTree;
 import com.gildedgames.aether.common.world.gen.tree.SkyrootTree;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.effect.MobEffects;
@@ -35,7 +35,8 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class AetherBlocks {
+public class AetherBlocks
+{
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Aether.MODID);
 
     public static final RegistryObject<AetherPortalBlock> AETHER_PORTAL = BLOCKS.register("aether_portal", () -> new AetherPortalBlock(Block.Properties.copy(Blocks.NETHER_PORTAL)));
@@ -306,15 +307,11 @@ public class AetherBlocks {
             } else if (block == SUN_ALTAR.get()) {
                 return new BlockItem(block, new Item.Properties().fireResistant().tab(AetherItemGroups.AETHER_BLOCKS));
             } else if (block == SKYROOT_BED.get()) {
-                return new SkyrootBedItem(block, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_BLOCKS)/*.setISTER(() -> AetherRendering::skyrootBedRenderer)*/);
+                return new EntityBlockItem(block, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_BLOCKS)).setBEWLR(AetherRenderers::skyrootBedRenderer);
             } else {
                 return new BlockItem(block, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
             }
         };
-    }
-
-    public static void initBEWLR() {
-        AetherBEWLR = new AetherBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
     }
 
     private static boolean never(BlockState p_test_1_, BlockGetter p_test_2_, BlockPos p_test_3_) {
