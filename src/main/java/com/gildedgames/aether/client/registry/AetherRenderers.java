@@ -20,6 +20,7 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.level.block.Block;
@@ -133,13 +134,14 @@ public class AetherRenderers
 
     @SubscribeEvent
     public static void addPlayerLayers(EntityRenderersEvent.AddLayers event) {
-        String[] types = new String[] { "default", "slim" };
+        EntityRenderDispatcher renderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+        String[] types = new String[]{"default", "slim"};
         for (String type : types) {
             PlayerRenderer playerRenderer =  event.getSkin(type);
             if (playerRenderer != null) {
-                playerRenderer.addLayer(new EnchantedDartLayer(Minecraft.getInstance().getEntityRenderDispatcher(), playerRenderer));
-                playerRenderer.addLayer(new GoldenDartLayer(Minecraft.getInstance().getEntityRenderDispatcher(), playerRenderer));
-                playerRenderer.addLayer(new PoisonDartLayer(Minecraft.getInstance().getEntityRenderDispatcher(), playerRenderer));
+                playerRenderer.addLayer(new EnchantedDartLayer(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new GoldenDartLayer(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new PoisonDartLayer(renderDispatcher, playerRenderer));
             }
         }
     }
