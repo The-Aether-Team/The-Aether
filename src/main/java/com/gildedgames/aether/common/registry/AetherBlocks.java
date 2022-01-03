@@ -303,8 +303,6 @@ public class AetherBlocks {
                     || block == SKYROOT_FENCE.get()
                     || block == SKYROOT_BOOKSHELF.get()) {
                 return new BurnableBlockItem(block, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
-            } else if (block == SUN_ALTAR.get()) {
-                return new BedItem(block, new Item.Properties().fireResistant().tab(AetherItemGroups.AETHER_BLOCKS));
             } else if (block == SKYROOT_BED.get()) {
                 return new SkyrootBedItem(block, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_BLOCKS)/*.setISTER(() -> AetherRendering::skyrootBedRenderer)*/);
             } else {
