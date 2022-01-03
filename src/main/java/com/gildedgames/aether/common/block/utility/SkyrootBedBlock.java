@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.block.utility;
 
-import com.gildedgames.aether.common.entity.tile.SkyrootBedTileEntity;
+import com.gildedgames.aether.common.entity.tile.SkyrootBedBlockEntity;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -66,7 +66,7 @@ public class SkyrootBedBlock extends BedBlock
 
     @Override
     public BlockEntity newBlockEntity(BlockPos p_152175_, BlockState p_152176_) {
-        return new SkyrootBedTileEntity(p_152175_, p_152176_);
+        return new SkyrootBedBlockEntity(p_152175_, p_152176_);
     }
 
 }

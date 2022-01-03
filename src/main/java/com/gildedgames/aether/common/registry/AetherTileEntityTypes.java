@@ -24,8 +24,8 @@ public class AetherTileEntityTypes
 			new BlockEntityType(ChestMimicTileEntity::new, Sets.newHashSet(AetherBlocks.CHEST_MIMIC.get()), null));
 	public static final RegistryObject<BlockEntityType<TreasureChestTileEntity>> TREASURE_CHEST = TILE_ENTITIES.register("treasure_chest", () ->
 			new BlockEntityType(TreasureChestTileEntity::new, Sets.newHashSet(AetherBlocks.TREASURE_CHEST.get()), null));
-	public static final RegistryObject<BlockEntityType<SkyrootBedTileEntity>> SKYROOT_BED = TILE_ENTITIES.register("skyroot_bed", () ->
-			new BlockEntityType(SkyrootBedTileEntity::new, Sets.newHashSet(AetherBlocks.SKYROOT_BED.get()), null));
+	public static final RegistryObject<BlockEntityType<SkyrootBedBlockEntity>> SKYROOT_BED = TILE_ENTITIES.register("skyroot_bed", () ->
+			new BlockEntityType(SkyrootBedBlockEntity::new, Sets.newHashSet(AetherBlocks.SKYROOT_BED.get()), null));
 	public static final RegistryObject<BlockEntityType<SkyrootSignTileEntity>> SKYROOT_SIGN = TILE_ENTITIES.register("custom_sign", () ->
 			BlockEntityType.Builder.of(SkyrootSignTileEntity::new, AetherBlocks.SKYROOT_WALL_SIGN.get(), AetherBlocks.SKYROOT_SIGN.get()).build(null));
 }
