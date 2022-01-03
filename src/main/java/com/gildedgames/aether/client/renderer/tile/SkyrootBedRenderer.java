@@ -1,16 +1,12 @@
 package com.gildedgames.aether.client.renderer.tile;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.block.utility.SkyrootBedBlock;
-import com.gildedgames.aether.common.entity.tile.SkyrootBedTileEntity;
-import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
+import com.gildedgames.aether.common.entity.tile.SkyrootBedBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.entity.BedBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -28,7 +24,7 @@ import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
 import net.minecraft.world.level.Level;
 
-public class SkyrootBedRenderer implements BlockEntityRenderer<SkyrootBedTileEntity>
+public class SkyrootBedRenderer implements BlockEntityRenderer<SkyrootBedBlockEntity>
 {
     private final ModelPart headRoot;
     private final ModelPart footRoot;
@@ -38,7 +34,7 @@ public class SkyrootBedRenderer implements BlockEntityRenderer<SkyrootBedTileEnt
         footRoot = context.bakeLayer(ModelLayers.BED_FOOT);
     }
 
-    public void render(SkyrootBedTileEntity bed, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
+    public void render(SkyrootBedBlockEntity bed, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
         Level level = bed.getLevel();
         if (level != null) {
             BlockState blockstate = bed.getBlockState();

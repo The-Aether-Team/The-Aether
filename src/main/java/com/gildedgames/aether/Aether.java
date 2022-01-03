@@ -2,6 +2,7 @@ package com.gildedgames.aether;
 
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.renderer.tile.AetherBlockEntityWithoutLevelRenderer;
 import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
 import com.gildedgames.aether.common.entity.projectile.weapon.*;
 import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
@@ -18,6 +19,7 @@ import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.common.registry.AetherFeatures;
+import net.minecraft.client.Minecraft;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -79,7 +81,7 @@ public class Aether
 		modEventBus.addListener(this::commonSetup);
 		modEventBus.addListener(this::curiosSetup);
 		modEventBus.addListener(this::dataSetup);
-		
+
 		DeferredRegister<?>[] registers = {
 				AetherBlocks.BLOCKS,
 				AetherEntityTypes.ENTITIES,
@@ -117,6 +119,7 @@ public class Aether
 		AetherBlocks.registerFlammability();
 		AetherBlocks.registerWoodTypes();
 		AetherBlocks.registerFreezables();
+        AetherBlocks.initBEWLR();
 
 		AetherFeatures.registerConfiguredFeatures();
 
