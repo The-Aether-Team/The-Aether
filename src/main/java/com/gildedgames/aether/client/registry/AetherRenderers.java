@@ -1,12 +1,18 @@
 package com.gildedgames.aether.client.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.renderer.entity.model.*;
 import com.gildedgames.aether.client.renderer.entity.*;
+import com.gildedgames.aether.client.renderer.entity.model.*;
+import com.gildedgames.aether.client.renderer.player.layer.EnchantedDartLayer;
+import com.gildedgames.aether.client.renderer.player.layer.GoldenDartLayer;
+import com.gildedgames.aether.client.renderer.player.layer.PoisonDartLayer;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicBlockEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.SkyrootBedRenderer;
 import com.gildedgames.aether.client.renderer.tile.TreasureChestRenderer;
-import com.gildedgames.aether.common.registry.*;
+import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
+import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.SlimeModel;
@@ -131,10 +137,9 @@ public class AetherRenderers
         for (String type : types) {
             PlayerRenderer playerRenderer =  event.getSkin(type);
             if (playerRenderer != null) {
-//                    r.addLayer(new RepulsionShieldLayer<>(r, new HumanoidModel<>(1.1F)));
-//                playerRenderer.addLayer(new GoldenDartLayer<>(playerRenderer));
-//                playerRenderer.addLayer(new PoisonDartLayer<>(playerRenderer));
-//                playerRenderer.addLayer(new EnchantedDartLayer<>(playerRenderer));
+                playerRenderer.addLayer(new EnchantedDartLayer(Minecraft.getInstance().getEntityRenderDispatcher(), playerRenderer));
+                playerRenderer.addLayer(new GoldenDartLayer(Minecraft.getInstance().getEntityRenderDispatcher(), playerRenderer));
+                playerRenderer.addLayer(new PoisonDartLayer(Minecraft.getInstance().getEntityRenderDispatcher(), playerRenderer));
             }
         }
     }
