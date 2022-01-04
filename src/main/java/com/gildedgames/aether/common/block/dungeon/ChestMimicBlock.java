@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.block.dungeon;
 
 import com.gildedgames.aether.common.entity.monster.dungeon.MimicEntity;
-import com.gildedgames.aether.common.entity.tile.ChestMimicTileEntity;
+import com.gildedgames.aether.common.entity.tile.ChestMimicBlockEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import net.minecraft.world.entity.player.Player;
@@ -172,7 +172,7 @@ public class ChestMimicBlock extends Block implements SimpleWaterloggedBlock
 		mimic.spawnAnim();
 	}
 
-	public DoubleBlockCombiner.NeighborCombineResult<? extends ChestMimicTileEntity> combine(BlockState state, Level world, BlockPos pos, boolean override) {
+	public DoubleBlockCombiner.NeighborCombineResult<? extends ChestMimicBlockEntity> combine(BlockState state, Level world, BlockPos pos, boolean override) {
 		BiPredicate<LevelAccessor, BlockPos> bipredicate;
 		if (override) {
 			bipredicate = (worldIn, posIn) -> false;

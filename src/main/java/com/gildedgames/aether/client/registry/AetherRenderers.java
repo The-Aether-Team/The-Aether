@@ -3,20 +3,20 @@ package com.gildedgames.aether.client.registry;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.entity.model.*;
-import com.gildedgames.aether.client.renderer.player.layer.EnchantedDartLayer;
-import com.gildedgames.aether.client.renderer.player.layer.GoldenDartLayer;
-import com.gildedgames.aether.client.renderer.player.layer.PoisonDartLayer;
+import com.gildedgames.aether.client.renderer.tile.AetherBlockEntityWithoutLevelRenderer;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicBlockEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.SkyrootBedRenderer;
 import com.gildedgames.aether.client.renderer.tile.TreasureChestRenderer;
-import com.gildedgames.aether.common.registry.AetherBlocks;
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
+import com.gildedgames.aether.client.renderer.player.layer.EnchantedDartLayer;
+import com.gildedgames.aether.client.renderer.player.layer.GoldenDartLayer;
+import com.gildedgames.aether.client.renderer.player.layer.PoisonDartLayer;
+import com.gildedgames.aether.common.registry.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
@@ -34,6 +34,8 @@ import java.util.function.Supplier;
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherRenderers
 {
+    public static final BlockEntityWithoutLevelRenderer blockEntityWithoutLevelRenderer = new AetherBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+
     public static void registerBlockRenderLayers() {
         RenderType cutout = RenderType.cutout();
         RenderType translucent = RenderType.translucent();
@@ -145,20 +147,6 @@ public class AetherRenderers
             }
         }
     }
-
-    /*public static CustomItemStackTileEntityRenderer chestMimicRenderer() {
-        return new CustomItemStackTileEntityRenderer(ChestMimicTileEntity::new);
-    }
-
-    public static CustomItemStackTileEntityRenderer treasureChestRenderer() {
-        return new CustomItemStackTileEntityRenderer(TreasureChestTileEntity::new);
-    }
-
-    public static CustomItemStackTileEntityRenderer skyrootBedRenderer() {
-        return new CustomItemStackTileEntityRenderer(SkyrootBedTileEntity::new);
-    }*/
-
-
 
     private static void registerBlockRenderer(Supplier<? extends Block> block, RenderType render) {
         ItemBlockRenderTypes.setRenderLayer(block.get(), render);

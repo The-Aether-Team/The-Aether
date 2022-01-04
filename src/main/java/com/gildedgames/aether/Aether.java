@@ -104,7 +104,6 @@ public class Aether {
         AetherBlocks.registerFlammability();
         AetherBlocks.registerWoodTypes();
         AetherBlocks.registerFreezables();
-        AetherBlocks.initBEWLR();
 
         AetherFeatures.registerConfiguredFeatures();
 

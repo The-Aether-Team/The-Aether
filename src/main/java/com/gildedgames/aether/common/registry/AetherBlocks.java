@@ -2,7 +2,6 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
-import com.gildedgames.aether.client.renderer.tile.AetherBlockEntityWithoutLevelRenderer;
 import com.gildedgames.aether.common.block.construction.*;
 import com.gildedgames.aether.common.block.dungeon.ChestMimicBlock;
 import com.gildedgames.aether.common.block.dungeon.TrappedBlock;
@@ -11,11 +10,13 @@ import com.gildedgames.aether.common.block.miscellaneous.AetherPortalBlock;
 import com.gildedgames.aether.common.block.natural.*;
 import com.gildedgames.aether.common.block.util.*;
 import com.gildedgames.aether.common.block.utility.*;
+import com.gildedgames.aether.common.entity.tile.ChestMimicBlockEntity;
+import com.gildedgames.aether.common.entity.tile.SkyrootBedBlockEntity;
+import com.gildedgames.aether.common.entity.tile.TreasureChestBlockEntity;
 import com.gildedgames.aether.common.item.block.BurnableBlockItem;
-import com.gildedgames.aether.common.item.block.SkyrootBedItem;
+import com.gildedgames.aether.common.item.block.EntityBlockItem;
 import com.gildedgames.aether.common.world.gen.tree.GoldenOakTree;
 import com.gildedgames.aether.common.world.gen.tree.SkyrootTree;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.effect.MobEffects;
@@ -35,12 +36,11 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class AetherBlocks {
+public class AetherBlocks
+{
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Aether.MODID);
 
     public static final RegistryObject<AetherPortalBlock> AETHER_PORTAL = BLOCKS.register("aether_portal", () -> new AetherPortalBlock(Block.Properties.copy(Blocks.NETHER_PORTAL)));
-
-    public static AetherBlockEntityWithoutLevelRenderer AetherBEWLR;
 
     public static final RegistryObject<Block> AETHER_GRASS_BLOCK = register("aether_grass_block", () -> new AetherGrassBlock(Block.Properties.of(Material.GRASS, MaterialColor.WARPED_WART_BLOCK).randomTicks().strength(0.6F).sound(SoundType.GRASS)));
     public static final RegistryObject<Block> ENCHANTED_AETHER_GRASS_BLOCK = register("enchanted_aether_grass_block", () -> new EnchantedAetherGrassBlock(Block.Properties.of(Material.GRASS, MaterialColor.GOLD).randomTicks().strength(0.6F).sound(SoundType.GRASS)));
@@ -294,10 +294,9 @@ public class AetherBlocks {
             } else if (block == SKYROOT_SIGN.get()) {
                 return new SignItem((new Item.Properties()).stacksTo(16).tab(AetherItemGroups.AETHER_BLOCKS), SKYROOT_SIGN.get(), SKYROOT_WALL_SIGN.get());
             } else if (block == CHEST_MIMIC.get()) {
-                return new BlockItem(block, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS)/*.setISTER(() -> AetherRendering::chestMimicRenderer)*/);
-            } // SEE: https://mcforge.readthedocs.io/en/1.18.x/rendering/bewlr/#using-blockentitywithoutlevelrenderer
-            else if (block == TREASURE_CHEST.get()) {
-                return new BlockItem(block, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS)/*.setISTER(() -> AetherRendering::treasureChestRenderer)*/);
+                return new EntityBlockItem(block, ChestMimicBlockEntity::new, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
+            } else if (block == TREASURE_CHEST.get()) {
+                return new EntityBlockItem(block, TreasureChestBlockEntity::new, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
             } else if (block == SKYROOT_PLANKS.get()
                     || block == SKYROOT_FENCE_GATE.get()
                     || block == SKYROOT_FENCE.get()
@@ -306,15 +305,11 @@ public class AetherBlocks {
             } else if (block == SUN_ALTAR.get()) {
                 return new BlockItem(block, new Item.Properties().fireResistant().tab(AetherItemGroups.AETHER_BLOCKS));
             } else if (block == SKYROOT_BED.get()) {
-                return new SkyrootBedItem(block, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_BLOCKS)/*.setISTER(() -> AetherRendering::skyrootBedRenderer)*/);
+                return new EntityBlockItem(block, SkyrootBedBlockEntity::new, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_BLOCKS));
             } else {
                 return new BlockItem(block, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
             }
         };
-    }
-
-    public static void initBEWLR() {
-        AetherBEWLR = new AetherBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
     }
 
     private static boolean never(BlockState p_test_1_, BlockGetter p_test_2_, BlockPos p_test_3_) {
