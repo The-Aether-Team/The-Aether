@@ -11,6 +11,9 @@ import com.gildedgames.aether.common.block.miscellaneous.AetherPortalBlock;
 import com.gildedgames.aether.common.block.natural.*;
 import com.gildedgames.aether.common.block.util.*;
 import com.gildedgames.aether.common.block.utility.*;
+import com.gildedgames.aether.common.entity.tile.ChestMimicTileEntity;
+import com.gildedgames.aether.common.entity.tile.SkyrootBedBlockEntity;
+import com.gildedgames.aether.common.entity.tile.TreasureChestTileEntity;
 import com.gildedgames.aether.common.item.block.BurnableBlockItem;
 import com.gildedgames.aether.common.item.block.EntityBlockItem;
 import com.gildedgames.aether.common.world.gen.tree.GoldenOakTree;
@@ -39,8 +42,6 @@ public class AetherBlocks
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Aether.MODID);
 
     public static final RegistryObject<AetherPortalBlock> AETHER_PORTAL = BLOCKS.register("aether_portal", () -> new AetherPortalBlock(Block.Properties.copy(Blocks.NETHER_PORTAL)));
-
-    public static AetherBlockEntityWithoutLevelRenderer AetherBEWLR;
 
     public static final RegistryObject<Block> AETHER_GRASS_BLOCK = register("aether_grass_block", () -> new AetherGrassBlock(Block.Properties.of(Material.GRASS, MaterialColor.WARPED_WART_BLOCK).randomTicks().strength(0.6F).sound(SoundType.GRASS)));
     public static final RegistryObject<Block> ENCHANTED_AETHER_GRASS_BLOCK = register("enchanted_aether_grass_block", () -> new EnchantedAetherGrassBlock(Block.Properties.of(Material.GRASS, MaterialColor.GOLD).randomTicks().strength(0.6F).sound(SoundType.GRASS)));
@@ -294,9 +295,9 @@ public class AetherBlocks
             } else if (block == SKYROOT_SIGN.get()) {
                 return new SignItem((new Item.Properties()).stacksTo(16).tab(AetherItemGroups.AETHER_BLOCKS), SKYROOT_SIGN.get(), SKYROOT_WALL_SIGN.get());
             } else if (block == CHEST_MIMIC.get()) {
-                return new BlockItem(block, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
+                return new EntityBlockItem(block, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS)).setBlockEntity(ChestMimicTileEntity::new);
             } else if (block == TREASURE_CHEST.get()) {
-                return new BlockItem(block, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
+                return new EntityBlockItem(block, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS)).setBlockEntity(TreasureChestTileEntity::new);
             } else if (block == SKYROOT_PLANKS.get()
                     || block == SKYROOT_FENCE_GATE.get()
                     || block == SKYROOT_FENCE.get()
@@ -305,7 +306,7 @@ public class AetherBlocks
             } else if (block == SUN_ALTAR.get()) {
                 return new BlockItem(block, new Item.Properties().fireResistant().tab(AetherItemGroups.AETHER_BLOCKS));
             } else if (block == SKYROOT_BED.get()) {
-                return new EntityBlockItem(block, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_BLOCKS));
+                return new EntityBlockItem(block, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_BLOCKS)).setBlockEntity(SkyrootBedBlockEntity::new);
             } else {
                 return new BlockItem(block, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
             }
