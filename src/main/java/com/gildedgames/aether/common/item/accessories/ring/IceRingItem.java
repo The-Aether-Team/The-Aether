@@ -1,13 +1,12 @@
 package com.gildedgames.aether.common.item.accessories.ring;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.item.accessories.abilities.IIceAccessory;
+import com.gildedgames.aether.common.item.accessories.abilities.FreezingItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import top.theillusivec4.curios.api.CuriosApi;
 
-import net.minecraft.world.item.Item.Properties;
-
-public class IceRingItem extends RingItem implements IIceAccessory
+public class IceRingItem extends RingItem implements FreezingItem
 {
     public IceRingItem(Properties properties) {
         super(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_ICE_RING, properties);
@@ -15,6 +14,7 @@ public class IceRingItem extends RingItem implements IIceAccessory
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        handleLiquidFreezing(identifier, index, livingEntity, stack);
+        int damage = this.freezeBlocks(livingEntity.level, livingEntity.blockPosition(), stack, 1.9f);
+        stack.hurtAndBreak(damage / 3, livingEntity, entity -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity));
     }
 }

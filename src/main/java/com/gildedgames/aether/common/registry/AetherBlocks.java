@@ -263,7 +263,7 @@ public class AetherBlocks
     }
 
     public static void registerFreezables() {
-        IIcestoneBlock.registerDefaultFreezables();
+        FreezingBehavior.registerDefaultFreezables();
     }
 
     private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<RegistryObject<T>, Supplier<? extends Item>> item) {
