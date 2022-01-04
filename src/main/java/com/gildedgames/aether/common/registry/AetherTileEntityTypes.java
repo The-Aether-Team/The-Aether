@@ -20,10 +20,10 @@ public class AetherTileEntityTypes
 			new BlockEntityType(FreezerTileEntity::new, Sets.newHashSet(AetherBlocks.FREEZER.get()), null));
 	public static final RegistryObject<BlockEntityType<IncubatorTileEntity>> INCUBATOR = TILE_ENTITIES.register("incubator", () ->
 			new BlockEntityType(IncubatorTileEntity::new, Sets.newHashSet(AetherBlocks.INCUBATOR.get()), null));
-	public static final RegistryObject<BlockEntityType<ChestMimicTileEntity>> CHEST_MIMIC = TILE_ENTITIES.register("chest_mimic", () ->
-			new BlockEntityType(ChestMimicTileEntity::new, Sets.newHashSet(AetherBlocks.CHEST_MIMIC.get()), null));
-	public static final RegistryObject<BlockEntityType<TreasureChestTileEntity>> TREASURE_CHEST = TILE_ENTITIES.register("treasure_chest", () ->
-			new BlockEntityType(TreasureChestTileEntity::new, Sets.newHashSet(AetherBlocks.TREASURE_CHEST.get()), null));
+	public static final RegistryObject<BlockEntityType<ChestMimicBlockEntity>> CHEST_MIMIC = TILE_ENTITIES.register("chest_mimic", () ->
+			new BlockEntityType(ChestMimicBlockEntity::new, Sets.newHashSet(AetherBlocks.CHEST_MIMIC.get()), null));
+	public static final RegistryObject<BlockEntityType<TreasureChestBlockEntity>> TREASURE_CHEST = TILE_ENTITIES.register("treasure_chest", () ->
+			new BlockEntityType(TreasureChestBlockEntity::new, Sets.newHashSet(AetherBlocks.TREASURE_CHEST.get()), null));
 	public static final RegistryObject<BlockEntityType<SkyrootBedBlockEntity>> SKYROOT_BED = TILE_ENTITIES.register("skyroot_bed", () ->
 			new BlockEntityType(SkyrootBedBlockEntity::new, Sets.newHashSet(AetherBlocks.SKYROOT_BED.get()), null));
 	public static final RegistryObject<BlockEntityType<SkyrootSignTileEntity>> SKYROOT_SIGN = TILE_ENTITIES.register("custom_sign", () ->

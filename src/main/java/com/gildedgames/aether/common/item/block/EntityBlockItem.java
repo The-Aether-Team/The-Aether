@@ -11,15 +11,11 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class EntityBlockItem extends BlockItem {
-    private Supplier<BlockEntity> blockEntity;
+    private final Supplier<BlockEntity> blockEntity;
 
-    public <B extends Block> EntityBlockItem(B block, Properties tab) {
+    public <B extends Block> EntityBlockItem(B block, Supplier<BlockEntity> blockEntity, Properties tab) {
         super(block, tab);
-    }
-
-    public EntityBlockItem setBlockEntity(Supplier<BlockEntity> blockEntity) {
         this.blockEntity = blockEntity;
-        return this;
     }
 
     public BlockEntity getBlockEntity() {
