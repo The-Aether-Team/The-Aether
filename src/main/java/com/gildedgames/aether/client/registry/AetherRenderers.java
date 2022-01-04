@@ -7,7 +7,6 @@ import com.gildedgames.aether.client.renderer.tile.AetherBlockEntityWithoutLevel
 import com.gildedgames.aether.client.renderer.tile.ChestMimicBlockEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.SkyrootBedRenderer;
 import com.gildedgames.aether.client.renderer.tile.TreasureChestRenderer;
-import com.gildedgames.aether.common.entity.tile.SkyrootBedBlockEntity;
 import com.gildedgames.aether.common.registry.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CowModel;
@@ -20,9 +19,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,6 +30,8 @@ import java.util.function.Supplier;
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherRenderers
 {
+    public static BlockEntityWithoutLevelRenderer blockEntityWithoutLevelRenderer = new AetherBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+
     public static void registerBlockRenderLayers() {
         RenderType cutout = RenderType.cutout();
         RenderType translucent = RenderType.translucent();
@@ -143,22 +142,6 @@ public class AetherRenderers
 //                playerRenderer.addLayer(new EnchantedDartLayer<>(playerRenderer));
             }
         }
-    }
-
-//    public static CustomItemStackTileEntityRenderer chestMimicRenderer() {
-//        return new CustomItemStackTileEntityRenderer(ChestMimicTileEntity::new);
-//    }
-//
-//    public static CustomItemStackTileEntityRenderer treasureChestRenderer() {
-//        return new CustomItemStackTileEntityRenderer(TreasureChestTileEntity::new);
-//    }
-
-    public static BlockEntityWithoutLevelRenderer skyrootBedRenderer() {
-        return blockEntityWithoutLevelRenderer(new SkyrootBedBlockEntity(BlockPos.ZERO, AetherBlocks.SKYROOT_BED.get().defaultBlockState()));
-    }
-
-    public static BlockEntityWithoutLevelRenderer blockEntityWithoutLevelRenderer(BlockEntity blockEntity) {
-        return new AetherBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels(), blockEntity);
     }
 
     private static void registerBlockRenderer(Supplier<? extends Block> block, RenderType render) {
