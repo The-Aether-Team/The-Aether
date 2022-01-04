@@ -38,6 +38,7 @@ public class AetherPlayerListener
 
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event) {
+        event.getOriginal().reviveCaps();
         IAetherPlayer original = IAetherPlayer.get(event.getOriginal()).orElseThrow(
                 () -> new IllegalStateException("Player " + event.getOriginal().getName().getContents() + " has no AetherPlayer capability!"));
         IAetherPlayer newPlayer = IAetherPlayer.get(event.getPlayer()).orElseThrow(
@@ -49,5 +50,6 @@ public class AetherPlayerListener
         } else {
             newPlayer.setSavedHealth(1024.0F); //Max health.
         }
+        event.getOriginal().invalidateCaps();
     }
 }
