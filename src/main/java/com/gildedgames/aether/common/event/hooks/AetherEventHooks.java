@@ -28,13 +28,13 @@ public class AetherEventHooks
 		return event.isBanned();
 	}
 
-	public static FreezeEvent.FreezeFromBlock onBlockFreezeFluid(LevelAccessor world, BlockPos pos, FluidState fluidState, BlockState blockState, BlockState sourceBlock) {
+	public static FreezeEvent.FreezeFromBlock onBlockFreezeFluid(LevelAccessor world, BlockPos pos, BlockState fluidState, BlockState blockState, BlockState sourceBlock) {
 		FreezeEvent.FreezeFromBlock event = new FreezeEvent.FreezeFromBlock(world, pos, fluidState, blockState, sourceBlock);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}
 
-	public static FreezeEvent.FreezeFromItem onItemFreezeFluid(LevelAccessor world, BlockPos pos, FluidState fluidState, BlockState blockState, ItemStack sourceItem) {
+	public static FreezeEvent.FreezeFromItem onItemFreezeFluid(LevelAccessor world, BlockPos pos, BlockState fluidState, BlockState blockState, ItemStack sourceItem) {
 		FreezeEvent.FreezeFromItem event = new FreezeEvent.FreezeFromItem(world, pos, fluidState, blockState, sourceItem);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;

@@ -1,37 +1,30 @@
 package com.gildedgames.aether.common.block.construction;
 
-import com.gildedgames.aether.common.block.util.IIcestoneBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.SlabBlock;
+import com.gildedgames.aether.common.block.util.FreezingBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraft.world.ticks.ScheduledTick;
-
-public class IcestoneSlabBlock extends SlabBlock implements IIcestoneBlock
+public class IcestoneSlabBlock extends SlabBlock implements FreezingBlock
 {
     public IcestoneSlabBlock(Properties properties) {
         super(properties);
     }
 
-    //TODO: Test if the switch to ScheduledTick works.
     @Override
     public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
         super.onPlace(state, worldIn, pos, oldState, isMoving);
-        ScheduledTick<Block> scheduledTick = new ScheduledTick<>(this, pos, 10, 0);
-        worldIn.getBlockTicks().schedule(scheduledTick);
+        worldIn.scheduleTick(pos, this, 10);
     }
 
     @Override
     public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
         super.tick(state, worldIn, pos, random);
-        freezeFluids(worldIn, pos);
-        ScheduledTick<Block> scheduledTick = new ScheduledTick<>(this, pos, 10, 0);
-        worldIn.getBlockTicks().schedule(scheduledTick);
+        this.freezeBlocks(worldIn, pos, state, 2.82842712475f); // Square root of 8
+        worldIn.scheduleTick(pos, this, 10);
     }
 }
