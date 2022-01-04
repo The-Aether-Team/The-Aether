@@ -25,7 +25,7 @@ public class IcestoneStairsBlock extends StairBlock implements FreezingBlock
     @Override
     public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
         super.tick(state, worldIn, pos, random);
-        this.freezeBlocks(worldIn, pos, state, 2.82842712475f); // Square root of 8
+        this.freezeBlocks(worldIn, pos, state, FreezingBlock.SQRT_8);
         worldIn.scheduleTick(pos, this, 10);
     }
 }
