@@ -15,7 +15,7 @@ public class IceRingItem extends RingItem implements FreezingItem
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        if (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
+        if (livingEntity instanceof Player player && (player.getAbilities().flying || player.isSpectator())) return;
 
         int damage = this.freezeBlocks(livingEntity.level, livingEntity.blockPosition(), stack, 1.9f);
         stack.hurtAndBreak(damage / 3, livingEntity, entity -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity));
