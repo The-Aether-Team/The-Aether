@@ -34,7 +34,7 @@ import java.util.function.Supplier;
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherRenderers
 {
-    public static BlockEntityWithoutLevelRenderer blockEntityWithoutLevelRenderer = new AetherBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+    public static final BlockEntityWithoutLevelRenderer blockEntityWithoutLevelRenderer = new AetherBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
 
     public static void registerBlockRenderLayers() {
         RenderType cutout = RenderType.cutout();
