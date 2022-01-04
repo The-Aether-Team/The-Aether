@@ -72,6 +72,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 	@Override
 	public void travel(Vec3 vector3d) {
 		if (this.isAlive()) {
+			boolean slime = this.isSlime();
 			if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player) {
 				Player entity = (Player) this.getControllingPassenger();
 				this.setYRot(entity.getYRot());
@@ -86,7 +87,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 					f1 *= 0.25F;
 				}
 				if (this.getPlayerJumped() && !this.isMountJumping() && this.canJump()) {
-					double jumpStrength = this.getMountJumpStrength() * (double)this.getBlockJumpFactor();
+					double jumpStrength = slime ? this.getMountJumpStrength() : this.getMountJumpStrength() * (double) this.getBlockJumpFactor();
 					this.setDeltaMovement(this.getDeltaMovement().x(), jumpStrength, this.getDeltaMovement().z());
 					if (this.hasEffect(MobEffects.JUMP)) {
 						this.push(0.0, 0.1 * (this.getEffect(MobEffects.JUMP).getAmplifier() + 1), 0.0);
@@ -95,6 +96,8 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 					this.hasImpulse = true;
 					this.setPlayerJumped(false);
 					this.onJump();
+				} else if(slime && this.onGround && !this.getPlayerJumped() && (this.getDeltaMovement().x != 0 || this.getDeltaMovement().z != 0)) {
+					this.setDeltaMovement(this.getDeltaMovement().x(), 0.42F, this.getDeltaMovement().z);
 				}
 				this.maxUpStep = 1.0F;
 				this.flyingSpeed = this.getSteeringSpeed() * 0.25F;
@@ -116,7 +119,8 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 				this.flyingSpeed = 0.02F;
 				this.travelWithInput(vector3d);
 			}
-			this.fallDistance = 0;
+			if(!slime)
+				this.fallDistance = 0;
 		}
 	}
 
@@ -242,6 +246,10 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 
 	protected double getMountJumpStrength() {
 		return 1.8D;
+	}
+
+	protected boolean isSlime() {
+		return false;
 	}
 
 	@Override

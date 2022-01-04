@@ -206,6 +206,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         eggItem(AetherItems.SENTRY_SPAWN_EGG);
         eggItem(AetherItems.MIMIC_SPAWN_EGG);
         eggItem(AetherItems.AERBUNNY_SPAWN_EGG);
+        eggItem(AetherItems.SWET_SPAWN_EGG);
 
         itemBlock(AetherBlocks.AETHER_GRASS_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK);

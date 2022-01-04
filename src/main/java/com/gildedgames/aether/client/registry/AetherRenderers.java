@@ -75,6 +75,7 @@ public class AetherRenderers
         event.registerEntityRenderer(AetherEntityTypes.MOA.get(), MoaRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.AERWHALE.get(), AerwhaleRenderer::new);
 
+        event.registerEntityRenderer(AetherEntityTypes.SWET.get(), SwetRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.WHIRLWIND.get(), WhirlwindRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.COCKATRICE.get(), CockatriceRenderer::new);
@@ -126,7 +127,7 @@ public class AetherRenderers
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL_PUFFED, SheepuffWoolModel::createFurLayer);
 //        event.registerLayerDefinition(AetherModelLayers.SLIDER, );
         event.registerLayerDefinition(AetherModelLayers.SUN_SPIRIT, SunSpiritModel::createBodyLayer);
-//        event.registerLayerDefinition(AetherModelLayers.SWET, );
+        event.registerLayerDefinition(AetherModelLayers.SWET, SlimeModel::createInnerBodyLayer);
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE, );
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_QUEEN, );
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR, ZephyrModel::createBodyLayer);
