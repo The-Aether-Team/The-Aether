@@ -46,7 +46,7 @@ public class SwetEntity extends MountableEntity {
     public float swetHeight = 1.0F;
     public float swetWidth = 1.0F;
 
-    public SwetEntity(EntityType<? extends MountableEntity> type, Level level) {
+    public SwetEntity(EntityType<? extends SwetEntity> type, Level level) {
         super(type, level);
         this.moveControl = new SwetEntity.MoveHelperController(this);
     }
@@ -206,11 +206,6 @@ public class SwetEntity extends MountableEntity {
         }
     }
 
-    public void knockback(float strength, double xRatio, double zRatio) {
-        if(!this.hasPrey())
-            super.knockback(strength, xRatio, zRatio);
-    }
-
     private void setSwetType(byte type) {
         this.entityData.set(SWET_TYPE, type);
     }
@@ -229,6 +224,11 @@ public class SwetEntity extends MountableEntity {
 
     public int getJumpTimer() {
         return jumpTimer;
+    }
+
+    @Override
+    public boolean canJump() {
+        return this.isOnGround();
     }
 
     @Override
