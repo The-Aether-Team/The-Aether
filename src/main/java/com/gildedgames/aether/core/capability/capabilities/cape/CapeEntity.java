@@ -89,7 +89,7 @@ public class CapeEntity implements ICapeEntity
 
     private void tickPassenger(Entity passenger) {
         if (!passenger.isRemoved()) {
-            if ((passenger.level instanceof ClientLevel clientLevel && clientLevel.tickingEntities.contains(passenger)) || (passenger.level instanceof ServerLevel serverLevel && serverLevel.entityTickList.contains(passenger))) {
+            if ((passenger.level.isClientSide && passenger.level instanceof ClientLevel clientLevel && clientLevel.tickingEntities.contains(passenger)) || (passenger.level instanceof ServerLevel serverLevel && serverLevel.entityTickList.contains(passenger))) {
                 this.rideTick();
             }
         }
