@@ -36,41 +36,51 @@ public interface FreezingBehavior<T>
         }
     }
 
+    int FLAG_SHELL = 1 | 2;
+    int FLAG_VOLUME = 2 | 16;
     default int freezeBlocks(Level worldIn, BlockPos origin, T source, float radius) {
         float radiusSq = radius * radius;
 
         int blocksFrozen = 0;
 
-        for (int z = 1; z <= radius; z++) {
-            for (int x = 0; x <= radius; x++) {
+        // This loop may be configured weird but this guarantees fully unique
+        // placement positions while only updating the shell of its volume
+        for (int x = (int) radius; x >= 0; x--) {
+            boolean firstXZ = true;
+
+            for (int z = (int) radius; z > 0; z--) {
                 int xzLengthSq = x * x + z * z;
+
                 if (xzLengthSq > radiusSq) continue;
 
-                blocksFrozen += this.freezeBlockAt(worldIn, source, origin.offset(x, 0, z));
-                blocksFrozen += this.freezeBlockAt(worldIn, source, origin.offset(-x, 0, -z));
-                blocksFrozen += this.freezeBlockAt(worldIn, source, origin.offset(-z, 0, x));
-                blocksFrozen += this.freezeBlockAt(worldIn, source, origin.offset(z, 0, -x));
+                blocksFrozen += this.quarters(worldIn, source, origin, x, 0, z, firstXZ ? FLAG_SHELL : FLAG_VOLUME);
+                firstXZ = false;
 
-                for (int y = 1; y <= radius; y++) {
+                boolean firstY = true;
+                for (int y = (int) radius; y > 0; y--) {
+
                     if (xzLengthSq + y * y > radiusSq) continue;
 
-                    blocksFrozen += this.freezeBlockAt(worldIn, source, origin.offset(x, y, z));
-                    blocksFrozen += this.freezeBlockAt(worldIn, source, origin.offset(-x, y, -z));
-                    blocksFrozen += this.freezeBlockAt(worldIn, source, origin.offset(-z, y, x));
-                    blocksFrozen += this.freezeBlockAt(worldIn, source, origin.offset(z, y, -x));
-
-                    blocksFrozen += this.freezeBlockAt(worldIn, source, origin.offset(x, -y, z));
-                    blocksFrozen += this.freezeBlockAt(worldIn, source, origin.offset(-x, -y, -z));
-                    blocksFrozen += this.freezeBlockAt(worldIn, source, origin.offset(-z, -y, x));
-                    blocksFrozen += this.freezeBlockAt(worldIn, source, origin.offset(z, -y, -x));
+                    int placementFlag = firstY ? FLAG_SHELL : FLAG_VOLUME;
+                    blocksFrozen += this.quarters(worldIn, source, origin, x, y, z, placementFlag);
+                    blocksFrozen += this.quarters(worldIn, source, origin, x, -y, z, placementFlag);
+                    firstY = false;
                 }
             }
         }
 
-        return blocksFrozen;
+        // Update the center too
+        return this.freezeBlockAt(worldIn, source, origin, FLAG_SHELL) + blocksFrozen;
     }
 
-    private int freezeBlockAt(Level worldIn, T source, BlockPos pos) {
+    private int quarters(Level worldIn, T source, BlockPos origin, int dX, int dY, int dZ, int flag) {
+        return this.freezeBlockAt(worldIn, source, origin.offset(dX, dY, dZ), flag)
+                + this.freezeBlockAt(worldIn, source, origin.offset(-dZ, dY, dX), flag)
+                + this.freezeBlockAt(worldIn, source, origin.offset(-dX, dY, -dZ), flag)
+                + this.freezeBlockAt(worldIn, source, origin.offset(dZ, dY, -dX), flag);
+    }
+
+    private int freezeBlockAt(Level worldIn, T source, BlockPos pos, int flag) {
         BlockState priorState = worldIn.getBlockState(pos);
 
         if (FREEZABLES.containsKey(priorState.getBlock())) {
@@ -78,7 +88,7 @@ public interface FreezingBehavior<T>
             FreezeEvent event = this.onFreeze(worldIn, pos, priorState, frozenState, source);
             if (!event.isCanceled()) {
                 frozenState = event.getFrozenBlock();
-                worldIn.setBlockAndUpdate(pos, frozenState);
+                worldIn.setBlock(pos, frozenState, flag);
                 if (priorState.getFluidState().is(FluidTags.LAVA)) {
                     worldIn.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
                 }
