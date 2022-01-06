@@ -2,7 +2,6 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.item.accessories.abilities.FreezingItem;
 import com.gildedgames.aether.common.item.accessories.cape.*;
 import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.common.item.accessories.gloves.LeatherGlovesItem;

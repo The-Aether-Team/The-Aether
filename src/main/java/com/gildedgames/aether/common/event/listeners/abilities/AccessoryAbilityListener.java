@@ -1,7 +1,6 @@
 package com.gildedgames.aether.common.event.listeners.abilities;
 
-import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.item.accessories.abilities.IZaniteAccessory;
+import com.gildedgames.aether.common.item.accessories.abilities.ZaniteAccessory;
 import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
@@ -32,8 +31,7 @@ public class AccessoryAbilityListener
     public static void onPlayerAttack(AttackEntityEvent event) {
         Player player = event.getPlayer();
         Entity target = event.getTarget();
-        if (!player.level.isClientSide() && target instanceof LivingEntity) {
-            LivingEntity livingTarget = (LivingEntity) target;
+        if (!player.level.isClientSide() && target instanceof LivingEntity livingTarget) {
             if (livingTarget.isAttackable() && !livingTarget.skipAttackInteraction(player)) {
                 CuriosApi.getCuriosHelper().findEquippedCurio((stack) -> stack.getItem() instanceof GlovesItem, player).ifPresent((triple) -> triple.getRight().hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND)));
             }
@@ -42,8 +40,8 @@ public class AccessoryAbilityListener
 
     @SubscribeEvent
     public static void onMiningSpeed(PlayerEvent.BreakSpeed event) {
-        CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.ZANITE_RING.get(), event.getPlayer()).ifPresent((triple) -> IZaniteAccessory.handleMiningSpeed(event, triple));
-        CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.ZANITE_PENDANT.get(), event.getPlayer()).ifPresent((triple) -> IZaniteAccessory.handleMiningSpeed(event, triple));
+        CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.ZANITE_RING.get(), event.getPlayer()).ifPresent((triple) -> ZaniteAccessory.handleMiningSpeed(event, triple));
+        CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.ZANITE_PENDANT.get(), event.getPlayer()).ifPresent((triple) -> ZaniteAccessory.handleMiningSpeed(event, triple));
     }
 
     @SubscribeEvent
@@ -55,15 +53,13 @@ public class AccessoryAbilityListener
     public static void onProjectileImpact(ProjectileImpactEvent event) {
         if (event.getRayTraceResult().getType() == HitResult.Type.ENTITY) {
             Entity impactedEntity = ((EntityHitResult) event.getRayTraceResult()).getEntity();
-            if (impactedEntity instanceof LivingEntity && event.getEntity() instanceof Projectile) {
-                LivingEntity impactedLiving = (LivingEntity) impactedEntity;
-                Projectile projectile = (Projectile) event.getEntity();
+            if (impactedEntity instanceof LivingEntity impactedLiving && event.getEntity() instanceof Projectile projectile) {
                 if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
                     CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.REPULSION_SHIELD.get(), impactedLiving).ifPresent((triple) -> {
                         Vec3 motion = impactedLiving.getDeltaMovement();
                         if (!impactedLiving.level.isClientSide) {
-                            if (impactedLiving instanceof Player) {
-                                IAetherPlayer.get((Player) impactedLiving).ifPresent(aetherPlayer -> {
+                            if (impactedLiving instanceof Player player) {
+                                IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
                                     if (!aetherPlayer.isMoving()) {
                                         aetherPlayer.setProjectileImpactedMaximum(150);
                                         aetherPlayer.setProjectileImpactedTimer(150);
@@ -85,8 +81,7 @@ public class AccessoryAbilityListener
     private static void handleDeflection(ProjectileImpactEvent event, Projectile projectile, LivingEntity impactedLiving, ImmutableTriple<String, Integer, ItemStack> triple) {
         event.setCanceled(true);
         projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25D));
-        if (projectile instanceof AbstractHurtingProjectile) {
-            AbstractHurtingProjectile damagingProjectileEntity = (AbstractHurtingProjectile) projectile;
+        if (projectile instanceof AbstractHurtingProjectile damagingProjectileEntity) {
             damagingProjectileEntity.xPower *= -0.25D;
             damagingProjectileEntity.yPower *= -0.25D;
             damagingProjectileEntity.zPower *= -0.25D;

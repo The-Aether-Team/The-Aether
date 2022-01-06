@@ -4,7 +4,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
-public interface IZaniteAccessory
+public interface ZaniteAccessory
 {
     static void handleMiningSpeed(PlayerEvent.BreakSpeed event, ImmutableTriple<String, Integer, ItemStack> triple) {
         float originalSpeed = event.getOriginalSpeed();

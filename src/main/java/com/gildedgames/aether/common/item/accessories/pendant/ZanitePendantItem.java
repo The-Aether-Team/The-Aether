@@ -7,6 +7,9 @@ import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import net.minecraft.world.item.Item.Properties;
+import top.theillusivec4.curios.api.SlotContext;
+
+import javax.annotation.Nonnull;
 
 public class ZanitePendantItem extends PendantItem
 {
@@ -15,14 +18,15 @@ public class ZanitePendantItem extends PendantItem
     }
 
     @Override
-    public boolean isValidRepairItem(ItemStack repairItem, ItemStack repairMaterial) {
+    public boolean isValidRepairItem(@Nonnull ItemStack repairItem, ItemStack repairMaterial) {
         return repairMaterial.getItem() == AetherItems.ZANITE_GEMSTONE.get();
     }
 
     @Override
-    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        if (livingEntity.tickCount % 400 == 0) {
-            stack.hurtAndBreak(1, livingEntity, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity));
+    public void curioTick(SlotContext slotContext, ItemStack stack) {
+        LivingEntity livingEntity = slotContext.entity();
+        if (!livingEntity.level.isClientSide() && livingEntity.tickCount % 400 == 0) {
+            stack.hurtAndBreak(1, livingEntity, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotContext));
         }
     }
 }
