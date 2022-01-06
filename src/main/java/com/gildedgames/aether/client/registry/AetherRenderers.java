@@ -1,6 +1,8 @@
 package com.gildedgames.aether.client.registry;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.renderer.accessory.PendantRenderer;
+import com.gildedgames.aether.client.renderer.accessory.model.PendantModel;
 import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.entity.model.*;
 import com.gildedgames.aether.client.renderer.tile.AetherBlockEntityWithoutLevelRenderer;
@@ -28,6 +30,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 import java.util.function.Supplier;
 
@@ -133,6 +136,15 @@ public class AetherRenderers
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR, ZephyrModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_CLASSIC, OldZephyrModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_TRANSPARENCY, ZephyrModel::createBodyLayer);
+
+        event.registerLayerDefinition(AetherModelLayers.PENDANT, PendantModel::createLayer);
+    }
+
+    public static void registerCuriosRenderers() {
+        CuriosRendererRegistry.register(AetherItems.IRON_PENDANT.get(), PendantRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.GOLDEN_PENDANT.get(), PendantRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.ZANITE_PENDANT.get(), PendantRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.ICE_PENDANT.get(), PendantRenderer::new);
     }
 
     @SubscribeEvent
@@ -142,9 +154,9 @@ public class AetherRenderers
         for (String type : types) {
             PlayerRenderer playerRenderer =  event.getSkin(type);
             if (playerRenderer != null) {
-                playerRenderer.addLayer(new EnchantedDartLayer(renderDispatcher, playerRenderer));
-                playerRenderer.addLayer(new GoldenDartLayer(renderDispatcher, playerRenderer));
-                playerRenderer.addLayer(new PoisonDartLayer(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new EnchantedDartLayer<>(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new GoldenDartLayer<>(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new PoisonDartLayer<>(renderDispatcher, playerRenderer));
             }
         }
     }

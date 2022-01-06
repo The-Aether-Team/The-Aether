@@ -32,6 +32,7 @@ public class AetherClient
             AetherKeys.registerKeys();
             AetherAtlases.registerWoodTypeAtlases();
             AetherRenderers.registerBlockRenderLayers();
+            AetherRenderers.registerCuriosRenderers();
             registerGuiFactories();
             registerItemModelProperties();
             registerColors();
