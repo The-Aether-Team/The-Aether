@@ -14,6 +14,9 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class DimensionClientListener
 {
+    /**
+     * The purpose of this event handler is to prevent the fog from turning black near the void in the Aether.
+     */
     @SubscribeEvent
     public static void onRenderFogColor(EntityViewRenderEvent.FogColors event) {
         Camera renderInfo = event.getCamera();
@@ -23,12 +26,12 @@ public class DimensionClientListener
             ClientLevel.ClientLevelData worldInfo = world.getLevelData();
             double d0 = height * worldInfo.getClearColorScale();
             FogType fluidState = renderInfo.getFluidInCamera();
-            if (d0 < 1.0D && fluidState != FogType.LAVA) { // Reverse implementation of FogRenderer.updateFogColor.
+            if (d0 < 1.0D && fluidState != FogType.LAVA) {
                 if (d0 < 0.0D) {
                     d0 = 0.0D;
                 }
                 d0 = d0 * d0;
-                if(d0 != 0.0D) {
+                if (d0 != 0.0D) {
                     event.setRed((float) ((double) event.getRed() / d0));
                     event.setGreen((float) ((double) event.getGreen() / d0));
                     event.setBlue((float) ((double) event.getBlue() / d0));

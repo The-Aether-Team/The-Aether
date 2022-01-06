@@ -27,7 +27,7 @@ public class ServerTimePacket extends AetherPacket
     @Override
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            EternalDayClientListener.serverWorldTime = this.serverTime;
+            EternalDayClientListener.serverLevelTime = this.serverTime;
         }
     }
 }
