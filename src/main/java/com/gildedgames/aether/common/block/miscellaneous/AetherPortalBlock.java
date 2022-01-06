@@ -330,9 +330,9 @@ public class AetherPortalBlock extends Block
 				this.rightDir = Direction.SOUTH;
 			}
 
-			for (BlockPos blockpos = pos; pos.getY() > blockpos.getY() - 21 && pos.getY() > 0
+			for (BlockPos blockpos = pos; pos.getY() > blockpos.getY() - 21 && pos.getY() > worldIn.getMinBuildHeight()
 				&& this.isEmptyBlock(worldIn.getBlockState(pos.below())); pos = pos.below()) {
-				;
+
 			}
 
 			int i = this.getDistanceUntilEdge(pos, this.leftDir) - 1;

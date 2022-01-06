@@ -177,7 +177,7 @@ public class AetherTeleporter implements ITeleporter
             return null;
         }
         else if(!this.hasFrame) {
-            return new PortalInfo(new Vec3(entity.getX(), 255D, entity.getZ()), Vec3.ZERO, entity.getYRot(), entity.getXRot()); //For falling out of the Aether
+            return new PortalInfo(new Vec3(entity.getX(), destWorld.getHeight(), entity.getZ()), Vec3.ZERO, entity.getYRot(), entity.getXRot()); //For falling out of the Aether
         }
         else {
             WorldBorder border = destWorld.getWorldBorder();

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.block.dungeon;
 
-import com.gildedgames.aether.common.entity.tile.TreasureChestTileEntity;
+import com.gildedgames.aether.common.entity.tile.TreasureChestBlockEntity;
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.stats.Stat;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -55,13 +54,13 @@ import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TreasureChestBlock extends AbstractChestBlock<TreasureChestTileEntity> implements SimpleWaterloggedBlock
+public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEntity> implements SimpleWaterloggedBlock
 {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D);
 
-	public TreasureChestBlock(BlockBehaviour.Properties properties, Supplier<BlockEntityType<? extends TreasureChestTileEntity>> tileEntityTypeSupplier) {
+	public TreasureChestBlock(BlockBehaviour.Properties properties, Supplier<BlockEntityType<? extends TreasureChestBlockEntity>> tileEntityTypeSupplier) {
 		super(properties, tileEntityTypeSupplier);
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE));
 	}
@@ -105,8 +104,8 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestTileEnti
 	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity livingEntity, ItemStack stack) {
 		if (stack.hasCustomHoverName()) {
 			BlockEntity tileentity = world.getBlockEntity(pos);
-			if (tileentity instanceof TreasureChestTileEntity) {
-				((TreasureChestTileEntity) tileentity).setCustomName(stack.getHoverName());
+			if (tileentity instanceof TreasureChestBlockEntity) {
+				((TreasureChestBlockEntity) tileentity).setCustomName(stack.getHoverName());
 			}
 		}
 	}
@@ -130,8 +129,8 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestTileEnti
 	@Override
 	public float getExplosionResistance(BlockState state, BlockGetter world, BlockPos pos, Explosion explosion) {
 		BlockEntity tileEntity = world.getBlockEntity(pos);
-		if (tileEntity instanceof TreasureChestTileEntity) {
-			TreasureChestTileEntity treasureChest = (TreasureChestTileEntity) tileEntity;
+		if (tileEntity instanceof TreasureChestBlockEntity) {
+			TreasureChestBlockEntity treasureChest = (TreasureChestBlockEntity) tileEntity;
 			return treasureChest.getLocked() ? super.getExplosionResistance(state, world, pos, explosion) : 3.0F;
 		}
 		return super.getExplosionResistance(state, world, pos, explosion);
@@ -155,8 +154,8 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestTileEnti
 			return InteractionResult.SUCCESS;
 		} else {
 			BlockEntity tileEntity = world.getBlockEntity(pos);
-			if (tileEntity instanceof TreasureChestTileEntity) {
-				TreasureChestTileEntity treasureChest = (TreasureChestTileEntity) tileEntity;
+			if (tileEntity instanceof TreasureChestBlockEntity) {
+				TreasureChestBlockEntity treasureChest = (TreasureChestBlockEntity) tileEntity;
 				MenuProvider inamedcontainerprovider = this.getMenuProvider(state, world, pos);
 				if (treasureChest.getLocked()) {
 					ItemStack stack = player.getMainHandItem();
@@ -181,10 +180,10 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestTileEnti
 	@Override
 	public ItemStack getCloneItemStack(BlockGetter reader, BlockPos pos, BlockState state) {
 		ItemStack stack = super.getCloneItemStack(reader, pos, state);
-		TreasureChestTileEntity treasureChestTileEntity = (TreasureChestTileEntity) reader.getBlockEntity(pos);
+		TreasureChestBlockEntity treasureChestBlockEntity = (TreasureChestBlockEntity) reader.getBlockEntity(pos);
 		CompoundTag compound = new CompoundTag();
-		compound.putBoolean("Locked", treasureChestTileEntity.getLocked());
-		compound.putString("Kind", treasureChestTileEntity.getKind());
+		compound.putBoolean("Locked", treasureChestBlockEntity.getLocked());
+		compound.putString("Kind", treasureChestBlockEntity.getKind());
 		stack.addTagElement("BlockEntityTag", compound);
 		return stack;
 	}
@@ -201,7 +200,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestTileEnti
 
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new TreasureChestTileEntity(pos, state);
+		return new TreasureChestBlockEntity(pos, state);
 	}
 
 	@Override

@@ -14,15 +14,15 @@ public class FreezeEvent extends Event
 {
     private final LevelAccessor world;
     private final BlockPos pos;
-    private final FluidState previousFluid;
+    private final BlockState priorBlock;
     @Nonnull
     private BlockState frozenBlock;
 
-    public FreezeEvent(LevelAccessor world, BlockPos pos, FluidState fluidState, @Nonnull BlockState blockState) {
+    public FreezeEvent(LevelAccessor world, BlockPos pos, BlockState priorBlock, @Nonnull BlockState frozenBlock) {
         this.world = world;
         this.pos = pos;
-        this.previousFluid = fluidState;
-        this.frozenBlock = blockState;
+        this.priorBlock = priorBlock;
+        this.frozenBlock = frozenBlock;
     }
 
     public LevelAccessor getWorld() {
@@ -33,8 +33,8 @@ public class FreezeEvent extends Event
         return this.pos;
     }
 
-    public FluidState getPreviousFluid() {
-        return this.previousFluid;
+    public BlockState getPriorBlock() {
+        return this.priorBlock;
     }
 
     @Nonnull
@@ -51,8 +51,8 @@ public class FreezeEvent extends Event
     {
         private final BlockState sourceBlock;
 
-        public FreezeFromBlock(LevelAccessor world, BlockPos pos, FluidState fluidState, BlockState blockState, BlockState sourceBlock) {
-            super(world, pos, fluidState, blockState);
+        public FreezeFromBlock(LevelAccessor world, BlockPos pos, BlockState priorBlock, BlockState frozenBlock, BlockState sourceBlock) {
+            super(world, pos, priorBlock, frozenBlock);
             this.sourceBlock = sourceBlock;
         }
 
@@ -66,8 +66,8 @@ public class FreezeEvent extends Event
     {
         private final ItemStack sourceStack;
 
-        public FreezeFromItem(LevelAccessor world, BlockPos pos, FluidState fluidState, BlockState blockState, ItemStack sourceStack) {
-            super(world, pos, fluidState, blockState);
+        public FreezeFromItem(LevelAccessor world, BlockPos pos, BlockState priorBlock, BlockState frozenBlock, ItemStack sourceStack) {
+            super(world, pos, priorBlock, frozenBlock);
             this.sourceStack = sourceStack;
         }
 

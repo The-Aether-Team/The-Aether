@@ -331,6 +331,7 @@ public class AetherLangData extends AetherLanguageProvider
         addItem(AetherItems.PHYG_SPAWN_EGG, "Phyg Spawn Egg");
         addItem(AetherItems.SENTRY_SPAWN_EGG, "Sentry Spawn Egg");
         addItem(AetherItems.SHEEPUFF_SPAWN_EGG, "Sheepuff Spawn Egg");
+        addItem(AetherItems.SWET_SPAWN_EGG, "Swet Spawn Egg");
         addItem(AetherItems.WHIRLWIND_SPAWN_EGG, "Whirlwind Spawn Egg");
         addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
 
@@ -341,6 +342,7 @@ public class AetherLangData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.MOA, "Moa");
         addEntityType(AetherEntityTypes.AERBUNNY, "Aerbunny");
         addEntityType(AetherEntityTypes.AERWHALE, "Aerwhale");
+        addEntityType(AetherEntityTypes.SWET, "Swet");
         addEntityType(AetherEntityTypes.WHIRLWIND, "Whirlwind");
         addEntityType(AetherEntityTypes.AECHOR_PLANT, "Aechor Plant");
         addEntityType(AetherEntityTypes.COCKATRICE, "Cockatrice");

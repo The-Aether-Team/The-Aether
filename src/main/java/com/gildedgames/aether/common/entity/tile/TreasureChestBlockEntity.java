@@ -2,12 +2,12 @@ package com.gildedgames.aether.common.entity.tile;
 
 import com.gildedgames.aether.common.block.dungeon.TreasureChestBlock;
 import com.gildedgames.aether.common.item.miscellaneous.DungeonKeyItem;
+import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.ContainerHelper;
@@ -18,8 +18,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.core.NonNullList;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -31,7 +29,7 @@ import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 
 @OnlyIn(value = Dist.CLIENT, _interface = LidBlockEntity.class)
-public class TreasureChestTileEntity extends RandomizableContainerBlockEntity implements LidBlockEntity
+public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity
 {
     private NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
     protected float openness;
@@ -41,14 +39,18 @@ public class TreasureChestTileEntity extends RandomizableContainerBlockEntity im
     private boolean locked;
     private String kind;
 
-    protected TreasureChestTileEntity(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
+    protected TreasureChestBlockEntity(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
         super(tileEntityType, pos, state);
     }
 
-    public TreasureChestTileEntity( BlockPos pos, BlockState state) {
+    public TreasureChestBlockEntity(BlockPos pos, BlockState state) {
         this(AetherTileEntityTypes.TREASURE_CHEST.get(), pos, state);
         this.kind = AetherDungeonTypes.BRONZE.getRegistryName();
         this.locked = true;
+    }
+
+    public TreasureChestBlockEntity() {
+        super(AetherTileEntityTypes.TREASURE_CHEST.get(), BlockPos.ZERO, AetherBlocks.TREASURE_CHEST.get().defaultBlockState());
     }
 
     @Override

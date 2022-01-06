@@ -1,22 +1,22 @@
 package com.gildedgames.aether.common.block.utility;
 
-import com.gildedgames.aether.common.entity.tile.SkyrootBedTileEntity;
+import com.gildedgames.aether.common.entity.tile.SkyrootBedBlockEntity;
 import com.gildedgames.aether.common.registry.AetherDimensions;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.level.block.state.properties.BedPart;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.*;
-
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BedPart;
+import net.minecraft.world.phys.BlockHitResult;
 
 public class SkyrootBedBlock extends BedBlock
 {
@@ -66,7 +66,8 @@ public class SkyrootBedBlock extends BedBlock
 
     @Override
     public BlockEntity newBlockEntity(BlockPos p_152175_, BlockState p_152176_) {
-        return new SkyrootBedTileEntity(p_152175_, p_152176_);
+        return new SkyrootBedBlockEntity(p_152175_, p_152176_);
     }
+
 }
 

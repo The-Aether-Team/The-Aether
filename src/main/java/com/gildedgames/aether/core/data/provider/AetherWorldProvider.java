@@ -20,7 +20,8 @@ import java.util.Optional;
 import java.util.OptionalLong;
 import java.util.function.Function;
 
-public abstract class AetherWorldProvider extends SmartRegistryWriteOps<JsonElement> {
+public abstract class AetherWorldProvider extends SmartRegistryWriteOps<JsonElement>
+{
     private static final SurfaceRules.RuleSource GRASS_BLOCK = makeStateRule(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
     private static final SurfaceRules.RuleSource DIRT = makeStateRule(AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
     private static final SurfaceRules.RuleSource QUICKSOIL = makeStateRule(AetherBlocks.QUICKSOIL.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
