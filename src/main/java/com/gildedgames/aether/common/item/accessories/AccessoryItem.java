@@ -1,14 +1,7 @@
 package com.gildedgames.aether.common.item.accessories;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
@@ -32,8 +25,6 @@ import top.theillusivec4.curios.api.type.util.ICuriosHelper;
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class AccessoryItem extends Item implements ICurioItem, Vanishable
 {
@@ -89,20 +80,6 @@ public class AccessoryItem extends Item implements ICurioItem, Vanishable
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
         return new ICurio.SoundInfo(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GENERIC.get(), 1.0f, 1.0f);
     }
-
-//    @Override //TODO: Fix this for 1.18
-//    public void render(String identifier, int index, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-//        EntityRenderer<?> entityRenderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(livingEntity);
-//        if (entityRenderer instanceof RenderLayerParent<?, ?>) {
-//            EntityModel<?> model = ((RenderLayerParent<?, ?>) entityRenderer).getModel();
-//            if (model instanceof HumanoidModel<?>) {
-//                HumanoidModel<?> bipedModel = (HumanoidModel<?>) model;
-//                this.renderModel(bipedModel, identifier, index, matrixStack, renderTypeBuffer, light, livingEntity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack);
-//            }
-//        }
-//    }
-
-    public void renderModel(HumanoidModel<?> model, String identifier, int index, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) { }
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
