@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
@@ -55,5 +56,18 @@ public class GlovesItem extends AccessoryItem
 
     public ResourceLocation getGlovesSlimTexture() {
         return this.GLOVES_SLIM_TEXTURE;
+    }
+
+    public ImmutableTriple<Float, Float, Float> getColors(ItemStack stack) {
+        float red = 1.0F;
+        float green = 1.0F;
+        float blue = 1.0F;
+        if (stack.getItem() instanceof LeatherGlovesItem leatherGlovesItem) {
+            int i = leatherGlovesItem.getColor(stack);
+            red = (float) (i >> 16 & 255) / 255.0F;
+            green = (float) (i >> 8 & 255) / 255.0F;
+            blue = (float) (i & 255) / 255.0F;
+        }
+        return new ImmutableTriple<>(red, green, blue);
     }
 }

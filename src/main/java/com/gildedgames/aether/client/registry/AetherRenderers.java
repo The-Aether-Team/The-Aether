@@ -140,10 +140,12 @@ public class AetherRenderers
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_TRANSPARENCY, ZephyrModel::createBodyLayer);
 
         event.registerLayerDefinition(AetherModelLayers.PENDANT, PendantModel::createLayer);
-        event.registerLayerDefinition(AetherModelLayers.GLOVES, () -> GlovesModel.createLayer(false));
-        event.registerLayerDefinition(AetherModelLayers.GLOVES_SLIM, () -> GlovesModel.createLayer(true));
-        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM, () -> GlovesModel.WornGlovesModel.createLayer(false));
-        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM_SLIM, () -> GlovesModel.WornGlovesModel.createLayer(true));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES, () -> GlovesModel.createLayer(new CubeDeformation(0.6F), false));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.6F), true));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM, () -> GlovesModel.createLayer(new CubeDeformation(0.0F), false));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.0F), true));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), false));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), true));
     }
 
     public static void registerCuriosRenderers() {
