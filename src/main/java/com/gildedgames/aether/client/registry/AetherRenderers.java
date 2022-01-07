@@ -1,7 +1,9 @@
 package com.gildedgames.aether.client.registry;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.renderer.accessory.GlovesRenderer;
 import com.gildedgames.aether.client.renderer.accessory.PendantRenderer;
+import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
 import com.gildedgames.aether.client.renderer.accessory.model.PendantModel;
 import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.entity.model.*;
@@ -138,6 +140,8 @@ public class AetherRenderers
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_TRANSPARENCY, ZephyrModel::createBodyLayer);
 
         event.registerLayerDefinition(AetherModelLayers.PENDANT, PendantModel::createLayer);
+        event.registerLayerDefinition(AetherModelLayers.GLOVES, () -> GlovesModel.createLayer(false));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_SLIM, () -> GlovesModel.createLayer(true));
     }
 
     public static void registerCuriosRenderers() {
@@ -145,6 +149,19 @@ public class AetherRenderers
         CuriosRendererRegistry.register(AetherItems.GOLDEN_PENDANT.get(), PendantRenderer::new);
         CuriosRendererRegistry.register(AetherItems.ZANITE_PENDANT.get(), PendantRenderer::new);
         CuriosRendererRegistry.register(AetherItems.ICE_PENDANT.get(), PendantRenderer::new);
+
+        CuriosRendererRegistry.register(AetherItems.LEATHER_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.CHAINMAIL_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.IRON_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.GOLDEN_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.DIAMOND_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.NETHERITE_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.ZANITE_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.GRAVITITE_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.NEPTUNE_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.PHOENIX_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.OBSIDIAN_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.VALKYRIE_GLOVES.get(), GlovesRenderer::new);
     }
 
     @SubscribeEvent

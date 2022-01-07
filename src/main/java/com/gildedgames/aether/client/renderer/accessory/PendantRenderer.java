@@ -19,17 +19,17 @@ import top.theillusivec4.curios.api.client.ICurioRenderer;
 
 public class PendantRenderer implements ICurioRenderer
 {
-    private final PendantModel model;
+    private final PendantModel pendantModel;
 
     public PendantRenderer() {
-        this.model = new PendantModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.PENDANT));
+        this.pendantModel = new PendantModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.PENDANT));
     }
 
     @Override
     public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack matrixStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         PendantItem pendantItem = (PendantItem) stack.getItem();
-        ICurioRenderer.followBodyRotations(slotContext.entity(), this.model);
+        ICurioRenderer.followBodyRotations(slotContext.entity(), this.pendantModel);
         VertexConsumer vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(pendantItem.getPendantTexture()), false, stack.isEnchanted());
-        this.model.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.pendantModel.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 }

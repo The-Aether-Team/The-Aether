@@ -23,6 +23,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotContext;
 
 @Mod.EventBusSubscriber
 public class AccessoryAbilityListener
@@ -33,7 +34,7 @@ public class AccessoryAbilityListener
         Entity target = event.getTarget();
         if (!player.level.isClientSide() && target instanceof LivingEntity livingTarget) {
             if (livingTarget.isAttackable() && !livingTarget.skipAttackInteraction(player)) {
-                CuriosApi.getCuriosHelper().findEquippedCurio((stack) -> stack.getItem() instanceof GlovesItem, player).ifPresent((triple) -> triple.getRight().hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND)));
+                CuriosApi.getCuriosHelper().findEquippedCurio((stack) -> stack.getItem() instanceof GlovesItem, player).ifPresent((triple) -> triple.getRight().hurtAndBreak(1, player, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(new SlotContext(triple.getLeft(), entity, triple.getMiddle(), false, false))));
             }
         }
     }
@@ -86,6 +87,6 @@ public class AccessoryAbilityListener
             damagingProjectileEntity.yPower *= -0.25D;
             damagingProjectileEntity.zPower *= -0.25D;
         }
-        triple.getRight().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), entity));
+        triple.getRight().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(new SlotContext(triple.getLeft(), entity, triple.getMiddle(), false, false)));
     }
 }
