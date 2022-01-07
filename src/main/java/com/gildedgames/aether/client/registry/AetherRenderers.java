@@ -142,6 +142,8 @@ public class AetherRenderers
         event.registerLayerDefinition(AetherModelLayers.PENDANT, PendantModel::createLayer);
         event.registerLayerDefinition(AetherModelLayers.GLOVES, () -> GlovesModel.createLayer(false));
         event.registerLayerDefinition(AetherModelLayers.GLOVES_SLIM, () -> GlovesModel.createLayer(true));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM, () -> GlovesModel.WornGlovesModel.createLayer(false));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM_SLIM, () -> GlovesModel.WornGlovesModel.createLayer(true));
     }
 
     public static void registerCuriosRenderers() {
