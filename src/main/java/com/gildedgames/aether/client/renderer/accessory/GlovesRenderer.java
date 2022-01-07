@@ -21,7 +21,13 @@ import top.theillusivec4.curios.api.client.ICurioRenderer;
 
 public class GlovesRenderer implements ICurioRenderer
 {
-    public GlovesRenderer() { }
+    private final GlovesModel glovesModel;
+    private final GlovesModel glovesModelSlim;
+
+    public GlovesRenderer() {
+        this.glovesModel = new GlovesModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.GLOVES));
+        this.glovesModelSlim = new GlovesModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.GLOVES_SLIM));
+    }
 
     @Override
     public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack matrixStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
@@ -30,10 +36,10 @@ public class GlovesRenderer implements ICurioRenderer
         VertexConsumer vertexBuilder;
 
         if (!(renderLayerParent.getModel() instanceof PlayerModel<?> playerModel)) {
-            glovesModel = new GlovesModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.GLOVES));
+            glovesModel = this.glovesModel;
             vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(glovesItem.getGlovesTexture()), false, stack.isEnchanted());
         } else {
-            glovesModel = new GlovesModel(!playerModel.slim ? Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.GLOVES) : Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.GLOVES_SLIM));
+            glovesModel = playerModel.slim ? this.glovesModelSlim : this.glovesModel;
             vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(playerModel.slim ? glovesItem.getGlovesSlimTexture() : glovesItem.getGlovesTexture()), false, stack.isEnchanted());
         }
         ICurioRenderer.followBodyRotations(slotContext.entity(), glovesModel);
