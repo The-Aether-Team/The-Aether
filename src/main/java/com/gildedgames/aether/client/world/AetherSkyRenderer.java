@@ -41,7 +41,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
     }
 
     @Override
-    public void render(int ticks, float pPartialTick, PoseStack pPoseStack, ClientLevel world, Minecraft mc) {  //TODO: How do we get a Matrix4f like LevelRenderer.renderSky() does?
+    public void render(int ticks, float pPartialTick, PoseStack pPoseStack, ClientLevel world, Minecraft mc) { 
         Matrix4f pProjectionMatrix = RenderSystem.getProjectionMatrix();
         float renderDistance = mc.gameRenderer.getRenderDistance();
         Camera camera = mc.gameRenderer.getMainCamera();
@@ -94,6 +94,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         RenderSystem.enableTexture();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         pPoseStack.pushPose();
+        
         /**
          * This code determines the current angle of the sun and moon and determines whether they should be visible or not.
          */
