@@ -1,8 +1,10 @@
 package com.gildedgames.aether.client.registry;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.renderer.accessory.CapeRenderer;
 import com.gildedgames.aether.client.renderer.accessory.GlovesRenderer;
 import com.gildedgames.aether.client.renderer.accessory.PendantRenderer;
+import com.gildedgames.aether.client.renderer.accessory.model.CapeModel;
 import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
 import com.gildedgames.aether.client.renderer.accessory.model.PendantModel;
 import com.gildedgames.aether.client.renderer.entity.*;
@@ -146,6 +148,7 @@ public class AetherRenderers
         event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.0F), true));
         event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), false));
         event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), true));
+        event.registerLayerDefinition(AetherModelLayers.CAPE, CapeModel::createLayer);
     }
 
     public static void registerCuriosRenderers() {
@@ -166,6 +169,14 @@ public class AetherRenderers
         CuriosRendererRegistry.register(AetherItems.PHOENIX_GLOVES.get(), GlovesRenderer::new);
         CuriosRendererRegistry.register(AetherItems.OBSIDIAN_GLOVES.get(), GlovesRenderer::new);
         CuriosRendererRegistry.register(AetherItems.VALKYRIE_GLOVES.get(), GlovesRenderer::new);
+
+        CuriosRendererRegistry.register(AetherItems.RED_CAPE.get(), CapeRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.BLUE_CAPE.get(), CapeRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.YELLOW_CAPE.get(), CapeRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.WHITE_CAPE.get(), CapeRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.SWET_CAPE.get(), CapeRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.AGILITY_CAPE.get(), CapeRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.VALKYRIE_CAPE.get(), CapeRenderer::new);
     }
 
     @SubscribeEvent

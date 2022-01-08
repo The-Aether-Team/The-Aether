@@ -40,17 +40,17 @@ public class GlovesRenderer implements ICurioRenderer
     }
 
     @Override
-    public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack matrixStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         GlovesItem glovesItem = (GlovesItem) stack.getItem();
         GlovesModel model;
-        VertexConsumer vertexBuilder;
+        VertexConsumer vertexConsumer;
 
         if (!(renderLayerParent.getModel() instanceof PlayerModel<?> playerModel)) {
             model = this.glovesModel;
-            vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(glovesItem.getGlovesTexture()), false, stack.isEnchanted());
+            vertexConsumer = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(glovesItem.getGlovesTexture()), false, stack.isEnchanted());
         } else {
             model = playerModel.slim ? this.glovesModelSlim : this.glovesModel;
-            vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(playerModel.slim ? glovesItem.getGlovesSlimTexture() : glovesItem.getGlovesTexture()), false, stack.isEnchanted());
+            vertexConsumer = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(playerModel.slim ? glovesItem.getGlovesSlimTexture() : glovesItem.getGlovesTexture()), false, stack.isEnchanted());
         }
         ICurioRenderer.followBodyRotations(slotContext.entity(), model);
 
@@ -58,7 +58,7 @@ public class GlovesRenderer implements ICurioRenderer
         float green = glovesItem.getColors(stack).getMiddle();
         float blue = glovesItem.getColors(stack).getRight();
 
-        model.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
+        model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
     }
 
     public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, AbstractClientPlayer player, HumanoidArm arm) {
@@ -79,22 +79,22 @@ public class GlovesRenderer implements ICurioRenderer
         model.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 
         GlovesItem glovesItem = (GlovesItem) stack.getItem();
-        VertexConsumer vertexBuilder = ItemRenderer.getArmorFoilBuffer(bufferSource, RenderType.armorCutoutNoCull(!isSlim ? glovesItem.getGlovesTexture() : glovesItem.getGlovesSlimTexture()), false, stack.isEnchanted());
+        VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(bufferSource, RenderType.armorCutoutNoCull(!isSlim ? glovesItem.getGlovesTexture() : glovesItem.getGlovesSlimTexture()), false, stack.isEnchanted());
 
         float red = glovesItem.getColors(stack).getLeft();
         float green = glovesItem.getColors(stack).getMiddle();
         float blue = glovesItem.getColors(stack).getRight();
 
         if (arm == HumanoidArm.RIGHT) {
-            this.renderGlove(model.rightArm, poseStack, combinedLight, vertexBuilder, red, green, blue);
+            this.renderGlove(model.rightArm, poseStack, combinedLight, vertexConsumer, red, green, blue);
         } else if (arm == HumanoidArm.LEFT) {
-            this.renderGlove(model.leftArm, poseStack, combinedLight, vertexBuilder, red, green, blue);
+            this.renderGlove(model.leftArm, poseStack, combinedLight, vertexConsumer, red, green, blue);
         }
     }
 
-    private void renderGlove(ModelPart gloveArm, PoseStack poseStack, int combinedLight, VertexConsumer vertexBuilder, float red, float green, float blue) {
+    private void renderGlove(ModelPart gloveArm, PoseStack poseStack, int combinedLight, VertexConsumer vertexConsumer, float red, float green, float blue) {
         gloveArm.visible = true;
         gloveArm.xRot = 0.0F;
-        gloveArm.render(poseStack, vertexBuilder, combinedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
+        gloveArm.render(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
     }
 }

@@ -10,6 +10,7 @@
     "common.CropBlockMixin",
     "common.DimensionTypeMixin",
     "common.FoxEatBerriesGoalMixin",
+    "common.LivingEntityMixin",
     "common.PiglinAiMixin"
   ],
   "client": [
