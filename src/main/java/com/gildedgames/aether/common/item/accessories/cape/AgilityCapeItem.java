@@ -15,7 +15,8 @@ public class AgilityCapeItem extends CapeItem
     }
 
     @Override
-    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
+    public void curioTick(SlotContext slotContext, ItemStack stack) {
+        LivingEntity livingEntity = slotContext.entity();
         livingEntity.maxUpStep = !livingEntity.isCrouching() ? 1.0F : 0.6F;
     }
 

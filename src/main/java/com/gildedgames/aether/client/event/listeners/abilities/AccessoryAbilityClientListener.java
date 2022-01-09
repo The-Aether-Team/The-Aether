@@ -18,7 +18,7 @@ public class AccessoryAbilityClientListener
     }
 
     @SubscribeEvent
-    public static void onRenderHand(RenderHandEvent event) {
+    public static void onRenderHand(RenderHandEvent event) { //TODO: This makes the item in the player's hand invisible which isn't great for playability.
         if (Minecraft.getInstance().player != null) {
             CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.INVISIBILITY_CLOAK.get(), Minecraft.getInstance().player).ifPresent((triple) -> event.setCanceled(true));
         }

@@ -5,6 +5,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
 import net.minecraft.world.item.Item.Properties;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class InvisibilityCloakItem extends AccessoryItem
 {
@@ -13,12 +14,12 @@ public class InvisibilityCloakItem extends AccessoryItem
     }
 
     @Override
-    public void onEquip(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        livingEntity.setInvisible(true);
+    public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
+        slotContext.entity().setInvisible(true);
     }
 
     @Override
-    public void onUnequip(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        livingEntity.setInvisible(false);
+    public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
+        slotContext.entity().setInvisible(false);
     }
 }

@@ -4,6 +4,7 @@ import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import com.gildedgames.aether.common.item.accessories.abilities.SlowFallAccessory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class GoldenFeatherItem extends AccessoryItem implements SlowFallAccessory
 {
@@ -12,7 +13,7 @@ public class GoldenFeatherItem extends AccessoryItem implements SlowFallAccessor
     }
 
     @Override
-    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        handleSlowFall(livingEntity);
+    public void curioTick(SlotContext slotContext, ItemStack stack) {
+        handleSlowFall(slotContext.entity());
     }
 }
