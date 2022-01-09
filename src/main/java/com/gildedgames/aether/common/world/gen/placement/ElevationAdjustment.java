@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.world.gen.placement;
 
+import com.gildedgames.aether.common.registry.AetherWorldComponents;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.IntProvider;
@@ -26,6 +27,6 @@ public class ElevationAdjustment extends PlacementModifier {
 
     @Override
     public PlacementModifierType<?> type() {
-        return PlacementModifiers.ELEVATION_ADJUSTMENT;
+        return AetherWorldComponents.ELEVATION_ADJUSTMENT;
     }
 }

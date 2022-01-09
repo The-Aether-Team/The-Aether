@@ -1,6 +1,9 @@
 package com.gildedgames.aether.core.data;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
+import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.common.world.gen.chunk.GriddedGenerator;
 import com.gildedgames.aether.core.data.provider.AetherWorldProvider;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -37,6 +40,8 @@ public class AetherWorldData extends AetherWorldProvider
 
         NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(RegistryAccess.builtin().registryOrThrow(Registry.NOISE_REGISTRY), new FixedBiomeSource(AetherBiomeData.FLOATING_FOREST), 0L, () -> worldNoiseSettings);
 
-        this.serialize(Registry.LEVEL_STEM_REGISTRY, new ResourceLocation(Aether.MODID, "the_aether"), new LevelStem(() -> dimensionType, aetherChunkGen), LevelStem.CODEC);
+        GriddedGenerator debug = new GriddedGenerator(aetherChunkGen, 0L, 1, 64, 64, this.aetherSurfaceRules(), AetherBlocks.HOLYSTONE.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
+
+        this.serialize(Registry.LEVEL_STEM_REGISTRY, new ResourceLocation(Aether.MODID, "the_aether"), new LevelStem(() -> dimensionType, debug), LevelStem.CODEC);
     }
 }

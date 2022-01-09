@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.world.gen.placement;
 
+import com.gildedgames.aether.common.registry.AetherWorldComponents;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -30,6 +31,6 @@ public class ElevationFilter extends PlacementFilter {
 
     @Override
     public PlacementModifierType<?> type() {
-        return PlacementModifiers.ELEVATION_FILTER;
+        return AetherWorldComponents.ELEVATION_FILTER;
     }
 }

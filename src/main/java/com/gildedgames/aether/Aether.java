@@ -10,7 +10,7 @@ import com.gildedgames.aether.common.entity.tile.FreezerTileEntity;
 import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
 import com.gildedgames.aether.common.item.miscellaneous.bucket.SkyrootWaterBucketItem;
 import com.gildedgames.aether.common.registry.*;
-import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
+import com.gildedgames.aether.common.registry.AetherWorldComponents;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.*;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
@@ -87,7 +87,7 @@ public class Aether {
 
         AetherLoot.init();
         AetherAdvancements.init();
-        PlacementModifiers.init();
+        AetherWorldComponents.init();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
