@@ -69,7 +69,35 @@
     [],
     [],
     [],
-    [],
+    [
+      {
+        "feature": {
+          "config": {},
+          "type": "aether:crystal_tree"
+        },
+        "placement": [
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "height": {
+              "min_inclusive": {
+                "absolute": 80
+              },
+              "max_inclusive": {
+                "absolute": 100
+              },
+              "type": "minecraft:uniform"
+            },
+            "type": "minecraft:height_range"
+          },
+          {
+            "chance": 8,
+            "type": "minecraft:rarity_filter"
+          }
+        ]
+      }
+    ],
     [],
     [
       {

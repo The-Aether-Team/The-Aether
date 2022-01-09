@@ -100,6 +100,7 @@ public class Aether
 
 		AetherLoot.init();
 		AetherAdvancements.init();
+		AetherFoliagePlacerTypes.init();
 		PlacementModifiers.init();
 
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
