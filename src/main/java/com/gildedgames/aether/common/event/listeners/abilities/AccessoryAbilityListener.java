@@ -6,6 +6,7 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
@@ -31,7 +32,7 @@ public class AccessoryAbilityListener
         Entity target = event.getTarget();
         if (!player.level.isClientSide() && target instanceof LivingEntity livingTarget) {
             if (livingTarget.isAttackable() && !livingTarget.skipAttackInteraction(player)) {
-                CuriosApi.getCuriosHelper().findFirstCurio(player, (stack) -> stack.getItem() instanceof GlovesItem).ifPresent((slotResult) -> slotResult.stack().hurtAndBreak(1, player, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext())));
+                CuriosApi.getCuriosHelper().findFirstCurio(player, (stack) -> stack.getItem() instanceof GlovesItem).ifPresent((slotResult) -> slotResult.stack().hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND)));
             }
         }
     }

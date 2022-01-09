@@ -33,6 +33,6 @@ public class EquipmentUtil
                 && entity.getItemBySlot(EquipmentSlot.CHEST).getItem() == chestplate
                 && entity.getItemBySlot(EquipmentSlot.LEGS).getItem() == leggings
                 && entity.getItemBySlot(EquipmentSlot.FEET).getItem() == boots
-                && CuriosApi.getCuriosHelper().findEquippedCurio(gloves, entity).isPresent();
+                && CuriosApi.getCuriosHelper().findFirstCurio(entity, gloves).isPresent();
     }
 }

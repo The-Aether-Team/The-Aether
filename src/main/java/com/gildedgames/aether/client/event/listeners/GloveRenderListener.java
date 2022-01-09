@@ -18,10 +18,10 @@ public class GloveRenderListener
     public static void onRenderArm(RenderArmEvent event) {
         AbstractClientPlayer player = event.getPlayer();
         if (player != null) {
-            CuriosApi.getCuriosHelper().findEquippedCurio((item) -> item.getItem() instanceof GlovesItem, player).ifPresent((triple) -> {
-                String identifier = triple.getLeft();
-                int id = triple.getMiddle();
-                ItemStack itemStack = triple.getRight();
+            CuriosApi.getCuriosHelper().findFirstCurio(player, (item) -> item.getItem() instanceof GlovesItem).ifPresent((slotResult) -> {
+                String identifier = slotResult.slotContext().identifier();
+                int id = slotResult.slotContext().index();
+                ItemStack itemStack = slotResult.stack();
                 CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(handler -> handler.getStacksHandler(identifier).ifPresent(stacksHandler -> {
                     if (stacksHandler.getRenders().get(id)) {
                         CuriosRendererRegistry.getRenderer(itemStack.getItem()).ifPresent((renderer) -> {
