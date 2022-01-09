@@ -23,6 +23,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
@@ -50,7 +51,7 @@ public class GuiListener
 		if (event.phase == TickEvent.Phase.END) {
 			if (entity != null) {
 				if (AetherKeys.openAccessoryInventory.consumeClick() && minecraft.isWindowActive()) {
-					AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(entity.getId()));
+					AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(entity.getId(), ItemStack.EMPTY));
 					shouldAddButton = false;
 				}
 			}

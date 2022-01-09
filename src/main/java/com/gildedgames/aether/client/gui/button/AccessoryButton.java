@@ -10,10 +10,16 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.PacketDistributor;
+import top.theillusivec4.curios.client.gui.CuriosScreen;
+import top.theillusivec4.curios.common.network.NetworkHandler;
+import top.theillusivec4.curios.common.network.client.CPacketOpenCurios;
+import top.theillusivec4.curios.common.network.client.CPacketOpenVanilla;
 
 public class AccessoryButton extends ImageButton
 {
@@ -25,15 +31,16 @@ public class AccessoryButton extends ImageButton
                     Minecraft minecraft = Minecraft.getInstance();
                     Player player = minecraft.player;
                     if (player != null) {
+                        ItemStack stack = player.containerMenu.getCarried();
+                        player.containerMenu.setCarried(ItemStack.EMPTY);
+
                         if (parentGui instanceof AccessoriesScreen) {
                             InventoryScreen inventory = new InventoryScreen(player);
-                            ItemStack stack = player.inventoryMenu.getCarried();
-                            player.inventoryMenu.setCarried(ItemStack.EMPTY);
                             minecraft.setScreen(inventory);
                             player.inventoryMenu.setCarried(stack);
-                            AetherPacketHandler.sendToServer(new OpenInventoryPacket(player.getId()));
+                            AetherPacketHandler.sendToServer(new OpenInventoryPacket(player.getId(), stack));
                         } else {
-                            AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(player.getId()));
+                            AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(player.getId(), stack));
                         }
                     }
                 });
