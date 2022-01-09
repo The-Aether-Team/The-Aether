@@ -12,7 +12,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public class GloveRenderListener
+public class ArmRenderListener
 {
     @SubscribeEvent
     public static void onRenderArm(RenderArmEvent event) {
@@ -32,6 +32,20 @@ public class GloveRenderListener
                     }
                 }));
             });
+//            CuriosApi.getCuriosHelper().findFirstCurio(player, (item) -> item.getItem() instanceof RepulsionShieldItem).ifPresent((slotResult) -> {
+//                String identifier = slotResult.slotContext().identifier();
+//                int id = slotResult.slotContext().index();
+//                ItemStack itemStack = slotResult.stack();
+//                CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(handler -> handler.getStacksHandler(identifier).ifPresent(stacksHandler -> {
+//                    if (stacksHandler.getRenders().get(id)) {
+//                        CuriosRendererRegistry.getRenderer(itemStack.getItem()).ifPresent((renderer) -> {
+//                            if (renderer instanceof RepulsionShieldRenderer shieldRenderer) {
+//                                shieldRenderer.renderFirstPerson(itemStack, event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight(), player, event.getArm());
+//                            }
+//                        });
+//                    }
+//                }));
+//            });
         }
     }
 }
