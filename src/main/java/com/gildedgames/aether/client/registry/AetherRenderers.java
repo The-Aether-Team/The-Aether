@@ -1,19 +1,26 @@
 package com.gildedgames.aether.client.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.renderer.entity.model.*;
 import com.gildedgames.aether.client.renderer.entity.*;
+import com.gildedgames.aether.client.renderer.entity.model.*;
+import com.gildedgames.aether.client.renderer.tile.AetherBlockEntityWithoutLevelRenderer;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicBlockEntityRenderer;
 import com.gildedgames.aether.client.renderer.tile.SkyrootBedRenderer;
 import com.gildedgames.aether.client.renderer.tile.TreasureChestRenderer;
+import com.gildedgames.aether.client.renderer.player.layer.EnchantedDartLayer;
+import com.gildedgames.aether.client.renderer.player.layer.GoldenDartLayer;
+import com.gildedgames.aether.client.renderer.player.layer.PoisonDartLayer;
 import com.gildedgames.aether.common.registry.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.level.block.Block;
@@ -27,6 +34,8 @@ import java.util.function.Supplier;
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherRenderers
 {
+    public static final BlockEntityWithoutLevelRenderer blockEntityWithoutLevelRenderer = new AetherBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+
     public static void registerBlockRenderLayers() {
         RenderType cutout = RenderType.cutout();
         RenderType translucent = RenderType.translucent();
@@ -66,6 +75,7 @@ public class AetherRenderers
         event.registerEntityRenderer(AetherEntityTypes.MOA.get(), MoaRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.AERWHALE.get(), AerwhaleRenderer::new);
 
+        event.registerEntityRenderer(AetherEntityTypes.SWET.get(), SwetRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.WHIRLWIND.get(), WhirlwindRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.COCKATRICE.get(), CockatriceRenderer::new);
@@ -117,7 +127,7 @@ public class AetherRenderers
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL_PUFFED, SheepuffWoolModel::createFurLayer);
 //        event.registerLayerDefinition(AetherModelLayers.SLIDER, );
         event.registerLayerDefinition(AetherModelLayers.SUN_SPIRIT, SunSpiritModel::createBodyLayer);
-//        event.registerLayerDefinition(AetherModelLayers.SWET, );
+        event.registerLayerDefinition(AetherModelLayers.SWET, SlimeModel::createInnerBodyLayer);
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE, );
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_QUEEN, );
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR, ZephyrModel::createBodyLayer);
@@ -127,31 +137,17 @@ public class AetherRenderers
 
     @SubscribeEvent
     public static void addPlayerLayers(EntityRenderersEvent.AddLayers event) {
-        String[] types = new String[] { "default", "slim" };
+        EntityRenderDispatcher renderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+        String[] types = new String[]{"default", "slim"};
         for (String type : types) {
             PlayerRenderer playerRenderer =  event.getSkin(type);
             if (playerRenderer != null) {
-//                    r.addLayer(new RepulsionShieldLayer<>(r, new HumanoidModel<>(1.1F)));
-//                playerRenderer.addLayer(new GoldenDartLayer<>(playerRenderer));
-//                playerRenderer.addLayer(new PoisonDartLayer<>(playerRenderer));
-//                playerRenderer.addLayer(new EnchantedDartLayer<>(playerRenderer));
+                playerRenderer.addLayer(new EnchantedDartLayer(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new GoldenDartLayer(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new PoisonDartLayer(renderDispatcher, playerRenderer));
             }
         }
     }
-
-    /*public static CustomItemStackTileEntityRenderer chestMimicRenderer() {
-        return new CustomItemStackTileEntityRenderer(ChestMimicTileEntity::new);
-    }
-
-    public static CustomItemStackTileEntityRenderer treasureChestRenderer() {
-        return new CustomItemStackTileEntityRenderer(TreasureChestTileEntity::new);
-    }
-
-    public static CustomItemStackTileEntityRenderer skyrootBedRenderer() {
-        return new CustomItemStackTileEntityRenderer(SkyrootBedTileEntity::new);
-    }*/
-
-
 
     private static void registerBlockRenderer(Supplier<? extends Block> block, RenderType render) {
         ItemBlockRenderTypes.setRenderLayer(block.get(), render);

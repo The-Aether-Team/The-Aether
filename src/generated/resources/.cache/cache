@@ -93,7 +93,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-6555023f1d626e02d9c94b9ba45b9dfb64812934 assets/aether/lang/en_us.json
+fd2cc417979db0a3382c29411e3111f5688fa0a0 assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -440,6 +440,7 @@ b5b43302287d9992ab5078650316b85fc3d7390a assets/aether/models/item/stripped_skyr
 1b1d6c16f99be659cdb413d3accd0539a03a6c57 assets/aether/models/item/sun_altar.json
 51966e7232da9d7b1d74e738ca8509f9b267c5b2 assets/aether/models/item/swet_ball.json
 8de85e47366938afc1015ce143983d44c1a912e7 assets/aether/models/item/swet_cape.json
+98167609bf3898587f7565736a6fc24a7966cacd assets/aether/models/item/swet_spawn_egg.json
 22c665f1905de6fc0dc6940662b4157dde9a63b4 assets/aether/models/item/trapped_angelic_stone.json
 42ce7ae0bf07b5860e2b7a951e8a7c976de3d8ef assets/aether/models/item/trapped_carved_stone.json
 90a452290fb5cc02f295bd348a9fed65091537be assets/aether/models/item/trapped_hellfire_stone.json
@@ -937,6 +938,9 @@ ac593654401f07206226bb7c1651c24f40c30d1e data/aether/loot_tables/entities/sheepu
 e9b8dc48c6062fdb6248030b088aa0ee76c89868 data/aether/loot_tables/entities/sheepuff/red.json
 7888c5edc30843d98b169940017c1a5bceac35dc data/aether/loot_tables/entities/sheepuff/white.json
 9de14e6a605353517ea6bbf274a725aaa63ba293 data/aether/loot_tables/entities/sheepuff/yellow.json
+f0266b86d509baafb030ddb9915394ea06d372cd data/aether/loot_tables/entities/swet.json
+3b1e6ea2d4a13f7902a661e689c57fad18250768 data/aether/loot_tables/entities/swet/blue.json
+01cde0d6fa6e62bdacebb960143391595e0259c0 data/aether/loot_tables/entities/swet/gold.json
 f0266b86d509baafb030ddb9915394ea06d372cd data/aether/loot_tables/entities/whirlwind.json
 10bf2cbe13442289445bf3efad1ebfbfca1af799 data/aether/loot_tables/entities/zephyr.json
 e4a2ba2d01e4c21ae6efe3bd79af3ed295154cac data/aether/loot_tables/stripping/strip_golden_oak.json

@@ -13,7 +13,6 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.lwjgl.glfw.GLFW;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class AetherPlayerClientListener
@@ -37,12 +36,21 @@ public class AetherPlayerClientListener
 
     @SubscribeEvent
     public static void onClick(InputEvent.MouseInputEvent event) {
+        checkHit(event.getButton());
+    }
+
+    @SubscribeEvent
+    public static void onClick(InputEvent.KeyInputEvent event) {
+        checkHit(event.getKey());
+    }
+
+    private static void checkHit(int key) {
         Player player = Minecraft.getInstance().player;
         if (player != null) {
             IAetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                boolean isLeftClick = event.getButton() == GLFW.GLFW_MOUSE_BUTTON_1;
-                boolean isPressing = event.getAction() == GLFW.GLFW_PRESS;
-                boolean isHitting = isLeftClick && isPressing;
+                boolean isAttack = key == Minecraft.getInstance().options.keyAttack.getKey().getValue();
+                boolean isPressing = Minecraft.getInstance().options.keyAttack.isDown();
+                boolean isHitting = isAttack && isPressing;
                 AetherPacketHandler.sendToServer(new HittingPacket(player.getId(), isHitting));
                 aetherPlayer.setHitting(isHitting);
             });

@@ -2,6 +2,11 @@ package com.gildedgames.aether.common.inventory.container;
 
 import com.gildedgames.aether.common.registry.AetherContainerTypes;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +18,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.inventory.CraftingMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.inventory.RecipeBookType;
@@ -30,6 +34,7 @@ import top.theillusivec4.curios.common.inventory.CurioSlot;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
+import java.util.Optional;
 
 public class AccessoriesContainer extends InventoryMenu
 {
@@ -55,7 +60,6 @@ public class AccessoriesContainer extends InventoryMenu
     };
 
     public final LazyOptional<ICuriosItemHandler> curiosHandler;
-
     private final Player player;
 
     private final CraftingContainer craftMatrix = new CraftingContainer(this, 2, 2);
@@ -71,6 +75,7 @@ public class AccessoriesContainer extends InventoryMenu
         super(playerInventory, playerInventory.player.level.isClientSide, playerInventory.player);
         this.menuType = AetherContainerTypes.ACCESSORIES.get();
         this.containerId = containerId;
+        this.remoteSlots.clear();
         this.lastSlots.clear();
         this.slots.clear();
         this.player = playerInventory.player;
@@ -86,7 +91,7 @@ public class AccessoriesContainer extends InventoryMenu
         }
 
         for (int k = 0; k < 4; ++k) {
-            final EquipmentSlot equipmentslottype = VALID_EQUIPMENT_SLOTS[k];
+            final EquipmentSlot equipmentSlotType = VALID_EQUIPMENT_SLOTS[k];
             this.addSlot(new Slot(playerInventory, 36 + (3 - k), 59, 8 + k * 18)
             {
                 @Override
@@ -95,20 +100,20 @@ public class AccessoriesContainer extends InventoryMenu
                 }
 
                 @Override
-                public boolean mayPlace(ItemStack p_75214_1_) {
-                    return p_75214_1_.canEquip(equipmentslottype, AccessoriesContainer.this.player);
+                public boolean mayPlace(@Nonnull ItemStack stack) {
+                    return stack.canEquip(equipmentSlotType, AccessoriesContainer.this.player);
                 }
 
                 @Override
-                public boolean mayPickup(Player p_82869_1_) {
-                    ItemStack itemstack = this.getItem();
-                    return (itemstack.isEmpty() || p_82869_1_.isCreative() || !EnchantmentHelper.hasBindingCurse(itemstack)) && super.mayPickup(p_82869_1_);
+                public boolean mayPickup(@Nonnull Player player) {
+                    ItemStack itemStack = this.getItem();
+                    return (itemStack.isEmpty() || player.isCreative() || !EnchantmentHelper.hasBindingCurse(itemStack)) && super.mayPickup(player);
                 }
 
                 @Override
                 @OnlyIn(Dist.CLIENT)
                 public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-                    return Pair.of(InventoryMenu.BLOCK_ATLAS, ARMOR_SLOT_TEXTURES[equipmentslottype.getIndex()]);
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, ARMOR_SLOT_TEXTURES[equipmentSlotType.getIndex()]);
                 }
             });
         }
@@ -166,7 +171,26 @@ public class AccessoriesContainer extends InventoryMenu
 
     @Override
     public void slotsChanged(@Nonnull Container inventoryIn) {
-        CraftingMenu.slotChangedCraftingGrid(this, this.player.level, this.player, this.craftMatrix, this.craftResult);
+        if (!this.player.level.isClientSide) {
+            ServerPlayer playerMP = (ServerPlayer) this.player;
+            ItemStack itemStack = ItemStack.EMPTY;
+            MinecraftServer server = this.player.level.getServer();
+
+            if (server == null) {
+                return;
+            }
+            Optional<CraftingRecipe> recipe = server.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftMatrix, this.player.level);
+
+            if (recipe.isPresent()) {
+                CraftingRecipe craftingRecipe = recipe.get();
+                if (this.craftResult.setRecipeUsed(this.player.level, playerMP, craftingRecipe)) {
+                    itemStack = craftingRecipe.assemble(this.craftMatrix);
+                }
+            }
+            this.craftResult.setItem(0, itemStack);
+            this.setRemoteSlot(0, itemStack);
+            playerMP.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, this.incrementStateId(), 0, itemStack));
+        }
     }
 
     @Override
@@ -185,68 +209,68 @@ public class AccessoriesContainer extends InventoryMenu
 
     @Nonnull
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
+    public ItemStack quickMoveStack(@Nonnull Player playerIn, int index) {
+        ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
 
-        if (slot != null && slot.hasItem()) {
-            ItemStack itemstack1 = slot.getItem();
-            itemstack = itemstack1.copy();
-            EquipmentSlot entityequipmentslot = Mob.getEquipmentSlotForItem(itemstack);
+        if (slot.hasItem()) {
+            ItemStack itemStack1 = slot.getItem();
+            itemStack = itemStack1.copy();
+            EquipmentSlot equipmentSlot = Mob.getEquipmentSlotForItem(itemStack);
             if (index == 0) {
-                if (!this.moveItemStackTo(itemstack1, 9, 45, true)) {
+                if (!this.moveItemStackTo(itemStack1, 9, 45, true)) {
                     return ItemStack.EMPTY;
                 }
-                slot.onQuickCraft(itemstack1, itemstack);
+                slot.onQuickCraft(itemStack1, itemStack);
             } else if (index < 5) {
-                if (!this.moveItemStackTo(itemstack1, 9, 45, false)) {
+                if (!this.moveItemStackTo(itemStack1, 9, 45, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index < 9) {
-                if (!this.moveItemStackTo(itemstack1, 9, 45, false)) {
+                if (!this.moveItemStackTo(itemStack1, 9, 45, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (entityequipmentslot.getType() == EquipmentSlot.Type.ARMOR && !this.slots.get(8 - entityequipmentslot.getIndex()).hasItem()) {
-                int i = 8 - entityequipmentslot.getIndex();
-                if (!this.moveItemStackTo(itemstack1, i, i + 1, false)) {
+            } else if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR && !this.slots.get(8 - equipmentSlot.getIndex()).hasItem()) {
+                int i = 8 - equipmentSlot.getIndex();
+                if (!this.moveItemStackTo(itemStack1, i, i + 1, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index < 46 && !CuriosApi.getCuriosHelper().getCurioTags(itemstack.getItem()).isEmpty()) {
-                if (!this.moveItemStackTo(itemstack1, 46, this.slots.size(), false)) {
+            } else if (index < 46 && !CuriosApi.getCuriosHelper().getCurioTags(itemStack.getItem()).isEmpty()) {
+                if (!this.moveItemStackTo(itemStack1, 46, this.slots.size(), false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (entityequipmentslot == EquipmentSlot.OFFHAND && !(this.slots.get(45)).hasItem()) {
-                if (!this.moveItemStackTo(itemstack1, 45, 46, false)) {
+            } else if (equipmentSlot == EquipmentSlot.OFFHAND && !(this.slots.get(45)).hasItem()) {
+                if (!this.moveItemStackTo(itemStack1, 45, 46, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index < 36) {
-                if (!this.moveItemStackTo(itemstack1, 36, 45, false)) {
+                if (!this.moveItemStackTo(itemStack1, 36, 45, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index < 45) {
-                if (!this.moveItemStackTo(itemstack1, 9, 36, false)) {
+                if (!this.moveItemStackTo(itemStack1, 9, 36, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 9, 45, false)) {
+            } else if (!this.moveItemStackTo(itemStack1, 9, 45, false)) {
                 return ItemStack.EMPTY;
             }
 
-            if (itemstack1.isEmpty()) {
+            if (itemStack1.isEmpty()) {
                 slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
 
-            if (itemstack1.getCount() == itemstack.getCount()) {
+            if (itemStack1.getCount() == itemStack.getCount()) {
                 return ItemStack.EMPTY;
             }
+            slot.onTake(playerIn, itemStack1);
 
-            /*ItemStack itemstack2 = */slot.onTake(playerIn, itemstack1); //TODO: Fix this if broken, slot.onTake returns void now.
             if (index == 0) {
-                playerIn.drop(itemstack1, false);
+                playerIn.drop(itemStack1, false);
             }
         }
-        return itemstack;
+        return itemStack;
     }
 
     @Nonnull
@@ -256,8 +280,8 @@ public class AccessoriesContainer extends InventoryMenu
     }
 
     @Override
-    public void fillCraftSlotsStackedContents(StackedContents recipeItemHelper) {
-        this.craftMatrix.fillStackedContents(recipeItemHelper);
+    public void fillCraftSlotsStackedContents(@Nonnull StackedContents itemHelper) {
+        this.craftMatrix.fillStackedContents(itemHelper);
     }
 
     @Override
@@ -267,8 +291,8 @@ public class AccessoriesContainer extends InventoryMenu
     }
 
     @Override
-    public boolean recipeMatches(Recipe<? super CraftingContainer> iRecipe) {
-        return iRecipe.matches(this.craftMatrix, this.player.level);
+    public boolean recipeMatches(Recipe<? super CraftingContainer> recipe) {
+        return recipe.matches(this.craftMatrix, this.player.level);
     }
 
     @Override

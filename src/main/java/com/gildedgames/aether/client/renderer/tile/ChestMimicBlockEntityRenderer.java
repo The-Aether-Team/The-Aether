@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.tile;
 
-import com.gildedgames.aether.common.entity.tile.ChestMimicTileEntity;
+import com.gildedgames.aether.common.entity.tile.ChestMimicBlockEntity;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.block.dungeon.ChestMimicBlock;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -73,7 +73,7 @@ public class ChestMimicBlockEntityRenderer<T extends BlockEntity> implements Blo
 			matrixStackIn.translate(0.5D, 0.5D, 0.5D);
 			matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(-f));
 			matrixStackIn.translate(-0.5D, -0.5D, -0.5D);
-			DoubleBlockCombiner.NeighborCombineResult<? extends ChestMimicTileEntity> icallbackwrapper;
+			DoubleBlockCombiner.NeighborCombineResult<? extends ChestMimicBlockEntity> icallbackwrapper;
 			if (world != null) {
 				icallbackwrapper = chestMimicBlock.combine(blockstate, world, tileEntityIn.getBlockPos(), true);
 			} else {

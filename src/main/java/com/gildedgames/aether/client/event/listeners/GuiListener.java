@@ -80,21 +80,19 @@ public class GuiListener
 						(button, matrixStack, x, y) ->
 								screen.renderTooltip(matrixStack, new TranslatableComponent(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether"), x + 4, y + 12));
 
-				//event.addWidget(themeSwitchButton);
+				event.addListener(themeSwitchButton);
 			}
 		}
 		if (screen instanceof InventoryScreen || screen instanceof CuriosScreen) {
 			AbstractContainerScreen<?> inventoryScreen = (AbstractContainerScreen<?>) screen;
-			//event.addWidget(new AccessoryButton(inventoryScreen, inventoryScreen.getGuiLeft() + 27, inventoryScreen.getGuiTop() + 68, AccessoriesScreen.ACCESSORIES_BUTTON));
+			event.addListener(new AccessoryButton(inventoryScreen, inventoryScreen.getGuiLeft() + 27, inventoryScreen.getGuiTop() + 68, AccessoriesScreen.ACCESSORIES_BUTTON));
 		}
-		if (screen instanceof CreativeModeInventoryScreen) {
-			CreativeModeInventoryScreen creativeScreen = (CreativeModeInventoryScreen) screen;
-			//event.addWidget(new AccessoryButton(creativeScreen, creativeScreen.getGuiLeft() + 74, creativeScreen.getGuiTop() + 40, AccessoriesScreen.ACCESSORIES_BUTTON));
+		if (screen instanceof CreativeModeInventoryScreen creativeScreen) {
+			event.addListener(new AccessoryButton(creativeScreen, creativeScreen.getGuiLeft() + 74, creativeScreen.getGuiTop() + 40, AccessoriesScreen.ACCESSORIES_BUTTON));
 		}
-		if (screen instanceof AccessoriesScreen) {
+		if (screen instanceof AccessoriesScreen accessoriesScreen) {
 			if (shouldAddButton) {
-				AccessoriesScreen accessoriesScreen = (AccessoriesScreen) screen;
-				//event.addWidget(new AccessoryButton(accessoriesScreen, accessoriesScreen.getGuiLeft() + 9, accessoriesScreen.getGuiTop() + 68, AccessoriesScreen.ACCESSORIES_BUTTON));
+				event.addListener(new AccessoryButton(accessoriesScreen, accessoriesScreen.getGuiLeft() + 9, accessoriesScreen.getGuiTop() + 68, AccessoriesScreen.ACCESSORIES_BUTTON));
 			} else {
 				shouldAddButton = true;
 			}

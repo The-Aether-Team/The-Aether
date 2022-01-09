@@ -129,11 +129,10 @@ public class DimensionListener
 
     @SubscribeEvent
     public static void onSleepFinishedTime(SleepFinishedTimeEvent event) {
-        if (event.getWorld() instanceof ServerLevel) {
-            ServerLevel world = (ServerLevel) event.getWorld();
-            MinecraftServer server = world.getServer();
-            for (ServerLevel serverworld : server.getAllLevels()) {
-                serverworld.setDayTime(0);
+        if (event.getWorld() instanceof ServerLevel level) {
+            MinecraftServer server = level.getServer();
+            for (ServerLevel serverLevel : server.getAllLevels()) {
+                serverLevel.setDayTime(event.getNewTime());
             }
         }
     }

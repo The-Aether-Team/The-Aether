@@ -29,13 +29,13 @@ public class OpenAccessoriesPacket extends AetherPacket
     }
 
     @Override
-    public void execute(Player playerEntity) {
+    public void execute(Player playerEntity) { //TODO: This doesn't work. Wait for a fix on Curios' end for this behavior being bugged.
         if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
-            ItemStack itemStack = serverPlayer.getInventory().getSelected();
-            serverPlayer.getInventory().setPickedItem(ItemStack.EMPTY);
+            ItemStack itemStack = serverPlayer.inventoryMenu.getCarried();
+            serverPlayer.inventoryMenu.setCarried(ItemStack.EMPTY);
             NetworkHooks.openGui(serverPlayer, new AccessoriesProvider());
             if (!itemStack.isEmpty()) {
-                serverPlayer.getInventory().setPickedItem(itemStack);
+                serverPlayer.inventoryMenu.setCarried(itemStack);
                 AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(serverPlayer.getId(), itemStack), serverPlayer);
             }
         }

@@ -3,17 +3,16 @@ package com.gildedgames.aether.client.renderer.player.layer;
 import com.gildedgames.aether.common.entity.projectile.dart.GoldenDartEntity;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.layers.StuckInBodyLayer;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.layers.StuckInBodyLayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,9 +23,9 @@ public class GoldenDartLayer<T extends LivingEntity, M extends PlayerModel<T>> e
 {
     private final EntityRenderDispatcher dispatcher;
 
-    public GoldenDartLayer(EntityRendererProvider.Context context, LivingEntityRenderer<T, M> renderer) {
+    public GoldenDartLayer(EntityRenderDispatcher renderDispatcher, LivingEntityRenderer<T, M> renderer) {
         super(renderer);
-        this.dispatcher = context.getEntityRenderDispatcher();
+        this.dispatcher = renderDispatcher;
     }
 
     @Override
