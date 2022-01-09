@@ -42,6 +42,7 @@ public class AetherModelLayers
     public static final ModelLayerLocation GLOVES_SLEEVE_SLIM = register("gloves_sleeve_slim");
     public static final ModelLayerLocation CAPE = register("cape");
     public static final ModelLayerLocation REPULSION_SHIELD = register("repulsion_shield");
+    public static final ModelLayerLocation REPULSION_SHIELD_SLIM = register("repulsion_shield_slim");
 
     private static ModelLayerLocation register(String name) {
         return register(name, "main");
