@@ -1,27 +1,30 @@
 package com.gildedgames.aether.common.entity.miscellaneous;
 
-import net.minecraft.entity.*;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MoverType;
+import net.minecraftforge.network.NetworkHooks;
 
 public abstract class AbstractParachuteEntity extends Entity
 {
     private float parachuteSpeed;
 
-    public AbstractParachuteEntity(EntityType<?> entityType, World world) {
+    public AbstractParachuteEntity(EntityType<?> entityType, Level world) {
         super(entityType, world);
         this.blocksBuilding = true;
-        this.setDeltaMovement(Vector3d.ZERO);
+        this.setDeltaMovement(Vec3.ZERO);
         this.xo = this.getX();
         this.yo = this.getY();
         this.zo = this.getZ();
@@ -51,17 +54,17 @@ public abstract class AbstractParachuteEntity extends Entity
 
     private void moveParachute(Entity passenger) {
         if (this.isVehicle()) {
-            Vector3d parachuteVec = this.getDeltaMovement();
-            Vector3d passengerVec = passenger.getDeltaMovement();
+            Vec3 parachuteVec = this.getDeltaMovement();
+            Vec3 passengerVec = passenger.getDeltaMovement();
             if (passengerVec.x() != 0.0D || passengerVec.z() != 0.0D) {
-                this.parachuteSpeed = MathHelper.approach(this.parachuteSpeed, 0.8F, 0.025F);
+                this.parachuteSpeed = Mth.approach(this.parachuteSpeed, 0.8F, 0.025F);
             } else {
-                this.parachuteSpeed = MathHelper.approach(this.parachuteSpeed, 0.0F, 0.0005F);
+                this.parachuteSpeed = Mth.approach(this.parachuteSpeed, 0.0F, 0.0005F);
             }
             double x = this.parachuteSpeed * (passengerVec.x() * 12.0D);
             double z = this.parachuteSpeed * (passengerVec.z() * 12.0D);
-            this.setDeltaMovement(parachuteVec.add((new Vector3d(x, 0.0D, z)).subtract(parachuteVec).scale(0.2D)));
-            Vector3d parachuteVec2 = this.getDeltaMovement();
+            this.setDeltaMovement(parachuteVec.add((new Vec3(x, 0.0D, z)).subtract(parachuteVec).scale(0.2D)));
+            Vec3 parachuteVec2 = this.getDeltaMovement();
             this.setDeltaMovement(parachuteVec2.x(), -0.15, parachuteVec2.z());
         }
     }
@@ -119,13 +122,8 @@ public abstract class AbstractParachuteEntity extends Entity
 	}
 
     @Override
-    protected boolean isMovementNoisy() {
-        return false;
-    }
-
-    @Override
     public boolean isPickable() {
-        return !this.removed;
+        return !this.isRemoved();
     }
 
     @Override
@@ -135,13 +133,13 @@ public abstract class AbstractParachuteEntity extends Entity
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundNBT nbt) { }
+    protected void addAdditionalSaveData(CompoundTag nbt) { }
 
     @Override
-    protected void readAdditionalSaveData(CompoundNBT nbt) { }
+    protected void readAdditionalSaveData(CompoundTag nbt) { }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

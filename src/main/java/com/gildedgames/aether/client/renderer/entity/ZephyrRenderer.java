@@ -1,23 +1,39 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.ZephyrTransparencyLayer;
+import com.gildedgames.aether.client.renderer.entity.model.BaseZephyrModel;
+import com.gildedgames.aether.client.renderer.entity.model.OldZephyrModel;
 import com.gildedgames.aether.client.renderer.entity.model.ZephyrModel;
 import com.gildedgames.aether.common.entity.monster.ZephyrEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-public class ZephyrRenderer extends MobRenderer<ZephyrEntity, ZephyrModel> {
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+@OnlyIn(Dist.CLIENT)
+public class ZephyrRenderer extends MobRenderer<ZephyrEntity, BaseZephyrModel>
+{
     private static final ResourceLocation ZEPHYR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr_main.png");
-    public ZephyrRenderer(EntityRendererManager renderManagerIn) {
-        super(renderManagerIn, new ZephyrModel(), 0.5F);
-        addLayer(new ZephyrTransparencyLayer(this));
+    private static final ResourceLocation OLD_ZEPHYR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr_old.png");
+
+    private final ZephyrModel regularModel;
+    private final OldZephyrModel oldModel;
+    private final ZephyrTransparencyLayer transparencyLayer;
+
+    public ZephyrRenderer(EntityRendererProvider.Context renderer) {
+        super(renderer, new ZephyrModel(renderer.bakeLayer(AetherModelLayers.ZEPHYR)), 0.5F);
+        addLayer(this.transparencyLayer = new ZephyrTransparencyLayer(this, renderer.getModelSet()));
+        this.regularModel = (ZephyrModel) this.model;
+        this.oldModel = new OldZephyrModel(renderer.bakeLayer(AetherModelLayers.ZEPHYR_CLASSIC));
     }
 
     @Override
-    protected void scale(ZephyrEntity zephyr, MatrixStack matrixStackIn, float partialTickTime) {
+    protected void scale(ZephyrEntity zephyr, PoseStack matrixStackIn, float partialTickTime) {
         float f1 = ((float) zephyr.getAttackCharge() + partialTickTime) / 20.0F;
         if (f1 < 0.0F)
         {
@@ -31,15 +47,19 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, ZephyrModel> {
         matrixStackIn.scale(f3, f2, f3);
         matrixStackIn.translate(0, 0.5, 0);
 
-        /*if (AetherConfig.visual_options.legacy_models) TODO: Re-enable this when the config is put back in.
-        {
-            matrixStackIn.scale(0.8F, 0.8F, 0.8F);
-            matrixStackIn.translate(0, -0.1, 0);
-        }*/
-
+        // TODO: Re-enable this when the config is put back in.
+//      if (AetherConfig.visual_options.legacy_models) { 
+//          matrixStackIn.scale(0.8F, 0.8F, 0.8F);
+//          matrixStackIn.translate(0, -0.1, 0);
+//      }
     }
 
-    @Override
+    @Override    // TODO: Configurable old zephyr model
+    public BaseZephyrModel getModel() {
+        return regularModel;
+    }
+
+    @Override   // TODO: Configurable old zephyr texture
     public ResourceLocation getTextureLocation(ZephyrEntity entity) {
         return ZEPHYR_TEXTURE;
     }

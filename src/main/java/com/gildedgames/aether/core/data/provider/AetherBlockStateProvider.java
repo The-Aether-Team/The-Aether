@@ -2,18 +2,29 @@ package com.gildedgames.aether.core.data.provider;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
-import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.state.properties.BedPart;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.BedPart;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.function.Supplier;
+
+import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SnowyDirtBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
 
 public abstract class AetherBlockStateProvider extends BlockStateProvider
 {
@@ -61,7 +72,7 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider
                 SaplingBlock.STAGE);
     }
 
-    public void stairs(Supplier<? extends StairsBlock> block, Supplier<? extends Block> baseBlock, String location) {
+    public void stairs(Supplier<? extends StairBlock> block, Supplier<? extends Block> baseBlock, String location) {
         stairsBlock(block.get(), texture(name(baseBlock), location));
     }
 

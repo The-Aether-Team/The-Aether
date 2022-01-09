@@ -1,52 +1,48 @@
 package com.gildedgames.aether.common.entity.passive;
 
-import com.gildedgames.aether.core.api.AetherAPI;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.monster.GhastEntity;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.FlyingMob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.BaseComponent;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.entity.ai.goal.Goal.Flag;
-
-public class AerwhaleEntity extends FlyingEntity implements IMob {
+public class AerwhaleEntity extends FlyingMob implements Enemy {
 	public float motionYaw, motionPitch;
 
-	public AerwhaleEntity(EntityType<? extends AerwhaleEntity> type, World worldIn) {
+	public AerwhaleEntity(EntityType<? extends AerwhaleEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.noCulling = true;
 		this.moveControl = new AerwhaleEntity.MoveHelperController(this);
 	}
 
-	public AerwhaleEntity(World worldIn) {
+	public AerwhaleEntity(Level worldIn) {
 		this(AetherEntityTypes.AERWHALE.get(), worldIn);
-		this.yRot = 360.0F * this.random.nextFloat();
-		this.xRot = 90.0F * this.random.nextFloat() - 45.0F;
+		this.setYRot(360.0F * this.random.nextFloat());
+		this.setXRot(90.0F * this.random.nextFloat() - 45.0F);
 		this.moveControl = new AerwhaleEntity.MoveHelperController(this);
 	}
 	
@@ -58,17 +54,17 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 //		this.goalSelector.addGoal(5, new AerwhaleEntity.TravelCourseGoal(this));
 	}
 
-	public static AttributeModifierMap.MutableAttribute createMobAttributes() {
-		return FlyingEntity.createMobAttributes()
+	public static AttributeSupplier.Builder createMobAttributes() {
+		return FlyingMob.createMobAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 1.0D)
 				.add(Attributes.MAX_HEALTH, 20.0D);
 	}
 	
 	@Override
-	public boolean checkSpawnRules(IWorld worldIn, SpawnReason spawnReasonIn) {
-		BlockPos pos = new BlockPos(MathHelper.floor(this.getX()), MathHelper.floor(this.getBoundingBox().minY), MathHelper.floor(this.getZ()));
+	public boolean checkSpawnRules(LevelAccessor worldIn, MobSpawnType spawnReasonIn) {
+		BlockPos pos = new BlockPos(Mth.floor(this.getX()), Mth.floor(this.getBoundingBox().minY), Mth.floor(this.getZ()));
 		
-		return this.random.nextInt(65) == 0 && !worldIn.getBlockCollisions(this, this.getBoundingBox()).findAny().isPresent()
+		return this.random.nextInt(65) == 0 && !worldIn.getBlockCollisions(this, this.getBoundingBox()).iterator().hasNext()
 			&& !worldIn.containsAnyLiquid(this.getBoundingBox()) && worldIn.getMaxLocalRawBrightness(pos) > 8
 			&& super.checkSpawnRules(worldIn, spawnReasonIn);
 	}
@@ -84,30 +80,31 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 		this.clearFire();
 		
 		if (this.getY() < -64) {
-			this.remove();
+			this.discard();
 		}
 	}
 	
 	@Override
-	public void travel(Vector3d positionIn) {
+	public void travel(Vec3 positionIn) {
 		List<Entity> passengers = this.getPassengers();
 		if (!passengers.isEmpty()) {
 			Entity entity = passengers.get(0);
-			if (entity instanceof PlayerEntity) {
-				PlayerEntity player = (PlayerEntity)entity;
-				
-				this.motionYaw = this.yRotO = this.yRot = player.yRot;
-				this.motionPitch = this.xRotO = this.xRot = player.xRot;
+			if (entity instanceof Player) {
+				Player player = (Player)entity;
+				this.setYRot(player.getYRot());
+				this.motionYaw = this.yRotO = this.getYRot();
+				this.setXRot(player.getXRot());
+				this.motionPitch = this.xRotO = this.getXRot();
 				
 				this.motionYaw = this.yHeadRot = player.yHeadRot;
 				
-				positionIn = new Vector3d(player.xxa, 0.0, (player.zza <= 0.0F)? player.zza * 0.25F : player.zza);
+				positionIn = new Vec3(player.xxa, 0.0, (player.zza <= 0.0F)? player.zza * 0.25F : player.zza);
 				
 				if (IAetherPlayer.get(player).map(IAetherPlayer::isJumping).orElse(false)) {
-					this.setDeltaMovement(new Vector3d(0.0, 0.0, 0.0));
+					this.setDeltaMovement(new Vec3(0.0, 0.0, 0.0));
 				} else {
-					double d0 = Math.toRadians(player.yRot - 90.0);
-					double d1 = Math.toRadians(-player.xRot);
+					double d0 = Math.toRadians(player.getYRot() - 90.0);
+					double d1 = Math.toRadians(-player.getXRot());
 					double d2 = Math.cos(d1);
 					this.setDeltaMovement(
 						0.98 * (this.getDeltaMovement().x + 0.05 * Math.cos(d0) * d2),
@@ -126,7 +123,7 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 				this.animationSpeedOld = this.animationSpeed;
 				double d0 = this.getX() - this.xo;
 				double d1 = this.getZ() - this.zo;
-				float f4 = 4.0F * MathHelper.sqrt(d0*d0 + d1*d1);
+				float f4 = 4.0F * Mth.sqrt((float) (d0*d0 + d1*d1));
 				
 				if (f4 > 1.0F) {
 					f4 = 1.0F;
@@ -143,14 +140,14 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 	}
 	
 	@Override
-	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
 		if (player.getUUID().getMostSignificantBits() == 220717875589366683L && player.getUUID().getLeastSignificantBits() == -7181826737698904209L) {
 			player.startRiding(this);
 			if (!this.level.isClientSide) {
-				TextComponent msg = new StringTextComponent("Serenity is the queen of W(h)ales!!");
+				BaseComponent msg = new TextComponent("Serenity is the queen of W(h)ales!!");
 				player.level.players().forEach(p -> p.sendMessage(msg, player.getUUID()));
 			}
-			return ActionResultType.sidedSuccess(this.level.isClientSide);
+			return InteractionResult.sidedSuccess(this.level.isClientSide);
 		}
 		return super.mobInteract(player, hand);
 	}
@@ -183,7 +180,7 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 	/**
 	 * Copied from {@link GhastEntity.RandomFlyGoal}
 	 */
-	static class MoveHelperController extends MovementController {
+	static class MoveHelperController extends MoveControl {
 		private final AerwhaleEntity parentEntity;
 		private int courseChangeCooldown;
 
@@ -194,13 +191,13 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 
 		@Override
 		public void tick() {
-			if (this.operation == MovementController.Action.MOVE_TO) {
+			if (this.operation == MoveControl.Operation.MOVE_TO) {
 				if (this.courseChangeCooldown-- <= 0) {
 					this.courseChangeCooldown += this.parentEntity.getRandom().nextInt(5) + 2;
-					Vector3d Vector3d = new Vector3d(this.wantedX - this.parentEntity.getX(), this.wantedY - this.parentEntity.getY(), this.wantedZ - this.parentEntity.getZ());
+					Vec3 Vector3d = new Vec3(this.wantedX - this.parentEntity.getX(), this.wantedY - this.parentEntity.getY(), this.wantedZ - this.parentEntity.getZ());
 					double d0 = Vector3d.length();
 					Vector3d = Vector3d.normalize();
-					if (this.canReach(Vector3d, MathHelper.ceil(d0))) {
+					if (this.canReach(Vector3d, Mth.ceil(d0))) {
 						this.parentEntity.setDeltaMovement(this.parentEntity.getDeltaMovement().add(Vector3d.scale(0.1D)));
 						double dx = this.wantedX - this.mob.getX();
 						double dz = this.wantedZ - this.mob.getZ();
@@ -211,19 +208,19 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 							return;
 						}
 
-						this.parentEntity.yRotO = this.parentEntity.yRot;
-						this.parentEntity.yRot = (float)(MathHelper.atan2(dz, dx) * (180F / (float)Math.PI)) - 90.0F;
-						this.parentEntity.xRot = -(float)(Math.atan(dy) * 73.0);
+						this.parentEntity.yRotO = this.parentEntity.getYRot();
+						this.parentEntity.setYRot((float)(Mth.atan2(dz, dx) * (180F / (float)Math.PI)) - 90.0F);
+						this.parentEntity.setXRot(-(float)(Math.atan(dy) * 73.0));
 					}
 					else {
-						this.operation = MovementController.Action.WAIT;
+						this.operation = MoveControl.Operation.WAIT;
 					}
 				}
 			}
 		}
 
-		private boolean canReach(Vector3d p_220673_1_, int p_220673_2_) {
-			AxisAlignedBB axisalignedbb = this.parentEntity.getBoundingBox();
+		private boolean canReach(Vec3 p_220673_1_, int p_220673_2_) {
+			AABB axisalignedbb = this.parentEntity.getBoundingBox();
 
 			for (int i = 1; i < p_220673_2_; ++i) {
 				axisalignedbb = axisalignedbb.move(p_220673_1_);
@@ -250,7 +247,7 @@ public class AerwhaleEntity extends FlyingEntity implements IMob {
 		 */
 		@Override
 		public boolean canUse() {
-			MovementController movementcontroller = this.parentEntity.getMoveControl();
+			MoveControl movementcontroller = this.parentEntity.getMoveControl();
 			if (!movementcontroller.hasWanted()) {
 				return true;
 			}

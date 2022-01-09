@@ -2,12 +2,12 @@ package com.gildedgames.aether.common.block.util;
 
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.state.StateContainer;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.StateDefinition;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class AetherDoubleDropsRotatedPillarBlock extends RotatedPillarBlock implements IAetherDoubleDropBlock
 {
@@ -17,7 +17,7 @@ public class AetherDoubleDropsRotatedPillarBlock extends RotatedPillarBlock impl
 	}
 	
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
 		builder.add(AetherBlockStateProperties.DOUBLE_DROPS);
 	}

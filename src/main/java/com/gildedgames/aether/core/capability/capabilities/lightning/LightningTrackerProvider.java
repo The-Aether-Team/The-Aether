@@ -2,14 +2,15 @@ package com.gildedgames.aether.core.capability.capabilities.lightning;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class LightningTrackerProvider implements ICapabilityProvider, INBTSerializable<CompoundNBT>
+import javax.annotation.Nonnull;
+
+public class LightningTrackerProvider implements ICapabilitySerializable<CompoundTag>
 {
     private final ILightningTracker lightningTracker;
 
@@ -18,18 +19,19 @@ public class LightningTrackerProvider implements ICapabilityProvider, INBTSerial
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        return lightningTracker.serializeNBT();
+    public CompoundTag serializeNBT() {
+        return this.lightningTracker.serializeNBT();
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
-        lightningTracker.deserializeNBT(nbt);
+    public void deserializeNBT(CompoundTag nbt) {
+        this.lightningTracker.deserializeNBT(nbt);
     }
 
     @SuppressWarnings("unchecked")
+    @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
         if (cap == AetherCapabilities.LIGHTNING_TRACKER_CAPABILITY) {
             return LazyOptional.of(() -> (T) this.lightningTracker);
         }

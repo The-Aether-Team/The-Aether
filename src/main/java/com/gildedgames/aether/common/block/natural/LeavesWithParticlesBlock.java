@@ -2,17 +2,17 @@ package com.gildedgames.aether.common.block.natural;
 
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.block.util.IAetherDoubleDropBlock;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.ParticleStatus;
-import net.minecraft.entity.EntityType;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.client.ParticleStatus;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -21,9 +21,9 @@ import java.util.function.Supplier;
 
 public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoubleDropBlock
 {
-	private final Supplier<BasicParticleType> particle;
+	private final Supplier<SimpleParticleType> particle;
 
-	public LeavesWithParticlesBlock(Supplier<BasicParticleType> particle, AbstractBlock.Properties properties) {
+	public LeavesWithParticlesBlock(Supplier<SimpleParticleType> particle, BlockBehaviour.Properties properties) {
 
 		super(properties.noOcclusion().isValidSpawn((state, reader, pos, entity) -> (entity == EntityType.OCELOT || entity == EntityType.PARROT)).isSuffocating((state, reader, pos) -> false).isViewBlocking((state, reader, pos) -> false));
 		this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
@@ -31,14 +31,14 @@ public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoub
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
 		builder.add(AetherBlockStateProperties.DOUBLE_DROPS);
 	}
 	
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+	public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
 		super.animateTick(stateIn, worldIn, pos, rand);
 		
 		if (worldIn.isClientSide) {

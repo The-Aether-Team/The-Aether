@@ -354,6 +354,10 @@ public class AetherSoundData extends SoundDefinitionsProvider
                 definition().with(sound("aether:entity/moa/say"))
                 .subtitle("subtitles.entity.moa.hurt")
         );
+        this.add(AetherSoundEvents.ENTITY_MOA_SADDLE,
+                definition().with(sound("minecraft:mob/horse/leather"))
+                        .subtitle("subtitles.entity.moa.saddle")
+        );
         this.add(AetherSoundEvents.ENTITY_MOA_FLAP,
                 definition().with(sound("minecraft:mob/bat/takeoff"))
                         .subtitle("subtitles.entity.moa.flap")

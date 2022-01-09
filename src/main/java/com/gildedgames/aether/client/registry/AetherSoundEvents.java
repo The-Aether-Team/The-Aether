@@ -2,11 +2,11 @@ package com.gildedgames.aether.client.registry;
 
 import com.gildedgames.aether.Aether;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class AetherSoundEvents
 {
@@ -71,6 +71,7 @@ public class AetherSoundEvents
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_AMBIENT = register("entity.moa.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_DEATH = register("entity.moa.death");
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_HURT = register("entity.moa.hurt");
+	public static final RegistryObject<SoundEvent> ENTITY_MOA_SADDLE = register("entity.moa.saddle");
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_FLAP = register("entity.moa.flap");
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_EGG = register("entity.moa.egg");
 

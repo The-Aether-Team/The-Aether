@@ -1,19 +1,22 @@
 package com.gildedgames.aether.common.entity.ai.navigator;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.network.DebugPacketSender;
-import net.minecraft.pathfinding.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.network.protocol.game.DebugPackets;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
-public class FallPathNavigator extends GroundPathNavigator
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+
+public class FallPathNavigator extends GroundPathNavigation
 {
     private BlockPos pathToPosition;
 
-    public FallPathNavigator(MobEntity mobEntity, World world) {
+    public FallPathNavigator(Mob mobEntity, Level world) {
         super(mobEntity, world);
     }
 
@@ -52,16 +55,16 @@ public class FallPathNavigator extends GroundPathNavigator
                 if (this.canUpdatePath()) {
                     this.followThePath();
                 } else if (this.path != null && !this.path.isDone()) {
-                    Vector3d vector3d = this.getTempMobPos();
-                    if (MathHelper.floor(this.mob.getX()) == MathHelper.floor(vector3d.x) && MathHelper.floor(this.mob.getY()) == MathHelper.floor(vector3d.y) && MathHelper.floor(this.mob.getZ()) == MathHelper.floor(vector3d.z)) {
+                    Vec3 vector3d = this.getTempMobPos();
+                    if (Mth.floor(this.mob.getX()) == Mth.floor(vector3d.x) && Mth.floor(this.mob.getY()) == Mth.floor(vector3d.y) && Mth.floor(this.mob.getZ()) == Mth.floor(vector3d.z)) {
                         this.path.advance();
                     }
                 }
-                DebugPacketSender.sendPathFindingPacket(this.level, this.mob, this.path, this.maxDistanceToWaypoint);
+                DebugPackets.sendPathFindingPacket(this.level, this.mob, this.path, this.maxDistanceToWaypoint);
                 if (this.path != null && !this.isDone()) {
-                    Vector3d vector3d2 = this.path.getNextEntityPos(this.mob);
+                    Vec3 vector3d2 = this.path.getNextEntityPos(this.mob);
                     BlockPos blockpos = new BlockPos(vector3d2);
-                    this.mob.getMoveControl().setWantedPosition(vector3d2.x, this.level.getBlockState(blockpos.below()).isAir() ? vector3d2.y : WalkNodeProcessor.getFloorLevel(this.level, blockpos), vector3d2.z, this.speedModifier);
+                    this.mob.getMoveControl().setWantedPosition(vector3d2.x, this.level.getBlockState(blockpos.below()).isAir() ? vector3d2.y : WalkNodeEvaluator.getFloorLevel(this.level, blockpos), vector3d2.z, this.speedModifier);
                 }
             }
         } else {

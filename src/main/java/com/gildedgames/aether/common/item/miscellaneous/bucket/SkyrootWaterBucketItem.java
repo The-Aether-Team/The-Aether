@@ -1,26 +1,31 @@
 package com.gildedgames.aether.common.item.miscellaneous.bucket;
 
 import com.gildedgames.aether.common.registry.AetherItems;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ILiquidContainer;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
+
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 
 public class SkyrootWaterBucketItem extends Item
 {
@@ -28,17 +33,17 @@ public class SkyrootWaterBucketItem extends Item
         super(properties);
     }
 
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack itemstack = playerIn.getItemInHand(handIn);
-        RayTraceResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, RayTraceContext.FluidMode.NONE);
-        ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(playerIn, worldIn, itemstack, raytraceresult);
+        HitResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.NONE);
+        InteractionResultHolder<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(playerIn, worldIn, itemstack, raytraceresult);
         if (ret != null) return ret;
-        if (raytraceresult.getType() == RayTraceResult.Type.MISS) {
-            return ActionResult.pass(itemstack);
-        } else if (raytraceresult.getType() != RayTraceResult.Type.BLOCK) {
-            return ActionResult.pass(itemstack);
+        if (raytraceresult.getType() == HitResult.Type.MISS) {
+            return InteractionResultHolder.pass(itemstack);
+        } else if (raytraceresult.getType() != HitResult.Type.BLOCK) {
+            return InteractionResultHolder.pass(itemstack);
         } else {
-            BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult) raytraceresult;
+            BlockHitResult blockraytraceresult = (BlockHitResult) raytraceresult;
             BlockPos blockpos = blockraytraceresult.getBlockPos();
             Direction direction = blockraytraceresult.getDirection();
             BlockPos blockpos1 = blockpos.relative(direction);
@@ -47,37 +52,37 @@ public class SkyrootWaterBucketItem extends Item
                 BlockPos blockpos2 = canBlockContainFluid(worldIn, blockpos, blockstate) ? blockpos : blockpos1;
                 if (this.tryPlaceContainedLiquid(playerIn, worldIn, blockpos2, blockraytraceresult)) {
                     playerIn.awardStat(Stats.ITEM_USED.get(this));
-                    return ActionResult.sidedSuccess(!playerIn.abilities.instabuild ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : itemstack, worldIn.isClientSide());
+                    return InteractionResultHolder.sidedSuccess(!playerIn.getAbilities().instabuild ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : itemstack, worldIn.isClientSide());
                 } else {
-                    return ActionResult.fail(itemstack);
+                    return InteractionResultHolder.fail(itemstack);
                 }
             } else {
-                return ActionResult.fail(itemstack);
+                return InteractionResultHolder.fail(itemstack);
             }
         }
     }
 
-    public boolean tryPlaceContainedLiquid(@Nullable PlayerEntity player, World worldIn, BlockPos posIn, @Nullable BlockRayTraceResult rayTrace) {
+    public boolean tryPlaceContainedLiquid(@Nullable Player player, Level worldIn, BlockPos posIn, @Nullable BlockHitResult rayTrace) {
         BlockState blockstate = worldIn.getBlockState(posIn);
         Block block = blockstate.getBlock();
         Material material = blockstate.getMaterial();
         boolean flag = blockstate.canBeReplaced(Fluids.WATER);
-        boolean flag1 = blockstate.isAir() || flag || block instanceof ILiquidContainer && ((ILiquidContainer)block).canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER);
+        boolean flag1 = blockstate.isAir() || flag || block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER);
         if (!flag1) {
             return rayTrace != null && this.tryPlaceContainedLiquid(player, worldIn, rayTrace.getBlockPos().relative(rayTrace.getDirection()), null);
         } else if (worldIn.dimensionType().ultraWarm()) {
             int i = posIn.getX();
             int j = posIn.getY();
             int k = posIn.getZ();
-            worldIn.playSound(player, posIn, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.random.nextFloat() - worldIn.random.nextFloat()) * 0.8F);
+            worldIn.playSound(player, posIn, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (worldIn.random.nextFloat() - worldIn.random.nextFloat()) * 0.8F);
 
             for(int l = 0; l < 8; ++l) {
                 worldIn.addParticle(ParticleTypes.LARGE_SMOKE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D);
             }
 
             return true;
-        } else if (block instanceof ILiquidContainer && ((ILiquidContainer)block).canPlaceLiquid(worldIn,posIn,blockstate, Fluids.WATER)) {
-            ((ILiquidContainer)block).placeLiquid(worldIn, posIn, blockstate, Fluids.WATER.getSource(false));
+        } else if (block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(worldIn,posIn,blockstate, Fluids.WATER)) {
+            ((LiquidBlockContainer)block).placeLiquid(worldIn, posIn, blockstate, Fluids.WATER.getSource(false));
             this.playEmptySound(player, worldIn, posIn);
             return true;
         } else {
@@ -94,12 +99,12 @@ public class SkyrootWaterBucketItem extends Item
         }
     }
 
-    private boolean canBlockContainFluid(World worldIn, BlockPos posIn, BlockState blockstate) {
-        return blockstate.getBlock() instanceof ILiquidContainer && ((ILiquidContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER);
+    private boolean canBlockContainFluid(Level worldIn, BlockPos posIn, BlockState blockstate) {
+        return blockstate.getBlock() instanceof LiquidBlockContainer && ((LiquidBlockContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER);
     }
 
-    protected void playEmptySound(@Nullable PlayerEntity player, IWorld worldIn, BlockPos pos) {
+    protected void playEmptySound(@Nullable Player player, LevelAccessor worldIn, BlockPos pos) {
         SoundEvent soundevent = Fluids.WATER.getAttributes().getEmptySound();
-        worldIn.playSound(player, pos, soundevent, SoundCategory.BLOCKS, 1.0F, 1.0F);
+        worldIn.playSound(player, pos, soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 }

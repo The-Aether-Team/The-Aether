@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.accessories.abilities;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 

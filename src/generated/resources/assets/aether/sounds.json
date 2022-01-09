@@ -411,6 +411,12 @@
       "aether:entity/moa/say"
     ]
   },
+  "entity.moa.saddle": {
+    "subtitle": "subtitles.entity.moa.saddle",
+    "sounds": [
+      "mob/horse/leather"
+    ]
+  },
   "entity.moa.flap": {
     "subtitle": "subtitles.entity.moa.flap",
     "sounds": [

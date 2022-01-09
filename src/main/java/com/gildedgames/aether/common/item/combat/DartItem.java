@@ -1,14 +1,16 @@
 package com.gildedgames.aether.common.item.combat;
 
 import com.gildedgames.aether.common.entity.projectile.dart.AbstractDartEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 import java.util.function.Supplier;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class DartItem extends Item
 {
@@ -19,7 +21,7 @@ public class DartItem extends Item
         this.dartEntity = dartEntity;
     }
 
-    public AbstractDartEntity createDart(World world, LivingEntity shooter) {
+    public AbstractDartEntity createDart(Level world, LivingEntity shooter) {
         Entity entity = this.dartEntity.get().create(world);
         if (entity instanceof AbstractDartEntity) {
             AbstractDartEntity dartEntity = (AbstractDartEntity) entity;
@@ -31,7 +33,7 @@ public class DartItem extends Item
         }
     }
 
-    public AbstractDartEntity createDart(World world) {
+    public AbstractDartEntity createDart(Level world) {
         Entity entity = this.dartEntity.get().create(world);
         if (entity instanceof AbstractDartEntity) {
             return (AbstractDartEntity) entity;
@@ -41,7 +43,7 @@ public class DartItem extends Item
     }
 
     public boolean isInfinite(ItemStack dartShooter) {
-        int enchant = net.minecraft.enchantment.EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY_ARROWS, dartShooter);
+        int enchant = net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.INFINITY_ARROWS, dartShooter);
         return enchant > 0 && this.getClass() == DartItem.class;
     }
 }

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.accessories.abilities;
 
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 
 public interface ISlowFallAccessory
 {

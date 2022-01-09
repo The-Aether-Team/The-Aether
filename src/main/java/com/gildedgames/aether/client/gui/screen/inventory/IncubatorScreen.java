@@ -2,18 +2,18 @@ package com.gildedgames.aether.client.gui.screen.inventory;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.inventory.container.IncubatorContainer;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 
-public class IncubatorScreen extends ContainerScreen<IncubatorContainer> {
+public class IncubatorScreen extends AbstractContainerScreen<IncubatorContainer> {
 	private static final ResourceLocation INCUBATOR_GUI_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/container/incubator.png");
 	
-	public IncubatorScreen(IncubatorContainer container, PlayerInventory inventory, ITextComponent name) {
+	public IncubatorScreen(IncubatorContainer container, Inventory inventory, Component name) {
 		super(container, inventory, name);
 	}
 
@@ -24,7 +24,7 @@ public class IncubatorScreen extends ContainerScreen<IncubatorContainer> {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		this.renderBackground(matrixStack);
 		this.renderBg(matrixStack, partialTicks, mouseX, mouseY);
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
@@ -32,9 +32,9 @@ public class IncubatorScreen extends ContainerScreen<IncubatorContainer> {
 	}
 
 	@Override
-	protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(INCUBATOR_GUI_TEXTURES);
+	protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
+		RenderSystem.clearColor(1.0F, 1.0F, 1.0F, 1.0F);
+		this.minecraft.getTextureManager().bindForSetup(INCUBATOR_GUI_TEXTURES);
 		int guiLeft = this.leftPos;
 		int guiTop = this.topPos;
 		this.blit(matrixStack, guiLeft, guiTop, 0, 0, this.imageWidth, this.imageHeight);

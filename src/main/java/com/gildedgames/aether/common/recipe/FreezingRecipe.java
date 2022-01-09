@@ -3,12 +3,12 @@ package com.gildedgames.aether.common.recipe;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherRecipes.RecipeTypes;
 import com.gildedgames.aether.common.registry.AetherBlocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.AbstractCookingRecipe;
-import net.minecraft.item.crafting.CookingRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.SimpleCookingSerializer;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.resources.ResourceLocation;
 
 public class FreezingRecipe extends AbstractCookingRecipe
 {
@@ -22,11 +22,11 @@ public class FreezingRecipe extends AbstractCookingRecipe
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return AetherRecipes.FREEZING.get();
 	}
 
-	public static class Serializer extends CookingRecipeSerializer<FreezingRecipe>
+	public static class Serializer extends SimpleCookingSerializer<FreezingRecipe>
 	{
 		public Serializer() {
 			super(FreezingRecipe::new, 200);

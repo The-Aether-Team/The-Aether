@@ -1,76 +1,58 @@
 package com.gildedgames.aether.common.world.structure;
 
 import com.gildedgames.aether.Aether;
-import com.mojang.serialization.Codec;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
-import net.minecraft.world.gen.feature.structure.AbstractVillagePiece;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.feature.structure.StructureStart;
-import net.minecraft.world.gen.feature.structure.VillageConfig;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.NoiseColumn;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
+import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
+import net.minecraft.world.level.levelgen.structure.NoiseAffectingStructureFeature;
+import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 
-public class BronzeDungeonStructure extends Structure<NoFeatureConfig> {
+import java.util.Optional;
 
-    public BronzeDungeonStructure(Codec<NoFeatureConfig> codec) {
-        super(codec);
+public class BronzeDungeonStructure extends NoiseAffectingStructureFeature<JigsawConfiguration> {
+    public BronzeDungeonStructure() {
+        super(JigsawConfiguration.CODEC, BronzeDungeonStructure::placePieces);
     }
 
     @Override
-    public IStartFactory<NoFeatureConfig> getStartFactory() {
-        return BronzeDungeonStructure.Start::new;
+    public GenerationStep.Decoration step() {
+        return GenerationStep.Decoration.UNDERGROUND_STRUCTURES;
     }
 
-    @Override
-    public GenerationStage.Decoration step() {
-        return GenerationStage.Decoration.SURFACE_STRUCTURES;
+    private static boolean shouldPlace(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+        NoiseColumn column = context.chunkGenerator().getBaseColumn(context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ(), context.heightAccessor());
+        return !column.getBlock(40).isAir() && !column.getBlock(80).isAir();
     }
 
-    @Override
-    protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeProvider biomeSource, long seed, SharedSeedRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoFeatureConfig featureConfig) {
-        BlockPos pos = new BlockPos(chunkX << 4, chunkGenerator.getGenDepth()-1, chunkZ << 4);
-        IBlockReader reader = chunkGenerator.getBaseColumn(pos.getX(), pos.getZ());
-        return !(reader.getBlockState(new BlockPos(pos.getX(), 80, pos.getZ())).isAir()) &&
-                !(reader.getBlockState(new BlockPos(pos.getX(), 40, pos.getZ())).isAir());
-    }
+    private static Optional<PieceGenerator<JigsawConfiguration>> placePieces(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+        // Uncomment below to generate because terrain cannot go above y80 yet FIXME Remove once terrain can go above y80
+        //if (false)
+        if (!shouldPlace(context))
+            return Optional.empty();
 
-    public static class Start extends StructureStart<NoFeatureConfig> {
-        public Start(Structure<NoFeatureConfig> structureIn, int chunkX, int chunkZ, MutableBoundingBox mutableBoundingBox, int referenceIn, long seedIn) {
-            super(structureIn, chunkX, chunkZ, mutableBoundingBox, referenceIn, seedIn);
-        }
+        JigsawConfiguration newConfig = new JigsawConfiguration(
+                () -> context.registryAccess().ownedRegistryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
+                        .get(new ResourceLocation(Aether.MODID, "bronze_dungeon/start_pool")),
+                10
+        );
 
-        @Override
-        public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManager, int chunkX, int chunkZ, Biome biome, NoFeatureConfig config) {
-            int x = (chunkX << 4) + 7;
-            int z = (chunkZ << 4) + 7;
+        PieceGeneratorSupplier.Context<JigsawConfiguration> newContext = new PieceGeneratorSupplier.Context<>(
+                context.chunkGenerator(),
+                context.biomeSource(),
+                context.seed(),
+                context.chunkPos(),
+                newConfig,
+                context.heightAccessor(),
+                context.validBiome(),
+                context.structureManager(),
+                context.registryAccess()
+        );
 
-            BlockPos blockpos = new BlockPos(x, 60, z);
-
-            JigsawManager.addPieces(
-                    dynamicRegistryManager,
-                    new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(new ResourceLocation(Aether.MODID, "bronze_dungeon/start_pool")), 100),
-                    AbstractVillagePiece::new,
-                    chunkGenerator,
-                    templateManager,
-                    blockpos,
-                    this.pieces,
-                    this.random,
-                    false,
-                    false);
-
-            this.calculateBoundingBox();
-        }
+        return JigsawPlacement.addPieces(newContext, PoolElementStructurePiece::new, context.chunkPos().getMiddleBlockPosition(60), false, false);
     }
 }

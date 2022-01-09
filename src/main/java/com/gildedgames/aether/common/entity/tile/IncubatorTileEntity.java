@@ -9,24 +9,24 @@ import com.gildedgames.aether.common.inventory.container.IncubatorContainer;
 import com.gildedgames.aether.common.registry.AetherItems;
 
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
-public class IncubatorTileEntity extends LockableTileEntity implements ISidedInventory, ITickableTileEntity {
+public class IncubatorTileEntity extends BaseContainerBlockEntity implements WorldlyContainer {
 	private static final int[] SLOTS_UP = {0};
 	private static final int[] SLOTS_DOWN = {};
 	private static final int[] SLOTS_HORIZONTAL = {1};
@@ -35,7 +35,7 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	private int progress;
 	private int powerRemaining;
 	private int ticksRequired = 5700;
-	protected final IIntArray incubatorData = new IIntArray() {
+	protected final ContainerData incubatorData = new ContainerData() {
 		@Override
 		public int get(int index) {
 			switch (index) {
@@ -70,12 +70,12 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 		}
 	};
 
-	protected IncubatorTileEntity(TileEntityType<?> tileEntityTypeIn) {
-		super(tileEntityTypeIn);
-	}
+	//protected IncubatorTileEntity(BlockEntityType<?> tileEntityTypeIn) {
+//		super(tileEntityTypeIn);
+//	}
 
-	public IncubatorTileEntity() {
-		super(AetherTileEntityTypes.INCUBATOR.get());
+	public IncubatorTileEntity(BlockPos blockPos, BlockState blockState) {
+		super(AetherTileEntityTypes.INCUBATOR.get(), blockPos, blockState);
 	}
 	
 	public UUID getOwnerUniqueId() {
@@ -93,7 +93,7 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	public int getTicksRequired() {
 		return ticksRequired;
 	}
-	
+
 	public int getPowerRemaining() {
 		return powerRemaining;
 	}
@@ -135,12 +135,12 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 
 	@Override
 	public ItemStack removeItem(int index, int count) {
-		return ItemStackHelper.removeItem(this.items, index, count);
+		return ContainerHelper.removeItem(this.items, index, count);
 	}
 
 	@Override
 	public ItemStack removeItemNoUpdate(int index) {
-		return ItemStackHelper.takeItem(this.items, index);
+		return ContainerHelper.takeItem(this.items, index);
 	}
 
 	@Override
@@ -159,7 +159,7 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player) {
+	public boolean stillValid(Player player) {
 		if (this.level.getBlockEntity(this.worldPosition)!= this) {
 			return false;	
 		} else {
@@ -173,12 +173,12 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	}
 
 	@Override
-	protected ITextComponent getDefaultName() {
-		return new TranslationTextComponent("container." + Aether.MODID + ".incubator");
+	protected Component getDefaultName() {
+		return new TranslatableComponent("container." + Aether.MODID + ".incubator");
 	}
 
 	@Override
-	protected Container createMenu(int id, PlayerInventory player) {
+	protected AbstractContainerMenu createMenu(int id, Inventory player) {
 		return new IncubatorContainer(id, player, this, incubatorData, this::setOwnerUniqueId);
 	}
 	
@@ -186,14 +186,14 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 		return powerRemaining > 0;
 	}
 
-	@Override
-	public void tick() {
-		if (isIncubating()) {
-			--this.powerRemaining;
-		}
-		
-		// TODO
-	}
+//	@Override
+//	public void tick() {
+//		if (isIncubating()) {
+//			--this.powerRemaining;
+//		}
+//
+//		// TODO
+//	}
 
 	@Override
 	public int[] getSlotsForFace(Direction side) {
@@ -215,22 +215,22 @@ public class IncubatorTileEntity extends LockableTileEntity implements ISidedInv
 	}
 	
 	@Override
-	public void load(BlockState state, CompoundNBT compound) {
-		super.load(state, compound);
+	public void load(CompoundTag compound) {
+		super.load(compound);
 		this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ItemStackHelper.loadAllItems(compound, this.items);
+		ContainerHelper.loadAllItems(compound, this.items);
 		this.powerRemaining = compound.getInt("BurnTime");
 		this.progress = compound.getInt("CookTime");
 		this.ticksRequired = compound.getInt("CookTimeTotal");
 	}
 	
 	@Override
-	public CompoundNBT save(CompoundNBT compound) {
+	public CompoundTag save(CompoundTag compound) {
 		super.save(compound);
 		compound.putInt("BurnTime", this.powerRemaining);
 		compound.putInt("CookTime", this.progress);
 		compound.putInt("CookTimeTotal", this.ticksRequired);
-		ItemStackHelper.saveAllItems(compound, this.items);
+		ContainerHelper.saveAllItems(compound, this.items);
 		return compound;
 	}
 	

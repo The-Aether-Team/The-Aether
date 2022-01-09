@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:golden_pendant"
+            "items": [
+              "aether:golden_pendant"
+            ]
           }
         ]
       }

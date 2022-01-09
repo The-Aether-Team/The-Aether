@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:zanite_axe"
+            "items": [
+              "aether:zanite_axe"
+            ]
           }
         ]
       }

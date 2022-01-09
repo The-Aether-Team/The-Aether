@@ -4,43 +4,43 @@ import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 
 import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraftforge.network.NetworkHooks;
 
-public class LightningKnifeEntity extends ProjectileItemEntity
+public class LightningKnifeEntity extends ThrowableItemProjectile
 {
-	public LightningKnifeEntity(EntityType<? extends LightningKnifeEntity> entityTypeIn, World worldIn) {
+	public LightningKnifeEntity(EntityType<? extends LightningKnifeEntity> entityTypeIn, Level worldIn) {
 		super(entityTypeIn, worldIn);
 	}
 
-	public LightningKnifeEntity(LivingEntity owner, World worldIn) {
+	public LightningKnifeEntity(LivingEntity owner, Level worldIn) {
 		super(AetherEntityTypes.LIGHTNING_KNIFE.get(), owner, worldIn);
 	}
 
-	public LightningKnifeEntity(World worldIn) {
+	public LightningKnifeEntity(Level worldIn) {
 		super(AetherEntityTypes.LIGHTNING_KNIFE.get(), worldIn);
 	}
 
 	@Override
-	protected void onHit(RayTraceResult result) {
+	protected void onHit(HitResult result) {
 		if (!this.level.isClientSide) {
-			if (result.getType() != RayTraceResult.Type.MISS && this.level instanceof ServerWorld) {
-				LightningBoltEntity lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
+			if (result.getType() != HitResult.Type.MISS && this.level instanceof ServerLevel) {
+				LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
 				if (lightningBolt != null) {
 					ILightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(this.getOwner()));
 					lightningBolt.setPos(this.getX(), this.getY(), this.getZ());
 					this.level.addFreshEntity(lightningBolt);
 				}
 			}
-			this.remove();
+			this.discard();
 		}
 		super.onHit(result);
 	}
@@ -51,7 +51,7 @@ public class LightningKnifeEntity extends ProjectileItemEntity
 	}	
 	
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

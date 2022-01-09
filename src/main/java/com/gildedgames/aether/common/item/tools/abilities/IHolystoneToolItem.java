@@ -3,10 +3,10 @@ package com.gildedgames.aether.common.item.tools.abilities;
 import java.util.Random;
 
 import com.gildedgames.aether.common.registry.AetherItems;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public interface IHolystoneToolItem
 {
@@ -14,10 +14,9 @@ public interface IHolystoneToolItem
 		return rand.nextInt(100) <= 5;
 	}
 
-	default void spawnAmbrosiumDrops(World world, BlockPos pos) {
+	default void spawnAmbrosiumDrops(Level world, BlockPos pos) {
 		if (!world.isClientSide && this.shouldDropAmbrosium(world.random)) {
-			ItemEntity itementity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ());
-			itementity.setItem(new ItemStack(AetherItems.AMBROSIUM_SHARD.get()));
+			ItemEntity itementity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(AetherItems.AMBROSIUM_SHARD.get()));
 			world.addFreshEntity(itementity);
 		}
 	}

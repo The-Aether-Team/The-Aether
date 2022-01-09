@@ -4,17 +4,18 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
-import net.minecraft.data.BlockTagsProvider;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.ItemTagsProvider;
-import net.minecraft.data.TagsProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.tags.ITag;
+import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.tags.Tag;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AetherItemTagData extends ItemTagsProvider
@@ -23,6 +24,7 @@ public class AetherItemTagData extends ItemTagsProvider
         super(dataGenerator, blockTagProvider, Aether.MODID, existingFileHelper);
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "Aether Item Tags";
@@ -187,6 +189,9 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherItems.GOLDEN_RING.get())
                 .add(AetherItems.GOLDEN_PENDANT.get())
                 .add(AetherItems.GOLDEN_GLOVES.get());
+        tag(ItemTags.FOX_FOOD)
+                .add(AetherItems.BLUE_BERRY.get())
+                .add(AetherItems.ENCHANTED_BERRY.get());
         tag(ItemTags.MUSIC_DISCS)
                 .add(AetherItems.MUSIC_DISC_AETHER_TUNE.get())
                 .add(AetherItems.MUSIC_DISC_ASCENDING_DAWN.get())
@@ -221,7 +226,8 @@ public class AetherItemTagData extends ItemTagsProvider
                 .add(AetherBlocks.ZANITE_BLOCK.get().asItem());
     }
 
-    protected TagsProvider.Builder<Item> tag(ITag.INamedTag<Item> tag) {
+    @Nonnull
+    protected TagsProvider.TagAppender<Item> tag(@Nonnull Tag.Named<Item> tag) {
         return super.tag(tag);
     }
 }

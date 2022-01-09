@@ -1,8 +1,10 @@
 package com.gildedgames.aether.common.item.accessories.gloves;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.sounds.SoundEvents;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class GoldGlovesItem extends GlovesItem
 {

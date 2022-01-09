@@ -5,14 +5,14 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import com.gildedgames.aether.core.network.packet.client.*;
 import com.gildedgames.aether.core.network.packet.server.*;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 import java.util.function.Function;
 
@@ -50,15 +50,15 @@ public class AetherPacketHandler
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
 	}
 
-	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<PacketBuffer, MSG> decoder) {
+	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
 		INSTANCE.messageBuilder(packet, index++).encoder(AetherPacket::encode).decoder(decoder).consumer(AetherPacket::handle).add();
 	}
 
-	public static <MSG> void sendToPlayer(MSG message, ServerPlayerEntity player) {
+	public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {
 		INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
 	}
 
-	public static <MSG> void sendToNear(MSG message, double x, double y, double z, double radius, RegistryKey<World> dimension) {
+	public static <MSG> void sendToNear(MSG message, double x, double y, double z, double radius, ResourceKey<Level> dimension) {
 		INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(x, y, z, radius, dimension)), message);
 	}
 

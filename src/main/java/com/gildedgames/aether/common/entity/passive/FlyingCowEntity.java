@@ -8,64 +8,64 @@ import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.DrinkHelper;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 public class FlyingCowEntity extends MountableEntity
 {
     public float wingFold;
     public float wingAngle;
 
-    public FlyingCowEntity(EntityType<? extends FlyingCowEntity> type, World worldIn) {
+    public FlyingCowEntity(EntityType<? extends FlyingCowEntity> type, Level worldIn) {
         super(type, worldIn);
     }
 
-    public FlyingCowEntity(World worldIn) {
+    public FlyingCowEntity(Level worldIn) {
         this(AetherEntityTypes.FLYING_COW.get(), worldIn);
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new SwimGoal(this));
+        this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 2.0));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, Ingredient.of(AetherItems.BLUE_BERRY.get()), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25));
         this.goalSelector.addGoal(5, new FallingRandomWalkingGoal(this, 1.0));
-        this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-        this.goalSelector.addGoal(7, new LookRandomlyGoal(this));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
     @Override
-    protected PathNavigator createNavigation(World world) {
+    protected PathNavigation createNavigation(Level world) {
         return new FallPathNavigator(this, world);
     }
 
-    public static AttributeModifierMap.MutableAttribute createMobAttributes() {
-        return MobEntity.createMobAttributes()
+    public static AttributeSupplier.Builder createMobAttributes() {
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.2F);
     }
@@ -73,13 +73,13 @@ public class FlyingCowEntity extends MountableEntity
     @Override
     public void tick() {
         super.tick();
-        if (this.getDeltaMovement().y < -0.1 && !this.playerTriedToCrouch) {
+        if (this.getDeltaMovement().y < -0.1 && !this.playerTriedToCrouch()) {
             this.setDeltaMovement(this.getDeltaMovement().x, -0.1, this.getDeltaMovement().z);
         }
     }
 
     @Override
-    public void travel(Vector3d vector3d) {
+    public void travel(Vec3 vector3d) {
         float f = this.flyingSpeed;
         if (this.isEffectiveAi() && !this.isOnGround() && this.getPassengers().isEmpty()) {
             this.flyingSpeed = this.getSpeed() * (0.24F / (0.91F * 0.91F * 0.91F));
@@ -92,13 +92,13 @@ public class FlyingCowEntity extends MountableEntity
     }
 
     @Override
-    public ActionResultType mobInteract(PlayerEntity playerEntity, Hand hand) {
+    public InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
         if (itemstack.getItem() == Items.BUCKET && !this.isBaby()) {
             playerEntity.playSound(AetherSoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);
-            ItemStack itemstack1 = DrinkHelper.createFilledResult(itemstack, playerEntity, Items.MILK_BUCKET.getDefaultInstance());
+            ItemStack itemstack1 = ItemUtils.createFilledResult(itemstack, playerEntity, Items.MILK_BUCKET.getDefaultInstance());
             playerEntity.setItemInHand(hand, itemstack1);
-            return ActionResultType.sidedSuccess(this.level.isClientSide);
+            return InteractionResult.sidedSuccess(this.level.isClientSide);
         } else {
             return super.mobInteract(playerEntity, hand);
         }
@@ -155,12 +155,12 @@ public class FlyingCowEntity extends MountableEntity
 
     @Nullable
     @Override
-    public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
+    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
         return AetherEntityTypes.FLYING_COW.get().create(world);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
         return this.isBaby() ? size.height * 0.95F : 1.3F;
     }
 }

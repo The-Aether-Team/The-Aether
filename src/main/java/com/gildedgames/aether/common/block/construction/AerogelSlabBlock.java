@@ -1,18 +1,18 @@
 package com.gildedgames.aether.common.block.construction;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SlabBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SlabBlock;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class AerogelSlabBlock extends SlabBlock
 {
@@ -21,7 +21,7 @@ public class AerogelSlabBlock extends SlabBlock
 	}
 
 	@Override
-	public int getLightBlock(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
 		return 3;
 	}
 	
@@ -36,7 +36,7 @@ public class AerogelSlabBlock extends SlabBlock
 	}
 
 	@Override
-	public VoxelShape getVisualShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
-		return VoxelShapes.empty();
+	public VoxelShape getVisualShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
+		return Shapes.empty();
 	}
 }

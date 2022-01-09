@@ -2,14 +2,16 @@ package com.gildedgames.aether.common.item.miscellaneous;
 
 import com.gildedgames.aether.common.block.miscellaneous.AetherPortalBlock;
 import com.gildedgames.aether.common.registry.AetherBlocks;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class AetherPortalItem extends Item
 {
@@ -18,21 +20,21 @@ public class AetherPortalItem extends Item
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
-        PlayerEntity player = context.getPlayer();
+    public InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
         if (player != null) {
             if (createPortalFrame(context.getLevel(), context.getClickedPos().relative(context.getClickedFace()), player.getDirection().getAxis())) {
                 player.swing(context.getHand());
-                if (!player.abilities.instabuild) {
+                if (!player.getAbilities().instabuild) {
                     context.getItemInHand().shrink(1);
                 }
-                return ActionResultType.CONSUME;
+                return InteractionResult.CONSUME;
             }
         }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
-    private boolean createPortalFrame(World world, BlockPos pos, Direction.Axis axis) {
+    private boolean createPortalFrame(Level world, BlockPos pos, Direction.Axis axis) {
         for (int h = -1; h < 3; h++) {
             for (int v = pos.getY(); v < pos.getY() + 5; v++) {
                 BlockPos truePos = axis == Direction.Axis.X ? new BlockPos(pos.getX(), v, pos.getZ() + h) : new BlockPos(pos.getX() + h, v, pos.getZ());

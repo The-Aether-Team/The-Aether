@@ -2,7 +2,12 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": 1.0,
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1.0,
+        "max": 1.0
+      },
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -10,10 +15,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 15.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 15.0
+              },
+              "add": false
             }
           ],
           "name": "aether:blue_gummy_swet"
@@ -24,10 +30,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 15.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 15.0
+              },
+              "add": false
             }
           ],
           "name": "aether:golden_gummy_swet"

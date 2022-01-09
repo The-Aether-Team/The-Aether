@@ -1,22 +1,22 @@
 package com.gildedgames.aether.common.block.util;
 
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.state.StateContainer;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.StateDefinition;
 
 public class AetherDoubleDropsLeaves extends LeavesBlock implements IAetherDoubleDropBlock
 {
 
-    public AetherDoubleDropsLeaves(AbstractBlock.Properties properties) {
+    public AetherDoubleDropsLeaves(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(AetherBlockStateProperties.DOUBLE_DROPS);
     }

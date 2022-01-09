@@ -3,42 +3,43 @@ package com.gildedgames.aether.common.entity.projectile;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractFireballEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Fireball;
+import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 
-public class ZephyrSnowballEntity extends AbstractFireballEntity {
+public class ZephyrSnowballEntity extends Fireball implements ItemSupplier {
 	private int ticksInAir;
 
-	public ZephyrSnowballEntity(EntityType<? extends ZephyrSnowballEntity> type, World worldIn) {
+	public ZephyrSnowballEntity(EntityType<? extends ZephyrSnowballEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public ZephyrSnowballEntity(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
+	public ZephyrSnowballEntity(Level worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
 		super(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), x, y, z, accelX, accelY, accelZ, worldIn);
 	}
 
-	public ZephyrSnowballEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
+	public ZephyrSnowballEntity(Level worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
 		super(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), shooter, accelX, accelY, accelZ, worldIn);
 	}
 
@@ -48,13 +49,13 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 	}
 
 	@Override
-	protected void onHit(RayTraceResult result) {
+	protected void onHit(HitResult result) {
 		super.onHit(result);
-		if (result.getType() == RayTraceResult.Type.ENTITY) {
-			Entity entity = ((EntityRayTraceResult)result).getEntity();
+		if (result.getType() == HitResult.Type.ENTITY) {
+			Entity entity = ((EntityHitResult)result).getEntity();
 			if (entity instanceof LivingEntity) {
 				LivingEntity livingEntity = (LivingEntity)entity;
-				boolean isPlayer = livingEntity instanceof PlayerEntity;
+				boolean isPlayer = livingEntity instanceof Player;
 
 				//TODO: Was this a thing?
 //				if (isPlayer && ((PlayerEntity)entity).inventory.armor.get(0).getItem() == AetherItems.SENTRY_BOOTS.get()) {
@@ -69,16 +70,16 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 					activeItemStack.hurtAndBreak(1, livingEntity, p -> p.broadcastBreakEvent(activeItemStack.getEquipmentSlot()));
 
 					if (activeItemStack.getCount() <= 0) {
-						level.playSound((PlayerEntity)null, entity.blockPosition(), SoundEvents.SHIELD_BREAK, SoundCategory.PLAYERS, 1.0F, 0.8F + this.level.random.nextFloat() * 0.4F);
+						level.playSound((Player)null, entity.blockPosition(), SoundEvents.SHIELD_BREAK, SoundSource.PLAYERS, 1.0F, 0.8F + this.level.random.nextFloat() * 0.4F);
 					}
 					else {
-						level.playSound((PlayerEntity)null, entity.blockPosition(), SoundEvents.SHIELD_BLOCK, SoundCategory.PLAYERS, 1.0F, 0.8F + this.level.random.nextFloat() * 0.4F);
+						level.playSound((Player)null, entity.blockPosition(), SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1.0F, 0.8F + this.level.random.nextFloat() * 0.4F);
 					}
 				}
 				entity.setDeltaMovement(entity.getDeltaMovement().x + (this.getDeltaMovement().x * 1.5F), entity.getDeltaMovement().y, entity.getDeltaMovement().z + (this.getDeltaMovement().z * 1.5F));
 			}
 		}
-		this.remove();
+		this.discard();
 	}
 
 	@Override
@@ -100,17 +101,17 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 			}
 
 			++this.ticksInAir;
-			RayTraceResult raytraceresult = ProjectileHelper.getHitResult(this, this::canHitEntity);
-			if (raytraceresult.getType() != RayTraceResult.Type.MISS
+			HitResult raytraceresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
+			if (raytraceresult.getType() != HitResult.Type.MISS
 					&& !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
 				this.onHit(raytraceresult);
 			}
 
-			Vector3d Vector3d = this.getDeltaMovement();
+			Vec3 Vector3d = this.getDeltaMovement();
 			double d0 = this.getX() + Vector3d.x;
 			double d1 = this.getY() + Vector3d.y;
 			double d2 = this.getZ() + Vector3d.z;
-			ProjectileHelper.rotateTowardsMovement(this, 0.2F);
+			ProjectileUtil.rotateTowardsMovement(this, 0.2F);
 			float f = this.getInertia();
 			if (this.isInWater()) {
 				for (int i = 0; i < 4; ++i) {
@@ -121,14 +122,14 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 			}
 
 			this.setDeltaMovement(Vector3d.add(this.xPower, this.yPower, this.zPower).scale(f));
-			IParticleData particle = this.getTrailParticle();
+			ParticleOptions particle = this.getTrailParticle();
 			if (particle != null) {
 				this.level.addParticle(this.getTrailParticle(), d0, d1 + 0.5D, d2, 0.0D, 0.0D, 0.0D);
 			}
 			this.setPos(d0, d1, d2);
 		}
 		else {
-			this.remove();
+			this.discard();
 			return;
 		}
 		/* END SLIGHTLY MODIFIED super.tick() CODE */
@@ -137,23 +138,22 @@ public class ZephyrSnowballEntity extends AbstractFireballEntity {
 		}
 
 		if (this.ticksInAir > 400) {
-			this.remove();
+			this.discard();
 		}
 	}
 
 	@Override
-	protected IParticleData getTrailParticle() {
+	protected ParticleOptions getTrailParticle() {
 		return null;
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public ItemStack getItem() {
 		return new ItemStack(Items.SNOWBALL);
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

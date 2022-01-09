@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:holystone_sword"
+            "items": [
+              "aether:holystone_sword"
+            ]
           }
         ]
       }

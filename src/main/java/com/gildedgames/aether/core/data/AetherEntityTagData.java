@@ -4,13 +4,14 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.EntityTypeTagsProvider;
-import net.minecraft.data.TagsProvider;
-import net.minecraft.entity.EntityType;
+import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.tags.ITag;
+import net.minecraft.tags.Tag;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AetherEntityTagData extends EntityTypeTagsProvider
@@ -19,6 +20,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
         super(generatorIn, Aether.MODID, existingFileHelper);
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "Aether Entity Tags";
@@ -65,7 +67,8 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 .add(AetherEntityTypes.HAMMER_PROJECTILE.get());
     }
 
-    protected TagsProvider.Builder<EntityType<?>> tag(ITag.INamedTag<EntityType<?>> tag) {
+    @Nonnull
+    protected TagsProvider.TagAppender<EntityType<?>> tag(@Nonnull Tag.Named<EntityType<?>> tag) {
         return super.tag(tag);
     }
 }

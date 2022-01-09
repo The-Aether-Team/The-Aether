@@ -4,39 +4,44 @@ import com.gildedgames.aether.common.block.util.IAetherDoubleDropBlock;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
-import net.minecraft.block.*;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.Random;
+
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.GrassBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlock
 {
 	private static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
 
-	public AetherGrassBlock(AbstractBlock.Properties properties) {
+	public AetherGrassBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 		this.registerDefaultState(this.defaultBlockState().setValue(DOUBLE_DROPS, false));
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
 		builder.add(DOUBLE_DROPS);
 	}
 	
-	@Override
-	public void onPlantGrow(BlockState state, IWorld world, BlockPos pos, BlockPos source) {
-		if (state.is(AetherTags.Blocks.AETHER_DIRT)) {
-			world.setBlock(pos, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS) ? AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)) : AetherBlocks.AETHER_DIRT.get().defaultBlockState(), 2);
-		}
-	}
+//	@Override
+//	public void onPlantGrow(BlockState state, LevelAccessor world, BlockPos pos, BlockPos source) {
+//		if (state.is(AetherTags.Blocks.AETHER_DIRT)) {
+//			world.setBlock(pos, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS) ? AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)) : AetherBlocks.AETHER_DIRT.get().defaultBlockState(), 2);
+//		}
+//	}
 
 	@Override
-	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
 		if (!canBeGrass(state, worldIn, pos)) {
 			if (!worldIn.isAreaLoaded(pos, 3)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
 			worldIn.setBlockAndUpdate(pos, AetherBlocks.AETHER_DIRT.get().defaultBlockState());

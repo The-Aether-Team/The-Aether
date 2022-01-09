@@ -1,29 +1,29 @@
 package com.gildedgames.aether.client.particle;
 
 import com.gildedgames.aether.common.entity.monster.WhirlwindEntity;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.EntityPredicate;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.Camera;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EvilWhirlyParticle extends SpriteTexturedParticle {
+public class EvilWhirlyParticle extends TextureSheetParticle {
 
     float smokeParticleScale;
     WhirlwindEntity whirlwind;
-    IAnimatedSprite animatedSprite;
+    SpriteSet animatedSprite;
 
-    public EvilWhirlyParticle(ClientWorld worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, IAnimatedSprite sprite)
+    public EvilWhirlyParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite)
     {
         this(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeed, ySpeed, zSpeed, 3.5F, sprite);
     }
 
-    public EvilWhirlyParticle(ClientWorld worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, float scale, IAnimatedSprite sprite)
+    public EvilWhirlyParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, float scale, SpriteSet sprite)
     {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D);
         this.xd *= 0.10000000149011612D;
@@ -42,14 +42,14 @@ public class EvilWhirlyParticle extends SpriteTexturedParticle {
         this.lifetime = (int)(8.0D / (Math.random() * 0.8D + 0.2D));
         this.lifetime = (int)((float)this.lifetime * scale);
         this.animatedSprite = sprite;
-        whirlwind = worldIn.getNearestEntity(WhirlwindEntity.class, EntityPredicate.DEFAULT, null, xCoordIn, yCoordIn, zCoordIn, new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1));
+        whirlwind = worldIn.getNearestEntity(WhirlwindEntity.class, TargetingConditions.DEFAULT, null, xCoordIn, yCoordIn, zCoordIn, new AABB(x, y, z, x + 1, y + 1, z + 1));
         this.setPos(whirlwind.getX(), whirlwind.getY(), whirlwind.getZ());
     }
 
     @Override
-    public void render(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks) {
+    public void render(VertexConsumer buffer, Camera renderInfo, float partialTicks) {
         float f = ((float)this.age + partialTicks) / (float)this.lifetime * 32.0F;
-        f = MathHelper.clamp(f, 0.0F, 1.0F);
+        f = Mth.clamp(f, 0.0F, 1.0F);
         this.quadSize = this.smokeParticleScale * f;
         super.render(buffer, renderInfo, partialTicks);
     }
@@ -72,7 +72,7 @@ public class EvilWhirlyParticle extends SpriteTexturedParticle {
             float f = (float)(whirlwind.getX() - this.x);
             float f1 = (float)(whirlwind.getY() - this.y);
             float f2 = (float)(whirlwind.getZ() - this.z);
-            float d16 = MathHelper.sqrt(f * f + f1 * f1 + f2 * f2);
+            float d16 = Mth.sqrt(f * f + f1 * f1 + f2 * f2);
 
             double d18 = this.getBoundingBox().minY - this.y;
             double d21 = Math.atan2(whirlwind.getX() - this.x, whirlwind.getZ() - this.z) / 0.01745329424738884D;
@@ -97,20 +97,20 @@ public class EvilWhirlyParticle extends SpriteTexturedParticle {
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory<BasicParticleType> {
-        private final IAnimatedSprite spriteSet;
+    public static class Factory implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet spriteSet;
 
-        public Factory(IAnimatedSprite spriteSetIn) {
+        public Factory(SpriteSet spriteSetIn) {
             this.spriteSet = spriteSetIn;
         }
 
         @Override
-        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             EvilWhirlyParticle portalparticle = new EvilWhirlyParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
             portalparticle.pickSprite(this.spriteSet);
             return portalparticle;

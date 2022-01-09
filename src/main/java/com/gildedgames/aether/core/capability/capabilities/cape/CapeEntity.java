@@ -1,9 +1,11 @@
 package com.gildedgames.aether.core.capability.capabilities.cape;
 
 import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.nbt.CompoundTag;
 
 public class CapeEntity implements ICapeEntity
 {
@@ -29,12 +31,12 @@ public class CapeEntity implements ICapeEntity
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        return new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        return new CompoundTag();
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) { }
+    public void deserializeNBT(CompoundTag nbt) { }
 
     @Override
     public void onUpdate() {
@@ -86,51 +88,49 @@ public class CapeEntity implements ICapeEntity
     }
 
     private void tickPassenger(Entity passenger) {
-        if (!passenger.removed) {
-            if (passenger.level.getChunkSource().isEntityTickingChunk(passenger)) {
-                if (passenger.inChunk) {
-                    this.rideTick();
-                }
+        if (!passenger.isRemoved()) {
+            if ((passenger.level.isClientSide && passenger.level instanceof ClientLevel clientLevel && clientLevel.tickingEntities.contains(passenger)) || (passenger.level instanceof ServerLevel serverLevel && serverLevel.entityTickList.contains(passenger))) {
+                this.rideTick();
             }
         }
     }
 
     public void rideTick() {
-        if (!this.entity.isShiftKeyDown() || !this.entity.isPassenger()) {
+        if (!this.entity.level.isClientSide || !this.entity.isShiftKeyDown() || !this.entity.isPassenger()) {
             this.oBob = this.bob;
             this.bob = 0.0F;
         }
     }
 
     public double getxCloakO() {
-        return xCloakO;
+        return this.xCloakO;
     }
 
     public double getyCloakO() {
-        return yCloakO;
+        return this.yCloakO;
     }
 
     public double getzCloakO() {
-        return zCloakO;
+        return this.zCloakO;
     }
 
     public double getxCloak() {
-        return xCloak;
+        return this.xCloak;
     }
 
     public double getyCloak() {
-        return yCloak;
+        return this.yCloak;
     }
 
     public double getzCloak() {
-        return zCloak;
+        return this.zCloak;
     }
 
     public float getBob() {
-        return bob;
+        return this.bob;
     }
 
     public float getoBob() {
-        return oBob;
+        return this.oBob;
     }
 }

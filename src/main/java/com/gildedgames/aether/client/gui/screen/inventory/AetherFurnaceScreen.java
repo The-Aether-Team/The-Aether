@@ -1,18 +1,18 @@
 package com.gildedgames.aether.client.gui.screen.inventory;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.AbstractFurnaceContainer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractFurnaceMenu;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 
-public class AetherFurnaceScreen<T extends AbstractFurnaceContainer> extends ContainerScreen<T>
+public class AetherFurnaceScreen<T extends AbstractFurnaceMenu> extends AbstractContainerScreen<T>
 {
     private final ResourceLocation guiTexture;
 
-    public AetherFurnaceScreen(T screenContainer, PlayerInventory inv, ITextComponent titleIn, ResourceLocation guiTextureIn) {
+    public AetherFurnaceScreen(T screenContainer, Inventory inv, Component titleIn, ResourceLocation guiTextureIn) {
         super(screenContainer, inv, titleIn);
         this.guiTexture = guiTextureIn;
     }
@@ -22,15 +22,15 @@ public class AetherFurnaceScreen<T extends AbstractFurnaceContainer> extends Con
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
     }
 
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bind(this.guiTexture);
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
+        RenderSystem.clearColor(1.0F, 1.0F, 1.0F, 1.0F);
+        this.minecraft.getTextureManager().bindForSetup(this.guiTexture);
         int i = this.leftPos;
         int j = this.topPos;
         this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);

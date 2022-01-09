@@ -2,7 +2,9 @@ package com.gildedgames.aether.common.item.accessories.miscellaneous;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.item.accessories.AccessoryItem;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class RepulsionShieldItem extends AccessoryItem
 {

@@ -1,34 +1,45 @@
 package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
-public abstract class MountableEntity extends AetherAnimalEntity implements IRideable, IEquipable
-{
-	private static final DataParameter<Boolean> DATA_SADDLE_ID = EntityDataManager.defineId(MountableEntity.class, DataSerializers.BOOLEAN);
-	protected boolean playerTriedToCrouch;
-	protected boolean playerJumped;
-	protected boolean mountJumping;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ItemSteerable;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.Saddleable;
+import net.minecraft.world.entity.vehicle.DismountHelper;
 
-	protected MountableEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
+public abstract class MountableEntity extends AetherAnimalEntity implements ItemSteerable, Saddleable
+{
+	private static final EntityDataAccessor<Boolean> DATA_SADDLE_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_PLAYER_JUMPED_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_MOUNT_JUMPING_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_PLAYER_CROUCHED_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
+
+	protected MountableEntity(EntityType<? extends Animal> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -36,6 +47,9 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(DATA_SADDLE_ID, false);
+		this.entityData.define(DATA_PLAYER_JUMPED_ID, false);
+		this.entityData.define(DATA_MOUNT_JUMPING_ID, false);
+		this.entityData.define(DATA_PLAYER_CROUCHED_ID, false);
 	}
 
 	@Override
@@ -45,61 +59,59 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 	}
 
 	public void riderTick() {
-		if (this.getControllingPassenger() instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) this.getControllingPassenger();
+		if (this.getControllingPassenger() instanceof Player) {
+			Player playerEntity = (Player) this.getControllingPassenger();
 			IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> {
-				if (aetherPlayer.isJumping() && !this.isMountJumping() && this.onGround) {
-					this.playerJumped = true;
+				if (aetherPlayer.isJumping() && !this.isMountJumping()) {
+					this.setPlayerJumped(true);
 				}
 			});
-			if (playerEntity.level.isClientSide && playerEntity instanceof ClientPlayerEntity && !this.isOnGround()) {
-				ClientPlayerEntity clientPlayerEntity = (ClientPlayerEntity) playerEntity;
-				this.playerTriedToCrouch = clientPlayerEntity.input.shiftKeyDown;
-				clientPlayerEntity.input.shiftKeyDown = false;
-			}
 		}
 	}
 
 	@Override
-	public void travel(Vector3d vector3d) {
+	public void travel(Vec3 vector3d) {
 		if (this.isAlive()) {
-			if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof PlayerEntity) {
-				PlayerEntity entity = (PlayerEntity) this.getControllingPassenger();
-				this.yRot = entity.yRot;
-				this.yRotO = this.yRot;
-				this.xRot = entity.xRot * 0.5F;
-				this.setRot(this.yRot, this.xRot);
-				this.yBodyRot = this.yRot;
+			boolean slime = this.isSlime();
+			if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player) {
+				Player entity = (Player) this.getControllingPassenger();
+				this.setYRot(entity.getYRot());
+				this.yRotO = this.getYRot();
+				this.setXRot(entity.getXRot() * 0.5F);
+				this.setRot(this.getYRot(), this.getXRot());
+				this.yBodyRot = this.getYRot();
 				this.yHeadRot = this.yBodyRot;
 				float f = entity.xxa * 0.5F;
 				float f1 = entity.zza;
 				if (f1 <= 0.0F) {
 					f1 *= 0.25F;
 				}
-				if (this.playerJumped && !this.isMountJumping() && this.onGround) {
-					double jumpStrength = this.getMountJumpStrength() * (double)this.getBlockJumpFactor();
+				if (this.getPlayerJumped() && !this.isMountJumping() && this.canJump()) {
+					double jumpStrength = slime ? this.getMountJumpStrength() : this.getMountJumpStrength() * (double) this.getBlockJumpFactor();
 					this.setDeltaMovement(this.getDeltaMovement().x(), jumpStrength, this.getDeltaMovement().z());
-					if (this.hasEffect(Effects.JUMP)) {
-						this.push(0.0, 0.1 * (this.getEffect(Effects.JUMP).getAmplifier() + 1), 0.0);
+					if (this.hasEffect(MobEffects.JUMP)) {
+						this.push(0.0, 0.1 * (this.getEffect(MobEffects.JUMP).getAmplifier() + 1), 0.0);
 					}
 					this.setMountJumping(true);
 					this.hasImpulse = true;
-					net.minecraftforge.common.ForgeHooks.onLivingJump(this);
-					this.playerJumped = false;
+					this.setPlayerJumped(false);
+					this.onJump();
+				} else if(slime && this.onGround && !this.getPlayerJumped() && (this.getDeltaMovement().x != 0 || this.getDeltaMovement().z != 0)) {
+					this.setDeltaMovement(this.getDeltaMovement().x(), 0.42F, this.getDeltaMovement().z);
 				}
 				this.maxUpStep = 1.0F;
 				this.flyingSpeed = this.getSteeringSpeed() * 0.25F;
 				if (this.isControlledByLocalInstance()) {
 					float speed = this.getSteeringSpeed();
 					this.setSpeed(speed);
-					this.travelWithInput(new Vector3d(f, vector3d.y, f1));
+					this.travelWithInput(new Vec3(f, vector3d.y, f1));
 					this.lerpSteps = 0;
 				} else {
 					this.calculateEntityAnimation(this, false);
-					this.setDeltaMovement(Vector3d.ZERO);
+					this.setDeltaMovement(Vec3.ZERO);
 				}
 				if (this.onGround) {
-					this.playerJumped = false;
+					this.setPlayerJumped(false);
 					this.setMountJumping(false);
 				}
 			} else {
@@ -107,27 +119,33 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 				this.flyingSpeed = 0.02F;
 				this.travelWithInput(vector3d);
 			}
+			if(!slime)
+				this.fallDistance = 0;
 		}
 	}
 
 	@Override
-	public void travelWithInput(Vector3d vector3d) {
+	public void travelWithInput(Vec3 vector3d) {
 		super.travel(vector3d);
 	}
 
+	public void onJump() {
+		net.minecraftforge.common.ForgeHooks.onLivingJump(this);
+	}
+
 	@Override
-	public ActionResultType mobInteract(PlayerEntity playerEntity, Hand hand) {
+	public InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
 		boolean flag = this.isFood(playerEntity.getItemInHand(hand));
 		if (!flag && this.isSaddled() && !this.isVehicle() && !playerEntity.isSecondaryUseActive()) {
 			if (!this.level.isClientSide) {
 				playerEntity.startRiding(this);
 			}
-			return ActionResultType.sidedSuccess(this.level.isClientSide);
+			return InteractionResult.sidedSuccess(this.level.isClientSide);
 		} else {
-			ActionResultType actionresulttype = super.mobInteract(playerEntity, hand);
+			InteractionResult actionresulttype = super.mobInteract(playerEntity, hand);
 			if (!actionresulttype.consumesAction()) {
 				ItemStack itemstack = playerEntity.getItemInHand(hand);
-				return itemstack.getItem() == Items.SADDLE ? itemstack.interactLivingEntity(playerEntity, this, hand) : ActionResultType.PASS;
+				return itemstack.getItem() == Items.SADDLE ? itemstack.interactLivingEntity(playerEntity, this, hand) : InteractionResult.PASS;
 			} else {
 				return actionresulttype;
 			}
@@ -135,20 +153,20 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 	}
 
 	@Override
-	public Vector3d getDismountLocationForPassenger(LivingEntity livingEntity) {
+	public Vec3 getDismountLocationForPassenger(LivingEntity livingEntity) {
 		Direction direction = this.getMotionDirection();
 		if (direction.getAxis() != Direction.Axis.Y) {
-			int[][] aint = TransportationHelper.offsetsForDirection(direction);
+			int[][] aint = DismountHelper.offsetsForDirection(direction);
 			BlockPos blockpos = this.blockPosition();
-			BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+			BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
 			for (Pose pose : livingEntity.getDismountPoses()) {
-				AxisAlignedBB axisalignedbb = livingEntity.getLocalBoundsForPose(pose);
+				AABB axisalignedbb = livingEntity.getLocalBoundsForPose(pose);
 				for (int[] aint1 : aint) {
 					blockpos$mutable.set(blockpos.getX() + aint1[0], blockpos.getY(), blockpos.getZ() + aint1[1]);
 					double d0 = this.level.getBlockFloorHeight(blockpos$mutable);
-					if (TransportationHelper.isBlockFloorValid(d0)) {
-						Vector3d vector3d = Vector3d.upFromBottomCenterOf(blockpos$mutable, d0);
-						if (TransportationHelper.canDismountTo(this.level, livingEntity, axisalignedbb.move(vector3d))) {
+					if (DismountHelper.isBlockFloorValid(d0)) {
+						Vec3 vector3d = Vec3.upFromBottomCenterOf(blockpos$mutable, d0);
+						if (DismountHelper.canDismountTo(this.level, livingEntity, axisalignedbb.move(vector3d))) {
 							livingEntity.setPose(pose);
 							return vector3d;
 						}
@@ -176,7 +194,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 	@Override
 	public boolean canBeControlledByRider() {
 		Entity entity = this.getControllingPassenger();
-		return entity instanceof PlayerEntity && this.isSaddled();
+		return entity instanceof Player && this.isSaddled();
 	}
 
 	@Override
@@ -185,12 +203,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 	}
 
 	@Override
-	public boolean rideableUnderWater() {
-		return true;
-	}
-
-	@Override
-	public void equipSaddle(@Nullable SoundCategory soundCategory) {
+	public void equipSaddle(@Nullable SoundSource soundCategory) {
 		this.setSaddled(true);
 		if (soundCategory != null && this.getSaddledSound() != null) {
 			this.level.playSound(null, this, this.getSaddledSound(), soundCategory, 0.5F, 1.0F);
@@ -211,20 +224,32 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 		this.entityData.set(DATA_SADDLE_ID, isSaddled);
 	}
 
-	public boolean canJump() {
-		return this.isSaddled();
+	public boolean getPlayerJumped() {
+		return this.entityData.get(DATA_PLAYER_JUMPED_ID);
+	}
+
+	public void setPlayerJumped(boolean playerJumped) {
+		this.entityData.set(DATA_PLAYER_JUMPED_ID, playerJumped);
 	}
 
 	public boolean isMountJumping() {
-		return this.mountJumping;
+		return this.entityData.get(DATA_MOUNT_JUMPING_ID);
 	}
 
 	public void setMountJumping(boolean isMountJumping) {
-		this.mountJumping = isMountJumping;
+		this.entityData.set(DATA_MOUNT_JUMPING_ID, isMountJumping);
+	}
+
+	public boolean canJump() {
+		return this.isSaddled() && this.isOnGround();
 	}
 
 	protected double getMountJumpStrength() {
 		return 1.8D;
+	}
+
+	protected boolean isSlime() {
+		return false;
 	}
 
 	@Override
@@ -233,7 +258,11 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 	}
 
 	public boolean playerTriedToCrouch() {
-		return this.playerTriedToCrouch;
+		return this.entityData.get(DATA_PLAYER_CROUCHED_ID);
+	}
+
+	public void setPlayerTriedToCrouch(boolean playerTriedToCrouch) {
+		this.entityData.set(DATA_PLAYER_CROUCHED_ID, playerTriedToCrouch);
 	}
 
 	@Override
@@ -247,13 +276,13 @@ public abstract class MountableEntity extends AetherAnimalEntity implements IRid
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		this.setSaddled(compound.getBoolean("Saddled"));
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("Saddled", this.isSaddled());
 	}

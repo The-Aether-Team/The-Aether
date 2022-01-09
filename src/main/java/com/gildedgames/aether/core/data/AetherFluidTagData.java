@@ -3,13 +3,14 @@ package com.gildedgames.aether.core.data;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.FluidTagsProvider;
-import net.minecraft.data.TagsProvider;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.tags.ITag;
+import net.minecraft.data.tags.FluidTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.tags.Tag;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AetherFluidTagData extends FluidTagsProvider
@@ -18,6 +19,7 @@ public class AetherFluidTagData extends FluidTagsProvider
         super(generatorIn, Aether.MODID, existingFileHelper);
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "Aether Fluid Tags";
@@ -30,7 +32,8 @@ public class AetherFluidTagData extends FluidTagsProvider
                 .add(Fluids.FLOWING_LAVA);
     }
 
-    protected TagsProvider.Builder<Fluid> tag(ITag.INamedTag<Fluid> tag) {
+    @Nonnull
+    protected TagsProvider.TagAppender<Fluid> tag(@Nonnull Tag.Named<Fluid> tag) {
         return super.tag(tag);
     }
 }

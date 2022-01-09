@@ -1,9 +1,9 @@
 package com.gildedgames.aether.common.item.materials;
 
 import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
 
 import javax.annotation.Nonnull;
 
@@ -14,7 +14,7 @@ public class SwetBallItem extends Item implements ISwetBallConversion
 	}
 	
 	@Override
-	public ActionResultType useOn(@Nonnull ItemUseContext context) {
+	public InteractionResult useOn(@Nonnull UseOnContext context) {
 		return convertBlock(context);
 	}
 }

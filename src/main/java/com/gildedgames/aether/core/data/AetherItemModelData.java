@@ -6,12 +6,15 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import javax.annotation.Nonnull;
+
 public class AetherItemModelData extends AetherItemModelProvider
 {
     public AetherItemModelData(DataGenerator generator, ExistingFileHelper fileHelper) {
         super(generator, fileHelper);
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "Aether Item Models";
@@ -203,6 +206,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         eggItem(AetherItems.SENTRY_SPAWN_EGG);
         eggItem(AetherItems.MIMIC_SPAWN_EGG);
         eggItem(AetherItems.AERBUNNY_SPAWN_EGG);
+        eggItem(AetherItems.SWET_SPAWN_EGG);
 
         itemBlock(AetherBlocks.AETHER_GRASS_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK);

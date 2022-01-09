@@ -4,12 +4,11 @@ import com.gildedgames.aether.common.inventory.provider.AccessoriesProvider;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import com.gildedgames.aether.core.network.packet.client.ClientGrabItemPacket;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkHooks;
 
 public class OpenAccessoriesPacket extends AetherPacket
 {
@@ -20,28 +19,24 @@ public class OpenAccessoriesPacket extends AetherPacket
     }
 
     @Override
-    public void encode(PacketBuffer buf) {
+    public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID);
     }
 
-    public static OpenAccessoriesPacket decode(PacketBuffer buf) {
+    public static OpenAccessoriesPacket decode(FriendlyByteBuf buf) {
         int playerID = buf.readInt();
         return new OpenAccessoriesPacket(playerID);
     }
 
     @Override
-    public void execute(PlayerEntity playerEntity) {
-        if (playerEntity != null && playerEntity.level != null && playerEntity.getServer() != null) {
-            Entity entity = playerEntity.level.getEntity(this.playerID);
-            if (entity instanceof ServerPlayerEntity) {
-                ServerPlayerEntity player = (ServerPlayerEntity) entity;
-                ItemStack stack = player.inventory.getCarried();
-                player.inventory.setCarried(ItemStack.EMPTY);
-                NetworkHooks.openGui(player, new AccessoriesProvider());
-                if (!stack.isEmpty()) {
-                    player.inventory.setCarried(stack);
-                    AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(player.getId(), stack), player);
-                }
+    public void execute(Player playerEntity) { //TODO: This doesn't work. Wait for a fix on Curios' end for this behavior being bugged.
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
+            ItemStack itemStack = serverPlayer.inventoryMenu.getCarried();
+            serverPlayer.inventoryMenu.setCarried(ItemStack.EMPTY);
+            NetworkHooks.openGui(serverPlayer, new AccessoriesProvider());
+            if (!itemStack.isEmpty()) {
+                serverPlayer.inventoryMenu.setCarried(itemStack);
+                AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(serverPlayer.getId(), itemStack), serverPlayer);
             }
         }
     }

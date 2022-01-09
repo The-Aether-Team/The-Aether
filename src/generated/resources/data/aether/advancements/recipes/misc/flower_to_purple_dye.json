@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "aether:purple_flower"
+            "items": [
+              "aether:purple_flower"
+            ]
           }
         ]
       }

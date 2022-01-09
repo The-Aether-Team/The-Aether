@@ -1,36 +1,28 @@
 package com.gildedgames.aether.common.world.gen.feature;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.core.util.BlockPlacers;
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
-import java.util.Random;
+public class HolystoneSphereFeature extends Feature<NoneFeatureConfiguration> {
+    private final BlockStateProvider holystone = BlockStateProvider.simple(AetherBlocks.HOLYSTONE.get().defaultBlockState());
 
-public class HolystoneSphereFeature extends Feature<NoFeatureConfig>
-{
-    public HolystoneSphereFeature(Codec<NoFeatureConfig> codec) {
+    public HolystoneSphereFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
-        int radius = 4;
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        BlockPos pos = context.origin();
+        WorldGenLevel reader = context.level();
 
-        for (int x = pos.getX() - radius; x < pos.getX() + radius; x++) {
-            for (int y = pos.getY() - radius; y < pos.getY() + radius; y++) {
-                for (int z = pos.getZ() - radius; z < pos.getZ() + radius; z++) {
-                    float formula = (float) (Math.pow(x - pos.getX(), 2) + Math.pow(y - pos.getY(), 2) + Math.pow(z - pos.getZ(), 2));
-
-                    if (formula <= Math.pow(radius, 2)) {
-                        reader.setBlock(new BlockPos(x, y, z), AetherBlocks.HOLYSTONE.get().defaultBlockState(), 2 | 16);
-                    }
-                }
-            }
-        }
+        BlockPlacers.placeSphere(pos, 4.5f, reader, this.holystone, context.random());
 
         return true;
     }

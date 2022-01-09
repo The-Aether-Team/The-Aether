@@ -2,20 +2,20 @@ package com.gildedgames.aether.common.block.util.dispenser;
 
 import com.gildedgames.aether.common.entity.projectile.dart.AbstractDartEntity;
 import com.gildedgames.aether.common.item.combat.DartItem;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.dispenser.IPosition;
-import net.minecraft.dispenser.ProjectileDispenseBehavior;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
 
 import java.util.function.Supplier;
 
-public class DispenseDartBehavior extends ProjectileDispenseBehavior
+public class DispenseDartBehavior extends AbstractProjectileDispenseBehavior
 {
     protected final Supplier<Item> dartItem;
 
@@ -24,11 +24,11 @@ public class DispenseDartBehavior extends ProjectileDispenseBehavior
     }
 
     @Override
-    public ItemStack execute(IBlockSource p_82487_1_, ItemStack p_82487_2_) {
-        World world = p_82487_1_.getLevel();
-        IPosition iposition = DispenserBlock.getDispensePosition(p_82487_1_);
+    public ItemStack execute(BlockSource p_82487_1_, ItemStack p_82487_2_) {
+        Level world = p_82487_1_.getLevel();
+        Position iposition = DispenserBlock.getDispensePosition(p_82487_1_);
         Direction direction = p_82487_1_.getBlockState().getValue(DispenserBlock.FACING);
-        ProjectileEntity projectileentity = this.getProjectile(world, iposition, p_82487_2_);
+        Projectile projectileentity = this.getProjectile(world, iposition, p_82487_2_);
         projectileentity.shoot(direction.getStepX(), (float) direction.getStepY(), direction.getStepZ(), this.getPower(), this.getUncertainty());
         world.addFreshEntity(projectileentity);
         p_82487_2_.shrink(1);
@@ -36,13 +36,13 @@ public class DispenseDartBehavior extends ProjectileDispenseBehavior
     }
 
     @Override
-    protected ProjectileEntity getProjectile(World world, IPosition position, ItemStack stack) {
+    protected Projectile getProjectile(Level world, Position position, ItemStack stack) {
         Item item = this.dartItem.get();
         if (item instanceof DartItem) {
             DartItem dartItem = (DartItem) item;
             AbstractDartEntity dartEntity = dartItem.createDart(world);
             dartEntity.setPos(position.x(), position.y(), position.z());
-            dartEntity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
+            dartEntity.pickup = AbstractArrow.Pickup.ALLOWED;
             dartEntity.setNoGravity(true);
             return dartEntity;
         } else {

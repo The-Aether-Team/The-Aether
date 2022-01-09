@@ -6,16 +6,16 @@ import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.DamagingProjectileEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -30,12 +30,12 @@ public class AccessoryAbilityListener
 {
     @SubscribeEvent
     public static void onPlayerAttack(AttackEntityEvent event) {
-        PlayerEntity player = event.getPlayer();
+        Player player = event.getPlayer();
         Entity target = event.getTarget();
         if (!player.level.isClientSide() && target instanceof LivingEntity) {
             LivingEntity livingTarget = (LivingEntity) target;
             if (livingTarget.isAttackable() && !livingTarget.skipAttackInteraction(player)) {
-                CuriosApi.getCuriosHelper().findEquippedCurio((stack) -> stack.getItem() instanceof GlovesItem, player).ifPresent((triple) -> triple.getRight().hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND)));
+                CuriosApi.getCuriosHelper().findEquippedCurio((stack) -> stack.getItem() instanceof GlovesItem, player).ifPresent((triple) -> triple.getRight().hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND)));
             }
         }
     }
@@ -53,17 +53,17 @@ public class AccessoryAbilityListener
 
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
-        if (event.getRayTraceResult().getType() == RayTraceResult.Type.ENTITY) {
-            Entity impactedEntity = ((EntityRayTraceResult) event.getRayTraceResult()).getEntity();
-            if (impactedEntity instanceof LivingEntity && event.getEntity() instanceof ProjectileEntity) {
+        if (event.getRayTraceResult().getType() == HitResult.Type.ENTITY) {
+            Entity impactedEntity = ((EntityHitResult) event.getRayTraceResult()).getEntity();
+            if (impactedEntity instanceof LivingEntity && event.getEntity() instanceof Projectile) {
                 LivingEntity impactedLiving = (LivingEntity) impactedEntity;
-                ProjectileEntity projectile = (ProjectileEntity) event.getEntity();
+                Projectile projectile = (Projectile) event.getEntity();
                 if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
                     CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.REPULSION_SHIELD.get(), impactedLiving).ifPresent((triple) -> {
-                        Vector3d motion = impactedLiving.getDeltaMovement();
+                        Vec3 motion = impactedLiving.getDeltaMovement();
                         if (!impactedLiving.level.isClientSide) {
-                            if (impactedLiving instanceof PlayerEntity) {
-                                IAetherPlayer.get((PlayerEntity) impactedLiving).ifPresent(aetherPlayer -> {
+                            if (impactedLiving instanceof Player) {
+                                IAetherPlayer.get((Player) impactedLiving).ifPresent(aetherPlayer -> {
                                     if (!aetherPlayer.isMoving()) {
                                         aetherPlayer.setProjectileImpactedMaximum(150);
                                         aetherPlayer.setProjectileImpactedTimer(150);
@@ -82,11 +82,11 @@ public class AccessoryAbilityListener
         }
     }
 
-    private static void handleDeflection(ProjectileImpactEvent event, ProjectileEntity projectile, LivingEntity impactedLiving, ImmutableTriple<String, Integer, ItemStack> triple) {
+    private static void handleDeflection(ProjectileImpactEvent event, Projectile projectile, LivingEntity impactedLiving, ImmutableTriple<String, Integer, ItemStack> triple) {
         event.setCanceled(true);
         projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25D));
-        if (projectile instanceof DamagingProjectileEntity) {
-            DamagingProjectileEntity damagingProjectileEntity = (DamagingProjectileEntity) projectile;
+        if (projectile instanceof AbstractHurtingProjectile) {
+            AbstractHurtingProjectile damagingProjectileEntity = (AbstractHurtingProjectile) projectile;
             damagingProjectileEntity.xPower *= -0.25D;
             damagingProjectileEntity.yPower *= -0.25D;
             damagingProjectileEntity.zPower *= -0.25D;

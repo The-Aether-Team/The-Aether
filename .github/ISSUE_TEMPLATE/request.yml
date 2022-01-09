@@ -1,0 +1,70 @@
+name: '✨ Feature Request'
+description: Create an issue about an idea that you would like to see in The Aether
+labels: [ "type/request" ]
+title: 'Feature Request: <title>'
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Before filling out this form:**
+        The Aether 1 project exists to maintain the original experience from The Aether that many enjoyed with the original mod. 
+        We do not plan to add content to the mod that is not in the original mod, or that does not improve functionality between The Aether and Minecraft or other mods.
+        Any feature ideas that do not fit this criteria should be for The Aether II.
+  - type: dropdown
+    id: feat-type
+    attributes:
+      label: What Feature Types Apply to This Request?
+      multiple: true
+      options:
+        - Art
+        - Audio
+        - Block
+        - Config
+        - Copy
+        - Entity
+        - Item
+        - System
+        - World-Gen
+        - Other (Please Describe)
+  - type: input
+    id: other-type
+    attributes:
+      label: Other Type
+      description: If you selected other in the dropdown above, please what type it is.
+    validations:
+      required: false
+  - type: checkboxes
+    id: is-enhancement
+    attributes:
+      label: Is This an Enhancement to a Preexisting Feature?
+      options:
+        - label: I confirm this request is an enhancement to a feature already in The Aether.
+          required: false
+  - type: textarea
+    id: request
+    attributes:
+      label: What Is Your Feature Request?
+      description: Describe the idea you have for the mod. Include details such as what the feature would do or what aspect of the mod it improves.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Why Should It Be in the Mod?
+      description: Describe why you would like to see this idea in the mod. Include reasons such as how gameplay would be improved, or how the feature improves the look and feel of the mod.
+    validations:
+      required: true
+  - type: input
+    id: mod-compat
+    attributes:
+      label: Does This Feature Improve Compatibility With Another Mod?
+      description: If this feature would create a better experience between the Aether and another mod, please put the name and version of the mod here. Leave blank otherwise.
+    validations:
+      required: false
+  - type: checkboxes
+    attributes:
+      label: Please Read and Confirm the Following
+      options:
+        - label: I have confirmed this feature is either in the original Aether mod, or improves parity between The Aether and Minecraft or other mods.
+          required: true
+        - label: I have confirmed this suggestion is unique and has not been suggested already.
+          required: true

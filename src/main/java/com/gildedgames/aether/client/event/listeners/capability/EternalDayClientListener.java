@@ -2,9 +2,8 @@ package com.gildedgames.aether.client.event.listeners.capability;
 
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
-import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,23 +16,23 @@ public class EternalDayClientListener
     public static boolean isEternalDay;
     public static boolean shouldCheckTime;
     public static long aetherTime;
-    public static long serverWorldTime;
+    public static long serverLevelTime;
 
     @SubscribeEvent
     public static void onWorldTick(TickEvent.RenderTickEvent event) {
         if (event.side == LogicalSide.CLIENT) {
-            ClientWorld world = Minecraft.getInstance().level;
-            if (world != null) {
-                if (world.dimension() == AetherDimensions.AETHER_WORLD) {
+            ClientLevel level = Minecraft.getInstance().level;
+            if (level != null) {
+                if (level.dimension() == AetherDimensions.AETHER_WORLD) {
                     if (!AetherConfig.COMMON.disable_eternal_day.get()) {
                         if (shouldCheckTime) {
                             if (!isEternalDay) {
-                                long dayTime = serverWorldTime % 72000;
+                                long dayTime = serverLevelTime % 72000;
                                 if (dayTime != aetherTime) {
-                                    world.setDayTime(aetherTime);
+                                    level.setDayTime(aetherTime);
                                 }
                             } else {
-                                world.setDayTime(18000L);
+                                level.setDayTime(18000L);
                             }
                         }
                     }

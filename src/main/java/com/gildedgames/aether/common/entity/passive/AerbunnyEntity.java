@@ -5,51 +5,61 @@ import com.gildedgames.aether.common.entity.ai.FallingRandomWalkingGoal;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+
 public class AerbunnyEntity extends AetherAnimalEntity
 {
-    public static final DataParameter<Integer> DATA_PUFFINESS_ID = EntityDataManager.defineId(AerbunnyEntity.class, DataSerializers.INT);
+    public static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(AerbunnyEntity.class, EntityDataSerializers.INT);
 
-    public AerbunnyEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
+    public AerbunnyEntity(EntityType<? extends Animal> type, Level worldIn) {
         super(type, worldIn);
     }
 
-    public AerbunnyEntity(World worldIn) {
+    public AerbunnyEntity(Level worldIn) {
         this(AetherEntityTypes.AERBUNNY.get(), worldIn);
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new SwimGoal(this));
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(AetherItems.BLUE_BERRY.get()), false));
-        this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 6.0F));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new HopGoal(this));
         this.goalSelector.addGoal(6, new FallingRandomWalkingGoal(this, 2.0D, 6));
     }
 
-    public static AttributeModifierMap.MutableAttribute createMobAttributes() {
-        return MobEntity.createMobAttributes()
+    public static AttributeSupplier.Builder createMobAttributes() {
+        return Mob.createMobAttributes()
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .add(Attributes.MAX_HEALTH, 5.0D);
     }
@@ -66,19 +76,19 @@ public class AerbunnyEntity extends AetherAnimalEntity
         if (this.getPuffiness() < 0) {
             this.setPuffiness(0);
         }
-        if (this.getVehicle() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) this.getVehicle();
-            this.yRot = player.yRot;
-            this.yRotO = this.yRot;
-            this.xRot = player.xRot * 0.5F;
-            this.setRot(this.yRot, this.xRot);
-            this.yBodyRot = this.yRot;
+        if (this.getVehicle() instanceof Player) {
+            Player player = (Player) this.getVehicle();
+            this.setYRot(player.getYRot());
+            this.yRotO = this.getYRot();
+            this.setXRot(player.getXRot() * 0.5F);
+            this.setRot(this.getYRot(), this.getXRot());
+            this.yBodyRot = this.getYRot();
             this.yHeadRot = this.yBodyRot;
 
             player.fallDistance = 0.0F;
 
             if (!player.isOnGround() && !player.isFallFlying()) {
-                if (!player.abilities.flying) {
+                if (!player.getAbilities().flying) {
                     player.setDeltaMovement(player.getDeltaMovement().add(0.0D, 0.05D, 0.0D));
                 }
                 IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
@@ -113,21 +123,21 @@ public class AerbunnyEntity extends AetherAnimalEntity
     }
 
     @Override
-    public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (player.isShiftKeyDown()) {
             return this.ridePlayer(player);
         } else {
-            ActionResultType result = super.mobInteract(player, hand);
-            if (result == ActionResultType.PASS || result == ActionResultType.FAIL) {
+            InteractionResult result = super.mobInteract(player, hand);
+            if (result == InteractionResult.PASS || result == InteractionResult.FAIL) {
                 return this.ridePlayer(player);
             }
             return result;
         }
     }
 
-    private ActionResultType ridePlayer(PlayerEntity player) {
+    private InteractionResult ridePlayer(Player player) {
         if (!this.isBaby()) {
-            this.level.playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundCategory.NEUTRAL, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            this.level.playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundSource.NEUTRAL, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             if (this.isPassenger()) {
                 this.navigation.recomputePath();
                 this.stopRiding();
@@ -137,9 +147,9 @@ public class AerbunnyEntity extends AetherAnimalEntity
                     IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(this.getUUID()));
                 }
             }
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -154,8 +164,8 @@ public class AerbunnyEntity extends AetherAnimalEntity
     }
 
     private void spawnExplosionParticle() {
-        if (this.level instanceof ServerWorld) {
-            ServerWorld world = (ServerWorld) this.level;
+        if (this.level instanceof ServerLevel) {
+            ServerLevel world = (ServerLevel) this.level;
             for (int i = 0; i < 5; i++) {
                 double d0 = this.random.nextGaussian() * 0.02D;
                 double d1 = this.random.nextGaussian() * 0.02D;
@@ -214,7 +224,7 @@ public class AerbunnyEntity extends AetherAnimalEntity
 
     @Nullable
     @Override
-    public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+    public AgeableMob getBreedOffspring(ServerLevel p_241840_1_, AgeableMob p_241840_2_) {
         return AetherEntityTypes.AERBUNNY.get().create(this.level);
     }
 

@@ -4,10 +4,10 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Preconditions;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
@@ -43,19 +43,19 @@ public class AetherBannedItemEvent extends Event
 	@Cancelable
 	public static class SpawnParticles extends AetherBannedItemEvent
 	{
-		private final IWorld world;
+		private final LevelAccessor world;
 		private final BlockPos pos;
 		@Nullable
 		private final Direction face;
 		
-		public SpawnParticles(IWorld worldIn, BlockPos pos, Direction face, ItemStack itemStack) {
+		public SpawnParticles(LevelAccessor worldIn, BlockPos pos, Direction face, ItemStack itemStack) {
 			super(itemStack);
 			this.world = Preconditions.checkNotNull(worldIn, "Null world in AetherBannedItemEvent");
 			this.pos = Preconditions.checkNotNull(pos, "Null position in AetherBannedItemEvent");
 			this.face = face;
 		}
 		
-		public IWorld getWorld() {
+		public LevelAccessor getWorld() {
 			return this.world;
 		}
 		

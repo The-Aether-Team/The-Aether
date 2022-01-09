@@ -8,7 +8,7 @@ parameters:
 jobs:
   build:
     machine:
-      image: ubuntu-2004:202104-01
+      image: ubuntu-2004:202111-02
 
     environment:
       JVM_OPTS: -Xmx3200m
@@ -18,14 +18,14 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v3-dependencies-{{ checksum "build.gradle" }}
-            - v3-dependencies-
+            - v4-dependencies-{{ checksum "build.gradle" }}
+            - v4-dependencies-
 
       - run: gradle dependencies
       - save_cache:
           paths:
             - ~/repo/.gradle
-          key: v3-dependencies-{{ checksum "build.gradle" }}
+          key: v4-dependencies-{{ checksum "build.gradle" }}
       - run: gradle test
       - run: gradle build
       - store_artifacts:
@@ -37,7 +37,7 @@ jobs:
 
   deploy:
     machine:
-        image: ubuntu-2004:202107-02
+        image: ubuntu-2004:202111-02
     steps:
       - run:
           name: Install OpenVPN
@@ -80,8 +80,6 @@ jobs:
       - run:
           name: Reinstall and start server
           command: |
-            SERVER_ID=9170ca89
-
             UPDATE_RESPONSE=$(curl -X PUT -s -o /dev/null -w "%{http_code}" "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/startup/variable" \
                 -H "Accept: application/json" \
                 -H "Content-Type: application/json" \
@@ -157,6 +155,6 @@ workflows:
           filters:
             branches:
               only: 
-                - "1.16"
+                - "1.18"
           requires:
             - build

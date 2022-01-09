@@ -19,44 +19,58 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherLoot;
 import com.google.common.collect.Maps;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.GroundPathNavigator;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.IForgeShearable;
 
-public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IForgeShearable
-{
-    private static final DataParameter<Byte> DATA_WOOL_COLOR_ID = EntityDataManager.defineId(SheepuffEntity.class, DataSerializers.BYTE);
-    private static final DataParameter<Boolean> DATA_PUFFED_ID = EntityDataManager.defineId(SheepuffEntity.class, DataSerializers.BOOLEAN);
+import net.minecraft.Util;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.level.ItemLike;
 
-    private static final Map<DyeColor, IItemProvider> ITEM_BY_DYE = Util.make(Maps.newEnumMap(DyeColor.class), (p_203402_0_) -> {
+public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IForgeShearable
+{
+    private static final EntityDataAccessor<Byte> DATA_WOOL_COLOR_ID = SynchedEntityData.defineId(SheepuffEntity.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Boolean> DATA_PUFFED_ID = SynchedEntityData.defineId(SheepuffEntity.class, EntityDataSerializers.BOOLEAN);
+
+    private static final Map<DyeColor, ItemLike> ITEM_BY_DYE = Util.make(Maps.newEnumMap(DyeColor.class), (p_203402_0_) -> {
         p_203402_0_.put(DyeColor.WHITE, Blocks.WHITE_WOOL);
         p_203402_0_.put(DyeColor.ORANGE, Blocks.ORANGE_WOOL);
         p_203402_0_.put(DyeColor.MAGENTA, Blocks.MAGENTA_WOOL);
@@ -80,7 +94,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
     private EatAetherGrassGoal eatBlockGoal;
 
     protected final FallPathNavigator fallNavigation;
-    protected final GroundPathNavigator groundNavigation;
+    protected final GroundPathNavigation groundNavigation;
 
     private static float[] createSheepColor(DyeColor p_192020_0_) {
         if (p_192020_0_ == DyeColor.WHITE) {
@@ -96,33 +110,33 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
         return COLOR_ARRAY_BY_COLOR.get(p_175513_0_);
     }
 
-    public SheepuffEntity(EntityType<? extends SheepuffEntity> type, World worldIn) {
+    public SheepuffEntity(EntityType<? extends SheepuffEntity> type, Level worldIn) {
         super(type, worldIn);
         this.moveControl = new FallingMovementController(this);
         this.fallNavigation = new FallPathNavigator(this, worldIn);
-        this.groundNavigation = new GroundPathNavigator(this, worldIn);
+        this.groundNavigation = new GroundPathNavigation(this, worldIn);
     }
 
-    public SheepuffEntity(World worldIn) {
+    public SheepuffEntity(Level worldIn) {
         this(AetherEntityTypes.SHEEPUFF.get(), worldIn);
     }
 
     @Override
     protected void registerGoals() {
         this.eatBlockGoal = new EatAetherGrassGoal(this);
-        this.goalSelector.addGoal(0, new SwimGoal(this));
+        this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.of(AetherItems.BLUE_BERRY.get()), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1));
         this.goalSelector.addGoal(5, this.eatBlockGoal);
         this.goalSelector.addGoal(6, new FallingRandomWalkingGoal(this, 1.0)); //originally was water avoiding goal.
-        this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-        this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
     }
 
-    public static AttributeModifierMap.MutableAttribute createMobAttributes() {
-        return MobEntity.createMobAttributes()
+    public static AttributeSupplier.Builder createMobAttributes() {
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 8.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.23F);
     }
@@ -136,7 +150,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
 
     @Nullable
     @Override
-    public ILivingEntityData finalizeSpawn(IServerWorld serverWorld, DifficultyInstance difficultyInstance, SpawnReason spawnReason, @Nullable ILivingEntityData livingEntityData, @Nullable CompoundNBT compoundNBT) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverWorld, DifficultyInstance difficultyInstance, MobSpawnType spawnReason, @Nullable SpawnGroupData livingEntityData, @Nullable CompoundTag compoundNBT) {
         this.setColor(getRandomSheepColor(serverWorld.getRandom()));
         return super.finalizeSpawn(serverWorld, difficultyInstance, spawnReason, livingEntityData, compoundNBT);
     }
@@ -180,9 +194,9 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
     public float getHeadEatAngleScale(float p_70890_1_) {
         if (this.eatAnimationTick > 4 && this.eatAnimationTick <= 36) {
             float f = ((float) (this.eatAnimationTick - 4) - p_70890_1_) / 32.0F;
-            return ((float) Math.PI / 5.0F) + 0.21991149F * MathHelper.sin(f * 28.7F);
+            return ((float) Math.PI / 5.0F) + 0.21991149F * Mth.sin(f * 28.7F);
         } else {
-            return this.eatAnimationTick > 0 ? ((float) Math.PI / 5.0F) : this.xRot * ((float) Math.PI / 180.0F);
+            return this.eatAnimationTick > 0 ? ((float) Math.PI / 5.0F) : this.getXRot() * ((float) Math.PI / 180.0F);
         }
     }
 
@@ -229,7 +243,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
     }
 
     @Override
-    public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if (itemstack.getItem() instanceof DyeItem && !this.isSheared()) {
             DyeColor color = ((DyeItem) itemstack.getItem()).getDyeColor();
@@ -238,7 +252,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
                     player.swing(hand);
                     if (!player.level.isClientSide) {
                         this.setColor(color);
-                        if (!player.abilities.instabuild) {
+                        if (!player.getAbilities().instabuild) {
                             itemstack.shrink(2);
                         }
                     }
@@ -246,7 +260,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
                     player.swing(hand);
                     if (!player.level.isClientSide) {
                         this.setColor(color);
-                        if (!player.abilities.instabuild) {
+                        if (!player.getAbilities().instabuild) {
                             itemstack.shrink(1);
                         }
                     }
@@ -258,7 +272,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
     }
 
     @Override
-    public void shear(SoundCategory category) {
+    public void shear(SoundSource category) {
         this.level.playSound(null, this, AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), category, 1.0F, 1.0F);
         this.amountEaten = 0;
         this.setSheared(true);
@@ -274,8 +288,8 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
 
     @Nonnull
     @Override
-    public List<ItemStack> onSheared(@Nullable PlayerEntity player, @Nonnull ItemStack item, World world, BlockPos pos, int fortune) {
-        world.playSound(null, this, AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), player == null ? SoundCategory.BLOCKS : SoundCategory.PLAYERS, 1.0F, 1.0F);
+    public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
+        world.playSound(null, this, AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
         if (!world.isClientSide) {
             this.amountEaten = 0;
             this.setSheared(true);
@@ -296,7 +310,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
     }
 
     @Override
-    public boolean isShearable(@Nonnull ItemStack item, World world, BlockPos pos) {
+    public boolean isShearable(@Nonnull ItemStack item, Level world, BlockPos pos) {
         return this.readyForShearing();
     }
 
@@ -365,7 +379,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_SHEEPUFF_STEP.get(), SoundCategory.NEUTRAL, 0.15F, 1.0F);
+        this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_SHEEPUFF_STEP.get(), SoundSource.NEUTRAL, 0.15F, 1.0F);
     }
 
     @Override
@@ -380,24 +394,24 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
 
     @Nullable
     @Override
-    public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity entity) {
+    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
         SheepuffEntity sheepuffParent = (SheepuffEntity) entity;
         SheepuffEntity sheepuffBaby = AetherEntityTypes.SHEEPUFF.get().create(world);
         sheepuffBaby.setColor(this.getOffspringColor(this, sheepuffParent));
         return sheepuffBaby;
     }
 
-    private DyeColor getOffspringColor(AnimalEntity parent1, AnimalEntity parent2) {
+    private DyeColor getOffspringColor(Animal parent1, Animal parent2) {
         DyeColor dyecolor1 = ((SheepuffEntity) parent1).getColor();
         DyeColor dyecolor2 = ((SheepuffEntity) parent2).getColor();
-        CraftingInventory craftinginventory = makeContainer(dyecolor1, dyecolor2);
-        return this.level.getRecipeManager().getRecipeFor(IRecipeType.CRAFTING, craftinginventory, this.level).map(
+        CraftingContainer craftinginventory = makeContainer(dyecolor1, dyecolor2);
+        return this.level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftinginventory, this.level).map(
                 (p_213614_1_) -> p_213614_1_.assemble(craftinginventory)).map(ItemStack::getItem).filter(DyeItem.class::isInstance).map(DyeItem.class::cast).map(DyeItem::getDyeColor).orElseGet(() -> this.level.random.nextBoolean() ? dyecolor1 : dyecolor2);
     }
 
-    private static CraftingInventory makeContainer(DyeColor dyeColor1, DyeColor dyeColor2) {
-        CraftingInventory craftinginventory = new CraftingInventory(new Container(null, -1) {
-            public boolean stillValid(PlayerEntity playerEntity) {
+    private static CraftingContainer makeContainer(DyeColor dyeColor1, DyeColor dyeColor2) {
+        CraftingContainer craftinginventory = new CraftingContainer(new AbstractContainerMenu(null, -1) {
+            public boolean stillValid(Player playerEntity) {
                 return false;
             }
         }, 2, 1);
@@ -407,7 +421,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose p_213348_1_, EntitySize p_213348_2_) {
+    protected float getStandingEyeHeight(Pose p_213348_1_, EntityDimensions p_213348_2_) {
         return 0.95F * p_213348_2_.height;
     }
 
@@ -455,7 +469,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundNBT compound) {
+    public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putBoolean("Sheared", this.isSheared());
         compound.putBoolean("Puffed", this.getPuffed());
@@ -463,7 +477,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements IShearable, IF
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT compound) {
+    public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setSheared(compound.getBoolean("Sheared"));
         this.setPuffed(compound.getBoolean("Puffed"));

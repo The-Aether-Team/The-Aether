@@ -1,9 +1,9 @@
 package com.gildedgames.aether.common.event.listeners.capability;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,15 +14,15 @@ public class AetherPlayerListener
 {
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        PlayerEntity player = event.getPlayer();
+        Player player = event.getPlayer();
         IAetherPlayer.get(player).ifPresent(IAetherPlayer::onLogin);
     }
 
     @SubscribeEvent
     public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
-        PlayerEntity player = event.getPlayer();
+        Player player = event.getPlayer();
         IAetherPlayer.get(player).ifPresent((aetherPlayer) ->  {
-            ModifiableAttributeInstance health = player.getAttribute(Attributes.MAX_HEALTH);
+            AttributeInstance health = player.getAttribute(Attributes.MAX_HEALTH);
             if (health != null && health.hasModifier(aetherPlayer.getLifeShardHealthAttributeModifier())) {
                 aetherPlayer.setSavedHealth(player.getHealth());
             }
@@ -31,13 +31,14 @@ public class AetherPlayerListener
 
     @SubscribeEvent
     public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
-        if (event.getEntityLiving() instanceof PlayerEntity) {
-            IAetherPlayer.get((PlayerEntity) event.getEntityLiving()).ifPresent(IAetherPlayer::onUpdate);
+        if (event.getEntityLiving() instanceof Player) {
+            IAetherPlayer.get((Player) event.getEntityLiving()).ifPresent(IAetherPlayer::onUpdate);
         }
     }
 
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event) {
+        event.getOriginal().reviveCaps();
         IAetherPlayer original = IAetherPlayer.get(event.getOriginal()).orElseThrow(
                 () -> new IllegalStateException("Player " + event.getOriginal().getName().getContents() + " has no AetherPlayer capability!"));
         IAetherPlayer newPlayer = IAetherPlayer.get(event.getPlayer()).orElseThrow(
@@ -49,5 +50,6 @@ public class AetherPlayerListener
         } else {
             newPlayer.setSavedHealth(1024.0F); //Max health.
         }
+        event.getOriginal().invalidateCaps();
     }
 }

@@ -1,10 +1,10 @@
 package com.gildedgames.aether.core.data.provider;
 
 import com.gildedgames.aether.Aether;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelBuilder;
@@ -33,6 +33,10 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
     public ItemModelBuilder item(Supplier<? extends Item> item, String location) {
         return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/generated"))
                 .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()));
+    }
+
+    public ItemModelBuilder withExistingParent(Supplier<? extends Item> item, ResourceLocation lookalike) {
+        return withExistingParent(item.get().getRegistryName().getPath(), lookalike);
     }
 
     public ItemModelBuilder handheldItem(Supplier<? extends Item> item, String location) {

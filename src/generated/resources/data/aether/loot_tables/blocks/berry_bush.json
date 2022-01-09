@@ -2,7 +2,8 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -16,7 +17,9 @@
                     "condition": "minecraft:location_check",
                     "predicate": {
                       "block": {
-                        "block": "aether:enchanted_aether_grass_block"
+                        "blocks": [
+                          "aether:enchanted_aether_grass_block"
+                        ]
                       }
                     },
                     "offsetY": -1
@@ -24,10 +27,11 @@
                 }
               ],
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 3.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 3.0
+              },
+              "add": false
             },
             {
               "function": "minecraft:set_count",
@@ -36,17 +40,20 @@
                   "condition": "minecraft:location_check",
                   "predicate": {
                     "block": {
-                      "block": "aether:enchanted_aether_grass_block"
+                      "blocks": [
+                        "aether:enchanted_aether_grass_block"
+                      ]
                     }
                   },
                   "offsetY": -1
                 }
               ],
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 4.0
+              },
+              "add": false
             },
             {
               "function": "minecraft:explosion_decay"

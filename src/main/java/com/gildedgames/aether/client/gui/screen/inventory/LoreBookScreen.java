@@ -4,35 +4,36 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.button.LorePageButton;
 import com.gildedgames.aether.common.inventory.container.LoreBookContainer;
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IReorderingProcessor;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
+public class LoreBookScreen extends AbstractContainerScreen<LoreBookContainer>
 {
     private static final ResourceLocation TEXTURE_LORE_BACKING = new ResourceLocation(Aether.MODID, "textures/gui/container/lore_backing.png");
     private static final ResourceLocation TEXTURE_LORE_BOOK = new ResourceLocation(Aether.MODID, "textures/gui/container/lore_book.png");
 
-    private Map<Integer, List<IReorderingProcessor>> pages = new HashMap<>();
+    private Map<Integer, List<FormattedCharSequence>> pages = new HashMap<>();
 
     private LorePageButton previousButton, nextButton;
     private int currentPageNumber;
 
-    public LoreBookScreen(LoreBookContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public LoreBookScreen(LoreBookContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
 
         this.imageWidth = 256;
@@ -45,17 +46,17 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - (this.imageHeight)) / 2;
 
-        this.previousButton = this.addButton(new LorePageButton(i + 14, j + 169, 20, 20, new StringTextComponent("<"), (p_214201_1_) -> {
+        this.previousButton = this.addWidget(new LorePageButton(i + 14, j + 169, 20, 20, new TextComponent("<"), (p_214201_1_) -> {
             if (this.currentPageNumber > 0) currentPageNumber--;
         }));
 
-        this.nextButton = this.addButton(new LorePageButton(i + 221, j + 169, 20, 20, new StringTextComponent(">"), (p_214201_1_) -> {
+        this.nextButton = this.addWidget(new LorePageButton(i + 221, j + 169, 20, 20, new TextComponent(">"), (p_214201_1_) -> {
             if (this.currentPageNumber < this.pages.size() - 1) currentPageNumber++;
         }));
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         this.renderBg(matrixStack, partialTicks, mouseX, mouseY);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
@@ -63,18 +64,18 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
     }
 
     @Override
-    protected void renderLabels(MatrixStack matrixStack, int x, int y) {
-        ITextComponent previous = new TranslationTextComponent("gui.aether.book_of_lore.previous");
-        ITextComponent next = new TranslationTextComponent("gui.aether.book_of_lore.next");
+    protected void renderLabels(PoseStack matrixStack, int x, int y) {
+        Component previous = new TranslatableComponent("gui.aether.book_of_lore.previous");
+        Component next = new TranslatableComponent("gui.aether.book_of_lore.next");
         this.drawBookText(matrixStack, this.font, previous, 13, 158);
         this.drawBookText(matrixStack, this.font, next, 221, 158);
 
-        ITextComponent book = new TranslationTextComponent("gui.aether.book_of_lore.book");
-        ITextComponent ofLore = new TranslationTextComponent("gui.aether.book_of_lore.of_lore");
+        Component book = new TranslatableComponent("gui.aether.book_of_lore.book");
+        Component ofLore = new TranslatableComponent("gui.aether.book_of_lore.of_lore");
         this.drawCenteredBookText(matrixStack, this.font, book, 75, 20);
         this.drawCenteredBookText(matrixStack, this.font, ofLore, 75, 20 + 10);
 
-        ITextComponent item = new TranslationTextComponent("gui.aether.book_of_lore.item");
+        Component item = new TranslatableComponent("gui.aether.book_of_lore.item");
         this.drawRightBookText(matrixStack, this.font, item, 78, 67);
 
         ItemStack itemStack = this.menu.slots.get(0).getItem();
@@ -82,11 +83,11 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
             String entryKey = this.menu.getLoreEntryKey(itemStack);
 
             if (I18n.exists(entryKey)) {
-                ITextComponent entry = new TranslationTextComponent(entryKey);
+                Component entry = new TranslatableComponent(entryKey);
                 this.createPages(entry);
 
                 if (this.currentPageNumber == 0) {
-                    ITextComponent title = new TranslationTextComponent(itemStack.getDescriptionId());
+                    Component title = new TranslatableComponent(itemStack.getDescriptionId());
                     createText(matrixStack, this.font.split(title, 98), 136, 10);
 
                     createText(matrixStack, this.pages.get(0), 136, 32);
@@ -103,17 +104,17 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
         this.nextButton.setIsActive(this.currentPageNumber < this.pages.size() - 1);
     }
 
-    private void createText(MatrixStack matrixStack, List<IReorderingProcessor> reorderingProcessors, int x, int y) {
+    private void createText(PoseStack matrixStack, List<FormattedCharSequence> reorderingProcessors, int x, int y) {
         int length = 0;
-        for (IReorderingProcessor line : reorderingProcessors) {
+        for (FormattedCharSequence line : reorderingProcessors) {
             this.drawBookText(matrixStack, this.font, line, x, y + (length * 10));
             length++;
         }
     }
 
-    private void createPages(ITextComponent entry) {
-        List<IReorderingProcessor> formattedText = new ArrayList<>(this.font.split(entry, 98));
-        List<IReorderingProcessor> firstPage;
+    private void createPages(Component entry) {
+        List<FormattedCharSequence> formattedText = new ArrayList<>(this.font.split(entry, 98));
+        List<FormattedCharSequence> firstPage;
         if (formattedText.size() < 6) {
             firstPage = formattedText.subList(0, formattedText.size());
             this.pages.put(0, firstPage);
@@ -121,9 +122,9 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
             firstPage = formattedText.subList(0, 6);
             this.pages.put(0, firstPage);
 
-            List<IReorderingProcessor> remainingPages = formattedText.subList(6, formattedText.size());
+            List<FormattedCharSequence> remainingPages = formattedText.subList(6, formattedText.size());
 
-            final List<List<IReorderingProcessor>> list = Lists.partition(remainingPages, 8);
+            final List<List<FormattedCharSequence>> list = Lists.partition(remainingPages, 8);
 
             for (int i = 1; i < list.size() + 1; i++) {
                 this.pages.put(i, list.get(i - 1));
@@ -132,34 +133,36 @@ public class LoreBookScreen extends ContainerScreen<LoreBookContainer>
     }
 
     @Override
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
+        //RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F); //TODO
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - (this.imageHeight)) / 2;
 
-        this.getMinecraft().getTextureManager().bind(TEXTURE_LORE_BACKING);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, TEXTURE_LORE_BACKING);
         blit(matrixStack, i, j - 4, 0, 0, this.imageWidth, this.imageHeight + 56, 256, 256);
 
-        this.getMinecraft().getTextureManager().bind(TEXTURE_LORE_BOOK);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, TEXTURE_LORE_BOOK);
         blit(matrixStack, i + 12, j + 2, 0, 0, this.imageWidth, this.imageHeight + 56, 256, 256);
     }
 
-    private void drawBookText(MatrixStack matrixStack, FontRenderer fontRenderer, IReorderingProcessor font, int x, int y) {
+    private void drawBookText(PoseStack matrixStack, Font fontRenderer, FormattedCharSequence font, int x, int y) {
         fontRenderer.draw(matrixStack, font, (float) x, (float) y, 4210752);
     }
 
-    private void drawBookText(MatrixStack matrixStack, FontRenderer fontRenderer, ITextComponent font, int x, int y) {
-        IReorderingProcessor text = font.getVisualOrderText();
+    private void drawBookText(PoseStack matrixStack, Font fontRenderer, Component font, int x, int y) {
+        FormattedCharSequence text = font.getVisualOrderText();
         fontRenderer.draw(matrixStack, text, (float) x, (float) y, 4210752);
     }
 
-    private void drawRightBookText(MatrixStack matrixStack, FontRenderer fontRenderer, ITextComponent font, int x, int y) {
-        IReorderingProcessor text = font.getVisualOrderText();
+    private void drawRightBookText(PoseStack matrixStack, Font fontRenderer, Component font, int x, int y) {
+        FormattedCharSequence text = font.getVisualOrderText();
         fontRenderer.draw(matrixStack, text, (float) (x - fontRenderer.width(text)), (float) y, 4210752);
     }
 
-    private void drawCenteredBookText(MatrixStack matrixStack, FontRenderer fontRenderer, ITextComponent font, int x, int y) {
-        IReorderingProcessor text = font.getVisualOrderText();
+    private void drawCenteredBookText(PoseStack matrixStack, Font fontRenderer, Component font, int x, int y) {
+        FormattedCharSequence text = font.getVisualOrderText();
         fontRenderer.draw(matrixStack, text, (float) (x - fontRenderer.width(text) / 2), (float) y, 4210752);
     }
 }

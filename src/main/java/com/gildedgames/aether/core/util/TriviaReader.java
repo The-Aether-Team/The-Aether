@@ -2,14 +2,12 @@ package com.gildedgames.aether.core.util;
 
 import com.gildedgames.aether.Aether;
 import com.google.common.collect.Lists;
-import joptsimple.internal.Strings;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.resources.IResource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
@@ -23,7 +21,7 @@ public class TriviaReader
 {
     private static final Random random = new Random();
 
-    public static ITextComponent getTriviaLine() {
+    public static Component getTriviaLine() {
         String localization = Minecraft.getInstance().getLanguageManager().getSelected().getCode();
         if (lineFromLocalization(localization) != null) {
             return lineFromLocalization(localization);
@@ -34,8 +32,8 @@ public class TriviaReader
         }
     }
 
-    public static ITextComponent lineFromLocalization(String localization) {
-        IResource resource = null;
+    public static Component lineFromLocalization(String localization) {
+        Resource resource = null;
         try {
             resource = Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(Aether.MODID, "texts/trivia/" + localization + ".txt"));
             BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
@@ -49,7 +47,7 @@ public class TriviaReader
                 }
             }
             if (!list.isEmpty()) {
-                return new TranslationTextComponent("gui.aether.pro_tip").append(new StringTextComponent(" " + list.get(random.nextInt(list.size()))));
+                return new TranslatableComponent("gui.aether.pro_tip").append(new TextComponent(" " + list.get(random.nextInt(list.size()))));
             }
 
         } catch (IOException ignore) { }

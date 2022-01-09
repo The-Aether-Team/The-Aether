@@ -1,0 +1,118 @@
+{
+  "ore_veins_enabled": false,
+  "noodle_caves_enabled": false,
+  "legacy_random_source": false,
+  "disable_mob_generation": false,
+  "aquifers_enabled": false,
+  "noise_caves_enabled": false,
+  "default_fluid": {
+    "Properties": {
+      "level": "0"
+    },
+    "Name": "minecraft:water"
+  },
+  "surface_rule": {
+    "sequence": [
+      {
+        "if_true": {
+          "offset": 0,
+          "add_surface_depth": false,
+          "add_surface_secondary_depth": false,
+          "surface_type": "floor",
+          "type": "minecraft:stone_depth"
+        },
+        "then_run": {
+          "sequence": [
+            {
+              "if_true": {
+                "offset": -1,
+                "surface_depth_multiplier": 0,
+                "add_stone_depth": false,
+                "type": "minecraft:water"
+              },
+              "then_run": {
+                "result_state": {
+                  "Properties": {
+                    "snowy": "false",
+                    "double_drops": "true"
+                  },
+                  "Name": "aether:aether_grass_block"
+                },
+                "type": "minecraft:block"
+              },
+              "type": "minecraft:condition"
+            },
+            {
+              "result_state": {
+                "Properties": {
+                  "double_drops": "true"
+                },
+                "Name": "aether:aether_dirt"
+              },
+              "type": "minecraft:block"
+            }
+          ],
+          "type": "minecraft:sequence"
+        },
+        "type": "minecraft:condition"
+      },
+      {
+        "if_true": {
+          "offset": 0,
+          "add_surface_depth": true,
+          "add_surface_secondary_depth": false,
+          "surface_type": "floor",
+          "type": "minecraft:stone_depth"
+        },
+        "then_run": {
+          "result_state": {
+            "Properties": {
+              "double_drops": "true"
+            },
+            "Name": "aether:aether_dirt"
+          },
+          "type": "minecraft:block"
+        },
+        "type": "minecraft:condition"
+      }
+    ],
+    "type": "minecraft:sequence"
+  },
+  "sea_level": -2147483648,
+  "structures": {
+    "structures": {}
+  },
+  "noise": {
+    "terrain_shaper": {
+      "offset": 0.0,
+      "factor": 0.0,
+      "jaggedness": 0.0
+    },
+    "size_horizontal": 2,
+    "size_vertical": 1,
+    "sampling": {
+      "xz_scale": 2.0,
+      "y_scale": 1.0,
+      "xz_factor": 80.0,
+      "y_factor": 160.0
+    },
+    "top_slide": {
+      "target": -23.4375,
+      "size": 64,
+      "offset": -46
+    },
+    "bottom_slide": {
+      "target": -0.234375,
+      "size": 7,
+      "offset": 1
+    },
+    "min_y": 0,
+    "height": 128
+  },
+  "default_block": {
+    "Properties": {
+      "double_drops": "true"
+    },
+    "Name": "aether:holystone"
+  }
+}

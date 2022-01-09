@@ -2,13 +2,12 @@ package com.gildedgames.aether.core.network.packet.server;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.ClientGrabItemPacket;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 
-import static com.gildedgames.aether.core.network.IAetherPacket.*;
+import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 
 public class OpenInventoryPacket extends AetherPacket
 {
@@ -19,28 +18,25 @@ public class OpenInventoryPacket extends AetherPacket
     }
 
     @Override
-    public void encode(PacketBuffer buf) {
+    public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID);
     }
 
-    public static OpenInventoryPacket decode(PacketBuffer buf) {
+    public static OpenInventoryPacket decode(FriendlyByteBuf buf) {
         int playerID = buf.readInt();
         return new OpenInventoryPacket(playerID);
     }
 
     @Override
-    public void execute(PlayerEntity playerEntity) {
-        if (playerEntity != null && playerEntity.level != null && playerEntity.getServer() != null) {
-            Entity entity = playerEntity.level.getEntity(this.playerID);
-            if (entity instanceof ServerPlayerEntity) {
-                ServerPlayerEntity player = (ServerPlayerEntity) entity;
-                ItemStack stack = player.inventory.getCarried();
-                player.inventory.setCarried(ItemStack.EMPTY);
-                player.doCloseContainer();
-                if (!stack.isEmpty()) {
-                    player.inventory.setCarried(stack);
-                    AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(player.getId(), stack), player);
-                }
+    public void execute(Player playerEntity) { //TODO: This doesn't work. Wait for a fix on Curios' end for this behavior being bugged.
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
+            ItemStack itemStack = serverPlayer.inventoryMenu.getCarried();
+            //might have to switch containermenu to inventorymenu
+            serverPlayer.inventoryMenu.setCarried(ItemStack.EMPTY);
+            serverPlayer.doCloseContainer();
+            if (!itemStack.isEmpty()) {
+                serverPlayer.inventoryMenu.setCarried(itemStack);
+                AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(serverPlayer.getId(), itemStack), serverPlayer);
             }
         }
     }

@@ -2,7 +2,6 @@ package com.gildedgames.aether.core.data;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.advancement.LoreTrigger;
-import com.gildedgames.aether.common.advancement.MountTrigger;
 import com.gildedgames.aether.common.registry.*;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
@@ -11,23 +10,22 @@ import com.google.gson.GsonBuilder;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.FrameType;
-import net.minecraft.advancements.IRequirementsStrategy;
-import net.minecraft.advancements.criterion.ChangeDimensionTrigger;
-import net.minecraft.advancements.criterion.EnterBlockTrigger;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
-import net.minecraft.block.Blocks;
-import net.minecraft.command.FunctionObject;
-import net.minecraft.data.AdvancementProvider;
+import net.minecraft.advancements.RequirementsStrategy;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.commands.CommandFunction;
+import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DirectoryCache;
-import net.minecraft.data.IDataProvider;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.data.HashCache;
+import net.minecraft.data.DataProvider;
+import net.minecraft.world.item.Items;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -41,16 +39,19 @@ public class AetherAdvancementData extends AdvancementProvider
     private final DataGenerator generator;
     public final List<Consumer<Consumer<Advancement>>> advancements = ImmutableList.of(new RegisterAdvancements());
 
-    public AetherAdvancementData(DataGenerator generatorIn) {
-        super(generatorIn);
+    public AetherAdvancementData(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
+        super(generatorIn, existingFileHelper);
         this.generator = generatorIn;
     }
 
+    @Nonnull
+    @Override
     public String getName() {
         return "Aether Advancements";
     }
 
-    public void run(DirectoryCache cache) {
+    @Override
+    public void run(@Nonnull HashCache cache) {
         Path path = this.generator.getOutputFolder();
         Set<ResourceLocation> set = Sets.newHashSet();
         Consumer<Advancement> consumer = (advancement) -> {
@@ -60,7 +61,7 @@ public class AetherAdvancementData extends AdvancementProvider
                 Path path1 = getPath(path, advancement);
 
                 try {
-                    IDataProvider.save(GSON, cache, advancement.deconstruct().serializeToJson(), path1);
+                    DataProvider.save(GSON, cache, advancement.deconstruct().serializeToJson(), path1);
                 } catch (IOException ioexception) {
                     LOGGER.error("Couldn't save advancement {}", path1, ioexception);
                 }
@@ -83,19 +84,19 @@ public class AetherAdvancementData extends AdvancementProvider
         public void accept(Consumer<Advancement> consumer) {
             Advancement enterAether = Advancement.Builder.advancement()
                     .display(Blocks.GLOWSTONE,
-                            new TranslationTextComponent("advancement.aether.enter_aether"),
-                            new TranslationTextComponent("advancement.aether.enter_aether.desc"),
+                            new TranslatableComponent("advancement.aether.enter_aether"),
+                            new TranslatableComponent("advancement.aether.enter_aether.desc"),
                             new ResourceLocation(Aether.MODID, "textures/block/dungeon/carved_stone.png"),
                             FrameType.TASK, true, true, false)
-                    .addCriterion("enter_aether", ChangeDimensionTrigger.Instance.changedDimensionTo(AetherDimensions.AETHER_WORLD))
-                    .rewards(new AdvancementRewards(0, new ResourceLocation[]{AetherLoot.ENTER_AETHER}, new ResourceLocation[0], FunctionObject.CacheableFunction.NONE))
+                    .addCriterion("enter_aether", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(AetherDimensions.AETHER_WORLD))
+                    .rewards(new AdvancementRewards(0, new ResourceLocation[]{AetherLoot.ENTER_AETHER}, new ResourceLocation[0], CommandFunction.CacheableFunction.NONE))
                     .save(consumer, "aether:enter_aether");
 
             Advancement moreYouKnow = Advancement.Builder.advancement()
                     .parent(enterAether)
                     .display(AetherItems.BOOK_OF_LORE.get(),
-                            new TranslationTextComponent("advancement.aether.read_lore"),
-                            new TranslationTextComponent("advancement.aether.read_lore.desc"),
+                            new TranslatableComponent("advancement.aether.read_lore"),
+                            new TranslatableComponent("advancement.aether.read_lore.desc"),
                             null,
                             FrameType.TASK, true, true, false)
                     .addCriterion("lore_book_entry", LoreTrigger.Instance.forAny())
@@ -104,8 +105,8 @@ public class AetherAdvancementData extends AdvancementProvider
             Advancement loreception = Advancement.Builder.advancement()
                     .parent(moreYouKnow)
                     .display(AetherItems.BOOK_OF_LORE.get(),
-                            new TranslationTextComponent("advancement.aether.loreception"),
-                            new TranslationTextComponent("advancement.aether.loreception.desc"),
+                            new TranslatableComponent("advancement.aether.loreception"),
+                            new TranslatableComponent("advancement.aether.loreception.desc"),
                             null,
                             FrameType.TASK, true, true, true)
                     .addCriterion("lore_book_entry", LoreTrigger.Instance.forItem(AetherItems.BOOK_OF_LORE.get()))
@@ -114,53 +115,53 @@ public class AetherAdvancementData extends AdvancementProvider
             Advancement toInfinityAndBeyond = Advancement.Builder.advancement()
                     .parent(enterAether)
                     .display(AetherBlocks.BLUE_AERCLOUD.get(),
-                            new TranslationTextComponent("advancement.aether.blue_aercloud"),
-                            new TranslationTextComponent("advancement.aether.blue_aercloud.desc"),
+                            new TranslatableComponent("advancement.aether.blue_aercloud"),
+                            new TranslatableComponent("advancement.aether.blue_aercloud.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .addCriterion("to_infinity_and_beyond", EnterBlockTrigger.Instance.entersBlock(AetherBlocks.BLUE_AERCLOUD.get()))
+                    .addCriterion("to_infinity_and_beyond", EnterBlockTrigger.TriggerInstance.entersBlock(AetherBlocks.BLUE_AERCLOUD.get()))
                     .save(consumer, "aether:to_infinity_and_beyond");
             Advancement mountPhyg = Advancement.Builder.advancement()
                     .parent(toInfinityAndBeyond)
                     .display(Items.SADDLE,
-                            new TranslationTextComponent("advancement.aether.mount_phyg"),
-                            new TranslationTextComponent("advancement.aether.mount_phyg.desc"),
+                            new TranslatableComponent("advancement.aether.mount_phyg"),
+                            new TranslatableComponent("advancement.aether.mount_phyg.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .addCriterion("mount_phyg", MountTrigger.Instance.forEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.PHYG.get())))
+                    .addCriterion("mount_phyg", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(AetherEntityTypes.PHYG.get()).build())))
                     .save(consumer, "aether:mount_phyg");
 
             Advancement craftIncubator = Advancement.Builder.advancement()
                     .parent(enterAether)
                     .display(AetherBlocks.INCUBATOR.get(),
-                            new TranslationTextComponent("advancement.aether.incubator"),
-                            new TranslationTextComponent("advancement.aether.incubator.desc"),
+                            new TranslatableComponent("advancement.aether.incubator"),
+                            new TranslatableComponent("advancement.aether.incubator.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .addCriterion("craft_incubator", InventoryChangeTrigger.Instance.hasItems(AetherBlocks.INCUBATOR.get()))
+                    .addCriterion("craft_incubator", InventoryChangeTrigger.TriggerInstance.hasItems(AetherBlocks.INCUBATOR.get()))
                     .save(consumer, "aether:craft_incubator");
 
             Advancement craftAltar = Advancement.Builder.advancement()
                     .parent(enterAether)
                     .display(AetherBlocks.ALTAR.get(),
-                            new TranslationTextComponent("advancement.aether.altar"),
-                            new TranslationTextComponent("advancement.aether.altar.desc"),
+                            new TranslatableComponent("advancement.aether.altar"),
+                            new TranslatableComponent("advancement.aether.altar.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .addCriterion("craft_altar", InventoryChangeTrigger.Instance.hasItems(AetherBlocks.ALTAR.get()))
+                    .addCriterion("craft_altar", InventoryChangeTrigger.TriggerInstance.hasItems(AetherBlocks.ALTAR.get()))
                     .save(consumer, "aether:craft_altar");
             Advancement gravititeTools = Advancement.Builder.advancement()
                     .parent(craftAltar)
                     .display(AetherItems.GRAVITITE_PICKAXE.get(),
-                            new TranslationTextComponent("advancement.aether.gravitite_tools"),
-                            new TranslationTextComponent("advancement.aether.gravitite_tools.desc"),
+                            new TranslatableComponent("advancement.aether.gravitite_tools"),
+                            new TranslatableComponent("advancement.aether.gravitite_tools.desc"),
                             null,
                             FrameType.GOAL, true, true, false)
-                    .requirements(IRequirementsStrategy.OR)
-                    .addCriterion("gravitite_pickaxe", InventoryChangeTrigger.Instance.hasItems(AetherItems.GRAVITITE_PICKAXE.get()))
-                    .addCriterion("gravitite_sword", InventoryChangeTrigger.Instance.hasItems(AetherItems.GRAVITITE_SWORD.get()))
-                    .addCriterion("gravitite_axe", InventoryChangeTrigger.Instance.hasItems(AetherItems.GRAVITITE_AXE.get()))
-                    .addCriterion("gravitite_shovel", InventoryChangeTrigger.Instance.hasItems(AetherItems.GRAVITITE_SHOVEL.get()))
+                    .requirements(RequirementsStrategy.OR)
+                    .addCriterion("gravitite_pickaxe", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_PICKAXE.get()))
+                    .addCriterion("gravitite_sword", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_SWORD.get()))
+                    .addCriterion("gravitite_axe", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_AXE.get()))
+                    .addCriterion("gravitite_shovel", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_SHOVEL.get()))
                     .save(consumer, "aether:gravitite_tools");
         }
     }

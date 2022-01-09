@@ -1,64 +1,48 @@
 package com.gildedgames.aether.common.world.structure;
 
 import com.gildedgames.aether.Aether;
-import com.mojang.serialization.Codec;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
-import net.minecraft.world.gen.feature.structure.AbstractVillagePiece;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.feature.structure.StructureStart;
-import net.minecraft.world.gen.feature.structure.VillageConfig;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
+import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
+import net.minecraft.world.level.levelgen.structure.NoiseAffectingStructureFeature;
+import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 
-public class GoldDungeonStructure extends Structure<NoFeatureConfig> {
+import java.util.Optional;
+import java.util.Random;
 
-    public GoldDungeonStructure(Codec<NoFeatureConfig> codec) {
-        super(codec);
+public class GoldDungeonStructure extends NoiseAffectingStructureFeature<JigsawConfiguration> {
+    public GoldDungeonStructure() {
+        super(JigsawConfiguration.CODEC, GoldDungeonStructure::placePieces);
     }
 
     @Override
-    public IStartFactory<NoFeatureConfig> getStartFactory() {
-        return GoldDungeonStructure.Start::new;
+    public GenerationStep.Decoration step() {
+        return GenerationStep.Decoration.SURFACE_STRUCTURES;
     }
 
-    @Override
-    public GenerationStage.Decoration step() {
-        return GenerationStage.Decoration.SURFACE_STRUCTURES;
-    }
+    private static Optional<PieceGenerator<JigsawConfiguration>> placePieces(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+        JigsawConfiguration newConfig = new JigsawConfiguration(
+                () -> context.registryAccess().ownedRegistryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
+                        .get(new ResourceLocation(Aether.MODID, "gold_dungeon/start_pool")),
+                10
+        );
 
-    public static class Start extends StructureStart<NoFeatureConfig> {
-        public Start(Structure<NoFeatureConfig> structureIn, int chunkX, int chunkZ, MutableBoundingBox mutableBoundingBox, int referenceIn, long seedIn) {
-            super(structureIn, chunkX, chunkZ, mutableBoundingBox, referenceIn, seedIn);
-        }
+        PieceGeneratorSupplier.Context<JigsawConfiguration> newContext = new PieceGeneratorSupplier.Context<>(
+                context.chunkGenerator(),
+                context.biomeSource(),
+                context.seed(),
+                context.chunkPos(),
+                newConfig,
+                context.heightAccessor(),
+                context.validBiome(),
+                context.structureManager(),
+                context.registryAccess()
+        );
 
-        @Override
-        public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManager, int chunkX, int chunkZ, Biome biome, NoFeatureConfig config) {
-            int x = (chunkX << 4) + 7;
-            int z = (chunkZ << 4) + 7;
-
-            BlockPos blockpos = new BlockPos(x, 120 + random.nextInt(30), z);
-
-            JigsawManager.addPieces(
-                    dynamicRegistryManager,
-                    new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(new ResourceLocation(Aether.MODID, "gold_dungeon/start_pool")), 100),
-                    AbstractVillagePiece::new,
-                    chunkGenerator,
-                    templateManager,
-                    blockpos,
-                    this.pieces,
-                    this.random,
-                    false,
-                    false);
-
-            this.calculateBoundingBox();
-        }
+        return JigsawPlacement.addPieces(newContext, PoolElementStructurePiece::new, context.chunkPos().getMiddleBlockPosition(120 + new Random(context.seed()).nextInt(30)), false, false);
     }
 }

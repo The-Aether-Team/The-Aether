@@ -2,14 +2,15 @@ package com.gildedgames.aether.core.capability.capabilities.arrow;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class PhoenixArrowProvider implements ICapabilityProvider, INBTSerializable<CompoundNBT>
+import javax.annotation.Nonnull;
+
+public class PhoenixArrowProvider implements ICapabilitySerializable<CompoundTag>
 {
     private final IPhoenixArrow phoenixArrow;
 
@@ -18,18 +19,19 @@ public class PhoenixArrowProvider implements ICapabilityProvider, INBTSerializab
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        return phoenixArrow.serializeNBT();
+    public CompoundTag serializeNBT() {
+        return this.phoenixArrow.serializeNBT();
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
-        phoenixArrow.deserializeNBT(nbt);
+    public void deserializeNBT(CompoundTag nbt) {
+        this.phoenixArrow.deserializeNBT(nbt);
     }
 
     @SuppressWarnings("unchecked")
+    @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
         if (cap == AetherCapabilities.PHOENIX_ARROW_CAPABILITY) {
             return LazyOptional.of(() -> (T) this.phoenixArrow);
         }

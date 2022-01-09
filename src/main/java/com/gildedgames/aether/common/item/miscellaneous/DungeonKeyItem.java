@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.item.miscellaneous;
 
 import com.gildedgames.aether.core.api.registers.DungeonType;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import org.apache.commons.lang3.Validate;
 
 import java.util.function.Supplier;

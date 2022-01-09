@@ -1,7 +1,10 @@
 package com.gildedgames.aether.common.item.materials;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.crafting.RecipeType;
 
 public class SkyrootStickItem extends Item
 {
@@ -10,7 +13,7 @@ public class SkyrootStickItem extends Item
     }
 
     @Override
-    public int getBurnTime(ItemStack itemStack) {
+    public int getBurnTime(ItemStack itemStack, RecipeType<?> recipeType) {
         return 100;
     }
 }
