@@ -183,7 +183,6 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
 
     private void drawSkyHemisphere(BufferBuilder pBuilder, float pY) {
         float f = Math.signum(pY) * 512.0F;
-        float f1 = 512.0F;
         RenderSystem.setShader(GameRenderer::getPositionShader);
         pBuilder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION);
         pBuilder.vertex(0.0D, (double) pY, 0.0D).endVertex();
@@ -191,8 +190,6 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         for (int i = -180; i <= 180; i += 45) {
             pBuilder.vertex((double) (f * Mth.cos((float) i * ((float) Math.PI / 180F))), (double) pY, (double) (512.0F * Mth.sin((float) i * ((float) Math.PI / 180F)))).endVertex();
         }
-
-        pBuilder.end();
     }
 
     private void createStars() {
