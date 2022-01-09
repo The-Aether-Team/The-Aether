@@ -19,6 +19,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -39,6 +40,9 @@ public class SwetEntity extends MountableEntity {
     public static final EntityDataAccessor<Byte> SWET_TYPE = SynchedEntityData.defineId(SwetEntity.class, EntityDataSerializers.BYTE); // 1 for blue swet, 0 for golden swet
 
     public static final EntityDataAccessor<Boolean> MID_JUMP = SynchedEntityData.defineId(SwetEntity.class, EntityDataSerializers.BOOLEAN);
+
+    public static final EntityDataAccessor<Float> WATER_DAMAGE_SCALE = SynchedEntityData.defineId(SwetEntity.class, EntityDataSerializers.FLOAT);
+
 
     public boolean wasOnGround;
     public boolean midJump;
@@ -70,13 +74,23 @@ public class SwetEntity extends MountableEntity {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(SWET_TYPE, (byte)1);
+        this.entityData.define(SWET_TYPE, (byte) 1);
         this.entityData.define(MID_JUMP, false);
+        this.entityData.define(WATER_DAMAGE_SCALE, 0.0F);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
+        if (WATER_DAMAGE_SCALE.equals(pKey)) {
+            this.refreshDimensions();
+        }
+
+        super.onSyncedDataUpdated(pKey);
     }
 
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-        this.setSwetType((byte)this.random.nextInt(2));
+        this.setSwetType((byte) this.random.nextInt(2));
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
@@ -94,7 +108,11 @@ public class SwetEntity extends MountableEntity {
     @Override
     public void tick() {
         if(this.isInWater()) {
-            this.dissolveSwet();
+            if (this.getWaterDamageScale() >= 1.0F) {
+                this.dissolveSwet();
+            } else {
+                this.setWaterDamageScale(this.getWaterDamageScale() + 0.02F);
+            }
         }
 
         super.tick();
@@ -222,6 +240,23 @@ public class SwetEntity extends MountableEntity {
         return this.entityData.get(MID_JUMP);
     }
 
+    public void setWaterDamageScale(float scale) {
+        float i = Mth.clamp(scale, 0.0F, 1.0F);
+        AttributeInstance attributeInstance = this.getAttribute(Attributes.MAX_HEALTH);
+        if (attributeInstance != null) {
+            attributeInstance.setBaseValue(attributeInstance.getBaseValue() * (1.0F - i));
+            if (attributeInstance.getBaseValue() < this.getHealth()) {
+                this.setHealth(this.getMaxHealth());
+            }
+        }
+
+        this.entityData.set(WATER_DAMAGE_SCALE, i);
+    }
+
+    public float getWaterDamageScale() {
+        return this.entityData.get(WATER_DAMAGE_SCALE);
+    }
+
     public int getJumpTimer() {
         return jumpTimer;
     }
@@ -276,17 +311,29 @@ public class SwetEntity extends MountableEntity {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putByte("SwetType", this.getSwetType());
+        compound.putFloat("WaterDamageScale", this.getWaterDamageScale());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setSwetType(compound.getByte("SwetType"));
+        this.setWaterDamageScale(compound.getFloat("WaterDamageScale"));
     }
 
     @Override
     protected ResourceLocation getDefaultLootTable() {
         return this.getSwetType() == 1 ? AetherLoot.ENTITIES_SWET_BLUE : AetherLoot.ENTITIES_SWET_GOLD;
+    }
+
+    @Override
+    public float getScale() {
+        return super.getScale() - super.getScale() * this.getWaterDamageScale();
+    }
+
+    @Override
+    public EntityDimensions getDimensions(Pose pPose) {
+        return super.getDimensions(pPose).scale(getScale());
     }
 
     static class ConsumeGoal extends Goal {
@@ -314,11 +361,11 @@ public class SwetEntity extends MountableEntity {
                     chosenDegrees = (float)this.swet.getRandom().nextInt(360);
 
                     if (this.jumps == 0) {
-                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.64999999403953552D, 0));
+                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.64999999403953552D * (1.0F - this.swet.getWaterDamageScale()), 0));
                     } else if (this.jumps == 1) {
-                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.74999998807907104D, 0));
+                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.74999998807907104D * (1.0F - this.swet.getWaterDamageScale()), 0));
                     } else if (this.jumps == 2) {
-                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 1.55D, 0));
+                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 1.55D * (1.0F - this.swet.getWaterDamageScale()), 0));
                     } else {
                         this.swet.getPassengers().get(0).stopRiding();
                         this.swet.dissolveSwet();
