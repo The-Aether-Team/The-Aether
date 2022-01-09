@@ -4,8 +4,6 @@ import com.gildedgames.aether.common.item.accessories.AccessoryItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class RegenerationStoneItem extends AccessoryItem
 {
     public RegenerationStoneItem(Properties properties) {
