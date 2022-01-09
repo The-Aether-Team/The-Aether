@@ -32,7 +32,7 @@ public class AccessoryItem extends Item implements ICurioItem, Vanishable
         protected ItemStack execute(BlockSource p_82487_1_, ItemStack p_82487_2_) {
             return AccessoryItem.dispenseAccessory(p_82487_1_, p_82487_2_) ? p_82487_2_ : super.execute(p_82487_1_, p_82487_2_);
         }
-    };
+    }; //TODO: Move this to a registry class for these behaviors.
 
     public static boolean dispenseAccessory(BlockSource blockSource, ItemStack stack) {
         BlockPos blockpos = blockSource.getPos().relative(blockSource.getBlockState().getValue(DispenserBlock.FACING));
