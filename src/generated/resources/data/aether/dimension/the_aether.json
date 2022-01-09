@@ -1,8 +1,11 @@
 {
   "type": "aether:aether_type",
   "generator": {
-    "blocks_to_unit_span": 65,
-    "vertical_scale": 65,
+    "unit_scale": [
+      64,
+      64,
+      64
+    ],
     "surface_rule": {
       "sequence": [
         {
@@ -70,12 +73,32 @@
       ],
       "type": "minecraft:sequence"
     },
-    "blockstate": {
-      "Properties": {
-        "double_drops": "true"
+    "blockstates": [
+      {
+        "Name": "minecraft:amethyst_block"
       },
-      "Name": "aether:holystone"
-    },
+      {
+        "Name": "minecraft:lapis_block"
+      },
+      {
+        "Name": "minecraft:diamond_block"
+      },
+      {
+        "Name": "minecraft:emerald_block"
+      },
+      {
+        "Name": "minecraft:gold_block"
+      },
+      {
+        "Name": "minecraft:redstone_block"
+      },
+      {
+        "Properties": {
+          "double_drops": "true"
+        },
+        "Name": "aether:holystone"
+      }
+    ],
     "delegate": {
       "biome_source": {
         "biome": "aether:floating_forest",
@@ -85,8 +108,17 @@
       "settings": "aether:skyland_generation",
       "type": "minecraft:noise"
     },
-    "seed": 0,
-    "vertical_unit_span": 1,
-    "type": "aether:gridded"
+    "transformation": [
+      1.0,
+      0.25,
+      0.0,
+      0.0,
+      1.0,
+      0.0625,
+      0.125,
+      0.0,
+      1.0
+    ],
+    "type": "aether:cells"
   }
 }

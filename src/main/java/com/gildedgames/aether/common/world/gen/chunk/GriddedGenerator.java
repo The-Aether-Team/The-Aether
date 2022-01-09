@@ -19,7 +19,6 @@ import java.util.concurrent.Executor;
 public class GriddedGenerator extends DelegatedChunkGenerator {
     public static final Codec<GriddedGenerator> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             ChunkGenerator.CODEC.fieldOf("delegate").forGetter(o -> o.delegate),
-            Codec.LONG.fieldOf("seed").forGetter(o -> o.strongholdSeed),
             Codec.INT.fieldOf("vertical_unit_span").forGetter(o -> o.verticalUnitSpan),
             Codec.INT.fieldOf("blocks_to_unit_span").forGetter(o -> o.blocksToUnitScale),
             Codec.INT.fieldOf("vertical_scale").forGetter(o -> o.verticalScale),
@@ -35,8 +34,8 @@ public class GriddedGenerator extends DelegatedChunkGenerator {
     private final SurfaceRules.RuleSource ruleSource;
     private final BlockState defaultBlock;
 
-    public GriddedGenerator(ChunkGenerator delegate, long seed, int verticalUnitSpan, int blocksToUnitScale, int verticalScale, SurfaceRules.RuleSource ruleSource, BlockState defaultBlock) {
-        super(delegate, delegate.getBiomeSource(), delegate.getSettings(), seed);
+    public GriddedGenerator(ChunkGenerator delegate, int verticalUnitSpan, int blocksToUnitScale, int verticalScale, SurfaceRules.RuleSource ruleSource, BlockState defaultBlock) {
+        super(delegate, delegate.getBiomeSource(), delegate.getSettings(), delegate.strongholdSeed);
         // Can't have 0 thickness or less
         this.verticalUnitSpan = Math.max(1, verticalUnitSpan);
         this.blocksToUnitScale = blocksToUnitScale | 1; // Must be even number

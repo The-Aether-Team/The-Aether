@@ -3,21 +3,27 @@ package com.gildedgames.aether.core.data;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.AetherBlocks;
-import com.gildedgames.aether.common.world.gen.chunk.GriddedGenerator;
+import com.gildedgames.aether.common.world.gen.chunk.CelledSpaceGenerator;
 import com.gildedgames.aether.core.data.provider.AetherWorldProvider;
+import com.gildedgames.aether.core.util.math.Matrix3x3;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.serialization.JsonOps;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.FixedBiomeSource;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
+
+import java.util.List;
 
 public class AetherWorldData extends AetherWorldProvider
 {
@@ -40,7 +46,23 @@ public class AetherWorldData extends AetherWorldProvider
 
         NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(RegistryAccess.builtin().registryOrThrow(Registry.NOISE_REGISTRY), new FixedBiomeSource(AetherBiomeData.FLOATING_FOREST), 0L, () -> worldNoiseSettings);
 
-        GriddedGenerator debug = new GriddedGenerator(aetherChunkGen, 0L, 1, 64, 64, this.aetherSurfaceRules(), AetherBlocks.HOLYSTONE.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
+        List<BlockState> states = List.of(
+                Blocks.AMETHYST_BLOCK.defaultBlockState(),
+                Blocks.LAPIS_BLOCK.defaultBlockState(),
+                Blocks.DIAMOND_BLOCK.defaultBlockState(),
+                Blocks.EMERALD_BLOCK.defaultBlockState(),
+                Blocks.GOLD_BLOCK.defaultBlockState(),
+                Blocks.REDSTONE_BLOCK.defaultBlockState(),
+                AetherBlocks.HOLYSTONE.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true)
+        );
+
+        Matrix3x3 basis = Matrix3x3.identityScaled(1f).add(
+                0, 0.25f, 0,
+                0, 0, 0.0625f,
+                0.125f, 0, 0
+        );
+
+        CelledSpaceGenerator debug = new CelledSpaceGenerator(aetherChunkGen, basis, new BlockPos(64, 64, 64), this.aetherSurfaceRules(), states);
 
         this.serialize(Registry.LEVEL_STEM_REGISTRY, new ResourceLocation(Aether.MODID, "the_aether"), new LevelStem(() -> dimensionType, debug), LevelStem.CODEC);
     }

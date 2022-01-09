@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.world.gen.chunk.CelledSpaceGenerator;
 import com.gildedgames.aether.common.world.gen.chunk.GriddedGenerator;
 import com.gildedgames.aether.common.world.gen.placement.ElevationAdjustment;
 import com.gildedgames.aether.common.world.gen.placement.ElevationFilter;
@@ -16,6 +17,7 @@ public class AetherWorldComponents {
 
     static {
         Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Aether.MODID, "gridded"), GriddedGenerator.CODEC);
+        Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Aether.MODID, "cells"), CelledSpaceGenerator.CODEC);
     }
 
     private static <P extends PlacementModifier> PlacementModifierType<P> register(ResourceLocation name, Codec<P> codec) {
