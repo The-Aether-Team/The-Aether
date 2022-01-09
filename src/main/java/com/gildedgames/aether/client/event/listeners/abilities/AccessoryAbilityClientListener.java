@@ -2,6 +2,7 @@ package com.gildedgames.aether.client.event.listeners.abilities;
 
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -18,9 +19,14 @@ public class AccessoryAbilityClientListener
     }
 
     @SubscribeEvent
-    public static void onRenderHand(RenderHandEvent event) { //TODO: This makes the item in the player's hand invisible which isn't great for playability.
-        if (Minecraft.getInstance().player != null) {
-            CuriosApi.getCuriosHelper().findFirstCurio(Minecraft.getInstance().player, AetherItems.INVISIBILITY_CLOAK.get()).ifPresent((slotResult) -> event.setCanceled(true));
+    public static void onRenderHand(RenderHandEvent event) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player != null) {
+            CuriosApi.getCuriosHelper().findFirstCurio(player, AetherItems.INVISIBILITY_CLOAK.get()).ifPresent((slotResult) -> {
+                if (player.getItemInHand(event.getHand()).isEmpty()) {
+                    event.setCanceled(true);
+                }
+            });
         }
     }
 }
