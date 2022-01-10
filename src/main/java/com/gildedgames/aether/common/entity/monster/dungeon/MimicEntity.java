@@ -1,11 +1,10 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
 
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,7 +20,6 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
@@ -37,6 +35,7 @@ public class MimicEntity extends Monster {
 		this.goalSelector.addGoal(2,  new MeleeAttackGoal(this, 1.0, false));
 		this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0));
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this, MimicEntity.class));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 
@@ -85,7 +84,7 @@ public class MimicEntity extends Monster {
 		
 		if (entityIn instanceof LivingEntity) {
 			// If the entity died as a result of this attack, then play the burp sound. Otherwise, play the eating sound.
-			SoundEvent sound = (((LivingEntity) entityIn).getHealth() <= 0.0)? SoundEvents.PLAYER_BURP : SoundEvents.GENERIC_EAT;
+			SoundEvent sound = (((LivingEntity) entityIn).getHealth() <= 0.0)? AetherSoundEvents.ENTITY_MIMIC_KILL.get() : AetherSoundEvents.ENTITY_MIMIC_ATTACK.get();
 			this.playSound(sound, 1.0F, this.getVoicePitch());
 		}
 		

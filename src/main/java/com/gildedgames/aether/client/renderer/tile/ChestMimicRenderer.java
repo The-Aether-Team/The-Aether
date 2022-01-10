@@ -27,8 +27,7 @@ import org.apache.logging.log4j.LogManager;
 
 import java.util.Calendar;
 
-public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRenderer<T>
-{
+public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRenderer<T> {
 	private final ModelPart singleLid;
 	private final ModelPart singleBottom;
 	private final ModelPart singleLock;

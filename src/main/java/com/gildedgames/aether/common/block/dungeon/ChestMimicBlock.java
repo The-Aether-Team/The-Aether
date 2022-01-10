@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.block.dungeon;
 
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.monster.dungeon.MimicEntity;
 import com.gildedgames.aether.common.entity.tile.ChestMimicBlockEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
@@ -167,7 +168,7 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
 		mimic.setYHeadRot(angle);
 		worldIn.addFreshEntity(mimic);
 		worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-		worldIn.playSound(null, pos, SoundEvents.CHEST_OPEN, SoundSource.BLOCKS, 0.5F, worldIn.random.nextFloat() * 0.1F + 0.9F);
+		worldIn.playSound(null, pos, AetherSoundEvents.BLOCK_CHEST_MIMIC_OPEM.get(), SoundSource.BLOCKS, 0.5F, worldIn.random.nextFloat() * 0.1F + 0.9F);
 		mimic.spawnAnim();
 	}
 
