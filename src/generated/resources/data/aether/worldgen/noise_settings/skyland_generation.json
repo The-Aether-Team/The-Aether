@@ -86,23 +86,23 @@
     "terrain_shaper": {
       "offset": 0.0,
       "factor": 0.0,
-      "jaggedness": 0.0
+      "jaggedness": 5.0
     },
     "size_horizontal": 2,
     "size_vertical": 1,
     "sampling": {
-      "xz_scale": 2.0,
-      "y_scale": 1.0,
-      "xz_factor": 80.0,
-      "y_factor": 160.0
+      "xz_scale": 3,
+      "y_scale": 1.2,
+      "xz_factor": 120.0,
+      "y_factor": 120.0
     },
     "top_slide": {
-      "target": -23.4375,
-      "size": 64,
+      "target": -2,
+      "size": 70,
       "offset": -46
     },
     "bottom_slide": {
-      "target": -0.234375,
+      "target": -0.4,
       "size": 7,
       "offset": 1
     },
