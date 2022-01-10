@@ -1,7 +1,9 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Entity;
@@ -23,14 +25,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
-public class MimicEntity extends PathfinderMob {
+public class MimicEntity extends Monster {
 
 	public MimicEntity(EntityType<? extends MimicEntity> type, Level worldIn) {
 		super(type, worldIn);
-	}
-
-	public MimicEntity(Level worldIn) {
-		super(AetherEntityTypes.MIMIC.get(), worldIn);
 	}
 
 	@Override
@@ -43,7 +41,7 @@ public class MimicEntity extends PathfinderMob {
 	}
 
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return PathfinderMob.createMobAttributes()
+		return Monster.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 40.0D)
 				.add(Attributes.ATTACK_DAMAGE, 3.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
@@ -52,12 +50,12 @@ public class MimicEntity extends PathfinderMob {
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundEvents.WOOD_BREAK;
+		return AetherSoundEvents.ENTITY_MIMIC_HURT.get();
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.CHEST_CLOSE;
+		return AetherSoundEvents.ENTITY_MIMIC_DEATH.get();
 	}
 	
 	@Override
