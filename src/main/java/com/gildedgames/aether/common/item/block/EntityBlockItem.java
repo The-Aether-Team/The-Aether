@@ -16,7 +16,7 @@ public class EntityBlockItem extends BlockItem {
     private static final IItemRenderProperties renderProperties = new IItemRenderProperties() {
         @Override
         public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-            return AetherRenderers.blockEntityWithoutLevelRenderer;
+            return AetherRenderers.blockEntityWithoutLevelRenderer.get();
         }
     };
 
