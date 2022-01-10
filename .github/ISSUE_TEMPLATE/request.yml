@@ -68,3 +68,4 @@ body:
           required: true
         - label: I have confirmed this suggestion is unique and has not been suggested already.
           required: true
+
