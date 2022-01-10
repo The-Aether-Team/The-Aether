@@ -4,6 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
 import com.gildedgames.aether.client.registry.AetherAtlases;
 import com.gildedgames.aether.client.registry.AetherKeys;
+import com.gildedgames.aether.client.registry.AetherOverlays;
 import com.gildedgames.aether.client.registry.AetherRenderers;
 import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
 import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
@@ -29,8 +30,9 @@ public class AetherClient
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            AetherKeys.registerKeys();
             AetherAtlases.registerWoodTypeAtlases();
+            AetherKeys.registerKeys();
+            AetherOverlays.registerOverlays();
             AetherRenderers.registerBlockRenderLayers();
             AetherRenderers.registerCuriosRenderers();
             registerGuiFactories();
