@@ -22,7 +22,7 @@ public interface IGravititeToolItem
 		InteractionHand hand = context.getHand();
 		if (player != null) {
 			if ((destroySpeed == efficiency || heldItem.isCorrectToolForDrops(state)) && world.isEmptyBlock(pos.above())) {
-				if (world.getBlockEntity(pos) == null && state.getDestroySpeed(world, pos) != -1.0F) {
+				if (world.getBlockEntity(pos) == null && state.getDestroySpeed(world, pos) < 0.0F) {
 					if (!world.isClientSide) {
 						FloatingBlockEntity entity = new FloatingBlockEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, state);
 						if (world.getBlockState(pos).is(BlockTags.ANVIL)) {
