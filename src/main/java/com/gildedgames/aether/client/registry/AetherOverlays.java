@@ -51,7 +51,7 @@ public class AetherOverlays
             if (player != null) {
                 IAetherPlayer.get(player).ifPresent(handler -> {
                     gui.setupOverlayRenderState(true, false);
-                    renderInebriationOverlay(window, handler);
+                    renderInebriationOverlay(minecraft, window, handler);
                 });
             }
         });
@@ -62,7 +62,7 @@ public class AetherOverlays
             if (player != null) {
                 IAetherPlayer.get(player).ifPresent(handler -> {
                     gui.setupOverlayRenderState(true, false);
-                    renderRemedyOverlay(window, handler);
+                    renderRemedyOverlay(minecraft, window, handler);
                 });
             }
         });
@@ -73,7 +73,7 @@ public class AetherOverlays
             if (player != null) {
                 IAetherPlayer.get(player).ifPresent(handler -> {
                     gui.setupOverlayRenderState(true, false);
-                    renderRepulsionShieldOverlay(window, handler);
+                    renderRepulsionShieldOverlay(minecraft, window, handler);
                 });
             }
         });
@@ -122,12 +122,14 @@ public class AetherOverlays
         }
     }
 
-    private static void renderInebriationOverlay(Window window, IAetherPlayer handler) {
+    private static void renderInebriationOverlay(Minecraft minecraft, Window window, IAetherPlayer handler) {
         Player player = handler.getPlayer();
         MobEffectInstance inebriation = player.getEffect(AetherEffects.INEBRIATION.get());
+        float effectScale = minecraft.options.screenEffectScale;
         if (inebriation != null) {
             float inebriationDuration = (float) (inebriation.getDuration() % 50) / 50;
             float alpha = (inebriationDuration * inebriationDuration) / 5.0F + 0.4F;
+            alpha *= Math.sqrt(effectScale);
             RenderSystem.disableDepthTest();
             RenderSystem.depthMask(false);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
@@ -146,11 +148,13 @@ public class AetherOverlays
         }
     }
 
-    private static void renderRemedyOverlay(Window window, IAetherPlayer handler) {
+    private static void renderRemedyOverlay(Minecraft minecraft, Window window, IAetherPlayer handler) {
         int remedyMaximum = handler.getRemedyMaximum();
         int remedyTimer = handler.getRemedyTimer();
+        float effectScale = minecraft.options.screenEffectScale;
         if (remedyTimer > 0) {
             float alpha = ((float) remedyTimer / remedyMaximum) / 1.5F;
+            alpha *= Math.sqrt(effectScale);
             RenderSystem.disableDepthTest();
             RenderSystem.depthMask(false);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
@@ -169,11 +173,13 @@ public class AetherOverlays
         }
     }
 
-    private static void renderRepulsionShieldOverlay(Window window, IAetherPlayer handler) {
+    private static void renderRepulsionShieldOverlay(Minecraft minecraft, Window window, IAetherPlayer handler) {
         int projectileImpactedMaximum = handler.getProjectileImpactedMaximum();
         int projectileImpactedTimer = handler.getProjectileImpactedTimer();
+        float effectScale = minecraft.options.screenEffectScale;
         if (projectileImpactedTimer > 0) {
             float alpha = (float) projectileImpactedTimer / projectileImpactedMaximum;
+            alpha *= Math.sqrt(effectScale);
             RenderSystem.disableDepthTest();
             RenderSystem.depthMask(false);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
