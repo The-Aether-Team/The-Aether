@@ -127,7 +127,7 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF, SheepuffModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL, SheepuffWoolModel::createFurLayer);
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL_PUFFED, SheepuffWoolModel::createFurLayer);
-        event.registerLayerDefinition(AetherModelLayers.SLIDER, SliderModel::createMainLayer);
+//        event.registerLayerDefinition(AetherModelLayers.SLIDER, SliderModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.SUN_SPIRIT, SunSpiritModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SWET, SlimeModel::createInnerBodyLayer);
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE, );
