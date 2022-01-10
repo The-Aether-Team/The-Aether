@@ -3,6 +3,9 @@ package com.gildedgames.aether.common.entity.projectile;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.ZephyrSnowballHitPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,8 +26,6 @@ import net.minecraft.world.phys.HitResult;
 
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkHooks;
 
 public class ZephyrSnowballEntity extends Fireball implements ItemSupplier {
@@ -32,11 +33,6 @@ public class ZephyrSnowballEntity extends Fireball implements ItemSupplier {
 
 	public ZephyrSnowballEntity(EntityType<? extends ZephyrSnowballEntity> type, Level worldIn) {
 		super(type, worldIn);
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public ZephyrSnowballEntity(Level worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
-		super(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), x, y, z, accelX, accelY, accelZ, worldIn);
 	}
 
 	public ZephyrSnowballEntity(Level worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
@@ -53,19 +49,17 @@ public class ZephyrSnowballEntity extends Fireball implements ItemSupplier {
 		super.onHit(result);
 		if (result.getType() == HitResult.Type.ENTITY) {
 			Entity entity = ((EntityHitResult)result).getEntity();
-			if (entity instanceof LivingEntity) {
-				LivingEntity livingEntity = (LivingEntity)entity;
+			if (entity instanceof LivingEntity livingEntity) {
 				boolean isPlayer = livingEntity instanceof Player;
 
 				//TODO: Was this a thing?
-//				if (isPlayer && ((PlayerEntity)entity).inventory.armor.get(0).getItem() == AetherItems.SENTRY_BOOTS.get()) {
-//					return;
-//				}
-
+				if (isPlayer && ((Player)entity).getInventory().armor.get(0).getItem() == AetherItems.SENTRY_BOOTS.get()) {
+					this.discard();
+					return;
+				}
 				if (!livingEntity.isBlocking()) {
 					entity.setDeltaMovement(entity.getDeltaMovement().x, entity.getDeltaMovement().y + 0.5, entity.getDeltaMovement().z);
-				}
-				else {
+				} else {
 					ItemStack activeItemStack = livingEntity.getUseItem();
 					activeItemStack.hurtAndBreak(1, livingEntity, p -> p.broadcastBreakEvent(activeItemStack.getEquipmentSlot()));
 
@@ -77,6 +71,9 @@ public class ZephyrSnowballEntity extends Fireball implements ItemSupplier {
 					}
 				}
 				entity.setDeltaMovement(entity.getDeltaMovement().x + (this.getDeltaMovement().x * 1.5F), entity.getDeltaMovement().y, entity.getDeltaMovement().z + (this.getDeltaMovement().z * 1.5F));
+				if(isPlayer && !this.level.isClientSide) {
+					AetherPacketHandler.sendToPlayer(new ZephyrSnowballHitPacket(livingEntity.getId(), this.getDeltaMovement().x, this.getDeltaMovement().z), (ServerPlayer) livingEntity);
+				}
 			}
 		}
 		this.discard();
@@ -127,8 +124,7 @@ public class ZephyrSnowballEntity extends Fireball implements ItemSupplier {
 				this.level.addParticle(this.getTrailParticle(), d0, d1 + 0.5D, d2, 0.0D, 0.0D, 0.0D);
 			}
 			this.setPos(d0, d1, d2);
-		}
-		else {
+		} else {
 			this.discard();
 			return;
 		}

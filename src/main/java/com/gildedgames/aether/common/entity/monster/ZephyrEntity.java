@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.entity.monster;
 
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.entity.projectile.ZephyrSnowballEntity;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import net.minecraft.world.entity.EntityType;

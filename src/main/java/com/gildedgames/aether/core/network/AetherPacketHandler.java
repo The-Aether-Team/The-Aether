@@ -39,6 +39,7 @@ public class AetherPacketHandler
 		register(ResetMaxUpStepPacket.class, ResetMaxUpStepPacket::decode);
 		register(ServerTimePacket.class, ServerTimePacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
+		register(ZephyrSnowballHitPacket.class, ZephyrSnowballHitPacket::decode);
 
 		// SERVER
 		register(ExtendedAttackPacket.class, ExtendedAttackPacket::decode);
