@@ -1,0 +1,28 @@
+{
+  "replace": false,
+  "values": [
+    "aether:icestone",
+    "aether:icestone_stairs",
+    "aether:icestone_slab",
+    "aether:icestone_wall",
+    "aether:zanite_ore",
+    "aether:zanite_block",
+    "aether:carved_stone",
+    "aether:sentry_stone",
+    "aether:carved_stairs",
+    "aether:carved_slab",
+    "aether:carved_wall",
+    "aether:angelic_stone",
+    "aether:light_angelic_stone",
+    "aether:angelic_stairs",
+    "aether:angelic_slab",
+    "aether:angelic_wall",
+    "aether:hellfire_stone",
+    "aether:light_hellfire_stone",
+    "aether:hellfire_stairs",
+    "aether:hellfire_slab",
+    "aether:hellfire_wall",
+    "aether:pillar",
+    "aether:pillar_top"
+  ]
+}
