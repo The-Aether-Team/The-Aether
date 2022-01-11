@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.particle;
 
-import com.gildedgames.aether.common.entity.monster.WhirlwindEntity;
+import com.gildedgames.aether.common.entity.monster.Whirlwind;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.Camera;
@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class EvilWhirlyParticle extends TextureSheetParticle {
 
     float smokeParticleScale;
-    WhirlwindEntity whirlwind;
+    Whirlwind whirlwind;
     SpriteSet animatedSprite;
 
     public EvilWhirlyParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite)
@@ -42,7 +42,7 @@ public class EvilWhirlyParticle extends TextureSheetParticle {
         this.lifetime = (int)(8.0D / (Math.random() * 0.8D + 0.2D));
         this.lifetime = (int)((float)this.lifetime * scale);
         this.animatedSprite = sprite;
-        whirlwind = worldIn.getNearestEntity(WhirlwindEntity.class, TargetingConditions.DEFAULT, null, xCoordIn, yCoordIn, zCoordIn, new AABB(x, y, z, x + 1, y + 1, z + 1));
+        whirlwind = worldIn.getNearestEntity(Whirlwind.class, TargetingConditions.DEFAULT, null, xCoordIn, yCoordIn, zCoordIn, new AABB(x, y, z, x + 1, y + 1, z + 1));
         this.setPos(whirlwind.getX(), whirlwind.getY(), whirlwind.getZ());
     }
 

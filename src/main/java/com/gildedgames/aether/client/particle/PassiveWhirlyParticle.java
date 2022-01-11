@@ -1,6 +1,7 @@
 package com.gildedgames.aether.client.particle;
 
-import com.gildedgames.aether.common.entity.monster.WhirlwindEntity;
+import com.gildedgames.aether.common.entity.monster.PassiveWhirlwind;
+import com.gildedgames.aether.common.entity.monster.Whirlwind;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -11,12 +12,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class PassiveWhirlyParticle extends TextureSheetParticle {
-    WhirlwindEntity whirlwind;
+    PassiveWhirlwind whirlwind;
     SpriteSet animatedSprite;
     public PassiveWhirlyParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, SpriteSet sprite) {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
         this.animatedSprite = sprite;
-        whirlwind = worldIn.getNearestEntity(WhirlwindEntity.class, TargetingConditions.DEFAULT, null, xCoordIn, yCoordIn, zCoordIn, new AABB(x, y, z, x + 1, y + 1, z + 1));
+        whirlwind = worldIn.getNearestEntity(PassiveWhirlwind.class, TargetingConditions.DEFAULT, null, xCoordIn, yCoordIn, zCoordIn, new AABB(x, y, z, x + 1, y + 1, z + 1));
         this.setPos(whirlwind.getX(), whirlwind.getY(), whirlwind.getZ());
         this.xd = xSpeedIn + (Math.random() * 2.0D - 1.0D) * 0.05000000074505806D;
         this.yd = ySpeedIn + (Math.random() * 2.0D - 1.0D) * 0.05000000074505806D;

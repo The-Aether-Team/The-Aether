@@ -29,19 +29,19 @@ import net.minecraft.world.level.Level;
 import java.util.EnumSet;
 import java.util.Random;
 
-public class ZephyrEntity extends FlyingMob implements Enemy {
-	public static final EntityDataAccessor<Integer> ATTACK_CHARGE = SynchedEntityData.defineId(ZephyrEntity.class, EntityDataSerializers.INT);
+public class Zephyr extends FlyingMob implements Enemy {
+	public static final EntityDataAccessor<Integer> ATTACK_CHARGE = SynchedEntityData.defineId(Zephyr.class, EntityDataSerializers.INT);
 
-	public ZephyrEntity(EntityType<? extends ZephyrEntity> type, Level worldIn) {
+	public Zephyr(EntityType<? extends Zephyr> type, Level worldIn) {
 		super(type, worldIn);
-		this.moveControl = new ZephyrEntity.MoveHelperController(this);
+		this.moveControl = new Zephyr.MoveHelperController(this);
 	}
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(5, new ZephyrEntity.RandomFlyGoal(this));
-		this.goalSelector.addGoal(7, new ZephyrEntity.LookAroundGoal(this));
-		this.goalSelector.addGoal(7, new ZephyrEntity.SnowballAttackGoal(this));
+		this.goalSelector.addGoal(5, new Zephyr.RandomFlyGoal(this));
+		this.goalSelector.addGoal(7, new Zephyr.LookAroundGoal(this));
+		this.goalSelector.addGoal(7, new Zephyr.SnowballAttackGoal(this));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
 	}
 
@@ -125,20 +125,20 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT.get();
 	}
 
-	public static boolean canZephyrSpawn(EntityType<? extends ZephyrEntity> zephyr, LevelAccessor worldIn, MobSpawnType reason,
-		BlockPos pos, Random random) {
+	public static boolean canZephyrSpawn(EntityType<? extends Zephyr> zephyr, LevelAccessor worldIn, MobSpawnType reason,
+										 BlockPos pos, Random random) {
 		AABB boundingBox = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 4, pos.getY() + 4, pos.getZ() + 4);
 		return worldIn.getDifficulty() != Difficulty.PEACEFUL && random.nextInt(65) == 0 //TODO: change the bounds of nextInt to a config value.
-			&& worldIn.getEntitiesOfClass(ZephyrEntity.class, boundingBox).size() == 0
+			&& worldIn.getEntitiesOfClass(Zephyr.class, boundingBox).size() == 0
 			&& !worldIn.containsAnyLiquid(boundingBox) && worldIn.getMaxLocalRawBrightness(pos) > 8
 			&& checkMobSpawnRules(zephyr, worldIn, reason, pos, random);
 	}
 
 	static class SnowballAttackGoal extends Goal {
-		private final ZephyrEntity parentEntity;
+		private final Zephyr parentEntity;
 		public int attackTimer;
 
-		public SnowballAttackGoal(ZephyrEntity zephyr) {
+		public SnowballAttackGoal(Zephyr zephyr) {
 			this.parentEntity = zephyr;
 		}
 
@@ -201,9 +201,9 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 	}
 
 	static class RandomFlyGoal extends Goal {
-		private final ZephyrEntity parentEntity;
+		private final Zephyr parentEntity;
 
-		public RandomFlyGoal(ZephyrEntity entity) {
+		public RandomFlyGoal(Zephyr entity) {
 			this.parentEntity = entity;
 			this.setFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
@@ -249,10 +249,10 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 	}
 
 	static class MoveHelperController extends MoveControl {
-		private final ZephyrEntity parentEntity;
+		private final Zephyr parentEntity;
 		private int courseChangeCooldown;
 
-		public MoveHelperController(ZephyrEntity zephyr) {
+		public MoveHelperController(Zephyr zephyr) {
 			super(zephyr);
 			this.parentEntity = zephyr;
 		}
@@ -295,9 +295,9 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 	}
 
 	static class LookAroundGoal extends Goal {
-		private final ZephyrEntity parentEntity;
+		private final Zephyr parentEntity;
 
-		public LookAroundGoal(ZephyrEntity zephyr) {
+		public LookAroundGoal(Zephyr zephyr) {
 			this.parentEntity = zephyr;
 			this.setFlags(EnumSet.of(Goal.Flag.LOOK));
 		}

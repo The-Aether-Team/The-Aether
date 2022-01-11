@@ -23,9 +23,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
-public class MimicEntity extends Monster {
+public class Mimic extends Monster {
 
-	public MimicEntity(EntityType<? extends MimicEntity> type, Level worldIn) {
+	public Mimic(EntityType<? extends Mimic> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -35,7 +35,7 @@ public class MimicEntity extends Monster {
 		this.goalSelector.addGoal(2,  new MeleeAttackGoal(this, 1.0, false));
 		this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0));
-		this.targetSelector.addGoal(1, new HurtByTargetGoal(this, MimicEntity.class));
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Mimic.class));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 
@@ -59,7 +59,7 @@ public class MimicEntity extends Monster {
 	
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source.getDirectEntity() instanceof MimicEntity) {
+		if (source.getDirectEntity() instanceof Mimic) {
 			return false;
 		}
 		if (source.getDirectEntity() instanceof LivingEntity && this.hurtTime == 0) {

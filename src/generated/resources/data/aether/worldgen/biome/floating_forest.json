@@ -771,7 +771,13 @@
     "monster": [
       {
         "type": "aether:whirlwind",
-        "weight": 10,
+        "weight": 9,
+        "minCount": 2,
+        "maxCount": 2
+      },
+      {
+        "type": "aether:evil_whirlwind",
+        "weight": 1,
         "minCount": 2,
         "maxCount": 2
       },
