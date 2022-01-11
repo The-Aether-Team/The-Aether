@@ -151,8 +151,8 @@ public class AetherRenderers
         event.registerLayerDefinition(AetherModelLayers.CAPE, CapeModel::createLayer);
         event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD, () -> LayerDefinition.create(HumanoidModel.createMesh(new CubeDeformation(1.1F), 0.0F), 64, 32));
         event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), true), 64, 64));
-//        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM, () -> LayerDefinition.create(HumanoidModel.createMesh(new CubeDeformation(0.3F), 0.0F), 64, 32));
-//        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.3F), true), 64, 64));
+        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM, () -> LayerDefinition.create(HumanoidModel.createMesh(new CubeDeformation(0.4F), 0.0F), 64, 32));
+        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), true), 64, 64));
     }
 
     public static void registerCuriosRenderers() {
