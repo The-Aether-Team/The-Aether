@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.entity.monster;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
@@ -10,6 +11,8 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -36,6 +39,7 @@ public abstract class Whirlwind extends Mob {
     public int actionTimer;
     public float movementAngle;
     public float movementCurve;
+    protected boolean isPullingEntity = false;
     protected boolean isEvil = false;
 
     public Whirlwind(EntityType<? extends Whirlwind> type, Level worldIn) {
@@ -59,8 +63,15 @@ public abstract class Whirlwind extends Mob {
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.05D)
-                .add(Attributes.FOLLOW_RANGE, 35.0D);
+                .add(Attributes.MOVEMENT_SPEED, 0.025D)
+                .add(Attributes.FOLLOW_RANGE, 16.0D);
+    }
+
+    @Override
+    protected void registerGoals() {
+        this.goalSelector.addGoal(0, new DestroyLeavesGoal(this));
+        this.goalSelector.addGoal(2, new MoveGoal(this));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, false));
     }
 
     @Override
@@ -69,33 +80,27 @@ public abstract class Whirlwind extends Mob {
         this.entityData.define(COLOR_DATA, this.getDefaultColor());
     }
 
+    /**
+     * Called to update the entity's position/logic.
+     */
     @Override
-    public void aiStep() {
-        Player closestPlayer = this.findClosestPlayer();
-
-        if(this.isEvil) {
-            if(closestPlayer != null && !closestPlayer.getAbilities().invulnerable && !closestPlayer.hasImpulse) {
-                this.setTarget(closestPlayer);
-            }
-        }
-
-        if(this.getTarget() == null) {
-            this.setDeltaMovement(Math.cos(0.01745329F * this.movementAngle) * this.getAttribute(Attributes.MOVEMENT_SPEED).getValue(), this.getDeltaMovement().y, -Math.sin(0.01745329F * this.movementAngle) * this.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
-            this.movementAngle += this.movementCurve;
-        } else {
-            this.setDeltaMovement(Vec3.ZERO);
-        }
-        super.aiStep();
+    public void tick() {
+        super.tick();
         this.lifeLeft--;
         if (!this.level.isClientSide) {
-            if((this.lifeLeft <= 0 || isInWater())) {
+            if ((this.lifeLeft <= 0 || isInWater())) {
                 this.removeAfterChangingDimensions();
             }
-            if(closestPlayer != null) {
+        }
+    }
+
+    @Override
+    public void aiStep() {
+        if (!this.level.isClientSide) {
+            if (this.getTarget() != null) {
                 this.actionTimer++;
             }
-
-            if(this.actionTimer >= 128) {
+            if (this.actionTimer >= 128) {
                 this.handleDrops();
                 this.actionTimer = 0;
                 this.level.playSound(null, this.blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.HOSTILE, 0.5F, 1.0F);
@@ -103,9 +108,13 @@ public abstract class Whirlwind extends Mob {
         } else {
             this.updateParticles();
         }
+        super.aiStep();
 
+        /**
+         * This code is used to move other entities around the whirlwind.
+         */
         List<Entity> list = this.level.getEntities(this, this.getBoundingBox().expandTowards(2.5D, 2.5D, 2.5D));
-
+        this.isPullingEntity = !list.isEmpty();
         for (Entity entity : list) {
             double d9 = (float) entity.getX();
             double d11 = (float) entity.getY() - entity.getMyRidingOffset() * 0.6F;
@@ -139,16 +148,6 @@ public abstract class Whirlwind extends Mob {
             if (!this.level.isEmptyBlock(this.blockPosition())) {
                 this.lifeLeft -= 50;
             }
-
-            if (this.level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING) && !level.isClientSide) {
-                int i2 = (Mth.floor(this.getX()) - 1) + this.random.nextInt(3);
-                int j2 = Mth.floor(this.getY()) + this.random.nextInt(5);
-                int k2 = (Mth.floor(this.getZ()) - 1) + this.random.nextInt(3);
-
-                if (this.level.getBlockState(new BlockPos.MutableBlockPos().set(i2, j2, k2)).getBlock() instanceof LeavesBlock) {
-                    this.level.destroyBlock(new BlockPos(i2, j2, k2), false);
-                }
-            }
         }
     }
 
@@ -165,10 +164,6 @@ public abstract class Whirlwind extends Mob {
     public boolean checkSpawnRules(LevelAccessor worldIn, MobSpawnType spawnReasonIn) {
         return this.level.isUnobstructed(this) //&& this.level.getBlockCollisions(this, this.getBoundingBox()).count() == 0
                 && !this.level.containsAnyLiquid(this.getBoundingBox());
-    }
-
-    public Player findClosestPlayer() {
-        return this.level.getNearestPlayer(this, 16D);
     }
 
     public void setColorData(int color) {
@@ -212,5 +207,63 @@ public abstract class Whirlwind extends Mob {
     @Override
     public boolean onClimbable() {
         return horizontalCollision;
+    }
+
+    /**
+     * This goal handles movement for whirlwinds.
+     */
+    protected static class MoveGoal extends Goal {
+        private final Whirlwind whirlwind;
+        protected float movementAngle;
+        protected float movementCurve;
+
+        public MoveGoal(Whirlwind entity) {
+            this.whirlwind = entity;
+            this.movementAngle = whirlwind.movementAngle;
+            this.movementCurve = whirlwind.movementCurve;
+            this.setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            return true;
+        }
+
+        @Override
+        public void tick() {
+            if (!this.whirlwind.isEvil || this.whirlwind.getTarget() == null) {
+                this.whirlwind.setDeltaMovement(Math.cos(0.01745329F * this.movementAngle) * this.whirlwind.getAttribute(Attributes.MOVEMENT_SPEED).getValue(), this.whirlwind.getDeltaMovement().y, -Math.sin(0.01745329F * this.movementAngle) * this.whirlwind.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
+                this.movementAngle += this.movementCurve;
+            } else {
+                this.whirlwind.setDeltaMovement(Vec3.ZERO);
+            }
+        }
+    }
+
+    /**
+     * This goal destroys leaves when the whirlwind is carrying an entity to make sure they stay out of the way.
+     */
+    protected static class DestroyLeavesGoal extends Goal { //TODO: Is this goal something we should keep?
+        private final Whirlwind whirlwind;
+
+        public DestroyLeavesGoal(Whirlwind entity) {
+            this.whirlwind = entity;
+            this.setFlags(EnumSet.of(Flag.LOOK));
+        }
+
+        @Override
+        public boolean canUse() {
+            return whirlwind.level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING) && this.whirlwind.isPullingEntity;
+        }
+
+        @Override
+        public void tick() {
+            int x = (Mth.floor(whirlwind.getX()) - 1) + whirlwind.random.nextInt(3);
+            int y = Mth.floor(whirlwind.getY()) + whirlwind.random.nextInt(5);
+            int z = (Mth.floor(whirlwind.getZ()) - 1) + whirlwind.random.nextInt(3);
+            if (whirlwind.level.getBlockState(new BlockPos.MutableBlockPos().set(x, y, z)).getBlock() instanceof LeavesBlock) {
+                whirlwind.level.destroyBlock(new BlockPos(x, y, z), false);
+            }
+        }
     }
 }
