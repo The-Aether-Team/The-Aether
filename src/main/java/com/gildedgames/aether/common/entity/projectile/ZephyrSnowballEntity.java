@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.entity.projectile;
 
+import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 
@@ -140,7 +141,7 @@ public class ZephyrSnowballEntity extends Fireball implements ItemSupplier {
 
 	@Override
 	protected ParticleOptions getTrailParticle() {
-		return null;
+		return AetherParticleTypes.ZEPHYR_SNOWFLAKE.get();
 	}
 
 	@Override

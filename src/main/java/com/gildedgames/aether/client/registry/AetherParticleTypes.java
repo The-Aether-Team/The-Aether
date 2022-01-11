@@ -5,6 +5,7 @@ import com.gildedgames.aether.client.particle.*;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.particle.SnowflakeParticle;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,6 +29,7 @@ public class AetherParticleTypes
 	public static final RegistryObject<SimpleParticleType> FROZEN = PARTICLES.register("frozen", () -> new SimpleParticleType(false));
 	public static final RegistryObject<SimpleParticleType> PASSIVE_WHIRLWIND = PARTICLES.register("passive_whirlwind", () -> new SimpleParticleType(false));
 	public static final RegistryObject<SimpleParticleType> EVIL_WHIRLWIND = PARTICLES.register("evil_whirlwind", () -> new SimpleParticleType(false));
+	public static final RegistryObject<SimpleParticleType> ZEPHYR_SNOWFLAKE = PARTICLES.register("zephyr_snowflake", ()-> new SimpleParticleType(false));
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
@@ -41,5 +43,6 @@ public class AetherParticleTypes
 		particleManager.register(FROZEN.get(), FrozenParticle.Factory::new);
 		particleManager.register(PASSIVE_WHIRLWIND.get(), PassiveWhirlyParticle.Factory::new);
 		particleManager.register(EVIL_WHIRLWIND.get(), EvilWhirlyParticle.Factory::new);
+		particleManager.register(ZEPHYR_SNOWFLAKE.get(), SnowflakeParticle.Provider::new);
 	}
 }
