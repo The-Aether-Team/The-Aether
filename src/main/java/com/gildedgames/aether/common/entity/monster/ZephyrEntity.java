@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.entity.monster;
 
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.entity.projectile.ZephyrSnowballEntity;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import net.minecraft.world.entity.EntityType;
@@ -32,15 +31,10 @@ import java.util.Random;
 
 public class ZephyrEntity extends FlyingMob implements Enemy {
 	public static final EntityDataAccessor<Integer> ATTACK_CHARGE = SynchedEntityData.defineId(ZephyrEntity.class, EntityDataSerializers.INT);
-	public static final EntityDataAccessor<Boolean> IS_ATTACKING = SynchedEntityData.defineId(ZephyrEntity.class, EntityDataSerializers.BOOLEAN);
 
 	public ZephyrEntity(EntityType<? extends ZephyrEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.moveControl = new ZephyrEntity.MoveHelperController(this);
-	}
-
-	public ZephyrEntity(Level worldIn) {
-		this(AetherEntityTypes.ZEPHYR.get(), worldIn);
 	}
 
 	@Override
@@ -61,15 +55,10 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(ATTACK_CHARGE, 0);
-		this.entityData.define(IS_ATTACKING, false);
 	}
 
 	public int getAttackCharge() {
 		return this.entityData.get(ATTACK_CHARGE);
-	}
-	
-	public boolean isAttacking() {
-		return this.entityData.get(IS_ATTACKING);
 	}
 
 	/**
@@ -78,14 +67,7 @@ public class ZephyrEntity extends FlyingMob implements Enemy {
 	 * zephyr begins to wind up for an attack.
 	 */
 	public void setAttackCharge(int attackTimer) {
-		if (attackTimer > 0) {
-			this.entityData.set(ATTACK_CHARGE, attackTimer);
-			this.entityData.set(IS_ATTACKING, true);
-		}
-		else {
-			this.entityData.set(ATTACK_CHARGE, 0);
-			this.entityData.set(IS_ATTACKING, false);
-		}
+		this.entityData.set(ATTACK_CHARGE, Math.max(attackTimer, 0));
 	}
 
 	@Override
