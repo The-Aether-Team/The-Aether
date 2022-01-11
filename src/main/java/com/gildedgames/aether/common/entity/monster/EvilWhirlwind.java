@@ -59,4 +59,9 @@ public class EvilWhirlwind extends Whirlwind {
             this.level.addParticle(AetherParticleTypes.EVIL_WHIRLWIND.get(), d2, d5 - 0.25, d8, -Math.sin(0.01745329F * f1) * 0.75, 0.125, Math.cos(0.01745329F * f1) * 0.75);
         }
     }
+
+    @Override
+    public int getDefaultColor() {
+        return 0;
+    }
 }

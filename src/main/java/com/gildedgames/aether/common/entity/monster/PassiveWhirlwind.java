@@ -28,7 +28,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class PassiveWhirlwind extends Whirlwind {
-    public static final EntityDataAccessor<Integer> COLOR_DATA = SynchedEntityData.defineId(PassiveWhirlwind.class, EntityDataSerializers.INT);
     public PassiveWhirlwind(EntityType<? extends Whirlwind> type, Level worldIn) {
         super(type, worldIn);
     }
@@ -37,20 +36,6 @@ public class PassiveWhirlwind extends Whirlwind {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
         this.lifeLeft = this.random.nextInt(512) + 512;
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-    }
-
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(COLOR_DATA, 0xFFFFFF);
-    }
-
-    public void setColorData(int color) {
-        this.entityData.set(COLOR_DATA, color);
-    }
-
-    public int getColorData() {
-        return this.entityData.get(COLOR_DATA);
     }
 
     @Override
@@ -97,17 +82,8 @@ public class PassiveWhirlwind extends Whirlwind {
         }
     }
 
-
     @Override
-    public void addAdditionalSaveData(CompoundTag nbttagcompound) {
-        super.addAdditionalSaveData(nbttagcompound);
-        nbttagcompound.putInt("color", this.getColorData());
+    public int getDefaultColor() {
+        return 0xFFFFFF;
     }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag nbttagcompound) {
-        super.readAdditionalSaveData(nbttagcompound);
-        this.setColorData(nbttagcompound.getInt("color"));
-    }
-
 }

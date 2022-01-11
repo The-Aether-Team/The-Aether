@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.particle;
 
+import com.gildedgames.aether.common.entity.monster.EvilWhirlwind;
 import com.gildedgames.aether.common.entity.monster.Whirlwind;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.particle.*;
@@ -12,11 +13,9 @@ import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EvilWhirlyParticle extends TextureSheetParticle {
+public class EvilWhirlyParticle extends WhirlyParticle<EvilWhirlwind> {
 
     float smokeParticleScale;
-    Whirlwind whirlwind;
-    SpriteSet animatedSprite;
 
     public EvilWhirlyParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite)
     {
@@ -25,13 +24,7 @@ public class EvilWhirlyParticle extends TextureSheetParticle {
 
     public EvilWhirlyParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, float scale, SpriteSet sprite)
     {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D);
-        this.xd *= 0.10000000149011612D;
-        this.yd *= 0.10000000149011612D;
-        this.zd *= 0.10000000149011612D;
-        this.xd += xSpeed;
-        this.yd += ySpeed;
-        this.zd += zSpeed;
+        super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeed, ySpeed, zSpeed, sprite);
         float f = (float)(Math.random() * 0.30000001192092896D);
         this.rCol = f;
         this.gCol = f;
@@ -41,9 +34,9 @@ public class EvilWhirlyParticle extends TextureSheetParticle {
         this.smokeParticleScale = this.quadSize;
         this.lifetime = (int)(8.0D / (Math.random() * 0.8D + 0.2D));
         this.lifetime = (int)((float)this.lifetime * scale);
-        this.animatedSprite = sprite;
-        whirlwind = worldIn.getNearestEntity(Whirlwind.class, TargetingConditions.DEFAULT, null, xCoordIn, yCoordIn, zCoordIn, new AABB(x, y, z, x + 1, y + 1, z + 1));
-        this.setPos(whirlwind.getX(), whirlwind.getY(), whirlwind.getZ());
+        if(this.whirlwind != null) {
+            this.setPos(this.whirlwind.getX(), this.whirlwind.getY(), this.whirlwind.getZ());
+        }
     }
 
     @Override
@@ -54,35 +47,10 @@ public class EvilWhirlyParticle extends TextureSheetParticle {
         super.render(buffer, renderInfo, partialTicks);
     }
 
+
     @Override
-    public void tick()
-    {
-        this.xo = this.x;
-        this.yo = this.y;
-        this.zo = this.z;
-
-        if (this.age++ >= this.lifetime)
-        {
-            this.remove();
-        }
-
-        this.setSpriteFromAge(animatedSprite);
-
-        if(whirlwind.isAlive()) {
-            float f = (float)(whirlwind.getX() - this.x);
-            float f1 = (float)(whirlwind.getY() - this.y);
-            float f2 = (float)(whirlwind.getZ() - this.z);
-            float d16 = Mth.sqrt(f * f + f1 * f1 + f2 * f2);
-
-            double d18 = this.getBoundingBox().minY - this.y;
-            double d21 = Math.atan2(whirlwind.getX() - this.x, whirlwind.getZ() - this.z) / 0.01745329424738884D;
-            d21 += 160D;
-            this.xd = -Math.cos(0.01745329424738884D * d21) * (d16 * 2.5D - d18) * 0.10000000149011612D;
-            this.zd = Math.sin(0.01745329424738884D * d21) * (d16 * 2.5D - d18) * 0.10000000149011612D;
-            this.yd = 0.11500000208616257D;
-        }
-        this.yd += 0.004D;
-        this.move(this.xd, this.yd, this.zd);
+    public void tick() {
+        super.tick();
         if (this.y == this.yo) {
             this.xd *= 1.1D;
             this.zd *= 1.1D;
@@ -97,8 +65,13 @@ public class EvilWhirlyParticle extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    public double getBaseSpeedModifier() {
+        return 0.10000000149011612D;
+    }
+
+    @Override
+    public Class<EvilWhirlwind> getWhirlwindType() {
+        return EvilWhirlwind.class;
     }
 
     @OnlyIn(Dist.CLIENT)

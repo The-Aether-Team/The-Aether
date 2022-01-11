@@ -6,6 +6,9 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -27,6 +30,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public abstract class Whirlwind extends Mob {
+    public static final EntityDataAccessor<Integer> COLOR_DATA = SynchedEntityData.defineId(Whirlwind.class, EntityDataSerializers.INT);
 
     public int lifeLeft;
     public int actionTimer;
@@ -57,6 +61,12 @@ public abstract class Whirlwind extends Mob {
                 .add(Attributes.MAX_HEALTH, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.05D)
                 .add(Attributes.FOLLOW_RANGE, 35.0D);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(COLOR_DATA, this.getDefaultColor());
     }
 
     @Override
@@ -161,12 +171,23 @@ public abstract class Whirlwind extends Mob {
         return this.level.getNearestPlayer(this, 16D);
     }
 
+    public void setColorData(int color) {
+        this.entityData.set(COLOR_DATA, color);
+    }
+
+    public int getColorData() {
+        return this.entityData.get(COLOR_DATA);
+    }
+
+    public abstract int getDefaultColor();
+
     @Override
     public void addAdditionalSaveData(CompoundTag nbttagcompound) {
         super.addAdditionalSaveData(nbttagcompound);
         nbttagcompound.putFloat("movementAngle", this.movementAngle);
         nbttagcompound.putFloat("movementCurve", this.movementCurve);
         nbttagcompound.putInt("lifeLeft", this.lifeLeft);
+        nbttagcompound.putInt("color", this.getColorData());
     }
 
     @Override
@@ -175,6 +196,7 @@ public abstract class Whirlwind extends Mob {
         this.movementAngle = nbttagcompound.getFloat("movementAngle");
         this.movementCurve = nbttagcompound.getFloat("movementCurve");
         this.lifeLeft = nbttagcompound.getInt("lifeLeft");
+        this.setColorData(nbttagcompound.getInt("color"));
     }
 
     @Override
