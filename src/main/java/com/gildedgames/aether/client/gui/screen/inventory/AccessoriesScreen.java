@@ -7,6 +7,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -14,6 +16,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.resources.ResourceLocation;
@@ -22,6 +25,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.network.PacketDistributor;
 import top.theillusivec4.curios.Curios;
+import top.theillusivec4.curios.client.gui.CuriosScreen;
 import top.theillusivec4.curios.client.gui.RenderButton;
 import top.theillusivec4.curios.common.inventory.CosmeticCurioSlot;
 import top.theillusivec4.curios.common.inventory.CurioSlot;
@@ -45,6 +49,24 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesContai
     public AccessoriesScreen(AccessoriesContainer accessoriesContainer, Inventory playerInventory, Component title) {
         super(accessoriesContainer, playerInventory, title);
         this.passEvents = true;
+    }
+
+    public static Tuple<Integer, Integer> getButtonOffset(Screen screen) {
+        int x = 0;
+        int y = 0;
+        if (screen instanceof InventoryScreen || screen instanceof CuriosScreen) {
+            x = 27;
+            y = 68;
+        }
+        if (screen instanceof CreativeModeInventoryScreen) {
+            x = 74;
+            y = 40;
+        }
+        if (screen instanceof AccessoriesScreen) {
+            x = 9;
+            y = 68;
+        }
+        return new Tuple<>(x, y);
     }
 
     @Override

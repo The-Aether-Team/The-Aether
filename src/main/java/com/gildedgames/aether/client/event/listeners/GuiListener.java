@@ -18,6 +18,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.network.chat.Component;
@@ -84,16 +85,14 @@ public class GuiListener
 				event.addListener(themeSwitchButton);
 			}
 		}
-		if (screen instanceof InventoryScreen || screen instanceof CuriosScreen) {
+		Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
+		if (screen instanceof InventoryScreen || screen instanceof CuriosScreen || screen instanceof CreativeModeInventoryScreen) {
 			AbstractContainerScreen<?> inventoryScreen = (AbstractContainerScreen<?>) screen;
-			event.addListener(new AccessoryButton(inventoryScreen, inventoryScreen.getGuiLeft() + 27, inventoryScreen.getGuiTop() + 68, AccessoriesScreen.ACCESSORIES_BUTTON));
-		}
-		if (screen instanceof CreativeModeInventoryScreen creativeScreen) {
-			event.addListener(new AccessoryButton(creativeScreen, creativeScreen.getGuiLeft() + 74, creativeScreen.getGuiTop() + 40, AccessoriesScreen.ACCESSORIES_BUTTON));
+			event.addListener(new AccessoryButton(inventoryScreen, inventoryScreen.getGuiLeft() + offsets.getA(), inventoryScreen.getGuiTop() + offsets.getB(), AccessoriesScreen.ACCESSORIES_BUTTON));
 		}
 		if (screen instanceof AccessoriesScreen accessoriesScreen) {
 			if (shouldAddButton) {
-				event.addListener(new AccessoryButton(accessoriesScreen, accessoriesScreen.getGuiLeft() + 9, accessoriesScreen.getGuiTop() + 68, AccessoriesScreen.ACCESSORIES_BUTTON));
+				event.addListener(new AccessoryButton(accessoriesScreen, accessoriesScreen.getGuiLeft() + offsets.getA(), accessoriesScreen.getGuiTop() + offsets.getB(), AccessoriesScreen.ACCESSORIES_BUTTON));
 			} else {
 				shouldAddButton = true;
 			}

@@ -10,16 +10,13 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.PacketDistributor;
-import top.theillusivec4.curios.client.gui.CuriosScreen;
-import top.theillusivec4.curios.common.network.NetworkHandler;
-import top.theillusivec4.curios.common.network.client.CPacketOpenCurios;
-import top.theillusivec4.curios.common.network.client.CPacketOpenVanilla;
+
+import javax.annotation.Nonnull;
 
 public class AccessoryButton extends ImageButton
 {
@@ -48,24 +45,22 @@ public class AccessoryButton extends ImageButton
     }
 
     @Override
-    public void render(PoseStack matrixStack, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
-        if (this.parentGui instanceof CreativeModeInventoryScreen) {
-            CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) this.parentGui;
-            if (screen.getSelectedTab() == CreativeModeTab.TAB_INVENTORY.getId()) {
-                this.active = true;
-                this.visible = true;
-                super.render(matrixStack, p_230430_2_, p_230430_3_, p_230430_4_);
-            } else {
-                this.active = false;
-                this.visible = false;
+    public void render(@Nonnull PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+        Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(this.parentGui);
+        this.x = this.parentGui.getGuiLeft() + offsets.getA();
+        this.y = this.parentGui.getGuiTop() + offsets.getB();
+        if (this.parentGui instanceof CreativeModeInventoryScreen screen) {
+            boolean isInventoryTab = screen.getSelectedTab() == CreativeModeTab.TAB_INVENTORY.getId();
+            this.active = isInventoryTab;
+            if (isInventoryTab) {
+                super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
             }
-        } else if (this.parentGui instanceof AccessoriesScreen) {
-            AccessoriesScreen screen = (AccessoriesScreen) this.parentGui;
+        } else if (this.parentGui instanceof AccessoriesScreen screen) {
             if (screen.getMenu().hasButton) {
-                super.render(matrixStack, p_230430_2_, p_230430_3_, p_230430_4_);
+                super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
             }
         } else {
-            super.render(matrixStack, p_230430_2_, p_230430_3_, p_230430_4_);
+            super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
         }
     }
 }
