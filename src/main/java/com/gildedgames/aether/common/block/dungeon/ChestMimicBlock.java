@@ -1,10 +1,13 @@
 package com.gildedgames.aether.common.block.dungeon;
 
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.monster.dungeon.MimicEntity;
 import com.gildedgames.aether.common.entity.tile.ChestMimicBlockEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -33,19 +36,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.ChestBlock;
-import net.minecraft.world.level.block.DoubleBlockCombiner;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class ChestMimicBlock extends Block implements SimpleWaterloggedBlock
+public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterloggedBlock
 {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final EnumProperty<ChestType> TYPE = BlockStateProperties.CHEST_TYPE;
@@ -59,6 +53,12 @@ public class ChestMimicBlock extends Block implements SimpleWaterloggedBlock
 	public ChestMimicBlock(BlockBehaviour.Properties builder) {
 		super(builder);
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(TYPE, ChestType.SINGLE).setValue(WATERLOGGED, Boolean.valueOf(false)));
+	}
+
+	@Nullable
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+		return new ChestMimicBlockEntity(pPos, pState);
 	}
 
 	@Override
@@ -168,7 +168,7 @@ public class ChestMimicBlock extends Block implements SimpleWaterloggedBlock
 		mimic.setYHeadRot(angle);
 		worldIn.addFreshEntity(mimic);
 		worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-		worldIn.playSound(null, pos, SoundEvents.CHEST_OPEN, SoundSource.BLOCKS, 0.5F, worldIn.random.nextFloat() * 0.1F + 0.9F);
+		worldIn.playSound(null, pos, AetherSoundEvents.BLOCK_CHEST_MIMIC_OPEM.get(), SoundSource.BLOCKS, 0.5F, worldIn.random.nextFloat() * 0.1F + 0.9F);
 		mimic.spawnAnim();
 	}
 
@@ -182,12 +182,6 @@ public class ChestMimicBlock extends Block implements SimpleWaterloggedBlock
 
 		return DoubleBlockCombiner.combineWithNeigbour(AetherTileEntityTypes.CHEST_MIMIC.get(), ChestBlock::getBlockType, ChestBlock::getConnectedDirection, FACING, state, world, pos, bipredicate);
 	}
-
-//	@Override
-//	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-//		return new ChestMimicTileEntity();
-//	}
-
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
