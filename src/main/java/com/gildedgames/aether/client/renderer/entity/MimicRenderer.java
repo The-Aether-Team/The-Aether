@@ -5,7 +5,7 @@ import java.util.Calendar;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.MimicModel;
-import com.gildedgames.aether.common.entity.monster.dungeon.MimicEntity;
+import com.gildedgames.aether.common.entity.monster.dungeon.Mimic;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class MimicRenderer extends MobRenderer<MimicEntity, MimicModel> {
+public class MimicRenderer extends MobRenderer<Mimic, MimicModel> {
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/mimic/normal.png");
 	private static final ResourceLocation XMAS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/mimic/christmas.png");
@@ -30,7 +30,7 @@ public class MimicRenderer extends MobRenderer<MimicEntity, MimicModel> {
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(MimicEntity entity) {
+	public ResourceLocation getTextureLocation(Mimic entity) {
 		return isChristmas? XMAS_TEXTURE : TEXTURE;
 	}
 	

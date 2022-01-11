@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.block.dungeon;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.entity.monster.dungeon.MimicEntity;
+import com.gildedgames.aether.common.entity.monster.dungeon.Mimic;
 import com.gildedgames.aether.common.entity.tile.ChestMimicBlockEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
@@ -32,7 +32,6 @@ import javax.annotation.Nullable;
 import java.util.function.BiPredicate;
 
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -163,7 +162,7 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
 	private void spawnMimic(BlockState state, Level worldIn, BlockPos pos) {
 		Direction facing = state.getValue(FACING);
 		float angle = facing.toYRot();
-		MimicEntity mimic = new MimicEntity(AetherEntityTypes.MIMIC.get(), worldIn);
+		Mimic mimic = new Mimic(AetherEntityTypes.MIMIC.get(), worldIn);
 		mimic.absMoveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, angle, 0.0F);
 		mimic.setYHeadRot(angle);
 		worldIn.addFreshEntity(mimic);

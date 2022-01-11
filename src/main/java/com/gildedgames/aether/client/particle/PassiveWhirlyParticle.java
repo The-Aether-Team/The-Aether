@@ -1,6 +1,7 @@
 package com.gildedgames.aether.client.particle;
 
-import com.gildedgames.aether.common.entity.monster.WhirlwindEntity;
+import com.gildedgames.aether.common.entity.monster.PassiveWhirlwind;
+import com.gildedgames.aether.common.entity.monster.Whirlwind;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -10,50 +11,20 @@ import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class PassiveWhirlyParticle extends TextureSheetParticle {
-    WhirlwindEntity whirlwind;
-    SpriteSet animatedSprite;
+public class PassiveWhirlyParticle extends WhirlyParticle<PassiveWhirlwind> {
     public PassiveWhirlyParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, SpriteSet sprite) {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
-        this.animatedSprite = sprite;
-        whirlwind = worldIn.getNearestEntity(WhirlwindEntity.class, TargetingConditions.DEFAULT, null, xCoordIn, yCoordIn, zCoordIn, new AABB(x, y, z, x + 1, y + 1, z + 1));
-        this.setPos(whirlwind.getX(), whirlwind.getY(), whirlwind.getZ());
-        this.xd = xSpeedIn + (Math.random() * 2.0D - 1.0D) * 0.05000000074505806D;
-        this.yd = ySpeedIn + (Math.random() * 2.0D - 1.0D) * 0.05000000074505806D;
-        this.zd = zSpeedIn + (Math.random() * 2.0D - 1.0D) * 0.05000000074505806D;
-        this.quadSize = this.random.nextFloat() * this.random.nextFloat() * 0.5F /* * 6.0F + 1.0F*/;
-        this.lifetime = (int)(16.0D / ((double)this.random.nextFloat() * 0.8D + 0.2D)) + 2;
-        int color = whirlwind.getColorData();
-        this.setColor((((color >> 16) & 0xFF) / 255F), (((color >> 8) & 0xFF) / 255F), ((color & 0xFF) / 255F));
+        super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, sprite);
+        if(this.whirlwind != null) {
+            this.quadSize = this.random.nextFloat() * this.random.nextFloat() * 0.5F /* * 6.0F + 1.0F*/;
+            this.lifetime = (int) (16.0D / ((double) this.random.nextFloat() * 0.8D + 0.2D)) + 2;
+            int color = whirlwind.getColorData();
+            this.setColor((((color >> 16) & 0xFF) / 255F), (((color >> 8) & 0xFF) / 255F), ((color & 0xFF) / 255F));
+        }
     }
 
     @Override
     public void tick() {
-        this.xo = this.x;
-        this.yo = this.y;
-        this.zo = this.z;
-
-        if (this.age++ >= this.lifetime) {
-            this.remove();
-        }
-
-        this.setSpriteFromAge(animatedSprite);
-
-        if(whirlwind.isAlive()) {
-            float f = (float)(whirlwind.getX() - this.x);
-            float f1 = (float)(whirlwind.getY() - this.y);
-            float f2 = (float)(whirlwind.getZ() - this.z);
-            float d16 = Mth.sqrt(f * f + f1 * f1 + f2 * f2);
-
-            double d18 = this.getBoundingBox().minY - this.y;
-            double d21 = Math.atan2(whirlwind.getX() - this.x, whirlwind.getZ() - this.z) / 0.01745329424738884D;
-            d21 += 160D;
-            this.xd = -Math.cos(0.01745329424738884D * d21) * (d16 * 2.5D - d18) * 0.10000000149011612D;
-            this.zd = Math.sin(0.01745329424738884D * d21) * (d16 * 2.5D - d18) * 0.10000000149011612D;
-            this.yd = 0.11500000208616257D;
-        }
-        this.yd += 0.004D;
-        this.move(this.xd, this.yd, this.zd);
+        super.tick();
         this.xd *= 0.8999999761581421D;
         this.yd *= 0.8999999761581421D;
         this.zd *= 0.8999999761581421D;
@@ -64,8 +35,13 @@ public class PassiveWhirlyParticle extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    protected double getBaseSpeedModifier() {
+        return 0.05000000074505806D;
+    }
+
+    @Override
+    public Class<PassiveWhirlwind> getWhirlwindType() {
+        return PassiveWhirlwind.class;
     }
 
     @OnlyIn(Dist.CLIENT)

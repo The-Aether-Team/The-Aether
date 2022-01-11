@@ -7,6 +7,7 @@ import com.gildedgames.aether.common.loot.conditions.ConfigEnabled;
 import com.gildedgames.aether.common.loot.functions.DoubleDrops;
 import com.gildedgames.aether.common.loot.functions.SpawnTNT;
 import com.gildedgames.aether.common.loot.functions.SpawnXP;
+import com.gildedgames.aether.common.loot.functions.WhirlwindSpawnEntity;
 import com.google.common.collect.Sets;
 
 import net.minecraft.resources.ResourceLocation;
@@ -31,6 +32,7 @@ public class AetherLoot
 	public static final LootItemFunctionType DOUBLE_DROPS = new LootItemFunctionType(new DoubleDrops.Serializer());
 	public static final LootItemFunctionType SPAWN_TNT = new LootItemFunctionType(new SpawnTNT.Serializer());
 	public static final LootItemFunctionType SPAWN_XP = new LootItemFunctionType(new SpawnXP.Serializer());
+	public static final LootItemFunctionType WHIRLWIND_SPAWN_ENTITY = new LootItemFunctionType(new WhirlwindSpawnEntity.Serializer());
 
 	public static final ResourceLocation ENTITIES_SHEEPUFF_WHITE = register("entities/sheepuff/white");
 	public static final ResourceLocation ENTITIES_SHEEPUFF_ORANGE = register("entities/sheepuff/orange");
@@ -83,6 +85,9 @@ public class AetherLoot
 
 	public static final ResourceLocation STRIP_GOLDEN_OAK = register("stripping/strip_golden_oak");
 
+	public static final ResourceLocation WHIRLWIND_JUNK = register("selectors/whirlwind_junk");
+	public static final ResourceLocation EVIL_WHIRLWIND_JUNK = register("selectors/evil_whirlwind_junk");
+
 	private static ResourceLocation register(String id) {
 		return register(new ResourceLocation(Aether.MODID, id));
 	}
@@ -101,5 +106,6 @@ public class AetherLoot
 		Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Aether.MODID, "double_drops").toString(), DOUBLE_DROPS);
 		Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Aether.MODID, "spawn_tnt").toString(), SPAWN_TNT);
 		Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Aether.MODID, "spawn_xp").toString(), SPAWN_XP);
+		Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Aether.MODID, "whirlwind_spawn_entity").toString(), WHIRLWIND_SPAWN_ENTITY);
 	}
 }
