@@ -53,7 +53,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 @Mod(Aether.MODID)
