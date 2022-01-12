@@ -52,6 +52,10 @@ public abstract class AetherLanguageProvider extends LanguageProvider
         add("gui.aether." + key, name);
     }
 
+    public void addCustomizationText(String key, String name) {
+        addGuiText("customization." + key, name);
+    }
+
     public void addMenuText(String key, String name) {
         addGuiText("menu." + key, name);
     }

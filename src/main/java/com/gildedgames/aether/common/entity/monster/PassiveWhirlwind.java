@@ -2,11 +2,8 @@ package com.gildedgames.aether.common.entity.monster;
 
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.common.registry.AetherLoot;
-import com.gildedgames.aether.core.api.AetherRankings;
+import com.gildedgames.aether.core.registry.AetherPlayerRankings;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -62,7 +59,7 @@ public class PassiveWhirlwind extends Whirlwind {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
-        if (heldItem.getItem() instanceof DyeItem && !AetherRankings.getRanksOf(player.getUUID()).isEmpty()) {
+        if (heldItem.getItem() instanceof DyeItem && !AetherPlayerRankings.getRanksOf(player.getUUID()).isEmpty()) {
             this.setColorData(((DyeItem) heldItem.getItem()).getDyeColor().getMaterialColor().col);
 
             return InteractionResult.SUCCESS;
