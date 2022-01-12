@@ -67,6 +67,7 @@ public class AetherBiomeProvider
                         .addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, AetherFeatureData.CRYSTAL_ISLAND_FEATURE)
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatureData.SKYROOT_TREE_FEATURE)
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatureData.GOLDEN_OAK_TREE_FEATURE)
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatureData.HOLIDAY_TREE_FEATURE)
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatureData.FLOWER_FEATURE)
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatureData.ORE_DIRT_FEATURE)
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatureData.ORE_ICESTONE_FEATURE)

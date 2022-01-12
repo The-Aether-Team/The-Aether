@@ -53,10 +53,10 @@ public class CrystalFoliagePlacer extends FoliagePlacer {
     }
 
     private void placeLeavesDiamond(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, Random random, TreeConfiguration config, FoliagePlacer.FoliageAttachment attachment, int radius, int offset) {
-        this.placeLeavesRow(level, blockSetter, random, config, attachment.pos().relative(Direction.NORTH), radius, offset, attachment.doubleTrunk());
-        this.placeLeavesRow(level, blockSetter, random, config, attachment.pos().relative(Direction.SOUTH), radius, offset, attachment.doubleTrunk());
-        this.placeLeavesRow(level, blockSetter, random, config, attachment.pos().relative(Direction.WEST), radius, offset, attachment.doubleTrunk());
-        this.placeLeavesRow(level, blockSetter, random, config, attachment.pos().relative(Direction.EAST), radius, offset, attachment.doubleTrunk());
+        this.placeLeavesRow(level, blockSetter, random, config, attachment.pos().north(), radius, offset, attachment.doubleTrunk());
+        this.placeLeavesRow(level, blockSetter, random, config, attachment.pos().south(), radius, offset, attachment.doubleTrunk());
+        this.placeLeavesRow(level, blockSetter, random, config, attachment.pos().west(), radius, offset, attachment.doubleTrunk());
+        this.placeLeavesRow(level, blockSetter, random, config, attachment.pos().east(), radius, offset, attachment.doubleTrunk());
     }
 
     public int foliageHeight(Random random, int height, TreeConfiguration config) {

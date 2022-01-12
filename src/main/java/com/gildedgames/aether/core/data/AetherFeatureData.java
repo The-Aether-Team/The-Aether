@@ -1,9 +1,11 @@
 package com.gildedgames.aether.core.data;
 
+import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherFeatures;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.world.foliageplacer.CrystalFoliagePlacer;
+import com.gildedgames.aether.common.world.foliageplacer.HolidayFoliagePlacer;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import com.gildedgames.aether.common.world.gen.configuration.SimpleDiskConfiguration;
 import com.gildedgames.aether.common.world.gen.placement.ElevationAdjustment;
@@ -71,6 +73,13 @@ public class AetherFeatureData
             new CrystalFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(6)),
             new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build());
 
+    public static final ConfiguredFeature<TreeConfiguration, ?> HOLIDAY_TREE_FEATURE_BASE = Feature.TREE.configured(new TreeConfiguration.TreeConfigurationBuilder(
+            BlockStateProvider.simple(AetherFeatureDataProvider.getDoubleDrops(AetherBlocks.SKYROOT_LOG)),
+            new StraightTrunkPlacer(7, 0, 0),
+            new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(AetherBlocks.HOLIDAY_LEAVES.get().defaultBlockState(), 4).add(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get().defaultBlockState(), 1).build()),
+            new HolidayFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(6)),
+            new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build());
+
     public static final ConfiguredFeature<RandomPatchConfiguration, ?> FLOWER_FEATURE_BASE = Feature.FLOWER.configured(AetherFeatureDataProvider.grassPatch(
             new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                     .add(AetherBlocks.PURPLE_FLOWER.get().defaultBlockState(), 2)
@@ -96,6 +105,7 @@ public class AetherFeatureData
 
     public static final PlacedFeature SKYROOT_TREE_FEATURE = SKYROOT_TREE_FEATURE_BASE.placed(VegetationPlacements.treePlacement(PlacementUtils.countExtra(6, 0.1F, 1), AetherBlocks.SKYROOT_SAPLING.get()));
     public static final PlacedFeature GOLDEN_OAK_TREE_FEATURE = GOLDEN_OAK_FEATURE_BASE.placed(VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 1), AetherBlocks.GOLDEN_OAK_SAPLING.get()));
+    public static final PlacedFeature HOLIDAY_TREE_FEATURE = HOLIDAY_TREE_FEATURE_BASE.placed(VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 1), AetherBlocks.SKYROOT_SAPLING.get()));
 
     public static final PlacedFeature FLOWER_FEATURE = FLOWER_FEATURE_BASE.placed(InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
