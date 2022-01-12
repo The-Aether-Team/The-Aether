@@ -75,7 +75,7 @@ public class SentryEntity extends Slime {
 	
 	@Override
 	public void tick() {
-		if (this.level.getNearestPlayer(this.getX(), this.getY(), this.getZ(), 8.0, EntitySelector.NO_CREATIVE_OR_SPECTATOR) != null) {
+		if (this.level.getNearestPlayer(this.getX(), this.getY(), this.getZ(), 8.0, EntitySelector.NO_SPECTATORS) != null) {
 			if (!this.isAwake()) {
 				if (this.timeSpotted >= 24) {
 					this.setAwake(true);
