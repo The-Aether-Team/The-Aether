@@ -3,6 +3,9 @@ package com.gildedgames.aether.client.registry;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.entity.model.*;
+import com.gildedgames.aether.client.renderer.perks.layer.DeveloperGlowLayer;
+import com.gildedgames.aether.client.renderer.perks.layer.PlayerHaloLayer;
+import com.gildedgames.aether.client.renderer.perks.model.PlayerHaloModel;
 import com.gildedgames.aether.client.renderer.tile.AetherBlockEntityWithoutLevelRenderer;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicRenderer;
 import com.gildedgames.aether.client.renderer.tile.SkyrootBedRenderer;
@@ -136,6 +139,8 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR, ZephyrModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_CLASSIC, OldZephyrModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_TRANSPARENCY, ZephyrModel::createBodyLayer);
+
+        event.registerLayerDefinition(AetherModelLayers.PLAYER_HALO, PlayerHaloModel::createLayer);
     }
 
     @SubscribeEvent
@@ -148,6 +153,8 @@ public class AetherRenderers {
                 playerRenderer.addLayer(new EnchantedDartLayer(renderDispatcher, playerRenderer));
                 playerRenderer.addLayer(new GoldenDartLayer(renderDispatcher, playerRenderer));
                 playerRenderer.addLayer(new PoisonDartLayer(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new PlayerHaloLayer<>(playerRenderer));
+                playerRenderer.addLayer(new DeveloperGlowLayer<>(playerRenderer));
             }
         }
     }

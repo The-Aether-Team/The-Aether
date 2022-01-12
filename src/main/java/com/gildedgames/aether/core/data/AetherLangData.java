@@ -527,6 +527,18 @@ public class AetherLangData extends AetherLanguageProvider
         addGuiText("descending", "Descending from the Aether");
 
 
+        addGuiText("accessories.perks_button", "Customization & Perks");
+
+
+        addCustomizationText("title", "Customization & Perks");
+        addCustomizationText("gloves.skin", "Glove Layer: Skin");
+        addCustomizationText("gloves.hat", "Glove Layer: Hat");
+        addCustomizationText("halo.on", "Player Halo: ON");
+        addCustomizationText("halo.off", "Player Halo: OFF");
+        addCustomizationText("developer_glow.on", "Developer Glow: ON");
+        addCustomizationText("developer_glow.off", "Developer Glow: OFF");
+
+
         addLoreBookText("previous", "Prev.");
         addLoreBookText("next", "Next");
         addLoreBookText("book", "Book");

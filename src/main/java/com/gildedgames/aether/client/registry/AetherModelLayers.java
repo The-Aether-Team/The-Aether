@@ -33,6 +33,8 @@ public class AetherModelLayers
     public static final ModelLayerLocation ZEPHYR_CLASSIC = register("zephyr", "variation");
     public static final ModelLayerLocation ZEPHYR_TRANSPARENCY = register("zephyr", "transparency");
 
+    public static final ModelLayerLocation PLAYER_HALO = register("player_halo");
+
     private static ModelLayerLocation register(String name) {
         return register(name, "main");
     }
