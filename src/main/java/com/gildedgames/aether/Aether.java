@@ -58,7 +58,6 @@ import java.util.Random;
 
 @Mod(Aether.MODID)
 public class Aether {
-    public static final ArrayList<EntityType> INEBRIATIONIMMUNE = new ArrayList<>();
     public static final String MODID = "aether";
     public static final Logger LOGGER = LogManager.getLogger();
 
@@ -116,13 +115,6 @@ public class Aether {
         registerDispenserBehaviors();
         registerComposting();
         registerFuels();
-
-        //TODO This arraylist holds all of the creatures that probably shouldn't be knocked around and hurt by inebriation if they happen to get the effect.
-        //	   You can either replace how this is done, or add on to it. They can still get the effect this way, it just won't do anything to these entities itself.
-        //The way this is handled could also mean that in the future other potential addon mobs can add their own immune entities easily.
-        INEBRIATIONIMMUNE.add(AetherEntityTypes.COCKATRICE.get());
-        INEBRIATIONIMMUNE.add(AetherEntityTypes.AECHOR_PLANT.get());
-        INEBRIATIONIMMUNE.add(AetherEntityTypes.WHIRLWIND.get());
     }
 
     public void curiosSetup(InterModEnqueueEvent event) {

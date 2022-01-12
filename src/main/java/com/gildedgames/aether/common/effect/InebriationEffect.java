@@ -1,17 +1,15 @@
 package com.gildedgames.aether.common.effect;
 
-import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.core.particles.ItemParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.server.level.ServerLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +26,10 @@ public class InebriationEffect extends MobEffect
 
     @Override
     public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
-        // Check for if the entitytype is immune to inebriation or not.
-            if (!Aether.INEBRIATIONIMMUNE.contains(entityLivingBaseIn.getType())) {
-                if (this.effectDuration % 50 == 0) {
-                    entityLivingBaseIn.hurt(new DamageSource("inebriation").bypassArmor(), 1.0F);
-                }
-            this.distractEntity(entityLivingBaseIn);
+        if (this.effectDuration % 50 == 0) {
+            entityLivingBaseIn.hurt(new DamageSource("inebriation").bypassArmor(), 1.0F);
         }
+        this.distractEntity(entityLivingBaseIn);
     }
 
     private void distractEntity(LivingEntity entityLivingBaseIn) {
