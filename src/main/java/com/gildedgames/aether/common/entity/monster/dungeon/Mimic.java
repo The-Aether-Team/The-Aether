@@ -1,9 +1,10 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,18 +20,13 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
-public class MimicEntity extends PathfinderMob {
+public class Mimic extends Monster {
 
-	public MimicEntity(EntityType<? extends MimicEntity> type, Level worldIn) {
+	public Mimic(EntityType<? extends Mimic> type, Level worldIn) {
 		super(type, worldIn);
-	}
-
-	public MimicEntity(Level worldIn) {
-		super(AetherEntityTypes.MIMIC.get(), worldIn);
 	}
 
 	@Override
@@ -39,11 +35,12 @@ public class MimicEntity extends PathfinderMob {
 		this.goalSelector.addGoal(2,  new MeleeAttackGoal(this, 1.0, false));
 		this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0));
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Mimic.class));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return PathfinderMob.createMobAttributes()
+		return Monster.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 40.0D)
 				.add(Attributes.ATTACK_DAMAGE, 3.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
@@ -52,17 +49,17 @@ public class MimicEntity extends PathfinderMob {
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundEvents.WOOD_BREAK;
+		return AetherSoundEvents.ENTITY_MIMIC_HURT.get();
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.CHEST_CLOSE;
+		return AetherSoundEvents.ENTITY_MIMIC_DEATH.get();
 	}
 	
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source.getDirectEntity() instanceof MimicEntity) {
+		if (source.getDirectEntity() instanceof Mimic) {
 			return false;
 		}
 		if (source.getDirectEntity() instanceof LivingEntity && this.hurtTime == 0) {
@@ -87,7 +84,7 @@ public class MimicEntity extends PathfinderMob {
 		
 		if (entityIn instanceof LivingEntity) {
 			// If the entity died as a result of this attack, then play the burp sound. Otherwise, play the eating sound.
-			SoundEvent sound = (((LivingEntity) entityIn).getHealth() <= 0.0)? SoundEvents.PLAYER_BURP : SoundEvents.GENERIC_EAT;
+			SoundEvent sound = (((LivingEntity) entityIn).getHealth() <= 0.0)? AetherSoundEvents.ENTITY_MIMIC_KILL.get() : AetherSoundEvents.ENTITY_MIMIC_ATTACK.get();
 			this.playSound(sound, 1.0F, this.getVoicePitch());
 		}
 		

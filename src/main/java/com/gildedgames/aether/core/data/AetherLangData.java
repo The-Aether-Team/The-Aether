@@ -333,6 +333,7 @@ public class AetherLangData extends AetherLanguageProvider
         addItem(AetherItems.SHEEPUFF_SPAWN_EGG, "Sheepuff Spawn Egg");
         addItem(AetherItems.SWET_SPAWN_EGG, "Swet Spawn Egg");
         addItem(AetherItems.WHIRLWIND_SPAWN_EGG, "Whirlwind Spawn Egg");
+        addItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG, "Evil Whirlwind Spawn Egg");
         addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
 
 
@@ -344,6 +345,7 @@ public class AetherLangData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.AERWHALE, "Aerwhale");
         addEntityType(AetherEntityTypes.SWET, "Swet");
         addEntityType(AetherEntityTypes.WHIRLWIND, "Whirlwind");
+        addEntityType(AetherEntityTypes.EVIL_WHIRLWIND, "Evil Whirlwind");
         addEntityType(AetherEntityTypes.AECHOR_PLANT, "Aechor Plant");
         addEntityType(AetherEntityTypes.COCKATRICE, "Cockatrice");
         addEntityType(AetherEntityTypes.ZEPHYR, "Zephyr");
@@ -409,6 +411,7 @@ public class AetherLangData extends AetherLanguageProvider
 
         addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");
         addSubtitle("block", "aether_portal.trigger", "Aether Portal noise intensifies");
+        addSubtitle("block", "chest_mimic.open", "Mimic awakens");
         addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
 
         addSubtitle("item", "dart_shooter.shoot", "Dart Shooter fired");
@@ -489,8 +492,10 @@ public class AetherLangData extends AetherLanguageProvider
         addSubtitle("entity", "sentry.hurt", "Sentry hurts");
         addSubtitle("entity", "sentry.jump", "Sentry squishes");
 
+        addSubtitle("entity", "mimic.attack", "Mimic attacks");
         addSubtitle("entity", "mimic.death", "Mimic dies");
         addSubtitle("entity", "mimic.hurt", "Mimic hurts");
+        addSubtitle("entity", "mimic.kill", "Mimic burps");
 
         addSubtitle("entity", "slider.awaken", "Slider awakens");
         addSubtitle("entity", "slider.collide", "Slider smashes");

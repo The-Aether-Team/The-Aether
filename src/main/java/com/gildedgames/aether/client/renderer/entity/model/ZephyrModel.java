@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
-import com.gildedgames.aether.common.entity.monster.ZephyrEntity;
+import com.gildedgames.aether.common.entity.monster.Zephyr;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -60,7 +60,7 @@ public class ZephyrModel extends BaseZephyrModel
     }
 
     @Override
-    public void setupAnim(ZephyrEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(Zephyr entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float motion = (float)(Math.sin(limbSwing * 20 / 57.2957795) * limbSwingAmount * 0.5F);
 
         this.leftFace.y = motion + 8;

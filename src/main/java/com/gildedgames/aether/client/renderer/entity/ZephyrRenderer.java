@@ -6,7 +6,7 @@ import com.gildedgames.aether.client.renderer.entity.layers.ZephyrTransparencyLa
 import com.gildedgames.aether.client.renderer.entity.model.BaseZephyrModel;
 import com.gildedgames.aether.client.renderer.entity.model.OldZephyrModel;
 import com.gildedgames.aether.client.renderer.entity.model.ZephyrModel;
-import com.gildedgames.aether.common.entity.monster.ZephyrEntity;
+import com.gildedgames.aether.common.entity.monster.Zephyr;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -16,7 +16,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ZephyrRenderer extends MobRenderer<ZephyrEntity, BaseZephyrModel>
+public class ZephyrRenderer extends MobRenderer<Zephyr, BaseZephyrModel>
 {
     private static final ResourceLocation ZEPHYR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr_main.png");
     private static final ResourceLocation OLD_ZEPHYR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr_old.png");
@@ -33,7 +33,7 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, BaseZephyrModel>
     }
 
     @Override
-    protected void scale(ZephyrEntity zephyr, PoseStack matrixStackIn, float partialTickTime) {
+    protected void scale(Zephyr zephyr, PoseStack matrixStackIn, float partialTickTime) {
         float f1 = ((float) zephyr.getAttackCharge() + partialTickTime) / 20.0F;
         if (f1 < 0.0F)
         {
@@ -60,7 +60,7 @@ public class ZephyrRenderer extends MobRenderer<ZephyrEntity, BaseZephyrModel>
     }
 
     @Override   // TODO: Configurable old zephyr texture
-    public ResourceLocation getTextureLocation(ZephyrEntity entity) {
+    public ResourceLocation getTextureLocation(Zephyr entity) {
         return ZEPHYR_TEXTURE;
     }
 }

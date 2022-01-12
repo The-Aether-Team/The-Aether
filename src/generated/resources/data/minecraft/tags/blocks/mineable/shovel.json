@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "aether:aether_grass_block",
+    "aether:enchanted_aether_grass_block",
+    "aether:aether_dirt",
+    "aether:quicksoil_glass",
+    "aether:aether_farmland"
+  ]
+}

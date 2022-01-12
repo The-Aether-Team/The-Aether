@@ -6,7 +6,7 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-//Subclass of SmokeParticle to make white particles.
+//Subclass of SmokeParticle to make white particles. TODO: Is this particle necessary?
 public class WhiteSmokeParticle extends SmokeParticle {
     protected WhiteSmokeParticle(ClientLevel p_i232425_1_, double p_i232425_2_, double p_i232425_4_, double p_i232425_6_, double p_i232425_8_, double p_i232425_10_, double p_i232425_12_, float p_i232425_14_, SpriteSet p_i232425_15_) {
         super(p_i232425_1_, p_i232425_2_, p_i232425_4_, p_i232425_6_, p_i232425_8_, p_i232425_10_, p_i232425_12_, p_i232425_14_, p_i232425_15_);
