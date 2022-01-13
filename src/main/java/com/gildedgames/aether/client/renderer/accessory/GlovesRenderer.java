@@ -3,6 +3,7 @@ package com.gildedgames.aether.client.renderer.accessory;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
 import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
+import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -64,34 +65,37 @@ public class GlovesRenderer implements ICurioRenderer
     }
 
     public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, AbstractClientPlayer player, HumanoidArm arm) {
-        GlovesModel model;
+        IAetherRankings.get(player).ifPresent(aetherRankings -> {
+            GlovesModel model;
 
-        boolean isSlim = player.getModelName().equals("slim");
-        boolean isSleeve = false; //TODO: toggle.
-        if (!isSlim) {
-            model = !isSleeve ? this.glovesArmModel : this.glovesSleeveModel;
-        } else {
-            model = !isSleeve ? this.glovesArmModelSlim : this.glovesSleeveModelSlim;
-        }
+            boolean isSlim = player.getModelName().equals("slim");
+            boolean isSleeve = aetherRankings.areSleeveGloves();
 
-        model.setAllVisible(false);
-        model.attackTime = 0.0F;
-        model.crouching = false;
-        model.swimAmount = 0.0F;
-        model.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+            if (!isSlim) {
+                model = !isSleeve ? this.glovesArmModel : this.glovesSleeveModel;
+            } else {
+                model = !isSleeve ? this.glovesArmModelSlim : this.glovesSleeveModelSlim;
+            }
 
-        GlovesItem glovesItem = (GlovesItem) stack.getItem();
-        VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(bufferSource, RenderType.armorCutoutNoCull(!isSlim ? glovesItem.getGlovesTexture() : glovesItem.getGlovesSlimTexture()), false, stack.isEnchanted());
+            model.setAllVisible(false);
+            model.attackTime = 0.0F;
+            model.crouching = false;
+            model.swimAmount = 0.0F;
+            model.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 
-        float red = glovesItem.getColors(stack).getLeft();
-        float green = glovesItem.getColors(stack).getMiddle();
-        float blue = glovesItem.getColors(stack).getRight();
+            GlovesItem glovesItem = (GlovesItem) stack.getItem();
+            VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(bufferSource, RenderType.armorCutoutNoCull(!isSlim ? glovesItem.getGlovesTexture() : glovesItem.getGlovesSlimTexture()), false, stack.isEnchanted());
 
-        if (arm == HumanoidArm.RIGHT) {
-            this.renderGlove(model.rightArm, poseStack, combinedLight, vertexConsumer, red, green, blue);
-        } else if (arm == HumanoidArm.LEFT) {
-            this.renderGlove(model.leftArm, poseStack, combinedLight, vertexConsumer, red, green, blue);
-        }
+            float red = glovesItem.getColors(stack).getLeft();
+            float green = glovesItem.getColors(stack).getMiddle();
+            float blue = glovesItem.getColors(stack).getRight();
+
+            if (arm == HumanoidArm.RIGHT) {
+                this.renderGlove(model.rightArm, poseStack, combinedLight, vertexConsumer, red, green, blue);
+            } else if (arm == HumanoidArm.LEFT) {
+                this.renderGlove(model.leftArm, poseStack, combinedLight, vertexConsumer, red, green, blue);
+            }
+        });
     }
 
     private void renderGlove(ModelPart gloveArm, PoseStack poseStack, int combinedLight, VertexConsumer vertexConsumer, float red, float green, float blue) {

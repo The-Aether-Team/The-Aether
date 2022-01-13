@@ -22,9 +22,9 @@ public class CustomizationScreen extends Screen
         if (this.minecraft.player != null) {
             IAetherRankings.get(this.minecraft.player).ifPresent(aetherRankings -> {
                 this.addRenderableWidget(new Button(this.width / 2 - 75, this.height / 6, 150, 20,
-                        new TranslatableComponent(aetherRankings.areSleeveGloves() ? "gui.aether.customization.gloves.hat" : "gui.aether.customization.gloves.skin"),
+                        new TranslatableComponent(aetherRankings.areSleeveGloves() ? "gui.aether.customization.gloves.sleeve" : "gui.aether.customization.gloves.arm"),
                         (pressed) -> aetherRankings.setSleeveGloves(!aetherRankings.areSleeveGloves()),
-                        (button, poseStack, x, y) -> button.setMessage(new TranslatableComponent(aetherRankings.areSleeveGloves() ? "gui.aether.customization.gloves.hat" : "gui.aether.customization.gloves.skin"))
+                        (button, poseStack, x, y) -> button.setMessage(new TranslatableComponent(aetherRankings.areSleeveGloves() ? "gui.aether.customization.gloves.sleeve" : "gui.aether.customization.gloves.arm"))
                 ));
                 this.addRenderableWidget(new Button(this.width / 2 - 75, this.height / 4, 150, 20,
                         new TranslatableComponent(aetherRankings.shouldRenderHalo() ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"),

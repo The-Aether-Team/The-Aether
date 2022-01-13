@@ -22,7 +22,7 @@ public class DeveloperGlowLayer<T extends Player, M extends PlayerModel<T>, A ex
     }
 
     public void render(@Nonnull PoseStack pMatrixStack, @Nonnull MultiBufferSource pBuffer, int pPackedLight, @Nonnull T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-        if (pLivingEntity instanceof  AbstractClientPlayer abstractClientPlayer) {
+        if (pLivingEntity instanceof AbstractClientPlayer abstractClientPlayer) {
             IAetherRankings.get(abstractClientPlayer).ifPresent(aetherRankings -> {
                 if (AetherPlayerRankings.hasDevGlow(abstractClientPlayer.getUUID()) && aetherRankings.shouldRenderDeveloperGlow()) {
                     VertexConsumer vertexconsumer = pBuffer.getBuffer(RenderType.eyes(abstractClientPlayer.getSkinTextureLocation()));
