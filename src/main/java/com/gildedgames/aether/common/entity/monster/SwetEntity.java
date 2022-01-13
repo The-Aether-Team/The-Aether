@@ -19,6 +19,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -39,6 +40,10 @@ public class SwetEntity extends MountableEntity {
     public static final EntityDataAccessor<Byte> SWET_TYPE = SynchedEntityData.defineId(SwetEntity.class, EntityDataSerializers.BYTE); // 1 for blue swet, 0 for golden swet
 
     public static final EntityDataAccessor<Boolean> MID_JUMP = SynchedEntityData.defineId(SwetEntity.class, EntityDataSerializers.BOOLEAN);
+
+    public static final EntityDataAccessor<Float> WATER_DAMAGE_SCALE = SynchedEntityData.defineId(SwetEntity.class, EntityDataSerializers.FLOAT);
+    public static final EntityDataAccessor<Boolean> DEAD_IN_WATER = SynchedEntityData.defineId(SwetEntity.class, EntityDataSerializers.BOOLEAN);
+
 
     public boolean wasOnGround;
     public boolean midJump;
@@ -70,13 +75,24 @@ public class SwetEntity extends MountableEntity {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(SWET_TYPE, (byte)1);
+        this.entityData.define(SWET_TYPE, (byte) 1);
         this.entityData.define(MID_JUMP, false);
+        this.entityData.define(WATER_DAMAGE_SCALE, 0.0F);
+        this.entityData.define(DEAD_IN_WATER, false);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
+        if (WATER_DAMAGE_SCALE.equals(pKey)) {
+            this.refreshDimensions();
+        }
+
+        super.onSyncedDataUpdated(pKey);
     }
 
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-        this.setSwetType((byte)this.random.nextInt(2));
+        this.setSwetType((byte) this.random.nextInt(2));
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
@@ -93,13 +109,19 @@ public class SwetEntity extends MountableEntity {
 
     @Override
     public void tick() {
-        if(this.isInWater()) {
+        if (this.isInWater()) {
             this.dissolveSwet();
+        }
+
+        if (this.getDeadInWater()) {
+            if (!(this.getWaterDamageScale() >= 1.0F)) {
+                this.setWaterDamageScale(this.getWaterDamageScale() + 0.02F);
+            }
         }
 
         super.tick();
 
-        if(!this.hasPrey()) {
+        if (!this.hasPrey()) {
             for (int i = 0; i < 5; i++) {
                 double d = (float) this.getX() + (this.random.nextFloat() - this.random.nextFloat()) * 0.3F;
                 double d1 = (float) this.getY() + this.getBbHeight();
@@ -180,7 +202,7 @@ public class SwetEntity extends MountableEntity {
     }
 
     public void dissolveSwet() {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 5; i++) {
             float f = this.random.nextFloat() * 3.141593F * 2.0F;
             float f1 = this.random.nextFloat() * 0.5F + 0.25F;
             float f2 = Mth.sin(f) * f1;
@@ -189,9 +211,27 @@ public class SwetEntity extends MountableEntity {
             this.level.addParticle(ParticleTypes.SPLASH, this.getX() + (double) f2, this.getBoundingBox().minY + 1.25D, this.getZ() + (double) f3, (double) f2 * 1.5D + this.getDeltaMovement().x, 4D, (double) f3 * 1.5D + this.getDeltaMovement().z);
         }
 
-        if (this.getDeathSound() != null) this.playSound(this.getDeathSound(), this.getSoundVolume(), this.getVoicePitch());
+        if (!this.getDeadInWater()) {
+            this.setDeadInWater(true);
+        }
+    }
 
-        this.discard();
+    @Override
+    protected void tickDeath() {
+        //This method changed death mechanic when dead in water.
+        if (this.getDeadInWater()) {
+            if (this.getWaterDamageScale() >= 1.0F && !this.level.isClientSide()) {
+                this.level.broadcastEntityEvent(this, (byte) 60);
+                this.remove(Entity.RemovalReason.KILLED);
+            }
+        } else {
+            super.tickDeath();
+        }
+    }
+
+    @Override
+    public boolean isDeadOrDying() {
+        return super.isDeadOrDying() || this.getDeadInWater();
     }
 
     public boolean isFriendly() {
@@ -220,6 +260,31 @@ public class SwetEntity extends MountableEntity {
 
     public boolean getMidJump() {
         return this.entityData.get(MID_JUMP);
+    }
+
+    public void setDeadInWater(boolean flag) {
+        this.entityData.set(DEAD_IN_WATER, flag);
+    }
+
+    public boolean getDeadInWater() {
+        return this.entityData.get(DEAD_IN_WATER);
+    }
+
+    public void setWaterDamageScale(float scale) {
+        float i = Mth.clamp(scale, 0.0F, 1.0F);
+        AttributeInstance attributeInstance = this.getAttribute(Attributes.MAX_HEALTH);
+        if (attributeInstance != null) {
+            attributeInstance.setBaseValue(attributeInstance.getBaseValue() * (1.0F - i));
+            if (attributeInstance.getBaseValue() < this.getHealth()) {
+                this.setHealth(this.getMaxHealth());
+            }
+        }
+
+        this.entityData.set(WATER_DAMAGE_SCALE, i);
+    }
+
+    public float getWaterDamageScale() {
+        return this.entityData.get(WATER_DAMAGE_SCALE);
     }
 
     public int getJumpTimer() {
@@ -276,17 +341,31 @@ public class SwetEntity extends MountableEntity {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putByte("SwetType", this.getSwetType());
+        compound.putFloat("WaterDamageScale", this.getWaterDamageScale());
+        compound.putBoolean("DeadInWater", this.getDeadInWater());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setSwetType(compound.getByte("SwetType"));
+        this.setWaterDamageScale(compound.getFloat("WaterDamageScale"));
+        this.setDeadInWater(compound.getBoolean("DeadInWater"));
     }
 
     @Override
     protected ResourceLocation getDefaultLootTable() {
         return this.getSwetType() == 1 ? AetherLoot.ENTITIES_SWET_BLUE : AetherLoot.ENTITIES_SWET_GOLD;
+    }
+
+    @Override
+    public float getScale() {
+        return super.getScale() - super.getScale() * this.getWaterDamageScale();
+    }
+
+    @Override
+    public EntityDimensions getDimensions(Pose pPose) {
+        return super.getDimensions(pPose).scale(getScale());
     }
 
     static class ConsumeGoal extends Goal {

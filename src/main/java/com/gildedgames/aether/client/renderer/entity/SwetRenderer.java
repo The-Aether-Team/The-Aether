@@ -31,6 +31,7 @@ public class SwetRenderer extends MobRenderer<SwetEntity, SlimeModel<SwetEntity>
         }
 
         poseStack.scale(width * scale, height * scale, width * scale);
+        poseStack.scale(swet.getScale(), swet.getScale(), swet.getScale());
     }
 
     @Override
