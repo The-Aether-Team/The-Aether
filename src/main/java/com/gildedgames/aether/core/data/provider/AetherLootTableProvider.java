@@ -65,6 +65,7 @@ public class AetherLootTableProvider extends LootTableProvider
                 Pair.of(AetherLootTableData.RegisterEntityLoot::new, LootContextParamSets.ENTITY),
                 Pair.of(AetherLootTableData.RegisterDungeonLoot::new, LootContextParamSets.CHEST),
                 Pair.of(AetherLootTableData.RegisterAdvancementLoot::new, LootContextParamSets.ADVANCEMENT_REWARD),
+                Pair.of(AetherLootTableData.RegisterSelectorLoot::new, LootContextParamSets.SELECTOR),
                 Pair.of(AetherLootTableData.RegisterStrippingLoot::new, AetherLoot.STRIPPING));
     }
 

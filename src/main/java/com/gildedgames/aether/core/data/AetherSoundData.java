@@ -26,6 +26,10 @@ public class AetherSoundData extends SoundDefinitionsProvider
                 definition().with(sound("minecraft:portal/trigger"))
                 .subtitle("subtitles.block.aether_portal.trigger")
         );
+        this.add(AetherSoundEvents.BLOCK_CHEST_MIMIC_OPEM,
+                definition().with(sound("minecraft:block/chest/open"))
+                        .subtitle("subtitles.block.chest_mimic.open")
+        );
         this.add(AetherSoundEvents.BLOCK_DUNGEON_TRAP_TRIGGER,
                 definition().with(
                         sound("aether:block/dungeon_trap/trigger1"),
@@ -492,6 +496,13 @@ public class AetherSoundData extends SoundDefinitionsProvider
                         sound("minecraft:mob/slime/big4")
                 ).subtitle("subtitles.entity.sentry.jump")
         );
+        this.add(AetherSoundEvents.ENTITY_MIMIC_ATTACK,
+                definition().with(
+                        sound("minecraft:random/eat1"),
+                        sound("minecraft:random/eat2"),
+                        sound("minecraft:random/eat3")
+                ).subtitle("subtitles.entity.mimic.attack")
+        );
         this.add(AetherSoundEvents.ENTITY_MIMIC_DEATH,
                 definition().with(
                         sound("minecraft:block/chest/close"),
@@ -506,6 +517,11 @@ public class AetherSoundData extends SoundDefinitionsProvider
                         sound("minecraft:dig/wood3"),
                         sound("minecraft:dig/wood4")
                 ).subtitle("subtitles.entity.mimic.hurt")
+        );
+        this.add(AetherSoundEvents.ENTITY_MIMIC_KILL,
+                definition().with(
+                        sound( 	"minecraft:random/burp")
+                ).subtitle("subtitles.entity.mimic.kill")
         );
         this.add(AetherSoundEvents.ENTITY_SLIDER_AWAKEN,
                 definition().with(sound("aether:entity/slider/awaken"))

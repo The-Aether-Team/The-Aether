@@ -46,6 +46,8 @@ public class AetherModelLayers
     public static final ModelLayerLocation REPULSION_SHIELD_ARM = register("repulsion_shield_arm");
     public static final ModelLayerLocation REPULSION_SHIELD_ARM_SLIM = register("repulsion_shield_arm_slim");
 
+    public static final ModelLayerLocation PLAYER_HALO = register("player_halo");
+
     private static ModelLayerLocation register(String name) {
         return register(name, "main");
     }

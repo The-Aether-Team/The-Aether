@@ -19,6 +19,12 @@
       "portal/trigger"
     ]
   },
+  "block.chest_mimic.open": {
+    "subtitle": "subtitles.block.chest_mimic.open",
+    "sounds": [
+      "block/chest/open"
+    ]
+  },
   "block.dungeon_trap.trigger": {
     "subtitle": "subtitles.block.dungeon_trap.trigger",
     "sounds": [
@@ -595,6 +601,14 @@
       "mob/slime/big4"
     ]
   },
+  "entity.mimic.attack": {
+    "subtitle": "subtitles.entity.mimic.attack",
+    "sounds": [
+      "random/eat1",
+      "random/eat2",
+      "random/eat3"
+    ]
+  },
   "entity.mimic.death": {
     "subtitle": "subtitles.entity.mimic.death",
     "sounds": [
@@ -610,6 +624,12 @@
       "dig/wood2",
       "dig/wood3",
       "dig/wood4"
+    ]
+  },
+  "entity.mimic.kill": {
+    "subtitle": "subtitles.entity.mimic.kill",
+    "sounds": [
+      "random/burp"
     ]
   },
   "entity.slider.awaken": {

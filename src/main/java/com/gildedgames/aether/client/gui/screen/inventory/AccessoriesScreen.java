@@ -1,11 +1,13 @@
 package com.gildedgames.aether.client.gui.screen.inventory;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.gui.screen.perks.CustomizationScreen;
 import com.gildedgames.aether.client.registry.AetherKeys;
 import com.gildedgames.aether.common.inventory.container.AccessoriesContainer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
@@ -75,6 +77,10 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesContai
         if (this.minecraft != null) {
             this.updateRenderButtons();
         }
+        this.addRenderableWidget(new Button(this.leftPos - 22, this.topPos + 2, 20, 20, new TextComponent("?"),
+                (pressed) -> this.minecraft.setScreen(new CustomizationScreen(this)),
+                (button, matrixStack, x, y) -> this.renderTooltip(matrixStack, new TranslatableComponent("gui.aether.accessories.perks_button"), x, y))
+        );
     }
 
     public void updateRenderButtons() {

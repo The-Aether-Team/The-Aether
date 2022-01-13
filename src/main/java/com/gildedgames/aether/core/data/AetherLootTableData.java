@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.data;
 
 import com.gildedgames.aether.common.loot.conditions.ConfigEnabled;
+import com.gildedgames.aether.common.loot.functions.WhirlwindSpawnEntity;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.provider.AetherLootTableProvider;
 import com.gildedgames.aether.common.registry.*;
@@ -30,8 +31,6 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
-
-import com.gildedgames.aether.core.data.provider.AetherLootTableProvider.AetherBlockLootTableProvider;
 
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -295,6 +294,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             );
 
             this.add(AetherEntityTypes.WHIRLWIND.get(), LootTable.lootTable());
+            this.add(AetherEntityTypes.EVIL_WHIRLWIND.get(), LootTable.lootTable());
 
             this.add(AetherEntityTypes.AECHOR_PLANT.get(), LootTable.lootTable()
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
@@ -606,6 +606,33 @@ public class AetherLootTableData extends AetherLootTableProvider
             builder.accept(AetherLoot.ENTER_AETHER, LootTable.lootTable()
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(AetherItems.GOLDEN_PARACHUTE.get())).when(ConfigEnabled.isEnabled(AetherConfig.COMMON.enable_startup_loot)))
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(AetherItems.BOOK_OF_LORE.get())).when(ConfigEnabled.isEnabled(AetherConfig.COMMON.enable_startup_loot)))
+            );
+        }
+    }
+
+    public static class RegisterSelectorLoot implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>
+    {
+        public void accept(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
+            builder.accept(AetherLoot.WHIRLWIND_JUNK, LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                            .add(LootItem.lootTableItem(Items.DIAMOND).setWeight(1))
+                            .add(LootItem.lootTableItem(Items.IRON_INGOT).setWeight(4))
+                            .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(5))
+                            .add(LootItem.lootTableItem(Items.COAL).setWeight(9))
+                            .add(LootItem.lootTableItem(Items.PUMPKIN).setWeight(2))
+                            .add(LootItem.lootTableItem(Items.GRAVEL).setWeight(5))
+                            .add(LootItem.lootTableItem(Items.CLAY).setWeight(11))
+                            .add(LootItem.lootTableItem(Items.STICK).setWeight(12))
+                            .add(LootItem.lootTableItem(Items.FLINT).setWeight(14))
+                            .add(LootItem.lootTableItem(Blocks.OAK_LOG).setWeight(17))
+                            .add(LootItem.lootTableItem(Blocks.SAND).setWeight(20))
+                    )
+            );
+            builder.accept(AetherLoot.EVIL_WHIRLWIND_JUNK, LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                            .add(LootItem.lootTableItem(Items.AIR)
+                                    .apply(WhirlwindSpawnEntity.builder(EntityType.CREEPER, 1)))
+                    )
             );
         }
     }

@@ -15,6 +15,7 @@ public class AetherSoundEvents
 	public static final RegistryObject<SoundEvent> BLOCK_AETHER_PORTAL_AMBIENT = register("block.aether_portal.ambient");
 	public static final RegistryObject<SoundEvent> BLOCK_AETHER_PORTAL_TRAVEL = register("block.aether_portal.travel");
 	public static final RegistryObject<SoundEvent> BLOCK_AETHER_PORTAL_TRIGGER = register("block.aether_portal.trigger");
+	public static final RegistryObject<SoundEvent> BLOCK_CHEST_MIMIC_OPEM = register("block.chest_mimic.open");
 
 	public static final RegistryObject<SoundEvent> BLOCK_DUNGEON_TRAP_TRIGGER = register("block.dungeon_trap.trigger");
 
@@ -106,8 +107,10 @@ public class AetherSoundEvents
 	public static final RegistryObject<SoundEvent> ENTITY_SENTRY_HURT = register("entity.sentry.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_SENTRY_JUMP = register("entity.sentry.jump");
 
+	public static final RegistryObject<SoundEvent> ENTITY_MIMIC_ATTACK = register("entity.mimic.attack");
 	public static final RegistryObject<SoundEvent> ENTITY_MIMIC_DEATH = register("entity.mimic.death");
 	public static final RegistryObject<SoundEvent> ENTITY_MIMIC_HURT = register("entity.mimic.hurt");
+	public static final RegistryObject<SoundEvent> ENTITY_MIMIC_KILL = register("entity.mimic.kill");
 
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_AWAKEN = register("entity.slider.awaken");
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_COLLIDE = register("entity.slider.collide");

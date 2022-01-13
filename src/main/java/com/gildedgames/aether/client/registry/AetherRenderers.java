@@ -10,8 +10,11 @@ import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
 import com.gildedgames.aether.client.renderer.accessory.model.PendantModel;
 import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.entity.model.*;
+import com.gildedgames.aether.client.renderer.perks.layer.DeveloperGlowLayer;
+import com.gildedgames.aether.client.renderer.perks.layer.PlayerHaloLayer;
+import com.gildedgames.aether.client.renderer.perks.model.PlayerHaloModel;
 import com.gildedgames.aether.client.renderer.tile.AetherBlockEntityWithoutLevelRenderer;
-import com.gildedgames.aether.client.renderer.tile.ChestMimicBlockEntityRenderer;
+import com.gildedgames.aether.client.renderer.tile.ChestMimicRenderer;
 import com.gildedgames.aether.client.renderer.tile.SkyrootBedRenderer;
 import com.gildedgames.aether.client.renderer.tile.TreasureChestRenderer;
 import com.gildedgames.aether.client.renderer.player.layer.EnchantedDartLayer;
@@ -32,6 +35,7 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
@@ -39,9 +43,9 @@ import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class AetherRenderers
-{
-    public static final BlockEntityWithoutLevelRenderer blockEntityWithoutLevelRenderer = new AetherBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+public class AetherRenderers {
+    public static final Lazy<BlockEntityWithoutLevelRenderer> blockEntityWithoutLevelRenderer = () ->
+            new AetherBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
 
     public static void registerBlockRenderLayers() {
         RenderType cutout = RenderType.cutout();
@@ -84,10 +88,12 @@ public class AetherRenderers
 
         event.registerEntityRenderer(AetherEntityTypes.SWET.get(), SwetRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.WHIRLWIND.get(), WhirlwindRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.EVIL_WHIRLWIND.get(), WhirlwindRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.COCKATRICE.get(), CockatriceRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.ZEPHYR.get(), ZephyrRenderer::new);
 
+//        event.registerEntityRenderer(AetherEntityTypes.SLIDER.get(), SliderRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.SENTRY.get(), SentryRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.MIMIC.get(), MimicRenderer::new);
 
@@ -97,7 +103,7 @@ public class AetherRenderers
         event.registerEntityRenderer(AetherEntityTypes.FLOATING_BLOCK.get(), FloatingBlockRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.TNT_PRESENT.get(), TNTPresentRenderer::new);
 
-        event.registerEntityRenderer(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), (context) -> new ThrownItemRenderer<>(context, 3.0F, true));
         event.registerEntityRenderer(AetherEntityTypes.CLOUD_CRYSTAL.get(), IceCrystalRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.GOLDEN_DART.get(), GoldenDartRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.POISON_DART.get(), PoisonDartRenderer::new);
@@ -106,7 +112,7 @@ public class AetherRenderers
         event.registerEntityRenderer(AetherEntityTypes.LIGHTNING_KNIFE.get(), LightningKnifeRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.HAMMER_PROJECTILE.get(), HammerProjectileRenderer::new);
 
-        event.registerBlockEntityRenderer(AetherTileEntityTypes.CHEST_MIMIC.get(), ChestMimicBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(AetherTileEntityTypes.CHEST_MIMIC.get(), ChestMimicRenderer::new);
         event.registerBlockEntityRenderer(AetherTileEntityTypes.TREASURE_CHEST.get(), TreasureChestRenderer::new);
         event.registerBlockEntityRenderer(AetherTileEntityTypes.SKYROOT_BED.get(), SkyrootBedRenderer::new);
         event.registerBlockEntityRenderer(AetherTileEntityTypes.SKYROOT_SIGN.get(), SignRenderer::new);
@@ -132,7 +138,7 @@ public class AetherRenderers
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF, SheepuffModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL, SheepuffWoolModel::createFurLayer);
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL_PUFFED, SheepuffWoolModel::createFurLayer);
-//        event.registerLayerDefinition(AetherModelLayers.SLIDER, );
+//        event.registerLayerDefinition(AetherModelLayers.SLIDER, SliderModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.SUN_SPIRIT, SunSpiritModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SWET, SlimeModel::createInnerBodyLayer);
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE, );
@@ -153,6 +159,8 @@ public class AetherRenderers
         event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), true), 64, 64));
         event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM, () -> LayerDefinition.create(HumanoidModel.createMesh(new CubeDeformation(0.4F), 0.0F), 64, 32));
         event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), true), 64, 64));
+
+        event.registerLayerDefinition(AetherModelLayers.PLAYER_HALO, PlayerHaloModel::createLayer);
     }
 
     public static void registerCuriosRenderers() {
@@ -190,11 +198,13 @@ public class AetherRenderers
         EntityRenderDispatcher renderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
         String[] types = new String[]{"default", "slim"};
         for (String type : types) {
-            PlayerRenderer playerRenderer =  event.getSkin(type);
+            PlayerRenderer playerRenderer = event.getSkin(type);
             if (playerRenderer != null) {
                 playerRenderer.addLayer(new EnchantedDartLayer<>(renderDispatcher, playerRenderer));
                 playerRenderer.addLayer(new GoldenDartLayer<>(renderDispatcher, playerRenderer));
                 playerRenderer.addLayer(new PoisonDartLayer<>(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new PlayerHaloLayer<>(playerRenderer));
+                playerRenderer.addLayer(new DeveloperGlowLayer<>(playerRenderer));
             }
         }
     }

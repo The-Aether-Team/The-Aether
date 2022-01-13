@@ -38,7 +38,6 @@ public class AetherClient
             registerGuiFactories();
             registerItemModelProperties();
             registerColors();
-
             DimensionSpecialEffects.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), new AetherSkyRenderInfo());
         });
     }

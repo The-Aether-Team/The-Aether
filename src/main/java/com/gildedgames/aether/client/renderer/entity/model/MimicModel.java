@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
-import com.gildedgames.aether.common.entity.monster.dungeon.MimicEntity;
+import com.gildedgames.aether.common.entity.monster.dungeon.Mimic;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -13,7 +13,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class MimicModel extends EntityModel<MimicEntity> {
+public class MimicModel extends EntityModel<Mimic> {
 	private final ModelPart upperBody;
 	private final ModelPart lowerBody;
 	private final ModelPart leftLeg;
@@ -51,7 +51,7 @@ public class MimicModel extends EntityModel<MimicEntity> {
 	}
 	
 	@Override
-	public void setupAnim(MimicEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(Mimic entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.upperBody.xRot = (float) Math.PI - 0.6F * (1.0F + Mth.cos(ageInTicks / 10.0F * (float) Math.PI));
 		
 		if (this.riding) {
