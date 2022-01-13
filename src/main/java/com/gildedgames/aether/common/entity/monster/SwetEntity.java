@@ -393,11 +393,11 @@ public class SwetEntity extends MountableEntity {
                     chosenDegrees = (float)this.swet.getRandom().nextInt(360);
 
                     if (this.jumps == 0) {
-                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.64999999403953552D * (1.0F - this.swet.getWaterDamageScale()), 0));
+                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.64999999403953552D, 0));
                     } else if (this.jumps == 1) {
-                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.74999998807907104D * (1.0F - this.swet.getWaterDamageScale()), 0));
+                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.74999998807907104D, 0));
                     } else if (this.jumps == 2) {
-                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 1.55D * (1.0F - this.swet.getWaterDamageScale()), 0));
+                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 1.55D, 0));
                     } else {
                         this.swet.getPassengers().get(0).stopRiding();
                         this.swet.dissolveSwet();
