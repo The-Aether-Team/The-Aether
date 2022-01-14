@@ -2,8 +2,9 @@ package com.gildedgames.aether.client.event.listeners.abilities;
 
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.client.event.RenderArmEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,13 +15,14 @@ public class AccessoryAbilityClientListener
 {
     @SubscribeEvent
     public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
-        CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.INVISIBILITY_CLOAK.get(), event.getPlayer()).ifPresent((triple) -> event.setCanceled(true));
+        CuriosApi.getCuriosHelper().findFirstCurio(event.getPlayer(), AetherItems.INVISIBILITY_CLOAK.get()).ifPresent((slotResult) -> event.setCanceled(true));
     }
 
     @SubscribeEvent
-    public static void onRenderHand(RenderHandEvent event) {
-        if (Minecraft.getInstance().player != null) {
-            CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.INVISIBILITY_CLOAK.get(), Minecraft.getInstance().player).ifPresent((triple) -> event.setCanceled(true));
+    public static void onRenderArm(RenderArmEvent event) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player != null) {
+            CuriosApi.getCuriosHelper().findFirstCurio(player, AetherItems.INVISIBILITY_CLOAK.get()).ifPresent((slotResult) -> event.setCanceled(true));
         }
     }
 }

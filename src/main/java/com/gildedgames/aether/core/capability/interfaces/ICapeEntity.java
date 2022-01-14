@@ -16,6 +16,8 @@ public interface ICapeEntity extends INBTSerializable<CompoundTag>
 
     void onUpdate();
 
+    void moveCloak();
+
     double getxCloakO();
 
     double getyCloakO();

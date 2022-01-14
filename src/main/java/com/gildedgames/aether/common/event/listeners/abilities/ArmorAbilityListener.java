@@ -21,6 +21,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
@@ -79,7 +80,7 @@ public class ArmorAbilityListener
                     }
                 }
             }
-            CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.PHOENIX_GLOVES.get(), entity).ifPresent((triple) -> breakPhoenixGloves(entity, triple, new ItemStack(AetherItems.OBSIDIAN_GLOVES.get())));
+            CuriosApi.getCuriosHelper().findFirstCurio(entity, AetherItems.PHOENIX_GLOVES.get()).ifPresent((slotResult) -> breakPhoenixGloves(entity, slotResult, new ItemStack(AetherItems.OBSIDIAN_GLOVES.get())));
         }
     }
 
@@ -139,20 +140,20 @@ public class ArmorAbilityListener
         }
     }
 
-    private static void breakPhoenixGloves(LivingEntity entity, ImmutableTriple<String, Integer, ItemStack> triple, ItemStack outcomeStack) {
+    private static void breakPhoenixGloves(LivingEntity entity, SlotResult slotResult, ItemStack outcomeStack) {
         if (entity.level.getGameTime() % 10 == 0) {
-            triple.getRight().hurtAndBreak(1, entity, (p) -> p.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-            if (!CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.PHOENIX_GLOVES.get(), entity).isPresent()) {
-                EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(triple.getRight()), outcomeStack);
-                if (triple.getRight().hasTag()) {
-                    outcomeStack.setTag(triple.getRight().getTag());
+            slotResult.stack().hurtAndBreak(1, entity, (p) -> p.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            if (CuriosApi.getCuriosHelper().findFirstCurio(entity, AetherItems.PHOENIX_GLOVES.get()).isEmpty()) {
+                EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(slotResult.stack()), outcomeStack);
+                if (slotResult.stack().hasTag()) {
+                    outcomeStack.setTag(slotResult.stack().getTag());
                 }
                 CuriosApi.getCuriosHelper().getCuriosHandler(entity).ifPresent(iCuriosItemHandler -> {
                     Map<String, ICurioStacksHandler> curios = iCuriosItemHandler.getCurios();
-                    ICurioStacksHandler inv = curios.get(triple.getLeft());
+                    ICurioStacksHandler inv = curios.get(slotResult.slotContext().identifier());
                     if (inv != null) {
                         IDynamicStackHandler stackHandler = inv.getStacks();
-                        stackHandler.setStackInSlot(triple.getMiddle(), outcomeStack);
+                        stackHandler.setStackInSlot(slotResult.slotContext().index(), outcomeStack);
                     }
                 });
             }

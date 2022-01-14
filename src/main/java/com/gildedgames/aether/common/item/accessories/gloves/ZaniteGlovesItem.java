@@ -11,8 +11,6 @@ import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.UUID;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class ZaniteGlovesItem extends GlovesItem
 {
     public ZaniteGlovesItem(double punchDamage, Properties properties) {

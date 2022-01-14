@@ -16,11 +16,11 @@ public class ElytraLayerMixin<T extends LivingEntity>
 {
     @Inject(at = @At("HEAD"), method = "getElytraTexture", cancellable = true, remap = false)
     private void getElytraTexture(ItemStack stack, T entity, CallbackInfoReturnable<ResourceLocation> cir) {
-        CuriosApi.getCuriosHelper().findEquippedCurio((item) -> item.getItem() instanceof CapeItem, entity).ifPresent((triple) -> {
-            String identifier = triple.getLeft();
-            int id = triple.getMiddle();
+        CuriosApi.getCuriosHelper().findFirstCurio(entity, (item) -> item.getItem() instanceof CapeItem).ifPresent((slotResult) -> {
+            String identifier = slotResult.slotContext().identifier();
+            int id = slotResult.slotContext().index();
             CuriosApi.getCuriosHelper().getCuriosHandler(entity).ifPresent(handler -> handler.getStacksHandler(identifier).ifPresent(stacksHandler -> {
-                CapeItem cape = (CapeItem) triple.getRight().getItem();
+                CapeItem cape = (CapeItem) slotResult.stack().getItem();
                 boolean isCapeVisible = stacksHandler.getRenders().get(id);
                 if (cape.getCapeTexture() != null && isCapeVisible) {
                     cir.setReturnValue(cape.getCapeTexture());

@@ -31,6 +31,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
@@ -197,7 +198,7 @@ public class SwetEntity extends MountableEntity {
     }
 
     public boolean isFriendlyTowardEntity(LivingEntity entity) {
-        Optional<ImmutableTriple<String, Integer, ItemStack>> swetCape = CuriosApi.getCuriosHelper().findEquippedCurio(AetherItems.SWET_CAPE.get(), entity);
+        Optional<SlotResult> swetCape = CuriosApi.getCuriosHelper().findFirstCurio(entity, AetherItems.SWET_CAPE.get());
         return swetCape.isPresent();
     }
 

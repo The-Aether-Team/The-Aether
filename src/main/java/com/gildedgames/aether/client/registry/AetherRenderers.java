@@ -1,6 +1,13 @@
 package com.gildedgames.aether.client.registry;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.renderer.accessory.CapeRenderer;
+import com.gildedgames.aether.client.renderer.accessory.GlovesRenderer;
+import com.gildedgames.aether.client.renderer.accessory.PendantRenderer;
+import com.gildedgames.aether.client.renderer.accessory.RepulsionShieldRenderer;
+import com.gildedgames.aether.client.renderer.accessory.model.CapeModel;
+import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
+import com.gildedgames.aether.client.renderer.accessory.model.PendantModel;
 import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.entity.model.*;
 import com.gildedgames.aether.client.renderer.perks.layer.DeveloperGlowLayer;
@@ -15,10 +22,9 @@ import com.gildedgames.aether.client.renderer.player.layer.GoldenDartLayer;
 import com.gildedgames.aether.client.renderer.player.layer.PoisonDartLayer;
 import com.gildedgames.aether.common.registry.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.CowModel;
-import net.minecraft.client.model.PigModel;
-import net.minecraft.client.model.SlimeModel;
+import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -32,6 +38,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 import java.util.function.Supplier;
 
@@ -140,7 +147,50 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_CLASSIC, OldZephyrModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_TRANSPARENCY, ZephyrModel::createBodyLayer);
 
+        event.registerLayerDefinition(AetherModelLayers.PENDANT, PendantModel::createLayer);
+        event.registerLayerDefinition(AetherModelLayers.GLOVES, () -> GlovesModel.createLayer(new CubeDeformation(0.6F), false));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.6F), true));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM, () -> GlovesModel.createLayer(new CubeDeformation(0.0F), false));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.0F), true));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), false));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), true));
+        event.registerLayerDefinition(AetherModelLayers.CAPE, CapeModel::createLayer);
+        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), false), 64, 64));
+        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), true), 64, 64));
+        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), false), 64, 64));
+        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), true), 64, 64));
+
         event.registerLayerDefinition(AetherModelLayers.PLAYER_HALO, PlayerHaloModel::createLayer);
+    }
+
+    public static void registerCuriosRenderers() {
+        CuriosRendererRegistry.register(AetherItems.IRON_PENDANT.get(), PendantRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.GOLDEN_PENDANT.get(), PendantRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.ZANITE_PENDANT.get(), PendantRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.ICE_PENDANT.get(), PendantRenderer::new);
+
+        CuriosRendererRegistry.register(AetherItems.LEATHER_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.CHAINMAIL_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.IRON_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.GOLDEN_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.DIAMOND_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.NETHERITE_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.ZANITE_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.GRAVITITE_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.NEPTUNE_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.PHOENIX_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.OBSIDIAN_GLOVES.get(), GlovesRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.VALKYRIE_GLOVES.get(), GlovesRenderer::new);
+
+        CuriosRendererRegistry.register(AetherItems.RED_CAPE.get(), CapeRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.BLUE_CAPE.get(), CapeRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.YELLOW_CAPE.get(), CapeRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.WHITE_CAPE.get(), CapeRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.SWET_CAPE.get(), CapeRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.AGILITY_CAPE.get(), CapeRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.VALKYRIE_CAPE.get(), CapeRenderer::new);
+
+        CuriosRendererRegistry.register(AetherItems.REPULSION_SHIELD.get(), RepulsionShieldRenderer::new);
     }
 
     @SubscribeEvent
@@ -150,9 +200,9 @@ public class AetherRenderers {
         for (String type : types) {
             PlayerRenderer playerRenderer = event.getSkin(type);
             if (playerRenderer != null) {
-                playerRenderer.addLayer(new EnchantedDartLayer(renderDispatcher, playerRenderer));
-                playerRenderer.addLayer(new GoldenDartLayer(renderDispatcher, playerRenderer));
-                playerRenderer.addLayer(new PoisonDartLayer(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new EnchantedDartLayer<>(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new GoldenDartLayer<>(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new PoisonDartLayer<>(renderDispatcher, playerRenderer));
                 playerRenderer.addLayer(new PlayerHaloLayer<>(playerRenderer));
                 playerRenderer.addLayer(new DeveloperGlowLayer<>(playerRenderer));
             }

@@ -6,8 +6,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class AgilityCapeItem extends CapeItem
 {
     public AgilityCapeItem(String capeLocation, Properties properties) {
@@ -15,7 +13,8 @@ public class AgilityCapeItem extends CapeItem
     }
 
     @Override
-    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
+    public void curioTick(SlotContext slotContext, ItemStack stack) {
+        LivingEntity livingEntity = slotContext.entity();
         livingEntity.maxUpStep = !livingEntity.isCrouching() ? 1.0F : 0.6F;
     }
 

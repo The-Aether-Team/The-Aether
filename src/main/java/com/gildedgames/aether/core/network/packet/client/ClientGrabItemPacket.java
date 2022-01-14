@@ -10,29 +10,30 @@ import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 
 public class ClientGrabItemPacket extends AetherPacket
 {
-    private final int entityID;
+    private final int playerID;
     private final ItemStack stack;
 
-    public ClientGrabItemPacket(int entityID, ItemStack stack) {
-        this.entityID = entityID;
+    public ClientGrabItemPacket(int playerID, ItemStack stack) {
+        this.playerID = playerID;
         this.stack = stack;
     }
 
     @Override
     public void encode(FriendlyByteBuf buf) {
+        buf.writeInt(this.playerID);
         buf.writeItem(this.stack);
     }
 
     public static ClientGrabItemPacket decode(FriendlyByteBuf buf) {
-        int entityID = buf.readInt();
+        int playerID = buf.readInt();
         ItemStack stack = buf.readItem();
-        return new ClientGrabItemPacket(entityID, stack);
+        return new ClientGrabItemPacket(playerID, stack);
     }
 
     @Override
-    public void execute(Player playerEntity) { //TODO: This doesn't work. Wait for a fix on Curios' end for this behavior being bugged.
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().player.level.getEntity(this.entityID) instanceof LocalPlayer localPlayer) {
-            localPlayer.inventoryMenu.setCarried(this.stack);
+    public void execute(Player playerEntity) {
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().player.level.getEntity(this.playerID) instanceof LocalPlayer localPlayer) {
+            localPlayer.containerMenu.setCarried(this.stack);
         }
     }
 }

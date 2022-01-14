@@ -33,6 +33,19 @@ public class AetherModelLayers
     public static final ModelLayerLocation ZEPHYR_CLASSIC = register("zephyr", "variation");
     public static final ModelLayerLocation ZEPHYR_TRANSPARENCY = register("zephyr", "transparency");
 
+    public static final ModelLayerLocation PENDANT = register("pendant");
+    public static final ModelLayerLocation GLOVES = register("gloves");
+    public static final ModelLayerLocation GLOVES_SLIM = register("gloves_slim");
+    public static final ModelLayerLocation GLOVES_ARM = register("gloves_arm");
+    public static final ModelLayerLocation GLOVES_ARM_SLIM = register("gloves_arm_slim");
+    public static final ModelLayerLocation GLOVES_SLEEVE = register("gloves_sleeve");
+    public static final ModelLayerLocation GLOVES_SLEEVE_SLIM = register("gloves_sleeve_slim");
+    public static final ModelLayerLocation CAPE = register("cape");
+    public static final ModelLayerLocation REPULSION_SHIELD = register("repulsion_shield");
+    public static final ModelLayerLocation REPULSION_SHIELD_SLIM = register("repulsion_shield_slim");
+    public static final ModelLayerLocation REPULSION_SHIELD_ARM = register("repulsion_shield_arm");
+    public static final ModelLayerLocation REPULSION_SHIELD_ARM_SLIM = register("repulsion_shield_arm_slim");
+
     public static final ModelLayerLocation PLAYER_HALO = register("player_halo");
 
     private static ModelLayerLocation register(String name) {

@@ -1,19 +1,17 @@
 package com.gildedgames.aether.common.item.accessories.cape;
 
-import com.gildedgames.aether.common.item.accessories.abilities.ISlowFallAccessory;
-import net.minecraft.world.entity.LivingEntity;
+import com.gildedgames.aether.common.item.accessories.abilities.SlowFallAccessory;
 import net.minecraft.world.item.ItemStack;
+import top.theillusivec4.curios.api.SlotContext;
 
-import net.minecraft.world.item.Item.Properties;
-
-public class ValkyrieCapeItem extends CapeItem implements ISlowFallAccessory
+public class ValkyrieCapeItem extends CapeItem implements SlowFallAccessory
 {
     public ValkyrieCapeItem(Properties properties) {
         super("valkyrie_cape", properties);
     }
 
     @Override
-    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        handleSlowFall(livingEntity);
+    public void curioTick(SlotContext slotContext, ItemStack stack) {
+        handleSlowFall(slotContext.entity());
     }
 }

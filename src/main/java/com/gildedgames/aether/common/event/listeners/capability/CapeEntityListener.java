@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 public class CapeEntityListener
 {
     @SubscribeEvent
-    public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
+    public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
         ICapeEntity.get(event.getEntityLiving()).ifPresent(ICapeEntity::onUpdate);
     }
 }

@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 
-public interface FreezingItem extends FreezingBehavior<ItemStack>
+public interface FreezingAccessory extends FreezingBehavior<ItemStack>
 {
     @Override
     default FreezeEvent onFreeze(LevelAccessor world, BlockPos pos, BlockState fluidState, BlockState blockState, ItemStack source) {

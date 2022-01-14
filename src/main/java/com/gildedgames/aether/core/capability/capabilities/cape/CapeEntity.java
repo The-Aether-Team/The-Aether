@@ -11,15 +11,15 @@ public class CapeEntity implements ICapeEntity
 {
     private final LivingEntity entity;
 
-    public double xCloakO;
-    public double yCloakO;
-    public double zCloakO;
-    public double xCloak;
-    public double yCloak;
-    public double zCloak;
+    private double xCloakO;
+    private double yCloakO;
+    private double zCloakO;
+    private double xCloak;
+    private double yCloak;
+    private double zCloak;
 
-    public float oBob;
-    public float bob;
+    private float oBob;
+    private float bob;
 
     public CapeEntity(LivingEntity entity) {
         this.entity = entity;
@@ -40,11 +40,22 @@ public class CapeEntity implements ICapeEntity
 
     @Override
     public void onUpdate() {
-        this.moveCloak();
+        this.handleBob();
         this.tickPassenger(this.entity);
     }
 
-    private void moveCloak() {
+    private void handleBob() {
+        this.oBob = this.bob;
+        float f;
+        if (this.entity.isOnGround() && !this.entity.isDeadOrDying() && !this.entity.isSwimming()) {
+            f = Math.min(0.1F, (float) this.entity.getDeltaMovement().horizontalDistance());
+        } else {
+            f = 0.0F;
+        }
+        this.bob += (f - this.bob) * 0.4F;
+    }
+
+    public void moveCloak() {
         this.xCloakO = this.xCloak;
         this.yCloakO = this.yCloak;
         this.zCloakO = this.zCloak;
@@ -88,14 +99,14 @@ public class CapeEntity implements ICapeEntity
     }
 
     private void tickPassenger(Entity passenger) {
-        if (!passenger.isRemoved()) {
+        if (!passenger.isRemoved() && passenger.getVehicle() != null) {
             if ((passenger.level.isClientSide && passenger.level instanceof ClientLevel clientLevel && clientLevel.tickingEntities.contains(passenger)) || (passenger.level instanceof ServerLevel serverLevel && serverLevel.entityTickList.contains(passenger))) {
                 this.rideTick();
             }
         }
     }
 
-    public void rideTick() {
+    private void rideTick() {
         if (!this.entity.level.isClientSide || !this.entity.isShiftKeyDown() || !this.entity.isPassenger()) {
             this.oBob = this.bob;
             this.bob = 0.0F;

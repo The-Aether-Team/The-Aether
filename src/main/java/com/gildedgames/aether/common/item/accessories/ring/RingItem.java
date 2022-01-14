@@ -9,8 +9,6 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class RingItem extends AccessoryItem
 {
     protected final Supplier<SoundEvent> equipSound;
