@@ -43,8 +43,8 @@ public class AetherPlayerListener
                 () -> new IllegalStateException("Player " + event.getOriginal().getName().getContents() + " has no AetherPlayer capability!"));
         IAetherPlayer newPlayer = IAetherPlayer.get(event.getPlayer()).orElseThrow(
                 () -> new IllegalStateException("Player " + event.getPlayer().getName().getContents() + " has no AetherPlayer capability!"));
-
         newPlayer.copyFrom(original, event.isWasDeath());
+
         if (!event.isWasDeath()) {
             newPlayer.setSavedHealth(original.getPlayer().getHealth());
         } else {
