@@ -105,6 +105,7 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(BlockTags.LOGS_THAT_BURN).addTags(
                 AetherTags.Blocks.SKYROOT_LOGS,
                 AetherTags.Blocks.GOLDEN_OAK_LOGS);
+        tag(BlockTags.SAND).add(AetherBlocks.QUICKSOIL.get());
         tag(BlockTags.STAIRS).add(
                 AetherBlocks.SKYROOT_STAIRS.get(),
                 AetherBlocks.CARVED_STAIRS.get(),
@@ -145,6 +146,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.PURPLE_FLOWER.get(),
                 AetherBlocks.WHITE_FLOWER.get());
         tag(BlockTags.BEDS).add(AetherBlocks.SKYROOT_BED.get());
+        tag(BlockTags.DIRT).addTag(AetherTags.Blocks.AETHER_DIRT);
         tag(BlockTags.FLOWER_POTS).add(
                 AetherBlocks.POTTED_PURPLE_FLOWER.get(),
                 AetherBlocks.POTTED_WHITE_FLOWER.get(),
@@ -157,6 +159,11 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(BlockTags.VALID_SPAWN).addTag(AetherTags.Blocks.AETHER_DIRT);
         tag(BlockTags.IMPERMEABLE).add(AetherBlocks.QUICKSOIL_GLASS.get());
         tag(BlockTags.BAMBOO_PLANTABLE_ON).addTags(AetherTags.Blocks.AETHER_DIRT);
+        tag(BlockTags.SIGNS).add(
+                AetherBlocks.SKYROOT_SIGN.get(),
+                AetherBlocks.SKYROOT_WALL_SIGN.get());
+        tag(BlockTags.STANDING_SIGNS).add(AetherBlocks.SKYROOT_SIGN.get());
+        tag(BlockTags.WALL_SIGNS).add(AetherBlocks.SKYROOT_WALL_SIGN.get());
         tag(BlockTags.DRAGON_IMMUNE).addTags(
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
@@ -171,11 +178,6 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.ENCHANTED_GRAVITITE.get());
         tag(BlockTags.WALL_POST_OVERRIDE).add(AetherBlocks.AMBROSIUM_TORCH.get());
         tag(BlockTags.FENCE_GATES).add(AetherBlocks.SKYROOT_FENCE_GATE.get());
-        tag(BlockTags.SIGNS).add(
-                AetherBlocks.SKYROOT_SIGN.get(),
-                AetherBlocks.SKYROOT_WALL_SIGN.get());
-        tag(BlockTags.STANDING_SIGNS).add(AetherBlocks.SKYROOT_SIGN.get());
-        tag(BlockTags.WALL_SIGNS).add(AetherBlocks.SKYROOT_WALL_SIGN.get());
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
                 AetherBlocks.HOLYSTONE.get(),
                 AetherBlocks.MOSSY_HOLYSTONE.get(),
@@ -299,14 +301,18 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.AEROGEL_WALL.get());
 
         //forge
-        tag(Tags.Blocks.DIRT).addTag(AetherTags.Blocks.AETHER_DIRT);
         tag(Tags.Blocks.FENCE_GATES_WOODEN).add(AetherBlocks.SKYROOT_FENCE_GATE.get());
         tag(Tags.Blocks.FENCES_WOODEN).add(AetherBlocks.SKYROOT_FENCE.get());
         tag(Tags.Blocks.GLASS_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS.get());
+        tag(Tags.Blocks.ORE_RATES_SINGULAR).add(
+                AetherBlocks.AMBROSIUM_ORE.get(),
+                AetherBlocks.ZANITE_ORE.get(),
+                AetherBlocks.GRAVITITE_ORE.get());
         tag(Tags.Blocks.ORES).add(
                 AetherBlocks.AMBROSIUM_ORE.get(),
                 AetherBlocks.ZANITE_ORE.get(),
                 AetherBlocks.GRAVITITE_ORE.get());
+        tag(Tags.Blocks.SAND_COLORLESS).add(AetherBlocks.QUICKSOIL.get());
         tag(Tags.Blocks.STONE).addTag(AetherTags.Blocks.HOLYSTONE);
         tag(Tags.Blocks.STORAGE_BLOCKS).add(AetherBlocks.ZANITE_BLOCK.get());
     }

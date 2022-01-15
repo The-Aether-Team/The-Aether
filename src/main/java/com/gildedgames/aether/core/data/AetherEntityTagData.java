@@ -64,6 +64,8 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 AetherEntityTypes.ENCHANTED_DART.get(),
                 AetherEntityTypes.LIGHTNING_KNIFE.get(),
                 AetherEntityTypes.HAMMER_PROJECTILE.get());
+        tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(AetherEntityTypes.AERBUNNY.get());
+        tag(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES).add(AetherEntityTypes.FIRE_MINION.get());
     }
 
     @Nonnull
