@@ -27,9 +27,9 @@ public class AetherFluidTagData extends FluidTagsProvider
 
     @Override
     protected void addTags() {
-        tag(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)
-                .add(Fluids.LAVA)
-                .add(Fluids.FLOWING_LAVA);
+        tag(AetherTags.Fluids.FREEZABLE_TO_AEROGEL).add(
+                Fluids.LAVA,
+                Fluids.FLOWING_LAVA);
     }
 
     @Nonnull
