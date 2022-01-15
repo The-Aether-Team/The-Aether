@@ -38,7 +38,6 @@ import java.util.EnumSet;
 import java.util.Optional;
 
 public class SwetEntity extends MountableEntity {
-    public static final EntityDataAccessor<Byte> SWET_TYPE = SynchedEntityData.defineId(SwetEntity.class, EntityDataSerializers.BYTE); // 1 for blue swet, 0 for golden swet
 
     public static final EntityDataAccessor<Boolean> MID_JUMP = SynchedEntityData.defineId(SwetEntity.class, EntityDataSerializers.BOOLEAN);
 
@@ -76,7 +75,6 @@ public class SwetEntity extends MountableEntity {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(SWET_TYPE, (byte) 1);
         this.entityData.define(MID_JUMP, false);
         this.entityData.define(WATER_DAMAGE_SCALE, 0.0F);
         this.entityData.define(DEAD_IN_WATER, false);
@@ -89,12 +87,6 @@ public class SwetEntity extends MountableEntity {
         }
 
         super.onSyncedDataUpdated(pKey);
-    }
-
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-        this.setSwetType((byte) this.random.nextInt(2));
-        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
     @Override
@@ -247,14 +239,6 @@ public class SwetEntity extends MountableEntity {
         }
     }
 
-    private void setSwetType(byte type) {
-        this.entityData.set(SWET_TYPE, type);
-    }
-
-    public byte getSwetType() {
-        return this.entityData.get(SWET_TYPE);
-    }
-
     public void setMidJump(boolean flag) {
         this.entityData.set(MID_JUMP, flag);
     }
@@ -341,7 +325,6 @@ public class SwetEntity extends MountableEntity {
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putByte("SwetType", this.getSwetType());
         compound.putFloat("WaterDamageScale", this.getWaterDamageScale());
         compound.putBoolean("DeadInWater", this.getDeadInWater());
     }
@@ -349,14 +332,8 @@ public class SwetEntity extends MountableEntity {
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setSwetType(compound.getByte("SwetType"));
         this.setWaterDamageScale(compound.getFloat("WaterDamageScale"));
         this.setDeadInWater(compound.getBoolean("DeadInWater"));
-    }
-
-    @Override
-    protected ResourceLocation getDefaultLootTable() {
-        return this.getSwetType() == 1 ? AetherLoot.ENTITIES_SWET_BLUE : AetherLoot.ENTITIES_SWET_GOLD;
     }
 
     @Override
