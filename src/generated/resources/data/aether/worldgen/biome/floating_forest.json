@@ -796,6 +796,18 @@
     ],
     "creature": [
       {
+        "type": "aether:blue_swet",
+        "weight": 15,
+        "minCount": 3,
+        "maxCount": 4
+      },
+      {
+        "type": "aether:golden_swet",
+        "weight": 15,
+        "minCount": 3,
+        "maxCount": 4
+      },
+      {
         "type": "aether:aechor_plant",
         "weight": 29,
         "minCount": 1,
