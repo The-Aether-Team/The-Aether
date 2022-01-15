@@ -19,10 +19,12 @@ public class AetherRankingsListener
 
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event) {
+        event.getOriginal().reviveCaps();
         IAetherRankings original = IAetherRankings.get(event.getOriginal()).orElseThrow(
                 () -> new IllegalStateException("Player " + event.getOriginal().getName().getContents() + " has no AetherRankings capability!"));
         IAetherRankings newPlayer = IAetherRankings.get(event.getPlayer()).orElseThrow(
                 () -> new IllegalStateException("Player " + event.getPlayer().getName().getContents() + " has no AetherRankings capability!"));
         newPlayer.copyFrom(original);
+        event.getOriginal().invalidateCaps();
     }
 }
