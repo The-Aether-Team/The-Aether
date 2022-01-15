@@ -28,7 +28,7 @@ public class DimensionTypeMixin
 
     @Inject(at = @At("HEAD"), method = "timeOfDay", cancellable = true)
     private void timeOfDay(long dayTime, CallbackInfoReturnable<Float> cir) {
-        if (this.effectsLocation.equals(new ResourceLocation(Aether.MODID, "the_aether"))) {
+        if (this.effectsLocation.getNamespace().equals(Aether.MODID)) {
             double time = (double) this.fixedTime.orElse(dayTime);
             double d0 = Mth.frac(time / 72000.0D - 0.25D);
             double d1 = 0.5D - Math.cos(d0 * Math.PI) / 2.0D;
@@ -38,7 +38,7 @@ public class DimensionTypeMixin
 
     @Inject(at = @At("HEAD"), method = "moonPhase", cancellable = true)
     private void moonPhase(long dayTime, CallbackInfoReturnable<Integer> cir) {
-        if (this.effectsLocation.equals(new ResourceLocation(Aether.MODID, "the_aether"))) {
+        if (this.effectsLocation.getNamespace().equals(Aether.MODID)) {
             long time = this.fixedTime.orElse(dayTime);
             Level level = EternalDayListener.world;
             if (level != null) {
