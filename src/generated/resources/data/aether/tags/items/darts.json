@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "aether:golden_dart",
+    "aether:poison_dart",
+    "aether:enchanted_dart"
+  ]
+}

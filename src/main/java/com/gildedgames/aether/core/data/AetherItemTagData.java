@@ -95,6 +95,14 @@ public class AetherItemTagData extends ItemTagsProvider
                 Items.DRAGON_HEAD,
                 Items.NETHER_STAR);
         tag(AetherTags.Items.PIG_DROPS).add(Items.PORKCHOP);
+        tag(AetherTags.Items.DARTS).add(
+                AetherItems.GOLDEN_DART.get(),
+                AetherItems.POISON_DART.get(),
+                AetherItems.ENCHANTED_DART.get());
+        tag(AetherTags.Items.DART_SHOOTERS).add(
+                AetherItems.GOLDEN_DART_SHOOTER.get(),
+                AetherItems.POISON_DART_SHOOTER.get(),
+                AetherItems.ENCHANTED_DART_SHOOTER.get());
         tag(AetherTags.Items.DUNGEON_KEYS).add(
                 AetherItems.BRONZE_DUNGEON_KEY.get(),
                 AetherItems.SILVER_DUNGEON_KEY.get(),
@@ -128,6 +136,7 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(ItemTags.LOGS_THAT_BURN).addTags( //charcoal recipes
                 AetherTags.Items.SKYROOT_LOGS,
                 AetherTags.Items.GOLDEN_OAK_LOGS);
+        tag(ItemTags.SAND).add(AetherBlocks.QUICKSOIL.get().asItem());
         tag(ItemTags.STAIRS).add(
                 AetherBlocks.SKYROOT_STAIRS.get().asItem(),
                 AetherBlocks.CARVED_STAIRS.get().asItem(),
@@ -164,7 +173,6 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherBlocks.CRYSTAL_FRUIT_LEAVES.get().asItem(),
                 AetherBlocks.HOLIDAY_LEAVES.get().asItem(),
                 AetherBlocks.DECORATED_HOLIDAY_LEAVES.get().asItem());
-        tag(ItemTags.SIGNS).add(AetherBlocks.SKYROOT_SIGN.get().asItem());
         tag(ItemTags.SMALL_FLOWERS).add(
                 AetherBlocks.PURPLE_FLOWER.get().asItem(),
                 AetherBlocks.WHITE_FLOWER.get().asItem());
@@ -176,6 +184,7 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(ItemTags.FOX_FOOD).add(
                 AetherItems.BLUE_BERRY.get(),
                 AetherItems.ENCHANTED_BERRY.get());
+        tag(ItemTags.SIGNS).add(AetherBlocks.SKYROOT_SIGN.get().asItem());
         tag(ItemTags.MUSIC_DISCS).add(
                 AetherItems.MUSIC_DISC_AETHER_TUNE.get(),
                 AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(),
@@ -191,13 +200,23 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(Tags.Items.FENCES_WOODEN).add(AetherBlocks.SKYROOT_FENCE.get().asItem());
         tag(Tags.Items.FENCE_GATES).add(AetherBlocks.SKYROOT_FENCE_GATE.get().asItem());
         tag(Tags.Items.FENCES).add(AetherBlocks.SKYROOT_FENCE.get().asItem());
+        tag(Tags.Items.EGGS).add(
+                AetherItems.BLUE_MOA_EGG.get(),
+                AetherItems.WHITE_MOA_EGG.get(),
+                AetherItems.BLACK_MOA_EGG.get(),
+                AetherItems.ORANGE_MOA_EGG.get());
         tag(Tags.Items.GEMS).add(AetherItems.ZANITE_GEMSTONE.get());
         tag(Tags.Items.GLASS_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS.get().asItem());
+        tag(Tags.Items.ORE_RATES_SINGULAR).add(
+                AetherBlocks.AMBROSIUM_ORE.get().asItem(),
+                AetherBlocks.ZANITE_ORE.get().asItem(),
+                AetherBlocks.GRAVITITE_ORE.get().asItem());
         tag(Tags.Items.ORES).add(
                 AetherBlocks.AMBROSIUM_ORE.get().asItem(),
                 AetherBlocks.ZANITE_ORE.get().asItem(),
                 AetherBlocks.GRAVITITE_ORE.get().asItem());
         tag(Tags.Items.RODS_WOODEN).add(AetherItems.SKYROOT_STICK.get());
+        tag(Tags.Items.SAND_COLORLESS).add(AetherBlocks.QUICKSOIL.get().asItem());
         tag(Tags.Items.STORAGE_BLOCKS).add(AetherBlocks.ZANITE_BLOCK.get().asItem());
     }
 
