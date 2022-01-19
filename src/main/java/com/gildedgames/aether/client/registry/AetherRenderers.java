@@ -139,8 +139,8 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.PHYG_SADDLE, () -> PigModel.createBodyLayer(new CubeDeformation(0.5F)));
         event.registerLayerDefinition(AetherModelLayers.SENTRY, SlimeModel::createInnerBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF, SheepuffModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL, SheepuffWoolModel::createFurLayer);
-        event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL_PUFFED, SheepuffWoolModel::createFurLayer);
+        event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL, () -> SheepuffWoolModel.createFurLayer(new CubeDeformation(1.75F), 0.0F));
+        event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL_PUFFED, () -> SheepuffWoolModel.createFurLayer(new CubeDeformation(3.75F), 2.0F));
 //        event.registerLayerDefinition(AetherModelLayers.SLIDER, SliderModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.SUN_SPIRIT, SunSpiritModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SWET, SlimeModel::createInnerBodyLayer);
