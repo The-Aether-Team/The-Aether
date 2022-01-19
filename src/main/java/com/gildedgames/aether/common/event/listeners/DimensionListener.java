@@ -145,8 +145,10 @@ public class DimensionListener
                 if (event.phase == TickEvent.Phase.END) {
                     if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
                         for (Entity entity : world.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
-                            if (entity.getY() <= 0 && !entity.isPassenger()) {
-                                fallFromAether(entity);
+                            if (entity.getY() <= world.getMinBuildHeight() && !entity.isPassenger()) {
+                                if (!(entity instanceof Player player && player.getAbilities().flying)) {
+                                    fallFromAether(entity);
+                                }
                             }
                         }
                     }

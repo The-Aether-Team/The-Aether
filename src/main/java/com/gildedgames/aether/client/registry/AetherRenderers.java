@@ -95,8 +95,9 @@ public class AetherRenderers {
         event.registerEntityRenderer(AetherEntityTypes.ZEPHYR.get(), ZephyrRenderer::new);
 
 //        event.registerEntityRenderer(AetherEntityTypes.SLIDER.get(), SliderRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.SENTRY.get(), SentryRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.MIMIC.get(), MimicRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.SENTRY.get(), SentryRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.FIRE_MINION.get(), FireMinionRenderer::new);
 
         event.registerEntityRenderer(AetherEntityTypes.CLOUD_MINION.get(), CloudMinionRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.COLD_PARACHUTE.get(), ColdParachuteRenderer::new);
