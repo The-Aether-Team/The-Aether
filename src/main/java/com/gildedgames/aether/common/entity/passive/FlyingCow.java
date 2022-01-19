@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.entity.passive;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
@@ -30,21 +31,13 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
-public class FlyingCowEntity extends MountableEntity
+public class FlyingCow extends WingedEntity
 {
-    public float wingFold;
-    public float wingAngle;
-
-    public FlyingCowEntity(EntityType<? extends FlyingCowEntity> type, Level worldIn) {
-        super(type, worldIn);
-    }
-
-    public FlyingCowEntity(Level worldIn) {
-        this(AetherEntityTypes.FLYING_COW.get(), worldIn);
+    public FlyingCow(EntityType<? extends FlyingCow> type, Level level) {
+        super(type, level);
     }
 
     @Override
@@ -59,11 +52,13 @@ public class FlyingCowEntity extends MountableEntity
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
+    @Nonnull
     @Override
-    protected PathNavigation createNavigation(Level world) {
-        return new FallPathNavigator(this, world);
+    protected PathNavigation createNavigation(@Nonnull Level level) {
+        return new FallPathNavigator(this, level);
     }
 
+    @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
@@ -71,33 +66,12 @@ public class FlyingCowEntity extends MountableEntity
     }
 
     @Override
-    public void tick() {
-        super.tick();
-        if (this.getDeltaMovement().y < -0.1 && !this.playerTriedToCrouch()) {
-            this.setDeltaMovement(this.getDeltaMovement().x, -0.1, this.getDeltaMovement().z);
-        }
-    }
-
-    @Override
-    public void travel(Vec3 vector3d) {
-        float f = this.flyingSpeed;
-        if (this.isEffectiveAi() && !this.isOnGround() && this.getPassengers().isEmpty()) {
-            this.flyingSpeed = this.getSpeed() * (0.24F / (0.91F * 0.91F * 0.91F));
-            super.travel(vector3d);
-            this.flyingSpeed = f;
-        } else {
-            this.flyingSpeed = f;
-            super.travel(vector3d);
-        }
-    }
-
-    @Override
     public InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
-        ItemStack itemstack = playerEntity.getItemInHand(hand);
-        if (itemstack.getItem() == Items.BUCKET && !this.isBaby()) {
+        ItemStack itemStack = playerEntity.getItemInHand(hand);
+        if (itemStack.getItem() == Items.BUCKET && !this.isBaby()) {
             playerEntity.playSound(AetherSoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);
-            ItemStack itemstack1 = ItemUtils.createFilledResult(itemstack, playerEntity, Items.MILK_BUCKET.getDefaultInstance());
-            playerEntity.setItemInHand(hand, itemstack1);
+            ItemStack itemStack1 = ItemUtils.createFilledResult(itemStack, playerEntity, Items.MILK_BUCKET.getDefaultInstance());
+            playerEntity.setItemInHand(hand, itemStack1);
             return InteractionResult.sidedSuccess(this.level.isClientSide);
         } else {
             return super.mobInteract(playerEntity, hand);
@@ -112,7 +86,7 @@ public class FlyingCowEntity extends MountableEntity
 
     @Nullable
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
         return AetherSoundEvents.ENTITY_FLYING_COW_HURT.get();
     }
 
@@ -129,7 +103,7 @@ public class FlyingCowEntity extends MountableEntity
     }
 
     @Override
-    protected void playStepSound(BlockPos p_180429_1_, BlockState p_180429_2_) {
+    protected void playStepSound(@Nonnull BlockPos pos, @Nonnull BlockState state) {
         this.playSound(AetherSoundEvents.ENTITY_FLYING_COW_STEP.get(), 0.15F, 1.0F);
     }
 
@@ -155,12 +129,12 @@ public class FlyingCowEntity extends MountableEntity
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        return AetherEntityTypes.FLYING_COW.get().create(world);
+    public AgeableMob getBreedOffspring(@Nonnull ServerLevel level, @Nonnull AgeableMob entity) {
+        return AetherEntityTypes.FLYING_COW.get().create(level);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+    protected float getStandingEyeHeight(@Nonnull Pose pose, @Nonnull EntityDimensions size) {
         return this.isBaby() ? size.height * 0.95F : 1.3F;
     }
 }

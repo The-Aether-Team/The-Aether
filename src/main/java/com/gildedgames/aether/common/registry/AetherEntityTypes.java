@@ -13,9 +13,9 @@ import com.gildedgames.aether.common.entity.miscellaneous.GoldenParachuteEntity;
 import com.gildedgames.aether.common.entity.monster.dungeon.FireMinionEntity;
 import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;
 import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
-import com.gildedgames.aether.common.entity.passive.FlyingCowEntity;
+import com.gildedgames.aether.common.entity.passive.FlyingCow;
 import com.gildedgames.aether.common.entity.passive.MoaEntity;
-import com.gildedgames.aether.common.entity.passive.PhygEntity;
+import com.gildedgames.aether.common.entity.passive.Phyg;
 import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
 import com.gildedgames.aether.common.entity.projectile.ZephyrSnowballEntity;
@@ -43,11 +43,11 @@ public class AetherEntityTypes {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, Aether.MODID);
 
     // Passive Mobs
-    public static final RegistryObject<EntityType<PhygEntity>> PHYG = ENTITIES.register("phyg",
-            () -> EntityType.Builder.<PhygEntity>of(PhygEntity::new, MobCategory.CREATURE).sized(0.9F, 0.9F).clientTrackingRange(10).build("phyg"));
+    public static final RegistryObject<EntityType<Phyg>> PHYG = ENTITIES.register("phyg",
+            () -> EntityType.Builder.<Phyg>of(Phyg::new, MobCategory.CREATURE).sized(0.9F, 0.9F).clientTrackingRange(10).build("phyg"));
 
-    public static final RegistryObject<EntityType<FlyingCowEntity>> FLYING_COW = ENTITIES.register("flying_cow",
-            () -> EntityType.Builder.<FlyingCowEntity>of(FlyingCowEntity::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build("flying_cow"));
+    public static final RegistryObject<EntityType<FlyingCow>> FLYING_COW = ENTITIES.register("flying_cow",
+            () -> EntityType.Builder.<FlyingCow>of(FlyingCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build("flying_cow"));
 
     public static final RegistryObject<EntityType<SheepuffEntity>> SHEEPUFF = ENTITIES.register("sheepuff",
             () -> EntityType.Builder.<SheepuffEntity>of(SheepuffEntity::new, MobCategory.CREATURE).sized(0.9F, 1.3F).clientTrackingRange(10).build("sheepuff"));
@@ -155,8 +155,8 @@ public class AetherEntityTypes {
 
     @SubscribeEvent
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
-        event.put(AetherEntityTypes.PHYG.get(), PhygEntity.createMobAttributes().build());
-        event.put(AetherEntityTypes.FLYING_COW.get(), FlyingCowEntity.createMobAttributes().build());
+        event.put(AetherEntityTypes.PHYG.get(), Phyg.createMobAttributes().build());
+        event.put(AetherEntityTypes.FLYING_COW.get(), FlyingCow.createMobAttributes().build());
         event.put(AetherEntityTypes.SHEEPUFF.get(), SheepuffEntity.createMobAttributes().build());
         event.put(AetherEntityTypes.MOA.get(), MoaEntity.createMobAttributes().build());
         event.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.createMobAttributes().build());

@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.entity.passive;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
@@ -34,17 +35,10 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 
-public class PhygEntity extends MountableEntity
+public class Phyg extends WingedEntity
 {
-    public float wingFold;
-    public float wingAngle;
-
-    public PhygEntity(EntityType<? extends PhygEntity> type, Level worldIn) {
+    public Phyg(EntityType<? extends Phyg> type, Level worldIn) {
         super(type, worldIn);
-    }
-
-    public PhygEntity(Level worldIn) {
-        this(AetherEntityTypes.PHYG.get(), worldIn);
     }
 
     @Override
@@ -59,36 +53,17 @@ public class PhygEntity extends MountableEntity
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
     }
 
+    @Nonnull
     @Override
-    protected PathNavigation createNavigation(Level world) {
-        return new FallPathNavigator(this, world);
+    protected PathNavigation createNavigation(@Nonnull Level level) {
+        return new FallPathNavigator(this, level);
     }
 
+    @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D);
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        if (this.getDeltaMovement().y < -0.1 && !this.playerTriedToCrouch()) {
-            this.setDeltaMovement(this.getDeltaMovement().x, -0.1, this.getDeltaMovement().z);
-        }
-    }
-
-    @Override
-    public void travel(Vec3 vector3d) {
-        float f = this.flyingSpeed;
-        if (this.isEffectiveAi() && !this.isOnGround() && this.getPassengers().isEmpty()) {
-            this.flyingSpeed = this.getSpeed() * (0.24F / (0.91F * 0.91F * 0.91F));
-            super.travel(vector3d);
-            this.flyingSpeed = f;
-        } else {
-            this.flyingSpeed = f;
-            super.travel(vector3d);
-        }
     }
 
     @Nullable
@@ -99,7 +74,7 @@ public class PhygEntity extends MountableEntity
 
     @Nullable
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
         return AetherSoundEvents.ENTITY_PHYG_HURT.get();
     }
 
@@ -116,7 +91,7 @@ public class PhygEntity extends MountableEntity
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {
+    protected void playStepSound(@Nonnull BlockPos pos, @Nonnull BlockState state) {
         this.playSound(AetherSoundEvents.ENTITY_PHYG_STEP.get(), 0.15F, 1.0F);
     }
 
@@ -132,10 +107,11 @@ public class PhygEntity extends MountableEntity
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        return AetherEntityTypes.PHYG.get().create(world);
+    public AgeableMob getBreedOffspring(@Nonnull ServerLevel level, @Nonnull AgeableMob entity) {
+        return AetherEntityTypes.PHYG.get().create(level);
     }
 
+    @Nonnull
     @OnlyIn(Dist.CLIENT)
     public Vec3 getLeashOffset() {
         return new Vec3(0.0D, 0.6F * this.getEyeHeight(), this.getBbWidth() * 0.4F);
