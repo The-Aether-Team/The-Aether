@@ -20,6 +20,7 @@ public class AetherModelLayers
     public static final ModelLayerLocation MOA_SADDLE = register("moa", "saddle");
     public static final ModelLayerLocation PHYG = register("phyg");
     public static final ModelLayerLocation PHYG_WINGS = register("phyg", "wings");
+    public static final ModelLayerLocation PHYG_SADDLE = register("phyg", "saddle");
     public static final ModelLayerLocation SENTRY = register("sentry");
     public static final ModelLayerLocation SHEEPUFF = register("sheepuff");
     public static final ModelLayerLocation SHEEPUFF_WOOL = register("sheepuff", "outer");

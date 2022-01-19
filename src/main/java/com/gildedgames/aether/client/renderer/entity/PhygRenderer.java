@@ -13,19 +13,22 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 @OnlyIn(Dist.CLIENT)
 public class PhygRenderer extends MobRenderer<PhygEntity, PigModel<PhygEntity>>
 {
 	private static final ResourceLocation PHYG_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/phyg/phyg.png");
 
 	public PhygRenderer(EntityRendererProvider.Context context) {
-		super(context, new PigModel(context.bakeLayer(AetherModelLayers.PHYG)), 0.7F);
+		super(context, new PigModel<>(context.bakeLayer(AetherModelLayers.PHYG)), 0.7F);
 		this.addLayer(new PhygWingsLayer(this, context.getModelSet()));
-		this.addLayer(new SaddleLayer(this, new PigModel(context.bakeLayer(AetherModelLayers.PHYG)), new ResourceLocation("textures/entity/pig/pig_saddle.png")));
+		this.addLayer(new SaddleLayer<>(this, new PigModel<>(context.bakeLayer(AetherModelLayers.PHYG_SADDLE)), new ResourceLocation("textures/entity/pig/pig_saddle.png")));
 	}
 
+	@Nonnull
 	@Override
-	public ResourceLocation getTextureLocation(PhygEntity entity) {
+	public ResourceLocation getTextureLocation(@Nonnull PhygEntity entity) {
 		return PHYG_TEXTURE;
 	}
 }

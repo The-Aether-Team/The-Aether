@@ -135,6 +135,7 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.MOA_SADDLE, MoaModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.PHYG, () -> PigModel.createBodyLayer(CubeDeformation.NONE));
         event.registerLayerDefinition(AetherModelLayers.PHYG_WINGS, PhygWingModel::createMainLayer);
+        event.registerLayerDefinition(AetherModelLayers.PHYG_SADDLE, () -> PigModel.createBodyLayer(new CubeDeformation(0.5F)));
         event.registerLayerDefinition(AetherModelLayers.SENTRY, SlimeModel::createInnerBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF, SheepuffModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL, SheepuffWoolModel::createFurLayer);
