@@ -15,6 +15,7 @@ public class AetherModelLayers
     public static final ModelLayerLocation COCKATRICE = register("cockatrice");
     public static final ModelLayerLocation FLYING_COW = register("flying_cow");
     public static final ModelLayerLocation FLYING_COW_WINGS = register("flying_cow", "wings");
+    public static final ModelLayerLocation FLYING_COW_SADDLE = register("flying_cow", "saddle");
     public static final ModelLayerLocation MIMIC = register("mimic");
     public static final ModelLayerLocation MOA = register("moa");
     public static final ModelLayerLocation MOA_SADDLE = register("moa", "saddle");

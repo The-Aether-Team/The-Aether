@@ -130,6 +130,7 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.COCKATRICE, CockatriceModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.FLYING_COW, CowModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.FLYING_COW_WINGS, FlyingCowWingModel::createMainLayer);
+        event.registerLayerDefinition(AetherModelLayers.FLYING_COW_SADDLE, CowModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.MIMIC, MimicModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.MOA, MoaModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.MOA_SADDLE, MoaModel::createBodyLayer);

@@ -13,6 +13,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 @OnlyIn(Dist.CLIENT)
 public class FlyingCowRenderer extends MobRenderer<FlyingCowEntity, CowModel<FlyingCowEntity>>
 {
@@ -21,11 +23,12 @@ public class FlyingCowRenderer extends MobRenderer<FlyingCowEntity, CowModel<Fly
     public FlyingCowRenderer(EntityRendererProvider.Context renderer) {
         super(renderer, new CowModel<>(renderer.bakeLayer(AetherModelLayers.FLYING_COW)), 0.7F);
         this.addLayer(new FlyingCowWingsLayer(this, renderer.getModelSet()));
-        this.addLayer(new SaddleLayer<>(this, new CowModel<>(renderer.bakeLayer(AetherModelLayers.FLYING_COW)), new ResourceLocation(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow_saddle.png")));
+        this.addLayer(new SaddleLayer<>(this, new CowModel<>(renderer.bakeLayer(AetherModelLayers.FLYING_COW_SADDLE)), new ResourceLocation(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow_saddle.png")));
     }
 
+    @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(FlyingCowEntity entity) {
+    public ResourceLocation getTextureLocation(@Nonnull FlyingCowEntity entity) {
         return FLYING_COW_TEXTURE;
     }
 }
