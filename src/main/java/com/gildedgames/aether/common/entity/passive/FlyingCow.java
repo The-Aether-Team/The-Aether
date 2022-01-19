@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.FallingRandomWalkingGoal;
-import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 
@@ -24,7 +23,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.ItemUtils;
@@ -50,12 +48,6 @@ public class FlyingCow extends WingedEntity
         this.goalSelector.addGoal(5, new FallingRandomWalkingGoal(this, 1.0));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
-    }
-
-    @Nonnull
-    @Override
-    protected PathNavigation createNavigation(@Nonnull Level level) {
-        return new FallPathNavigator(this, level);
     }
 
     @Nonnull
@@ -115,16 +107,6 @@ public class FlyingCow extends WingedEntity
     @Override
     public float getSteeringSpeed() {
         return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.75F;
-    }
-
-    @Override
-    protected int calculateFallDamage(float distance, float damageMultiplier) {
-        return 0;
-    }
-
-    @Override
-    public int getMaxFallDistance() {
-        return this.isOnGround() ? super.getMaxFallDistance() : 14;
     }
 
     @Nullable

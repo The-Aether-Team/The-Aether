@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.FallingRandomWalkingGoal;
-import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 
@@ -22,7 +21,6 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
@@ -51,12 +49,6 @@ public class Phyg extends WingedEntity
         this.goalSelector.addGoal(6, new FallingRandomWalkingGoal(this, 1.0));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-    }
-
-    @Nonnull
-    @Override
-    protected PathNavigation createNavigation(@Nonnull Level level) {
-        return new FallPathNavigator(this, level);
     }
 
     @Nonnull
@@ -93,16 +85,6 @@ public class Phyg extends WingedEntity
     @Override
     protected void playStepSound(@Nonnull BlockPos pos, @Nonnull BlockState state) {
         this.playSound(AetherSoundEvents.ENTITY_PHYG_STEP.get(), 0.15F, 1.0F);
-    }
-
-    @Override
-    protected int calculateFallDamage(float distance, float damageMultiplier) {
-        return 0;
-    }
-
-    @Override
-    public int getMaxFallDistance() {
-        return this.isOnGround() ? super.getMaxFallDistance() : 14;
     }
 
     @Nullable
