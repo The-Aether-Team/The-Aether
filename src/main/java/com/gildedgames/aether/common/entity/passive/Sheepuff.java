@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.EatAetherGrassGoal;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
@@ -190,7 +189,6 @@ public class Sheepuff extends AetherAnimalEntity implements IForgeShearable
 
     @Override
     public void tick() {
-        Aether.LOGGER.info(this.amountEaten);
         super.tick();
         if (this.getPuffed()) {
             this.fallDistance = 0.0F;
