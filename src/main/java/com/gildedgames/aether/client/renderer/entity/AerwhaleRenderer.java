@@ -71,7 +71,9 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
     public void render(AerwhaleEntity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
     	super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
     }
-    
+
+    //TODO: See if a multiple models class can be made through abstraction which can be used for both the Zephyr and Aerwhale renderers.
+
     @Override	//TODO: Configurable old aerwhale model
     public BaseAerwhaleModel getModel() {
     	return regularModel;
