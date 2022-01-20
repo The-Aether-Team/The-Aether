@@ -6,9 +6,10 @@ import javax.annotation.Nullable;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.common.registry.AetherItems;
 
+import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -44,7 +45,7 @@ public class Phyg extends WingedEntity
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(3, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2, Ingredient.of(AetherItems.BLUE_BERRY.get()), false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2, Ingredient.of(AetherTags.Items.PHYG_TEMPTATION_ITEMS), false));
         this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1));
         this.goalSelector.addGoal(6, new FallingRandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
@@ -56,6 +57,11 @@ public class Phyg extends WingedEntity
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D);
+    }
+
+    @Override
+    public boolean isFood(ItemStack stack) {
+        return stack.is(AetherTags.Items.PHYG_TEMPTATION_ITEMS);
     }
 
     @Nullable

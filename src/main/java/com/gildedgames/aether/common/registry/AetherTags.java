@@ -24,6 +24,7 @@ public class AetherTags
 		public static final Tag.Named<Block> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final Tag.Named<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final Tag.Named<Block> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final Tag.Named<Block> AETHER_ANIMALS_SPAWNABLE_ON = tag("aether_animals_spawnable_on");
 
 		private static Tag.Named<Block> tag(String name) {
 			return BlockTags.bind(new ResourceLocation(Aether.MODID, name).toString());
@@ -62,6 +63,10 @@ public class AetherTags
 		public static final Tag.Named<Item> DUNGEON_KEYS = tag("dungeon_keys");
 		public static final Tag.Named<Item> ACCEPTED_MUSIC_DISCS = tag("accepted_music_discs");
 		public static final Tag.Named<Item> SAVE_NBT_IN_RECIPE = tag("save_nbt_in_recipe");
+
+		public static final Tag.Named<Item> PHYG_TEMPTATION_ITEMS = tag("phyg_temptation_items");
+		public static final Tag.Named<Item> FLYING_COW_TEMPTATION_ITEMS = tag("flying_cow_temptation_items");
+		public static final Tag.Named<Item> SHEEPUFF_TEMPTATION_ITEMS = tag("sheepuff_temptation_items");
 
 		private static Tag.Named<Item> tag(String name) {
 			return ItemTags.bind(new ResourceLocation(Aether.MODID, name).toString());
