@@ -4,7 +4,7 @@ import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.ColdParachuteEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.GoldenParachuteEntity;
-import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;
+import com.gildedgames.aether.common.entity.passive.Aerbunny;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.AetherConfig;
@@ -341,7 +341,7 @@ public class AetherPlayer implements IAetherPlayer
 
 	//TODO: Can we just kill the aerbunny, save all its data, and respawn it when the player rejoins? Or is that too much to track.
 	private void remountAerbunny() {
-		if (this.getAerbunny() != null && this.getPlayer().level instanceof ServerLevel serverLevel && serverLevel.getEntity(this.getAerbunny()) instanceof AerbunnyEntity aerbunny) {
+		if (this.getAerbunny() != null && this.getPlayer().level instanceof ServerLevel serverLevel && serverLevel.getEntity(this.getAerbunny()) instanceof Aerbunny aerbunny) {
 			aerbunny.startRiding(this.getPlayer());
 			if (this.getPlayer() instanceof ServerPlayer serverPlayer) {
 				AetherPacketHandler.sendToPlayer(new RemountAerbunnyPacket(this.getPlayer().getId(), aerbunny.getId()), serverPlayer);
@@ -350,7 +350,7 @@ public class AetherPlayer implements IAetherPlayer
 	}
 
 	private void checkToRemoveAerbunny() {
-		if (this.getAerbunny() != null && this.getPlayer().level instanceof ServerLevel serverLevel && serverLevel.getEntity(this.getAerbunny()) instanceof AerbunnyEntity aerbunny) {
+		if (this.getAerbunny() != null && this.getPlayer().level instanceof ServerLevel serverLevel && serverLevel.getEntity(this.getAerbunny()) instanceof Aerbunny aerbunny) {
 			if (aerbunny.getVehicle() == null) {
 				this.aerbunnyCheck++;
 			} else {

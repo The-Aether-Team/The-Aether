@@ -2,11 +2,15 @@ package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
+import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -22,6 +26,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
@@ -33,16 +38,12 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 
-public class AerbunnyEntity extends AetherAnimalEntity
+public class Aerbunny extends AetherAnimalEntity
 {
-    public static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(AerbunnyEntity.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
 
-    public AerbunnyEntity(EntityType<? extends Animal> type, Level worldIn) {
-        super(type, worldIn);
-    }
-
-    public AerbunnyEntity(Level worldIn) {
-        this(AetherEntityTypes.AERBUNNY.get(), worldIn);
+    public Aerbunny(EntityType<? extends Animal> type, Level level) {
+        super(type, level);
     }
 
     @Override
@@ -50,12 +51,19 @@ public class AerbunnyEntity extends AetherAnimalEntity
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(AetherItems.BLUE_BERRY.get()), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new HopGoal(this));
         this.goalSelector.addGoal(6, new FallingRandomStrollGoal(this, 2.0D, 6));
     }
 
+    @Nonnull
+    @Override
+    protected PathNavigation createNavigation(@Nonnull Level level) {
+        return new FallPathNavigator(this, level);
+    }
+
+    @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
@@ -70,23 +78,19 @@ public class AerbunnyEntity extends AetherAnimalEntity
     @Override
     public void tick() {
         super.tick();
+        if (this.getDeltaMovement().y < -0.1D) {
+            this.setDeltaMovement(getDeltaMovement().x, -0.1D, getDeltaMovement().z);
+        }
         this.setPuffiness(this.getPuffiness() - 1);
         if (this.getPuffiness() < 0) {
             this.setPuffiness(0);
         }
-        if (this.getVehicle() instanceof Player) {
-            Player player = (Player) this.getVehicle();
-            this.setYRot(player.getYRot());
-            this.yRotO = this.getYRot();
-            this.setXRot(player.getXRot() * 0.5F);
-            this.setRot(this.getYRot(), this.getXRot());
-            this.yBodyRot = this.getYRot();
-            this.yHeadRot = this.yBodyRot;
+        if (this.getVehicle() instanceof Player player) {
+            EntityUtil.copyRotations(this, player);
 
             player.fallDistance = 0.0F;
-
             if (!player.isOnGround() && !player.isFallFlying()) {
-                if (!player.getAbilities().flying) {
+                if (!player.getAbilities().flying && !player.isInWater() && !player.isInLava()) {
                     player.setDeltaMovement(player.getDeltaMovement().add(0.0D, 0.05D, 0.0D));
                 }
                 IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
@@ -112,16 +116,9 @@ public class AerbunnyEntity extends AetherAnimalEntity
         }
     }
 
+    @Nonnull
     @Override
-    public void aiStep() {
-        if (this.getDeltaMovement().y < -0.1D) {
-            this.setDeltaMovement(getDeltaMovement().x, -0.1D, getDeltaMovement().z);
-        }
-        super.aiStep();
-    }
-
-    @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
         if (player.isShiftKeyDown()) {
             return this.ridePlayer(player);
         } else {
@@ -162,8 +159,7 @@ public class AerbunnyEntity extends AetherAnimalEntity
     }
 
     private void spawnExplosionParticle() {
-        if (this.level instanceof ServerLevel) {
-            ServerLevel world = (ServerLevel) this.level;
+        if (this.level instanceof ServerLevel level) {
             for (int i = 0; i < 5; i++) {
                 double d0 = this.random.nextGaussian() * 0.02D;
                 double d1 = this.random.nextGaussian() * 0.02D;
@@ -172,7 +168,7 @@ public class AerbunnyEntity extends AetherAnimalEntity
                 double x = this.getX() + (double) (this.random.nextFloat() * this.getBbWidth() * 2.0F) - (this.getBbWidth() - d0 * d3);
                 double y = this.getY() + (double) (this.random.nextFloat() * this.getBbHeight()) - d1 * d3;
                 double z = this.getZ() + (double) (this.random.nextFloat() * this.getBbWidth() * 2.0F) - (this.getBbWidth() - d2 * d3);
-                world.sendParticles(ParticleTypes.POOF, x, y, z, 1, d0, d1, d2, 0.0F);
+                level.sendParticles(ParticleTypes.POOF, x, y, z, 1, d0, d1, d2, 0.0F);
             }
         }
     }
@@ -186,7 +182,12 @@ public class AerbunnyEntity extends AetherAnimalEntity
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
+    public boolean isFood(ItemStack stack) {
+        return stack.is(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS);
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(@Nonnull DamageSource source) {
         return AetherSoundEvents.ENTITY_AERBUNNY_HURT.get();
     }
 
@@ -206,7 +207,7 @@ public class AerbunnyEntity extends AetherAnimalEntity
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
+    public boolean isInvulnerableTo(@Nonnull DamageSource damageSource) {
         return (this.getVehicle() != null && this.getVehicle() == damageSource.getEntity()) || super.isInvulnerableTo(damageSource);
     }
 
@@ -222,15 +223,15 @@ public class AerbunnyEntity extends AetherAnimalEntity
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel p_241840_1_, AgeableMob p_241840_2_) {
-        return AetherEntityTypes.AERBUNNY.get().create(this.level);
+    public AgeableMob getBreedOffspring(@Nonnull ServerLevel level, @Nonnull AgeableMob entity) {
+        return AetherEntityTypes.AERBUNNY.get().create(level);
     }
 
     public static class HopGoal extends Goal
     {
-        private final AerbunnyEntity aerbunny;
+        private final Aerbunny aerbunny;
 
-        public HopGoal(AerbunnyEntity entity) {
+        public HopGoal(Aerbunny entity) {
             this.aerbunny = entity;
             setFlags(EnumSet.of(Flag.JUMP));
         }

@@ -127,6 +127,7 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.PHYG_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
         tag(AetherTags.Items.FLYING_COW_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
         tag(AetherTags.Items.SHEEPUFF_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
+        tag(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
 
         //vanilla
         tag(ItemTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get().asItem()).addTag(AetherTags.Items.DUNGEON_BLOCKS);

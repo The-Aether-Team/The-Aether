@@ -10,6 +10,7 @@ import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.api.registers.MoaType;
 import com.gildedgames.aether.core.registry.AetherMoaTypes;
+import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -155,13 +156,8 @@ public class MoaEntity extends MountableEntity
 			super.travel(vector3d);
 		} else {
 			if (this.isAlive()) {
-				if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player entity) {
-					this.setYRot(entity.getYRot());
-					this.yRotO = this.getYRot();
-					this.setXRot(entity.getXRot() * 0.5F);
-					this.setRot(this.getYRot(), this.getXRot());
-					this.yBodyRot = this.getYRot();
-					this.yHeadRot = this.yBodyRot;
+				if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player player) {
+					EntityUtil.copyRotations(this, player);
 					if (this.isControlledByLocalInstance()) {
 						this.travelWithInput(new Vec3(0, vector3d.y(), 0));
 						this.lerpSteps = 0;

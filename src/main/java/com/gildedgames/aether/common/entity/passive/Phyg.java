@@ -36,8 +36,8 @@ import net.minecraft.world.entity.Mob;
 
 public class Phyg extends WingedEntity
 {
-    public Phyg(EntityType<? extends Phyg> type, Level worldIn) {
-        super(type, worldIn);
+    public Phyg(EntityType<? extends Phyg> type, Level level) {
+        super(type, level);
     }
 
     @Override

@@ -103,11 +103,11 @@ public class Sheepuff extends AetherAnimalEntity implements IForgeShearable
         return COLOR_ARRAY_BY_COLOR.get(p_175513_0_);
     }
 
-    public Sheepuff(EntityType<? extends Sheepuff> type, Level worldIn) {
-        super(type, worldIn);
+    public Sheepuff(EntityType<? extends Sheepuff> type, Level level) {
+        super(type, level);
         this.moveControl = new FallingMovementController(this);
-        this.fallNavigation = new FallPathNavigator(this, worldIn);
-        this.groundNavigation = new GroundPathNavigation(this, worldIn);
+        this.fallNavigation = new FallPathNavigator(this, level);
+        this.groundNavigation = new GroundPathNavigation(this, level);
     }
 
     @Override

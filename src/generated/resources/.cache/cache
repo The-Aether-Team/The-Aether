@@ -1249,6 +1249,7 @@ eb63088b6df7e0f3d78ff3e43d59e289e6677d27 data/aether/tags/entity_types/no_skyroo
 950d8653641729fae48d516598df550671f5bffb data/aether/tags/entity_types/pigs.json
 6d86d02a3f9975defeaf27b7d67dcb5a5d06348f data/aether/tags/fluids/freezable_to_aerogel.json
 43e63f3bd6394d9fe41429c3f74604766f9d56dd data/aether/tags/items/accepted_music_discs.json
+af0c2eedb134c30d4318a59ce358fa88b7a8cf5a data/aether/tags/items/aerbunny_temptation_items.json
 8d6c9296865148dd7bd9a1a7bd93162b92f9573c data/aether/tags/items/aerclouds.json
 36c4998736ba1b2f6f0dd59363b4fd9f1977f8cf data/aether/tags/items/aerogel.json
 c6ee5014148eca27283bde75333809c4f2d13051 data/aether/tags/items/aether_dirt.json

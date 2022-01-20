@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
-import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;
+import com.gildedgames.aether.common.entity.passive.Aerbunny;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -9,11 +9,10 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
-public class AerbunnyModel extends EntityModel<AerbunnyEntity>
+import javax.annotation.Nonnull;
+
+public class AerbunnyModel extends EntityModel<Aerbunny>
 {
     public ModelPart head;
     public ModelPart rightEar;
@@ -29,14 +28,14 @@ public class AerbunnyModel extends EntityModel<AerbunnyEntity>
     public ModelPart leftBackLeg;
     public float puffiness;
 
-    public AerbunnyModel(ModelPart model) {
-        this.head = model.getChild("head");
+    public AerbunnyModel(ModelPart root) {
+        this.head = root.getChild("head");
         this.rightEar = head.getChild("right_ear");
         this.leftEar = head.getChild("left_ear");
         this.rightWhiskers = head.getChild("right_whiskers");
         this.leftWhiskers = head.getChild("left_whiskers");
-        this.body = model.getChild("body");
-        this.puff = model.getChild("puff");
+        this.body = root.getChild("body");
+        this.puff = root.getChild("puff");
         this.tail = body.getChild("tail");
         this.rightFrontLeg = body.getChild("right_front_leg");
         this.leftFrontLeg = body.getChild("left_front_leg");
@@ -63,13 +62,13 @@ public class AerbunnyModel extends EntityModel<AerbunnyEntity>
     }
 
     @Override
-    public void prepareMobModel(AerbunnyEntity aerbunny, float p_212843_2_, float p_212843_3_, float p_212843_4_) {
-        super.prepareMobModel(aerbunny, p_212843_2_, p_212843_3_, p_212843_4_);
+    public void prepareMobModel(@Nonnull Aerbunny aerbunny, float limbSwing, float limbSwingAmount, float partialTicks) {
+        super.prepareMobModel(aerbunny, limbSwing, limbSwingAmount, partialTicks);
         this.puffiness = (float) aerbunny.getPuffiness() / 10.0F;
     }
 
     @Override
-    public void setupAnim(AerbunnyEntity aerbunny, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@Nonnull Aerbunny aerbunny, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.xRot = headPitch * ((float) Math.PI / 180F);
         this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
         this.body.xRot = (float) Math.PI / 2F;
@@ -81,14 +80,14 @@ public class AerbunnyModel extends EntityModel<AerbunnyEntity>
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.head.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.body.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        matrixStack.pushPose();
+    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        this.head.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.body.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        poseStack.pushPose();
         float a = 1.0F + this.puffiness * 0.5F;
-        matrixStack.translate(0.0F, 1.0F, 0.0F);
-        matrixStack.scale(a, a, a);
-        this.puff.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        matrixStack.popPose();
+        poseStack.translate(0.0F, 1.0F, 0.0F);
+        poseStack.scale(a, a, a);
+        this.puff.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        poseStack.popPose();
     }
 }

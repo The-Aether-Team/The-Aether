@@ -15,13 +15,13 @@ import net.minecraft.world.level.Level;
 
 public abstract class AetherAnimalEntity extends Animal
 {
-	protected AetherAnimalEntity(EntityType<? extends Animal> type, Level worldIn) {
-		super(type, worldIn);
+	protected AetherAnimalEntity(EntityType<? extends Animal> type, Level level) {
+		super(type, level);
 	}
 	
 	@Override
-	public float getWalkTargetValue(BlockPos pos, LevelReader worldIn) {
-		return worldIn.getBlockState(pos.below()).is(AetherBlocks.AETHER_GRASS_BLOCK.get()) ? 10.0F : worldIn.getMaxLocalRawBrightness(pos) - 0.5F;
+	public float getWalkTargetValue(BlockPos pos, LevelReader level) {
+		return level.getBlockState(pos.below()).is(AetherBlocks.AETHER_GRASS_BLOCK.get()) ? 10.0F : level.getMaxLocalRawBrightness(pos) - 0.5F;
 	}
 
 	public static boolean canAetherAnimalSpawn(EntityType<? extends AetherAnimalEntity> animal, LevelAccessor worldIn, MobSpawnType reason, BlockPos pos, Random random) {

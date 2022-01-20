@@ -4,19 +4,14 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.monster.*;
 import com.gildedgames.aether.common.entity.monster.dungeon.Mimic;
 import com.gildedgames.aether.common.entity.monster.dungeon.SentryEntity;
-import com.gildedgames.aether.common.entity.passive.AetherAnimalEntity;
+import com.gildedgames.aether.common.entity.passive.*;
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.ColdParachuteEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.GoldenParachuteEntity;
 import com.gildedgames.aether.common.entity.monster.dungeon.FireMinionEntity;
-import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;
-import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
-import com.gildedgames.aether.common.entity.passive.FlyingCow;
-import com.gildedgames.aether.common.entity.passive.MoaEntity;
-import com.gildedgames.aether.common.entity.passive.Phyg;
-import com.gildedgames.aether.common.entity.passive.Sheepuff;
+import com.gildedgames.aether.common.entity.passive.Aerbunny;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
 import com.gildedgames.aether.common.entity.projectile.ZephyrSnowballEntity;
 import com.gildedgames.aether.common.entity.projectile.crystal.CloudCrystalEntity;
@@ -58,8 +53,8 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<AerwhaleEntity>> AERWHALE = ENTITIES.register("aerwhale",
             () -> EntityType.Builder.<AerwhaleEntity>of(AerwhaleEntity::new, MobCategory.CREATURE).sized(3.0F, 3.0F).fireImmune().build("aerwhale"));
 
-    public static final RegistryObject<EntityType<AerbunnyEntity>> AERBUNNY = ENTITIES.register("aerbunny",
-            () -> EntityType.Builder.<AerbunnyEntity>of(AerbunnyEntity::new, MobCategory.CREATURE).sized(0.4F, 0.4F).build("aerbunny"));
+    public static final RegistryObject<EntityType<Aerbunny>> AERBUNNY = ENTITIES.register("aerbunny",
+            () -> EntityType.Builder.<Aerbunny>of(Aerbunny::new, MobCategory.CREATURE).sized(0.4F, 0.4F).build("aerbunny"));
 
     // Hostile Mobs
     public static final RegistryObject<EntityType<SwetEntity>> SWET = ENTITIES.register("swet",
@@ -160,7 +155,7 @@ public class AetherEntityTypes {
         event.put(AetherEntityTypes.SHEEPUFF.get(), Sheepuff.createMobAttributes().build());
         event.put(AetherEntityTypes.MOA.get(), MoaEntity.createMobAttributes().build());
         event.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.createMobAttributes().build());
-        event.put(AetherEntityTypes.AERBUNNY.get(), AerbunnyEntity.createMobAttributes().build());
+        event.put(AetherEntityTypes.AERBUNNY.get(), Aerbunny.createMobAttributes().build());
 
         event.put(AetherEntityTypes.SWET.get(), SwetEntity.createMobAttributes().build());
         event.put(AetherEntityTypes.WHIRLWIND.get(), Whirlwind.createMobAttributes().build());
