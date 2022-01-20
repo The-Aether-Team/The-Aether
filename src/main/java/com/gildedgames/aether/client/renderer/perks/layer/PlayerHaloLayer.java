@@ -2,7 +2,7 @@ package com.gildedgames.aether.client.renderer.perks.layer;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
-import com.gildedgames.aether.client.renderer.perks.model.PlayerHaloModel;
+import com.gildedgames.aether.client.renderer.perks.model.HaloModel;
 import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
 import com.gildedgames.aether.core.registry.AetherPlayerRankings;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -23,16 +23,16 @@ import javax.annotation.Nonnull;
 public class PlayerHaloLayer<T extends Player, M extends PlayerModel<T>> extends RenderLayer<T, M>
 {
     private static final ResourceLocation PLAYER_HALO_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/perks/halo.png");
-    private final PlayerHaloModel playerHaloModel;
+    private final HaloModel<Player> playerHaloModel;
 
     public PlayerHaloLayer(RenderLayerParent<T, M> renderer) {
         super(renderer);
-        this.playerHaloModel = new PlayerHaloModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.PLAYER_HALO));
+        this.playerHaloModel = new HaloModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.PLAYER_HALO));
     }
 
     @Override
     public void render(@Nonnull PoseStack pMatrixStack, @Nonnull MultiBufferSource pBuffer, int pPackedLight, @Nonnull T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-        if (pLivingEntity instanceof  AbstractClientPlayer abstractClientPlayer) {
+        if (pLivingEntity instanceof AbstractClientPlayer abstractClientPlayer) {
             IAetherRankings.get(abstractClientPlayer).ifPresent(aetherRankings -> {
                 if (AetherPlayerRankings.hasHalo(abstractClientPlayer.getUUID()) && aetherRankings.shouldRenderHalo()) {
                     this.playerHaloModel.main.yRot = this.getParentModel().head.yRot;

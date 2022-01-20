@@ -12,7 +12,7 @@ import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.entity.model.*;
 import com.gildedgames.aether.client.renderer.perks.layer.DeveloperGlowLayer;
 import com.gildedgames.aether.client.renderer.perks.layer.PlayerHaloLayer;
-import com.gildedgames.aether.client.renderer.perks.model.PlayerHaloModel;
+import com.gildedgames.aether.client.renderer.perks.model.HaloModel;
 import com.gildedgames.aether.client.renderer.tile.AetherBlockEntityWithoutLevelRenderer;
 import com.gildedgames.aether.client.renderer.tile.ChestMimicRenderer;
 import com.gildedgames.aether.client.renderer.tile.SkyrootBedRenderer;
@@ -137,6 +137,7 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.PHYG, () -> PigModel.createBodyLayer(CubeDeformation.NONE));
         event.registerLayerDefinition(AetherModelLayers.PHYG_WINGS, () -> QuadrupedWingsModel.createMainLayer(10.0F));
         event.registerLayerDefinition(AetherModelLayers.PHYG_SADDLE, () -> PigModel.createBodyLayer(new CubeDeformation(0.5F)));
+        event.registerLayerDefinition(AetherModelLayers.PHYG_HALO, () -> HaloModel.createLayer(3.0F, -4.0F, 12.0F, -6.0F));
         event.registerLayerDefinition(AetherModelLayers.SENTRY, SlimeModel::createInnerBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF, SheepuffModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL, () -> SheepuffWoolModel.createFurLayer(new CubeDeformation(1.75F), 0.0F));
@@ -163,7 +164,7 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), false), 64, 64));
         event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), true), 64, 64));
 
-        event.registerLayerDefinition(AetherModelLayers.PLAYER_HALO, PlayerHaloModel::createLayer);
+        event.registerLayerDefinition(AetherModelLayers.PLAYER_HALO, () -> HaloModel.createLayer(0.0F, 0.0F, 0.0F, 0.0F));
     }
 
     public static void registerCuriosRenderers() {

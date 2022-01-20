@@ -23,6 +23,8 @@ public class ColdParachuteRenderer extends EntityRenderer<ColdParachuteEntity>
         this.shadowRadius = 0.0F;
     }
 
+    //TODO: Abstract into a ParachuteRenderer, and have the block for the renderer be a constructor parameter.
+
     @Override
     public void render(ColdParachuteEntity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         matrixStackIn.pushPose();
