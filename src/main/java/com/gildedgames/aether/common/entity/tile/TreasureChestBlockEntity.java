@@ -202,7 +202,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     @Override
     public CompoundTag getUpdateTag() {
-        return this.save(new CompoundTag());
+        return this.saveWithoutMetadata();
     }
 
     @Override
@@ -222,13 +222,12 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        super.save(compound);
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putBoolean("Locked", this.getLocked());
         compound.putString("Kind", this.getKind());
         if (!this.trySaveLootTable(compound)) {
             ContainerHelper.saveAllItems(compound, this.items);
         }
-        return compound;
     }
 }

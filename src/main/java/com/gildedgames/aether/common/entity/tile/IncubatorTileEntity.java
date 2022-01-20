@@ -225,13 +225,12 @@ public class IncubatorTileEntity extends BaseContainerBlockEntity implements Wor
 	}
 	
 	@Override
-	public CompoundTag save(CompoundTag compound) {
-		super.save(compound);
+	public void saveAdditional(CompoundTag compound) {
+		super.saveAdditional(compound);
 		compound.putInt("BurnTime", this.powerRemaining);
 		compound.putInt("CookTime", this.progress);
 		compound.putInt("CookTimeTotal", this.ticksRequired);
 		ContainerHelper.saveAllItems(compound, this.items);
-		return compound;
 	}
 	
 	net.minecraftforge.common.util.LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =
