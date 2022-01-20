@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
-import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
+import com.gildedgames.aether.common.entity.passive.Sheepuff;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -8,7 +8,7 @@ import net.minecraft.client.model.geom.builders.*;
 
 import javax.annotation.Nonnull;
 
-public class SheepuffModel extends QuadrupedModel<SheepuffEntity>
+public class SheepuffModel extends QuadrupedModel<Sheepuff>
 {
     private float headXRot;
 
@@ -24,15 +24,15 @@ public class SheepuffModel extends QuadrupedModel<SheepuffEntity>
         return LayerDefinition.create(meshdefinition, 64, 32);
     }
 
-    public void prepareMobModel(@Nonnull SheepuffEntity sheepuff, float limbSwing, float limbSwingAmount, float partialTick) {
+    public void prepareMobModel(@Nonnull Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float partialTick) {
         super.prepareMobModel(sheepuff, limbSwing, limbSwingAmount, partialTick);
-        this.head.y = 6.0F + sheepuff.getHeadRotationPointY(partialTick) * 9.0F;
+        this.head.y = 6.0F + sheepuff.getHeadEatPositionScale(partialTick) * 9.0F;
         this.headXRot = sheepuff.getHeadEatAngleScale(partialTick);
         this.body.xRot = ((float) Math.PI / 2F);
     }
 
     @Override
-    public void setupAnim(@Nonnull SheepuffEntity sheepuff, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@Nonnull Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         super.setupAnim(sheepuff, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         this.head.xRot = this.headXRot;
     }

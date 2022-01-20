@@ -1,17 +1,15 @@
 package com.gildedgames.aether.common.entity.passive;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.EatAetherGrassGoal;
-import com.gildedgames.aether.common.entity.ai.FallingRandomWalkingGoal;
+import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.entity.ai.controller.FallingMovementController;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
@@ -24,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -45,8 +42,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.IForgeShearable;
 
 import net.minecraft.Util;
@@ -65,10 +60,10 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.level.ItemLike;
 
-public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IForgeShearable
+public class Sheepuff extends AetherAnimalEntity implements IForgeShearable
 {
-    private static final EntityDataAccessor<Byte> DATA_WOOL_COLOR_ID = SynchedEntityData.defineId(SheepuffEntity.class, EntityDataSerializers.BYTE);
-    private static final EntityDataAccessor<Boolean> DATA_PUFFED_ID = SynchedEntityData.defineId(SheepuffEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Byte> DATA_WOOL_COLOR_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Boolean> DATA_PUFFED_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BOOLEAN);
 
     private static final Map<DyeColor, ItemLike> ITEM_BY_DYE = Util.make(Maps.newEnumMap(DyeColor.class), (p_203402_0_) -> {
         p_203402_0_.put(DyeColor.WHITE, Blocks.WHITE_WOOL);
@@ -88,7 +83,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
         p_203402_0_.put(DyeColor.RED, Blocks.RED_WOOL);
         p_203402_0_.put(DyeColor.BLACK, Blocks.BLACK_WOOL);
     });
-    private static final Map<DyeColor, float[]> COLOR_ARRAY_BY_COLOR = Maps.newEnumMap(Arrays.stream(DyeColor.values()).collect(Collectors.toMap((DyeColor p_200204_0_) -> p_200204_0_, SheepuffEntity::createSheepColor)));
+    private static final Map<DyeColor, float[]> COLOR_ARRAY_BY_COLOR = Maps.newEnumMap(Arrays.stream(DyeColor.values()).collect(Collectors.toMap((DyeColor p_200204_0_) -> p_200204_0_, Sheepuff::createSheepColor)));
 
     private int eatAnimationTick, amountEaten;
     private EatAetherGrassGoal eatBlockGoal;
@@ -105,20 +100,15 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static float[] getColorArray(DyeColor p_175513_0_) {
         return COLOR_ARRAY_BY_COLOR.get(p_175513_0_);
     }
 
-    public SheepuffEntity(EntityType<? extends SheepuffEntity> type, Level worldIn) {
+    public Sheepuff(EntityType<? extends Sheepuff> type, Level worldIn) {
         super(type, worldIn);
         this.moveControl = new FallingMovementController(this);
         this.fallNavigation = new FallPathNavigator(this, worldIn);
         this.groundNavigation = new GroundPathNavigation(this, worldIn);
-    }
-
-    public SheepuffEntity(Level worldIn) {
-        this(AetherEntityTypes.SHEEPUFF.get(), worldIn);
     }
 
     @Override
@@ -130,11 +120,12 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.of(AetherItems.BLUE_BERRY.get()), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1));
         this.goalSelector.addGoal(5, this.eatBlockGoal);
-        this.goalSelector.addGoal(6, new FallingRandomWalkingGoal(this, 1.0)); //originally was water avoiding goal.
+        this.goalSelector.addGoal(6, new FallingRandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
     }
 
+    @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 8.0D)
@@ -150,8 +141,8 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
 
     @Nullable
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverWorld, DifficultyInstance difficultyInstance, MobSpawnType spawnReason, @Nullable SpawnGroupData livingEntityData, @Nullable CompoundTag compoundNBT) {
-        this.setColor(getRandomSheepColor(serverWorld.getRandom()));
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverWorld, @Nonnull DifficultyInstance difficultyInstance, @Nonnull MobSpawnType spawnReason, @Nullable SpawnGroupData livingEntityData, @Nullable CompoundTag compoundNBT) {
+        this.setColor(getRandomSheepuffColor(serverWorld.getRandom()));
         return super.finalizeSpawn(serverWorld, difficultyInstance, spawnReason, livingEntityData, compoundNBT);
     }
 
@@ -169,7 +160,6 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
         super.aiStep();
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 10) {
@@ -179,21 +169,19 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public float getHeadRotationPointY(float rot) {
+    public float getHeadEatPositionScale(float pos) {
         if (this.eatAnimationTick <= 0) {
             return 0.0F;
         } else if (this.eatAnimationTick >= 4 && this.eatAnimationTick <= 36) {
             return 1.0F;
         } else {
-            return this.eatAnimationTick < 4 ? (this.eatAnimationTick - rot) / 4.0F : -(this.eatAnimationTick - 40 - rot) / 4.0F;
+            return this.eatAnimationTick < 4 ? (this.eatAnimationTick - pos) / 4.0F : -(this.eatAnimationTick - 40 - pos) / 4.0F;
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public float getHeadEatAngleScale(float p_70890_1_) {
+    public float getHeadEatAngleScale(float angle) {
         if (this.eatAnimationTick > 4 && this.eatAnimationTick <= 36) {
-            float f = ((float) (this.eatAnimationTick - 4) - p_70890_1_) / 32.0F;
+            float f = ((float) (this.eatAnimationTick - 4) - angle) / 32.0F;
             return ((float) Math.PI / 5.0F) + 0.21991149F * Mth.sin(f * 28.7F);
         } else {
             return this.eatAnimationTick > 0 ? ((float) Math.PI / 5.0F) : this.getXRot() * ((float) Math.PI / 180.0F);
@@ -202,6 +190,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
 
     @Override
     public void tick() {
+        Aether.LOGGER.info(this.amountEaten);
         super.tick();
         if (this.getPuffed()) {
             this.fallDistance = 0.0F;
@@ -210,18 +199,6 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
             }
             this.navigation = this.fallNavigation;
         } else {
-            if (!this.isSheared()) {
-                if (this.amountEaten >= 2) {
-                    this.setPuffed(true);
-                    this.amountEaten = 0;
-                }
-            } else {
-                if (this.amountEaten == 1) {
-                    this.setSheared(false);
-                    this.setColor(DyeColor.WHITE);
-                    this.amountEaten = 0;
-                }
-            }
             this.navigation = this.groundNavigation;
         }
     }
@@ -237,16 +214,29 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
     @Override
     public void ate() {
         ++this.amountEaten;
+        if (!this.isSheared()) {
+            if (this.amountEaten >= 2) {
+                this.setPuffed(true);
+                this.amountEaten = 0;
+            }
+        } else {
+            if (this.amountEaten == 1) {
+                this.setSheared(false);
+                this.setColor(DyeColor.WHITE);
+                this.amountEaten = 0;
+            }
+        }
         if (this.isBaby()) {
             this.ageUp(60);
         }
     }
 
+    @Nonnull
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
-        if (itemstack.getItem() instanceof DyeItem && !this.isSheared()) {
-            DyeColor color = ((DyeItem) itemstack.getItem()).getDyeColor();
+        if (itemstack.getItem() instanceof DyeItem dyeItem && !this.isSheared()) {
+            DyeColor color = dyeItem.getDyeColor();
             if (this.getColor() != color) {
                 if (this.getPuffed() && itemstack.getCount() >= 2) {
                     player.swing(hand);
@@ -271,26 +261,11 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
         return super.mobInteract(player, hand);
     }
 
-    @Override
-    public void shear(SoundSource category) {
-        this.level.playSound(null, this, AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), category, 1.0F, 1.0F);
-        this.amountEaten = 0;
-        this.setSheared(true);
-        this.setPuffed(false);
-        int i = 1 + this.random.nextInt(3);
-        for (int j = 0; j < i; ++j) {
-            ItemEntity itementity = this.spawnAtLocation(ITEM_BY_DYE.get(this.getColor()), 1);
-            if (itementity != null) {
-                itementity.setDeltaMovement(itementity.getDeltaMovement().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1F, (this.random.nextFloat() * 0.05F), ((this.random.nextFloat() - this.random.nextFloat()) * 0.1F)));
-            }
-        }
-    }
-
     @Nonnull
     @Override
-    public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
-        world.playSound(null, this, AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
-        if (!world.isClientSide) {
+    public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level level, BlockPos pos, int fortune) {
+        level.playSound(null, this, AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
+        if (!level.isClientSide) {
             this.amountEaten = 0;
             this.setSheared(true);
             this.setPuffed(false);
@@ -301,17 +276,12 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
             }
             return items;
         }
-        return java.util.Collections.emptyList();
-    }
-
-    @Override
-    public boolean readyForShearing() {
-        return this.isAlive() && !this.isSheared() && !this.isBaby();
+        return Collections.emptyList();
     }
 
     @Override
     public boolean isShearable(@Nonnull ItemStack item, Level world, BlockPos pos) {
-        return this.readyForShearing();
+        return this.isAlive() && !this.isSheared() && !this.isBaby();
     }
 
     public boolean isSheared() {
@@ -336,7 +306,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
         this.entityData.set(DATA_WOOL_COLOR_ID, (byte)(b0 & 240 | dyeColor.getId() & 15));
     }
 
-    public static DyeColor getRandomSheepColor(Random random) {
+    public static DyeColor getRandomSheepuffColor(Random random) {
         int i = random.nextInt(100);
         if (i < 5) {
             return DyeColor.LIGHT_BLUE;
@@ -367,7 +337,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
 
     @Nullable
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSourceIn) {
         return AetherSoundEvents.ENTITY_SHEEPUFF_HURT.get();
     }
 
@@ -378,7 +348,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {
+    protected void playStepSound(@Nonnull BlockPos pos, @Nonnull BlockState state) {
         this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_SHEEPUFF_STEP.get(), SoundSource.NEUTRAL, 0.15F, 1.0F);
     }
 
@@ -394,82 +364,68 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
-        SheepuffEntity sheepuffParent = (SheepuffEntity) entity;
-        SheepuffEntity sheepuffBaby = AetherEntityTypes.SHEEPUFF.get().create(world);
-        sheepuffBaby.setColor(this.getOffspringColor(this, sheepuffParent));
+    public AgeableMob getBreedOffspring(@Nonnull ServerLevel level, @Nonnull AgeableMob entity) {
+        Sheepuff sheepuffParent = (Sheepuff) entity;
+        Sheepuff sheepuffBaby = AetherEntityTypes.SHEEPUFF.get().create(level);
+        if (sheepuffBaby != null) {
+            sheepuffBaby.setColor(this.getOffspringColor(this, sheepuffParent));
+        }
         return sheepuffBaby;
     }
 
     private DyeColor getOffspringColor(Animal parent1, Animal parent2) {
-        DyeColor dyecolor1 = ((SheepuffEntity) parent1).getColor();
-        DyeColor dyecolor2 = ((SheepuffEntity) parent2).getColor();
-        CraftingContainer craftinginventory = makeContainer(dyecolor1, dyecolor2);
-        return this.level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftinginventory, this.level).map(
-                (p_213614_1_) -> p_213614_1_.assemble(craftinginventory)).map(ItemStack::getItem).filter(DyeItem.class::isInstance).map(DyeItem.class::cast).map(DyeItem::getDyeColor).orElseGet(() -> this.level.random.nextBoolean() ? dyecolor1 : dyecolor2);
+        DyeColor dyeColor1 = ((Sheepuff) parent1).getColor();
+        DyeColor dyeColor2 = ((Sheepuff) parent2).getColor();
+        CraftingContainer craftingInventory = makeContainer(dyeColor1, dyeColor2);
+        return this.level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftingInventory, this.level).map(
+                (p_213614_1_) -> p_213614_1_.assemble(craftingInventory)).map(ItemStack::getItem).filter(DyeItem.class::isInstance).map(DyeItem.class::cast).map(DyeItem::getDyeColor).orElseGet(() -> this.level.random.nextBoolean() ? dyeColor1 : dyeColor2);
     }
 
     private static CraftingContainer makeContainer(DyeColor dyeColor1, DyeColor dyeColor2) {
-        CraftingContainer craftinginventory = new CraftingContainer(new AbstractContainerMenu(null, -1) {
-            public boolean stillValid(Player playerEntity) {
+        CraftingContainer craftingInventory = new CraftingContainer(new AbstractContainerMenu(null, -1) {
+            public boolean stillValid(@Nonnull Player player) {
                 return false;
             }
         }, 2, 1);
-        craftinginventory.setItem(0, new ItemStack(DyeItem.byColor(dyeColor1)));
-        craftinginventory.setItem(1, new ItemStack(DyeItem.byColor(dyeColor2)));
-        return craftinginventory;
+        craftingInventory.setItem(0, new ItemStack(DyeItem.byColor(dyeColor1)));
+        craftingInventory.setItem(1, new ItemStack(DyeItem.byColor(dyeColor2)));
+        return craftingInventory;
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose p_213348_1_, EntityDimensions p_213348_2_) {
-        return 0.95F * p_213348_2_.height;
+    protected float getStandingEyeHeight(@Nonnull Pose pose, EntityDimensions size) {
+        return 0.95F * size.height;
     }
 
+    @Nonnull
     @Override
     public ResourceLocation getDefaultLootTable() {
         if (this.isSheared()) {
             return this.getType().getDefaultLootTable();
         } else {
-            switch(this.getColor()) {
-                case WHITE:
-                default:
-                    return AetherLoot.ENTITIES_SHEEPUFF_WHITE;
-                case ORANGE:
-                    return AetherLoot.ENTITIES_SHEEPUFF_ORANGE;
-                case MAGENTA:
-                    return AetherLoot.ENTITIES_SHEEPUFF_MAGENTA;
-                case LIGHT_BLUE:
-                    return AetherLoot.ENTITIES_SHEEPUFF_LIGHT_BLUE;
-                case YELLOW:
-                    return AetherLoot.ENTITIES_SHEEPUFF_YELLOW;
-                case LIME:
-                    return AetherLoot.ENTITIES_SHEEPUFF_LIME;
-                case PINK:
-                    return AetherLoot.ENTITIES_SHEEPUFF_PINK;
-                case GRAY:
-                    return AetherLoot.ENTITIES_SHEEPUFF_GRAY;
-                case LIGHT_GRAY:
-                    return AetherLoot.ENTITIES_SHEEPUFF_LIGHT_GRAY;
-                case CYAN:
-                    return AetherLoot.ENTITIES_SHEEPUFF_CYAN;
-                case PURPLE:
-                    return AetherLoot.ENTITIES_SHEEPUFF_PURPLE;
-                case BLUE:
-                    return AetherLoot.ENTITIES_SHEEPUFF_BLUE;
-                case BROWN:
-                    return AetherLoot.ENTITIES_SHEEPUFF_BROWN;
-                case GREEN:
-                    return AetherLoot.ENTITIES_SHEEPUFF_GREEN;
-                case RED:
-                    return AetherLoot.ENTITIES_SHEEPUFF_RED;
-                case BLACK:
-                    return AetherLoot.ENTITIES_SHEEPUFF_BLACK;
-            }
+            return switch (this.getColor()) {
+                case WHITE -> AetherLoot.ENTITIES_SHEEPUFF_WHITE;
+                case ORANGE -> AetherLoot.ENTITIES_SHEEPUFF_ORANGE;
+                case MAGENTA -> AetherLoot.ENTITIES_SHEEPUFF_MAGENTA;
+                case LIGHT_BLUE -> AetherLoot.ENTITIES_SHEEPUFF_LIGHT_BLUE;
+                case YELLOW -> AetherLoot.ENTITIES_SHEEPUFF_YELLOW;
+                case LIME -> AetherLoot.ENTITIES_SHEEPUFF_LIME;
+                case PINK -> AetherLoot.ENTITIES_SHEEPUFF_PINK;
+                case GRAY -> AetherLoot.ENTITIES_SHEEPUFF_GRAY;
+                case LIGHT_GRAY -> AetherLoot.ENTITIES_SHEEPUFF_LIGHT_GRAY;
+                case CYAN -> AetherLoot.ENTITIES_SHEEPUFF_CYAN;
+                case PURPLE -> AetherLoot.ENTITIES_SHEEPUFF_PURPLE;
+                case BLUE -> AetherLoot.ENTITIES_SHEEPUFF_BLUE;
+                case BROWN -> AetherLoot.ENTITIES_SHEEPUFF_BROWN;
+                case GREEN -> AetherLoot.ENTITIES_SHEEPUFF_GREEN;
+                case RED -> AetherLoot.ENTITIES_SHEEPUFF_RED;
+                case BLACK -> AetherLoot.ENTITIES_SHEEPUFF_BLACK;
+            };
         }
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
+    public void addAdditionalSaveData(@Nonnull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putBoolean("Sheared", this.isSheared());
         compound.putBoolean("Puffed", this.getPuffed());
@@ -477,7 +433,7 @@ public class SheepuffEntity extends AetherAnimalEntity implements Shearable, IFo
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
+    public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setSheared(compound.getBoolean("Sheared"));
         this.setPuffed(compound.getBoolean("Puffed"));

@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffModel;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffWoolModel;
-import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
+import com.gildedgames.aether.common.entity.passive.Sheepuff;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -15,26 +15,25 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class SheepuffWoolLayer extends RenderLayer<SheepuffEntity, SheepuffModel>
+public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel>
 {
     private static final ResourceLocation SHEEPUFF_WOOL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff_wool.png");
     private final SheepuffWoolModel woolModel;
     private final SheepuffWoolModel puffedModel;
 
-    public SheepuffWoolLayer(RenderLayerParent<SheepuffEntity, SheepuffModel> entityRendererIn, EntityModelSet modelSet) {
+    public SheepuffWoolLayer(RenderLayerParent<Sheepuff, SheepuffModel> entityRendererIn, EntityModelSet modelSet) {
         super(entityRendererIn);
         this.woolModel = new SheepuffWoolModel(modelSet.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL));
         this.puffedModel = new SheepuffWoolModel(modelSet.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL_PUFFED));
     }
 
     @Override
-    public void render(@Nonnull PoseStack matrixStackIn, @Nonnull MultiBufferSource bufferIn, int packedLightIn, SheepuffEntity sheepuff, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(@Nonnull PoseStack matrixStackIn, @Nonnull MultiBufferSource bufferIn, int packedLightIn, Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (!sheepuff.isSheared()) {
             SheepuffWoolModel woolModel = sheepuff.getPuffed() ? this.puffedModel : this.woolModel;
             if (sheepuff.isInvisible()) {
@@ -58,13 +57,13 @@ public class SheepuffWoolLayer extends RenderLayer<SheepuffEntity, SheepuffModel
                     int k = i % j;
                     int l = (i + 1) % j;
                     float f3 = ((float) (sheepuff.tickCount % i1) + partialTicks) / (float) i1;
-                    float[] afloat1 = Sheep.getColorArray(DyeColor.byId(k));
-                    float[] afloat2 = Sheep.getColorArray(DyeColor.byId(l));
+                    float[] afloat1 = Sheepuff.getColorArray(DyeColor.byId(k));
+                    float[] afloat2 = Sheepuff.getColorArray(DyeColor.byId(l));
                     f = afloat1[0] * (1.0F - f3) + afloat2[0] * f3;
                     f1 = afloat1[1] * (1.0F - f3) + afloat2[1] * f3;
                     f2 = afloat1[2] * (1.0F - f3) + afloat2[2] * f3;
                 } else {
-                    float[] afloat = Sheep.getColorArray(sheepuff.getColor());
+                    float[] afloat = Sheepuff.getColorArray(sheepuff.getColor());
                     f = afloat[0];
                     f1 = afloat[1];
                     f2 = afloat[2];

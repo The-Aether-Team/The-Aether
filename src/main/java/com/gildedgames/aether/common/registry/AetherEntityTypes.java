@@ -16,7 +16,7 @@ import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
 import com.gildedgames.aether.common.entity.passive.FlyingCow;
 import com.gildedgames.aether.common.entity.passive.MoaEntity;
 import com.gildedgames.aether.common.entity.passive.Phyg;
-import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
+import com.gildedgames.aether.common.entity.passive.Sheepuff;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
 import com.gildedgames.aether.common.entity.projectile.ZephyrSnowballEntity;
 import com.gildedgames.aether.common.entity.projectile.crystal.CloudCrystalEntity;
@@ -49,8 +49,8 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<FlyingCow>> FLYING_COW = ENTITIES.register("flying_cow",
             () -> EntityType.Builder.<FlyingCow>of(FlyingCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build("flying_cow"));
 
-    public static final RegistryObject<EntityType<SheepuffEntity>> SHEEPUFF = ENTITIES.register("sheepuff",
-            () -> EntityType.Builder.<SheepuffEntity>of(SheepuffEntity::new, MobCategory.CREATURE).sized(0.9F, 1.3F).clientTrackingRange(10).build("sheepuff"));
+    public static final RegistryObject<EntityType<Sheepuff>> SHEEPUFF = ENTITIES.register("sheepuff",
+            () -> EntityType.Builder.<Sheepuff>of(Sheepuff::new, MobCategory.CREATURE).sized(0.9F, 1.3F).clientTrackingRange(10).build("sheepuff"));
 
     public static final RegistryObject<EntityType<MoaEntity>> MOA = ENTITIES.register("moa",
             () -> EntityType.Builder.<MoaEntity>of(MoaEntity::new, MobCategory.CREATURE).sized(1.0F, 2.0F).build("moa"));
@@ -157,7 +157,7 @@ public class AetherEntityTypes {
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
         event.put(AetherEntityTypes.PHYG.get(), Phyg.createMobAttributes().build());
         event.put(AetherEntityTypes.FLYING_COW.get(), FlyingCow.createMobAttributes().build());
-        event.put(AetherEntityTypes.SHEEPUFF.get(), SheepuffEntity.createMobAttributes().build());
+        event.put(AetherEntityTypes.SHEEPUFF.get(), Sheepuff.createMobAttributes().build());
         event.put(AetherEntityTypes.MOA.get(), MoaEntity.createMobAttributes().build());
         event.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.createMobAttributes().build());
         event.put(AetherEntityTypes.AERBUNNY.get(), AerbunnyEntity.createMobAttributes().build());

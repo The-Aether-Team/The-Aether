@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.entity.ai.FallingRandomWalkingGoal;
+import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
@@ -24,8 +24,6 @@ import net.minecraft.server.level.ServerLevel;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
-
-import net.minecraft.world.entity.ai.goal.Goal.Flag;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -55,7 +53,7 @@ public class AerbunnyEntity extends AetherAnimalEntity
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(AetherItems.BLUE_BERRY.get()), false));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new HopGoal(this));
-        this.goalSelector.addGoal(6, new FallingRandomWalkingGoal(this, 2.0D, 6));
+        this.goalSelector.addGoal(6, new FallingRandomStrollGoal(this, 2.0D, 6));
     }
 
     public static AttributeSupplier.Builder createMobAttributes() {

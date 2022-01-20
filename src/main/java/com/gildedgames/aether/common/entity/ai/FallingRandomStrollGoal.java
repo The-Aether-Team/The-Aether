@@ -2,25 +2,24 @@ package com.gildedgames.aether.common.entity.ai;
 
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
-import net.minecraft.world.entity.ai.util.RandomPos;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
-public class FallingRandomWalkingGoal extends RandomStrollGoal
+public class FallingRandomStrollGoal extends RandomStrollGoal
 {
     protected final float probability;
 
-    public FallingRandomWalkingGoal(PathfinderMob creatureEntity, double speed) {
+    public FallingRandomStrollGoal(PathfinderMob creatureEntity, double speed) {
         this(creatureEntity, speed, 120, 0.001F);
     }
 
-    public FallingRandomWalkingGoal(PathfinderMob creatureEntity, double speed, int interval) {
+    public FallingRandomStrollGoal(PathfinderMob creatureEntity, double speed, int interval) {
         this(creatureEntity, speed, interval, 0.001F);
     }
 
-    public FallingRandomWalkingGoal(PathfinderMob creatureEntity, double speed, int interval, float probability) {
+    public FallingRandomStrollGoal(PathfinderMob creatureEntity, double speed, int interval, float probability) {
         super(creatureEntity, speed, interval);
         this.probability = probability;
     }

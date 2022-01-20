@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.SheepuffWoolLayer;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffModel;
-import com.gildedgames.aether.common.entity.passive.SheepuffEntity;
+import com.gildedgames.aether.common.entity.passive.Sheepuff;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class SheepuffRenderer extends MobRenderer<SheepuffEntity, SheepuffModel>
+public class SheepuffRenderer extends MobRenderer<Sheepuff, SheepuffModel>
 {
     private static final ResourceLocation SHEEPUFF_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff.png");
     
@@ -23,7 +23,7 @@ public class SheepuffRenderer extends MobRenderer<SheepuffEntity, SheepuffModel>
 
     @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull SheepuffEntity entity) {
+    public ResourceLocation getTextureLocation(@Nonnull Sheepuff entity) {
         return SHEEPUFF_TEXTURE;
     }
 }
