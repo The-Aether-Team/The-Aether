@@ -15,6 +15,7 @@ import com.gildedgames.aether.core.network.packet.client.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -29,13 +30,11 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public class AetherPlayer implements IAetherPlayer
@@ -67,8 +66,8 @@ public class AetherPlayer implements IAetherPlayer
 	private static final EntityDataAccessor<Integer> DATA_IMPACTED_MAXIMUM_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> DATA_IMPACTED_TIMER_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
 
-	private static final EntityDataAccessor<Optional<UUID>> DATA_AERBUNNY_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.OPTIONAL_UUID);
-	private int aerbunnyCheck;
+	private Aerbunny mountedAerbunny;
+	private CompoundTag mountedAerbunnyTag;
 
 	private final List<CloudMinionEntity> cloudMinions = new ArrayList<>(2);
 
@@ -93,11 +92,11 @@ public class AetherPlayer implements IAetherPlayer
 		nbt.putInt("RemedyTimer", this.getRemedyTimer());
 		nbt.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
 		nbt.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
-		if (this.getAerbunny() != null) {
-			nbt.putUUID("Aerbunny", this.getAerbunny());
-		}
 		nbt.putFloat("SavedHealth", this.getSavedHealth());
 		nbt.putInt("LifeShardCount", this.getLifeShardCount());
+		if (this.getMountedAerbunnyTag() != null) {
+			nbt.put("MountedAerbunnyTag", this.getMountedAerbunnyTag());
+		}
 
 		//(leftover reference code)
 		//Set<AetherRank> ranks = AetherRankings.getRanksOf(this.player.getUniqueID());
@@ -125,14 +124,14 @@ public class AetherPlayer implements IAetherPlayer
 		if (nbt.contains("ProjectileImpactedTimer")) {
 			this.setProjectileImpactedTimer(nbt.getInt("ProjectileImpactedTimer"));
 		}
-		if (nbt.contains("Aerbunny")) {
-			this.setAerbunny(nbt.getUUID("Aerbunny"));
-		}
 		if (nbt.contains("SavedHealth")) {
 			this.setSavedHealth(nbt.getFloat("SavedHealth"));
 		}
 		if (nbt.contains("LifeShardCount")) {
 			this.setLifeShardCount(nbt.getInt("LifeShardCount"));
+		}
+		if (nbt.contains("MountedAerbunnyTag")) {
+			this.setMountedAerbunnyTag(nbt.getCompound("MountedAerbunnyTag"));
 		}
 	}
 
@@ -145,8 +144,12 @@ public class AetherPlayer implements IAetherPlayer
 		this.getPlayer().getEntityData().define(DATA_REMEDY_TIMER_ID, 0);
 		this.getPlayer().getEntityData().define(DATA_IMPACTED_MAXIMUM_ID, 0);
 		this.getPlayer().getEntityData().define(DATA_IMPACTED_TIMER_ID, 0);
-		this.getPlayer().getEntityData().define(DATA_AERBUNNY_ID, Optional.empty());
 		this.getPlayer().getEntityData().define(DATA_LIFE_SHARD_ID, 0);
+	}
+
+	@Override
+	public void onLogout() {
+		this.removeAerbunny();
 	}
 
 	@Override
@@ -193,7 +196,7 @@ public class AetherPlayer implements IAetherPlayer
 	 * On the client, this will also help to set the portal overlay.
 	 */
 	private void handleAetherPortal() {
-		if (player.level.isClientSide) {
+		if (this.player.level.isClientSide) {
 			this.prevPortalAnimTime = this.portalAnimTime;
 			Minecraft mc = Minecraft.getInstance();
 			if (this.isInAetherPortal) {
@@ -212,16 +215,16 @@ public class AetherPlayer implements IAetherPlayer
 
 		if (this.isInAetherPortal) {
 			++this.aetherPortalTimer;
-			if (player.level.isClientSide) {
+			if (this.player.level.isClientSide) {
 				this.portalAnimTime += 0.0125F;
-				if(this.portalAnimTime > 1.0F) {
+				if (this.portalAnimTime > 1.0F) {
 					this.portalAnimTime = 1.0F;
 				}
 			}
 			this.isInAetherPortal = false;
 		}
 		else {
-			if (player.level.isClientSide) {
+			if (this.player.level.isClientSide) {
 				if (this.portalAnimTime > 0.0F) {
 					this.portalAnimTime -= 0.05F;
 				}
@@ -339,27 +342,36 @@ public class AetherPlayer implements IAetherPlayer
 		}
 	}
 
-	//TODO: Can we just kill the aerbunny, save all its data, and respawn it when the player rejoins? Or is that too much to track.
-	private void remountAerbunny() {
-		if (this.getAerbunny() != null && this.getPlayer().level instanceof ServerLevel serverLevel && serverLevel.getEntity(this.getAerbunny()) instanceof Aerbunny aerbunny) {
-			aerbunny.startRiding(this.getPlayer());
-			if (this.getPlayer() instanceof ServerPlayer serverPlayer) {
-				AetherPacketHandler.sendToPlayer(new RemountAerbunnyPacket(this.getPlayer().getId(), aerbunny.getId()), serverPlayer);
-			}
+	private void checkToRemoveAerbunny() {
+		if (this.getMountedAerbunny() != null && (!this.getMountedAerbunny().isAlive() || !this.getPlayer().isAlive())) {
+			this.setMountedAerbunny(null);
 		}
 	}
 
-	private void checkToRemoveAerbunny() {
-		if (this.getAerbunny() != null && this.getPlayer().level instanceof ServerLevel serverLevel && serverLevel.getEntity(this.getAerbunny()) instanceof Aerbunny aerbunny) {
-			if (aerbunny.getVehicle() == null) {
-				this.aerbunnyCheck++;
-			} else {
-				this.aerbunnyCheck = 0;
+	private void removeAerbunny() {
+		if (this.getMountedAerbunny() != null) {
+			Aerbunny aerbunny = this.getMountedAerbunny();
+			CompoundTag nbt = new CompoundTag();
+			aerbunny.save(nbt);
+			this.setMountedAerbunnyTag(nbt);
+			aerbunny.stopRiding();
+			aerbunny.setRemoved(Entity.RemovalReason.UNLOADED_WITH_PLAYER);
+		}
+	}
+
+	private void remountAerbunny() {
+		if (this.getMountedAerbunnyTag() != null) {
+			if (!this.getPlayer().level.isClientSide()) {
+				Aerbunny aerbunny = new Aerbunny(AetherEntityTypes.AERBUNNY.get(), this.getPlayer().level);
+				aerbunny.load(this.getMountedAerbunnyTag());
+				this.getPlayer().level.addFreshEntity(aerbunny);
+				aerbunny.startRiding(this.getPlayer());
+				this.setMountedAerbunny(aerbunny);
+				if (this.getPlayer() instanceof ServerPlayer serverPlayer) {
+					AetherPacketHandler.sendToPlayer(new RemountAerbunnyPacket(this.getPlayer().getId(), aerbunny.getId()), serverPlayer);
+				}
 			}
-			if (this.aerbunnyCheck == 50) {
-				this.setAerbunny(null);
-				this.aerbunnyCheck = 0;
-			}
+			this.setMountedAerbunnyTag(null);
 		}
 	}
 
@@ -546,13 +558,23 @@ public class AetherPlayer implements IAetherPlayer
 	}
 
 	@Override
-	public void setAerbunny(UUID uuid) {
-		this.getPlayer().getEntityData().set(DATA_AERBUNNY_ID, Optional.ofNullable(uuid));
+	public void setMountedAerbunny(Aerbunny mountedAerbunny) {
+		this.mountedAerbunny = mountedAerbunny;
 	}
 
 	@Override
-	public UUID getAerbunny() {
-		return this.getPlayer().getEntityData().get(DATA_AERBUNNY_ID).orElse(null);
+	public Aerbunny getMountedAerbunny() {
+		return this.mountedAerbunny;
+	}
+
+	@Override
+	public void setMountedAerbunnyTag(CompoundTag mountedAerbunnyTag) {
+		this.mountedAerbunnyTag = mountedAerbunnyTag;
+	}
+
+	@Override
+	public CompoundTag getMountedAerbunnyTag() {
+		return this.mountedAerbunnyTag;
 	}
 
 	@Override

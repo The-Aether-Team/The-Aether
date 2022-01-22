@@ -136,10 +136,10 @@ public class Aerbunny extends AetherAnimalEntity
             if (this.isPassenger()) {
                 this.navigation.recomputePath();
                 this.stopRiding();
-                IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(null));
+                IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(null));
             } else {
                 if (this.startRiding(player)) {
-                    IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(this.getUUID()));
+                    IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(this));
                 }
             }
             return InteractionResult.SUCCESS;
