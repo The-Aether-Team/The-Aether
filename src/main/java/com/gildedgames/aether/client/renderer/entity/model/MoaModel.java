@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
-import com.gildedgames.aether.common.entity.passive.MoaEntity;
+import com.gildedgames.aether.common.entity.passive.Moa;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -12,11 +12,9 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 //TODO: Will have to review this all when all the moa functionality is completed, of course.
-public class MoaModel extends EntityModel<MoaEntity>
+public class MoaModel extends EntityModel<Moa>
 {
 	public ModelPart head;
 	public ModelPart jaw;
@@ -63,13 +61,13 @@ public class MoaModel extends EntityModel<MoaEntity>
 	}
 
 	@Override
-	public void prepareMobModel(MoaEntity moa, float p_212843_2_, float p_212843_3_, float p_212843_4_) {
+	public void prepareMobModel(Moa moa, float p_212843_2_, float p_212843_3_, float p_212843_4_) {
 		super.prepareMobModel(moa, p_212843_2_, p_212843_3_, p_212843_4_);
 		this.renderLegs = !moa.isSitting() || (!moa.isOnGround() && moa.isSitting());
 	}
 
 	@Override
-	public void setupAnim(MoaEntity moa, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(Moa moa, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.head.xRot = headPitch * ((float) Math.PI / 180F);
 		this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
 		this.neck.xRot = -this.head.xRot;
@@ -110,7 +108,7 @@ public class MoaModel extends EntityModel<MoaEntity>
 		this.leftTailFeather.yRot = 0.375F;
 	}
 
-	public void setupWingsAnimation(MoaEntity moa) {
+	public void setupWingsAnimation(Moa moa) {
 		moa.prevWingRotation = moa.wingRotation;
 		moa.prevDestPos = moa.destPos;
 		if (!moa.isOnGround()) {

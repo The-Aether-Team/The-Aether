@@ -1,7 +1,6 @@
 package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -17,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.core.Direction;
@@ -59,8 +59,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 	}
 
 	public void riderTick() {
-		if (this.getControllingPassenger() instanceof Player) {
-			Player playerEntity = (Player) this.getControllingPassenger();
+		if (this.getControllingPassenger() instanceof Player playerEntity) {
 			IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> {
 				if (aetherPlayer.isJumping() && !this.isMountJumping()) {
 					this.setPlayerJumped(true);
@@ -70,19 +69,18 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 	}
 
 	@Override
-	public void travel(Vec3 vector3d) {
+	public void travel(@Nonnull Vec3 vector3d) {
 		if (this.isAlive()) {
 			boolean slime = this.isSlime();
-			if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player) {
-				Player entity = (Player) this.getControllingPassenger();
-				this.setYRot(entity.getYRot());
+			if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player player) {
+				this.setYRot(player.getYRot());
 				this.yRotO = this.getYRot();
-				this.setXRot(entity.getXRot() * 0.5F);
+				this.setXRot(player.getXRot() * 0.5F);
 				this.setRot(this.getYRot(), this.getXRot());
 				this.yBodyRot = this.getYRot();
 				this.yHeadRot = this.yBodyRot;
-				float f = entity.xxa * 0.5F;
-				float f1 = entity.zza;
+				float f = player.xxa * 0.5F;
+				float f1 = player.zza;
 				if (f1 <= 0.0F) {
 					f1 *= 0.25F;
 				}
@@ -125,7 +123,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 	}
 
 	@Override
-	public void travelWithInput(Vec3 vector3d) {
+	public void travelWithInput(@Nonnull Vec3 vector3d) {
 		super.travel(vector3d);
 	}
 
@@ -133,8 +131,9 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 		net.minecraftforge.common.ForgeHooks.onLivingJump(this);
 	}
 
+	@Nonnull
 	@Override
-	public InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
+	public InteractionResult mobInteract(Player playerEntity, @Nonnull InteractionHand hand) {
 		boolean flag = this.isFood(playerEntity.getItemInHand(hand));
 		if (!flag && this.isSaddled() && !this.isVehicle() && !playerEntity.isSecondaryUseActive()) {
 			if (!this.level.isClientSide) {
@@ -152,8 +151,9 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 		}
 	}
 
+	@Nonnull
 	@Override
-	public Vec3 getDismountLocationForPassenger(LivingEntity livingEntity) {
+	public Vec3 getDismountLocationForPassenger(@Nonnull LivingEntity livingEntity) {
 		Direction direction = this.getMotionDirection();
 		if (direction.getAxis() != Direction.Axis.Y) {
 			int[][] aint = DismountHelper.offsetsForDirection(direction);
@@ -198,7 +198,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 	}
 
 	@Override
-	protected boolean canRide(Entity entityIn) {
+	protected boolean canRide(@Nonnull Entity entityIn) {
 		return true;
 	}
 
@@ -276,13 +276,13 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag compound) {
+	public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		this.setSaddled(compound.getBoolean("Saddled"));
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag compound) {
+	public void addAdditionalSaveData(@Nonnull CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("Saddled", this.isSaddled());
 	}

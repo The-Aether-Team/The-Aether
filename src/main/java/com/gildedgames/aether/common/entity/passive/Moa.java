@@ -1,11 +1,11 @@
 package com.gildedgames.aether.common.entity.passive;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
 
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.api.registers.MoaType;
@@ -46,16 +46,16 @@ import java.util.UUID;
 //Make isSaddleable() and the Nature Staff functionality dependent on isPlayerGrown().
 //Make MoaEntity and other MountableEntities affected by Slowfall and other movement modifiers.
 
-public class MoaEntity extends MountableEntity
+public class Moa extends MountableEntity
 {
-	private static final EntityDataAccessor<String> DATA_MOA_TYPE_ID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.STRING);
-	private static final EntityDataAccessor<Optional<UUID>> DATA_RIDER_UUID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.OPTIONAL_UUID);
-	private static final EntityDataAccessor<Optional<UUID>> DATA_LAST_RIDER_UUID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.OPTIONAL_UUID);
-	private static final EntityDataAccessor<Integer> DATA_REMAINING_JUMPS_ID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Boolean> DATA_HUNGRY_ID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Integer> DATA_AMOUNT_FED_ID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Boolean> DATA_PLAYER_GROWN_ID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Boolean> DATA_SITTING_ID = SynchedEntityData.defineId(MoaEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<String> DATA_MOA_TYPE_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.STRING);
+	private static final EntityDataAccessor<Optional<UUID>> DATA_RIDER_UUID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.OPTIONAL_UUID);
+	private static final EntityDataAccessor<Optional<UUID>> DATA_LAST_RIDER_UUID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.OPTIONAL_UUID);
+	private static final EntityDataAccessor<Integer> DATA_REMAINING_JUMPS_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> DATA_HUNGRY_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> DATA_AMOUNT_FED_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> DATA_PLAYER_GROWN_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_SITTING_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.BOOLEAN);
 
 	public float wingRotation;
 	public float prevWingRotation;
@@ -67,13 +67,8 @@ public class MoaEntity extends MountableEntity
 
 	public int eggTime = this.random.nextInt(50) + 775;
 
-	public MoaEntity(EntityType<? extends MoaEntity> type, Level worldIn) {
+	public Moa(EntityType<? extends Moa> type, Level worldIn) {
 		super(type, worldIn);
-	}
-
-	public MoaEntity(Level worldIn) {
-		this(AetherEntityTypes.MOA.get(), worldIn);
-		this.maxUpStep = 1.0F;
 	}
 
 	@Override
@@ -87,11 +82,13 @@ public class MoaEntity extends MountableEntity
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
 	}
 
+	@Nonnull
 	@Override
-	protected PathNavigation createNavigation(Level world) {
+	protected PathNavigation createNavigation(@Nonnull Level world) {
 		return new FallPathNavigator(this, world);
 	}
 
+	@Nonnull
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return Mob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 35.0D)
@@ -151,7 +148,7 @@ public class MoaEntity extends MountableEntity
 	}
 
 	@Override
-	public void travel(Vec3 vector3d) {
+	public void travel(@Nonnull Vec3 vector3d) {
 		if (!this.isSitting()) {
 			super.travel(vector3d);
 		} else {
@@ -183,8 +180,9 @@ public class MoaEntity extends MountableEntity
 		this.setFlapCooldown(0);
 	}
 
+	@Nonnull
 	@Override
-	public InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
+	public InteractionResult mobInteract(Player playerEntity, @Nonnull InteractionHand hand) {
 		ItemStack itemstack = playerEntity.getItemInHand(hand);
 		if (itemstack.getItem() == AetherItems.NATURE_STAFF.get()) {
 			itemstack.hurtAndBreak(2, playerEntity, (p) -> p.broadcastBreakEvent(hand));
@@ -329,7 +327,7 @@ public class MoaEntity extends MountableEntity
 
 	@Nullable
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+	protected SoundEvent getHurtSound(@Nonnull DamageSource damageSourceIn) {
 		return AetherSoundEvents.ENTITY_MOA_HURT.get();
 	}
 
@@ -346,7 +344,7 @@ public class MoaEntity extends MountableEntity
 	}
 
 	@Override
-	public boolean isFood(ItemStack stack) {
+	public boolean isFood(@Nonnull ItemStack stack) {
 		return false;
 	}
 
@@ -392,7 +390,7 @@ public class MoaEntity extends MountableEntity
 
 	@Nullable
 	@Override
-	public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
+	public AgeableMob getBreedOffspring(@Nonnull ServerLevel level, @Nonnull AgeableMob entity) {
 		return null;
 	}
 
@@ -402,7 +400,7 @@ public class MoaEntity extends MountableEntity
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag compound) {
+	public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		this.setMoaType(AetherMoaTypes.MOA_TYPES.get(compound.getString("MoaType")));
 		if (compound.hasUUID("Rider")) {
@@ -419,7 +417,7 @@ public class MoaEntity extends MountableEntity
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag compound) {
+	public void addAdditionalSaveData(@Nonnull CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putString("MoaType", this.getMoaType().getRegistryName());
 		if (this.getRider() != null) {

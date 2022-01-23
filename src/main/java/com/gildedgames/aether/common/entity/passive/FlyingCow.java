@@ -62,8 +62,9 @@ public class FlyingCow extends WingedEntity
         return stack.is(AetherTags.Items.FLYING_COW_TEMPTATION_ITEMS);
     }
 
+    @Nonnull
     @Override
-    public InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
+    public InteractionResult mobInteract(Player playerEntity, @Nonnull InteractionHand hand) {
         ItemStack itemStack = playerEntity.getItemInHand(hand);
         if (itemStack.getItem() == Items.BUCKET && !this.isBaby()) {
             playerEntity.playSound(AetherSoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);

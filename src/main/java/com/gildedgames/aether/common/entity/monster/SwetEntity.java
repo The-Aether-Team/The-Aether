@@ -33,6 +33,7 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Optional;
@@ -163,8 +164,9 @@ public class SwetEntity extends MountableEntity {
         this.wasOnGround = this.onGround;
     }
 
+    @Nonnull
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
         if (!this.level.isClientSide) {
             if (!this.hasPrey() && this.isFriendlyTowardEntity(player)) {
                 this.capturePrey(player);
@@ -339,7 +341,7 @@ public class SwetEntity extends MountableEntity {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
+    public void addAdditionalSaveData(@Nonnull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putByte("SwetType", this.getSwetType());
         compound.putFloat("WaterDamageScale", this.getWaterDamageScale());
@@ -347,7 +349,7 @@ public class SwetEntity extends MountableEntity {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
+    public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setSwetType(compound.getByte("SwetType"));
         this.setWaterDamageScale(compound.getFloat("WaterDamageScale"));

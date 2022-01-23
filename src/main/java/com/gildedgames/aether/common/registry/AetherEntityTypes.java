@@ -47,8 +47,8 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<Sheepuff>> SHEEPUFF = ENTITIES.register("sheepuff",
             () -> EntityType.Builder.<Sheepuff>of(Sheepuff::new, MobCategory.CREATURE).sized(0.9F, 1.3F).clientTrackingRange(10).build("sheepuff"));
 
-    public static final RegistryObject<EntityType<MoaEntity>> MOA = ENTITIES.register("moa",
-            () -> EntityType.Builder.<MoaEntity>of(MoaEntity::new, MobCategory.CREATURE).sized(1.0F, 2.0F).build("moa"));
+    public static final RegistryObject<EntityType<Moa>> MOA = ENTITIES.register("moa",
+            () -> EntityType.Builder.<Moa>of(Moa::new, MobCategory.CREATURE).sized(1.0F, 2.0F).build("moa"));
 
     public static final RegistryObject<EntityType<AerwhaleEntity>> AERWHALE = ENTITIES.register("aerwhale",
             () -> EntityType.Builder.<AerwhaleEntity>of(AerwhaleEntity::new, MobCategory.CREATURE).sized(3.0F, 3.0F).fireImmune().build("aerwhale"));
@@ -153,7 +153,7 @@ public class AetherEntityTypes {
         event.put(AetherEntityTypes.PHYG.get(), Phyg.createMobAttributes().build());
         event.put(AetherEntityTypes.FLYING_COW.get(), FlyingCow.createMobAttributes().build());
         event.put(AetherEntityTypes.SHEEPUFF.get(), Sheepuff.createMobAttributes().build());
-        event.put(AetherEntityTypes.MOA.get(), MoaEntity.createMobAttributes().build());
+        event.put(AetherEntityTypes.MOA.get(), Moa.createMobAttributes().build());
         event.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.createMobAttributes().build());
         event.put(AetherEntityTypes.AERBUNNY.get(), Aerbunny.createMobAttributes().build());
 
