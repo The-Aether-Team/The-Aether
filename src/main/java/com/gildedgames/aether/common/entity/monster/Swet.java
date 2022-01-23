@@ -3,17 +3,14 @@ package com.gildedgames.aether.common.entity.monster;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.passive.MountableEntity;
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.common.registry.AetherLoot;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -26,10 +23,7 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
@@ -37,23 +31,25 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Optional;
 
-public class SwetEntity extends MountableEntity {
+public class Swet extends MountableEntity {
 
-    public static final EntityDataAccessor<Boolean> MID_JUMP = SynchedEntityData.defineId(SwetEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> MID_JUMP = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.BOOLEAN);
 
-    public static final EntityDataAccessor<Float> WATER_DAMAGE_SCALE = SynchedEntityData.defineId(SwetEntity.class, EntityDataSerializers.FLOAT);
-    public static final EntityDataAccessor<Boolean> DEAD_IN_WATER = SynchedEntityData.defineId(SwetEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Float> WATER_DAMAGE_SCALE = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Boolean> DEAD_IN_WATER = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.BOOLEAN);
 
 
     public boolean wasOnGround;
     public boolean midJump;
     public int jumpTimer;
     public float swetHeight = 1.0F;
+    public float oSwetHeight = 1.0F;
     public float swetWidth = 1.0F;
+    public float oSwetWidth = 1.0F;
 
-    public SwetEntity(EntityType<? extends SwetEntity> type, Level level) {
+    public Swet(EntityType<? extends Swet> type, Level level) {
         super(type, level);
-        this.moveControl = new SwetEntity.MoveHelperController(this);
+        this.moveControl = new Swet.MoveHelperController(this);
     }
 
     @Override
@@ -129,6 +125,8 @@ public class SwetEntity extends MountableEntity {
         this.setMidJump(!this.onGround);
         if(!this.level.isClientSide) {
         } else {
+            this.oSwetHeight = this.swetHeight;
+            this.oSwetWidth = this.swetWidth;
             if (this.getMidJump()) {
                 this.jumpTimer++;
             } else {
@@ -347,12 +345,12 @@ public class SwetEntity extends MountableEntity {
     }
 
     static class ConsumeGoal extends Goal {
-        private final SwetEntity swet;
+        private final Swet swet;
         private int jumps = 0;
 
         private float chosenDegrees = 0;
 
-        public ConsumeGoal(SwetEntity entity) {
+        public ConsumeGoal(Swet entity) {
             this.swet = entity;
             this.setFlags(EnumSet.of(Flag.MOVE));
         }
@@ -415,9 +413,9 @@ public class SwetEntity extends MountableEntity {
     }
 
     static class HuntGoal extends Goal {
-        private final SwetEntity swet;
+        private final Swet swet;
 
-        public HuntGoal(SwetEntity entity) {
+        public HuntGoal(Swet entity) {
             this.swet = entity;
             this.setFlags(EnumSet.of(Goal.Flag.LOOK));
         }
@@ -428,7 +426,7 @@ public class SwetEntity extends MountableEntity {
             if (swet.hasPrey() || target == null || !target.isAlive() || this.swet.isFriendlyTowardEntity(target) || (target instanceof Player && ((Player)target).getAbilities().invulnerable)) {
                 return false;
             } else {
-                return this.swet.getMoveControl() instanceof SwetEntity.MoveHelperController;
+                return this.swet.getMoveControl() instanceof Swet.MoveHelperController;
             }
         }
 
@@ -449,7 +447,7 @@ public class SwetEntity extends MountableEntity {
             LivingEntity target = this.swet.getTarget();
             if(target != null) {
                 this.swet.lookAt(target, 10.0F, 10.0F);
-                ((SwetEntity.MoveHelperController)this.swet.getMoveControl()).setDirection(this.swet.getYRot(), true);
+                ((Swet.MoveHelperController)this.swet.getMoveControl()).setDirection(this.swet.getYRot(), true);
                 if(swet.getBoundingBox().intersects(target.getBoundingBox())) {
                     swet.capturePrey(target);
                 }
@@ -462,11 +460,11 @@ public class SwetEntity extends MountableEntity {
      * @see net.minecraft.world.entity.monster.Slime
      */
     static class RandomFacingGoal extends Goal {
-        private final SwetEntity swet;
+        private final Swet swet;
         private float chosenDegrees;
         private int nextRandomizeTime;
 
-        public RandomFacingGoal(SwetEntity swetEntity) {
+        public RandomFacingGoal(Swet swetEntity) {
             this.swet = swetEntity;
             this.setFlags(EnumSet.of(Goal.Flag.LOOK));
         }
@@ -486,9 +484,9 @@ public class SwetEntity extends MountableEntity {
     }
 
     static class HopGoal extends Goal {
-        private final SwetEntity swet;
+        private final Swet swet;
 
-        public HopGoal(SwetEntity swetEntity) {
+        public HopGoal(Swet swetEntity) {
             this.swet = swetEntity;
             this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
         }
@@ -505,10 +503,10 @@ public class SwetEntity extends MountableEntity {
     static class MoveHelperController extends MoveControl {
         private float yRot;
         private int jumpDelay;
-        private final SwetEntity swet;
+        private final Swet swet;
         private boolean isAggressive;
 
-        public MoveHelperController(SwetEntity swet) {
+        public MoveHelperController(Swet swet) {
             super(swet);
             this.swet = swet;
             this.yRot = 180.0F * swet.getYRot() / (float)Math.PI;

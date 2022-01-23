@@ -62,11 +62,11 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.<AerbunnyEntity>of(AerbunnyEntity::new, MobCategory.CREATURE).sized(0.4F, 0.4F).build("aerbunny"));
 
     // Hostile Mobs
-    public static final RegistryObject<EntityType<SwetEntity>> BLUE_SWET = ENTITIES.register("blue_swet",
-            () -> EntityType.Builder.<SwetEntity>of(SwetEntity::new, MobCategory.MONSTER).sized(0.8F, 0.8F).build("blue_swet"));
+    public static final RegistryObject<EntityType<Swet>> BLUE_SWET = ENTITIES.register("blue_swet",
+            () -> EntityType.Builder.<Swet>of(Swet::new, MobCategory.MONSTER).sized(0.8F, 0.8F).build("blue_swet"));
 
-    public static final RegistryObject<EntityType<SwetEntity>> GOLDEN_SWET = ENTITIES.register("golden_swet",
-            () -> EntityType.Builder.<SwetEntity>of(SwetEntity::new, MobCategory.MONSTER).sized(0.8F, 0.8F).build("golden_swet"));
+    public static final RegistryObject<EntityType<Swet>> GOLDEN_SWET = ENTITIES.register("golden_swet",
+            () -> EntityType.Builder.<Swet>of(Swet::new, MobCategory.MONSTER).sized(0.8F, 0.8F).build("golden_swet"));
 
     public static final RegistryObject<EntityType<Whirlwind>> WHIRLWIND = ENTITIES.register("whirlwind",
             () -> EntityType.Builder.<Whirlwind>of(PassiveWhirlwind::new, MobCategory.MONSTER).sized(0.6F, 0.8F).build("whirlwind"));
@@ -166,8 +166,8 @@ public class AetherEntityTypes {
         event.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.createMobAttributes().build());
         event.put(AetherEntityTypes.AERBUNNY.get(), AerbunnyEntity.createMobAttributes().build());
 
-        event.put(AetherEntityTypes.BLUE_SWET.get(), SwetEntity.createMobAttributes().build());
-        event.put(AetherEntityTypes.GOLDEN_SWET.get(), SwetEntity.createMobAttributes().build());
+        event.put(AetherEntityTypes.BLUE_SWET.get(), Swet.createMobAttributes().build());
+        event.put(AetherEntityTypes.GOLDEN_SWET.get(), Swet.createMobAttributes().build());
         event.put(AetherEntityTypes.WHIRLWIND.get(), Whirlwind.createMobAttributes().build());
         event.put(AetherEntityTypes.EVIL_WHIRLWIND.get(), Whirlwind.createMobAttributes().build());
         event.put(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantEntity.createMobAttributes().build());
