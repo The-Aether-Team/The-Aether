@@ -24,9 +24,8 @@ public class DimensionClientListener
         Camera renderInfo = event.getCamera();
         ClientLevel world = (ClientLevel) renderInfo.getEntity().level;
         if (world.effects() instanceof AetherSkyRenderInfo) {
-            double height = renderInfo.getPosition().y;
             ClientLevel.ClientLevelData worldInfo = world.getLevelData();
-            double d0 = height * worldInfo.getClearColorScale();
+            double d0 = (renderInfo.getPosition().y - (double)world.getMinBuildHeight()) * worldInfo.getClearColorScale();
             FogType fluidState = renderInfo.getFluidInCamera();
             if (d0 < 1.0D && fluidState != FogType.LAVA) {
                 if (d0 < 0.0D) {
