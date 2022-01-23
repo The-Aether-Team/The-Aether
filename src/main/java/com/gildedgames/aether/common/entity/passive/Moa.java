@@ -402,7 +402,9 @@ public class Moa extends MountableEntity
 	@Override
 	public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		this.setMoaType(AetherMoaTypes.MOA_TYPES.get(compound.getString("MoaType")));
+		if (compound.contains("MoaType")) {
+			this.setMoaType(AetherMoaTypes.MOA_TYPES.get(compound.getString("MoaType")));
+		}
 		if (compound.hasUUID("Rider")) {
 			this.setRider(compound.getUUID("Rider"));
 		}

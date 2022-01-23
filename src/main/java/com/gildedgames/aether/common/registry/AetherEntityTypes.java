@@ -39,22 +39,22 @@ public class AetherEntityTypes {
 
     // Passive Mobs
     public static final RegistryObject<EntityType<Phyg>> PHYG = ENTITIES.register("phyg",
-            () -> EntityType.Builder.<Phyg>of(Phyg::new, MobCategory.CREATURE).sized(0.9F, 0.9F).clientTrackingRange(10).build("phyg"));
+            () -> EntityType.Builder.of(Phyg::new, MobCategory.CREATURE).sized(0.9F, 0.9F).clientTrackingRange(10).build("phyg"));
 
     public static final RegistryObject<EntityType<FlyingCow>> FLYING_COW = ENTITIES.register("flying_cow",
-            () -> EntityType.Builder.<FlyingCow>of(FlyingCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build("flying_cow"));
+            () -> EntityType.Builder.of(FlyingCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10).build("flying_cow"));
 
     public static final RegistryObject<EntityType<Sheepuff>> SHEEPUFF = ENTITIES.register("sheepuff",
-            () -> EntityType.Builder.<Sheepuff>of(Sheepuff::new, MobCategory.CREATURE).sized(0.9F, 1.3F).clientTrackingRange(10).build("sheepuff"));
+            () -> EntityType.Builder.of(Sheepuff::new, MobCategory.CREATURE).sized(0.9F, 1.3F).clientTrackingRange(10).build("sheepuff"));
 
     public static final RegistryObject<EntityType<Moa>> MOA = ENTITIES.register("moa",
-            () -> EntityType.Builder.<Moa>of(Moa::new, MobCategory.CREATURE).sized(1.0F, 2.0F).build("moa"));
+            () -> EntityType.Builder.of(Moa::new, MobCategory.CREATURE).sized(1.0F, 2.0F).build("moa"));
 
     public static final RegistryObject<EntityType<AerwhaleEntity>> AERWHALE = ENTITIES.register("aerwhale",
             () -> EntityType.Builder.<AerwhaleEntity>of(AerwhaleEntity::new, MobCategory.CREATURE).sized(3.0F, 3.0F).fireImmune().build("aerwhale"));
 
     public static final RegistryObject<EntityType<Aerbunny>> AERBUNNY = ENTITIES.register("aerbunny",
-            () -> EntityType.Builder.<Aerbunny>of(Aerbunny::new, MobCategory.CREATURE).sized(0.4F, 0.4F).build("aerbunny"));
+            () -> EntityType.Builder.of(Aerbunny::new, MobCategory.CREATURE).sized(0.4F, 0.4F).build("aerbunny"));
 
     // Hostile Mobs
     public static final RegistryObject<EntityType<SwetEntity>> SWET = ENTITIES.register("swet",
