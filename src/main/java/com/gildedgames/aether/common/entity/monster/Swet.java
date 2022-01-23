@@ -24,6 +24,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
@@ -123,8 +124,7 @@ public class Swet extends MountableEntity {
             this.playSound(AetherSoundEvents.ENTITY_SWET_SQUISH.get(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
         }
         this.setMidJump(!this.onGround);
-        if(!this.level.isClientSide) {
-        } else {
+        if(this.level.isClientSide) {
             this.oSwetHeight = this.swetHeight;
             this.oSwetWidth = this.swetWidth;
             if (this.getMidJump()) {
@@ -151,6 +151,19 @@ public class Swet extends MountableEntity {
             this.fallDistance = 0;
 
         this.wasOnGround = this.onGround;
+    }
+
+    @Override
+    public void travel(Vec3 vector3d) {
+        if (this.isAlive()) {
+            super.travel(vector3d);
+            if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player) {
+                if (this.onGround && !this.getPlayerJumped() && (this.getDeltaMovement().x != 0 || this.getDeltaMovement().z != 0)) {
+                    this.setDeltaMovement(this.getDeltaMovement().x(), 0.42F, this.getDeltaMovement().z);
+                }
+                this.fallDistance = 0;
+            }
+        }
     }
 
     @Override
@@ -296,11 +309,6 @@ public class Swet extends MountableEntity {
 
     @Override
     public boolean canRiderInteract() {
-        return true;
-    }
-
-    @Override
-    protected boolean isSlime() {
         return true;
     }
 
