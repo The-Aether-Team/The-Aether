@@ -100,7 +100,7 @@ public class Swet extends MountableEntity {
     @Override
     public void tick() {
         if (this.isInWater()) {
-            this.dissolveSwet();
+            this.dissolveSwetInWater();
         }
 
         if (this.getDeadInWater()) {
@@ -205,6 +205,18 @@ public class Swet extends MountableEntity {
         return swetCape.isPresent();
     }
 
+    public void dissolveSwetInWater() {
+        this.dissolveSwet();
+        if (!this.getDeadInWater()) {
+            this.setDeadInWater(true);
+        }
+    }
+
+    public void dissolveSwetNormally() {
+        this.dissolveSwet();
+        this.discard();
+    }
+
     public void dissolveSwet() {
         for (int i = 0; i < 5; i++) {
             float f = this.random.nextFloat() * 3.141593F * 2.0F;
@@ -213,10 +225,6 @@ public class Swet extends MountableEntity {
             float f3 = Mth.cos(f) * f1;
 
             this.level.addParticle(ParticleTypes.SPLASH, this.getX() + (double) f2, this.getBoundingBox().minY + 1.25D, this.getZ() + (double) f3, (double) f2 * 1.5D + this.getDeltaMovement().x, 4D, (double) f3 * 1.5D + this.getDeltaMovement().z);
-        }
-
-        if (!this.getDeadInWater()) {
-            this.setDeadInWater(true);
         }
     }
 
@@ -384,7 +392,7 @@ public class Swet extends MountableEntity {
                         this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 1.55D, 0));
                     } else {
                         this.swet.getPassengers().get(0).stopRiding();
-                        this.swet.dissolveSwet();
+                        this.swet.dissolveSwetNormally();
                     }
 
                     if (!this.swet.getMidJump()) {
