@@ -41,7 +41,6 @@ public class Swet extends MountableEntity {
 
 
     public boolean wasOnGround;
-    public boolean midJump;
     public int jumpTimer;
     public float swetHeight = 1.0F;
     public float oSwetHeight = 1.0F;
