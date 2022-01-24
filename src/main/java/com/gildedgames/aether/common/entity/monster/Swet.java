@@ -403,11 +403,11 @@ public class Swet extends MountableEntity {
                 if (!this.swet.wasOnGround) {
                     if (this.swet.getJumpTimer() < 6) {
                         if (this.jumps == 1) {
-                            this.moveHorizontal(0.0F, 0.2F, chosenDegrees);
+                            this.moveHorizontal(0.0F, 0.1F, chosenDegrees);
                         } else if (this.jumps == 2) {
-                            this.moveHorizontal(0.0F, 0.3F, chosenDegrees);
+                            this.moveHorizontal(0.0F, 0.15F, chosenDegrees);
                         } else if (this.jumps == 3) {
-                            this.moveHorizontal(0.0F, 0.6F, chosenDegrees);
+                            this.moveHorizontal(0.0F, 0.3F, chosenDegrees);
                         }
                     }
                 }
