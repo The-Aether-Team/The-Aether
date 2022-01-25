@@ -1,12 +1,12 @@
 package com.gildedgames.aether.core.network.packet.client;
 
 import com.gildedgames.aether.client.event.listeners.capability.EternalDayClientListener;
-import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket.BaseAetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class ServerTimePacket extends AetherPacket
+public class ServerTimePacket extends BaseAetherPacket
 {
     private final long serverTime;
 

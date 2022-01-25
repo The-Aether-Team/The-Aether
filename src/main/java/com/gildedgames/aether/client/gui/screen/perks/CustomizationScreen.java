@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.gui.screen.perks;
 
-import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
+import com.gildedgames.aether.core.capability.interfaces.AetherRankingsSerializable;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -20,7 +20,7 @@ public class CustomizationScreen extends Screen
 
     protected void init() {
         if (this.minecraft.player != null) {
-            IAetherRankings.get(this.minecraft.player).ifPresent(aetherRankings -> {
+            AetherRankingsSerializable.get(this.minecraft.player).ifPresent(aetherRankings -> {
                 this.addRenderableWidget(new Button(this.width / 2 - 75, this.height / 6, 150, 20,
                         new TranslatableComponent(aetherRankings.areSleeveGloves() ? "gui.aether.customization.gloves.sleeve" : "gui.aether.customization.gloves.arm"),
                         (pressed) -> aetherRankings.setSleeveGloves(!aetherRankings.areSleeveGloves()),

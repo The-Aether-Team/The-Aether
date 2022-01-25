@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.capability.capabilities.cape;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
+import com.gildedgames.aether.core.capability.interfaces.CapeEntitySerializable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -12,9 +12,9 @@ import javax.annotation.Nonnull;
 
 public class CapeEntityProvider implements ICapabilitySerializable<CompoundTag>
 {
-    private final ICapeEntity capeEntity;
+    private final CapeEntitySerializable capeEntity;
 
-    public CapeEntityProvider(ICapeEntity capeEntity) {
+    public CapeEntityProvider(CapeEntitySerializable capeEntity) {
         this.capeEntity = capeEntity;
     }
 

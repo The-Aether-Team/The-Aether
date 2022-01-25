@@ -2,7 +2,7 @@ package com.gildedgames.aether.core.capability.capabilities.eternal_day;
 
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
-import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
+import com.gildedgames.aether.core.capability.interfaces.EternalDaySerializable;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.AetherTimePacket;
 import com.gildedgames.aether.core.network.packet.client.CheckTimePacket;
@@ -13,7 +13,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
-public class EternalDay implements IEternalDay
+public class EternalDay implements EternalDaySerializable
 {
     private final Level level;
 

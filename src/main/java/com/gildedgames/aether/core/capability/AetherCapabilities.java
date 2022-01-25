@@ -23,7 +23,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
@@ -36,21 +35,21 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherCapabilities
 {
-	public static final Capability<ICapeEntity> CAPE_ENTITY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<IAetherPlayer> AETHER_PLAYER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<IAetherRankings> AETHER_RANKINGS_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<IPhoenixArrow> PHOENIX_ARROW_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<ILightningTracker> LIGHTNING_TRACKER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<IEternalDay> ETERNAL_DAY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<CapeEntitySerializable> CAPE_ENTITY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<AetherPlayerSerializable> AETHER_PLAYER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<AetherRankingsSerializable> AETHER_RANKINGS_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<PhoenixArrowSerializable> PHOENIX_ARROW_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<LightningTrackerSerializable> LIGHTNING_TRACKER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<EternalDaySerializable> ETERNAL_DAY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
 
 	@SubscribeEvent
 	public static void register(RegisterCapabilitiesEvent event) {
-		event.register(ICapeEntity.class);
-		event.register(IAetherPlayer.class);
-		event.register(IAetherRankings.class);
-		event.register(IPhoenixArrow.class);
-		event.register(ILightningTracker.class);
-		event.register(IEternalDay.class);
+		event.register(CapeEntitySerializable.class);
+		event.register(AetherPlayerSerializable.class);
+		event.register(AetherRankingsSerializable.class);
+		event.register(PhoenixArrowSerializable.class);
+		event.register(LightningTrackerSerializable.class);
+		event.register(EternalDaySerializable.class);
 	}
 	
 	@EventBusSubscriber(modid = Aether.MODID)

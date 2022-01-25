@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.capability.capabilities.rankings;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
+import com.gildedgames.aether.core.capability.interfaces.AetherRankingsSerializable;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -12,9 +12,9 @@ import javax.annotation.Nonnull;
 
 public class AetherRankingsProvider implements ICapabilitySerializable<CompoundTag>
 {
-    private final IAetherRankings aetherRankings;
+    private final AetherRankingsSerializable aetherRankings;
 
-    public AetherRankingsProvider(IAetherRankings aetherRankings) {
+    public AetherRankingsProvider(AetherRankingsSerializable aetherRankings) {
         this.aetherRankings = aetherRankings;
     }
 

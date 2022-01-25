@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.event.listeners.capability;
 
-import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
+import com.gildedgames.aether.core.capability.interfaces.AetherRankingsSerializable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -13,16 +13,16 @@ public class AetherRankingsListener
     @SubscribeEvent
     public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntityLiving() instanceof Player player) {
-            IAetherRankings.get(player).ifPresent(IAetherRankings::onUpdate);
+            AetherRankingsSerializable.get(player).ifPresent(AetherRankingsSerializable::onUpdate);
         }
     }
 
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event) {
         event.getOriginal().reviveCaps();
-        IAetherRankings original = IAetherRankings.get(event.getOriginal()).orElseThrow(
+        AetherRankingsSerializable original = AetherRankingsSerializable.get(event.getOriginal()).orElseThrow(
                 () -> new IllegalStateException("Player " + event.getOriginal().getName().getContents() + " has no AetherRankings capability!"));
-        IAetherRankings newPlayer = IAetherRankings.get(event.getPlayer()).orElseThrow(
+        AetherRankingsSerializable newPlayer = AetherRankingsSerializable.get(event.getPlayer()).orElseThrow(
                 () -> new IllegalStateException("Player " + event.getPlayer().getName().getContents() + " has no AetherRankings capability!"));
         newPlayer.copyFrom(original);
         event.getOriginal().invalidateCaps();

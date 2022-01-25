@@ -2,7 +2,7 @@ package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.interfaces.AetherPlayerSerializable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
@@ -100,7 +100,7 @@ public class AerwhaleEntity extends FlyingMob implements Enemy {
 				
 				positionIn = new Vec3(player.xxa, 0.0, (player.zza <= 0.0F)? player.zza * 0.25F : player.zza);
 				
-				if (IAetherPlayer.get(player).map(IAetherPlayer::isJumping).orElse(false)) {
+				if (AetherPlayerSerializable.get(player).map(AetherPlayerSerializable::isJumping).orElse(false)) {
 					this.setDeltaMovement(new Vec3(0.0, 0.0, 0.0));
 				} else {
 					double d0 = Math.toRadians(player.getYRot() - 90.0);

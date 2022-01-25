@@ -8,7 +8,7 @@ import com.gildedgames.aether.common.entity.passive.AerbunnyEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.AetherConfig;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.interfaces.AetherPlayerSerializable;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.*;
@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class AetherPlayer implements IAetherPlayer
+public class AetherPlayer implements AetherPlayerSerializable
 {
 	private final Player player;
 
@@ -156,7 +156,7 @@ public class AetherPlayer implements IAetherPlayer
 	}
 
 	@Override
-	public void copyFrom(IAetherPlayer other, boolean isWasDeath) {
+	public void copyFrom(AetherPlayerSerializable other, boolean isWasDeath) {
 		if (!isWasDeath) {
 			this.setRemedyMaximum(other.getRemedyMaximum());
 			this.setRemedyTimer(other.getRemedyTimer());

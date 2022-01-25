@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.event.listeners.capability;
 
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.interfaces.AetherPlayerSerializable;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.HittingPacket;
 import com.gildedgames.aether.core.network.packet.server.JumpPacket;
@@ -19,7 +19,7 @@ public class AetherPlayerClientListener
 {
     @SubscribeEvent
     public static void onMove(MovementInputUpdateEvent event) {
-        IAetherPlayer.get(event.getPlayer()).ifPresent((aetherPlayer) -> {
+        AetherPlayerSerializable.get(event.getPlayer()).ifPresent((aetherPlayer) -> {
             Input input = event.getInput();
             boolean isJumping = input.jumping;
             if (isJumping != aetherPlayer.isJumping()) {
@@ -47,7 +47,7 @@ public class AetherPlayerClientListener
     private static void checkHit(int key) {
         Player player = Minecraft.getInstance().player;
         if (player != null) {
-            IAetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+            AetherPlayerSerializable.get(player).ifPresent((aetherPlayer) -> {
                 boolean isAttack = key == Minecraft.getInstance().options.keyAttack.getKey().getValue();
                 boolean isPressing = Minecraft.getInstance().options.keyAttack.isDown();
                 boolean isHitting = isAttack && isPressing;

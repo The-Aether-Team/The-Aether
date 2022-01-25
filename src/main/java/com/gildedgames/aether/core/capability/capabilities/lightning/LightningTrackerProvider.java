@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.capability.capabilities.lightning;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
+import com.gildedgames.aether.core.capability.interfaces.LightningTrackerSerializable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -12,9 +12,9 @@ import javax.annotation.Nonnull;
 
 public class LightningTrackerProvider implements ICapabilitySerializable<CompoundTag>
 {
-    private final ILightningTracker lightningTracker;
+    private final LightningTrackerSerializable lightningTracker;
 
-    public LightningTrackerProvider(ILightningTracker lightningTracker) {
+    public LightningTrackerProvider(LightningTrackerSerializable lightningTracker) {
         this.lightningTracker = lightningTracker;
     }
 

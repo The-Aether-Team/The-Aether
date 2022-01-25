@@ -1,13 +1,13 @@
 package com.gildedgames.aether.core.capability.capabilities.cape;
 
-import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
+import com.gildedgames.aether.core.capability.interfaces.CapeEntitySerializable;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.nbt.CompoundTag;
 
-public class CapeEntity implements ICapeEntity
+public class CapeEntity implements CapeEntitySerializable
 {
     private final LivingEntity entity;
 

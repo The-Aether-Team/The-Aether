@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.capability.capabilities.arrow;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
+import com.gildedgames.aether.core.capability.interfaces.PhoenixArrowSerializable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -12,9 +12,9 @@ import javax.annotation.Nonnull;
 
 public class PhoenixArrowProvider implements ICapabilitySerializable<CompoundTag>
 {
-    private final IPhoenixArrow phoenixArrow;
+    private final PhoenixArrowSerializable phoenixArrow;
 
-    public PhoenixArrowProvider(IPhoenixArrow phoenixArrow) {
+    public PhoenixArrowProvider(PhoenixArrowSerializable phoenixArrow) {
         this.phoenixArrow = phoenixArrow;
     }
 

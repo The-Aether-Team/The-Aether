@@ -6,9 +6,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 
-import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket.BaseAetherPacket;
 
-public class ClientGrabItemPacket extends AetherPacket
+public class ClientGrabItemPacket extends BaseAetherPacket
 {
     private final int playerID;
     private final ItemStack stack;

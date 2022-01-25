@@ -1,7 +1,6 @@
 package com.gildedgames.aether.common.entity.passive;
 
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import net.minecraft.client.player.LocalPlayer;
+import com.gildedgames.aether.core.capability.interfaces.AetherPlayerSerializable;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -61,7 +60,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 	public void riderTick() {
 		if (this.getControllingPassenger() instanceof Player) {
 			Player playerEntity = (Player) this.getControllingPassenger();
-			IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> {
+			AetherPlayerSerializable.get(playerEntity).ifPresent(aetherPlayer -> {
 				if (aetherPlayer.isJumping() && !this.isMountJumping()) {
 					this.setPlayerJumped(true);
 				}

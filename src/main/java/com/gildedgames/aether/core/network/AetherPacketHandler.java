@@ -2,7 +2,7 @@ package com.gildedgames.aether.core.network;
 
 import com.gildedgames.aether.Aether;
 
-import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket.BaseAetherPacket;
 import com.gildedgames.aether.core.network.packet.client.*;
 import com.gildedgames.aether.core.network.packet.server.*;
 import net.minecraft.server.level.ServerPlayer;
@@ -51,8 +51,8 @@ public class AetherPacketHandler
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
 	}
 
-	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
-		INSTANCE.messageBuilder(packet, index++).encoder(AetherPacket::encode).decoder(decoder).consumer(AetherPacket::handle).add();
+	private static <MSG extends BaseAetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
+		INSTANCE.messageBuilder(packet, index++).encoder(BaseAetherPacket::encode).decoder(decoder).consumer(BaseAetherPacket::handle).add();
 	}
 
 	public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.core.network.packet.client;
 
-import com.gildedgames.aether.core.network.IAetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
@@ -9,7 +9,7 @@ import net.minecraft.world.entity.player.Player;
 /**
  * This packet is used to move the player on the client when they are hit by a ZephyrSnowBallEntity on the server.
  */
-public class ZephyrSnowballHitPacket extends IAetherPacket.AetherPacket {
+public class ZephyrSnowballHitPacket extends AetherPacket.BaseAetherPacket {
     private final int entityID;
     private final double xSpeed;
     private final double zSpeed;

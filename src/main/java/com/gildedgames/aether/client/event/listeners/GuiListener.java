@@ -8,7 +8,7 @@ import com.gildedgames.aether.client.registry.AetherKeys;
 import com.gildedgames.aether.common.event.listeners.DimensionListener;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.interfaces.AetherPlayerSerializable;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.OpenAccessoriesPacket;
 import com.gildedgames.aether.core.util.TriviaReader;
@@ -127,7 +127,7 @@ public class GuiListener
 				if (dimension == AetherDimensions.AETHER_WORLD) {
 					Screen.drawCenteredString(matrixStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.descending"), screen.width / 2, 50, 16777215);
 				} else {
-					IAetherPlayer.get(Minecraft.getInstance().player).ifPresent(aetherPlayer -> {
+					AetherPlayerSerializable.get(Minecraft.getInstance().player).ifPresent(aetherPlayer -> {
 						if (aetherPlayer.isInPortal()) {
 							Screen.drawCenteredString(matrixStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.ascending"), screen.width / 2, 50, 16777215);
 						}

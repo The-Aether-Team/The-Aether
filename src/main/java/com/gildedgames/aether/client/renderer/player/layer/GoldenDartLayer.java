@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.player.layer;
 
 import com.gildedgames.aether.common.entity.projectile.dart.GoldenDartEntity;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.interfaces.AetherPlayerSerializable;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -31,7 +31,7 @@ public class GoldenDartLayer<T extends LivingEntity, M extends PlayerModel<T>> e
     @Override
     protected int numStuck(T entity) {
         if (entity instanceof Player) {
-            IAetherPlayer aetherPlayer = IAetherPlayer.get((Player) entity).orElse(null);
+            AetherPlayerSerializable aetherPlayer = AetherPlayerSerializable.get((Player) entity).orElse(null);
             return aetherPlayer.getGoldenDartCount();
         } else {
             return 0;

@@ -1,13 +1,13 @@
 package com.gildedgames.aether.core.capability.capabilities.rankings;
 
-import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
+import com.gildedgames.aether.core.capability.interfaces.AetherRankingsSerializable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.player.Player;
 
-public class AetherRankings implements IAetherRankings
+public class AetherRankings implements AetherRankingsSerializable
 {
     private final Player player;
 
@@ -55,7 +55,7 @@ public class AetherRankings implements IAetherRankings
     }
 
     @Override
-    public void copyFrom(IAetherRankings other) {
+    public void copyFrom(AetherRankingsSerializable other) {
         this.setSleeveGloves(other.areSleeveGloves());
         this.setRenderHalo(other.shouldRenderHalo());
         this.setRenderDeveloperGlow(other.shouldRenderDeveloperGlow());

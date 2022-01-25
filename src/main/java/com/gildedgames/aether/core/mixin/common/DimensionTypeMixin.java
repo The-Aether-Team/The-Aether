@@ -2,7 +2,7 @@ package com.gildedgames.aether.core.mixin.common;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.event.listeners.capability.EternalDayListener;
-import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
+import com.gildedgames.aether.core.capability.interfaces.EternalDaySerializable;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.dimension.DimensionType;
@@ -42,7 +42,7 @@ public class DimensionTypeMixin
             long time = this.fixedTime.orElse(dayTime);
             Level level = EternalDayListener.world;
             if (level != null) {
-                IEternalDay eternalDay = IEternalDay.get(level).orElse(null);
+                EternalDaySerializable eternalDay = EternalDaySerializable.get(level).orElse(null);
                 eternalDay.setServerLevelTime(level.getDayTime());
                 time = eternalDay.getServerLevelTime();
             }

@@ -4,7 +4,7 @@ import com.gildedgames.aether.common.item.accessories.abilities.ZaniteAccessory;
 import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.interfaces.AetherPlayerSerializable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -58,7 +58,7 @@ public class AccessoryAbilityListener
                         Vec3 motion = impactedLiving.getDeltaMovement();
                         if (!impactedLiving.level.isClientSide) {
                             if (impactedLiving instanceof Player player) {
-                                IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                                AetherPlayerSerializable.get(player).ifPresent(aetherPlayer -> {
                                     if (!aetherPlayer.isMoving()) {
                                         aetherPlayer.setProjectileImpactedMaximum(150);
                                         aetherPlayer.setProjectileImpactedTimer(150);

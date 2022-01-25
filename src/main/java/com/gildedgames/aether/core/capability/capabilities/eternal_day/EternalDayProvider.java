@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.capability.capabilities.eternal_day;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
+import com.gildedgames.aether.core.capability.interfaces.EternalDaySerializable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -12,9 +12,9 @@ import javax.annotation.Nonnull;
 
 public class EternalDayProvider implements ICapabilitySerializable<CompoundTag>
 {
-    private final IEternalDay eternalDay;
+    private final EternalDaySerializable eternalDay;
 
-    public EternalDayProvider(IEternalDay eternalDay) {
+    public EternalDayProvider(EternalDaySerializable eternalDay) {
         this.eternalDay = eternalDay;
     }
 

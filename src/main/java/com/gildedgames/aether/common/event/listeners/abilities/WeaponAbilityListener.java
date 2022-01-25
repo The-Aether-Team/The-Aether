@@ -6,9 +6,9 @@ import com.gildedgames.aether.common.entity.projectile.dart.GoldenDartEntity;
 import com.gildedgames.aether.common.entity.projectile.dart.PoisonDartEntity;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
-import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
+import com.gildedgames.aether.core.capability.interfaces.AetherPlayerSerializable;
+import com.gildedgames.aether.core.capability.interfaces.LightningTrackerSerializable;
+import com.gildedgames.aether.core.capability.interfaces.PhoenixArrowSerializable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -97,7 +97,7 @@ public class WeaponAbilityListener
     public static void onArrowHit(ProjectileImpactEvent event) {
         if (event.getRayTraceResult().getType() == HitResult.Type.ENTITY && event.getProjectile() instanceof AbstractArrow) {
             Entity impactedEntity = ((EntityHitResult) event.getRayTraceResult()).getEntity();
-            IPhoenixArrow.get((AbstractArrow) event.getProjectile()).ifPresent(phoenixArrow -> {
+            PhoenixArrowSerializable.get((AbstractArrow) event.getProjectile()).ifPresent(phoenixArrow -> {
                 if (phoenixArrow.isPhoenixArrow() && phoenixArrow.getFireTime() > 0) {
                     impactedEntity.setSecondsOnFire(phoenixArrow.getFireTime());
                 }
@@ -111,11 +111,11 @@ public class WeaponAbilityListener
             Player playerEntity = (Player) event.getEntityLiving();
             Entity source = event.getSource().getDirectEntity();
             if (source instanceof GoldenDartEntity) {
-                IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setGoldenDartCount(aetherPlayer.getGoldenDartCount() + 1));
+                AetherPlayerSerializable.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setGoldenDartCount(aetherPlayer.getGoldenDartCount() + 1));
             } else if (source instanceof PoisonDartEntity || source instanceof PoisonNeedleEntity) {
-                IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setPoisonDartCount(aetherPlayer.getPoisonDartCount() + 1));
+                AetherPlayerSerializable.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setPoisonDartCount(aetherPlayer.getPoisonDartCount() + 1));
             } else if (source instanceof EnchantedDartEntity) {
-                IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setEnchantedDartCount(aetherPlayer.getEnchantedDartCount() + 1));
+                AetherPlayerSerializable.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setEnchantedDartCount(aetherPlayer.getEnchantedDartCount() + 1));
             }
         }
     }
@@ -124,7 +124,7 @@ public class WeaponAbilityListener
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
         if (event.getEntity() instanceof LivingEntity) {
             LivingEntity entity = (LivingEntity) event.getEntity();
-            ILightningTracker.get(event.getLightning()).ifPresent(lightningTracker -> {
+            LightningTrackerSerializable.get(event.getLightning()).ifPresent(lightningTracker -> {
                 if (lightningTracker.getOwner() != null) {
                     if (entity == lightningTracker.getOwner() || entity == lightningTracker.getOwner().getVehicle()) {
                         event.setCanceled(true);

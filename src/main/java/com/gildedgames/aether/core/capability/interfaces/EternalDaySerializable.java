@@ -7,11 +7,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public interface IEternalDay extends INBTSerializable<CompoundTag>
+public interface EternalDaySerializable extends INBTSerializable<CompoundTag>
 {
     Level getLevel();
 
-    static LazyOptional<IEternalDay> get(Level world) {
+    static LazyOptional<EternalDaySerializable> get(Level world) {
         return world.getCapability(AetherCapabilities.ETERNAL_DAY_CAPABILITY);
     }
 

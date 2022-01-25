@@ -1,11 +1,11 @@
 package com.gildedgames.aether.core.capability.capabilities.lightning;
 
-import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
+import com.gildedgames.aether.core.capability.interfaces.LightningTrackerSerializable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.nbt.CompoundTag;
 
-public class LightningTracker implements ILightningTracker
+public class LightningTracker implements LightningTrackerSerializable
 {
     private final LightningBolt lightningBolt;
 

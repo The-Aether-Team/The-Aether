@@ -4,7 +4,7 @@ import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.FallingRandomWalkingGoal;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.interfaces.AetherPlayerSerializable;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.level.block.Blocks;
@@ -24,8 +24,6 @@ import net.minecraft.server.level.ServerLevel;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
-
-import net.minecraft.world.entity.ai.goal.Goal.Flag;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -91,7 +89,7 @@ public class AerbunnyEntity extends AetherAnimalEntity
                 if (!player.getAbilities().flying) {
                     player.setDeltaMovement(player.getDeltaMovement().add(0.0D, 0.05D, 0.0D));
                 }
-                IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                AetherPlayerSerializable.get(player).ifPresent(aetherPlayer -> {
                     if (aetherPlayer.isJumping() && player.getDeltaMovement().y < -0.225D) {
                         player.setDeltaMovement(player.getDeltaMovement().x, 0.125D, player.getDeltaMovement().z);
                         if (!this.level.isClientSide) {
@@ -141,10 +139,10 @@ public class AerbunnyEntity extends AetherAnimalEntity
             if (this.isPassenger()) {
                 this.navigation.recomputePath();
                 this.stopRiding();
-                IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(null));
+                AetherPlayerSerializable.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(null));
             } else {
                 if (this.startRiding(player)) {
-                    IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(this.getUUID()));
+                    AetherPlayerSerializable.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAerbunny(this.getUUID()));
                 }
             }
             return InteractionResult.SUCCESS;

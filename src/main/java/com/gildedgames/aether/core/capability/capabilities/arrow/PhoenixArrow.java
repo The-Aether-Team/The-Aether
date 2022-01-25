@@ -1,10 +1,10 @@
 package com.gildedgames.aether.core.capability.capabilities.arrow;
 
-import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
+import com.gildedgames.aether.core.capability.interfaces.PhoenixArrowSerializable;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.nbt.CompoundTag;
 
-public class PhoenixArrow implements IPhoenixArrow
+public class PhoenixArrow implements PhoenixArrowSerializable
 {
     private final AbstractArrow arrow;
 

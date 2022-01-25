@@ -3,7 +3,7 @@ package com.gildedgames.aether.common.item.combat.loot;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.interfaces.AetherPlayerSerializable;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +25,7 @@ public class CloudStaffItem extends Item
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand hand) {
         ItemStack heldItem = playerIn.getItemInHand(hand);
-        IAetherPlayer.get(playerIn).ifPresent(aetherPlayer -> {
+        AetherPlayerSerializable.get(playerIn).ifPresent(aetherPlayer -> {
             if (aetherPlayer.getCloudMinions().isEmpty()) {
                 playerIn.swing(hand);
                 if (!worldIn.isClientSide) {
@@ -52,7 +52,7 @@ public class CloudStaffItem extends Item
     @Override
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         if (entity instanceof Player) {
-            IAetherPlayer.get((Player) entity).ifPresent(aetherPlayer -> {
+            AetherPlayerSerializable.get((Player) entity).ifPresent(aetherPlayer -> {
                 if (!aetherPlayer.getCloudMinions().isEmpty()) {
                     if (!aetherPlayer.getPlayer().getCooldowns().isOnCooldown(this) && aetherPlayer.isHitting()) {
                         CloudMinionEntity cloudMinionRight = aetherPlayer.getCloudMinions().get(0);

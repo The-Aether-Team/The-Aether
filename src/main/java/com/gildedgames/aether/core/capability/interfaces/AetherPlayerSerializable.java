@@ -11,11 +11,11 @@ import net.minecraftforge.common.util.LazyOptional;
 import java.util.List;
 import java.util.UUID;
 
-public interface IAetherPlayer extends INBTSerializable<CompoundTag>
+public interface AetherPlayerSerializable extends INBTSerializable<CompoundTag>
 {
 	Player getPlayer();
 
-	static LazyOptional<IAetherPlayer> get(Player player) {
+	static LazyOptional<AetherPlayerSerializable> get(Player player) {
 		return player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
 	}
 
@@ -23,7 +23,7 @@ public interface IAetherPlayer extends INBTSerializable<CompoundTag>
 
 	void onLogin();
 
-	void copyFrom(IAetherPlayer other, boolean isWasDeath);
+	void copyFrom(AetherPlayerSerializable other, boolean isWasDeath);
 
 	void onUpdate();
 

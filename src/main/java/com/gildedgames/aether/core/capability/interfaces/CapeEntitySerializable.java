@@ -6,11 +6,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public interface ICapeEntity extends INBTSerializable<CompoundTag>
+public interface CapeEntitySerializable extends INBTSerializable<CompoundTag>
 {
     LivingEntity getEntity();
 
-    static LazyOptional<ICapeEntity> get(LivingEntity entity) {
+    static LazyOptional<CapeEntitySerializable> get(LivingEntity entity) {
         return entity.getCapability(AetherCapabilities.CAPE_ENTITY_CAPABILITY);
     }
 

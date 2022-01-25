@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.event.listeners.capability;
 
 import com.gildedgames.aether.common.registry.AetherDimensions;
-import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
+import com.gildedgames.aether.core.capability.interfaces.EternalDaySerializable;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
@@ -23,7 +23,7 @@ public class EternalDayListener
             MinecraftServer server = world.getServer();
             for (ServerLevel serverworld : server.getAllLevels()) {
                 if (serverworld.dimension() == AetherDimensions.AETHER_WORLD) {
-                    IEternalDay.get(world).ifPresent(IEternalDay::syncToClient);
+                    EternalDaySerializable.get(world).ifPresent(EternalDaySerializable::syncToClient);
                 }
             }
         }
@@ -36,7 +36,7 @@ public class EternalDayListener
             MinecraftServer server = world.getServer();
             for (ServerLevel serverworld : server.getAllLevels()) {
                 if (serverworld.dimension() == AetherDimensions.AETHER_WORLD) {
-                    IEternalDay.get(world).ifPresent(IEternalDay::syncToClient);
+                    EternalDaySerializable.get(world).ifPresent(EternalDaySerializable::syncToClient);
                 }
             }
         }
@@ -49,7 +49,7 @@ public class EternalDayListener
             ServerLevel world = (ServerLevel) event.world;
             MinecraftServer server = world.getServer();
             for (ServerLevel serverworld : server.getAllLevels()) {
-                IEternalDay.get(serverworld).ifPresent(eternalDay -> eternalDay.serverTick(serverworld));
+                EternalDaySerializable.get(serverworld).ifPresent(eternalDay -> eternalDay.serverTick(serverworld));
             }
         }
     }

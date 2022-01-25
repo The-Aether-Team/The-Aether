@@ -2,7 +2,7 @@ package com.gildedgames.aether.common.item.combat.loot;
 
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
+import com.gildedgames.aether.core.capability.interfaces.PhoenixArrowSerializable;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,7 +19,7 @@ public class PhoenixBowItem extends BowItem
 
     @Override
     public AbstractArrow customArrow(AbstractArrow arrow) {
-        IPhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
+        PhoenixArrowSerializable.get(arrow).ifPresent(phoenixArrow -> {
             phoenixArrow.setPhoenixArrow(true);
             int defaultTime = 20;
             if (arrow.getOwner() instanceof LivingEntity && EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAMING_ARROWS, (LivingEntity) arrow.getOwner()) > 0) {

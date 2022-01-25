@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.capability.capabilities.player;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.interfaces.AetherPlayerSerializable;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
@@ -13,9 +13,9 @@ import javax.annotation.Nonnull;
 
 public class AetherPlayerProvider implements ICapabilitySerializable<CompoundTag>
 {
-	private final IAetherPlayer aetherPlayer;
+	private final AetherPlayerSerializable aetherPlayer;
 	
-	public AetherPlayerProvider(IAetherPlayer aetherPlayer) {
+	public AetherPlayerProvider(AetherPlayerSerializable aetherPlayer) {
 		this.aetherPlayer = aetherPlayer;
 	}
 	

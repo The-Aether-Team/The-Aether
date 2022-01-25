@@ -2,7 +2,7 @@ package com.gildedgames.aether.core.network.packet.server;
 
 import com.gildedgames.aether.common.inventory.provider.AccessoriesProvider;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket.BaseAetherPacket;
 import com.gildedgames.aether.core.network.packet.client.ClientGrabItemPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkHooks;
 
-public class OpenAccessoriesPacket extends AetherPacket
+public class OpenAccessoriesPacket extends BaseAetherPacket
 {
     private final int playerID;
     private final ItemStack carryStack;
