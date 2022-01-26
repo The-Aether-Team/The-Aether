@@ -36,7 +36,7 @@ public class CapeEntity implements CapeEntitySerializable
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) { }
+    public void deserializeNBT(CompoundTag compound) { }
 
     @Override
     public void onUpdate() {

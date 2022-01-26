@@ -87,17 +87,17 @@ public class AetherPlayer implements AetherPlayerSerializable
 
 	@Override
 	public CompoundTag serializeNBT() {
-		CompoundTag nbt = new CompoundTag();
-		nbt.putBoolean("CanGetPortal", this.canGetPortal());
-		nbt.putInt("RemedyMaximum", this.getRemedyMaximum());
-		nbt.putInt("RemedyTimer", this.getRemedyTimer());
-		nbt.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
-		nbt.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
+		CompoundTag compound = new CompoundTag();
+		compound.putBoolean("CanGetPortal", this.canGetPortal());
+		compound.putInt("RemedyMaximum", this.getRemedyMaximum());
+		compound.putInt("RemedyTimer", this.getRemedyTimer());
+		compound.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
+		compound.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
 		if (this.getAerbunny() != null) {
-			nbt.putUUID("Aerbunny", this.getAerbunny());
+			compound.putUUID("Aerbunny", this.getAerbunny());
 		}
-		nbt.putFloat("SavedHealth", this.getSavedHealth());
-		nbt.putInt("LifeShardCount", this.getLifeShardCount());
+		compound.putFloat("SavedHealth", this.getSavedHealth());
+		compound.putInt("LifeShardCount", this.getLifeShardCount());
 
 		//(leftover reference code)
 		//Set<AetherRank> ranks = AetherRankings.getRanksOf(this.player.getUniqueID());
@@ -105,34 +105,34 @@ public class AetherPlayer implements AetherPlayerSerializable
 //			nbt.putBoolean("Halo", this.shouldRenderHalo);
 //		}
 		//this.accessories.writeToNBT(nbt);
-		return nbt;
+		return compound;
 	}
 
 	@Override
-	public void deserializeNBT(CompoundTag nbt) {
-		if (nbt.contains("CanGetPortal")) {
-			this.setCanGetPortal(nbt.getBoolean("CanGetPortal"));
+	public void deserializeNBT(CompoundTag compound) {
+		if (compound.contains("CanGetPortal")) {
+			this.setCanGetPortal(compound.getBoolean("CanGetPortal"));
 		}
-		if (nbt.contains("RemedyMaximum")) {
-			this.setRemedyMaximum(nbt.getInt("RemedyMaximum"));
+		if (compound.contains("RemedyMaximum")) {
+			this.setRemedyMaximum(compound.getInt("RemedyMaximum"));
 		}
-		if (nbt.contains("RemedyTimer")) {
-			this.setRemedyTimer(nbt.getInt("RemedyTimer"));
+		if (compound.contains("RemedyTimer")) {
+			this.setRemedyTimer(compound.getInt("RemedyTimer"));
 		}
-		if (nbt.contains("ProjectileImpactedMaximum")) {
-			this.setProjectileImpactedMaximum(nbt.getInt("ProjectileImpactedMaximum"));
+		if (compound.contains("ProjectileImpactedMaximum")) {
+			this.setProjectileImpactedMaximum(compound.getInt("ProjectileImpactedMaximum"));
 		}
-		if (nbt.contains("ProjectileImpactedTimer")) {
-			this.setProjectileImpactedTimer(nbt.getInt("ProjectileImpactedTimer"));
+		if (compound.contains("ProjectileImpactedTimer")) {
+			this.setProjectileImpactedTimer(compound.getInt("ProjectileImpactedTimer"));
 		}
-		if (nbt.contains("Aerbunny")) {
-			this.setAerbunny(nbt.getUUID("Aerbunny"));
+		if (compound.contains("Aerbunny")) {
+			this.setAerbunny(compound.getUUID("Aerbunny"));
 		}
-		if (nbt.contains("SavedHealth")) {
-			this.setSavedHealth(nbt.getFloat("SavedHealth"));
+		if (compound.contains("SavedHealth")) {
+			this.setSavedHealth(compound.getFloat("SavedHealth"));
 		}
-		if (nbt.contains("LifeShardCount")) {
-			this.setLifeShardCount(nbt.getInt("LifeShardCount"));
+		if (compound.contains("LifeShardCount")) {
+			this.setLifeShardCount(compound.getInt("LifeShardCount"));
 		}
 	}
 

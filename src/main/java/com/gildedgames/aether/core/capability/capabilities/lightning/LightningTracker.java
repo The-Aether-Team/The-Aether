@@ -22,15 +22,15 @@ public class LightningTracker implements LightningTrackerSerializable
 
     @Override
     public CompoundTag serializeNBT() {
-        CompoundTag nbt = new CompoundTag();
-        nbt.putInt("Owner", this.getOwner().getId());
-        return nbt;
+        CompoundTag compound = new CompoundTag();
+        compound.putInt("Owner", this.getOwner().getId());
+        return compound;
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        if (nbt.contains("Owner")) {
-            this.setOwner(this.getOwner().level.getEntity(nbt.getInt("Owner")));
+    public void deserializeNBT(CompoundTag compound) {
+        if (compound.contains("Owner")) {
+            this.setOwner(this.getOwner().level.getEntity(compound.getInt("Owner")));
         }
     }
 

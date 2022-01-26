@@ -33,27 +33,27 @@ public class EternalDay implements EternalDaySerializable
 
     @Override
     public CompoundTag serializeNBT() {
-        CompoundTag nbt = new CompoundTag();
-        nbt.putBoolean("EternalDay", this.getEternalDay());
-        nbt.putBoolean("CheckTime", this.getCheckTime());
-        nbt.putLong("Time", this.getAetherTime());
-        nbt.putLong("ServerLevelTime", this.getServerLevelTime());
-        return nbt;
+        CompoundTag compound = new CompoundTag();
+        compound.putBoolean("EternalDay", this.getEternalDay());
+        compound.putBoolean("CheckTime", this.getCheckTime());
+        compound.putLong("Time", this.getAetherTime());
+        compound.putLong("ServerLevelTime", this.getServerLevelTime());
+        return compound;
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        if (nbt.contains("EternalDay")) {
-            this.setEternalDay(nbt.getBoolean("EternalDay"));
+    public void deserializeNBT(CompoundTag compound) {
+        if (compound.contains("EternalDay")) {
+            this.setEternalDay(compound.getBoolean("EternalDay"));
         }
-        if (nbt.contains("CheckTime")) {
-            this.setCheckTime(nbt.getBoolean("CheckTime"));
+        if (compound.contains("CheckTime")) {
+            this.setCheckTime(compound.getBoolean("CheckTime"));
         }
-        if (nbt.contains("Time")) {
-            this.setAetherTime(nbt.getLong("Time"));
+        if (compound.contains("Time")) {
+            this.setAetherTime(compound.getLong("Time"));
         }
-        if (nbt.contains("ServerLevelTime")) {
-            this.setServerLevelTime(nbt.getLong("ServerLevelTime"));
+        if (compound.contains("ServerLevelTime")) {
+            this.setServerLevelTime(compound.getLong("ServerLevelTime"));
         }
     }
 

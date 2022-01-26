@@ -27,23 +27,23 @@ public class AetherRankings implements AetherRankingsSerializable
 
     @Override
     public CompoundTag serializeNBT() {
-        CompoundTag nbt = new CompoundTag();
-        nbt.putBoolean("HatGloves", this.areSleeveGloves());
-        nbt.putBoolean("RenderHalo", this.shouldRenderHalo());
-        nbt.putBoolean("RenderDeveloperGlow", this.shouldRenderDeveloperGlow());
-        return nbt;
+        CompoundTag compound = new CompoundTag();
+        compound.putBoolean("HatGloves", this.areSleeveGloves());
+        compound.putBoolean("RenderHalo", this.shouldRenderHalo());
+        compound.putBoolean("RenderDeveloperGlow", this.shouldRenderDeveloperGlow());
+        return compound;
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        if (nbt.contains("HatGloves")) {
-            this.setSleeveGloves(nbt.getBoolean("HatGloves"));
+    public void deserializeNBT(CompoundTag compound) {
+        if (compound.contains("HatGloves")) {
+            this.setSleeveGloves(compound.getBoolean("HatGloves"));
         }
-        if (nbt.contains("RenderHalo")) {
-            this.setRenderHalo(nbt.getBoolean("RenderHalo"));
+        if (compound.contains("RenderHalo")) {
+            this.setRenderHalo(compound.getBoolean("RenderHalo"));
         }
-        if (nbt.contains("RenderDeveloperGlow")) {
-            this.setRenderDeveloperGlow(nbt.getBoolean("RenderDeveloperGlow"));
+        if (compound.contains("RenderDeveloperGlow")) {
+            this.setRenderDeveloperGlow(compound.getBoolean("RenderDeveloperGlow"));
         }
     }
 

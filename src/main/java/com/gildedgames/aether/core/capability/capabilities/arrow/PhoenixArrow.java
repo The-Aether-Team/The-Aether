@@ -22,19 +22,19 @@ public class PhoenixArrow implements PhoenixArrowSerializable
 
     @Override
     public CompoundTag serializeNBT() {
-        CompoundTag nbt = new CompoundTag();
-        nbt.putBoolean("PhoenixArrow", this.isPhoenixArrow());
-        nbt.putInt("FireTime", this.getFireTime());
-        return nbt;
+        CompoundTag compound = new CompoundTag();
+        compound.putBoolean("PhoenixArrow", this.isPhoenixArrow());
+        compound.putInt("FireTime", this.getFireTime());
+        return compound;
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        if (nbt.contains("PhoenixArrow")) {
-            this.setPhoenixArrow(nbt.getBoolean("PhoenixArrow"));
+    public void deserializeNBT(CompoundTag compound) {
+        if (compound.contains("PhoenixArrow")) {
+            this.setPhoenixArrow(compound.getBoolean("PhoenixArrow"));
         }
-        if (nbt.contains("FireTime")) {
-            this.setFireTime(nbt.getInt("FireTime"));
+        if (compound.contains("FireTime")) {
+            this.setFireTime(compound.getInt("FireTime"));
         }
     }
 
