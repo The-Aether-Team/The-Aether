@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.miscellaneous;
 
-import com.gildedgames.aether.common.entity.miscellaneous.AbstractParachuteEntity;
+import com.gildedgames.aether.common.entity.miscellaneous.ParachuteEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -15,9 +15,9 @@ import java.util.function.Supplier;
 
 public class ParachuteItem extends Item
 {
-    protected final Supplier<EntityType<?>> parachuteEntity;
+    protected final Supplier<EntityType<ParachuteEntity>> parachuteEntity;
 
-    public ParachuteItem(Supplier<EntityType<?>> parachuteEntity, Properties properties) {
+    public ParachuteItem(Supplier<EntityType<ParachuteEntity>> parachuteEntity, Properties properties) {
         super(properties);
         this.parachuteEntity = parachuteEntity;
     }
@@ -26,12 +26,11 @@ public class ParachuteItem extends Item
     public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
         if (!playerEntity.isOnGround() && !playerEntity.isInWater() && !playerEntity.isInLava() && !playerEntity.isShiftKeyDown()) {
-            Entity entity = this.parachuteEntity.get().create(world);
-            if (entity instanceof AbstractParachuteEntity) {
-                AbstractParachuteEntity parachuteEntity = (AbstractParachuteEntity) entity;
+            Entity entity = this.getParachuteEntity().get().create(world);
+            if (entity instanceof ParachuteEntity parachuteEntity) {
                 parachuteEntity.setPos(playerEntity.getX(), playerEntity.getY() - 1.0D, playerEntity.getZ());
                 if (playerEntity.isPassenger()) {
-                    if (playerEntity.getVehicle() instanceof AbstractParachuteEntity) {
+                    if (playerEntity.getVehicle() instanceof ParachuteEntity) {
                         playerEntity.getVehicle().ejectPassengers();
                     } else {
                         return InteractionResultHolder.pass(itemstack);
@@ -48,5 +47,9 @@ public class ParachuteItem extends Item
             }
         }
         return InteractionResultHolder.pass(itemstack);
+    }
+
+    public Supplier<EntityType<ParachuteEntity>> getParachuteEntity() {
+        return this.parachuteEntity;
     }
 }

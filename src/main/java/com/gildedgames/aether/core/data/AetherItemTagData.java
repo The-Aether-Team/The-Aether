@@ -104,6 +104,9 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.GOLDEN_DART_SHOOTER.get(),
                 AetherItems.POISON_DART_SHOOTER.get(),
                 AetherItems.ENCHANTED_DART_SHOOTER.get());
+        tag(AetherTags.Items.DEPLOYABLE_PARACHUTES).add(
+                AetherItems.COLD_PARACHUTE.get(),
+                AetherItems.GOLDEN_PARACHUTE.get());
         tag(AetherTags.Items.DUNGEON_KEYS).add(
                 AetherItems.BRONZE_DUNGEON_KEY.get(),
                 AetherItems.SILVER_DUNGEON_KEY.get(),
