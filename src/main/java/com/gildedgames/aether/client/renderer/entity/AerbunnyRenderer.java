@@ -22,15 +22,15 @@ public class AerbunnyRenderer extends MobRenderer<Aerbunny, AerbunnyModel>
     }
 
     @Override
-    protected void scale(Aerbunny aerbunny, PoseStack matrixStack, float scale) {
-        matrixStack.translate(0, 0.2D, 0);
+    protected void scale(Aerbunny aerbunny, PoseStack poseStack, float scale) {
+        poseStack.translate(0, 0.2D, 0);
         if (aerbunny.isBaby()) {
-            matrixStack.scale(0.5F, 0.5F, 0.5F);
+            poseStack.scale(0.5F, 0.5F, 0.5F);
         }
     }
 
     @Override
-    protected void setupRotations(Aerbunny aerbunny, @Nonnull PoseStack poseStack, float p_225621_3_, float p_225621_4_, float p_225621_5_) {
+    protected void setupRotations(Aerbunny aerbunny, @Nonnull PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
         if (!aerbunny.isOnGround()) {
             if (aerbunny.getDeltaMovement().y > 0.5D) {
                 poseStack.mulPose(Vector3f.XN.rotationDegrees(15.0F));
@@ -42,7 +42,7 @@ public class AerbunnyRenderer extends MobRenderer<Aerbunny, AerbunnyModel>
                 poseStack.mulPose(Vector3f.XN.rotationDegrees((float)(aerbunny.getDeltaMovement().y * 30.0D)));
             }
         }
-        super.setupRotations(aerbunny, poseStack, p_225621_3_, p_225621_4_, p_225621_5_);
+        super.setupRotations(aerbunny, poseStack, ageInTicks, rotationYaw, partialTicks);
     }
 
     @Nonnull

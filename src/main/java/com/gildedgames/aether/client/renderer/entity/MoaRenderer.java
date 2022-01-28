@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class MoaRenderer extends MobRenderer<Moa, MoaModel>
@@ -21,12 +22,12 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel>
 
 	public MoaRenderer(EntityRendererProvider.Context context) {
 		super(context, new MoaModel(context.bakeLayer(AetherModelLayers.MOA)), 0.7F);
-		this.addLayer(new MoaSaddleLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
+		//this.addLayer(new MoaSaddleLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
 	}
 
 	@Override
-	public void render(Moa moa, float p_115456_, float p_115457_, PoseStack p_115458_, MultiBufferSource p_115459_, int p_115460_) {
-		super.render(moa, p_115456_, p_115457_, p_115458_, p_115459_, p_115460_);
+	public void render(@Nonnull Moa moa, float entityYaw, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
+		super.render(moa, entityYaw, partialTicks, poseStack, buffer, packedLight);
 		this.model.setupWingsAnimation(moa);
 	}
 
@@ -39,6 +40,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel>
 		}
 	}
 
+	@Nonnull
 	@Override
 	public ResourceLocation getTextureLocation(Moa moa) {
 		if (moa.hasCustomName() && moa.getCustomName() != null && moa.getCustomName().getContents().equals("Mos") && moa.getMoaType() == AetherMoaTypes.ORANGE) {
