@@ -2,11 +2,12 @@ package com.gildedgames.aether.core.capability.capabilities.player;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
-import com.gildedgames.aether.common.entity.miscellaneous.ColdParachuteEntity;
-import com.gildedgames.aether.common.entity.miscellaneous.GoldenParachuteEntity;
+import com.gildedgames.aether.common.entity.miscellaneous.ParachuteEntity;
 import com.gildedgames.aether.common.entity.passive.Aerbunny;
+import com.gildedgames.aether.common.item.miscellaneous.ParachuteItem;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
@@ -22,7 +23,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -248,38 +248,20 @@ public class AetherPlayer implements IAetherPlayer
 		Player player = this.getPlayer();
 		Inventory inventory = this.getPlayer().getInventory();
 		Level level = player.level;
-		if (!player.isCreative() && !player.isShiftKeyDown()) {
+		if (!player.isCreative() && !player.isShiftKeyDown() && !player.isFallFlying()) {
 			if (player.getDeltaMovement().y() < -1.5D) {
-				if (inventory.contains(new ItemStack(AetherItems.COLD_PARACHUTE.get()))) {
+				if (inventory.contains(AetherTags.Items.DEPLOYABLE_PARACHUTES)) {
 					for (ItemStack stack : inventory.items) {
-						Item item = stack.getItem();
-						if (item == AetherItems.COLD_PARACHUTE.get()) {
-							ColdParachuteEntity coldParachute = AetherEntityTypes.COLD_PARACHUTE.get().create(level);
-							if (coldParachute != null) {
-								coldParachute.setPos(player.getX(), player.getY() - 1.0D, player.getZ());
+						if (stack.getItem() instanceof ParachuteItem parachuteItem) {
+							ParachuteEntity parachute = parachuteItem.getParachuteEntity().get().create(level);
+							if (parachute != null) {
+								parachute.setPos(player.getX(), player.getY() - 1.0D, player.getZ());
 								if (!level.isClientSide) {
-									level.addFreshEntity(coldParachute);
-									player.startRiding(coldParachute);
+									level.addFreshEntity(parachute);
+									player.startRiding(parachute);
 									stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
 								}
-								coldParachute.spawnExplosionParticle();
-								break;
-							}
-						}
-					}
-				} else if (inventory.contains(new ItemStack(AetherItems.GOLDEN_PARACHUTE.get()))) {
-					for (ItemStack stack : inventory.items) {
-						Item item = stack.getItem();
-						if (item == AetherItems.GOLDEN_PARACHUTE.get()) {
-							GoldenParachuteEntity goldenParachute = AetherEntityTypes.GOLDEN_PARACHUTE.get().create(level);
-							if (goldenParachute != null) {
-								goldenParachute.setPos(player.getX(), player.getY() - 1.0D, player.getZ());
-								if (!level.isClientSide) {
-									level.addFreshEntity(goldenParachute);
-									player.startRiding(goldenParachute);
-									stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
-								}
-								goldenParachute.spawnExplosionParticle();
+								parachute.spawnExplosionParticle();
 								break;
 							}
 						}

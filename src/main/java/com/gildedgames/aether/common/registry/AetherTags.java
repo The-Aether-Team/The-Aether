@@ -60,6 +60,7 @@ public class AetherTags
 		public static final Tag.Named<Item> PIG_DROPS = tag("pig_drops");
 		public static final Tag.Named<Item> DARTS = tag("darts");
 		public static final Tag.Named<Item> DART_SHOOTERS = tag("dart_shooters");
+		public static final Tag.Named<Item> DEPLOYABLE_PARACHUTES = tag("deployable_parachutes");
 		public static final Tag.Named<Item> DUNGEON_KEYS = tag("dungeon_keys");
 		public static final Tag.Named<Item> ACCEPTED_MUSIC_DISCS = tag("accepted_music_discs");
 		public static final Tag.Named<Item> SAVE_NBT_IN_RECIPE = tag("save_nbt_in_recipe");

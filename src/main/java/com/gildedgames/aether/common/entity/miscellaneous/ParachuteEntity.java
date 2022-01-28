@@ -17,11 +17,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraftforge.network.NetworkHooks;
 
-public abstract class AbstractParachuteEntity extends Entity
+public class ParachuteEntity extends Entity
 {
     private float parachuteSpeed;
 
-    public AbstractParachuteEntity(EntityType<?> entityType, Level world) {
+    public ParachuteEntity(EntityType<?> entityType, Level world) {
         super(entityType, world);
         this.blocksBuilding = true;
         this.setDeltaMovement(Vec3.ZERO);
