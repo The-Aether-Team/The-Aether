@@ -10,10 +10,13 @@ import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.*;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.resource.CombinedResourcePack;
+import net.minecraft.SharedConstants;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
@@ -26,17 +29,18 @@ import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.InterModComms;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.forgespi.language.IModInfo;
+import net.minecraftforge.forgespi.locating.IModFile;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.resource.DelegatingResourcePack;
 import net.minecraftforge.resource.PathResourcePack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,6 +48,11 @@ import top.theillusivec4.curios.api.SlotTypeMessage;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import static net.minecraftforge.fml.Logging.CORE;
 
 @Mod(Aether.MODID)
 public class Aether
@@ -141,44 +150,36 @@ public class Aether
     }
 
     public void packSetup(AddPackFindersEvent event) {
-        setupProgrammerArt(event);
-        setupBetaVariants(event);
+        setupReleasePack(event);
+        setupBetaPack(event);
     }
 
-    private void setupProgrammerArt(AddPackFindersEvent event) {
-        try {
-            if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-                Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/programmer_art");
-                PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
-                PackMetadataSection metadataSection = pack.getMetadataSection(PackMetadataSection.SERIALIZER);
-                if (metadataSection != null) {
-                    event.addRepositorySource((packConsumer, packConstructor) ->
-                            packConsumer.accept(packConstructor.create(
-                                    "builtin/aether_programmer_art", new TextComponent("Aether Programmer Art"), false,
-                                    () -> pack, metadataSection, Pack.Position.BOTTOM, PackSource.BUILT_IN, false)));
-                }
-            }
-        } catch(IOException ex) {
-            throw new RuntimeException(ex);
+    private void setupReleasePack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_125");
+            PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+            createCombinedPack(event, resourcePath, pack, "builtin/aether_125_art", "Aether 1.2.5 Textures", "The classic look of the Aether from 1.2.5");
         }
     }
 
-    private void setupBetaVariants(AddPackFindersEvent event) {
-        try {
-            if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-                Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/beta_variants");
-                PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
-                PackMetadataSection metadataSection = pack.getMetadataSection(PackMetadataSection.SERIALIZER);
-                if (metadataSection != null) {
-                    event.addRepositorySource((packConsumer, packConstructor) ->
-                            packConsumer.accept(packConstructor.create(
-                                    "builtin/aether_beta_resources", new TextComponent("Aether b1.7.3 Variants"), false,
-                                    () -> pack, metadataSection, Pack.Position.BOTTOM, PackSource.BUILT_IN, false)));
-                }
-            }
-        } catch(IOException ex) {
-            throw new RuntimeException(ex);
+    private void setupBetaPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_b173");
+            PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+            createCombinedPack(event, resourcePath, pack, "builtin/aether_b173_art", "Aether b1.7.3 Textures", "The original look of the Aether from b1.7.3");
         }
+    }
+
+    private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, PathResourcePack pack, String name, String title, String description) {
+        Path baseResourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_base");
+        PathResourcePack basePack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, baseResourcePath);
+        List<PathResourcePack> mergedPacks = List.of(pack, basePack);
+        event.addRepositorySource((packConsumer, packConstructor) ->
+                packConsumer.accept(Pack.create(
+                        name, false,
+                        () -> new CombinedResourcePack(name, title, new PackMetadataSection(new TextComponent(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())), mergedPacks, sourcePath),
+                        packConstructor, Pack.Position.TOP, PackSource.BUILT_IN)
+                ));
     }
 
     private void registerDispenserBehaviors() {
