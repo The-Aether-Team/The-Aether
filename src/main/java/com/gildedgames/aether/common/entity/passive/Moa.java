@@ -65,7 +65,7 @@ public class Moa extends MountableEntity
 	private int jumpCooldown;
 	private int flapCooldown;
 
-	public int eggTime = this.random.nextInt(50) + 775;
+	public int eggTime = this.getEggTime();
 
 	public Moa(EntityType<? extends Moa> type, Level worldIn) {
 		super(type, worldIn);
@@ -128,7 +128,7 @@ public class Moa extends MountableEntity
 		if (!this.level.isClientSide && this.isAlive() && !this.isBaby() && this.getPassengers().isEmpty() && --this.eggTime <= 0) {
 			this.playSound(AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 			this.spawnAtLocation(this.getMoaType().getEgg());
-			this.eggTime = this.random.nextInt(50) + 775;
+			this.eggTime = this.getEggTime();
 		}
 	}
 
@@ -317,6 +317,10 @@ public class Moa extends MountableEntity
 
 	public int getMaxJumps() {
 		return this.getMoaType().getMaxJumps();
+	}
+
+	public int getEggTime() {
+		return this.random.nextInt(6000) + 6000;
 	}
 
 	@Nullable

@@ -7,15 +7,15 @@ import com.gildedgames.aether.client.renderer.entity.model.CockatriceModel;
 import com.gildedgames.aether.common.entity.monster.CockatriceEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
-public class CockatriceRenderer extends MobRenderer<CockatriceEntity, CockatriceModel>{
+import javax.annotation.Nonnull;
+
+public class CockatriceRenderer extends MobRenderer<CockatriceEntity, CockatriceModel>
+{
     private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/cockatrice/cockatrice.png");
 
     public CockatriceRenderer(EntityRendererProvider.Context context) {
@@ -24,20 +24,19 @@ public class CockatriceRenderer extends MobRenderer<CockatriceEntity, Cockatrice
     }
 
     @Override
-	protected void scale(CockatriceEntity cockatrice, PoseStack matrixStackIn, float partialTickTime) {
-        matrixStackIn.scale(1.8F, 1.8F, 1.8F);
+    public void render(@Nonnull CockatriceEntity cockatrice, float entityYaw, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
+        super.render(cockatrice, entityYaw, partialTicks, poseStack, buffer, packedLight);
+        this.model.setupWingsAnimation(cockatrice);
     }
 
     @Override
-    protected float getBob(CockatriceEntity cockatrice, float partialTicks) {
-        float f1 = cockatrice.prevWingRotation + (cockatrice.wingRotation - cockatrice.prevWingRotation) * partialTicks;
-        float f2 = cockatrice.prevDestPos + (cockatrice.destPos - cockatrice.prevDestPos) * partialTicks;
-        return (Mth.sin(f1) + 1.0F) * f2;
+	protected void scale(@Nonnull CockatriceEntity cockatrice, PoseStack poseStack, float partialTickTime) {
+        poseStack.scale(1.8F, 1.8F, 1.8F);
     }
 
+    @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(CockatriceEntity entity) {
+    public ResourceLocation getTextureLocation(@Nonnull CockatriceEntity entity) {
         return TEXTURE;
     }
-
 }

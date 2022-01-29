@@ -33,17 +33,17 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 
-public class CockatriceEntity extends Monster implements RangedAttackMob {
+public class CockatriceEntity extends Monster implements RangedAttackMob
+{
+    public float wingRotation;
+    public float prevWingRotation;
+    public float destPos;
+    public float prevDestPos;
 
-    public float wingRotation, prevWingRotation, destPos, prevDestPos;
     protected int ticksOffGround, ticksUntilFlap, secsUntilFlying;
 
     public CockatriceEntity(EntityType<? extends CockatriceEntity> type, Level worldIn) {
         super(type, worldIn);
-    }
-
-    public CockatriceEntity(Level worldIn) {
-        this(AetherEntityTypes.COCKATRICE.get(), worldIn);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class CockatriceEntity extends Monster implements RangedAttackMob {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(2,  new RangedAttackGoal(this, 1.0, 60, 5));
         this.goalSelector.addGoal(4, new MoveTowardsRestrictionGoal(this, 1.0));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.35F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
@@ -59,7 +59,7 @@ public class CockatriceEntity extends Monster implements RangedAttackMob {
     public static AttributeSupplier.Builder createMonsterAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.28000000417232513D)
+                .add(Attributes.MOVEMENT_SPEED, 1.0D)
                 .add(Attributes.FOLLOW_RANGE, 35.0D);
     }
 

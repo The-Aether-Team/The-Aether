@@ -22,7 +22,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel>
 
 	public MoaRenderer(EntityRendererProvider.Context context) {
 		super(context, new MoaModel(context.bakeLayer(AetherModelLayers.MOA)), 0.7F);
-		//this.addLayer(new MoaSaddleLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
+		this.addLayer(new MoaSaddleLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
 	}
 
 	@Override
@@ -32,11 +32,11 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel>
 	}
 
 	@Override
-	protected void scale(Moa moa, PoseStack matrixStackIn, float partialTickTime) {
+	protected void scale(Moa moa, PoseStack poseStack, float partialTickTime) {
 		float moaScale = moa.isBaby() ? 1.0F : 1.8F;
-		matrixStackIn.scale(moaScale, moaScale, moaScale);
+		poseStack.scale(moaScale, moaScale, moaScale);
 		if (moa.isSitting()) {
-			matrixStackIn.translate(0, 0.5D, 0);
+			poseStack.translate(0, 0.5D, 0);
 		}
 	}
 
