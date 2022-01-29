@@ -3,44 +3,31 @@ package com.gildedgames.aether;
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
-import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectileEntity;
-import com.gildedgames.aether.common.entity.projectile.weapon.LightningKnifeEntity;
 import com.gildedgames.aether.common.entity.tile.AltarTileEntity;
 import com.gildedgames.aether.common.entity.tile.FreezerTileEntity;
-import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
-import com.gildedgames.aether.common.item.miscellaneous.bucket.SkyrootWaterBucketItem;
 import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.*;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
-import net.minecraft.Util;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Position;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
-import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
-import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.SmallFireball;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -50,14 +37,17 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.resource.PathResourcePack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 
-import java.util.Random;
+import java.io.IOException;
+import java.nio.file.Path;
 
 @Mod(Aether.MODID)
-public class Aether {
+public class Aether
+{
     public static final String MODID = "aether";
     public static final Logger LOGGER = LogManager.getLogger();
 
@@ -67,6 +57,7 @@ public class Aether {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::curiosSetup);
         modEventBus.addListener(this::dataSetup);
+        modEventBus.addListener(this::packSetup);
 
         DeferredRegister<?>[] registers = {
                 AetherBlocks.BLOCKS,
@@ -146,6 +137,47 @@ public class Aether {
             generator.addProvider(new AetherFluidTagData(generator, helper));
             generator.addProvider(new AetherAdvancementData(generator, helper));
             generator.addProvider(new AetherWorldData(generator));
+        }
+    }
+
+    public void packSetup(AddPackFindersEvent event) {
+        setupProgrammerArt(event);
+        setupBetaVariants(event);
+    }
+
+    private void setupProgrammerArt(AddPackFindersEvent event) {
+        try {
+            if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+                Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/programmer_art");
+                PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+                PackMetadataSection metadataSection = pack.getMetadataSection(PackMetadataSection.SERIALIZER);
+                if (metadataSection != null) {
+                    event.addRepositorySource((packConsumer, packConstructor) ->
+                            packConsumer.accept(packConstructor.create(
+                                    "builtin/aether_programmer_art", new TextComponent("Aether Programmer Art"), false,
+                                    () -> pack, metadataSection, Pack.Position.BOTTOM, PackSource.BUILT_IN, false)));
+                }
+            }
+        } catch(IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private void setupBetaVariants(AddPackFindersEvent event) {
+        try {
+            if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+                Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/beta_variants");
+                PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+                PackMetadataSection metadataSection = pack.getMetadataSection(PackMetadataSection.SERIALIZER);
+                if (metadataSection != null) {
+                    event.addRepositorySource((packConsumer, packConstructor) ->
+                            packConsumer.accept(packConstructor.create(
+                                    "builtin/aether_beta_resources", new TextComponent("Aether b1.7.3 Variants"), false,
+                                    () -> pack, metadataSection, Pack.Position.BOTTOM, PackSource.BUILT_IN, false)));
+                }
+            }
+        } catch(IOException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
