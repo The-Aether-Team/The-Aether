@@ -23,7 +23,7 @@ public class SheepuffRenderer extends MobRenderer<Sheepuff, SheepuffModel>
 
     @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull Sheepuff entity) {
+    public ResourceLocation getTextureLocation(@Nonnull Sheepuff sheepuff) {
         return SHEEPUFF_TEXTURE;
     }
 }

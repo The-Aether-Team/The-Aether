@@ -69,6 +69,8 @@ public class AetherTags
 		public static final Tag.Named<Item> FLYING_COW_TEMPTATION_ITEMS = tag("flying_cow_temptation_items");
 		public static final Tag.Named<Item> SHEEPUFF_TEMPTATION_ITEMS = tag("sheepuff_temptation_items");
 		public static final Tag.Named<Item> AERBUNNY_TEMPTATION_ITEMS = tag("aerbunny_temptation_items");
+		public static final Tag.Named<Item> MOA_TEMPTATION_ITEMS = tag("moa_temptation_items");
+		public static final Tag.Named<Item> MOA_FOOD_ITEMS = tag("moa_food_items");
 
 		private static Tag.Named<Item> tag(String name) {
 			return ItemTags.bind(new ResourceLocation(Aether.MODID, name).toString());

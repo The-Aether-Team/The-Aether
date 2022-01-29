@@ -24,10 +24,10 @@ public class SheepuffModel extends QuadrupedModel<Sheepuff>
         return LayerDefinition.create(meshdefinition, 64, 32);
     }
 
-    public void prepareMobModel(@Nonnull Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float partialTick) {
-        super.prepareMobModel(sheepuff, limbSwing, limbSwingAmount, partialTick);
-        this.head.y = 6.0F + sheepuff.getHeadEatPositionScale(partialTick) * 9.0F;
-        this.headXRot = sheepuff.getHeadEatAngleScale(partialTick);
+    public void prepareMobModel(@Nonnull Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float partialTicks) {
+        super.prepareMobModel(sheepuff, limbSwing, limbSwingAmount, partialTicks);
+        this.head.y = 6.0F + sheepuff.getHeadEatPositionScale(partialTicks) * 9.0F;
+        this.headXRot = sheepuff.getHeadEatAngleScale(partialTicks);
         this.body.xRot = ((float) Math.PI / 2F);
     }
 

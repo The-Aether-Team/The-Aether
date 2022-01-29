@@ -28,7 +28,7 @@ public class PhygRenderer extends MobRenderer<Phyg, PigModel<Phyg>>
 
 	@Nonnull
 	@Override
-	public ResourceLocation getTextureLocation(@Nonnull Phyg entity) {
+	public ResourceLocation getTextureLocation(@Nonnull Phyg phyg) {
 		return PHYG_TEXTURE;
 	}
 }

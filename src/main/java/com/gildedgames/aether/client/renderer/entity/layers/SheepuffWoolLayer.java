@@ -26,14 +26,14 @@ public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel>
     private final SheepuffWoolModel woolModel;
     private final SheepuffWoolModel puffedModel;
 
-    public SheepuffWoolLayer(RenderLayerParent<Sheepuff, SheepuffModel> entityRendererIn, EntityModelSet modelSet) {
-        super(entityRendererIn);
+    public SheepuffWoolLayer(RenderLayerParent<Sheepuff, SheepuffModel> entityRenderer, EntityModelSet modelSet) {
+        super(entityRenderer);
         this.woolModel = new SheepuffWoolModel(modelSet.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL));
         this.puffedModel = new SheepuffWoolModel(modelSet.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL_PUFFED));
     }
 
     @Override
-    public void render(@Nonnull PoseStack matrixStackIn, @Nonnull MultiBufferSource bufferIn, int packedLightIn, Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (!sheepuff.isSheared()) {
             SheepuffWoolModel woolModel = sheepuff.getPuffed() ? this.puffedModel : this.woolModel;
             if (sheepuff.isInvisible()) {
@@ -43,8 +43,8 @@ public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel>
                     this.getParentModel().copyPropertiesTo(woolModel);
                     woolModel.prepareMobModel(sheepuff, limbSwing, limbSwingAmount, partialTicks);
                     woolModel.setupAnim(sheepuff, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-                    VertexConsumer vertexconsumer = bufferIn.getBuffer(RenderType.outline(SHEEPUFF_WOOL_TEXTURE));
-                    woolModel.renderToBuffer(matrixStackIn, vertexconsumer, packedLightIn, LivingEntityRenderer.getOverlayCoords(sheepuff, 0.0F), 0.0F, 0.0F, 0.0F, 1.0F);
+                    VertexConsumer consumer = buffer.getBuffer(RenderType.outline(SHEEPUFF_WOOL_TEXTURE));
+                    woolModel.renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(sheepuff, 0.0F), 0.0F, 0.0F, 0.0F, 1.0F);
                 }
             } else {
                 float f;
@@ -68,7 +68,7 @@ public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel>
                     f1 = afloat[1];
                     f2 = afloat[2];
                 }
-                coloredCutoutModelCopyLayerRender(this.getParentModel(), woolModel, SHEEPUFF_WOOL_TEXTURE, matrixStackIn, bufferIn, packedLightIn, sheepuff, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, f, f1, f2);
+                coloredCutoutModelCopyLayerRender(this.getParentModel(), woolModel, SHEEPUFF_WOOL_TEXTURE, poseStack, buffer, packedLight, sheepuff, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, f, f1, f2);
             }
         }
     }

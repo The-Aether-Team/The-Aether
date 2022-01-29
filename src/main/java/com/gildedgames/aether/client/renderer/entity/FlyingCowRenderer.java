@@ -26,7 +26,7 @@ public class FlyingCowRenderer extends MobRenderer<FlyingCow, CowModel<FlyingCow
 
     @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull FlyingCow entity) {
+    public ResourceLocation getTextureLocation(@Nonnull FlyingCow flyingCow) {
         return FLYING_COW_TEXTURE;
     }
 }

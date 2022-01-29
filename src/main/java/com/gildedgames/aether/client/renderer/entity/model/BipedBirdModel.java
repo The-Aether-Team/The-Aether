@@ -11,7 +11,7 @@ import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nonnull;
 
-public class BipedBirdModel<T extends Entity> extends EntityModel<T>
+public abstract class BipedBirdModel<T extends Entity> extends EntityModel<T>
 {
     public ModelPart head;
     public ModelPart jaw;

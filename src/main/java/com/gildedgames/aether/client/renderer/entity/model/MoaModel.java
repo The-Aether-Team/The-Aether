@@ -19,8 +19,8 @@ public class MoaModel extends BipedBirdModel<Moa>
 	}
 
 	@Override
-	public void prepareMobModel(@Nonnull Moa moa, float limbSwing, float limbSwingAmount, float partialTick) {
-		super.prepareMobModel(moa, limbSwing, limbSwingAmount, partialTick);
+	public void prepareMobModel(@Nonnull Moa moa, float limbSwing, float limbSwingAmount, float partialTicks) {
+		super.prepareMobModel(moa, limbSwing, limbSwingAmount, partialTicks);
 		this.renderLegs = !moa.isSitting() || (!moa.isOnGround() && moa.isSitting());
 	}
 

@@ -19,20 +19,20 @@ public class QuadrupedWingsLayer<T extends WingedEntity, M extends QuadrupedMode
     private final ResourceLocation resourceLocation;
     private final QuadrupedWingsModel<T> wings;
 
-    public QuadrupedWingsLayer(RenderLayerParent<T, M> entityRendererIn, QuadrupedWingsModel<T> model, ResourceLocation resourceLocation) {
-        super(entityRendererIn);
+    public QuadrupedWingsLayer(RenderLayerParent<T, M> entityRenderer, QuadrupedWingsModel<T> model, ResourceLocation resourceLocation) {
+        super(entityRenderer);
         this.wings = model;
         this.resourceLocation = resourceLocation;
     }
 
     @Override
-    public void render(@Nonnull PoseStack matrixStackIn, @Nonnull MultiBufferSource bufferIn, int packedLightIn, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (entity.isBaby()) {
-            matrixStackIn.scale(0.5F, 0.5F, 0.5F);
-            matrixStackIn.translate(0.0F, 1.5F, 0.0F);
+            poseStack.scale(0.5F, 0.5F, 0.5F);
+            poseStack.translate(0.0F, 1.5F, 0.0F);
         }
         this.wings.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        VertexConsumer vertexBuilder = bufferIn.getBuffer(RenderType.entityCutoutNoCull(this.resourceLocation));
-        this.wings.renderToBuffer(matrixStackIn, vertexBuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(this.resourceLocation));
+        this.wings.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 }

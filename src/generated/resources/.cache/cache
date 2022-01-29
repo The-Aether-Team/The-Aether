@@ -93,7 +93,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-66f536a1ed529f5e69526f20c97093105dff8730 assets/aether/lang/en_us.json
+f2b4dc3abd46bf158bf8e3c6baf47b62293f98e0 assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -1268,6 +1268,8 @@ cc50f220643304a9a55bf762f391dc67d087ab9d data/aether/tags/items/golden_oak_logs.
 bcc812fe8c9cd1c675cd91f170cad804bc8da32a data/aether/tags/items/holystone.json
 1af6021073f2b9d774a68d7c423d99ed110fda9f data/aether/tags/items/holystone_tools.json
 c294a7ed55dd3893da97c77889a570a9ade6abc8 data/aether/tags/items/locked_dungeon_blocks.json
+9b02e9ee1a3f17d5c6061b4ae7d5b96674c7b4fb data/aether/tags/items/moa_food_items.json
+98e7aedca44141867b4a6e24ba8d819b844eeb2d data/aether/tags/items/moa_temptation_items.json
 28b206363dd8ded37bb9a533a071e193dc3bed17 data/aether/tags/items/no_skyroot_double_drops.json
 af0c2eedb134c30d4318a59ce358fa88b7a8cf5a data/aether/tags/items/phyg_temptation_items.json
 9785a8eb61e2d850a739425c5448748621ff291d data/aether/tags/items/pig_drops.json

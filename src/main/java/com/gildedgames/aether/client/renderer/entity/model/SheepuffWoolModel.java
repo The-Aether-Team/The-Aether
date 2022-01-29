@@ -30,15 +30,15 @@ public class SheepuffWoolModel extends QuadrupedModel<Sheepuff>
         return LayerDefinition.create(meshDef, 64, 32);
     }
 
-    public void prepareMobModel(@Nonnull Sheepuff entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
-        super.prepareMobModel(entityIn, limbSwing, limbSwingAmount, partialTick);
-        this.head.y = 6.0F + entityIn.getHeadEatPositionScale(partialTick) * 9.0F;
-        this.headXRot = entityIn.getHeadEatAngleScale(partialTick);
+    public void prepareMobModel(@Nonnull Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float partialTicks) {
+        super.prepareMobModel(sheepuff, limbSwing, limbSwingAmount, partialTicks);
+        this.head.y = 6.0F + sheepuff.getHeadEatPositionScale(partialTicks) * 9.0F;
+        this.headXRot = sheepuff.getHeadEatAngleScale(partialTicks);
     }
 
     @Override
-    public void setupAnim(@Nonnull Sheepuff entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        super.setupAnim(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+    public void setupAnim(@Nonnull Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        super.setupAnim(sheepuff, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         this.head.xRot = this.headXRot;
     }
 }

@@ -8,6 +8,7 @@ import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 
 import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.api.registers.MoaType;
 import com.gildedgames.aether.core.registry.AetherMoaTypes;
 import com.gildedgames.aether.core.util.EntityUtil;
@@ -76,7 +77,7 @@ public class Moa extends MountableEntity
 		super.registerGoals();
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 0.65F));
-		this.goalSelector.addGoal(2, new TemptGoal(this, 1.0F, Ingredient.of(AetherItems.NATURE_STAFF.get()), false));
+		this.goalSelector.addGoal(2, new TemptGoal(this, 1.0F, Ingredient.of(AetherTags.Items.MOA_TEMPTATION_ITEMS), false));
 		this.goalSelector.addGoal(3, new FallingRandomStrollGoal(this, 0.35F));
 		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
