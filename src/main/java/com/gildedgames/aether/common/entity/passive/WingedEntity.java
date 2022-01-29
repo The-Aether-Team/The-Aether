@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
@@ -27,8 +28,9 @@ public abstract class WingedEntity extends MountableEntity
     @Override
     public void tick() {
         super.tick();
-        if (this.getDeltaMovement().y < -0.1 && !this.playerTriedToCrouch()) {
-            this.setDeltaMovement(this.getDeltaMovement().x, -0.1, this.getDeltaMovement().z);
+        double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.05 : -0.1;
+        if (this.getDeltaMovement().y < fallSpeed && !this.playerTriedToCrouch()) {
+            this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
         }
     }
 

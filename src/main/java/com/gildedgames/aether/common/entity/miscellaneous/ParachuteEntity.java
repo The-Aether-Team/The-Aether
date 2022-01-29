@@ -1,9 +1,11 @@
 package com.gildedgames.aether.common.entity.miscellaneous;
 
+import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -65,20 +67,14 @@ public class ParachuteEntity extends Entity
             double z = this.parachuteSpeed * (passengerVec.z() * 12.0D);
             this.setDeltaMovement(parachuteVec.add((new Vec3(x, 0.0D, z)).subtract(parachuteVec).scale(0.2D)));
             Vec3 parachuteVec2 = this.getDeltaMovement();
-            this.setDeltaMovement(parachuteVec2.x(), -0.15, parachuteVec2.z());
+            double fallSpeed = passenger instanceof LivingEntity livingEntity && livingEntity.hasEffect(MobEffects.SLOW_FALLING) ? -0.075 : -0.15;
+            this.setDeltaMovement(parachuteVec2.x(), fallSpeed, parachuteVec2.z());
         }
     }
 
     public void spawnExplosionParticle() {
         for (int i = 0; i < 1; ++i) {
-            double d0 = this.random.nextGaussian() * 0.02D;
-            double d1 = this.random.nextGaussian() * 0.02D;
-            double d2 = this.random.nextGaussian() * 0.02D;
-            double d3 = 10.0D;
-            double d4 = this.getX() + ((double) this.random.nextFloat() * this.getBbWidth() * 2.0D) - this.getBbWidth() - d0 * d3;
-            double d5 = this.getY() + ((double) this.random.nextFloat() * this.getBbHeight()) - d1 * d3;
-            double d6 = this.getZ() + ((double) this.random.nextFloat() * this.getBbWidth() * 2.0D) - this.getBbWidth() - d2 * d3;
-            this.level.addParticle(ParticleTypes.POOF, d4, d5, d6, d0, d1, d2);
+            EntityUtil.spawnMovementExplosionParticles(this);
         }
     }
 

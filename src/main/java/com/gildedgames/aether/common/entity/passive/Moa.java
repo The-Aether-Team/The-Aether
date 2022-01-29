@@ -12,7 +12,6 @@ import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.api.registers.MoaType;
 import com.gildedgames.aether.core.registry.AetherMoaTypes;
 import com.gildedgames.aether.core.util.EntityUtil;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -24,6 +23,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -45,7 +45,6 @@ import java.util.UUID;
 //Fixing the issues with using isOnGround not properly detecting if the Moa and other MountableEntities are on the ground.
 //Implement visual HUD for Moa jumps.
 //Make isSaddleable() and the Nature Staff functionality dependent on isPlayerGrown().
-//Make MoaEntity and other MountableEntities affected by Slowfall and other movement modifiers.
 
 public class Moa extends MountableEntity
 {
@@ -113,8 +112,9 @@ public class Moa extends MountableEntity
 	@Override
 	public void tick() {
 		super.tick();
-		if (this.getDeltaMovement().y < -0.1 && !this.playerTriedToCrouch()) {
-			this.setDeltaMovement(this.getDeltaMovement().x, -0.1, this.getDeltaMovement().z);
+		double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.05 : -0.1;
+		if (this.getDeltaMovement().y < fallSpeed && !this.playerTriedToCrouch()) {
+			this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
 		}
 		if (this.isOnGround()) {
 			this.setRemainingJumps(this.getMaxJumps());
@@ -197,14 +197,7 @@ public class Moa extends MountableEntity
 
 	public void spawnExplosionParticle() {
 		for (int i = 0; i < 20; ++i) {
-			double d0 = this.random.nextGaussian() * 0.02D;
-			double d1 = this.random.nextGaussian() * 0.02D;
-			double d2 = this.random.nextGaussian() * 0.02D;
-			double d3 = 10.0D;
-			double d4 = this.getX() + ((double) this.random.nextFloat() * this.getBbWidth() * 2.0D) - this.getBbWidth() - d0 * d3;
-			double d5 = this.getY() + ((double) this.random.nextFloat() * this.getBbHeight()) - d1 * d3;
-			double d6 = this.getZ() + ((double) this.random.nextFloat() * this.getBbWidth() * 2.0D) - this.getBbWidth() - d2 * d3;
-			this.level.addParticle(ParticleTypes.POOF, d4, d5, d6, d0, d1, d2);
+			EntityUtil.spawnMovementExplosionParticles(this);
 		}
 	}
 

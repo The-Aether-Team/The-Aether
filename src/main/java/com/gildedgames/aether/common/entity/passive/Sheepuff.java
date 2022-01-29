@@ -16,6 +16,7 @@ import com.gildedgames.aether.common.registry.AetherLoot;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.google.common.collect.Maps;
 
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -192,8 +193,9 @@ public class Sheepuff extends AetherAnimalEntity implements IForgeShearable
         super.tick();
         if (this.getPuffed()) {
             this.fallDistance = 0.0F;
-            if (this.getDeltaMovement().y < -0.05) {
-                this.setDeltaMovement(this.getDeltaMovement().x, -0.05, this.getDeltaMovement().z);
+            double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.025 : -0.05;
+            if (this.getDeltaMovement().y < fallSpeed) {
+                this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
             }
             this.navigation = this.fallNavigation;
         } else {

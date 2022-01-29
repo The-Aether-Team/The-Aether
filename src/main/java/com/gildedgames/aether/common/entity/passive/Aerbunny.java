@@ -20,7 +20,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -159,16 +158,9 @@ public class Aerbunny extends AetherAnimalEntity
     }
 
     private void spawnExplosionParticle() {
-        if (this.level instanceof ServerLevel level) {
+        if (this.level instanceof ServerLevel) {
             for (int i = 0; i < 5; i++) {
-                double d0 = this.random.nextGaussian() * 0.02D;
-                double d1 = this.random.nextGaussian() * 0.02D;
-                double d2 = this.random.nextGaussian() * 0.02D;
-                double d3 = 10.0D;
-                double x = this.getX() + (double) (this.random.nextFloat() * this.getBbWidth() * 2.0F) - (this.getBbWidth() - d0 * d3);
-                double y = this.getY() + (double) (this.random.nextFloat() * this.getBbHeight()) - d1 * d3;
-                double z = this.getZ() + (double) (this.random.nextFloat() * this.getBbWidth() * 2.0F) - (this.getBbWidth() - d2 * d3);
-                level.sendParticles(ParticleTypes.POOF, x, y, z, 1, d0, d1, d2, 0.0F);
+                EntityUtil.spawnMovementExplosionParticles(this);
             }
         }
     }

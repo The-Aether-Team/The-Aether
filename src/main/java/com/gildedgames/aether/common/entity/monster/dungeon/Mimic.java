@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.entity.monster.dungeon;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 
+import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.block.Blocks;
@@ -94,12 +95,7 @@ public class Mimic extends Monster {
 	@Override
 	public void spawnAnim() {
 		if (this.level.isClientSide) {
-			for(int i = 0; i < 20; ++i) {
-				double d0 = this.random.nextGaussian() * 0.02D;
-				double d1 = this.random.nextGaussian() * 0.02D;
-				double d2 = this.random.nextGaussian() * 0.02D;
-				this.level.addParticle(ParticleTypes.POOF, this.getX(0.0D) - d0 * 10.0D, this.getRandomY() - d1 * 10.0D, this.getRandomZ(1.0D) - d2 * 10.0D, d0, d1, d2);
-			}
+			EntityUtil.spawnSummoningExplosionParticles(this);
 		} else {
 			this.level.broadcastEntityEvent(this, (byte) 20);
 		}

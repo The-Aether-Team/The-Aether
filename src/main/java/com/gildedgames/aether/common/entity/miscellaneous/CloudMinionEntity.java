@@ -1,9 +1,9 @@
 package com.gildedgames.aether.common.entity.miscellaneous;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.projectile.crystal.CloudCrystalEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
+import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -13,7 +13,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.util.Mth;
@@ -143,12 +142,7 @@ public class CloudMinionEntity extends FlyingMob
 
     private void spawnExplosionParticles() {
         if (this.level.isClientSide) {
-            for (int i = 0; i < 20; ++i) {
-                double d0 = this.random.nextGaussian() * 0.02D;
-                double d1 = this.random.nextGaussian() * 0.02D;
-                double d2 = this.random.nextGaussian() * 0.02D;
-                this.level.addParticle(ParticleTypes.POOF, this.getX(0.0D) - d0 * 10.0D, this.getRandomY() - d1 * 10.0D, this.getRandomZ(1.0D) - d2 * 10.0D, d0, d1, d2);
-            }
+            EntityUtil.spawnSummoningExplosionParticles(this);
         } else {
             this.level.broadcastEntityEvent(this, (byte) 20);
         }
