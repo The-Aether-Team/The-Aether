@@ -64,7 +64,7 @@ public class Swet extends MountableEntity {
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 25.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.3D)
+                .add(Attributes.MOVEMENT_SPEED, 0.5D)
                 .add(Attributes.FOLLOW_RANGE, 25.0D);
     }
 
@@ -130,8 +130,8 @@ public class Swet extends MountableEntity {
                 this.jumpTimer = 0;
             }
             if (this.onGround) {
-                this.swetHeight = this.swetHeight < 1.0F ? this.swetHeight += 0.25F : 1.0F;
-                this.swetWidth = this.swetWidth > 1.0F ? this.swetWidth -= 0.25F : 1.0F;
+                this.swetHeight = this.swetHeight < 1.0F ? this.swetHeight + 0.25F : 1.0F;
+                this.swetWidth = this.swetWidth > 1.0F ? this.swetWidth - 0.25F : 1.0F;
             } else {
                 this.swetHeight = 1.425F;
                 this.swetWidth = 0.875F;
@@ -298,6 +298,11 @@ public class Swet extends MountableEntity {
     }
 
     @Override
+    public float getJumpPower() {
+        return 0.5F;
+    }
+
+    @Override
     public boolean canBeControlledByRider() {
         return this.isFriendly();
     }
@@ -312,6 +317,9 @@ public class Swet extends MountableEntity {
         return AetherSoundEvents.ENTITY_SWET_DEATH.get();
     }
 
+    /**
+     * The player can attack the swet to try to kill it before they finish the attack.
+     */
     @Override
     public boolean canRiderInteract() {
         return true;
@@ -319,12 +327,12 @@ public class Swet extends MountableEntity {
 
     @Override
     public float getSteeringSpeed() {
-        return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.28F;
+        return 0.084F;
     }
 
     @Override
     protected double getMountJumpStrength() {
-        return 1.0D;
+        return 1.2D;
     }
 
     @Nullable
@@ -547,7 +555,7 @@ public class Swet extends MountableEntity {
             } else {
                 this.operation = Operation.WAIT;
                 if (this.mob.isOnGround()) {
-                    this.mob.setSpeed((float) (this.speedModifier * this.mob.getAttribute(Attributes.MOVEMENT_SPEED).getValue()));
+                    this.mob.setSpeed((float) (this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
 
                     if (this.jumpDelay-- <= 0) {
                         this.jumpDelay = this.swet.getJumpDelay();
@@ -564,6 +572,8 @@ public class Swet extends MountableEntity {
                         this.swet.zza = 0.0F;
                         this.mob.setSpeed(0.0F);
                     }
+                } else {
+                    this.mob.setSpeed((float)(this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
                 }
             }
         }
