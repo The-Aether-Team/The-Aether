@@ -111,19 +111,17 @@ public class Swet extends MountableEntity {
         super.tick();
 
         if (!this.hasPrey()) {
-            for (int i = 0; i < 5; i++) {
-                double d = (float) this.getX() + (this.random.nextFloat() - this.random.nextFloat()) * 0.3F;
-                double d1 = (float) this.getY() + this.getBbHeight();
-                double d2 = (float) this.getZ() + (this.random.nextFloat() - this.random.nextFloat()) * 0.3F;
-                this.level.addParticle(ParticleTypes.SPLASH, d, d1 - 0.25D, d2, 0.0D, 0.0D, 0.0D);
-            }
+            double d = (float) this.getX() + (this.random.nextFloat() - this.random.nextFloat()) * 0.3F;
+            double d1 = (float) this.getY() + this.getBbHeight();
+            double d2 = (float) this.getZ() + (this.random.nextFloat() - this.random.nextFloat()) * 0.3F;
+            this.level.addParticle(ParticleTypes.SPLASH, d, d1 - 0.25D, d2, 0.0D, 0.0D, 0.0D);
         }
 
-        if(this.onGround && !this.wasOnGround) {
+        if (this.onGround && !this.wasOnGround) {
             this.playSound(AetherSoundEvents.ENTITY_SWET_SQUISH.get(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
         }
         this.setMidJump(!this.onGround);
-        if(this.level.isClientSide) {
+        if (this.level.isClientSide) {
             this.oSwetHeight = this.swetHeight;
             this.oSwetWidth = this.swetWidth;
             if (this.getMidJump()) {
@@ -146,7 +144,7 @@ public class Swet extends MountableEntity {
             }
         }
 
-        if(this.isFriendly())
+        if (this.isFriendly())
             this.fallDistance = 0;
 
         this.wasOnGround = this.onGround;
@@ -381,7 +379,7 @@ public class Swet extends MountableEntity {
                 if (this.swet.onGround) {
                     this.swet.playSound(AetherSoundEvents.ENTITY_SWET_JUMP.get(), 1.0F, ((this.swet.getRandom().nextFloat() - this.swet.getRandom().nextFloat()) * 0.2F + 1.0F) * 0.8F);
 
-                    chosenDegrees = (float)this.swet.getRandom().nextInt(360);
+                    chosenDegrees = (float) this.swet.getRandom().nextInt(360);
 
                     if (this.jumps == 0) {
                         this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.64999999403953552D, 0));
@@ -438,7 +436,7 @@ public class Swet extends MountableEntity {
         @Override
         public boolean canUse() {
             LivingEntity target = this.swet.getTarget();
-            if (swet.hasPrey() || target == null || !target.isAlive() || this.swet.isFriendlyTowardEntity(target) || (target instanceof Player && ((Player)target).getAbilities().invulnerable)) {
+            if (swet.hasPrey() || target == null || !target.isAlive() || this.swet.isFriendlyTowardEntity(target) || (target instanceof Player && ((Player) target).getAbilities().invulnerable)) {
                 return false;
             } else {
                 return this.swet.getMoveControl() instanceof Swet.MoveHelperController;
@@ -450,7 +448,7 @@ public class Swet extends MountableEntity {
             LivingEntity target = this.swet.getTarget();
             if (swet.hasPrey() || target == null || !target.isAlive()) {
                 return false;
-            } else if (target instanceof Player && ((Player)target).getAbilities().invulnerable) {
+            } else if (target instanceof Player && ((Player) target).getAbilities().invulnerable) {
                 return false;
             } else {
                 return !this.swet.isFriendlyTowardEntity(target);
@@ -460,10 +458,10 @@ public class Swet extends MountableEntity {
         @Override
         public void tick() {
             LivingEntity target = this.swet.getTarget();
-            if(target != null) {
+            if (target != null) {
                 this.swet.lookAt(target, 10.0F, 10.0F);
-                ((Swet.MoveHelperController)this.swet.getMoveControl()).setDirection(this.swet.getYRot(), true);
-                if(swet.getBoundingBox().intersects(target.getBoundingBox())) {
+                ((Swet.MoveHelperController) this.swet.getMoveControl()).setDirection(this.swet.getYRot(), true);
+                if (swet.getBoundingBox().intersects(target.getBoundingBox())) {
                     swet.capturePrey(target);
                 }
             }
@@ -491,10 +489,10 @@ public class Swet extends MountableEntity {
         public void tick() {
             if (--this.nextRandomizeTime <= 0) {
                 this.nextRandomizeTime = 40 + this.swet.getRandom().nextInt(60);
-                this.chosenDegrees = (float)this.swet.getRandom().nextInt(360);
+                this.chosenDegrees = (float) this.swet.getRandom().nextInt(360);
             }
 
-            ((MoveHelperController)this.swet.getMoveControl()).setDirection(this.chosenDegrees, false);
+            ((MoveHelperController) this.swet.getMoveControl()).setDirection(this.chosenDegrees, false);
         }
     }
 
@@ -511,7 +509,7 @@ public class Swet extends MountableEntity {
         }
 
         public void tick() {
-            ((MoveHelperController)this.swet.getMoveControl()).setWantedMovement(1.0D);
+            ((MoveHelperController) this.swet.getMoveControl()).setWantedMovement(1.0D);
         }
     }
 
@@ -524,7 +522,7 @@ public class Swet extends MountableEntity {
         public MoveHelperController(Swet swet) {
             super(swet);
             this.swet = swet;
-            this.yRot = 180.0F * swet.getYRot() / (float)Math.PI;
+            this.yRot = 180.0F * swet.getYRot() / (float) Math.PI;
         }
 
         public void setDirection(float yRotIn, boolean isAggressiveIn) {
@@ -538,6 +536,9 @@ public class Swet extends MountableEntity {
         }
 
         public void tick() {
+            if (this.swet.isFriendly()) {
+                return;
+            }
             this.mob.setYRot(this.rotlerp(this.mob.getYRot(), this.yRot, 90.0F));
             this.mob.yHeadRot = this.mob.getYRot();
             this.mob.yBodyRot = this.mob.getYRot();
@@ -546,36 +547,24 @@ public class Swet extends MountableEntity {
             } else {
                 this.operation = Operation.WAIT;
                 if (this.mob.isOnGround()) {
-                    boolean flag = true;
+                    this.mob.setSpeed((float) (this.speedModifier * this.mob.getAttribute(Attributes.MOVEMENT_SPEED).getValue()));
 
-                    if (this.swet.isFriendly()) {
-                        if (this.swet.getDeltaMovement().x == 0 || this.swet.getDeltaMovement().z == 0) {
-                            flag = false;
+                    if (this.jumpDelay-- <= 0) {
+                        this.jumpDelay = this.swet.getJumpDelay();
+
+                        if (this.isAggressive) {
+                            this.jumpDelay /= 3;
                         }
+
+                        this.swet.getJumpControl().jump();
+
+                        this.swet.playSound(AetherSoundEvents.ENTITY_SWET_JUMP.get(), 1.0F, ((this.swet.random.nextFloat() - this.swet.random.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+                    } else {
+                        this.swet.xxa = 0.0F;
+                        this.swet.zza = 0.0F;
+                        this.mob.setSpeed(0.0F);
                     }
-                    if (flag) {
-                        this.mob.setSpeed((float)(this.speedModifier * this.mob.getAttribute(Attributes.MOVEMENT_SPEED).getValue()));
-
-                        if (this.jumpDelay-- <= 0) {
-                            this.jumpDelay = this.swet.getJumpDelay();
-
-                            if (this.isAggressive) {
-                                this.jumpDelay /= 3;
-                            }
-
-                            this.swet.getJumpControl().jump();
-
-                            this.swet.playSound(AetherSoundEvents.ENTITY_SWET_JUMP.get(), 1.0F, ((this.swet.random.nextFloat() - this.swet.random.nextFloat()) * 0.2F + 1.0F) * 0.8F);
-                        } else {
-                            this.swet.xxa = 0.0F;
-                            this.swet.zza = 0.0F;
-                            this.mob.setSpeed(0.0F);
-                        }
-                    }
-                } else {
-                    this.mob.setSpeed((float)(this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
                 }
-
             }
         }
     }
