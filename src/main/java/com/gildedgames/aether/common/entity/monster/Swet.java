@@ -11,6 +11,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -248,11 +249,7 @@ public class Swet extends MountableEntity {
     }
 
     public int getJumpDelay() {
-        if (this.isFriendly()) {
-            return 2;
-        } else {
-            return this.random.nextInt(20) + 10;
-        }
+        return this.random.nextInt(20) + 10;
     }
 
     public void setMidJump(boolean flag) {
@@ -378,7 +375,7 @@ public class Swet extends MountableEntity {
 
         @Override
         public boolean canUse() {
-            return this.swet.hasPrey() && this.swet.getPassengers().get(0) instanceof LivingEntity && !this.swet.isFriendlyTowardEntity((LivingEntity) this.swet.getPassengers().get(0));
+            return this.swet.level.getDifficulty() != Difficulty.PEACEFUL && this.swet.hasPrey() && this.swet.getPassengers().get(0) instanceof LivingEntity && !this.swet.isFriendlyTowardEntity((LivingEntity) this.swet.getPassengers().get(0));
         }
 
         @Override
