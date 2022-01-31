@@ -1,8 +1,10 @@
 package com.gildedgames.aether.common.entity.monster;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.entity.ai.goal.target.NearestTaggedTargetGoal;
 import com.gildedgames.aether.common.entity.passive.MountableEntity;
 import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -23,7 +25,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -59,7 +63,8 @@ public class Swet extends MountableEntity {
         this.goalSelector.addGoal(1, new HuntGoal(this));
         this.goalSelector.addGoal(2, new RandomFacingGoal(this));
         this.goalSelector.addGoal(4, new HopGoal(this));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, (target) -> !this.isFriendlyTowardEntity(target)));
+        this.targetSelector.addGoal(2, new NearestTaggedTargetGoal(this, AetherTags.Entities.SWET_TARGET, true, (target) -> !this.isFriendlyTowardEntity(target)));
     }
 
     public static AttributeSupplier.Builder createMobAttributes() {
@@ -91,7 +96,7 @@ public class Swet extends MountableEntity {
         super.aiStep();
 
         if (this.getTarget() != null) {
-            if (this.isFriendlyTowardEntity(this.getTarget()) || this.isFriendly()) {
+            if (this.hasPrey() || this.isFriendlyTowardEntity(this.getTarget())) {
                 this.setTarget(null);
             }
         }
@@ -151,6 +156,15 @@ public class Swet extends MountableEntity {
         this.wasOnGround = this.onGround;
     }
 
+    /**
+     * Swet AI goals shouldn't be deactivated when it grabs a mob.
+     */
+    @Override
+    protected void updateControlFlags() {
+        boolean flag = !(this.getVehicle() instanceof Boat);
+        this.goalSelector.setControlFlag(Goal.Flag.JUMP, flag);
+    }
+
     @Override
     public void travel(Vec3 vector3d) {
         if (this.isAlive()) {
@@ -195,7 +209,7 @@ public class Swet extends MountableEntity {
     }
 
     public boolean hasPrey() {
-        return this.isVehicle() && this.getPassengers().get(0) != null;
+        return getFirstPassenger() != null;
     }
 
     public boolean isFriendlyTowardEntity(LivingEntity entity) {
@@ -375,7 +389,15 @@ public class Swet extends MountableEntity {
 
         @Override
         public boolean canUse() {
-            return this.swet.level.getDifficulty() != Difficulty.PEACEFUL && this.swet.hasPrey() && this.swet.getPassengers().get(0) instanceof LivingEntity && !this.swet.isFriendlyTowardEntity((LivingEntity) this.swet.getPassengers().get(0));
+            return this.swet.level.getDifficulty() != Difficulty.PEACEFUL
+                    && this.swet.hasPrey()
+                    && this.swet.getPassengers().get(0) instanceof LivingEntity
+                    && !this.swet.isFriendlyTowardEntity((LivingEntity) this.swet.getPassengers().get(0));
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return super.canContinueToUse();
         }
 
         @Override
@@ -493,7 +515,7 @@ public class Swet extends MountableEntity {
 
         public void tick() {
             if (--this.nextRandomizeTime <= 0) {
-                this.nextRandomizeTime = 40 + this.swet.getRandom().nextInt(60);
+                this.nextRandomizeTime = this.adjustedTickDelay(40 + this.swet.getRandom().nextInt(60));
                 this.chosenDegrees = (float) this.swet.getRandom().nextInt(360);
             }
 
