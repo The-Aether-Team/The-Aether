@@ -3,41 +3,21 @@ package com.gildedgames.aether;
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
-import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectileEntity;
-import com.gildedgames.aether.common.entity.projectile.weapon.LightningKnifeEntity;
-import com.gildedgames.aether.common.entity.tile.AltarTileEntity;
-import com.gildedgames.aether.common.entity.tile.FreezerTileEntity;
-import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
-import com.gildedgames.aether.common.item.miscellaneous.bucket.SkyrootWaterBucketItem;
+import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
+import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
 import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.*;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
-import net.minecraft.Util;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Position;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
-import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
-import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;
@@ -53,8 +33,6 @@ import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
-
-import java.util.Random;
 
 @Mod(Aether.MODID)
 public class Aether {
@@ -200,8 +178,7 @@ public class Aether {
     }
 
     private void registerFuels() {
-        AltarTileEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 500);
-
-        FreezerTileEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 500);
+        AltarBlockEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 500);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 500);
     }
 }

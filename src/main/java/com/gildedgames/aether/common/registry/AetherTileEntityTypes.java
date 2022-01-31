@@ -2,6 +2,8 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 
+import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
+import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
 import com.gildedgames.aether.common.entity.tile.SkyrootSignTileEntity;
 import com.gildedgames.aether.common.entity.tile.*;
 import com.google.common.collect.Sets;
@@ -14,10 +16,10 @@ public class AetherTileEntityTypes
 {
 	public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Aether.MODID);
 
-	public static final RegistryObject<BlockEntityType<AltarTileEntity>> ALTAR = TILE_ENTITIES.register("altar", () ->
-			new BlockEntityType(AltarTileEntity::new, Sets.newHashSet(AetherBlocks.ALTAR.get()), null));
-	public static final RegistryObject<BlockEntityType<FreezerTileEntity>> FREEZER = TILE_ENTITIES.register("freezer", () ->
-			new BlockEntityType(FreezerTileEntity::new, Sets.newHashSet(AetherBlocks.FREEZER.get()), null));
+	public static final RegistryObject<BlockEntityType<AltarBlockEntity>> ALTAR = TILE_ENTITIES.register("altar", () ->
+			new BlockEntityType(AltarBlockEntity::new, Sets.newHashSet(AetherBlocks.ALTAR.get()), null));
+	public static final RegistryObject<BlockEntityType<FreezerBlockEntity>> FREEZER = TILE_ENTITIES.register("freezer", () ->
+			new BlockEntityType(FreezerBlockEntity::new, Sets.newHashSet(AetherBlocks.FREEZER.get()), null));
 	public static final RegistryObject<BlockEntityType<IncubatorTileEntity>> INCUBATOR = TILE_ENTITIES.register("incubator", () ->
 			new BlockEntityType(IncubatorTileEntity::new, Sets.newHashSet(AetherBlocks.INCUBATOR.get()), null));
 	public static final RegistryObject<BlockEntityType<ChestMimicBlockEntity>> CHEST_MIMIC = TILE_ENTITIES.register("chest_mimic", () ->
