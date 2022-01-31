@@ -4,7 +4,7 @@ import java.util.Random;
 
 import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
 
-import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
+import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -37,7 +37,7 @@ public class AltarBlock extends AbstractFurnaceBlock
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> blockEntityType) {
-		return createFurnaceTicker(level, blockEntityType, AetherTileEntityTypes.ALTAR.get());
+		return createFurnaceTicker(level, blockEntityType, AetherBlockEntityTypes.ALTAR.get());
 	}
 
 	@Override

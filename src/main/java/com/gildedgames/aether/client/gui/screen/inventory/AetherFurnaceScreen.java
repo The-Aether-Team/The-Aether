@@ -20,17 +20,20 @@ public class AetherFurnaceScreen<T extends AbstractFurnaceMenu> extends Abstract
         this.guiTexture = guiTexture;
     }
 
+    @Override
     public void init() {
         super.init();
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
     }
 
+    @Override
     public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(poseStack);
         super.render(poseStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(poseStack, mouseX, mouseY);
     }
 
+    @Override
     protected void renderBg(@Nonnull PoseStack poseStack, float partialTicks, int x, int y) {
         RenderSystem.clearColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);

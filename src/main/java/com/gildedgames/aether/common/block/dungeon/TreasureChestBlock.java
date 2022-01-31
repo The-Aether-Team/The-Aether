@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.block.dungeon;
 
 import com.gildedgames.aether.common.entity.tile.TreasureChestBlockEntity;
-import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
+import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
@@ -66,7 +66,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 	}
 
 	public TreasureChestBlock(BlockBehaviour.Properties properties) {
-		this(properties, AetherTileEntityTypes.TREASURE_CHEST::get);
+		this(properties, AetherBlockEntityTypes.TREASURE_CHEST::get);
 	}
 
 	@Override

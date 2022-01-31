@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.mixin.common;
 
+import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import com.gildedgames.aether.common.registry.AetherTags;
-import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
@@ -23,7 +23,7 @@ public class AbstractFurnaceBlockEntityMixin
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity;canBurn(Lnet/minecraft/world/item/crafting/Recipe;Lnet/minecraft/core/NonNullList;I)Z", shift = At.Shift.AFTER), method = "burn", cancellable = true)
     private void burn(@Nullable Recipe<?> recipe, @Nonnull NonNullList<ItemStack> stacks, int p_155029_, CallbackInfoReturnable<Boolean> cir) {
         AbstractFurnaceBlockEntity blockEntity = (AbstractFurnaceBlockEntity) (Object) this;
-        if (recipe != null && (blockEntity.getType() == AetherTileEntityTypes.ALTAR.get() || blockEntity.getType() == AetherTileEntityTypes.FREEZER.get())) {
+        if (recipe != null && (blockEntity.getType() == AetherBlockEntityTypes.ALTAR.get() || blockEntity.getType() == AetherBlockEntityTypes.FREEZER.get())) {
             ItemStack itemStack = stacks.get(0);
             ItemStack itemStack1 = ((Recipe<WorldlyContainer>) recipe).assemble(blockEntity);
             ItemStack itemStack2 = stacks.get(2);

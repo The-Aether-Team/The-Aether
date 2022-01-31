@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherRecipes.RecipeTypes;
 import com.gildedgames.aether.common.inventory.container.AltarContainer;
 
-import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
+import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,12 +20,12 @@ import net.minecraft.network.chat.TranslatableComponent;
 import javax.annotation.Nonnull;
 import java.util.Map;
 
-public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity
+public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity //TODO: Test hopper support.
 {
 	private static final Map<Item, Integer> enchantingMap = Maps.newLinkedHashMap();
 
 	public AltarBlockEntity(BlockPos pos, BlockState state) {
-		super(AetherTileEntityTypes.ALTAR.get(), pos, state, RecipeTypes.ENCHANTING);
+		super(AetherBlockEntityTypes.ALTAR.get(), pos, state, RecipeTypes.ENCHANTING);
 	}
 
 	@Nonnull

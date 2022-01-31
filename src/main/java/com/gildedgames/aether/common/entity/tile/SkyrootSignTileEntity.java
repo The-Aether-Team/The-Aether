@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.entity.tile;
 
-import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
+import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -15,6 +15,6 @@ public class SkyrootSignTileEntity extends SignBlockEntity
     @Override
     public BlockEntityType<SkyrootSignTileEntity> getType()
     {
-        return AetherTileEntityTypes.SKYROOT_SIGN.get();
+        return AetherBlockEntityTypes.SKYROOT_SIGN.get();
     }
 }

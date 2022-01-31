@@ -2,6 +2,7 @@ package com.gildedgames.aether;
 
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.block.entity.IncubatorBlockEntity;
 import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
 import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
 import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
@@ -56,7 +57,7 @@ public class Aether {
                 AetherPOI.POI,
                 AetherSoundEvents.SOUNDS,
                 AetherContainerTypes.CONTAINERS,
-                AetherTileEntityTypes.TILE_ENTITIES,
+                AetherBlockEntityTypes.BLOCK_ENTITIES,
                 AetherRecipes.RECIPE_SERIALIZERS
         };
 
@@ -180,5 +181,6 @@ public class Aether {
     private void registerFuels() {
         AltarBlockEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 500);
         FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 500);
+        IncubatorBlockEntity.addItemIncubatingTime(AetherBlocks.AMBROSIUM_TORCH.get(), 1000);
     }
 }

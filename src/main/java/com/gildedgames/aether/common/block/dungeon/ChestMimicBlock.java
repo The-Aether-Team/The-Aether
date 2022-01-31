@@ -3,8 +3,8 @@ package com.gildedgames.aether.common.block.dungeon;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.monster.dungeon.Mimic;
 import com.gildedgames.aether.common.entity.tile.ChestMimicBlockEntity;
+import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -179,7 +179,7 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
 			bipredicate = ChestBlock::isChestBlockedAt;
 		}
 
-		return DoubleBlockCombiner.combineWithNeigbour(AetherTileEntityTypes.CHEST_MIMIC.get(), ChestBlock::getBlockType, ChestBlock::getConnectedDirection, FACING, state, world, pos, bipredicate);
+		return DoubleBlockCombiner.combineWithNeigbour(AetherBlockEntityTypes.CHEST_MIMIC.get(), ChestBlock::getBlockType, ChestBlock::getConnectedDirection, FACING, state, world, pos, bipredicate);
 	}
 
 	@Override

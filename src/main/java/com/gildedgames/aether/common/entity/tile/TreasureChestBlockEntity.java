@@ -2,8 +2,8 @@ package com.gildedgames.aether.common.entity.tile;
 
 import com.gildedgames.aether.common.block.dungeon.TreasureChestBlock;
 import com.gildedgames.aether.common.item.miscellaneous.DungeonKeyItem;
+import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import com.gildedgames.aether.common.registry.AetherBlocks;
-import com.gildedgames.aether.common.registry.AetherTileEntityTypes;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
@@ -44,13 +44,13 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     }
 
     public TreasureChestBlockEntity(BlockPos pos, BlockState state) {
-        this(AetherTileEntityTypes.TREASURE_CHEST.get(), pos, state);
+        this(AetherBlockEntityTypes.TREASURE_CHEST.get(), pos, state);
         this.kind = AetherDungeonTypes.BRONZE.getRegistryName();
         this.locked = true;
     }
 
     public TreasureChestBlockEntity() {
-        super(AetherTileEntityTypes.TREASURE_CHEST.get(), BlockPos.ZERO, AetherBlocks.TREASURE_CHEST.get().defaultBlockState());
+        super(AetherBlockEntityTypes.TREASURE_CHEST.get(), BlockPos.ZERO, AetherBlocks.TREASURE_CHEST.get().defaultBlockState());
     }
 
     @Override
