@@ -69,6 +69,8 @@ public class Aether {
         AetherAdvancements.init();
         PlacementModifiers.init();
 
+        AetherBlocks.registerWoodTypes();
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
 
@@ -82,7 +84,6 @@ public class Aether {
         AetherBlocks.registerAxeStrippingBlocks();
         AetherBlocks.registerHoeTillingBlocks();
         AetherBlocks.registerFlammability();
-        AetherBlocks.registerWoodTypes();
         AetherBlocks.registerFreezables();
 
         AetherFeatures.registerConfiguredFeatures();

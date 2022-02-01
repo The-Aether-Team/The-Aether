@@ -18,13 +18,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-
 import javax.annotation.Nonnull;
 
 public class AltarBlock extends AbstractFurnaceBlock
 {
-	public AltarBlock(BlockBehaviour.Properties properties) {
+	public AltarBlock(Properties properties) {
 		super(properties);
 	}
 

@@ -3,7 +3,7 @@ package com.gildedgames.aether.common.registry;
 import com.gildedgames.aether.Aether;
 
 import com.gildedgames.aether.common.block.entity.*;
-import com.gildedgames.aether.common.entity.tile.SkyrootSignTileEntity;
+import com.gildedgames.aether.common.block.entity.SkyrootSignBlockEntity;
 import com.gildedgames.aether.common.entity.tile.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -26,6 +26,6 @@ public class AetherBlockEntityTypes
 			BlockEntityType.Builder.of(TreasureChestBlockEntity::new, AetherBlocks.TREASURE_CHEST.get()).build(null));
 	public static final RegistryObject<BlockEntityType<SkyrootBedBlockEntity>> SKYROOT_BED = BLOCK_ENTITIES.register("skyroot_bed", () ->
 			BlockEntityType.Builder.of(SkyrootBedBlockEntity::new, AetherBlocks.SKYROOT_BED.get()).build(null));
-	public static final RegistryObject<BlockEntityType<SkyrootSignTileEntity>> SKYROOT_SIGN = BLOCK_ENTITIES.register("skyroot_sign", () ->
-			BlockEntityType.Builder.of(SkyrootSignTileEntity::new, AetherBlocks.SKYROOT_WALL_SIGN.get(), AetherBlocks.SKYROOT_SIGN.get()).build(null));
+	public static final RegistryObject<BlockEntityType<SkyrootSignBlockEntity>> SKYROOT_SIGN = BLOCK_ENTITIES.register("skyroot_sign", () ->
+			BlockEntityType.Builder.of(SkyrootSignBlockEntity::new, AetherBlocks.SKYROOT_WALL_SIGN.get(), AetherBlocks.SKYROOT_SIGN.get()).build(null));
 }

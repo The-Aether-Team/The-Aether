@@ -19,13 +19,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-
 import javax.annotation.Nonnull;
 
 public class FreezerBlock extends AbstractFurnaceBlock
 {
-	public FreezerBlock(BlockBehaviour.Properties properties) {
+	public FreezerBlock(Properties properties) {
 		super(properties);
 	}
 	
