@@ -27,10 +27,7 @@ public class EntityListener
         Entity rider = event.getEntityMounting();
         Entity mount = event.getEntityBeingMounted();
         if(event.isDismounting() && rider.isShiftKeyDown()) {
-            if (mount instanceof MountableEntity && !mount.isOnGround()) {
-                event.setCanceled(true);
-            }
-            if (mount instanceof Swet swet && !swet.isFriendly()) {
+            if ((mount instanceof MountableEntity && !mount.isOnGround()) || (mount instanceof Swet swet && !swet.isFriendly())) {
                 event.setCanceled(true);
             }
         }
