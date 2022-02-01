@@ -22,7 +22,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class FreezerBlock extends AbstractFurnaceBlock
 {
@@ -35,7 +34,6 @@ public class FreezerBlock extends AbstractFurnaceBlock
 		return new FreezerBlockEntity(pos, state);
 	}
 
-	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> blockEntityType) {
 		return createFurnaceTicker(level, blockEntityType, AetherBlockEntityTypes.FREEZER.get());

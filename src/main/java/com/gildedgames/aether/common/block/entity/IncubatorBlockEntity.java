@@ -218,7 +218,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 
 	@Override
 	public int getContainerSize() {
-		return items.size();
+		return this.items.size();
 	}
 
 	@Override
@@ -234,7 +234,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	@Nonnull
 	@Override
 	public ItemStack getItem(int index) {
-		return items.get(index);
+		return this.items.get(index);
 	}
 
 	@Nonnull
