@@ -1,19 +1,19 @@
 package com.gildedgames.aether.common.inventory.container.slot;
 
 import com.gildedgames.aether.common.inventory.container.IncubatorContainer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class IncubatorEggSlot extends Slot {
+import javax.annotation.Nonnull;
+
+public class IncubatorEggSlot extends Slot
+{
 	private final IncubatorContainer container;
-	private Player player;
 	
-	public IncubatorEggSlot(IncubatorContainer container, Container incubatorInventoryIn, int index, int xPosition, int yPosition, Player playerIn) {
+	public IncubatorEggSlot(IncubatorContainer container, Container incubatorInventoryIn, int index, int xPosition, int yPosition) {
 		super(incubatorInventoryIn, index, xPosition, yPosition);
 		this.container = container;
-		this.player = playerIn;
 	}
 	
 	@Override
@@ -22,14 +22,7 @@ public class IncubatorEggSlot extends Slot {
 	}
 	
 	@Override
-	public boolean mayPlace(ItemStack stack) {
-		return container.isEgg(stack);
+	public boolean mayPlace(@Nonnull ItemStack stack) {
+		return this.container.isEgg(stack);
 	}
-	
-	@Override
-	public void set(ItemStack stack) {
-		super.set(stack);
-		container.playerUUIDAcceptor.accept(player.getUUID());
-	}
-
 }
