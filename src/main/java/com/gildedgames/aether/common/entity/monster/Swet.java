@@ -5,6 +5,8 @@ import com.gildedgames.aether.common.entity.ai.goal.target.NearestTaggedTargetGo
 import com.gildedgames.aether.common.entity.passive.MountableEntity;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.SwetAttackPacket;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -25,9 +27,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -63,8 +63,8 @@ public class Swet extends MountableEntity {
         this.goalSelector.addGoal(1, new HuntGoal(this));
         this.goalSelector.addGoal(2, new RandomFacingGoal(this));
         this.goalSelector.addGoal(4, new HopGoal(this));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, (target) -> !this.isFriendlyTowardEntity(target)));
-        this.targetSelector.addGoal(2, new NearestTaggedTargetGoal(this, AetherTags.Entities.SWET_TARGET, true, (target) -> !this.isFriendlyTowardEntity(target)));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, (target) -> !this.isFriendlyTowardEntity(target) && !(target.getRootVehicle() instanceof Swet)));
+        this.targetSelector.addGoal(2, new NearestTaggedTargetGoal(this, AetherTags.Entities.SWET_TARGET, true, (target) -> !this.isFriendlyTowardEntity(target) && !(target.getRootVehicle() instanceof Swet)));
     }
 
     public static AttributeSupplier.Builder createMobAttributes() {
@@ -96,7 +96,7 @@ public class Swet extends MountableEntity {
         super.aiStep();
 
         if (this.getTarget() != null) {
-            if (this.hasPrey() || this.isFriendlyTowardEntity(this.getTarget())) {
+            if (this.hasPrey() || this.isFriendlyTowardEntity(this.getTarget()) || this.getTarget().getRootVehicle() instanceof Swet) {
                 this.setTarget(null);
             }
         }
@@ -156,13 +156,13 @@ public class Swet extends MountableEntity {
         this.wasOnGround = this.onGround;
     }
 
-    /**
-     * Swet AI goals shouldn't be deactivated when it grabs a mob.
-     */
+    @Nullable
     @Override
-    protected void updateControlFlags() {
-        boolean flag = !(this.getVehicle() instanceof Boat);
-        this.goalSelector.setControlFlag(Goal.Flag.JUMP, flag);
+    public Entity getControllingPassenger() {
+        if (this.getFirstPassenger() instanceof LivingEntity passenger && this.isFriendlyTowardEntity(passenger)) {
+            return passenger;
+        }
+        return null;
     }
 
     @Override
@@ -376,9 +376,10 @@ public class Swet extends MountableEntity {
         return super.getDimensions(pPose).scale(getScale());
     }
 
-    static class ConsumeGoal extends Goal {
+    public static class ConsumeGoal extends Goal {
         private final Swet swet;
         private int jumps = 0;
+        private int jumpTimer = 2;
 
         private float chosenDegrees = 0;
 
@@ -391,19 +392,15 @@ public class Swet extends MountableEntity {
         public boolean canUse() {
             return this.swet.level.getDifficulty() != Difficulty.PEACEFUL
                     && this.swet.hasPrey()
-                    && this.swet.getPassengers().get(0) instanceof LivingEntity
-                    && !this.swet.isFriendlyTowardEntity((LivingEntity) this.swet.getPassengers().get(0));
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return super.canContinueToUse();
+                    && this.swet.getPassengers().get(0) instanceof LivingEntity passenger
+                    && !this.swet.isFriendlyTowardEntity(passenger);
         }
 
         @Override
         public void tick() {
             if (this.jumps <= 3) {
-                if (this.swet.onGround) {
+                if (this.swet.onGround && --this.jumpTimer <= 0) {
+                    this.jumpTimer = 2;
                     this.swet.playSound(AetherSoundEvents.ENTITY_SWET_JUMP.get(), 1.0F, ((this.swet.getRandom().nextFloat() - this.swet.getRandom().nextFloat()) * 0.2F + 1.0F) * 0.8F);
 
                     chosenDegrees = (float) this.swet.getRandom().nextInt(360);
@@ -435,6 +432,7 @@ public class Swet extends MountableEntity {
                         }
                     }
                 }
+                AetherPacketHandler.sendToNear(new SwetAttackPacket(this.swet.getId(), this.swet.getDeltaMovement()), this.swet.getX(), this.swet.getY(), this.swet.getZ(), 1.0D, this.swet.getLevel().dimension());
             }
         }
 
@@ -452,7 +450,7 @@ public class Swet extends MountableEntity {
         }
     }
 
-    static class HuntGoal extends Goal {
+    public static class HuntGoal extends Goal {
         private final Swet swet;
 
         public HuntGoal(Swet entity) {
@@ -463,7 +461,7 @@ public class Swet extends MountableEntity {
         @Override
         public boolean canUse() {
             LivingEntity target = this.swet.getTarget();
-            if (swet.hasPrey() || target == null || !target.isAlive() || this.swet.isFriendlyTowardEntity(target) || (target instanceof Player && ((Player) target).getAbilities().invulnerable)) {
+            if (swet.hasPrey() || target == null || !target.isAlive() || this.swet.isFriendlyTowardEntity(target) || (target instanceof Player player && player.getAbilities().invulnerable)) {
                 return false;
             } else {
                 return this.swet.getMoveControl() instanceof Swet.MoveHelperController;
@@ -475,7 +473,7 @@ public class Swet extends MountableEntity {
             LivingEntity target = this.swet.getTarget();
             if (swet.hasPrey() || target == null || !target.isAlive()) {
                 return false;
-            } else if (target instanceof Player && ((Player) target).getAbilities().invulnerable) {
+            } else if (target instanceof Player player && player.getAbilities().invulnerable) {
                 return false;
             } else {
                 return !this.swet.isFriendlyTowardEntity(target);
@@ -499,7 +497,7 @@ public class Swet extends MountableEntity {
      * Classes down here are based off of the AI classes used in SlimeEntity.
      * @see net.minecraft.world.entity.monster.Slime
      */
-    static class RandomFacingGoal extends Goal {
+    public static class RandomFacingGoal extends Goal {
         private final Swet swet;
         private float chosenDegrees;
         private int nextRandomizeTime;
@@ -523,7 +521,7 @@ public class Swet extends MountableEntity {
         }
     }
 
-    static class HopGoal extends Goal {
+    public static class HopGoal extends Goal {
         private final Swet swet;
 
         public HopGoal(Swet swetEntity) {
@@ -540,7 +538,7 @@ public class Swet extends MountableEntity {
         }
     }
 
-    static class MoveHelperController extends MoveControl {
+    public static class MoveHelperController extends MoveControl {
         private float yRot;
         private int jumpDelay;
         private final Swet swet;
@@ -580,7 +578,7 @@ public class Swet extends MountableEntity {
                         this.jumpDelay = this.swet.getJumpDelay();
 
                         if (this.isAggressive) {
-                            this.jumpDelay /= 3;
+                            this.jumpDelay /= 6;
                         }
 
                         this.swet.getJumpControl().jump();
