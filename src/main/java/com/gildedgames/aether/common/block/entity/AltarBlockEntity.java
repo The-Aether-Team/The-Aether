@@ -20,7 +20,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import javax.annotation.Nonnull;
 import java.util.Map;
 
-public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity //TODO: Test hopper support.
+public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity
 {
 	private static final Map<Item, Integer> enchantingMap = Maps.newLinkedHashMap();
 

@@ -38,7 +38,6 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import java.util.Map;
 
-//TODO: Verify hopper support works
 public class IncubatorBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer
 {
 	private static final int[] SLOTS_NS = {0};
@@ -205,7 +204,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	}
 
 	public boolean canPlaceItemThroughFace(int index, @Nonnull ItemStack stack, @Nullable Direction direction) {
-		 if (index == 1) {
+		 if (index == 0) {
 			 return stack.is(AetherTags.Items.MOA_EGGS);
 		} else {
 			 return this.getBurnDuration(stack) > 0;

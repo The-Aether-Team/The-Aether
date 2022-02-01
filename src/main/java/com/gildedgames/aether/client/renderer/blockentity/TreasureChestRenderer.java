@@ -1,10 +1,9 @@
-package com.gildedgames.aether.client.renderer.tile;
+package com.gildedgames.aether.client.renderer.blockentity;
 
 import com.gildedgames.aether.client.registry.AetherAtlases;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.renderer.blockentity.ChestRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;

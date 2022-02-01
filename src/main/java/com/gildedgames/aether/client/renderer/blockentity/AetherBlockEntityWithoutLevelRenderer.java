@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.renderer.tile;
+package com.gildedgames.aether.client.renderer.blockentity;
 
 import com.gildedgames.aether.common.item.block.EntityBlockItem;
 import com.mojang.blaze3d.vertex.PoseStack;

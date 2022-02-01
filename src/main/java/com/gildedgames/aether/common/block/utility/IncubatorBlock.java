@@ -3,9 +3,11 @@ package com.gildedgames.aether.common.block.utility;
 import com.gildedgames.aether.common.block.entity.IncubatorBlockEntity;
 
 import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.*;
@@ -29,8 +31,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.Random;
 
-public class IncubatorBlock extends BaseEntityBlock //TODO: Particles.
+public class IncubatorBlock extends BaseEntityBlock
 {
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
@@ -68,6 +71,22 @@ public class IncubatorBlock extends BaseEntityBlock //TODO: Particles.
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof IncubatorBlockEntity) {
 				player.openMenu((MenuProvider) blockEntity);
+			}
+		}
+	}
+
+	@Override
+	public void animateTick(BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull Random random) {
+		if (state.getValue(LIT)) {
+			double f = pos.getX() + 0.5;
+			double f1 = pos.getY() + 1.0 + (random.nextFloat() * 15.0D) / 16.0;
+			double f2 = pos.getZ() + 0.5;
+
+			level.addParticle(ParticleTypes.SMOKE, f, f1, f2, 0.0D, 0.0D, 0.0D);
+			level.addParticle(ParticleTypes.FLAME, f, f1, f2, 0.0D, 0.0D, 0.0D);
+
+			if (random.nextDouble() < 0.1) {
+				level.playLocalSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 			}
 		}
 	}
@@ -116,10 +135,4 @@ public class IncubatorBlock extends BaseEntityBlock //TODO: Particles.
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
 		pBuilder.add(LIT);
 	}
-
-	//TODO: Did the incubator even emit light? Also did other utility blocks emit light?
-//	@Override
-//	public int getLightEmission(BlockState state, BlockGetter blockGetter, BlockPos pos) {
-//		return state.getValue(LIT) ? super.getLightEmission(state, blockGetter, pos) : 0;
-//	}
 }

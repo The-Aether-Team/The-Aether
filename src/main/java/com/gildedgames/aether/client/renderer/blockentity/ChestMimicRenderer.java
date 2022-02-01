@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.renderer.tile;
+package com.gildedgames.aether.client.renderer.blockentity;
 
 import com.gildedgames.aether.common.entity.tile.ChestMimicBlockEntity;
 import com.gildedgames.aether.common.registry.AetherBlocks;
