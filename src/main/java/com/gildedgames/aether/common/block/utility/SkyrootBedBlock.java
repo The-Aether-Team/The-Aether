@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.block.utility;
 
-import com.gildedgames.aether.common.entity.tile.SkyrootBedBlockEntity;
+import com.gildedgames.aether.common.block.entity.SkyrootBedBlockEntity;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -13,21 +13,28 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.BlockHitResult;
 
+import javax.annotation.Nonnull;
+
 public class SkyrootBedBlock extends BedBlock
 {
-    public SkyrootBedBlock(BlockBehaviour.Properties properties) {
+    public SkyrootBedBlock(Properties properties) {
         super(DyeColor.WHITE, properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(PART, BedPart.FOOT).setValue(OCCUPIED, Boolean.FALSE));
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (worldIn.isClientSide) {
+    public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+        return new SkyrootBedBlockEntity(pos, state);
+    }
+
+    @Nonnull
+    @Override
+    public InteractionResult use(@Nonnull BlockState state, Level worldIn, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull InteractionHand hand, @Nonnull BlockHitResult hit) {
+        if (worldIn.isClientSide()) {
             return InteractionResult.CONSUME;
         } else {
             if (state.getValue(PART) != BedPart.HEAD) {
@@ -38,20 +45,20 @@ public class SkyrootBedBlock extends BedBlock
                 }
             }
 
-            if (!doesBedWork(worldIn)) {
+            if (!canSetSpawn(worldIn)) {
                 worldIn.removeBlock(pos, false);
                 BlockPos blockpos = pos.relative(state.getValue(FACING).getOpposite());
                 if (worldIn.getBlockState(blockpos).is(this)) {
                     worldIn.removeBlock(blockpos, false);
                 }
-                worldIn.explode(null, DamageSource.badRespawnPointExplosion(), null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, 5.0F, true, Explosion.BlockInteraction.DESTROY);
+                worldIn.explode(null, DamageSource.badRespawnPointExplosion(), null, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, 5.0F, true, Explosion.BlockInteraction.DESTROY);
                 return InteractionResult.SUCCESS;
             } else if (state.getValue(OCCUPIED)) {
                 player.displayClientMessage(new TranslatableComponent("block.minecraft.bed.occupied"), true);
                 return InteractionResult.SUCCESS;
             } else {
                 player.startSleepInBed(pos).ifLeft((result) -> {
-                    if (result != null) {
+                    if (result != null && result.getMessage() != null) {
                         player.displayClientMessage(result.getMessage(), true);
                     }
                 });
@@ -60,14 +67,8 @@ public class SkyrootBedBlock extends BedBlock
         }
     }
 
-    public static boolean doesBedWork(Level world) {
+    public static boolean canSetSpawn(Level world) {
         return world.dimension() == AetherDimensions.AETHER_WORLD;
     }
-
-    @Override
-    public BlockEntity newBlockEntity(BlockPos p_152175_, BlockState p_152176_) {
-        return new SkyrootBedBlockEntity(p_152175_, p_152176_);
-    }
-
 }
 

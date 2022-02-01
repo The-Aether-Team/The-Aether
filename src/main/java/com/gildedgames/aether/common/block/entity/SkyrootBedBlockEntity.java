@@ -1,8 +1,9 @@
-package com.gildedgames.aether.common.entity.tile;
+package com.gildedgames.aether.common.block.entity;
 
 import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -16,7 +17,7 @@ public class SkyrootBedBlockEntity extends BlockEntity
         super(AetherBlockEntityTypes.SKYROOT_BED.get(), BlockPos.ZERO, AetherBlocks.SKYROOT_BED.get().defaultBlockState());
     }
 
-//    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-//        return new ClientboundBlockEntityDataPacket(this.worldPosition, 11, this.getUpdateTag());
-//    }
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
 }

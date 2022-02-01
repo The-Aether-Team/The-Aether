@@ -11,7 +11,7 @@ import com.gildedgames.aether.common.block.natural.*;
 import com.gildedgames.aether.common.block.util.*;
 import com.gildedgames.aether.common.block.utility.*;
 import com.gildedgames.aether.common.block.entity.ChestMimicBlockEntity;
-import com.gildedgames.aether.common.entity.tile.SkyrootBedBlockEntity;
+import com.gildedgames.aether.common.block.entity.SkyrootBedBlockEntity;
 import com.gildedgames.aether.common.block.entity.TreasureChestBlockEntity;
 import com.gildedgames.aether.common.item.block.BurnableBlockItem;
 import com.gildedgames.aether.common.item.block.EntityBlockItem;
