@@ -108,8 +108,6 @@ public class AetherConfig
 
         public final ConfigValue<Boolean> disable_menu_music;
 
-        public final ConfigValue<Boolean> install_resource_packs;
-
         public Client(ForgeConfigSpec.Builder builder) {
             builder.push("Rendering");
             legacy_models = builder
@@ -136,12 +134,6 @@ public class AetherConfig
             disable_menu_music = builder
                     .comment("Disables the Aether's menu music in case another mod implements its own")
                     .define("Disables menu music", false);
-            builder.pop();
-
-            builder.push("Resource Pack");
-            install_resource_packs = builder
-                    .comment("Allows the built-in programmer art resource packs for b1.7.3 and 1.2.5 textures to be automatically downloaded")
-                    .define("Installs resource packs", true);
             builder.pop();
         }
     }
