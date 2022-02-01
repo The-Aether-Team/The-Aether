@@ -62,6 +62,7 @@ public class AetherTags
 		public static final Tag.Named<Item> DUNGEON_KEYS = tag("dungeon_keys");
 		public static final Tag.Named<Item> ACCEPTED_MUSIC_DISCS = tag("accepted_music_discs");
 		public static final Tag.Named<Item> SAVE_NBT_IN_RECIPE = tag("save_nbt_in_recipe");
+		public static final Tag.Named<Item> MOA_EGGS = tag("moa_eggs");
 
 		private static Tag.Named<Item> tag(String name) {
 			return ItemTags.bind(new ResourceLocation(Aether.MODID, name).toString());

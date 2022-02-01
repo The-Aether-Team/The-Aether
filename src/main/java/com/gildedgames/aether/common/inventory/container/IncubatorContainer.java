@@ -1,141 +1,122 @@
 package com.gildedgames.aether.common.inventory.container;
 
-import java.util.UUID;
-import java.util.function.Consumer;
-
-import com.gildedgames.aether.common.entity.tile.IncubatorTileEntity;
+import com.gildedgames.aether.common.block.entity.IncubatorBlockEntity;
 
 import com.gildedgames.aether.common.inventory.container.slot.IncubatorEggSlot;
 import com.gildedgames.aether.common.inventory.container.slot.IncubatorFuelSlot;
 import com.gildedgames.aether.common.registry.AetherContainerTypes;
+import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class IncubatorContainer extends AbstractContainerMenu {
-	public final Container incubatorInventory;
-	public final ContainerData incubatorData;
-	public final Consumer<UUID> playerUUIDAcceptor;
-	public final Level world;
+import javax.annotation.Nonnull;
+
+public class IncubatorContainer extends AbstractContainerMenu
+{
+	public final Container container;
+	public final ContainerData data;
+	public final Level level;
 
 	public IncubatorContainer(int id, Inventory playerInventoryIn) {
-		this(id, playerInventoryIn, new SimpleContainer(2), new SimpleContainerData(3), (uuid) -> {});
+		this(id, playerInventoryIn, new SimpleContainer(2), new SimpleContainerData(3));
 	}
 	
-	public IncubatorContainer(int id, Inventory playerInventoryIn, Container incubatorInventoryIn, ContainerData incubatorDataIn, Consumer<UUID> playerUUIDConsumerIn) {
+	public IncubatorContainer(int id, Inventory playerInventory, Container incubatorInventory, ContainerData incubatorData) {
 		super(AetherContainerTypes.INCUBATOR.get(), id);
-		checkContainerSize(incubatorInventoryIn, 2);
-		checkContainerDataCount(incubatorDataIn, 3);
-		this.incubatorInventory = incubatorInventoryIn;
-		this.incubatorData = incubatorDataIn;
-		this.playerUUIDAcceptor = playerUUIDConsumerIn;
-		this.world = playerInventoryIn.player.level;
-		this.addSlot(new IncubatorEggSlot(this, incubatorInventoryIn, 0, 73, 17, playerInventoryIn.player));
-		this.addSlot(new IncubatorFuelSlot(this, incubatorInventoryIn, 0, 73, 53));
+		checkContainerSize(incubatorInventory, 2);
+		checkContainerDataCount(incubatorData, 3);
+		this.container = incubatorInventory;
+		this.data = incubatorData;
+		this.level = playerInventory.player.level;
+		this.addSlot(new IncubatorEggSlot(this, incubatorInventory, 0, 73, 17));
+		this.addSlot(new IncubatorFuelSlot(this, incubatorInventory, 1, 73, 53));
 
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
-				this.addSlot(new Slot(playerInventoryIn, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
 			}
 		}
 
 		for (int k = 0; k < 9; ++k) {
-			this.addSlot(new Slot(playerInventoryIn, k, 8 + k * 18, 142));
+			this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
 		}
 
-		this.addDataSlots(incubatorDataIn);
-	}
-	
-	public void clear() {
-		this.incubatorInventory.clearContent();
+		this.addDataSlots(incubatorData);
 	}
 
-	@Override
-	public boolean stillValid(Player playerIn) {
-		return incubatorInventory.stillValid(playerIn);
-	}
-	
-	public boolean isFuel(ItemStack stack) {
-		return IncubatorTileEntity.isFuel(stack);
-	}
-	
-	public boolean isEgg(ItemStack stack) {
-		return true;
-		//return stack.getItem() == AetherItems.MOA_EGG;
+	public int getSize() {
+		return 2;
 	}
 
+	public boolean stillValid(@Nonnull Player player) {
+		return this.container.stillValid(player);
+	}
+
+	@Nonnull
 	@Override
-	public ItemStack quickMoveStack(Player playerIn, int index) {
-		ItemStack itemstack = ItemStack.EMPTY;
+	public ItemStack quickMoveStack(@Nonnull Player player, int index) {
+		ItemStack itemStack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
-		if (slot != null && slot.hasItem()) {
-			ItemStack itemstack1 = slot.getItem();
-			itemstack = itemstack1.copy();
+		if (slot.hasItem()) {
+			ItemStack itemStack1 = slot.getItem();
+			itemStack = itemStack1.copy();
 			if (index != 1 && index != 0) {
-				if (this.isFuel(itemstack1)) {
-					if (!this.moveItemStackTo(itemstack1, 1, 2, false)) {
+				if (this.isEgg(itemStack1)) {
+					if (!this.moveItemStackTo(itemStack1, 0, 1, false)) {
 						return ItemStack.EMPTY;
 					}
-				}
-				else if (this.isEgg(itemstack1)) {
-					if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
+				} else if (this.isFuel(itemStack1)) {
+					if (!this.moveItemStackTo(itemStack1, 1, 2, false)) {
 						return ItemStack.EMPTY;
 					}
-				}
-				else if (index >= 2 && index < 29) {
-					if (!this.moveItemStackTo(itemstack1, 29, 38, false)) {
+				} else if (index >= 2 && index < 29) {
+					if (!this.moveItemStackTo(itemStack1, 29, 38, false)) {
 						return ItemStack.EMPTY;
 					}
-				}
-				else if (index >= 29 && index < 38 && !this.moveItemStackTo(itemstack1, 2, 29, false)) {
+				} else if (index >= 29 && index < 38 && !this.moveItemStackTo(itemStack1, 2, 29, false)) {
 					return ItemStack.EMPTY;
 				}
-			}
-			else if (!this.moveItemStackTo(itemstack1, 2, 38, false)) {
+			} else if (!this.moveItemStackTo(itemStack1, 2, 38, false)) {
 				return ItemStack.EMPTY;
 			}
 
-			if (itemstack1.isEmpty()) {
+			if (itemStack1.isEmpty()) {
 				slot.set(ItemStack.EMPTY);
 			}
 			else {
 				slot.setChanged();
 			}
 
-			if (itemstack1.getCount() == itemstack.getCount()) {
+			if (itemStack1.getCount() == itemStack.getCount()) {
 				return ItemStack.EMPTY;
 			}
-
-			slot.onTake(playerIn, itemstack1);
+			slot.onTake(player, itemStack1);
 		}
+		return itemStack;
+	}
 
-		return itemstack;
+	public boolean isEgg(ItemStack stack) {
+		return stack.is(AetherTags.Items.MOA_EGGS);
 	}
-	
-	@OnlyIn(Dist.CLIENT)
-	public int getProgressionScaled() {
-		int progress = this.incubatorData.get(0);
-		int ticksRequired = this.incubatorData.get(2);
-		return progress != 0 && ticksRequired != 0? progress * 24 / ticksRequired : 0;
+
+	public boolean isFuel(ItemStack stack) {
+		return IncubatorBlockEntity.getIncubatingMap().containsKey(stack.getItem());
 	}
-	
-	@OnlyIn(Dist.CLIENT)
+
+	public int getIncubationProgressScaled() {
+		return this.data.get(2) != 0 ? (this.data.get(1) * 54) / this.data.get(2) : 0;
+	}
+
 	public boolean isIncubating() {
-		return this.incubatorData.get(1) > 0;
-	}
-	
-	@OnlyIn(Dist.CLIENT)
-	public int getFreezingTimeRemaining() {
-		return (this.incubatorData.get(1) * 12) / 500; 
+		return this.data.get(0) > 0;
 	}
 
+	public int getIncubationTimeRemaining() {
+		return (this.data.get(0) * 12) / 500;
+	}
 }

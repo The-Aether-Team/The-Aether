@@ -122,6 +122,11 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.ENCHANTED_DART_SHOOTER.get(),
                 AetherItems.ICE_RING.get(),
                 AetherItems.ICE_PENDANT.get());
+        tag(AetherTags.Items.MOA_EGGS).add(
+                AetherItems.BLUE_MOA_EGG.get(),
+                AetherItems.WHITE_MOA_EGG.get(),
+                AetherItems.BLACK_MOA_EGG.get(),
+                AetherItems.ORANGE_MOA_EGG.get());
 
         //vanilla
         tag(ItemTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get().asItem()).addTag(AetherTags.Items.DUNGEON_BLOCKS);

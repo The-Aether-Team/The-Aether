@@ -1,119 +1,133 @@
 package com.gildedgames.aether.common.block.utility;
 
-import com.gildedgames.aether.common.entity.tile.IncubatorTileEntity;
+import com.gildedgames.aether.common.block.entity.IncubatorBlockEntity;
 
-import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import java.util.Random;
 
-public class IncubatorBlock extends BaseEntityBlock {
-	public static final BooleanProperty LIT = AbstractFurnaceBlock.LIT;
+public class IncubatorBlock extends BaseEntityBlock
+{
+	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
-	public IncubatorBlock(BlockBehaviour.Properties builder) {
+	public IncubatorBlock(Properties builder) {
 		super(builder);
 		this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false));
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		super.createBlockStateDefinition(builder);
-		builder.add(LIT);
-	}
-
-	@Nullable
-	@Override
-	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-		return new IncubatorTileEntity(blockPos, blockState);
+	public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+		return new IncubatorBlockEntity(pos, state);
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-		if (worldIn.isClientSide) {
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> blockEntityType) {
+		return createTickerHelper(blockEntityType, AetherBlockEntityTypes.INCUBATOR.get(), IncubatorBlockEntity::serverTick);
+	}
+
+	@Nonnull
+	@Override
+	public InteractionResult use(@Nonnull BlockState state, Level level, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull InteractionHand hand, @Nonnull BlockHitResult hit) {
+		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		}
 		else {
-			this.interactWith(worldIn, pos, player);
-			return InteractionResult.SUCCESS;
+			this.openContainer(level, pos, player);
+			return InteractionResult.CONSUME;
 		}
 	}
 
-	protected void interactWith(Level worldIn, BlockPos pos, Player player) {
-		if (!worldIn.isClientSide) { 
-			BlockEntity tileentity = worldIn.getBlockEntity(pos);
-			if (tileentity instanceof IncubatorTileEntity) {
-				//NetworkHooks.openGui((ServerPlayer) player, (IncubatorTileEntity) tileentity);
+	protected void openContainer(Level level, @Nonnull BlockPos pos, @Nonnull Player player) {
+		if (!level.isClientSide) {
+			BlockEntity blockEntity = level.getBlockEntity(pos);
+			if (blockEntity instanceof IncubatorBlockEntity) {
+				player.openMenu((MenuProvider) blockEntity);
 			}
 		}
 	}
 
-	/*
-	@Deprecated
 	@Override
-	public int getLightValue(BlockState state) {
-		return state.get(LIT)? super.getLightValue(state) : 0;
+	public void animateTick(BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull Random random) {
+		if (state.getValue(LIT)) {
+			double f = pos.getX() + 0.5;
+			double f1 = pos.getY() + 1.0 + (random.nextFloat() * 15.0D) / 16.0;
+			double f2 = pos.getZ() + 0.5;
+
+			level.addParticle(ParticleTypes.SMOKE, f, f1, f2, 0.0D, 0.0D, 0.0D);
+			level.addParticle(ParticleTypes.FLAME, f, f1, f2, 0.0D, 0.0D, 0.0D);
+
+			if (random.nextDouble() < 0.1) {
+				level.playLocalSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
+			}
+		}
 	}
-	*/
 
 	@Override
-	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(@Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state, LivingEntity placerEntity, ItemStack stack) {
 		if (stack.hasCustomHoverName()) {
-			BlockEntity tileentity = worldIn.getBlockEntity(pos);
-			if (tileentity instanceof IncubatorTileEntity) {
-				((IncubatorTileEntity)tileentity).setCustomName(stack.getHoverName());
+			BlockEntity blockentity = level.getBlockEntity(pos);
+			if (blockentity instanceof IncubatorBlockEntity incubatorBlockEntity) {
+				incubatorBlockEntity.setCustomName(stack.getHoverName());
 			}
 		}
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
-	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (state.getBlock() != newState.getBlock()) {
-			BlockEntity tileentity = worldIn.getBlockEntity(pos);
-			if (tileentity instanceof IncubatorTileEntity) {
-				Containers.dropContents(worldIn, pos, (IncubatorTileEntity)tileentity);
-				worldIn.updateNeighbourForOutputSignal(pos, this);
+	public void onRemove(BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState newState, boolean isMoving) {
+		if (!state.is(newState.getBlock())) {
+			BlockEntity blockentity = level.getBlockEntity(pos);
+			if (blockentity instanceof IncubatorBlockEntity incubatorBlockEntity) {
+				if (level instanceof ServerLevel) {
+					Containers.dropContents(level, pos, incubatorBlockEntity);
+				}
+				level.updateNeighbourForOutputSignal(pos, this);
 			}
-
-			super.onRemove(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, level, pos, newState, isMoving);
 		}
 	}
 
-	@Deprecated
 	@Override
-	public boolean hasAnalogOutputSignal(BlockState state) {
+	public boolean hasAnalogOutputSignal(@Nonnull BlockState state) {
 		return true;
 	}
 
-	@Deprecated
 	@Override
-	public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
-		return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(worldIn.getBlockEntity(pos));
+	public int getAnalogOutputSignal(@Nonnull BlockState state, Level level, @Nonnull BlockPos pos) {
+		return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
 	}
 
-	@Deprecated
+	@Nonnull
 	@Override
-	public RenderShape getRenderShape(BlockState state) {
+	public RenderShape getRenderShape(@Nonnull BlockState state) {
 		return RenderShape.MODEL;
 	}
 
+	@Override
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+		pBuilder.add(LIT);
+	}
 }

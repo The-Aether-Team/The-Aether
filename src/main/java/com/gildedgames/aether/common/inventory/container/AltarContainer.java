@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.inventory.container;
 
+import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
 import com.gildedgames.aether.common.registry.AetherRecipes.RecipeTypes;
-import com.gildedgames.aether.common.entity.tile.AltarTileEntity;
 import com.gildedgames.aether.common.registry.AetherContainerTypes;
 
 import net.minecraft.world.entity.player.Inventory;
@@ -23,6 +23,6 @@ public class AltarContainer extends AbstractFurnaceMenu
 
 	@Override
 	protected boolean isFuel(ItemStack stack) {
-		return AltarTileEntity.getEnchantingMap().containsKey(stack.getItem());
+		return AltarBlockEntity.getEnchantingMap().containsKey(stack.getItem());
 	}
 }

@@ -5,7 +5,10 @@ import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class IncubatorFuelSlot extends Slot {
+import javax.annotation.Nonnull;
+
+public class IncubatorFuelSlot extends Slot
+{
 	private final IncubatorContainer container;
 	
 	public IncubatorFuelSlot(IncubatorContainer container, Container incubatorInventoryIn, int index, int xPosition, int yPosition) {
@@ -14,8 +17,7 @@ public class IncubatorFuelSlot extends Slot {
 	}
 	
 	@Override
-	public boolean mayPlace(ItemStack stack) {
+	public boolean mayPlace(@Nonnull ItemStack stack) {
 		return this.container.isFuel(stack);
 	}
-
 }

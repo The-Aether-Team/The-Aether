@@ -2,9 +2,10 @@ package com.gildedgames.aether;
 
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.block.entity.IncubatorBlockEntity;
 import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
-import com.gildedgames.aether.common.entity.tile.AltarTileEntity;
-import com.gildedgames.aether.common.entity.tile.FreezerTileEntity;
+import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
+import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
 import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
@@ -16,7 +17,6 @@ import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
@@ -36,23 +36,15 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
-import net.minecraftforge.forgespi.language.IModInfo;
-import net.minecraftforge.forgespi.locating.IModFile;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.resource.DelegatingResourcePack;
 import net.minecraftforge.resource.PathResourcePack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 
-import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import static net.minecraftforge.fml.Logging.CORE;
 
 @Mod(Aether.MODID)
 public class Aether
@@ -78,7 +70,7 @@ public class Aether
                 AetherPOI.POI,
                 AetherSoundEvents.SOUNDS,
                 AetherContainerTypes.CONTAINERS,
-                AetherTileEntityTypes.TILE_ENTITIES,
+                AetherBlockEntityTypes.BLOCK_ENTITIES,
                 AetherRecipes.RECIPE_SERIALIZERS
         };
 
@@ -89,6 +81,8 @@ public class Aether
         AetherLoot.init();
         AetherAdvancements.init();
         PlacementModifiers.init();
+
+        AetherBlocks.registerWoodTypes();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
@@ -103,7 +97,6 @@ public class Aether
         AetherBlocks.registerAxeStrippingBlocks();
         AetherBlocks.registerHoeTillingBlocks();
         AetherBlocks.registerFlammability();
-        AetherBlocks.registerWoodTypes();
         AetherBlocks.registerFreezables();
 
         AetherFeatures.registerConfiguredFeatures();
@@ -233,8 +226,8 @@ public class Aether
     }
 
     private void registerFuels() {
-        AltarTileEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 500);
-
-        FreezerTileEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 500);
+        AltarBlockEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 500);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 500);
+        IncubatorBlockEntity.addItemIncubatingTime(AetherBlocks.AMBROSIUM_TORCH.get(), 1000);
     }
 }
