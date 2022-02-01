@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.entity.tile;
+package com.gildedgames.aether.common.block.entity;
 
 import com.gildedgames.aether.common.block.dungeon.TreasureChestBlock;
 import com.gildedgames.aether.common.item.miscellaneous.DungeonKeyItem;

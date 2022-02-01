@@ -6,6 +6,8 @@ import net.minecraft.resources.ResourceLocation;
 
 public class AetherModelLayers
 {
+    public static final ModelLayerLocation CHEST_MIMIC = register("chest_mimic");
+
     public static final ModelLayerLocation AECHOR_PLANT = register("aechor_plant");
     public static final ModelLayerLocation AERBUNNY = register("aerbunny");
     public static final ModelLayerLocation AERWHALE = register("aerwhale");

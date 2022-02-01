@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.entity.tile;
+package com.gildedgames.aether.common.block.entity;
 
 import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import com.gildedgames.aether.common.registry.AetherBlocks;

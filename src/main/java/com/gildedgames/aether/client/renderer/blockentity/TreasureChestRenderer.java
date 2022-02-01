@@ -8,24 +8,21 @@ import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class TreasureChestRenderer<T extends BlockEntity & LidBlockEntity> extends ChestRenderer<T> {
+import javax.annotation.Nonnull;
 
+public class TreasureChestRenderer<T extends BlockEntity & LidBlockEntity> extends ChestRenderer<T>
+{
 	public TreasureChestRenderer(BlockEntityRendererProvider.Context p_173607_) {
 		super(p_173607_);
 	}
 
-
+	@Nonnull
 	@Override
-	protected Material getMaterial(T tileEntity, ChestType chestType) {
-		switch (chestType) {
-		case LEFT:
-			return AetherAtlases.TREASURE_CHEST_LEFT_MATERIAL;
-		case RIGHT:
-			return AetherAtlases.TREASURE_CHEST_RIGHT_MATERIAL;
-		case SINGLE:
-		default:
-			return AetherAtlases.TREASURE_CHEST_MATERIAL;
-		}
+	protected Material getMaterial(@Nonnull T blockEntity, @Nonnull ChestType chestType) {
+		return switch (chestType) {
+			case LEFT -> AetherAtlases.TREASURE_CHEST_LEFT_MATERIAL;
+			case RIGHT -> AetherAtlases.TREASURE_CHEST_RIGHT_MATERIAL;
+			case SINGLE -> AetherAtlases.TREASURE_CHEST_MATERIAL;
+		};
 	}
-	
 }

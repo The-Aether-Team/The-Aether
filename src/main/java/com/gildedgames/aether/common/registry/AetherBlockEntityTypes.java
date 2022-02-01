@@ -2,9 +2,7 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 
-import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
-import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
-import com.gildedgames.aether.common.block.entity.IncubatorBlockEntity;
+import com.gildedgames.aether.common.block.entity.*;
 import com.gildedgames.aether.common.entity.tile.SkyrootSignTileEntity;
 import com.gildedgames.aether.common.entity.tile.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;

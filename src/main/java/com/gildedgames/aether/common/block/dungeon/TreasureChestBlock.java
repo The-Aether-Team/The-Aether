@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.block.dungeon;
 
-import com.gildedgames.aether.common.entity.tile.TreasureChestBlockEntity;
+import com.gildedgames.aether.common.block.entity.TreasureChestBlockEntity;
 import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.entity.LivingEntity;
