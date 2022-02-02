@@ -126,6 +126,11 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.ENCHANTED_DART_SHOOTER.get(),
                 AetherItems.ICE_RING.get(),
                 AetherItems.ICE_PENDANT.get());
+        tag(AetherTags.Items.MOA_EGGS).add(
+                AetherItems.BLUE_MOA_EGG.get(),
+                AetherItems.WHITE_MOA_EGG.get(),
+                AetherItems.BLACK_MOA_EGG.get(),
+                AetherItems.ORANGE_MOA_EGG.get());
 
         tag(AetherTags.Items.PHYG_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
         tag(AetherTags.Items.FLYING_COW_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());

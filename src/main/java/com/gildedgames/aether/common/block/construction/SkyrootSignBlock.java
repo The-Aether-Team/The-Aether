@@ -1,14 +1,13 @@
 package com.gildedgames.aether.common.block.construction;
 
-import com.gildedgames.aether.common.entity.tile.SkyrootSignTileEntity;
+import com.gildedgames.aether.common.block.entity.SkyrootSignBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.BlockGetter;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import javax.annotation.Nonnull;
 
 public class SkyrootSignBlock extends StandingSignBlock
 {
@@ -18,7 +17,7 @@ public class SkyrootSignBlock extends StandingSignBlock
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos p_154556_, BlockState p_154557_) {
-        return new SkyrootSignTileEntity(p_154556_, p_154557_);
+    public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+        return new SkyrootSignBlockEntity(pos, state);
     }
 }

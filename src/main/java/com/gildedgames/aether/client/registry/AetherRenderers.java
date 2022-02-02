@@ -13,10 +13,10 @@ import com.gildedgames.aether.client.renderer.entity.model.*;
 import com.gildedgames.aether.client.renderer.perks.layer.DeveloperGlowLayer;
 import com.gildedgames.aether.client.renderer.perks.layer.PlayerHaloLayer;
 import com.gildedgames.aether.client.renderer.perks.model.HaloModel;
-import com.gildedgames.aether.client.renderer.tile.AetherBlockEntityWithoutLevelRenderer;
-import com.gildedgames.aether.client.renderer.tile.ChestMimicRenderer;
-import com.gildedgames.aether.client.renderer.tile.SkyrootBedRenderer;
-import com.gildedgames.aether.client.renderer.tile.TreasureChestRenderer;
+import com.gildedgames.aether.client.renderer.blockentity.AetherBlockEntityWithoutLevelRenderer;
+import com.gildedgames.aether.client.renderer.blockentity.ChestMimicRenderer;
+import com.gildedgames.aether.client.renderer.blockentity.SkyrootBedRenderer;
+import com.gildedgames.aether.client.renderer.blockentity.TreasureChestRenderer;
 import com.gildedgames.aether.client.renderer.player.layer.EnchantedDartLayer;
 import com.gildedgames.aether.client.renderer.player.layer.GoldenDartLayer;
 import com.gildedgames.aether.client.renderer.player.layer.PoisonDartLayer;
@@ -28,6 +28,8 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BedRenderer;
+import net.minecraft.client.renderer.blockentity.ChestRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -114,14 +116,18 @@ public class AetherRenderers
         event.registerEntityRenderer(AetherEntityTypes.LIGHTNING_KNIFE.get(), LightningKnifeRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.HAMMER_PROJECTILE.get(), HammerProjectileRenderer::new);
 
-        event.registerBlockEntityRenderer(AetherTileEntityTypes.CHEST_MIMIC.get(), ChestMimicRenderer::new);
-        event.registerBlockEntityRenderer(AetherTileEntityTypes.TREASURE_CHEST.get(), TreasureChestRenderer::new);
-        event.registerBlockEntityRenderer(AetherTileEntityTypes.SKYROOT_BED.get(), SkyrootBedRenderer::new);
-        event.registerBlockEntityRenderer(AetherTileEntityTypes.SKYROOT_SIGN.get(), SignRenderer::new);
+        event.registerBlockEntityRenderer(AetherBlockEntityTypes.CHEST_MIMIC.get(), ChestMimicRenderer::new);
+        event.registerBlockEntityRenderer(AetherBlockEntityTypes.TREASURE_CHEST.get(), TreasureChestRenderer::new);
+        event.registerBlockEntityRenderer(AetherBlockEntityTypes.SKYROOT_BED.get(), SkyrootBedRenderer::new);
+        event.registerBlockEntityRenderer(AetherBlockEntityTypes.SKYROOT_SIGN.get(), SignRenderer::new);
     }
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(AetherModelLayers.CHEST_MIMIC, ChestRenderer::createSingleBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.SKYROOT_BED_FOOT, BedRenderer::createFootLayer);
+        event.registerLayerDefinition(AetherModelLayers.SKYROOT_BED_HEAD, BedRenderer::createHeadLayer);
+
         event.registerLayerDefinition(AetherModelLayers.AECHOR_PLANT, AechorPlantModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.AERBUNNY, AerbunnyModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.AERWHALE, AerwhaleModel::createBodyLayer);

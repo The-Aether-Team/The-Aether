@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.event.listeners;
 
+import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -16,15 +17,15 @@ public class DimensionClientListener
 {
     /**
      * The purpose of this event handler is to prevent the fog from turning black near the void in the Aether.
+     * This works with any dimension using the Aether's dimension effects.
      */
     @SubscribeEvent
     public static void onRenderFogColor(EntityViewRenderEvent.FogColors event) {
         Camera renderInfo = event.getCamera();
         ClientLevel world = (ClientLevel) renderInfo.getEntity().level;
-        if (world.dimension() == AetherDimensions.AETHER_WORLD) {
-            double height = renderInfo.getPosition().y;
+        if (world.effects() instanceof AetherSkyRenderInfo) {
             ClientLevel.ClientLevelData worldInfo = world.getLevelData();
-            double d0 = height * worldInfo.getClearColorScale();
+            double d0 = (renderInfo.getPosition().y - (double)world.getMinBuildHeight()) * worldInfo.getClearColorScale();
             FogType fluidState = renderInfo.getFluidInCamera();
             if (d0 < 1.0D && fluidState != FogType.LAVA) {
                 if (d0 < 0.0D) {

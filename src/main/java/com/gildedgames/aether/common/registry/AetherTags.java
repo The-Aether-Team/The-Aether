@@ -64,6 +64,7 @@ public class AetherTags
 		public static final Tag.Named<Item> DUNGEON_KEYS = tag("dungeon_keys");
 		public static final Tag.Named<Item> ACCEPTED_MUSIC_DISCS = tag("accepted_music_discs");
 		public static final Tag.Named<Item> SAVE_NBT_IN_RECIPE = tag("save_nbt_in_recipe");
+		public static final Tag.Named<Item> MOA_EGGS = tag("moa_eggs");
 
 		public static final Tag.Named<Item> PHYG_TEMPTATION_ITEMS = tag("phyg_temptation_items");
 		public static final Tag.Named<Item> FLYING_COW_TEMPTATION_ITEMS = tag("flying_cow_temptation_items");
