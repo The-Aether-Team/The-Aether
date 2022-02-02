@@ -31,6 +31,7 @@ public abstract class WingedEntity extends MountableEntity
         double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.05 : -0.1;
         if (this.getDeltaMovement().y < fallSpeed && !this.playerTriedToCrouch()) {
             this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+            this.hasImpulse = true;
         }
     }
 

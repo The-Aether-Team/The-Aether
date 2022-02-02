@@ -7,6 +7,7 @@ import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.util.EntityUtil;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -49,11 +50,11 @@ public class Aerbunny extends AetherAnimalEntity
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
-        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
+        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, Ingredient.of(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new HopGoal(this));
-        this.goalSelector.addGoal(6, new FallingRandomStrollGoal(this, 2.0D, 6));
+        this.goalSelector.addGoal(6, new FallingRandomStrollGoal(this, 2.0, 6));
     }
 
     @Nonnull
@@ -65,8 +66,8 @@ public class Aerbunny extends AetherAnimalEntity
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MOVEMENT_SPEED, 0.25D)
-                .add(Attributes.MAX_HEALTH, 5.0D);
+                .add(Attributes.MOVEMENT_SPEED, 0.25)
+                .add(Attributes.MAX_HEALTH, 5.0);
     }
 
     public void defineSynchedData() {
@@ -77,8 +78,9 @@ public class Aerbunny extends AetherAnimalEntity
     @Override
     public void tick() {
         super.tick();
-        if (this.getDeltaMovement().y < -0.1D) {
-            this.setDeltaMovement(getDeltaMovement().x, -0.1D, getDeltaMovement().z);
+        double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.05 : -0.1;
+        if (this.getDeltaMovement().y < fallSpeed) {
+            this.setDeltaMovement(getDeltaMovement().x, fallSpeed, getDeltaMovement().z);
         }
         this.setPuffiness(this.getPuffiness() - 1);
         if (this.getPuffiness() < 0) {
@@ -90,11 +92,11 @@ public class Aerbunny extends AetherAnimalEntity
             player.fallDistance = 0.0F;
             if (!player.isOnGround() && !player.isFallFlying()) {
                 if (!player.getAbilities().flying && !player.isInWater() && !player.isInLava()) {
-                    player.setDeltaMovement(player.getDeltaMovement().add(0.0D, 0.05D, 0.0D));
+                    player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));
                 }
                 IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                    if (aetherPlayer.isJumping() && player.getDeltaMovement().y < -0.225D) {
-                        player.setDeltaMovement(player.getDeltaMovement().x, 0.125D, player.getDeltaMovement().z);
+                    if (aetherPlayer.isJumping() && player.getDeltaMovement().y < -0.225) {
+                        player.setDeltaMovement(player.getDeltaMovement().x, 0.125, player.getDeltaMovement().z);
                         if (!this.level.isClientSide) {
                             this.puff();
                         }
@@ -195,7 +197,7 @@ public class Aerbunny extends AetherAnimalEntity
 
     @Override
     public double getMyRidingOffset() {
-        return this.getVehicle() != null && this.getVehicle().isCrouching() ? 0.4D : 0.575D;
+        return this.getVehicle() != null && this.getVehicle().isCrouching() ? 0.4 : 0.575;
     }
 
     @Override
@@ -230,12 +232,12 @@ public class Aerbunny extends AetherAnimalEntity
 
         @Override
         public boolean canUse() {
-            return this.aerbunny.getDeltaMovement().z > 0.0D || this.aerbunny.getDeltaMovement().x > 0.0D || this.aerbunny.onGround;
+            return this.aerbunny.getDeltaMovement().z > 0.0 || this.aerbunny.getDeltaMovement().x > 0.0 || this.aerbunny.onGround;
         }
 
         @Override
         public void tick() {
-            if (this.aerbunny.getDeltaMovement().x != 0.0F || aerbunny.getDeltaMovement().z != 0.0F) {
+            if (this.aerbunny.getDeltaMovement().x != 0.0 || this.aerbunny.getDeltaMovement().z != 0.0) {
                 this.aerbunny.jumpControl.jump();
             }
         }

@@ -64,7 +64,7 @@ public abstract class BipedBirdModel<T extends Entity> extends EntityModel<T>
         this.neck.xRot = -this.head.xRot;
         this.body.xRot = (float) (Math.PI / 2.0F);
 
-        if (!bipedBird.isOnGround()) {
+        if (!bipedBird.isOnGround() && bipedBird.hasImpulse) {
             this.rightWing.setPos(-3.001F, 0.0F, 4.0F);
             this.leftWing.setPos(3.001F, 0.0F, 4.0F);
             this.rightWing.xRot = (float) -(Math.PI / 2.0F);

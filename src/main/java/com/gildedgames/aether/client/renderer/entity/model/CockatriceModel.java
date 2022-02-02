@@ -37,7 +37,7 @@ public class CockatriceModel extends BipedBirdModel<CockatriceEntity>
     public void setupWingsAnimation(CockatriceEntity cockatrice) {
         cockatrice.prevWingRotation = cockatrice.wingRotation;
         cockatrice.prevDestPos = cockatrice.destPos;
-        if (!cockatrice.isOnGround()) {
+        if (!cockatrice.isOnGround() && cockatrice.hasImpulse) {
             cockatrice.destPos += 0.2F;
             cockatrice.destPos = Math.min(1.0F, Math.max(0.01F, cockatrice.destPos));
         } else {

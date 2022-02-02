@@ -40,19 +40,19 @@ public class QuadrupedWingsModel<T extends WingedEntity> extends EntityModel<T>
     }
 
     @Override
-    public void setupAnim(T phyg, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float aimingForFold;
-        if (phyg.isOnGround()) {
+        if (entity.isOnGround() || !entity.hasImpulse) {
             aimingForFold = 0.1F;
         } else {
             aimingForFold = 1.0F;
         }
-        phyg.wingAngle = phyg.wingFold * Mth.sin(ageInTicks / 31.83098862F);
-        phyg.wingFold += (aimingForFold - phyg.wingFold) / 15.0F;
-        float wingBend = -((float) Math.acos(phyg.wingFold));
+        entity.wingAngle = entity.wingFold * Mth.sin(ageInTicks / 31.83098862F);
+        entity.wingFold += (aimingForFold - entity.wingFold) / 15.0F;
+        float wingBend = -((float) Math.acos(entity.wingFold));
 
-        this.leftWingInner.zRot = -(phyg.wingAngle + wingBend + ((float) Math.PI / 2.0F));
-        this.leftWingOuter.zRot = -(phyg.wingAngle - wingBend + ((float) Math.PI / 2.0F)) - this.leftWingInner.zRot;
+        this.leftWingInner.zRot = -(entity.wingAngle + wingBend + ((float) Math.PI / 2.0F));
+        this.leftWingOuter.zRot = -(entity.wingAngle - wingBend + ((float) Math.PI / 2.0F)) - this.leftWingInner.zRot;
         this.rightWingInner.zRot = -this.leftWingInner.zRot;
         this.rightWingOuter.zRot = -this.leftWingOuter.zRot;
     }

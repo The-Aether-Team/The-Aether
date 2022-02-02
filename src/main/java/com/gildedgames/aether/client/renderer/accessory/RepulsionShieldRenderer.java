@@ -4,6 +4,7 @@ import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.common.item.accessories.miscellaneous.RepulsionShieldItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.util.ConstantsUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -67,7 +68,7 @@ public class RepulsionShieldRenderer implements ICurioRenderer
                         } else {
                             model = this.shieldModel;
                             Vec3 motion = livingEntity.getDeltaMovement();
-                            if (motion.x() == 0.0 && (motion.y() == -0.0784000015258789 || motion.y() == 0.0) && motion.z() == 0.0) {
+                            if (motion.x() == 0.0 && (motion.y() == ConstantsUtil.DEFAULT_DELTA_MOVEMENT_Y || motion.y() == 0.0) && motion.z() == 0.0) {
                                 texture = shield.getRepulsionShieldTexture();
                             } else {
                                 texture = shield.getRepulsionShieldInactiveTexture();

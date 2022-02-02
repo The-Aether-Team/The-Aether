@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.passive.Moa;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -43,7 +44,7 @@ public class MoaModel extends BipedBirdModel<Moa>
 	public void setupWingsAnimation(Moa moa) {
 		moa.prevWingRotation = moa.wingRotation;
 		moa.prevDestPos = moa.destPos;
-		if (!moa.isOnGround()) {
+		if (!moa.isOnGround() && moa.hasImpulse) {
 			moa.destPos += 0.2F;
 			moa.destPos = Math.min(1.0F, Math.max(0.01F, moa.destPos));
 		} else {

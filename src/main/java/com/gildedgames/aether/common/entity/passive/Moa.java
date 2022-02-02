@@ -44,6 +44,7 @@ import java.util.UUID;
 
 //TODO:
 //Fixing the issues with using isOnGround not properly detecting if the Moa and other MountableEntities are on the ground.
+//For some reason the moa animation flickers when dismounting.
 
 public class Moa extends MountableEntity
 {
@@ -114,6 +115,7 @@ public class Moa extends MountableEntity
 		double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.05 : -0.1;
 		if (this.getDeltaMovement().y < fallSpeed && !this.playerTriedToCrouch()) {
 			this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+			this.hasImpulse = true;
 		}
 		if (this.isOnGround()) {
 			this.setRemainingJumps(this.getMaxJumps());
