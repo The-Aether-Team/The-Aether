@@ -41,7 +41,7 @@ import java.util.function.Supplier;
 
 public class MoaEggItem extends Item
 {
-    private static final Map<Supplier<MoaType>, MoaEggItem> BY_ID = Maps.newIdentityHashMap();
+    private static final Map<MoaType, MoaEggItem> BY_ID = Maps.newIdentityHashMap();
     private final Supplier<MoaType> moaType;
     private final int color;
 
@@ -49,7 +49,7 @@ public class MoaEggItem extends Item
         super(properties);
         this.moaType = moaType;
         this.color = shellColor;
-        BY_ID.put(moaType, this);
+        BY_ID.put(moaType.get(), this);
     }
 
     @Nonnull
@@ -144,8 +144,7 @@ public class MoaEggItem extends Item
     }
 
     @Nullable
-    @OnlyIn(Dist.CLIENT)
-    public static MoaEggItem byId(@Nullable Supplier<MoaType> moaType) {
+    public static MoaEggItem byId(@Nullable MoaType moaType) {
         return BY_ID.get(moaType);
     }
 

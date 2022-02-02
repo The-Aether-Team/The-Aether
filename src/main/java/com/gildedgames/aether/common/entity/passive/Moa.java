@@ -7,11 +7,13 @@ import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 
+import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.api.registers.MoaType;
 import com.gildedgames.aether.core.registry.AetherMoaTypes;
 import com.gildedgames.aether.core.util.EntityUtil;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -41,10 +43,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 //TODO:
-//Raising system, which depends on the Incubator.
 //Fixing the issues with using isOnGround not properly detecting if the Moa and other MountableEntities are on the ground.
 //Implement visual HUD for Moa jumps.
-//Make isSaddleable() and the Nature Staff functionality dependent on isPlayerGrown().
 
 public class Moa extends MountableEntity
 {
@@ -131,6 +131,20 @@ public class Moa extends MountableEntity
 			this.spawnAtLocation(this.getMoaType().getEgg());
 			this.eggTime = this.getEggTime();
 		}
+
+		if (this.isBaby()) {
+			if (!this.isHungry()) {
+				if (this.random.nextInt(2000) == 0) {
+					this.setHungry(true);
+				}
+			} else {
+				if (this.random.nextInt(10) == 0) {
+					this.level.addParticle(ParticleTypes.ANGRY_VILLAGER, this.getX() + (this.random.nextDouble() - 0.5) * this.getBbWidth(), this.getY() + 1, this.getZ() + (this.random.nextDouble() - 0.5) * this.getBbWidth(), 0.0, 0.0, 0.0);
+				}
+			}
+		} else if (this.isHungry()) {
+			this.setHungry(false);
+		}
 	}
 
 	@Override
@@ -184,11 +198,21 @@ public class Moa extends MountableEntity
 	@Nonnull
 	@Override
 	public InteractionResult mobInteract(Player playerEntity, @Nonnull InteractionHand hand) {
-		ItemStack itemstack = playerEntity.getItemInHand(hand);
-		if (itemstack.getItem() == AetherItems.NATURE_STAFF.get()) {
-			itemstack.hurtAndBreak(2, playerEntity, (p) -> p.broadcastBreakEvent(hand));
+		ItemStack itemStack = playerEntity.getItemInHand(hand);
+		if (this.isPlayerGrown() && itemStack.is(AetherItems.NATURE_STAFF.get())) {
+			itemStack.hurtAndBreak(2, playerEntity, (p) -> p.broadcastBreakEvent(hand));
 			this.setSitting(!this.isSitting());
 			this.spawnExplosionParticle();
+			return InteractionResult.sidedSuccess(this.level.isClientSide);
+		} else if (this.isPlayerGrown() && this.isBaby() && this.isHungry() && this.getAmountFed() < 3 && itemStack.is(AetherTags.Items.MOA_FOOD_ITEMS)) {
+			if (!playerEntity.getAbilities().instabuild) {
+				itemStack.shrink(1);
+			}
+			this.setAmountFed(this.getAmountFed() + 1);
+			if (this.getAmountFed() >= 3) {
+				this.setAge(0);
+			}
+			this.setHungry(false);
 			return InteractionResult.sidedSuccess(this.level.isClientSide);
 		} else {
 			return super.mobInteract(playerEntity, hand);
@@ -200,32 +224,6 @@ public class Moa extends MountableEntity
 			EntityUtil.spawnMovementExplosionParticles(this);
 		}
 	}
-
-	//	@Override
-//	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
-//		ItemStack stack = player.getItemInHand(hand);
-//
-//		if (!stack.isEmpty() && this.isPlayerGrown()) {
-//			if (this.isBaby() && this.isHungry()) {
-//				if (this.getAmountFed() < 3 && stack.getItem() == AetherItems.AECHOR_PETAL.get()) {
-//					if (!player.abilities.instabuild) {
-//						stack.shrink(1);
-//					}
-//
-//					this.increaseAmountFed(1);
-//
-//					if (this.getAmountFed() >= 3) {
-//						this.setAge(0);
-//					}
-//					else {
-//						this.resetHunger();
-//					}
-//				}
-//			}
-//		}
-//
-//		return super.mobInteract(player, hand);
-//	}
 
 	public MoaType getMoaType() {
 		return AetherMoaTypes.MOA_TYPES.get(this.entityData.get(DATA_MOA_TYPE_ID));
@@ -358,7 +356,7 @@ public class Moa extends MountableEntity
 
 	@Override
 	public boolean isSaddleable() {
-		return super.isSaddleable();
+		return super.isSaddleable() && this.isPlayerGrown();
 	}
 
 	@Override
@@ -398,6 +396,12 @@ public class Moa extends MountableEntity
 	}
 
 	@Override
+	public ItemStack getPickResult() {
+		MoaEggItem moaEggItem = MoaEggItem.byId(this.getMoaType());
+		return moaEggItem == null ? null : new ItemStack(moaEggItem);
+	}
+
+	@Override
 	public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("MoaType")) {
@@ -432,61 +436,4 @@ public class Moa extends MountableEntity
 		compound.putBoolean("PlayerGrown", this.isPlayerGrown());
 		compound.putBoolean("Sitting", this.isSitting());
 	}
-
-
-
-//	protected int ticksOffGround, ticksUntilFlap, secsUntilFlying, secsUntilWalking, secsUntilHungry, secsUntilEgg;
-//
-//	@SuppressWarnings("unused")
-//	@Override
-//	public void tick() {
-//		super.tick();
-//		if (this.secsUntilHungry > 0) {
-//			if (this.tickCount % 20 == 0) {
-//				--this.secsUntilHungry;
-//			}
-//		}
-//		else if (!this.isHungry()) {
-//			this.setHungry(true);
-//		}
-//
-//		if (this.level.isClientSide && this.isHungry() && this.isBaby()) {
-//			if (this.rand.nextInt(10) == 0) {
-//				this.level.addParticle(ParticleTypes.ANGRY_VILLAGER, this.getX() + (this.rand.nextDouble() - 0.5) * this.getBbWidth(), this.getY() + 1, this.getZ() + (this.rand.nextDouble() - 0.5) * this.getBbWidth(), 0.0, 0.0, 0.0);
-//			}
-//		}
-//	}
-//
-//	public void resetHunger() {
-//		if (!this.level.isClientSide) {
-//			this.setHungry(false);
-//		}
-//
-//		this.secsUntilHungry = 40 + this.rand.nextInt(40);
-//	}
-//
-//	public void onMountedJump() {
-//		if (this.getRemainingJumps() > 0 && this.getDeltaMovement().y() < 0.0) {
-//			if (!this.onGround) {
-//				float jumpPower = this.jumpPower;
-//				if (jumpPower < 0.7F) {
-//					jumpPower = 0.7F;
-//				}
-//				this.setDeltaMovement(this.getDeltaMovement().x(), jumpPower, this.getDeltaMovement().z());
-//				this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7F, 1.0F) + MathHelper.clamp(this.rand.nextFloat(), 0.0F, 0.3F));
-//
-//				if (!this.level.isClientSide) {
-//					this.setRemainingJumps(this.getRemainingJumps() - 1);
-//					ForgeHooks.onLivingJump(this);
-//					this.spawnAnim();
-//				}
-//			}
-//			else {
-//				this.setDeltaMovement(this.getDeltaMovement().x(), 0.89, this.getDeltaMovement().z());
-//			}
-//		}
-//	}
-//
-
-//
 }

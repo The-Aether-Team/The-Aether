@@ -9,7 +9,6 @@ import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
-//TODO: Will have to review this all when all the moa functionality is completed, of course.
 public class MoaModel extends BipedBirdModel<Moa>
 {
 	public boolean renderLegs;

@@ -66,7 +66,7 @@ public class FlyingCow extends WingedEntity
     @Override
     public InteractionResult mobInteract(Player playerEntity, @Nonnull InteractionHand hand) {
         ItemStack itemStack = playerEntity.getItemInHand(hand);
-        if (itemStack.getItem() == Items.BUCKET && !this.isBaby()) {
+        if (itemStack.is(Items.BUCKET) && !this.isBaby()) {
             playerEntity.playSound(AetherSoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);
             ItemStack itemStack1 = ItemUtils.createFilledResult(itemStack, playerEntity, Items.MILK_BUCKET.getDefaultInstance());
             playerEntity.setItemInHand(hand, itemStack1);
