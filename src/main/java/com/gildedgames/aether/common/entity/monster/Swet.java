@@ -379,7 +379,6 @@ public class Swet extends MountableEntity {
     public static class ConsumeGoal extends Goal {
         private final Swet swet;
         private int jumps = 0;
-        private int jumpTimer = 2;
 
         private float chosenDegrees = 0;
 
@@ -399,8 +398,10 @@ public class Swet extends MountableEntity {
         @Override
         public void tick() {
             if (this.jumps <= 3) {
-                if (this.swet.onGround && --this.jumpTimer <= 0) {
-                    this.jumpTimer = 2;
+                if (this.swet.onGround) {
+                    // This is to make sure the swet actually touches the ground on the client.
+                    AetherPacketHandler.sendToNear(new SwetAttackPacket(this.swet.getId(), this.swet.getX(), this.swet.getY(), this.swet.getZ()), this.swet.getX(), this.swet.getY(), this.swet.getZ(), 50.0D, this.swet.getLevel().dimension());
+
                     this.swet.playSound(AetherSoundEvents.ENTITY_SWET_JUMP.get(), 1.0F, ((this.swet.getRandom().nextFloat() - this.swet.getRandom().nextFloat()) * 0.2F + 1.0F) * 0.8F);
 
                     chosenDegrees = (float) this.swet.getRandom().nextInt(360);
@@ -432,7 +433,6 @@ public class Swet extends MountableEntity {
                         }
                     }
                 }
-                AetherPacketHandler.sendToNear(new SwetAttackPacket(this.swet.getId(), this.swet.getDeltaMovement()), this.swet.getX(), this.swet.getY(), this.swet.getZ(), 1.0D, this.swet.getLevel().dimension());
             }
         }
 
