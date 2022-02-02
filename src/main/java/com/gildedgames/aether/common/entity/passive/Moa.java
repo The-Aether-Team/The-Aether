@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.entity.passive;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
@@ -44,7 +45,6 @@ import java.util.UUID;
 
 //TODO:
 //Fixing the issues with using isOnGround not properly detecting if the Moa and other MountableEntities are on the ground.
-//Implement visual HUD for Moa jumps.
 
 public class Moa extends MountableEntity
 {
@@ -188,8 +188,8 @@ public class Moa extends MountableEntity
 	public void onJump() {
 		super.onJump();
 		this.setJumpCooldown(10);
-		this.setRemainingJumps(this.getRemainingJumps() - 1);
 		if (!this.isOnGround()) {
+			this.setRemainingJumps(this.getRemainingJumps() - 1);
 			this.spawnExplosionParticle();
 		}
 		this.setFlapCooldown(0);

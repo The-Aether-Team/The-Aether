@@ -183,7 +183,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		}
 	}
 
-	private void incubate(NonNullList<ItemStack> stacks) { //TODO: The rest of this will be implemented with the PR for Moas.
+	private void incubate(NonNullList<ItemStack> stacks) {
 		ItemStack itemStack = stacks.get(0);
 		if (!itemStack.isEmpty() && itemStack.getItem() instanceof MoaEggItem moaEggItem) {
 			BlockPos spawnPos = this.worldPosition.above();
