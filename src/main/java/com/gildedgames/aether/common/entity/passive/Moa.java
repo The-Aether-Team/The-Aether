@@ -3,7 +3,6 @@ package com.gildedgames.aether.common.entity.passive;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
