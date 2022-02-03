@@ -51,9 +51,6 @@ public class AetherLoot
 	public static final ResourceLocation ENTITIES_SHEEPUFF_RED = register("entities/sheepuff/red");
 	public static final ResourceLocation ENTITIES_SHEEPUFF_BLACK = register("entities/sheepuff/black");
 
-	public static final ResourceLocation ENTITIES_SWET_BLUE = register("entities/swet/blue");
-	public static final ResourceLocation ENTITIES_SWET_GOLD = register("entities/swet/gold");
-
 	public static final ResourceLocation BRONZE_DUNGEON = register("chests/dungeon/bronze/bronze_dungeon");
 	public static final ResourceLocation BRONZE_DUNGEON_SUB_1 = register("chests/dungeon/bronze/bronze_dungeon_sub_1");
 	public static final ResourceLocation BRONZE_DUNGEON_SUB_2 = register("chests/dungeon/bronze/bronze_dungeon_sub_2");

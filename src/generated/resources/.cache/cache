@@ -93,7 +93,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-f2b4dc3abd46bf158bf8e3c6baf47b62293f98e0 assets/aether/lang/en_us.json
+0157052e409ccba5573c5dfbb7f3dd80ee3ea402 assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -261,6 +261,7 @@ bb24a4b6f5624ace259fd60d8f465845c5a2ea2d assets/aether/models/item/blue_berry.js
 b7da65a495a98851bcc38d7f728af9a62351df95 assets/aether/models/item/blue_cape.json
 56870822cf15f244921071d9b757cb55392ffbc2 assets/aether/models/item/blue_gummy_swet.json
 4b8f03d0c03b5f86e9fe295e7608c92dcba3c720 assets/aether/models/item/blue_moa_egg.json
+98167609bf3898587f7565736a6fc24a7966cacd assets/aether/models/item/blue_swet_spawn_egg.json
 2e0038ff4547d5c2d1851e1c2b579ce6d805c31f assets/aether/models/item/book_of_lore.json
 5c05495338c6c708dde66607698081db7f40e386 assets/aether/models/item/bronze_dungeon_key.json
 448b086eeaf0515d0ab1a9280f87e46a927fa11b assets/aether/models/item/candy_cane.json
@@ -303,6 +304,7 @@ bf5c8e2050d2d8498545a46ba350daa950ef082e assets/aether/models/item/golden_oak_sa
 6f3324c9491cfb434bbbc9f3763d109f6787e62b assets/aether/models/item/golden_parachute.json
 65f98cfd7e7e15df66eb7e864dfb1151aa9223a7 assets/aether/models/item/golden_pendant.json
 bd67973e26f591d58ef6171899dc193bc58a57c3 assets/aether/models/item/golden_ring.json
+98167609bf3898587f7565736a6fc24a7966cacd assets/aether/models/item/golden_swet_spawn_egg.json
 875dc3ccd4e372aa7899121006fe67feb7fb605f assets/aether/models/item/gravitite_axe.json
 6683ebabbe3f83690302503d23bac3dbf10fab2a assets/aether/models/item/gravitite_boots.json
 3da08b9a3fe676259c0feb78ac862abfd1598397 assets/aether/models/item/gravitite_chestplate.json
@@ -441,7 +443,6 @@ b5b43302287d9992ab5078650316b85fc3d7390a assets/aether/models/item/stripped_skyr
 1b1d6c16f99be659cdb413d3accd0539a03a6c57 assets/aether/models/item/sun_altar.json
 51966e7232da9d7b1d74e738ca8509f9b267c5b2 assets/aether/models/item/swet_ball.json
 8de85e47366938afc1015ce143983d44c1a912e7 assets/aether/models/item/swet_cape.json
-98167609bf3898587f7565736a6fc24a7966cacd assets/aether/models/item/swet_spawn_egg.json
 22c665f1905de6fc0dc6940662b4157dde9a63b4 assets/aether/models/item/trapped_angelic_stone.json
 42ce7ae0bf07b5860e2b7a951e8a7c976de3d8ef assets/aether/models/item/trapped_carved_stone.json
 90a452290fb5cc02f295bd348a9fed65091537be assets/aether/models/item/trapped_hellfire_stone.json
@@ -915,10 +916,12 @@ cc62f2e2f2b88f6de74987a365cf2ab51a4708d3 data/aether/loot_tables/chests/dungeon/
 4a5ec99ad834edf1a78de8461e52308b009e3662 data/aether/loot_tables/entities/aechor_plant.json
 73283d23c4a225b2ca2c6a9069624812625d603b data/aether/loot_tables/entities/aerbunny.json
 f0266b86d509baafb030ddb9915394ea06d372cd data/aether/loot_tables/entities/aerwhale.json
+3b1e6ea2d4a13f7902a661e689c57fad18250768 data/aether/loot_tables/entities/blue_swet.json
 107751525a160774cd3798407b1aad09b70ab794 data/aether/loot_tables/entities/cockatrice.json
 f0266b86d509baafb030ddb9915394ea06d372cd data/aether/loot_tables/entities/evil_whirlwind.json
 f0266b86d509baafb030ddb9915394ea06d372cd data/aether/loot_tables/entities/fire_minion.json
 1b47707e90b26f899ba9710aec8cf46ece90490e data/aether/loot_tables/entities/flying_cow.json
+01cde0d6fa6e62bdacebb960143391595e0259c0 data/aether/loot_tables/entities/golden_swet.json
 976d303ffbf30aa57b4c4fc55550ec59dc6554fa data/aether/loot_tables/entities/mimic.json
 107751525a160774cd3798407b1aad09b70ab794 data/aether/loot_tables/entities/moa.json
 c2b86e76ff6f4b80b1aee3b5a6a51c62e9ee7cea data/aether/loot_tables/entities/phyg.json
@@ -940,9 +943,6 @@ ac593654401f07206226bb7c1651c24f40c30d1e data/aether/loot_tables/entities/sheepu
 e9b8dc48c6062fdb6248030b088aa0ee76c89868 data/aether/loot_tables/entities/sheepuff/red.json
 7888c5edc30843d98b169940017c1a5bceac35dc data/aether/loot_tables/entities/sheepuff/white.json
 9de14e6a605353517ea6bbf274a725aaa63ba293 data/aether/loot_tables/entities/sheepuff/yellow.json
-f0266b86d509baafb030ddb9915394ea06d372cd data/aether/loot_tables/entities/swet.json
-3b1e6ea2d4a13f7902a661e689c57fad18250768 data/aether/loot_tables/entities/swet/blue.json
-01cde0d6fa6e62bdacebb960143391595e0259c0 data/aether/loot_tables/entities/swet/gold.json
 f0266b86d509baafb030ddb9915394ea06d372cd data/aether/loot_tables/entities/whirlwind.json
 10bf2cbe13442289445bf3efad1ebfbfca1af799 data/aether/loot_tables/entities/zephyr.json
 fa36f37616a99f880afe943ea37987c204c99893 data/aether/loot_tables/selectors/evil_whirlwind_junk.json
@@ -1247,6 +1247,7 @@ d84975c4861b70c3f92cfbad01916658bf6145c7 data/aether/tags/blocks/skyroot_logs.js
 8ed58a2efe2e74e9368c85d9cf8942a2bbd2fbd5 data/aether/tags/entity_types/deflectable_projectiles.json
 eb63088b6df7e0f3d78ff3e43d59e289e6677d27 data/aether/tags/entity_types/no_skyroot_double_drops.json
 950d8653641729fae48d516598df550671f5bffb data/aether/tags/entity_types/pigs.json
+4aa6887a2031782466716a0470111cc78f6cdb17 data/aether/tags/entity_types/swet_target.json
 6d86d02a3f9975defeaf27b7d67dcb5a5d06348f data/aether/tags/fluids/freezable_to_aerogel.json
 43e63f3bd6394d9fe41429c3f74604766f9d56dd data/aether/tags/items/accepted_music_discs.json
 af0c2eedb134c30d4318a59ce358fa88b7a8cf5a data/aether/tags/items/aerbunny_temptation_items.json
@@ -1284,7 +1285,7 @@ ef1688d8839282e91b8aa07f3029cefcf02df64e data/aether/tags/items/skyroot_stick.js
 999af6754446aa73b45312bf631ed4ac234ec764 data/aether/tags/items/trapped_dungeon_blocks.json
 8f8f0e16bb000c5f7503a95c7fcf7b19e42774af data/aether/tags/items/valkyrie_tools.json
 7857dbef719f59695d7f3f80ae5a7b2090dabd97 data/aether/tags/items/zanite_tools.json
-916442b48d116df763f1dee65a694565bf54cf07 data/aether/worldgen/biome/floating_forest.json
+f0cfe3cedf3a854be279581323eeafa36249b60f data/aether/worldgen/biome/floating_forest.json
 f6339302eee532026dfae6480f2a71498c8a469c data/aether/worldgen/noise_settings/skyland_generation.json
 ef896638976d84e49ea64f3df732b1fa877600bb data/forge/tags/blocks/fence_gates/wooden.json
 0951b17699df5d7949eefbb975fa38059e801e9c data/forge/tags/blocks/fences/wooden.json

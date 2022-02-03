@@ -1,19 +1,15 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
-import com.gildedgames.aether.common.entity.monster.SwetEntity;
+import com.gildedgames.aether.common.entity.monster.Swet;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.SlimeOuterLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
-public class SwetRenderer extends MobRenderer<SwetEntity, SlimeModel<SwetEntity>> {
-    private static final ResourceLocation BLUE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/swet/swet_blue.png");
-
-    private static final ResourceLocation GOLDEN_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/swet/swet_golden.png");
+public abstract class SwetRenderer extends MobRenderer<Swet, SlimeModel<Swet>> {
 
     public SwetRenderer(EntityRendererProvider.Context renderer) {
         super(renderer, new SlimeModel<>(renderer.bakeLayer(AetherModelLayers.SWET)), 0.3F);
@@ -21,21 +17,18 @@ public class SwetRenderer extends MobRenderer<SwetEntity, SlimeModel<SwetEntity>
     }
 
     @Override
-    protected void scale(SwetEntity swet, PoseStack poseStack, float partialTickTime) {
-        float height = swet.swetHeight;
-        float width = swet.swetWidth;
+    protected void scale(Swet swet, PoseStack poseStack, float partialTickTime) {
         float scale = 1.5F;
 
         if(!swet.getPassengers().isEmpty()) {
             scale += (swet.getPassengers().get(0).getBbWidth() + swet.getPassengers().get(0).getBbHeight()) * 0.75F;
         }
 
+        float height = Mth.lerp(partialTickTime, swet.oSwetHeight, swet.swetHeight);
+        float width = Mth.lerp(partialTickTime, swet.oSwetWidth, swet.swetWidth);
+
         poseStack.scale(width * scale, height * scale, width * scale);
         poseStack.scale(swet.getScale(), swet.getScale(), swet.getScale());
-    }
-
-    @Override
-    public ResourceLocation getTextureLocation(SwetEntity swet) {
-        return swet.getSwetType() == 1 ? BLUE_TEXTURE : GOLDEN_TEXTURE;
+        this.shadowRadius = 0.3F * width;
     }
 }

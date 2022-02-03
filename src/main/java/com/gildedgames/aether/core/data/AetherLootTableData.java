@@ -344,8 +344,7 @@ public class AetherLootTableData extends AetherLootTableProvider
                             )
                     )
             );
-            this.add(AetherEntityTypes.SWET.get(), LootTable.lootTable());
-            this.add(AetherLoot.ENTITIES_SWET_BLUE, LootTable.lootTable()
+            this.add(AetherEntityTypes.BLUE_SWET.get(), LootTable.lootTable()
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(AetherItems.SWET_BALL.get())
                                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
@@ -359,7 +358,7 @@ public class AetherLootTableData extends AetherLootTableProvider
                             )
                     )
             );
-            this.add(AetherLoot.ENTITIES_SWET_GOLD, LootTable.lootTable()
+            this.add(AetherEntityTypes.GOLDEN_SWET.get(), LootTable.lootTable()
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(Blocks.GLOWSTONE)
                                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
