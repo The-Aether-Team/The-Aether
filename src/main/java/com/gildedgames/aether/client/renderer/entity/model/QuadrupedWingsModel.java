@@ -42,7 +42,7 @@ public class QuadrupedWingsModel<T extends WingedEntity> extends EntityModel<T>
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float aimingForFold;
-        if (entity.isOnGround() || !entity.hasImpulse) {
+        if (entity.isEntityOnGround()) {
             aimingForFold = 0.1F;
         } else {
             aimingForFold = 1.0F;

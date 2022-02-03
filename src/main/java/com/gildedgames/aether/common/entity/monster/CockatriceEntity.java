@@ -1,8 +1,12 @@
 package com.gildedgames.aether.common.entity.monster;
 
+import com.gildedgames.aether.common.entity.passive.MountableEntity;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -35,6 +39,8 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 
 public class CockatriceEntity extends Monster implements RangedAttackMob
 {
+    private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN); //TODO: Implementation pending.
+
     public float wingRotation;
     public float prevWingRotation;
     public float destPos;
@@ -61,6 +67,12 @@ public class CockatriceEntity extends Monster implements RangedAttackMob
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, 1.0D)
                 .add(Attributes.FOLLOW_RANGE, 35.0D);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_ENTITY_ON_GROUND_ID, true);
     }
 
     //@Override
@@ -159,5 +171,13 @@ public class CockatriceEntity extends Monster implements RangedAttackMob
     @Override
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
         super.playStepSound(pos, blockIn);
+    }
+
+    public boolean isEntityOnGround() {
+        return this.entityData.get(DATA_ENTITY_ON_GROUND_ID);
+    }
+
+    public void setEntityOnGround(boolean onGround) {
+        this.entityData.set(DATA_ENTITY_ON_GROUND_ID, onGround);
     }
 }

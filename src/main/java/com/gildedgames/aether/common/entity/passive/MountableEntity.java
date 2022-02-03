@@ -38,6 +38,7 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 	private static final EntityDataAccessor<Boolean> DATA_PLAYER_JUMPED_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_MOUNT_JUMPING_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_PLAYER_CROUCHED_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
 
 	protected MountableEntity(EntityType<? extends Animal> type, Level worldIn) {
 		super(type, worldIn);
@@ -50,12 +51,19 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 		this.entityData.define(DATA_PLAYER_JUMPED_ID, false);
 		this.entityData.define(DATA_MOUNT_JUMPING_ID, false);
 		this.entityData.define(DATA_PLAYER_CROUCHED_ID, false);
+		this.entityData.define(DATA_ENTITY_ON_GROUND_ID, true);
 	}
 
 	@Override
 	public void tick() {
 		this.riderTick();
 		super.tick();
+		if (this.isOnGround()) {
+			this.setEntityOnGround(true);
+		}
+		if (this.getPlayerJumped()) {
+			this.setEntityOnGround(false);
+		}
 	}
 
 	public void riderTick() {
@@ -125,6 +133,12 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 	@Override
 	public void travelWithInput(@Nonnull Vec3 vector3d) {
 		super.travel(vector3d);
+	}
+
+	@Override
+	protected void jumpFromGround() {
+		super.jumpFromGround();
+		this.setEntityOnGround(false);
 	}
 
 	public void onJump() {
@@ -263,6 +277,14 @@ public abstract class MountableEntity extends AetherAnimalEntity implements Item
 
 	public void setPlayerTriedToCrouch(boolean playerTriedToCrouch) {
 		this.entityData.set(DATA_PLAYER_CROUCHED_ID, playerTriedToCrouch);
+	}
+
+	public boolean isEntityOnGround() {
+		return this.entityData.get(DATA_ENTITY_ON_GROUND_ID);
+	}
+
+	public void setEntityOnGround(boolean onGround) {
+		this.entityData.set(DATA_ENTITY_ON_GROUND_ID, onGround);
 	}
 
 	@Override

@@ -32,6 +32,7 @@ public abstract class WingedEntity extends MountableEntity
         if (this.getDeltaMovement().y < fallSpeed && !this.playerTriedToCrouch()) {
             this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
             this.hasImpulse = true;
+            this.setEntityOnGround(false);
         }
     }
 

@@ -6,7 +6,6 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nonnull;
@@ -63,22 +62,6 @@ public abstract class BipedBirdModel<T extends Entity> extends EntityModel<T>
         this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
         this.neck.xRot = -this.head.xRot;
         this.body.xRot = (float) (Math.PI / 2.0F);
-
-        if (!bipedBird.isOnGround() && bipedBird.hasImpulse) {
-            this.rightWing.setPos(-3.001F, 0.0F, 4.0F);
-            this.leftWing.setPos(3.001F, 0.0F, 4.0F);
-            this.rightWing.xRot = (float) -(Math.PI / 2.0F);
-            this.leftWing.xRot = this.rightWing.xRot;
-            this.rightLeg.xRot = 0.6F;
-            this.leftLeg.xRot = this.rightLeg.xRot;
-        } else {
-            this.rightWing.setPos(-3.001F, -3.0F, 3.0F);
-            this.leftWing.setPos(3.001F, -3.0F, 3.0F);
-            this.rightWing.xRot = 0.0F;
-            this.leftWing.xRot = 0.0F;
-            this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-            this.leftLeg.xRot = Mth.cos((float) (limbSwing * 0.6662F + Math.PI)) * 1.4F * limbSwingAmount;
-        }
 
         this.rightTailFeather.xRot = 0.25F;
         this.rightTailFeather.yRot = -0.375F;

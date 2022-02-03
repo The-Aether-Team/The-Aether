@@ -42,10 +42,6 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Optional;
 import java.util.UUID;
 
-//TODO:
-//Fixing the issues with using isOnGround not properly detecting if the Moa and other MountableEntities are on the ground.
-//For some reason the moa animation flickers when dismounting.
-
 public class Moa extends MountableEntity
 {
 	private static final EntityDataAccessor<String> DATA_MOA_TYPE_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.STRING);
@@ -116,6 +112,7 @@ public class Moa extends MountableEntity
 		if (this.getDeltaMovement().y < fallSpeed && !this.playerTriedToCrouch()) {
 			this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
 			this.hasImpulse = true;
+			this.setEntityOnGround(false);
 		}
 		if (this.isOnGround()) {
 			this.setRemainingJumps(this.getMaxJumps());
