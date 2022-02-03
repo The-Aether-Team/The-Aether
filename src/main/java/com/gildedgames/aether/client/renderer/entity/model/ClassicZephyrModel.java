@@ -13,11 +13,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class OldZephyrModel extends BaseZephyrModel
+public class ClassicZephyrModel extends BaseZephyrModel
 {
     public ModelPart body;
 
-    public OldZephyrModel(ModelPart root) {
+    public ClassicZephyrModel(ModelPart root) {
         body = root.getChild("body");
     }
 

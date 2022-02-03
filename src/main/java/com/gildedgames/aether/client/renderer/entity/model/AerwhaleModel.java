@@ -1,16 +1,17 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
+import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
-public class AerwhaleModel extends BaseAerwhaleModel
+import javax.annotation.Nonnull;
+
+public class AerwhaleModel extends EntityModel<AerwhaleEntity>
 {
 	public ModelPart frontBody;
 	public ModelPart rightFin;
@@ -56,18 +57,20 @@ public class AerwhaleModel extends BaseAerwhaleModel
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		this.frontBody.render(matrixStack, buffer, packedLight, packedOverlay);
-		this.rightFin.render(matrixStack, buffer, packedLight, packedOverlay);
-		this.bottomPartHead.render(matrixStack, buffer, packedLight, packedOverlay);
-		this.leftFin.render(matrixStack, buffer, packedLight, packedOverlay);
-		this.bottomPartMiddlebody.render(matrixStack, buffer, packedLight, packedOverlay);
-		this.head.render(matrixStack, buffer, packedLight, packedOverlay);
-		this.middleFin.render(matrixStack, buffer, packedLight, packedOverlay);
-		this.backFinRight.render(matrixStack, buffer, packedLight, packedOverlay);
-		this.backBody.render(matrixStack, buffer, packedLight, packedOverlay);
-		this.backFinLeft.render(matrixStack, buffer, packedLight, packedOverlay);
-		this.middleBody.render(matrixStack, buffer, packedLight, packedOverlay);
+	public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+		this.frontBody.render(poseStack, consumer, packedLight, packedOverlay);
+		this.rightFin.render(poseStack, consumer, packedLight, packedOverlay);
+		this.bottomPartHead.render(poseStack, consumer, packedLight, packedOverlay);
+		this.leftFin.render(poseStack, consumer, packedLight, packedOverlay);
+		this.bottomPartMiddlebody.render(poseStack, consumer, packedLight, packedOverlay);
+		this.head.render(poseStack, consumer, packedLight, packedOverlay);
+		this.middleFin.render(poseStack, consumer, packedLight, packedOverlay);
+		this.backFinRight.render(poseStack, consumer, packedLight, packedOverlay);
+		this.backBody.render(poseStack, consumer, packedLight, packedOverlay);
+		this.backFinLeft.render(poseStack, consumer, packedLight, packedOverlay);
+		this.middleBody.render(poseStack, consumer, packedLight, packedOverlay);
 	}
-	
+
+	@Override
+	public void setupAnim(@Nonnull AerwhaleEntity aerwhale, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
 }

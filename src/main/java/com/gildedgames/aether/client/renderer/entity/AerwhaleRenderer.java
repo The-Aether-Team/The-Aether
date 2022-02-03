@@ -3,38 +3,31 @@ package com.gildedgames.aether.client.renderer.entity;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.AerwhaleModel;
-import com.gildedgames.aether.client.renderer.entity.model.BaseAerwhaleModel;
-import com.gildedgames.aether.client.renderer.entity.model.OldAerwhaleModel;
+import com.gildedgames.aether.client.renderer.entity.model.ClassicAerwhaleModel;
 import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
-public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleModel>
+//TODO
+// MultiModel class testing to make sure it works for the aerwhale.
+public class AerwhaleRenderer extends MultiModelRenderer<AerwhaleEntity, EntityModel<AerwhaleEntity>, AerwhaleModel, ClassicAerwhaleModel>
 {
-    private static final ResourceLocation AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale.png");
+    private static final ResourceLocation DEFAULT_AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale.png");
     private static final ResourceLocation OLD_AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/old_aerwhale.png");
-
-    private final AerwhaleModel regularModel;
-    private final OldAerwhaleModel oldModel;
+    private final AerwhaleModel defaultModel;
+    private final ClassicAerwhaleModel oldModel;
     
     public AerwhaleRenderer(EntityRendererProvider.Context renderer) {
         super(renderer, new AerwhaleModel(renderer.bakeLayer(AetherModelLayers.AERWHALE)), 0.5F);
-        this.regularModel = (AerwhaleModel) this.model;
-        this.oldModel = new OldAerwhaleModel(renderer.bakeLayer(AetherModelLayers.AERWHALE_CLASSIC));
+        this.defaultModel = new AerwhaleModel(renderer.bakeLayer(AetherModelLayers.AERWHALE));
+        this.oldModel = new ClassicAerwhaleModel(renderer.bakeLayer(AetherModelLayers.AERWHALE_CLASSIC));
     }
-    
-    private Object _data;
-    private static Object _staticData;
 
     @Override
     protected void scale(AerwhaleEntity aerwhale, PoseStack matrixStackIn, float partialTickTime) {
@@ -68,20 +61,23 @@ public class AerwhaleRenderer extends MobRenderer<AerwhaleEntity, BaseAerwhaleMo
     }
 
     @Override
-    public void render(AerwhaleEntity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-    	super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+    public AerwhaleModel getDefaultModel() {
+        return this.defaultModel;
     }
 
-    //TODO: See if a multiple models class can be made through abstraction which can be used for both the Zephyr and Aerwhale renderers.
-
-    @Override	//TODO: Configurable old aerwhale model
-    public BaseAerwhaleModel getModel() {
-    	return regularModel;
+    @Override
+    public ClassicAerwhaleModel getOldModel() {
+        return this.oldModel;
     }
 
-    @Override   //TODO: Configurable old aerwhale texture
-    public ResourceLocation getTextureLocation(AerwhaleEntity entity) {
-        return AERWHALE_TEXTURE;
+    @Override
+    public ResourceLocation getDefaultTexture() {
+        return DEFAULT_AERWHALE_TEXTURE;
+    }
+
+    @Override
+    public ResourceLocation getOldTexture() {
+        return OLD_AERWHALE_TEXTURE;
     }
 }
 

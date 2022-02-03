@@ -132,7 +132,7 @@ public class AetherRenderers
         event.registerLayerDefinition(AetherModelLayers.AECHOR_PLANT, AechorPlantModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.AERBUNNY, AerbunnyModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.AERWHALE, AerwhaleModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.AERWHALE_CLASSIC, OldAerwhaleModel::createMainLayer);
+        event.registerLayerDefinition(AetherModelLayers.AERWHALE_CLASSIC, ClassicAerwhaleModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.CLOUD_CRYSTAL, CrystalModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.CLOUD_MINION, CloudMinionModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.COCKATRICE, () -> CockatriceModel.createBodyLayer(new CubeDeformation(0.0F)));
@@ -156,7 +156,7 @@ public class AetherRenderers
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE, );
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_QUEEN, );
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR, ZephyrModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.ZEPHYR_CLASSIC, OldZephyrModel::createMainLayer);
+        event.registerLayerDefinition(AetherModelLayers.ZEPHYR_CLASSIC, ClassicZephyrModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_TRANSPARENCY, ZephyrModel::createBodyLayer);
 
         event.registerLayerDefinition(AetherModelLayers.PENDANT, PendantModel::createLayer);

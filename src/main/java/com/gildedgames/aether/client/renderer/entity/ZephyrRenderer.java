@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.ZephyrTransparencyLayer;
 import com.gildedgames.aether.client.renderer.entity.model.BaseZephyrModel;
-import com.gildedgames.aether.client.renderer.entity.model.OldZephyrModel;
+import com.gildedgames.aether.client.renderer.entity.model.ClassicZephyrModel;
 import com.gildedgames.aether.client.renderer.entity.model.ZephyrModel;
 import com.gildedgames.aether.common.entity.monster.Zephyr;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -15,21 +15,21 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+//TODO: Make use of MultiModel renderer.
 public class ZephyrRenderer extends MobRenderer<Zephyr, BaseZephyrModel>
 {
     private static final ResourceLocation ZEPHYR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr_main.png");
     private static final ResourceLocation OLD_ZEPHYR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr_old.png");
 
     private final ZephyrModel regularModel;
-    private final OldZephyrModel oldModel;
+    private final ClassicZephyrModel oldModel;
     private final ZephyrTransparencyLayer transparencyLayer;
 
     public ZephyrRenderer(EntityRendererProvider.Context renderer) {
         super(renderer, new ZephyrModel(renderer.bakeLayer(AetherModelLayers.ZEPHYR)), 0.5F);
         addLayer(this.transparencyLayer = new ZephyrTransparencyLayer(this, renderer.getModelSet()));
         this.regularModel = (ZephyrModel) this.model;
-        this.oldModel = new OldZephyrModel(renderer.bakeLayer(AetherModelLayers.ZEPHYR_CLASSIC));
+        this.oldModel = new ClassicZephyrModel(renderer.bakeLayer(AetherModelLayers.ZEPHYR_CLASSIC));
     }
 
     @Override

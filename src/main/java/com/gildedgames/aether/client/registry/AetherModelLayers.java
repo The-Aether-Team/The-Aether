@@ -13,7 +13,7 @@ public class AetherModelLayers
     public static final ModelLayerLocation AECHOR_PLANT = register("aechor_plant");
     public static final ModelLayerLocation AERBUNNY = register("aerbunny");
     public static final ModelLayerLocation AERWHALE = register("aerwhale");
-    public static final ModelLayerLocation AERWHALE_CLASSIC = register("aerwhale", "variation");
+    public static final ModelLayerLocation AERWHALE_CLASSIC = register("aerwhale", "classic");
     public static final ModelLayerLocation CLOUD_CRYSTAL = register("cloud_crystal");
     public static final ModelLayerLocation CLOUD_MINION = register("cloud_minion");
     public static final ModelLayerLocation COCKATRICE = register("cockatrice");
@@ -37,7 +37,7 @@ public class AetherModelLayers
     public static final ModelLayerLocation VALKYRIE = register("valkyrie");
     public static final ModelLayerLocation VALKYRIE_QUEEN = register("valkyrie_queen");
     public static final ModelLayerLocation ZEPHYR = register("zephyr");
-    public static final ModelLayerLocation ZEPHYR_CLASSIC = register("zephyr", "variation");
+    public static final ModelLayerLocation ZEPHYR_CLASSIC = register("zephyr", "classic");
     public static final ModelLayerLocation ZEPHYR_TRANSPARENCY = register("zephyr", "transparency");
 
     public static final ModelLayerLocation PENDANT = register("pendant");
