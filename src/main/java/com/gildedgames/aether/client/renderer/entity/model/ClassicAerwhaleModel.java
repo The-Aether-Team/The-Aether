@@ -22,10 +22,7 @@ public class ClassicAerwhaleModel extends EntityModel<AerwhaleEntity>
 	public ModelPart rightFin;
 	
 	public ClassicAerwhaleModel(ModelPart root) {
-		this.middleBody = root.getChild("middle_body"); // 0 , 0
-//		this.middleBody.setPos(0.0F, -1.0F, 14.0F);
-//		this.middleBody.addBox(-9.0F, -6.0F, 1.0F, 15.0F, 15.0F, 15.0F);
-		
+		this.middleBody = root.getChild("middle_body");
 		this.head = root.getChild("head");
 		this.backBody = root.getChild("back_body");
 		this.backFinRight = root.getChild("back_fin_right");
@@ -38,13 +35,13 @@ public class ClassicAerwhaleModel extends EntityModel<AerwhaleEntity>
 		MeshDefinition meshDefinition = new MeshDefinition();
 		PartDefinition partDefinition = meshDefinition.getRoot();
 		partDefinition.addOrReplaceChild("middle_body", CubeListBuilder.create().texOffs(0, 0)
-				.addBox(-9.0F, -6.0F, 1.0F, 15.0F, 15.0F, 15.0F), PartPose.ZERO);
+				.addBox(-9.0F, -6.0F, 1.0F, 15.0F, 15.0F, 15.0F), PartPose.offset(0.0F, -1.0F, 14.0F));
 
 		partDefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(60, 0)
 				.addBox(-12.0F, -9.0F, -14.0F, 21.0F, 18.0F, 30.0F), PartPose.ZERO);
 
 		partDefinition.addOrReplaceChild("back_body", CubeListBuilder.create().texOffs(0, 30)
-				.addBox(-6.0F, -9.0F, -8.5F, 9.0F, 9.0F, 12.0F), PartPose.offset(3.0F, 2.2F, 38.0F));
+				.addBox(-6.0F, -9.0F, -8.5F, 9.0F, 9.0F, 12.0F), PartPose.offset(0.0F, 2.2F, 38.0F));
 
 		partDefinition.addOrReplaceChild("back_fin_right", CubeListBuilder.create().texOffs(0, 51)
 				.addBox(-4.0F, 0.0F, -6.0F, 24.0F, 3.0F, 12.0F), PartPose.offsetAndRotation(-5.0F, 2.2F, 38.0F,  -0.10471975511965977F,  -2.5497515042385164F, 0.0F));
