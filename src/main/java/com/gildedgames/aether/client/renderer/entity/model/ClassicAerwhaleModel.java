@@ -35,31 +35,34 @@ public class ClassicAerwhaleModel extends EntityModel<AerwhaleEntity>
 	}
 
 	public static LayerDefinition createBodyLayer() {
-		MeshDefinition meshdefinition = new MeshDefinition();
-		PartDefinition partdefinition = meshdefinition.getRoot();
-		partdefinition.addOrReplaceChild("middle_body", CubeListBuilder.create().texOffs(0, 0)
+		MeshDefinition meshDefinition = new MeshDefinition();
+		PartDefinition partDefinition = meshDefinition.getRoot();
+		partDefinition.addOrReplaceChild("middle_body", CubeListBuilder.create().texOffs(0, 0)
 				.addBox(-9.0F, -6.0F, 1.0F, 15.0F, 15.0F, 15.0F), PartPose.ZERO);
 
-		partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(60, 0)
+		partDefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(60, 0)
 				.addBox(-12.0F, -9.0F, -14.0F, 21.0F, 18.0F, 30.0F), PartPose.ZERO);
 
-		partdefinition.addOrReplaceChild("back_body", CubeListBuilder.create().texOffs(0, 30)
+		partDefinition.addOrReplaceChild("back_body", CubeListBuilder.create().texOffs(0, 30)
 				.addBox(-6.0F, -9.0F, -8.5F, 9.0F, 9.0F, 12.0F), PartPose.offset(3.0F, 2.2F, 38.0F));
 
-		partdefinition.addOrReplaceChild("back_fin_right", CubeListBuilder.create().texOffs(0, 51)
+		partDefinition.addOrReplaceChild("back_fin_right", CubeListBuilder.create().texOffs(0, 51)
 				.addBox(-4.0F, 0.0F, -6.0F, 24.0F, 3.0F, 12.0F), PartPose.offsetAndRotation(-5.0F, 2.2F, 38.0F,  -0.10471975511965977F,  -2.5497515042385164F, 0.0F));
 
-		partdefinition.addOrReplaceChild("back_fin_left", CubeListBuilder.create().texOffs(0, 51)
+		partDefinition.addOrReplaceChild("back_fin_left", CubeListBuilder.create().texOffs(0, 51)
 				.addBox(-4.0F, 0.0F, -6.0F, 24.0F, 3.0F, 12.0F), PartPose.offsetAndRotation(3.0F, 2.2F, 38.0F,  0.10471975511965977F,  -0.593411945678072F, 0.0F));
 
-		partdefinition.addOrReplaceChild("fin_right", CubeListBuilder.create().texOffs(0, 66)
+		partDefinition.addOrReplaceChild("fin_right", CubeListBuilder.create().texOffs(0, 66)
 				.addBox(-12.0F, 1.4F, -6.0F, 12.0F, 3.0F, 6.0F), PartPose.offsetAndRotation(-10.0F, 4.0F, 10.0F,  0.0F, 0.17453292519943295F, 0.0F));
 
-		partdefinition.addOrReplaceChild("fin_left", CubeListBuilder.create().texOffs(0, 66)
+		partDefinition.addOrReplaceChild("fin_left", CubeListBuilder.create().texOffs(0, 66)
 				.addBox(0.0F, 1.4F, -6.0F, 12.0F, 3.0F, 6.0F), PartPose.offsetAndRotation(7.0F, 4.0F, 10.0F,  0.0F, -0.17453292519943295F, 0.0F));
 
-		return LayerDefinition.create(meshdefinition, 192, 96);
+		return LayerDefinition.create(meshDefinition, 192, 96);
 	}
+
+	@Override
+	public void setupAnim(@Nonnull AerwhaleEntity aerwhale, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
 
 	@Override
 	public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
@@ -71,7 +74,4 @@ public class ClassicAerwhaleModel extends EntityModel<AerwhaleEntity>
 		this.rightFin.render(poseStack, consumer, packedLight, packedOverlay);
 		this.leftFin.render(poseStack, consumer, packedLight, packedOverlay);
 	}
-
-	@Override
-	public void setupAnim(@Nonnull AerwhaleEntity aerwhale, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
 }

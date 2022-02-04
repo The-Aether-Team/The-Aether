@@ -51,8 +51,8 @@ public class QuadrupedWingsModel<T extends WingedEntity> extends EntityModel<T>
         entity.wingFold += (aimingForFold - entity.wingFold) / 15.0F;
         float wingBend = -((float) Math.acos(entity.wingFold));
 
-        this.leftWingInner.zRot = -(entity.wingAngle + wingBend + ((float) Math.PI / 2.0F));
-        this.leftWingOuter.zRot = -(entity.wingAngle - wingBend + ((float) Math.PI / 2.0F)) - this.leftWingInner.zRot;
+        this.leftWingInner.zRot = -(entity.wingAngle + wingBend + (float) (Math.PI / 2.0F));
+        this.leftWingOuter.zRot = -(entity.wingAngle - wingBend + (float) (Math.PI / 2.0F)) - this.leftWingInner.zRot;
         this.rightWingInner.zRot = -this.leftWingInner.zRot;
         this.rightWingOuter.zRot = -this.leftWingOuter.zRot;
     }
