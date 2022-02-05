@@ -25,10 +25,9 @@ public interface IGravititeToolItem
 				if (world.getBlockEntity(pos) == null && state.getDestroySpeed(world, pos) >= 0.0F) {
 					if (!world.isClientSide) {
 						FloatingBlockEntity entity = new FloatingBlockEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, state);
-						if (world.getBlockState(pos).is(BlockTags.ANVIL)) {
-							entity.setHurtsEntities(true);
+						if (state.is(BlockTags.ANVIL)) {
+							entity.setHurtsEntities(2.0F, 40);
 						}
-						world.removeBlock(pos, false);
 						world.addFreshEntity(entity);
 						heldItem.hurtAndBreak(4, player, (p) -> p.broadcastBreakEvent(hand));
 					}

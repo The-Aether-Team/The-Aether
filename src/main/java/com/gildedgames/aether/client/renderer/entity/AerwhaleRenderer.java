@@ -14,8 +14,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
 
-//TODO
-// MultiModel class testing to make sure it works for the aerwhale.
 public class AerwhaleRenderer extends MultiModelRenderer<AerwhaleEntity, EntityModel<AerwhaleEntity>, AerwhaleModel, ClassicAerwhaleModel>
 {
     private static final ResourceLocation DEFAULT_AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale.png");
