@@ -89,7 +89,7 @@ public class Aerbunny extends AetherAnimalEntity
         if (this.getVehicle() instanceof Player player) {
             EntityUtil.copyRotations(this, player);
 
-            player.fallDistance = 0.0F;
+            player.resetFallDistance();
             if (!player.isOnGround() && !player.isFallFlying()) {
                 if (!player.getAbilities().flying && !player.isInWater() && !player.isInLava()) {
                     player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));

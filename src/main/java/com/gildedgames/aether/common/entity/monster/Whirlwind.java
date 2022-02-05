@@ -124,7 +124,7 @@ public abstract class Whirlwind extends Mob {
 
             if (d15 <= 1.5D + d17) {
                 entity.setDeltaMovement(entity.getDeltaMovement().x, 0.15000000596046448D, entity.getDeltaMovement().z);
-                entity.fallDistance = 0.0F;
+                entity.resetFallDistance();
 
                 if (d17 > 1.5D) {
                     entity.setDeltaMovement(entity.getDeltaMovement().x, -0.44999998807907104D + d17 * 0.34999999403953552D, entity.getDeltaMovement().z);

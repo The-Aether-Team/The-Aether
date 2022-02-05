@@ -192,7 +192,7 @@ public class Sheepuff extends AetherAnimalEntity implements IForgeShearable
     public void tick() {
         super.tick();
         if (this.getPuffed()) {
-            this.fallDistance = 0.0F;
+            this.resetFallDistance();
             double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.025 : -0.05;
             if (this.getDeltaMovement().y < fallSpeed) {
                 this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);

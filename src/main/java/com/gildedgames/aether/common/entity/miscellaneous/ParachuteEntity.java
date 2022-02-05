@@ -41,7 +41,7 @@ public class ParachuteEntity extends Entity
         boolean hasControllingPassenger = this.getControllingPassenger() != null;
         if (hasControllingPassenger) {
             Entity passenger = this.getControllingPassenger();
-            this.fallDistance *= 0.0F;
+            this.resetFallDistance();
             this.moveParachute(passenger);
             this.move(MoverType.SELF, this.getDeltaMovement());
             this.spawnExplosionParticle();

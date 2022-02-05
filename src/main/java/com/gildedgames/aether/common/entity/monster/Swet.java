@@ -150,7 +150,7 @@ public class Swet extends MountableEntity
         }
 
         if (this.isFriendly())
-            this.fallDistance = 0;
+            this.resetFallDistance();
 
         this.wasOnGround = this.onGround;
     }
