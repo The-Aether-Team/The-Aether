@@ -16,6 +16,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.OptionalLong;
 
+/**
+ * This mixin is used to handle the eternal day code in the Aether.
+ */
 @Mixin(DimensionType.class)
 public class DimensionTypeMixin
 {
