@@ -58,7 +58,7 @@ public class AetherTime implements IAetherTime {
      */
     @Override
     public void tick(Level level) {
-        if (this.isEternalDay/* && !AetherConfig.COMMON.disable_eternal_day.get()*/) {
+        if (this.isEternalDay && !AetherConfig.COMMON.disable_eternal_day.get()) {
             if (this.dayTime != 18000L) {
                 long target = Mth.clamp(18000L - this.dayTime, -10, 10);
                 this.dayTime += target;
