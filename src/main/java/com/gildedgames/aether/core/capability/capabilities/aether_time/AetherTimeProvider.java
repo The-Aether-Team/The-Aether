@@ -1,7 +1,7 @@
-package com.gildedgames.aether.core.capability.capabilities.eternal_day;
+package com.gildedgames.aether.core.capability.capabilities.aether_time;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
+import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -10,30 +10,30 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 
-public class EternalDayProvider implements ICapabilitySerializable<CompoundTag>
+public class AetherTimeProvider implements ICapabilitySerializable<CompoundTag>
 {
-    private final IEternalDay eternalDay;
+    private final IAetherTime aetherTime;
 
-    public EternalDayProvider(IEternalDay eternalDay) {
-        this.eternalDay = eternalDay;
+    public AetherTimeProvider(IAetherTime eternalDay) {
+        this.aetherTime = eternalDay;
     }
 
     @Override
     public CompoundTag serializeNBT() {
-        return this.eternalDay.serializeNBT();
+        return this.aetherTime.serializeNBT();
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        this.eternalDay.deserializeNBT(nbt);
+        this.aetherTime.deserializeNBT(nbt);
     }
 
     @SuppressWarnings("unchecked")
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-        if (cap == AetherCapabilities.ETERNAL_DAY_CAPABILITY) {
-            return LazyOptional.of(() -> (T) this.eternalDay);
+        if (cap == AetherCapabilities.AETHER_TIME_CAPABILITY) {
+            return LazyOptional.of(() -> (T) this.aetherTime);
         }
         return LazyOptional.empty();
     }

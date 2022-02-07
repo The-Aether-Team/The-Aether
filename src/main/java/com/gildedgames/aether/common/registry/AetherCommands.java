@@ -2,7 +2,7 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IEternalDay;
+import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -36,7 +36,7 @@ public class AetherCommands {
 
         public static int setEternalDay(CommandSourceStack stack, boolean value) {
             ServerLevel level = stack.getLevel();
-            IEternalDay eternalDay = level.getCapability(AetherCapabilities.ETERNAL_DAY_CAPABILITY).orElse(null);
+            IAetherTime eternalDay = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
             eternalDay.setEternalDay(value);
             stack.sendSuccess(new TextComponent("Set eternal day to " + value), true);
             return 1;
@@ -44,7 +44,7 @@ public class AetherCommands {
 
         public static int queryEternalDay(CommandSourceStack stack) {
             ServerLevel level = stack.getLevel();
-            IEternalDay eternalDay = level.getCapability(AetherCapabilities.ETERNAL_DAY_CAPABILITY).orElse(null);
+            IAetherTime eternalDay = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
             stack.sendSuccess(new TextComponent("Eternal day is set to " + eternalDay.getEternalDay()), true);
             return 1;
         }
