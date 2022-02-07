@@ -44,6 +44,9 @@ public class AetherTime implements IAetherTime {
         }
     }
 
+    /**
+     * Sends eternal day and Aether time values to the client.
+     */
     @Override
     public void syncToClient() {
         this.updateDayTime();
@@ -51,23 +54,24 @@ public class AetherTime implements IAetherTime {
     }
 
     /**
-     * Tick time in the Aether
+     * Ticks time in the Aether. This method is called on the server.
      */
     @Override
     public void tick(Level level) {
-        if (!level.isClientSide) {
-            if (this.isEternalDay/* && !AetherConfig.COMMON.disable_eternal_day.get()*/) {
-                if (this.dayTime != 18000L) {
-                    long target = Mth.clamp(18000L - this.dayTime, -10, 10);
-                    this.dayTime += target;
-                }
-            } else if (level.getLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
-                this.dayTime += 1L;
+        if (this.isEternalDay/* && !AetherConfig.COMMON.disable_eternal_day.get()*/) {
+            if (this.dayTime != 18000L) {
+                long target = Mth.clamp(18000L - this.dayTime, -10, 10);
+                this.dayTime += target;
             }
-            this.updateDayTime();
+        } else if (level.getLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+            this.dayTime += 1L;
         }
+        this.updateDayTime();
     }
 
+    /**
+     * Sends the eternal day value to the client.
+     */
     @Override
     public void updateEternalDay() {
         AetherPacketHandler.sendToAll(new EternalDayPacket(this.isEternalDay));
@@ -83,6 +87,9 @@ public class AetherTime implements IAetherTime {
         return this.isEternalDay;
     }
 
+    /**
+     * Sends the Aether time value to the client.
+     */
     @Override
     public void updateDayTime() {
         AetherPacketHandler.sendToAll(new AetherTimePacket(this.dayTime));

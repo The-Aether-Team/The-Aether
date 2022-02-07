@@ -38,6 +38,9 @@ public class AetherTimeListener
         }
     }
 
+    /**
+     *
+     */
     @SubscribeEvent
     public static void onWorldLoad(WorldEvent.Load event) {
         if(event.getWorld() instanceof Level level && level.dimension() == AetherDimensions.AETHER_WORLD) {
