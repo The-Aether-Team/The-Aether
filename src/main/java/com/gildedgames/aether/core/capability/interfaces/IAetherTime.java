@@ -22,9 +22,11 @@ public interface IAetherTime extends INBTSerializable<CompoundTag>
 
     void tick(Level world);
 
+    void updateEternalDay();
     void setEternalDay(boolean isEternalDay);
     boolean getEternalDay();
 
+    void updateDayTime();
     void setDayTime(long time);
     long getDayTime();
 }

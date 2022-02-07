@@ -26,6 +26,7 @@ public class EternalDayCommand {
         ServerLevel level = stack.getLevel();
         IAetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
         aetherTime.setEternalDay(value);
+        aetherTime.updateEternalDay();
         stack.sendSuccess(new TextComponent("Set eternal day to " + value), true);
         return 1;
     }

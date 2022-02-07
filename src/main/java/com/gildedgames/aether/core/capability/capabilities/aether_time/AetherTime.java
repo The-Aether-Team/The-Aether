@@ -2,6 +2,10 @@ package com.gildedgames.aether.core.capability.capabilities.aether_time;
 
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.AetherTimePacket;
+import com.gildedgames.aether.core.network.packet.client.EternalDayPacket;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -15,7 +19,7 @@ import net.minecraft.world.level.Level;
  */
 public class AetherTime implements IAetherTime {
     private final Level level;
-    private boolean isEternalDay = !AetherConfig.COMMON.disable_eternal_day.get();
+    private boolean isEternalDay = true;
     private long dayTime = 18000L;
 
     public AetherTime(Level level) {
@@ -41,24 +45,32 @@ public class AetherTime implements IAetherTime {
     }
 
     @Override
-    public void syncToClient() {}
+    public void syncToClient() {
+        this.updateDayTime();
+        this.updateEternalDay();
+    }
 
     /**
      * Tick time in the Aether
      */
     @Override
     public void tick(Level level) {
-        if (this.isEternalDay) {
-            if (this.dayTime != 18000L) {
-                long target = Mth.clamp(18000L - this.dayTime, -10, 10);
-                this.dayTime += target;
+        if (!level.isClientSide) {
+            if (this.isEternalDay/* && !AetherConfig.COMMON.disable_eternal_day.get()*/) {
+                if (this.dayTime != 18000L) {
+                    long target = Mth.clamp(18000L - this.dayTime, -10, 10);
+                    this.dayTime += target;
+                }
+            } else if (level.getLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+                this.dayTime += 1L;
             }
-        } else if (level.getLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
-            this.dayTime += 1L;
-            if (!level.isClientSide) {
-                ((ServerLevel) level).setDayTime(this.getDayTime());
-            }
+            this.updateDayTime();
         }
+    }
+
+    @Override
+    public void updateEternalDay() {
+        AetherPacketHandler.sendToAll(new EternalDayPacket(this.isEternalDay));
     }
 
     @Override
@@ -69,6 +81,11 @@ public class AetherTime implements IAetherTime {
     @Override
     public boolean getEternalDay() {
         return this.isEternalDay;
+    }
+
+    @Override
+    public void updateDayTime() {
+        AetherPacketHandler.sendToAll(new AetherTimePacket(this.dayTime));
     }
 
     @Override

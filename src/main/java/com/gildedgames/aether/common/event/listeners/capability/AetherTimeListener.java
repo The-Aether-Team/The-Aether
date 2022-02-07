@@ -8,8 +8,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
@@ -39,9 +39,22 @@ public class AetherTimeListener
     }
 
     @SubscribeEvent
+    public static void onWorldLoad(WorldEvent.Load event) {
+        if(event.getWorld() instanceof Level level && level.dimension() == AetherDimensions.AETHER_WORLD) {
+            world = level;
+        }
+    }
+
+    @SubscribeEvent
+    public static void onWorldUnload(WorldEvent.Unload event) {
+        if(event.getWorld() instanceof Level level && level.dimension() == AetherDimensions.AETHER_WORLD) {
+            world = null;
+        }
+    }
+
+    @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
-        if(event.world.dimension() == AetherDimensions.AETHER_WORLD) {
-            world = event.world;
+        if(event.world.dimension() == AetherDimensions.AETHER_WORLD && event.phase == TickEvent.Phase.END) {
             IAetherTime.get(event.world).ifPresent(aetherTime -> aetherTime.tick(event.world));
         }
     }

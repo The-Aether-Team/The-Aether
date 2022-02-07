@@ -28,8 +28,10 @@ public class AetherPacketHandler
 	
 	public static synchronized void register() {
 		// CLIENT
+		register(AetherTimePacket.class, AetherTimePacket::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
+		register(EternalDayPacket.class, EternalDayPacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);

@@ -51,6 +51,7 @@ public class AetherTimeCommand {
         ServerLevel level = pSource.getLevel();
         IAetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
         aetherTime.setDayTime(pTime);
+        aetherTime.updateDayTime();
 
         pSource.sendSuccess(new TranslatableComponent("commands.time.set", pTime), true);
         return getDayTime(pSource.getLevel());
@@ -60,7 +61,7 @@ public class AetherTimeCommand {
         ServerLevel level = pSource.getLevel();
         IAetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
         aetherTime.setDayTime(aetherTime.getDayTime() + pAmount);
-
+        aetherTime.updateDayTime();
 
         int i = getDayTime(pSource.getLevel());
         pSource.sendSuccess(new TranslatableComponent("commands.time.set", i), true);
