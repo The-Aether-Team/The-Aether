@@ -10,28 +10,29 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public interface IGravititeToolItem
 {
 	default InteractionResult floatBlock(UseOnContext context, float destroySpeed, float efficiency) {
-		Level world = context.getLevel();
-		BlockPos pos = context.getClickedPos();
+		Level level = context.getLevel();
+		BlockPos blockPos = context.getClickedPos();
 		ItemStack heldItem = context.getItemInHand();
-		BlockState state = world.getBlockState(pos);
+		BlockState blockState = level.getBlockState(blockPos);
 		Player player = context.getPlayer();
 		InteractionHand hand = context.getHand();
 		if (player != null) {
-			if ((destroySpeed == efficiency || heldItem.isCorrectToolForDrops(state)) && world.isEmptyBlock(pos.above())) {
-				if (world.getBlockEntity(pos) == null && state.getDestroySpeed(world, pos) >= 0.0F) {
-					if (!world.isClientSide) {
-						FloatingBlockEntity entity = new FloatingBlockEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, state);
-						if (state.is(BlockTags.ANVIL)) {
+			if ((destroySpeed == efficiency || heldItem.isCorrectToolForDrops(blockState)) && level.isEmptyBlock(blockPos.above())) {
+				if (level.getBlockEntity(blockPos) == null && blockState.getDestroySpeed(level, blockPos) >= 0.0F && !blockState.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF)) {
+					if (!level.isClientSide) {
+						FloatingBlockEntity entity = new FloatingBlockEntity(level, blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, blockState);
+						if (blockState.is(BlockTags.ANVIL)) {
 							entity.setHurtsEntities(2.0F, 40);
 						}
-						world.addFreshEntity(entity);
+						level.addFreshEntity(entity);
 						heldItem.hurtAndBreak(4, player, (p) -> p.broadcastBreakEvent(hand));
 					}
-					return InteractionResult.sidedSuccess(world.isClientSide);
+					return InteractionResult.sidedSuccess(level.isClientSide);
 				}
 			}
 		}
