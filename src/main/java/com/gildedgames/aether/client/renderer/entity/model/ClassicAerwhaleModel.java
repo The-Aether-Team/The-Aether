@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
-import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
+import com.gildedgames.aether.common.entity.passive.Aerwhale;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -11,7 +11,7 @@ import net.minecraft.client.model.geom.builders.*;
 
 import javax.annotation.Nonnull;
 
-public class ClassicAerwhaleModel extends EntityModel<AerwhaleEntity>
+public class ClassicAerwhaleModel extends EntityModel<Aerwhale>
 {
 	public ModelPart middleBody;
 	public ModelPart leftFin;
@@ -59,7 +59,7 @@ public class ClassicAerwhaleModel extends EntityModel<AerwhaleEntity>
 	}
 
 	@Override
-	public void setupAnim(@Nonnull AerwhaleEntity aerwhale, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
+	public void setupAnim(@Nonnull Aerwhale aerwhale, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
 
 	@Override
 	public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {

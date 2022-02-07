@@ -49,18 +49,18 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<Moa>> MOA = ENTITIES.register("moa",
             () -> EntityType.Builder.of(Moa::new, MobCategory.CREATURE).sized(1.0F, 2.0F).build("moa"));
 
-    public static final RegistryObject<EntityType<AerwhaleEntity>> AERWHALE = ENTITIES.register("aerwhale",
-            () -> EntityType.Builder.<AerwhaleEntity>of(AerwhaleEntity::new, MobCategory.CREATURE).sized(3.0F, 3.0F).fireImmune().build("aerwhale"));
+    public static final RegistryObject<EntityType<Aerwhale>> AERWHALE = ENTITIES.register("aerwhale",
+            () -> EntityType.Builder.of(Aerwhale::new, MobCategory.CREATURE).sized(3.0F, 3.0F).fireImmune().build("aerwhale"));
 
     public static final RegistryObject<EntityType<Aerbunny>> AERBUNNY = ENTITIES.register("aerbunny",
             () -> EntityType.Builder.of(Aerbunny::new, MobCategory.CREATURE).sized(0.4F, 0.4F).build("aerbunny"));
 
     // Hostile Mobs
     public static final RegistryObject<EntityType<Swet>> BLUE_SWET = ENTITIES.register("blue_swet",
-            () -> EntityType.Builder.<Swet>of(Swet::new, MobCategory.MONSTER).sized(0.8F, 0.8F).build("blue_swet"));
+            () -> EntityType.Builder.of(Swet::new, MobCategory.MONSTER).sized(0.8F, 0.8F).build("blue_swet"));
 
     public static final RegistryObject<EntityType<Swet>> GOLDEN_SWET = ENTITIES.register("golden_swet",
-            () -> EntityType.Builder.<Swet>of(Swet::new, MobCategory.MONSTER).sized(0.8F, 0.8F).build("golden_swet"));
+            () -> EntityType.Builder.of(Swet::new, MobCategory.MONSTER).sized(0.8F, 0.8F).build("golden_swet"));
 
     public static final RegistryObject<EntityType<Whirlwind>> WHIRLWIND = ENTITIES.register("whirlwind",
             () -> EntityType.Builder.<Whirlwind>of(PassiveWhirlwind::new, MobCategory.MONSTER).sized(0.6F, 0.8F).build("whirlwind"));
@@ -72,10 +72,10 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.<AechorPlantEntity>of(AechorPlantEntity::new, MobCategory.MONSTER).sized(1.0F, 1.0F).build("aechor_plant"));
 
     public static final RegistryObject<EntityType<CockatriceEntity>> COCKATRICE = ENTITIES.register("cockatrice",
-            () -> EntityType.Builder.<CockatriceEntity>of(CockatriceEntity::new, MobCategory.MONSTER).sized(1.0F, 2.0F).build("cockatrice"));
+            () -> EntityType.Builder.of(CockatriceEntity::new, MobCategory.MONSTER).sized(1.0F, 2.0F).build("cockatrice"));
 
     public static final RegistryObject<EntityType<Zephyr>> ZEPHYR = ENTITIES.register("zephyr",
-            () -> EntityType.Builder.<Zephyr>of(Zephyr::new, MobCategory.MONSTER).sized(4.0F, 4.0F).build("zephyr"));
+            () -> EntityType.Builder.of(Zephyr::new, MobCategory.MONSTER).sized(4.0F, 4.0F).build("zephyr"));
 
     // Dungeon
 
@@ -157,7 +157,7 @@ public class AetherEntityTypes {
         event.put(AetherEntityTypes.FLYING_COW.get(), FlyingCow.createMobAttributes().build());
         event.put(AetherEntityTypes.SHEEPUFF.get(), Sheepuff.createMobAttributes().build());
         event.put(AetherEntityTypes.MOA.get(), Moa.createMobAttributes().build());
-        event.put(AetherEntityTypes.AERWHALE.get(), AerwhaleEntity.createMobAttributes().build());
+        event.put(AetherEntityTypes.AERWHALE.get(), Aerwhale.createMobAttributes().build());
         event.put(AetherEntityTypes.AERBUNNY.get(), Aerbunny.createMobAttributes().build());
 
         event.put(AetherEntityTypes.BLUE_SWET.get(), Swet.createMobAttributes().build());

@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.AerwhaleModel;
 import com.gildedgames.aether.client.renderer.entity.model.ClassicAerwhaleModel;
-import com.gildedgames.aether.common.entity.passive.AerwhaleEntity;
+import com.gildedgames.aether.common.entity.passive.Aerwhale;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.model.EntityModel;
@@ -14,7 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
 
-public class AerwhaleRenderer extends MultiModelRenderer<AerwhaleEntity, EntityModel<AerwhaleEntity>, AerwhaleModel, ClassicAerwhaleModel>
+public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<Aerwhale>, AerwhaleModel, ClassicAerwhaleModel>
 {
     private static final ResourceLocation DEFAULT_AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale.png");
     private static final ResourceLocation OLD_AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/old_aerwhale.png");
@@ -28,7 +28,7 @@ public class AerwhaleRenderer extends MultiModelRenderer<AerwhaleEntity, EntityM
     }
 
     @Override
-    protected void scale(AerwhaleEntity aerwhale, PoseStack matrixStackIn, float partialTickTime) {
+    protected void scale(Aerwhale aerwhale, PoseStack matrixStackIn, float partialTickTime) {
         matrixStackIn.translate(0, 1.2, 0);
 //        if (_staticData == null) {
 //        	_staticData = new float[] {aerwhale.rotationYaw, aerwhale.rotationPitch};

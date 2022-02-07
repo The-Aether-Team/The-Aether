@@ -15,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -42,7 +41,7 @@ public class Aerbunny extends AetherAnimalEntity
 {
     public static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
 
-    public Aerbunny(EntityType<? extends Animal> type, Level level) {
+    public Aerbunny(EntityType<? extends Aerbunny> type, Level level) {
         super(type, level);
     }
 
@@ -66,8 +65,8 @@ public class Aerbunny extends AetherAnimalEntity
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MOVEMENT_SPEED, 0.25)
-                .add(Attributes.MAX_HEALTH, 5.0);
+                .add(Attributes.MAX_HEALTH, 5.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.25);
     }
 
     public void defineSynchedData() {
