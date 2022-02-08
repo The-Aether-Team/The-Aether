@@ -132,17 +132,22 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         // This code determines the current angle of the sun and moon and determines whether they should be visible or not.
         IAetherTime aetherTime = world.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
         long dayTime = aetherTime.getDayTime() % 72000L;
-        float sunOpacity = 1.0F;
-        float moonOpacity = 0.0F;
+        float sunOpacity;
+        float moonOpacity;
         if (dayTime > 71400L) {
             dayTime -= 71400L;
-            sunOpacity = dayTime * 0.001666666667F;
-            moonOpacity = 1.0F - dayTime * 0.001666666667F;
+            sunOpacity = Math.min(dayTime * 0.001666666667F, 1F);
+            moonOpacity = Math.max(1.0F - dayTime * 0.001666666667F, 0F);
         } else if (dayTime > 38400L) {
             dayTime -= 38400L;
-            sunOpacity = 1.0F - dayTime * 0.001666666667F;
-            moonOpacity = dayTime * 0.001666666667F;
+            sunOpacity = Math.max(1.0F - dayTime * 0.001666666667F, 0F);
+            moonOpacity = Math.min(dayTime * 0.001666666667F, 1F);
+        } else {
+            sunOpacity = 1.0F;
+            moonOpacity = 0.0F;
         }
+        sunOpacity -= world.getRainLevel(pPartialTick);
+        moonOpacity -= world.getRainLevel(pPartialTick);
 
         //Render celestial bodies
         pPoseStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
