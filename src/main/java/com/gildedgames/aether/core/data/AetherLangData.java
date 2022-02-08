@@ -373,6 +373,7 @@ public class AetherLangData extends AetherLanguageProvider
         addContainerType("bronze_dungeon_chest", "Bronze Dungeon Chest");
         addContainerType("silver_dungeon_chest", "Silver Dungeon Chest");
         addContainerType("gold_dungeon_chest", "Gold Dungeon Chest");
+        addContainerType("sun_altar", "Sun Altar");
 
 
         addItemGroup(AetherItemGroups.AETHER_BLOCKS, "Aether Blocks");
@@ -532,6 +533,9 @@ public class AetherLangData extends AetherLanguageProvider
         addGuiText("accessories.perks_button", "Customization & Perks");
 
 
+        addGuiText("sun_altar.time", "Time");
+
+
         addCustomizationText("title", "Customization & Perks");
         addCustomizationText("gloves.arm", "Glove Layer: Arm");
         addCustomizationText("gloves.sleeve", "Glove Layer: Sleeve");
@@ -555,6 +559,10 @@ public class AetherLangData extends AetherLanguageProvider
         addMessage("bronze_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
         addMessage("silver_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
         addMessage("gold_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Golden Key.");
+        addMessage("sun_altar.in_control", "The sun spirit is still in control of this realm.");
+        addMessage("sun_altar.no_permission", "You don't have permission to use this.");
+        addMessage("sun_altar.no_power", "The sun spirit has no power over this realm.");
+
 
 
         addKeyInfo("category", "Aether");
