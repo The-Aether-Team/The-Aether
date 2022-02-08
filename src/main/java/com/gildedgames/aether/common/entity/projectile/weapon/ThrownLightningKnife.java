@@ -15,22 +15,24 @@ import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.network.NetworkHooks;
 
-public class LightningKnifeEntity extends ThrowableItemProjectile
+import javax.annotation.Nonnull;
+
+public class ThrownLightningKnife extends ThrowableItemProjectile
 {
-	public LightningKnifeEntity(EntityType<? extends LightningKnifeEntity> entityTypeIn, Level worldIn) {
+	public ThrownLightningKnife(EntityType<? extends ThrownLightningKnife> entityTypeIn, Level worldIn) {
 		super(entityTypeIn, worldIn);
 	}
 
-	public LightningKnifeEntity(LivingEntity owner, Level worldIn) {
+	public ThrownLightningKnife(LivingEntity owner, Level worldIn) {
 		super(AetherEntityTypes.LIGHTNING_KNIFE.get(), owner, worldIn);
 	}
 
-	public LightningKnifeEntity(Level worldIn) {
+	public ThrownLightningKnife(Level worldIn) {
 		super(AetherEntityTypes.LIGHTNING_KNIFE.get(), worldIn);
 	}
 
 	@Override
-	protected void onHit(HitResult result) {
+	protected void onHit(@Nonnull HitResult result) {
 		if (!this.level.isClientSide) {
 			if (result.getType() != HitResult.Type.MISS && this.level instanceof ServerLevel) {
 				LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
@@ -45,11 +47,13 @@ public class LightningKnifeEntity extends ThrowableItemProjectile
 		super.onHit(result);
 	}
 
+	@Nonnull
 	@Override
 	protected Item getDefaultItem() {
 		return AetherItems.LIGHTNING_KNIFE.get();
 	}	
 	
+	@Nonnull
 	@Override
 	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);

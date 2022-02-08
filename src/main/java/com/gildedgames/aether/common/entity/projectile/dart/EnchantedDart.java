@@ -8,21 +8,21 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
-public class GoldenDartEntity extends AbstractDartEntity
+public class EnchantedDart extends AbstractDart
 {
-    public GoldenDartEntity(EntityType<? extends GoldenDartEntity> type, Level worldIn) {
+    public EnchantedDart(EntityType<? extends EnchantedDart> type, Level worldIn) {
         super(type, worldIn);
-        this.setBaseDamage(4.0D);
+        this.setBaseDamage(6.0D);
     }
 
-    public GoldenDartEntity(Level worldIn) {
-        super(AetherEntityTypes.GOLDEN_DART.get(), worldIn);
-        this.setBaseDamage(4.0D);
+    public EnchantedDart(Level worldIn) {
+        super(AetherEntityTypes.ENCHANTED_DART.get(), worldIn);
+        this.setBaseDamage(6.0D);
     }
 
     @Nonnull
     @Override
     protected ItemStack getPickupItem() {
-        return new ItemStack(AetherItems.GOLDEN_DART.get());
+        return new ItemStack(AetherItems.ENCHANTED_DART.get());
     }
 }

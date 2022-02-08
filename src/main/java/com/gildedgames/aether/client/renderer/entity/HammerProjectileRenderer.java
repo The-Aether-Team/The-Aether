@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectileEntity;
+import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -18,7 +18,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class HammerProjectileRenderer extends EntityRenderer<HammerProjectileEntity>
+public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile>
 {
     public static final ResourceLocation NOTCH_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/notch_wave.png");
     public static final ResourceLocation JEB_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/jeb_wave.png");
@@ -29,7 +29,7 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectileEnt
     }
 
     @Override
-    public void render(HammerProjectileEntity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+    public void render(HammerProjectile entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         matrixStackIn.pushPose();
         matrixStackIn.mulPose(this.entityRenderDispatcher.cameraOrientation());
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F));
@@ -50,7 +50,7 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectileEnt
     }
 
     @Override
-    public ResourceLocation getTextureLocation(HammerProjectileEntity entity) {
+    public ResourceLocation getTextureLocation(HammerProjectile entity) {
         return !entity.getIsJeb() ? NOTCH_WAVE_TEXTURE : JEB_WAVE_TEXTURE;
     }
 }

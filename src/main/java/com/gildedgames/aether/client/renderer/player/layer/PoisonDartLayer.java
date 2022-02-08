@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.player.layer;
 
-import com.gildedgames.aether.common.entity.projectile.dart.PoisonDartEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.PoisonDart;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PlayerModel;
@@ -67,7 +67,7 @@ public class PoisonDartLayer<T extends LivingEntity, M extends PlayerModel<T>> e
     @Override
     protected void renderStuckItem(PoseStack p_225632_1_, MultiBufferSource p_225632_2_, int p_225632_3_, Entity p_225632_4_, float p_225632_5_, float p_225632_6_, float p_225632_7_, float p_225632_8_) {
         float f = Mth.sqrt(p_225632_5_ * p_225632_5_ + p_225632_7_ * p_225632_7_);
-        PoisonDartEntity dart = new PoisonDartEntity(p_225632_4_.level);
+        PoisonDart dart = new PoisonDart(p_225632_4_.level);
         dart.setPos(p_225632_4_.getX(), p_225632_4_.getY(), p_225632_4_.getZ());
         dart.setYRot((float)(Math.atan2(p_225632_5_, p_225632_7_) * (double)(180F / (float)Math.PI)));
         dart.setXRot((float)(Math.atan2(p_225632_6_, f) * (double)(180F / (float)Math.PI)));

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import com.gildedgames.aether.common.entity.projectile.weapon.LightningKnifeEntity;
+import com.gildedgames.aether.common.entity.projectile.weapon.ThrownLightningKnife;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class LightningKnifeRenderer extends EntityRenderer<LightningKnifeEntity>
+public class LightningKnifeRenderer extends EntityRenderer<ThrownLightningKnife>
 {
 	public LightningKnifeRenderer(EntityRendererProvider.Context renderer) {
 		super(renderer);
@@ -25,7 +25,7 @@ public class LightningKnifeRenderer extends EntityRenderer<LightningKnifeEntity>
 	}
 
 	@Override
-	public void render(LightningKnifeEntity entityIn, float entityYaw, float partialTicks, PoseStack matrix, MultiBufferSource bufferIn, int packedLightIn) {
+	public void render(ThrownLightningKnife entityIn, float entityYaw, float partialTicks, PoseStack matrix, MultiBufferSource bufferIn, int packedLightIn) {
 		matrix.pushPose();
 		Quaternion base = Vector3f.YP.rotationDegrees(entityIn.getYRot());
 		base.mul(Vector3f.XP.rotationDegrees((-(entityIn.xRotO + (entityIn.getXRot() - entityIn.xRotO) * partialTicks)) - 90.0F));
@@ -37,7 +37,7 @@ public class LightningKnifeRenderer extends EntityRenderer<LightningKnifeEntity>
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(LightningKnifeEntity entity) {
+	public ResourceLocation getTextureLocation(ThrownLightningKnife entity) {
 		return TextureAtlas.LOCATION_BLOCKS;
 	}
 }

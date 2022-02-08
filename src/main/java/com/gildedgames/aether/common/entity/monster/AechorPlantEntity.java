@@ -3,7 +3,7 @@ package com.gildedgames.aether.common.entity.monster;
 import java.util.Random;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
+import com.gildedgames.aether.common.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 
@@ -61,7 +61,7 @@ public class AechorPlantEntity extends PathfinderMob implements RangedAttackMob 
     }
 
     public void performRangedAttack (LivingEntity target, float distanceFactor) {
-        PoisonNeedleEntity needle = new PoisonNeedleEntity(this.level, this);
+        PoisonNeedle needle = new PoisonNeedle(this.level, this);
         double x = target.getX() - this.getX();
         double y = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0F) - needle.getY();
         double z = target.getZ() - this.getZ();

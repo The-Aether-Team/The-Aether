@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.registry;
 
-import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectileEntity;
-import com.gildedgames.aether.common.entity.projectile.weapon.LightningKnifeEntity;
+import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectile;
+import com.gildedgames.aether.common.entity.projectile.weapon.ThrownLightningKnife;
 import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
 import com.gildedgames.aether.common.item.miscellaneous.bucket.SkyrootWaterBucketItem;
 import net.minecraft.Util;
@@ -84,7 +84,7 @@ public class AetherDispenseBehaviors
         @Nonnull
         @Override
         protected Projectile getProjectile(@Nonnull Level world, @Nonnull Position position, @Nonnull ItemStack stack) {
-            return Util.make(new LightningKnifeEntity(world), (projectile) -> {
+            return Util.make(new ThrownLightningKnife(world), (projectile) -> {
                 projectile.setPos(position.x(), position.y(), position.z());
                 projectile.setItem(stack);
             });
@@ -117,7 +117,7 @@ public class AetherDispenseBehaviors
         @Nonnull
         @Override
         protected Projectile getProjectile(@Nonnull Level world, Position position, @Nonnull ItemStack stack) {
-            HammerProjectileEntity hammerProjectile = new HammerProjectileEntity(world);
+            HammerProjectile hammerProjectile = new HammerProjectile(world);
             hammerProjectile.setPos(position.x(), position.y(), position.z());
             return hammerProjectile;
         }

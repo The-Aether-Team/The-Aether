@@ -1,8 +1,8 @@
-package com.gildedgames.aether.common.entity.projectile.dart;
+package com.gildedgames.aether.common.entity.projectile;
 
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.common.entity.projectile.dart.AbstractDart;
 import com.gildedgames.aether.common.registry.AetherEffects;
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -11,16 +11,16 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
-public class PoisonDartEntity extends AbstractDartEntity
+public class PoisonNeedle extends AbstractDart
 {
-    public PoisonDartEntity(EntityType<? extends PoisonDartEntity> type, Level worldIn) {
+    public PoisonNeedle(EntityType<? extends PoisonNeedle> type, Level worldIn) {
         super(type, worldIn);
-        this.setBaseDamage(0.5D);
+        this.setBaseDamage(1.0D);
     }
 
-    public PoisonDartEntity(Level worldIn) {
-        super(AetherEntityTypes.POISON_DART.get(), worldIn);
-        this.setBaseDamage(0.5D);
+    public PoisonNeedle(Level worldIn, LivingEntity shooter) {
+        super(AetherEntityTypes.POISON_NEEDLE.get(), shooter, worldIn);
+        this.setBaseDamage(1.0D);
     }
 
     @Override
@@ -34,6 +34,6 @@ public class PoisonDartEntity extends AbstractDartEntity
     @Nonnull
     @Override
     protected ItemStack getPickupItem() {
-        return new ItemStack(AetherItems.POISON_DART.get());
+        return ItemStack.EMPTY;
     }
 }

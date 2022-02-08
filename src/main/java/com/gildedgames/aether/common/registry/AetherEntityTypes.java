@@ -11,14 +11,14 @@ import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.common.entity.monster.dungeon.FireMinionEntity;
 import com.gildedgames.aether.common.entity.passive.Aerbunny;
-import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
+import com.gildedgames.aether.common.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.common.entity.projectile.ZephyrSnowballEntity;
 import com.gildedgames.aether.common.entity.projectile.crystal.CloudCrystalEntity;
-import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDartEntity;
-import com.gildedgames.aether.common.entity.projectile.dart.GoldenDartEntity;
-import com.gildedgames.aether.common.entity.projectile.dart.PoisonDartEntity;
-import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectileEntity;
-import com.gildedgames.aether.common.entity.projectile.weapon.LightningKnifeEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDart;
+import com.gildedgames.aether.common.entity.projectile.dart.GoldenDart;
+import com.gildedgames.aether.common.entity.projectile.dart.PoisonDart;
+import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectile;
+import com.gildedgames.aether.common.entity.projectile.weapon.ThrownLightningKnife;
 
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
@@ -117,23 +117,23 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<CloudCrystalEntity>> CLOUD_CRYSTAL = ENTITIES.register("cloud_crystal",
             () -> EntityType.Builder.<CloudCrystalEntity>of(CloudCrystalEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("cloud_crystal"));
 
-    public static final RegistryObject<EntityType<GoldenDartEntity>> GOLDEN_DART = ENTITIES.register("golden_dart",
-            () -> EntityType.Builder.<GoldenDartEntity>of(GoldenDartEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("golden_dart"));
+    public static final RegistryObject<EntityType<GoldenDart>> GOLDEN_DART = ENTITIES.register("golden_dart",
+            () -> EntityType.Builder.<GoldenDart>of(GoldenDart::new, MobCategory.MISC).sized(0.5F, 0.5F).build("golden_dart"));
 
-    public static final RegistryObject<EntityType<PoisonDartEntity>> POISON_DART = ENTITIES.register("poison_dart",
-            () -> EntityType.Builder.<PoisonDartEntity>of(PoisonDartEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("poison_dart"));
+    public static final RegistryObject<EntityType<PoisonDart>> POISON_DART = ENTITIES.register("poison_dart",
+            () -> EntityType.Builder.<PoisonDart>of(PoisonDart::new, MobCategory.MISC).sized(0.5F, 0.5F).build("poison_dart"));
 
-    public static final RegistryObject<EntityType<EnchantedDartEntity>> ENCHANTED_DART = ENTITIES.register("enchanted_dart",
-            () -> EntityType.Builder.<EnchantedDartEntity>of(EnchantedDartEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("enchanted_dart"));
+    public static final RegistryObject<EntityType<EnchantedDart>> ENCHANTED_DART = ENTITIES.register("enchanted_dart",
+            () -> EntityType.Builder.<EnchantedDart>of(EnchantedDart::new, MobCategory.MISC).sized(0.5F, 0.5F).build("enchanted_dart"));
 
-    public static final RegistryObject<EntityType<PoisonNeedleEntity>> POISON_NEEDLE = ENTITIES.register("poison_needle",
-            () -> EntityType.Builder.<PoisonNeedleEntity>of(PoisonNeedleEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("poison_needle"));
+    public static final RegistryObject<EntityType<PoisonNeedle>> POISON_NEEDLE = ENTITIES.register("poison_needle",
+            () -> EntityType.Builder.<PoisonNeedle>of(PoisonNeedle::new, MobCategory.MISC).sized(0.5F, 0.5F).build("poison_needle"));
 
-    public static final RegistryObject<EntityType<LightningKnifeEntity>> LIGHTNING_KNIFE = ENTITIES.register("lightning_knife",
-            () -> EntityType.Builder.<LightningKnifeEntity>of(LightningKnifeEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).build("lightning_knife"));
+    public static final RegistryObject<EntityType<ThrownLightningKnife>> LIGHTNING_KNIFE = ENTITIES.register("lightning_knife",
+            () -> EntityType.Builder.<ThrownLightningKnife>of(ThrownLightningKnife::new, MobCategory.MISC).sized(0.25F, 0.25F).build("lightning_knife"));
 
-    public static final RegistryObject<EntityType<HammerProjectileEntity>> HAMMER_PROJECTILE = ENTITIES.register("hammer_projectile",
-            () -> EntityType.Builder.<HammerProjectileEntity>of(HammerProjectileEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).build("hammer_projectile"));
+    public static final RegistryObject<EntityType<HammerProjectile>> HAMMER_PROJECTILE = ENTITIES.register("hammer_projectile",
+            () -> EntityType.Builder.<HammerProjectile>of(HammerProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F).build("hammer_projectile"));
 
     public static void registerSpawnPlacements() {
         SpawnPlacements.register(AetherEntityTypes.PHYG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::checkAetherAnimalSpawnRules);

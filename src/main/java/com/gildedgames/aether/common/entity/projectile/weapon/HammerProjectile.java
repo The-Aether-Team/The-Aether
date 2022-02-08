@@ -20,23 +20,24 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
-public class HammerProjectileEntity extends ThrowableProjectile
+public class HammerProjectile extends ThrowableProjectile
 {
-    private static final EntityDataAccessor<Boolean> DATA_JEB_ID = SynchedEntityData.defineId(HammerProjectileEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_JEB_ID = SynchedEntityData.defineId(HammerProjectile.class, EntityDataSerializers.BOOLEAN);
 
     private int ticksInAir = 0;
 
-    public HammerProjectileEntity(EntityType<? extends HammerProjectileEntity> type, Level worldIn) {
+    public HammerProjectile(EntityType<? extends HammerProjectile> type, Level worldIn) {
         super(type, worldIn);
     }
 
-    public HammerProjectileEntity(LivingEntity owner, Level world) {
+    public HammerProjectile(LivingEntity owner, Level world) {
         super(AetherEntityTypes.HAMMER_PROJECTILE.get(), owner, world);
     }
 
-    public HammerProjectileEntity(Level world) {
+    public HammerProjectile(Level world) {
         super(AetherEntityTypes.HAMMER_PROJECTILE.get(), world);
     }
 
@@ -60,16 +61,16 @@ public class HammerProjectileEntity extends ThrowableProjectile
     }
 
     public void shoot(Player player, float rotationPitch, float rotationYaw, float v, float velocity, float inaccuracy) {
-        float x = -Mth.sin(rotationYaw * ((float)Math.PI / 180F)) * Mth.cos(rotationPitch * ((float)Math.PI / 180F));
-        float y = -Mth.sin((rotationPitch + v) * ((float)Math.PI / 180F));
-        float z = Mth.cos(rotationYaw * ((float)Math.PI / 180F)) * Mth.cos(rotationPitch * ((float)Math.PI / 180F));
+        float x = -Mth.sin(rotationYaw * ((float) Math.PI / 180F)) * Mth.cos(rotationPitch * ((float) Math.PI / 180F));
+        float y = -Mth.sin((rotationPitch + v) * ((float) Math.PI / 180F));
+        float z = Mth.cos(rotationYaw * ((float) Math.PI / 180F)) * Mth.cos(rotationPitch * ((float) Math.PI / 180F));
         this.shoot(x, y, z, velocity, inaccuracy);
         Vec3 playerMotion = player.getDeltaMovement();
         this.setDeltaMovement(this.getDeltaMovement().add(playerMotion.x, player.isOnGround() ? 0.0D : playerMotion.y, playerMotion.z));
     }
 
     @Override
-    protected void onHit(HitResult result) {
+    protected void onHit(@Nonnull HitResult result) {
         super.onHit(result);
         if (!this.level.isClientSide) {
             this.discard();
@@ -85,7 +86,7 @@ public class HammerProjectileEntity extends ThrowableProjectile
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult result) {
+    protected void onHitEntity(@Nonnull EntityHitResult result) {
         if (!this.level.isClientSide) {
             Entity target = result.getEntity();
             launchTarget(target);
@@ -93,8 +94,8 @@ public class HammerProjectileEntity extends ThrowableProjectile
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult p_230299_1_) {
-        super.onHitBlock(p_230299_1_);
+    protected void onHitBlock(@Nonnull BlockHitResult result) {
+        super.onHitBlock(result);
         if (!this.level.isClientSide) {
             List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate(3.0D));
             for (Entity target : list) {
@@ -125,6 +126,7 @@ public class HammerProjectileEntity extends ThrowableProjectile
         return this.entityData.get(DATA_JEB_ID);
     }
 
+    @Nonnull
     @Override
     public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);

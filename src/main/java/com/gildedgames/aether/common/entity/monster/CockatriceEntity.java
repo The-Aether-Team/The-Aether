@@ -3,7 +3,7 @@ package com.gildedgames.aether.common.entity.monster;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.entity.passive.MountableEntity;
-import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
+import com.gildedgames.aether.common.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -107,7 +107,7 @@ public class CockatriceEntity extends Monster implements RangedAttackMob
 
     @Override
     public void performRangedAttack(LivingEntity target, float distanceFactor) { //TODO
-        PoisonNeedleEntity needle = new PoisonNeedleEntity(this.level, this);
+        PoisonNeedle needle = new PoisonNeedle(this.level, this);
         double d0 = target.getX() - this.getX();
         double d1 = target.getBoundingBox().minY + (double) (target.getBbHeight() / 3.0F) - needle.getY();
         double d2 = target.getZ() - this.getZ();
