@@ -83,9 +83,6 @@ public class AetherTime implements IAetherTime {
                 this.setDayTime(j - j % 72000L);
             }
             this.wakeUpAllPlayers(level);
-            /*if (level.getGameRules().getBoolean(GameRules.RULE_WEATHER_CYCLE) && this.isRaining()) {
-                level.resetWeatherCycle();
-            }*/
         }
     }
 
