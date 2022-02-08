@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.event.listeners.capability;
 
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
+import com.gildedgames.aether.server.player.AetherSleepStatus;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -45,6 +46,9 @@ public class AetherTimeListener
     public static void onWorldLoad(WorldEvent.Load event) {
         if(event.getWorld() instanceof Level level && level.dimension() == AetherDimensions.AETHER_WORLD) {
             world = level;
+            if(!level.isClientSide) {
+                ((ServerLevel)level).sleepStatus = new AetherSleepStatus();
+            }
         }
     }
 
@@ -58,7 +62,7 @@ public class AetherTimeListener
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         if(event.world.dimension() == AetherDimensions.AETHER_WORLD && event.phase == TickEvent.Phase.END) {
-            IAetherTime.get(event.world).ifPresent(aetherTime -> aetherTime.tick(event.world));
+            IAetherTime.get(event.world).ifPresent(aetherTime -> aetherTime.serverTick((ServerLevel) event.world));
         }
     }
 }

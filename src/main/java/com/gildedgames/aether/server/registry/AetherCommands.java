@@ -1,8 +1,8 @@
-package com.gildedgames.aether.common.registry;
+package com.gildedgames.aether.server.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.command.AetherTimeCommand;
-import com.gildedgames.aether.common.command.EternalDayCommand;
+import com.gildedgames.aether.server.command.AetherTimeCommand;
+import com.gildedgames.aether.server.command.EternalDayCommand;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraftforge.event.RegisterCommandsEvent;

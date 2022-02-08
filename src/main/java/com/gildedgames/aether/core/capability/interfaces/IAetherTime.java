@@ -1,9 +1,10 @@
 package com.gildedgames.aether.core.capability.interfaces;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
+import com.gildedgames.aether.server.player.AetherSleepStatus;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -23,7 +24,7 @@ public interface IAetherTime extends INBTSerializable<CompoundTag>
      */
     void syncToClient();
 
-    void tick(Level world);
+    void serverTick(ServerLevel world);
 
     /**
      * Sends the eternal day value to the client.
