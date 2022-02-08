@@ -17,6 +17,7 @@ import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraftforge.api.distmarker.Dist;
@@ -76,5 +77,12 @@ public class AetherClient
         for (MoaEggItem moaEggItem : MoaEggItem.moaEggs()) {
             colors.register((color, itemProvider) -> moaEggItem.getColor(itemProvider), moaEggItem);
         }
+    }
+
+    /**
+     * Used to work around a classloading crash on the server.
+     */
+    public static void setToSunAltarScreen(Component name) {
+        Minecraft.getInstance().setScreen(new SunAltarScreen(name));
     }
 }

@@ -48,6 +48,7 @@ public class AetherPacketHandler
 		register(MovementPacket.class, MovementPacket::decode);
 		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
+		register(SunAltarUpdatePacket.class, SunAltarUpdatePacket::decode);
 	}
 
 	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
