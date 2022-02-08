@@ -11,11 +11,11 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class CockatriceLayer<T extends CockatriceEntity, M extends BipedBirdModel<T>> extends EyesLayer<T, M>
+public class CockatriceMarkingsLayer<T extends CockatriceEntity, M extends BipedBirdModel<T>> extends EyesLayer<T, M>
 {
     private static final RenderType COCKATRICE_MARKINGS = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/mobs/cockatrice/cockatrice_emissive.png"));
 
-    public CockatriceLayer(RenderLayerParent<T, M> entityRenderer) {
+    public CockatriceMarkingsLayer(RenderLayerParent<T, M> entityRenderer) {
         super(entityRenderer);
     }
 

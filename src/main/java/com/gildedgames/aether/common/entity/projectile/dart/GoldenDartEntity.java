@@ -6,6 +6,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nonnull;
+
 public class GoldenDartEntity extends AbstractDartEntity
 {
     public GoldenDartEntity(EntityType<? extends GoldenDartEntity> type, Level worldIn) {
@@ -18,6 +20,7 @@ public class GoldenDartEntity extends AbstractDartEntity
         this.setBaseDamage(4.0D);
     }
 
+    @Nonnull
     @Override
     protected ItemStack getPickupItem() {
         return new ItemStack(AetherItems.GOLDEN_DART.get());

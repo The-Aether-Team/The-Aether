@@ -6,6 +6,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nonnull;
+
 public class EnchantedDartEntity extends AbstractDartEntity
 {
     public EnchantedDartEntity(EntityType<? extends EnchantedDartEntity> type, Level worldIn) {
@@ -18,6 +20,7 @@ public class EnchantedDartEntity extends AbstractDartEntity
         this.setBaseDamage(6.0D);
     }
 
+    @Nonnull
     @Override
     protected ItemStack getPickupItem() {
         return new ItemStack(AetherItems.ENCHANTED_DART.get());

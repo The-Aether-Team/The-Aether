@@ -40,7 +40,7 @@ public abstract class WingedEntity extends MountableEntity
     public void travel(@Nonnull Vec3 vector3d) {
         float f = this.flyingSpeed;
         if (this.isEffectiveAi() && !this.isOnGround() && this.getPassengers().isEmpty()) {
-            this.flyingSpeed = this.getSpeed() * (0.24F / (0.91F * 0.91F * 0.91F));
+            this.flyingSpeed = this.getSpeed() * (0.24F / ((float) Math.pow(0.91F, 3)));
             super.travel(vector3d);
             this.flyingSpeed = f;
         } else {

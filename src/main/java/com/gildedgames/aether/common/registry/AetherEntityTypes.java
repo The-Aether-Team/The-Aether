@@ -136,18 +136,18 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.<HammerProjectileEntity>of(HammerProjectileEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).build("hammer_projectile"));
 
     public static void registerSpawnPlacements() {
-        SpawnPlacements.register(AetherEntityTypes.PHYG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
-        SpawnPlacements.register(AetherEntityTypes.FLYING_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
-        SpawnPlacements.register(AetherEntityTypes.SHEEPUFF.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
-        SpawnPlacements.register(AetherEntityTypes.MOA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
-        SpawnPlacements.register(AetherEntityTypes.AERBUNNY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::canAetherAnimalSpawn);
+        SpawnPlacements.register(AetherEntityTypes.PHYG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::checkAetherAnimalSpawnRules);
+        SpawnPlacements.register(AetherEntityTypes.FLYING_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::checkAetherAnimalSpawnRules);
+        SpawnPlacements.register(AetherEntityTypes.SHEEPUFF.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::checkAetherAnimalSpawnRules);
+        SpawnPlacements.register(AetherEntityTypes.MOA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::checkAetherAnimalSpawnRules);
+        SpawnPlacements.register(AetherEntityTypes.AERBUNNY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimalEntity::checkAetherAnimalSpawnRules);
 
         SpawnPlacements.register(AetherEntityTypes.BLUE_SWET.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
         SpawnPlacements.register(AetherEntityTypes.GOLDEN_SWET.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
         SpawnPlacements.register(AetherEntityTypes.WHIRLWIND.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Whirlwind::canWhirlwindSpawn);
         SpawnPlacements.register(AetherEntityTypes.EVIL_WHIRLWIND.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Whirlwind::canWhirlwindSpawn);
         SpawnPlacements.register(AetherEntityTypes.AECHOR_PLANT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AechorPlantEntity::canAechorSpawn);
-        SpawnPlacements.register(AetherEntityTypes.COCKATRICE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CockatriceEntity::canCockatriceSpawn);
+        SpawnPlacements.register(AetherEntityTypes.COCKATRICE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CockatriceEntity::checkMobSpawnRules);
         SpawnPlacements.register(AetherEntityTypes.ZEPHYR.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Zephyr::canZephyrSpawn);
     }
 
@@ -156,9 +156,9 @@ public class AetherEntityTypes {
         event.put(AetherEntityTypes.PHYG.get(), Phyg.createMobAttributes().build());
         event.put(AetherEntityTypes.FLYING_COW.get(), FlyingCow.createMobAttributes().build());
         event.put(AetherEntityTypes.SHEEPUFF.get(), Sheepuff.createMobAttributes().build());
+        event.put(AetherEntityTypes.AERBUNNY.get(), Aerbunny.createMobAttributes().build());
         event.put(AetherEntityTypes.MOA.get(), Moa.createMobAttributes().build());
         event.put(AetherEntityTypes.AERWHALE.get(), Aerwhale.createMobAttributes().build());
-        event.put(AetherEntityTypes.AERBUNNY.get(), Aerbunny.createMobAttributes().build());
 
         event.put(AetherEntityTypes.BLUE_SWET.get(), Swet.createMobAttributes().build());
         event.put(AetherEntityTypes.GOLDEN_SWET.get(), Swet.createMobAttributes().build());

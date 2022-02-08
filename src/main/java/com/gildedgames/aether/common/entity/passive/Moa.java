@@ -321,7 +321,7 @@ public class Moa extends MountableEntity
 
 	@Nullable
 	@Override
-	protected SoundEvent getHurtSound(@Nonnull DamageSource damageSourceIn) {
+	protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
 		return AetherSoundEvents.ENTITY_MOA_HURT.get();
 	}
 

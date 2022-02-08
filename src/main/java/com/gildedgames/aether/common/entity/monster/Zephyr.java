@@ -116,7 +116,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT.get();
 	}
 

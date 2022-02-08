@@ -1,52 +1,45 @@
 package com.gildedgames.aether.common.entity.monster;
 
+import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
+import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.entity.passive.MountableEntity;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
-
-import java.util.Random;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 
+import javax.annotation.Nonnull;
+
 public class CockatriceEntity extends Monster implements RangedAttackMob
 {
-    private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN); //TODO: Implementation pending.
+    private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
 
     public float wingRotation;
     public float prevWingRotation;
     public float destPos;
     public float prevDestPos;
 
-    protected int ticksOffGround, ticksUntilFlap, secsUntilFlying;
+    private int flapCooldown;
 
     public CockatriceEntity(EntityType<? extends CockatriceEntity> type, Level worldIn) {
         super(type, worldIn);
@@ -55,18 +48,25 @@ public class CockatriceEntity extends Monster implements RangedAttackMob
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(2,  new RangedAttackGoal(this, 1.0, 60, 5));
-        this.goalSelector.addGoal(4, new MoveTowardsRestrictionGoal(this, 1.0));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.35F));
+        this.goalSelector.addGoal(2,  new RangedAttackGoal(this, 1.0F, 60, 10.0F));
+        this.goalSelector.addGoal(3, new FallingRandomStrollGoal(this, 1.0F));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 5.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
-    public static AttributeSupplier.Builder createMonsterAttributes() {
+    @Nonnull
+    @Override
+    protected PathNavigation createNavigation(@Nonnull Level level) {
+        return new FallPathNavigator(this, level);
+    }
+
+    @Nonnull
+    public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.MOVEMENT_SPEED, 1.0D)
-                .add(Attributes.FOLLOW_RANGE, 35.0D);
+                .add(Attributes.MOVEMENT_SPEED, 0.25D);
     }
 
     @Override
@@ -75,102 +75,46 @@ public class CockatriceEntity extends Monster implements RangedAttackMob
         this.entityData.define(DATA_ENTITY_ON_GROUND_ID, true);
     }
 
-    //@Override
-    //public void move(MoverType typeIn, Vec3d pos) {
-        //super.move(typeIn, new Vec3d(0, pos.getY(), 0));
-    //}
-
-
-    public static boolean canCockatriceSpawn(EntityType<? extends CockatriceEntity> type, ServerLevelAccessor worldIn, MobSpawnType reason, BlockPos pos, Random randomIn) {
-        return randomIn.nextInt(45) == 0 && checkMonsterSpawnRules(type, worldIn, reason, pos, randomIn); //TODO: change the bounds of nextInt to a config value.
-    }
-
-    @Override
-    public void performRangedAttack(LivingEntity target, float distanceFactor) {
-        PoisonNeedleEntity needle = new PoisonNeedleEntity(this.level, this);
-        double d0 = target.getX() - this.getX();
-        double d1 = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0F) - needle.getY();
-        double d2 = target.getZ() - this.getZ();
-        double d3 = Mth.sqrt((float)(d0 * d0 + d2 * d2));
-        needle.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.0F, (float)(14 - this.level.getDifficulty().getId() * 4));
-        this.playSound(AetherSoundEvents.ENTITY_COCKATRICE_SHOOT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
-        this.level.addFreshEntity(needle);
-    }
-
-    @Override
-    public boolean canBeAffected(MobEffectInstance effect) {
-        return effect.getEffect() != MobEffects.POISON && super.canBeAffected(effect);
-    }
-
-    @SuppressWarnings("unused")
     @Override
     public void tick() {
         super.tick();
-
-        if (this.jumping) {
-            this.push(0.0, 0.05, 0.0);
+        if (this.isOnGround()) {
+            this.setEntityOnGround(true);
         }
 
-        updateWingRotation: {
-            if (!this.onGround) {
-                if (this.ticksUntilFlap == 0) {
-                    this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.random.nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.random.nextFloat(), 0.0F, 0.3F));
-                    this.ticksUntilFlap = 8;
-                }
-                else {
-                    --this.ticksUntilFlap;
-                }
-            }
-
-            this.prevWingRotation = this.wingRotation;
-            this.prevDestPos = this.destPos;
-
-            if (this.onGround) {
-                this.destPos = 0.0F;
-            }
-            else {
-                this.destPos += 0.2;
-                this.destPos = Mth.clamp(this.destPos, 0.01F, 1.0F);
-            }
-
-            this.wingRotation += 1.233F;
+        double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.05 : -0.1;
+        if (this.getDeltaMovement().y < fallSpeed) {
+            this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+            this.hasImpulse = true;
+            this.setEntityOnGround(false);
         }
 
-        fall: {
-//			boolean blockBeneath = !this.world.isAirBlock(this.getPositionUnderneath());
-
-            Vec3 vec3d = this.getDeltaMovement();
-            if (!this.onGround && vec3d.y < 0.0) {
-                this.setDeltaMovement(vec3d.multiply(1.0, 0.6, 1.0));
+        if (this.getFlapCooldown() > 0) {
+            this.setFlapCooldown(this.getFlapCooldown() - 1);
+        } else if (this.getFlapCooldown() == 0) {
+            if (!this.isOnGround()) {
+                this.level.playSound(null, this, AetherSoundEvents.ENTITY_COCKATRICE_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.random.nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.random.nextFloat(), 0.0F, 0.3F));
+                this.setFlapCooldown(15);
             }
         }
-
-        this.fallDistance = 0.0F;
     }
 
     @Override
-    public boolean causeFallDamage(float p_147187_, float p_147188_, DamageSource p_147189_) {
-        return false;
+    protected void jumpFromGround() {
+        super.jumpFromGround();
+        this.setEntityOnGround(false);
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return AetherSoundEvents.ENTITY_MOA_AMBIENT.get();
-    }
-
-    @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return AetherSoundEvents.ENTITY_MOA_AMBIENT.get();
-    }
-
-    @Override
-    protected SoundEvent getDeathSound() {
-        return AetherSoundEvents.ENTITY_MOA_AMBIENT.get();
-    }
-
-    @Override
-    protected void playStepSound(BlockPos pos, BlockState blockIn) {
-        super.playStepSound(pos, blockIn);
+    public void performRangedAttack(LivingEntity target, float distanceFactor) { //TODO
+        PoisonNeedleEntity needle = new PoisonNeedleEntity(this.level, this);
+        double d0 = target.getX() - this.getX();
+        double d1 = target.getBoundingBox().minY + (double) (target.getBbHeight() / 3.0F) - needle.getY();
+        double d2 = target.getZ() - this.getZ();
+        double d3 = Mth.sqrt((float) (Mth.square(d0) + Mth.square(d2)));
+        needle.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.0F, (float) (14 - this.level.getDifficulty().getId() * 4));
+        this.playSound(AetherSoundEvents.ENTITY_COCKATRICE_SHOOT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+        this.level.addFreshEntity(needle);
     }
 
     public boolean isEntityOnGround() {
@@ -179,5 +123,38 @@ public class CockatriceEntity extends Monster implements RangedAttackMob
 
     public void setEntityOnGround(boolean onGround) {
         this.entityData.set(DATA_ENTITY_ON_GROUND_ID, onGround);
+    }
+
+    public int getFlapCooldown() {
+        return this.flapCooldown;
+    }
+
+    public void setFlapCooldown(int flapCooldown) {
+        this.flapCooldown = flapCooldown;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return AetherSoundEvents.ENTITY_COCKATRICE_AMBIENT.get();
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+        return AetherSoundEvents.ENTITY_COCKATRICE_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return AetherSoundEvents.ENTITY_COCKATRICE_DEATH.get();
+    }
+
+    @Override
+    protected int calculateFallDamage(float distance, float damageMultiplier) {
+        return 0;
+    }
+
+    @Override
+    public int getMaxFallDistance() {
+        return this.isOnGround() ? super.getMaxFallDistance() : 14;
     }
 }

@@ -9,6 +9,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nonnull;
+
 public class PoisonDartEntity extends AbstractDartEntity
 {
     public PoisonDartEntity(EntityType<? extends PoisonDartEntity> type, Level worldIn) {
@@ -22,13 +24,14 @@ public class PoisonDartEntity extends AbstractDartEntity
     }
 
     @Override
-    protected void doPostHurtEffects(LivingEntity living) {
+    protected void doPostHurtEffects(@Nonnull LivingEntity living) {
         super.doPostHurtEffects(living);
         if (!this.level.isClientSide) {
             living.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION.get(), 500, 0, false, false));
         }
     }
 
+    @Nonnull
     @Override
     protected ItemStack getPickupItem() {
         return new ItemStack(AetherItems.POISON_DART.get());

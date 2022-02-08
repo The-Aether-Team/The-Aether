@@ -342,7 +342,7 @@ public class Sheepuff extends AetherAnimalEntity implements IForgeShearable
 
     @Nullable
     @Override
-    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSourceIn) {
+    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
         return AetherSoundEvents.ENTITY_SHEEPUFF_HURT.get();
     }
 

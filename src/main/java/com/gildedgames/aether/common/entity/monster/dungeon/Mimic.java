@@ -49,7 +49,7 @@ public class Mimic extends Monster {
 	}
 	
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return AetherSoundEvents.ENTITY_MIMIC_HURT.get();
 	}
 	

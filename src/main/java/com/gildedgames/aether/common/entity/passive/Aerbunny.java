@@ -180,7 +180,7 @@ public class Aerbunny extends AetherAnimalEntity
     }
 
     @Override
-    protected SoundEvent getHurtSound(@Nonnull DamageSource source) {
+    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
         return AetherSoundEvents.ENTITY_AERBUNNY_HURT.get();
     }
 
