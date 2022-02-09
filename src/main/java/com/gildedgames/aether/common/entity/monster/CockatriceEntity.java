@@ -106,7 +106,7 @@ public class CockatriceEntity extends Monster implements RangedAttackMob
     }
 
     @Override
-    public void performRangedAttack(LivingEntity target, float distanceFactor) { //TODO
+    public void performRangedAttack(LivingEntity target, float distanceFactor) {
         PoisonNeedle needle = new PoisonNeedle(this.level, this);
         double d0 = target.getX() - this.getX();
         double d1 = target.getBoundingBox().minY + (double) (target.getBbHeight() / 3.0F) - needle.getY();
