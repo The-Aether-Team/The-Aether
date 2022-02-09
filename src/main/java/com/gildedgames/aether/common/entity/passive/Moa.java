@@ -157,6 +157,7 @@ public class Moa extends MountableEntity
 					this.setFlapCooldown(15);
 				}
 			}
+			this.resetFallDistance();
 		}
 	}
 

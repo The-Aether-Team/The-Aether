@@ -5,6 +5,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -33,6 +34,14 @@ public abstract class WingedEntity extends MountableEntity
             this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
             this.hasImpulse = true;
             this.setEntityOnGround(false);
+        }
+    }
+
+    @Override
+    public void riderTick() {
+        super.riderTick();
+        if (this.getControllingPassenger() instanceof Player) {
+            this.resetFallDistance();
         }
     }
 

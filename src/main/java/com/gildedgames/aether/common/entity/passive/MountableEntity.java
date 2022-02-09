@@ -32,7 +32,6 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.Saddleable;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 
-//TODO: fall distance cancelling for mounts broke, again, for some reason.
 public abstract class MountableEntity extends AetherAnimalEntity implements ItemSteerable, Saddleable
 {
 	private static final EntityDataAccessor<Boolean> DATA_SADDLE_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
