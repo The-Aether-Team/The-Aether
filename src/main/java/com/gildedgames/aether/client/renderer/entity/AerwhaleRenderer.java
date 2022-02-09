@@ -16,8 +16,8 @@ import com.mojang.math.Vector3f;
 
 public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<Aerwhale>, AerwhaleModel, ClassicAerwhaleModel>
 {
-    private static final ResourceLocation DEFAULT_AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale.png");
-    private static final ResourceLocation OLD_AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/old_aerwhale.png");
+    private static final ResourceLocation AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale.png");
+    private static final ResourceLocation AERWHALE_CLASSIC_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale_classic.png");
     private final AerwhaleModel defaultModel;
     private final ClassicAerwhaleModel oldModel;
     
@@ -70,12 +70,12 @@ public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<A
 
     @Override
     public ResourceLocation getDefaultTexture() {
-        return DEFAULT_AERWHALE_TEXTURE;
+        return AERWHALE_TEXTURE;
     }
 
     @Override
     public ResourceLocation getOldTexture() {
-        return OLD_AERWHALE_TEXTURE;
+        return AERWHALE_CLASSIC_TEXTURE;
     }
 }
 

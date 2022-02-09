@@ -156,7 +156,7 @@ public class AetherRenderers
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE, );
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_QUEEN, );
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR, ZephyrModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.ZEPHYR_CLASSIC, ClassicZephyrModel::createMainLayer);
+        event.registerLayerDefinition(AetherModelLayers.ZEPHYR_CLASSIC, ClassicZephyrModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_TRANSPARENCY, ZephyrModel::createBodyLayer);
 
         event.registerLayerDefinition(AetherModelLayers.PENDANT, PendantModel::createLayer);

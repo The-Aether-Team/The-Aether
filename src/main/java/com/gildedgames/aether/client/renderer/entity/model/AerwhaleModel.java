@@ -60,7 +60,7 @@ public class AerwhaleModel extends EntityModel<Aerwhale>
 	public void setupAnim(@Nonnull Aerwhale aerwhale, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
 
 	@Override
-	public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		this.frontBody.render(poseStack, consumer, packedLight, packedOverlay);
 		this.rightFin.render(poseStack, consumer, packedLight, packedOverlay);
 		this.bottomPartHead.render(poseStack, consumer, packedLight, packedOverlay);
