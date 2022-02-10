@@ -432,6 +432,10 @@ public class AetherSoundData extends SoundDefinitionsProvider
                         sound("minecraft:mob/slime/big4")
                 ).subtitle("subtitles.entity.swet.squish")
         );
+        this.add(AetherSoundEvents.ENTITY_WHIRLWIND_DROP,
+                definition().with(sound("minecraft:random/pop"))
+                        .subtitle("subtitles.entity.item.pickup")
+        );
         this.add(AetherSoundEvents.ENTITY_AECHOR_PLANT_SHOOT,
                 definition().with(sound("minecraft:random/bow"))
                 .subtitle("subtitles.entity.aechor_plant.shoot")

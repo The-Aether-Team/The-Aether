@@ -90,6 +90,8 @@ public class AetherSoundEvents
 	public static final RegistryObject<SoundEvent> ENTITY_SWET_JUMP = register("entity.swet.jump");
 	public static final RegistryObject<SoundEvent> ENTITY_SWET_SQUISH = register("entity.swet.squish");
 
+	public static final RegistryObject<SoundEvent> ENTITY_WHIRLWIND_DROP = register("entity.whirlwind.drop");
+
 	public static final RegistryObject<SoundEvent> ENTITY_AECHOR_PLANT_SHOOT = register("entity.aechor_plant.shoot");
 
 	public static final RegistryObject<SoundEvent> ENTITY_COCKATRICE_SHOOT = register("entity.cockatrice.shoot");

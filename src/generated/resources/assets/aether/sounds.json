@@ -514,6 +514,12 @@
       "mob/slime/big4"
     ]
   },
+  "entity.whirlwind.drop": {
+    "subtitle": "subtitles.entity.item.pickup",
+    "sounds": [
+      "random/pop"
+    ]
+  },
   "entity.aechor_plant.shoot": {
     "subtitle": "subtitles.entity.aechor_plant.shoot",
     "sounds": [
