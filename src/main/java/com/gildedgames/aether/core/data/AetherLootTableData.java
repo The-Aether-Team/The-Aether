@@ -613,26 +613,26 @@ public class AetherLootTableData extends AetherLootTableProvider
     {
         public void accept(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
             builder.accept(AetherLoot.WHIRLWIND_JUNK, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                            .add(LootItem.lootTableItem(Items.DIAMOND).setWeight(1))
-                            .add(LootItem.lootTableItem(Items.IRON_INGOT).setWeight(4))
-                            .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(5))
-                            .add(LootItem.lootTableItem(Items.COAL).setWeight(9))
-                            .add(LootItem.lootTableItem(Items.PUMPKIN).setWeight(2))
-                            .add(LootItem.lootTableItem(Items.GRAVEL).setWeight(5))
-                            .add(LootItem.lootTableItem(Items.CLAY).setWeight(11))
-                            .add(LootItem.lootTableItem(Items.STICK).setWeight(12))
-                            .add(LootItem.lootTableItem(Items.FLINT).setWeight(14))
-                            .add(LootItem.lootTableItem(Blocks.OAK_LOG).setWeight(17))
-                            .add(LootItem.lootTableItem(Blocks.SAND).setWeight(20))
-                    )
+                    .withPool(this.whirlwindLoot())
             );
             builder.accept(AetherLoot.EVIL_WHIRLWIND_JUNK, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                            .add(LootItem.lootTableItem(Items.AIR)
-                                    .apply(WhirlwindSpawnEntity.builder(EntityType.CREEPER, 1)))
-                    )
+                    .withPool(this.whirlwindLoot().add(LootItem.lootTableItem(Items.AIR).apply(WhirlwindSpawnEntity.builder(EntityType.CREEPER, 1)).setWeight(60)))
             );
+        }
+
+        private LootPool.Builder whirlwindLoot() {
+            return LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                    .add(LootItem.lootTableItem(Items.DIAMOND).setWeight(1))
+                    .add(LootItem.lootTableItem(Items.IRON_INGOT).setWeight(4))
+                    .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(5))
+                    .add(LootItem.lootTableItem(Items.COAL).setWeight(9))
+                    .add(LootItem.lootTableItem(Items.PUMPKIN).setWeight(2))
+                    .add(LootItem.lootTableItem(Items.GRAVEL).setWeight(5))
+                    .add(LootItem.lootTableItem(Items.CLAY).setWeight(11))
+                    .add(LootItem.lootTableItem(Items.STICK).setWeight(12))
+                    .add(LootItem.lootTableItem(Items.FLINT).setWeight(14))
+                    .add(LootItem.lootTableItem(Blocks.OAK_LOG).setWeight(17))
+                    .add(LootItem.lootTableItem(Blocks.SAND).setWeight(20));
         }
     }
 

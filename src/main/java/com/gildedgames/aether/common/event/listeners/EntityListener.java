@@ -2,7 +2,7 @@ package com.gildedgames.aether.common.event.listeners;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.monster.Swet;
-import com.gildedgames.aether.common.entity.passive.MountableEntity;
+import com.gildedgames.aether.common.entity.passive.MountableAnimal;
 import com.gildedgames.aether.common.entity.passive.FlyingCow;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.world.entity.Entity;
@@ -26,7 +26,7 @@ public class EntityListener
         Entity rider = event.getEntityMounting();
         Entity mount = event.getEntityBeingMounted();
         if(event.isDismounting() && rider.isShiftKeyDown()) {
-            if ((mount instanceof MountableEntity && !mount.isOnGround()) || (mount instanceof Swet swet && !swet.isFriendly())) {
+            if ((mount instanceof MountableAnimal && !mount.isOnGround()) || (mount instanceof Swet swet && !swet.isFriendly())) {
                 event.setCanceled(true);
             }
         }

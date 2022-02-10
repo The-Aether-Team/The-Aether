@@ -34,7 +34,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 
-public class Phyg extends WingedEntity
+public class Phyg extends WingedAnimal
 {
     public Phyg(EntityType<? extends Phyg> type, Level level) {
         super(type, level);

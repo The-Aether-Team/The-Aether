@@ -2,7 +2,7 @@ package com.gildedgames.aether.common.entity.monster;
 
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
-import com.gildedgames.aether.common.entity.passive.MountableEntity;
+import com.gildedgames.aether.common.entity.passive.MountableAnimal;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -32,7 +32,7 @@ import javax.annotation.Nonnull;
 
 public class CockatriceEntity extends Monster implements RangedAttackMob
 {
-    private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 
     public float wingRotation;
     public float prevWingRotation;

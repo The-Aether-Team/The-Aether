@@ -60,7 +60,7 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.level.ItemLike;
 
-public class Sheepuff extends AetherAnimalEntity implements IForgeShearable
+public class Sheepuff extends AetherAnimal implements IForgeShearable
 {
     private static final EntityDataAccessor<Byte> DATA_WOOL_COLOR_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> DATA_PUFFED_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BOOLEAN);
@@ -139,11 +139,10 @@ public class Sheepuff extends AetherAnimalEntity implements IForgeShearable
         this.entityData.define(DATA_PUFFED_ID, false);
     }
 
-    @Nullable
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverWorld, @Nonnull DifficultyInstance difficultyInstance, @Nonnull MobSpawnType spawnReason, @Nullable SpawnGroupData livingEntityData, @Nullable CompoundTag compoundNBT) {
-        this.setColor(getRandomSheepuffColor(serverWorld.getRandom()));
-        return super.finalizeSpawn(serverWorld, difficultyInstance, spawnReason, livingEntityData, compoundNBT);
+    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+        this.setColor(getRandomSheepuffColor(level.getRandom()));
+        return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
     }
 
     @Override

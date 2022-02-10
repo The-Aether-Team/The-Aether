@@ -29,13 +29,9 @@ public abstract class MultiModelRenderer<T extends Mob, M extends EntityModel<T>
         return AetherConfig.CLIENT.legacy_models.get() ? this.getOldModel() : this.getDefaultModel();
     }
 
-    public N getDefaultModel() {
-        return null;
-    }
+    public abstract N getDefaultModel();
 
-    public O getOldModel() {
-        return null;
-    }
+    public abstract O getOldModel();
 
     @Nonnull
     @Override
@@ -43,11 +39,7 @@ public abstract class MultiModelRenderer<T extends Mob, M extends EntityModel<T>
         return AetherConfig.CLIENT.legacy_models.get() ? this.getOldTexture() : this.getDefaultTexture();
     }
 
-    public ResourceLocation getDefaultTexture() {
-        return null;
-    }
+    public abstract ResourceLocation getDefaultTexture();
 
-    public ResourceLocation getOldTexture() {
-        return null;
-    }
+    public abstract ResourceLocation getOldTexture();
 }

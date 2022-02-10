@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
-import com.gildedgames.aether.common.entity.passive.WingedEntity;
+import com.gildedgames.aether.common.entity.passive.WingedAnimal;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
@@ -14,7 +14,7 @@ import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
-public class QuadrupedWingsModel<T extends WingedEntity> extends EntityModel<T>
+public class QuadrupedWingsModel<T extends WingedAnimal> extends EntityModel<T>
 {
     private final ModelPart leftWingInner;
     private final ModelPart leftWingOuter;

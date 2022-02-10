@@ -11,12 +11,12 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 
-public abstract class WingedEntity extends MountableEntity
+public abstract class WingedAnimal extends MountableAnimal
 {
     public float wingFold;
     public float wingAngle;
 
-    public WingedEntity(EntityType<? extends Animal> type, Level level) {
+    public WingedAnimal(EntityType<? extends Animal> type, Level level) {
         super(type, level);
     }
 

@@ -1,25 +1,29 @@
 package com.gildedgames.aether.client.particle;
 
-import com.gildedgames.aether.common.entity.monster.Whirlwind;
+import com.gildedgames.aether.common.entity.monster.AbstractWhirlwind;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.phys.AABB;
 
-public abstract class WhirlyParticle<T extends Whirlwind> extends TextureSheetParticle {
+import javax.annotation.Nonnull;
+
+public abstract class WhirlyParticle<T extends AbstractWhirlwind> extends TextureSheetParticle
+{
     protected static final TargetingConditions TARGET_CONDITION = TargetingConditions.forNonCombat();
-    protected Whirlwind whirlwind;
+    protected AbstractWhirlwind whirlwind;
     protected SpriteSet animatedSprite;
-    public WhirlyParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, SpriteSet sprite) {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
+
+    public WhirlyParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite) {
+        super(level, xCoord, yCoord, zCoord, xSpeed, ySpeed, zSpeed);
         this.animatedSprite = sprite;
-        whirlwind = worldIn.getNearestEntity(this.getWhirlwindType(), TARGET_CONDITION, null, xCoordIn, yCoordIn, zCoordIn, new AABB(x, y, z, x + 1, y + 1, z + 1));
-        if(whirlwind != null) {
-            this.setPos(whirlwind.getX(), whirlwind.getY(), whirlwind.getZ());
-            this.xd = xSpeedIn + (Math.random() * 2.0D - 1.0D) * this.getBaseSpeedModifier();
-            this.yd = ySpeedIn + (Math.random() * 2.0D - 1.0D) * this.getBaseSpeedModifier();
-            this.zd = zSpeedIn + (Math.random() * 2.0D - 1.0D) * this.getBaseSpeedModifier();
+        this.whirlwind = level.getNearestEntity(this.getWhirlwindType(), TARGET_CONDITION, null, xCoord, yCoord, zCoord, new AABB(this.x, this.y, this.z, this.x + 1, this.y + 1, this.z + 1));
+        if (this.whirlwind != null) {
+            this.setPos(this.whirlwind.getX(), this.whirlwind.getY(), this.whirlwind.getZ());
+            this.xd = xSpeed + (Math.random() * 2.0D - 1.0D) * this.getBaseSpeedModifier();
+            this.yd = ySpeed + (Math.random() * 2.0D - 1.0D) * this.getBaseSpeedModifier();
+            this.zd = zSpeed + (Math.random() * 2.0D - 1.0D) * this.getBaseSpeedModifier();
         }
     }
 
@@ -28,30 +32,28 @@ public abstract class WhirlyParticle<T extends Whirlwind> extends TextureSheetPa
         this.xo = this.x;
         this.yo = this.y;
         this.zo = this.z;
-
         if (this.age++ >= this.lifetime) {
             this.remove();
         }
+        this.setSpriteFromAge(this.animatedSprite);
+        if (this.whirlwind != null && this.whirlwind.isAlive()) {
+            float x = (float) (this.whirlwind.getX() - this.x);
+            float y = (float) (this.whirlwind.getY() - this.y);
+            float z = (float) (this.whirlwind.getZ() - this.z);
+            float d1 = Mth.sqrt(x * x + y * y + z * z);
 
-        this.setSpriteFromAge(animatedSprite);
-
-        if(whirlwind != null && whirlwind.isAlive()) {
-            float f = (float)(whirlwind.getX() - this.x);
-            float f1 = (float)(whirlwind.getY() - this.y);
-            float f2 = (float)(whirlwind.getZ() - this.z);
-            float d16 = Mth.sqrt(f * f + f1 * f1 + f2 * f2);
-
-            double d18 = this.getBoundingBox().minY - this.y;
-            double d21 = Math.atan2(whirlwind.getX() - this.x, whirlwind.getZ() - this.z) / 0.01745329424738884D;
-            d21 += 160D;
-            this.xd = -Math.cos(0.01745329424738884D * d21) * (d16 * 2.5D - d18) * 0.10000000149011612D;
-            this.zd = Math.sin(0.01745329424738884D * d21) * (d16 * 2.5D - d18) * 0.10000000149011612D;
+            double minY = this.getBoundingBox().minY - this.y;
+            double d2 = Math.atan2(this.whirlwind.getX() - this.x, this.whirlwind.getZ() - this.z) / 0.01745329424738884D;
+            d2 += 160D;
+            this.xd = -Math.cos(0.01745329424738884D * d2) * (d1 * 2.5D - minY) * 0.10000000149011612D;
+            this.zd = Math.sin(0.01745329424738884D * d2) * (d1 * 2.5D - minY) * 0.10000000149011612D;
             this.yd = 0.11500000208616257D;
         }
         this.yd += 0.004D;
         this.move(this.xd, this.yd, this.zd);
     }
 
+    @Nonnull
     @Override
     public ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
