@@ -27,4 +27,6 @@ public class AetherBlockEntityTypes
 			BlockEntityType.Builder.of(SkyrootBedBlockEntity::new, AetherBlocks.SKYROOT_BED.get()).build(null));
 	public static final RegistryObject<BlockEntityType<SkyrootSignBlockEntity>> SKYROOT_SIGN = BLOCK_ENTITIES.register("skyroot_sign", () ->
 			BlockEntityType.Builder.of(SkyrootSignBlockEntity::new, AetherBlocks.SKYROOT_WALL_SIGN.get(), AetherBlocks.SKYROOT_SIGN.get()).build(null));
+	public static final RegistryObject<BlockEntityType<SunAltarBlockEntity>> SUN_ALTAR = BLOCK_ENTITIES.register("sun_altar", () ->
+			BlockEntityType.Builder.of(SunAltarBlockEntity::new, AetherBlocks.SUN_ALTAR.get()).build(null));
 }

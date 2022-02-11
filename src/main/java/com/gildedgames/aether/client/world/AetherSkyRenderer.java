@@ -1,5 +1,7 @@
 package com.gildedgames.aether.client.world;
 
+import com.gildedgames.aether.core.capability.AetherCapabilities;
+import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -24,6 +26,7 @@ import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ISkyRenderHandler;
+import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.Random;
 
@@ -94,55 +97,9 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         RenderSystem.enableTexture();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         pPoseStack.pushPose();
-        
-        /**
-         * This code determines the current angle of the sun and moon and determines whether they should be visible or not.
-         */
-        float timeFactor = world.getDayTime() % 72000;
-        float sunOpacity = 1.0F;
-        float moonOpacity = 0.0F;
-        if (timeFactor > 71400) {
-            timeFactor -= 71400;
-            sunOpacity = timeFactor * 0.005F;
-            moonOpacity = 1.0F - timeFactor * 0.005F;
-        } else if (timeFactor > 38400) {
-            timeFactor -= 38400;
-            sunOpacity = 1.0F - timeFactor * 0.005F;
-            moonOpacity = timeFactor * 0.005F;
-        }
 
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, sunOpacity);
-        pPoseStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
-        pPoseStack.mulPose(Vector3f.XP.rotationDegrees(world.getTimeOfDay(pPartialTick) * 360.0F));
-        Matrix4f matrix4f1 = pPoseStack.last().pose();
-        float f12 = 30.0F;
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, SUN_LOCATION);
-        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        bufferbuilder.vertex(matrix4f1, -f12, 100.0F, -f12).uv(0.0F, 0.0F).endVertex();
-        bufferbuilder.vertex(matrix4f1, f12, 100.0F, -f12).uv(1.0F, 0.0F).endVertex();
-        bufferbuilder.vertex(matrix4f1, f12, 100.0F, f12).uv(1.0F, 1.0F).endVertex();
-        bufferbuilder.vertex(matrix4f1, -f12, 100.0F, f12).uv(0.0F, 1.0F).endVertex();
-        bufferbuilder.end();
-        BufferUploader.end(bufferbuilder);
+        this.drawCelestialBodies(pPartialTick, pPoseStack, world, bufferbuilder);
 
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, moonOpacity);
-        f12 = 20.0F;
-        RenderSystem.setShaderTexture(0, MOON_LOCATION);
-        int k = world.getMoonPhase();
-        int l = k % 4;
-        int i1 = k / 4 % 2;
-        float f13 = (float) (l + 0) / 4.0F;
-        float f14 = (float) (i1 + 0) / 2.0F;
-        float f15 = (float) (l + 1) / 4.0F;
-        float f16 = (float) (i1 + 1) / 2.0F;
-        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        bufferbuilder.vertex(matrix4f1, -f12, -100.0F, f12).uv(f15, f16).endVertex();
-        bufferbuilder.vertex(matrix4f1, f12, -100.0F, f12).uv(f13, f16).endVertex();
-        bufferbuilder.vertex(matrix4f1, f12, -100.0F, -f12).uv(f13, f14).endVertex();
-        bufferbuilder.vertex(matrix4f1, -f12, -100.0F, -f12).uv(f15, f14).endVertex();
-        bufferbuilder.end();
-        BufferUploader.end(bufferbuilder);
         RenderSystem.disableTexture();
         float f10 = world.getStarBrightness(pPartialTick);
         if (f10 > 0.0F) {
@@ -166,6 +123,68 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
 
         RenderSystem.enableTexture();
         RenderSystem.depthMask(true);
+    }
+
+    /**
+     * This method is used to draw the sun and/or moon in the Aether.
+     */
+    private void drawCelestialBodies(float pPartialTick, PoseStack pPoseStack, ClientLevel world, BufferBuilder bufferbuilder) {
+        // This code determines the current angle of the sun and moon and determines whether they should be visible or not.
+        IAetherTime aetherTime = world.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
+        long dayTime = aetherTime.getDayTime() % 72000L;
+        float sunOpacity;
+        float moonOpacity;
+        if (dayTime > 71400L) {
+            dayTime -= 71400L;
+            sunOpacity = Math.min(dayTime * 0.001666666667F, 1F);
+            moonOpacity = Math.max(1.0F - dayTime * 0.001666666667F, 0F);
+        } else if (dayTime > 38400L) {
+            dayTime -= 38400L;
+            sunOpacity = Math.max(1.0F - dayTime * 0.001666666667F, 0F);
+            moonOpacity = Math.min(dayTime * 0.001666666667F, 1F);
+        } else {
+            sunOpacity = 1.0F;
+            moonOpacity = 0.0F;
+        }
+        sunOpacity -= world.getRainLevel(pPartialTick);
+        moonOpacity -= world.getRainLevel(pPartialTick);
+
+        //Render celestial bodies
+        pPoseStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
+        pPoseStack.mulPose(Vector3f.XP.rotationDegrees(world.getTimeOfDay(pPartialTick) * 360.0F));
+        Matrix4f matrix4f1 = pPoseStack.last().pose();
+        float celestialOffset = 30.0F;
+
+        // Render the sun
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, sunOpacity);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, SUN_LOCATION);
+        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        bufferbuilder.vertex(matrix4f1, -celestialOffset, 100.0F, -celestialOffset).uv(0.0F, 0.0F).endVertex();
+        bufferbuilder.vertex(matrix4f1, celestialOffset, 100.0F, -celestialOffset).uv(1.0F, 0.0F).endVertex();
+        bufferbuilder.vertex(matrix4f1, celestialOffset, 100.0F, celestialOffset).uv(1.0F, 1.0F).endVertex();
+        bufferbuilder.vertex(matrix4f1, -celestialOffset, 100.0F, celestialOffset).uv(0.0F, 1.0F).endVertex();
+        bufferbuilder.end();
+        BufferUploader.end(bufferbuilder);
+
+        // Render the moon
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, moonOpacity);
+        celestialOffset = 20.0F;
+        RenderSystem.setShaderTexture(0, MOON_LOCATION);
+        int moonPhase = world.getMoonPhase();
+        int textureX = moonPhase % 4;
+        int textureY = moonPhase / 4 % 2;
+        float uLeft = (float) (textureX) / 4.0F;
+        float vDown = (float) (textureY) / 2.0F;
+        float uRight = (float) (textureX + 1) / 4.0F;
+        float vUp = (float) (textureY + 1) / 2.0F;
+        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        bufferbuilder.vertex(matrix4f1, -celestialOffset, -100.0F, celestialOffset).uv(uRight, vUp).endVertex();
+        bufferbuilder.vertex(matrix4f1, celestialOffset, -100.0F, celestialOffset).uv(uLeft, vUp).endVertex();
+        bufferbuilder.vertex(matrix4f1, celestialOffset, -100.0F, -celestialOffset).uv(uLeft, vDown).endVertex();
+        bufferbuilder.vertex(matrix4f1, -celestialOffset, -100.0F, -celestialOffset).uv(uRight, vDown).endVertex();
+        bufferbuilder.end();
+        BufferUploader.end(bufferbuilder);
     }
 
     private void createLightSky() {
@@ -249,6 +268,5 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
                 }
             }
         }
-
     }
 }
