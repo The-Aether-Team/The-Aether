@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
+import com.gildedgames.aether.common.entity.block.TntPresent;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -15,7 +15,7 @@ import com.mojang.math.Vector3f;
 
 import javax.annotation.Nonnull;
 
-public class TNTPresentRenderer extends EntityRenderer<TNTPresentEntity>
+public class TNTPresentRenderer extends EntityRenderer<TntPresent>
 {
     public TNTPresentRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -23,7 +23,7 @@ public class TNTPresentRenderer extends EntityRenderer<TNTPresentEntity>
     }
 
     @Override
-    public void render(TNTPresentEntity present, float entityYaw, float partialTicks, PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
+    public void render(TntPresent present, float entityYaw, float partialTicks, PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         poseStack.translate(0.0D, 0.5D, 0.0D);
         if ((float) present.getFuse() - partialTicks + 1.0F < 10.0F) {
@@ -44,7 +44,7 @@ public class TNTPresentRenderer extends EntityRenderer<TNTPresentEntity>
 
     @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull TNTPresentEntity present) {
+    public ResourceLocation getTextureLocation(@Nonnull TntPresent present) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 }

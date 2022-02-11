@@ -7,7 +7,7 @@ import com.gildedgames.aether.common.entity.monster.dungeon.Mimic;
 import com.gildedgames.aether.common.entity.monster.dungeon.SentryEntity;
 import com.gildedgames.aether.common.entity.passive.*;
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
-import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
+import com.gildedgames.aether.common.entity.block.TntPresent;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
 import com.gildedgames.aether.common.entity.monster.dungeon.FireMinionEntity;
 import com.gildedgames.aether.common.entity.passive.Aerbunny;
@@ -106,8 +106,8 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<FloatingBlockEntity>> FLOATING_BLOCK = ENTITIES.register("floating_block",
             () -> EntityType.Builder.<FloatingBlockEntity>of(FloatingBlockEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).updateInterval(1).build("floating_block"));
 
-    public static final RegistryObject<EntityType<TNTPresentEntity>> TNT_PRESENT = ENTITIES.register("tnt_present",
-            () -> EntityType.Builder.<TNTPresentEntity>of(TNTPresentEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).build("tnt_present"));
+    public static final RegistryObject<EntityType<TntPresent>> TNT_PRESENT = ENTITIES.register("tnt_present",
+            () -> EntityType.Builder.<TntPresent>of(TntPresent::new, MobCategory.MISC).sized(1.0F, 1.0F).build("tnt_present"));
 
     // Projectiles
 
