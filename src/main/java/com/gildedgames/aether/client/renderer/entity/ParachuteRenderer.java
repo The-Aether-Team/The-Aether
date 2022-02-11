@@ -1,7 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.common.entity.miscellaneous.ParachuteEntity;
-import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;

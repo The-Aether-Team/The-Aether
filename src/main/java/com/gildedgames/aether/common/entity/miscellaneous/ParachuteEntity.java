@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -86,7 +87,7 @@ public class ParachuteEntity extends Entity
     }
 
     @Override
-    protected boolean canRide(Entity entityIn) {
+    protected boolean canRide(@Nonnull Entity entity) {
         return true;
     }
 
@@ -129,11 +130,12 @@ public class ParachuteEntity extends Entity
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag nbt) { }
+    protected void addAdditionalSaveData(@Nonnull CompoundTag tag) { }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag nbt) { }
+    protected void readAdditionalSaveData(@Nonnull CompoundTag tag) { }
 
+    @Nonnull
     @Override
     public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
