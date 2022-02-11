@@ -2,7 +2,7 @@ package com.gildedgames.aether.core.capability.capabilities.player;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
-import com.gildedgames.aether.common.entity.miscellaneous.ParachuteEntity;
+import com.gildedgames.aether.common.entity.miscellaneous.Parachute;
 import com.gildedgames.aether.common.entity.passive.Aerbunny;
 import com.gildedgames.aether.common.item.miscellaneous.ParachuteItem;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
@@ -253,7 +253,7 @@ public class AetherPlayer implements IAetherPlayer
 				if (inventory.contains(AetherTags.Items.DEPLOYABLE_PARACHUTES)) {
 					for (ItemStack stack : inventory.items) {
 						if (stack.getItem() instanceof ParachuteItem parachuteItem) {
-							ParachuteEntity parachute = parachuteItem.getParachuteEntity().get().create(level);
+							Parachute parachute = parachuteItem.getParachuteEntity().get().create(level);
 							if (parachute != null) {
 								parachute.setPos(player.getX(), player.getY() - 1.0D, player.getZ());
 								if (!level.isClientSide) {

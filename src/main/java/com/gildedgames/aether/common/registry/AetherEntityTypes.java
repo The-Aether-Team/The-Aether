@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.entity.miscellaneous.ParachuteEntity;
+import com.gildedgames.aether.common.entity.miscellaneous.Parachute;
 import com.gildedgames.aether.common.entity.monster.*;
 import com.gildedgames.aether.common.entity.monster.dungeon.Mimic;
 import com.gildedgames.aether.common.entity.monster.dungeon.SentryEntity;
@@ -97,11 +97,11 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<CloudMinionEntity>> CLOUD_MINION = ENTITIES.register("cloud_minion",
             () -> EntityType.Builder.<CloudMinionEntity>of(CloudMinionEntity::new, MobCategory.MISC).sized(0.75F, 0.75F).build("cloud_minion"));
 
-    public static final RegistryObject<EntityType<ParachuteEntity>> COLD_PARACHUTE = ENTITIES.register("cold_parachute",
-            () -> EntityType.Builder.of(ParachuteEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).build("cold_parachute"));
+    public static final RegistryObject<EntityType<Parachute>> COLD_PARACHUTE = ENTITIES.register("cold_parachute",
+            () -> EntityType.Builder.of(Parachute::new, MobCategory.MISC).sized(1.0F, 1.0F).build("cold_parachute"));
 
-    public static final RegistryObject<EntityType<ParachuteEntity>> GOLDEN_PARACHUTE = ENTITIES.register("golden_parachute",
-            () -> EntityType.Builder.of(ParachuteEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).build("golden_parachute"));
+    public static final RegistryObject<EntityType<Parachute>> GOLDEN_PARACHUTE = ENTITIES.register("golden_parachute",
+            () -> EntityType.Builder.of(Parachute::new, MobCategory.MISC).sized(1.0F, 1.0F).build("golden_parachute"));
 
     public static final RegistryObject<EntityType<FloatingBlockEntity>> FLOATING_BLOCK = ENTITIES.register("floating_block",
             () -> EntityType.Builder.<FloatingBlockEntity>of(FloatingBlockEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).updateInterval(1).build("floating_block"));

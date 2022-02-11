@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import com.gildedgames.aether.common.entity.miscellaneous.ParachuteEntity;
+import com.gildedgames.aether.common.entity.miscellaneous.Parachute;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.Block;
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
-public class ParachuteRenderer extends EntityRenderer<ParachuteEntity>
+public class ParachuteRenderer extends EntityRenderer<Parachute>
 {
     private final Supplier<Block> parachuteBlock;
 
@@ -26,7 +26,7 @@ public class ParachuteRenderer extends EntityRenderer<ParachuteEntity>
     }
 
     @Override
-    public void render(@Nonnull ParachuteEntity parachute, float entityYaw, float partialTicks, PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
+    public void render(@Nonnull Parachute parachute, float entityYaw, float partialTicks, PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         poseStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
         poseStack.translate(-0.5, 0.0, 0.5);
@@ -38,7 +38,7 @@ public class ParachuteRenderer extends EntityRenderer<ParachuteEntity>
 
     @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull ParachuteEntity entity) {
+    public ResourceLocation getTextureLocation(@Nonnull Parachute entity) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 }

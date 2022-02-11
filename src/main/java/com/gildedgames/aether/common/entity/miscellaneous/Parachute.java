@@ -8,8 +8,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,11 +18,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraftforge.network.NetworkHooks;
 
-public class ParachuteEntity extends Entity
+public class Parachute extends Entity
 {
     private float parachuteSpeed;
 
-    public ParachuteEntity(EntityType<?> entityType, Level world) {
+    public Parachute(EntityType<?> entityType, Level world) {
         super(entityType, world);
         this.blocksBuilding = true;
         this.setDeltaMovement(Vec3.ZERO);
@@ -124,7 +122,6 @@ public class ParachuteEntity extends Entity
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public boolean displayFireAnimation() {
         return false;
     }
