@@ -20,23 +20,25 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 
-public class CloudMinionEntity extends FlyingMob
+import javax.annotation.Nonnull;
+
+public class CloudMinion extends FlyingMob
 {
-    private static final EntityDataAccessor<Integer> DATA_OWNER_ID = SynchedEntityData.defineId(CloudMinionEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> DATA_IS_RIGHT_ID = SynchedEntityData.defineId(CloudMinionEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Integer> DATA_LIFESPAN_ID = SynchedEntityData.defineId(CloudMinionEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_OWNER_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_IS_RIGHT_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_LIFESPAN_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.INT);
 
     public boolean shouldShoot;
     public double targetX, targetY, targetZ;
 
-    public CloudMinionEntity(EntityType<? extends FlyingMob> p_i48578_1_, Level p_i48578_2_) {
-        super(p_i48578_1_, p_i48578_2_);
+    public CloudMinion(EntityType<? extends FlyingMob> type, Level level) {
+        super(type, level);
     }
 
-    public CloudMinionEntity(Level p_i48578_2_, Player entity, HumanoidArm side) {
-        super(AetherEntityTypes.CLOUD_MINION.get(), p_i48578_2_);
-        this.setOwner(entity);
-        this.setSide(side);
+    public CloudMinion(Level level, Player player, HumanoidArm armSide) {
+        super(AetherEntityTypes.CLOUD_MINION.get(), level);
+        this.setOwner(player);
+        this.setSide(armSide);
         this.setLifeSpan(3600);
         this.noPhysics = true;
         this.setPositionFromOwner();
@@ -45,55 +47,18 @@ public class CloudMinionEntity extends FlyingMob
         this.setYRot(this.getOwner().getYRot());
     }
 
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_OWNER_ID, 0);
-        this.entityData.define(DATA_IS_RIGHT_ID, true);
-        this.entityData.define(DATA_LIFESPAN_ID, 0);
-    }
-
-    public static AttributeSupplier.Builder registerAttributes() {
+    @Nonnull
+    public static AttributeSupplier.Builder createMobAttributes() {
         return FlyingMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 1.0F)
                 .add(Attributes.MOVEMENT_SPEED, 10.0F);
     }
 
-    public void setPositionFromOwner() {
-        if (this.distanceTo(this.getOwner()) > 2.0F) {
-            this.targetX = this.getOwner().getX();
-            this.targetY = this.getOwner().getY() + 1.0D;
-            this.targetZ = this.getOwner().getZ();
-        } else {
-            double yaw = this.getOwner().getYRot();
-            if (this.getSide() == HumanoidArm.RIGHT) {
-                yaw -= 90.0D;
-            } else {
-                yaw += 90.0D;
-            }
-            yaw /= -(180.0D / Math.PI);
-            this.targetX = this.getOwner().getX() + Math.sin(yaw) * 1.05D;
-            this.targetY = this.getOwner().getY() + 1.0D;
-            this.targetZ = this.getOwner().getZ() + Math.cos(yaw) * 1.05D;
-        }
-    }
-
-    public boolean atShoulder() {
-        double x = this.getX() - this.targetX;
-        double y = this.getY() - this.targetY;
-        double z = this.getZ() - this.targetZ;
-        return Math.sqrt(x * x + y * y + z * z) < 0.4D;
-    }
-
-    public void approachOwner() {
-        double x = this.targetX - this.getX();
-        double y = this.targetY - this.getY();
-        double z = this.targetZ - this.getZ();
-        double sqrt = Math.sqrt(x * x + y * y + z * z) * 3.25D;
-        Vec3 motion = this.getDeltaMovement();
-        double motionX = (motion.x() + x / sqrt) / 2.0D;
-        double motionY = (motion.y() + y / sqrt) / 2.0D;
-        double motionZ = (motion.z() + z / sqrt) / 2.0D;
-        this.setDeltaMovement(motionX, motionY, motionZ);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_OWNER_ID, 0);
+        this.entityData.define(DATA_IS_RIGHT_ID, true);
+        this.entityData.define(DATA_LIFESPAN_ID, 0);
     }
 
     @Override
@@ -140,6 +105,44 @@ public class CloudMinionEntity extends FlyingMob
         }
     }
 
+    public void setPositionFromOwner() {
+        if (this.distanceTo(this.getOwner()) > 2.0F) {
+            this.targetX = this.getOwner().getX();
+            this.targetY = this.getOwner().getY() + 1.0D;
+            this.targetZ = this.getOwner().getZ();
+        } else {
+            double yaw = this.getOwner().getYRot();
+            if (this.getSide() == HumanoidArm.RIGHT) {
+                yaw -= 90.0D;
+            } else {
+                yaw += 90.0D;
+            }
+            yaw /= -(180.0D / Math.PI);
+            this.targetX = this.getOwner().getX() + Math.sin(yaw) * 1.05D;
+            this.targetY = this.getOwner().getY() + 1.0D;
+            this.targetZ = this.getOwner().getZ() + Math.cos(yaw) * 1.05D;
+        }
+    }
+
+    public boolean atShoulder() {
+        double x = this.getX() - this.targetX;
+        double y = this.getY() - this.targetY;
+        double z = this.getZ() - this.targetZ;
+        return Math.sqrt(x * x + y * y + z * z) < 0.4D;
+    }
+
+    public void approachOwner() {
+        double x = this.targetX - this.getX();
+        double y = this.targetY - this.getY();
+        double z = this.targetZ - this.getZ();
+        double sqrt = Math.sqrt(x * x + y * y + z * z) * 3.25D;
+        Vec3 motion = this.getDeltaMovement();
+        double motionX = (motion.x() + x / sqrt) / 2.0D;
+        double motionY = (motion.y() + y / sqrt) / 2.0D;
+        double motionZ = (motion.z() + z / sqrt) / 2.0D;
+        this.setDeltaMovement(motionX, motionY, motionZ);
+    }
+
     private void spawnExplosionParticles() {
         if (this.level.isClientSide) {
             EntityUtil.spawnSummoningExplosionParticles(this);
@@ -152,42 +155,43 @@ public class CloudMinionEntity extends FlyingMob
     protected void pushEntities() { }
 
     @Override
-    public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
+    public boolean hurt(@Nonnull DamageSource source, float damage) {
         return false;
-    }
-
-    public void setOwner(Player entity) {
-        this.entityData.set(DATA_OWNER_ID, entity.getId());
     }
 
     public Player getOwner() {
         return (Player) this.level.getEntity(this.entityData.get(DATA_OWNER_ID));
     }
 
-    public void setSide(HumanoidArm side) {
-        this.entityData.set(DATA_IS_RIGHT_ID, side == HumanoidArm.RIGHT);
+    public void setOwner(Player entity) {
+        this.entityData.set(DATA_OWNER_ID, entity.getId());
     }
 
     public HumanoidArm getSide() {
         return this.entityData.get(DATA_IS_RIGHT_ID) ? HumanoidArm.RIGHT : HumanoidArm.LEFT;
     }
 
-    public void setLifeSpan(int lifespan) {
-        this.entityData.set(DATA_LIFESPAN_ID, lifespan);
+    public void setSide(HumanoidArm armSide) {
+        this.entityData.set(DATA_IS_RIGHT_ID, armSide == HumanoidArm.RIGHT);
     }
 
     public int getLifeSpan() {
         return this.entityData.get(DATA_LIFESPAN_ID);
     }
 
-    public void setShouldShoot(boolean shouldShoot) {
-        this.shouldShoot = shouldShoot;
+    public void setLifeSpan(int lifespan) {
+        this.entityData.set(DATA_LIFESPAN_ID, lifespan);
     }
 
     public boolean shouldShoot() {
         return this.shouldShoot;
     }
 
+    public void setShouldShoot(boolean shouldShoot) {
+        this.shouldShoot = shouldShoot;
+    }
+
+    @Nonnull
     @Override
     public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.combat.loot;
 
-import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
+import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
@@ -32,8 +32,8 @@ public class CloudStaffItem extends Item
                     if (!playerIn.getAbilities().instabuild) {
                         heldItem.hurtAndBreak(1, playerIn, (p) -> p.broadcastBreakEvent(hand));
                     }
-                    CloudMinionEntity cloudMinionRight = new CloudMinionEntity(worldIn, playerIn, HumanoidArm.RIGHT);
-                    CloudMinionEntity cloudMinionLeft = new CloudMinionEntity(worldIn, playerIn, HumanoidArm.LEFT);
+                    CloudMinion cloudMinionRight = new CloudMinion(worldIn, playerIn, HumanoidArm.RIGHT);
+                    CloudMinion cloudMinionLeft = new CloudMinion(worldIn, playerIn, HumanoidArm.LEFT);
                     worldIn.addFreshEntity(cloudMinionRight);
                     worldIn.addFreshEntity(cloudMinionLeft);
                     aetherPlayer.setCloudMinions(cloudMinionRight, cloudMinionLeft);
@@ -41,8 +41,8 @@ public class CloudStaffItem extends Item
                 this.spawnExplosionParticles(playerIn);
             } else if (playerIn.isShiftKeyDown()) {
                 playerIn.swing(hand);
-                for (CloudMinionEntity cloudMinionEntity : aetherPlayer.getCloudMinions()) {
-                    cloudMinionEntity.setLifeSpan(0);
+                for (CloudMinion cloudMinion : aetherPlayer.getCloudMinions()) {
+                    cloudMinion.setLifeSpan(0);
                 }
             }
         });
@@ -55,11 +55,11 @@ public class CloudStaffItem extends Item
             IAetherPlayer.get((Player) entity).ifPresent(aetherPlayer -> {
                 if (!aetherPlayer.getCloudMinions().isEmpty()) {
                     if (!aetherPlayer.getPlayer().getCooldowns().isOnCooldown(this) && aetherPlayer.isHitting()) {
-                        CloudMinionEntity cloudMinionRight = aetherPlayer.getCloudMinions().get(0);
+                        CloudMinion cloudMinionRight = aetherPlayer.getCloudMinions().get(0);
                         if (cloudMinionRight != null) {
                             cloudMinionRight.setShouldShoot(true);
                         }
-                        CloudMinionEntity cloudMinionLeft = aetherPlayer.getCloudMinions().get(1);
+                        CloudMinion cloudMinionLeft = aetherPlayer.getCloudMinions().get(1);
                         if (cloudMinionLeft != null) {
                             cloudMinionLeft.setShouldShoot(true);
                         }

@@ -8,7 +8,7 @@ import com.gildedgames.aether.common.entity.monster.dungeon.SentryEntity;
 import com.gildedgames.aether.common.entity.passive.*;
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.common.entity.block.TntPresent;
-import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
+import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.common.entity.monster.dungeon.FireMinionEntity;
 import com.gildedgames.aether.common.entity.passive.Aerbunny;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedle;
@@ -94,8 +94,8 @@ public class AetherEntityTypes {
 
     // Miscellaneous
 
-    public static final RegistryObject<EntityType<CloudMinionEntity>> CLOUD_MINION = ENTITIES.register("cloud_minion",
-            () -> EntityType.Builder.<CloudMinionEntity>of(CloudMinionEntity::new, MobCategory.MISC).sized(0.75F, 0.75F).build("cloud_minion"));
+    public static final RegistryObject<EntityType<CloudMinion>> CLOUD_MINION = ENTITIES.register("cloud_minion",
+            () -> EntityType.Builder.<CloudMinion>of(CloudMinion::new, MobCategory.MISC).sized(0.75F, 0.75F).build("cloud_minion"));
 
     public static final RegistryObject<EntityType<Parachute>> COLD_PARACHUTE = ENTITIES.register("cold_parachute",
             () -> EntityType.Builder.of(Parachute::new, MobCategory.MISC).sized(1.0F, 1.0F).build("cold_parachute"));
@@ -173,6 +173,6 @@ public class AetherEntityTypes {
         //event.put(AetherEntityTypes.VALKYRIE.get(), ValkyrieEntity.createMobAttributes().build());
         event.put(AetherEntityTypes.FIRE_MINION.get(), FireMinionEntity.createMobAttributes().build());
 
-        event.put(AetherEntityTypes.CLOUD_MINION.get(), CloudMinionEntity.registerAttributes().build());
+        event.put(AetherEntityTypes.CLOUD_MINION.get(), CloudMinion.createMobAttributes().build());
     }
 }

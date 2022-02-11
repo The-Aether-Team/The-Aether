@@ -1,6 +1,6 @@
 package com.gildedgames.aether.core.capability.interfaces;
 
-import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
+import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.common.entity.passive.Aerbunny;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -73,8 +73,8 @@ public interface IAetherPlayer extends INBTSerializable<CompoundTag>
 	void setMountedAerbunnyTag(CompoundTag mountedAerbunny);
 	CompoundTag getMountedAerbunnyTag();
 
-	void setCloudMinions(CloudMinionEntity cloudMinionRight, CloudMinionEntity cloudMinionLeft);
-	List<CloudMinionEntity> getCloudMinions();
+	void setCloudMinions(CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft);
+	List<CloudMinion> getCloudMinions();
 
 	void setSavedHealth(float health);
 	float getSavedHealth();

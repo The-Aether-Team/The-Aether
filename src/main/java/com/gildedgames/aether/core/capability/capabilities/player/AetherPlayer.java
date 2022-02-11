@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.capability.capabilities.player;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
+import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.common.entity.miscellaneous.Parachute;
 import com.gildedgames.aether.common.entity.passive.Aerbunny;
 import com.gildedgames.aether.common.item.miscellaneous.ParachuteItem;
@@ -69,7 +69,7 @@ public class AetherPlayer implements IAetherPlayer
 	private Aerbunny mountedAerbunny;
 	private CompoundTag mountedAerbunnyTag;
 
-	private final List<CloudMinionEntity> cloudMinions = new ArrayList<>(2);
+	private final List<CloudMinion> cloudMinions = new ArrayList<>(2);
 
 	private float savedHealth = 0.0F;
 	private static final EntityDataAccessor<Integer> DATA_LIFE_SHARD_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
@@ -560,14 +560,14 @@ public class AetherPlayer implements IAetherPlayer
 	}
 
 	@Override
-	public void setCloudMinions(CloudMinionEntity cloudMinionRight, CloudMinionEntity cloudMinionLeft) {
+	public void setCloudMinions(CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft) {
 		this.sendCloudMinionPacket(cloudMinionRight, cloudMinionLeft);
 		this.cloudMinions.add(0, cloudMinionRight);
 		this.cloudMinions.add(1, cloudMinionLeft);
 	}
 
 	@Override
-	public List<CloudMinionEntity> getCloudMinions() {
+	public List<CloudMinion> getCloudMinions() {
 		return this.cloudMinions;
 	}
 
@@ -607,7 +607,7 @@ public class AetherPlayer implements IAetherPlayer
 		return new AttributeModifier(LIFE_SHARD_HEALTH_ID, "Life Shard health increase", this.getLifeShardCount() * 2.0F, AttributeModifier.Operation.ADDITION);
 	}
 
-	private void sendCloudMinionPacket(CloudMinionEntity cloudMinionRight, CloudMinionEntity cloudMinionLeft) {
+	private void sendCloudMinionPacket(CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft) {
 		if (this.getPlayer() instanceof ServerPlayer serverPlayer && !this.getPlayer().level.isClientSide) {
 			AetherPacketHandler.sendToPlayer(new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
 		}
