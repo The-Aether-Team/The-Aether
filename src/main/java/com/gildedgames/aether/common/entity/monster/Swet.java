@@ -1,12 +1,15 @@
 package com.gildedgames.aether.common.entity.monster;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.goal.target.NearestTaggedTargetGoal;
 import com.gildedgames.aether.common.entity.passive.MountableAnimal;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.SentryExplosionParticlePacket;
 import com.gildedgames.aether.core.network.packet.client.SwetAttackPacket;
+import com.gildedgames.aether.core.network.packet.client.SwetDeathParticlePacket;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -93,7 +96,6 @@ public class Swet extends MountableAnimal
     @Override
     public void aiStep() {
         super.aiStep();
-
         if (this.getTarget() != null) {
             if (this.hasPrey() || this.isFriendlyTowardEntity(this.getTarget()) || this.getTarget().getRootVehicle() instanceof Swet) {
                 this.setTarget(null);
@@ -185,25 +187,24 @@ public class Swet extends MountableAnimal
                 this.capturePrey(player);
             }
         }
-
         return InteractionResult.PASS;
     }
 
-    public void capturePrey(LivingEntity entity) {
+    public void capturePrey(LivingEntity livingEntity) {
         this.playSound(AetherSoundEvents.ENTITY_SWET_ATTACK.get(), 0.5F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 
         this.xo = this.getX();
         this.yo = this.getY();
         this.zo = this.getZ();
         this.xRotO = this.getXRot();
-        this.setXRot(entity.getXRot());
+        this.setXRot(livingEntity.getXRot());
         this.yRotO = this.getYRot();
-        this.setYRot(entity.getYRot());
-        this.setDeltaMovement(entity.getDeltaMovement());
+        this.setYRot(livingEntity.getYRot());
+        this.setDeltaMovement(livingEntity.getDeltaMovement());
 
-        this.setPos(entity.getX(), entity.getY() + 0.01, entity.getZ());
+        this.setPos(livingEntity.getX(), livingEntity.getY() + 0.01, livingEntity.getZ());
 
-        entity.startRiding(this);
+        livingEntity.startRiding(this);
 
         this.setXRot(this.random.nextFloat() * 360F);
     }
@@ -230,13 +231,8 @@ public class Swet extends MountableAnimal
     }
 
     public void dissolveSwet() {
-        for (int i = 0; i < 5; i++) {
-            float f = this.random.nextFloat() * 3.141593F * 2.0F;
-            float f1 = this.random.nextFloat() * 0.5F + 0.25F;
-            float f2 = Mth.sin(f) * f1;
-            float f3 = Mth.cos(f) * f1;
-
-            this.level.addParticle(ParticleTypes.SPLASH, this.getX() + (double) f2, this.getBoundingBox().minY + 1.25D, this.getZ() + (double) f3, (double) f2 * 1.5D + this.getDeltaMovement().x, 4D, (double) f3 * 1.5D + this.getDeltaMovement().z);
+        if (this.level instanceof ServerLevel level) {
+            AetherPacketHandler.sendToNear(new SwetDeathParticlePacket(this.getId()), this.getX(), this.getY(), this.getZ(), 10.0D, level.dimension());
         }
     }
 
@@ -259,7 +255,7 @@ public class Swet extends MountableAnimal
     }
 
     public boolean isFriendly() {
-        return this.hasPrey() && this.getPassengers().get(0) instanceof LivingEntity && isFriendlyTowardEntity((LivingEntity) this.getPassengers().get(0));
+        return this.hasPrey() && this.getPassengers().get(0) instanceof LivingEntity livingEntity && isFriendlyTowardEntity(livingEntity);
     }
 
     public int getJumpDelay() {
@@ -291,7 +287,6 @@ public class Swet extends MountableAnimal
                 this.setHealth(this.getMaxHealth());
             }
         }
-
         this.entityData.set(DATA_WATER_DAMAGE_SCALE_ID, i);
     }
 
@@ -346,6 +341,17 @@ public class Swet extends MountableAnimal
         return 1.2D;
     }
 
+    @Nonnull
+    @Override
+    public Vec3 getDismountLocationForPassenger(@Nonnull LivingEntity livingEntity) {
+        if (this.isFriendlyTowardEntity(livingEntity)) {
+            Aether.LOGGER.info(true);
+            return super.getDismountLocationForPassenger(livingEntity);
+        } else {
+            return this.position();
+        }
+    }
+
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(@Nonnull ServerLevel level, @Nonnull AgeableMob entity) {
@@ -377,14 +383,15 @@ public class Swet extends MountableAnimal
         return super.getDimensions(pose).scale(getScale());
     }
 
-    public static class ConsumeGoal extends Goal {
+    public static class ConsumeGoal extends Goal
+    {
         private final Swet swet;
         private int jumps = 0;
 
         private float chosenDegrees = 0;
 
-        public ConsumeGoal(Swet entity) {
-            this.swet = entity;
+        public ConsumeGoal(Swet swet) {
+            this.swet = swet;
             this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
@@ -405,7 +412,7 @@ public class Swet extends MountableAnimal
 
                     this.swet.playSound(AetherSoundEvents.ENTITY_SWET_JUMP.get(), 1.0F, ((this.swet.getRandom().nextFloat() - this.swet.getRandom().nextFloat()) * 0.2F + 1.0F) * 0.8F);
 
-                    chosenDegrees = (float) this.swet.getRandom().nextInt(360);
+                    this.chosenDegrees = (float) this.swet.getRandom().nextInt(360);
 
                     if (this.jumps == 0) {
                         this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.64999999403953552D, 0));
@@ -426,11 +433,11 @@ public class Swet extends MountableAnimal
                 if (!this.swet.wasOnGround) {
                     if (this.swet.getJumpTimer() < 6) {
                         if (this.jumps == 1) {
-                            this.moveHorizontal(0.0F, 0.1F, chosenDegrees);
+                            this.moveHorizontal(0.0F, 0.1F, this.chosenDegrees);
                         } else if (this.jumps == 2) {
-                            this.moveHorizontal(0.0F, 0.15F, chosenDegrees);
+                            this.moveHorizontal(0.0F, 0.15F, this.chosenDegrees);
                         } else if (this.jumps == 3) {
-                            this.moveHorizontal(0.0F, 0.3F, chosenDegrees);
+                            this.moveHorizontal(0.0F, 0.3F, this.chosenDegrees);
                         }
                     }
                 }
@@ -451,18 +458,19 @@ public class Swet extends MountableAnimal
         }
     }
 
-    public static class HuntGoal extends Goal {
+    public static class HuntGoal extends Goal
+    {
         private final Swet swet;
 
-        public HuntGoal(Swet entity) {
-            this.swet = entity;
+        public HuntGoal(Swet swet) {
+            this.swet = swet;
             this.setFlags(EnumSet.of(Goal.Flag.LOOK));
         }
 
         @Override
         public boolean canUse() {
             LivingEntity target = this.swet.getTarget();
-            if (swet.hasPrey() || target == null || !target.isAlive() || this.swet.isFriendlyTowardEntity(target) || (target instanceof Player player && player.getAbilities().invulnerable)) {
+            if (this.swet.hasPrey() || target == null || !target.isAlive() || this.swet.isFriendlyTowardEntity(target) || (target instanceof Player player && player.getAbilities().invulnerable)) {
                 return false;
             } else {
                 return this.swet.getMoveControl() instanceof Swet.MoveHelperController;
@@ -487,8 +495,8 @@ public class Swet extends MountableAnimal
             if (target != null) {
                 this.swet.lookAt(target, 10.0F, 10.0F);
                 ((Swet.MoveHelperController) this.swet.getMoveControl()).setDirection(this.swet.getYRot(), true);
-                if (swet.getBoundingBox().intersects(target.getBoundingBox())) {
-                    swet.capturePrey(target);
+                if (this.swet.getBoundingBox().intersects(target.getBoundingBox())) {
+                    this.swet.capturePrey(target);
                 }
             }
         }
@@ -498,13 +506,14 @@ public class Swet extends MountableAnimal
      * Classes down here are based off of the AI classes used in SlimeEntity.
      * @see net.minecraft.world.entity.monster.Slime
      */
-    public static class RandomFacingGoal extends Goal {
+    public static class RandomFacingGoal extends Goal
+    {
         private final Swet swet;
         private float chosenDegrees;
         private int nextRandomizeTime;
 
-        public RandomFacingGoal(Swet swetEntity) {
-            this.swet = swetEntity;
+        public RandomFacingGoal(Swet swet) {
+            this.swet = swet;
             this.setFlags(EnumSet.of(Goal.Flag.LOOK));
         }
 
@@ -539,7 +548,8 @@ public class Swet extends MountableAnimal
         }
     }
 
-    public static class MoveHelperController extends MoveControl {
+    public static class MoveHelperController extends MoveControl
+    {
         private float yRot;
         private int jumpDelay;
         private final Swet swet;

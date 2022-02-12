@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
-import com.gildedgames.aether.common.entity.monster.CockatriceEntity;
+import com.gildedgames.aether.common.entity.monster.Cockatrice;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -9,14 +9,14 @@ import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
-public class CockatriceModel extends BipedBirdModel<CockatriceEntity>
+public class CockatriceModel extends BipedBirdModel<Cockatrice>
 {
     public CockatriceModel(ModelPart root) {
         super(root);
     }
 
     @Override
-    public void setupAnim(@Nonnull CockatriceEntity cockatrice, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@Nonnull Cockatrice cockatrice, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         super.setupAnim(cockatrice, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
         if (!cockatrice.isEntityOnGround()) {
@@ -44,7 +44,7 @@ public class CockatriceModel extends BipedBirdModel<CockatriceEntity>
         this.jaw.xRot = 0.35F;
     }
 
-    public void setupWingsAnimation(CockatriceEntity cockatrice) {
+    public void setupWingsAnimation(Cockatrice cockatrice) {
         cockatrice.prevWingRotation = cockatrice.wingRotation;
         cockatrice.prevDestPos = cockatrice.destPos;
         if (!cockatrice.isEntityOnGround()) {

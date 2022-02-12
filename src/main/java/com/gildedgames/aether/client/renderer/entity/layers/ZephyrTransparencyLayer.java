@@ -22,8 +22,8 @@ public class ZephyrTransparencyLayer extends RenderLayer<Zephyr, EntityModel<Zep
 
     private final ZephyrModel model;
 
-    public ZephyrTransparencyLayer(RenderLayerParent<Zephyr, EntityModel<Zephyr>> entityRendererIn, ZephyrModel model) {
-        super(entityRendererIn);
+    public ZephyrTransparencyLayer(RenderLayerParent<Zephyr, EntityModel<Zephyr>> entityRenderer, ZephyrModel model) {
+        super(entityRenderer);
         this.model = model;
     }
 

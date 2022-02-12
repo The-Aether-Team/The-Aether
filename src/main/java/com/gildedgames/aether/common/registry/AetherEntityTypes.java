@@ -71,8 +71,8 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<AechorPlantEntity>> AECHOR_PLANT = ENTITIES.register("aechor_plant",
             () -> EntityType.Builder.<AechorPlantEntity>of(AechorPlantEntity::new, MobCategory.MONSTER).sized(1.0F, 1.0F).build("aechor_plant"));
 
-    public static final RegistryObject<EntityType<CockatriceEntity>> COCKATRICE = ENTITIES.register("cockatrice",
-            () -> EntityType.Builder.of(CockatriceEntity::new, MobCategory.MONSTER).sized(1.0F, 2.0F).build("cockatrice"));
+    public static final RegistryObject<EntityType<Cockatrice>> COCKATRICE = ENTITIES.register("cockatrice",
+            () -> EntityType.Builder.of(Cockatrice::new, MobCategory.MONSTER).sized(1.0F, 2.0F).build("cockatrice"));
 
     public static final RegistryObject<EntityType<Zephyr>> ZEPHYR = ENTITIES.register("zephyr",
             () -> EntityType.Builder.of(Zephyr::new, MobCategory.MONSTER).sized(4.0F, 4.0F).build("zephyr"));
@@ -147,7 +147,7 @@ public class AetherEntityTypes {
         SpawnPlacements.register(AetherEntityTypes.WHIRLWIND.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AbstractWhirlwind::canWhirlwindSpawn);
         SpawnPlacements.register(AetherEntityTypes.EVIL_WHIRLWIND.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AbstractWhirlwind::canWhirlwindSpawn);
         SpawnPlacements.register(AetherEntityTypes.AECHOR_PLANT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AechorPlantEntity::canAechorSpawn);
-        SpawnPlacements.register(AetherEntityTypes.COCKATRICE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CockatriceEntity::checkMobSpawnRules);
+        SpawnPlacements.register(AetherEntityTypes.COCKATRICE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Cockatrice::checkMobSpawnRules);
         SpawnPlacements.register(AetherEntityTypes.ZEPHYR.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Zephyr::canZephyrSpawn);
     }
 
@@ -165,7 +165,7 @@ public class AetherEntityTypes {
         event.put(AetherEntityTypes.WHIRLWIND.get(), AbstractWhirlwind.createMobAttributes().build());
         event.put(AetherEntityTypes.EVIL_WHIRLWIND.get(), AbstractWhirlwind.createMobAttributes().build());
         event.put(AetherEntityTypes.AECHOR_PLANT.get(), AechorPlantEntity.createMobAttributes().build());
-        event.put(AetherEntityTypes.COCKATRICE.get(), CockatriceEntity.createMobAttributes().build());
+        event.put(AetherEntityTypes.COCKATRICE.get(), Cockatrice.createMobAttributes().build());
         event.put(AetherEntityTypes.ZEPHYR.get(), Zephyr.createMobAttributes().build());
 
         event.put(AetherEntityTypes.SENTRY.get(), Sentry.createMobAttributes().build());

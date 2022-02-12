@@ -2,7 +2,7 @@ package com.gildedgames.aether.client.renderer.entity.layers;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.model.BipedBirdModel;
-import com.gildedgames.aether.common.entity.monster.CockatriceEntity;
+import com.gildedgames.aether.common.entity.monster.Cockatrice;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class CockatriceMarkingsLayer<T extends CockatriceEntity, M extends BipedBirdModel<T>> extends EyesLayer<T, M>
+public class CockatriceMarkingsLayer<T extends Cockatrice, M extends BipedBirdModel<T>> extends EyesLayer<T, M>
 {
     private static final RenderType COCKATRICE_MARKINGS = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/mobs/cockatrice/cockatrice_emissive.png"));
 

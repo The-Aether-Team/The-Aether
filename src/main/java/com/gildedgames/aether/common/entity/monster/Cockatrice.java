@@ -30,7 +30,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 
 import javax.annotation.Nonnull;
 
-public class CockatriceEntity extends Monster implements RangedAttackMob
+public class Cockatrice extends Monster implements RangedAttackMob
 {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 
@@ -41,7 +41,7 @@ public class CockatriceEntity extends Monster implements RangedAttackMob
 
     private int flapCooldown;
 
-    public CockatriceEntity(EntityType<? extends CockatriceEntity> type, Level worldIn) {
+    public Cockatrice(EntityType<? extends Cockatrice> type, Level worldIn) {
         super(type, worldIn);
     }
 

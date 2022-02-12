@@ -39,6 +39,7 @@ public class AetherPacketHandler
 		register(SentryExplosionParticlePacket.class, SentryExplosionParticlePacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
 		register(SwetAttackPacket.class, SwetAttackPacket::decode);
+		register(SwetDeathParticlePacket.class, SwetDeathParticlePacket::decode);
 		register(ZephyrSnowballHitPacket.class, ZephyrSnowballHitPacket::decode);
 
 		// SERVER

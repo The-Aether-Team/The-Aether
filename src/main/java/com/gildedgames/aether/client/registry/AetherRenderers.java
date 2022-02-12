@@ -153,6 +153,7 @@ public class AetherRenderers
 //        event.registerLayerDefinition(AetherModelLayers.SLIDER, SliderModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.SUN_SPIRIT, SunSpiritModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SWET, SlimeModel::createInnerBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.SWET_OUTER, SlimeModel::createOuterBodyLayer);
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE, );
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_QUEEN, );
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR, ZephyrModel::createBodyLayer);
