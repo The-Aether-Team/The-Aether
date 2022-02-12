@@ -61,7 +61,7 @@ public class TntPresent extends Entity
         if (i <= 0) {
             this.discard();
             if (!this.level.isClientSide) {
-                this.explode();
+                this.level.explode(this, null, null, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F, false, Explosion.BlockInteraction.NONE);
             }
         } else {
             this.updateInWaterStateAndDoFluidPushing();
@@ -69,16 +69,6 @@ public class TntPresent extends Entity
                 this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.5, this.getZ(), 0.0, 0.0, 0.0);
             }
         }
-    }
-
-    protected Explosion explode() {
-        Explosion explosion = new Explosion(this.level, this, null, null, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F, false, Explosion.BlockInteraction.NONE);
-        if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(this.level, explosion)) {
-            return explosion;
-        }
-        explosion.explode();
-        explosion.finalizeExplosion(true);
-        return explosion;
     }
 
     public int getFuse() {

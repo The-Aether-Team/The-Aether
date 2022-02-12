@@ -314,25 +314,21 @@ public class Moa extends MountableAnimal
 		return this.random.nextInt(6000) + 6000;
 	}
 
-	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return AetherSoundEvents.ENTITY_MOA_AMBIENT.get();
 	}
 
-	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
 		return AetherSoundEvents.ENTITY_MOA_HURT.get();
 	}
 
-	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
 		return AetherSoundEvents.ENTITY_MOA_DEATH.get();
 	}
 
-	@Nullable
 	@Override
 	protected SoundEvent getSaddledSound() {
 		return AetherSoundEvents.ENTITY_MOA_SADDLE.get();

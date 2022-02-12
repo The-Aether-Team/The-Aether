@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.miscellaneous.Parachute;
 import com.gildedgames.aether.common.entity.monster.*;
 import com.gildedgames.aether.common.entity.monster.dungeon.Mimic;
-import com.gildedgames.aether.common.entity.monster.dungeon.SentryEntity;
+import com.gildedgames.aether.common.entity.monster.dungeon.Sentry;
 import com.gildedgames.aether.common.entity.passive.*;
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.common.entity.block.TntPresent;
@@ -79,8 +79,8 @@ public class AetherEntityTypes {
 
     // Dungeon
 
-    public static final RegistryObject<EntityType<SentryEntity>> SENTRY = ENTITIES.register("sentry",
-            () -> EntityType.Builder.<SentryEntity>of(SentryEntity::new, MobCategory.MONSTER).sized(2.0F, 2.0F).build("sentry"));
+    public static final RegistryObject<EntityType<Sentry>> SENTRY = ENTITIES.register("sentry",
+            () -> EntityType.Builder.<Sentry>of(Sentry::new, MobCategory.MONSTER).sized(2.0F, 2.0F).build("sentry"));
 
     public static final RegistryObject<EntityType<Mimic>> MIMIC = ENTITIES.register("mimic",
             () -> EntityType.Builder.<Mimic>of(Mimic::new, MobCategory.MONSTER).sized(1.0F, 2.0F).build("mimic"));
@@ -168,7 +168,7 @@ public class AetherEntityTypes {
         event.put(AetherEntityTypes.COCKATRICE.get(), CockatriceEntity.createMobAttributes().build());
         event.put(AetherEntityTypes.ZEPHYR.get(), Zephyr.createMobAttributes().build());
 
-        event.put(AetherEntityTypes.SENTRY.get(), SentryEntity.createMobAttributes().build());
+        event.put(AetherEntityTypes.SENTRY.get(), Sentry.createMobAttributes().build());
         event.put(AetherEntityTypes.MIMIC.get(), Mimic.createMobAttributes().build());
         //event.put(AetherEntityTypes.VALKYRIE.get(), ValkyrieEntity.createMobAttributes().build());
         event.put(AetherEntityTypes.FIRE_MINION.get(), FireMinionEntity.createMobAttributes().build());

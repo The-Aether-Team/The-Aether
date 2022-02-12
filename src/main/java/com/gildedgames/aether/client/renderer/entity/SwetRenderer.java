@@ -13,7 +13,7 @@ public abstract class SwetRenderer extends MobRenderer<Swet, SlimeModel<Swet>> {
 
     public SwetRenderer(EntityRendererProvider.Context renderer) {
         super(renderer, new SlimeModel<>(renderer.bakeLayer(AetherModelLayers.SWET)), 0.3F);
-        this.addLayer(new SlimeOuterLayer<>(this, renderer.getModelSet()));
+        this.addLayer(new SlimeOuterLayer<>(this, renderer.getModelSet())); //TODO: Look into making a custom layer for swet_outer.
     }
 
     @Override
