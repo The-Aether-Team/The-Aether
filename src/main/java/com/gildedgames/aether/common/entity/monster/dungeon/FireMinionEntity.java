@@ -12,18 +12,15 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
+
+import javax.annotation.Nonnull;
 
 public class FireMinionEntity extends Monster
 {
-    public FireMinionEntity(EntityType<? extends Monster> type, Level worldIn) {
-        super(type, worldIn);
+    public FireMinionEntity(EntityType<? extends Monster> type, Level level) {
+        super(type, level);
     }
-    
-//  public FireMinionEntity(World worldIn) {
-//      super(AetherEntityTypes.FIRE_MINION.get(), worldIn);
-//  }
 
     @Override
     protected void registerGoals() {
@@ -33,6 +30,7 @@ public class FireMinionEntity extends Monster
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
+    @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.FOLLOW_RANGE, 12.0)
@@ -44,24 +42,21 @@ public class FireMinionEntity extends Monster
     @Override
     public void tick() {
         super.tick();
-
         ParticleOptions particle = ParticleTypes.FLAME;
         if (this.hasCustomName()) {
-            String name = ChatFormatting.stripFormatting(this.getName().getString());
-            if ("JorgeQ".equals(name) || "Jorge_SunSpirit".equals(name)) {
+            String name = this.getName().getContents();
+            if (name.equals("JorgeQ") || name.equals("Jorge_SunSpirit")) {
                 particle = ParticleTypes.ITEM_SNOWBALL;
             }
         }
-
         for (int i = 0; i < 1; i++) {
-            double d = random.nextFloat() - 0.5F;
-            double d1 = random.nextFloat();
-            double d2 = random.nextFloat() - 0.5F;
-            double d3 = this.getX() + d*d1;
-            double d4 = this.getBoundingBox().minY + d1 + 0.5;
-            double d5 = this.getZ() + d2*d1;
-
-            this.level.addParticle(particle, d3, d4, d5, 0.0, -0.075000002980232239, 0.0);
+            double d = this.random.nextFloat() - 0.5F;
+            double d1 = this.random.nextFloat();
+            double d2 = this.random.nextFloat() - 0.5F;
+            double x = this.getX() + d * d1;
+            double y = this.getBoundingBox().minY + d1 + 0.5;
+            double z = this.getZ() + d2 * d1;
+            this.level.addParticle(particle, x, y, z, 0.0, -0.075, 0.0);
         }
     }
 }

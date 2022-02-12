@@ -89,7 +89,7 @@ public class AetherEntityTypes {
     //public static final RegistryObject<EntityType<ValkyrieEntity>> VALKYRIE = ENTITIES.register("valkyrie", () -> VALKYRIE_TYPE);
 
     public static final RegistryObject<EntityType<FireMinionEntity>> FIRE_MINION = ENTITIES.register("fire_minion",
-            () -> EntityType.Builder.<FireMinionEntity>of(FireMinionEntity::new, MobCategory.MONSTER).sized(0.8F, 1.95F).build("fire_minion"));
+            () -> EntityType.Builder.<FireMinionEntity>of(FireMinionEntity::new, MobCategory.MONSTER).sized(0.8F, 1.95F).fireImmune().build("fire_minion"));
 
 
     // Miscellaneous

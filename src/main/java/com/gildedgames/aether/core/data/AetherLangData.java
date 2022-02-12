@@ -325,6 +325,7 @@ public class AetherLangData extends AetherLanguageProvider
         addItem(AetherItems.AERBUNNY_SPAWN_EGG, "Aerbunny Spawn Egg");
         addItem(AetherItems.AERWHALE_SPAWN_EGG, "Aerwhale Spawn Egg");
         addItem(AetherItems.COCKATRICE_SPAWN_EGG, "Cockatrice Spawn Egg");
+        addItem(AetherItems.FIRE_MINION_SPAWN_EGG, "Fire Minion Spawn Egg");
         addItem(AetherItems.FLYING_COW_SPAWN_EGG, "Flying Cow Spawn Egg");
         addItem(AetherItems.MIMIC_SPAWN_EGG, "Mimic Spawn Egg");
         addItem(AetherItems.MOA_SPAWN_EGG, "Moa Spawn Egg");

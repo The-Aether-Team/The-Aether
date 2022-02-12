@@ -50,7 +50,7 @@ public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel>
                 float f;
                 float f1;
                 float f2;
-                if (sheepuff.hasCustomName() && "jeb_".equals(sheepuff.getName().getContents())) {
+                if (sheepuff.hasCustomName() && sheepuff.getName().getContents().equals("jeb_")) {
                     int i1 = 25;
                     int i = sheepuff.tickCount / i1 + sheepuff.getId();
                     int j = DyeColor.values().length;
