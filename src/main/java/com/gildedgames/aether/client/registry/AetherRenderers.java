@@ -133,12 +133,12 @@ public class AetherRenderers
         event.registerLayerDefinition(AetherModelLayers.AERBUNNY, AerbunnyModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.AERWHALE, AerwhaleModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.AERWHALE_CLASSIC, ClassicAerwhaleModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.CLOUD_CRYSTAL, CrystalModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.CLOUD_MINION, CloudMinionModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.COCKATRICE, () -> CockatriceModel.createBodyLayer(new CubeDeformation(0.0F)));
         event.registerLayerDefinition(AetherModelLayers.FLYING_COW, CowModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.FLYING_COW_WINGS, () -> QuadrupedWingsModel.createMainLayer(0.0F));
         event.registerLayerDefinition(AetherModelLayers.FLYING_COW_SADDLE, CowModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.ICE_CRYSTAL, CrystalModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.MIMIC, MimicModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.MOA, () -> MoaModel.createBodyLayer(new CubeDeformation(0.0F)));
         event.registerLayerDefinition(AetherModelLayers.MOA_SADDLE, () -> MoaModel.createBodyLayer(new CubeDeformation(0.25F)));

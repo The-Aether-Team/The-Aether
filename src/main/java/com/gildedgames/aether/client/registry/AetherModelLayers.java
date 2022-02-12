@@ -14,12 +14,12 @@ public class AetherModelLayers
     public static final ModelLayerLocation AERBUNNY = register("aerbunny");
     public static final ModelLayerLocation AERWHALE = register("aerwhale");
     public static final ModelLayerLocation AERWHALE_CLASSIC = register("aerwhale", "classic");
-    public static final ModelLayerLocation CLOUD_CRYSTAL = register("cloud_crystal");
     public static final ModelLayerLocation CLOUD_MINION = register("cloud_minion");
     public static final ModelLayerLocation COCKATRICE = register("cockatrice");
     public static final ModelLayerLocation FLYING_COW = register("flying_cow");
     public static final ModelLayerLocation FLYING_COW_WINGS = register("flying_cow", "wings");
     public static final ModelLayerLocation FLYING_COW_SADDLE = register("flying_cow", "saddle");
+    public static final ModelLayerLocation ICE_CRYSTAL = register("ice_crystal");
     public static final ModelLayerLocation MIMIC = register("mimic");
     public static final ModelLayerLocation MOA = register("moa");
     public static final ModelLayerLocation MOA_SADDLE = register("moa", "saddle");

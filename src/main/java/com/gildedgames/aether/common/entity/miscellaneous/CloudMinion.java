@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.entity.miscellaneous;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.entity.projectile.crystal.CloudCrystalEntity;
+import com.gildedgames.aether.common.entity.projectile.crystal.CloudCrystal;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.world.entity.EntityType;
@@ -81,7 +81,7 @@ public class CloudMinion extends FlyingMob
                         if (this.shouldShoot()) {
                             float offset = this.getSide() == HumanoidArm.RIGHT ? 2.0F : -2.0F;
                             float rotation = Mth.wrapDegrees(this.getYRot() + offset);
-                            CloudCrystalEntity crystal = new CloudCrystalEntity(this.level);
+                            CloudCrystal crystal = new CloudCrystal(this.level);
                             crystal.setPos(this.getX(), this.getY(), this.getZ());
                             crystal.shootFromRotation(this, this.getXRot(), rotation, 0.0F, 1.0F, 1.0F);
                             crystal.setOwner(this.getOwner());

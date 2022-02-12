@@ -1,48 +1,46 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-
-import net.minecraft.client.model.EntityModel;
+import com.google.common.collect.ImmutableList;
+import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
-public class CrystalModel<T extends Entity> extends EntityModel<T>
+import javax.annotation.Nonnull;
+
+public class CrystalModel<T extends Entity> extends ListModel<T>
 {
-    public final ModelPart[] crystal = new ModelPart[3];
+    public final ModelPart crystal_0;
+    public final ModelPart crystal_1;
+    public final ModelPart crystal_2;
 
     public CrystalModel(ModelPart root) {
-        for (int i = 0; i < 3; i++) {
-            crystal[i] = root.getChild("crystal_" + i);
-        }
+        this.crystal_0 = root.getChild("crystal_0");
+        this.crystal_1 = root.getChild("crystal_1");
+        this.crystal_2 = root.getChild("crystal_2");
     }
 
-    public static LayerDefinition createMainLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
-        partdefinition.addOrReplaceChild("crystal_0", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8), PartPose.ZERO);
-        partdefinition.addOrReplaceChild("crystal_1", CubeListBuilder.create().texOffs(32, 0).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8), PartPose.ZERO);
-        partdefinition.addOrReplaceChild("crystal_2", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8), PartPose.ZERO);
-        return LayerDefinition.create(meshdefinition, 64, 32);
+    public static LayerDefinition createBodyLayer() {
+        MeshDefinition meshDefinition = new MeshDefinition();
+        PartDefinition partDefinition = meshDefinition.getRoot();
+        partDefinition.addOrReplaceChild("crystal_0", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8), PartPose.ZERO);
+        partDefinition.addOrReplaceChild("crystal_1", CubeListBuilder.create().texOffs(32, 0).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8), PartPose.ZERO);
+        partDefinition.addOrReplaceChild("crystal_2", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8), PartPose.ZERO);
+        return LayerDefinition.create(meshDefinition, 64, 32);
+    }
+
+    @Nonnull
+    @Override
+    public Iterable<ModelPart> parts() {
+        return ImmutableList.of(this.crystal_0, this.crystal_1, this.crystal_2);
     }
 
     @Override
-    public void setupAnim(T p_225597_1_, float p_225597_2_, float p_225597_3_, float p_225597_4_, float p_225597_5_, float p_225597_6_) {
-        for (int i = 0; i < 3; i++) {
-            this.crystal[i].yRot = p_225597_5_ * ((float) Math.PI / 180F);
-            this.crystal[i].xRot = p_225597_6_ * ((float) Math.PI / 180F);
-        }
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack p_225598_1_, VertexConsumer p_225598_2_, int p_225598_3_, int p_225598_4_, float p_225598_5_, float p_225598_6_, float p_225598_7_, float p_225598_8_) {
-        for (int i = 0; i < 3; i++) {
-            this.crystal[i].render(p_225598_1_, p_225598_2_, p_225598_3_, p_225598_4_, p_225598_5_, p_225598_6_, p_225598_7_, p_225598_8_);
+    public void setupAnim(@Nonnull T crystal, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        for (ModelPart modelPart : this.parts()) {
+            modelPart.xRot = headPitch * ((float) Math.PI / 180.0F);
+            modelPart.yRot = netHeadYaw * ((float) Math.PI / 180.0F);
         }
     }
 }

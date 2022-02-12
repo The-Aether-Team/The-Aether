@@ -13,7 +13,7 @@ import com.gildedgames.aether.common.entity.monster.dungeon.FireMinionEntity;
 import com.gildedgames.aether.common.entity.passive.Aerbunny;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.common.entity.projectile.ZephyrSnowball;
-import com.gildedgames.aether.common.entity.projectile.crystal.CloudCrystalEntity;
+import com.gildedgames.aether.common.entity.projectile.crystal.CloudCrystal;
 import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDart;
 import com.gildedgames.aether.common.entity.projectile.dart.GoldenDart;
 import com.gildedgames.aether.common.entity.projectile.dart.PoisonDart;
@@ -114,8 +114,8 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<ZephyrSnowball>> ZEPHYR_SNOWBALL = ENTITIES.register("zephyr_snowball",
             () -> EntityType.Builder.<ZephyrSnowball>of(ZephyrSnowball::new, MobCategory.MISC).sized(1.0F, 1.0F).build("zephyr_snowball"));
 
-    public static final RegistryObject<EntityType<CloudCrystalEntity>> CLOUD_CRYSTAL = ENTITIES.register("cloud_crystal",
-            () -> EntityType.Builder.<CloudCrystalEntity>of(CloudCrystalEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("cloud_crystal"));
+    public static final RegistryObject<EntityType<CloudCrystal>> CLOUD_CRYSTAL = ENTITIES.register("cloud_crystal",
+            () -> EntityType.Builder.<CloudCrystal>of(CloudCrystal::new, MobCategory.MISC).sized(0.5F, 0.5F).build("cloud_crystal"));
 
     public static final RegistryObject<EntityType<GoldenDart>> GOLDEN_DART = ENTITIES.register("golden_dart",
             () -> EntityType.Builder.<GoldenDart>of(GoldenDart::new, MobCategory.MISC).sized(0.5F, 0.5F).build("golden_dart"));

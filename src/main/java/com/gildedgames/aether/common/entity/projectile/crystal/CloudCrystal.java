@@ -9,7 +9,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.util.*;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
@@ -18,21 +17,20 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 
-public class CloudCrystalEntity extends AbstractCrystalEntity
+public class CloudCrystal extends AbstractCrystal
 {
-    public CloudCrystalEntity(EntityType<? extends AbstractCrystalEntity> entityType, Level world) {
+    public CloudCrystal(EntityType<? extends AbstractCrystal> entityType, Level world) {
         super(entityType, world);
     }
 
-    public CloudCrystalEntity(Level world) {
+    public CloudCrystal(Level world) {
         super(AetherEntityTypes.CLOUD_CRYSTAL.get(), world);
     }
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
-        if (entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity) entity;
+        if (entity instanceof LivingEntity livingEntity) {
             float bonus = entity instanceof Blaze ? 3.0F : 0.0F;
             if (livingEntity.hurt(new IndirectEntityDamageSource("ice_crystal", this, this.getOwner()).setProjectile(), 5.0F + bonus)) {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
@@ -45,13 +43,12 @@ public class CloudCrystalEntity extends AbstractCrystalEntity
 
     @Override
     public void spawnExplosionParticles() {
-        if (this.level instanceof ServerLevel) {
-            ServerLevel world = (ServerLevel) this.level;
+        if (this.level instanceof ServerLevel level) {
             for (int i = 0; i < 20; i++) {
                 double d0 = (this.random.nextFloat() - 0.5F) * 0.5D;
                 double d1 = (this.random.nextFloat() - 0.5F) * 0.5D;
                 double d2 = (this.random.nextFloat() - 0.5F) * 0.5D;
-                world.sendParticles(AetherParticleTypes.FROZEN.get(), this.getX(), this.getY(), this.getZ(), 1, d0 * 0.5D, d1 * 0.5D, d2 * 0.5D, 0.0F);
+                level.sendParticles(AetherParticleTypes.FROZEN.get(), this.getX(), this.getY(), this.getZ(), 1, d0 * 0.5D, d1 * 0.5D, d2 * 0.5D, 0.0F);
             }
         }
     }

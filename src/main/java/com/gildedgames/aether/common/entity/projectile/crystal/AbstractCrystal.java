@@ -15,17 +15,21 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.network.NetworkHooks;
 
-public abstract class AbstractCrystalEntity extends Projectile
+import javax.annotation.Nonnull;
+
+public abstract class AbstractCrystal extends Projectile
 {
     private int ticksInAir = 0;
 
-    protected AbstractCrystalEntity(EntityType<? extends AbstractCrystalEntity> entityType, Level world) {
+    protected AbstractCrystal(EntityType<? extends AbstractCrystal> entityType, Level world) {
         super(entityType, world);
         this.setNoGravity(true);
     }
+
+    @Override
+    protected void defineSynchedData() { }
 
     @Override
     public void tick() {
@@ -35,26 +39,26 @@ public abstract class AbstractCrystalEntity extends Projectile
         }
         if (this.ticksInAir > this.getLifeSpan()) {
             this.spawnExplosionParticles();
-            this.remove(RemovalReason.DISCARDED);
+            this.discard();
         }
-        HitResult raytraceresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
+        HitResult result = ProjectileUtil.getHitResult(this, this::canHitEntity);
         boolean flag = false;
-        if (raytraceresult.getType() == HitResult.Type.BLOCK) {
-            BlockPos blockpos = ((BlockHitResult)raytraceresult).getBlockPos();
-            BlockState blockstate = this.level.getBlockState(blockpos);
-            if (blockstate.is(Blocks.NETHER_PORTAL)) {
-                this.handleInsidePortal(blockpos);
+        if (result.getType() == HitResult.Type.BLOCK) {
+            BlockPos blockPos = ((BlockHitResult) result).getBlockPos();
+            BlockState blockState = this.level.getBlockState(blockPos);
+            if (blockState.is(Blocks.NETHER_PORTAL)) {
+                this.handleInsidePortal(blockPos);
                 flag = true;
-            } else if (blockstate.is(Blocks.END_GATEWAY)) {
-                BlockEntity blockentity = this.level.getBlockEntity(blockpos);
-                if (blockentity instanceof TheEndGatewayBlockEntity && TheEndGatewayBlockEntity.canEntityTeleport(this)) {
-                    TheEndGatewayBlockEntity.teleportEntity(this.level, blockpos, blockstate, this, (TheEndGatewayBlockEntity)blockentity);
+            } else if (blockState.is(Blocks.END_GATEWAY)) {
+                BlockEntity blockEntity = this.level.getBlockEntity(blockPos);
+                if (blockEntity instanceof TheEndGatewayBlockEntity endGatewayBlockEntity && TheEndGatewayBlockEntity.canEntityTeleport(this)) {
+                    TheEndGatewayBlockEntity.teleportEntity(this.level, blockPos, blockState, this, endGatewayBlockEntity);
                 }
                 flag = true;
             }
         }
-        if (raytraceresult.getType() != HitResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
-            this.onHit(raytraceresult);
+        if (result.getType() != HitResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, result)) {
+            this.onHit(result);
         }
         this.checkInsideBlocks();
         Vec3 vector3d = this.getDeltaMovement();
@@ -67,25 +71,21 @@ public abstract class AbstractCrystalEntity extends Projectile
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult p_230299_1_) {
-        super.onHitBlock(p_230299_1_);
+    protected void onHitBlock(@Nonnull BlockHitResult result) {
+        super.onHitBlock(result);
         this.spawnExplosionParticles();
         this.discard();
     }
 
     public void spawnExplosionParticles() { }
 
-    public SoundEvent getImpactExplosionSoundEvent() {
-        return SoundEvents.GENERIC_EXPLODE;
-    }
+    public abstract SoundEvent getImpactExplosionSoundEvent();
 
     public int getLifeSpan() {
         return 300;
     }
 
-    @Override
-    protected void defineSynchedData() { }
-
+    @Nonnull
     @Override
     public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
