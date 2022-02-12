@@ -45,8 +45,8 @@ public class Sentry extends Slime
 	
 	public float timeSpotted = 0.0F;
 	
-	public Sentry(EntityType<? extends Sentry> type, Level worldIn) {
-		super(type, worldIn);
+	public Sentry(EntityType<? extends Sentry> type, Level level) {
+		super(type, level);
 	}
 
 	@Override
@@ -182,6 +182,12 @@ public class Sentry extends Slime
 	@Nonnull
 	@Override
 	protected SoundEvent getSquishSound() {
+		return AetherSoundEvents.ENTITY_SENTRY_JUMP.get();
+	}
+
+	@Nonnull
+	@Override
+	protected SoundEvent getJumpSound() {
 		return AetherSoundEvents.ENTITY_SENTRY_JUMP.get();
 	}
 
