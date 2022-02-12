@@ -16,9 +16,9 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
-public class FireMinionEntity extends Monster
+public class FireMinion extends Monster
 {
-    public FireMinionEntity(EntityType<? extends Monster> type, Level level) {
+    public FireMinion(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
 

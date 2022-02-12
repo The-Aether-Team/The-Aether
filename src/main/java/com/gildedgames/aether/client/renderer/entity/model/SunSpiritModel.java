@@ -7,12 +7,13 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
-public class SunSpiritModel extends EntityModel<Mob>
+public class SunSpiritModel<T extends Entity> extends EntityModel<T>
 {
     public ModelPart head;
     public ModelPart jaw;
@@ -61,7 +62,7 @@ public class SunSpiritModel extends EntityModel<Mob>
     }
 
     @Override
-    public void setupAnim(@Nonnull Mob mob, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@Nonnull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.xRot = headPitch * 0.017453292F;
         this.head.yRot = netHeadYaw * 0.017453292F;
         this.jaw.xRot = this.head.xRot;
