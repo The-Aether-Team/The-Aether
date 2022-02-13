@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.renderer.perks.model;
+package com.gildedgames.aether.client.renderer.player.model;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.model.ListModel;

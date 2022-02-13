@@ -27,13 +27,13 @@ public class FireMinion extends Monster
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.5, true));
         this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.FOLLOW_RANGE, 12.0)
+                .add(Attributes.FOLLOW_RANGE, 30.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.25)
                 .add(Attributes.ATTACK_DAMAGE, 10.0)
                 .add(Attributes.MAX_HEALTH, 40.0);

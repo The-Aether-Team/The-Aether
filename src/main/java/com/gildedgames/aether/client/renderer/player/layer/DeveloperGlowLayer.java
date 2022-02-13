@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.renderer.perks.layer;
+package com.gildedgames.aether.client.renderer.player.layer;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
 import com.gildedgames.aether.core.registry.AetherPlayerRankings;
