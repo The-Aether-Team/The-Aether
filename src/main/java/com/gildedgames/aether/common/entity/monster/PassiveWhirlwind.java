@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 
 public class PassiveWhirlwind extends AbstractWhirlwind
 {
-    public PassiveWhirlwind(EntityType<? extends AbstractWhirlwind> type, Level worldIn) {
+    public PassiveWhirlwind(EntityType<? extends PassiveWhirlwind> type, Level worldIn) {
         super(type, worldIn);
     }
 

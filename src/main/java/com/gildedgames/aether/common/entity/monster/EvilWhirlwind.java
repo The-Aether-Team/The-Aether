@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 
 public class EvilWhirlwind extends AbstractWhirlwind
 {
-    public EvilWhirlwind(EntityType<? extends AbstractWhirlwind> type, Level worldIn) {
+    public EvilWhirlwind(EntityType<? extends EvilWhirlwind> type, Level worldIn) {
         super(type, worldIn);
     }
 

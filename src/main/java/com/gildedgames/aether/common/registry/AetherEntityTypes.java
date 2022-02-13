@@ -62,14 +62,14 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<Swet>> GOLDEN_SWET = ENTITIES.register("golden_swet",
             () -> EntityType.Builder.of(Swet::new, MobCategory.MONSTER).sized(0.8F, 0.8F).build("golden_swet"));
 
-    public static final RegistryObject<EntityType<AbstractWhirlwind>> WHIRLWIND = ENTITIES.register("whirlwind",
-            () -> EntityType.Builder.<AbstractWhirlwind>of(PassiveWhirlwind::new, MobCategory.MONSTER).sized(0.6F, 0.8F).build("whirlwind"));
+    public static final RegistryObject<EntityType<PassiveWhirlwind>> WHIRLWIND = ENTITIES.register("whirlwind",
+            () -> EntityType.Builder.of(PassiveWhirlwind::new, MobCategory.MONSTER).sized(0.6F, 0.8F).build("whirlwind"));
 
-    public static final RegistryObject<EntityType<AbstractWhirlwind>> EVIL_WHIRLWIND = ENTITIES.register("evil_whirlwind",
-            () -> EntityType.Builder.<AbstractWhirlwind>of(EvilWhirlwind::new, MobCategory.MONSTER).sized(0.6F, 0.8F).build("evil_whirlwind"));
+    public static final RegistryObject<EntityType<EvilWhirlwind>> EVIL_WHIRLWIND = ENTITIES.register("evil_whirlwind",
+            () -> EntityType.Builder.of(EvilWhirlwind::new, MobCategory.MONSTER).sized(0.6F, 0.8F).build("evil_whirlwind"));
 
     public static final RegistryObject<EntityType<AechorPlant>> AECHOR_PLANT = ENTITIES.register("aechor_plant",
-            () -> EntityType.Builder.<AechorPlant>of(AechorPlant::new, MobCategory.MONSTER).sized(1.0F, 1.0F).build("aechor_plant"));
+            () -> EntityType.Builder.of(AechorPlant::new, MobCategory.MONSTER).sized(1.0F, 1.0F).build("aechor_plant"));
 
     public static final RegistryObject<EntityType<Cockatrice>> COCKATRICE = ENTITIES.register("cockatrice",
             () -> EntityType.Builder.of(Cockatrice::new, MobCategory.MONSTER).sized(1.0F, 2.0F).build("cockatrice"));
@@ -80,16 +80,16 @@ public class AetherEntityTypes {
     // Dungeon
 
     public static final RegistryObject<EntityType<Sentry>> SENTRY = ENTITIES.register("sentry",
-            () -> EntityType.Builder.<Sentry>of(Sentry::new, MobCategory.MONSTER).sized(2.0F, 2.0F).build("sentry"));
+            () -> EntityType.Builder.of(Sentry::new, MobCategory.MONSTER).sized(2.0F, 2.0F).build("sentry"));
 
     public static final RegistryObject<EntityType<Mimic>> MIMIC = ENTITIES.register("mimic",
-            () -> EntityType.Builder.<Mimic>of(Mimic::new, MobCategory.MONSTER).sized(1.0F, 2.0F).build("mimic"));
+            () -> EntityType.Builder.of(Mimic::new, MobCategory.MONSTER).sized(1.0F, 2.0F).build("mimic"));
 
     //public static final EntityType<ValkyrieEntity> VALKYRIE_TYPE = EntityType.Builder.<ValkyrieEntity>of(ValkyrieEntity::new, EntityClassification.MONSTER).sized(0.8F, 1.95F).build("valkyrie");
     //public static final RegistryObject<EntityType<ValkyrieEntity>> VALKYRIE = ENTITIES.register("valkyrie", () -> VALKYRIE_TYPE);
 
     public static final RegistryObject<EntityType<FireMinion>> FIRE_MINION = ENTITIES.register("fire_minion",
-            () -> EntityType.Builder.<FireMinion>of(FireMinion::new, MobCategory.MONSTER).sized(0.8F, 1.95F).fireImmune().build("fire_minion"));
+            () -> EntityType.Builder.of(FireMinion::new, MobCategory.MONSTER).sized(0.8F, 1.95F).fireImmune().build("fire_minion"));
 
 
     // Miscellaneous

@@ -28,13 +28,9 @@ public class ValkyrieEntity extends Monster
 {
     private int chatTime;
 
-    public ValkyrieEntity(EntityType<? extends Monster> type, Level worldIn) {
+    public ValkyrieEntity(EntityType<? extends ValkyrieEntity> type, Level worldIn) {
         super(type, worldIn);
     }
-
-//    public ValkyrieEntity(World worldIn) {
-//        this(AetherEntityTypes.VALKYRIE.get(), worldIn);
-//    }
 
     @Override
     protected void registerGoals() {

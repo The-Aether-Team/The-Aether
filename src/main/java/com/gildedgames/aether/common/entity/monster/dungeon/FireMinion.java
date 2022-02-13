@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 
 public class FireMinion extends Monster
 {
-    public FireMinion(EntityType<? extends Monster> type, Level level) {
+    public FireMinion(EntityType<? extends FireMinion> type, Level level) {
         super(type, level);
     }
 
