@@ -77,7 +77,6 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.of(Zephyr::new, MobCategory.MONSTER).sized(4.0F, 4.0F).clientTrackingRange(10).build("zephyr"));
 
     // Dungeon
-
     public static final RegistryObject<EntityType<Sentry>> SENTRY = ENTITIES.register("sentry",
             () -> EntityType.Builder.of(Sentry::new, MobCategory.MONSTER).sized(2.0F, 2.0F).clientTrackingRange(10).build("sentry"));
 
@@ -92,7 +91,6 @@ public class AetherEntityTypes {
 
 
     // Miscellaneous
-
     public static final RegistryObject<EntityType<CloudMinion>> CLOUD_MINION = ENTITIES.register("cloud_minion",
             () -> EntityType.Builder.<CloudMinion>of(CloudMinion::new, MobCategory.MISC).sized(0.75F, 0.75F).clientTrackingRange(5).build("cloud_minion"));
 
@@ -109,7 +107,6 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.<TntPresent>of(TntPresent::new, MobCategory.MISC).fireImmune().sized(1.0F, 1.0F).clientTrackingRange(10).updateInterval(10).build("tnt_present"));
 
     // Projectiles
-
     public static final RegistryObject<EntityType<ZephyrSnowball>> ZEPHYR_SNOWBALL = ENTITIES.register("zephyr_snowball",
             () -> EntityType.Builder.<ZephyrSnowball>of(ZephyrSnowball::new, MobCategory.MISC).sized(1.0F, 1.0F).clientTrackingRange(4).updateInterval(10).build("zephyr_snowball"));
 

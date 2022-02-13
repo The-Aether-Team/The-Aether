@@ -15,7 +15,7 @@ public class FireMinionRenderer extends MobRenderer<FireMinion, SunSpiritModel<F
     private static final ResourceLocation FROZEN_SPIRIT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sun_spirit/frozen_sun_spirit.png");
     
     public FireMinionRenderer(EntityRendererProvider.Context context) {
-        super(context, new SunSpiritModel<>(context.bakeLayer(AetherModelLayers.SUN_SPIRIT)), 0.8F);
+        super(context, new SunSpiritModel<>(context.bakeLayer(AetherModelLayers.FIRE_MINION)), 0.8F);
     }
     
     @Nonnull

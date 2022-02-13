@@ -27,8 +27,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.gui.OverlayRegistry;
 
 @OnlyIn(Dist.CLIENT)
-public class AetherOverlays
-{
+public class AetherOverlays {
     private static final ResourceLocation TEXTURE_INEBRIATION_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/inebriation_vignette.png");
     private static final ResourceLocation TEXTURE_REMEDY_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/remedy_vignette.png");
     private static final ResourceLocation TEXTURE_REPULSION_SHIELD_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/repulsion_shield_vignette.png");
