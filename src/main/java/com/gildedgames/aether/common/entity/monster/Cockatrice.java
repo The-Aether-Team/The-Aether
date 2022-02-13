@@ -38,8 +38,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
-public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, NotGrounded
-{
+public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, NotGrounded {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 
     public float wingRotation;
@@ -49,8 +48,8 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
 
     private int flapCooldown;
 
-    public Cockatrice(EntityType<? extends Cockatrice> type, Level worldIn) {
-        super(type, worldIn);
+    public Cockatrice(EntityType<? extends Cockatrice> type, Level level) {
+        super(type, level);
     }
 
     @Override

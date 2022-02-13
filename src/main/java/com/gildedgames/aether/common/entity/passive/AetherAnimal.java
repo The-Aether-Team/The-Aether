@@ -13,8 +13,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 
-public abstract class AetherAnimal extends Animal
-{
+public abstract class AetherAnimal extends Animal {
 	protected AetherAnimal(EntityType<? extends Animal> type, Level level) {
 		super(type, level);
 	}

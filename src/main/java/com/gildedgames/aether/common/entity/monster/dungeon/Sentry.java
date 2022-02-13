@@ -39,8 +39,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 
-public class Sentry extends Slime
-{
+public class Sentry extends Slime {
 	public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Sentry.class, EntityDataSerializers.BOOLEAN);
 	
 	public float timeSpotted = 0.0F;
@@ -196,8 +195,7 @@ public class Sentry extends Slime
 		return true;
 	}
 
-	public static class AttackGoal extends SlimeAttackGoal
-	{
+	public static class AttackGoal extends SlimeAttackGoal {
 		private final Sentry sentry;
 
 		public AttackGoal(Sentry sentryIn) {
@@ -216,8 +214,7 @@ public class Sentry extends Slime
 		}
 	}
 
-	public static class FloatGoal extends SlimeFloatGoal
-	{
+	public static class FloatGoal extends SlimeFloatGoal {
 		private final Sentry sentry;
 
 		public FloatGoal(Sentry sentryIn) {
@@ -236,8 +233,7 @@ public class Sentry extends Slime
 		}
 	}
 
-	public static class KeepOnJumpingGoal extends SlimeKeepOnJumpingGoal
-	{
+	public static class KeepOnJumpingGoal extends SlimeKeepOnJumpingGoal {
 		private final Sentry sentry;
 
 		public KeepOnJumpingGoal(Sentry sentryIn) {
@@ -256,8 +252,7 @@ public class Sentry extends Slime
 		}
 	}
 
-	public static class RandomDirectionGoal extends SlimeRandomDirectionGoal
-	{
+	public static class RandomDirectionGoal extends SlimeRandomDirectionGoal {
 		private final Sentry sentry;
 
 		public RandomDirectionGoal(Sentry sentryIn) {

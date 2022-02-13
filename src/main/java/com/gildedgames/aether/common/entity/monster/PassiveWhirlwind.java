@@ -18,10 +18,9 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class PassiveWhirlwind extends AbstractWhirlwind
-{
-    public PassiveWhirlwind(EntityType<? extends PassiveWhirlwind> type, Level worldIn) {
-        super(type, worldIn);
+public class PassiveWhirlwind extends AbstractWhirlwind {
+    public PassiveWhirlwind(EntityType<? extends PassiveWhirlwind> type, Level level) {
+        super(type, level);
     }
 
     @Override

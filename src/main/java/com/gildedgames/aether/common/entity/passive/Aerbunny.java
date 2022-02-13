@@ -37,8 +37,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 
-public class Aerbunny extends AetherAnimal
-{
+public class Aerbunny extends AetherAnimal {
     public static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
 
     public Aerbunny(EntityType<? extends Aerbunny> type, Level level) {
@@ -220,8 +219,7 @@ public class Aerbunny extends AetherAnimal
         return AetherEntityTypes.AERBUNNY.get().create(level);
     }
 
-    public static class HopGoal extends Goal
-    {
+    public static class HopGoal extends Goal {
         private final Aerbunny aerbunny;
 
         public HopGoal(Aerbunny entity) {

@@ -32,8 +32,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
-public class FlyingCow extends WingedAnimal
-{
+public class FlyingCow extends WingedAnimal {
     public FlyingCow(EntityType<? extends FlyingCow> type, Level level) {
         super(type, level);
     }

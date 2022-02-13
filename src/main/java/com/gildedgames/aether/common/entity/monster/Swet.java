@@ -45,8 +45,7 @@ import java.util.EnumSet;
 import java.util.Optional;
 import java.util.Random;
 
-public class Swet extends MountableAnimal
-{
+public class Swet extends MountableAnimal {
     private static final EntityDataAccessor<Boolean> DATA_MID_JUMP_ID = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_DEAD_IN_WATER_ID = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Float> DATA_WATER_DAMAGE_SCALE_ID = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.FLOAT);
@@ -396,8 +395,7 @@ public class Swet extends MountableAnimal
         return super.getDimensions(pose).scale(getScale());
     }
 
-    public static class ConsumeGoal extends Goal
-    {
+    public static class ConsumeGoal extends Goal {
         private final Swet swet;
         private int jumps = 0;
 
@@ -470,8 +468,7 @@ public class Swet extends MountableAnimal
         }
     }
 
-    public static class HuntGoal extends Goal
-    {
+    public static class HuntGoal extends Goal {
         private final Swet swet;
 
         public HuntGoal(Swet swet) {
@@ -518,8 +515,7 @@ public class Swet extends MountableAnimal
      * Classes down here are based off of the AI classes used in SlimeEntity.
      * @see net.minecraft.world.entity.monster.Slime
      */
-    public static class RandomFacingGoal extends Goal
-    {
+    public static class RandomFacingGoal extends Goal {
         private final Swet swet;
         private float chosenDegrees;
         private int nextRandomizeTime;
@@ -560,8 +556,7 @@ public class Swet extends MountableAnimal
         }
     }
 
-    public static class MoveHelperController extends MoveControl
-    {
+    public static class MoveHelperController extends MoveControl {
         private float yRot;
         private int jumpDelay;
         private final Swet swet;

@@ -38,16 +38,15 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 
-public class AechorPlant extends PathfinderMob implements RangedAttackMob
-{
+public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     public static final EntityDataAccessor<Integer> DATA_SIZE_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> DATA_POISON_REMAINING_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> DATA_TARGETING_ENTITY_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.BOOLEAN);
 
     public float sinage;
 
-    public AechorPlant(EntityType<? extends AechorPlant> type, Level worldIn) {
-        super(type, worldIn);
+    public AechorPlant(EntityType<? extends AechorPlant> type, Level level) {
+        super(type, level);
     }
 
     @Override

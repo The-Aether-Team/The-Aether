@@ -33,16 +33,15 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.Saddleable;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 
-public abstract class MountableAnimal extends AetherAnimal implements ItemSteerable, Saddleable, NotGrounded
-{
+public abstract class MountableAnimal extends AetherAnimal implements ItemSteerable, Saddleable, NotGrounded {
 	private static final EntityDataAccessor<Boolean> DATA_SADDLE_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_PLAYER_JUMPED_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_MOUNT_JUMPING_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_PLAYER_CROUCHED_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 
-	protected MountableAnimal(EntityType<? extends Animal> type, Level worldIn) {
-		super(type, worldIn);
+	protected MountableAnimal(EntityType<? extends Animal> type, Level level) {
+		super(type, level);
 	}
 
 	@Override

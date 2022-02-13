@@ -26,8 +26,7 @@ import net.minecraft.server.level.ServerLevel;
 
 import javax.annotation.Nonnull;
 
-public class Mimic extends Monster
-{
+public class Mimic extends Monster {
 	public Mimic(EntityType<? extends Mimic> type, Level level) {
 		super(type, level);
 	}

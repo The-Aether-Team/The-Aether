@@ -11,8 +11,7 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 
-public abstract class WingedAnimal extends MountableAnimal
-{
+public abstract class WingedAnimal extends MountableAnimal {
     public float wingFold;
     public float wingAngle;
 

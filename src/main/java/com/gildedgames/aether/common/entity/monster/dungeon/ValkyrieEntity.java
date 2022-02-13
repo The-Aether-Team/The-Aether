@@ -24,8 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 
-public class ValkyrieEntity extends Monster
-{
+public class ValkyrieEntity extends Monster {
     private int chatTime;
 
     public ValkyrieEntity(EntityType<? extends ValkyrieEntity> type, Level worldIn) {

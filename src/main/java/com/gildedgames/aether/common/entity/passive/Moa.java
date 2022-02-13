@@ -43,8 +43,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Optional;
 import java.util.UUID;
 
-public class Moa extends MountableAnimal implements WingedBird
-{
+public class Moa extends MountableAnimal implements WingedBird {
 	private static final EntityDataAccessor<String> DATA_MOA_TYPE_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.STRING);
 	private static final EntityDataAccessor<Optional<UUID>> DATA_RIDER_UUID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.OPTIONAL_UUID);
 	private static final EntityDataAccessor<Optional<UUID>> DATA_LAST_RIDER_UUID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.OPTIONAL_UUID);
@@ -64,8 +63,8 @@ public class Moa extends MountableAnimal implements WingedBird
 
 	public int eggTime = this.getEggTime();
 
-	public Moa(EntityType<? extends Moa> type, Level worldIn) {
-		super(type, worldIn);
+	public Moa(EntityType<? extends Moa> type, Level level) {
+		super(type, level);
 	}
 
 	@Override
@@ -81,8 +80,8 @@ public class Moa extends MountableAnimal implements WingedBird
 
 	@Nonnull
 	@Override
-	protected PathNavigation createNavigation(@Nonnull Level world) {
-		return new FallPathNavigator(this, world);
+	protected PathNavigation createNavigation(@Nonnull Level level) {
+		return new FallPathNavigator(this, level);
 	}
 
 	@Nonnull

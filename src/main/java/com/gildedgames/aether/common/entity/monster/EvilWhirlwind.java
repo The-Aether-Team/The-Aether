@@ -12,10 +12,9 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class EvilWhirlwind extends AbstractWhirlwind
-{
-    public EvilWhirlwind(EntityType<? extends EvilWhirlwind> type, Level worldIn) {
-        super(type, worldIn);
+public class EvilWhirlwind extends AbstractWhirlwind {
+    public EvilWhirlwind(EntityType<? extends EvilWhirlwind> type, Level level) {
+        super(type, level);
     }
 
     @Override

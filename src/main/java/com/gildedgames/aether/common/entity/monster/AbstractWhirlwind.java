@@ -40,8 +40,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
-public abstract class AbstractWhirlwind extends Mob
-{
+public abstract class AbstractWhirlwind extends Mob {
     public static final EntityDataAccessor<Integer> DATA_COLOR_ID = SynchedEntityData.defineId(AbstractWhirlwind.class, EntityDataSerializers.INT);
 
     public int lifeLeft;
@@ -51,8 +50,8 @@ public abstract class AbstractWhirlwind extends Mob
     protected boolean isPullingEntity = false;
     protected boolean isEvil = false;
 
-    public AbstractWhirlwind(EntityType<? extends AbstractWhirlwind> type, Level worldIn) {
-        super(type, worldIn);
+    public AbstractWhirlwind(EntityType<? extends AbstractWhirlwind> type, Level level) {
+        super(type, level);
     }
 
     @Override
@@ -235,8 +234,7 @@ public abstract class AbstractWhirlwind extends Mob
     /**
      * This goal handles movement for whirlwinds.
      */
-    protected static class MoveGoal extends Goal
-    {
+    protected static class MoveGoal extends Goal {
         private final AbstractWhirlwind whirlwind;
         protected float movementAngle;
         protected float movementCurve;

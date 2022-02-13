@@ -32,12 +32,11 @@ import javax.annotation.Nonnull;
 import java.util.EnumSet;
 import java.util.Random;
 
-public class Zephyr extends FlyingMob implements Enemy
-{
+public class Zephyr extends FlyingMob implements Enemy {
 	public static final EntityDataAccessor<Integer> ATTACK_CHARGE = SynchedEntityData.defineId(Zephyr.class, EntityDataSerializers.INT);
 
-	public Zephyr(EntityType<? extends Zephyr> type, Level worldIn) {
-		super(type, worldIn);
+	public Zephyr(EntityType<? extends Zephyr> type, Level level) {
+		super(type, level);
 		this.moveControl = new Zephyr.MoveHelperController(this);
 	}
 
@@ -138,8 +137,7 @@ public class Zephyr extends FlyingMob implements Enemy
 		return true;
 	}
 
-	static class SnowballAttackGoal extends Goal
-	{
+	static class SnowballAttackGoal extends Goal {
 		private final Zephyr parentEntity;
 		public int attackTimer;
 
@@ -178,8 +176,8 @@ public class Zephyr extends FlyingMob implements Enemy
 		 */
 		@Override
 		public void tick() {
-			LivingEntity target = parentEntity.getTarget();
-			if (target.distanceToSqr(this.parentEntity) < 64*64 && this.parentEntity.hasLineOfSight(target)) {
+			LivingEntity target = this.parentEntity.getTarget();
+			if (target.distanceToSqr(this.parentEntity) < 64 * 64 && this.parentEntity.hasLineOfSight(target)) {
 				Level level = this.parentEntity.level;
 				++this.attackTimer;
 				if (this.attackTimer == 10) {
@@ -202,8 +200,7 @@ public class Zephyr extends FlyingMob implements Enemy
 		}
 	}
 
-	static class RandomFlyGoal extends Goal
-	{
+	static class RandomFlyGoal extends Goal {
 		private final Zephyr parentEntity;
 
 		public RandomFlyGoal(Zephyr entity) {
@@ -250,8 +247,7 @@ public class Zephyr extends FlyingMob implements Enemy
 		}
 	}
 
-	static class MoveHelperController extends MoveControl
-	{
+	static class MoveHelperController extends MoveControl {
 		private final Zephyr parentEntity;
 		private int courseChangeCooldown;
 
@@ -292,8 +288,7 @@ public class Zephyr extends FlyingMob implements Enemy
 		}
 	}
 
-	static class LookAroundGoal extends Goal
-	{
+	static class LookAroundGoal extends Goal {
 		private final Zephyr parentEntity;
 
 		public LookAroundGoal(Zephyr zephyr) {
