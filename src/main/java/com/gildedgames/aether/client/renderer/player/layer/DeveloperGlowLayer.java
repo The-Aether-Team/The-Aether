@@ -15,8 +15,7 @@ import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nonnull;
 
-public class DeveloperGlowLayer<T extends Player, M extends PlayerModel<T>, A extends PlayerModel<T>> extends RenderLayer<T, M>
-{
+public class DeveloperGlowLayer<T extends Player, M extends PlayerModel<T>> extends RenderLayer<T, M> {
     public DeveloperGlowLayer(RenderLayerParent<T, M> renderer) {
         super(renderer);
     }

@@ -11,8 +11,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 
 import javax.annotation.Nonnull;
 
-public class CapeModel extends HumanoidModel<LivingEntity>
-{
+public class CapeModel extends HumanoidModel<LivingEntity> {
     private final ModelPart cloak;
 
     public CapeModel(ModelPart root) {

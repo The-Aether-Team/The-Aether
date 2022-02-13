@@ -216,7 +216,7 @@ public class AetherRenderers
                 playerRenderer.addLayer(new EnchantedDartLayer<>(renderDispatcher, playerRenderer));
                 playerRenderer.addLayer(new GoldenDartLayer<>(renderDispatcher, playerRenderer));
                 playerRenderer.addLayer(new PoisonDartLayer<>(renderDispatcher, playerRenderer));
-                playerRenderer.addLayer(new PlayerHaloLayer<>(playerRenderer));
+                playerRenderer.addLayer(new PlayerHaloLayer<>(playerRenderer, Minecraft.getInstance().getEntityModels()));
                 playerRenderer.addLayer(new DeveloperGlowLayer<>(playerRenderer));
             }
         }

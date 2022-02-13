@@ -17,21 +17,21 @@ import javax.annotation.Nonnull;
 
 public class PhygHaloLayer extends RenderLayer<Phyg, PigModel<Phyg>> {
     private static final ResourceLocation HALO_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/perks/halo.png");
-    private final HaloModel<Phyg> halo;
+    private final HaloModel<Phyg> phygHalo;
 
     public PhygHaloLayer(RenderLayerParent<Phyg, PigModel<Phyg>> entityRenderer, HaloModel<Phyg> haloModel) {
         super(entityRenderer);
-        this.halo = haloModel;
+        this.phygHalo = haloModel;
     }
 
     @Override
     public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, Phyg phyg, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (phyg.hasCustomName() && phyg.getCustomName() != null && phyg.getCustomName().getContents().equals("KingPhygieBoo")) {
-            this.halo.main.yRot = this.getParentModel().head.yRot;
-            this.halo.main.xRot = this.getParentModel().head.xRot;
-            this.halo.setupAnim(phyg, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            this.phygHalo.halo.yRot = this.getParentModel().head.yRot;
+            this.phygHalo.halo.xRot = this.getParentModel().head.xRot;
+            this.phygHalo.setupAnim(phyg, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
             VertexConsumer consumer = buffer.getBuffer(RenderType.eyes(HALO_LOCATION));
-            this.halo.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 0.25F);
+            this.phygHalo.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 0.25F);
         }
     }
 }

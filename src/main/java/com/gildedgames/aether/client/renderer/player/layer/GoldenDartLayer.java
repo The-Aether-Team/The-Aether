@@ -12,8 +12,7 @@ import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nonnull;
 
-public class GoldenDartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends AbstractDartLayer<T, M>
-{
+public class GoldenDartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends AbstractDartLayer<T, M> {
     public GoldenDartLayer(EntityRenderDispatcher renderDispatcher, LivingEntityRenderer<T, M> renderer) {
         super(renderDispatcher, renderer);
     }

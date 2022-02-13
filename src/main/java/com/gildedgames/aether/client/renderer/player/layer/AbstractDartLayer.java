@@ -14,8 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
-public abstract class AbstractDartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends RenderLayer<T, M>
-{
+public abstract class AbstractDartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends RenderLayer<T, M> {
     private final EntityRenderDispatcher dispatcher;
 
     public AbstractDartLayer(EntityRenderDispatcher renderDispatcher, LivingEntityRenderer<T, M> renderer) {
@@ -27,7 +26,7 @@ public abstract class AbstractDartLayer<T extends LivingEntity, M extends Player
         int i = this.numStuck(entity);
         Random random = new Random((long) (entity.getId() * (0.25 * offset)));
         if (i > 0) {
-            for(int j = 0; j < i; ++j) {
+            for (int j = 0; j < i; ++j) {
                 poseStack.pushPose();
                 ModelPart modelPart = this.getParentModel().getRandomModelPart(random);
                 ModelPart.Cube modelCube = modelPart.getRandomCube(random);
@@ -54,7 +53,7 @@ public abstract class AbstractDartLayer<T extends LivingEntity, M extends Player
         float f3 = Mth.sqrt(f * f + f2 * f2);
         dart.setPos(entity.getX(), entity.getY(), entity.getZ());
         dart.setYRot((float) (Math.atan2(f, f2) * (double) (180.0F / (float) Math.PI)));
-        dart.setXRot((float) (Math.atan2(f1, f3) * (double )(180.0F / (float) Math.PI)));
+        dart.setXRot((float) (Math.atan2(f1, f3) * (double) (180.0F / (float) Math.PI)));
         dart.yRotO = dart.getYRot();
         dart.xRotO = dart.getXRot();
         this.dispatcher.render(dart, 0.0, 0.0, 0.0, 0.0F, partialTicks, poseStack, buffer, packedLight);

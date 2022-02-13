@@ -12,8 +12,7 @@ import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nonnull;
 
-public class EnchantedDartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends AbstractDartLayer<T, M>
-{
+public class EnchantedDartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends AbstractDartLayer<T, M> {
     public EnchantedDartLayer(EntityRenderDispatcher renderDispatcher, LivingEntityRenderer<T, M> renderer) {
         super(renderDispatcher, renderer);
     }
