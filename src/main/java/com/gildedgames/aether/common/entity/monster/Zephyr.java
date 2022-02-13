@@ -120,12 +120,12 @@ public class Zephyr extends FlyingMob implements Enemy
 
 	@Override
 	protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
-		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT.get();
+		return AetherSoundEvents.ENTITY_ZEPHYR_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT.get();
+		return AetherSoundEvents.ENTITY_ZEPHYR_DEATH.get();
 	}
 
 	@Override
