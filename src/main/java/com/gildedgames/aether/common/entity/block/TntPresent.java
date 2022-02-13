@@ -19,19 +19,18 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.Pose;
 import net.minecraftforge.network.NetworkHooks;
 
-public class TntPresent extends Entity
-{
+public class TntPresent extends Entity {
     private static final EntityDataAccessor<Integer> DATA_FUSE_ID = SynchedEntityData.defineId(TntPresent.class, EntityDataSerializers.INT);
 
-    public TntPresent(EntityType<? extends TntPresent> type, Level worldIn) {
-        super(type, worldIn);
+    public TntPresent(EntityType<? extends TntPresent> type, Level level) {
+        super(type, level);
         this.blocksBuilding = true;
     }
 
-    public TntPresent(Level worldIn, double x, double y, double z) {
-        this(AetherEntityTypes.TNT_PRESENT.get(), worldIn);
+    public TntPresent(Level level, double x, double y, double z) {
+        this(AetherEntityTypes.TNT_PRESENT.get(), level);
         this.setPos(x, y, z);
-        double d0 = worldIn.random.nextDouble() * (double) ((float) Math.PI * 2.0F);
+        double d0 = level.random.nextDouble() * (double) ((float) Math.PI * 2.0F);
         this.setDeltaMovement(-Math.sin(d0) * 0.02, 0.2, -Math.cos(d0) * 0.02);
         this.setFuse(10);
         this.xo = x;

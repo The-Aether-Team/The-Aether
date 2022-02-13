@@ -43,8 +43,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
-public class FloatingBlockEntity extends Entity
-{
+public class FloatingBlockEntity extends Entity {
     protected static final EntityDataAccessor<BlockPos> DATA_START_POS = SynchedEntityData.defineId(FloatingBlockEntity.class, EntityDataSerializers.BLOCK_POS);
     private BlockState blockState;
     public int time;
@@ -58,8 +57,8 @@ public class FloatingBlockEntity extends Entity
     @Nullable
     public CompoundTag blockData;
 
-    public FloatingBlockEntity(EntityType<FloatingBlockEntity> entityType, Level level) {
-        super(entityType, level);
+    public FloatingBlockEntity(EntityType<? extends FloatingBlockEntity> type, Level level) {
+        super(type, level);
     }
 
     public FloatingBlockEntity(Level level, double x, double y, double z, BlockState state) {
@@ -101,7 +100,7 @@ public class FloatingBlockEntity extends Entity
 
             if (!this.isNoGravity()) {
                 this.floatDistance = this.blockPosition().getY() - this.getStartPos().getY();
-                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.04D, 0.0D));
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0, 0.04, 0.0));
                 this.causeFallDamage();
                 if (this.level.isClientSide) {
                     this.spawnFloatingBlockParticles();
@@ -131,7 +130,7 @@ public class FloatingBlockEntity extends Entity
                     }
                 } else {
                     BlockState blockState = this.level.getBlockState(blockPos1);
-                    this.setDeltaMovement(this.getDeltaMovement().multiply(0.7D, -0.5D, 0.7D));
+                    this.setDeltaMovement(this.getDeltaMovement().multiply(0.7, -0.5, 0.7));
                     if (!blockState.is(Blocks.MOVING_PISTON)) {
                         if (!this.cancelDrop) {
                             boolean canBeReplaced = blockState.canBeReplaced(new DirectionalPlaceContext(this.level, blockPos1, Direction.UP, ItemStack.EMPTY, Direction.DOWN));
@@ -192,7 +191,7 @@ public class FloatingBlockEntity extends Entity
                     }
                 }
             }
-            this.setDeltaMovement(this.getDeltaMovement().scale(0.98D));
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.98));
         }
     }
 
@@ -254,7 +253,7 @@ public class FloatingBlockEntity extends Entity
     private void spawnFloatingBlockParticles() {
         if (this.random.nextInt(8) == 0) {
             double d0 = (this.getX() - 0.5) + this.random.nextDouble();
-            double d1 = this.getY() - 0.05D;
+            double d1 = this.getY() - 0.05;
             double d2 = (this.getZ() - 0.5) + this.random.nextDouble();
             this.level.addParticle(new BlockParticleOption(ParticleTypes.FALLING_DUST, this.getBlockState()), d0, d1, d2, 0.0D, 0.0D, 0.0D);
         }
