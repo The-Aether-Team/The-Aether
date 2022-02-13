@@ -15,11 +15,11 @@ import javax.annotation.Nonnull;
 
 public class SwetOuterLayer extends RenderLayer<Swet, SlimeModel<Swet>>
 {
-    private final SlimeModel<Swet> model;
+    private final SlimeModel<Swet> outer;
 
-    public SwetOuterLayer(RenderLayerParent<Swet, SlimeModel<Swet>> entityRenderer, SlimeModel<Swet> model) {
+    public SwetOuterLayer(RenderLayerParent<Swet, SlimeModel<Swet>> entityRenderer, SlimeModel<Swet> outerModel) {
         super(entityRenderer);
-        this.model = model;
+        this.outer = outerModel;
     }
 
     public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, @Nonnull Swet swet, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
@@ -32,10 +32,10 @@ public class SwetOuterLayer extends RenderLayer<Swet, SlimeModel<Swet>>
             } else {
                 consumer = buffer.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(swet)));
             }
-            this.getParentModel().copyPropertiesTo(this.model);
-            this.model.prepareMobModel(swet, limbSwing, limbSwingAmount, partialTicks);
-            this.model.setupAnim(swet, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-            this.model.renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(swet, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+            this.getParentModel().copyPropertiesTo(this.outer);
+            this.outer.prepareMobModel(swet, limbSwing, limbSwingAmount, partialTicks);
+            this.outer.setupAnim(swet, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            this.outer.renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(swet, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
 }

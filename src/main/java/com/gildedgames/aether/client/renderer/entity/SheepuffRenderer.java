@@ -4,6 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.SheepuffWoolLayer;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffModel;
+import com.gildedgames.aether.client.renderer.entity.model.SheepuffWoolModel;
 import com.gildedgames.aether.common.entity.passive.Sheepuff;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -18,7 +19,7 @@ public class SheepuffRenderer extends MobRenderer<Sheepuff, SheepuffModel>
     
     public SheepuffRenderer(EntityRendererProvider.Context context) {
         super(context, new SheepuffModel(context.bakeLayer(AetherModelLayers.SHEEPUFF)), 0.7F);
-        this.addLayer(new SheepuffWoolLayer(this, context.getModelSet()));
+        this.addLayer(new SheepuffWoolLayer(this, new SheepuffWoolModel(context.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL)), new SheepuffWoolModel(context.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL_PUFFED))));
     }
 
     @Nonnull

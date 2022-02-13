@@ -1,13 +1,11 @@
 package com.gildedgames.aether.client.renderer.entity.layers;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.perks.model.HaloModel;
 import com.gildedgames.aether.common.entity.passive.Phyg;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.PigModel;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -22,9 +20,9 @@ public class PhygHaloLayer extends RenderLayer<Phyg, PigModel<Phyg>>
     private static final ResourceLocation HALO_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/perks/halo.png");
     private final HaloModel<Phyg> halo;
 
-    public PhygHaloLayer(RenderLayerParent<Phyg, PigModel<Phyg>> entityRenderer, EntityModelSet modelSet) {
+    public PhygHaloLayer(RenderLayerParent<Phyg, PigModel<Phyg>> entityRenderer, HaloModel<Phyg> haloModel) {
         super(entityRenderer);
-        this.halo = new HaloModel<>(modelSet.bakeLayer(AetherModelLayers.PHYG_HALO));
+        this.halo = haloModel;
     }
 
     @Override

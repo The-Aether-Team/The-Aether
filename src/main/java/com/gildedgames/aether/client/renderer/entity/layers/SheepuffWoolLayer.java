@@ -1,7 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.layers;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffModel;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffWoolModel;
 import com.gildedgames.aether.common.entity.passive.Sheepuff;
@@ -9,7 +8,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -23,19 +21,19 @@ import javax.annotation.Nonnull;
 public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel>
 {
     private static final ResourceLocation SHEEPUFF_WOOL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff_wool.png");
-    private final SheepuffWoolModel woolModel;
-    private final SheepuffWoolModel puffedModel;
+    private final SheepuffWoolModel wool;
+    private final SheepuffWoolModel puffed;
 
-    public SheepuffWoolLayer(RenderLayerParent<Sheepuff, SheepuffModel> entityRenderer, EntityModelSet modelSet) {
+    public SheepuffWoolLayer(RenderLayerParent<Sheepuff, SheepuffModel> entityRenderer, SheepuffWoolModel woolModel, SheepuffWoolModel puffedModel) {
         super(entityRenderer);
-        this.woolModel = new SheepuffWoolModel(modelSet.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL));
-        this.puffedModel = new SheepuffWoolModel(modelSet.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL_PUFFED));
+        this.wool = woolModel;
+        this.puffed = puffedModel;
     }
 
     @Override
     public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (!sheepuff.isSheared()) {
-            SheepuffWoolModel woolModel = sheepuff.getPuffed() ? this.puffedModel : this.woolModel;
+            SheepuffWoolModel woolModel = sheepuff.getPuffed() ? this.puffed : this.wool;
             if (sheepuff.isInvisible()) {
                 Minecraft minecraft = Minecraft.getInstance();
                 boolean flag = minecraft.shouldEntityAppearGlowing(sheepuff);

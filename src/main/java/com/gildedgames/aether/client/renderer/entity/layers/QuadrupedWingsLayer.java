@@ -19,9 +19,9 @@ public class QuadrupedWingsLayer<T extends WingedAnimal, M extends QuadrupedMode
     private final ResourceLocation resourceLocation;
     private final QuadrupedWingsModel<T> wings;
 
-    public QuadrupedWingsLayer(RenderLayerParent<T, M> entityRenderer, QuadrupedWingsModel<T> model, ResourceLocation resourceLocation) {
+    public QuadrupedWingsLayer(RenderLayerParent<T, M> entityRenderer, QuadrupedWingsModel<T> wingsModel, ResourceLocation resourceLocation) {
         super(entityRenderer);
-        this.wings = model;
+        this.wings = wingsModel;
         this.resourceLocation = resourceLocation;
     }
 
