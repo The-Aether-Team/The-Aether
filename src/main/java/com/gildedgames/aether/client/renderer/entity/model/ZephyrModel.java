@@ -11,8 +11,7 @@ import net.minecraft.client.model.geom.builders.*;
 
 import javax.annotation.Nonnull;
 
-public class ZephyrModel extends EntityModel<Zephyr>
-{
+public class ZephyrModel extends EntityModel<Zephyr> {
     public ModelPart rightFace;
     public ModelPart leftFace;
     public ModelPart mouth;

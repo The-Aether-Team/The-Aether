@@ -15,8 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class SentryLayer<T extends Sentry, M extends SlimeModel<T>> extends EyesLayer<T, M>
-{
+public class SentryLayer<T extends Sentry, M extends SlimeModel<T>> extends EyesLayer<T, M> {
 	private static final RenderType SENTRY_EYE = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/eye.png"));
 	
 	public SentryLayer(RenderLayerParent<T, M> entityRenderer) {

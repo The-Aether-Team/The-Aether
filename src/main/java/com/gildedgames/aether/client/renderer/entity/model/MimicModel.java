@@ -15,8 +15,7 @@ import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
-public class MimicModel extends EntityModel<Mimic>
-{
+public class MimicModel extends EntityModel<Mimic> {
 	private final ModelPart upperBody;
 	private final ModelPart lowerBody;
 	private final ModelPart leftLeg;
@@ -32,14 +31,14 @@ public class MimicModel extends EntityModel<Mimic>
 	}
 
 	public static LayerDefinition createBodyLayer() {
-		MeshDefinition meshdefinition = new MeshDefinition();
-		PartDefinition partdefinition = meshdefinition.getRoot();
-		PartDefinition upperBody = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(0, 10).addBox(0.0F, 0.0F, 0.0F, 16, 6, 16), PartPose.offsetAndRotation(-8.0F, 0.0F, 8.0F, (float)Math.PI, 0.0F, 0.0F));
-		partdefinition.addOrReplaceChild("lower_body", CubeListBuilder.create().texOffs(0, 38).addBox(0.0F, 0.0F, 0.0F, 16, 10, 16), PartPose.offset(-8.0F, 0.0F, -8.0F));
-		partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(64, 0).addBox(0.0F, 0.0F, -3.0F, 6, 15, 6), PartPose.offset(1.5F, 9.0F, 0.0F));
-		partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(64, 0).addBox(-5.1F, 0.0F, -3.0F, 6, 15, 6).mirror(), PartPose.offset(-2.5F, 9.0F, 0.0F));
+		MeshDefinition meshDefinition = new MeshDefinition();
+		PartDefinition partDefinition = meshDefinition.getRoot();
+		PartDefinition upperBody = partDefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(0, 10).addBox(0.0F, 0.0F, 0.0F, 16, 6, 16), PartPose.offsetAndRotation(-8.0F, 0.0F, 8.0F, (float)Math.PI, 0.0F, 0.0F));
+		partDefinition.addOrReplaceChild("lower_body", CubeListBuilder.create().texOffs(0, 38).addBox(0.0F, 0.0F, 0.0F, 16, 10, 16), PartPose.offset(-8.0F, 0.0F, -8.0F));
+		partDefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(64, 0).addBox(0.0F, 0.0F, -3.0F, 6, 15, 6), PartPose.offset(1.5F, 9.0F, 0.0F));
+		partDefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(64, 0).addBox(-5.1F, 0.0F, -3.0F, 6, 15, 6).mirror(), PartPose.offset(-2.5F, 9.0F, 0.0F));
 		upperBody.addOrReplaceChild("knob", CubeListBuilder.create().texOffs(0, 0).addBox(7.0F, -2.0F, 16.0F, 2, 4, 1), PartPose.ZERO);
-		return LayerDefinition.create(meshdefinition, 128, 64);
+		return LayerDefinition.create(meshDefinition, 128, 64);
 	}
 
 	@Override
@@ -55,9 +54,5 @@ public class MimicModel extends EntityModel<Mimic>
 		this.upperBody.xRot = (float) Math.PI - 0.6F * (1.0F + Mth.cos(ageInTicks / 10.0F * (float) Math.PI));
 		this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-		this.rightLeg.yRot = 0.0F;
-		this.leftLeg.yRot = 0.0F;
-		this.rightLeg.zRot = 0.0F;
-		this.leftLeg.zRot = 0.0F;
 	}
 }

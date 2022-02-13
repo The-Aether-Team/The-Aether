@@ -15,8 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class PhygHaloLayer extends RenderLayer<Phyg, PigModel<Phyg>>
-{
+public class PhygHaloLayer extends RenderLayer<Phyg, PigModel<Phyg>> {
     private static final ResourceLocation HALO_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/perks/halo.png");
     private final HaloModel<Phyg> halo;
 

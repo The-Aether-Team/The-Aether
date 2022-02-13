@@ -9,8 +9,7 @@ import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nonnull;
 
-public class CrystalModel<T extends Entity> extends ListModel<T>
-{
+public class CrystalModel<T extends Entity> extends ListModel<T> {
     public final ModelPart crystal1;
     public final ModelPart crystal2;
     public final ModelPart crystal3;

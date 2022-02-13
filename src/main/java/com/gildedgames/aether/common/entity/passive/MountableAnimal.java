@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.entity.passive;
 
+import com.gildedgames.aether.common.entity.NotGrounded;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
@@ -32,7 +33,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.Saddleable;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 
-public abstract class MountableAnimal extends AetherAnimal implements ItemSteerable, Saddleable
+public abstract class MountableAnimal extends AetherAnimal implements ItemSteerable, Saddleable, NotGrounded
 {
 	private static final EntityDataAccessor<Boolean> DATA_SADDLE_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_PLAYER_JUMPED_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);

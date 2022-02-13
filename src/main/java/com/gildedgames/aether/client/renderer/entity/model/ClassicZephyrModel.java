@@ -14,8 +14,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 import javax.annotation.Nonnull;
 
-public class ClassicZephyrModel extends EntityModel<Zephyr>
-{
+public class ClassicZephyrModel extends EntityModel<Zephyr> {
     public ModelPart body;
 
     public ClassicZephyrModel(ModelPart root) {

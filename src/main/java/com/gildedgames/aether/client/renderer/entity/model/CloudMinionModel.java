@@ -10,8 +10,7 @@ import net.minecraft.client.model.geom.builders.*;
 
 import javax.annotation.Nonnull;
 
-public class CloudMinionModel extends ListModel<CloudMinion>
-{
+public class CloudMinionModel extends ListModel<CloudMinion> {
     public ModelPart cloudMinion;
 
     public CloudMinionModel(ModelPart root) {
@@ -37,8 +36,5 @@ public class CloudMinionModel extends ListModel<CloudMinion>
     }
 
     @Override
-    public void setupAnim(@Nonnull CloudMinion cloudMinion, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.cloudMinion.yRot = 0F;
-        this.cloudMinion.xRot = 0F;
-    }
+    public void setupAnim(@Nonnull CloudMinion cloudMinion, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
 }

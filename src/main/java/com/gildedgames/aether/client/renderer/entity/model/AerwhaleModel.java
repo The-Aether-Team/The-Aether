@@ -11,8 +11,7 @@ import net.minecraft.client.model.geom.builders.*;
 
 import javax.annotation.Nonnull;
 
-public class AerwhaleModel extends EntityModel<Aerwhale>
-{
+public class AerwhaleModel extends EntityModel<Aerwhale> {
 	public ModelPart frontBody;
 	public ModelPart rightFin;
 	public ModelPart leftFin;
@@ -45,7 +44,7 @@ public class AerwhaleModel extends EntityModel<Aerwhale>
 		partDefinition.addOrReplaceChild("front_body", CubeListBuilder.create().texOffs(0, 0).addBox(-11.5F, -1.0F, -0.5F, 19.0F, 5.0F,21.0F).mirror(), PartPose.offsetAndRotation(2.0F, 6.0F, 38.0F, -0.1047198F, 0.0F, 0.0F));
 		partDefinition.addOrReplaceChild("right_fin", CubeListBuilder.create().texOffs(446, 1).addBox(-20.0F, -2.0F, -6.0F, 19.0F, 3.0F, 14.0F), PartPose.offsetAndRotation(-10.0F, 4.0F, 10.0F, -0.148353F, 0.2094395F, 0.0F));
 		partDefinition.addOrReplaceChild("left_fin", CubeListBuilder.create().texOffs(446, 1).addBox(1.0F, -2.0F, -6.0F, 19.0F, 3.0F, 14.0F).mirror(), PartPose.offsetAndRotation(10.0F, 4.0F, 10.0F, -0.148353F, -0.2094395F, 0.0F));
-		partDefinition.addOrReplaceChild("bottom_part_head", CubeListBuilder.create().texOffs(116, 28).addBox(-13.0F, 4.0F, -15.0F, 26.0F, 6.0F, 30.0F).mirror(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		partDefinition.addOrReplaceChild("bottom_part_head", CubeListBuilder.create().texOffs(116, 28).addBox(-13.0F, 4.0F, -15.0F, 26.0F, 6.0F, 30.0F).mirror(), PartPose.ZERO);
 		partDefinition.addOrReplaceChild("bottom_part_middle_body", CubeListBuilder.create().texOffs(16, 32).addBox(-12.0F, 5.0F, -1.0F, 24.0F, 6.0F, 26.0F).mirror(), PartPose.offset(0.0F, -1.0F, 14.0F));
 		partDefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(408, 18).addBox(-12.0F, -9.0F, -14.0F, 24.0F, 18.0F, 28.0F).mirror(), PartPose.ZERO);
 		partDefinition.addOrReplaceChild("middle_fin", CubeListBuilder.create().texOffs(318, 35).addBox(-1.0F, -11.0F, 7.0F, 2.0F, 7.0F, 8.0F).mirror(), PartPose.offsetAndRotation(0.0F, -1.0F, 14.0F, -0.1441704F, 0.0F, 0.0F));

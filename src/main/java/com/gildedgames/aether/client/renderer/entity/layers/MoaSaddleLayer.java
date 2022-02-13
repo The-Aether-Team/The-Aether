@@ -13,8 +13,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 
 import javax.annotation.Nonnull;
 
-public class MoaSaddleLayer extends RenderLayer<Moa, MoaModel>
-{
+public class MoaSaddleLayer extends RenderLayer<Moa, MoaModel> {
 	private final MoaModel saddle;
 	
 	public MoaSaddleLayer(RenderLayerParent<Moa, MoaModel> entityRenderer, MoaModel saddleModel) {

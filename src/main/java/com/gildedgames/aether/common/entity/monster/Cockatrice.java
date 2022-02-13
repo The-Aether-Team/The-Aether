@@ -1,5 +1,7 @@
 package com.gildedgames.aether.common.entity.monster;
 
+import com.gildedgames.aether.common.entity.NotGrounded;
+import com.gildedgames.aether.common.entity.WingedBird;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.entity.passive.MountableAnimal;
@@ -36,7 +38,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
-public class Cockatrice extends Monster implements RangedAttackMob
+public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, NotGrounded
 {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 
@@ -127,12 +129,53 @@ public class Cockatrice extends Monster implements RangedAttackMob
         this.level.addFreshEntity(needle);
     }
 
+    @Override
     public boolean isEntityOnGround() {
         return this.entityData.get(DATA_ENTITY_ON_GROUND_ID);
     }
 
     public void setEntityOnGround(boolean onGround) {
         this.entityData.set(DATA_ENTITY_ON_GROUND_ID, onGround);
+    }
+
+    @Override
+    public float getWingRotation() {
+        return this.wingRotation;
+    }
+
+    @Override
+    public void setWingRotation(float rot) {
+        this.wingRotation = rot;
+    }
+
+    @Override
+    public float getPrevWingRotation() {
+        return this.prevWingRotation;
+    }
+
+    @Override
+    public void setPrevWingRotation(float rot) {
+        this.prevWingRotation = rot;
+    }
+
+    @Override
+    public float getDestPos() {
+        return this.destPos;
+    }
+
+    @Override
+    public void setDestPos(float pos) {
+        this.destPos = pos;
+    }
+
+    @Override
+    public float getPrevDestPos() {
+        return this.prevDestPos;
+    }
+
+    @Override
+    public void setPrevDestPos(float pos) {
+        this.prevDestPos = pos;
     }
 
     public int getFlapCooldown() {

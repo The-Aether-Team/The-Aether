@@ -13,8 +13,7 @@ import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
-public class SunSpiritModel<T extends Entity> extends EntityModel<T>
-{
+public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
     public ModelPart head;
     public ModelPart jaw;
     public ModelPart torso;

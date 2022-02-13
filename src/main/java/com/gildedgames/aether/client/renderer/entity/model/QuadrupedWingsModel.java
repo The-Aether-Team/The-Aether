@@ -14,8 +14,7 @@ import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
-public class QuadrupedWingsModel<T extends WingedAnimal> extends EntityModel<T>
-{
+public class QuadrupedWingsModel<T extends WingedAnimal> extends EntityModel<T> {
     private final ModelPart leftWingInner;
     private final ModelPart leftWingOuter;
     private final ModelPart rightWingInner;

@@ -14,8 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class QuadrupedWingsLayer<T extends WingedAnimal, M extends QuadrupedModel<T>> extends RenderLayer<T, M>
-{
+public class QuadrupedWingsLayer<T extends WingedAnimal, M extends QuadrupedModel<T>> extends RenderLayer<T, M> {
     private final ResourceLocation resourceLocation;
     private final QuadrupedWingsModel<T> wings;
 

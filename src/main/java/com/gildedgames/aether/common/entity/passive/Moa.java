@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.entity.WingedBird;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 
@@ -42,7 +43,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Optional;
 import java.util.UUID;
 
-public class Moa extends MountableAnimal
+public class Moa extends MountableAnimal implements WingedBird
 {
 	private static final EntityDataAccessor<String> DATA_MOA_TYPE_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.STRING);
 	private static final EntityDataAccessor<Optional<UUID>> DATA_RIDER_UUID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.OPTIONAL_UUID);
@@ -288,6 +289,46 @@ public class Moa extends MountableAnimal
 
 	public void setSitting(boolean isSitting) {
 		this.entityData.set(DATA_SITTING_ID, isSitting);
+	}
+
+	@Override
+	public float getWingRotation() {
+		return this.wingRotation;
+	}
+
+	@Override
+	public void setWingRotation(float rot) {
+		this.wingRotation = rot;
+	}
+
+	@Override
+	public float getPrevWingRotation() {
+		return this.prevWingRotation;
+	}
+
+	@Override
+	public void setPrevWingRotation(float rot) {
+		this.prevWingRotation = rot;
+	}
+
+	@Override
+	public float getDestPos() {
+		return this.destPos;
+	}
+
+	@Override
+	public void setDestPos(float pos) {
+		this.destPos = pos;
+	}
+
+	@Override
+	public float getPrevDestPos() {
+		return this.prevDestPos;
+	}
+
+	@Override
+	public void setPrevDestPos(float pos) {
+		this.prevDestPos = pos;
 	}
 
 	public int getJumpCooldown() {

@@ -22,7 +22,7 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 
-public class CloudMinion extends FlyingMob
+public class CloudMinion extends FlyingMob //TODO: Rotation is not syncing properly. may be a tracking issue, see: entitytypes.
 {
     private static final EntityDataAccessor<Integer> DATA_OWNER_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_IS_RIGHT_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.BOOLEAN);

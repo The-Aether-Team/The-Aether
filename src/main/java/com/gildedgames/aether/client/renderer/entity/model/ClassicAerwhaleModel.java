@@ -11,8 +11,7 @@ import net.minecraft.client.model.geom.builders.*;
 
 import javax.annotation.Nonnull;
 
-public class ClassicAerwhaleModel extends EntityModel<Aerwhale>
-{
+public class ClassicAerwhaleModel extends EntityModel<Aerwhale> {
 	public ModelPart middleBody;
 	public ModelPart leftFin;
 	public ModelPart head;
@@ -34,27 +33,13 @@ public class ClassicAerwhaleModel extends EntityModel<Aerwhale>
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshDefinition = new MeshDefinition();
 		PartDefinition partDefinition = meshDefinition.getRoot();
-		partDefinition.addOrReplaceChild("middle_body", CubeListBuilder.create().texOffs(0, 0)
-				.addBox(-9.0F, -6.0F, 1.0F, 15.0F, 15.0F, 15.0F), PartPose.offset(0.0F, -1.0F, 14.0F));
-
-		partDefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(60, 0)
-				.addBox(-12.0F, -9.0F, -14.0F, 21.0F, 18.0F, 30.0F), PartPose.ZERO);
-
-		partDefinition.addOrReplaceChild("back_body", CubeListBuilder.create().texOffs(0, 30)
-				.addBox(-6.0F, -9.0F, -8.5F, 9.0F, 9.0F, 12.0F), PartPose.offset(0.0F, 2.2F, 38.0F));
-
-		partDefinition.addOrReplaceChild("back_fin_right", CubeListBuilder.create().texOffs(0, 51)
-				.addBox(-4.0F, 0.0F, -6.0F, 24.0F, 3.0F, 12.0F), PartPose.offsetAndRotation(-5.0F, 2.2F, 38.0F,  -0.10471975511965977F,  -2.5497515042385164F, 0.0F));
-
-		partDefinition.addOrReplaceChild("back_fin_left", CubeListBuilder.create().texOffs(0, 51)
-				.addBox(-4.0F, 0.0F, -6.0F, 24.0F, 3.0F, 12.0F), PartPose.offsetAndRotation(3.0F, 2.2F, 38.0F,  0.10471975511965977F,  -0.593411945678072F, 0.0F));
-
-		partDefinition.addOrReplaceChild("fin_right", CubeListBuilder.create().texOffs(0, 66)
-				.addBox(-12.0F, 1.4F, -6.0F, 12.0F, 3.0F, 6.0F), PartPose.offsetAndRotation(-10.0F, 4.0F, 10.0F,  0.0F, 0.17453292519943295F, 0.0F));
-
-		partDefinition.addOrReplaceChild("fin_left", CubeListBuilder.create().texOffs(0, 66)
-				.addBox(0.0F, 1.4F, -6.0F, 12.0F, 3.0F, 6.0F), PartPose.offsetAndRotation(7.0F, 4.0F, 10.0F,  0.0F, -0.17453292519943295F, 0.0F));
-
+		partDefinition.addOrReplaceChild("middle_body", CubeListBuilder.create().texOffs(0, 0).addBox(-9.0F, -6.0F, 1.0F, 15.0F, 15.0F, 15.0F), PartPose.offset(0.0F, -1.0F, 14.0F));
+		partDefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(60, 0).addBox(-12.0F, -9.0F, -14.0F, 21.0F, 18.0F, 30.0F), PartPose.ZERO);
+		partDefinition.addOrReplaceChild("back_body", CubeListBuilder.create().texOffs(0, 30).addBox(-6.0F, -9.0F, -8.5F, 9.0F, 9.0F, 12.0F), PartPose.offset(0.0F, 2.2F, 38.0F));
+		partDefinition.addOrReplaceChild("back_fin_right", CubeListBuilder.create().texOffs(0, 51).addBox(-4.0F, 0.0F, -6.0F, 24.0F, 3.0F, 12.0F), PartPose.offsetAndRotation(-5.0F, 2.2F, 38.0F,  -0.10471975511965977F,  -2.5497515042385164F, 0.0F));
+		partDefinition.addOrReplaceChild("back_fin_left", CubeListBuilder.create().texOffs(0, 51).addBox(-4.0F, 0.0F, -6.0F, 24.0F, 3.0F, 12.0F), PartPose.offsetAndRotation(3.0F, 2.2F, 38.0F,  0.10471975511965977F,  -0.593411945678072F, 0.0F));
+		partDefinition.addOrReplaceChild("fin_right", CubeListBuilder.create().texOffs(0, 66).addBox(-12.0F, 1.4F, -6.0F, 12.0F, 3.0F, 6.0F), PartPose.offsetAndRotation(-10.0F, 4.0F, 10.0F,  0.0F, 0.17453292519943295F, 0.0F));
+		partDefinition.addOrReplaceChild("fin_left", CubeListBuilder.create().texOffs(0, 66).addBox(0.0F, 1.4F, -6.0F, 12.0F, 3.0F, 6.0F), PartPose.offsetAndRotation(7.0F, 4.0F, 10.0F,  0.0F, -0.17453292519943295F, 0.0F));
 		return LayerDefinition.create(meshDefinition, 192, 96);
 	}
 

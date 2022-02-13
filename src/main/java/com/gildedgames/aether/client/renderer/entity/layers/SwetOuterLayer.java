@@ -13,8 +13,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
 import javax.annotation.Nonnull;
 
-public class SwetOuterLayer extends RenderLayer<Swet, SlimeModel<Swet>>
-{
+public class SwetOuterLayer extends RenderLayer<Swet, SlimeModel<Swet>> {
     private final SlimeModel<Swet> outer;
 
     public SwetOuterLayer(RenderLayerParent<Swet, SlimeModel<Swet>> entityRenderer, SlimeModel<Swet> outerModel) {

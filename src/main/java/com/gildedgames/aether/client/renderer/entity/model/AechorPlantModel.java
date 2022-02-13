@@ -12,8 +12,7 @@ import net.minecraft.client.model.geom.builders.*;
 
 import javax.annotation.Nonnull;
 
-public class AechorPlantModel extends EntityModel<AechorPlant>
-{
+public class AechorPlantModel extends EntityModel<AechorPlant> {
     public ModelPart stem;
     public ModelPart head;
     public ModelPart thorn1;
@@ -125,12 +124,6 @@ public class AechorPlantModel extends EntityModel<AechorPlant>
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.stem.render(poseStack, consumer, packedLight, packedOverlay);
-        this.head.render(poseStack, consumer, packedLight, packedOverlay);
-    }
-
-    @Override
     public void setupAnim(@Nonnull AechorPlant aechorPlant, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float sinage1 = (float) Math.sin(aechorPlant.sinage);
         float sinage2;
@@ -147,7 +140,6 @@ public class AechorPlantModel extends EntityModel<AechorPlant>
             sinage2 = 1.75F;
         }
 
-        this.head.xRot = 0.0F;
         this.head.yRot = headPitch / 57.29578F;
         this.stem.yRot = this.head.yRot;
         this.stem.y = sinage2 * 0.5F;
@@ -183,5 +175,11 @@ public class AechorPlantModel extends EntityModel<AechorPlant>
         }
 
         this.head.y = sinage2 + (sinage1 * 2.0F);
+    }
+
+    @Override
+    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        this.stem.render(poseStack, consumer, packedLight, packedOverlay);
+        this.head.render(poseStack, consumer, packedLight, packedOverlay);
     }
 }

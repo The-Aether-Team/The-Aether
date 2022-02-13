@@ -1,17 +1,19 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
+import com.gildedgames.aether.common.entity.NotGrounded;
+import com.gildedgames.aether.common.entity.WingedBird;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nonnull;
 
-public abstract class BipedBirdModel<T extends Entity> extends EntityModel<T>
-{
+public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded> extends EntityModel<T> {
     public ModelPart head;
     public ModelPart jaw;
     public ModelPart neck;
@@ -60,6 +62,41 @@ public abstract class BipedBirdModel<T extends Entity> extends EntityModel<T>
         this.head.xRot = headPitch * (float) (Math.PI / 180.0F);
         this.head.yRot = netHeadYaw * (float) (Math.PI / 180.0F);
         this.neck.xRot = -this.head.xRot;
+
+        if (!bipedBird.isEntityOnGround()) {
+            this.rightWing.setPos(-3.001F, 0.0F, 4.0F);
+            this.leftWing.setPos(3.001F, 0.0F, 4.0F);
+            this.rightWing.xRot = (float) -(Math.PI / 2.0F);
+            this.leftWing.xRot = this.rightWing.xRot;
+            this.rightLeg.xRot = 0.6F;
+            this.leftLeg.xRot = this.rightLeg.xRot;
+        } else {
+            this.rightWing.setPos(-3.001F, -3.0F, 3.0F);
+            this.leftWing.setPos(3.001F, -3.0F, 3.0F);
+            this.rightWing.xRot = 0.0F;
+            this.leftWing.xRot = 0.0F;
+            this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+            this.leftLeg.xRot = Mth.cos((float) (limbSwing * 0.6662F + Math.PI)) * 1.4F * limbSwingAmount;
+        }
+
+        float rotVal = bipedBird.getPrevWingRotation() + (bipedBird.getWingRotation() - bipedBird.getPrevWingRotation());
+        float destVal = bipedBird.getPrevDestPos() + (bipedBird.getDestPos() - bipedBird.getPrevDestPos());
+
+        this.rightWing.yRot = (Mth.sin(rotVal * 0.225F) + 1.0F) * destVal;
+        this.leftWing.yRot = -this.rightWing.yRot;
+    }
+
+    public void setupWingsAnimation(T bipedBird) {
+        bipedBird.setPrevWingRotation(bipedBird.getWingRotation());
+        bipedBird.setPrevDestPos(bipedBird.getDestPos());
+        if (!bipedBird.isEntityOnGround()) {
+            bipedBird.setDestPos(bipedBird.getDestPos() + 0.2F);
+            bipedBird.setDestPos(Math.min(1.0F, Math.max(0.01F, bipedBird.getDestPos())));
+        } else {
+            bipedBird.setDestPos(0.0F);
+            bipedBird.setWingRotation(0.0F);
+        }
+        bipedBird.setWingRotation(bipedBird.getWingRotation() + 1.233F);
     }
 
     @Override

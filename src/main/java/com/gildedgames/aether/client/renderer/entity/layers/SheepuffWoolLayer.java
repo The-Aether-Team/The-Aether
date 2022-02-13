@@ -18,8 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel>
-{
+public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel> {
     private static final ResourceLocation SHEEPUFF_WOOL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff_wool.png");
     private final SheepuffWoolModel wool;
     private final SheepuffWoolModel puffed;

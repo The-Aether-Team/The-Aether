@@ -9,8 +9,7 @@ import net.minecraft.client.model.geom.builders.*;
 
 import javax.annotation.Nonnull;
 
-public class SheepuffWoolModel extends QuadrupedModel<Sheepuff>
-{
+public class SheepuffWoolModel extends QuadrupedModel<Sheepuff> {
     private float headXRot;
 
     public SheepuffWoolModel(ModelPart root) {
