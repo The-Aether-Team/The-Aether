@@ -20,11 +20,9 @@ import com.gildedgames.aether.common.entity.projectile.dart.PoisonDart;
 import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectile;
 import com.gildedgames.aether.common.entity.projectile.weapon.ThrownLightningKnife;
 
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,93 +46,93 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.of(Sheepuff::new, MobCategory.CREATURE).sized(0.9F, 1.3F).clientTrackingRange(10).build("sheepuff"));
 
     public static final RegistryObject<EntityType<Moa>> MOA = ENTITIES.register("moa",
-            () -> EntityType.Builder.of(Moa::new, MobCategory.CREATURE).sized(1.0F, 2.0F).build("moa"));
+            () -> EntityType.Builder.of(Moa::new, MobCategory.CREATURE).sized(1.0F, 2.0F).clientTrackingRange(10).build("moa"));
 
     public static final RegistryObject<EntityType<Aerwhale>> AERWHALE = ENTITIES.register("aerwhale",
-            () -> EntityType.Builder.of(Aerwhale::new, MobCategory.CREATURE).sized(3.0F, 3.0F).fireImmune().build("aerwhale"));
+            () -> EntityType.Builder.of(Aerwhale::new, MobCategory.CREATURE).fireImmune().sized(3.0F, 3.0F).clientTrackingRange(10).build("aerwhale"));
 
     public static final RegistryObject<EntityType<Aerbunny>> AERBUNNY = ENTITIES.register("aerbunny",
-            () -> EntityType.Builder.of(Aerbunny::new, MobCategory.CREATURE).sized(0.4F, 0.4F).build("aerbunny"));
+            () -> EntityType.Builder.of(Aerbunny::new, MobCategory.CREATURE).sized(0.4F, 0.4F).clientTrackingRange(10).build("aerbunny"));
 
     // Hostile Mobs
     public static final RegistryObject<EntityType<Swet>> BLUE_SWET = ENTITIES.register("blue_swet",
-            () -> EntityType.Builder.of(Swet::new, MobCategory.MONSTER).sized(0.8F, 0.8F).build("blue_swet"));
+            () -> EntityType.Builder.of(Swet::new, MobCategory.MONSTER).sized(0.8F, 0.8F).clientTrackingRange(10).build("blue_swet"));
 
     public static final RegistryObject<EntityType<Swet>> GOLDEN_SWET = ENTITIES.register("golden_swet",
-            () -> EntityType.Builder.of(Swet::new, MobCategory.MONSTER).sized(0.8F, 0.8F).build("golden_swet"));
+            () -> EntityType.Builder.of(Swet::new, MobCategory.MONSTER).sized(0.8F, 0.8F).clientTrackingRange(10).build("golden_swet"));
 
     public static final RegistryObject<EntityType<PassiveWhirlwind>> WHIRLWIND = ENTITIES.register("whirlwind",
-            () -> EntityType.Builder.of(PassiveWhirlwind::new, MobCategory.MONSTER).sized(0.6F, 0.8F).build("whirlwind"));
+            () -> EntityType.Builder.of(PassiveWhirlwind::new, MobCategory.MONSTER).fireImmune().sized(0.6F, 0.8F).clientTrackingRange(8).build("whirlwind"));
 
     public static final RegistryObject<EntityType<EvilWhirlwind>> EVIL_WHIRLWIND = ENTITIES.register("evil_whirlwind",
-            () -> EntityType.Builder.of(EvilWhirlwind::new, MobCategory.MONSTER).sized(0.6F, 0.8F).build("evil_whirlwind"));
+            () -> EntityType.Builder.of(EvilWhirlwind::new, MobCategory.MONSTER).fireImmune().sized(0.6F, 0.8F).clientTrackingRange(8).build("evil_whirlwind"));
 
     public static final RegistryObject<EntityType<AechorPlant>> AECHOR_PLANT = ENTITIES.register("aechor_plant",
-            () -> EntityType.Builder.of(AechorPlant::new, MobCategory.MONSTER).sized(1.0F, 1.0F).build("aechor_plant"));
+            () -> EntityType.Builder.of(AechorPlant::new, MobCategory.MONSTER).sized(1.0F, 1.0F).clientTrackingRange(8).build("aechor_plant"));
 
     public static final RegistryObject<EntityType<Cockatrice>> COCKATRICE = ENTITIES.register("cockatrice",
-            () -> EntityType.Builder.of(Cockatrice::new, MobCategory.MONSTER).sized(1.0F, 2.0F).build("cockatrice"));
+            () -> EntityType.Builder.of(Cockatrice::new, MobCategory.MONSTER).sized(1.0F, 2.0F).clientTrackingRange(10).build("cockatrice"));
 
     public static final RegistryObject<EntityType<Zephyr>> ZEPHYR = ENTITIES.register("zephyr",
-            () -> EntityType.Builder.of(Zephyr::new, MobCategory.MONSTER).sized(4.0F, 4.0F).build("zephyr"));
+            () -> EntityType.Builder.of(Zephyr::new, MobCategory.MONSTER).sized(4.0F, 4.0F).clientTrackingRange(10).build("zephyr"));
 
     // Dungeon
 
     public static final RegistryObject<EntityType<Sentry>> SENTRY = ENTITIES.register("sentry",
-            () -> EntityType.Builder.of(Sentry::new, MobCategory.MONSTER).sized(2.0F, 2.0F).build("sentry"));
+            () -> EntityType.Builder.of(Sentry::new, MobCategory.MONSTER).sized(2.0F, 2.0F).clientTrackingRange(10).build("sentry"));
 
     public static final RegistryObject<EntityType<Mimic>> MIMIC = ENTITIES.register("mimic",
-            () -> EntityType.Builder.of(Mimic::new, MobCategory.MONSTER).sized(1.0F, 2.0F).build("mimic"));
+            () -> EntityType.Builder.of(Mimic::new, MobCategory.MONSTER).sized(1.0F, 2.0F).clientTrackingRange(8).build("mimic"));
 
     //public static final EntityType<ValkyrieEntity> VALKYRIE_TYPE = EntityType.Builder.<ValkyrieEntity>of(ValkyrieEntity::new, EntityClassification.MONSTER).sized(0.8F, 1.95F).build("valkyrie");
     //public static final RegistryObject<EntityType<ValkyrieEntity>> VALKYRIE = ENTITIES.register("valkyrie", () -> VALKYRIE_TYPE);
 
     public static final RegistryObject<EntityType<FireMinion>> FIRE_MINION = ENTITIES.register("fire_minion",
-            () -> EntityType.Builder.of(FireMinion::new, MobCategory.MONSTER).sized(0.8F, 1.95F).fireImmune().build("fire_minion"));
+            () -> EntityType.Builder.of(FireMinion::new, MobCategory.MONSTER).fireImmune().sized(0.8F, 1.95F).clientTrackingRange(8).build("fire_minion"));
 
 
     // Miscellaneous
 
     public static final RegistryObject<EntityType<CloudMinion>> CLOUD_MINION = ENTITIES.register("cloud_minion",
-            () -> EntityType.Builder.<CloudMinion>of(CloudMinion::new, MobCategory.MISC).sized(0.75F, 0.75F).build("cloud_minion"));
+            () -> EntityType.Builder.<CloudMinion>of(CloudMinion::new, MobCategory.MISC).sized(0.75F, 0.75F).clientTrackingRange(5).build("cloud_minion"));
 
     public static final RegistryObject<EntityType<Parachute>> COLD_PARACHUTE = ENTITIES.register("cold_parachute",
-            () -> EntityType.Builder.of(Parachute::new, MobCategory.MISC).sized(1.0F, 1.0F).build("cold_parachute"));
+            () -> EntityType.Builder.of(Parachute::new, MobCategory.MISC).sized(1.0F, 1.0F).clientTrackingRange(8).build("cold_parachute"));
 
     public static final RegistryObject<EntityType<Parachute>> GOLDEN_PARACHUTE = ENTITIES.register("golden_parachute",
-            () -> EntityType.Builder.of(Parachute::new, MobCategory.MISC).sized(1.0F, 1.0F).build("golden_parachute"));
+            () -> EntityType.Builder.of(Parachute::new, MobCategory.MISC).sized(1.0F, 1.0F).clientTrackingRange(8).build("golden_parachute"));
 
     public static final RegistryObject<EntityType<FloatingBlockEntity>> FLOATING_BLOCK = ENTITIES.register("floating_block",
-            () -> EntityType.Builder.<FloatingBlockEntity>of(FloatingBlockEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).updateInterval(1).build("floating_block"));
+            () -> EntityType.Builder.<FloatingBlockEntity>of(FloatingBlockEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).clientTrackingRange(10).updateInterval(20).build("floating_block"));
 
     public static final RegistryObject<EntityType<TntPresent>> TNT_PRESENT = ENTITIES.register("tnt_present",
-            () -> EntityType.Builder.<TntPresent>of(TntPresent::new, MobCategory.MISC).sized(1.0F, 1.0F).build("tnt_present"));
+            () -> EntityType.Builder.<TntPresent>of(TntPresent::new, MobCategory.MISC).fireImmune().sized(1.0F, 1.0F).clientTrackingRange(10).updateInterval(10).build("tnt_present"));
 
     // Projectiles
 
     public static final RegistryObject<EntityType<ZephyrSnowball>> ZEPHYR_SNOWBALL = ENTITIES.register("zephyr_snowball",
-            () -> EntityType.Builder.<ZephyrSnowball>of(ZephyrSnowball::new, MobCategory.MISC).sized(1.0F, 1.0F).build("zephyr_snowball"));
+            () -> EntityType.Builder.<ZephyrSnowball>of(ZephyrSnowball::new, MobCategory.MISC).sized(1.0F, 1.0F).clientTrackingRange(4).updateInterval(10).build("zephyr_snowball"));
 
     public static final RegistryObject<EntityType<CloudCrystal>> CLOUD_CRYSTAL = ENTITIES.register("cloud_crystal",
-            () -> EntityType.Builder.<CloudCrystal>of(CloudCrystal::new, MobCategory.MISC).sized(0.5F, 0.5F).build("cloud_crystal"));
+            () -> EntityType.Builder.<CloudCrystal>of(CloudCrystal::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(10).build("cloud_crystal"));
 
     public static final RegistryObject<EntityType<GoldenDart>> GOLDEN_DART = ENTITIES.register("golden_dart",
-            () -> EntityType.Builder.<GoldenDart>of(GoldenDart::new, MobCategory.MISC).sized(0.5F, 0.5F).build("golden_dart"));
+            () -> EntityType.Builder.<GoldenDart>of(GoldenDart::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).build("golden_dart"));
 
     public static final RegistryObject<EntityType<PoisonDart>> POISON_DART = ENTITIES.register("poison_dart",
-            () -> EntityType.Builder.<PoisonDart>of(PoisonDart::new, MobCategory.MISC).sized(0.5F, 0.5F).build("poison_dart"));
+            () -> EntityType.Builder.<PoisonDart>of(PoisonDart::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).build("poison_dart"));
 
     public static final RegistryObject<EntityType<EnchantedDart>> ENCHANTED_DART = ENTITIES.register("enchanted_dart",
-            () -> EntityType.Builder.<EnchantedDart>of(EnchantedDart::new, MobCategory.MISC).sized(0.5F, 0.5F).build("enchanted_dart"));
+            () -> EntityType.Builder.<EnchantedDart>of(EnchantedDart::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).build("enchanted_dart"));
 
     public static final RegistryObject<EntityType<PoisonNeedle>> POISON_NEEDLE = ENTITIES.register("poison_needle",
-            () -> EntityType.Builder.<PoisonNeedle>of(PoisonNeedle::new, MobCategory.MISC).sized(0.5F, 0.5F).build("poison_needle"));
+            () -> EntityType.Builder.<PoisonNeedle>of(PoisonNeedle::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).build("poison_needle"));
 
     public static final RegistryObject<EntityType<ThrownLightningKnife>> LIGHTNING_KNIFE = ENTITIES.register("lightning_knife",
-            () -> EntityType.Builder.<ThrownLightningKnife>of(ThrownLightningKnife::new, MobCategory.MISC).sized(0.25F, 0.25F).build("lightning_knife"));
+            () -> EntityType.Builder.<ThrownLightningKnife>of(ThrownLightningKnife::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build("lightning_knife"));
 
     public static final RegistryObject<EntityType<HammerProjectile>> HAMMER_PROJECTILE = ENTITIES.register("hammer_projectile",
-            () -> EntityType.Builder.<HammerProjectile>of(HammerProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F).build("hammer_projectile"));
+            () -> EntityType.Builder.<HammerProjectile>of(HammerProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build("hammer_projectile"));
 
     public static void registerSpawnPlacements() {
         SpawnPlacements.register(AetherEntityTypes.PHYG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimal::checkAetherAnimalSpawnRules);
