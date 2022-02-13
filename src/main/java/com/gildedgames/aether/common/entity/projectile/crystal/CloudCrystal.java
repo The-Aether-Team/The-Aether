@@ -44,10 +44,10 @@ public class CloudCrystal extends AbstractCrystal {
     public void spawnExplosionParticles() {
         if (this.level instanceof ServerLevel level) {
             for (int i = 0; i < 20; i++) {
-                double d0 = (this.random.nextFloat() - 0.5F) * 0.5D;
-                double d1 = (this.random.nextFloat() - 0.5F) * 0.5D;
-                double d2 = (this.random.nextFloat() - 0.5F) * 0.5D;
-                level.sendParticles(AetherParticleTypes.FROZEN.get(), this.getX(), this.getY(), this.getZ(), 1, d0 * 0.5D, d1 * 0.5D, d2 * 0.5D, 0.0F);
+                double d0 = (this.random.nextFloat() - 0.5F) * 0.5;
+                double d1 = (this.random.nextFloat() - 0.5F) * 0.5;
+                double d2 = (this.random.nextFloat() - 0.5F) * 0.5;
+                level.sendParticles(AetherParticleTypes.FROZEN.get(), this.getX(), this.getY(), this.getZ(), 1, d0 * 0.5, d1 * 0.5, d2 * 0.5, 0.0F);
             }
         }
     }

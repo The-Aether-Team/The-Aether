@@ -153,7 +153,7 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 			InteractionResult actionresulttype = super.mobInteract(playerEntity, hand);
 			if (!actionresulttype.consumesAction()) {
 				ItemStack itemstack = playerEntity.getItemInHand(hand);
-				return itemstack.getItem() == Items.SADDLE ? itemstack.interactLivingEntity(playerEntity, this, hand) : InteractionResult.PASS;
+				return itemstack.is(Items.SADDLE) ? itemstack.interactLivingEntity(playerEntity, this, hand) : InteractionResult.PASS;
 			} else {
 				return actionresulttype;
 			}
@@ -166,15 +166,15 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 		Direction direction = this.getMotionDirection();
 		if (direction.getAxis() != Direction.Axis.Y) {
 			int[][] aint = DismountHelper.offsetsForDirection(direction);
-			BlockPos blockpos = this.blockPosition();
-			BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
+			BlockPos blockPos = this.blockPosition();
+			BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
 			for (Pose pose : livingEntity.getDismountPoses()) {
 				AABB axisalignedbb = livingEntity.getLocalBoundsForPose(pose);
 				for (int[] aint1 : aint) {
-					blockpos$mutable.set(blockpos.getX() + aint1[0], blockpos.getY(), blockpos.getZ() + aint1[1]);
-					double d0 = this.level.getBlockFloorHeight(blockpos$mutable);
+					mutableBlockPos.set(blockPos.getX() + aint1[0], blockPos.getY(), blockPos.getZ() + aint1[1]);
+					double d0 = this.level.getBlockFloorHeight(mutableBlockPos);
 					if (DismountHelper.isBlockFloorValid(d0)) {
-						Vec3 vector3d = Vec3.upFromBottomCenterOf(blockpos$mutable, d0);
+						Vec3 vector3d = Vec3.upFromBottomCenterOf(mutableBlockPos, d0);
 						if (DismountHelper.canDismountTo(this.level, livingEntity, axisalignedbb.move(vector3d))) {
 							livingEntity.setPose(pose);
 							return vector3d;
@@ -254,7 +254,7 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 	}
 
 	protected double getMountJumpStrength() {
-		return 1.8D;
+		return 1.8;
 	}
 
 	@Override

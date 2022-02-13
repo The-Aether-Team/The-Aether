@@ -127,8 +127,8 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 8.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.23F);
+                .add(Attributes.MAX_HEALTH, 8.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.23);
     }
 
     @Override
@@ -289,9 +289,9 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
     public void setSheared(boolean sheared) {
         byte b0 = this.entityData.get(DATA_WOOL_COLOR_ID);
         if (sheared) {
-            this.entityData.set(DATA_WOOL_COLOR_ID, (byte)(b0 | 16));
+            this.entityData.set(DATA_WOOL_COLOR_ID, (byte) (b0 | 16));
         } else {
-            this.entityData.set(DATA_WOOL_COLOR_ID, (byte)(b0 & -17));
+            this.entityData.set(DATA_WOOL_COLOR_ID, (byte) (b0 & -17));
         }
     }
 
@@ -301,7 +301,7 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
 
     public void setColor(DyeColor dyeColor) {
         byte b0 = this.entityData.get(DATA_WOOL_COLOR_ID);
-        this.entityData.set(DATA_WOOL_COLOR_ID, (byte)(b0 & 240 | dyeColor.getId() & 15));
+        this.entityData.set(DATA_WOOL_COLOR_ID, (byte) (b0 & 240 | dyeColor.getId() & 15));
     }
 
     public static DyeColor getRandomSheepuffColor(Random random) {

@@ -3,12 +3,10 @@ package com.gildedgames.aether.common.entity.monster;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.goal.target.NearestTaggedTargetGoal;
-import com.gildedgames.aether.common.entity.passive.AetherAnimal;
 import com.gildedgames.aether.common.entity.passive.MountableAnimal;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.client.SentryExplosionParticlePacket;
 import com.gildedgames.aether.core.network.packet.client.SwetAttackPacket;
 import com.gildedgames.aether.core.network.packet.client.SwetDeathParticlePacket;
 import net.minecraft.core.BlockPos;
@@ -75,9 +73,9 @@ public class Swet extends MountableAnimal {
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 25.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.5D)
-                .add(Attributes.FOLLOW_RANGE, 25.0D);
+                .add(Attributes.MAX_HEALTH, 25.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.5)
+                .add(Attributes.FOLLOW_RANGE, 25.0);
     }
 
     @Override
@@ -128,7 +126,7 @@ public class Swet extends MountableAnimal {
             double d = (float) this.getX() + (this.random.nextFloat() - this.random.nextFloat()) * 0.3F;
             double d1 = (float) this.getY() + this.getBbHeight();
             double d2 = (float) this.getZ() + (this.random.nextFloat() - this.random.nextFloat()) * 0.3F;
-            this.level.addParticle(ParticleTypes.SPLASH, d, d1 - 0.25D, d2, 0.0D, 0.0D, 0.0D);
+            this.level.addParticle(ParticleTypes.SPLASH, d, d1 - 0.25, d2, 0.0, 0.0, 0.0);
         }
 
         if (this.onGround && !this.wasOnGround) {
@@ -213,7 +211,7 @@ public class Swet extends MountableAnimal {
 
         livingEntity.startRiding(this);
 
-        this.setXRot(this.random.nextFloat() * 360F);
+        this.setXRot(this.random.nextFloat() * 360.0F);
     }
 
     public boolean hasPrey() {
@@ -239,7 +237,7 @@ public class Swet extends MountableAnimal {
 
     public void dissolveSwet() {
         if (this.level instanceof ServerLevel level) {
-            AetherPacketHandler.sendToNear(new SwetDeathParticlePacket(this.getId()), this.getX(), this.getY(), this.getZ(), 10.0D, level.dimension());
+            AetherPacketHandler.sendToNear(new SwetDeathParticlePacket(this.getId()), this.getX(), this.getY(), this.getZ(), 10.0, level.dimension());
         }
     }
 
@@ -345,7 +343,7 @@ public class Swet extends MountableAnimal {
 
     @Override
     protected double getMountJumpStrength() {
-        return 1.2D;
+        return 1.2;
     }
 
     @Nonnull
@@ -425,11 +423,11 @@ public class Swet extends MountableAnimal {
                     this.chosenDegrees = (float) this.swet.getRandom().nextInt(360);
 
                     if (this.jumps == 0) {
-                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.64999999403953552D, 0));
+                        this.swet.setDeltaMovement(this.swet.getDeltaMovement().add(0, 0.64999999403953552D, 0));
                     } else if (this.jumps == 1) {
-                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 0.74999998807907104D, 0));
+                        this.swet.setDeltaMovement(this.swet.getDeltaMovement().add(0, 0.74999998807907104D, 0));
                     } else if (this.jumps == 2) {
-                        this.swet.setDeltaMovement(swet.getDeltaMovement().add(0, 1.55D, 0));
+                        this.swet.setDeltaMovement(this.swet.getDeltaMovement().add(0, 1.55D, 0));
                     } else {
                         this.swet.getPassengers().get(0).stopRiding();
                         this.swet.dissolveSwetNormally();
@@ -464,7 +462,7 @@ public class Swet extends MountableAnimal {
             float f1 = Mth.sin(rotation * 0.017453292F);
             float f2 = Mth.cos(rotation * 0.017453292F);
 
-            this.swet.setDeltaMovement((strafe * f2 - forward * f1), swet.getDeltaMovement().y, (forward * f2 + strafe * f1));
+            this.swet.setDeltaMovement((strafe * f2 - forward * f1), this.swet.getDeltaMovement().y, (forward * f2 + strafe * f1));
         }
     }
 
@@ -552,7 +550,7 @@ public class Swet extends MountableAnimal {
         }
 
         public void tick() {
-            ((MoveHelperController) this.swet.getMoveControl()).setWantedMovement(1.0D);
+            ((MoveHelperController) this.swet.getMoveControl()).setWantedMovement(1.0);
         }
     }
 

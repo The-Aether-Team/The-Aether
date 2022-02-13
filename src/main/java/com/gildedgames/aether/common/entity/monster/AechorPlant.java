@@ -51,7 +51,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0,  new RangedAttackGoal(this, 1.0, 60, 10));
+        this.goalSelector.addGoal(0,  new RangedAttackGoal(this, 1.0, 60, 10.0F));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(2, new NearestTaggedTargetGoal(this, AetherTags.Entities.AECHOR_PLANT_TARGETS, true));
     }
@@ -59,9 +59,9 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 15.0F)
-                .add(Attributes.MOVEMENT_SPEED, 0.0F)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0F);
+                .add(Attributes.MAX_HEALTH, 15.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.0)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0);
     }
 
     @Override
@@ -146,9 +146,9 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
                     d2 = Math.sqrt(d2);
                     d0 /= d2;
                     d1 /= d2;
-                    double d3 = 1.0D / d2;
-                    if (d3 > 1.0D) {
-                        d3 = 1.0D;
+                    double d3 = 1.0 / d2;
+                    if (d3 > 1.0) {
+                        d3 = 1.0;
                     }
 
                     d0 *= d3;
@@ -157,7 +157,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
                     d1 *= 0.05F;
 
                     if (!entity.isVehicle()) {
-                        entity.push(d0, 0.0D, d1);
+                        entity.push(d0, 0.0, d1);
                     }
                 }
             }
@@ -168,12 +168,12 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     public boolean hurt(@Nonnull DamageSource damageSource, float amount) {
         if (this.hurtTime == 0) {
             for (int i = 0; i < 8; ++i) {
-                double d1 = this.getX() + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.5D;
-                double d2 = this.getY() + 0.25D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.5D;
-                double d3 = this.getZ() + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.5D;
-                double d4 = (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.5D;
-                double d5 = (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.5D;
-                this.level.addParticle(ParticleTypes.PORTAL, d1, d2, d3, d4, 0.25D, d5);
+                double d1 = this.getX() + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.5;
+                double d2 = this.getY() + 0.25 + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.5;
+                double d3 = this.getZ() + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.5;
+                double d4 = (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.5;
+                double d5 = (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.5;
+                this.level.addParticle(ParticleTypes.PORTAL, d1, d2, d3, d4, 0.25, d5);
             }
         }
         return super.hurt(damageSource, amount);

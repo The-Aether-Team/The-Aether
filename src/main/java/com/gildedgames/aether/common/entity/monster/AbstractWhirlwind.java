@@ -63,9 +63,9 @@ public abstract class AbstractWhirlwind extends Mob {
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 10.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.025D)
-                .add(Attributes.FOLLOW_RANGE, 16.0D);
+                .add(Attributes.MAX_HEALTH, 10.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.025)
+                .add(Attributes.FOLLOW_RANGE, 16.0);
     }
 
     @Override
@@ -77,7 +77,7 @@ public abstract class AbstractWhirlwind extends Mob {
     @Override
     public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
         this.setColorData(this.getDefaultColor());
-        this.movementAngle = this.random.nextFloat() * 360F;
+        this.movementAngle = this.random.nextFloat() * 360.0F;
         this.movementCurve = (this.random.nextFloat() - this.random.nextFloat()) * 0.1F;
         return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
     }

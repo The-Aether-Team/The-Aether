@@ -113,7 +113,7 @@ public class FloatingBlockEntity extends Entity {
                 boolean isConcrete = this.blockState.getBlock() instanceof ConcretePowderBlock;
                 boolean canConvert = isConcrete && this.level.getFluidState(blockPos1).is(FluidTags.WATER);
                 double d0 = this.getDeltaMovement().lengthSqr();
-                if (isConcrete && d0 > 1.0D) {
+                if (isConcrete && d0 > 1.0) {
                     BlockHitResult blockHitResult = this.level.clip(new ClipContext(new Vec3(this.xo, this.yo, this.zo), this.position(), ClipContext.Block.COLLIDER, ClipContext.Fluid.SOURCE_ONLY, this));
                     if (blockHitResult.getType() != HitResult.Type.MISS && this.level.getFluidState(blockHitResult.getBlockPos()).is(FluidTags.WATER)) {
                         blockPos1 = blockHitResult.getBlockPos();
@@ -255,7 +255,7 @@ public class FloatingBlockEntity extends Entity {
             double d0 = (this.getX() - 0.5) + this.random.nextDouble();
             double d1 = this.getY() - 0.05;
             double d2 = (this.getZ() - 0.5) + this.random.nextDouble();
-            this.level.addParticle(new BlockParticleOption(ParticleTypes.FALLING_DUST, this.getBlockState()), d0, d1, d2, 0.0D, 0.0D, 0.0D);
+            this.level.addParticle(new BlockParticleOption(ParticleTypes.FALLING_DUST, this.getBlockState()), d0, d1, d2, 0.0, 0.0, 0.0);
         }
     }
 

@@ -119,7 +119,7 @@ public class Sentry extends Slime {
 			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, Explosion.BlockInteraction.NONE);
 			this.playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 0.2F * (this.random.nextFloat() - this.random.nextFloat()) + 1);
 			if (this.level instanceof ServerLevel level) {
-				AetherPacketHandler.sendToNear(new SentryExplosionParticlePacket(this.getId()), this.getX(), this.getY(), this.getZ(), 10.0D, level.dimension());
+				AetherPacketHandler.sendToNear(new SentryExplosionParticlePacket(this.getId()), this.getX(), this.getY(), this.getZ(), 10.0, level.dimension());
 				level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, this.getX(), this.getY(), this.getZ(), 1, 0.0, 0.0, 0.0, 0.5);
 			}
 			this.doEnchantDamageEffects(this, livingEntity);

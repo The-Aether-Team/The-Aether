@@ -71,9 +71,9 @@ public class Moa extends MountableAnimal implements WingedBird {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.goalSelector.addGoal(0, new FloatGoal(this));
-		this.goalSelector.addGoal(1, new PanicGoal(this, 0.65F));
-		this.goalSelector.addGoal(2, new TemptGoal(this, 1.0F, Ingredient.of(AetherTags.Items.MOA_TEMPTATION_ITEMS), false));
-		this.goalSelector.addGoal(3, new FallingRandomStrollGoal(this, 0.35F));
+		this.goalSelector.addGoal(1, new PanicGoal(this, 0.65));
+		this.goalSelector.addGoal(2, new TemptGoal(this, 1.0, Ingredient.of(AetherTags.Items.MOA_TEMPTATION_ITEMS), false));
+		this.goalSelector.addGoal(3, new FallingRandomStrollGoal(this, 0.35));
 		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
 	}
@@ -87,8 +87,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Nonnull
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return Mob.createMobAttributes()
-				.add(Attributes.MAX_HEALTH, 35.0D)
-				.add(Attributes.MOVEMENT_SPEED, 1.0D);
+				.add(Attributes.MAX_HEALTH, 35.0)
+				.add(Attributes.MOVEMENT_SPEED, 1.0);
 	}
 
 	@Override
@@ -396,7 +396,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	protected double getMountJumpStrength() {
-		return this.isOnGround() ? 0.9D : 0.75D;
+		return this.isOnGround() ? 0.9 : 0.75;
 	}
 
 	@Override

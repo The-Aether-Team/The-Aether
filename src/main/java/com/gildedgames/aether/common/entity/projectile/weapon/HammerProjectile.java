@@ -60,12 +60,12 @@ public class HammerProjectile extends ThrowableProjectile {
     }
 
     public void shoot(Player player, float rotationPitch, float rotationYaw, float v, float velocity, float inaccuracy) {
-        float x = -Mth.sin(rotationYaw * ((float) Math.PI / 180F)) * Mth.cos(rotationPitch * ((float) Math.PI / 180F));
-        float y = -Mth.sin((rotationPitch + v) * ((float) Math.PI / 180F));
-        float z = Mth.cos(rotationYaw * ((float) Math.PI / 180F)) * Mth.cos(rotationPitch * ((float) Math.PI / 180F));
+        float x = -Mth.sin(rotationYaw * ((float) Math.PI / 180.0F)) * Mth.cos(rotationPitch * ((float) Math.PI / 180.0F));
+        float y = -Mth.sin((rotationPitch + v) * ((float) Math.PI / 180.0F));
+        float z = Mth.cos(rotationYaw * ((float) Math.PI / 180.0F)) * Mth.cos(rotationPitch * ((float) Math.PI / 180.0F));
         this.shoot(x, y, z, velocity, inaccuracy);
         Vec3 playerMotion = player.getDeltaMovement();
-        this.setDeltaMovement(this.getDeltaMovement().add(playerMotion.x, player.isOnGround() ? 0.0D : playerMotion.y, playerMotion.z));
+        this.setDeltaMovement(this.getDeltaMovement().add(playerMotion.x, player.isOnGround() ? 0.0 : playerMotion.y, playerMotion.z));
     }
 
     @Override
@@ -96,7 +96,7 @@ public class HammerProjectile extends ThrowableProjectile {
     protected void onHitBlock(@Nonnull BlockHitResult result) {
         super.onHitBlock(result);
         if (!this.level.isClientSide) {
-            List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate(3.0D));
+            List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate(3.0));
             for (Entity target : list) {
                 launchTarget(target);
             }
@@ -107,7 +107,7 @@ public class HammerProjectile extends ThrowableProjectile {
         if (target != this.getOwner()) {
             if (this.getOwner() == null || target != this.getOwner().getVehicle()) {
                 target.hurt(DamageSource.thrown(this, this.getOwner()), 5);
-                target.push(this.getDeltaMovement().x, 0.6D, this.getDeltaMovement().z);
+                target.push(this.getDeltaMovement().x, 0.6, this.getDeltaMovement().z);
             }
         }
     }

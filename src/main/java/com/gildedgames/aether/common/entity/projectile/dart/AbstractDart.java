@@ -47,7 +47,7 @@ public abstract class AbstractDart extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         float f = (float) this.getDeltaMovement().length();
-        int i = Mth.ceil(Mth.clamp((double) f * this.getBaseDamage(), 0.0D, 2.147483647E9D));
+        int i = Mth.ceil(Mth.clamp((double) f * this.getBaseDamage(), 0.0, 2.147483647E9));
 
         Entity entity1 = this.getOwner();
         DamageSource damagesource;
@@ -73,9 +73,9 @@ public abstract class AbstractDart extends AbstractArrow {
 
             if (entity instanceof LivingEntity livingentity) {
                 if (this.getKnockback() > 0) {
-                    Vec3 vector3d = this.getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale((double) this.getKnockback() * 0.6D);
-                    if (vector3d.lengthSqr() > 0.0D) {
-                        livingentity.push(vector3d.x, 0.1D, vector3d.z);
+                    Vec3 vector3d = this.getDeltaMovement().multiply(1.0, 0.0, 1.0).normalize().scale((double) this.getKnockback() * 0.6);
+                    if (vector3d.lengthSqr() > 0.0) {
+                        livingentity.push(vector3d.x, 0.1, vector3d.z);
                     }
                 }
 
@@ -98,7 +98,7 @@ public abstract class AbstractDart extends AbstractArrow {
             this.setYRot(this.getYRot() + 180.0F);
 
             this.yRotO += 180.0F;
-            if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D) {
+            if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7) {
                 if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
                     this.spawnAtLocation(this.getPickupItem(), 0.1F);
                 }

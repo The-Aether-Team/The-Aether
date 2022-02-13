@@ -55,8 +55,8 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(2,  new RangedAttackGoal(this, 1.0F, 60, 10.0F));
-        this.goalSelector.addGoal(3, new FallingRandomStrollGoal(this, 1.0F));
+        this.goalSelector.addGoal(2,  new RangedAttackGoal(this, 1.0, 60, 10.0F));
+        this.goalSelector.addGoal(3, new FallingRandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 5.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
@@ -72,8 +72,8 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.25D);
+                .add(Attributes.MAX_HEALTH, 20.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.25);
     }
 
     @Override

@@ -56,14 +56,14 @@ public class Parachute extends Entity {
         if (this.isVehicle()) {
             Vec3 parachuteVec = this.getDeltaMovement();
             Vec3 passengerVec = passenger.getDeltaMovement();
-            if (passengerVec.x() != 0.0D || passengerVec.z() != 0.0D) {
+            if (passengerVec.x() != 0.0 || passengerVec.z() != 0.0) {
                 this.parachuteSpeed = Mth.approach(this.parachuteSpeed, 0.8F, 0.025F);
             } else {
                 this.parachuteSpeed = Mth.approach(this.parachuteSpeed, 0.0F, 0.0005F);
             }
-            double x = this.parachuteSpeed * (passengerVec.x() * 12.0D);
-            double z = this.parachuteSpeed * (passengerVec.z() * 12.0D);
-            this.setDeltaMovement(parachuteVec.add((new Vec3(x, 0.0D, z)).subtract(parachuteVec).scale(0.2D)));
+            double x = this.parachuteSpeed * (passengerVec.x() * 12.0);
+            double z = this.parachuteSpeed * (passengerVec.z() * 12.0);
+            this.setDeltaMovement(parachuteVec.add((new Vec3(x, 0.0D, z)).subtract(parachuteVec).scale(0.2)));
             Vec3 parachuteVec2 = this.getDeltaMovement();
             double fallSpeed = passenger instanceof LivingEntity livingEntity && livingEntity.hasEffect(MobEffects.SLOW_FALLING) ? -0.075 : -0.15;
             this.setDeltaMovement(parachuteVec2.x(), fallSpeed, parachuteVec2.z());
@@ -100,7 +100,7 @@ public class Parachute extends Entity {
 
     @Override
     public double getPassengersRidingOffset() {
-        return 1.35D;
+        return 1.35;
     }
 
     @Override

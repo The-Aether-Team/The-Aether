@@ -11,12 +11,12 @@ import javax.annotation.Nonnull;
 public class GoldenDart extends AbstractDart {
     public GoldenDart(EntityType<? extends GoldenDart> type, Level level) {
         super(type, level);
-        this.setBaseDamage(4.0D);
+        this.setBaseDamage(4.0);
     }
 
     public GoldenDart(Level level) {
         super(AetherEntityTypes.GOLDEN_DART.get(), level);
-        this.setBaseDamage(4.0D);
+        this.setBaseDamage(4.0);
     }
 
     @Nonnull

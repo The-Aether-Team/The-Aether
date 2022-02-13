@@ -11,12 +11,12 @@ import javax.annotation.Nonnull;
 public class EnchantedDart extends AbstractDart {
     public EnchantedDart(EntityType<? extends EnchantedDart> type, Level level) {
         super(type, level);
-        this.setBaseDamage(6.0D);
+        this.setBaseDamage(6.0);
     }
 
     public EnchantedDart(Level level) {
         super(AetherEntityTypes.ENCHANTED_DART.get(), level);
-        this.setBaseDamage(6.0D);
+        this.setBaseDamage(6.0);
     }
 
     @Nonnull
