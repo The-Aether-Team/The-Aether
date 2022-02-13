@@ -17,18 +17,17 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 
-public class ThrownLightningKnife extends ThrowableItemProjectile
-{
-	public ThrownLightningKnife(EntityType<? extends ThrownLightningKnife> entityTypeIn, Level worldIn) {
-		super(entityTypeIn, worldIn);
+public class ThrownLightningKnife extends ThrowableItemProjectile {
+	public ThrownLightningKnife(EntityType<? extends ThrownLightningKnife> type, Level level) {
+		super(type, level);
 	}
 
-	public ThrownLightningKnife(LivingEntity owner, Level worldIn) {
-		super(AetherEntityTypes.LIGHTNING_KNIFE.get(), owner, worldIn);
+	public ThrownLightningKnife(LivingEntity owner, Level level) {
+		super(AetherEntityTypes.LIGHTNING_KNIFE.get(), owner, level);
 	}
 
-	public ThrownLightningKnife(Level worldIn) {
-		super(AetherEntityTypes.LIGHTNING_KNIFE.get(), worldIn);
+	public ThrownLightningKnife(Level level) {
+		super(AetherEntityTypes.LIGHTNING_KNIFE.get(), level);
 	}
 
 	@Override

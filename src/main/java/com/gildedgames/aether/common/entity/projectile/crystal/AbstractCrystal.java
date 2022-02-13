@@ -19,12 +19,11 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 
-public abstract class AbstractCrystal extends Projectile
-{
+public abstract class AbstractCrystal extends Projectile {
     private int ticksInAir = 0;
 
-    protected AbstractCrystal(EntityType<? extends AbstractCrystal> entityType, Level world) {
-        super(entityType, world);
+    protected AbstractCrystal(EntityType<? extends AbstractCrystal> entityType, Level level) {
+        super(entityType, level);
         this.setNoGravity(true);
     }
 

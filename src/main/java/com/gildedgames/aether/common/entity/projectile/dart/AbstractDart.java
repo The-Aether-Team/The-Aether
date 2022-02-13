@@ -21,16 +21,15 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 
-public abstract class AbstractDart extends AbstractArrow
-{
+public abstract class AbstractDart extends AbstractArrow {
     private int ticksInAir = 0;
 
-    protected AbstractDart(EntityType<? extends AbstractArrow> type, Level worldIn) {
-        super(type, worldIn);
+    protected AbstractDart(EntityType<? extends AbstractDart> type, Level level) {
+        super(type, level);
     }
 
-    public AbstractDart(EntityType<? extends AbstractArrow> type, LivingEntity shooter, Level worldIn) {
-        super(type, shooter, worldIn);
+    public AbstractDart(EntityType<? extends AbstractDart> type, LivingEntity shooter, Level level) {
+        super(type, shooter, level);
     }
 
     @Override

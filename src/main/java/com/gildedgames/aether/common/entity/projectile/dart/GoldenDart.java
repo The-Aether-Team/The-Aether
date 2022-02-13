@@ -8,15 +8,14 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
-public class GoldenDart extends AbstractDart
-{
-    public GoldenDart(EntityType<? extends GoldenDart> type, Level worldIn) {
-        super(type, worldIn);
+public class GoldenDart extends AbstractDart {
+    public GoldenDart(EntityType<? extends GoldenDart> type, Level level) {
+        super(type, level);
         this.setBaseDamage(4.0D);
     }
 
-    public GoldenDart(Level worldIn) {
-        super(AetherEntityTypes.GOLDEN_DART.get(), worldIn);
+    public GoldenDart(Level level) {
+        super(AetherEntityTypes.GOLDEN_DART.get(), level);
         this.setBaseDamage(4.0D);
     }
 

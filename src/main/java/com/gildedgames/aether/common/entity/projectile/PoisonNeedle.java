@@ -11,15 +11,14 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
-public class PoisonNeedle extends AbstractDart
-{
-    public PoisonNeedle(EntityType<? extends PoisonNeedle> type, Level worldIn) {
-        super(type, worldIn);
+public class PoisonNeedle extends AbstractDart {
+    public PoisonNeedle(EntityType<? extends PoisonNeedle> type, Level level) {
+        super(type, level);
         this.setBaseDamage(1.0D);
     }
 
-    public PoisonNeedle(Level worldIn, LivingEntity shooter) {
-        super(AetherEntityTypes.POISON_NEEDLE.get(), shooter, worldIn);
+    public PoisonNeedle(Level level, LivingEntity shooter) {
+        super(AetherEntityTypes.POISON_NEEDLE.get(), shooter, level);
         this.setBaseDamage(1.0D);
     }
 

@@ -28,17 +28,16 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 
-public class ZephyrSnowball extends Fireball implements ItemSupplier
-{
+public class ZephyrSnowball extends Fireball implements ItemSupplier {
 	private int ticksInAir;
 
-	public ZephyrSnowball(EntityType<? extends ZephyrSnowball> type, Level worldIn) {
-		super(type, worldIn);
+	public ZephyrSnowball(EntityType<? extends ZephyrSnowball> type, Level level) {
+		super(type, level);
 		this.setNoGravity(true);
 	}
 
-	public ZephyrSnowball(Level worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
-		super(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), shooter, accelX, accelY, accelZ, worldIn);
+	public ZephyrSnowball(Level level, LivingEntity shooter, double accelX, double accelY, double accelZ) {
+		super(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), shooter, accelX, accelY, accelZ, level);
 		this.setNoGravity(true);
 	}
 

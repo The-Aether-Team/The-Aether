@@ -23,22 +23,21 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class HammerProjectile extends ThrowableProjectile
-{
+public class HammerProjectile extends ThrowableProjectile {
     private static final EntityDataAccessor<Boolean> DATA_JEB_ID = SynchedEntityData.defineId(HammerProjectile.class, EntityDataSerializers.BOOLEAN);
 
     private int ticksInAir = 0;
 
-    public HammerProjectile(EntityType<? extends HammerProjectile> type, Level worldIn) {
-        super(type, worldIn);
+    public HammerProjectile(EntityType<? extends HammerProjectile> type, Level level) {
+        super(type, level);
     }
 
-    public HammerProjectile(LivingEntity owner, Level world) {
-        super(AetherEntityTypes.HAMMER_PROJECTILE.get(), owner, world);
+    public HammerProjectile(LivingEntity owner, Level level) {
+        super(AetherEntityTypes.HAMMER_PROJECTILE.get(), owner, level);
     }
 
-    public HammerProjectile(Level world) {
-        super(AetherEntityTypes.HAMMER_PROJECTILE.get(), world);
+    public HammerProjectile(Level level) {
+        super(AetherEntityTypes.HAMMER_PROJECTILE.get(), level);
     }
 
     @Override

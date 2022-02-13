@@ -17,14 +17,13 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 
-public class CloudCrystal extends AbstractCrystal
-{
-    public CloudCrystal(EntityType<? extends AbstractCrystal> entityType, Level world) {
-        super(entityType, world);
+public class CloudCrystal extends AbstractCrystal {
+    public CloudCrystal(EntityType<? extends CloudCrystal> entityType, Level level) {
+        super(entityType, level);
     }
 
-    public CloudCrystal(Level world) {
-        super(AetherEntityTypes.CLOUD_CRYSTAL.get(), world);
+    public CloudCrystal(Level level) {
+        super(AetherEntityTypes.CLOUD_CRYSTAL.get(), level);
     }
 
     @Override
