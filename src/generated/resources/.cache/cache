@@ -1235,6 +1235,7 @@ ea2a3ab67da000291547e7b4db01917e8c45d64d data/aether/recipes/zanite_shovel_repai
 4c59eb2bccf358c5860cd8de021fb2d7e9be6205 data/aether/tags/blocks/aechor_plant_spawnable_on.json
 8d6c9296865148dd7bd9a1a7bd93162b92f9573c data/aether/tags/blocks/aerclouds.json
 36c4998736ba1b2f6f0dd59363b4fd9f1977f8cf data/aether/tags/blocks/aerogel.json
+55f59c0a5e2f545636add709ca265ec8ac1f9b0a data/aether/tags/blocks/aerwhale_spawnable_on.json
 4c59eb2bccf358c5860cd8de021fb2d7e9be6205 data/aether/tags/blocks/aether_animals_spawnable_on.json
 c6ee5014148eca27283bde75333809c4f2d13051 data/aether/tags/blocks/aether_dirt.json
 23c9f09c73c054385b299813a55bf68fda32cdac data/aether/tags/blocks/aether_island_blocks.json

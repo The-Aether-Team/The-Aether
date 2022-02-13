@@ -84,6 +84,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.TRAPPED_HELLFIRE_STONE.get(),
                 AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE.get());
         tag(AetherTags.Blocks.AETHER_ANIMALS_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
+        tag(AetherTags.Blocks.AERWHALE_SPAWNABLE_ON).addTags(AetherTags.Blocks.AERCLOUDS);
         tag(AetherTags.Blocks.SWET_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
         tag(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
         tag(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON).addTags(AetherTags.Blocks.AERCLOUDS);

@@ -25,6 +25,7 @@ public class AetherTags
 		public static final Tag.Named<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final Tag.Named<Block> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
 		public static final Tag.Named<Block> AETHER_ANIMALS_SPAWNABLE_ON = tag("aether_animals_spawnable_on");
+		public static final Tag.Named<Block> AERWHALE_SPAWNABLE_ON = tag("aerwhale_spawnable_on");
 		public static final Tag.Named<Block> SWET_SPAWNABLE_ON = tag("swet_spawnable_on");
 		public static final Tag.Named<Block> AECHOR_PLANT_SPAWNABLE_ON = tag("aechor_plant_spawnable_on");
 		public static final Tag.Named<Block> ZEPHYR_SPAWNABLE_ON = tag("zephyr_spawnable_on");
