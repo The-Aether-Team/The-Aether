@@ -440,6 +440,10 @@ public class AetherSoundData extends SoundDefinitionsProvider
                 definition().with(sound("minecraft:random/bow"))
                 .subtitle("subtitles.entity.aechor_plant.shoot")
         );
+        this.add(AetherSoundEvents.ENTITY_AECHOR_PLANT_DEATH,
+                definition().with(sound("minecraft:damage/fallbig"))
+                        .subtitle("subtitles.entity.aechor_plant.death")
+        );
         this.add(AetherSoundEvents.ENTITY_COCKATRICE_SHOOT,
                 definition().with(sound("minecraft:random/bow"))
                 .subtitle("subtitles.entity.cockatrice.shoot")

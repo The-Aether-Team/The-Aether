@@ -37,7 +37,7 @@ import net.minecraft.world.phys.Vec3;
 
 public abstract class AbstractWhirlwind extends Mob
 {
-    public static final EntityDataAccessor<Integer> COLOR_DATA = SynchedEntityData.defineId(AbstractWhirlwind.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Integer> DATA_COLOR_ID = SynchedEntityData.defineId(AbstractWhirlwind.class, EntityDataSerializers.INT);
 
     public int lifeLeft;
     public int actionTimer;
@@ -67,12 +67,7 @@ public abstract class AbstractWhirlwind extends Mob
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(COLOR_DATA, this.getDefaultColor());
-    }
-
-    @Override
-    public boolean checkSpawnRules(@Nonnull LevelAccessor level, @Nonnull MobSpawnType reason) {
-        return this.level.isUnobstructed(this) && !this.level.containsAnyLiquid(this.getBoundingBox());
+        this.entityData.define(DATA_COLOR_ID, this.getDefaultColor());
     }
 
     @Override
@@ -83,7 +78,7 @@ public abstract class AbstractWhirlwind extends Mob
         return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
     }
 
-    public static boolean canWhirlwindSpawn(EntityType<? extends AbstractWhirlwind> typeIn, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random randomIn) {
+    public static boolean checkWhirlwindSpawnRules(EntityType<? extends AbstractWhirlwind> typeIn, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random randomIn) {
         return level.getBlockState(pos.below()).is(AetherTags.Blocks.AETHER_ANIMALS_SPAWNABLE_ON) && level.getMaxLocalRawBrightness(pos) > 8 && Mob.checkMobSpawnRules(typeIn, level, reason, pos, randomIn);
     }
 
@@ -182,12 +177,12 @@ public abstract class AbstractWhirlwind extends Mob
 
     public abstract ResourceLocation getLootLocation();
 
-    public void setColorData(int color) {
-        this.entityData.set(COLOR_DATA, color);
+    public int getColorData() {
+        return this.entityData.get(DATA_COLOR_ID);
     }
 
-    public int getColorData() {
-        return this.entityData.get(COLOR_DATA);
+    public void setColorData(int color) {
+        this.entityData.set(DATA_COLOR_ID, color);
     }
 
     public abstract int getDefaultColor();

@@ -30,17 +30,17 @@ public class AerbunnyModel extends EntityModel<Aerbunny>
 
     public AerbunnyModel(ModelPart root) {
         this.head = root.getChild("head");
-        this.rightEar = head.getChild("right_ear");
-        this.leftEar = head.getChild("left_ear");
-        this.rightWhiskers = head.getChild("right_whiskers");
-        this.leftWhiskers = head.getChild("left_whiskers");
+        this.rightEar = this.head.getChild("right_ear");
+        this.leftEar = this.head.getChild("left_ear");
+        this.rightWhiskers = this.head.getChild("right_whiskers");
+        this.leftWhiskers = this.head.getChild("left_whiskers");
         this.body = root.getChild("body");
         this.puff = root.getChild("puff");
-        this.tail = body.getChild("tail");
-        this.rightFrontLeg = body.getChild("right_front_leg");
-        this.leftFrontLeg = body.getChild("left_front_leg");
-        this.rightBackLeg = body.getChild("right_back_leg");
-        this.leftBackLeg = body.getChild("left_back_leg");
+        this.tail = this.body.getChild("tail");
+        this.rightFrontLeg = this.body.getChild("right_front_leg");
+        this.leftFrontLeg = this.body.getChild("left_front_leg");
+        this.rightBackLeg = this.body.getChild("right_back_leg");
+        this.leftBackLeg = this.body.getChild("left_back_leg");
     }
 
     public static LayerDefinition createBodyLayer() {

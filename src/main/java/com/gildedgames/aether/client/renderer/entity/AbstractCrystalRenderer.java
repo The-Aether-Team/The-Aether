@@ -30,11 +30,11 @@ public abstract class AbstractCrystalRenderer<T extends AbstractCrystal> extends
         VertexConsumer iVertexBuilder = buffer.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(crystal)));
         float f = (float) crystal.tickCount + partialTicks;
         poseStack.mulPose(Vector3f.XP.rotationDegrees(f * 0.1F * 360.0F));
-        this.model.crystal_0.render(poseStack, iVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.model.crystal1.render(poseStack, iVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         poseStack.mulPose(Vector3f.YP.rotationDegrees(f * 0.1F * 360.0F));
-        this.model.crystal_1.render(poseStack, iVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.model.crystal2.render(poseStack, iVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         poseStack.mulPose(Vector3f.ZP.rotationDegrees(f * 0.1F * 360.0F));
-        this.model.crystal_2.render(poseStack, iVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.model.crystal3.render(poseStack, iVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         poseStack.popPose();
         super.render(crystal, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }

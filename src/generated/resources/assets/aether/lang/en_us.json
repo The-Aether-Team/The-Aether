@@ -587,6 +587,7 @@
   "subtitles.block.aether_portal.trigger": "Aether Portal noise intensifies",
   "subtitles.block.chest_mimic.open": "Mimic awakens",
   "subtitles.block.dungeon_trap.trigger": "Dungeon Trap activated",
+  "subtitles.entity.aechor_plant.death": "Aechor Plant dies",
   "subtitles.entity.aechor_plant.shoot": "Aechor Plant shoots",
   "subtitles.entity.aerbunny.death": "Aerbunny dies",
   "subtitles.entity.aerbunny.hurt": "Aerbunny squeals",

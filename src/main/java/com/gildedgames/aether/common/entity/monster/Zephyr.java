@@ -60,7 +60,7 @@ public class Zephyr extends FlyingMob implements Enemy
 		this.entityData.define(ATTACK_CHARGE, 0);
 	}
 
-	public static boolean canZephyrSpawn(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random random) {
+	public static boolean checkZephyrSpawnRules(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random random) {
 		AABB boundingBox = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 4, pos.getY() + 4, pos.getZ() + 4);
 		return level.getDifficulty() != Difficulty.PEACEFUL && level.getEntitiesOfClass(Zephyr.class, boundingBox).size() == 0 && !level.containsAnyLiquid(boundingBox)
 				&& level.getMaxLocalRawBrightness(pos) > 8 && checkMobSpawnRules(zephyr, level, reason, pos, random);

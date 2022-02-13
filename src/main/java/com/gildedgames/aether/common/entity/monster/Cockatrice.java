@@ -113,7 +113,7 @@ public class Cockatrice extends Monster implements RangedAttackMob
         double d2 = target.getZ() - this.getZ();
         double d3 = Mth.sqrt((float) (Mth.square(d0) + Mth.square(d2)));
         needle.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.0F, (float) (14 - this.level.getDifficulty().getId() * 4));
-        this.playSound(AetherSoundEvents.ENTITY_COCKATRICE_SHOOT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+        this.playSound(AetherSoundEvents.ENTITY_COCKATRICE_SHOOT.get(), 2.0F, 1.0F / (this.random.nextFloat() * 0.4F + 0.8F));
         this.level.addFreshEntity(needle);
     }
 

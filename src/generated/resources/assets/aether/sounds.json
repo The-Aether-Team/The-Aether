@@ -526,6 +526,12 @@
       "random/bow"
     ]
   },
+  "entity.aechor_plant.death": {
+    "subtitle": "subtitles.entity.aechor_plant.death",
+    "sounds": [
+      "damage/fallbig"
+    ]
+  },
   "entity.cockatrice.shoot": {
     "subtitle": "subtitles.entity.cockatrice.shoot",
     "sounds": [
