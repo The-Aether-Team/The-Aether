@@ -11,8 +11,7 @@ import net.minecraft.world.entity.Mob;
 
 import javax.annotation.Nonnull;
 
-public abstract class MultiModelRenderer<T extends Mob, M extends EntityModel<T>, N extends M, O extends M> extends MobRenderer<T, M>
-{
+public abstract class MultiModelRenderer<T extends Mob, M extends EntityModel<T>, N extends M, O extends M> extends MobRenderer<T, M> {
     public MultiModelRenderer(EntityRendererProvider.Context context, N defaultModel, float shadowRadius) {
         super(context, defaultModel, shadowRadius);
     }

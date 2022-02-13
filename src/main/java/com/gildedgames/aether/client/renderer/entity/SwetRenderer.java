@@ -11,8 +11,7 @@ import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
-public abstract class SwetRenderer extends MobRenderer<Swet, SlimeModel<Swet>>
-{
+public abstract class SwetRenderer extends MobRenderer<Swet, SlimeModel<Swet>> {
     public SwetRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel<>(context.bakeLayer(AetherModelLayers.SWET)), 0.3F);
         this.addLayer(new SwetOuterLayer(this, new SlimeModel<>(context.bakeLayer(AetherModelLayers.SWET_OUTER))));

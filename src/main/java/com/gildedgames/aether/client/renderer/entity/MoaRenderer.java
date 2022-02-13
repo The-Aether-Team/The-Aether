@@ -15,8 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import javax.annotation.Nonnull;
 import java.util.UUID;
 
-public class MoaRenderer extends MobRenderer<Moa, MoaModel>
-{
+public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 	private static final ResourceLocation MOS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/mos.png");
 	private static final ResourceLocation RAPTOR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/raptor.png");
 
@@ -36,7 +35,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel>
 		float moaScale = moa.isBaby() ? 1.0F : 1.8F;
 		poseStack.scale(moaScale, moaScale, moaScale);
 		if (moa.isSitting()) {
-			poseStack.translate(0, 0.5D, 0);
+			poseStack.translate(0.0, 0.5, 0.0);
 		}
 	}
 

@@ -17,13 +17,12 @@ import com.mojang.math.Vector3f;
 
 import javax.annotation.Nonnull;
 
-public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile>
-{
+public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
     public static final ResourceLocation NOTCH_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/notch_wave.png");
     public static final ResourceLocation JEB_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/jeb_wave.png");
 
-    public HammerProjectileRenderer(EntityRendererProvider.Context renderer) {
-        super(renderer);
+    public HammerProjectileRenderer(EntityRendererProvider.Context context) {
+        super(context);
         this.shadowRadius = 0.0F;
     }
 
@@ -50,7 +49,7 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile>
 
     @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull HammerProjectile entity) {
-        return !entity.getIsJeb() ? NOTCH_WAVE_TEXTURE : JEB_WAVE_TEXTURE;
+    public ResourceLocation getTextureLocation(@Nonnull HammerProjectile hammer) {
+        return !hammer.getIsJeb() ? NOTCH_WAVE_TEXTURE : JEB_WAVE_TEXTURE;
     }
 }

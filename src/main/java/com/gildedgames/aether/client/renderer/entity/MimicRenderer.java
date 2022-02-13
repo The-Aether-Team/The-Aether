@@ -13,8 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class MimicRenderer extends MobRenderer<Mimic, MimicModel>
-{
+public class MimicRenderer extends MobRenderer<Mimic, MimicModel> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/mimic/normal.png");
 	private static final ResourceLocation XMAS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/mimic/christmas.png");
 

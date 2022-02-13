@@ -14,8 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class CockatriceRenderer extends MobRenderer<Cockatrice, CockatriceModel>
-{
+public class CockatriceRenderer extends MobRenderer<Cockatrice, CockatriceModel> {
     private static final ResourceLocation COCKATRICE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/cockatrice/cockatrice.png");
 
     public CockatriceRenderer(EntityRendererProvider.Context context) {
@@ -36,7 +35,7 @@ public class CockatriceRenderer extends MobRenderer<Cockatrice, CockatriceModel>
 
     @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull Cockatrice entity) {
+    public ResourceLocation getTextureLocation(@Nonnull Cockatrice cockatrice) {
         return COCKATRICE_TEXTURE;
     }
 }

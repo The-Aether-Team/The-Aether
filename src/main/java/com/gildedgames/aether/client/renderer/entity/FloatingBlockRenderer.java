@@ -21,10 +21,9 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
-public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity>
-{
-	public FloatingBlockRenderer(EntityRendererProvider.Context renderer) {
-		super(renderer);
+public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
+	public FloatingBlockRenderer(EntityRendererProvider.Context context) {
+		super(context);
 		this.shadowRadius = 0.5F;
 	}
 
@@ -36,7 +35,7 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity>
 			if (blockState != world.getBlockState(floatingBlock.blockPosition()) && blockState.getRenderShape() != RenderShape.INVISIBLE) {
 				poseStack.pushPose();
 				BlockPos blockPos = new BlockPos(floatingBlock.getX(), floatingBlock.getBoundingBox().maxY, floatingBlock.getZ());
-				poseStack.translate(-0.5D, 0.0D, -0.5D);
+				poseStack.translate(-0.5, 0.0, -0.5);
 				BlockRenderDispatcher blockRenderDispatcher = Minecraft.getInstance().getBlockRenderer();
 				for (net.minecraft.client.renderer.RenderType type : net.minecraft.client.renderer.RenderType.chunkBufferLayers()) {
 					if (ItemBlockRenderTypes.canRenderInLayer(blockState, type)) {

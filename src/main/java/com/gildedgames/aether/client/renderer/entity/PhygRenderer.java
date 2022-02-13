@@ -16,8 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class PhygRenderer extends MobRenderer<Phyg, PigModel<Phyg>>
-{
+public class PhygRenderer extends MobRenderer<Phyg, PigModel<Phyg>> {
 	private static final ResourceLocation PHYG_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/phyg/phyg.png");
 
 	public PhygRenderer(EntityRendererProvider.Context context) {

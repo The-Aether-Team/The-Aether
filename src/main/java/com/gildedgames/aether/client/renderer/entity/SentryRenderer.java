@@ -12,8 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class SentryRenderer extends MobRenderer<Sentry, SlimeModel<Sentry>>
-{
+public class SentryRenderer extends MobRenderer<Sentry, SlimeModel<Sentry>> {
 	private static final ResourceLocation SENTRY_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/sentry.png");
 	private static final ResourceLocation SENTRY_LIT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/sentry_lit.png");
 	

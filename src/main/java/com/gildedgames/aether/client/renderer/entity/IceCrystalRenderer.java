@@ -10,8 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class IceCrystalRenderer<T extends AbstractCrystal> extends AbstractCrystalRenderer<T>
-{
+public class IceCrystalRenderer<T extends AbstractCrystal> extends AbstractCrystalRenderer<T> {
     private static final ResourceLocation ICE_CRYSTAL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/crystals/ice_ball.png");
 
     public IceCrystalRenderer(EntityRendererProvider.Context context) {

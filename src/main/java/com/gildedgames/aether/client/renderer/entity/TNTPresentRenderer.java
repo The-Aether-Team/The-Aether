@@ -15,8 +15,7 @@ import com.mojang.math.Vector3f;
 
 import javax.annotation.Nonnull;
 
-public class TNTPresentRenderer extends EntityRenderer<TntPresent>
-{
+public class TNTPresentRenderer extends EntityRenderer<TntPresent> {
     public TNTPresentRenderer(EntityRendererProvider.Context context) {
         super(context);
         this.shadowRadius = 0.5F;
@@ -25,7 +24,7 @@ public class TNTPresentRenderer extends EntityRenderer<TntPresent>
     @Override
     public void render(TntPresent present, float entityYaw, float partialTicks, PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
-        poseStack.translate(0.0D, 0.5D, 0.0D);
+        poseStack.translate(0.0, 0.5, 0.0);
         if ((float) present.getFuse() - partialTicks + 1.0F < 10.0F) {
             float f = 1.0F - ((float) present.getFuse() - partialTicks + 1.0F) / 10.0F;
             f = Mth.clamp(f, 0.0F, 1.0F);
@@ -35,7 +34,7 @@ public class TNTPresentRenderer extends EntityRenderer<TntPresent>
             poseStack.scale(f1, f1, f1);
         }
         poseStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
-        poseStack.translate(-0.5D, -0.5D, 0.5D);
+        poseStack.translate(-0.5, -0.5, 0.5);
         poseStack.mulPose(Vector3f.YP.rotationDegrees(90.0F));
         TntMinecartRenderer.renderWhiteSolidBlock(AetherBlocks.PRESENT.get().defaultBlockState(), poseStack, buffer, packedLight, present.getFuse() / 5 % 2 == 0);
         poseStack.popPose();

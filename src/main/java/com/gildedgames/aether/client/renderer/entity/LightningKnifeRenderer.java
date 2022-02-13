@@ -16,10 +16,9 @@ import com.mojang.math.Vector3f;
 
 import javax.annotation.Nonnull;
 
-public class LightningKnifeRenderer extends EntityRenderer<ThrownLightningKnife>
-{
-	public LightningKnifeRenderer(EntityRendererProvider.Context renderer) {
-		super(renderer);
+public class LightningKnifeRenderer extends EntityRenderer<ThrownLightningKnife> {
+	public LightningKnifeRenderer(EntityRendererProvider.Context context) {
+		super(context);
 		this.shadowRadius = 0.0F;
 	}
 

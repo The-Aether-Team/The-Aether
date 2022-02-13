@@ -13,8 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class SheepuffRenderer extends MobRenderer<Sheepuff, SheepuffModel>
-{
+public class SheepuffRenderer extends MobRenderer<Sheepuff, SheepuffModel> {
     private static final ResourceLocation SHEEPUFF_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff.png");
     
     public SheepuffRenderer(EntityRendererProvider.Context context) {

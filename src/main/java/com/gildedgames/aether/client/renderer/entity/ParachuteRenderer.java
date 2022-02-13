@@ -15,12 +15,11 @@ import net.minecraft.world.level.block.Block;
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
-public class ParachuteRenderer extends EntityRenderer<Parachute>
-{
+public class ParachuteRenderer extends EntityRenderer<Parachute> {
     private final Supplier<Block> parachuteBlock;
 
-    public ParachuteRenderer(EntityRendererProvider.Context renderer, Supplier<Block> parachuteBlock) {
-        super(renderer);
+    public ParachuteRenderer(EntityRendererProvider.Context context, Supplier<Block> parachuteBlock) {
+        super(context);
         this.parachuteBlock = parachuteBlock;
         this.shadowRadius = 0.0F;
     }
@@ -38,7 +37,7 @@ public class ParachuteRenderer extends EntityRenderer<Parachute>
 
     @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull Parachute entity) {
+    public ResourceLocation getTextureLocation(@Nonnull Parachute parachute) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 }

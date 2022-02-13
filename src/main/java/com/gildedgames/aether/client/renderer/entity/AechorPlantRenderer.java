@@ -12,8 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class AechorPlantRenderer extends MobRenderer<AechorPlant, AechorPlantModel>
-{
+public class AechorPlantRenderer extends MobRenderer<AechorPlant, AechorPlantModel> {
     private static final ResourceLocation AECHOR_PLANT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aechor_plant/aechor_plant.png");
 
     public AechorPlantRenderer(EntityRendererProvider.Context context) {
@@ -23,7 +22,7 @@ public class AechorPlantRenderer extends MobRenderer<AechorPlant, AechorPlantMod
     protected void scale(AechorPlant aechorPlant, @Nonnull PoseStack poseStack, float partialTickTime) {
         float f2 = 0.625F + aechorPlant.getSize() / 6.0F;
         poseStack.scale(f2, f2, f2);
-        poseStack.translate(0.0D, 1.2D, 0.0D);
+        poseStack.translate(0.0, 1.2, 0.0);
         this.shadowRadius = f2 - 0.25F;
     }
 

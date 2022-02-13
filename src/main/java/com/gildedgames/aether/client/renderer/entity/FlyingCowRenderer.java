@@ -14,8 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class FlyingCowRenderer extends MobRenderer<FlyingCow, CowModel<FlyingCow>>
-{
+public class FlyingCowRenderer extends MobRenderer<FlyingCow, CowModel<FlyingCow>> {
     private static final ResourceLocation FLYING_COW_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow.png");
     
     public FlyingCowRenderer(EntityRendererProvider.Context context) {

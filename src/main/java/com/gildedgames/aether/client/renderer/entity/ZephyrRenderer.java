@@ -13,19 +13,18 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephyr>, ZephyrModel, ClassicZephyrModel>
-{
+public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephyr>, ZephyrModel, ClassicZephyrModel> {
     private static final ResourceLocation ZEPHYR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr.png");
     private static final ResourceLocation ZEPHYR_CLASSIC_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr_classic.png");
 
     private final ZephyrModel defaultModel;
     private final ClassicZephyrModel oldModel;
 
-    public ZephyrRenderer(EntityRendererProvider.Context renderer) {
-        super(renderer, new ZephyrModel(renderer.bakeLayer(AetherModelLayers.ZEPHYR)), 0.5F);
-        this.addLayer(new ZephyrTransparencyLayer(this, new ZephyrModel(renderer.getModelSet().bakeLayer(AetherModelLayers.ZEPHYR_TRANSPARENCY))));
-        this.defaultModel = new ZephyrModel(renderer.bakeLayer(AetherModelLayers.ZEPHYR));
-        this.oldModel = new ClassicZephyrModel(renderer.bakeLayer(AetherModelLayers.ZEPHYR_CLASSIC));
+    public ZephyrRenderer(EntityRendererProvider.Context context) {
+        super(context, new ZephyrModel(context.bakeLayer(AetherModelLayers.ZEPHYR)), 0.5F);
+        this.addLayer(new ZephyrTransparencyLayer(this, new ZephyrModel(context.getModelSet().bakeLayer(AetherModelLayers.ZEPHYR_TRANSPARENCY))));
+        this.defaultModel = new ZephyrModel(context.bakeLayer(AetherModelLayers.ZEPHYR));
+        this.oldModel = new ClassicZephyrModel(context.bakeLayer(AetherModelLayers.ZEPHYR_CLASSIC));
     }
 
     @Override
@@ -39,11 +38,11 @@ public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephy
         float f3 = (8.0F + 1.0F / f1) / 2.0F;
 
         poseStack.scale(f3, f2, f3);
-        poseStack.translate(0, 0.5, 0);
+        poseStack.translate(0.0, 0.5, 0.0);
 
         if (this.getModel() instanceof ClassicZephyrModel) {
             poseStack.scale(0.8F, 0.8F, 0.8F);
-            poseStack.translate(0, -0.1, 0);
+            poseStack.translate(0.0, -0.1, 0.0);
         }
     }
 

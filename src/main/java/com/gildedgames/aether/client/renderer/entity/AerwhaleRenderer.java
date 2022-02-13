@@ -14,8 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
 
-public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<Aerwhale>, AerwhaleModel, ClassicAerwhaleModel>
-{
+public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<Aerwhale>, AerwhaleModel, ClassicAerwhaleModel> {
     private static final ResourceLocation AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale.png");
     private static final ResourceLocation AERWHALE_CLASSIC_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale_classic.png");
     private final AerwhaleModel defaultModel;
@@ -29,7 +28,7 @@ public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<A
 
     @Override
     protected void scale(Aerwhale aerwhale, PoseStack matrixStackIn, float partialTickTime) {
-        matrixStackIn.translate(0, 1.2, 0);
+        matrixStackIn.translate(0.0, 1.2, 0.0);
 //        if (_staticData == null) {
 //        	_staticData = new float[] {aerwhale.rotationYaw, aerwhale.rotationPitch};
 //        }

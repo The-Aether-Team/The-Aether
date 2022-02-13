@@ -9,8 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class GoldenDartRenderer extends ArrowRenderer<AbstractDart>
-{
+public class GoldenDartRenderer extends ArrowRenderer<AbstractDart> {
     public static final ResourceLocation GOLDEN_DART_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/dart/golden_dart.png");
 
     public GoldenDartRenderer(EntityRendererProvider.Context context) {
@@ -19,7 +18,7 @@ public class GoldenDartRenderer extends ArrowRenderer<AbstractDart>
 
     @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull AbstractDart entity) {
+    public ResourceLocation getTextureLocation(@Nonnull AbstractDart dart) {
         return GOLDEN_DART_TEXTURE;
     }
 }

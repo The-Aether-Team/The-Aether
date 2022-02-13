@@ -9,8 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class EnchantedDartRenderer extends ArrowRenderer<AbstractDart>
-{
+public class EnchantedDartRenderer extends ArrowRenderer<AbstractDart> {
     public static final ResourceLocation ENCHANTED_DART_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/dart/enchanted_dart.png");
 
     public EnchantedDartRenderer(EntityRendererProvider.Context context) {
@@ -19,7 +18,7 @@ public class EnchantedDartRenderer extends ArrowRenderer<AbstractDart>
 
     @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull AbstractDart entity) {
+    public ResourceLocation getTextureLocation(@Nonnull AbstractDart dart) {
         return ENCHANTED_DART_TEXTURE;
     }
 }
