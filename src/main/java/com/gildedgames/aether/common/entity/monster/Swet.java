@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.entity.monster;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.goal.target.NearestTaggedTargetGoal;
+import com.gildedgames.aether.common.entity.passive.AetherAnimal;
 import com.gildedgames.aether.common.entity.passive.MountableAnimal;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
@@ -10,6 +11,7 @@ import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.SentryExplosionParticlePacket;
 import com.gildedgames.aether.core.network.packet.client.SwetAttackPacket;
 import com.gildedgames.aether.core.network.packet.client.SwetDeathParticlePacket;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -32,6 +34,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
@@ -40,6 +43,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Optional;
+import java.util.Random;
 
 public class Swet extends MountableAnimal
 {
@@ -91,6 +95,10 @@ public class Swet extends MountableAnimal
             this.refreshDimensions();
         }
         super.onSyncedDataUpdated(dataAccessor);
+    }
+
+    public static boolean checkSwetSpawnRules(EntityType<? extends Swet> swet, LevelAccessor level, MobSpawnType spawnReason, BlockPos pos, Random random) {
+        return level.getDifficulty() != Difficulty.PEACEFUL && level.getBlockState(pos.below()).is(AetherTags.Blocks.SWET_SPAWNABLE_ON) && level.getRawBrightness(pos, 0) > 8;
     }
 
     @Override
@@ -359,6 +367,11 @@ public class Swet extends MountableAnimal
     }
 
     @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return true;
+    }
+
+    @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putFloat("WaterDamageScale", this.getWaterDamageScale());
@@ -397,8 +410,7 @@ public class Swet extends MountableAnimal
 
         @Override
         public boolean canUse() {
-            return this.swet.level.getDifficulty() != Difficulty.PEACEFUL
-                    && this.swet.hasPrey()
+            return this.swet.hasPrey()
                     && this.swet.getPassengers().get(0) instanceof LivingEntity passenger
                     && !this.swet.isFriendlyTowardEntity(passenger);
         }

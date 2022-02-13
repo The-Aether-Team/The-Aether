@@ -5,9 +5,13 @@ import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.entity.passive.MountableAnimal;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.registry.AetherTags;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -27,8 +31,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.level.ServerLevelAccessor;
 
 import javax.annotation.Nonnull;
+import java.util.Random;
 
 public class Cockatrice extends Monster implements RangedAttackMob
 {
@@ -73,6 +79,10 @@ public class Cockatrice extends Monster implements RangedAttackMob
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_ENTITY_ON_GROUND_ID, true);
+    }
+
+    public static boolean checkCockatriceSpawnRules(EntityType<? extends Cockatrice> cockatrice, ServerLevelAccessor level, MobSpawnType spawnReason, BlockPos pos, Random random) {
+        return level.getDifficulty() != Difficulty.PEACEFUL && !level.getBlockState(pos.below()).is(AetherTags.Blocks.COCKATRICE_SPAWNABLE_BLACKLIST) && Monster.isDarkEnoughToSpawn(level, pos, random) && Mob.checkMobSpawnRules(cockatrice, level, spawnReason, pos, random);
     }
 
     @Override

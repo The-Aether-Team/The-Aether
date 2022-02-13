@@ -191,6 +191,11 @@ public class Sentry extends Slime
 		return AetherSoundEvents.ENTITY_SENTRY_JUMP.get();
 	}
 
+	@Override
+	protected boolean shouldDespawnInPeaceful() {
+		return true;
+	}
+
 	public static class AttackGoal extends SlimeAttackGoal
 	{
 		private final Sentry sentry;

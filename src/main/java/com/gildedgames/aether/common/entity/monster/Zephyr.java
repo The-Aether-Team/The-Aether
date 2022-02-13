@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.entity.monster;
 
 import com.gildedgames.aether.common.entity.projectile.ZephyrSnowball;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,6 +19,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -61,9 +63,11 @@ public class Zephyr extends FlyingMob implements Enemy
 	}
 
 	public static boolean checkZephyrSpawnRules(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random random) {
-		AABB boundingBox = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 4, pos.getY() + 4, pos.getZ() + 4);
-		return level.getDifficulty() != Difficulty.PEACEFUL && level.getEntitiesOfClass(Zephyr.class, boundingBox).size() == 0 && !level.containsAnyLiquid(boundingBox)
-				&& level.getMaxLocalRawBrightness(pos) > 8 && checkMobSpawnRules(zephyr, level, reason, pos, random);
+		return level.getDifficulty() != Difficulty.PEACEFUL && level.getBlockState(pos.below()).is(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON);
+	}
+
+	public boolean checkSpawnObstruction(@Nonnull LevelReader level) {
+		return level.isUnobstructed(this) && !level.containsAnyLiquid(this.getBoundingBox());
 	}
 
 	/**
@@ -84,16 +88,6 @@ public class Zephyr extends FlyingMob implements Enemy
 		if (this.getY() < this.level.getMinBuildHeight() - 2 || this.getY() > this.level.getMaxBuildHeight()) {
 			this.discard();
 		}
-	}
-
-	@Override
-	public int getMaxSpawnClusterSize() {
-		return 1;
-	}
-
-	@Override
-	protected boolean shouldDespawnInPeaceful() {
-		return true;
 	}
 
 	@Override
@@ -132,6 +126,16 @@ public class Zephyr extends FlyingMob implements Enemy
 	@Override
 	protected SoundEvent getDeathSound() {
 		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT.get();
+	}
+
+	@Override
+	public int getMaxSpawnClusterSize() {
+		return 1;
+	}
+
+	@Override
+	protected boolean shouldDespawnInPeaceful() {
+		return true;
 	}
 
 	static class SnowballAttackGoal extends Goal

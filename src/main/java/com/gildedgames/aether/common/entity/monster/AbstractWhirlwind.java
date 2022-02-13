@@ -14,6 +14,8 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -26,9 +28,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -78,8 +83,15 @@ public abstract class AbstractWhirlwind extends Mob
         return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
     }
 
-    public static boolean checkWhirlwindSpawnRules(EntityType<? extends AbstractWhirlwind> typeIn, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random randomIn) {
-        return level.getBlockState(pos.below()).is(AetherTags.Blocks.AETHER_ANIMALS_SPAWNABLE_ON) && level.getMaxLocalRawBrightness(pos) > 8 && Mob.checkMobSpawnRules(typeIn, level, reason, pos, randomIn);
+    public static boolean checkWhirlwindSpawnRules(EntityType<? extends AbstractWhirlwind> whirlwind, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random random) {
+        return level.getDifficulty() != Difficulty.PEACEFUL && level.getRawBrightness(pos, 0) > 12 && Mob.checkMobSpawnRules(whirlwind, level, reason, pos, random);
+    }
+
+    public boolean checkSpawnObstruction(@Nonnull LevelReader level) {
+        if (level.isUnobstructed(this) && !level.containsAnyLiquid(this.getBoundingBox())) {
+            return !(this.getY() < level.getSeaLevel() + 1);
+        }
+        return false;
     }
 
     @Override
@@ -195,6 +207,11 @@ public abstract class AbstractWhirlwind extends Mob
     @Override
     public int getMaxSpawnClusterSize() {
         return 3;
+    }
+
+    @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return true;
     }
 
     @Override

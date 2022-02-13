@@ -98,4 +98,9 @@ public class Mimic extends Monster
 	protected SoundEvent getDeathSound() {
 		return AetherSoundEvents.ENTITY_MIMIC_DEATH.get();
 	}
+
+	@Override
+	protected boolean shouldDespawnInPeaceful() {
+		return true;
+	}
 }
