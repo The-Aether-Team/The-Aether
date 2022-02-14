@@ -7,8 +7,7 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
-public class FallingRandomStrollGoal extends RandomStrollGoal
-{
+public class FallingRandomStrollGoal extends RandomStrollGoal {
     protected final float probability;
 
     public FallingRandomStrollGoal(PathfinderMob creatureEntity, double speed) {

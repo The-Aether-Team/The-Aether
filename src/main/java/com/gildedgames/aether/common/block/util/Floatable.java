@@ -10,8 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.function.Predicate;
 
-public interface Floatable
-{
+public interface Floatable {
     default void onCollide(Level level, BlockPos pos, BlockState state, BlockState oldState, FloatingBlockEntity floatingBlock) { }
 
     default void onBrokenAfterCollide(Level level, BlockPos pos, FloatingBlockEntity floatingBlock) { }

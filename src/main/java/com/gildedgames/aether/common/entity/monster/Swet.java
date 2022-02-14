@@ -4,11 +4,11 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.goal.target.NearestTaggedTargetGoal;
 import com.gildedgames.aether.common.entity.passive.MountableAnimal;
-import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.SwetAttackPacket;
 import com.gildedgames.aether.core.network.packet.client.SwetDeathParticlePacket;
+import com.gildedgames.aether.core.util.EquipmentUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -34,13 +34,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
-import java.util.Optional;
 import java.util.Random;
 
 public class Swet extends MountableAnimal {
@@ -219,8 +216,7 @@ public class Swet extends MountableAnimal {
     }
 
     public boolean isFriendlyTowardEntity(LivingEntity entity) {
-        Optional<SlotResult> swetCape = CuriosApi.getCuriosHelper().findFirstCurio(entity, AetherItems.SWET_CAPE.get());
-        return swetCape.isPresent();
+        return EquipmentUtil.hasSwetCape(entity);
     }
 
     public void dissolveSwetInWater() {

@@ -15,8 +15,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import java.util.EnumSet;
 import java.util.function.Predicate;
 
-public class EatAetherGrassGoal extends Goal
-{
+public class EatAetherGrassGoal extends Goal {
     private static final Predicate<BlockState> IS_TALL_GRASS = BlockStatePredicate.forBlock(Blocks.GRASS);
     private final Mob mob;
     private final Level level;

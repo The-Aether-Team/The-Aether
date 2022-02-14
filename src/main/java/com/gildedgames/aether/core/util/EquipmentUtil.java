@@ -6,8 +6,11 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import top.theillusivec4.curios.api.CuriosApi;
 
-public class EquipmentUtil
-{
+public class EquipmentUtil {
+    public static boolean hasSwetCape(LivingEntity entity) {
+        return CuriosApi.getCuriosHelper().findFirstCurio(entity, AetherItems.SWET_CAPE.get()).isPresent();
+    }
+
     public static boolean hasSentryBoots(LivingEntity entity) {
         return entity.getItemBySlot(EquipmentSlot.FEET).is(AetherItems.SENTRY_BOOTS.get());
     }

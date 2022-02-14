@@ -9,13 +9,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 
-public class PassiveWhirlyParticle extends WhirlyParticle<PassiveWhirlwind>
-{
+public class PassiveWhirlyParticle extends WhirlyParticle<PassiveWhirlwind> {
     public PassiveWhirlyParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite) {
         super(level, xCoord, yCoord, zCoord, xSpeed, ySpeed, zSpeed, sprite);
         if (this.whirlwind != null) {
             this.quadSize = this.random.nextFloat() * this.random.nextFloat() * 0.5F;
-            this.lifetime = (int) (16.0D / ((double) this.random.nextFloat() * 0.8D + 0.2D)) + 2;
+            this.lifetime = (int) (16.0 / ((double) this.random.nextFloat() * 0.8 + 0.2)) + 2;
             int color = this.whirlwind.getColorData();
             float red = ((color >> 16) & 0xFF) / 255.0F;
             float green = ((color >> 8) & 0xFF) / 255.0F;
@@ -27,18 +26,18 @@ public class PassiveWhirlyParticle extends WhirlyParticle<PassiveWhirlwind>
     @Override
     public void tick() {
         super.tick();
-        this.xd *= 0.8999999761581421D;
-        this.yd *= 0.8999999761581421D;
-        this.zd *= 0.8999999761581421D;
+        this.xd *= 0.8999999761581421;
+        this.yd *= 0.8999999761581421;
+        this.zd *= 0.8999999761581421;
         if (this.onGround) {
-            this.xd *= 0.699999988079071D;
-            this.zd *= 0.699999988079071D;
+            this.xd *= 0.699999988079071;
+            this.zd *= 0.699999988079071;
         }
     }
 
     @Override
     protected double getBaseSpeedModifier() {
-        return 0.05000000074505806D;
+        return 0.05000000074505806;
     }
 
     @Override

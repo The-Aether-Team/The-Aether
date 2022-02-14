@@ -8,10 +8,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.tags.*;
 import net.minecraft.resources.ResourceLocation;
 
-public class AetherTags
-{
-	public static class Blocks
-	{
+public class AetherTags {
+	public static class Blocks {
 		public static final Tag.Named<Block> AETHER_PORTAL_BLOCKS = tag("aether_portal_blocks");
 		public static final Tag.Named<Block> AETHER_ISLAND_BLOCKS = tag("aether_island_blocks");
 		public static final Tag.Named<Block> ENCHANTABLE_GRASS_BLOCKS = tag("enchantable_grass_blocks");
@@ -36,8 +34,7 @@ public class AetherTags
 		}
 	}
 	
-	public static class Items
-	{
+	public static class Items {
 		public static final Tag.Named<Item> AETHER_DIRT = tag("aether_dirt");
 		public static final Tag.Named<Item> HOLYSTONE = tag("holystone");
 		public static final Tag.Named<Item> AERCLOUDS = tag("aerclouds");
@@ -83,8 +80,7 @@ public class AetherTags
 		}
 	}
 
-	public static class Entities
-	{
+	public static class Entities {
 		public static final Tag.Named<EntityType<?>> PIGS = tag("pigs");
 		public static final Tag.Named<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 		public static final Tag.Named<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
@@ -96,8 +92,7 @@ public class AetherTags
 		}
 	}
 
-	public static class Fluids
-	{
+	public static class Fluids {
 		public static final Tag.Named<Fluid> FREEZABLE_TO_AEROGEL = tag("freezable_to_aerogel");
 
 		private static Tag.Named<Fluid> tag(String name) {
