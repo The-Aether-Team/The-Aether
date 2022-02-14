@@ -22,8 +22,7 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 
-public class CloudMinion extends FlyingMob //TODO: Rotation is not syncing properly. may be a tracking issue, see: entitytypes.
-{
+public class CloudMinion extends FlyingMob {
     private static final EntityDataAccessor<Integer> DATA_OWNER_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_IS_RIGHT_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> DATA_LIFESPAN_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.INT);
@@ -50,8 +49,8 @@ public class CloudMinion extends FlyingMob //TODO: Rotation is not syncing prope
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return FlyingMob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 1.0F)
-                .add(Attributes.MOVEMENT_SPEED, 10.0F);
+                .add(Attributes.MAX_HEALTH, 1.0)
+                .add(Attributes.MOVEMENT_SPEED, 10.0);
     }
 
     protected void defineSynchedData() {
@@ -72,12 +71,10 @@ public class CloudMinion extends FlyingMob //TODO: Rotation is not syncing prope
             if (this.getOwner() != null) {
                 if (this.getOwner().isAlive()) {
                     this.setPositionFromOwner();
+                    this.setRotationFromOwner();
                     if (this.atShoulder()) {
                         Vec3 motion = this.getDeltaMovement();
-                        this.setDeltaMovement(motion.multiply(0.65D, 0.65D, 0.65D));
-                        this.setYRot(this.getOwner().getYRot() + (this.getSide() == HumanoidArm.RIGHT ? 1.0F : -1.0F));
-                        this.setXRot(this.getOwner().getXRot());
-                        this.setYHeadRot(this.getOwner().getYHeadRot());
+                        this.setDeltaMovement(motion.multiply(0.65, 0.65, 0.65));
                         if (this.shouldShoot()) {
                             float offset = this.getSide() == HumanoidArm.RIGHT ? 2.0F : -2.0F;
                             float rotation = Mth.wrapDegrees(this.getYRot() + offset);
@@ -108,38 +105,44 @@ public class CloudMinion extends FlyingMob //TODO: Rotation is not syncing prope
     public void setPositionFromOwner() {
         if (this.distanceTo(this.getOwner()) > 2.0F) {
             this.targetX = this.getOwner().getX();
-            this.targetY = this.getOwner().getY() + 1.0D;
+            this.targetY = this.getOwner().getY() + 1.0;
             this.targetZ = this.getOwner().getZ();
         } else {
             double yaw = this.getOwner().getYRot();
             if (this.getSide() == HumanoidArm.RIGHT) {
-                yaw -= 90.0D;
+                yaw -= 90.0;
             } else {
-                yaw += 90.0D;
+                yaw += 90.0;
             }
-            yaw /= -(180.0D / Math.PI);
-            this.targetX = this.getOwner().getX() + Math.sin(yaw) * 1.05D;
-            this.targetY = this.getOwner().getY() + 1.0D;
-            this.targetZ = this.getOwner().getZ() + Math.cos(yaw) * 1.05D;
+            yaw /= -(180.0 / Math.PI);
+            this.targetX = this.getOwner().getX() + Math.sin(yaw) * 1.05;
+            this.targetY = this.getOwner().getY() + 1.0;
+            this.targetZ = this.getOwner().getZ() + Math.cos(yaw) * 1.05;
         }
+    }
+
+    public void setRotationFromOwner() {
+        this.setYRot(this.getOwner().getYRot() + (this.getSide() == HumanoidArm.RIGHT ? 1.0F : -1.0F));
+        this.setXRot(this.getOwner().getXRot());
+        this.setYHeadRot(this.getOwner().getYHeadRot());
     }
 
     public boolean atShoulder() {
         double x = this.getX() - this.targetX;
         double y = this.getY() - this.targetY;
         double z = this.getZ() - this.targetZ;
-        return Math.sqrt(x * x + y * y + z * z) < 0.4D;
+        return Math.sqrt(x * x + y * y + z * z) < 0.4;
     }
 
     public void approachOwner() {
         double x = this.targetX - this.getX();
         double y = this.targetY - this.getY();
         double z = this.targetZ - this.getZ();
-        double sqrt = Math.sqrt(x * x + y * y + z * z) * 3.25D;
+        double sqrt = Math.sqrt(x * x + y * y + z * z) * 3.25;
         Vec3 motion = this.getDeltaMovement();
-        double motionX = (motion.x() + x / sqrt) / 2.0D;
-        double motionY = (motion.y() + y / sqrt) / 2.0D;
-        double motionZ = (motion.z() + z / sqrt) / 2.0D;
+        double motionX = (motion.x() + x / sqrt) / 2.0;
+        double motionY = (motion.y() + y / sqrt) / 2.0;
+        double motionZ = (motion.z() + z / sqrt) / 2.0;
         this.setDeltaMovement(motionX, motionY, motionZ);
     }
 
