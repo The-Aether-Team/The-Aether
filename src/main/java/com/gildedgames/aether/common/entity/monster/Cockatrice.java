@@ -133,6 +133,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
         return this.entityData.get(DATA_ENTITY_ON_GROUND_ID);
     }
 
+    @Override
     public void setEntityOnGround(boolean onGround) {
         this.entityData.set(DATA_ENTITY_ON_GROUND_ID, onGround);
     }

@@ -270,10 +270,12 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 		this.entityData.set(DATA_PLAYER_CROUCHED_ID, playerTriedToCrouch);
 	}
 
+	@Override
 	public boolean isEntityOnGround() {
 		return this.entityData.get(DATA_ENTITY_ON_GROUND_ID);
 	}
 
+	@Override
 	public void setEntityOnGround(boolean onGround) {
 		this.entityData.set(DATA_ENTITY_ON_GROUND_ID, onGround);
 	}
