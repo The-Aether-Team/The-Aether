@@ -39,7 +39,7 @@ import javax.annotation.Nonnull;
 import java.util.Random;
 
 public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, NotGrounded {
-    private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(Cockatrice.class, EntityDataSerializers.BOOLEAN);
 
     public float wingRotation;
     public float prevWingRotation;
