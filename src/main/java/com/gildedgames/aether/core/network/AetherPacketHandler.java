@@ -29,15 +29,13 @@ public class AetherPacketHandler
 	public static synchronized void register() {
 		// CLIENT
 		register(AetherTimePacket.class, AetherTimePacket::decode);
-		register(CheckTimePacket.class, CheckTimePacket::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
-		register(EternalDayPacket.class, EternalDayPacket::decode);
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
+		register(EternalDayPacket.class, EternalDayPacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
 		register(ResetMaxUpStepPacket.class, ResetMaxUpStepPacket::decode);
-		register(ServerTimePacket.class, ServerTimePacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
 		register(SwetAttackPacket.class, SwetAttackPacket::decode);
 		register(ZephyrSnowballHitPacket.class, ZephyrSnowballHitPacket::decode);
@@ -50,6 +48,7 @@ public class AetherPacketHandler
 		register(MovementPacket.class, MovementPacket::decode);
 		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
+		register(SunAltarUpdatePacket.class, SunAltarUpdatePacket::decode);
 	}
 
 	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {

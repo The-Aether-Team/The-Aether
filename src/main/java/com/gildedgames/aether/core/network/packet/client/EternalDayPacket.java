@@ -1,13 +1,12 @@
 package com.gildedgames.aether.core.network.packet.client;
 
-import com.gildedgames.aether.client.event.listeners.capability.EternalDayClientListener;
-import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
+import com.gildedgames.aether.core.capability.AetherCapabilities;
+import com.gildedgames.aether.core.network.IAetherPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 
-public class EternalDayPacket extends AetherPacket
-{
+public class EternalDayPacket extends IAetherPacket.AetherPacket {
     private final boolean isEternalDay;
 
     public EternalDayPacket(boolean isEternalDay) {
@@ -27,7 +26,7 @@ public class EternalDayPacket extends AetherPacket
     @Override
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            EternalDayClientListener.isEternalDay = this.isEternalDay;
+            Minecraft.getInstance().level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent((aetherTime -> aetherTime.setEternalDay(this.isEternalDay)));
         }
     }
 }

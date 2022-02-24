@@ -1,33 +1,32 @@
 package com.gildedgames.aether.core.network.packet.client;
 
-import com.gildedgames.aether.client.event.listeners.capability.EternalDayClientListener;
-import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
+import com.gildedgames.aether.core.capability.AetherCapabilities;
+import com.gildedgames.aether.core.network.IAetherPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 
-public class AetherTimePacket extends AetherPacket
-{
-    private final long aetherTime;
+public class AetherTimePacket extends IAetherPacket.AetherPacket {
+    private final long dayTime;
 
-    public AetherTimePacket(long aetherTime) {
-        this.aetherTime = aetherTime;
+    public AetherTimePacket(long dayTime) {
+        this.dayTime = dayTime;
     }
 
     @Override
     public void encode(FriendlyByteBuf buf) {
-        buf.writeLong(this.aetherTime);
+        buf.writeLong(this.dayTime);
     }
 
     public static AetherTimePacket decode(FriendlyByteBuf buf) {
-        long aetherTime = buf.readLong();
-        return new AetherTimePacket(aetherTime);
+        long dayTime = buf.readLong();
+        return new AetherTimePacket(dayTime);
     }
 
     @Override
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            EternalDayClientListener.aetherTime = this.aetherTime;
+            Minecraft.getInstance().level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent(aetherTime -> aetherTime.setDayTime(this.dayTime));
         }
     }
 }
