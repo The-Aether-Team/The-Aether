@@ -1316,7 +1316,7 @@ a0f3c2f4910e857b799981106ebf4953767be364 data/minecraft/tags/blocks/logs_that_bu
 2f260741d01192ff02cb26b95576143579791ba3 data/minecraft/tags/blocks/mineable/axe.json
 24fa6266cd0cff70c0626cf398896d21456875d5 data/minecraft/tags/blocks/mineable/hoe.json
 54d63e58d5e8cb4b0a45271ddac6c50b72c2eea6 data/minecraft/tags/blocks/mineable/pickaxe.json
-5980420a369df4f357b89837629f9bdc3cac8b1f data/minecraft/tags/blocks/mineable/shovel.json
+931f9f84286aca0e4505cd4b7fc138ecee97d068 data/minecraft/tags/blocks/mineable/shovel.json
 f80c58119737ea6ba93a2203818cb8b6631fc7f8 data/minecraft/tags/blocks/needs_diamond_tool.json
 c7ad58c327a0a8824204861012f952132cec7c46 data/minecraft/tags/blocks/needs_iron_tool.json
 3072ca9a581700ef9fa11ca03e1015e69bcc7a98 data/minecraft/tags/blocks/needs_stone_tool.json

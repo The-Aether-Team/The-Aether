@@ -182,7 +182,7 @@ public class AetherBlocks
     public static final RegistryObject<SlabBlock> ANGELIC_SLAB = register("angelic_slab",
             () -> new SlabBlock(Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get()).strength(2.0F, 6.0F)));
     public static final RegistryObject<SlabBlock> HELLFIRE_SLAB = register("hellfire_slab",
-            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get()).strength(2.0F, 6.0F)));
+            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get()).strength(0.5F, 6.0F)));
     public static final RegistryObject<SlabBlock> HOLYSTONE_SLAB = register("holystone_slab",
             () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE.get()).strength(2.0F, 6.0F)));
     public static final RegistryObject<SlabBlock> MOSSY_HOLYSTONE_SLAB = register("mossy_holystone_slab",
