@@ -20,6 +20,7 @@ import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
 import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
@@ -41,10 +42,7 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
-import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -182,20 +180,22 @@ public class AetherLootTableProvider extends LootTableProvider
             );
         }
 
-        protected static LootTable.Builder droppingBerryBush(Block block, Item drop) {
+        protected static LootTable.Builder droppingBerryBush(Block block, Block stem, Item drop) {
             return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                     .add(applyExplosionDecay(block, LootItem.lootTableItem(drop)
-                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))
-                            .when(LocationCheck.checkLocation(
-                                    LocationPredicate.Builder.location().setBlock(
-                                            BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
-                                    new BlockPos(0, -1, 0)).invert()))
-                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F))
-                            .when(LocationCheck.checkLocation(
-                                    LocationPredicate.Builder.location().setBlock(
-                                            BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
-                                    new BlockPos(0, -1, 0))))))
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))
+                                    .when(LocationCheck.checkLocation(
+                                            LocationPredicate.Builder.location().setBlock(
+                                                    BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
+                                            new BlockPos(0, -1, 0)).invert()))
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F))
+                                    .when(LocationCheck.checkLocation(
+                                            LocationPredicate.Builder.location().setBlock(
+                                                    BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
+                                            new BlockPos(0, -1, 0))))))
                     .apply(DoubleDrops.builder())
+            ).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                    .add(LootItem.lootTableItem(stem).when(LootItemEntityPropertyCondition.entityPresent(LootContext.EntityTarget.THIS).invert()))
             );
         }
 
