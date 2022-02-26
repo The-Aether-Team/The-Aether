@@ -778,6 +778,7 @@ c4969d6eb5dcdf4f6cd7e537a4a9bf7bf547c5c1 data/aether/advancements/recipes/tools/
 fb4b0b56398f0f5b4e426657238d36719169077a data/aether/advancements/to_infinity_and_beyond.json
 8740c7a5ef174c1b7ddc41a2f86fb938a2d196e1 data/aether/dimension/the_aether.json
 71eb444cf55d780d1df433bb96742a2d11ea0196 data/aether/dimension_type/aether_type.json
+0ba38a4b58ac993de416ea29407c9e1f7328cf39 data/aether/loot_modifiers/remove_seeds.json
 e74b9bef2dec56628a7bf4b5908751e388e62e39 data/aether/loot_tables/advancements/enter_aether.json
 7146f7a733c79fd597f0f54edc2871e96dfdbb1f data/aether/loot_tables/blocks/aerogel.json
 ed40f7a1e448ca33e59f01bbd91ddb7615704d97 data/aether/loot_tables/blocks/aerogel_slab.json
@@ -1279,6 +1280,7 @@ ef1688d8839282e91b8aa07f3029cefcf02df64e data/aether/tags/items/skyroot_stick.js
 7857dbef719f59695d7f3f80ae5a7b2090dabd97 data/aether/tags/items/zanite_tools.json
 f0cfe3cedf3a854be279581323eeafa36249b60f data/aether/worldgen/biome/floating_forest.json
 f6339302eee532026dfae6480f2a71498c8a469c data/aether/worldgen/noise_settings/skyland_generation.json
+3c748dc0e356a9846ae0f5bf08efad08d0d18e4e data/forge/loot_modifiers/global_loot_modifiers.json
 ef896638976d84e49ea64f3df732b1fa877600bb data/forge/tags/blocks/fence_gates/wooden.json
 0951b17699df5d7949eefbb975fa38059e801e9c data/forge/tags/blocks/fences/wooden.json
 09ab249c93193997ee72291f6b847e58b9391034 data/forge/tags/blocks/glass/colorless.json
