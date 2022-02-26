@@ -20,6 +20,7 @@ import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
@@ -195,7 +196,9 @@ public class AetherLootTableProvider extends LootTableProvider
                                             new BlockPos(0, -1, 0))))))
                     .apply(DoubleDrops.builder())
             ).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                    .add(LootItem.lootTableItem(stem).when(LootItemEntityPropertyCondition.entityPresent(LootContext.EntityTarget.THIS).invert()))
+                    .add(LootItem.lootTableItem(stem)
+                            .when(LootItemEntityPropertyCondition.entityPresent(LootContext.EntityTarget.THIS).invert())
+                            .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(Blocks.AIR))))
             );
         }
 

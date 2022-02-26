@@ -82,6 +82,14 @@
                 "predicate": {},
                 "entity": "this"
               }
+            },
+            {
+              "condition": "minecraft:match_tool",
+              "predicate": {
+                "items": [
+                  "minecraft:air"
+                ]
+              }
             }
           ],
           "name": "aether:berry_bush_stem"
