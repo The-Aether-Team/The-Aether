@@ -2,6 +2,8 @@ package com.gildedgames.aether.common.block.natural;
 
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -22,10 +24,16 @@ public class BerryBushBlock extends AetherBushBlock
 		super.createBlockStateDefinition(builder);
 		builder.add(AetherBlockStateProperties.DOUBLE_DROPS);
 	}
-	
+
 	@Override
 	public void destroy(LevelAccessor worldIn, BlockPos pos, BlockState state) {
 		super.destroy(worldIn, pos, state);
 		worldIn.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 3);
+	}
+
+	@Override
+	public void onBlockExploded(BlockState state, Level world, BlockPos pos, Explosion explosion) {
+		super.onBlockExploded(state, world, pos, explosion);
+		world.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 3);
 	}
 }

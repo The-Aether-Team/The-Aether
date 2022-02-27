@@ -33,9 +33,13 @@ public class BlueAercloudBlock extends AercloudBlock
 		}
 		
 		entity.setDeltaMovement(motion.x, 2.0, motion.z);
-		
+
 		if (world.isClientSide) {
-			for (int count = 0; count < 50; count++) {
+			int amount = 50;
+			if (entity.getY() == entity.yOld) {
+				amount = 10;
+			}
+			for (int count = 0; count < amount; count++) {
 				double xOffset = pos.getX() + world.random.nextDouble();
 				double yOffset = pos.getY() + world.random.nextDouble();
 				double zOffset = pos.getZ() + world.random.nextDouble();

@@ -22,7 +22,7 @@ import java.util.List;
 public class ToolAbilityListener
 {
     @SubscribeEvent
-    public static void doGoldenOakStripping(PlayerInteractEvent.RightClickBlock event) {
+    public static void doGoldenOakStripping(PlayerInteractEvent.RightClickBlock event) { //TODO: Potentially  switch to use popResources
         Level world = event.getWorld();
         ItemStack stack = event.getItemStack();
         if (stack.getItem() instanceof AxeItem) {
