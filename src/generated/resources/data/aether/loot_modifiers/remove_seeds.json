@@ -1,8 +1,17 @@
 {
   "conditions": [
     {
-      "condition": "minecraft:block_state_property",
-      "block": "minecraft:grass"
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "minecraft:grass"
+        },
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "minecraft:tall_grass"
+        }
+      ]
     },
     {
       "condition": "minecraft:inverted",
