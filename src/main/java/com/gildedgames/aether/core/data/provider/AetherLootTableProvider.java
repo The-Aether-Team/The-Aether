@@ -197,8 +197,7 @@ public class AetherLootTableProvider extends LootTableProvider
                     .apply(DoubleDrops.builder())
             ).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                     .add(LootItem.lootTableItem(stem)
-                            .when(LootItemEntityPropertyCondition.entityPresent(LootContext.EntityTarget.THIS).invert())
-                            .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(Blocks.AIR))))
+                            .when(LootItemEntityPropertyCondition.entityPresent(LootContext.EntityTarget.THIS).invert()))
             );
         }
 
