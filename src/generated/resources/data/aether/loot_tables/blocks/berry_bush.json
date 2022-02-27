@@ -67,6 +67,26 @@
           "function": "aether:double_drops"
         }
       ]
+    },
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "minecraft:entity_properties",
+                "predicate": {},
+                "entity": "this"
+              }
+            }
+          ],
+          "name": "aether:berry_bush_stem"
+        }
+      ]
     }
   ]
 }

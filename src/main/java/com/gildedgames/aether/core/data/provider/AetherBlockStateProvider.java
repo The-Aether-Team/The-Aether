@@ -138,9 +138,8 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider
         axisBlock(block.get(), texture(name(block), "natural/"), extend(texture(name(baseBlock), "natural/"), "_top"));
     }
 
-    public void wood(Supplier<? extends Block> block, Supplier<? extends RotatedPillarBlock> baseBlock) {
-        ConfiguredModel wood = new ConfiguredModel(models().cubeAll(name(block), texture(name(baseBlock), "natural/")));
-        getVariantBuilder(block.get()).partialState().setModels(wood);
+    public void wood(Supplier<? extends RotatedPillarBlock> block, Supplier<? extends RotatedPillarBlock> baseBlock) {
+        axisBlock(block.get(), texture(name(baseBlock), "natural/"), texture(name(baseBlock), "natural/"));
     }
 
     public void altar(Supplier<? extends Block> block) {
@@ -174,8 +173,7 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider
         getVariantBuilder(block.get()).partialState().setModels(dungeonBlock);
     }
 
-    public void chest(Supplier<? extends Block> block, Supplier<? extends Block> dummyBlock)
-    {
+    public void chest(Supplier<? extends Block> block, Supplier<? extends Block> dummyBlock) {
         ModelFile chest = models().cubeAll(name(block), texture(name(dummyBlock), "dungeon/"));
         getVariantBuilder(block.get()).forAllStatesExcept(state -> ConfiguredModel.builder().modelFile(chest).build(),
                 ChestBlock.TYPE, ChestBlock.WATERLOGGED);

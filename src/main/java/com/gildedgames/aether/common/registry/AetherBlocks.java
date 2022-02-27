@@ -17,11 +17,14 @@ import com.gildedgames.aether.common.item.block.BurnableBlockItem;
 import com.gildedgames.aether.common.item.block.EntityBlockItem;
 import com.gildedgames.aether.common.world.gen.tree.GoldenOakTree;
 import com.gildedgames.aether.common.world.gen.tree.SkyrootTree;
+import com.google.common.collect.ImmutableMap;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,7 +36,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class AetherBlocks
@@ -46,7 +51,7 @@ public class AetherBlocks
     public static final RegistryObject<Block> ENCHANTED_AETHER_GRASS_BLOCK = register("enchanted_aether_grass_block", () -> new EnchantedAetherGrassBlock(Block.Properties.of(Material.GRASS, MaterialColor.GOLD).randomTicks().strength(0.6F).sound(SoundType.GRASS)));
     public static final RegistryObject<Block> AETHER_DIRT = register("aether_dirt", () -> new AetherDoubleDropBlock(Block.Properties.of(Material.DIRT, MaterialColor.TERRACOTTA_CYAN).strength(0.5F).sound(SoundType.GRAVEL)));
     public static final RegistryObject<Block> QUICKSOIL = register("quicksoil", () -> new AetherDoubleDropBlock(Block.Properties.of(Material.SAND, MaterialColor.COLOR_YELLOW).strength(0.5F).friction(1.1F).sound(SoundType.SAND)));
-    public static final RegistryObject<Block> HOLYSTONE = register("holystone", () -> new AetherDoubleDropBlock(Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(0.5F, 6.0f).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> HOLYSTONE = register("holystone", () -> new AetherDoubleDropBlock(Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(1.5F, 6.0F).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOSSY_HOLYSTONE = register("mossy_holystone", () -> new AetherDoubleDropBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE.get())));
     public static final RegistryObject<Block> AETHER_FARMLAND = register("aether_farmland", () -> new AetherFarmlandBlock(Block.Properties.of(Material.DIRT, MaterialColor.TERRACOTTA_CYAN).randomTicks().strength(0.6F).sound(SoundType.GRAVEL).isViewBlocking(AetherBlocks::always).isSuffocating(AetherBlocks::always)));
 
@@ -58,7 +63,7 @@ public class AetherBlocks
     public static final RegistryObject<Block> ICESTONE = register("icestone", () -> new IcestoneBlock(Block.Properties.of(Material.STONE, MaterialColor.ICE).strength(3.0F).randomTicks().sound(SoundType.GLASS).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> AMBROSIUM_ORE = register("ambrosium_ore", () -> new AetherDoubleDropsOreBlock(0, 2, Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(3.0F).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> ZANITE_ORE = register("zanite_ore", () -> new AetherOreBlock(3, 5, Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(3.0F).requiresCorrectToolForDrops()));
-    public static final RegistryObject<Block> GRAVITITE_ORE = register("gravitite_ore", () -> new FloatingBlock(false, Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(5.0F).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> GRAVITITE_ORE = register("gravitite_ore", () -> new FloatingBlock(false, Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(3.0F).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> SKYROOT_LEAVES = register("skyroot_leaves", () -> new AetherDoubleDropsLeaves(Block.Properties.of(Material.LEAVES, MaterialColor.GRASS).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never)));
     public static final RegistryObject<Block> GOLDEN_OAK_LEAVES = register("golden_oak_leaves", () -> new LeavesWithParticlesBlock(AetherParticleTypes.GOLDEN_OAK_LEAVES, Block.Properties.of(Material.LEAVES, MaterialColor.GOLD).strength(0.2F).randomTicks().sound(SoundType.GRASS)));
@@ -69,13 +74,13 @@ public class AetherBlocks
 
     public static final RegistryObject<RotatedPillarBlock> SKYROOT_LOG = register("skyroot_log", () -> new AetherLogBlock(Block.Properties.copy(Blocks.OAK_LOG)));
     public static final RegistryObject<RotatedPillarBlock> GOLDEN_OAK_LOG = register("golden_oak_log", () -> new AetherLogBlock(Block.Properties.copy(Blocks.OAK_LOG)));
-    public static final RegistryObject<RotatedPillarBlock> STRIPPED_SKYROOT_LOG = register("stripped_skyroot_log", () -> new AetherLogBlock(Block.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
-    public static final RegistryObject<RotatedPillarBlock> SKYROOT_WOOD = register("skyroot_wood", () -> new AetherDoubleDropsRotatedPillarBlock(Block.Properties.copy(Blocks.OAK_WOOD)));
-    public static final RegistryObject<RotatedPillarBlock> GOLDEN_OAK_WOOD = register("golden_oak_wood", () -> new AetherDoubleDropsRotatedPillarBlock(Block.Properties.copy(Blocks.OAK_WOOD)));
-    public static final RegistryObject<RotatedPillarBlock> STRIPPED_SKYROOT_WOOD = register("stripped_skyroot_wood", () -> new AetherDoubleDropsRotatedPillarBlock(Block.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+    public static final RegistryObject<RotatedPillarBlock> STRIPPED_SKYROOT_LOG = register("stripped_skyroot_log", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistryObject<RotatedPillarBlock> SKYROOT_WOOD = register("skyroot_wood", () -> new AetherLogBlock(Block.Properties.copy(Blocks.OAK_WOOD)));
+    public static final RegistryObject<RotatedPillarBlock> GOLDEN_OAK_WOOD = register("golden_oak_wood", () -> new AetherLogBlock(Block.Properties.copy(Blocks.OAK_WOOD)));
+    public static final RegistryObject<RotatedPillarBlock> STRIPPED_SKYROOT_WOOD = register("stripped_skyroot_wood", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
 
     public static final RegistryObject<Block> SKYROOT_PLANKS = register("skyroot_planks", () -> new Block(Block.Properties.copy(Blocks.OAK_PLANKS)));
-    public static final RegistryObject<Block> HOLYSTONE_BRICKS = register("holystone_bricks", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(0.5F, 10.0F).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> HOLYSTONE_BRICKS = register("holystone_bricks", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(1.5F, 6.0F).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> QUICKSOIL_GLASS = register("quicksoil_glass", () -> new GlassBlock(Block.Properties.of(Material.GLASS, MaterialColor.COLOR_YELLOW).strength(0.3F).friction(1.1F).lightLevel((state) -> 11).sound(SoundType.GLASS).noOcclusion().isValidSpawn(AetherBlocks::never).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never)));
     public static final RegistryObject<Block> AEROGEL = register("aerogel", () -> new AerogelBlock(Block.Properties.of(Material.STONE, MaterialColor.DIAMOND).strength(1.0F, 2000.0F).sound(SoundType.METAL).noOcclusion().requiresCorrectToolForDrops().isViewBlocking(AetherBlocks::never)));
 
@@ -105,11 +110,11 @@ public class AetherBlocks
     public static final RegistryObject<FlowerPotBlock> POTTED_SKYROOT_SAPLING = BLOCKS.register("potted_skyroot_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, SKYROOT_SAPLING, Block.Properties.copy(Blocks.FLOWER_POT)));
     public static final RegistryObject<FlowerPotBlock> POTTED_GOLDEN_OAK_SAPLING = BLOCKS.register("potted_golden_oak_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, GOLDEN_OAK_SAPLING, Block.Properties.copy(Blocks.FLOWER_POT)));
 
-    public static final RegistryObject<Block> CARVED_STONE = register("carved_stone", () -> new Block(Block.Properties.of(Material.STONE).strength(0.5F).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CARVED_STONE = register("carved_stone", () -> new Block(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> SENTRY_STONE = register("sentry_stone", () -> new Block(Block.Properties.copy(CARVED_STONE.get()).lightLevel((state) -> 11)));
-    public static final RegistryObject<Block> ANGELIC_STONE = register("angelic_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.SAND).strength(0.5F).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> ANGELIC_STONE = register("angelic_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.SAND).strength(1.5F, 6.0F).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> LIGHT_ANGELIC_STONE = register("light_angelic_stone", () -> new Block(Block.Properties.copy(ANGELIC_STONE.get()).lightLevel((state) -> 11)));
-    public static final RegistryObject<Block> HELLFIRE_STONE = register("hellfire_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.NETHER).strength(0.5F).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> HELLFIRE_STONE = register("hellfire_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.NETHER).strength(1.5F, 6.0F).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> LIGHT_HELLFIRE_STONE = register("light_hellfire_stone", () -> new Block(Block.Properties.copy(HELLFIRE_STONE.get()).lightLevel((state) -> 11)));
 
     public static final RegistryObject<Block> LOCKED_CARVED_STONE = register("locked_carved_stone", () -> new Block(Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never)));
@@ -182,7 +187,7 @@ public class AetherBlocks
     public static final RegistryObject<SlabBlock> ANGELIC_SLAB = register("angelic_slab",
             () -> new SlabBlock(Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get()).strength(2.0F, 6.0F)));
     public static final RegistryObject<SlabBlock> HELLFIRE_SLAB = register("hellfire_slab",
-            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get()).strength(0.5F, 6.0F)));
+            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get()).strength(2.0F, 6.0F)));
     public static final RegistryObject<SlabBlock> HOLYSTONE_SLAB = register("holystone_slab",
             () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE.get()).strength(2.0F, 6.0F)));
     public static final RegistryObject<SlabBlock> MOSSY_HOLYSTONE_SLAB = register("mossy_holystone_slab",
@@ -204,58 +209,54 @@ public class AetherBlocks
 
     public static void registerPots() {
         FlowerPotBlock pot = (FlowerPotBlock) Blocks.FLOWER_POT;
-
         pot.addPlant(AetherBlocks.PURPLE_FLOWER.getId(), AetherBlocks.POTTED_PURPLE_FLOWER);
         pot.addPlant(AetherBlocks.WHITE_FLOWER.getId(), AetherBlocks.POTTED_WHITE_FLOWER);
         pot.addPlant(AetherBlocks.SKYROOT_SAPLING.getId(), AetherBlocks.POTTED_SKYROOT_SAPLING);
         pot.addPlant(AetherBlocks.GOLDEN_OAK_SAPLING.getId(), AetherBlocks.POTTED_GOLDEN_OAK_SAPLING);
     }
 
-    // See: https://github.com/MinecraftForge/MinecraftForge/blob/eb1a9b57c6cc4d5cb4ad3c4305c2a73015d28917/src/main/java/net/minecraftforge/event/world/BlockEvent.java#L431
     public static void registerAxeStrippingBlocks() {
-//		AxeItem.STRIPPABLES = ImmutableMap.<Block, Block>builder()
-//				.putAll(AxeItem.STRIPABLES)
-//				.put(AetherBlocks.SKYROOT_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
-//				.put(AetherBlocks.GOLDEN_OAK_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
-//				.put(AetherBlocks.SKYROOT_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
-//				.put(AetherBlocks.GOLDEN_OAK_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
-//				.build();
+		AxeItem.STRIPPABLES = ImmutableMap.<Block, Block>builder()
+				.putAll(AxeItem.STRIPPABLES)
+				.put(AetherBlocks.SKYROOT_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
+				.put(AetherBlocks.GOLDEN_OAK_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
+				.put(AetherBlocks.SKYROOT_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
+				.put(AetherBlocks.GOLDEN_OAK_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
+				.build();
     }
-
     public static void registerHoeTillingBlocks() {
-//		HoeItem.TILLABLES = ImmutableMap.<Block, BlockState>builder()
-//				.putAll(HoeItem.TILLABLES)
-//				.put(AetherBlocks.AETHER_DIRT.get(), AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())
-//				.put(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())
-//				.put(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())
-//				.build();
+		HoeItem.TILLABLES = ImmutableMap.<Block, Pair<Predicate<UseOnContext>, Consumer<UseOnContext>>>builder()
+				.putAll(HoeItem.TILLABLES)
+				.put(AetherBlocks.AETHER_DIRT.get(), Pair.of(HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())))
+				.put(AetherBlocks.AETHER_GRASS_BLOCK.get(), Pair.of(HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())))
+				.put(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), Pair.of(HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())))
+				.build();
     }
 
-    //See: https://github.com/MinecraftForge/MinecraftForge/blob/eb1a9b57c6cc4d5cb4ad3c4305c2a73015d28917/src/main/java/net/minecraftforge/common/extensions/IForgeBlock.java#L579
     public static void registerFlammability() {
-//		FireBlock fireblock = (FireBlock) Blocks.FIRE;
-//		fireblock.fla(AetherBlocks.SKYROOT_LEAVES, 30, 60);
-//		fireblock.setFlammable(AetherBlocks.GOLDEN_OAK_LEAVES.get(), 30, 60);
-//		fireblock.setFlammable(AetherBlocks.CRYSTAL_LEAVES.get(), 30, 60);
-//		fireblock.setFlammable(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get(), 30, 60);
-//		fireblock.setFlammable(AetherBlocks.HOLIDAY_LEAVES.get(), 30, 60);
-//		fireblock.setFlammable(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get(), 30, 60);
-//		fireblock.setFlammable(AetherBlocks.SKYROOT_LOG.get(), 5, 5);
-//		fireblock.setFlammable(AetherBlocks.GOLDEN_OAK_LOG.get(), 5, 5);
-//		fireblock.setFlammable(AetherBlocks.STRIPPED_SKYROOT_LOG.get(), 5, 5);
-//		fireblock.setFlammable(AetherBlocks.SKYROOT_WOOD.get(), 5, 5);
-//		fireblock.setFlammable(AetherBlocks.GOLDEN_OAK_WOOD.get(), 5, 5);
-//		fireblock.setFlammable(AetherBlocks.STRIPPED_SKYROOT_WOOD.get(), 5, 5);
-//		fireblock.setFlammable(AetherBlocks.SKYROOT_PLANKS.get(), 5, 20);
-//		fireblock.setFlammable(AetherBlocks.BERRY_BUSH.get(), 30, 60);
-//		fireblock.setFlammable(AetherBlocks.BERRY_BUSH_STEM.get(), 60, 100);
-//		fireblock.setFlammable(AetherBlocks.PURPLE_FLOWER.get(), 60, 100);
-//		fireblock.setFlammable(AetherBlocks.WHITE_FLOWER.get(), 60, 100);
-//		fireblock.setFlammable(AetherBlocks.SKYROOT_FENCE_GATE.get(), 5, 20);
-//		fireblock.setFlammable(AetherBlocks.SKYROOT_FENCE.get(), 5, 20);
-//		fireblock.setFlammable(AetherBlocks.SKYROOT_STAIRS.get(), 5, 20);
-//		fireblock.setFlammable(AetherBlocks.SKYROOT_SLAB.get(), 5, 20);
-//		fireblock.setFlammable(AetherBlocks.SKYROOT_BOOKSHELF.get(), 30, 20);
+		FireBlock fireBlock = (FireBlock) Blocks.FIRE;
+        fireBlock.setFlammable(AetherBlocks.SKYROOT_LEAVES.get(), 30, 60);
+        fireBlock.setFlammable(AetherBlocks.GOLDEN_OAK_LEAVES.get(), 30, 60);
+        fireBlock.setFlammable(AetherBlocks.CRYSTAL_LEAVES.get(), 30, 60);
+        fireBlock.setFlammable(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get(), 30, 60);
+        fireBlock.setFlammable(AetherBlocks.HOLIDAY_LEAVES.get(), 30, 60);
+        fireBlock.setFlammable(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get(), 30, 60);
+        fireBlock.setFlammable(AetherBlocks.SKYROOT_LOG.get(), 5, 5);
+        fireBlock.setFlammable(AetherBlocks.GOLDEN_OAK_LOG.get(), 5, 5);
+        fireBlock.setFlammable(AetherBlocks.STRIPPED_SKYROOT_LOG.get(), 5, 5);
+        fireBlock.setFlammable(AetherBlocks.SKYROOT_WOOD.get(), 5, 5);
+        fireBlock.setFlammable(AetherBlocks.GOLDEN_OAK_WOOD.get(), 5, 5);
+        fireBlock.setFlammable(AetherBlocks.STRIPPED_SKYROOT_WOOD.get(), 5, 5);
+        fireBlock.setFlammable(AetherBlocks.SKYROOT_PLANKS.get(), 5, 20);
+        fireBlock.setFlammable(AetherBlocks.BERRY_BUSH.get(), 30, 60);
+        fireBlock.setFlammable(AetherBlocks.BERRY_BUSH_STEM.get(), 60, 100);
+        fireBlock.setFlammable(AetherBlocks.PURPLE_FLOWER.get(), 60, 100);
+        fireBlock.setFlammable(AetherBlocks.WHITE_FLOWER.get(), 60, 100);
+        fireBlock.setFlammable(AetherBlocks.SKYROOT_FENCE_GATE.get(), 5, 20);
+        fireBlock.setFlammable(AetherBlocks.SKYROOT_FENCE.get(), 5, 20);
+        fireBlock.setFlammable(AetherBlocks.SKYROOT_STAIRS.get(), 5, 20);
+        fireBlock.setFlammable(AetherBlocks.SKYROOT_SLAB.get(), 5, 20);
+        fireBlock.setFlammable(AetherBlocks.SKYROOT_BOOKSHELF.get(), 30, 20);
     }
 
     public static void registerWoodTypes() {

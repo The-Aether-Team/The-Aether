@@ -71,7 +71,8 @@ public class Aether
                 AetherSoundEvents.SOUNDS,
                 AetherContainerTypes.CONTAINERS,
                 AetherBlockEntityTypes.BLOCK_ENTITIES,
-                AetherRecipes.RECIPE_SERIALIZERS
+                AetherRecipes.RECIPE_SERIALIZERS,
+                AetherLootModifiers.GLOBAL_LOOT_MODIFIERS
         };
 
         for (DeferredRegister<?> register : registers) {
@@ -132,6 +133,7 @@ public class Aether
         if (event.includeServer()) {
             generator.addProvider(new AetherRecipeData(generator));
             generator.addProvider(new AetherLootTableData(generator));
+            generator.addProvider(new AetherLootModifierData(generator));
             AetherBlockTagData blockTags = new AetherBlockTagData(generator, helper);
             generator.addProvider(blockTags);
             generator.addProvider(new AetherItemTagData(generator, blockTags, helper));
