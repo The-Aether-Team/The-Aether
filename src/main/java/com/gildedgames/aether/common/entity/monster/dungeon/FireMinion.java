@@ -6,6 +6,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -23,7 +24,7 @@ public class FireMinion extends Monster {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.5, true));
         this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));

@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.monster.dungeon.Valkyrie;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -143,11 +144,21 @@ public class ValkyrieModel extends HumanoidModel<Valkyrie> {
         this.head.yRot = netHeadYaw * ((float) Math.PI / 180.0F);
         this.head.xRot = headPitch * ((float) Math.PI / 180.0F);
 
+        this.rightArm.x = -4.0F;
+        this.rightArm.z = 0.0F;
+        this.leftArm.x = 5.0F;
+        this.leftArm.z = 0.0F;
+
         this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 2.0F * limbSwingAmount * 0.5F;
         this.leftArm.xRot = Mth.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F;
+        this.rightArm.zRot = 0.0F;
+        this.leftArm.zRot = 0.0F;
 
         this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+
+        this.rightArm.yRot = 0.0F;
+        this.leftArm.yRot = 0.0F;
 
         this.setupAttackAnimation(valkyrie, ageInTicks); //TODO: Test
     }

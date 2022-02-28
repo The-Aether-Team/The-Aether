@@ -355,6 +355,8 @@ public class AetherLangData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.ZEPHYR, "Zephyr");
         addEntityType(AetherEntityTypes.SENTRY, "Sentry");
         addEntityType(AetherEntityTypes.MIMIC, "Mimic");
+        addEntityType(AetherEntityTypes.VALKYRIE, "Valkyrie");
+        addEntityType(AetherEntityTypes.FIRE_MINION, "Fire Minion");
 
         addEntityType(AetherEntityTypes.FLOATING_BLOCK, "Floating Block");
         addEntityType(AetherEntityTypes.LIGHTNING_KNIFE, "Lightning Knife");
