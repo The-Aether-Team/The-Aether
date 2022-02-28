@@ -81,7 +81,7 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
         this.lowerPetal5 = this.stem.getChild("lower_petal_5");
     }
 
-    public static LayerDefinition createMainLayer() {
+    public static LayerDefinition createBodyLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();
         PartDefinition partDefinition = meshDefinition.getRoot();
         PartDefinition stem = partDefinition.addOrReplaceChild("stem", CubeListBuilder.create().texOffs(24, 13).addBox(-1.0F, 0.0F, -1.0F, 2, 6, 2), PartPose.offset(0.0F, 1.0F, 0.0F));

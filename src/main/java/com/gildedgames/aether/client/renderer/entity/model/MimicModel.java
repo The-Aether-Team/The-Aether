@@ -36,7 +36,7 @@ public class MimicModel extends EntityModel<Mimic> {
 		PartDefinition upperBody = partDefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(0, 10).addBox(0.0F, 0.0F, 0.0F, 16, 6, 16), PartPose.offsetAndRotation(-8.0F, 0.0F, 8.0F, (float)Math.PI, 0.0F, 0.0F));
 		partDefinition.addOrReplaceChild("lower_body", CubeListBuilder.create().texOffs(0, 38).addBox(0.0F, 0.0F, 0.0F, 16, 10, 16), PartPose.offset(-8.0F, 0.0F, -8.0F));
 		partDefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(64, 0).addBox(0.0F, 0.0F, -3.0F, 6, 15, 6), PartPose.offset(1.5F, 9.0F, 0.0F));
-		partDefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(64, 0).addBox(-5.1F, 0.0F, -3.0F, 6, 15, 6).mirror(), PartPose.offset(-2.5F, 9.0F, 0.0F));
+		partDefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(64, 0).mirror().addBox(-5.1F, 0.0F, -3.0F, 6, 15, 6), PartPose.offset(-2.5F, 9.0F, 0.0F));
 		upperBody.addOrReplaceChild("knob", CubeListBuilder.create().texOffs(0, 0).addBox(7.0F, -2.0F, 16.0F, 2, 4, 1), PartPose.ZERO);
 		return LayerDefinition.create(meshDefinition, 128, 64);
 	}

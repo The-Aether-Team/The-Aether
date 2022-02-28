@@ -272,6 +272,7 @@ public class AetherItems
 	public static final RegistryObject<SpawnEggItem> GOLDEN_SWET_SPAWN_EGG = ITEMS.register("golden_swet_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.GOLDEN_SWET, 0xcdda4f, 0x4fb1da, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 	public static final RegistryObject<SpawnEggItem> WHIRLWIND_SPAWN_EGG = ITEMS.register("whirlwind_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.WHIRLWIND, 0x9fc3f7, 0xffffff, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 	public static final RegistryObject<SpawnEggItem> EVIL_WHIRLWIND_SPAWN_EGG = ITEMS.register("evil_whirlwind_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.EVIL_WHIRLWIND, 0x9fc3f7, 0x111111, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+	public static final RegistryObject<SpawnEggItem> VALKYRIE_SPAWN_EGG = ITEMS.register("valkyrie_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.VALKYRIE, 0xF9F5E3, 0xF2D200, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 	public static final RegistryObject<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.ZEPHYR, 0xDFDFDF, 0x99CFE8, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 
 	public static void registerAbilities() {

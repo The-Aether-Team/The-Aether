@@ -44,14 +44,14 @@ public class ZephyrModel extends EntityModel<Zephyr> {
         MeshDefinition meshDefinition = new MeshDefinition();
         PartDefinition partDefinition = meshDefinition.getRoot();
         partDefinition.addOrReplaceChild("right_face", CubeListBuilder.create().texOffs(67, 11).addBox(-7.0F, -1.0F, -9.0F, 4.0F, 6.0F, 2.0F), PartPose.offset(0.0F, 8.0F, 0.0F));
-        partDefinition.addOrReplaceChild("left_face", CubeListBuilder.create().texOffs(67, 11).addBox(3.0F, -1.0F, -9.0F, 4.0F, 6.0F, 2.0F).mirror(), PartPose.offset(0.0F, 8.0F, 0.0F));
-        partDefinition.addOrReplaceChild("mouth", CubeListBuilder.create().texOffs(66, 19).addBox(-3.0F, 1.0F, -8.0F, 6.0F, 3.0F, 1.0F).mirror(), PartPose.offset(0.0F, 8.0F, 0.0F));
+        partDefinition.addOrReplaceChild("left_face", CubeListBuilder.create().texOffs(67, 11).mirror().addBox(3.0F, -1.0F, -9.0F, 4.0F, 6.0F, 2.0F), PartPose.offset(0.0F, 8.0F, 0.0F));
+        partDefinition.addOrReplaceChild("mouth", CubeListBuilder.create().texOffs(66, 19).mirror().addBox(-3.0F, 1.0F, -8.0F, 6.0F, 3.0F, 1.0F), PartPose.offset(0.0F, 8.0F, 0.0F));
         partDefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(27, 9).addBox(-6.0F, -4.0F, -7.0F, 12.0F, 9.0F, 14.0F), PartPose.offset(0.0F, 8.0F, 0.0F));
         partDefinition.addOrReplaceChild("body_right_side_front", CubeListBuilder.create().texOffs(0, 20).mirror().addBox(-2.0F, -3.0F, -3.0F, 2.0F, 6.0F, 6.0F), PartPose.offset(-6.0F, 8.0F, -4.0F));
         partDefinition.addOrReplaceChild("body_right_side_back", CubeListBuilder.create().texOffs(25, 11).mirror().addBox(-2.0F, -3.3333F, -2.5F, 2.0F, 6.0F, 6.0F), PartPose.offset(-5.5F, 9.0F, 2.0F));
         partDefinition.addOrReplaceChild("body_left_side_front", CubeListBuilder.create().texOffs(0, 20).addBox(0.0F, -3.0F, -3.0F, 2.0F, 6.0F, 6.0F), PartPose.offset(6.0F, 8.0F, -4.0F));
         partDefinition.addOrReplaceChild("body_left_side_back", CubeListBuilder.create().texOffs(25, 11).addBox(0.0F, -3.3333F, -2.5F, 2.0F, 6.0F, 6.0F), PartPose.offset(5.5F, 9.0F, 2.0F));
-        partDefinition.addOrReplaceChild("cloud_butt", CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, -3.0F, 0.0F, 8.0F, 6.0F, 2.0F).mirror(), PartPose.offset(2.0F, 8.0F, 7.0F));
+        partDefinition.addOrReplaceChild("cloud_butt", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-6.0F, -3.0F, 0.0F, 8.0F, 6.0F, 2.0F), PartPose.offset(2.0F, 8.0F, 7.0F));
         PartDefinition tailBase = partDefinition.addOrReplaceChild("tail_base", CubeListBuilder.create().texOffs(96, 22).addBox(-2.5F, -2.5F, -2.5F, 5, 5, 5), PartPose.offset(0.0F, 0.0F, 12.4F));
         PartDefinition tailMiddle = tailBase.addOrReplaceChild("tail_middle", CubeListBuilder.create().texOffs(80, 24).addBox(-2.0F, -2.0F, -1.966667F, 4, 4, 4), PartPose.offset(0.0F, 0.0F, 6.0F));
         tailMiddle.addOrReplaceChild("tail_end", CubeListBuilder.create().texOffs(84, 18).addBox(-1.5F, -1.5F, -1.5F, 3, 3, 3), PartPose.offset(0.0F, 0.0F, 5.0F));

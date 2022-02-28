@@ -126,8 +126,8 @@ public class AetherBlocks
 
     public static final RegistryObject<Block> TRAPPED_CARVED_STONE = register("trapped_carved_stone", () -> new TrappedBlock(AetherEntityTypes.SENTRY::get, () -> LOCKED_CARVED_STONE.get().defaultBlockState(), Block.Properties.copy(LOCKED_CARVED_STONE.get())));
     public static final RegistryObject<Block> TRAPPED_SENTRY_STONE = register("trapped_sentry_stone", () -> new TrappedBlock(AetherEntityTypes.SENTRY::get, () -> LOCKED_SENTRY_STONE.get().defaultBlockState(), Block.Properties.copy(LOCKED_SENTRY_STONE.get())));
-    public static final RegistryObject<Block> TRAPPED_ANGELIC_STONE = register("trapped_angelic_stone", () -> new Block(Block.Properties.copy(LOCKED_ANGELIC_STONE.get()))); // TODO
-    public static final RegistryObject<Block> TRAPPED_LIGHT_ANGELIC_STONE = register("trapped_light_angelic_stone", () -> new Block(Block.Properties.copy(LOCKED_LIGHT_ANGELIC_STONE.get()))); // TODO
+    public static final RegistryObject<Block> TRAPPED_ANGELIC_STONE = register("trapped_angelic_stone", () -> new TrappedBlock(AetherEntityTypes.VALKYRIE::get, () -> LOCKED_ANGELIC_STONE.get().defaultBlockState(), Block.Properties.copy(LOCKED_ANGELIC_STONE.get())));
+    public static final RegistryObject<Block> TRAPPED_LIGHT_ANGELIC_STONE = register("trapped_light_angelic_stone", () -> new TrappedBlock(AetherEntityTypes.VALKYRIE::get, () -> LOCKED_LIGHT_ANGELIC_STONE.get().defaultBlockState(), Block.Properties.copy(LOCKED_LIGHT_ANGELIC_STONE.get())));
     public static final RegistryObject<Block> TRAPPED_HELLFIRE_STONE = register("trapped_hellfire_stone", () -> new Block(Block.Properties.copy(LOCKED_HELLFIRE_STONE.get()))); // TODO
     public static final RegistryObject<Block> TRAPPED_LIGHT_HELLFIRE_STONE = register("trapped_light_hellfire_stone", () -> new Block(Block.Properties.copy(LOCKED_LIGHT_HELLFIRE_STONE.get()))); // TODO
 

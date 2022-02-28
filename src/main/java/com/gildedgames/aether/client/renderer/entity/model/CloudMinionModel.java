@@ -21,11 +21,11 @@ public class CloudMinionModel extends ListModel<CloudMinion> {
         MeshDefinition meshDefinition = new MeshDefinition();
         PartDefinition partDefinition = meshDefinition.getRoot();
         partDefinition.addOrReplaceChild("cloudMinion", CubeListBuilder.create()
-                .addBox("1", -4.5F, 14.0F, -4.5F, 9, 9, 9, new CubeDeformation(0), 0, 0)
-                .addBox("2", -3.5F, 15.0F, -5.5F, 7, 7, 1, new CubeDeformation(0), 36, 0)
-                .addBox("3", -3.5F, 15.0F, 4.5F, 7, 7, 1, new CubeDeformation(0), 36, 0)
-                .addBox("4", -5.5F, 15.0F, -3.5F, 1, 7, 7, new CubeDeformation(0), 36, 8)
-                .addBox("5", 4.5F, 15.0F, -3.5F, 1, 7, 7, new CubeDeformation(0), 36, 8), PartPose.ZERO);
+                .addBox("1", -4.5F, 14.0F, -4.5F, 9, 9, 9, CubeDeformation.NONE, 0, 0)
+                .addBox("2", -3.5F, 15.0F, -5.5F, 7, 7, 1, CubeDeformation.NONE, 36, 0)
+                .addBox("3", -3.5F, 15.0F, 4.5F, 7, 7, 1, CubeDeformation.NONE, 36, 0)
+                .addBox("4", -5.5F, 15.0F, -3.5F, 1, 7, 7, CubeDeformation.NONE, 36, 8)
+                .addBox("5", 4.5F, 15.0F, -3.5F, 1, 7, 7, CubeDeformation.NONE, 36, 8), PartPose.ZERO);
         return LayerDefinition.create(meshDefinition, 64, 32);
     }
 

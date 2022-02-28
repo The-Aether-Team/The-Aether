@@ -36,6 +36,7 @@ public class AetherModelLayers {
     public static final ModelLayerLocation MIMIC = register("mimic");
     public static final ModelLayerLocation SENTRY = register("sentry");
     public static final ModelLayerLocation VALKYRIE = register("valkyrie");
+    public static final ModelLayerLocation VALKYRIE_WINGS = register("valkyrie", "wings");
     public static final ModelLayerLocation FIRE_MINION = register("fire_minion");
 
     public static final ModelLayerLocation SLIDER = register("slider");

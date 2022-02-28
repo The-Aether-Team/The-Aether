@@ -5,6 +5,7 @@ import com.gildedgames.aether.common.entity.miscellaneous.Parachute;
 import com.gildedgames.aether.common.entity.monster.*;
 import com.gildedgames.aether.common.entity.monster.dungeon.Mimic;
 import com.gildedgames.aether.common.entity.monster.dungeon.Sentry;
+import com.gildedgames.aether.common.entity.monster.dungeon.Valkyrie;
 import com.gildedgames.aether.common.entity.passive.*;
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.common.entity.block.TntPresent;
@@ -83,8 +84,8 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<Mimic>> MIMIC = ENTITIES.register("mimic",
             () -> EntityType.Builder.of(Mimic::new, MobCategory.MONSTER).sized(1.0F, 2.0F).clientTrackingRange(8).build("mimic"));
 
-    //public static final EntityType<ValkyrieEntity> VALKYRIE_TYPE = EntityType.Builder.<ValkyrieEntity>of(ValkyrieEntity::new, EntityClassification.MONSTER).sized(0.8F, 1.95F).build("valkyrie");
-    //public static final RegistryObject<EntityType<ValkyrieEntity>> VALKYRIE = ENTITIES.register("valkyrie", () -> VALKYRIE_TYPE);
+    public static final RegistryObject<EntityType<Valkyrie>> VALKYRIE = ENTITIES.register("valkyrie",
+            () -> EntityType.Builder.of(Valkyrie::new, MobCategory.MONSTER).sized(0.8F, 1.95F).clientTrackingRange(8).build("valkyrie"));
 
     public static final RegistryObject<EntityType<FireMinion>> FIRE_MINION = ENTITIES.register("fire_minion",
             () -> EntityType.Builder.of(FireMinion::new, MobCategory.MONSTER).fireImmune().sized(0.8F, 1.95F).clientTrackingRange(8).build("fire_minion"));
@@ -166,7 +167,7 @@ public class AetherEntityTypes {
 
         event.put(AetherEntityTypes.SENTRY.get(), Sentry.createMobAttributes().build());
         event.put(AetherEntityTypes.MIMIC.get(), Mimic.createMobAttributes().build());
-        //event.put(AetherEntityTypes.VALKYRIE.get(), ValkyrieEntity.createMobAttributes().build());
+        event.put(AetherEntityTypes.VALKYRIE.get(), Valkyrie.createMobAttributes().build());
         event.put(AetherEntityTypes.FIRE_MINION.get(), FireMinion.createMobAttributes().build());
 
         event.put(AetherEntityTypes.CLOUD_MINION.get(), CloudMinion.createMobAttributes().build());

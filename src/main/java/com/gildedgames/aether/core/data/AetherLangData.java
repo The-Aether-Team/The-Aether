@@ -336,6 +336,7 @@ public class AetherLangData extends AetherLanguageProvider
         addItem(AetherItems.GOLDEN_SWET_SPAWN_EGG, "Golden Swet Spawn Egg");
         addItem(AetherItems.WHIRLWIND_SPAWN_EGG, "Whirlwind Spawn Egg");
         addItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG, "Evil Whirlwind Spawn Egg");
+        addItem(AetherItems.VALKYRIE_SPAWN_EGG, "Valkyrie Spawn Egg");
         addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
 
 

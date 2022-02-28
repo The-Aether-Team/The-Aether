@@ -12,7 +12,7 @@ import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.entity.model.*;
 import com.gildedgames.aether.client.renderer.player.layer.DeveloperGlowLayer;
 import com.gildedgames.aether.client.renderer.player.layer.PlayerHaloLayer;
-import com.gildedgames.aether.client.renderer.player.model.HaloModel;
+import com.gildedgames.aether.client.renderer.entity.model.HaloModel;
 import com.gildedgames.aether.client.renderer.blockentity.AetherBlockEntityWithoutLevelRenderer;
 import com.gildedgames.aether.client.renderer.blockentity.ChestMimicRenderer;
 import com.gildedgames.aether.client.renderer.blockentity.SkyrootBedRenderer;
@@ -103,7 +103,7 @@ public class AetherRenderers {
 
         event.registerEntityRenderer(AetherEntityTypes.MIMIC.get(), MimicRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.SENTRY.get(), SentryRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.VALKYRIE.get(), ValkyrieRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.VALKYRIE.get(), ValkyrieRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.FIRE_MINION.get(), FireMinionRenderer::new);
 
 //        event.registerEntityRenderer(AetherEntityTypes.SLIDER.get(), SliderRenderer::new);
@@ -143,22 +143,23 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL, () -> SheepuffWoolModel.createFurLayer(new CubeDeformation(1.75F), 0.0F));
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL_PUFFED, () -> SheepuffWoolModel.createFurLayer(new CubeDeformation(3.75F), 2.0F));
         event.registerLayerDefinition(AetherModelLayers.AERBUNNY, AerbunnyModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.MOA, () -> MoaModel.createBodyLayer(new CubeDeformation(0.0F)));
+        event.registerLayerDefinition(AetherModelLayers.MOA, () -> MoaModel.createBodyLayer(CubeDeformation.NONE));
         event.registerLayerDefinition(AetherModelLayers.MOA_SADDLE, () -> MoaModel.createBodyLayer(new CubeDeformation(0.25F)));
         event.registerLayerDefinition(AetherModelLayers.AERWHALE, AerwhaleModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.AERWHALE_CLASSIC, ClassicAerwhaleModel::createBodyLayer);
 
         event.registerLayerDefinition(AetherModelLayers.SWET, SlimeModel::createInnerBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SWET_OUTER, SlimeModel::createOuterBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.AECHOR_PLANT, AechorPlantModel::createMainLayer);
-        event.registerLayerDefinition(AetherModelLayers.COCKATRICE, () -> CockatriceModel.createBodyLayer(new CubeDeformation(0.0F)));
+        event.registerLayerDefinition(AetherModelLayers.AECHOR_PLANT, AechorPlantModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.COCKATRICE, () -> CockatriceModel.createBodyLayer(CubeDeformation.NONE));
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR, ZephyrModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_TRANSPARENCY, ZephyrModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.ZEPHYR_CLASSIC, ClassicZephyrModel::createBodyLayer);
 
         event.registerLayerDefinition(AetherModelLayers.MIMIC, MimicModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SENTRY, SlimeModel::createOuterBodyLayer);
-//        event.registerLayerDefinition(AetherModelLayers.VALKYRIE, ValkyrieModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.VALKYRIE, ValkyrieModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_WINGS, ValkyrieWingsModel::createMainLayer);
         event.registerLayerDefinition(AetherModelLayers.FIRE_MINION, SunSpiritModel::createBodyLayer);
 
 //        event.registerLayerDefinition(AetherModelLayers.SLIDER, SliderModel::createBodyLayer);
@@ -172,8 +173,8 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.PENDANT, PendantModel::createLayer);
         event.registerLayerDefinition(AetherModelLayers.GLOVES, () -> GlovesModel.createLayer(new CubeDeformation(0.6F), false));
         event.registerLayerDefinition(AetherModelLayers.GLOVES_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.6F), true));
-        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM, () -> GlovesModel.createLayer(new CubeDeformation(0.0F), false));
-        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.0F), true));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM, () -> GlovesModel.createLayer(CubeDeformation.NONE, false));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM_SLIM, () -> GlovesModel.createLayer(CubeDeformation.NONE, true));
         event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), false));
         event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), true));
         event.registerLayerDefinition(AetherModelLayers.CAPE, CapeModel::createLayer);
