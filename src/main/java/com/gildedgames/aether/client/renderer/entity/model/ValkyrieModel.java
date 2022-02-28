@@ -160,7 +160,7 @@ public class ValkyrieModel extends HumanoidModel<Valkyrie> {
         this.rightArm.yRot = 0.0F;
         this.leftArm.yRot = 0.0F;
 
-        this.setupAttackAnimation(valkyrie, ageInTicks); //TODO: Test
+        this.setupAttackAnimation(valkyrie, ageInTicks);
     }
 
     @Override
