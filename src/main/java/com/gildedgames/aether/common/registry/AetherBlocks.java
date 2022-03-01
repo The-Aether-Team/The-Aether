@@ -54,6 +54,7 @@ public class AetherBlocks
     public static final RegistryObject<Block> HOLYSTONE = register("holystone", () -> new AetherDoubleDropBlock(Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(1.5F, 6.0F).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> MOSSY_HOLYSTONE = register("mossy_holystone", () -> new AetherDoubleDropBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE.get())));
     public static final RegistryObject<Block> AETHER_FARMLAND = register("aether_farmland", () -> new AetherFarmlandBlock(Block.Properties.of(Material.DIRT, MaterialColor.TERRACOTTA_CYAN).randomTicks().strength(0.6F).sound(SoundType.GRAVEL).isViewBlocking(AetherBlocks::always).isSuffocating(AetherBlocks::always)));
+    public static final RegistryObject<Block> AETHER_DIRT_PATH = register("aether_dirt_path", () -> new AetherDirtPathBlock(Block.Properties.of(Material.DIRT, MaterialColor.TERRACOTTA_CYAN).strength(0.65F).sound(SoundType.GRASS).isViewBlocking(AetherBlocks::always).isSuffocating(AetherBlocks::always)));
 
     public static final RegistryObject<Block> COLD_AERCLOUD = register("cold_aercloud", () -> new AercloudBlock(Block.Properties.of(Material.ICE, MaterialColor.SNOW).strength(0.2F).sound(SoundType.WOOL).noOcclusion()));
     public static final RegistryObject<Block> BLUE_AERCLOUD = register("blue_aercloud", () -> new BlueAercloudBlock(Block.Properties.of(Material.ICE, MaterialColor.COLOR_LIGHT_BLUE).strength(0.2F).sound(SoundType.WOOL).noOcclusion()));
@@ -224,12 +225,23 @@ public class AetherBlocks
 				.put(AetherBlocks.GOLDEN_OAK_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
 				.build();
     }
+
+    public static void registerShovelFlatteningBlocks() {
+        ShovelItem.FLATTENABLES = ImmutableMap.<Block, BlockState>builder()
+                .putAll(ShovelItem.FLATTENABLES)
+                .put(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT_PATH.get().defaultBlockState())
+                .put(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT_PATH.get().defaultBlockState())
+                .put(AetherBlocks.AETHER_DIRT.get(), AetherBlocks.AETHER_DIRT_PATH.get().defaultBlockState())
+                .build();
+    }
+
     public static void registerHoeTillingBlocks() {
 		HoeItem.TILLABLES = ImmutableMap.<Block, Pair<Predicate<UseOnContext>, Consumer<UseOnContext>>>builder()
 				.putAll(HoeItem.TILLABLES)
 				.put(AetherBlocks.AETHER_DIRT.get(), Pair.of(HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())))
 				.put(AetherBlocks.AETHER_GRASS_BLOCK.get(), Pair.of(HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())))
 				.put(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), Pair.of(HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())))
+                .put(AetherBlocks.AETHER_DIRT_PATH.get(), Pair.of(HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())))
 				.build();
     }
 
