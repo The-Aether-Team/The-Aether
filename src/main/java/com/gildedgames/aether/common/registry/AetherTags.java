@@ -7,6 +7,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.*;
 import net.minecraft.resources.ResourceLocation;
+import top.theillusivec4.curios.api.CuriosApi;
 
 public class AetherTags
 {
@@ -87,6 +88,20 @@ public class AetherTags
 
 		private static Tag.Named<Fluid> tag(String name) {
 			return FluidTags.bind(new ResourceLocation(Aether.MODID, name).toString());
+		}
+	}
+
+	public static class Curios
+	{
+		public static final Tag.Named<Item> AETHER_RING = tag("aether_ring");
+		public static final Tag.Named<Item> AETHER_PENDANT = tag("aether_pendant");
+		public static final Tag.Named<Item> AETHER_GLOVES = tag("aether_gloves");
+		public static final Tag.Named<Item> AETHER_CAPE = tag("aether_cape");
+		public static final Tag.Named<Item> AETHER_ACCESSORY = tag("aether_accessory");
+		public static final Tag.Named<Item> AETHER_SHIELD = tag("aether_shield");
+
+		private static Tag.Named<Item> tag(String name) {
+			return ItemTags.bind(new ResourceLocation(CuriosApi.MODID, name).toString());
 		}
 	}
 }

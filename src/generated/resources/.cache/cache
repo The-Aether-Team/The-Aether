@@ -1283,6 +1283,12 @@ ef1688d8839282e91b8aa07f3029cefcf02df64e data/aether/tags/items/skyroot_stick.js
 7857dbef719f59695d7f3f80ae5a7b2090dabd97 data/aether/tags/items/zanite_tools.json
 f0cfe3cedf3a854be279581323eeafa36249b60f data/aether/worldgen/biome/floating_forest.json
 f6339302eee532026dfae6480f2a71498c8a469c data/aether/worldgen/noise_settings/skyland_generation.json
+110cdc952cb73f20743ccd70f44208e3bcb8ff45 data/curios/tags/items/aether_accessory.json
+b1b4d9477d8b941ff7f7829d2b1aa7137c71285d data/curios/tags/items/aether_cape.json
+6db84164de8c4a6777d3c2ed1d229acea394b536 data/curios/tags/items/aether_gloves.json
+696e873e516f5f5270ab03bcf08d98b616254923 data/curios/tags/items/aether_pendant.json
+0d50af7e49a09502cf2cab6cbe2d0ca1f865a64e data/curios/tags/items/aether_ring.json
+910499ef8d736119bb056153141cb8db14470f05 data/curios/tags/items/aether_shield.json
 3c748dc0e356a9846ae0f5bf08efad08d0d18e4e data/forge/loot_modifiers/global_loot_modifiers.json
 ef896638976d84e49ea64f3df732b1fa877600bb data/forge/tags/blocks/fence_gates/wooden.json
 0951b17699df5d7949eefbb975fa38059e801e9c data/forge/tags/blocks/fences/wooden.json
