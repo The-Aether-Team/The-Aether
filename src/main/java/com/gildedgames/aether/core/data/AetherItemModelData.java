@@ -217,6 +217,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.HOLYSTONE);
         itemBlock(AetherBlocks.MOSSY_HOLYSTONE);
         itemBlock(AetherBlocks.AETHER_FARMLAND);
+        itemBlock(AetherBlocks.AETHER_DIRT_PATH);
 
         itemBlock(AetherBlocks.COLD_AERCLOUD);
         itemBlock(AetherBlocks.BLUE_AERCLOUD);
