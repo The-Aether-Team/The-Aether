@@ -264,7 +264,8 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(),
                 AetherBlocks.AETHER_DIRT.get(),
                 AetherBlocks.QUICKSOIL.get(),
-                AetherBlocks.AETHER_FARMLAND.get());
+                AetherBlocks.AETHER_FARMLAND.get(),
+                AetherBlocks.AETHER_DIRT_PATH.get());
         tag(BlockTags.MINEABLE_WITH_HOE).add(
                 AetherBlocks.COLD_AERCLOUD.get(),
                 AetherBlocks.BLUE_AERCLOUD.get(),

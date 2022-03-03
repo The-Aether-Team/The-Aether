@@ -93,7 +93,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-2d190c31f5a5ddace830e9aba184401971d7d0e9 assets/aether/lang/en_us.json
+8369c847756aa9552a2cc7906b24f43795209c04 assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -244,6 +244,7 @@ ae8abae56a78d7335f7733dea976d0872c04bded assets/aether/models/item/aerogel_stair
 09152846c4dc63f3ee7f41d6ddf94288f0706882 assets/aether/models/item/aerogel_wall.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/aether/models/item/aerwhale_spawn_egg.json
 a1fccfdbe00979538284826306b945ddaae55298 assets/aether/models/item/aether_dirt.json
+b2a7358d95c8fc8eba7a7c8620d569dbbe71d151 assets/aether/models/item/aether_dirt_path.json
 937216ab80b9a713ebe0debb71b700aa4849d53e assets/aether/models/item/aether_farmland.json
 6841f385fb96cd3876a7c2dc1996a4195aa7c931 assets/aether/models/item/aether_grass_block.json
 b16cd72a8478c8aafb3fdeb58616bd529e4c033c assets/aether/models/item/aether_portal_frame.json
@@ -790,6 +791,7 @@ ed40f7a1e448ca33e59f01bbd91ddb7615704d97 data/aether/loot_tables/blocks/aerogel_
 c08182351f738cdfe7b34227d7bf22aeea79aa5d data/aether/loot_tables/blocks/aerogel_stairs.json
 cf150ff0b2c7467a509bb79e158a178d10952fa2 data/aether/loot_tables/blocks/aerogel_wall.json
 87733b6b5c863b6f978416adcdcc9e36bc80d4c4 data/aether/loot_tables/blocks/aether_dirt.json
+7e3865fb688b8489c8f87d64599fbe756b45a0de data/aether/loot_tables/blocks/aether_dirt_path.json
 7e3865fb688b8489c8f87d64599fbe756b45a0de data/aether/loot_tables/blocks/aether_farmland.json
 ecda99dc85c6da8d203ffe2a5c48d19f3639c523 data/aether/loot_tables/blocks/aether_grass_block.json
 374fc761ad454802cb3e7a484cfec94537b114d8 data/aether/loot_tables/blocks/aether_portal.json
@@ -1338,7 +1340,7 @@ a0f3c2f4910e857b799981106ebf4953767be364 data/minecraft/tags/blocks/logs_that_bu
 2f260741d01192ff02cb26b95576143579791ba3 data/minecraft/tags/blocks/mineable/axe.json
 24fa6266cd0cff70c0626cf398896d21456875d5 data/minecraft/tags/blocks/mineable/hoe.json
 54d63e58d5e8cb4b0a45271ddac6c50b72c2eea6 data/minecraft/tags/blocks/mineable/pickaxe.json
-931f9f84286aca0e4505cd4b7fc138ecee97d068 data/minecraft/tags/blocks/mineable/shovel.json
+0414139592fd299af1d9262b39be68e4b9706947 data/minecraft/tags/blocks/mineable/shovel.json
 f80c58119737ea6ba93a2203818cb8b6631fc7f8 data/minecraft/tags/blocks/needs_diamond_tool.json
 c7ad58c327a0a8824204861012f952132cec7c46 data/minecraft/tags/blocks/needs_iron_tool.json
 3072ca9a581700ef9fa11ca03e1015e69bcc7a98 data/minecraft/tags/blocks/needs_stone_tool.json

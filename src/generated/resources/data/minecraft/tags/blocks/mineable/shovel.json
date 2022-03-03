@@ -5,6 +5,7 @@
     "aether:enchanted_aether_grass_block",
     "aether:aether_dirt",
     "aether:quicksoil",
-    "aether:aether_farmland"
+    "aether:aether_farmland",
+    "aether:aether_dirt_path"
   ]
 }
