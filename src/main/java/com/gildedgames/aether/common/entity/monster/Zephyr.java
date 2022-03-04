@@ -1,7 +1,8 @@
 package com.gildedgames.aether.common.entity.monster;
 
-import com.gildedgames.aether.common.entity.projectile.ZephyrSnowballEntity;
+import com.gildedgames.aether.common.entity.projectile.ZephyrSnowball;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,6 +19,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -26,14 +28,15 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nonnull;
 import java.util.EnumSet;
 import java.util.Random;
 
 public class Zephyr extends FlyingMob implements Enemy {
 	public static final EntityDataAccessor<Integer> ATTACK_CHARGE = SynchedEntityData.defineId(Zephyr.class, EntityDataSerializers.INT);
 
-	public Zephyr(EntityType<? extends Zephyr> type, Level worldIn) {
-		super(type, worldIn);
+	public Zephyr(EntityType<? extends Zephyr> type, Level level) {
+		super(type, level);
 		this.moveControl = new Zephyr.MoveHelperController(this);
 	}
 
@@ -45,16 +48,50 @@ public class Zephyr extends FlyingMob implements Enemy {
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
 	}
 
+	@Nonnull
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return FlyingMob.createMobAttributes()
-				.add(Attributes.MAX_HEALTH, 5.0D)
-				.add(Attributes.FOLLOW_RANGE, 100.0D);
+				.add(Attributes.MAX_HEALTH, 5.0)
+				.add(Attributes.FOLLOW_RANGE, 100.0);
 	}
 
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(ATTACK_CHARGE, 0);
+	}
+
+	public static boolean checkZephyrSpawnRules(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random random) {
+		return level.getDifficulty() != Difficulty.PEACEFUL && level.getBlockState(pos.below()).is(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON);
+	}
+
+	public boolean checkSpawnObstruction(@Nonnull LevelReader level) {
+		return level.isUnobstructed(this) && !level.containsAnyLiquid(this.getBoundingBox());
+	}
+
+	/**
+	 * The purpose of this method override is to fix the weird movement from flying mobs.
+	 */
+	@Override
+	public void travel(@Nonnull Vec3 vector3d) {
+		if (this.isEffectiveAi() || this.isControlledByLocalInstance()) {
+			super.travel(vector3d);
+		} else {
+			this.calculateEntityAnimation(this, false);
+		}
+	}
+
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		if (this.getY() < this.level.getMinBuildHeight() - 2 || this.getY() > this.level.getMaxBuildHeight()) {
+			this.discard();
+		}
+	}
+
+	@Override
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return true;
 	}
 
 	public int getAttackCharge() {
@@ -71,41 +108,6 @@ public class Zephyr extends FlyingMob implements Enemy {
 	}
 
 	@Override
-	protected boolean shouldDespawnInPeaceful() {
-		return true;
-	}
-
-	/**
-	 * The purpose of this method override is to fix the weird movement from flying mobs.
-	 */
-	@Override
-	public void travel(Vec3 pTravelVector) {
-		if (this.isEffectiveAi() || this.isControlledByLocalInstance()) {
-			super.travel(pTravelVector);
-		} else {
-			this.calculateEntityAnimation(this, false);
-		}
-	}
-
-	@Override
-	public void aiStep() {
-		super.aiStep();
-		if (this.getY() < -2 || this.getY() > 255) {
-			this.discard();
-		}
-	}
-
-	@Override
-	public int getMaxSpawnClusterSize() {
-		return 1;
-	}
-
-	@Override
-	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return true;
-	}
-
-	@Override
 	protected float getSoundVolume() {
 		return 3.0F;
 	}
@@ -116,22 +118,23 @@ public class Zephyr extends FlyingMob implements Enemy {
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(DamageSource source) {
-		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT.get();
+	protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+		return AetherSoundEvents.ENTITY_ZEPHYR_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT.get();
+		return AetherSoundEvents.ENTITY_ZEPHYR_DEATH.get();
 	}
 
-	public static boolean canZephyrSpawn(EntityType<? extends Zephyr> zephyr, LevelAccessor worldIn, MobSpawnType reason,
-										 BlockPos pos, Random random) {
-		AABB boundingBox = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 4, pos.getY() + 4, pos.getZ() + 4);
-		return worldIn.getDifficulty() != Difficulty.PEACEFUL && random.nextInt(65) == 0 //TODO: change the bounds of nextInt to a config value.
-			&& worldIn.getEntitiesOfClass(Zephyr.class, boundingBox).size() == 0
-			&& !worldIn.containsAnyLiquid(boundingBox) && worldIn.getMaxLocalRawBrightness(pos) > 8
-			&& checkMobSpawnRules(zephyr, worldIn, reason, pos, random);
+	@Override
+	public int getMaxSpawnClusterSize() {
+		return 1;
+	}
+
+	@Override
+	protected boolean shouldDespawnInPeaceful() {
+		return true;
 	}
 
 	static class SnowballAttackGoal extends Goal {
@@ -173,29 +176,26 @@ public class Zephyr extends FlyingMob implements Enemy {
 		 */
 		@Override
 		public void tick() {
-			LivingEntity target = parentEntity.getTarget();
-			if (target.distanceToSqr(this.parentEntity) < 64*64 && this.parentEntity.hasLineOfSight(target)) {
-				Level world = this.parentEntity.level;
+			LivingEntity target = this.parentEntity.getTarget();
+			if (target.distanceToSqr(this.parentEntity) < 64 * 64 && this.parentEntity.hasLineOfSight(target)) {
+				Level level = this.parentEntity.level;
 				++this.attackTimer;
 				if (this.attackTimer == 10) {
-					this.parentEntity.playSound(this.parentEntity.getAmbientSound(), 3.0F, (world.random.nextFloat() - world.random.nextFloat()) * 0.2F + 1.0F);
-				}
-				else if (this.attackTimer == 20) {
+					this.parentEntity.playSound(this.parentEntity.getAmbientSound(), 3.0F, (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.0F);
+				} else if (this.attackTimer == 20) {
 					Vec3 look = this.parentEntity.getViewVector(1.0F);
 					double accelX = target.getX() - (this.parentEntity.getX() + look.x * 4.0);
-					double accelY = target.getY(0.5)  - (0.5 + this.parentEntity.getY(0.5));
+					double accelY = target.getY(0.5) - (0.5 + this.parentEntity.getY(0.5));
 					double accelZ = target.getZ() - (this.parentEntity.getZ() + look.z * 4.0);
-					this.parentEntity.playSound(AetherSoundEvents.ENTITY_ZEPHYR_SHOOT.get(), 3.0F, (world.random.nextFloat() - world.random.nextFloat()) * 0.2F + 1.0F);
-					ZephyrSnowballEntity snowballentity = new ZephyrSnowballEntity(world, this.parentEntity, accelX, accelY, accelZ);
-					snowballentity.setPos(this.parentEntity.getX() + look.x * 4.0, this.parentEntity.getY(0.5) + 0.5, this.parentEntity.getZ() + look.z * 4.0);
-					world.addFreshEntity(snowballentity);
+					this.parentEntity.playSound(AetherSoundEvents.ENTITY_ZEPHYR_SHOOT.get(), 3.0F, (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.0F);
+					ZephyrSnowball snowball = new ZephyrSnowball(level, this.parentEntity, accelX, accelY, accelZ);
+					snowball.setPos(this.parentEntity.getX() + look.x * 4.0, this.parentEntity.getY(0.5) + 0.5, this.parentEntity.getZ() + look.z * 4.0);
+					level.addFreshEntity(snowball);
 					this.attackTimer = -40;
 				}
-			}
-			else if (this.attackTimer > 0) {
+			} else if (this.attackTimer > 0) {
 				this.attackTimer--;
 			}
-			
 			this.parentEntity.setAttackCharge(attackTimer);
 		}
 	}
@@ -214,14 +214,13 @@ public class Zephyr extends FlyingMob implements Enemy {
 		 */
 		@Override
 		public boolean canUse() {
-			MoveControl movementcontroller = this.parentEntity.getMoveControl();
-			if (!movementcontroller.hasWanted()) {
+			MoveControl moveControl = this.parentEntity.getMoveControl();
+			if (!moveControl.hasWanted()) {
 				return true;
-			}
-			else {
-				double d0 = movementcontroller.getWantedX() - this.parentEntity.getX();
-				double d1 = movementcontroller.getWantedY() - this.parentEntity.getY();
-				double d2 = movementcontroller.getWantedZ() - this.parentEntity.getZ();
+			} else {
+				double d0 = moveControl.getWantedX() - this.parentEntity.getX();
+				double d1 = moveControl.getWantedY() - this.parentEntity.getY();
+				double d2 = moveControl.getWantedZ() - this.parentEntity.getZ();
 				double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 				return d3 < 1.0 || d3 > 3600.0;
 			}
@@ -267,12 +266,10 @@ public class Zephyr extends FlyingMob implements Enemy {
 					vec3d = vec3d.normalize();
 					if (this.isNotColliding(vec3d, Mth.ceil(d0))) {
 						this.parentEntity.setDeltaMovement(this.parentEntity.getDeltaMovement().add(vec3d.scale(0.1)));
-					}
-					else {
+					} else {
 						this.operation = MoveControl.Operation.WAIT;
 					}
 				}
-
 			}
 		}
 
@@ -281,17 +278,14 @@ public class Zephyr extends FlyingMob implements Enemy {
 		 */
 		private boolean isNotColliding(Vec3 pos, int distance) {
 			AABB axisalignedbb = this.parentEntity.getBoundingBox();
-
 			for (int i = 1; i < distance; ++i) {
 				axisalignedbb = axisalignedbb.move(pos);
 				if (!this.parentEntity.level.noCollision(this.parentEntity, axisalignedbb)) {
 					return false;
 				}
 			}
-
 			return true;
 		}
-
 	}
 
 	static class LookAroundGoal extends Goal {
@@ -318,20 +312,17 @@ public class Zephyr extends FlyingMob implements Enemy {
 		public void tick() {
 			if (this.parentEntity.getTarget() == null) {
 				Vec3 vec3d = this.parentEntity.getDeltaMovement();
-				this.parentEntity.setYRot(-((float)Mth.atan2(vec3d.x, vec3d.z)) * (180.0F / (float)Math.PI));
+				this.parentEntity.setYRot(-((float) Mth.atan2(vec3d.x, vec3d.z)) * (180.0F / (float) Math.PI));
 				this.parentEntity.yBodyRot = this.parentEntity.getYRot();
-			}
-			else {
-				LivingEntity livingentity = this.parentEntity.getTarget();
-				if (livingentity.distanceToSqr(this.parentEntity) < 64*64) {
-					double x = livingentity.getX() - this.parentEntity.getX();
-					double z = livingentity.getZ() - this.parentEntity.getZ();
-					this.parentEntity.setYRot(-((float)Mth.atan2(x, z)) * (180.0F / (float)Math.PI));
+			} else {
+				LivingEntity livingEntity = this.parentEntity.getTarget();
+				if (livingEntity.distanceToSqr(this.parentEntity) < 64 * 64) {
+					double x = livingEntity.getX() - this.parentEntity.getX();
+					double z = livingEntity.getZ() - this.parentEntity.getZ();
+					this.parentEntity.setYRot(-((float) Mth.atan2(x, z)) * (180.0F / (float) Math.PI));
 					this.parentEntity.yBodyRot = this.parentEntity.getYRot();
 				}
 			}
-
 		}
 	}
-
 }

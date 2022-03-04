@@ -326,6 +326,7 @@ public class AetherLangData extends AetherLanguageProvider
         addItem(AetherItems.AERBUNNY_SPAWN_EGG, "Aerbunny Spawn Egg");
         addItem(AetherItems.AERWHALE_SPAWN_EGG, "Aerwhale Spawn Egg");
         addItem(AetherItems.COCKATRICE_SPAWN_EGG, "Cockatrice Spawn Egg");
+        addItem(AetherItems.FIRE_MINION_SPAWN_EGG, "Fire Minion Spawn Egg");
         addItem(AetherItems.FLYING_COW_SPAWN_EGG, "Flying Cow Spawn Egg");
         addItem(AetherItems.MIMIC_SPAWN_EGG, "Mimic Spawn Egg");
         addItem(AetherItems.MOA_SPAWN_EGG, "Moa Spawn Egg");
@@ -336,6 +337,7 @@ public class AetherLangData extends AetherLanguageProvider
         addItem(AetherItems.GOLDEN_SWET_SPAWN_EGG, "Golden Swet Spawn Egg");
         addItem(AetherItems.WHIRLWIND_SPAWN_EGG, "Whirlwind Spawn Egg");
         addItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG, "Evil Whirlwind Spawn Egg");
+        addItem(AetherItems.VALKYRIE_SPAWN_EGG, "Valkyrie Spawn Egg");
         addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
 
 
@@ -354,6 +356,8 @@ public class AetherLangData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.ZEPHYR, "Zephyr");
         addEntityType(AetherEntityTypes.SENTRY, "Sentry");
         addEntityType(AetherEntityTypes.MIMIC, "Mimic");
+        addEntityType(AetherEntityTypes.VALKYRIE, "Valkyrie");
+        addEntityType(AetherEntityTypes.FIRE_MINION, "Fire Minion");
 
         addEntityType(AetherEntityTypes.FLOATING_BLOCK, "Floating Block");
         addEntityType(AetherEntityTypes.LIGHTNING_KNIFE, "Lightning Knife");
@@ -480,6 +484,7 @@ public class AetherLangData extends AetherLanguageProvider
         addSubtitle("entity", "swet.squish", "Swet squishes");
 
         addSubtitle("entity", "aechor_plant.shoot", "Aechor Plant shoots");
+        addSubtitle("entity", "aechor_plant.death", "Aechor Plant dies");
 
         addSubtitle("entity", "cockatrice.shoot", "Cockatrice shoots");
         addSubtitle("entity", "cockatrice.ambient", "Cockatrice calls");

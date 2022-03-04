@@ -56,7 +56,16 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 AetherEntityTypes.ZEPHYR_SNOWBALL.get(),
                 AetherEntityTypes.LIGHTNING_KNIFE.get(),
                 AetherEntityTypes.HAMMER_PROJECTILE.get());
-        tag(AetherTags.Entities.SWET_TARGET).add(
+        tag(AetherTags.Entities.SWET_TARGETS).add(
+                EntityType.CHICKEN,
+                EntityType.COW,
+                EntityType.PIG,
+                EntityType.SHEEP,
+                AetherEntityTypes.FLYING_COW.get(),
+                AetherEntityTypes.PHYG.get(),
+                AetherEntityTypes.SHEEPUFF.get()
+        );
+        tag(AetherTags.Entities.AECHOR_PLANT_TARGETS).add(
                 EntityType.CHICKEN,
                 EntityType.COW,
                 EntityType.PIG,

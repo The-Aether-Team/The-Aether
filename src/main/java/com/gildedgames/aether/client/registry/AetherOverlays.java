@@ -1,5 +1,7 @@
 package com.gildedgames.aether.client.registry;
 
+import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.entity.passive.Moa;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEffects;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -25,15 +27,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.gui.OverlayRegistry;
 
 @OnlyIn(Dist.CLIENT)
-public class AetherOverlays
-{
-    private static final ResourceLocation TEXTURE_INEBRIATION_VIGNETTE = new ResourceLocation("aether", "textures/blur/inebriation_vignette.png");
-    private static final ResourceLocation TEXTURE_REMEDY_VIGNETTE = new ResourceLocation("aether", "textures/blur/remedy_vignette.png");
-    private static final ResourceLocation TEXTURE_REPULSION_SHIELD_VIGNETTE = new ResourceLocation("aether", "textures/blur/repulsion_shield_vignette.png");
-    private static final ResourceLocation TEXTURE_COOLDOWN_BAR = new ResourceLocation("aether", "textures/gui/cooldown_bar.png");
+public class AetherOverlays {
+    private static final ResourceLocation TEXTURE_INEBRIATION_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/inebriation_vignette.png");
+    private static final ResourceLocation TEXTURE_REMEDY_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/remedy_vignette.png");
+    private static final ResourceLocation TEXTURE_REPULSION_SHIELD_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/repulsion_shield_vignette.png");
+    private static final ResourceLocation TEXTURE_COOLDOWN_BAR = new ResourceLocation(Aether.MODID, "textures/gui/cooldown_bar.png");
+    private static final ResourceLocation TEXTURE_JUMPS = new ResourceLocation(Aether.MODID, "textures/gui/jumps.png");
 
     public static void registerOverlays() {
-        OverlayRegistry.registerOverlayTop("Aether Portal Overlay", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+        OverlayRegistry.registerOverlayTop("Aether Portal Overlay", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -44,7 +46,7 @@ public class AetherOverlays
                 });
             }
         });
-        OverlayRegistry.registerOverlayTop("Inebriation Vignette", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+        OverlayRegistry.registerOverlayTop("Inebriation Vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -55,7 +57,7 @@ public class AetherOverlays
                 });
             }
         });
-        OverlayRegistry.registerOverlayTop("Remedy Vignette", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+        OverlayRegistry.registerOverlayTop("Remedy Vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -66,7 +68,7 @@ public class AetherOverlays
                 });
             }
         });
-        OverlayRegistry.registerOverlayTop("Repulsion Shield Vignette", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+        OverlayRegistry.registerOverlayTop("Repulsion Shield Vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -77,13 +79,22 @@ public class AetherOverlays
                 });
             }
         });
-        OverlayRegistry.registerOverlayTop("Hammer Cooldown", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+        OverlayRegistry.registerOverlayTop("Hammer Cooldown", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
                 gui.setupOverlayRenderState(true, false);
-                renderHammerCooldownOverlay(mStack, minecraft, window, player);
+                renderHammerCooldownOverlay(pStack, minecraft, window, player);
+            }
+        });
+        OverlayRegistry.registerOverlayTop("Moa Jumps", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+            Minecraft minecraft = Minecraft.getInstance();
+            Window window = minecraft.getWindow();
+            LocalPlayer player = minecraft.player;
+            if (player != null) {
+                gui.setupOverlayRenderState(true, false);
+                renderMoaJumps(pStack, window, player);
             }
         });
     }
@@ -111,10 +122,10 @@ public class AetherOverlays
             Tesselator tesselator = Tesselator.getInstance();
             BufferBuilder bufferbuilder = tesselator.getBuilder();
             bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            bufferbuilder.vertex(0.0D, window.getGuiScaledHeight(), -90.0D).uv(f, f3).endVertex();
-            bufferbuilder.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0D).uv(f2, f3).endVertex();
-            bufferbuilder.vertex(window.getGuiScaledWidth(), 0.0D, -90.0D).uv(f2, f1).endVertex();
-            bufferbuilder.vertex(0.0D, 0.0D, -90.0D).uv(f, f1).endVertex();
+            bufferbuilder.vertex(0.0, window.getGuiScaledHeight(), -90.0).uv(f, f3).endVertex();
+            bufferbuilder.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0).uv(f2, f3).endVertex();
+            bufferbuilder.vertex(window.getGuiScaledWidth(), 0.0, -90.0).uv(f2, f1).endVertex();
+            bufferbuilder.vertex(0.0, 0.0, -90.0).uv(f, f1).endVertex();
             tesselator.end();
             RenderSystem.depthMask(true);
             RenderSystem.enableDepthTest();
@@ -129,22 +140,7 @@ public class AetherOverlays
         if (inebriation != null) {
             float inebriationDuration = (float) (inebriation.getDuration() % 50) / 50;
             float alpha = (inebriationDuration * inebriationDuration) / 5.0F + 0.4F;
-            alpha *= Math.sqrt(effectScale);
-            RenderSystem.disableDepthTest();
-            RenderSystem.depthMask(false);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, TEXTURE_INEBRIATION_VIGNETTE);
-            Tesselator tessellator = Tesselator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuilder();
-            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            bufferbuilder.vertex(0.0D, window.getGuiScaledHeight(), -90.0D).uv(0.0F, 1.0F).endVertex();
-            bufferbuilder.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0D).uv(1.0F, 1.0F).endVertex();
-            bufferbuilder.vertex(window.getGuiScaledWidth(), 0.0D, -90.0D).uv(1.0F, 0.0F).endVertex();
-            bufferbuilder.vertex(0.0D, 0.0D, -90.0D).uv(0.0F, 0.0F).endVertex();
-            tessellator.end();
-            RenderSystem.depthMask(true);
-            RenderSystem.enableDepthTest();
+            renderVignette(window, effectScale, alpha, TEXTURE_INEBRIATION_VIGNETTE);
         }
     }
 
@@ -154,22 +150,7 @@ public class AetherOverlays
         float effectScale = minecraft.options.screenEffectScale;
         if (remedyTimer > 0) {
             float alpha = ((float) remedyTimer / remedyMaximum) / 1.5F;
-            alpha *= Math.sqrt(effectScale);
-            RenderSystem.disableDepthTest();
-            RenderSystem.depthMask(false);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, TEXTURE_REMEDY_VIGNETTE);
-            Tesselator tessellator = Tesselator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuilder();
-            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            bufferbuilder.vertex(0.0D, window.getGuiScaledHeight(), -90.0D).uv(0.0F, 1.0F).endVertex();
-            bufferbuilder.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0D).uv(1.0F, 1.0F).endVertex();
-            bufferbuilder.vertex(window.getGuiScaledWidth(), 0.0D, -90.0D).uv(1.0F, 0.0F).endVertex();
-            bufferbuilder.vertex(0.0D, 0.0D, -90.0D).uv(0.0F, 0.0F).endVertex();
-            tessellator.end();
-            RenderSystem.depthMask(true);
-            RenderSystem.enableDepthTest();
+            renderVignette(window, effectScale, alpha, TEXTURE_REMEDY_VIGNETTE);
         }
     }
 
@@ -179,26 +160,30 @@ public class AetherOverlays
         float effectScale = minecraft.options.screenEffectScale;
         if (projectileImpactedTimer > 0) {
             float alpha = (float) projectileImpactedTimer / projectileImpactedMaximum;
-            alpha *= Math.sqrt(effectScale);
-            RenderSystem.disableDepthTest();
-            RenderSystem.depthMask(false);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, TEXTURE_REPULSION_SHIELD_VIGNETTE);
-            Tesselator tessellator = Tesselator.getInstance();
-            BufferBuilder bufferbuilder = tessellator.getBuilder();
-            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            bufferbuilder.vertex(0.0D, window.getGuiScaledHeight(), -90.0D).uv(0.0F, 1.0F).endVertex();
-            bufferbuilder.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0D).uv(1.0F, 1.0F).endVertex();
-            bufferbuilder.vertex(window.getGuiScaledWidth(), 0.0D, -90.0D).uv(1.0F, 0.0F).endVertex();
-            bufferbuilder.vertex(0.0D, 0.0D, -90.0D).uv(0.0F, 0.0F).endVertex();
-            tessellator.end();
-            RenderSystem.depthMask(true);
-            RenderSystem.enableDepthTest();
+            renderVignette(window, effectScale, alpha, TEXTURE_REPULSION_SHIELD_VIGNETTE);
         }
     }
 
-    public static void renderHammerCooldownOverlay(PoseStack poseStack, Minecraft mc, Window window, LocalPlayer player) {
+    private static void renderVignette(Window window, float effectScale, float alpha, ResourceLocation resource) {
+        alpha *= Math.sqrt(effectScale);
+        RenderSystem.disableDepthTest();
+        RenderSystem.depthMask(false);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, resource);
+        Tesselator tessellator = Tesselator.getInstance();
+        BufferBuilder bufferbuilder = tessellator.getBuilder();
+        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        bufferbuilder.vertex(0.0, window.getGuiScaledHeight(), -90.0).uv(0.0F, 1.0F).endVertex();
+        bufferbuilder.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0).uv(1.0F, 1.0F).endVertex();
+        bufferbuilder.vertex(window.getGuiScaledWidth(), 0.0, -90.0).uv(1.0F, 0.0F).endVertex();
+        bufferbuilder.vertex(0.0, 0.0, -90.0).uv(0.0F, 0.0F).endVertex();
+        tessellator.end();
+        RenderSystem.depthMask(true);
+        RenderSystem.enableDepthTest();
+    }
+
+    private static void renderHammerCooldownOverlay(PoseStack poseStack, Minecraft mc, Window window, LocalPlayer player) {
         Inventory inventory = player.getInventory();
         if (inventory.contains(new ItemStack(AetherItems.HAMMER_OF_NOTCH.get()))) {
             for (ItemStack itemStack : inventory.items) {
@@ -219,6 +204,22 @@ public class AetherOverlays
                         GuiComponent.blit(poseStack, window.getGuiScaledWidth() / 2 - 64, 42, 0, 0, (int) (cooldownPercent * 128), 8, 256, 256);
                         break;
                     }
+                }
+            }
+        }
+    }
+
+    private static void renderMoaJumps(PoseStack poseStack, Window window, LocalPlayer player) {
+        if (player.getVehicle() instanceof Moa moa) {
+            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            RenderSystem.setShaderTexture(0, TEXTURE_JUMPS);
+            for (int jumpCount = 0; jumpCount < moa.getMaxJumps(); jumpCount++) {
+                int xPos = ((window.getGuiScaledWidth() / 2) + (jumpCount * 8)) - (moa.getMaxJumps() * 8) / 2;
+                int yPos = 18;
+                if (jumpCount < moa.getRemainingJumps()) {
+                    GuiComponent.blit(poseStack, xPos, yPos, 0, 0, 9, 11, 256, 256);
+                } else {
+                    GuiComponent.blit(poseStack, xPos, yPos, 10, 0, 9, 11, 256, 256);
                 }
             }
         }
