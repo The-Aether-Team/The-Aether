@@ -30,7 +30,7 @@ public class AmbrosiumShardItem extends Item
 		Level world = context.getLevel();
 		BlockPos blockpos = context.getClickedPos();
 		BlockState blockstate = world.getBlockState(blockpos);
-		if (blockstate.is(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)) {
+		if (blockstate.m_204336_(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)) {
 			world.setBlockAndUpdate(blockpos, AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get().defaultBlockState());
 			if (playerentity != null) {
 				if (!playerentity.getAbilities().instabuild) {

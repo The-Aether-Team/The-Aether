@@ -8,9 +8,9 @@ import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -34,25 +34,25 @@ public class AetherItemTagData extends ItemTagsProvider
     @Override
     protected void addTags() {
         //aether
-        copy(AetherTags.Blocks.AETHER_DIRT, AetherTags.Items.AETHER_DIRT);
-        copy(AetherTags.Blocks.HOLYSTONE, AetherTags.Items.HOLYSTONE);
-        copy(AetherTags.Blocks.AERCLOUDS, AetherTags.Items.AERCLOUDS);
-        copy(AetherTags.Blocks.SKYROOT_LOGS, AetherTags.Items.SKYROOT_LOGS);
-        copy(AetherTags.Blocks.GOLDEN_OAK_LOGS, AetherTags.Items.GOLDEN_OAK_LOGS);
-        copy(AetherTags.Blocks.AEROGEL, AetherTags.Items.AEROGEL);
-        copy(AetherTags.Blocks.DUNGEON_BLOCKS, AetherTags.Items.DUNGEON_BLOCKS);
-        copy(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS, AetherTags.Items.LOCKED_DUNGEON_BLOCKS);
-        copy(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS, AetherTags.Items.TRAPPED_DUNGEON_BLOCKS);
+        m_206421_(AetherTags.Blocks.AETHER_DIRT, AetherTags.Items.AETHER_DIRT);
+        m_206421_(AetherTags.Blocks.HOLYSTONE, AetherTags.Items.HOLYSTONE);
+        m_206421_(AetherTags.Blocks.AERCLOUDS, AetherTags.Items.AERCLOUDS);
+        m_206421_(AetherTags.Blocks.SKYROOT_LOGS, AetherTags.Items.SKYROOT_LOGS);
+        m_206421_(AetherTags.Blocks.GOLDEN_OAK_LOGS, AetherTags.Items.GOLDEN_OAK_LOGS);
+        m_206421_(AetherTags.Blocks.AEROGEL, AetherTags.Items.AEROGEL);
+        m_206421_(AetherTags.Blocks.DUNGEON_BLOCKS, AetherTags.Items.DUNGEON_BLOCKS);
+        m_206421_(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS, AetherTags.Items.LOCKED_DUNGEON_BLOCKS);
+        m_206421_(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS, AetherTags.Items.TRAPPED_DUNGEON_BLOCKS);
 
-        tag(AetherTags.Items.PLANKS_CRAFTING).addTag(ItemTags.PLANKS).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
-        tag(AetherTags.Items.STONE_CRAFTING).addTag(ItemTags.STONE_CRAFTING_MATERIALS).add(AetherBlocks.HOLYSTONE.get().asItem());
+        tag(AetherTags.Items.PLANKS_CRAFTING).m_206428_(ItemTags.PLANKS).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
+        tag(AetherTags.Items.STONE_CRAFTING).m_206428_(ItemTags.STONE_CRAFTING_MATERIALS).add(AetherBlocks.HOLYSTONE.get().asItem());
         tag(AetherTags.Items.BANNED_IN_AETHER).add(
                 Items.FLINT_AND_STEEL,
                 Items.TORCH,
                 Items.SOUL_TORCH,
                 Items.FIRE_CHARGE);
         tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS);
-        tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS).addTag(Tags.Items.DUSTS_GLOWSTONE).add(
+        tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS).m_206428_(Tags.Items.DUSTS_GLOWSTONE).add(
                 Items.FLINT,
                 AetherItems.AMBROSIUM_SHARD.get());
         tag(AetherTags.Items.SKYROOT_STICKS).add(AetherItems.SKYROOT_STICK.get());
@@ -85,7 +85,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.ZANITE_AXE.get(),
                 AetherItems.GRAVITITE_AXE.get(),
                 AetherItems.VALKYRIE_AXE.get());
-        tag(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS).addTag(AetherTags.Items.DUNGEON_KEYS).add(
+        tag(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS).m_206428_(AetherTags.Items.DUNGEON_KEYS).add(
                 AetherItems.VICTORY_MEDAL.get(),
                 Items.PLAYER_HEAD,
                 Items.SKELETON_SKULL,
@@ -129,7 +129,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.ORANGE_MOA_EGG.get());
 
         //vanilla
-        tag(ItemTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get().asItem()).addTag(AetherTags.Items.DUNGEON_BLOCKS);
+        tag(ItemTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get().asItem()).m_206428_(AetherTags.Items.DUNGEON_BLOCKS);
         tag(ItemTags.WOODEN_STAIRS).add(AetherBlocks.SKYROOT_STAIRS.get().asItem());
         tag(ItemTags.WOODEN_SLABS).add(AetherBlocks.SKYROOT_SLAB.get().asItem());
         tag(ItemTags.WOODEN_FENCES).add(AetherBlocks.SKYROOT_FENCE.get().asItem());
@@ -226,7 +226,7 @@ public class AetherItemTagData extends ItemTagsProvider
     }
 
     @Nonnull
-    protected TagsProvider.TagAppender<Item> tag(@Nonnull Tag.Named<Item> tag) {
-        return super.tag(tag);
+    protected TagsProvider.TagAppender<Item> tag(@Nonnull TagKey<Item> tag) {
+        return super.m_206424_(tag);
     }
 }

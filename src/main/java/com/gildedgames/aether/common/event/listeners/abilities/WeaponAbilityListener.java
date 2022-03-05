@@ -48,7 +48,7 @@ public class WeaponAbilityListener
                 Player player = (Player) source.getDirectEntity();
                 ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
                 Item item = stack.getItem();
-                if (item == AetherItems.SKYROOT_SWORD.get() && !entity.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
+                if (item == AetherItems.SKYROOT_SWORD.get() && !entity.getType().m_204039_(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
                     NonNullList<Item> inventory = NonNullList.create();
                     for (ItemStack handStack : entity.getHandSlots()) {
                         inventory.add(handStack.getItem());
@@ -72,11 +72,11 @@ public class WeaponAbilityListener
                 Player player = (Player) source.getDirectEntity();
                 ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
                 Item item = stack.getItem();
-                if (item == AetherItems.SKYROOT_SWORD.get() && !entity.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
+                if (item == AetherItems.SKYROOT_SWORD.get() && !entity.getType().m_204039_(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
                     ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
                     for (ItemEntity drop : event.getDrops()) {
                         ItemStack droppedStack = drop.getItem();
-                        if (!droppedStack.getItem().getTags().contains(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS.getName())) {
+                        if (!droppedStack.m_204117_(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS)) { //TODO: test
                             ItemEntity dropEntity = new ItemEntity(entity.level, drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy());
                             dropEntity.setDefaultPickUpDelay();
                             newDrops.add(dropEntity);

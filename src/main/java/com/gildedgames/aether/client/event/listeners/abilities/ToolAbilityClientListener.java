@@ -25,14 +25,14 @@ public class ToolAbilityClientListener
 {
     @SubscribeEvent
     public static void onPlayerLeftClick(PlayerInteractEvent.LeftClickEmpty event) {
-        if (event.getItemStack().is(AetherTags.Items.VALKYRIE_TOOLS) || event.getItemStack().getItem() == AetherItems.VALKYRIE_LANCE.get()) {
+        if (event.getItemStack().m_204117_(AetherTags.Items.VALKYRIE_TOOLS) || event.getItemStack().getItem() == AetherItems.VALKYRIE_LANCE.get()) {
             handleExtendedReach(event.getPlayer());
         }
     }
 
     @SubscribeEvent
     public static void onPlayerLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-        if (event.getItemStack().is(AetherTags.Items.VALKYRIE_TOOLS) || event.getItemStack().getItem() == AetherItems.VALKYRIE_LANCE.get()) {
+        if (event.getItemStack().m_204117_(AetherTags.Items.VALKYRIE_TOOLS) || event.getItemStack().getItem() == AetherItems.VALKYRIE_LANCE.get()) {
             event.setCanceled(handleExtendedReach(event.getPlayer()));
         }
     }

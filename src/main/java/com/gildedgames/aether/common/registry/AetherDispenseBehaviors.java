@@ -186,7 +186,7 @@ public class AetherDispenseBehaviors
             Level world = source.getLevel();
             BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
             BlockState blockstate = world.getBlockState(blockpos);
-            if (blockstate.is(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)) {
+            if (blockstate.m_204336_(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)) {
                 world.setBlockAndUpdate(blockpos, AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get().defaultBlockState());
                 stack.shrink(1);
             } else {

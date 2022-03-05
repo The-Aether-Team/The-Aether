@@ -3,12 +3,12 @@ package com.gildedgames.aether.core.data.provider;
 import com.gildedgames.aether.common.recipe.builder.AltarRepairBuilder;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.tags.Tag;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 
@@ -69,7 +69,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern("M/M")
                 .pattern("M/M")
                 .define('M', materialIn.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .define('/', Ingredient.m_204132_(AetherTags.Items.SKYROOT_STICKS))
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
@@ -78,7 +78,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern("/M/")
                 .pattern("/M/")
                 .define('M', materialIn.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .define('/', Ingredient.m_204132_(AetherTags.Items.SKYROOT_STICKS))
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
@@ -112,7 +112,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern(" / ")
                 .pattern(" / ")
                 .define('#', materialIn.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .define('/', Ingredient.m_204132_(AetherTags.Items.SKYROOT_STICKS))
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
@@ -122,7 +122,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern("#/")
                 .pattern(" /")
                 .define('#', materialIn.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .define('/', Ingredient.m_204132_(AetherTags.Items.SKYROOT_STICKS))
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
@@ -132,7 +132,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern("/")
                 .pattern("/")
                 .define('#', materialIn.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .define('/', Ingredient.m_204132_(AetherTags.Items.SKYROOT_STICKS))
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
@@ -142,7 +142,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern(" /")
                 .pattern(" /")
                 .define('#', materialIn.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .define('/', Ingredient.m_204132_(AetherTags.Items.SKYROOT_STICKS))
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
@@ -152,7 +152,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern("#")
                 .pattern("/")
                 .define('#', materialIn.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .define('/', Ingredient.m_204132_(AetherTags.Items.SKYROOT_STICKS))
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
@@ -162,7 +162,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern(" / ")
                 .pattern(" / ")
                 .define('#', materialIn.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .define('/', Ingredient.m_204132_(AetherTags.Items.SKYROOT_STICKS))
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
@@ -172,7 +172,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern("#/")
                 .pattern(" /")
                 .define('#', materialIn.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .define('/', Ingredient.m_204132_(AetherTags.Items.SKYROOT_STICKS))
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
@@ -182,7 +182,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern("/")
                 .pattern("/")
                 .define('#', materialIn.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .define('/', Ingredient.m_204132_(AetherTags.Items.SKYROOT_STICKS))
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
@@ -192,7 +192,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern(" /")
                 .pattern(" /")
                 .define('#', materialIn.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .define('/', Ingredient.m_204132_(AetherTags.Items.SKYROOT_STICKS))
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
@@ -202,7 +202,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern("#")
                 .pattern("/")
                 .define('#', materialIn.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .define('/', Ingredient.m_204132_(AetherTags.Items.SKYROOT_STICKS))
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
@@ -247,11 +247,11 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
-    public ShapedRecipeBuilder makeGlovesWithTag(Supplier<? extends Item> glovesOut, Tags.IOptionalNamedTag<Item> materialTag, String advancementName) {
+    public ShapedRecipeBuilder makeGlovesWithTag(Supplier<? extends Item> glovesOut, TagKey<Item> materialTag, String advancementName) {
         return ShapedRecipeBuilder.shaped(glovesOut.get())
                 .pattern("M M")
-                .define('M', materialTag)
-                .unlockedBy("has_" + advancementName, has(materialTag));
+                .define('M', Ingredient.m_204132_(materialTag))
+                .unlockedBy("has_" + advancementName, m_206406_(materialTag));
     }
 
     public ShapedRecipeBuilder makeHelmetWithBlock(Supplier<? extends Item> helmetOut, Supplier<? extends Block> materialIn) {
@@ -309,7 +309,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .pattern("SSS")
                 .pattern("S S")
                 .pattern(" M ")
-                .define('S', Tags.Items.STRING)
+                .define('S', Ingredient.m_204132_(Tags.Items.STRING))
                 .define('M', materialIn)
                 .unlockedBy("has_" + materialIn.getRegistryName().getPath(), has(materialIn));
     }
@@ -348,9 +348,9 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlocks("has_" + upgradeItem.get().getRegistryName(), has(upgradeItem.get()));
     }
 
-    public UpgradeRecipeBuilder smithingRecipeWithTag(Supplier<Item> input, Tags.IOptionalNamedTag<Item> upgradeTag, Supplier<Item> result, String advancementName) {
-        return UpgradeRecipeBuilder.smithing(Ingredient.of(input.get()), Ingredient.of(upgradeTag), result.get())
-                .unlocks("has_" + advancementName, has(upgradeTag));
+    public UpgradeRecipeBuilder smithingRecipeWithTag(Supplier<Item> input, TagKey<Item> upgradeTag, Supplier<Item> result, String advancementName) {
+        return UpgradeRecipeBuilder.smithing(Ingredient.of(input.get()), Ingredient.m_204132_(upgradeTag), result.get())
+                .unlocks("has_" + advancementName, m_206406_(upgradeTag));
     }
 
     public AltarRepairBuilder repairingRecipe(ItemLike item, int duration) {
@@ -363,9 +363,9 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + ingredient.asItem().getRegistryName(), has(ingredient));
     }
 
-    public SimpleCookingRecipeBuilder enchantingRecipe(ItemLike result, Tag.Named<Item> ingredient, int duration) {
-        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, 0.0F, duration, AetherRecipes.ENCHANTING.get())
-                .unlockedBy("has_disc", has(ingredient));
+    public SimpleCookingRecipeBuilder enchantingRecipe(ItemLike result, TagKey<Item> ingredient, int duration) {
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.m_204132_(ingredient), result, 0.0F, duration, AetherRecipes.ENCHANTING.get())
+                .unlockedBy("has_disc", m_206406_(ingredient));
     }
 
     public SimpleCookingRecipeBuilder freezingRecipe(ItemLike result, ItemLike ingredient, int duration) {

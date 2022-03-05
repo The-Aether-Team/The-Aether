@@ -32,7 +32,7 @@ public class PigSlayerItem extends SwordItem
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (AetherTags.Entities.PIGS.contains(target.getType())) {
+		if (target.getType().m_204039_(AetherTags.Entities.PIGS)) {
 			if (target.getHealth() > 0.0F) {
 				target.hurt(DamageSource.mobAttack(attacker), 9999);
 			}
@@ -62,12 +62,12 @@ public class PigSlayerItem extends SwordItem
 				Player player = (Player) source.getDirectEntity();
 				ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 				Item item = stack.getItem();
-				if (item == AetherItems.PIG_SLAYER.get() && entity.getType().is(AetherTags.Entities.PIGS)) {
+				if (item == AetherItems.PIG_SLAYER.get() && entity.getType().m_204039_(AetherTags.Entities.PIGS)) {
 					if (entity.getRandom().nextInt(4) == 0) {
 						ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
 						for (ItemEntity drop : event.getDrops()) {
 							ItemStack droppedStack = drop.getItem();
-							if (droppedStack.getItem().getTags().contains(AetherTags.Items.PIG_DROPS.getName())) {
+							if (droppedStack.m_204117_(AetherTags.Items.PIG_DROPS)) { //TODO: Test
 								ItemEntity dropEntity = new ItemEntity(entity.level, drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy());
 								dropEntity.setDefaultPickUpDelay();
 								newDrops.add(dropEntity);

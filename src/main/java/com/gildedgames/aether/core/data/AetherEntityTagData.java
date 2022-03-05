@@ -6,9 +6,9 @@ import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.tags.Tag;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
@@ -41,7 +41,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 EntityType.PLAYER,
                 EntityType.WITHER,
                 EntityType.ENDER_DRAGON);
-        tag(AetherTags.Entities.DEFLECTABLE_PROJECTILES).addTag(EntityTypeTags.ARROWS).add(
+        tag(AetherTags.Entities.DEFLECTABLE_PROJECTILES).m_206428_(EntityTypeTags.ARROWS).add(
                 EntityType.EGG,
                 EntityType.SMALL_FIREBALL,
                 EntityType.FIREBALL,
@@ -78,7 +78,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
     }
 
     @Nonnull
-    protected TagsProvider.TagAppender<EntityType<?>> tag(@Nonnull Tag.Named<EntityType<?>> tag) {
-        return super.tag(tag);
+    protected TagsProvider.TagAppender<EntityType<?>> tag(@Nonnull TagKey<EntityType<?>> tag) {
+        return super.m_206424_(tag);
     }
 }

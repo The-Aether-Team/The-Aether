@@ -28,7 +28,7 @@ public class AbstractFurnaceBlockEntityMixin
             ItemStack itemStack1 = ((Recipe<WorldlyContainer>) recipe).assemble(blockEntity);
             ItemStack itemStack2 = stacks.get(2);
 
-            if (itemStack.is(itemStack1.getItem()) || itemStack1.is(AetherTags.Items.SAVE_NBT_IN_RECIPE)) {
+            if (itemStack.is(itemStack1.getItem()) || itemStack1.m_204117_(AetherTags.Items.SAVE_NBT_IN_RECIPE)) {
                 EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(itemStack), itemStack1);
                 if (itemStack.hasTag()) {
                     itemStack1.setTag(itemStack.getTag());

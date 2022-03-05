@@ -53,7 +53,7 @@ public class AccessoryAbilityListener
         if (event.getRayTraceResult().getType() == HitResult.Type.ENTITY) {
             Entity impactedEntity = ((EntityHitResult) event.getRayTraceResult()).getEntity();
             if (impactedEntity instanceof LivingEntity impactedLiving && event.getEntity() instanceof Projectile projectile) {
-                if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
+                if (projectile.getType().m_204039_(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
                     CuriosApi.getCuriosHelper().findFirstCurio(impactedLiving, AetherItems.REPULSION_SHIELD.get()).ifPresent((slotResult) -> {
                         Vec3 motion = impactedLiving.getDeltaMovement();
                         if (!impactedLiving.level.isClientSide) {

@@ -5,9 +5,9 @@ import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.FluidTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.tags.Tag;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
@@ -33,7 +33,7 @@ public class AetherFluidTagData extends FluidTagsProvider
     }
 
     @Nonnull
-    protected TagsProvider.TagAppender<Fluid> tag(@Nonnull Tag.Named<Fluid> tag) {
-        return super.tag(tag);
+    protected TagsProvider.TagAppender<Fluid> tag(@Nonnull TagKey<Fluid> tag) {
+        return super.m_206424_(tag);
     }
 }

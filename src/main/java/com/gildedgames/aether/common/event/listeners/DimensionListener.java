@@ -21,7 +21,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.LevelAccessor;
@@ -62,21 +61,21 @@ public class DimensionListener
         BlockState state = world.getBlockState(pos);
 
         if (player.getCommandSenderWorld().dimension() == AetherDimensions.AETHER_WORLD) {
-            if (stack.is(AetherTags.Items.BANNED_IN_AETHER)) {
+            if (stack.m_204117_(AetherTags.Items.BANNED_IN_AETHER)) {
                 if (AetherEventHooks.isItemBanned(stack)) {
                     AetherEventHooks.onItemBanned(world, pos, face, stack);
                     event.setCanceled(true);
                 }
             }
 
-            if (state.is(BlockTags.BEDS) && state.getBlock() != AetherBlocks.SKYROOT_BED.get()) {
+            if (state.m_204336_(BlockTags.BEDS) && state.getBlock() != AetherBlocks.SKYROOT_BED.get()) {
                 if (!world.isClientSide()) {
                     if (state.getValue(BedBlock.PART) != BedPart.HEAD) {
                         pos = pos.relative(state.getValue(BedBlock.FACING));
                         state = world.getBlockState(pos);
                     }
                     BlockPos blockpos = pos.relative(state.getValue(BedBlock.FACING).getOpposite());
-                    if (world.getBlockState(blockpos).is(BlockTags.BEDS) && world.getBlockState(blockpos).getBlock() != AetherBlocks.SKYROOT_BED.get()) {
+                    if (world.getBlockState(blockpos).m_204336_(BlockTags.BEDS) && world.getBlockState(blockpos).getBlock() != AetherBlocks.SKYROOT_BED.get()) {
                         world.removeBlock(blockpos, false);
                     }
                     world.explode(null, DamageSource.badRespawnPointExplosion(), null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, 5.0F, true, Explosion.BlockInteraction.DESTROY);
@@ -105,7 +104,7 @@ public class DimensionListener
             Level world = (Level) event.getWorld();
             BlockPos pos = event.getPos();
             FluidState fluidstate = world.getFluidState(pos);
-            if (world.dimension() == AetherDimensions.AETHER_WORLD && fluidstate.getType().is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
+            if (world.dimension() == AetherDimensions.AETHER_WORLD && fluidstate.m_205070_(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
                 world.setBlockAndUpdate(pos, AetherBlocks.AEROGEL.get().defaultBlockState());
                 if (world instanceof ServerLevel) {
                     ServerLevel serverWorld = (ServerLevel) world;
