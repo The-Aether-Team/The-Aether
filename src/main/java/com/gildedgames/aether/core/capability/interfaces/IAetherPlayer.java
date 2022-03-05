@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.capability.interfaces;
 
-import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
+import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
+import com.gildedgames.aether.common.entity.passive.Aerbunny;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -9,7 +10,6 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface IAetherPlayer extends INBTSerializable<CompoundTag>
 {
@@ -21,6 +21,7 @@ public interface IAetherPlayer extends INBTSerializable<CompoundTag>
 
 	void defineSynchedData();
 
+	void onLogout();
 	void onLogin();
 
 	void copyFrom(IAetherPlayer other, boolean isWasDeath);
@@ -67,11 +68,13 @@ public interface IAetherPlayer extends INBTSerializable<CompoundTag>
 	void setProjectileImpactedTimer(int timer);
 	int getProjectileImpactedTimer();
 
-	void setAerbunny(UUID uuid);
-	UUID getAerbunny();
+	void setMountedAerbunny(Aerbunny mountedAerbunny);
+	Aerbunny getMountedAerbunny();
+	void setMountedAerbunnyTag(CompoundTag mountedAerbunny);
+	CompoundTag getMountedAerbunnyTag();
 
-	void setCloudMinions(CloudMinionEntity cloudMinionRight, CloudMinionEntity cloudMinionLeft);
-	List<CloudMinionEntity> getCloudMinions();
+	void setCloudMinions(CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft);
+	List<CloudMinion> getCloudMinions();
 
 	void setSavedHealth(float health);
 	float getSavedHealth();

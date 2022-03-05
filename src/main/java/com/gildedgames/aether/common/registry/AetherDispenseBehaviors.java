@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.registry;
 
-import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectileEntity;
-import com.gildedgames.aether.common.entity.projectile.weapon.LightningKnifeEntity;
+import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectile;
+import com.gildedgames.aether.common.entity.projectile.weapon.ThrownLightningKnife;
 import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
 import com.gildedgames.aether.common.item.miscellaneous.bucket.SkyrootWaterBucketItem;
 import net.minecraft.Util;
@@ -39,8 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class AetherDispenseBehaviors
-{
+public class AetherDispenseBehaviors {
     public static final DispenseItemBehavior DISPENSE_ACCESSORY_BEHAVIOR = new DefaultDispenseItemBehavior() {
         @Nonnull
         @Override
@@ -84,7 +83,7 @@ public class AetherDispenseBehaviors
         @Nonnull
         @Override
         protected Projectile getProjectile(@Nonnull Level world, @Nonnull Position position, @Nonnull ItemStack stack) {
-            return Util.make(new LightningKnifeEntity(world), (projectile) -> {
+            return Util.make(new ThrownLightningKnife(world), (projectile) -> {
                 projectile.setPos(position.x(), position.y(), position.z());
                 projectile.setItem(stack);
             });
@@ -117,7 +116,7 @@ public class AetherDispenseBehaviors
         @Nonnull
         @Override
         protected Projectile getProjectile(@Nonnull Level world, Position position, @Nonnull ItemStack stack) {
-            HammerProjectileEntity hammerProjectile = new HammerProjectileEntity(world);
+            HammerProjectile hammerProjectile = new HammerProjectile(world);
             hammerProjectile.setPos(position.x(), position.y(), position.z());
             return hammerProjectile;
         }
@@ -156,7 +155,7 @@ public class AetherDispenseBehaviors
             Block block = blockstate.getBlock();
             if (block instanceof BucketPickup bucketPickup) {
                 ItemStack itemstack = bucketPickup.pickupBlock(levelaccessor, blockpos, blockstate);
-                if (itemstack.isEmpty() || itemstack.getItem() != Items.WATER_BUCKET) {
+                if (itemstack.isEmpty() || !itemstack.is(Items.WATER_BUCKET)) {
                     return super.execute(p_123566_, p_123567_);
                 } else {
                     levelaccessor.gameEvent(null, GameEvent.FLUID_PICKUP, blockpos);

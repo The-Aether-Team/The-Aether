@@ -10,12 +10,12 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 
 import java.util.EnumSet;
 import java.util.function.Predicate;
 
-public class EatAetherGrassGoal extends Goal
-{
+public class EatAetherGrassGoal extends Goal {
     private static final Predicate<BlockState> IS_TALL_GRASS = BlockStatePredicate.forBlock(Blocks.GRASS);
     private final Mob mob;
     private final Level level;
@@ -66,20 +66,22 @@ public class EatAetherGrassGoal extends Goal
     public void tick() {
         this.eatAnimationTick = Math.max(0, this.eatAnimationTick - 1);
         if (this.eatAnimationTick == 4) {
-            BlockPos blockpos = this.mob.blockPosition();
-            if (IS_TALL_GRASS.test(this.level.getBlockState(blockpos))) {
+            BlockPos blockPos = this.mob.blockPosition();
+            if (IS_TALL_GRASS.test(this.level.getBlockState(blockPos))) {
                 if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this.mob)) {
-                    this.level.destroyBlock(blockpos, false);
+                    this.level.destroyBlock(blockPos, false);
                 }
                 this.mob.ate();
+                this.mob.gameEvent(GameEvent.EAT, this.mob.eyeBlockPosition());
             } else {
-                BlockPos blockpos1 = blockpos.below();
-                if (this.level.getBlockState(blockpos1).is(AetherBlocks.AETHER_GRASS_BLOCK.get())) {
+                BlockPos blockPos1 = blockPos.below();
+                if (this.level.getBlockState(blockPos1).is(AetherBlocks.AETHER_GRASS_BLOCK.get())) {
                     if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this.mob)) {
-                        this.level.levelEvent(2001, blockpos1, Block.getId(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState()));
-                        this.level.setBlock(blockpos1, AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, this.level.getBlockState(blockpos1).getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 2);
+                        this.level.levelEvent(2001, blockPos1, Block.getId(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState()));
+                        this.level.setBlock(blockPos1, AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, this.level.getBlockState(blockPos1).getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 2);
                     }
                     this.mob.ate();
+                    this.mob.gameEvent(GameEvent.EAT, this.mob.eyeBlockPosition());
                 }
             }
         }

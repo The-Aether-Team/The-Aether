@@ -1,42 +1,43 @@
 package com.gildedgames.aether.client.particle;
 
 import com.gildedgames.aether.common.entity.monster.PassiveWhirlwind;
-import com.gildedgames.aether.common.entity.monster.Whirlwind;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 public class PassiveWhirlyParticle extends WhirlyParticle<PassiveWhirlwind> {
-    public PassiveWhirlyParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, SpriteSet sprite) {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, sprite);
-        if(this.whirlwind != null) {
-            this.quadSize = this.random.nextFloat() * this.random.nextFloat() * 0.5F /* * 6.0F + 1.0F*/;
-            this.lifetime = (int) (16.0D / ((double) this.random.nextFloat() * 0.8D + 0.2D)) + 2;
-            int color = whirlwind.getColorData();
-            this.setColor((((color >> 16) & 0xFF) / 255F), (((color >> 8) & 0xFF) / 255F), ((color & 0xFF) / 255F));
+    public PassiveWhirlyParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite) {
+        super(level, xCoord, yCoord, zCoord, xSpeed, ySpeed, zSpeed, sprite);
+        if (this.whirlwind != null) {
+            this.quadSize = this.random.nextFloat() * this.random.nextFloat() * 0.5F;
+            this.lifetime = (int) (16.0 / ((double) this.random.nextFloat() * 0.8 + 0.2)) + 2;
+            int color = this.whirlwind.getColorData();
+            float red = ((color >> 16) & 0xFF) / 255.0F;
+            float green = ((color >> 8) & 0xFF) / 255.0F;
+            float blue = (color & 0xFF) / 255.0F;
+            this.setColor(red, green, blue);
         }
     }
 
     @Override
     public void tick() {
         super.tick();
-        this.xd *= 0.8999999761581421D;
-        this.yd *= 0.8999999761581421D;
-        this.zd *= 0.8999999761581421D;
+        this.xd *= 0.8999999761581421;
+        this.yd *= 0.8999999761581421;
+        this.zd *= 0.8999999761581421;
         if (this.onGround) {
-            this.xd *= 0.699999988079071D;
-            this.zd *= 0.699999988079071D;
+            this.xd *= 0.699999988079071;
+            this.zd *= 0.699999988079071;
         }
     }
 
     @Override
     protected double getBaseSpeedModifier() {
-        return 0.05000000074505806D;
+        return 0.05000000074505806;
     }
 
     @Override
@@ -45,7 +46,8 @@ public class PassiveWhirlyParticle extends WhirlyParticle<PassiveWhirlwind> {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements ParticleProvider<SimpleParticleType> {
+    public static class Factory implements ParticleProvider<SimpleParticleType>
+    {
         private final SpriteSet spriteSet;
 
         public Factory(SpriteSet spriteSetIn) {
@@ -53,10 +55,10 @@ public class PassiveWhirlyParticle extends WhirlyParticle<PassiveWhirlwind> {
         }
 
         @Override
-        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            PassiveWhirlyParticle whirlyParticle = new PassiveWhirlyParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
-            whirlyParticle.pickSprite(this.spriteSet);
-            return whirlyParticle;
+        public Particle createParticle(@Nonnull SimpleParticleType particleType, @Nonnull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            PassiveWhirlyParticle passiveWhirlyParticle = new PassiveWhirlyParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
+            passiveWhirlyParticle.pickSprite(this.spriteSet);
+            return passiveWhirlyParticle;
         }
     }
 }

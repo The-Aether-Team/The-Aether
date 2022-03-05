@@ -46,6 +46,7 @@ public class AetherItemTagData extends ItemTagsProvider
 
         tag(AetherTags.Items.PLANKS_CRAFTING).addTag(ItemTags.PLANKS).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
         tag(AetherTags.Items.STONE_CRAFTING).addTag(ItemTags.STONE_CRAFTING_MATERIALS).add(AetherBlocks.HOLYSTONE.get().asItem());
+
         tag(AetherTags.Items.BANNED_IN_AETHER).add(
                 Items.FLINT_AND_STEEL,
                 Items.TORCH,
@@ -103,6 +104,9 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.GOLDEN_DART_SHOOTER.get(),
                 AetherItems.POISON_DART_SHOOTER.get(),
                 AetherItems.ENCHANTED_DART_SHOOTER.get());
+        tag(AetherTags.Items.DEPLOYABLE_PARACHUTES).add(
+                AetherItems.COLD_PARACHUTE.get(),
+                AetherItems.GOLDEN_PARACHUTE.get());
         tag(AetherTags.Items.DUNGEON_KEYS).add(
                 AetherItems.BRONZE_DUNGEON_KEY.get(),
                 AetherItems.SILVER_DUNGEON_KEY.get(),
@@ -127,6 +131,13 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.WHITE_MOA_EGG.get(),
                 AetherItems.BLACK_MOA_EGG.get(),
                 AetherItems.ORANGE_MOA_EGG.get());
+
+        tag(AetherTags.Items.PHYG_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
+        tag(AetherTags.Items.FLYING_COW_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
+        tag(AetherTags.Items.SHEEPUFF_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
+        tag(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
+        tag(AetherTags.Items.MOA_TEMPTATION_ITEMS).add(AetherItems.NATURE_STAFF.get());
+        tag(AetherTags.Items.MOA_FOOD_ITEMS).add(AetherItems.AECHOR_PETAL.get());
 
         //vanilla
         tag(ItemTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get().asItem()).addTag(AetherTags.Items.DUNGEON_BLOCKS);

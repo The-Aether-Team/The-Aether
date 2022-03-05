@@ -64,6 +64,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropSelfDouble(AetherBlocks.HOLYSTONE);
             dropSelfDouble(AetherBlocks.MOSSY_HOLYSTONE);
             drop(AetherBlocks.AETHER_FARMLAND, AetherBlocks.AETHER_DIRT);
+            drop(AetherBlocks.AETHER_DIRT_PATH, AetherBlocks.AETHER_DIRT);
 
             dropSelfDouble(AetherBlocks.COLD_AERCLOUD);
             dropSelfDouble(AetherBlocks.BLUE_AERCLOUD);
@@ -293,6 +294,30 @@ public class AetherLootTableData extends AetherLootTableProvider
                     )
             );
 
+            this.add(AetherEntityTypes.BLUE_SWET.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                            .add(LootItem.lootTableItem(AetherItems.SWET_BALL.get())
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
+                            )
+                    )
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                            .add(LootItem.lootTableItem(AetherBlocks.BLUE_AERCLOUD.get())
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
+                            )
+                    )
+            );
+
+            this.add(AetherEntityTypes.GOLDEN_SWET.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                            .add(LootItem.lootTableItem(Blocks.GLOWSTONE)
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
+                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
+                            )
+                    )
+            );
+
             this.add(AetherEntityTypes.WHIRLWIND.get(), LootTable.lootTable());
             this.add(AetherEntityTypes.EVIL_WHIRLWIND.get(), LootTable.lootTable());
 
@@ -344,28 +369,15 @@ public class AetherLootTableData extends AetherLootTableProvider
                             )
                     )
             );
-            this.add(AetherEntityTypes.BLUE_SWET.get(), LootTable.lootTable()
+
+            this.add(AetherEntityTypes.VALKYRIE.get(), LootTable.lootTable()
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                            .add(LootItem.lootTableItem(AetherItems.SWET_BALL.get())
+                            .add(LootItem.lootTableItem(AetherItems.VICTORY_MEDAL.get())
                                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
-                            )
-                    )
-                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                            .add(LootItem.lootTableItem(AetherBlocks.BLUE_AERCLOUD.get())
-                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                             )
                     )
             );
-            this.add(AetherEntityTypes.GOLDEN_SWET.get(), LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                            .add(LootItem.lootTableItem(Blocks.GLOWSTONE)
-                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
-                            )
-                    )
-            );
+
             this.add(AetherEntityTypes.FIRE_MINION.get(), LootTable.lootTable());
         }
 
@@ -613,26 +625,26 @@ public class AetherLootTableData extends AetherLootTableProvider
     {
         public void accept(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
             builder.accept(AetherLoot.WHIRLWIND_JUNK, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                            .add(LootItem.lootTableItem(Items.DIAMOND).setWeight(1))
-                            .add(LootItem.lootTableItem(Items.IRON_INGOT).setWeight(4))
-                            .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(5))
-                            .add(LootItem.lootTableItem(Items.COAL).setWeight(9))
-                            .add(LootItem.lootTableItem(Items.PUMPKIN).setWeight(2))
-                            .add(LootItem.lootTableItem(Items.GRAVEL).setWeight(5))
-                            .add(LootItem.lootTableItem(Items.CLAY).setWeight(11))
-                            .add(LootItem.lootTableItem(Items.STICK).setWeight(12))
-                            .add(LootItem.lootTableItem(Items.FLINT).setWeight(14))
-                            .add(LootItem.lootTableItem(Blocks.OAK_LOG).setWeight(17))
-                            .add(LootItem.lootTableItem(Blocks.SAND).setWeight(20))
-                    )
+                    .withPool(this.whirlwindLoot())
             );
             builder.accept(AetherLoot.EVIL_WHIRLWIND_JUNK, LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                            .add(LootItem.lootTableItem(Items.AIR)
-                                    .apply(WhirlwindSpawnEntity.builder(EntityType.CREEPER, 1)))
-                    )
+                    .withPool(this.whirlwindLoot().add(LootItem.lootTableItem(Items.AIR).apply(WhirlwindSpawnEntity.builder(EntityType.CREEPER, 1)).setWeight(60)))
             );
+        }
+
+        private LootPool.Builder whirlwindLoot() {
+            return LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                    .add(LootItem.lootTableItem(Items.DIAMOND).setWeight(1))
+                    .add(LootItem.lootTableItem(Items.IRON_INGOT).setWeight(4))
+                    .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(5))
+                    .add(LootItem.lootTableItem(Items.COAL).setWeight(9))
+                    .add(LootItem.lootTableItem(Items.PUMPKIN).setWeight(2))
+                    .add(LootItem.lootTableItem(Items.GRAVEL).setWeight(5))
+                    .add(LootItem.lootTableItem(Items.CLAY).setWeight(11))
+                    .add(LootItem.lootTableItem(Items.STICK).setWeight(12))
+                    .add(LootItem.lootTableItem(Items.FLINT).setWeight(14))
+                    .add(LootItem.lootTableItem(Blocks.OAK_LOG).setWeight(17))
+                    .add(LootItem.lootTableItem(Blocks.SAND).setWeight(20));
         }
     }
 
