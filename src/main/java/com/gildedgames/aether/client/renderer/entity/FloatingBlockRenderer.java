@@ -15,49 +15,44 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
-public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity>
-{
-	public FloatingBlockRenderer(EntityRendererProvider.Context renderer) {
-		super(renderer);
+import javax.annotation.Nonnull;
+
+public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
+	public FloatingBlockRenderer(EntityRendererProvider.Context context) {
+		super(context);
 		this.shadowRadius = 0.5F;
 	}
 
 	@Override
-	public void render(FloatingBlockEntity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-		BlockState blockstate = entityIn.getBlockState();
-		if (blockstate.getRenderShape() == RenderShape.MODEL) {
-			Level world = entityIn.getLevel();
-			if (blockstate != world.getBlockState(entityIn.blockPosition()) && blockstate.getRenderShape() != RenderShape.INVISIBLE) {
-				matrixStackIn.pushPose();
-				BlockPos blockpos = new BlockPos(entityIn.getX(), entityIn.getBoundingBox().maxY, entityIn.getZ());
-				matrixStackIn.translate(-0.5D, 0.0D, -0.5D);
-				BlockRenderDispatcher blockrendererdispatcher = Minecraft.getInstance().getBlockRenderer();
+	public void render(FloatingBlockEntity floatingBlock, float entityYaw, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLightIn) {
+		BlockState blockState = floatingBlock.getBlockState();
+		if (blockState.getRenderShape() == RenderShape.MODEL) {
+			Level world = floatingBlock.getLevel();
+			if (blockState != world.getBlockState(floatingBlock.blockPosition()) && blockState.getRenderShape() != RenderShape.INVISIBLE) {
+				poseStack.pushPose();
+				BlockPos blockPos = new BlockPos(floatingBlock.getX(), floatingBlock.getBoundingBox().maxY, floatingBlock.getZ());
+				poseStack.translate(-0.5, 0.0, -0.5);
+				BlockRenderDispatcher blockRenderDispatcher = Minecraft.getInstance().getBlockRenderer();
 				for (net.minecraft.client.renderer.RenderType type : net.minecraft.client.renderer.RenderType.chunkBufferLayers()) {
-					if (ItemBlockRenderTypes.canRenderInLayer(blockstate, type)) {
+					if (ItemBlockRenderTypes.canRenderInLayer(blockState, type)) {
 						net.minecraftforge.client.ForgeHooksClient.setRenderType(type);
-						blockrendererdispatcher.getModelRenderer().tesselateBlock(world, blockrendererdispatcher.getBlockModel(blockstate), blockstate, blockpos, matrixStackIn, bufferIn.getBuffer(type), false, new Random(), blockstate.getSeed(entityIn.getStartPos()), OverlayTexture.NO_OVERLAY);
+						blockRenderDispatcher.getModelRenderer().tesselateBlock(world, blockRenderDispatcher.getBlockModel(blockState), blockState, blockPos, poseStack, buffer.getBuffer(type), false, new Random(), blockState.getSeed(floatingBlock.getStartPos()), OverlayTexture.NO_OVERLAY);
 					}
 				}
 				net.minecraftforge.client.ForgeHooksClient.setRenderType(null);
-				matrixStackIn.popPose();
-				super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+				poseStack.popPose();
+				super.render(floatingBlock, entityYaw, partialTicks, poseStack, buffer, packedLightIn);
 			}
-		}
-		for (Entity entity : entityIn.getCarriedEntityList()) {
-			entity.setPos(entity.getX(), entityIn.getY() + 1.0D, entity.getZ());
 		}
 	}
 
+	@Nonnull
 	@Override
-	public ResourceLocation getTextureLocation(FloatingBlockEntity entity) {
+	public ResourceLocation getTextureLocation(@Nonnull FloatingBlockEntity floatingBlock) {
 		return TextureAtlas.LOCATION_BLOCKS;
 	}
 }

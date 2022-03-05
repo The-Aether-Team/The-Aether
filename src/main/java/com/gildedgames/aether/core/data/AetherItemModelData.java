@@ -199,16 +199,18 @@ public class AetherItemModelData extends AetherItemModelProvider
         eggItem(AetherItems.SHEEPUFF_SPAWN_EGG);
         eggItem(AetherItems.MOA_SPAWN_EGG);
         eggItem(AetherItems.AERWHALE_SPAWN_EGG);
+        eggItem(AetherItems.AERBUNNY_SPAWN_EGG);
         eggItem(AetherItems.WHIRLWIND_SPAWN_EGG);
+        eggItem(AetherItems.BLUE_SWET_SPAWN_EGG);
+        eggItem(AetherItems.GOLDEN_SWET_SPAWN_EGG);
         eggItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG);
         eggItem(AetherItems.AECHOR_PLANT_SPAWN_EGG);
         eggItem(AetherItems.COCKATRICE_SPAWN_EGG);
         eggItem(AetherItems.ZEPHYR_SPAWN_EGG);
         eggItem(AetherItems.SENTRY_SPAWN_EGG);
         eggItem(AetherItems.MIMIC_SPAWN_EGG);
-        eggItem(AetherItems.AERBUNNY_SPAWN_EGG);
-        eggItem(AetherItems.BLUE_SWET_SPAWN_EGG);
-        eggItem(AetherItems.GOLDEN_SWET_SPAWN_EGG);
+        eggItem(AetherItems.VALKYRIE_SPAWN_EGG);
+        eggItem(AetherItems.FIRE_MINION_SPAWN_EGG);
 
         itemBlock(AetherBlocks.AETHER_GRASS_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK);
@@ -217,6 +219,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.HOLYSTONE);
         itemBlock(AetherBlocks.MOSSY_HOLYSTONE);
         itemBlock(AetherBlocks.AETHER_FARMLAND);
+        itemBlock(AetherBlocks.AETHER_DIRT_PATH);
 
         itemBlock(AetherBlocks.COLD_AERCLOUD);
         itemBlock(AetherBlocks.BLUE_AERCLOUD);

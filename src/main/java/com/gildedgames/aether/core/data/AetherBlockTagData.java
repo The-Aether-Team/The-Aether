@@ -83,6 +83,16 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get(),
                 AetherBlocks.TRAPPED_HELLFIRE_STONE.get(),
                 AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE.get());
+        tag(AetherTags.Blocks.AETHER_ANIMALS_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
+        tag(AetherTags.Blocks.AERWHALE_SPAWNABLE_ON).addTags(AetherTags.Blocks.AERCLOUDS);
+        tag(AetherTags.Blocks.SWET_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
+        tag(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
+        tag(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON).addTags(AetherTags.Blocks.AERCLOUDS);
+        tag(AetherTags.Blocks.COCKATRICE_SPAWNABLE_BLACKLIST).addTags(
+                AetherTags.Blocks.DUNGEON_BLOCKS,
+                AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
+                AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS
+        );
 
         //vanilla
         tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).m_206428_(AetherTags.Blocks.DUNGEON_BLOCKS);
@@ -254,7 +264,8 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(),
                 AetherBlocks.AETHER_DIRT.get(),
                 AetherBlocks.QUICKSOIL.get(),
-                AetherBlocks.AETHER_FARMLAND.get());
+                AetherBlocks.AETHER_FARMLAND.get(),
+                AetherBlocks.AETHER_DIRT_PATH.get());
         tag(BlockTags.MINEABLE_WITH_HOE).add(
                 AetherBlocks.COLD_AERCLOUD.get(),
                 AetherBlocks.BLUE_AERCLOUD.get(),

@@ -23,7 +23,7 @@ public class SkyrootBedBlock extends BedBlock
 {
     public SkyrootBedBlock(Properties properties) {
         super(DyeColor.WHITE, properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(PART, BedPart.FOOT).setValue(OCCUPIED, Boolean.FALSE));
+        this.registerDefaultState(this.stateDefinition.any().setValue(PART, BedPart.FOOT).setValue(OCCUPIED, false));
     }
 
     @Override

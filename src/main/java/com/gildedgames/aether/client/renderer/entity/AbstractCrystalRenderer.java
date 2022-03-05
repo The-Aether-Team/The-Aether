@@ -1,43 +1,40 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.client.renderer.entity.model.CrystalModel;
-import com.gildedgames.aether.common.entity.projectile.crystal.AbstractCrystalEntity;
+import com.gildedgames.aether.common.entity.projectile.crystal.AbstractCrystal;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import com.mojang.math.Vector3f;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
-public abstract class AbstractCrystalRenderer<T extends AbstractCrystalEntity> extends EntityRenderer<T>
-{
-    private final CrystalModel<AbstractCrystalEntity> model;
+import javax.annotation.Nonnull;
 
-    public AbstractCrystalRenderer(EntityRendererProvider.Context renderer, CrystalModel<AbstractCrystalEntity> model) {
-        super(renderer);
-        this.model = model;
+public abstract class AbstractCrystalRenderer<T extends AbstractCrystal> extends EntityRenderer<T> {
+    private final CrystalModel<AbstractCrystal> crystal;
+
+    public AbstractCrystalRenderer(EntityRendererProvider.Context context, CrystalModel<AbstractCrystal> crystalModel) {
+        super(context);
+        this.crystal = crystalModel;
     }
 
     @Override
-    public void render(T p_225623_1_, float p_225623_2_, float p_225623_3_, PoseStack p_225623_4_, MultiBufferSource p_225623_5_, int p_225623_6_) {
-        p_225623_4_.pushPose();
-        p_225623_4_.translate(0.0D, 0.25D, 0.0D);
-        VertexConsumer iVertexBuilder = p_225623_5_.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(p_225623_1_)));
-        float f = (float) p_225623_1_.tickCount + p_225623_3_;
-        p_225623_4_.mulPose(Vector3f.XP.rotationDegrees(f * 0.1F * 360.0F));
-        this.model.crystal[0].render(p_225623_4_, iVertexBuilder, p_225623_6_, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        p_225623_4_.mulPose(Vector3f.YP.rotationDegrees(f * 0.1F * 360.0F));
-        this.model.crystal[1].render(p_225623_4_, iVertexBuilder, p_225623_6_, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        p_225623_4_.mulPose(Vector3f.ZP.rotationDegrees(f * 0.1F * 360.0F));
-        this.model.crystal[2].render(p_225623_4_, iVertexBuilder, p_225623_6_, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        p_225623_4_.popPose();
-        super.render(p_225623_1_, p_225623_2_, p_225623_3_, p_225623_4_, p_225623_5_, p_225623_6_);
+    public void render(@Nonnull T crystal, float entityYaw, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
+        poseStack.pushPose();
+        poseStack.translate(0.0, 0.25, 0.0);
+        VertexConsumer iVertexBuilder = buffer.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(crystal)));
+        float f = (float) crystal.tickCount + partialTicks;
+        poseStack.mulPose(Vector3f.XP.rotationDegrees(f * 0.1F * 360.0F));
+        this.crystal.crystal1.render(poseStack, iVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(f * 0.1F * 360.0F));
+        this.crystal.crystal2.render(poseStack, iVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        poseStack.mulPose(Vector3f.ZP.rotationDegrees(f * 0.1F * 360.0F));
+        this.crystal.crystal3.render(poseStack, iVertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        poseStack.popPose();
+        super.render(crystal, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
 }

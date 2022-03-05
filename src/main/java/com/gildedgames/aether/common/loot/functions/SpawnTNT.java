@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.loot.functions;
 
-import com.gildedgames.aether.common.entity.block.TNTPresentEntity;
+import com.gildedgames.aether.common.entity.block.TntPresent;
 import com.gildedgames.aether.common.registry.AetherLoot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
@@ -28,7 +28,7 @@ public class SpawnTNT extends LootItemConditionalFunction
         ServerLevel world = context.getLevel();
         Vec3 vector3d = context.getParamOrNull(LootContextParams.ORIGIN);
         if (vector3d != null) {
-            TNTPresentEntity tnt = new TNTPresentEntity(world, vector3d.x(), vector3d.y(), vector3d.z());
+            TntPresent tnt = new TntPresent(world, vector3d.x(), vector3d.y(), vector3d.z());
             world.addFreshEntity(tnt);
             world.playSound(null, new BlockPos(vector3d), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
         }

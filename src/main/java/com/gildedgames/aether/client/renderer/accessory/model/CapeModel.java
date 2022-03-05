@@ -11,8 +11,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 
 import javax.annotation.Nonnull;
 
-public class CapeModel extends HumanoidModel<LivingEntity>
-{
+public class CapeModel extends HumanoidModel<LivingEntity> {
     private final ModelPart cloak;
 
     public CapeModel(ModelPart root) {
@@ -21,8 +20,7 @@ public class CapeModel extends HumanoidModel<LivingEntity>
     }
 
     public static LayerDefinition createLayer() {
-        CubeDeformation cube = new CubeDeformation(0.0F);
-        MeshDefinition meshDefinition = HumanoidModel.createMesh(cube, 0.0F);
+        MeshDefinition meshDefinition = HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F);
         PartDefinition partDefinition = meshDefinition.getRoot();
         partDefinition.addOrReplaceChild("cloak", CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, 0.0F, -1.0F, 10.0F, 16.0F, 1.0F), PartPose.ZERO);
         return LayerDefinition.create(meshDefinition, 64, 32);

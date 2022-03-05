@@ -25,12 +25,18 @@ public class AetherTags
 		public static final TagKey<Block> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final TagKey<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final TagKey<Block> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final TagKey<Block> AETHER_ANIMALS_SPAWNABLE_ON = tag("aether_animals_spawnable_on");
+		public static final TagKey<Block> AERWHALE_SPAWNABLE_ON = tag("aerwhale_spawnable_on");
+		public static final TagKey<Block> SWET_SPAWNABLE_ON = tag("swet_spawnable_on");
+		public static final TagKey<Block> AECHOR_PLANT_SPAWNABLE_ON = tag("aechor_plant_spawnable_on");
+		public static final TagKey<Block> ZEPHYR_SPAWNABLE_ON = tag("zephyr_spawnable_on");
+		public static final TagKey<Block> COCKATRICE_SPAWNABLE_BLACKLIST = tag("cockatrice_spawnable_blacklist");
 
 		private static TagKey<Block> tag(String name) {
 			return TagKey.m_203882_(Registry.BLOCK_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 	}
-	
+
 	public static class Items
 	{
 		public static final TagKey<Item> AETHER_DIRT = tag("aether_dirt");
@@ -60,10 +66,18 @@ public class AetherTags
 		public static final TagKey<Item> PIG_DROPS = tag("pig_drops");
 		public static final TagKey<Item> DARTS = tag("darts");
 		public static final TagKey<Item> DART_SHOOTERS = tag("dart_shooters");
+		public static final TagKey<Item> DEPLOYABLE_PARACHUTES = tag("deployable_parachutes");
 		public static final TagKey<Item> DUNGEON_KEYS = tag("dungeon_keys");
 		public static final TagKey<Item> ACCEPTED_MUSIC_DISCS = tag("accepted_music_discs");
 		public static final TagKey<Item> SAVE_NBT_IN_RECIPE = tag("save_nbt_in_recipe");
 		public static final TagKey<Item> MOA_EGGS = tag("moa_eggs");
+
+		public static final TagKey<Item> PHYG_TEMPTATION_ITEMS = tag("phyg_temptation_items");
+		public static final TagKey<Item> FLYING_COW_TEMPTATION_ITEMS = tag("flying_cow_temptation_items");
+		public static final TagKey<Item> SHEEPUFF_TEMPTATION_ITEMS = tag("sheepuff_temptation_items");
+		public static final TagKey<Item> AERBUNNY_TEMPTATION_ITEMS = tag("aerbunny_temptation_items");
+		public static final TagKey<Item> MOA_TEMPTATION_ITEMS = tag("moa_temptation_items");
+		public static final TagKey<Item> MOA_FOOD_ITEMS = tag("moa_food_items");
 
 		private static TagKey<Item> tag(String name) {
 			return TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Aether.MODID, name));
@@ -75,7 +89,8 @@ public class AetherTags
 		public static final TagKey<EntityType<?>> PIGS = tag("pigs");
 		public static final TagKey<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 		public static final TagKey<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
-		public static final TagKey<EntityType<?>> SWET_TARGET = tag("swet_target");
+		public static final TagKey<EntityType<?>> SWET_TARGETS = tag("swet_target");
+		public static final TagKey<EntityType<?>> AECHOR_PLANT_TARGETS = tag("aechor_plant_targets");
 
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.m_203882_(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, name));

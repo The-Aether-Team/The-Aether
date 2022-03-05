@@ -4,14 +4,20 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.entity.passive.Moa;
 import com.gildedgames.aether.common.inventory.container.IncubatorContainer;
 
+import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
@@ -177,9 +183,21 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		}
 	}
 
-	private void incubate(NonNullList<ItemStack> stacks) { //TODO: The rest of this will be implemented with the PR for Moas.
-		stacks.get(0).shrink(1);
-		Aether.LOGGER.info(true);
+	private void incubate(NonNullList<ItemStack> stacks) {
+		ItemStack itemStack = stacks.get(0);
+		if (!itemStack.isEmpty() && itemStack.getItem() instanceof MoaEggItem moaEggItem) {
+			BlockPos spawnPos = this.worldPosition.above();
+			if (this.getLevel() != null && !this.getLevel().isClientSide() && this.getLevel() instanceof ServerLevel serverLevel) {
+				Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, itemStack, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
+				if (entity instanceof Moa moa) {
+					moa.setMoaType(moaEggItem.getMoaType().get());
+					moa.setBaby(true);
+					moa.setPlayerGrown(true);
+					moa.setHungry(true);
+				}
+			}
+			itemStack.shrink(1);
+		}
 	}
 
 	protected int getBurnDuration(ItemStack fuelStack) {

@@ -1,9 +1,9 @@
 package com.gildedgames.aether.common.event.listeners.abilities;
 
-import com.gildedgames.aether.common.entity.projectile.PoisonNeedleEntity;
-import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDartEntity;
-import com.gildedgames.aether.common.entity.projectile.dart.GoldenDartEntity;
-import com.gildedgames.aether.common.entity.projectile.dart.PoisonDartEntity;
+import com.gildedgames.aether.common.entity.projectile.PoisonNeedle;
+import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDart;
+import com.gildedgames.aether.common.entity.projectile.dart.GoldenDart;
+import com.gildedgames.aether.common.entity.projectile.dart.PoisonDart;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
@@ -110,11 +110,11 @@ public class WeaponAbilityListener
         if (event.getEntityLiving() instanceof Player) {
             Player playerEntity = (Player) event.getEntityLiving();
             Entity source = event.getSource().getDirectEntity();
-            if (source instanceof GoldenDartEntity) {
+            if (source instanceof GoldenDart) {
                 IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setGoldenDartCount(aetherPlayer.getGoldenDartCount() + 1));
-            } else if (source instanceof PoisonDartEntity || source instanceof PoisonNeedleEntity) {
+            } else if (source instanceof PoisonDart || source instanceof PoisonNeedle) {
                 IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setPoisonDartCount(aetherPlayer.getPoisonDartCount() + 1));
-            } else if (source instanceof EnchantedDartEntity) {
+            } else if (source instanceof EnchantedDart) {
                 IAetherPlayer.get(playerEntity).ifPresent(aetherPlayer -> aetherPlayer.setEnchantedDartCount(aetherPlayer.getEnchantedDartCount() + 1));
             }
         }

@@ -9,8 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import javax.annotation.Nonnull;
 
-public class PendantModel extends HumanoidModel<LivingEntity>
-{
+public class PendantModel extends HumanoidModel<LivingEntity> {
     public PendantModel(ModelPart root) {
         super(root);
     }

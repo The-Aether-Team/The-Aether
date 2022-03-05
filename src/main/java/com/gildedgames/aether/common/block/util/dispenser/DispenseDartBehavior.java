@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.block.util.dispenser;
 
-import com.gildedgames.aether.common.entity.projectile.dart.AbstractDartEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.AbstractDart;
 import com.gildedgames.aether.common.item.combat.DartItem;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.core.BlockSource;
@@ -40,7 +40,7 @@ public class DispenseDartBehavior extends AbstractProjectileDispenseBehavior
         Item item = this.dartItem.get();
         if (item instanceof DartItem) {
             DartItem dartItem = (DartItem) item;
-            AbstractDartEntity dartEntity = dartItem.createDart(world);
+            AbstractDart dartEntity = dartItem.createDart(world);
             dartEntity.setPos(position.x(), position.y(), position.z());
             dartEntity.pickup = AbstractArrow.Pickup.ALLOWED;
             dartEntity.setNoGravity(true);
