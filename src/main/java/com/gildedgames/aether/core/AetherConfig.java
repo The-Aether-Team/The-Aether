@@ -8,6 +8,7 @@ public class AetherConfig
 {
     public static class Common
     {
+        public final ConfigValue<Boolean> enable_bed_explosions;
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
         public final ConfigValue<Boolean> edible_ambrosium;
@@ -31,6 +32,9 @@ public class AetherConfig
 
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("Gameplay");
+            enable_bed_explosions = builder
+                    .comment("Vanilla's beds will explode in the Aether")
+                    .define("Beds explode", false);
             start_with_portal = builder
                     .comment("On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with")
                     .define("Gives player Aether Portal Frame item", false);
