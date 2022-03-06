@@ -3,6 +3,7 @@ package com.gildedgames.aether.core.data.provider;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.core.Direction;
@@ -13,18 +14,6 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.function.Supplier;
-
-import net.minecraft.world.level.block.BedBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.ChestBlock;
-import net.minecraft.world.level.block.FenceBlock;
-import net.minecraft.world.level.block.FenceGateBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.SaplingBlock;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.SnowyDirtBlock;
-import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.WallBlock;
 
 public abstract class AetherBlockStateProvider extends BlockStateProvider
 {
@@ -78,6 +67,23 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider
 
     public void slab(Supplier<? extends SlabBlock> block, Supplier<? extends Block> baseBlock, String location) {
         slabBlock(block.get(), texture(name(baseBlock)), texture(name(baseBlock), location));
+    }
+
+    public void buttonBlock(Supplier<? extends ButtonBlock> block, ResourceLocation texture) {
+        ModelFile button = models().button(name(block), texture);
+        ModelFile buttonPressed = models().buttonPressed(name(block) + "_pressed", texture);
+        buttonBlock(block.get(), button, buttonPressed);
+    }
+
+    public void pressurePlateBlock(Supplier<? extends PressurePlateBlock> block, ResourceLocation texture) {
+        ModelFile pressurePlate = models().pressurePlate(name(block), texture);
+        ModelFile pressurePlateDown = models().pressurePlateDown(name(block) + "_down", texture);
+        pressurePlateBlock(block.get(), pressurePlate, pressurePlateDown);
+    }
+
+    public void signBlock(Supplier<? extends StandingSignBlock> signBlock, Supplier<? extends WallSignBlock> wallSignBlock, ResourceLocation texture) {
+        ModelFile sign = models().sign(name(signBlock), texture);
+        signBlock(signBlock.get(), wallSignBlock.get(), sign);
     }
 
     public void fence(Supplier<? extends FenceBlock> block, Supplier<? extends Block> baseBlock, String location) {

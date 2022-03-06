@@ -68,6 +68,8 @@ public class AetherBlockStateData extends AetherBlockStateProvider
 
         torchBlock(AetherBlocks.AMBROSIUM_TORCH, AetherBlocks.AMBROSIUM_WALL_TORCH);
 
+        signBlock(AetherBlocks.SKYROOT_SIGN, AetherBlocks.SKYROOT_WALL_SIGN, texture(name(AetherBlocks.SKYROOT_PLANKS), "construction/"));
+
         crossBlock(AetherBlocks.BERRY_BUSH_STEM, "natural/");
 
         crossBlock(AetherBlocks.PURPLE_FLOWER, "natural/");
@@ -106,8 +108,13 @@ public class AetherBlockStateData extends AetherBlockStateProvider
 
         fence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS, "construction/");
         fenceGateBlock(AetherBlocks.SKYROOT_FENCE_GATE, AetherBlocks.SKYROOT_PLANKS, "construction/");
-        doorBlock((DoorBlock) AetherBlocks.SKYROOT_DOOR.get(), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_bottom"), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_top"));
-        trapdoorBlock((TrapDoorBlock) AetherBlocks.SKYROOT_TRAPDOOR.get(), texture(name(AetherBlocks.SKYROOT_TRAPDOOR), "construction/"), false);
+        doorBlock(AetherBlocks.SKYROOT_DOOR.get(), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_bottom"), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_top"));
+        trapdoorBlock(AetherBlocks.SKYROOT_TRAPDOOR.get(), texture(name(AetherBlocks.SKYROOT_TRAPDOOR), "construction/"), false);
+        buttonBlock(AetherBlocks.SKYROOT_BUTTON, texture(name(AetherBlocks.SKYROOT_PLANKS), "construction/"));
+        pressurePlateBlock(AetherBlocks.SKYROOT_PRESSURE_PLATE, texture(name(AetherBlocks.SKYROOT_PLANKS), "construction/"));
+
+        buttonBlock(AetherBlocks.HOLYSTONE_BUTTON, texture(name(AetherBlocks.HOLYSTONE), "natural/"));
+        pressurePlateBlock(AetherBlocks.HOLYSTONE_PRESSURE_PLATE, texture(name(AetherBlocks.HOLYSTONE), "natural/"));
 
         wallBlock(AetherBlocks.CARVED_WALL, AetherBlocks.CARVED_STONE, "dungeon/");
         wallBlock(AetherBlocks.ANGELIC_WALL, AetherBlocks.ANGELIC_STONE, "dungeon/");
