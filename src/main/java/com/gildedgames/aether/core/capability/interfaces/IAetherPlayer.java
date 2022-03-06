@@ -11,8 +11,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.List;
 
-public interface IAetherPlayer extends INBTSerializable<CompoundTag>
-{
+public interface IAetherPlayer extends INBTSerializable<CompoundTag> {
 	Player getPlayer();
 
 	static LazyOptional<IAetherPlayer> get(Player player) {

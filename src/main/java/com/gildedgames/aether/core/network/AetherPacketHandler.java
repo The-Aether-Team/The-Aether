@@ -2,7 +2,6 @@ package com.gildedgames.aether.core.network;
 
 import com.gildedgames.aether.Aether;
 
-import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import com.gildedgames.aether.core.network.packet.client.*;
 import com.gildedgames.aether.core.network.packet.server.*;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,8 +15,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 import java.util.function.Function;
 
-public class AetherPacketHandler
-{
+public class AetherPacketHandler {
 	private static final String PROTOCOL_VERSION = "1";
 	public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
 		new ResourceLocation(Aether.MODID, "main"),
@@ -53,8 +51,8 @@ public class AetherPacketHandler
 		register(SunAltarUpdatePacket.class, SunAltarUpdatePacket::decode);
 	}
 
-	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
-		INSTANCE.messageBuilder(packet, index++).encoder(AetherPacket::encode).decoder(decoder).consumer(AetherPacket::handle).add();
+	private static <MSG extends AetherPacket.AbstractAetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
+		INSTANCE.messageBuilder(packet, index++).encoder(AetherPacket.AbstractAetherPacket::encode).decoder(decoder).consumer(AetherPacket.AbstractAetherPacket::handle).add();
 	}
 
 	public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

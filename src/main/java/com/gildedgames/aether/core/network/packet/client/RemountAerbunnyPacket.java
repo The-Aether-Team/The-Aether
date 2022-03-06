@@ -2,14 +2,13 @@ package com.gildedgames.aether.core.network.packet.client;
 
 import com.gildedgames.aether.common.entity.passive.Aerbunny;
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 
-public class RemountAerbunnyPacket extends AetherPacket
-{
+public class RemountAerbunnyPacket extends AetherPacket.AbstractAetherPacket {
     private final int entityID;
     private final int aerbunnyID;
 

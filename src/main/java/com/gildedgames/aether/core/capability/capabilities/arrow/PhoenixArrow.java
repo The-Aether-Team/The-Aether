@@ -4,8 +4,7 @@ import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.nbt.CompoundTag;
 
-public class PhoenixArrow implements IPhoenixArrow
-{
+public class PhoenixArrow implements IPhoenixArrow {
     private final AbstractArrow arrow;
 
     private boolean isPhoenixArrow;
@@ -22,19 +21,19 @@ public class PhoenixArrow implements IPhoenixArrow
 
     @Override
     public CompoundTag serializeNBT() {
-        CompoundTag nbt = new CompoundTag();
-        nbt.putBoolean("PhoenixArrow", this.isPhoenixArrow());
-        nbt.putInt("FireTime", this.getFireTime());
-        return nbt;
+        CompoundTag tag = new CompoundTag();
+        tag.putBoolean("PhoenixArrow", this.isPhoenixArrow());
+        tag.putInt("FireTime", this.getFireTime());
+        return tag;
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        if (nbt.contains("PhoenixArrow")) {
-            this.setPhoenixArrow(nbt.getBoolean("PhoenixArrow"));
+    public void deserializeNBT(CompoundTag tag) {
+        if (tag.contains("PhoenixArrow")) {
+            this.setPhoenixArrow(tag.getBoolean("PhoenixArrow"));
         }
-        if (nbt.contains("FireTime")) {
-            this.setFireTime(nbt.getInt("FireTime"));
+        if (tag.contains("FireTime")) {
+            this.setFireTime(tag.getInt("FireTime"));
         }
     }
 

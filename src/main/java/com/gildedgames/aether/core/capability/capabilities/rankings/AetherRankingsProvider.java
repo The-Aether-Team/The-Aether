@@ -10,8 +10,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 
-public class AetherRankingsProvider implements ICapabilitySerializable<CompoundTag>
-{
+public class AetherRankingsProvider implements ICapabilitySerializable<CompoundTag> {
     private final IAetherRankings aetherRankings;
 
     public AetherRankingsProvider(IAetherRankings aetherRankings) {
@@ -24,8 +23,8 @@ public class AetherRankingsProvider implements ICapabilitySerializable<CompoundT
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        this.aetherRankings.deserializeNBT(nbt);
+    public void deserializeNBT(CompoundTag tag) {
+        this.aetherRankings.deserializeNBT(tag);
     }
 
     @SuppressWarnings("unchecked")

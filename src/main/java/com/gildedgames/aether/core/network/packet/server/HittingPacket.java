@@ -1,13 +1,12 @@
 package com.gildedgames.aether.core.network.packet.server;
 
 import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class HittingPacket extends AetherPacket
-{
+public class HittingPacket extends AetherPacket.AbstractAetherPacket {
     private final int playerID;
     private final boolean isHitting;
 

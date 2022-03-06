@@ -7,8 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public interface ILightningTracker extends INBTSerializable<CompoundTag>
-{
+public interface ILightningTracker extends INBTSerializable<CompoundTag> {
     LightningBolt getLightningBolt();
 
     static LazyOptional<ILightningTracker> get(LightningBolt arrow) {

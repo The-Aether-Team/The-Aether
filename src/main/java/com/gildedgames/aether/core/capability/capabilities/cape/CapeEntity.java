@@ -7,8 +7,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.nbt.CompoundTag;
 
-public class CapeEntity implements ICapeEntity
-{
+public class CapeEntity implements ICapeEntity {
     private final LivingEntity entity;
 
     private double xCloakO;
@@ -36,7 +35,7 @@ public class CapeEntity implements ICapeEntity
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) { }
+    public void deserializeNBT(CompoundTag tag) { }
 
     @Override
     public void onUpdate() {

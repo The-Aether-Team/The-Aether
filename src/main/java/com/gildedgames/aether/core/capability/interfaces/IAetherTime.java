@@ -1,7 +1,6 @@
 package com.gildedgames.aether.core.capability.interfaces;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.server.player.AetherSleepStatus;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -11,8 +10,7 @@ import net.minecraftforge.common.util.LazyOptional;
 /**
  * Capability interface to handle the Aether's day/night cycle.
  */
-public interface IAetherTime extends INBTSerializable<CompoundTag>
-{
+public interface IAetherTime extends INBTSerializable<CompoundTag> {
     Level getLevel();
 
     static LazyOptional<IAetherTime> get(Level world) {

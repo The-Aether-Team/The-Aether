@@ -2,21 +2,25 @@ package com.gildedgames.aether.core.capability;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
 import com.gildedgames.aether.core.capability.capabilities.arrow.PhoenixArrow;
 import com.gildedgames.aether.core.capability.capabilities.arrow.PhoenixArrowProvider;
+import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
 import com.gildedgames.aether.core.capability.capabilities.cape.CapeEntity;
 import com.gildedgames.aether.core.capability.capabilities.cape.CapeEntityProvider;
 import com.gildedgames.aether.core.capability.capabilities.aether_time.AetherTime;
 import com.gildedgames.aether.core.capability.capabilities.aether_time.AetherTimeProvider;
+import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
 import com.gildedgames.aether.core.capability.capabilities.lightning.LightningTracker;
 import com.gildedgames.aether.core.capability.capabilities.lightning.LightningTrackerProvider;
+import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
 import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayer;
 import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayerProvider;
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.capability.capabilities.rankings.AetherRankings;
 import com.gildedgames.aether.core.capability.capabilities.rankings.AetherRankingsProvider;
-import com.gildedgames.aether.core.capability.interfaces.*;
+import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
 
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.LightningBolt;

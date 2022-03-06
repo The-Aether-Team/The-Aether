@@ -6,8 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public interface ICapeEntity extends INBTSerializable<CompoundTag>
-{
+public interface ICapeEntity extends INBTSerializable<CompoundTag> {
     LivingEntity getEntity();
 
     static LazyOptional<ICapeEntity> get(LivingEntity entity) {

@@ -2,11 +2,11 @@ package com.gildedgames.aether.core.network.packet.server;
 
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
-import com.gildedgames.aether.core.network.IAetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
-public class SunAltarUpdatePacket extends IAetherPacket.AetherPacket {
+public class SunAltarUpdatePacket extends AetherPacket.AbstractAetherPacket {
     private final long dayTime;
     public SunAltarUpdatePacket(long time) {
         this.dayTime = time;

@@ -7,8 +7,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.player.Player;
 
-public class AetherRankings implements IAetherRankings
-{
+public class AetherRankings implements IAetherRankings {
     private final Player player;
 
     private static final EntityDataAccessor<Boolean> DATA_SLEEVE_GLOVES_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.BOOLEAN);
@@ -27,23 +26,23 @@ public class AetherRankings implements IAetherRankings
 
     @Override
     public CompoundTag serializeNBT() {
-        CompoundTag nbt = new CompoundTag();
-        nbt.putBoolean("HatGloves", this.areSleeveGloves());
-        nbt.putBoolean("RenderHalo", this.shouldRenderHalo());
-        nbt.putBoolean("RenderDeveloperGlow", this.shouldRenderDeveloperGlow());
-        return nbt;
+        CompoundTag tag = new CompoundTag();
+        tag.putBoolean("HatGloves", this.areSleeveGloves());
+        tag.putBoolean("RenderHalo", this.shouldRenderHalo());
+        tag.putBoolean("RenderDeveloperGlow", this.shouldRenderDeveloperGlow());
+        return tag;
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        if (nbt.contains("HatGloves")) {
-            this.setSleeveGloves(nbt.getBoolean("HatGloves"));
+    public void deserializeNBT(CompoundTag tag) {
+        if (tag.contains("HatGloves")) {
+            this.setSleeveGloves(tag.getBoolean("HatGloves"));
         }
-        if (nbt.contains("RenderHalo")) {
-            this.setRenderHalo(nbt.getBoolean("RenderHalo"));
+        if (tag.contains("RenderHalo")) {
+            this.setRenderHalo(tag.getBoolean("RenderHalo"));
         }
-        if (nbt.contains("RenderDeveloperGlow")) {
-            this.setRenderDeveloperGlow(nbt.getBoolean("RenderDeveloperGlow"));
+        if (tag.contains("RenderDeveloperGlow")) {
+            this.setRenderDeveloperGlow(tag.getBoolean("RenderDeveloperGlow"));
         }
     }
 

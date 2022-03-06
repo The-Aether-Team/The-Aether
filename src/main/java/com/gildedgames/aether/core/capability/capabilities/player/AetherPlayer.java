@@ -9,8 +9,8 @@ import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.AetherConfig;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 
+import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.*;
 import net.minecraft.client.Minecraft;
@@ -37,8 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AetherPlayer implements IAetherPlayer
-{
+public class AetherPlayer implements IAetherPlayer {
 	private final Player player;
 
 	private static final UUID LIFE_SHARD_HEALTH_ID = UUID.fromString("E11710C8-4247-4CB6-B3B5-729CB34CFC1A");
@@ -86,16 +85,16 @@ public class AetherPlayer implements IAetherPlayer
 
 	@Override
 	public CompoundTag serializeNBT() {
-		CompoundTag nbt = new CompoundTag();
-		nbt.putBoolean("CanGetPortal", this.canGetPortal());
-		nbt.putInt("RemedyMaximum", this.getRemedyMaximum());
-		nbt.putInt("RemedyTimer", this.getRemedyTimer());
-		nbt.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
-		nbt.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
-		nbt.putFloat("SavedHealth", this.getSavedHealth());
-		nbt.putInt("LifeShardCount", this.getLifeShardCount());
+		CompoundTag tag = new CompoundTag();
+		tag.putBoolean("CanGetPortal", this.canGetPortal());
+		tag.putInt("RemedyMaximum", this.getRemedyMaximum());
+		tag.putInt("RemedyTimer", this.getRemedyTimer());
+		tag.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
+		tag.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
+		tag.putFloat("SavedHealth", this.getSavedHealth());
+		tag.putInt("LifeShardCount", this.getLifeShardCount());
 		if (this.getMountedAerbunnyTag() != null) {
-			nbt.put("MountedAerbunnyTag", this.getMountedAerbunnyTag());
+			tag.put("MountedAerbunnyTag", this.getMountedAerbunnyTag());
 		}
 
 		//(leftover reference code)
@@ -104,34 +103,34 @@ public class AetherPlayer implements IAetherPlayer
 //			nbt.putBoolean("Halo", this.shouldRenderHalo);
 //		}
 		//this.accessories.writeToNBT(nbt);
-		return nbt;
+		return tag;
 	}
 
 	@Override
-	public void deserializeNBT(CompoundTag nbt) {
-		if (nbt.contains("CanGetPortal")) {
-			this.setCanGetPortal(nbt.getBoolean("CanGetPortal"));
+	public void deserializeNBT(CompoundTag tag) {
+		if (tag.contains("CanGetPortal")) {
+			this.setCanGetPortal(tag.getBoolean("CanGetPortal"));
 		}
-		if (nbt.contains("RemedyMaximum")) {
-			this.setRemedyMaximum(nbt.getInt("RemedyMaximum"));
+		if (tag.contains("RemedyMaximum")) {
+			this.setRemedyMaximum(tag.getInt("RemedyMaximum"));
 		}
-		if (nbt.contains("RemedyTimer")) {
-			this.setRemedyTimer(nbt.getInt("RemedyTimer"));
+		if (tag.contains("RemedyTimer")) {
+			this.setRemedyTimer(tag.getInt("RemedyTimer"));
 		}
-		if (nbt.contains("ProjectileImpactedMaximum")) {
-			this.setProjectileImpactedMaximum(nbt.getInt("ProjectileImpactedMaximum"));
+		if (tag.contains("ProjectileImpactedMaximum")) {
+			this.setProjectileImpactedMaximum(tag.getInt("ProjectileImpactedMaximum"));
 		}
-		if (nbt.contains("ProjectileImpactedTimer")) {
-			this.setProjectileImpactedTimer(nbt.getInt("ProjectileImpactedTimer"));
+		if (tag.contains("ProjectileImpactedTimer")) {
+			this.setProjectileImpactedTimer(tag.getInt("ProjectileImpactedTimer"));
 		}
-		if (nbt.contains("SavedHealth")) {
-			this.setSavedHealth(nbt.getFloat("SavedHealth"));
+		if (tag.contains("SavedHealth")) {
+			this.setSavedHealth(tag.getFloat("SavedHealth"));
 		}
-		if (nbt.contains("LifeShardCount")) {
-			this.setLifeShardCount(nbt.getInt("LifeShardCount"));
+		if (tag.contains("LifeShardCount")) {
+			this.setLifeShardCount(tag.getInt("LifeShardCount"));
 		}
-		if (nbt.contains("MountedAerbunnyTag")) {
-			this.setMountedAerbunnyTag(nbt.getCompound("MountedAerbunnyTag"));
+		if (tag.contains("MountedAerbunnyTag")) {
+			this.setMountedAerbunnyTag(tag.getCompound("MountedAerbunnyTag"));
 		}
 	}
 

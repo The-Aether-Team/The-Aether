@@ -5,8 +5,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.nbt.CompoundTag;
 
-public class LightningTracker implements ILightningTracker
-{
+public class LightningTracker implements ILightningTracker {
     private final LightningBolt lightningBolt;
 
     private Entity owner;
@@ -22,15 +21,15 @@ public class LightningTracker implements ILightningTracker
 
     @Override
     public CompoundTag serializeNBT() {
-        CompoundTag nbt = new CompoundTag();
-        nbt.putInt("Owner", this.getOwner().getId());
-        return nbt;
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("Owner", this.getOwner().getId());
+        return tag;
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        if (nbt.contains("Owner")) {
-            this.setOwner(this.getOwner().level.getEntity(nbt.getInt("Owner")));
+    public void deserializeNBT(CompoundTag tag) {
+        if (tag.contains("Owner")) {
+            this.setOwner(this.getOwner().level.getEntity(tag.getInt("Owner")));
         }
     }
 

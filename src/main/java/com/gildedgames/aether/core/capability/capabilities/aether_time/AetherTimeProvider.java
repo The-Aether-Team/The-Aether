@@ -10,12 +10,11 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 
-public class AetherTimeProvider implements ICapabilitySerializable<CompoundTag>
-{
+public class AetherTimeProvider implements ICapabilitySerializable<CompoundTag> {
     private final IAetherTime aetherTime;
 
-    public AetherTimeProvider(IAetherTime eternalDay) {
-        this.aetherTime = eternalDay;
+    public AetherTimeProvider(IAetherTime aetherTime) {
+        this.aetherTime = aetherTime;
     }
 
     @Override
@@ -24,8 +23,8 @@ public class AetherTimeProvider implements ICapabilitySerializable<CompoundTag>
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        this.aetherTime.deserializeNBT(nbt);
+    public void deserializeNBT(CompoundTag tag) {
+        this.aetherTime.deserializeNBT(tag);
     }
 
     @SuppressWarnings("unchecked")

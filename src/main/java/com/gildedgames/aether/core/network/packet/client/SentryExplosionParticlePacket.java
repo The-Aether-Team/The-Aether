@@ -1,14 +1,13 @@
 package com.gildedgames.aether.core.network.packet.client;
 
 import com.gildedgames.aether.common.entity.monster.dungeon.Sentry;
-import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
-public class SentryExplosionParticlePacket extends AetherPacket
-{
+public class SentryExplosionParticlePacket extends AetherPacket.AbstractAetherPacket {
     private final int sentryID;
 
     public SentryExplosionParticlePacket(int id) {

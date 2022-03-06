@@ -31,19 +31,19 @@ public class AetherTime implements IAetherTime {
 
     @Override
     public CompoundTag serializeNBT() {
-        CompoundTag nbt = new CompoundTag();
-        nbt.putBoolean("EternalDay", this.getEternalDay());
-        nbt.putLong("DayTime", this.getDayTime());
-        return nbt;
+        CompoundTag tag = new CompoundTag();
+        tag.putBoolean("EternalDay", this.getEternalDay());
+        tag.putLong("DayTime", this.getDayTime());
+        return tag;
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        if (nbt.contains("EternalDay")) {
-            this.setEternalDay(nbt.getBoolean("EternalDay"));
+    public void deserializeNBT(CompoundTag tag) {
+        if (tag.contains("EternalDay")) {
+            this.setEternalDay(tag.getBoolean("EternalDay"));
         }
-        if (nbt.contains("DayTime")) {
-            this.setDayTime(nbt.getLong("DayTime"));
+        if (tag.contains("DayTime")) {
+            this.setDayTime(tag.getLong("DayTime"));
         }
     }
 

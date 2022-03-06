@@ -10,8 +10,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 
-public class PhoenixArrowProvider implements ICapabilitySerializable<CompoundTag>
-{
+public class PhoenixArrowProvider implements ICapabilitySerializable<CompoundTag> {
     private final IPhoenixArrow phoenixArrow;
 
     public PhoenixArrowProvider(IPhoenixArrow phoenixArrow) {
@@ -24,8 +23,8 @@ public class PhoenixArrowProvider implements ICapabilitySerializable<CompoundTag
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        this.phoenixArrow.deserializeNBT(nbt);
+    public void deserializeNBT(CompoundTag tag) {
+        this.phoenixArrow.deserializeNBT(tag);
     }
 
     @SuppressWarnings("unchecked")

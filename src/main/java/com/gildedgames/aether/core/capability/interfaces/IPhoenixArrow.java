@@ -6,8 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public interface IPhoenixArrow extends INBTSerializable<CompoundTag>
-{
+public interface IPhoenixArrow extends INBTSerializable<CompoundTag> {
     AbstractArrow getArrow();
 
     static LazyOptional<IPhoenixArrow> get(AbstractArrow arrow) {

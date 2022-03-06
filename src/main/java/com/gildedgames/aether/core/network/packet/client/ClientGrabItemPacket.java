@@ -1,15 +1,13 @@
 package com.gildedgames.aether.core.network.packet.client;
 
+import com.gildedgames.aether.core.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 
-import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
-
-public class ClientGrabItemPacket extends AetherPacket
-{
+public class ClientGrabItemPacket extends AetherPacket.AbstractAetherPacket {
     private final int playerID;
     private final ItemStack stack;
 

@@ -10,8 +10,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 
-public class CapeEntityProvider implements ICapabilitySerializable<CompoundTag>
-{
+public class CapeEntityProvider implements ICapabilitySerializable<CompoundTag> {
     private final ICapeEntity capeEntity;
 
     public CapeEntityProvider(ICapeEntity capeEntity) {
@@ -24,8 +23,8 @@ public class CapeEntityProvider implements ICapabilitySerializable<CompoundTag>
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        this.capeEntity.deserializeNBT(nbt);
+    public void deserializeNBT(CompoundTag tag) {
+        this.capeEntity.deserializeNBT(tag);
     }
 
     @SuppressWarnings("unchecked")

@@ -6,14 +6,12 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public interface IAetherPacket
-{
+public interface AetherPacket {
     void encode(FriendlyByteBuf buf);
 
     boolean handle(Supplier<NetworkEvent.Context> context);
 
-    class AetherPacket implements IAetherPacket
-    {
+    class AbstractAetherPacket implements AetherPacket {
         @Override
         public void encode(FriendlyByteBuf buf) { }
 

@@ -10,8 +10,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 
-public class LightningTrackerProvider implements ICapabilitySerializable<CompoundTag>
-{
+public class LightningTrackerProvider implements ICapabilitySerializable<CompoundTag> {
     private final ILightningTracker lightningTracker;
 
     public LightningTrackerProvider(ILightningTracker lightningTracker) {
@@ -24,8 +23,8 @@ public class LightningTrackerProvider implements ICapabilitySerializable<Compoun
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        this.lightningTracker.deserializeNBT(nbt);
+    public void deserializeNBT(CompoundTag tag) {
+        this.lightningTracker.deserializeNBT(tag);
     }
 
     @SuppressWarnings("unchecked")

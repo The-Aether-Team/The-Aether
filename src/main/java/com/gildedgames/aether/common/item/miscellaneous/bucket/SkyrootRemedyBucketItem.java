@@ -15,8 +15,6 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class SkyrootRemedyBucketItem extends Item
 {
     public SkyrootRemedyBucketItem(Properties properties) {
