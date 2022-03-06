@@ -4,7 +4,7 @@ import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.common.registry.AetherLoot;
 import com.gildedgames.aether.core.registry.AetherPlayerRankings;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -14,63 +14,35 @@ import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
 
-public class PassiveWhirlwind extends Whirlwind {
-    public PassiveWhirlwind(EntityType<? extends Whirlwind> type, Level worldIn) {
-        super(type, worldIn);
+public class PassiveWhirlwind extends AbstractWhirlwind {
+    public PassiveWhirlwind(EntityType<? extends PassiveWhirlwind> type, Level level) {
+        super(type, level);
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
+    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
         this.lifeLeft = this.random.nextInt(512) + 512;
-        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
     }
 
+    @Nonnull
     @Override
-    /**
-     * This method is called in aiStep to handle the item drop behavior of the whirlwind.
-     * This method should only be called on the logical server!
-     */
-    protected void handleDrops() {
-        if(this.random.nextInt(4) == 0) {
-            LootContext.Builder builder = new LootContext.Builder((ServerLevel) this.level)
-                    .withParameter(LootContextParams.ORIGIN, this.position())
-                    .withParameter(LootContextParams.THIS_ENTITY, this);
-            LootTable lootTable = this.level.getServer().getLootTables().get(AetherLoot.WHIRLWIND_JUNK);
-            List<ItemStack> list = lootTable.getRandomItems(builder.create(LootContextParamSets.SELECTOR));
-            for (ItemStack itemstack : list) {
-                this.spawnAtLocation(itemstack, 1);
-            }
-        }
-    }
-
-    /**
-     * This method is called when a player right-clicks the entity.
-     */
-    @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        ItemStack heldItem = player.getItemInHand(hand);
-        if (heldItem.getItem() instanceof DyeItem && !AetherPlayerRankings.getRanksOf(player.getUUID()).isEmpty()) {
-            this.setColorData(((DyeItem) heldItem.getItem()).getDyeColor().getMaterialColor().col);
-
+    public InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if (itemStack.getItem() instanceof DyeItem dyeItem && !AetherPlayerRankings.getRanksOf(player.getUUID()).isEmpty()) {
+            this.setColorData(dyeItem.getDyeColor().getMaterialColor().col);
             return InteractionResult.SUCCESS;
         }
         return super.mobInteract(player, hand);
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void updateParticles() {
-        for(int k = 0; k < 2; k++) {
+        for (int i = 0; i < 2; i++) {
             double d1 = this.getX() + this.random.nextDouble() * 0.25;
             double d4 = getY() + getBbHeight() + 0.125;
             double d7 = this.getZ() + this.random.nextDouble() * 0.25;
@@ -80,7 +52,12 @@ public class PassiveWhirlwind extends Whirlwind {
     }
 
     @Override
+    public ResourceLocation getLootLocation() {
+        return AetherLoot.WHIRLWIND_JUNK;
+    }
+
+    @Override
     public int getDefaultColor() {
-        return 0xFFFFFF;
+        return 16777215;
     }
 }

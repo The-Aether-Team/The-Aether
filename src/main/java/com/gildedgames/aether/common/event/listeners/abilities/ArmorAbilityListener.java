@@ -87,7 +87,7 @@ public class ArmorAbilityListener
     @SubscribeEvent
     public static void onEntityJump(LivingEvent.LivingJumpEvent event) {
         LivingEntity entity = event.getEntityLiving();
-        if (EquipmentUtil.hasFullGravititeSet(entity)) {
+        if (EquipmentUtil.hasFullGravititeSet(entity)) { //TODO: Make influenced by jump boost.
             if (entity instanceof Player) {
                 Player player = (Player) entity;
                 if (!player.isShiftKeyDown()) {

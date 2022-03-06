@@ -22,6 +22,7 @@ public class AetherPlayerListener
     public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         Player player = event.getPlayer();
         IAetherPlayer.get(player).ifPresent((aetherPlayer) ->  {
+            aetherPlayer.onLogout();
             AttributeInstance health = player.getAttribute(Attributes.MAX_HEALTH);
             if (health != null && health.hasModifier(aetherPlayer.getLifeShardHealthAttributeModifier())) {
                 aetherPlayer.setSavedHealth(player.getHealth());

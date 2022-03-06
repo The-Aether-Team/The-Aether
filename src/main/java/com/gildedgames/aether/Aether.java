@@ -96,6 +96,7 @@ public class Aether
 
         AetherBlocks.registerPots();
         AetherBlocks.registerAxeStrippingBlocks();
+        AetherBlocks.registerShovelFlatteningBlocks();
         AetherBlocks.registerHoeTillingBlocks();
         AetherBlocks.registerFlammability();
         AetherBlocks.registerFreezables();
