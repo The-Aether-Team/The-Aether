@@ -72,7 +72,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 		super.registerGoals();
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 0.65));
-		this.goalSelector.addGoal(2, new TemptGoal(this, 1.0, Ingredient.m_204132_(AetherTags.Items.MOA_TEMPTATION_ITEMS), false));
+		this.goalSelector.addGoal(2, new TemptGoal(this, 1.0, Ingredient.of(AetherTags.Items.MOA_TEMPTATION_ITEMS), false));
 		this.goalSelector.addGoal(3, new FallingRandomStrollGoal(this, 0.35));
 		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
@@ -203,7 +203,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 			this.setSitting(!this.isSitting());
 			this.spawnExplosionParticle();
 			return InteractionResult.sidedSuccess(this.level.isClientSide);
-		} else if (this.isPlayerGrown() && this.isBaby() && this.isHungry() && this.getAmountFed() < 3 && itemStack.m_204117_(AetherTags.Items.MOA_FOOD_ITEMS)) {
+		} else if (this.isPlayerGrown() && this.isBaby() && this.isHungry() && this.getAmountFed() < 3 && itemStack.is(AetherTags.Items.MOA_FOOD_ITEMS)) {
 			if (!playerEntity.getAbilities().instabuild) {
 				itemStack.shrink(1);
 			}

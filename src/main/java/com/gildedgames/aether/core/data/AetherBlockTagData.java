@@ -95,7 +95,7 @@ public class AetherBlockTagData extends BlockTagsProvider
         );
 
         //vanilla
-        tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).m_206428_(AetherTags.Blocks.DUNGEON_BLOCKS);
+        tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).addTags(AetherTags.Blocks.DUNGEON_BLOCKS);
         tag(BlockTags.WOODEN_STAIRS).add(AetherBlocks.SKYROOT_STAIRS.get());
         tag(BlockTags.WOODEN_SLABS).add(AetherBlocks.SKYROOT_SLAB.get());
         tag(BlockTags.WOODEN_FENCES).add(AetherBlocks.SKYROOT_FENCE.get());
@@ -156,17 +156,17 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.PURPLE_FLOWER.get(),
                 AetherBlocks.WHITE_FLOWER.get());
         tag(BlockTags.BEDS).add(AetherBlocks.SKYROOT_BED.get());
-        tag(BlockTags.DIRT).m_206428_(AetherTags.Blocks.AETHER_DIRT);
+        tag(BlockTags.DIRT).addTags(AetherTags.Blocks.AETHER_DIRT);
         tag(BlockTags.FLOWER_POTS).add(
                 AetherBlocks.POTTED_PURPLE_FLOWER.get(),
                 AetherBlocks.POTTED_WHITE_FLOWER.get(),
                 AetherBlocks.POTTED_SKYROOT_SAPLING.get(),
                 AetherBlocks.POTTED_GOLDEN_OAK_SAPLING.get());
-        tag(BlockTags.ENDERMAN_HOLDABLE).m_206428_(AetherTags.Blocks.AETHER_DIRT).add(
+        tag(BlockTags.ENDERMAN_HOLDABLE).addTags(AetherTags.Blocks.AETHER_DIRT).add(
                 AetherBlocks.QUICKSOIL.get(),
                 AetherBlocks.PURPLE_FLOWER.get(),
                 AetherBlocks.WHITE_FLOWER.get());
-        tag(BlockTags.VALID_SPAWN).m_206428_(AetherTags.Blocks.AETHER_DIRT);
+        tag(BlockTags.VALID_SPAWN).addTags(AetherTags.Blocks.AETHER_DIRT);
         tag(BlockTags.IMPERMEABLE).add(AetherBlocks.QUICKSOIL_GLASS.get());
         tag(BlockTags.BAMBOO_PLANTABLE_ON).addTags(AetherTags.Blocks.AETHER_DIRT);
         tag(BlockTags.SIGNS).add(
@@ -324,12 +324,12 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.ZANITE_ORE.get(),
                 AetherBlocks.GRAVITITE_ORE.get());
         tag(Tags.Blocks.SAND_COLORLESS).add(AetherBlocks.QUICKSOIL.get());
-        tag(Tags.Blocks.STONE).m_206428_(AetherTags.Blocks.HOLYSTONE);
+        tag(Tags.Blocks.STONE).addTags(AetherTags.Blocks.HOLYSTONE);
         tag(Tags.Blocks.STORAGE_BLOCKS).add(AetherBlocks.ZANITE_BLOCK.get());
     }
 
     @Nonnull
     protected TagsProvider.TagAppender<Block> tag(@Nonnull TagKey<Block> tag) {
-        return super.m_206424_(tag);
+        return super.tag(tag);
     }
 }

@@ -1,8 +1,8 @@
 package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.world.structure.BronzeDungeonStructure;
-import com.gildedgames.aether.common.world.structure.GoldDungeonStructure;
+//import com.gildedgames.aether.common.world.structure.BronzeDungeonStructure;
+//import com.gildedgames.aether.common.world.structure.GoldDungeonStructure;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Registry;

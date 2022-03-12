@@ -34,6 +34,6 @@ public class AetherFluidTagData extends FluidTagsProvider
 
     @Nonnull
     protected TagsProvider.TagAppender<Fluid> tag(@Nonnull TagKey<Fluid> tag) {
-        return super.m_206424_(tag);
+        return super.tag(tag);
     }
 }

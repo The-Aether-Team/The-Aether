@@ -88,7 +88,7 @@ public class Aether
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
 
-        AetherStructureIngress.registerEvents(modEventBus);
+        //AetherStructureIngress.registerEvents(modEventBus);
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {

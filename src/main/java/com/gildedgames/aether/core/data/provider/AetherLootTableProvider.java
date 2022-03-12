@@ -167,7 +167,7 @@ public class AetherLootTableProvider extends LootTableProvider
                     .withPool(applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(block)
                             .when(HAS_SILK_TOUCH.invert()))))
                     .withPool(applyExplosionDecay(item, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(item)
-                            .when(MatchTool.toolMatches(ItemPredicate.Builder.item().m_204145_(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
+                            .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
                             .when(HAS_SILK_TOUCH.invert())
                             .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
                             .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))

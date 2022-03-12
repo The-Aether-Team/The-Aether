@@ -116,7 +116,7 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.m_204132_(AetherTags.Items.SHEEPUFF_TEMPTATION_ITEMS), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.of(AetherTags.Items.SHEEPUFF_TEMPTATION_ITEMS), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1));
         this.goalSelector.addGoal(5, this.eatBlockGoal);
         this.goalSelector.addGoal(6, new FallingRandomStrollGoal(this, 1.0));
@@ -329,7 +329,7 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return stack.m_204117_(AetherTags.Items.SHEEPUFF_TEMPTATION_ITEMS);
+        return stack.is(AetherTags.Items.SHEEPUFF_TEMPTATION_ITEMS);
     }
 
     @Nullable

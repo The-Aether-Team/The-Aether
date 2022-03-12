@@ -101,7 +101,7 @@ public class IncubatorContainer extends AbstractContainerMenu
 	}
 
 	public boolean isEgg(ItemStack stack) {
-		return stack.m_204117_(AetherTags.Items.MOA_EGGS);
+		return stack.is(AetherTags.Items.MOA_EGGS);
 	}
 
 	public boolean isFuel(ItemStack stack) {

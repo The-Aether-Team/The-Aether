@@ -19,7 +19,7 @@ public abstract class AetherAnimal extends Animal {
 	}
 
 	public static boolean checkAetherAnimalSpawnRules(EntityType<? extends AetherAnimal> animal, LevelAccessor level, MobSpawnType spawnReason, BlockPos pos, Random random) {
-		return level.getBlockState(pos.below()).m_204336_(AetherTags.Blocks.AETHER_ANIMALS_SPAWNABLE_ON) && level.getRawBrightness(pos, 0) > 8;
+		return level.getBlockState(pos.below()).is(AetherTags.Blocks.AETHER_ANIMALS_SPAWNABLE_ON) && level.getRawBrightness(pos, 0) > 8;
 	}
 	
 	@Override

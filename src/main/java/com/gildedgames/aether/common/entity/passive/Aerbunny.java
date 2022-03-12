@@ -49,7 +49,7 @@ public class Aerbunny extends AetherAnimal {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, Ingredient.m_204132_(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, Ingredient.of(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new HopGoal(this));
         this.goalSelector.addGoal(6, new FallingRandomStrollGoal(this, 2.0, 6));
@@ -109,7 +109,7 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public void baseTick() {
         super.baseTick();
-        if (this.isAlive() && this.m_204029_(FluidTags.WATER) && !this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).is(Blocks.BUBBLE_COLUMN)
+        if (this.isAlive() && this.isEyeInFluid(FluidTags.WATER) && !this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).is(Blocks.BUBBLE_COLUMN)
                 && this.isPassenger() && this.getVehicle() != null && !this.getVehicle().canBeRiddenInWater(this) && this.level.isClientSide) {
             this.stopRiding();
         }
@@ -175,7 +175,7 @@ public class Aerbunny extends AetherAnimal {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return stack.m_204117_(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS);
+        return stack.is(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS);
     }
 
     @Override

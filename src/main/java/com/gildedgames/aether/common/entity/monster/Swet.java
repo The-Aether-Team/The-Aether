@@ -92,7 +92,7 @@ public class Swet extends MountableAnimal {
     }
 
     public static boolean checkSwetSpawnRules(EntityType<? extends Swet> swet, LevelAccessor level, MobSpawnType spawnReason, BlockPos pos, Random random) {
-        return level.getDifficulty() != Difficulty.PEACEFUL && level.getBlockState(pos.below()).m_204336_(AetherTags.Blocks.SWET_SPAWNABLE_ON) && level.getRawBrightness(pos, 0) > 8;
+        return level.getDifficulty() != Difficulty.PEACEFUL && level.getBlockState(pos.below()).is(AetherTags.Blocks.SWET_SPAWNABLE_ON) && level.getRawBrightness(pos, 0) > 8;
     }
 
     @Override

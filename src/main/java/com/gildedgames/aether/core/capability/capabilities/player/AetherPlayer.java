@@ -250,7 +250,7 @@ public class AetherPlayer implements IAetherPlayer
 		Level level = player.level;
 		if (!player.isCreative() && !player.isShiftKeyDown() && !player.isFallFlying()) {
 			if (player.getDeltaMovement().y() < -1.5D) {
-				if (inventory.m_204075_(AetherTags.Items.DEPLOYABLE_PARACHUTES)) {
+				if (inventory.contains(AetherTags.Items.DEPLOYABLE_PARACHUTES)) {
 					for (ItemStack stack : inventory.items) {
 						if (stack.getItem() instanceof ParachuteItem parachuteItem) {
 							Parachute parachute = parachuteItem.getParachuteEntity().get().create(level);
