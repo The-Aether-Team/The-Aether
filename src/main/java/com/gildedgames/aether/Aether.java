@@ -82,6 +82,7 @@ public class Aether
         AetherLoot.init();
         AetherAdvancements.init();
         PlacementModifiers.init();
+        AetherTags.init();
 
         AetherBlocks.registerWoodTypes();
 

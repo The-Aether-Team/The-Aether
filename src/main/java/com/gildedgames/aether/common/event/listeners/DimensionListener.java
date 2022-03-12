@@ -69,20 +69,22 @@ public class DimensionListener
                 }
             }
 
-            if (state.is(BlockTags.BEDS) && state.getBlock() != AetherBlocks.SKYROOT_BED.get()) {
-                if (!world.isClientSide()) {
-                    if (state.getValue(BedBlock.PART) != BedPart.HEAD) {
-                        pos = pos.relative(state.getValue(BedBlock.FACING));
-                        state = world.getBlockState(pos);
+            if (AetherConfig.COMMON.enable_bed_explosions.get()) {
+                if (state.is(BlockTags.BEDS) && state.getBlock() != AetherBlocks.SKYROOT_BED.get()) {
+                    if (!world.isClientSide()) {
+                        if (state.getValue(BedBlock.PART) != BedPart.HEAD) {
+                            pos = pos.relative(state.getValue(BedBlock.FACING));
+                            state = world.getBlockState(pos);
+                        }
+                        BlockPos blockpos = pos.relative(state.getValue(BedBlock.FACING).getOpposite());
+                        if (world.getBlockState(blockpos).is(BlockTags.BEDS) && world.getBlockState(blockpos).getBlock() != AetherBlocks.SKYROOT_BED.get()) {
+                            world.removeBlock(blockpos, false);
+                        }
+                        world.explode(null, DamageSource.badRespawnPointExplosion(), null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, 5.0F, true, Explosion.BlockInteraction.DESTROY);
                     }
-                    BlockPos blockpos = pos.relative(state.getValue(BedBlock.FACING).getOpposite());
-                    if (world.getBlockState(blockpos).is(BlockTags.BEDS) && world.getBlockState(blockpos).getBlock() != AetherBlocks.SKYROOT_BED.get()) {
-                        world.removeBlock(blockpos, false);
-                    }
-                    world.explode(null, DamageSource.badRespawnPointExplosion(), null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, 5.0F, true, Explosion.BlockInteraction.DESTROY);
+                    player.swing(InteractionHand.MAIN_HAND);
+                    event.setCanceled(true);
                 }
-                player.swing(InteractionHand.MAIN_HAND);
-                event.setCanceled(true);
             }
         }
     }
