@@ -4,8 +4,10 @@ import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Holder;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.Musics;
+import net.minecraft.world.level.biome.Biome;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,7 +20,7 @@ public class MinecraftMixin
     public void getSituationalMusic_Dimension(CallbackInfoReturnable<Music> cir) {
         Minecraft minecraft = (Minecraft) (Object) this;
         if (minecraft.player != null && minecraft.level != null && minecraft.player.level.dimension() == AetherDimensions.AETHER_WORLD) {
-            cir.setReturnValue(minecraft.level.getBiomeManager().getNoiseBiomeAtPosition(minecraft.player.blockPosition()).getBackgroundMusic().orElse(Musics.GAME));
+            cir.setReturnValue(minecraft.player.level.getBiome(minecraft.player.blockPosition()).value().getBackgroundMusic().orElse(Musics.GAME));
         }
     }
 

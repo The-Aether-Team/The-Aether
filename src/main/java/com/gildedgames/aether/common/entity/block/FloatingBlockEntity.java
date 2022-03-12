@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.entity.block;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.util.Floatable;
 import com.gildedgames.aether.common.block.util.FloatingBlock;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
@@ -52,7 +53,6 @@ public class FloatingBlockEntity extends Entity {
     private boolean hurtEntities;
     private int fallDamageMax = 40;
     private float fallDamagePerDistance;
-    private long removeAtMillis;
     private int floatDistance;
     @Nullable
     public CompoundTag blockData;
@@ -82,10 +82,6 @@ public class FloatingBlockEntity extends Entity {
     public void tick() {
         if (this.blockState.isAir()) {
             this.discard();
-        } else if (this.level.isClientSide && this.removeAtMillis > 0L) {
-            if (System.currentTimeMillis() >= this.removeAtMillis) {
-                super.setRemoved(RemovalReason.DISCARDED);
-            }
         } else {
             Block block = this.blockState.getBlock();
             if (this.time++ == 0) {
@@ -167,7 +163,7 @@ public class FloatingBlockEntity extends Entity {
                                             try {
                                                 blockEntity.load(tag);
                                             } catch (Exception exception) {
-                                                LOGGER.error("Failed to load block entity from floating block", exception);
+                                                Aether.LOGGER.error("Failed to load block entity from floating block", exception);
                                             }
                                             blockEntity.setChanged();
                                         }
@@ -192,15 +188,6 @@ public class FloatingBlockEntity extends Entity {
                 }
             }
             this.setDeltaMovement(this.getDeltaMovement().scale(0.98));
-        }
-    }
-
-    @Override
-    public void setRemoved(@Nonnull Entity.RemovalReason removalReason) {
-        if (this.level.shouldDelayFallingBlockEntityRemoval(removalReason)) {
-            this.removeAtMillis = System.currentTimeMillis() + 50L;
-        } else {
-            super.setRemoved(removalReason);
         }
     }
 
