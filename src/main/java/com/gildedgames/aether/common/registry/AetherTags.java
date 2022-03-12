@@ -32,6 +32,8 @@ public class AetherTags
 		public static final TagKey<Block> ZEPHYR_SPAWNABLE_ON = tag("zephyr_spawnable_on");
 		public static final TagKey<Block> COCKATRICE_SPAWNABLE_BLACKLIST = tag("cockatrice_spawnable_blacklist");
 
+		public static void init() { }
+
 		private static TagKey<Block> tag(String name) {
 			return TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
@@ -79,6 +81,8 @@ public class AetherTags
 		public static final TagKey<Item> MOA_TEMPTATION_ITEMS = tag("moa_temptation_items");
 		public static final TagKey<Item> MOA_FOOD_ITEMS = tag("moa_food_items");
 
+		public static void init() { }
+
 		private static TagKey<Item> tag(String name) {
 			return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
@@ -92,6 +96,8 @@ public class AetherTags
 		public static final TagKey<EntityType<?>> SWET_TARGETS = tag("swet_target");
 		public static final TagKey<EntityType<?>> AECHOR_PLANT_TARGETS = tag("aechor_plant_targets");
 
+		public static void init() { }
+
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
@@ -101,8 +107,18 @@ public class AetherTags
 	{
 		public static final TagKey<Fluid> FREEZABLE_TO_AEROGEL = tag("freezable_to_aerogel");
 
+		public static void init() { }
+
 		private static TagKey<Fluid> tag(String name) {
 			return TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
+	}
+
+	// Classloads all of the tags.
+	public static void init() {
+		Blocks.init();
+		Items.init();
+		Entities.init();
+		Fluids.init();
 	}
 }

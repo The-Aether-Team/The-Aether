@@ -24,7 +24,7 @@ public class LoreInventory extends SimpleContainer
     @Override
     public void setItem(int index, ItemStack stack) {
         if (!stack.isEmpty()) {
-            if (this.playerEntity instanceof LocalPlayer) {
+            if (this.playerEntity.level.isClientSide && this.playerEntity instanceof LocalPlayer) {
                 if (this.container.loreEntryExists(stack)) {
                     AetherPacketHandler.sendToServer(new LoreExistsPacket(this.playerEntity.getId(), stack, true));
                 } else {
