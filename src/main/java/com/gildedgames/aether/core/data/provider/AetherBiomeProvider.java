@@ -10,6 +10,19 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 
 public class AetherBiomeProvider
 {
+    public static Biome makeEmptyBiome() {
+        return fullDefinition(
+                Biome.Precipitation.NONE,
+                Biome.BiomeCategory.NONE,
+                0,
+                0,
+                new BiomeSpecialEffects.Builder().fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build(),
+                new MobSpawnSettings.Builder().build(),
+                new BiomeGenerationSettings.Builder().build(),
+                Biome.TemperatureModifier.NONE
+        );
+    }
+
     public static Biome makeDefaultBiome() {
         return fullDefinition(
                 Biome.Precipitation.NONE,

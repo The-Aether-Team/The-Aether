@@ -25,14 +25,18 @@ import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
@@ -47,6 +51,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 @Mod(Aether.MODID)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Aether
 {
     public static final String MODID = "aether";
@@ -72,24 +77,28 @@ public class Aether
                 AetherContainerTypes.CONTAINERS,
                 AetherBlockEntityTypes.BLOCK_ENTITIES,
                 AetherRecipes.RECIPE_SERIALIZERS,
-                AetherLootModifiers.GLOBAL_LOOT_MODIFIERS
+                AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
+                AetherBiomes.BIOMES
         };
 
         for (DeferredRegister<?> register : registers) {
             register.register(modEventBus);
         }
 
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
+
+        //AetherStructureIngress.registerEvents(modEventBus);
+    }
+
+    @SubscribeEvent //This is not actually for registering RecipeSerializers.
+    public static void registerSerializers(RegistryEvent.Register<RecipeSerializer<?>> evt) {
         AetherLoot.init();
         AetherAdvancements.init();
         PlacementModifiers.init();
         AetherTags.init();
 
         AetherBlocks.registerWoodTypes();
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
-
-        //AetherStructureIngress.registerEvents(modEventBus);
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
