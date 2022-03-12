@@ -2,9 +2,8 @@ package com.gildedgames.aether.core.data;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.core.data.provider.AetherBlockStateProvider;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
@@ -23,12 +22,16 @@ public class AetherBlockStateData extends AetherBlockStateProvider
 
     @Override
     protected void registerStatesAndModels() {
+        portal(AetherBlocks.AETHER_PORTAL);
+
         grass(AetherBlocks.AETHER_GRASS_BLOCK, AetherBlocks.AETHER_DIRT);
         enchantedGrass(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK, AetherBlocks.AETHER_GRASS_BLOCK, AetherBlocks.AETHER_DIRT);
         randomBlockDoubleDrops(AetherBlocks.AETHER_DIRT, "natural/");
         randomBlockDoubleDrops(AetherBlocks.QUICKSOIL, "natural/");
         blockDoubleDrops(AetherBlocks.HOLYSTONE, "natural/");
         blockDoubleDrops(AetherBlocks.MOSSY_HOLYSTONE, "natural/");
+        farmland(AetherBlocks.AETHER_FARMLAND, AetherBlocks.AETHER_DIRT);
+        dirtPath(AetherBlocks.AETHER_DIRT_PATH, AetherBlocks.AETHER_DIRT);
 
         block(AetherBlocks.COLD_AERCLOUD, "natural/");
         block(AetherBlocks.BLUE_AERCLOUD, "natural/");
@@ -71,12 +74,17 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         signBlock(AetherBlocks.SKYROOT_SIGN, AetherBlocks.SKYROOT_WALL_SIGN, texture(name(AetherBlocks.SKYROOT_PLANKS), "construction/"));
 
         crossBlock(AetherBlocks.BERRY_BUSH_STEM, "natural/");
+        berryBush(AetherBlocks.BERRY_BUSH, AetherBlocks.BERRY_BUSH_STEM);
 
         crossBlock(AetherBlocks.PURPLE_FLOWER, "natural/");
         crossBlock(AetherBlocks.WHITE_FLOWER, "natural/");
+        pottedPlant(AetherBlocks.POTTED_PURPLE_FLOWER, AetherBlocks.PURPLE_FLOWER, "natural/");
+        pottedPlant(AetherBlocks.POTTED_WHITE_FLOWER, AetherBlocks.WHITE_FLOWER, "natural/");
 
         saplingBlock(AetherBlocks.SKYROOT_SAPLING, "natural/");
         saplingBlock(AetherBlocks.GOLDEN_OAK_SAPLING, "natural/");
+        pottedPlant(AetherBlocks.POTTED_SKYROOT_SAPLING, AetherBlocks.SKYROOT_SAPLING, "natural/");
+        pottedPlant(AetherBlocks.POTTED_GOLDEN_OAK_SAPLING, AetherBlocks.GOLDEN_OAK_SAPLING, "natural/");
 
         block(AetherBlocks.CARVED_STONE, "dungeon/");
         block(AetherBlocks.SENTRY_STONE, "dungeon/");
@@ -99,7 +107,8 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         dungeonBlock(AetherBlocks.TRAPPED_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
         dungeonBlock(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE, AetherBlocks.LIGHT_HELLFIRE_STONE);
 
-        chest(AetherBlocks.TREASURE_CHEST, AetherBlocks.CARVED_STONE);
+        chestMimic(AetherBlocks.CHEST_MIMIC, () -> Blocks.OAK_PLANKS);
+        treasureChest(AetherBlocks.TREASURE_CHEST, AetherBlocks.CARVED_STONE);
 
         pillar(AetherBlocks.PILLAR);
         pillarTop(AetherBlocks.PILLAR_TOP);

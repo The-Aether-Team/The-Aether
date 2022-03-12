@@ -290,6 +290,9 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemTrappedDungeonBlock(AetherBlocks.TRAPPED_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
         itemTrappedDungeonBlock(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE, AetherBlocks.LIGHT_HELLFIRE_STONE);
 
+        lookalikeBlock(AetherBlocks.CHEST_MIMIC, mcLoc("item/chest"));
+        lookalikeBlock(AetherBlocks.TREASURE_CHEST, mcLoc("item/chest"));
+
         itemBlock(AetherBlocks.PILLAR);
         itemBlock(AetherBlocks.PILLAR_TOP);
 
@@ -337,5 +340,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.SUN_ALTAR);
 
         itemBlock(AetherBlocks.SKYROOT_BOOKSHELF);
+
+        lookalikeBlock(AetherBlocks.SKYROOT_BED, mcLoc("item/template_bed"));
     }
 }
