@@ -26,7 +26,6 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
         return "Aether Entity Tags";
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void addTags() {
         //aether
@@ -42,7 +41,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 EntityType.PLAYER,
                 EntityType.WITHER,
                 EntityType.ENDER_DRAGON);
-        tag(AetherTags.Entities.DEFLECTABLE_PROJECTILES).addTags(EntityTypeTags.ARROWS).add(
+        tag(AetherTags.Entities.DEFLECTABLE_PROJECTILES).addTag(EntityTypeTags.ARROWS).add(
                 EntityType.EGG,
                 EntityType.SMALL_FIREBALL,
                 EntityType.FIREBALL,

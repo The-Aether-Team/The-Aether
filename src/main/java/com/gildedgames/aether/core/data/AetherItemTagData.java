@@ -44,8 +44,8 @@ public class AetherItemTagData extends ItemTagsProvider
         copy(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS, AetherTags.Items.LOCKED_DUNGEON_BLOCKS);
         copy(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS, AetherTags.Items.TRAPPED_DUNGEON_BLOCKS);
 
-        tag(AetherTags.Items.PLANKS_CRAFTING).addTags(ItemTags.PLANKS).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
-        tag(AetherTags.Items.STONE_CRAFTING).addTags(ItemTags.STONE_CRAFTING_MATERIALS).add(AetherBlocks.HOLYSTONE.get().asItem());
+        tag(AetherTags.Items.PLANKS_CRAFTING).addTag(ItemTags.PLANKS).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
+        tag(AetherTags.Items.STONE_CRAFTING).addTag(ItemTags.STONE_CRAFTING_MATERIALS).add(AetherBlocks.HOLYSTONE.get().asItem());
 
         tag(AetherTags.Items.BANNED_IN_AETHER).add(
                 Items.FLINT_AND_STEEL,
@@ -53,7 +53,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 Items.SOUL_TORCH,
                 Items.FIRE_CHARGE);
         tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS);
-        tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS).addTags(Tags.Items.DUSTS_GLOWSTONE).add(
+        tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS).addTag(Tags.Items.DUSTS_GLOWSTONE).add(
                 Items.FLINT,
                 AetherItems.AMBROSIUM_SHARD.get());
         tag(AetherTags.Items.SKYROOT_STICKS).add(AetherItems.SKYROOT_STICK.get());
@@ -86,7 +86,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.ZANITE_AXE.get(),
                 AetherItems.GRAVITITE_AXE.get(),
                 AetherItems.VALKYRIE_AXE.get());
-        tag(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS).addTags(AetherTags.Items.DUNGEON_KEYS).add(
+        tag(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS).addTag(AetherTags.Items.DUNGEON_KEYS).add(
                 AetherItems.VICTORY_MEDAL.get(),
                 Items.PLAYER_HEAD,
                 Items.SKELETON_SKULL,
@@ -140,7 +140,7 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.MOA_FOOD_ITEMS).add(AetherItems.AECHOR_PETAL.get());
 
         //vanilla
-        tag(ItemTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get().asItem()).addTags(AetherTags.Items.DUNGEON_BLOCKS);
+        tag(ItemTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get().asItem()).addTag(AetherTags.Items.DUNGEON_BLOCKS);
         tag(ItemTags.WOODEN_STAIRS).add(AetherBlocks.SKYROOT_STAIRS.get().asItem());
         tag(ItemTags.WOODEN_SLABS).add(AetherBlocks.SKYROOT_SLAB.get().asItem());
         tag(ItemTags.WOODEN_FENCES).add(AetherBlocks.SKYROOT_FENCE.get().asItem());
