@@ -1,12 +1,12 @@
 package com.gildedgames.aether.core.network.packet.client;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.network.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
-public class AetherTimePacket extends AetherPacket.AbstractAetherPacket {
+public class AetherTimePacket extends AbstractAetherPacket {
     private final long dayTime;
 
     public AetherTimePacket(long dayTime) {

@@ -1,12 +1,12 @@
 package com.gildedgames.aether.core.network.packet.client;
 
 import com.gildedgames.aether.common.entity.monster.Swet;
-import com.gildedgames.aether.core.network.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
-public class SwetAttackPacket extends AetherPacket.AbstractAetherPacket {
+public class SwetAttackPacket extends AbstractAetherPacket {
     private final int swetID;
     private final double xPos;
     private final double yPos;

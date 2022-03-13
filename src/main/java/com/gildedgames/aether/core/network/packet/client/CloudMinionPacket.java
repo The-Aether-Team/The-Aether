@@ -2,13 +2,13 @@ package com.gildedgames.aether.core.network.packet.client;
 
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
-import com.gildedgames.aether.core.network.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 
-public class CloudMinionPacket extends AetherPacket.AbstractAetherPacket {
+public class CloudMinionPacket extends AbstractAetherPacket {
     private final int entityID;
     private final int rightCloudMinionID, leftCloudMinionID;
 

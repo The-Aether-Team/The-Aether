@@ -1,13 +1,13 @@
 package com.gildedgames.aether.core.network.packet.client;
 
 import com.gildedgames.aether.core.capability.arrow.PhoenixArrow;
-import com.gildedgames.aether.core.network.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class PhoenixArrowPacket extends AetherPacket.AbstractAetherPacket {
+public class PhoenixArrowPacket extends AbstractAetherPacket {
     private final int entityID;
     private final boolean isPhoenix;
 

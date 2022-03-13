@@ -1,12 +1,12 @@
 package com.gildedgames.aether.core.network.packet.client;
 
-import com.gildedgames.aether.core.network.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
 import com.gildedgames.aether.core.util.ServerSoundUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class PortalTravelSoundPacket extends AetherPacket.AbstractAetherPacket {
+public class PortalTravelSoundPacket extends AbstractAetherPacket {
     public PortalTravelSoundPacket() { }
 
     @Override
