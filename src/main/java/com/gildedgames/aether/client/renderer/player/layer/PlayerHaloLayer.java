@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.renderer.player.layer;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.HaloModel;
-import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
+import com.gildedgames.aether.core.capability.rankings.AetherRankings;
 import com.gildedgames.aether.core.registry.AetherPlayerRankings;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -32,7 +32,7 @@ public class PlayerHaloLayer<T extends Player, M extends PlayerModel<T>> extends
     @Override
     public void render(@Nonnull PoseStack pMatrixStack, @Nonnull MultiBufferSource pBuffer, int pPackedLight, @Nonnull T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
         if (pLivingEntity instanceof AbstractClientPlayer abstractClientPlayer) {
-            IAetherRankings.get(abstractClientPlayer).ifPresent(aetherRankings -> {
+            AetherRankings.get(abstractClientPlayer).ifPresent(aetherRankings -> {
                 if (AetherPlayerRankings.hasHalo(abstractClientPlayer.getUUID()) && aetherRankings.shouldRenderHalo() && !abstractClientPlayer.isInvisible()) {
                     this.playerHalo.halo.yRot = this.getParentModel().head.yRot;
                     this.playerHalo.halo.xRot = this.getParentModel().head.xRot;

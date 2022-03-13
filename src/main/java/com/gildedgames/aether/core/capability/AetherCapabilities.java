@@ -2,24 +2,24 @@ package com.gildedgames.aether.core.capability;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherDimensions;
-import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
-import com.gildedgames.aether.core.capability.capabilities.arrow.PhoenixArrow;
-import com.gildedgames.aether.core.capability.capabilities.arrow.PhoenixArrowProvider;
-import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
-import com.gildedgames.aether.core.capability.capabilities.cape.CapeEntity;
-import com.gildedgames.aether.core.capability.capabilities.cape.CapeEntityProvider;
-import com.gildedgames.aether.core.capability.capabilities.aether_time.AetherTime;
-import com.gildedgames.aether.core.capability.capabilities.aether_time.AetherTimeProvider;
-import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
-import com.gildedgames.aether.core.capability.capabilities.lightning.LightningTracker;
-import com.gildedgames.aether.core.capability.capabilities.lightning.LightningTrackerProvider;
-import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
-import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayer;
-import com.gildedgames.aether.core.capability.capabilities.player.AetherPlayerProvider;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
-import com.gildedgames.aether.core.capability.capabilities.rankings.AetherRankings;
-import com.gildedgames.aether.core.capability.capabilities.rankings.AetherRankingsProvider;
-import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
+import com.gildedgames.aether.core.capability.time.AetherTime;
+import com.gildedgames.aether.core.capability.arrow.PhoenixArrowCapability;
+import com.gildedgames.aether.core.capability.arrow.PhoenixArrowProvider;
+import com.gildedgames.aether.core.capability.arrow.PhoenixArrow;
+import com.gildedgames.aether.core.capability.cape.CapeEntityCapability;
+import com.gildedgames.aether.core.capability.cape.CapeEntityProvider;
+import com.gildedgames.aether.core.capability.time.AetherTimeCapability;
+import com.gildedgames.aether.core.capability.time.AetherTimeProvider;
+import com.gildedgames.aether.core.capability.cape.CapeEntity;
+import com.gildedgames.aether.core.capability.lightning.LightningTrackerCapability;
+import com.gildedgames.aether.core.capability.lightning.LightningTrackerProvider;
+import com.gildedgames.aether.core.capability.lightning.LightningTracker;
+import com.gildedgames.aether.core.capability.player.AetherPlayerCapability;
+import com.gildedgames.aether.core.capability.player.AetherPlayerProvider;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
+import com.gildedgames.aether.core.capability.rankings.AetherRankingsCapability;
+import com.gildedgames.aether.core.capability.rankings.AetherRankingsProvider;
+import com.gildedgames.aether.core.capability.rankings.AetherRankings;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -39,21 +39,21 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherCapabilities {
-	public static final Capability<ICapeEntity> CAPE_ENTITY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<IAetherPlayer> AETHER_PLAYER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<IAetherRankings> AETHER_RANKINGS_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<IAetherTime> AETHER_TIME_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<IPhoenixArrow> PHOENIX_ARROW_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<ILightningTracker> LIGHTNING_TRACKER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<CapeEntity> CAPE_ENTITY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<AetherPlayer> AETHER_PLAYER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<AetherRankings> AETHER_RANKINGS_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<AetherTime> AETHER_TIME_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<PhoenixArrow> PHOENIX_ARROW_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<LightningTracker> LIGHTNING_TRACKER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
 
 	@SubscribeEvent
 	public static void register(RegisterCapabilitiesEvent event) {
-		event.register(ICapeEntity.class);
-		event.register(IAetherPlayer.class);
-		event.register(IAetherRankings.class);
-		event.register(IAetherTime.class);
-		event.register(IPhoenixArrow.class);
-		event.register(ILightningTracker.class);
+		event.register(CapeEntity.class);
+		event.register(AetherPlayer.class);
+		event.register(AetherRankings.class);
+		event.register(AetherTime.class);
+		event.register(PhoenixArrow.class);
+		event.register(LightningTracker.class);
 	}
 	
 	@EventBusSubscriber(modid = Aether.MODID)
@@ -61,24 +61,24 @@ public class AetherCapabilities {
 		@SubscribeEvent
 		public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
 			if (event.getObject() instanceof LivingEntity livingEntity) {
-				event.addCapability(new ResourceLocation(Aether.MODID, "cape_entity"), new CapeEntityProvider(new CapeEntity(livingEntity)));
+				event.addCapability(new ResourceLocation(Aether.MODID, "cape_entity"), new CapeEntityProvider(new CapeEntityCapability(livingEntity)));
 				if (livingEntity instanceof Player player) {
-					event.addCapability(new ResourceLocation(Aether.MODID, "aether_player"), new AetherPlayerProvider(new AetherPlayer(player)));
-					event.addCapability(new ResourceLocation(Aether.MODID, "aether_rankings"), new AetherRankingsProvider(new AetherRankings(player)));
+					event.addCapability(new ResourceLocation(Aether.MODID, "aether_player"), new AetherPlayerProvider(new AetherPlayerCapability(player)));
+					event.addCapability(new ResourceLocation(Aether.MODID, "aether_rankings"), new AetherRankingsProvider(new AetherRankingsCapability(player)));
 				}
 			}
 			if (event.getObject() instanceof AbstractArrow abstractArrow) {
-				event.addCapability(new ResourceLocation(Aether.MODID, "phoenix_arrow"), new PhoenixArrowProvider(new PhoenixArrow(abstractArrow)));
+				event.addCapability(new ResourceLocation(Aether.MODID, "phoenix_arrow"), new PhoenixArrowProvider(new PhoenixArrowCapability(abstractArrow)));
 			}
 			if (event.getObject() instanceof LightningBolt lightningBolt) {
-				event.addCapability(new ResourceLocation(Aether.MODID, "lightning_tracker"), new LightningTrackerProvider(new LightningTracker(lightningBolt)));
+				event.addCapability(new ResourceLocation(Aether.MODID, "lightning_tracker"), new LightningTrackerProvider(new LightningTrackerCapability(lightningBolt)));
 			}
 		}
 
 		@SubscribeEvent
 		public static void attachWorldCapabilities(AttachCapabilitiesEvent<Level> event) {
 			if (event.getObject().dimension().location() == AetherDimensions.AETHER_WORLD.location()) {
-				event.addCapability(new ResourceLocation(Aether.MODID, "aether_time"), new AetherTimeProvider(new AetherTime(event.getObject())));
+				event.addCapability(new ResourceLocation(Aether.MODID, "aether_time"), new AetherTimeProvider(new AetherTimeCapability(event.getObject())));
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.capability.interfaces;
+package com.gildedgames.aether.core.capability.player;
 
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.common.entity.passive.Aerbunny;
@@ -11,10 +11,10 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.List;
 
-public interface IAetherPlayer extends INBTSerializable<CompoundTag> {
+public interface AetherPlayer extends INBTSerializable<CompoundTag> {
 	Player getPlayer();
 
-	static LazyOptional<IAetherPlayer> get(Player player) {
+	static LazyOptional<AetherPlayer> get(Player player) {
 		return player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
 	}
 
@@ -23,7 +23,7 @@ public interface IAetherPlayer extends INBTSerializable<CompoundTag> {
 	void onLogout();
 	void onLogin();
 
-	void copyFrom(IAetherPlayer other, boolean isWasDeath);
+	void copyFrom(AetherPlayer other, boolean isWasDeath);
 
 	void onUpdate();
 

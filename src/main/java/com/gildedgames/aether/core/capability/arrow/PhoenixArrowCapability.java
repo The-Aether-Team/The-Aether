@@ -1,16 +1,15 @@
-package com.gildedgames.aether.core.capability.capabilities.arrow;
+package com.gildedgames.aether.core.capability.arrow;
 
-import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.nbt.CompoundTag;
 
-public class PhoenixArrow implements IPhoenixArrow {
+public class PhoenixArrowCapability implements PhoenixArrow {
     private final AbstractArrow arrow;
 
     private boolean isPhoenixArrow;
     private int fireTime;
 
-    public PhoenixArrow(AbstractArrow arrow) {
+    public PhoenixArrowCapability(AbstractArrow arrow) {
         this.arrow = arrow;
     }
 

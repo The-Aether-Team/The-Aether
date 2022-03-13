@@ -1,38 +1,37 @@
-package com.gildedgames.aether.core.capability.capabilities.rankings;
+package com.gildedgames.aether.core.capability.cape;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 
-public class AetherRankingsProvider implements ICapabilitySerializable<CompoundTag> {
-    private final IAetherRankings aetherRankings;
+public class CapeEntityProvider implements ICapabilitySerializable<CompoundTag> {
+    private final CapeEntity capeEntity;
 
-    public AetherRankingsProvider(IAetherRankings aetherRankings) {
-        this.aetherRankings = aetherRankings;
+    public CapeEntityProvider(CapeEntity capeEntity) {
+        this.capeEntity = capeEntity;
     }
 
     @Override
     public CompoundTag serializeNBT() {
-        return this.aetherRankings.serializeNBT();
+        return this.capeEntity.serializeNBT();
     }
 
     @Override
     public void deserializeNBT(CompoundTag tag) {
-        this.aetherRankings.deserializeNBT(tag);
+        this.capeEntity.deserializeNBT(tag);
     }
 
     @SuppressWarnings("unchecked")
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-        if (cap == AetherCapabilities.AETHER_RANKINGS_CAPABILITY) {
-            return LazyOptional.of(() -> (T) this.aetherRankings);
+        if (cap == AetherCapabilities.CAPE_ENTITY_CAPABILITY) {
+            return LazyOptional.of(() -> (T) this.capeEntity);
         }
         return LazyOptional.empty();
     }

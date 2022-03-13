@@ -9,7 +9,7 @@ import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -92,7 +92,7 @@ public class AetherPortalBlock extends Block
 				if (!entity.level.isClientSide && !pos.equals(entity.portalEntrancePos)) {
 					entity.portalEntrancePos = pos.immutable();
 				}
-				LazyOptional<IAetherPlayer> aetherPlayer = entity.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
+				LazyOptional<AetherPlayer> aetherPlayer = entity.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
 				if (!aetherPlayer.isPresent()) {
 					handleTeleportation(entity);
 				} else {

@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.network.packet.client;
 
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
@@ -37,7 +37,7 @@ public class CloudMinionPacket extends AetherPacket.AbstractAetherPacket {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Level world = Minecraft.getInstance().player.level;
             if (world.getEntity(this.entityID) instanceof Player player && world.getEntity(this.rightCloudMinionID) instanceof CloudMinion cloudMinionRight && world.getEntity(this.leftCloudMinionID) instanceof CloudMinion cloudMinionLeft) {
-                IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     if (aetherPlayer.getCloudMinions().isEmpty()) {
                         aetherPlayer.setCloudMinions(cloudMinionRight, cloudMinionLeft);
                     }

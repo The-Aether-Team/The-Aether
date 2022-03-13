@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.capability.interfaces;
+package com.gildedgames.aether.core.capability.rankings;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import net.minecraft.nbt.CompoundTag;
@@ -6,16 +6,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public interface IAetherRankings extends INBTSerializable<CompoundTag> {
+public interface AetherRankings extends INBTSerializable<CompoundTag> {
     Player getPlayer();
 
-    static LazyOptional<IAetherRankings> get(Player player) {
+    static LazyOptional<AetherRankings> get(Player player) {
         return player.getCapability(AetherCapabilities.AETHER_RANKINGS_CAPABILITY);
     }
 
     void defineSynchedData();
 
-    void copyFrom(IAetherRankings other);
+    void copyFrom(AetherRankings other);
 
     void onUpdate();
 

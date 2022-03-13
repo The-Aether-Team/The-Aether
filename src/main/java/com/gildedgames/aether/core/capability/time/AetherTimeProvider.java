@@ -1,7 +1,6 @@
-package com.gildedgames.aether.core.capability.capabilities.aether_time;
+package com.gildedgames.aether.core.capability.time;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -11,9 +10,9 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 
 public class AetherTimeProvider implements ICapabilitySerializable<CompoundTag> {
-    private final IAetherTime aetherTime;
+    private final AetherTime aetherTime;
 
-    public AetherTimeProvider(IAetherTime aetherTime) {
+    public AetherTimeProvider(AetherTime aetherTime) {
         this.aetherTime = aetherTime;
     }
 

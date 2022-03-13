@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.world;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
+import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -128,7 +128,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
      */
     private void drawCelestialBodies(float pPartialTick, PoseStack pPoseStack, ClientLevel world, BufferBuilder bufferbuilder) {
         // This code determines the current angle of the sun and moon and determines whether they should be visible or not.
-        IAetherTime aetherTime = world.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
+        AetherTime aetherTime = world.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
         long dayTime = aetherTime.getDayTime() % 72000L;
         float sunOpacity;
         float moonOpacity;

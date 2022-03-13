@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.item.miscellaneous.bucket;
 
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -31,7 +31,7 @@ public class SkyrootRemedyBucketItem extends Item
         }
         if (entityLiving instanceof Player) {
             Player player = (Player) entityLiving;
-            IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
+            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                 aetherPlayer.setRemedyMaximum(200);
                 aetherPlayer.setRemedyTimer(200);
             });

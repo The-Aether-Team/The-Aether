@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.capability.interfaces;
+package com.gildedgames.aether.core.capability.lightning;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import net.minecraft.world.entity.Entity;
@@ -7,10 +7,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public interface ILightningTracker extends INBTSerializable<CompoundTag> {
+public interface LightningTracker extends INBTSerializable<CompoundTag> {
     LightningBolt getLightningBolt();
 
-    static LazyOptional<ILightningTracker> get(LightningBolt arrow) {
+    static LazyOptional<LightningTracker> get(LightningBolt arrow) {
         return arrow.getCapability(AetherCapabilities.LIGHTNING_TRACKER_CAPABILITY);
     }
 

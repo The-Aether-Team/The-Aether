@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.renderer.accessory;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
 import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
-import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
+import com.gildedgames.aether.core.capability.rankings.AetherRankings;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -64,7 +64,7 @@ public class GlovesRenderer implements ICurioRenderer {
     }
 
     public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, HumanoidArm arm) {
-        IAetherRankings.get(player).ifPresent(aetherRankings -> {
+        AetherRankings.get(player).ifPresent(aetherRankings -> {
             GlovesModel model;
 
             boolean isSlim = player.getModelName().equals("slim");

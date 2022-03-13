@@ -1,6 +1,6 @@
 package com.gildedgames.aether.core.network.packet.server;
 
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,7 +30,7 @@ public class JumpPacket extends AbstractAetherPacket {
 	@Override
 	public void execute(Player playerEntity) {
 		if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
-			IAetherPlayer.get(serverPlayer).ifPresent(aetherPlayer -> aetherPlayer.setJumping(this.isJumping));
+			AetherPlayer.get(serverPlayer).ifPresent(aetherPlayer -> aetherPlayer.setJumping(this.isJumping));
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.player.layer;
 
-import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
+import com.gildedgames.aether.core.capability.rankings.AetherRankings;
 import com.gildedgames.aether.core.registry.AetherPlayerRankings;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -22,7 +22,7 @@ public class DeveloperGlowLayer<T extends Player, M extends PlayerModel<T>> exte
 
     public void render(@Nonnull PoseStack pMatrixStack, @Nonnull MultiBufferSource pBuffer, int pPackedLight, @Nonnull T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
         if (pLivingEntity instanceof AbstractClientPlayer abstractClientPlayer) {
-            IAetherRankings.get(abstractClientPlayer).ifPresent(aetherRankings -> {
+            AetherRankings.get(abstractClientPlayer).ifPresent(aetherRankings -> {
                 if (AetherPlayerRankings.hasDevGlow(abstractClientPlayer.getUUID()) && aetherRankings.shouldRenderDeveloperGlow()) {
                     VertexConsumer vertexconsumer = pBuffer.getBuffer(RenderType.eyes(abstractClientPlayer.getSkinTextureLocation()));
                     this.getParentModel().renderToBuffer(pMatrixStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

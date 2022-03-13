@@ -1,13 +1,12 @@
-package com.gildedgames.aether.core.capability.capabilities.cape;
+package com.gildedgames.aether.core.capability.cape;
 
-import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.nbt.CompoundTag;
 
-public class CapeEntity implements ICapeEntity {
+public class CapeEntityCapability implements CapeEntity {
     private final LivingEntity entity;
 
     private double xCloakO;
@@ -20,7 +19,7 @@ public class CapeEntity implements ICapeEntity {
     private float oBob;
     private float bob;
 
-    public CapeEntity(LivingEntity entity) {
+    public CapeEntityCapability(LivingEntity entity) {
         this.entity = entity;
     }
 

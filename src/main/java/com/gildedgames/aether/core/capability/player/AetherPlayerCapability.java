@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.capability.capabilities.player;
+package com.gildedgames.aether.core.capability.player;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
@@ -10,7 +10,6 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.AetherConfig;
 
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.*;
 import net.minecraft.client.Minecraft;
@@ -37,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AetherPlayer implements IAetherPlayer {
+public class AetherPlayerCapability implements AetherPlayer {
 	private final Player player;
 
 	private static final UUID LIFE_SHARD_HEALTH_ID = UUID.fromString("E11710C8-4247-4CB6-B3B5-729CB34CFC1A");
@@ -73,7 +72,7 @@ public class AetherPlayer implements IAetherPlayer {
 	private float savedHealth = 0.0F;
 	private static final EntityDataAccessor<Integer> DATA_LIFE_SHARD_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
 	
-	public AetherPlayer(Player player) {
+	public AetherPlayerCapability(Player player) {
 		this.player = player;
 		this.defineSynchedData();
 	}
@@ -158,7 +157,7 @@ public class AetherPlayer implements IAetherPlayer {
 	}
 
 	@Override
-	public void copyFrom(IAetherPlayer other, boolean isWasDeath) {
+	public void copyFrom(AetherPlayer other, boolean isWasDeath) {
 		if (!isWasDeath) {
 			this.setRemedyMaximum(other.getRemedyMaximum());
 			this.setRemedyTimer(other.getRemedyTimer());

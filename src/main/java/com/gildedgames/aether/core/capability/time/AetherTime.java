@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.capability.interfaces;
+package com.gildedgames.aether.core.capability.time;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import net.minecraft.nbt.CompoundTag;
@@ -10,10 +10,10 @@ import net.minecraftforge.common.util.LazyOptional;
 /**
  * Capability interface to handle the Aether's day/night cycle.
  */
-public interface IAetherTime extends INBTSerializable<CompoundTag> {
+public interface AetherTime extends INBTSerializable<CompoundTag> {
     Level getLevel();
 
-    static LazyOptional<IAetherTime> get(Level world) {
+    static LazyOptional<AetherTime> get(Level world) {
         return world.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY);
     }
 

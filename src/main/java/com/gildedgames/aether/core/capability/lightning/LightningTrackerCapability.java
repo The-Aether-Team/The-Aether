@@ -1,16 +1,15 @@
-package com.gildedgames.aether.core.capability.capabilities.lightning;
+package com.gildedgames.aether.core.capability.lightning;
 
-import com.gildedgames.aether.core.capability.interfaces.ILightningTracker;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.nbt.CompoundTag;
 
-public class LightningTracker implements ILightningTracker {
+public class LightningTrackerCapability implements LightningTracker {
     private final LightningBolt lightningBolt;
 
     private Entity owner;
 
-    public LightningTracker(LightningBolt lightningBolt) {
+    public LightningTrackerCapability(LightningBolt lightningBolt) {
         this.lightningBolt = lightningBolt;
     }
 

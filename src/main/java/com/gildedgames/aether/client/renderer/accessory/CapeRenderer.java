@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.renderer.accessory;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.accessory.model.CapeModel;
 import com.gildedgames.aether.common.item.accessories.cape.CapeItem;
-import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
+import com.gildedgames.aether.core.capability.cape.CapeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -37,7 +37,7 @@ public class CapeRenderer implements ICurioRenderer {
     public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         LivingEntity livingEntity = slotContext.entity();
         CapeItem capeItem = (CapeItem) stack.getItem();
-        ICapeEntity.get(livingEntity).ifPresent((capeEntity) -> {
+        CapeEntity.get(livingEntity).ifPresent((capeEntity) -> {
             if (!livingEntity.isInvisible()) {
                 ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
                 boolean hasCape = livingEntity instanceof AbstractClientPlayer abstractClientPlayer

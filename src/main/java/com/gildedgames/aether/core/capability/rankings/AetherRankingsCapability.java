@@ -1,20 +1,19 @@
-package com.gildedgames.aether.core.capability.capabilities.rankings;
+package com.gildedgames.aether.core.capability.rankings;
 
-import com.gildedgames.aether.core.capability.interfaces.IAetherRankings;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.player.Player;
 
-public class AetherRankings implements IAetherRankings {
+public class AetherRankingsCapability implements AetherRankings {
     private final Player player;
 
     private static final EntityDataAccessor<Boolean> DATA_SLEEVE_GLOVES_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_RENDER_HALO_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_RENDER_DEVELOPER_GLOW_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.BOOLEAN);
 
-    public AetherRankings(Player player) {
+    public AetherRankingsCapability(Player player) {
         this.player = player;
         this.defineSynchedData();
     }
@@ -54,7 +53,7 @@ public class AetherRankings implements IAetherRankings {
     }
 
     @Override
-    public void copyFrom(IAetherRankings other) {
+    public void copyFrom(AetherRankings other) {
         this.setSleeveGloves(other.areSleeveGloves());
         this.setRenderHalo(other.shouldRenderHalo());
         this.setRenderDeveloperGlow(other.shouldRenderDeveloperGlow());

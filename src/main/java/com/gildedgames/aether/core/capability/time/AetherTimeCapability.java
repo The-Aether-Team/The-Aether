@@ -1,7 +1,6 @@
-package com.gildedgames.aether.core.capability.capabilities.aether_time;
+package com.gildedgames.aether.core.capability.time;
 
 import com.gildedgames.aether.core.AetherConfig;
-import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.AetherTimePacket;
 import com.gildedgames.aether.core.network.packet.client.EternalDayPacket;
@@ -20,12 +19,12 @@ import java.util.stream.Collectors;
  * This class makes the day/night cycle longer depending on the time factor, and handles eternal day.
  * This capability should ONLY be attached to the Aether dimension!!!
  */
-public class AetherTime implements IAetherTime {
+public class AetherTimeCapability implements AetherTime {
     private final Level level;
     private boolean isEternalDay = true;
     private long dayTime = 18000L;
 
-    public AetherTime(Level level) {
+    public AetherTimeCapability(Level level) {
         this.level = level;
     }
 
