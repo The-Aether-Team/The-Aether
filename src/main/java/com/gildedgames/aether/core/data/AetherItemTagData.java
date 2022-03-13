@@ -139,6 +139,44 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.MOA_TEMPTATION_ITEMS).add(AetherItems.NATURE_STAFF.get());
         tag(AetherTags.Items.MOA_FOOD_ITEMS).add(AetherItems.AECHOR_PETAL.get());
 
+        tag(AetherTags.Items.AETHER_RING).add(
+                AetherItems.IRON_RING.get(),
+                AetherItems.GOLDEN_RING.get(),
+                AetherItems.ZANITE_RING.get(),
+                AetherItems.ICE_RING.get());
+        tag(AetherTags.Items.AETHER_PENDANT).add(
+                AetherItems.IRON_PENDANT.get(),
+                AetherItems.GOLDEN_PENDANT.get(),
+                AetherItems.ZANITE_PENDANT.get(),
+                AetherItems.ICE_PENDANT.get());
+        tag(AetherTags.Items.AETHER_GLOVES).add(
+                AetherItems.LEATHER_GLOVES.get(),
+                AetherItems.CHAINMAIL_GLOVES.get(),
+                AetherItems.IRON_GLOVES.get(),
+                AetherItems.GOLDEN_GLOVES.get(),
+                AetherItems.DIAMOND_GLOVES.get(),
+                AetherItems.NETHERITE_GLOVES.get(),
+                AetherItems.ZANITE_GLOVES.get(),
+                AetherItems.GRAVITITE_GLOVES.get(),
+                AetherItems.NEPTUNE_GLOVES.get(),
+                AetherItems.PHOENIX_GLOVES.get(),
+                AetherItems.OBSIDIAN_GLOVES.get(),
+                AetherItems.VALKYRIE_GLOVES.get());
+        tag(AetherTags.Items.AETHER_CAPE).add(
+                AetherItems.RED_CAPE.get(),
+                AetherItems.BLUE_CAPE.get(),
+                AetherItems.YELLOW_CAPE.get(),
+                AetherItems.WHITE_CAPE.get(),
+                AetherItems.SWET_CAPE.get(),
+                AetherItems.INVISIBILITY_CLOAK.get(),
+                AetherItems.AGILITY_CAPE.get(),
+                AetherItems.VALKYRIE_CAPE.get());
+        tag(AetherTags.Items.AETHER_ACCESSORY).add(
+                AetherItems.GOLDEN_FEATHER.get(),
+                AetherItems.REGENERATION_STONE.get(),
+                AetherItems.IRON_BUBBLE.get());
+        tag(AetherTags.Items.AETHER_SHIELD).add(AetherItems.REPULSION_SHIELD.get());
+
         //vanilla
         tag(ItemTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get().asItem()).addTag(AetherTags.Items.DUNGEON_BLOCKS);
         tag(ItemTags.WOODEN_STAIRS).add(AetherBlocks.SKYROOT_STAIRS.get().asItem());

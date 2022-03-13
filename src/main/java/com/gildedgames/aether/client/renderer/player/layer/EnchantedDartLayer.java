@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.player.layer;
 
 import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDart;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,7 +20,7 @@ public class EnchantedDartLayer<T extends LivingEntity, M extends PlayerModel<T>
     @Override
     protected int numStuck(@Nonnull T entity) {
         if (entity instanceof Player) {
-            IAetherPlayer aetherPlayer = IAetherPlayer.get((Player) entity).orElse(null);
+            AetherPlayer aetherPlayer = AetherPlayer.get((Player) entity).orElse(null);
             return aetherPlayer.getEnchantedDartCount();
         } else {
             return 0;

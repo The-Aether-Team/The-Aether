@@ -1,15 +1,14 @@
 package com.gildedgames.aether.core.network.packet.client;
 
 import com.gildedgames.aether.common.entity.monster.Swet;
-import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
-public class SwetDeathParticlePacket extends AetherPacket
-{
+public class SwetDeathParticlePacket extends AbstractAetherPacket {
     private final int swetID;
 
     public SwetDeathParticlePacket(int id) {

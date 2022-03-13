@@ -176,7 +176,7 @@ public class Swet extends MountableAnimal {
                 if (this.onGround && !this.getPlayerJumped() && (this.getDeltaMovement().x != 0 || this.getDeltaMovement().z != 0)) {
                     this.setDeltaMovement(this.getDeltaMovement().x(), 0.42F, this.getDeltaMovement().z);
                 }
-                this.fallDistance = 0;
+                this.resetFallDistance();
             }
         }
     }

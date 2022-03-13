@@ -1,14 +1,13 @@
 package com.gildedgames.aether.core.network.packet.server;
 
 import com.gildedgames.aether.common.inventory.container.LoreBookContainer;
-import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
+import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class LoreExistsPacket extends AetherPacket
-{
+public class LoreExistsPacket extends AbstractAetherPacket {
     private final int playerID;
     private final ItemStack itemStack;
     private final boolean exists;

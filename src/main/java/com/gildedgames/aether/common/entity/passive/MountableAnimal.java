@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.common.entity.NotGrounded;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -68,7 +68,7 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 
 	public void riderTick() {
 		if (this.getControllingPassenger() instanceof Player player) {
-			IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
+			AetherPlayer.get(player).ifPresent(aetherPlayer -> {
 				if (aetherPlayer.isJumping() && !this.isMountJumping()) {
 					this.setPlayerJumped(true);
 				}

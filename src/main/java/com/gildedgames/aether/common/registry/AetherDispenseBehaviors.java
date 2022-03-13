@@ -15,17 +15,14 @@ import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -37,9 +34,11 @@ import top.theillusivec4.curios.api.type.util.ICuriosHelper;
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class AetherDispenseBehaviors {
+    public static DispenseItemBehavior DEFAULT_FIRE_CHARGE_BEHAVIOR;
+    public static DispenseItemBehavior DEFAULT_FLINT_AND_STEEL_BEHAVIOR;
+
     public static final DispenseItemBehavior DISPENSE_ACCESSORY_BEHAVIOR = new DefaultDispenseItemBehavior() {
         @Nonnull
         @Override
@@ -209,18 +208,6 @@ public class AetherDispenseBehaviors {
         }
     };
 
-    public static final DispenseItemBehavior DISPENSE_SPAWN_EGG_BEHAVIOR = new DefaultDispenseItemBehavior() {
-        @Nonnull
-        @Override
-        public ItemStack execute(BlockSource source, ItemStack stack) {
-            Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
-            EntityType<?> entityType = ((SpawnEggItem) stack.getItem()).getType(stack.getTag());
-            entityType.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
-            stack.shrink(1);
-            return stack;
-        }
-    };
-
     public static final DispenseItemBehavior DISPENSE_FIRE_CHARGE_BEHAVIOR = new OptionalDispenseItemBehavior() {
         @Nonnull
         @Override
@@ -228,21 +215,10 @@ public class AetherDispenseBehaviors {
             Level world = source.getLevel();
             if (world.dimension() == AetherDimensions.AETHER_WORLD) {
                 this.setSuccess(false);
+                return stack;
             } else {
-                this.setSuccess(true);
-                Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
-                Position iposition = DispenserBlock.getDispensePosition(source);
-                double d0 = iposition.x() + direction.getStepX() * 0.3F;
-                double d1 = iposition.y() + direction.getStepY() * 0.3F;
-                double d2 = iposition.z() + direction.getStepZ() * 0.3F;
-                Random random = world.random;
-                double d3 = random.nextGaussian() * 0.05 + direction.getStepX();
-                double d4 = random.nextGaussian() * 0.05 + direction.getStepY();
-                double d5 = random.nextGaussian() * 0.05 + direction.getStepZ();
-                world.addFreshEntity(Util.make(new SmallFireball(world, d0, d1, d2, d3, d4, d5), (entity) -> entity.setItem(stack)));
-                stack.shrink(1);
+                return DEFAULT_FIRE_CHARGE_BEHAVIOR.dispense(source, stack);
             }
-            return stack;
         }
 
         @Override
@@ -252,34 +228,16 @@ public class AetherDispenseBehaviors {
     };
 
     public static final DispenseItemBehavior DISPENSE_FLINT_AND_STEEL = new OptionalDispenseItemBehavior() {
+        @Nonnull
         @Override
-        protected ItemStack execute(BlockSource source, ItemStack stack) {
+        protected ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
             Level world = source.getLevel();
             if (world.dimension() == AetherDimensions.AETHER_WORLD) {
                 this.setSuccess(false);
+                return stack;
             } else {
-                this.setSuccess(true);
-                BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
-                BlockState blockstate = world.getBlockState(blockpos);
-                Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
-                if (BaseFireBlock.canBePlacedAt(world, blockpos, direction)) {
-                    world.setBlockAndUpdate(blockpos, Blocks.FIRE.defaultBlockState());
-                } else if (CampfireBlock.canLight(blockstate)) {
-                    world.setBlockAndUpdate(blockpos, blockstate.setValue(BlockStateProperties.LIT, true));
-                } else if (blockstate.isFlammable(world, blockpos, source.getBlockState().getValue(DispenserBlock.FACING).getOpposite())) {
-                    blockstate.onCaughtFire(world, blockpos, source.getBlockState().getValue(DispenserBlock.FACING).getOpposite(), null);
-                    if (blockstate.getBlock() instanceof TntBlock) {
-                        world.removeBlock(blockpos, false);
-                    }
-                } else {
-                    this.setSuccess(false);
-                }
-
-                if (this.isSuccess() && stack.hurt(1, world.random, null)) {
-                    stack.setCount(0);
-                }
+                return DEFAULT_FLINT_AND_STEEL_BEHAVIOR.dispense(source, stack);
             }
-            return stack;
         }
     };
 }

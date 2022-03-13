@@ -2,7 +2,7 @@ package com.gildedgames.aether.core.mixin.common;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.event.listeners.capability.AetherTimeListener;
-import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
+import com.gildedgames.aether.core.capability.time.AetherTime;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
@@ -34,7 +34,7 @@ public class DimensionTypeMixin {
             double time = (double) this.fixedTime.orElse(dayTime);
             Level level = AetherTimeListener.world;
             if (level != null) {
-                IAetherTime aetherTime = IAetherTime.get(level).orElse(null);
+                AetherTime aetherTime = AetherTime.get(level).orElse(null);
                 time = aetherTime.getDayTime();
             }
             double d0 = Mth.frac(time / 72000.0D - 0.25D);
@@ -49,7 +49,7 @@ public class DimensionTypeMixin {
             long time = this.fixedTime.orElse(dayTime);
             Level level = AetherTimeListener.world;
             if (level != null) {
-                IAetherTime aetherTime = IAetherTime.get(level).orElse(null);
+                AetherTime aetherTime = AetherTime.get(level).orElse(null);
                 time = aetherTime.getDayTime();
             }
             cir.setReturnValue((int) (time / 72000L % 8L + 8L) % 8);

@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.renderer.accessory;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.common.item.accessories.miscellaneous.RepulsionShieldItem;
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.util.ConstantsUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -58,7 +58,7 @@ public class RepulsionShieldRenderer implements ICurioRenderer {
 
                         if (livingEntity instanceof Player player && renderLayerParent.getModel() instanceof PlayerModel<?> playerModel) {
                             model = playerModel.slim ? this.shieldModelSlim : this.shieldModel;
-                            IAetherPlayer aetherPlayer = IAetherPlayer.get(player).orElse(null);
+                            AetherPlayer aetherPlayer = AetherPlayer.get(player).orElse(null);
                             if (!aetherPlayer.isMoving()) {
                                 texture = playerModel.slim ? shield.getRepulsionShieldSlimTexture() : shield.getRepulsionShieldTexture();
                             } else {
@@ -95,7 +95,7 @@ public class RepulsionShieldRenderer implements ICurioRenderer {
         ResourceLocation texture;
         RepulsionShieldItem shield = (RepulsionShieldItem) stack.getItem();
 
-        IAetherPlayer aetherPlayer = IAetherPlayer.get(player).orElse(null);
+        AetherPlayer aetherPlayer = AetherPlayer.get(player).orElse(null);
         if (!aetherPlayer.isMoving()) {
             texture = isSlim ? shield.getRepulsionShieldSlimTexture() : shield.getRepulsionShieldTexture();
         } else {
@@ -113,7 +113,7 @@ public class RepulsionShieldRenderer implements ICurioRenderer {
     private void setupHand(PlayerModel<LivingEntity> model, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, HumanoidArm arm) {
         this.setupModel(model, player);
 
-        IAetherPlayer aetherPlayer = IAetherPlayer.get(player).orElse(null);
+        AetherPlayer aetherPlayer = AetherPlayer.get(player).orElse(null);
         if (!aetherPlayer.isMoving()) {
             VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(player.getSkinTextureLocation()));
             if (arm == HumanoidArm.RIGHT) {

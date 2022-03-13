@@ -36,7 +36,7 @@ public class AercloudBlock extends HalfTransparentBlock implements IAetherDouble
 	
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		entity.fallDistance *= 0.0F;
+		entity.resetFallDistance();
 
 		if (entity.getDeltaMovement().y < 0.0) {
 			entity.setDeltaMovement(entity.getDeltaMovement().multiply(1.0, 0.005, 1.0));

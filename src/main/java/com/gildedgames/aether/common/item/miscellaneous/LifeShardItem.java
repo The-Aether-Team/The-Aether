@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.miscellaneous;
 
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +19,7 @@ public class LifeShardItem extends Item
     public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
         if (!playerEntity.isCreative()) {
-            IAetherPlayer aetherPlayer = IAetherPlayer.get(playerEntity).orElseThrow(() -> new IllegalStateException("Player " + playerEntity.getName().getContents() + " has no AetherPlayer capability!"));
+            AetherPlayer aetherPlayer = AetherPlayer.get(playerEntity).orElseThrow(() -> new IllegalStateException("Player " + playerEntity.getName().getContents() + " has no AetherPlayer capability!"));
             if (aetherPlayer.getLifeShardCount() < aetherPlayer.getLifeShardLimit()) {
                 playerEntity.swing(hand);
                 if (!world.isClientSide && !playerEntity.getAbilities().instabuild) {
