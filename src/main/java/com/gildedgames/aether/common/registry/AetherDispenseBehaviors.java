@@ -209,18 +209,6 @@ public class AetherDispenseBehaviors {
         }
     };
 
-    public static final DispenseItemBehavior DISPENSE_SPAWN_EGG_BEHAVIOR = new DefaultDispenseItemBehavior() {
-        @Nonnull
-        @Override
-        public ItemStack execute(BlockSource source, ItemStack stack) {
-            Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
-            EntityType<?> entityType = ((ForgeSpawnEggItem) stack.getItem()).getType(stack.getTag());
-            entityType.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
-            stack.shrink(1);
-            return stack;
-        }
-    };
-
     public static final DispenseItemBehavior DISPENSE_FIRE_CHARGE_BEHAVIOR = new OptionalDispenseItemBehavior() {
         @Nonnull
         @Override
