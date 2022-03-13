@@ -7,9 +7,8 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.*;
 import net.minecraft.resources.ResourceLocation;
+import top.theillusivec4.curios.api.CuriosApi;
 import net.minecraftforge.common.Tags;
-
-import javax.annotation.Nullable;
 
 public class AetherTags {
 	public static class Blocks {
@@ -80,12 +79,19 @@ public class AetherTags {
 		public static final Tags.IOptionalNamedTag<Item> MOA_TEMPTATION_ITEMS = tag("moa_temptation_items");
 		public static final Tags.IOptionalNamedTag<Item> MOA_FOOD_ITEMS = tag("moa_food_items");
 
+		public static final Tags.IOptionalNamedTag<Item> AETHER_RING = curio("aether_ring");
+		public static final Tags.IOptionalNamedTag<Item> AETHER_PENDANT = curio("aether_pendant");
+		public static final Tags.IOptionalNamedTag<Item> AETHER_GLOVES = curio("aether_gloves");
+		public static final Tags.IOptionalNamedTag<Item> AETHER_CAPE = curio("aether_cape");
+		public static final Tags.IOptionalNamedTag<Item> AETHER_ACCESSORY = curio("aether_accessory");
+		public static final Tags.IOptionalNamedTag<Item> AETHER_SHIELD = curio("aether_shield");
+
 		private static Tags.IOptionalNamedTag<Item> tag(String name) {
 			return ItemTags.createOptional(new ResourceLocation(Aether.MODID, name));
 		}
 
-		private static Tags.IOptionalNamedTag<Item> tag(String name, @Nullable java.util.Set<java.util.function.Supplier<Item>> defaults) {
-			return ItemTags.createOptional(new ResourceLocation(Aether.MODID, name), defaults);
+		private static Tags.IOptionalNamedTag<Item> curio(String name) {
+			return ItemTags.createOptional(new ResourceLocation(CuriosApi.MODID, name));
 		}
 
 		public static void init() {}

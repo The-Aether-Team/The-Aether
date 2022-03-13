@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.gui.screen.inventory;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.button.SunAltarSlider;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
+import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
@@ -26,7 +26,7 @@ public class SunAltarScreen extends Screen {
     @Override
     public void init() {
         super.init();
-        LazyOptional<IAetherTime> aetherTime = this.minecraft.level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY);
+        LazyOptional<AetherTime> aetherTime = this.minecraft.level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY);
         double value = aetherTime.isPresent() ? (double) aetherTime.orElse(null).getDayTime() / 72000D : 0.5D;
         this.addRenderableWidget(new SunAltarSlider(this.minecraft.level, this.width / 2 - 75, this.height / 2, 150, 20, new TranslatableComponent("gui." + Aether.MODID + ".sun_altar.time"), value));
     }
