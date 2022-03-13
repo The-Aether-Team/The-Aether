@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.ForgeSpawnEggItem;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
@@ -37,8 +36,8 @@ import java.util.List;
 import java.util.Map;
 
 public class AetherDispenseBehaviors {
-    public static final DispenseItemBehavior DEFAULT_FIRE_CHARGE_BEHAVIOR = DispenserBlock.DISPENSER_REGISTRY.get(Items.FIRE_CHARGE);
-    public static final DispenseItemBehavior DEFAULT_FLINT_AND_STEEL_BEHAVIOR = DispenserBlock.DISPENSER_REGISTRY.get(Items.FLINT_AND_STEEL);
+    public static DispenseItemBehavior DEFAULT_FIRE_CHARGE_BEHAVIOR;
+    public static DispenseItemBehavior DEFAULT_FLINT_AND_STEEL_BEHAVIOR;
 
     public static final DispenseItemBehavior DISPENSE_ACCESSORY_BEHAVIOR = new DefaultDispenseItemBehavior() {
         @Nonnull
