@@ -9,10 +9,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.tags.*;
 import net.minecraft.resources.ResourceLocation;
 
-public class AetherTags
-{
-	public static class Blocks
-	{
+public class AetherTags {
+	public static class Blocks {
 		public static final TagKey<Block> AETHER_PORTAL_BLOCKS = tag("aether_portal_blocks");
 		public static final TagKey<Block> AETHER_ISLAND_BLOCKS = tag("aether_island_blocks");
 		public static final TagKey<Block> ENCHANTABLE_GRASS_BLOCKS = tag("enchantable_grass_blocks");
@@ -39,8 +37,7 @@ public class AetherTags
 		}
 	}
 
-	public static class Items
-	{
+	public static class Items {
 		public static final TagKey<Item> AETHER_DIRT = tag("aether_dirt");
 		public static final TagKey<Item> HOLYSTONE = tag("holystone");
 		public static final TagKey<Item> AERCLOUDS = tag("aerclouds");
@@ -88,8 +85,7 @@ public class AetherTags
 		}
 	}
 
-	public static class Entities
-	{
+	public static class Entities {
 		public static final TagKey<EntityType<?>> PIGS = tag("pigs");
 		public static final TagKey<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 		public static final TagKey<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
@@ -103,8 +99,7 @@ public class AetherTags
 		}
 	}
 
-	public static class Fluids
-	{
+	public static class Fluids {
 		public static final TagKey<Fluid> FREEZABLE_TO_AEROGEL = tag("freezable_to_aerogel");
 
 		public static void init() { }
