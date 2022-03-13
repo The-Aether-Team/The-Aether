@@ -24,8 +24,8 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.*;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -191,7 +191,7 @@ public class Aether
         DispenserBlock.registerBehavior(AetherItems.SWET_BALL.get(), AetherDispenseBehaviors.DISPENSE_SWET_BALL_BEHAVIOR);
         DispenseItemBehavior dispenseSpawnEgg = AetherDispenseBehaviors.DISPENSE_SPAWN_EGG_BEHAVIOR;
         for (RegistryObject<Item> item : AetherItems.ITEMS.getEntries()) {
-            if (item.get() instanceof SpawnEggItem) {
+            if (item.get() instanceof ForgeSpawnEggItem) {
                 DispenserBlock.registerBehavior(item.get(), dispenseSpawnEgg);
             }
         }
