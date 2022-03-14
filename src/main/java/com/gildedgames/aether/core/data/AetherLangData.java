@@ -570,9 +570,36 @@ public class AetherLangData extends AetherLanguageProvider
         addMessage("sun_altar.no_power", "The sun spirit has no power over this realm.");
 
 
+        addCommand("sun_altar_whitelist.enabled", "Sun Altar's whitelist is now turned on");
+        addCommand("sun_altar_whitelist.disabled", "Sun Altar's whitelist is now turned off");
+        addCommand("sun_altar_whitelist.none", "There are no whitelisted players");
+        addCommand("sun_altar_whitelist.list", "There are %s whitelisted players: %s");
+        addCommand("sun_altar_whitelist.add.success", "Added %s to the Sun Altar's whitelist");
+        addCommand("sun_altar_whitelist.remove.success", "Removed %s from the Sun Altar's whitelist");
+        addCommand("sun_altar_whitelist.reloaded", "Reloaded the Sun Altar's whitelist");
+        addCommand("sun_altar_whitelist.alreadyOn", "Sun Altar's whitelist is already turned on");
+        addCommand("sun_altar_whitelist.alreadyOff", "Sun Altar's whitelist is already turned off");
+        addCommand("sun_altar_whitelist.add.failed", "Player is already whitelisted to use the Sun Altar");
+        addCommand("sun_altar_whitelist.remove.failed", "Player is not whitelisted to use the Sun Altar");
+
+
+        addCommand("sun_altar_whitelist.enabled", "Sun Altar's whitelist is now turned on");
+        addCommand("sun_altar_whitelist.disabled", "Sun Altar's whitelist is now turned off");
+        addCommand("sun_altar_whitelist.none", "There are no whitelisted players");
+        addCommand("sun_altar_whitelist.list", "There are %s whitelisted players: %s");
+        addCommand("sun_altar_whitelist.add.success", "Added %s to the Sun Altar's whitelist");
+        addCommand("sun_altar_whitelist.remove.success", "Removed %s from the Sun Altar's whitelist");
+        addCommand("sun_altar_whitelist.reloaded", "Reloaded the Sun Altar's whitelist");
+        addCommand("sun_altar_whitelist.alreadyOn", "Sun Altar's whitelist is already turned on");
+        addCommand("sun_altar_whitelist.alreadyOff", "Sun Altar's whitelist is already turned off");
+        addCommand("sun_altar_whitelist.add.failed", "Player is already whitelisted to use the Sun Altar");
+        addCommand("sun_altar_whitelist.remove.failed", "Player is not whitelisted to use the Sun Altar");
+
+
 
         addKeyInfo("category", "Aether");
         addKeyInfo("open_accessories.desc", "Open/Close Accessories Inventory");
+
 
 
         addCuriosIdentifier("aether_pendant", "Pendant");

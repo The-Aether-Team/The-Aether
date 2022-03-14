@@ -4,7 +4,7 @@ import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.AetherTimePacket;
 import com.gildedgames.aether.core.network.packet.client.EternalDayPacket;
-import com.gildedgames.aether.server.player.AetherSleepStatus;
+import com.gildedgames.aether.core.util.AetherSleepStatus;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
