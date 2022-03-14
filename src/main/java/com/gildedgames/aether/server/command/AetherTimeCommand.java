@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.command;
+package com.gildedgames.aether.server.command;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import com.gildedgames.aether.core.capability.time.AetherTime;

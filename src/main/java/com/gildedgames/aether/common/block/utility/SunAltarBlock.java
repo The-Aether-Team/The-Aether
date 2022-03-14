@@ -5,8 +5,6 @@ import com.gildedgames.aether.common.block.entity.SunAltarBlockEntity;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import com.gildedgames.aether.core.capability.time.AetherTime;
-import com.gildedgames.aether.core.util.SunAltarWhitelist;
-import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -44,7 +42,7 @@ public class SunAltarBlock extends BaseEntityBlock {
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
-			if (AetherConfig.COMMON.sun_altar_whitelist.get() && !player.hasPermissions(4) && !SunAltarWhitelist.INSTANCE.isWhiteListed(player.getGameProfile())) {
+			if (!player.hasPermissions(AetherConfig.COMMON.admin_sun_altar.get() ? 4 : 0)) {
 				player.displayClientMessage(new TranslatableComponent(Aether.MODID + ".sun_altar.no_permission"), true);
 				return InteractionResult.FAIL;
 			}

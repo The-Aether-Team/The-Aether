@@ -24,7 +24,7 @@ public class AetherConfig
         public final ConfigValue<Boolean> generate_holiday_tree_always;
         public final ConfigValue<Boolean> generate_holiday_tree_seasonally;
 
-        public final ConfigValue<Boolean> sun_altar_whitelist;
+        public final ConfigValue<Boolean> admin_sun_altar;
 
         public final ConfigValue<Boolean> disable_aether_portal;
         public final ConfigValue<Boolean> disable_falling_to_overworld;
@@ -82,9 +82,9 @@ public class AetherConfig
             builder.pop();
 
             builder.push("Multiplayer");
-            sun_altar_whitelist = builder
-                    .comment("Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server")
-                    .define("Only whitelisted users access Sun Altars", false);
+            admin_sun_altar = builder
+                    .comment("Makes it so that only the server admin or anyone with permission level 4 can use the Sun Altar on a server")
+                    .define("Only admins use Sun Altars", true);
             builder.pop();
 
             builder.push("Modpack");

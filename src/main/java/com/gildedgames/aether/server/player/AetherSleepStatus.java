@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.util;
+package com.gildedgames.aether.server.player;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.SleepStatus;

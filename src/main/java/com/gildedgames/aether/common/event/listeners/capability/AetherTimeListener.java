@@ -2,7 +2,7 @@ package com.gildedgames.aether.common.event.listeners.capability;
 
 import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.capability.time.AetherTime;
-import com.gildedgames.aether.core.util.AetherSleepStatus;
+import com.gildedgames.aether.server.player.AetherSleepStatus;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
