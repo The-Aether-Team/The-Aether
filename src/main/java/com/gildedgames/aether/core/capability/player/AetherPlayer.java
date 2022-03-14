@@ -75,6 +75,19 @@ public interface AetherPlayer extends INBTSerializable<CompoundTag> {
 	void setCloudMinions(CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft);
 	List<CloudMinion> getCloudMinions();
 
+	void setWingRotation(float wingRotation);
+	float getWingRotation();
+
+	int getFlightTimerMax();
+
+	float getFlightModifierMax();
+
+	void setFlightTimer(int timer);
+	int getFlightTimer();
+
+	void setFlightModifier(float modifier);
+	float getFlightModifier();
+
 	void setSavedHealth(float health);
 	float getSavedHealth();
 
