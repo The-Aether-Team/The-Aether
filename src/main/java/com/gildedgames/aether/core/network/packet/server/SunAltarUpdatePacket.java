@@ -25,10 +25,8 @@ public class SunAltarUpdatePacket extends AbstractAetherPacket {
 
     @Override
     public void execute(Player player) {
-        if (player != null && AetherConfig.COMMON.sun_altar_whitelist.get() && !player.hasPermissions(4) && !SunAltarWhitelist.INSTANCE.isWhiteListed(player.getGameProfile())) {
-            AetherTime.get(player.level).ifPresent(aetherTime -> {
-                aetherTime.setDayTime(this.dayTime);
-            });
+        if (player != null && (!AetherConfig.COMMON.sun_altar_whitelist.get() || player.hasPermissions(4) || SunAltarWhitelist.INSTANCE.isWhiteListed(player.getGameProfile()))) {
+            AetherTime.get(player.level).ifPresent(aetherTime -> aetherTime.setDayTime(this.dayTime));
         }
     }
 }
