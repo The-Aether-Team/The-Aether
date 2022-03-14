@@ -68,6 +68,10 @@ public abstract class AetherLanguageProvider extends LanguageProvider
         add("aether." + key, name);
     }
 
+    public void addCommand(String key, String name) {
+        add("commands.aether." + key, name);
+    }
+
     public void addKeyInfo(String key, String name) {
         add("key.aether." + key, name);
     }
