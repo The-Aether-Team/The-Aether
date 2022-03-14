@@ -12,6 +12,7 @@ import com.gildedgames.aether.core.AetherConfig;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.*;
+import com.gildedgames.aether.core.util.EquipmentUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -68,6 +69,13 @@ public class AetherPlayerCapability implements AetherPlayer {
 	private CompoundTag mountedAerbunnyTag;
 
 	private final List<CloudMinion> cloudMinions = new ArrayList<>(2);
+
+	private float wingRotation;
+
+	private static final int FLIGHT_TIMER_MAX = 52;
+	private static final float FLIGHT_MODIFIER_MAX = 15.0F;
+	private static final EntityDataAccessor<Integer> DATA_FLIGHT_TIMER_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Float> DATA_FLIGHT_MODIFIER_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.FLOAT);
 
 	private float savedHealth = 0.0F;
 	private static final EntityDataAccessor<Integer> DATA_LIFE_SHARD_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
@@ -142,6 +150,8 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.getPlayer().getEntityData().define(DATA_REMEDY_TIMER_ID, 0);
 		this.getPlayer().getEntityData().define(DATA_IMPACTED_MAXIMUM_ID, 0);
 		this.getPlayer().getEntityData().define(DATA_IMPACTED_TIMER_ID, 0);
+		this.getPlayer().getEntityData().define(DATA_FLIGHT_TIMER_ID, 0);
+		this.getPlayer().getEntityData().define(DATA_FLIGHT_MODIFIER_ID, 1.0F);
 		this.getPlayer().getEntityData().define(DATA_LIFE_SHARD_ID, 0);
 	}
 
@@ -171,6 +181,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	@Override
 	public void onUpdate() {
 		this.handleAetherPortal();
+		this.handleWingRotation();
 		this.activateParachute();
 		this.handleRemoveDarts();
 		this.tickDownRemedy();
@@ -234,6 +245,23 @@ public class AetherPlayerCapability implements AetherPlayer {
 			if (this.aetherPortalTimer > 0) {
 				this.aetherPortalTimer -= 4;
 			}
+		}
+	}
+
+	private void handleWingRotation() {
+		if (EquipmentUtil.hasFullValkyrieSet(this.getPlayer())) {
+			if (!this.getPlayer().isOnGround() && (this.getPlayer().getFirstPassenger() != null && !this.getPlayer().getFirstPassenger().isOnGround())) {
+				this.wingRotation += 0.75F;
+			} else {
+				this.wingRotation += 0.15F;
+			}
+			if (this.wingRotation > (Math.PI * 2.0F)) {
+				this.wingRotation -= (Math.PI * 2.0F);
+			} else {
+				this.wingRotation += 0.1F;
+			}
+		} else {
+			this.wingRotation = 0.0F;
 		}
 	}
 
@@ -567,6 +595,46 @@ public class AetherPlayerCapability implements AetherPlayer {
 	@Override
 	public List<CloudMinion> getCloudMinions() {
 		return this.cloudMinions;
+	}
+
+	@Override
+	public void setWingRotation(float wingRotation) {
+		this.wingRotation = wingRotation;
+	}
+
+	@Override
+	public float getWingRotation() {
+		return this.wingRotation;
+	}
+
+	@Override
+	public int getFlightTimerMax() {
+		return FLIGHT_TIMER_MAX;
+	}
+
+	@Override
+	public float getFlightModifierMax() {
+		return FLIGHT_MODIFIER_MAX;
+	}
+
+	@Override
+	public void setFlightTimer(int timer) {
+		this.getPlayer().getEntityData().set(DATA_FLIGHT_TIMER_ID, timer);
+	}
+
+	@Override
+	public int getFlightTimer() {
+		return this.getPlayer().getEntityData().get(DATA_FLIGHT_TIMER_ID);
+	}
+
+	@Override
+	public void setFlightModifier(float modifier) {
+		this.getPlayer().getEntityData().set(DATA_FLIGHT_MODIFIER_ID, modifier);
+	}
+
+	@Override
+	public float getFlightModifier() {
+		return this.getPlayer().getEntityData().get(DATA_FLIGHT_MODIFIER_ID);
 	}
 
 	@Override

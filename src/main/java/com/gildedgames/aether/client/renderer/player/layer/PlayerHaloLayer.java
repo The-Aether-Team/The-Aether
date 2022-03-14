@@ -30,15 +30,15 @@ public class PlayerHaloLayer<T extends Player, M extends PlayerModel<T>> extends
     }
 
     @Override
-    public void render(@Nonnull PoseStack pMatrixStack, @Nonnull MultiBufferSource pBuffer, int pPackedLight, @Nonnull T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-        if (pLivingEntity instanceof AbstractClientPlayer abstractClientPlayer) {
+    public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, @Nonnull T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (entity instanceof AbstractClientPlayer abstractClientPlayer) {
             AetherRankings.get(abstractClientPlayer).ifPresent(aetherRankings -> {
                 if (AetherPlayerRankings.hasHalo(abstractClientPlayer.getUUID()) && aetherRankings.shouldRenderHalo() && !abstractClientPlayer.isInvisible()) {
                     this.playerHalo.halo.yRot = this.getParentModel().head.yRot;
                     this.playerHalo.halo.xRot = this.getParentModel().head.xRot;
-                    this.playerHalo.setupAnim(pLivingEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
-                    VertexConsumer vertexConsumer = pBuffer.getBuffer(RenderType.entityTranslucent(PLAYER_HALO_LOCATION));
-                    this.playerHalo.renderToBuffer(pMatrixStack, vertexConsumer, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                    this.playerHalo.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+                    VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(PLAYER_HALO_LOCATION));
+                    this.playerHalo.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
                 }
             });
         }

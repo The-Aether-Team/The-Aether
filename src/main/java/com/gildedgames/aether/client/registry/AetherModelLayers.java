@@ -47,6 +47,8 @@ public class AetherModelLayers {
 
     public static final ModelLayerLocation ICE_CRYSTAL = register("ice_crystal");
 
+    public static final ModelLayerLocation VALKYRIE_ARMOR_WINGS = register("valkyrie_armor_wings");
+
     public static final ModelLayerLocation PENDANT = register("pendant");
     public static final ModelLayerLocation GLOVES = register("gloves");
     public static final ModelLayerLocation GLOVES_SLIM = register("gloves_slim");
