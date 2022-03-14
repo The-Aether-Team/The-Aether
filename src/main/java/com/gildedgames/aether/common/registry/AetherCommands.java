@@ -1,8 +1,9 @@
-package com.gildedgames.aether.server.registry;
+package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.server.command.AetherTimeCommand;
-import com.gildedgames.aether.server.command.EternalDayCommand;
+import com.gildedgames.aether.common.command.AetherTimeCommand;
+import com.gildedgames.aether.common.command.EternalDayCommand;
+import com.gildedgames.aether.common.command.SunAltarWhitelistCommand;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -14,6 +15,7 @@ public class AetherCommands {
     @SubscribeEvent
     public static void registerCommands(RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+        SunAltarWhitelistCommand.register(dispatcher);
         AetherTimeCommand.register(dispatcher);
         EternalDayCommand.register(dispatcher);
     }
