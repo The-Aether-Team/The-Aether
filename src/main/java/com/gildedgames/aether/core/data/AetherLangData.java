@@ -570,7 +570,6 @@ public class AetherLangData extends AetherLanguageProvider
         addMessage("sun_altar.no_power", "The sun spirit has no power over this realm.");
 
 
-
         addCommand("sun_altar_whitelist.enabled", "Sun Altar's whitelist is now turned on");
         addCommand("sun_altar_whitelist.disabled", "Sun Altar's whitelist is now turned off");
         addCommand("sun_altar_whitelist.none", "There are no whitelisted players");
@@ -584,9 +583,9 @@ public class AetherLangData extends AetherLanguageProvider
         addCommand("sun_altar_whitelist.remove.failed", "Player is not whitelisted to use the Sun Altar");
 
 
-
         addKeyInfo("category", "Aether");
         addKeyInfo("open_accessories.desc", "Open/Close Accessories Inventory");
+
 
 
         addCuriosIdentifier("aether_pendant", "Pendant");
