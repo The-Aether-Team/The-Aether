@@ -113,7 +113,6 @@ public abstract class AbstractWhirlwind extends Mob {
             if (this.actionTimer >= 128) {
                 this.handleDrops();
                 this.actionTimer = 0;
-                this.level.playSound(null, this.blockPosition(), AetherSoundEvents.ENTITY_WHIRLWIND_DROP.get(), SoundSource.HOSTILE, 0.5F, 1.0F);
             }
         } else {
             this.updateParticles();
@@ -174,6 +173,7 @@ public abstract class AbstractWhirlwind extends Mob {
             LootTable lootTable = this.level.getServer().getLootTables().get(this.getLootLocation());
             List<ItemStack> list = lootTable.getRandomItems(builder.create(LootContextParamSets.SELECTOR));
             for (ItemStack itemstack : list) {
+                this.level.playSound(null, this.blockPosition(), AetherSoundEvents.ENTITY_WHIRLWIND_DROP.get(), SoundSource.HOSTILE, 0.5F, 1.0F);
                 this.spawnAtLocation(itemstack, 1);
             }
         }
