@@ -45,14 +45,11 @@ public abstract class WorldProvider extends WorldgenRegistryDumpReport {
     public void run(HashCache p_194682_) {
         Path path = this.generator.getOutputFolder();
         RegistryAccess registryaccess = RegistryAccess.BUILTIN.get();
-        int i = 0;
         Registry<LevelStem> registry = DimensionType.defaultDimensions(registryaccess, 0L, false);
         ChunkGenerator chunkgenerator = WorldGenSettings.makeDefaultOverworld(registryaccess, 0L, false);
         Registry<LevelStem> registry1 = WorldGenSettings.withOverworld(registryaccess.ownedRegistryOrThrow(Registry.DIMENSION_TYPE_REGISTRY), registry, chunkgenerator);
         DynamicOps<JsonElement> dynamicops = RegistryOps.create(JsonOps.INSTANCE, registryaccess);
-        RegistryAccess.knownRegistries().forEach((p_194713_) -> {
-            this.dumpRegistryCap(p_194682_, path, registryaccess, dynamicops, p_194713_);
-        });
+        RegistryAccess.knownRegistries().forEach(p_194713_ -> this.dumpRegistryCap(p_194682_, path, registryaccess, dynamicops, p_194713_));
         this.dumpRegistry(path, p_194682_, dynamicops, Registry.LEVEL_STEM_REGISTRY, registry1, LevelStem.CODEC);
     }
 

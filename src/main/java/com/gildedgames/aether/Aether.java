@@ -7,6 +7,7 @@ import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
 import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
 import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
 import com.gildedgames.aether.common.registry.*;
+import com.gildedgames.aether.common.registry.worldgen.AetherFeaturesForge;
 import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.*;
@@ -65,7 +66,7 @@ public class Aether
                 AetherEntityTypes.ENTITIES,
                 AetherEffects.EFFECTS,
                 AetherItems.ITEMS,
-                AetherFeatures.FEATURES,
+                AetherFeaturesForge.FEATURES,
                 AetherParticleTypes.PARTICLES,
                 AetherPOI.POI,
                 AetherSoundEvents.SOUNDS,

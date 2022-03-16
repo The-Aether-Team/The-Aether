@@ -1,33 +1,54 @@
 package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.core.data.provider.AetherBiomeProvider;
-import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.biome.OverworldBiomes;
+import com.gildedgames.aether.common.registry.worldgen.AetherConfiguredFeatures;
+import com.gildedgames.aether.common.world.biome.AetherBiomeKeys;
+import com.gildedgames.aether.common.world.feature.FeatureBuilders;
+import com.gildedgames.aether.common.world.gen.AetherBiomeProvider;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeGenerationSettings;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.placement.CountOnEveryLayerPlacement;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
-//TODO: Will likely undergo changes with Drullkus' branch.
+import java.util.List;
+import java.util.function.Supplier;
+
 public class AetherBiomes {
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, Aether.MODID);
 
-    public static final ResourceKey<Biome> FLOATING_FOREST = register("floating_forest");
+    // No fancy variations with trees are required, so inline these different tree decoration patterns instead
+    public static final RegistryObject<Biome> SKYROOT_GROVE = register(AetherBiomeKeys.SKYROOT_GROVE, () -> AetherBiomeProvider.makeDefaultBiome(new BiomeGenerationSettings.Builder()
+            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(FeatureBuilders.treeBlendDensity(2)))
+    ));
+    public static final RegistryObject<Biome> SKYROOT_FOREST = register(AetherBiomeKeys.SKYROOT_FOREST, () -> AetherBiomeProvider.makeDefaultBiome(new BiomeGenerationSettings.Builder()
+            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(FeatureBuilders.treeBlendDensity(2)))
+            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherConfiguredFeatures.SKYROOT_TREE_CONFIGURED_FEATURE), List.of(
+                    CountOnEveryLayerPlacement.of(1),
+                    FeatureBuilders.copyBlockSurvivability(AetherBlocks.SKYROOT_SAPLING.get())
+            ))))
+    ));
+    public static final RegistryObject<Biome> SKYROOT_THICKET = register(AetherBiomeKeys.SKYROOT_THICKET, () -> AetherBiomeProvider.makeDefaultBiome(new BiomeGenerationSettings.Builder()
+            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherConfiguredFeatures.SKYROOT_TREE_CONFIGURED_FEATURE), List.of(
+                    CountOnEveryLayerPlacement.of(1),
+                    FeatureBuilders.copyBlockSurvivability(AetherBlocks.SKYROOT_SAPLING.get())
+            ))))
+            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(FeatureBuilders.treeBlendDensity(3)))
+    ));
+    public static final RegistryObject<Biome> GOLDEN_FOREST = register(AetherBiomeKeys.GOLDEN_FOREST, () -> AetherBiomeProvider.makeDefaultBiome(0xb1_ff_cb, new BiomeGenerationSettings.Builder()
+            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURED_FEATURE), List.of(
+                    CountOnEveryLayerPlacement.of(2),
+                    FeatureBuilders.copyBlockSurvivability(AetherBlocks.GOLDEN_OAK_SAPLING.get())
+            ))))
+            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(FeatureBuilders.treeBlendDensity(2)))
+    ));
 
-    private static ResourceKey<Biome> register(String key) {
-        BIOMES.register(key, AetherBiomeProvider::makeEmptyBiome);
-        return ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Aether.MODID, key));
+    private static RegistryObject<Biome> register(ResourceKey<Biome> biomeResourceKey, Supplier<Biome> biome) {
+        return BIOMES.register(biomeResourceKey.location().getPath(), biome);
     }
-
-    //TODO: Move settings creation to the world DataGen somehow.
-//    private static void register(ResourceKey<Biome> key, Biome biome) {
-//        BuiltinRegistries.register(BuiltinRegistries.BIOME, key, biome);
-//    }
-//
-//    static {
-//        register(FLOATING_FOREST, AetherBiomeProvider.makeDefaultBiome());
-//    }
 }

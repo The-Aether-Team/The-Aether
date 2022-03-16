@@ -1,29 +1,17 @@
-package com.gildedgames.aether.core.data.provider;
+package com.gildedgames.aether.common.world.gen;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.common.registry.AetherFeatures;
 import net.minecraft.sounds.Music;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
-import net.minecraft.world.level.levelgen.GenerationStep;
 
-public class AetherBiomeProvider
-{
-    public static Biome makeEmptyBiome() {
-        return fullDefinition(
-                Biome.Precipitation.NONE,
-                Biome.BiomeCategory.NONE,
-                0,
-                0,
-                new BiomeSpecialEffects.Builder().fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build(),
-                new MobSpawnSettings.Builder().build(),
-                new BiomeGenerationSettings.Builder().build(),
-                Biome.TemperatureModifier.NONE
-        );
+public class AetherBiomeProvider {
+    public static Biome makeDefaultBiome(BiomeGenerationSettings.Builder builder) {
+        return makeDefaultBiome(0xb1_ff_cb, builder);
     }
 
-    public static Biome makeDefaultBiome() {
+    public static Biome makeDefaultBiome(int grassColor, BiomeGenerationSettings.Builder builder) {
         return fullDefinition(
                 Biome.Precipitation.NONE,
                 Biome.BiomeCategory.NONE,
@@ -34,8 +22,8 @@ public class AetherBiomeProvider
                         .skyColor(0xc0_c0_ff)
                         .waterColor(0x3f_76_e4)
                         .waterFogColor(0x05_05_33)
-                        .grassColorOverride(0xb1_ff_cb)
-                        .foliageColorOverride(0xb1_ff_cb)
+                        .grassColorOverride(grassColor)
+                        .foliageColorOverride(grassColor)
                         .grassColorModifier(BiomeSpecialEffects.GrassColorModifier.NONE)
                         .backgroundMusic(new Music(AetherSoundEvents.MUSIC_AETHER.get(), 12000, 24000, true))
                         .build(),
@@ -54,9 +42,9 @@ public class AetherBiomeProvider
                         .addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(AetherEntityTypes.FLYING_COW.get(), 10, 4, 4))
                         .addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(AetherEntityTypes.AERWHALE.get(), 2, 1, 1))
                         .build(),
-                new BiomeGenerationSettings.Builder()
+                builder
                         //// TODO GenerationStep.Decoration.RAW_GENERATION
-                        //.addFeature(GenerationStep.Decoration.RAW_GENERATION, AetherFeatures.Placements.QUICKSOIL_SHELF_PLACED_FEATURE)
+                        //.addFeature(GenerationStep.Decoration.RAW_GENERATION, AetherFeatureData.QUICKSOIL_SHELF_FEATURE)
                         ////  "aether:crystal_tree"
                         //// TODO GenerationStep.Decoration.LAKES
                         ////  "aether:water_lake"
