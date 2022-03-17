@@ -24,7 +24,7 @@ public class AercloudBlock extends HalfTransparentBlock implements IAetherDouble
 	protected static VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 0.01, 16.0);
 	
 	public AercloudBlock(BlockBehaviour.Properties properties) {
-		super(properties.isRedstoneConductor((state, reader, pos) -> false).isSuffocating((state, reader, pos) -> false).isViewBlocking((state, reader, pos) -> false));
+		super(properties.isRedstoneConductor((state, reader, pos) -> false).isSuffocating((state, reader, pos) -> false).isViewBlocking((state, reader, pos) -> false).isValidSpawn((state, reader, pos, entity) -> state.getLightEmission(reader, pos) < 14));
 		this.registerDefaultState(this.defaultBlockState().setValue(DOUBLE_DROPS, false));
 	}
 
