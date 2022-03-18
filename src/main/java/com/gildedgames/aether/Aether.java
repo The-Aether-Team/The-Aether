@@ -13,6 +13,7 @@ import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.*;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.resource.CombinedResourcePack;
+import com.gildedgames.aether.core.util.SunAltarWhitelist;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.data.DataGenerator;
@@ -36,6 +37,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.resource.PathResourcePack;
@@ -43,6 +45,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -81,6 +84,8 @@ public class Aether
             register.register(modEventBus);
         }
 
+        File path = new File(FMLPaths.CONFIGDIR.get() + "/aether/");
+        path.mkdirs();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
 
@@ -89,6 +94,8 @@ public class Aether
 
     @SubscribeEvent //This is not actually for registering RecipeSerializers.
     public static void registerSerializers(RegistryEvent.Register<RecipeSerializer<?>> evt) {
+        SunAltarWhitelist.initialize();
+
         AetherLoot.init();
         AetherAdvancements.init();
         PlacementModifiers.init();
