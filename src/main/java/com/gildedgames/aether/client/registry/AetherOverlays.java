@@ -168,6 +168,7 @@ public class AetherOverlays {
         alpha *= Math.sqrt(effectScale);
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(false);
+        RenderSystem.defaultBlendFunc();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, resource);
