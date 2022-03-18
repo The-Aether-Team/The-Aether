@@ -22,7 +22,7 @@ import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
-//import top.theillusivec4.caelus.mixin.util.ClientMixinHooks; TODO: Caelus API update
+import top.theillusivec4.caelus.mixin.util.ClientMixinHooks;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
@@ -44,7 +44,7 @@ public class CapeRenderer implements ICurioRenderer {
                         && abstractClientPlayer.isCapeLoaded()
                         && abstractClientPlayer.getCloakTextureLocation() != null
                         && abstractClientPlayer.isModelPartShown(PlayerModelPart.CAPE);
-                boolean isCapeDisabled = ModList.get().isLoaded("caelus") && livingEntity instanceof Player player; // && !ClientMixinHooks.canRenderCape(player) TODO: Revive this when Caelus API updates
+                boolean isCapeDisabled = ModList.get().isLoaded("caelus") && livingEntity instanceof Player player && !ClientMixinHooks.canRenderCape(player);
 
                 if (!(itemstack.getItem() instanceof ElytraItem) && !hasCape && !isCapeDisabled) {
                     this.cape.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
