@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.capability;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.gildedgames.aether.core.capability.arrow.PhoenixArrowCapability;
 import com.gildedgames.aether.core.capability.arrow.PhoenixArrowProvider;
@@ -21,6 +21,7 @@ import com.gildedgames.aether.core.capability.rankings.AetherRankingsCapability;
 import com.gildedgames.aether.core.capability.rankings.AetherRankingsProvider;
 import com.gildedgames.aether.core.capability.rankings.AetherRankings;
 
+import com.gildedgames.aether.core.util.LevelUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.LightningBolt;
@@ -77,7 +78,7 @@ public class AetherCapabilities {
 
 		@SubscribeEvent
 		public static void attachWorldCapabilities(AttachCapabilitiesEvent<Level> event) {
-			if (event.getObject().dimension().location() == AetherDimensions.AETHER_WORLD.location()) {
+			if (LevelUtil.isLevelAether(event.getObject())) {
 				event.addCapability(new ResourceLocation(Aether.MODID, "aether_time"), new AetherTimeProvider(new AetherTimeCapability(event.getObject())));
 			}
 		}

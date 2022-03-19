@@ -1,6 +1,6 @@
 package com.gildedgames.aether.core.mixin.client;
 
-import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
 import net.minecraft.client.renderer.LevelRenderer;

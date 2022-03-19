@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.registry;
+package com.gildedgames.aether.common.registry.worldgen;
 
 import com.gildedgames.aether.Aether;
 import com.google.common.collect.HashMultimap;

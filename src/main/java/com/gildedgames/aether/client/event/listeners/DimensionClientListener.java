@@ -1,11 +1,8 @@
 package com.gildedgames.aether.client.event.listeners;
 
 import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
-import com.gildedgames.aether.common.registry.AetherDimensions;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.material.FogType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;

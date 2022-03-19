@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.world.gen;
+package com.gildedgames.aether.common.world.biome;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
@@ -6,7 +6,7 @@ import net.minecraft.sounds.Music;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 
-public class AetherBiomeProvider {
+public class AetherBiomeBuilder {
     public static Biome makeDefaultBiome(BiomeGenerationSettings.Builder builder) {
         return makeDefaultBiome(0xb1_ff_cb, builder);
     }

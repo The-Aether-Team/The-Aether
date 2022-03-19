@@ -6,11 +6,11 @@ import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
 
 import com.gildedgames.aether.client.registry.AetherKeys;
 import com.gildedgames.aether.common.event.listeners.DimensionListener;
-import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.OpenAccessoriesPacket;
+import com.gildedgames.aether.core.util.LevelUtil;
 import com.gildedgames.aether.core.util.TriviaReader;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -20,12 +20,10 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.client.event.ScreenOpenEvent;
@@ -111,8 +109,7 @@ public class GuiListener
 		}
 		if (screen instanceof ReceivingLevelScreen) {
 			if (Minecraft.getInstance().player != null) {
-				ResourceKey<Level> dimension = Minecraft.getInstance().player.level.dimension();
-				if (dimension == AetherDimensions.AETHER_WORLD) {
+				if (LevelUtil.isLevelAether(Minecraft.getInstance().player.level)) {
 					Screen.drawCenteredString(matrixStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.ascending"), screen.width / 2, 50, 16777215);
 				} else {
 					if (DimensionListener.leavingAether) {
@@ -123,8 +120,7 @@ public class GuiListener
 		}
 		if (screen instanceof ProgressScreen) {
 			if (Minecraft.getInstance().player != null) {
-				ResourceKey<Level> dimension = Minecraft.getInstance().player.level.dimension();
-				if (dimension == AetherDimensions.AETHER_WORLD) {
+				if (LevelUtil.isLevelAether(Minecraft.getInstance().player.level)) {
 					Screen.drawCenteredString(matrixStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.descending"), screen.width / 2, 50, 16777215);
 				} else {
 					AetherPlayer.get(Minecraft.getInstance().player).ifPresent(aetherPlayer -> {

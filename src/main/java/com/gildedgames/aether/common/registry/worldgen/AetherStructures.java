@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.registry;
+package com.gildedgames.aether.common.registry.worldgen;
 
 import com.gildedgames.aether.Aether;
 //import com.gildedgames.aether.common.world.structure.BronzeDungeonStructure;

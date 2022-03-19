@@ -4,11 +4,11 @@ import com.gildedgames.aether.common.event.events.AetherBannedItemEvent;
 import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
-import com.gildedgames.aether.common.registry.AetherDimensions;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.SetVehiclePacket;
+import com.gildedgames.aether.core.util.LevelUtil;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
@@ -60,7 +60,7 @@ public class DimensionListener
         ItemStack stack = event.getItemStack();
         BlockState state = world.getBlockState(pos);
 
-        if (player.getCommandSenderWorld().dimension() == AetherDimensions.AETHER_WORLD) {
+        if (LevelUtil.isLevelAether(player.getCommandSenderWorld())) {
             if (stack.is(AetherTags.Items.BANNED_IN_AETHER)) {
                 if (AetherEventHooks.isItemBanned(stack)) {
                     AetherEventHooks.onItemBanned(world, pos, face, stack);
@@ -102,14 +102,12 @@ public class DimensionListener
 
     @SubscribeEvent
     public static void onNeighborNotified(BlockEvent.NeighborNotifyEvent event) {
-        if (event.getWorld() instanceof Level) {
-            Level world = (Level) event.getWorld();
+        if (event.getWorld() instanceof Level world) {
             BlockPos pos = event.getPos();
             FluidState fluidstate = world.getFluidState(pos);
-            if (world.dimension() == AetherDimensions.AETHER_WORLD && fluidstate.is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
+            if (LevelUtil.isLevelAether(world) && fluidstate.is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
                 world.setBlockAndUpdate(pos, AetherBlocks.AEROGEL.get().defaultBlockState());
-                if (world instanceof ServerLevel) {
-                    ServerLevel serverWorld = (ServerLevel) world;
+                if (world instanceof ServerLevel serverWorld) {
                     double x = pos.getX() + 0.5;
                     double y = pos.getY() + 1;
                     double z = pos.getZ() + 0.5;
@@ -125,7 +123,7 @@ public class DimensionListener
 
     @SubscribeEvent
     public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {
-        leavingAether = event.getEntity().level.dimension() == AetherDimensions.AETHER_WORLD && event.getDimension() == Level.OVERWORLD;
+        leavingAether = LevelUtil.isLevelAether(event.getEntity().level) && event.getDimension() == Level.OVERWORLD;
     }
 
     @SubscribeEvent
@@ -142,7 +140,7 @@ public class DimensionListener
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         if (event.side == LogicalSide.SERVER) {
             ServerLevel world = (ServerLevel) event.world;
-            if (world.dimension() == AetherDimensions.AETHER_WORLD) {
+            if (LevelUtil.isLevelAether(world)) {
                 if (event.phase == TickEvent.Phase.END) {
                     if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
                         for (Entity entity : world.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
