@@ -3,15 +3,24 @@ package com.gildedgames.aether.core.data.provider;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.common.world.biome.AetherBiomeKeys;
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.worldgen.TerrainProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.biome.Climate;
+import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.*;
 
+import java.util.List;
 import java.util.OptionalLong;
 
 public abstract class AetherWorldProvider extends WorldProvider {
@@ -26,7 +35,69 @@ public abstract class AetherWorldProvider extends WorldProvider {
         return SurfaceRules.state(block);
     }
 
-    protected DimensionType aetherDimensionType() {
+    public static BiomeSource buildAetherBiomeSource(Registry<Biome> registry) {
+        final Climate.Parameter FULL_RANGE = Climate.Parameter.span(-1.0F, 1.0F);
+
+        return new MultiNoiseBiomeSource(new Climate.ParameterList<>(List.of(
+                Pair.of(
+                        new Climate.ParameterPoint(
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                Climate.Parameter.span(1f, 2f),
+                                0
+                        ), Holder.Reference.createStandAlone(registry, AetherBiomeKeys.GOLDEN_FOREST)
+                ),
+                Pair.of(
+                        new Climate.ParameterPoint(
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                Climate.Parameter.span(0.5f, 1f),
+                                0
+                        ), Holder.Reference.createStandAlone(registry, AetherBiomeKeys.SKYROOT_FOREST)
+                ),
+                Pair.of(
+                        new Climate.ParameterPoint(
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                Climate.Parameter.span(-0.1f, 0.5f),
+                                0
+                        ), Holder.Reference.createStandAlone(registry, AetherBiomeKeys.SKYROOT_THICKET)
+                ),
+                Pair.of(
+                        new Climate.ParameterPoint(
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                Climate.Parameter.span(-0.7f, -0.1f),
+                                0
+                        ), Holder.Reference.createStandAlone(registry, AetherBiomeKeys.SKYROOT_FOREST)
+                ),
+                Pair.of(
+                        new Climate.ParameterPoint(
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                FULL_RANGE,
+                                Climate.Parameter.span(-2f, -0.7f),
+                                0
+                        ), Holder.Reference.createStandAlone(registry, AetherBiomeKeys.SKYROOT_GROVE)
+                )
+        )));
+    }
+
+    public static DimensionType aetherDimensionType() {
         return DimensionType.create(
                 OptionalLong.empty(), // fixed_time
                 true, // has_skylight
@@ -58,7 +129,7 @@ public abstract class AetherWorldProvider extends WorldProvider {
                         0,
                         128,
                         new NoiseSamplingSettings(2, 1, 80, 160),
-                        new NoiseSlider(-23.4375D, 64, -46),
+                        new NoiseSlider(-3, 40, -22),
                         new NoiseSlider(-0.234375D, 7, 1),
                         2,
                         1,

@@ -2,14 +2,25 @@ package com.gildedgames.aether.core.data;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.core.data.provider.AetherWorldProvider;
+import com.gildedgames.aether.core.util.RegistryUtil;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.biome.FixedBiomeSource;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.dimension.LevelStem;
+import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
+import net.minecraft.world.level.levelgen.structure.StructureSet;
+import net.minecraft.world.level.levelgen.synth.NormalNoise;
+
+import java.util.Optional;
 
 // Register this class to the data generator to generate world generation pieces
 public class AetherWorldData extends AetherWorldProvider {
@@ -28,12 +39,18 @@ public class AetherWorldData extends AetherWorldProvider {
     }
 
     public void preloadRegistries(RegistryAccess registryAccess) {
+        Optional<? extends Registry<Biome>> biomeRegistry = registryAccess.registry(Registry.BIOME_REGISTRY);
+        Optional<? extends Registry<DimensionType>> dimensionTypeRegistry = registryAccess.registry(Registry.DIMENSION_TYPE_REGISTRY);
+        Optional<? extends Registry<NoiseGeneratorSettings>> noiseGenerator = registryAccess.registry(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY);
+        Optional<? extends Registry<StructureSet>> structureSet = registryAccess.registry(Registry.STRUCTURE_SET_REGISTRY);
+        Optional<? extends Registry<NormalNoise.NoiseParameters>> noiseParameters = registryAccess.registry(Registry.NOISE_REGISTRY);
+
         // It if crashes on .get(), then you've got bigger problems than removing Optional here
-        DimensionType dimensionType = registryAccess.registry(Registry.DIMENSION_TYPE_REGISTRY).map(reg -> Registry.register(reg, new ResourceLocation(Aether.MODID, "aether_type"), this.aetherDimensionType())).get();
-        NoiseGeneratorSettings worldNoiseSettings = registryAccess.registry(BuiltinRegistries.NOISE_GENERATOR_SETTINGS.key()).map(reg -> Registry.register(reg, new ResourceLocation(Aether.MODID, "skyland_generation"), aetherNoiseSettings())).get();
+        Holder<DimensionType> dimensionType = RegistryUtil.register(dimensionTypeRegistry.get(), "hostile_paradise", aetherDimensionType());
+        Holder<NoiseGeneratorSettings> worldNoiseSettings = RegistryUtil.register(noiseGenerator.get(), "skyland_generation", aetherNoiseSettings());
 
-        //NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(RegistryAccess.builtin().registryOrThrow(Registry.NOISE_REGISTRY), new FixedBiomeSource(AetherBiomeData.FLOATING_FOREST), 0L, () -> worldNoiseSettings);
+        BiomeSource source = AetherWorldProvider.buildAetherBiomeSource(biomeRegistry.get());
 
-        //this.serialize(Registry.LEVEL_STEM_REGISTRY, new ResourceLocation(Aether.MODID, "the_aether"), new LevelStem(() -> dimensionType, aetherChunkGen), LevelStem.CODEC);
+        NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(structureSet.get(), noiseParameters.get(), source, 0L, worldNoiseSettings);
     }
 }
