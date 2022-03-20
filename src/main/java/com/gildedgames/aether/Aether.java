@@ -101,6 +101,7 @@ public class Aether
         AetherAdvancements.init();
         PlacementModifiers.init();
         AetherTags.init();
+        AetherRecipes.RecipeTypes.init(); //TODO: Make sure this is registered in the right spot.
 
         AetherBlocks.registerWoodTypes();
     }

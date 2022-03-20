@@ -25,19 +25,14 @@ public class AetherRecipes
 	public static final RegistryObject<SimpleCookingSerializer<EnchantingRecipe>> ENCHANTING = RECIPE_SERIALIZERS.register("enchanting", EnchantingRecipe.Serializer::new);
 	public static final RegistryObject<SimpleCookingSerializer<FreezingRecipe>> FREEZING = RECIPE_SERIALIZERS.register("freezing", FreezingRecipe.Serializer::new);
 
-	@Mod.EventBusSubscriber(modid = Aether.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
 	public static class RecipeTypes
 	{
 		public static RecipeType<EnchantingRecipe> ENCHANTING;
 		public static RecipeType<FreezingRecipe> FREEZING;
 
-		@SubscribeEvent
-		public static void registerRecipeType(RegistryEvent.Register<Block> event) {
-			// Forge does not include a registry for RecipeTypes, and starting from 1.18.2,
-			// registering in a vanilla registry must be done in any registry event.
+		public static void init() {
 			ENCHANTING = RecipeType.register(Aether.MODID + ":enchanting");
 			FREEZING = RecipeType.register(Aether.MODID + ":freezing");
-			Aether.LOGGER.info("Registered " + Aether.MODID + " recipe types.");
 		}
 	}
 }
