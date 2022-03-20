@@ -5,6 +5,10 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.recipe.AltarRepairRecipe;
 import com.gildedgames.aether.common.recipe.EnchantingRecipe;
 import com.gildedgames.aether.common.recipe.FreezingRecipe;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -21,9 +25,19 @@ public class AetherRecipes
 	public static final RegistryObject<SimpleCookingSerializer<EnchantingRecipe>> ENCHANTING = RECIPE_SERIALIZERS.register("enchanting", EnchantingRecipe.Serializer::new);
 	public static final RegistryObject<SimpleCookingSerializer<FreezingRecipe>> FREEZING = RECIPE_SERIALIZERS.register("freezing", FreezingRecipe.Serializer::new);
 
+	@Mod.EventBusSubscriber(modid = Aether.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
 	public static class RecipeTypes
 	{
-		public static final RecipeType<EnchantingRecipe> ENCHANTING = RecipeType.register(Aether.MODID + ":enchanting");
-		public static final RecipeType<FreezingRecipe> FREEZING = RecipeType.register(Aether.MODID + ":freezing");
+		public static RecipeType<EnchantingRecipe> ENCHANTING;
+		public static RecipeType<FreezingRecipe> FREEZING;
+
+		@SubscribeEvent
+		public static void registerRecipeType(RegistryEvent.Register<Block> event) {
+			// Forge does not include a registry for RecipeTypes, and starting from 1.18.2,
+			// registering in a vanilla registry must be done in any registry event.
+			ENCHANTING = RecipeType.register(Aether.MODID + ":enchanting");
+			FREEZING = RecipeType.register(Aether.MODID + ":freezing");
+			Aether.LOGGER.info("Registered " + Aether.MODID + " recipe types.");
+		}
 	}
 }
