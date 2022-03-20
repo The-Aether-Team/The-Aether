@@ -1,12 +1,51 @@
 package com.gildedgames.aether.common.world.biome;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
+import com.gildedgames.aether.common.registry.worldgen.AetherConfiguredFeatures;
+import com.gildedgames.aether.common.world.feature.FeatureBuilders;
+import net.minecraft.core.Holder;
 import net.minecraft.sounds.Music;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.placement.CountOnEveryLayerPlacement;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+
+import java.util.List;
 
 public class AetherBiomeBuilder {
+    // No fancy variations with trees are required, so inline these different tree decoration patterns instead
+    public static Biome skyrootGrove() {
+        return makeDefaultBiome(new BiomeGenerationSettings.Builder()
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(FeatureBuilders.treeBlendDensity(2))));
+    }
+
+    public static Biome skyrootForest() {
+        return makeDefaultBiome(new BiomeGenerationSettings.Builder()
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(FeatureBuilders.treeBlendDensity(2)))
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherConfiguredFeatures.SKYROOT_TREE_CONFIGURED_FEATURE), List.of(
+                        CountOnEveryLayerPlacement.of(1),
+                        FeatureBuilders.copyBlockSurvivability(AetherBlocks.SKYROOT_SAPLING.get()))))));
+    }
+
+    public static Biome skyrootThicket() {
+        return makeDefaultBiome(new BiomeGenerationSettings.Builder()
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherConfiguredFeatures.SKYROOT_TREE_CONFIGURED_FEATURE), List.of(
+                        CountOnEveryLayerPlacement.of(1),
+                        FeatureBuilders.copyBlockSurvivability(AetherBlocks.SKYROOT_SAPLING.get())))))
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(FeatureBuilders.treeBlendDensity(3))));
+    }
+
+    public static Biome goldenForest() {
+        return makeDefaultBiome(0xb1_ff_cb, new BiomeGenerationSettings.Builder()
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURED_FEATURE), List.of(
+                        CountOnEveryLayerPlacement.of(2),
+                        FeatureBuilders.copyBlockSurvivability(AetherBlocks.GOLDEN_OAK_SAPLING.get())))))
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(FeatureBuilders.treeBlendDensity(2))));
+    }
+
     public static Biome makeDefaultBiome(BiomeGenerationSettings.Builder builder) {
         return makeDefaultBiome(0xb1_ff_cb, builder);
     }
@@ -80,6 +119,19 @@ public class AetherBiomeBuilder {
                 Biome.TemperatureModifier.NONE
         );
     }
+
+//    public static Biome makeEmptyBiome() {
+//        return AetherBiomeBuilder.fullDefinition(
+//                Biome.Precipitation.NONE,
+//                Biome.BiomeCategory.NONE,
+//                0,
+//                0,
+//                new BiomeSpecialEffects.Builder().fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build(),
+//                new MobSpawnSettings.Builder().build(),
+//                new BiomeGenerationSettings.Builder().build(),
+//                Biome.TemperatureModifier.NONE
+//        );
+//    }
 
     public static Biome fullDefinition(
             Biome.Precipitation precipitation,
