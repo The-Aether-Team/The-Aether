@@ -101,7 +101,7 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> PIGS = tag("pigs");
 		public static final TagKey<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 		public static final TagKey<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
-		public static final TagKey<EntityType<?>> SWET_TARGETS = tag("swet_target");
+		public static final TagKey<EntityType<?>> SWET_TARGETS = tag("swet_targets");
 		public static final TagKey<EntityType<?>> AECHOR_PLANT_TARGETS = tag("aechor_plant_targets");
 
 		public static void init() { }
