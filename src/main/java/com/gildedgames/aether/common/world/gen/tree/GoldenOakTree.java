@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.world.gen.tree;
 
-import com.gildedgames.aether.common.registry.worldgen.AetherConfiguredFeatures;
+import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 
@@ -13,6 +13,6 @@ public class GoldenOakTree extends AbstractTreeGrower {
 	@Nullable
 	@Override
 	protected Holder<? extends ConfiguredFeature<?, ?>> getConfiguredFeature(Random random, boolean largeHive) {
-		return AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURED_FEATURE;
+		return AetherFeatures.ConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURED_FEATURE;
 	}
 }

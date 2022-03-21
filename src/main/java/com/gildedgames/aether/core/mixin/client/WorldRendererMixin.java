@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 //
 //    @ModifyVariable(at = @At(value = "STORE", ordinal = 0, args = { "log=true" }), method = "renderSky", ordinal = 1)
 //    public double renderSky(double d0) {
-//        if (this.level != null && this.level.dimension() == AetherDimensions.AETHER_WORLD) {
+//        if (this.level != null && this.level.dimension() == AetherDimensions.AETHER_LEVEL) {
 //            return 1.0D;
 //        }
 //        return d0;

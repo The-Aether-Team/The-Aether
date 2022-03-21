@@ -3,12 +3,21 @@ package com.gildedgames.aether.core.data.provider;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.AetherBlocks;
-import com.gildedgames.aether.common.world.biome.AetherBiomeKeys;
+import com.gildedgames.aether.common.registry.worldgen.AetherBiomes;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
+import com.gildedgames.aether.core.util.RegistryUtil;
+import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.Lifecycle;
+import net.minecraft.core.*;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.HashCache;
 import net.minecraft.data.worldgen.TerrainProvider;
+import net.minecraft.resources.RegistryOps;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.biome.Biome;
@@ -18,10 +27,18 @@ import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.*;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.structure.StructureSet;
+import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import java.util.OptionalLong;
+import java.util.function.Supplier;
 
 public abstract class AetherWorldProvider extends WorldProvider {
     private static final SurfaceRules.RuleSource GRASS_BLOCK = makeStateRule(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
@@ -31,11 +48,61 @@ public abstract class AetherWorldProvider extends WorldProvider {
         super(generator);
     }
 
-    private static SurfaceRules.RuleSource makeStateRule(BlockState block) {
-        return SurfaceRules.state(block);
+    @Override
+    public void run(HashCache cache) {
+        Path path = this.generator.getOutputFolder();
+        RegistryAccess registryAccess = RegistryAccess.BUILTIN.get();
+        DynamicOps<JsonElement> dynamicOps = RegistryOps.create(JsonOps.INSTANCE, registryAccess);
+
+        RegistryAccess.knownRegistries().forEach(registryData -> this.dumpRegistryCap(cache, path, registryAccess, dynamicOps, registryData));
+        this.dumpRegistries(registryAccess, cache, path, dynamicOps);
     }
 
-    public static BiomeSource buildAetherBiomeSource(Registry<Biome> registry) {
+    protected abstract void dumpRegistries(RegistryAccess registryAccess, HashCache cache, Path path, DynamicOps<JsonElement> dynamicOps);
+
+    protected Registry<Biome> registerBiomes() {
+        WritableRegistry<Biome> writableRegistry = new MappedRegistry<>(Registry.BIOME_REGISTRY, Lifecycle.experimental(), null);
+        for (Map.Entry<ResourceKey<Biome>, Supplier<Biome>> biomeEntry : AetherBiomes.BIOME_SETTINGS.entrySet()) {
+            writableRegistry.register(biomeEntry.getKey(), biomeEntry.getValue().get(), Lifecycle.stable());
+        }
+        return writableRegistry;
+    }
+
+    protected Registry<ConfiguredFeature<?, ?>> registerConfiguredFeatures() {
+        WritableRegistry<ConfiguredFeature<?, ?>> writableRegistry = new MappedRegistry<>(Registry.CONFIGURED_FEATURE_REGISTRY, Lifecycle.experimental(), null);
+        for (Map.Entry<ResourceKey<ConfiguredFeature<?, ?>>, Supplier<ConfiguredFeature<?, ?>>> configuredFeatureEntry : AetherFeatures.ConfiguredFeatures.CONFIGURED_FEATURES.entrySet()) {
+            writableRegistry.register(configuredFeatureEntry.getKey(), configuredFeatureEntry.getValue().get(), Lifecycle.stable());
+        }
+        return writableRegistry;
+    }
+
+    protected Registry<PlacedFeature> registerPlacedFeatures() {
+        WritableRegistry<PlacedFeature> writableRegistry = new MappedRegistry<>(Registry.PLACED_FEATURE_REGISTRY, Lifecycle.experimental(), null);
+        for (Map.Entry<ResourceKey<PlacedFeature>, Supplier<PlacedFeature>> placedFeatureEntry : AetherFeatures.PlacedFeatures.PLACED_FEATURES.entrySet()) {
+            writableRegistry.register(placedFeatureEntry.getKey(), placedFeatureEntry.getValue().get(), Lifecycle.stable());
+        }
+        return writableRegistry;
+    }
+
+    protected Registry<LevelStem> registerLevelStem(RegistryAccess registryAccess) {
+        WritableRegistry<LevelStem> writableRegistry = new MappedRegistry<>(Registry.LEVEL_STEM_REGISTRY, Lifecycle.experimental(), null);
+
+        Registry<DimensionType> dimensionTypeRegistry = registryAccess.registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY);
+        Registry<Biome> biomeRegistry = registryAccess.registryOrThrow(Registry.BIOME_REGISTRY);
+        Registry<StructureSet> structureSetRegistry = registryAccess.registryOrThrow(Registry.STRUCTURE_SET_REGISTRY);
+        Registry<NoiseGeneratorSettings> noiseGeneratorSettingsRegistry = registryAccess.registryOrThrow(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY);
+        Registry<NormalNoise.NoiseParameters> noiseParametersRegistry = registryAccess.registryOrThrow(Registry.NOISE_REGISTRY);
+
+        Holder<DimensionType> dimensionType = RegistryUtil.register(dimensionTypeRegistry, "the_aether", aetherDimensionType());
+        BiomeSource source = AetherWorldProvider.buildAetherBiomeSource(biomeRegistry);
+        Holder<NoiseGeneratorSettings> worldNoiseSettings = RegistryUtil.register(noiseGeneratorSettingsRegistry, "skyland_generation", aetherNoiseSettings());
+        NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(structureSetRegistry, noiseParametersRegistry, source, 0L, worldNoiseSettings);
+
+        writableRegistry.register(AetherDimensions.AETHER_LEVEL_STEM, new LevelStem(dimensionType, aetherChunkGen), Lifecycle.stable());
+        return writableRegistry;
+    }
+
+    protected static BiomeSource buildAetherBiomeSource(Registry<Biome> registry) {
         final Climate.Parameter FULL_RANGE = Climate.Parameter.span(-1.0F, 1.0F);
 
         return new MultiNoiseBiomeSource(new Climate.ParameterList<>(List.of(
@@ -46,9 +113,9 @@ public abstract class AetherWorldProvider extends WorldProvider {
                                 FULL_RANGE,
                                 FULL_RANGE,
                                 FULL_RANGE,
-                                Climate.Parameter.span(1f, 2f),
+                                Climate.Parameter.span(1.0F, 2.0F),
                                 0
-                        ), Holder.Reference.createStandAlone(registry, AetherBiomeKeys.GOLDEN_FOREST)
+                        ), Holder.Reference.createStandAlone(registry, AetherBiomes.Keys.GOLDEN_FOREST)
                 ),
                 Pair.of(
                         new Climate.ParameterPoint(
@@ -57,9 +124,9 @@ public abstract class AetherWorldProvider extends WorldProvider {
                                 FULL_RANGE,
                                 FULL_RANGE,
                                 FULL_RANGE,
-                                Climate.Parameter.span(0.5f, 1f),
+                                Climate.Parameter.span(0.5F, 1.0F),
                                 0
-                        ), Holder.Reference.createStandAlone(registry, AetherBiomeKeys.SKYROOT_FOREST)
+                        ), Holder.Reference.createStandAlone(registry, AetherBiomes.Keys.SKYROOT_FOREST)
                 ),
                 Pair.of(
                         new Climate.ParameterPoint(
@@ -68,9 +135,9 @@ public abstract class AetherWorldProvider extends WorldProvider {
                                 FULL_RANGE,
                                 FULL_RANGE,
                                 FULL_RANGE,
-                                Climate.Parameter.span(-0.1f, 0.5f),
+                                Climate.Parameter.span(-0.1F, 0.5F),
                                 0
-                        ), Holder.Reference.createStandAlone(registry, AetherBiomeKeys.SKYROOT_THICKET)
+                        ), Holder.Reference.createStandAlone(registry, AetherBiomes.Keys.SKYROOT_THICKET)
                 ),
                 Pair.of(
                         new Climate.ParameterPoint(
@@ -79,9 +146,9 @@ public abstract class AetherWorldProvider extends WorldProvider {
                                 FULL_RANGE,
                                 FULL_RANGE,
                                 FULL_RANGE,
-                                Climate.Parameter.span(-0.7f, -0.1f),
+                                Climate.Parameter.span(-0.7F, -0.1F),
                                 0
-                        ), Holder.Reference.createStandAlone(registry, AetherBiomeKeys.SKYROOT_FOREST)
+                        ), Holder.Reference.createStandAlone(registry, AetherBiomes.Keys.SKYROOT_FOREST)
                 ),
                 Pair.of(
                         new Climate.ParameterPoint(
@@ -90,14 +157,14 @@ public abstract class AetherWorldProvider extends WorldProvider {
                                 FULL_RANGE,
                                 FULL_RANGE,
                                 FULL_RANGE,
-                                Climate.Parameter.span(-2f, -0.7f),
+                                Climate.Parameter.span(-2.0F, -0.7F),
                                 0
-                        ), Holder.Reference.createStandAlone(registry, AetherBiomeKeys.SKYROOT_GROVE)
+                        ), Holder.Reference.createStandAlone(registry, AetherBiomes.Keys.SKYROOT_GROVE)
                 )
         )));
     }
 
-    public static DimensionType aetherDimensionType() {
+    protected static DimensionType aetherDimensionType() {
         return DimensionType.create(
                 OptionalLong.empty(), // fixed_time
                 true, // has_skylight
@@ -119,7 +186,7 @@ public abstract class AetherWorldProvider extends WorldProvider {
         );
     }
 
-    public static NoiseGeneratorSettings aetherNoiseSettings() {
+    protected static NoiseGeneratorSettings aetherNoiseSettings() {
         return new NoiseGeneratorSettings(
                 //new StructureSettings(Optional.empty(), Map.of(
                 //        //AetherStructures.BRONZE_DUNGEON_INSTANCE, new StructureFeatureConfiguration(6, 4, 16811681)//,
@@ -149,10 +216,13 @@ public abstract class AetherWorldProvider extends WorldProvider {
 
     protected static SurfaceRules.RuleSource aetherSurfaceRules() {
         SurfaceRules.RuleSource surface = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(-1, 0), GRASS_BLOCK), DIRT);
-
         return SurfaceRules.sequence(
                 SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, surface),
                 SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT)
         );
+    }
+
+    private static SurfaceRules.RuleSource makeStateRule(BlockState block) {
+        return SurfaceRules.state(block);
     }
 }

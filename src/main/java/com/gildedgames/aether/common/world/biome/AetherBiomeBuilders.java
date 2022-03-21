@@ -3,8 +3,8 @@ package com.gildedgames.aether.common.world.biome;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.common.registry.worldgen.AetherConfiguredFeatures;
-import com.gildedgames.aether.common.world.feature.FeatureBuilders;
+import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
+import com.gildedgames.aether.common.world.feature.AetherFeatureBuilders;
 import net.minecraft.core.Holder;
 import net.minecraft.sounds.Music;
 import net.minecraft.world.entity.MobCategory;
@@ -15,54 +15,50 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import java.util.List;
 
-public class AetherBiomeBuilder {
+public class AetherBiomeBuilders {
     // No fancy variations with trees are required, so inline these different tree decoration patterns instead
-    public static Biome skyrootGrove() {
+    public static Biome skyrootGroveBiome() {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder()
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(FeatureBuilders.treeBlendDensity(2))));
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatureBuilders.treeBlendDensity(2))));
     }
 
-    public static Biome skyrootForest() {
+    public static Biome skyrootForestBiome() {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder()
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(FeatureBuilders.treeBlendDensity(2)))
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherConfiguredFeatures.SKYROOT_TREE_CONFIGURED_FEATURE), List.of(
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatureBuilders.treeBlendDensity(2)))
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherFeatures.ConfiguredFeatures.SKYROOT_TREE_CONFIGURED_FEATURE), List.of(
                         CountOnEveryLayerPlacement.of(1),
-                        FeatureBuilders.copyBlockSurvivability(AetherBlocks.SKYROOT_SAPLING.get()))))));
+                        AetherFeatureBuilders.copyBlockSurvivability(AetherBlocks.SKYROOT_SAPLING.get()))))));
     }
 
-    public static Biome skyrootThicket() {
+    public static Biome skyrootThicketBiome() {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder()
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherConfiguredFeatures.SKYROOT_TREE_CONFIGURED_FEATURE), List.of(
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherFeatures.ConfiguredFeatures.SKYROOT_TREE_CONFIGURED_FEATURE), List.of(
                         CountOnEveryLayerPlacement.of(1),
-                        FeatureBuilders.copyBlockSurvivability(AetherBlocks.SKYROOT_SAPLING.get())))))
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(FeatureBuilders.treeBlendDensity(3))));
+                        AetherFeatureBuilders.copyBlockSurvivability(AetherBlocks.SKYROOT_SAPLING.get())))))
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatureBuilders.treeBlendDensity(3))));
     }
 
-    public static Biome goldenForest() {
-        return makeDefaultBiome(0xb1_ff_cb, new BiomeGenerationSettings.Builder()
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURED_FEATURE), List.of(
+    public static Biome goldenForestBiome() {
+        return makeDefaultBiome(new BiomeGenerationSettings.Builder()
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherFeatures.ConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURED_FEATURE), List.of(
                         CountOnEveryLayerPlacement.of(2),
-                        FeatureBuilders.copyBlockSurvivability(AetherBlocks.GOLDEN_OAK_SAPLING.get())))))
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(FeatureBuilders.treeBlendDensity(2))));
+                        AetherFeatureBuilders.copyBlockSurvivability(AetherBlocks.GOLDEN_OAK_SAPLING.get())))))
+                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatureBuilders.treeBlendDensity(2))));
     }
 
     public static Biome makeDefaultBiome(BiomeGenerationSettings.Builder builder) {
-        return makeDefaultBiome(0xb1_ff_cb, builder);
-    }
-
-    public static Biome makeDefaultBiome(int grassColor, BiomeGenerationSettings.Builder builder) {
         return fullDefinition(
                 Biome.Precipitation.NONE,
                 Biome.BiomeCategory.NONE,
-                0.8f,
-                0.0f,
+                0.8F,
+                0.0F,
                 new BiomeSpecialEffects.Builder()
                         .fogColor(0x93_93_bc)
                         .skyColor(0xc0_c0_ff)
                         .waterColor(0x3f_76_e4)
                         .waterFogColor(0x05_05_33)
-                        .grassColorOverride(grassColor)
-                        .foliageColorOverride(grassColor)
+                        .grassColorOverride(0xb1_ff_cb)
+                        .foliageColorOverride(0xb1_ff_cb)
                         .grassColorModifier(BiomeSpecialEffects.GrassColorModifier.NONE)
                         .backgroundMusic(new Music(AetherSoundEvents.MUSIC_AETHER.get(), 12000, 24000, true))
                         .build(),
@@ -120,29 +116,20 @@ public class AetherBiomeBuilder {
         );
     }
 
-//    public static Biome makeEmptyBiome() {
-//        return AetherBiomeBuilder.fullDefinition(
-//                Biome.Precipitation.NONE,
-//                Biome.BiomeCategory.NONE,
-//                0,
-//                0,
-//                new BiomeSpecialEffects.Builder().fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build(),
-//                new MobSpawnSettings.Builder().build(),
-//                new BiomeGenerationSettings.Builder().build(),
-//                Biome.TemperatureModifier.NONE
-//        );
-//    }
+    public static Biome makeBlankBiome() {
+        return fullDefinition(
+                Biome.Precipitation.NONE,
+                Biome.BiomeCategory.NONE,
+                0,
+                0,
+                new BiomeSpecialEffects.Builder().fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build(),
+                new MobSpawnSettings.Builder().build(),
+                new BiomeGenerationSettings.Builder().build(),
+                Biome.TemperatureModifier.NONE
+        );
+    }
 
-    public static Biome fullDefinition(
-            Biome.Precipitation precipitation,
-            Biome.BiomeCategory category,
-            float temperature,
-            float downfall,
-            BiomeSpecialEffects effects,
-            MobSpawnSettings spawnSettings,
-            BiomeGenerationSettings generationSettings,
-            Biome.TemperatureModifier temperatureModifier
-    ) {
+    public static Biome fullDefinition(Biome.Precipitation precipitation, Biome.BiomeCategory category, float temperature, float downfall, BiomeSpecialEffects effects, MobSpawnSettings spawnSettings, BiomeGenerationSettings generationSettings, Biome.TemperatureModifier temperatureModifier) {
         return new Biome.BiomeBuilder()
                 .precipitation(precipitation)
                 .biomeCategory(category)
@@ -152,7 +139,6 @@ public class AetherBiomeBuilder {
                 .mobSpawnSettings(spawnSettings)
                 .generationSettings(generationSettings)
                 .temperatureAdjustment(temperatureModifier)
-                .build()
-                ;
+                .build();
     }
 }

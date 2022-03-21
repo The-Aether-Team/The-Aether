@@ -10,20 +10,12 @@ import net.minecraft.world.level.dimension.LevelStem;
 
 public class AetherDimensions {
 	// NOT for API - If you are an addon author using this field, expect this field to change without warning!
-	private final static ResourceLocation AETHER_LEVEL_RL = new ResourceLocation(Aether.MODID, "the_aether");
+	private final static ResourceLocation AETHER_LEVEL_ID = new ResourceLocation(Aether.MODID, "the_aether");
 
 	// Dimension Type - Specifies logic that impacts an entire dimension
-	public static final ResourceKey<DimensionType> AETHER_DIMENSION_TYPE = ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, "hostile_paradise"));
+	public static final ResourceKey<DimensionType> AETHER_DIMENSION_TYPE = ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, "the_aether"));
 	// Level Stem - Begins the dimension's lifecycle
-	public static final ResourceKey<LevelStem> AETHER_WORLD_STEM = ResourceKey.create(Registry.LEVEL_STEM_REGISTRY, AetherDimensions.AETHER_LEVEL_RL);
+	public static final ResourceKey<LevelStem> AETHER_LEVEL_STEM = ResourceKey.create(Registry.LEVEL_STEM_REGISTRY, AetherDimensions.AETHER_LEVEL_ID);
 	// Level - Actual runtime dimension
-	public static final ResourceKey<Level> AETHER_WORLD = ResourceKey.create(Registry.DIMENSION_REGISTRY, AetherDimensions.AETHER_LEVEL_RL);
-
-//	public static <E> void register(ResourceKey<DimensionType> key, DimensionType settings) {
-//		BuiltinRegistries.register(BuiltinRegistries.ACCESS.registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY), key.location(), settings);
-//	}
-//
-//	static {
-//		register(AETHER_DIMENSION, AetherWorldProvider.aetherDimensionType());
-//	}
+	public static final ResourceKey<Level> AETHER_LEVEL = ResourceKey.create(Registry.DIMENSION_REGISTRY, AetherDimensions.AETHER_LEVEL_ID);
 }
