@@ -53,6 +53,6 @@ public class AetherWorldData extends AetherWorldProvider {
 
     @Override
     protected Path resolveTopPath(Path path) {
-        return path.resolve("data").resolve(Aether.MODID).resolve("worldgen");
+        return path.resolve("data");
     }
 }
