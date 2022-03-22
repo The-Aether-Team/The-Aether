@@ -94,7 +94,7 @@ public class Aether
     }
 
     @SubscribeEvent //This is not actually for registering RecipeSerializers.
-    public static void register(RegistryEvent.Register<RecipeSerializer<?>> evt) {
+    public static void register(RegistryEvent.Register<RecipeSerializer<?>> event) {
         SunAltarWhitelist.initialize();
 
         AetherLoot.init();
