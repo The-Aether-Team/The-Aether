@@ -11,7 +11,7 @@ public class AetherNoiseBuilders {
     private static final SurfaceRules.RuleSource GRASS_BLOCK = makeStateRule(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
     private static final SurfaceRules.RuleSource DIRT = makeStateRule(AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
 
-    public static NoiseGeneratorSettings aetherNoiseSettings() {
+    public static NoiseGeneratorSettings skylandsNoiseSettings() {
         return new NoiseGeneratorSettings(
                 //new StructureSettings(Optional.empty(), Map.of(
                 //        //AetherStructures.BRONZE_DUNGEON_INSTANCE, new StructureFeatureConfiguration(6, 4, 16811681)//,

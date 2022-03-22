@@ -1,9 +1,19 @@
 package com.gildedgames.aether.core.util;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 
 public final class LevelUtil {
+    public static boolean isPortalDestination(Level level) {
+        return getPortalDestination().equals(level.dimension());
+    }
+
+    public static ResourceKey<Level> getPortalDestination() {
+        return AetherDimensions.AETHER_LEVEL; // TODO Config
+    }
+
     public static boolean sunSpiritControlsDaycycle(Level level) {
         return isHostileParadise(level); // TODO AetherTags.Dimensions.SUN_SPIRIT_CONTROLS_DAYCYCLE
     }

@@ -18,12 +18,4 @@ public class AetherDimensions {
 	public static final ResourceKey<LevelStem> AETHER_LEVEL_STEM = ResourceKey.create(Registry.LEVEL_STEM_REGISTRY, AetherDimensions.AETHER_LEVEL_ID);
 	// Level - Actual runtime dimension
 	public static final ResourceKey<Level> AETHER_LEVEL = ResourceKey.create(Registry.DIMENSION_REGISTRY, AetherDimensions.AETHER_LEVEL_ID);
-
-	public static boolean isPortalDestination(Level level) {
-		return getPortalDestination().equals(level.dimension());
-	}
-
-	public static ResourceKey<Level> getPortalDestination() {
-		return AetherDimensions.AETHER_LEVEL; // TODO Config
-	}
 }

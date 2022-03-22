@@ -124,7 +124,7 @@ public class AetherPortalBlock extends Block
 		Level serverworld = entity.level;
 		if (serverworld != null) {
 			MinecraftServer minecraftserver = serverworld.getServer();
-			ResourceKey<Level> where2go = LevelUtil.shouldReturnPlayerToOverworld(entity.level) ? Level.OVERWORLD : AetherDimensions.getPortalDestination();
+			ResourceKey<Level> where2go = LevelUtil.shouldReturnPlayerToOverworld(entity.level) ? Level.OVERWORLD : LevelUtil.getPortalDestination();
 			if (minecraftserver != null) {
 				ServerLevel destination = minecraftserver.getLevel(where2go);
 				if (destination != null && minecraftserver.isNetherEnabled() && !entity.isPassenger()) {

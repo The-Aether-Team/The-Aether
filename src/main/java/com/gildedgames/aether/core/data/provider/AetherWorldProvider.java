@@ -55,7 +55,7 @@ public abstract class AetherWorldProvider extends WorldProvider {
 
         Holder.Reference<DimensionType> dimensionType = Holder.Reference.createStandAlone(dimensionTypeRegistry, AetherDimensions.AETHER_DIMENSION_TYPE);
         dimensionType.bind(AetherDimensions.AETHER_DIMENSION_TYPE, AetherDimensionBuilders.aetherDimensionType());
-        Holder<NoiseGeneratorSettings> worldNoiseSettings = noiseGeneratorSettingsRegistry.getHolderOrThrow(AetherNoiseGeneratorSettings.AETHER);
+        Holder<NoiseGeneratorSettings> worldNoiseSettings = noiseGeneratorSettingsRegistry.getHolderOrThrow(AetherNoiseGeneratorSettings.SKYLANDS);
 
         BiomeSource source = AetherBiomeBuilders.buildAetherBiomeSource(biomeRegistry);
         NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(structureSetRegistry, noiseParametersRegistry, source, 0L, worldNoiseSettings);
