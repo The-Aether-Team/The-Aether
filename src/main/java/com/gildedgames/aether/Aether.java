@@ -51,7 +51,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 @Mod(Aether.MODID)
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Aether
 {
     public static final String MODID = "aether";
@@ -70,7 +70,6 @@ public class Aether
                 AetherEntityTypes.ENTITIES,
                 AetherEffects.EFFECTS,
                 AetherItems.ITEMS,
-                AetherFeatures.FEATURES,
                 AetherParticleTypes.PARTICLES,
                 AetherPOI.POI,
                 AetherSoundEvents.SOUNDS,

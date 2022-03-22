@@ -60,30 +60,6 @@ public abstract class AetherWorldProvider extends WorldProvider {
 
     protected abstract void dumpRegistries(RegistryAccess registryAccess, HashCache cache, Path path, DynamicOps<JsonElement> dynamicOps);
 
-    protected Registry<Biome> registerBiomes() {
-        WritableRegistry<Biome> writableRegistry = new MappedRegistry<>(Registry.BIOME_REGISTRY, Lifecycle.experimental(), null);
-        for (Map.Entry<ResourceKey<Biome>, Supplier<Biome>> biomeEntry : AetherBiomes.BIOME_SETTINGS.entrySet()) {
-            writableRegistry.register(biomeEntry.getKey(), biomeEntry.getValue().get(), Lifecycle.stable());
-        }
-        return writableRegistry;
-    }
-
-    protected Registry<ConfiguredFeature<?, ?>> registerConfiguredFeatures() {
-        WritableRegistry<ConfiguredFeature<?, ?>> writableRegistry = new MappedRegistry<>(Registry.CONFIGURED_FEATURE_REGISTRY, Lifecycle.experimental(), null);
-        for (Map.Entry<ResourceKey<ConfiguredFeature<?, ?>>, Supplier<ConfiguredFeature<?, ?>>> configuredFeatureEntry : AetherFeatures.ConfiguredFeatures.CONFIGURED_FEATURES.entrySet()) {
-            writableRegistry.register(configuredFeatureEntry.getKey(), configuredFeatureEntry.getValue().get(), Lifecycle.stable());
-        }
-        return writableRegistry;
-    }
-
-    protected Registry<PlacedFeature> registerPlacedFeatures() {
-        WritableRegistry<PlacedFeature> writableRegistry = new MappedRegistry<>(Registry.PLACED_FEATURE_REGISTRY, Lifecycle.experimental(), null);
-        for (Map.Entry<ResourceKey<PlacedFeature>, Supplier<PlacedFeature>> placedFeatureEntry : AetherFeatures.PlacedFeatures.PLACED_FEATURES.entrySet()) {
-            writableRegistry.register(placedFeatureEntry.getKey(), placedFeatureEntry.getValue().get(), Lifecycle.stable());
-        }
-        return writableRegistry;
-    }
-
     protected Registry<LevelStem> registerLevelStem(RegistryAccess registryAccess) {
         WritableRegistry<LevelStem> writableRegistry = new MappedRegistry<>(Registry.LEVEL_STEM_REGISTRY, Lifecycle.experimental(), null);
 

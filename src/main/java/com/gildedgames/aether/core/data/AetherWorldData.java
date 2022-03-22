@@ -41,12 +41,8 @@ public class AetherWorldData extends AetherWorldProvider {
         return "Aether World Data";
     }
 
-    //TODO: Anything that tries to call from something that uses a configured feature in it just fails.
     @Override
     protected void dumpRegistries(RegistryAccess registryAccess, HashCache cache, Path path, DynamicOps<JsonElement> dynamicOps) {
-        this.dumpRegistry(path, cache, dynamicOps, Registry.BIOME_REGISTRY, registerBiomes(), Biome.DIRECT_CODEC);
-        this.dumpRegistry(path, cache, dynamicOps, Registry.CONFIGURED_FEATURE_REGISTRY, registerConfiguredFeatures(), ConfiguredFeature.DIRECT_CODEC);
-        this.dumpRegistry(path, cache, dynamicOps, Registry.PLACED_FEATURE_REGISTRY, registerPlacedFeatures(), PlacedFeature.DIRECT_CODEC);
         this.dumpRegistry(path, cache, dynamicOps, Registry.LEVEL_STEM_REGISTRY, registerLevelStem(registryAccess), LevelStem.CODEC);
     }
 

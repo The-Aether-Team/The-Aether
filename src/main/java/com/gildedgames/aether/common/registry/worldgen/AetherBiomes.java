@@ -15,7 +15,6 @@ import java.util.function.Supplier;
 
 public class AetherBiomes {
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, Aether.MODID);
-    public static final HashMap<ResourceKey<Biome>, Supplier<Biome>> BIOME_SETTINGS = new HashMap<>();
 
     public static final RegistryObject<Biome> SKYROOT_GROVE = register(AetherBiomes.Keys.SKYROOT_GROVE, AetherBiomeBuilders::skyrootGroveBiome);
     public static final RegistryObject<Biome> SKYROOT_FOREST = register(AetherBiomes.Keys.SKYROOT_FOREST, AetherBiomeBuilders::skyrootForestBiome);
@@ -23,8 +22,7 @@ public class AetherBiomes {
     public static final RegistryObject<Biome> GOLDEN_FOREST = register(AetherBiomes.Keys.GOLDEN_FOREST, AetherBiomeBuilders::goldenForestBiome);
 
     private static RegistryObject<Biome> register(ResourceKey<Biome> biomeResourceKey, Supplier<Biome> biome) {
-        BIOME_SETTINGS.put(biomeResourceKey, biome);
-        return BIOMES.register(biomeResourceKey.location().getPath(), AetherBiomeBuilders::makeBlankBiome);
+        return BIOMES.register(biomeResourceKey.location().getPath(), biome);
     }
 
     public static class Keys {

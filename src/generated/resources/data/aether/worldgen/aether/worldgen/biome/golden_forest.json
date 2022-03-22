@@ -1,0 +1,156 @@
+{
+  "carvers": {},
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      {
+        "feature": "aether:golden_oak_tree",
+        "placement": [
+          {
+            "count": 2,
+            "type": "minecraft:count_on_every_layer"
+          },
+          {
+            "predicate": {
+              "state": {
+                "Properties": {
+                  "stage": "0"
+                },
+                "Name": "aether:golden_oak_sapling"
+              },
+              "type": "minecraft:would_survive"
+            },
+            "type": "minecraft:block_predicate_filter"
+          }
+        ]
+      },
+      {
+        "feature": "aether:aether_tree_mix",
+        "placement": [
+          {
+            "count": 2,
+            "type": "minecraft:count_on_every_layer"
+          }
+        ]
+      }
+    ]
+  ],
+  "spawners": {
+    "monster": [
+      {
+        "type": "aether:whirlwind",
+        "weight": 9,
+        "minCount": 2,
+        "maxCount": 2
+      },
+      {
+        "type": "aether:evil_whirlwind",
+        "weight": 1,
+        "minCount": 2,
+        "maxCount": 2
+      },
+      {
+        "type": "aether:cockatrice",
+        "weight": 100,
+        "minCount": 4,
+        "maxCount": 4
+      },
+      {
+        "type": "aether:zephyr",
+        "weight": 50,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "creature": [
+      {
+        "type": "aether:blue_swet",
+        "weight": 15,
+        "minCount": 3,
+        "maxCount": 4
+      },
+      {
+        "type": "aether:golden_swet",
+        "weight": 15,
+        "minCount": 3,
+        "maxCount": 4
+      },
+      {
+        "type": "aether:aechor_plant",
+        "weight": 29,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aether:phyg",
+        "weight": 12,
+        "minCount": 4,
+        "maxCount": 4
+      },
+      {
+        "type": "aether:aerbunny",
+        "weight": 11,
+        "minCount": 3,
+        "maxCount": 3
+      },
+      {
+        "type": "aether:sheepuff",
+        "weight": 10,
+        "minCount": 4,
+        "maxCount": 4
+      },
+      {
+        "type": "aether:moa",
+        "weight": 10,
+        "minCount": 3,
+        "maxCount": 3
+      },
+      {
+        "type": "aether:flying_cow",
+        "weight": 10,
+        "minCount": 4,
+        "maxCount": 4
+      },
+      {
+        "type": "aether:aerwhale",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {},
+  "forge:registry_name": "aether:golden_forest",
+  "precipitation": "none",
+  "temperature": 0.8,
+  "downfall": 0.0,
+  "category": "none",
+  "effects": {
+    "music": {
+      "sound": "aether:music.aether",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": true
+    },
+    "sky_color": 12632319,
+    "foliage_color": 11665355,
+    "grass_color": 11665355,
+    "fog_color": 9671612,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  }
+}

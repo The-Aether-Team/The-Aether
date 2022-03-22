@@ -116,19 +116,6 @@ public class AetherBiomeBuilders {
         );
     }
 
-    public static Biome makeBlankBiome() {
-        return fullDefinition(
-                Biome.Precipitation.NONE,
-                Biome.BiomeCategory.NONE,
-                0,
-                0,
-                new BiomeSpecialEffects.Builder().fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build(),
-                new MobSpawnSettings.Builder().build(),
-                new BiomeGenerationSettings.Builder().build(),
-                Biome.TemperatureModifier.NONE
-        );
-    }
-
     public static Biome fullDefinition(Biome.Precipitation precipitation, Biome.BiomeCategory category, float temperature, float downfall, BiomeSpecialEffects effects, MobSpawnSettings spawnSettings, BiomeGenerationSettings generationSettings, Biome.TemperatureModifier temperatureModifier) {
         return new Biome.BiomeBuilder()
                 .precipitation(precipitation)

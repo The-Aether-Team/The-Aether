@@ -8,7 +8,6 @@ import com.gildedgames.aether.common.world.feature.AetherFeatureBuilders;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import com.gildedgames.aether.common.world.gen.configuration.SimpleDiskConfiguration;
 import com.gildedgames.aether.common.world.gen.feature.AercloudFeature;
-import com.gildedgames.aether.common.world.gen.feature.HolystoneSphereFeature;
 import com.gildedgames.aether.common.world.gen.feature.SimpleDiskFeature;
 import com.gildedgames.aether.common.world.gen.placement.ElevationAdjustment;
 import com.gildedgames.aether.common.world.gen.placement.ElevationFilter;
@@ -25,7 +24,6 @@ import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
@@ -43,32 +41,44 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.function.Supplier;
 
+@Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherFeatures {
-    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Aether.MODID);
+    public static Feature<SimpleDiskConfiguration> SIMPLE_DISK = new SimpleDiskFeature(SimpleDiskConfiguration.CODEC);
+    public static Feature<AercloudConfiguration> AERCLOUD = new AercloudFeature(AercloudConfiguration.CODEC);
+    //public static Feature<NoneFeatureConfiguration> HOLYSTONE_SPHERE = new HolystoneSphereFeature(NoneFeatureConfiguration.CODEC); // This is for Gold Dungeons
 
-    public static final RegistryObject<Feature<SimpleDiskConfiguration>> SIMPLE_DISK = FEATURES.register("simple_disk", () -> new SimpleDiskFeature(SimpleDiskConfiguration.CODEC));
-    public static final RegistryObject<Feature<AercloudConfiguration>> AERCLOUD = FEATURES.register("aercloud", () -> new AercloudFeature(AercloudConfiguration.CODEC));
-    public static final RegistryObject<Feature<NoneFeatureConfiguration>> HOLYSTONE_SPHERE = FEATURES.register("holystone_sphere", () -> new HolystoneSphereFeature(NoneFeatureConfiguration.CODEC)); // This is for Gold Dungeons
+    @SubscribeEvent //This cannot be moved to DeferredRegister or the features won't be able to be added to the biomes at registry time.
+    public static void register(RegistryEvent.Register<Feature<?>> event) {
+        IForgeRegistry<Feature<?>> registry = event.getRegistry();
+        register(registry, "simple_disk", SIMPLE_DISK);
+        register(registry, "aercloud", AERCLOUD);
+    }
+
+    private static <C extends FeatureConfiguration, F extends Feature<C>> void register(IForgeRegistry<Feature<?>> registry, String name, F value) {
+        value.setRegistryName(new ResourceLocation(Aether.MODID, name).toString());
+        registry.register(value);
+    }
 
     public static class ConfiguredFeatures {
         public static final HashMap<ResourceKey<ConfiguredFeature<?, ?>>, Supplier<ConfiguredFeature<?, ?>>> CONFIGURED_FEATURES = new HashMap<>();
 
-        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> COLD_AERCLOUD = register("cold_aercloud", AERCLOUD.get(),
+        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> COLD_AERCLOUD = register("cold_aercloud", AERCLOUD,
                 AetherFeatureBuilders.createAercloudConfig(16, States.COLD_AERCLOUD));
-        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> BLUE_AERCLOUD = register("blue_aercloud", AERCLOUD.get(),
+        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> BLUE_AERCLOUD = register("blue_aercloud", AERCLOUD,
                 AetherFeatureBuilders.createAercloudConfig(8, States.BLUE_AERCLOUD));
-        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> GOLDEN_AERCLOUD = register("golden_aercloud", AERCLOUD.get(),
+        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> GOLDEN_AERCLOUD = register("golden_aercloud", AERCLOUD,
                 AetherFeatureBuilders.createAercloudConfig(4, States.GOLDEN_AERCLOUD));
-        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> PINK_AERCLOUD = register("pink_aercloud", AERCLOUD.get(),
+        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> PINK_AERCLOUD = register("pink_aercloud", AERCLOUD,
                 AetherFeatureBuilders.createAercloudConfig(1, States.PINK_AERCLOUD));
 
         public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> SKYROOT_TREE_CONFIGURED_FEATURE = register("skyroot_tree", Feature.TREE,
@@ -96,7 +106,7 @@ public class AetherFeatures {
                         .add(States.BERRY_BUSH, 1)), 64
                 ));
 
-        public static final Holder<ConfiguredFeature<SimpleDiskConfiguration, ?>> QUICKSOIL_SHELF_CONFIGURED_FEATURE = register("quicksoil_shelf", SIMPLE_DISK.get(),
+        public static final Holder<ConfiguredFeature<SimpleDiskConfiguration, ?>> QUICKSOIL_SHELF_CONFIGURED_FEATURE = register("quicksoil_shelf", SIMPLE_DISK,
                 new SimpleDiskConfiguration(
                         UniformFloat.of(Mth.sqrt(12), 5), // sqrt(12) is old static value
                         BlockStateProvider.simple(States.QUICKSOIL),
