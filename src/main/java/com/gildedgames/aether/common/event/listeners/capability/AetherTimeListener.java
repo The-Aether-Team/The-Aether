@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.event.listeners.capability;
 
-import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.gildedgames.aether.core.util.AetherSleepStatus;
 import com.gildedgames.aether.core.util.LevelUtil;
@@ -17,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class AetherTimeListener
 {
+    // TODO Rebuild into a Level set
     public static Level world;
 
     @SubscribeEvent
@@ -33,7 +33,7 @@ public class AetherTimeListener
         if (player != null && player.level instanceof ServerLevel world) {
             MinecraftServer server = world.getServer();
             for (ServerLevel serverworld : server.getAllLevels()) {
-                if (LevelUtil.isLevelAether(serverworld)) {
+                if (LevelUtil.sunSpiritControlsDaycycle(serverworld)) {
                     AetherTime.get(world).ifPresent(AetherTime::syncToClient);
                 }
             }
@@ -45,24 +45,24 @@ public class AetherTimeListener
      */
     @SubscribeEvent
     public static void onWorldLoad(WorldEvent.Load event) {
-        if(event.getWorld() instanceof Level level && LevelUtil.isLevelAether(level)) {
-            world = level;
-            if(!level.isClientSide) {
-                ((ServerLevel)level).sleepStatus = new AetherSleepStatus();
-            }
-        }
+        if (!(event.getWorld() instanceof Level level) || !LevelUtil.sunSpiritControlsDaycycle(level)) return;
+
+        world = level;
+
+        if(!level.isClientSide && level instanceof ServerLevel serverLevel)
+            serverLevel.sleepStatus = new AetherSleepStatus();
     }
 
     @SubscribeEvent
     public static void onWorldUnload(WorldEvent.Unload event) {
-        if(event.getWorld() instanceof Level level && LevelUtil.isLevelAether(level)) {
+        if(event.getWorld() instanceof Level level && LevelUtil.sunSpiritControlsDaycycle(level)) {
             world = null;
         }
     }
 
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
-        if(LevelUtil.isLevelAether(event.world) && event.phase == TickEvent.Phase.END) {
+        if(LevelUtil.sunSpiritControlsDaycycle(event.world) && event.phase == TickEvent.Phase.END) {
             AetherTime.get(event.world).ifPresent(aetherTime -> aetherTime.serverTick((ServerLevel) event.world));
         }
     }

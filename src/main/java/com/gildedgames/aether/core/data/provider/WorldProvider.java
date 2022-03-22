@@ -41,20 +41,8 @@ public abstract class WorldProvider extends WorldgenRegistryDumpReport {
         this.generator = generator;
     }
 
-    @Override
-    public void run(HashCache p_194682_) {
-        Path path = this.generator.getOutputFolder();
-        RegistryAccess registryaccess = RegistryAccess.BUILTIN.get();
-        Registry<LevelStem> registry = DimensionType.defaultDimensions(registryaccess, 0L, false);
-        ChunkGenerator chunkgenerator = WorldGenSettings.makeDefaultOverworld(registryaccess, 0L, false);
-        Registry<LevelStem> registry1 = WorldGenSettings.withOverworld(registryaccess.ownedRegistryOrThrow(Registry.DIMENSION_TYPE_REGISTRY), registry, chunkgenerator);
-        DynamicOps<JsonElement> dynamicops = RegistryOps.create(JsonOps.INSTANCE, registryaccess);
-        RegistryAccess.knownRegistries().forEach(p_194713_ -> this.dumpRegistryCap(p_194682_, path, registryaccess, dynamicops, p_194713_));
-        this.dumpRegistry(path, p_194682_, dynamicops, Registry.LEVEL_STEM_REGISTRY, registry1, LevelStem.CODEC);
-    }
-
-    protected <T> void dumpRegistryCap(HashCache p_194684_, Path p_194685_, RegistryAccess p_194686_, DynamicOps<JsonElement> p_194687_, RegistryAccess.RegistryData<T> p_194688_) {
-        this.dumpRegistry(p_194685_, p_194684_, p_194687_, p_194688_.key(), p_194686_.ownedRegistryOrThrow(p_194688_.key()), p_194688_.codec());
+    protected <T> void dumpRegistryCap(HashCache cache, Path pathRoot, RegistryAccess registryAccess, DynamicOps<JsonElement> jsonOps, RegistryAccess.RegistryData<T> p_194688_) {
+        this.dumpRegistry(pathRoot, cache, jsonOps, p_194688_.key(), registryAccess.ownedRegistryOrThrow(p_194688_.key()), p_194688_.codec());
     }
 
     protected <E, T extends Registry<E>> void dumpRegistry(Path p_194698_, HashCache p_194699_, DynamicOps<JsonElement> p_194700_, ResourceKey<? extends T> p_194701_, T p_194702_, Encoder<E> p_194703_) {

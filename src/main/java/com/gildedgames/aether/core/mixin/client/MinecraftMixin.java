@@ -14,14 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Minecraft.class)
 public class MinecraftMixin
 {
-    @Inject(at = @At(value = "RETURN", ordinal = 2), method = "getSituationalMusic", cancellable = true)
-    public void getSituationalMusic_Dimension(CallbackInfoReturnable<Music> cir) {
-        Minecraft minecraft = (Minecraft) (Object) this;
-        if (minecraft.player != null && minecraft.level != null && LevelUtil.isLevelAether(minecraft.player.level)) {
-            cir.setReturnValue(minecraft.player.level.getBiome(minecraft.player.blockPosition()).value().getBackgroundMusic().orElse(Musics.GAME));
-        }
-    }
-
     /**
      * {@link Minecraft#getSituationalMusic()}
      * Injector mixin to make sure the game recognizes the Aether menu and doesn't try to interrupt with its own music,

@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 
 public class AetherNoiseGeneratorSettings {
-    public static final ResourceKey<NoiseGeneratorSettings> AETHER = ResourceKey.create(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY, new ResourceLocation(Aether.MODID, "aether"));
+    public static final ResourceKey<NoiseGeneratorSettings> AETHER = ResourceKey.create(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY, new ResourceLocation(Aether.MODID, "skylands"));
 
     public static void register(ResourceKey<NoiseGeneratorSettings> pKey, NoiseGeneratorSettings pSettings) {
         BuiltinRegistries.register(BuiltinRegistries.NOISE_GENERATOR_SETTINGS, pKey.location(), pSettings);

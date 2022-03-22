@@ -6,6 +6,7 @@ import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
 
 import com.gildedgames.aether.client.registry.AetherKeys;
 import com.gildedgames.aether.common.event.listeners.DimensionListener;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
@@ -109,18 +110,16 @@ public class GuiListener
 		}
 		if (screen instanceof ReceivingLevelScreen) {
 			if (Minecraft.getInstance().player != null) {
-				if (LevelUtil.isLevelAether(Minecraft.getInstance().player.level)) {
+				if (AetherDimensions.isPortalDestination(Minecraft.getInstance().player.level)) {
 					Screen.drawCenteredString(matrixStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.ascending"), screen.width / 2, 50, 16777215);
-				} else {
-					if (DimensionListener.leavingAether) {
-						Screen.drawCenteredString(matrixStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.descending"), screen.width / 2, 50, 16777215);
-					}
+				} else if (DimensionListener.playerLeavingAether) {
+					Screen.drawCenteredString(matrixStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.descending"), screen.width / 2, 50, 16777215);
 				}
 			}
 		}
 		if (screen instanceof ProgressScreen) {
 			if (Minecraft.getInstance().player != null) {
-				if (LevelUtil.isLevelAether(Minecraft.getInstance().player.level)) {
+				if (AetherDimensions.isPortalDestination(Minecraft.getInstance().player.level)) {
 					Screen.drawCenteredString(matrixStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.descending"), screen.width / 2, 50, 16777215);
 				} else {
 					AetherPlayer.get(Minecraft.getInstance().player).ifPresent(aetherPlayer -> {

@@ -4,6 +4,7 @@ import com.gildedgames.aether.Aether;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.*;
@@ -121,11 +122,33 @@ public class AetherTags {
 		}
 	}
 
+	public static class Dimensions {
+		public static final TagKey<LevelStem> SUN_SPIRIT_CONTROLS_DAYCYCLE = tag("sun_spirit_controls_daycycle");
+		public static final TagKey<LevelStem> DISPENSER_IGNITION_DISABLED = tag("dispenser_ignition_disabled");
+		public static final TagKey<LevelStem> USES_AETHER_ITEM_BAN = tag("uses_aether_item_ban");
+		public static final TagKey<LevelStem> REMOVES_WHEAT_SEED_DROP = tag("removes_wheat_seed_drop");
+		public static final TagKey<LevelStem> HAS_AEROGEL_FREEZING = tag("has_aerogel_freezing");
+		public static final TagKey<LevelStem> AETHER_PORTALS_RETURN_PLAYER = tag("aether_portals_return_player");
+		public static final TagKey<LevelStem> AETHER_PORTALS_CAN_FORM = tag("aether_portals_can_form");
+		public static final TagKey<LevelStem> PLAYER_FALLS_INTO_OVERWORLD = tag("player_falls_into_overworld");
+
+		// This should be our most general tag for any worlds that are "Aether-like"
+		// AYags above should reference this tag, for any dimensions added to this tag should apply for all logic above
+		public static final TagKey<LevelStem> HOSTILE_PARADISE = tag("hostile_paradise");
+
+		public static void init() { }
+
+		private static TagKey<LevelStem> tag(String name) {
+			return TagKey.create(Registry.LEVEL_STEM_REGISTRY, new ResourceLocation(Aether.MODID, name));
+		}
+	}
+
 	// Classloads all of the tags.
 	public static void init() {
 		Blocks.init();
 		Items.init();
 		Entities.init();
 		Fluids.init();
+		Dimensions.init();
 	}
 }

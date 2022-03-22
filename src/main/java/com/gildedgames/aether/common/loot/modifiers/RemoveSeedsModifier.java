@@ -21,7 +21,7 @@ public class RemoveSeedsModifier extends LootModifier {
     @Nonnull
     @Override
     public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        if (LevelUtil.isLevelAether(context.getLevel())) {
+        if (LevelUtil.shouldRemoveWheatSeedDrop(context.getLevel())) {
             generatedLoot.removeIf((itemStack) -> itemStack.is(Items.WHEAT_SEEDS));
         }
         return generatedLoot;

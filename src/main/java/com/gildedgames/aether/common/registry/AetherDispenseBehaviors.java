@@ -213,7 +213,7 @@ public class AetherDispenseBehaviors {
         @Nonnull
         @Override
         public ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
-            if (LevelUtil.isLevelAether(source.getLevel())) {
+            if (LevelUtil.isDispenserIgnitionDisabled(source.getLevel())) {
                 this.setSuccess(false);
                 return stack;
             } else {
@@ -231,7 +231,7 @@ public class AetherDispenseBehaviors {
         @Nonnull
         @Override
         protected ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
-            if (LevelUtil.isLevelAether(source.getLevel())) {
+            if (LevelUtil.isDispenserIgnitionDisabled(source.getLevel())) {
                 this.setSuccess(false);
                 return stack;
             } else {

@@ -173,8 +173,8 @@ public class AetherTeleporter implements ITeleporter
     @Nullable
     @Override
     public PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-        boolean isAether = LevelUtil.isLevelAether(destWorld);
-        if (LevelUtil.isLevelAether(entity.level) && !isAether) {
+        boolean isAether = LevelUtil.isPortalFormingAllowed(destWorld);
+        if (LevelUtil.isPortalFormingAllowed(entity.level) && !isAether) {
             return null;
         }
         else if(!this.hasFrame) {

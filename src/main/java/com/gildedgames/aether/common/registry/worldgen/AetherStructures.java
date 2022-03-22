@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 //TODO: Redone in 1.18.2
+// Further addendum: 1.19 will introduce changes that will be even more helpful https://youtu.be/Az_BA5ka8C4
 public class AetherStructures {
 //    public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Aether.MODID);
 //

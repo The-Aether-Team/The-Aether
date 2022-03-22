@@ -124,7 +124,7 @@ public class AetherPortalBlock extends Block
 		Level serverworld = entity.level;
 		if (serverworld != null) {
 			MinecraftServer minecraftserver = serverworld.getServer();
-			ResourceKey<Level> where2go = LevelUtil.isLevelAether(entity.level) ? Level.OVERWORLD : AetherDimensions.AETHER_LEVEL;
+			ResourceKey<Level> where2go = LevelUtil.shouldReturnPlayerToOverworld(entity.level) ? Level.OVERWORLD : AetherDimensions.getPortalDestination();
 			if (minecraftserver != null) {
 				ServerLevel destination = minecraftserver.getLevel(where2go);
 				if (destination != null && minecraftserver.isNetherEnabled() && !entity.isPassenger()) {
@@ -199,7 +199,7 @@ public class AetherPortalBlock extends Block
 	public static void onBlockRightClicked(PlayerInteractEvent.RightClickBlock event) {
         BlockHitResult hitVec = event.getHitVec();
         BlockPos pos = hitVec.getBlockPos().relative(hitVec.getDirection());
-		if (event.getItemStack().is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS)) {
+		if (event.getItemStack().is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS) && LevelUtil.isPortalFormingAllowed(event.getWorld())) {
 			if (!AetherConfig.COMMON.disable_aether_portal.get()) {
 				if (fillPortalBlocks(event.getWorld(), pos, event.getPlayer(), event.getHand(), event.getItemStack())) {
 					event.setCanceled(true);
@@ -215,7 +215,7 @@ public class AetherPortalBlock extends Block
 		BlockState blockstate = world.getBlockState(pos);
 		FluidState fluidstate = world.getFluidState(pos);
 		if (fluidstate.getType() == Fluids.WATER && !blockstate.isAir()) {
-			if (world.dimension() == Level.OVERWORLD || LevelUtil.isLevelAether(world)) {
+			if (LevelUtil.isPortalFormingAllowed(world)) {
 				boolean tryPortal = false;
 				for (Direction direction : Direction.values()) {
 					if (world.getBlockState(pos.relative(direction)).is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)) {
@@ -235,7 +235,7 @@ public class AetherPortalBlock extends Block
 	}
 
 	private static boolean fillPortalBlocks(Level world, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
-		if (world.dimension() == Level.OVERWORLD || LevelUtil.isLevelAether(world)) {
+		if (LevelUtil.isPortalFormingAllowed(world)) {
 			boolean tryPortal = false;
 			for (Direction direction : Direction.values()) {
 				if (world.getBlockState(pos.relative(direction)).is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)) {
@@ -267,7 +267,7 @@ public class AetherPortalBlock extends Block
 	}
 
 	public static boolean fillPortalBlocksWithoutContext(Level world, BlockPos pos, ItemStack stack) {
-		if (world.dimension() == Level.OVERWORLD || LevelUtil.isLevelAether(world)) {
+		if (LevelUtil.isPortalFormingAllowed(world)) {
 			boolean tryPortal = false;
 			for (Direction direction : Direction.values()) {
 				if (world.getBlockState(pos.relative(direction)).is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)) {

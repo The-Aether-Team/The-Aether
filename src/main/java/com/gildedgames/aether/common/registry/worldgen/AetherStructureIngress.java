@@ -27,9 +27,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-// FIXME: This class is needed because registering structures within the Minecraft core codebase is god-awful right now
-//  I'm not a fan of littering the main Aether mod class with this mess, so that's why these are here instead
-    //TODO: This can be removed now that we're in 1.18.2 when we start registering structures through datapacks.
+//TODO: This can be removed now that we're in 1.18.2 when we start registering structures through datapacks.
+// About goddamn time -Drull
+// Further addendum: 1.19 will introduce changes that will be even more helpful https://youtu.be/Az_BA5ka8C4
 @Deprecated // This class is NOT going to stay.
 public final class AetherStructureIngress {
 //    public static void registerEvents(IEventBus modEventBus) {
