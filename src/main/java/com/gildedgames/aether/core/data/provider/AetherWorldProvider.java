@@ -47,7 +47,6 @@ public abstract class AetherWorldProvider extends WorldProvider {
 
     protected void registerLevelStem(RegistryAccess registryAccess, HashCache cache, Path path, DynamicOps<JsonElement> dynamicOps) {
         WritableRegistry<LevelStem> writableRegistry = new MappedRegistry<>(Registry.LEVEL_STEM_REGISTRY, Lifecycle.experimental(), null);
-
         Registry<DimensionType> dimensionTypeRegistry = registryAccess.registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY);
         Registry<Biome> biomeRegistry = registryAccess.registryOrThrow(Registry.BIOME_REGISTRY);
         Registry<StructureSet> structureSetRegistry = registryAccess.registryOrThrow(Registry.STRUCTURE_SET_REGISTRY);
@@ -56,8 +55,6 @@ public abstract class AetherWorldProvider extends WorldProvider {
 
         Holder.Reference<DimensionType> dimensionType = Holder.Reference.createStandAlone(dimensionTypeRegistry, AetherDimensions.AETHER_DIMENSION_TYPE);
         dimensionType.bind(AetherDimensions.AETHER_DIMENSION_TYPE, AetherDimensionBuilders.aetherDimensionType());
-        //Holder<DimensionType> dimensionType = RegistryUtil.register(dimensionTypeRegistry, "the_aether", AetherDimensionBuilders.aetherDimensionType());
-        //Holder<DimensionType> dimensionType = dimensionTypeRegistry.getHolderOrThrow(AetherDimensions.AETHER_DIMENSION_TYPE);
         Holder<NoiseGeneratorSettings> worldNoiseSettings = noiseGeneratorSettingsRegistry.getHolderOrThrow(AetherNoiseGeneratorSettings.AETHER);
 
         BiomeSource source = AetherBiomeBuilders.buildAetherBiomeSource(biomeRegistry);
