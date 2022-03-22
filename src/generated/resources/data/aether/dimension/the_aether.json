@@ -157,7 +157,7 @@
       "type": "minecraft:multi_noise"
     },
     "seed": 0,
-    "settings": "aether:aether",
+    "settings": "aether:skylands",
     "type": "minecraft:noise"
   }
 }

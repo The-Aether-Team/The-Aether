@@ -31,7 +31,7 @@ public class AetherNoiseBuilders {
                 Blocks.WATER.defaultBlockState(),
                 NoiseRouterData.overworldWithoutCaves(NoiseSettings.FLOATING_ISLANDS_NOISE_SETTINGS),
                 aetherSurfaceRules(),
-                Integer.MIN_VALUE, // seaLevel
+                -64, // seaLevel
                 false, // disableMobGeneration
                 false, // aquifersEnabled
                 false, // oreVeinsEnabled
