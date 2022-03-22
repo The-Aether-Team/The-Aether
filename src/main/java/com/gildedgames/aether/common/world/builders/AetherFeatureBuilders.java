@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.world.feature;
+package com.gildedgames.aether.common.world.builders;
 
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;

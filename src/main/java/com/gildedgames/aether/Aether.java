@@ -9,6 +9,7 @@ import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
 import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.common.registry.worldgen.AetherBiomes;
 import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
+import com.gildedgames.aether.common.registry.worldgen.AetherNoiseGeneratorSettings;
 import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.*;
@@ -103,6 +104,8 @@ public class Aether
         AetherRecipes.RecipeTypes.init(); //TODO: Make sure this is registered in the right spot.
 
         AetherBlocks.registerWoodTypes();
+
+        AetherNoiseGeneratorSettings.init();
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {

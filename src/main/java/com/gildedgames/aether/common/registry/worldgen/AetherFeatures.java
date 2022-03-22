@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
-import com.gildedgames.aether.common.world.feature.AetherFeatureBuilders;
+import com.gildedgames.aether.common.world.builders.AetherFeatureBuilders;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import com.gildedgames.aether.common.world.gen.configuration.SimpleDiskConfiguration;
 import com.gildedgames.aether.common.world.gen.feature.AercloudFeature;
@@ -13,11 +13,9 @@ import com.gildedgames.aether.common.world.gen.placement.ElevationAdjustment;
 import com.gildedgames.aether.common.world.gen.placement.ElevationFilter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -46,10 +44,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.OptionalInt;
-import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherFeatures {
@@ -70,8 +66,6 @@ public class AetherFeatures {
     }
 
     public static class ConfiguredFeatures {
-        public static final HashMap<ResourceKey<ConfiguredFeature<?, ?>>, Supplier<ConfiguredFeature<?, ?>>> CONFIGURED_FEATURES = new HashMap<>();
-
         public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> COLD_AERCLOUD = register("cold_aercloud", AERCLOUD,
                 AetherFeatureBuilders.createAercloudConfig(16, States.COLD_AERCLOUD));
         public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> BLUE_AERCLOUD = register("blue_aercloud", AERCLOUD,
@@ -135,16 +129,11 @@ public class AetherFeatures {
                 ));
 
         public static <FC extends FeatureConfiguration, F extends Feature<FC>> Holder<ConfiguredFeature<FC, ?>> register(String name, F feature, FC configuration) {
-            ResourceKey<ConfiguredFeature<?, ?>> resourceKey = ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, new ResourceLocation(Aether.MODID, name));
-            ConfiguredFeature<FC, ?> configuredFeature =  new ConfiguredFeature<>(feature, configuration);
-            CONFIGURED_FEATURES.put(resourceKey, () -> configuredFeature);
-            return BuiltinRegistries.registerExact(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name).toString(), configuredFeature);
+            return BuiltinRegistries.registerExact(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name).toString(), new ConfiguredFeature<>(feature, configuration));
         }
     }
 
     public static class PlacedFeatures {
-        public static final HashMap<ResourceKey<PlacedFeature>, Supplier<PlacedFeature>> PLACED_FEATURES = new HashMap<>();
-
         public static final Holder<PlacedFeature> COLD_AERCLOUD_PLACED_FEATURE = register("cold_aercloud", ConfiguredFeatures.COLD_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(128, 5));
         public static final Holder<PlacedFeature> BLUE_AERCLOUD_PLACED_FEATURE = register("blue_aercloud", ConfiguredFeatures.BLUE_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(96, 5));
         public static final Holder<PlacedFeature> GOLDEN_AERCLOUD_PLACED_FEATURE = register("golden_aercloud", ConfiguredFeatures.GOLDEN_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(160, 5));
@@ -180,10 +169,7 @@ public class AetherFeatures {
                 AetherFeatureBuilders.commonOrePlacement(3, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(0), VerticalAnchor.belowTop(0))));
 
         public static Holder<PlacedFeature> register(String name, Holder<? extends ConfiguredFeature<?, ?>> configuredFeature, List<PlacementModifier> placementModifiers) {
-            ResourceKey<PlacedFeature> resourceKey = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, new ResourceLocation(Aether.MODID, name));
-            PlacedFeature placedFeature = new PlacedFeature(Holder.hackyErase(configuredFeature), List.copyOf(placementModifiers));
-            PLACED_FEATURES.put(resourceKey, () -> placedFeature);
-            return BuiltinRegistries.register(BuiltinRegistries.PLACED_FEATURE, new ResourceLocation(Aether.MODID, name).toString(), placedFeature);
+            return BuiltinRegistries.register(BuiltinRegistries.PLACED_FEATURE, new ResourceLocation(Aether.MODID, name).toString(), new PlacedFeature(Holder.hackyErase(configuredFeature), List.copyOf(placementModifiers)));
         }
 
         public static Holder<PlacedFeature> register(String name, Holder<? extends ConfiguredFeature<?, ?>> configuredFeature, PlacementModifier... placementModifiers) {

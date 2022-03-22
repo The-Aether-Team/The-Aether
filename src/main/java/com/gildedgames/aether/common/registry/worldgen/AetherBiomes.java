@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.registry.worldgen;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.world.biome.AetherBiomeBuilders;
+import com.gildedgames.aether.common.world.builders.AetherBiomeBuilders;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -10,7 +10,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.HashMap;
 import java.util.function.Supplier;
 
 public class AetherBiomes {
