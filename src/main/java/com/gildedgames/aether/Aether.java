@@ -8,7 +8,6 @@ import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
 import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
 import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.common.registry.worldgen.AetherBiomes;
-import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
 import com.gildedgames.aether.common.registry.worldgen.AetherNoiseGeneratorSettings;
 import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
@@ -89,8 +88,6 @@ public class Aether
         path.mkdirs();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
-
-        //AetherStructureIngress.registerEvents(modEventBus);
     }
 
     @SubscribeEvent //This is not actually for registering RecipeSerializers.
@@ -101,11 +98,10 @@ public class Aether
         AetherAdvancements.init();
         PlacementModifiers.init();
         AetherTags.init();
-        AetherRecipes.RecipeTypes.init(); //TODO: Make sure this is registered in the right spot.
+        AetherRecipes.RecipeTypes.init();
+        AetherNoiseGeneratorSettings.init();
 
         AetherBlocks.registerWoodTypes();
-
-        AetherNoiseGeneratorSettings.init();
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
