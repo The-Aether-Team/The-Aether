@@ -76,7 +76,7 @@ public class WeaponAbilityListener
                     ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
                     for (ItemEntity drop : event.getDrops()) {
                         ItemStack droppedStack = drop.getItem();
-                        if (!droppedStack.is(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS)) { //TODO: test
+                        if (!droppedStack.is(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS)) {
                             ItemEntity dropEntity = new ItemEntity(entity.level, drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy());
                             dropEntity.setDefaultPickUpDelay();
                             newDrops.add(dropEntity);

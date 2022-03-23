@@ -60,7 +60,7 @@ public class NearestTaggedTargetGoal extends TargetGoal {
 
     protected void findTarget() {
         this.target = this.mob.level.getNearestEntity(this.mob.level.getEntities(EntityTypeTest.forClass(LivingEntity.class), this.getTargetSearchArea(this.getFollowDistance()),
-                (LivingEntity entity) -> entity.getType().is(this.targetTag)), this.targetConditions, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ()); //TODO: Test
+                (LivingEntity entity) -> entity.getType().is(this.targetTag)), this.targetConditions, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
     }
 
     /**

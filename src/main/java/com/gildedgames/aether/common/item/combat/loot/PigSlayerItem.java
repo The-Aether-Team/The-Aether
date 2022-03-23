@@ -67,7 +67,7 @@ public class PigSlayerItem extends SwordItem
 						ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
 						for (ItemEntity drop : event.getDrops()) {
 							ItemStack droppedStack = drop.getItem();
-							if (droppedStack.is(AetherTags.Items.PIG_DROPS)) { //TODO: Test
+							if (droppedStack.is(AetherTags.Items.PIG_DROPS)) {
 								ItemEntity dropEntity = new ItemEntity(entity.level, drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy());
 								dropEntity.setDefaultPickUpDelay();
 								newDrops.add(dropEntity);
