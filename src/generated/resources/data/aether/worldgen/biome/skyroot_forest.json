@@ -1,13 +1,22 @@
 {
   "carvers": {},
   "features": [
+    [
+      "aether:quicksoil_shelf"
+    ],
     [],
     [],
     [],
     [],
     [],
-    [],
-    [],
+    [
+      "aether:aether_dirt_ore",
+      "aether:icestone_ore",
+      "aether:ambrosium_ore",
+      "aether:zanite_ore",
+      "aether:gravitite_ore_common",
+      "aether:gravitite_ore_dense"
+    ],
     [],
     [],
     [
@@ -40,7 +49,28 @@
             "type": "minecraft:block_predicate_filter"
           }
         ]
+      },
+      {
+        "feature": "aether:flower_patch",
+        "placement": [
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "heightmap": "MOTION_BLOCKING",
+            "type": "minecraft:heightmap"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
       }
+    ],
+    [
+      "aether:cold_aercloud",
+      "aether:blue_aercloud",
+      "aether:golden_aercloud",
+      "aether:pink_aercloud"
     ]
   ],
   "spawners": {

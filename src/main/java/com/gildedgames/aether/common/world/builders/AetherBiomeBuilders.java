@@ -144,7 +144,7 @@ public class AetherBiomeBuilders {
                         .build(),
                 builder
                         //// TODO GenerationStep.Decoration.RAW_GENERATION
-                        //.addFeature(GenerationStep.Decoration.RAW_GENERATION, AetherFeatureData.QUICKSOIL_SHELF_FEATURE)
+                        .addFeature(GenerationStep.Decoration.RAW_GENERATION, AetherFeatures.PlacedFeatures.QUICKSOIL_SHELF_PLACED_FEATURE)
                         ////  "aether:crystal_tree"
                         //// TODO GenerationStep.Decoration.LAKES
                         ////  "aether:water_lake"
@@ -163,19 +163,17 @@ public class AetherBiomeBuilders {
                         ////   "aether:tree_skyroot",
                         ////   "aether:tree_golden_oak",
                         ////   "aether:holiday_tree"
-                        //.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.Placements.COLD_AERCLOUD_PLACED_FEATURE)
-                        //.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.Placements.BLUE_AERCLOUD_PLACED_FEATURE)
-                        //.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.Placements.GOLDEN_AERCLOUD_PLACED_FEATURE)
-                        //.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.Placements.PINK_AERCLOUD_PLACED_FEATURE)
-                        //.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.Placements.SKYROOT_TREE_PLACED_FEATURE)
-                        //.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.Placements.GOLDEN_OAK_TREE_PLACED_FEATURE)
-                        //.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.Placements.FLOWER_PATCH_PLACED_FEATURE)
-                        //.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.Placements.ORE_AETHER_DIRT_PLACED_FEATURE)
-                        //.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.Placements.ORE_ICESTONE_PLACED_FEATURE)
-                        //.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.Placements.ORE_AMBROSIUM_PLACED_FEATURE)
-                        //.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.Placements.ORE_ZANITE_PLACED_FEATURE)
-                        //.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.Placements.ORE_GRAVITITE_COMMON_PLACED_FEATURE)
-                        //.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.Placements.ORE_GRAVITITE_DENSE_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.COLD_AERCLOUD_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.BLUE_AERCLOUD_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.GOLDEN_AERCLOUD_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.PINK_AERCLOUD_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.FLOWER_PATCH_PLACED_FEATURE.value())) //this probably isnt ideal but it can be looked into later
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_AETHER_DIRT_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_ICESTONE_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_AMBROSIUM_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_ZANITE_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_GRAVITITE_COMMON_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_GRAVITITE_DENSE_PLACED_FEATURE)
                         .build(),
                 Biome.TemperatureModifier.NONE
         );

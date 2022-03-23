@@ -139,11 +139,6 @@ public class AetherFeatures {
         public static final Holder<PlacedFeature> GOLDEN_AERCLOUD_PLACED_FEATURE = register("golden_aercloud", ConfiguredFeatures.GOLDEN_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(160, 5));
         public static final Holder<PlacedFeature> PINK_AERCLOUD_PLACED_FEATURE = register("pink_aercloud", ConfiguredFeatures.PINK_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(160, 7));
 
-        public static final Holder<PlacedFeature> SKYROOT_TREE_PLACED_FEATURE = register("skyroot_tree", ConfiguredFeatures.SKYROOT_TREE_CONFIGURED_FEATURE,
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(6, 0.1F, 1), AetherBlocks.SKYROOT_SAPLING.get()));
-        public static final Holder<PlacedFeature> GOLDEN_OAK_TREE_PLACED_FEATURE = register("golden_oak_tree", ConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURED_FEATURE,
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 1), AetherBlocks.GOLDEN_OAK_SAPLING.get()));
-
         public static final Holder<PlacedFeature> FLOWER_PATCH_PLACED_FEATURE = register("flower_patch", ConfiguredFeatures.FLOWER_PATCH_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
