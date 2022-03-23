@@ -38,6 +38,10 @@ public final class LevelUtil {
         return isHostileParadise(level); // TODO AetherTags.Dimensions.AETHER_PORTALS_RETURN_PLAYER
     }
 
+    public static boolean shouldPlayAetherMusic(Level level) {
+        return isHostileParadise(level);
+    }
+
     public static boolean isPortalFormingAllowed(Level level) {
         // TODO AetherTags.Dimensions.AETHER_PORTALS_CAN_FORM
         //  This is the only tag that features both the Aether and Overworld
