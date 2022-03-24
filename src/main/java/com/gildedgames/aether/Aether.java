@@ -8,6 +8,7 @@ import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
 import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
 import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.common.registry.worldgen.AetherBiomes;
+import com.gildedgames.aether.common.registry.worldgen.AetherFoliagePlacerTypes;
 import com.gildedgames.aether.common.registry.worldgen.AetherNoiseGeneratorSettings;
 import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
@@ -77,7 +78,8 @@ public class Aether
                 AetherBlockEntityTypes.BLOCK_ENTITIES,
                 AetherRecipes.RECIPE_SERIALIZERS,
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
-                AetherBiomes.BIOMES
+                AetherBiomes.BIOMES,
+                AetherFoliagePlacerTypes.FOLIAGE_PLACERS
         };
 
         for (DeferredRegister<?> register : registers) {

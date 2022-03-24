@@ -5,9 +5,11 @@ import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProp
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.world.builders.AetherFeatureBuilders;
+import com.gildedgames.aether.common.world.foliageplacer.CrystalFoliagePlacer;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import com.gildedgames.aether.common.world.gen.configuration.SimpleDiskConfiguration;
 import com.gildedgames.aether.common.world.gen.feature.AercloudFeature;
+import com.gildedgames.aether.common.world.gen.feature.CrystalIslandFeature;
 import com.gildedgames.aether.common.world.gen.feature.SimpleDiskFeature;
 import com.gildedgames.aether.common.world.gen.placement.ElevationAdjustment;
 import com.gildedgames.aether.common.world.gen.placement.ElevationFilter;
@@ -15,7 +17,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
-import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -52,12 +53,14 @@ public class AetherFeatures {
     public static Feature<SimpleDiskConfiguration> SIMPLE_DISK = new SimpleDiskFeature(SimpleDiskConfiguration.CODEC);
     public static Feature<AercloudConfiguration> AERCLOUD = new AercloudFeature(AercloudConfiguration.CODEC);
     //public static Feature<NoneFeatureConfiguration> HOLYSTONE_SPHERE = new HolystoneSphereFeature(NoneFeatureConfiguration.CODEC); // This is for Gold Dungeons
+    public static Feature<NoneFeatureConfiguration> CRYSTAL_ISLAND = new CrystalIslandFeature(NoneFeatureConfiguration.CODEC);
 
     @SubscribeEvent //This cannot be moved to DeferredRegister or the features won't be able to be added to the biomes at registry time.
     public static void register(RegistryEvent.Register<Feature<?>> event) {
         IForgeRegistry<Feature<?>> registry = event.getRegistry();
         register(registry, "simple_disk", SIMPLE_DISK);
         register(registry, "aercloud", AERCLOUD);
+        register(registry, "crystal_island", CRYSTAL_ISLAND);
     }
 
     private static <C extends FeatureConfiguration, F extends Feature<C>> void register(IForgeRegistry<Feature<?>> registry, String name, F value) {
@@ -74,6 +77,8 @@ public class AetherFeatures {
                 AetherFeatureBuilders.createAercloudConfig(4, States.GOLDEN_AERCLOUD));
         public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> PINK_AERCLOUD = register("pink_aercloud", AERCLOUD,
                 AetherFeatureBuilders.createAercloudConfig(1, States.PINK_AERCLOUD));
+
+        public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> CRYSTAL_ISLAND_CONFIGURED_FEATURE = register("crystal_island", CRYSTAL_ISLAND, NoneFeatureConfiguration.INSTANCE);
 
         public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> SKYROOT_TREE_CONFIGURED_FEATURE = register("skyroot_tree", Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
@@ -92,6 +97,21 @@ public class AetherFeatures {
                         new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
                         new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))
                 ).ignoreVines().build());
+
+        public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> CRYSTAL_TREE_CONFIGURED_FEATURE = register("crystal_tree", Feature.TREE,
+                new TreeConfiguration.TreeConfigurationBuilder(
+                        BlockStateProvider.simple(States.SKYROOT_LOG),
+                        new StraightTrunkPlacer(7, 0, 0),
+                        new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(AetherBlocks.CRYSTAL_LEAVES.get().defaultBlockState(), 4).add(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get().defaultBlockState(), 1).build()),
+                        new CrystalFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(6)),
+                        new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build());
+
+//        public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> HOLIDAY_TREE_FEATURE_BASE = register("crystal_tree", new TreeConfiguration.TreeConfigurationBuilder(
+//                BlockStateProvider.simple(AetherFeatureDataProvider.getDoubleDrops(AetherBlocks.SKYROOT_LOG)),
+//                new StraightTrunkPlacer(7, 0, 0),
+//                new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(AetherBlocks.HOLIDAY_LEAVES.get().defaultBlockState(), 4).add(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get().defaultBlockState(), 1).build()),
+//                new HolidayFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(6)),
+//                new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build());
 
         public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> FLOWER_PATCH_CONFIGURED_FEATURE = register("flower_patch", Feature.FLOWER,
                 AetherFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
@@ -138,6 +158,13 @@ public class AetherFeatures {
         public static final Holder<PlacedFeature> BLUE_AERCLOUD_PLACED_FEATURE = register("blue_aercloud", ConfiguredFeatures.BLUE_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(96, 5));
         public static final Holder<PlacedFeature> GOLDEN_AERCLOUD_PLACED_FEATURE = register("golden_aercloud", ConfiguredFeatures.GOLDEN_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(160, 5));
         public static final Holder<PlacedFeature> PINK_AERCLOUD_PLACED_FEATURE = register("pink_aercloud", ConfiguredFeatures.PINK_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(160, 7));
+
+        public static final Holder<PlacedFeature> CRYSTAL_ISLAND_PLACED_FEATURE = register("crystal_island", ConfiguredFeatures.CRYSTAL_ISLAND_CONFIGURED_FEATURE,
+                InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(80), VerticalAnchor.absolute(100)),
+                RarityFilter.onAverageOnceEvery(8));
+
+        //public static final PlacedFeature HOLIDAY_TREE_FEATURE = HOLIDAY_TREE_FEATURE_BASE.placed(VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 1), AetherBlocks.SKYROOT_SAPLING.get()));
 
         public static final Holder<PlacedFeature> FLOWER_PATCH_PLACED_FEATURE = register("flower_patch", ConfiguredFeatures.FLOWER_PATCH_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
@@ -188,9 +215,11 @@ public class AetherFeatures {
         public static final BlockState WHITE_FLOWER = AetherBlocks.WHITE_FLOWER.get().defaultBlockState();
         public static final BlockState BERRY_BUSH = AetherBlocks.BERRY_BUSH.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
 
-        public static final BlockState QUICKSOIL = AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
+        public static final BlockState QUICKSOIL = AetherBlocks.QUICKSOIL.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
 
+        public static final BlockState AETHER_GRASS_BLOCK = AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
         public static final BlockState AETHER_DIRT = AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
+        public static final BlockState HOLYSTONE = AetherBlocks.HOLYSTONE.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
         public static final BlockState ICESTONE = AetherBlocks.ICESTONE.get().defaultBlockState();
         public static final BlockState AMBROSIUM_ORE = AetherBlocks.AMBROSIUM_ORE.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
         public static final BlockState ZANITE_ORE = AetherBlocks.ZANITE_ORE.get().defaultBlockState();

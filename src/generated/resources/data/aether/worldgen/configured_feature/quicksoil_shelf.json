@@ -9,7 +9,7 @@
         "Properties": {
           "double_drops": "true"
         },
-        "Name": "aether:aether_dirt"
+        "Name": "aether:quicksoil"
       },
       "type": "minecraft:simple_state_provider"
     },
