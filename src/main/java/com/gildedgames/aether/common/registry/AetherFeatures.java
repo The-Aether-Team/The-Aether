@@ -32,7 +32,7 @@ public class AetherFeatures
 
     public static final RegistryObject<Feature<AercloudConfiguration>> AERCLOUD = FEATURES.register("aercloud", () -> new AercloudFeature(AercloudConfiguration.CODEC));
 //
-//    public static final RegistryObject<Feature<NoneFeatureConfiguration>> CRYSTAL_TREE = FEATURES.register("crystal_tree", () -> new CrystalTreeFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> CRYSTAL_ISLAND = FEATURES.register("crystal_tree", () -> new CrystalIslandFeature(NoneFeatureConfiguration.CODEC));
 //    public static final RegistryObject<Feature<NoneFeatureConfiguration>> HOLIDAY_TREE = FEATURES.register("holiday_tree", () -> new HolidayTreeFeature(NoneFeatureConfiguration.CODEC));
 //
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> HOLYSTONE_SPHERE = FEATURES.register("holystone_sphere", () -> new HolystoneSphereFeature(NoneFeatureConfiguration.CODEC)); // This is for Gold Dungeons
@@ -45,7 +45,9 @@ public class AetherFeatures
         public static final BlockState GOLDEN_OAK_LOG = AetherBlocks.GOLDEN_OAK_LOG.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
         public static final BlockState GOLDEN_OAK_LEAVES = AetherBlocks.GOLDEN_OAK_LEAVES.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
 
+        public static final BlockState AETHER_GRASS_BLOCK = AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
         public static final BlockState AETHER_DIRT = AetherBlocks.AETHER_DIRT.get().defaultBlockState();
+        public static final BlockState HOLYSTONE = AetherBlocks.HOLYSTONE.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
         public static final BlockState ICESTONE = AetherBlocks.ICESTONE.get().defaultBlockState();
         public static final BlockState AMBROSIUM_ORE = AetherBlocks.AMBROSIUM_ORE.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
         public static final BlockState ZANITE_ORE = AetherBlocks.ZANITE_ORE.get().defaultBlockState();
