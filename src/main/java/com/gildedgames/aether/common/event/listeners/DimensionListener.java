@@ -125,7 +125,7 @@ public class DimensionListener
     public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {
         // The level passed into shouldReturnPlayerToOverworld() is the dimension the player is leaving
         //  Meaning: We display the Descending GUI text to the player if they're about to leave a dimension that returns them to the OW
-        playerLeavingAether = event.getEntity().getLevel().dimensionTypeRegistration().is(AetherDimensions.AETHER_DIMENSION_TYPE) && event.getDimension() == Level.OVERWORLD;
+        playerLeavingAether = event.getEntity().level.dimension() == AetherDimensions.AETHER_LEVEL && event.getDimension() == Level.OVERWORLD;
     }
 
     @SubscribeEvent
