@@ -146,6 +146,7 @@ public class AetherBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.RAW_GENERATION, AetherFeatures.PlacedFeatures.QUICKSOIL_SHELF_PLACED_FEATURE)
                         //// TODO GenerationStep.Decoration.LAKES
                         ////  "aether:water_lake"
+                        .addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, AetherFeatures.PlacedFeatures.CRYSTAL_ISLAND_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_AETHER_DIRT_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_ICESTONE_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_AMBROSIUM_PLACED_FEATURE)
@@ -163,7 +164,6 @@ public class AetherBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.BLUE_AERCLOUD_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.GOLDEN_AERCLOUD_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.PINK_AERCLOUD_PLACED_FEATURE)
-                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.CRYSTAL_ISLAND_PLACED_FEATURE)
                         .build(),
                 Biome.TemperatureModifier.NONE
         );
