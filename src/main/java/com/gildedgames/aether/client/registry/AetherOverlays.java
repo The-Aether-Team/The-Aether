@@ -40,10 +40,7 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent(handler -> {
-                    gui.setupOverlayRenderState(true, false);
-                    renderAetherPortalOverlay(minecraft, window, handler, partialTicks);
-                });
+                AetherPlayer.get(player).ifPresent(handler -> renderAetherPortalOverlay(minecraft, window, handler, partialTicks));
             }
         });
         OverlayRegistry.registerOverlayTop("Inebriation Vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
@@ -51,10 +48,7 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent(handler -> {
-                    gui.setupOverlayRenderState(true, false);
-                    renderInebriationOverlay(minecraft, window, handler);
-                });
+                AetherPlayer.get(player).ifPresent(handler -> renderInebriationOverlay(minecraft, window, handler));
             }
         });
         OverlayRegistry.registerOverlayTop("Remedy Vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
@@ -62,10 +56,7 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent(handler -> {
-                    gui.setupOverlayRenderState(true, false);
-                    renderRemedyOverlay(minecraft, window, handler);
-                });
+                AetherPlayer.get(player).ifPresent(handler -> renderRemedyOverlay(minecraft, window, handler));
             }
         });
         OverlayRegistry.registerOverlayTop("Repulsion Shield Vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
@@ -73,10 +64,7 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent(handler -> {
-                    gui.setupOverlayRenderState(true, false);
-                    renderRepulsionShieldOverlay(minecraft, window, handler);
-                });
+                AetherPlayer.get(player).ifPresent(handler -> renderRepulsionShieldOverlay(minecraft, window, handler));
             }
         });
         OverlayRegistry.registerOverlayTop("Hammer Cooldown", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
@@ -84,7 +72,6 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                gui.setupOverlayRenderState(true, false);
                 renderHammerCooldownOverlay(pStack, minecraft, window, player);
             }
         });
@@ -93,7 +80,6 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                gui.setupOverlayRenderState(true, false);
                 renderMoaJumps(pStack, window, player);
             }
         });
@@ -168,6 +154,7 @@ public class AetherOverlays {
         alpha *= Math.sqrt(effectScale);
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(false);
+        RenderSystem.defaultBlendFunc();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, resource);
@@ -179,6 +166,7 @@ public class AetherOverlays {
         bufferbuilder.vertex(window.getGuiScaledWidth(), 0.0, -90.0).uv(1.0F, 0.0F).endVertex();
         bufferbuilder.vertex(0.0, 0.0, -90.0).uv(0.0F, 0.0F).endVertex();
         tessellator.end();
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.depthMask(true);
         RenderSystem.enableDepthTest();
     }

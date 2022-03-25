@@ -193,7 +193,11 @@ public class AetherLootTableProvider extends LootTableProvider
                                             LocationPredicate.Builder.location().setBlock(
                                                     BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
                                             new BlockPos(0, -1, 0))))))
+                    .when(HAS_SILK_TOUCH.invert())
                     .apply(DoubleDrops.builder())
+            ).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                    .add(LootItem.lootTableItem(block))
+                    .when(HAS_SILK_TOUCH)
             ).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                     .add(LootItem.lootTableItem(stem)
                             .when(LootItemEntityPropertyCondition.entityPresent(LootContext.EntityTarget.THIS).invert()))
