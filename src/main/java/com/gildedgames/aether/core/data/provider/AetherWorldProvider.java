@@ -60,7 +60,7 @@ public abstract class AetherWorldProvider extends WorldProvider {
         BiomeSource source = AetherBiomeBuilders.buildAetherBiomeSource(biomeRegistry);
         NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(structureSetRegistry, noiseParametersRegistry, source, 0L, worldNoiseSettings);
 
-        writableRegistry.register(AetherDimensions.AETHER_LEVEL_STEM, new LevelStem(dimensionType, aetherChunkGen), Lifecycle.stable());
+        writableRegistry.register(AetherDimensions.AETHER_LEVEL_STEM, new LevelStem(dimensionType, aetherChunkGen, true), Lifecycle.stable());
         this.dumpRegistry(path, cache, dynamicOps, Registry.LEVEL_STEM_REGISTRY, writableRegistry, LevelStem.CODEC);
     }
 }

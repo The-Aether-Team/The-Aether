@@ -159,5 +159,6 @@
     "seed": 0,
     "settings": "aether:skylands",
     "type": "minecraft:noise"
-  }
+  },
+  "forge:use_server_seed": true
 }
