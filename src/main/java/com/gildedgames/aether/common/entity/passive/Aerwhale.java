@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.BaseComponent;
 import net.minecraft.network.chat.TextComponent;
@@ -71,7 +71,7 @@ public class Aerwhale extends FlyingMob {
 
                     positionIn = new Vec3(player.xxa, 0.0, (player.zza <= 0.0F)? player.zza * 0.25F : player.zza);
 
-                    if (IAetherPlayer.get(player).map(IAetherPlayer::isJumping).orElse(false)) {
+                    if (AetherPlayer.get(player).map(AetherPlayer::isJumping).orElse(false)) {
                         this.setDeltaMovement(new Vec3(0.0, 0.0, 0.0));
                     } else {
                         double d0 = Math.toRadians(player.getYRot() - 90.0);
