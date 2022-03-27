@@ -212,8 +212,7 @@ public class AetherDispenseBehaviors {
         @Nonnull
         @Override
         public ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
-            Level world = source.getLevel();
-            if (world.dimension() == AetherDimensions.AETHER_WORLD) {
+            if (source.getLevel().dimensionTypeRegistration().is(AetherTags.Dimensions.ULTRACOLD)) {
                 this.setSuccess(false);
                 return stack;
             } else {
@@ -231,8 +230,7 @@ public class AetherDispenseBehaviors {
         @Nonnull
         @Override
         protected ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
-            Level world = source.getLevel();
-            if (world.dimension() == AetherDimensions.AETHER_WORLD) {
+            if (source.getLevel().dimensionTypeRegistration().is(AetherTags.Dimensions.ULTRACOLD)) {
                 this.setSuccess(false);
                 return stack;
             } else {

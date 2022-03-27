@@ -1,99 +1,66 @@
 package com.gildedgames.aether.core.data.provider;
 
-import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
-import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import com.gildedgames.aether.common.registry.worldgen.AetherNoiseGeneratorSettings;
+import com.gildedgames.aether.common.world.builders.AetherBiomeBuilders;
+import com.gildedgames.aether.common.world.builders.AetherDimensionBuilders;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.DynamicOps;
-import net.minecraft.core.RegistryAccess;
+import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.Lifecycle;
+import net.minecraft.core.*;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.worldgen.TerrainProvider;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.data.HashCache;
+import net.minecraft.resources.RegistryOps;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.*;
+import net.minecraft.world.level.levelgen.structure.StructureSet;
+import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.OptionalLong;
-import java.util.function.Function;
+import java.nio.file.Path;
 
-public abstract class AetherWorldProvider extends SmartRegistryWriteOps<JsonElement>
-{
-    private static final SurfaceRules.RuleSource GRASS_BLOCK = makeStateRule(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
-    private static final SurfaceRules.RuleSource DIRT = makeStateRule(AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
-    private static final SurfaceRules.RuleSource QUICKSOIL = makeStateRule(AetherBlocks.QUICKSOIL.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
-
-    public AetherWorldProvider(DataGenerator generator, DynamicOps<JsonElement> ops, Function<JsonElement, String> fileWriter) {
-        super(Aether.MODID, generator, ops, fileWriter, DimensionType.registerBuiltin(new RegistryAccess.RegistryHolder()));
+public abstract class AetherWorldProvider extends WorldProvider {
+    public AetherWorldProvider(DataGenerator generator) {
+        super(generator);
     }
 
-    private static SurfaceRules.RuleSource makeStateRule(BlockState block) {
-        return SurfaceRules.state(block);
+    @Override
+    public void run(HashCache cache) {
+        Path path = this.generator.getOutputFolder();
+        RegistryAccess registryAccess = RegistryAccess.BUILTIN.get();
+        DynamicOps<JsonElement> dynamicOps = RegistryOps.create(JsonOps.INSTANCE, registryAccess);
+
+        RegistryAccess.knownRegistries().forEach(registryData -> this.dumpRegistryCap(cache, path, registryAccess, dynamicOps, registryData));
+        this.dumpRegistries(registryAccess, cache, path, dynamicOps);
     }
 
-    protected DimensionType aetherDimensionType() {
-        return DimensionType.create(
-                OptionalLong.empty(), // fixed_time
-                true, // has_skylight
-                false, // has_ceiling
-                false, // ultrawarm
-                true, // natural
-                1.0D, // coordinate_scale
-                false, // createDragonFight
-                false, // piglin_safe
-                true, // bed_works
-                false, // respawn_anchor_works
-                false, // has_raids
-                0, // min_y
-                256, // height [This is min_y + max_y. This value is the total height of the building space going from the minimum height to the desired maximum build height]
-                256, // logical_height [Ditto, except for processing - ticking and such]
-                BlockTags.INFINIBURN_OVERWORLD.getName(), // infiniburn
-                new ResourceLocation(Aether.MODID, "the_aether"), // effects
-                0.1F // ambient_light
-        );
+    protected abstract void dumpRegistries(RegistryAccess registryAccess, HashCache cache, Path path, DynamicOps<JsonElement> dynamicOps);
+
+    protected void registerDimensionType(HashCache cache, Path path, DynamicOps<JsonElement> dynamicOps) {
+        WritableRegistry<DimensionType> writableRegistry = new MappedRegistry<>(Registry.DIMENSION_TYPE_REGISTRY, Lifecycle.experimental(), null);
+        writableRegistry.register(AetherDimensions.AETHER_DIMENSION_TYPE, AetherDimensionBuilders.aetherDimensionType(), Lifecycle.stable());
+        this.dumpRegistry(path, cache, dynamicOps, Registry.DIMENSION_TYPE_REGISTRY, writableRegistry, DimensionType.DIRECT_CODEC);
     }
 
-    protected NoiseGeneratorSettings aetherNoiseSettings() {
-        return new NoiseGeneratorSettings(
-                new StructureSettings(Optional.empty(), Map.of(
-                        //AetherStructures.BRONZE_DUNGEON_INSTANCE, new StructureFeatureConfiguration(6, 4, 16811681)//,
-                        //AetherStructures.GOLD_DUNGEON.get(), new StructureFeatureConfiguration(24, 12, 120320420)
-                )),
-                new NoiseSettings(
-                        0,
-                        128,
-                        new NoiseSamplingSettings(2, 1, 80, 160),
-                        new NoiseSlider(-23.4375D, 64, -46),
-                        new NoiseSlider(-0.234375D, 7, 1),
-                        2,
-                        1,
-                        false,
-                        false,
-                        false,
-                        TerrainProvider.floatingIslands()
-                ),
-                AetherBlocks.HOLYSTONE.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true),
-                Blocks.WATER.defaultBlockState(),
-                this.aetherSurfaceRules(),
-                Integer.MIN_VALUE, // seaLevel
-                false, // disableMobGeneration
-                false, // aquifersEnabled
-                false, // noiseCavesEnabled
-                false, // oreVeinsEnabled
-                false, // noodleCavesEnabled
-                false  // We want to use that fancy faster algorithm [Xoroshiro]
-        );
-    }
+    protected void registerLevelStem(RegistryAccess registryAccess, HashCache cache, Path path, DynamicOps<JsonElement> dynamicOps) {
+        WritableRegistry<LevelStem> writableRegistry = new MappedRegistry<>(Registry.LEVEL_STEM_REGISTRY, Lifecycle.experimental(), null);
+        Registry<DimensionType> dimensionTypeRegistry = registryAccess.registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY);
+        Registry<Biome> biomeRegistry = registryAccess.registryOrThrow(Registry.BIOME_REGISTRY);
+        Registry<StructureSet> structureSetRegistry = registryAccess.registryOrThrow(Registry.STRUCTURE_SET_REGISTRY);
+        Registry<NoiseGeneratorSettings> noiseGeneratorSettingsRegistry = registryAccess.registryOrThrow(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY);
+        Registry<NormalNoise.NoiseParameters> noiseParametersRegistry = registryAccess.registryOrThrow(Registry.NOISE_REGISTRY);
 
-    protected SurfaceRules.RuleSource aetherSurfaceRules() {
-        SurfaceRules.RuleSource surface = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(-1, 0), GRASS_BLOCK), DIRT);
+        Holder.Reference<DimensionType> dimensionType = Holder.Reference.createStandAlone(dimensionTypeRegistry, AetherDimensions.AETHER_DIMENSION_TYPE);
+        dimensionType.bind(AetherDimensions.AETHER_DIMENSION_TYPE, AetherDimensionBuilders.aetherDimensionType());
+        Holder<NoiseGeneratorSettings> worldNoiseSettings = noiseGeneratorSettingsRegistry.getHolderOrThrow(AetherNoiseGeneratorSettings.SKYLANDS);
 
-        return SurfaceRules.sequence(
-                SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, surface),
-                SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT)
-        );
+        BiomeSource source = AetherBiomeBuilders.buildAetherBiomeSource(biomeRegistry);
+        NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(structureSetRegistry, noiseParametersRegistry, source, 0L, worldNoiseSettings);
+
+        writableRegistry.register(AetherDimensions.AETHER_LEVEL_STEM, new LevelStem(dimensionType, aetherChunkGen, true), Lifecycle.stable());
+        this.dumpRegistry(path, cache, dynamicOps, Registry.LEVEL_STEM_REGISTRY, writableRegistry, LevelStem.CODEC);
     }
 }

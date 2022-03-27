@@ -23,9 +23,8 @@ public class AetherLoot
 {
 	private static final Set<ResourceLocation> LOOT_TABLES = Sets.newHashSet();
 
-	public static final LootContextParamSet STRIPPING = LootContextParamSets.register("aether:stripping", (p_237455_0_) -> {
-		p_237455_0_.required(LootContextParams.BLOCK_STATE).required(LootContextParams.ORIGIN).required(LootContextParams.TOOL);
-	});
+	public static final LootContextParamSet STRIPPING = LootContextParamSets.register("aether:stripping", (p_237455_0_) ->
+			p_237455_0_.required(LootContextParams.BLOCK_STATE).required(LootContextParams.ORIGIN).required(LootContextParams.TOOL));
 
 	public static final LootItemConditionType CONFIG_ENABLED = new LootItemConditionType(new ConfigEnabled.Serializer());
 

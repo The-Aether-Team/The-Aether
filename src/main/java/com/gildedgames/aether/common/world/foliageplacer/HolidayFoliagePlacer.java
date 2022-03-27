@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.world.foliageplacer;
 
-import com.gildedgames.aether.common.registry.AetherFoliagePlacerTypes;
+import com.gildedgames.aether.common.registry.worldgen.AetherFoliagePlacerTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -28,7 +28,7 @@ public class HolidayFoliagePlacer extends FoliagePlacer {
     }
 
     protected FoliagePlacerType<?> type() {
-        return AetherFoliagePlacerTypes.HOLIDAY_FOLIAGE_PLACER;
+        return AetherFoliagePlacerTypes.HOLIDAY_FOLIAGE_PLACER.get();
     }
 
     protected void createFoliage(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, Random random, TreeConfiguration config, int maxFreeTreeHeight, FoliagePlacer.FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {

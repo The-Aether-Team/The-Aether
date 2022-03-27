@@ -1,7 +1,6 @@
 package com.gildedgames.aether.common.world.gen.feature;
 
-import com.gildedgames.aether.common.registry.AetherFeatures;
-import com.gildedgames.aether.core.data.AetherFeatureData;
+import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
@@ -11,9 +10,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 
 import java.util.Arrays;
 
-public class CrystalIslandFeature extends Feature<NoneFeatureConfiguration>
-{
-
+public class CrystalIslandFeature extends Feature<NoneFeatureConfiguration> {
     public CrystalIslandFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
     }
@@ -38,9 +35,8 @@ public class CrystalIslandFeature extends Feature<NoneFeatureConfiguration>
             });
         }
 
-        AetherFeatureData.CRYSTAL_TREE_FEATURE_BASE.place(context.level(), context.chunkGenerator(), context.random(), context.origin().above());
+        AetherFeatures.ConfiguredFeatures.CRYSTAL_TREE_CONFIGURED_FEATURE.value().place(context.level(), context.chunkGenerator(), context.random(), context.origin().above());
 
         return true;
     }
-
 }

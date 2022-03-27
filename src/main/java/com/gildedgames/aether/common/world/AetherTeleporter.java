@@ -3,9 +3,10 @@ package com.gildedgames.aether.common.world;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.block.miscellaneous.AetherPortalBlock;
 import com.gildedgames.aether.common.registry.AetherPOI;
-import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.PortalTravelSoundPacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -172,8 +173,8 @@ public class AetherTeleporter implements ITeleporter
     @Nullable
     @Override
     public PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-        boolean isAether = destWorld.dimension() == AetherDimensions.AETHER_WORLD;
-        if (entity.level.dimension() != AetherDimensions.AETHER_WORLD && !isAether) {
+        boolean isAether = destWorld.dimension() == AetherDimensions.AETHER_LEVEL;
+        if (entity.level.dimension() != AetherDimensions.AETHER_LEVEL && !isAether) {
             return null;
         }
         else if(!this.hasFrame) {

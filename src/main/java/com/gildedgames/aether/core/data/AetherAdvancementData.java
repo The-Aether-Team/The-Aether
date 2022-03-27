@@ -3,6 +3,7 @@ package com.gildedgames.aether.core.data;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.advancement.LoreTrigger;
 import com.gildedgames.aether.common.registry.*;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
@@ -88,7 +89,7 @@ public class AetherAdvancementData extends AdvancementProvider
                             new TranslatableComponent("advancement.aether.enter_aether.desc"),
                             new ResourceLocation(Aether.MODID, "textures/block/dungeon/carved_stone.png"),
                             FrameType.TASK, true, true, false)
-                    .addCriterion("enter_aether", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(AetherDimensions.AETHER_WORLD))
+                    .addCriterion("enter_aether", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(AetherDimensions.AETHER_LEVEL))
                     .rewards(new AdvancementRewards(0, new ResourceLocation[]{AetherLoot.ENTER_AETHER}, new ResourceLocation[0], CommandFunction.CacheableFunction.NONE))
                     .save(consumer, "aether:enter_aether");
 
