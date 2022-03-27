@@ -107,23 +107,25 @@ public class Aether
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
-        AetherPacketHandler.register();
+        event.enqueueWork(() -> {
+            AetherPacketHandler.register();
 
-        AetherBlocks.registerPots();
-        AetherBlocks.registerAxeStrippingBlocks();
-        AetherBlocks.registerShovelFlatteningBlocks();
-        AetherBlocks.registerHoeTillingBlocks();
-        AetherBlocks.registerFlammability();
-        AetherBlocks.registerFreezables();
+            AetherBlocks.registerPots();
+            AetherBlocks.registerAxeStrippingBlocks();
+            AetherBlocks.registerShovelFlatteningBlocks();
+            AetherBlocks.registerHoeTillingBlocks();
+            AetherBlocks.registerFlammability();
+            AetherBlocks.registerFreezables();
 
-        AetherEntityTypes.registerSpawnPlacements();
+            AetherEntityTypes.registerSpawnPlacements();
 
-        AetherItems.registerAbilities();
+            AetherItems.registerAbilities();
 
-        registerDispenserBehaviors();
-        registerCauldronInteractions();
-        registerComposting();
-        registerFuels();
+            registerDispenserBehaviors();
+            registerCauldronInteractions();
+            registerComposting();
+            registerFuels();
+        });
     }
 
     public void curiosSetup(InterModEnqueueEvent event) {
