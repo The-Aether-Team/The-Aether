@@ -5,7 +5,7 @@ import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherTags;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
@@ -92,7 +92,7 @@ public class Aerbunny extends AetherAnimal {
                 if (!player.getAbilities().flying && !player.isInWater() && !player.isInLava()) {
                     player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));
                 }
-                IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     if (aetherPlayer.isJumping() && player.getDeltaMovement().y < -0.225) {
                         player.setDeltaMovement(player.getDeltaMovement().x, 0.125, player.getDeltaMovement().z);
                         if (!this.level.isClientSide) {
@@ -135,10 +135,10 @@ public class Aerbunny extends AetherAnimal {
             if (this.isPassenger()) {
                 this.navigation.recomputePath();
                 this.stopRiding();
-                IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(null));
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(null));
             } else {
                 if (this.startRiding(player)) {
-                    IAetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(this));
+                    AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(this));
                 }
             }
             return InteractionResult.SUCCESS;

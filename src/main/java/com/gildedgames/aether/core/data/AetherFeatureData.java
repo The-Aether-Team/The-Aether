@@ -1,8 +1,11 @@
 package com.gildedgames.aether.core.data;
 
+import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherFeatures;
 import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.common.world.foliageplacer.CrystalFoliagePlacer;
+import com.gildedgames.aether.common.world.foliageplacer.HolidayFoliagePlacer;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import com.gildedgames.aether.common.world.gen.configuration.SimpleDiskConfiguration;
 import com.gildedgames.aether.common.world.gen.placement.ElevationAdjustment;
@@ -21,6 +24,7 @@ import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
@@ -62,6 +66,20 @@ public class AetherFeatureData
             new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
             new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))).build());
 
+    public static final ConfiguredFeature<TreeConfiguration, ?> CRYSTAL_TREE_FEATURE_BASE = Feature.TREE.configured(new TreeConfiguration.TreeConfigurationBuilder(
+            BlockStateProvider.simple(AetherFeatureDataProvider.getDoubleDrops(AetherBlocks.SKYROOT_LOG)),
+            new StraightTrunkPlacer(7, 0, 0),
+            new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(AetherBlocks.CRYSTAL_LEAVES.get().defaultBlockState(), 4).add(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get().defaultBlockState(), 1).build()),
+            new CrystalFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(6)),
+            new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build());
+
+    public static final ConfiguredFeature<TreeConfiguration, ?> HOLIDAY_TREE_FEATURE_BASE = Feature.TREE.configured(new TreeConfiguration.TreeConfigurationBuilder(
+            BlockStateProvider.simple(AetherFeatureDataProvider.getDoubleDrops(AetherBlocks.SKYROOT_LOG)),
+            new StraightTrunkPlacer(7, 0, 0),
+            new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(AetherBlocks.HOLIDAY_LEAVES.get().defaultBlockState(), 4).add(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get().defaultBlockState(), 1).build()),
+            new HolidayFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(6)),
+            new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build());
+
     public static final ConfiguredFeature<RandomPatchConfiguration, ?> FLOWER_FEATURE_BASE = Feature.FLOWER.configured(AetherFeatureDataProvider.grassPatch(
             new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                     .add(AetherBlocks.PURPLE_FLOWER.get().defaultBlockState(), 2)
@@ -74,6 +92,8 @@ public class AetherFeatureData
             3
     ));
 
+    public static final ConfiguredFeature<NoneFeatureConfiguration, ?> CRYSTAL_ISLAND_BASE = AetherFeatures.CRYSTAL_ISLAND.get().configured(NoneFeatureConfiguration.INSTANCE);
+
     public static final PlacedFeature COLD_AERCLOUD_FEATURE = COLD_AERCLOUD_FEATURE_BASE.placed(
             AetherFeatureDataProvider.createAercloudPlacements(128, 5));
     public static final PlacedFeature BLUE_AERCLOUD_FEATURE = BLUE_AERCLOUD_FEATURE_BASE.placed(
@@ -85,10 +105,13 @@ public class AetherFeatureData
 
     public static final PlacedFeature SKYROOT_TREE_FEATURE = SKYROOT_TREE_FEATURE_BASE.placed(VegetationPlacements.treePlacement(PlacementUtils.countExtra(6, 0.1F, 1), AetherBlocks.SKYROOT_SAPLING.get()));
     public static final PlacedFeature GOLDEN_OAK_TREE_FEATURE = GOLDEN_OAK_FEATURE_BASE.placed(VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 1), AetherBlocks.GOLDEN_OAK_SAPLING.get()));
+    public static final PlacedFeature HOLIDAY_TREE_FEATURE = HOLIDAY_TREE_FEATURE_BASE.placed(VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 1), AetherBlocks.SKYROOT_SAPLING.get()));
 
     public static final PlacedFeature FLOWER_FEATURE = FLOWER_FEATURE_BASE.placed(InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
     public static final PlacedFeature QUICKSOIL_SHELF_FEATURE = QUICKSOIL_BASE.placed(InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, new ElevationAdjustment(UniformInt.of(-4, -2)), new ElevationFilter(47, 70), BlockPredicateFilter.forPredicate(BlockPredicate.anyOf(BlockPredicate.matchesBlock(AetherBlocks.AETHER_DIRT.get(), BlockPos.ZERO), BlockPredicate.matchesTag(AetherTags.Blocks.HOLYSTONE)))); // FIXME once Terrain can go above 63 again, change 47 -> 63
+
+    public static final PlacedFeature CRYSTAL_ISLAND_FEATURE = CRYSTAL_ISLAND_BASE.placed(InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(80), VerticalAnchor.absolute(100)), RarityFilter.onAverageOnceEvery(8));
 
     public static final RuleTest HOLYSTONE = new TagMatchTest(AetherTags.Blocks.HOLYSTONE);
 

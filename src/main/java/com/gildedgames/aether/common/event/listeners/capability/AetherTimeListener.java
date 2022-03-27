@@ -1,8 +1,8 @@
 package com.gildedgames.aether.common.event.listeners.capability;
 
 import com.gildedgames.aether.common.registry.AetherDimensions;
-import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
-import com.gildedgames.aether.server.player.AetherSleepStatus;
+import com.gildedgames.aether.core.capability.time.AetherTime;
+import com.gildedgames.aether.core.util.AetherSleepStatus;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -33,7 +33,7 @@ public class AetherTimeListener
             MinecraftServer server = world.getServer();
             for (ServerLevel serverworld : server.getAllLevels()) {
                 if (serverworld.dimension() == AetherDimensions.AETHER_WORLD) {
-                    IAetherTime.get(world).ifPresent(IAetherTime::syncToClient);
+                    AetherTime.get(world).ifPresent(AetherTime::syncToClient);
                 }
             }
         }
@@ -62,7 +62,7 @@ public class AetherTimeListener
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         if(event.world.dimension() == AetherDimensions.AETHER_WORLD && event.phase == TickEvent.Phase.END) {
-            IAetherTime.get(event.world).ifPresent(aetherTime -> aetherTime.serverTick((ServerLevel) event.world));
+            AetherTime.get(event.world).ifPresent(aetherTime -> aetherTime.serverTick((ServerLevel) event.world));
         }
     }
 }

@@ -10,16 +10,12 @@ import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
 import com.gildedgames.aether.client.renderer.accessory.model.PendantModel;
 import com.gildedgames.aether.client.renderer.entity.*;
 import com.gildedgames.aether.client.renderer.entity.model.*;
-import com.gildedgames.aether.client.renderer.player.layer.DeveloperGlowLayer;
-import com.gildedgames.aether.client.renderer.player.layer.PlayerHaloLayer;
+import com.gildedgames.aether.client.renderer.player.layer.*;
 import com.gildedgames.aether.client.renderer.entity.model.HaloModel;
 import com.gildedgames.aether.client.renderer.blockentity.AetherBlockEntityWithoutLevelRenderer;
 import com.gildedgames.aether.client.renderer.blockentity.ChestMimicRenderer;
 import com.gildedgames.aether.client.renderer.blockentity.SkyrootBedRenderer;
 import com.gildedgames.aether.client.renderer.blockentity.TreasureChestRenderer;
-import com.gildedgames.aether.client.renderer.player.layer.EnchantedDartLayer;
-import com.gildedgames.aether.client.renderer.player.layer.GoldenDartLayer;
-import com.gildedgames.aether.client.renderer.player.layer.PoisonDartLayer;
 import com.gildedgames.aether.common.registry.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.*;
@@ -159,7 +155,7 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.MIMIC, MimicModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SENTRY, SlimeModel::createOuterBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.VALKYRIE, ValkyrieModel::createBodyLayer);
-        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_WINGS, ValkyrieWingsModel::createMainLayer);
+        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_WINGS, () -> ValkyrieWingsModel.createMainLayer(4.5F, 2.5F));
         event.registerLayerDefinition(AetherModelLayers.FIRE_MINION, SunSpiritModel::createBodyLayer);
 
 //        event.registerLayerDefinition(AetherModelLayers.SLIDER, SliderModel::createBodyLayer);
@@ -169,6 +165,8 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.CLOUD_MINION, CloudMinionModel::createBodyLayer);
 
         event.registerLayerDefinition(AetherModelLayers.ICE_CRYSTAL, CrystalModel::createBodyLayer);
+
+        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_ARMOR_WINGS, () -> ValkyrieWingsModel.createMainLayer(3.5F, 3.375F));
 
         event.registerLayerDefinition(AetherModelLayers.PENDANT, PendantModel::createLayer);
         event.registerLayerDefinition(AetherModelLayers.GLOVES, () -> GlovesModel.createLayer(new CubeDeformation(0.6F), false));
@@ -223,11 +221,12 @@ public class AetherRenderers {
         for (String type : types) {
             PlayerRenderer playerRenderer = event.getSkin(type);
             if (playerRenderer != null) {
+                playerRenderer.addLayer(new DeveloperGlowLayer<>(playerRenderer));
                 playerRenderer.addLayer(new EnchantedDartLayer<>(renderDispatcher, playerRenderer));
                 playerRenderer.addLayer(new GoldenDartLayer<>(renderDispatcher, playerRenderer));
                 playerRenderer.addLayer(new PoisonDartLayer<>(renderDispatcher, playerRenderer));
                 playerRenderer.addLayer(new PlayerHaloLayer<>(playerRenderer, Minecraft.getInstance().getEntityModels()));
-                playerRenderer.addLayer(new DeveloperGlowLayer<>(playerRenderer));
+                playerRenderer.addLayer(new PlayerWingsLayer<>(playerRenderer, Minecraft.getInstance().getEntityModels()));
             }
         }
     }

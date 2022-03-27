@@ -26,8 +26,15 @@ public class ValkyrieWingsLayer extends RenderLayer<Valkyrie, ValkyrieModel> {
 
     @Override
     public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, @Nonnull Valkyrie valkyrie, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.wings.setupWingRotation(valkyrie, valkyrie.sinage);
+        this.setupWingRotation(valkyrie, valkyrie.sinage);
         VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(VALKYRIE_TEXTURE));
         this.wings.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+    }
+
+    public void setupWingRotation(@Nonnull Valkyrie entity, float sinage) {
+        this.wings.rightWing.yRot = -((float) Math.sin(sinage) / 6.0F);
+        this.wings.rightWing.zRot = -((float) Math.cos(sinage) / (entity.isEntityOnGround() ? 8.0F : 3.0F));
+        this.wings.leftWing.yRot = (float) Math.sin(sinage) / 6.0F;
+        this.wings.leftWing.zRot = (float) Math.cos(sinage) / (entity.isEntityOnGround() ? 8.0F : 3.0F);
     }
 }

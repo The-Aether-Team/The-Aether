@@ -4,10 +4,10 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.block.entity.SunAltarBlockEntity;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IAetherTime;
+import com.gildedgames.aether.core.capability.time.AetherTime;
+import com.gildedgames.aether.core.util.SunAltarWhitelist;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -44,11 +44,11 @@ public class SunAltarBlock extends BaseEntityBlock {
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
-			if (!player.hasPermissions(AetherConfig.COMMON.admin_sun_altar.get() ? 4 : 0)) {
+			if (AetherConfig.COMMON.sun_altar_whitelist.get() && !player.hasPermissions(4) && !SunAltarWhitelist.INSTANCE.isWhiteListed(player.getGameProfile())) {
 				player.displayClientMessage(new TranslatableComponent(Aether.MODID + ".sun_altar.no_permission"), true);
 				return InteractionResult.FAIL;
 			}
-			IAetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
+			AetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
 			if(aetherTime != null) {
 				if(!aetherTime.getEternalDay() || AetherConfig.COMMON.disable_eternal_day.get()) {
 					this.openScreen(level, pos, player);

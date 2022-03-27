@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.event.listeners.abilities;
 
 import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.util.EquipmentUtil;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,7 +34,33 @@ public class ArmorAbilityListener
     @SubscribeEvent
     public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
         LivingEntity entity = event.getEntityLiving();
-        if (EquipmentUtil.hasFullNeptuneSet(entity)) {
+        if (EquipmentUtil.hasFullValkyrieSet(entity)) {
+            if (entity instanceof Player player) {
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                    Vec3 deltaMovement = player.getDeltaMovement();
+                    if (aetherPlayer.isJumping()) {
+                        if (aetherPlayer.getFlightModifier() >= aetherPlayer.getFlightModifierMax()) {
+                            aetherPlayer.setFlightModifier(aetherPlayer.getFlightModifierMax());
+                        }
+                        if (aetherPlayer.getFlightTimer() > 2) {
+                            if (aetherPlayer.getFlightTimer() < aetherPlayer.getFlightTimerMax()) {
+                                aetherPlayer.setFlightModifier(aetherPlayer.getFlightModifier() + 0.25F);
+                                player.setDeltaMovement(deltaMovement.x(), 0.025F * aetherPlayer.getFlightModifier(), deltaMovement.z());
+                                aetherPlayer.setFlightTimer(aetherPlayer.getFlightTimer() + 1);
+                            }
+                        } else {
+                            aetherPlayer.setFlightTimer(aetherPlayer.getFlightTimer() + 1);
+                        }
+                    } else {
+                        aetherPlayer.setFlightModifier(1.0F);
+                    }
+                    if (player.isOnGround()) {
+                        aetherPlayer.setFlightTimer(0);
+                        aetherPlayer.setFlightModifier(1.0F);
+                    }
+                });
+            }
+        } else if (EquipmentUtil.hasFullNeptuneSet(entity)) {
             if (entity.isInWaterOrBubble()) {
                 float defaultBoost = 1.55F;
                 float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
@@ -46,7 +73,7 @@ public class ArmorAbilityListener
         } else if (EquipmentUtil.hasFullPhoenixSet(entity)) {
             entity.clearFire();
             if (entity.isInLava()) {
-                entity.fallDistance *= 0.0F;
+                entity.resetFallDistance();
                 float defaultBoost = 10.5F;
                 float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
                 if (depthStriderModifier > 0.0F) {

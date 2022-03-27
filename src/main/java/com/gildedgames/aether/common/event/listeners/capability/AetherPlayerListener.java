@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.event.listeners.capability;
 
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
@@ -15,13 +15,13 @@ public class AetherPlayerListener
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         Player player = event.getPlayer();
-        IAetherPlayer.get(player).ifPresent(IAetherPlayer::onLogin);
+        AetherPlayer.get(player).ifPresent(AetherPlayer::onLogin);
     }
 
     @SubscribeEvent
     public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         Player player = event.getPlayer();
-        IAetherPlayer.get(player).ifPresent((aetherPlayer) ->  {
+        AetherPlayer.get(player).ifPresent((aetherPlayer) ->  {
             aetherPlayer.onLogout();
             AttributeInstance health = player.getAttribute(Attributes.MAX_HEALTH);
             if (health != null && health.hasModifier(aetherPlayer.getLifeShardHealthAttributeModifier())) {
@@ -33,16 +33,16 @@ public class AetherPlayerListener
     @SubscribeEvent
     public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntityLiving() instanceof Player) {
-            IAetherPlayer.get((Player) event.getEntityLiving()).ifPresent(IAetherPlayer::onUpdate);
+            AetherPlayer.get((Player) event.getEntityLiving()).ifPresent(AetherPlayer::onUpdate);
         }
     }
 
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event) {
         event.getOriginal().reviveCaps();
-        IAetherPlayer original = IAetherPlayer.get(event.getOriginal()).orElseThrow(
+        AetherPlayer original = AetherPlayer.get(event.getOriginal()).orElseThrow(
                 () -> new IllegalStateException("Player " + event.getOriginal().getName().getContents() + " has no AetherPlayer capability!"));
-        IAetherPlayer newPlayer = IAetherPlayer.get(event.getPlayer()).orElseThrow(
+        AetherPlayer newPlayer = AetherPlayer.get(event.getPlayer()).orElseThrow(
                 () -> new IllegalStateException("Player " + event.getPlayer().getName().getContents() + " has no AetherPlayer capability!"));
         newPlayer.copyFrom(original, event.isWasDeath());
 
