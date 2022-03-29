@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.combat.loot;
 
-import com.gildedgames.aether.common.item.tools.abilities.IValkyrieToolItem;
+import com.gildedgames.aether.common.item.tools.abilities.ValkyrieToolAbility;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.google.common.collect.ImmutableMultimap;
@@ -24,8 +24,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 
-public class ValkyrieLanceItem extends TieredItem implements IValkyrieToolItem, Vanishable
-{
+public class ValkyrieLanceItem extends TieredItem implements ValkyrieToolAbility, Vanishable {
     private final int attackDamage;
     private final float attackSpeed;
 
@@ -55,7 +54,7 @@ public class ValkyrieLanceItem extends TieredItem implements IValkyrieToolItem, 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();
         attributeBuilder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
         attributeBuilder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", this.attackSpeed, AttributeModifier.Operation.ADDITION));
-        attributeBuilder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(REACH_MODIFIER_UUID, "Tool modifier", this.getReachDistanceModifier(), AttributeModifier.Operation.ADDITION));
+        attributeBuilder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(REACH_MODIFIER_UUID, "Weapon modifier", this.getReachDistanceModifier(), AttributeModifier.Operation.ADDITION));
         Multimap<Attribute, AttributeModifier> attributes = attributeBuilder.build();
         return equipmentSlot == EquipmentSlot.MAINHAND ? attributes : super.getDefaultAttributeModifiers(equipmentSlot);
     }

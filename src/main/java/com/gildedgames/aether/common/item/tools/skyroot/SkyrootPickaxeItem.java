@@ -9,8 +9,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 
 import javax.annotation.Nullable;
 
-public class SkyrootPickaxeItem extends PickaxeItem
-{
+public class SkyrootPickaxeItem extends PickaxeItem {
     public SkyrootPickaxeItem() {
         super(AetherItemTiers.SKYROOT, 1, -2.8F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
     }
