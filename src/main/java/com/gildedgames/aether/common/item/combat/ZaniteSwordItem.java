@@ -29,7 +29,7 @@ public class ZaniteSwordItem extends SwordItem {
 		return super.getAttributeModifiers(equipmentSlot, stack);
 	}
 	
-	public float calculateIncrease(ItemStack tool) {
+	public float calculateIncrease(ItemStack tool) { //TODO: Should probably be made to not be dependent on sword durability when abstracted to events and tags.
 		int current = tool.getDamageValue();
 		int maxDamage = tool.getMaxDamage();
 		
