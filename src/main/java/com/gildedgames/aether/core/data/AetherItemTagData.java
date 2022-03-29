@@ -62,26 +62,31 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.SKYROOT_AXE.get(),
                 AetherItems.SKYROOT_SHOVEL.get(),
                 AetherItems.SKYROOT_HOE.get());
+        tag(AetherTags.Items.SKYROOT_WEAPONS).add(AetherItems.SKYROOT_SWORD.get());
         tag(AetherTags.Items.HOLYSTONE_TOOLS).add(
                 AetherItems.HOLYSTONE_PICKAXE.get(),
                 AetherItems.HOLYSTONE_AXE.get(),
                 AetherItems.HOLYSTONE_SHOVEL.get(),
                 AetherItems.HOLYSTONE_HOE.get());
+        tag(AetherTags.Items.HOLYSTONE_WEAPONS).add(AetherItems.HOLYSTONE_SWORD.get());
         tag(AetherTags.Items.ZANITE_TOOLS).add(
                 AetherItems.ZANITE_PICKAXE.get(),
                 AetherItems.ZANITE_AXE.get(),
                 AetherItems.ZANITE_SHOVEL.get(),
                 AetherItems.ZANITE_HOE.get());
+        tag(AetherTags.Items.ZANITE_WEAPONS).add(AetherItems.ZANITE_SWORD.get());
         tag(AetherTags.Items.GRAVITITE_TOOLS).add(
                 AetherItems.GRAVITITE_PICKAXE.get(),
                 AetherItems.GRAVITITE_AXE.get(),
                 AetherItems.GRAVITITE_SHOVEL.get(),
                 AetherItems.GRAVITITE_HOE.get());
+        tag(AetherTags.Items.GRAVITITE_WEAPONS).add(AetherItems.GRAVITITE_SWORD.get());
         tag(AetherTags.Items.VALKYRIE_TOOLS).add(
                 AetherItems.VALKYRIE_PICKAXE.get(),
                 AetherItems.VALKYRIE_AXE.get(),
                 AetherItems.VALKYRIE_SHOVEL.get(),
                 AetherItems.VALKYRIE_HOE.get());
+        tag(AetherTags.Items.VALKYRIE_WEAPONS).add(AetherItems.VALKYRIE_LANCE.get());
         tag(AetherTags.Items.GOLDEN_AMBER_HARVESTERS).add(
                 AetherItems.ZANITE_AXE.get(),
                 AetherItems.GRAVITITE_AXE.get(),

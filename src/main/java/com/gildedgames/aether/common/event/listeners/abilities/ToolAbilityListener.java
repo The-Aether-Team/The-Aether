@@ -127,7 +127,7 @@ public class ToolAbilityListener {
 
     private static void floatBlock(Level level, BlockPos pos, ItemStack stack, BlockState state, Player player, InteractionHand hand, float destroySpeed, float efficiency) {
         if ((destroySpeed == efficiency || stack.isCorrectToolForDrops(state)) && level.isEmptyBlock(pos.above())) {
-            if (level.getBlockEntity(pos) == null && state.getDestroySpeed(level, pos) >= 0.0F && !state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF)) {
+            if (level.getBlockEntity(pos) == null && state.getDestroySpeed(level, pos) >= 0.0F && !state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF) && !state.is(AetherTags.Blocks.GRAVITITE_ABILITY_BLACKLIST)) {
                 if (!level.isClientSide) {
                     FloatingBlockEntity entity = new FloatingBlockEntity(level, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, state);
                     if (state.is(BlockTags.ANVIL)) {

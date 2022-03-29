@@ -1294,6 +1294,7 @@ d313f6931077edea158c019286615efee5d754b1 data/aether/tags/blocks/cockatrice_spaw
 1bf5110a1d632a35e62cd092d74ddb31b9c649d7 data/aether/tags/blocks/dungeon_blocks.json
 4c59eb2bccf358c5860cd8de021fb2d7e9be6205 data/aether/tags/blocks/enchantable_grass_blocks.json
 cc50f220643304a9a55bf762f391dc67d087ab9d data/aether/tags/blocks/golden_oak_logs.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/aether/tags/blocks/gravitite_ability_blacklist.json
 bcc812fe8c9cd1c675cd91f170cad804bc8da32a data/aether/tags/blocks/holystone.json
 c294a7ed55dd3893da97c77889a570a9ade6abc8 data/aether/tags/blocks/locked_dungeon_blocks.json
 d84975c4861b70c3f92cfbad01916658bf6145c7 data/aether/tags/blocks/skyroot_logs.json
@@ -1329,8 +1330,10 @@ af0c2eedb134c30d4318a59ce358fa88b7a8cf5a data/aether/tags/items/flying_cow_tempt
 bf1cb9f651631e9510ca3eb6549cb8fc1bdae3c8 data/aether/tags/items/golden_amber_harvesters.json
 cc50f220643304a9a55bf762f391dc67d087ab9d data/aether/tags/items/golden_oak_logs.json
 5cbf346e8fdf300c31ba37fe2cb897c2e459f77b data/aether/tags/items/gravitite_tools.json
+863704aa5dd06e961f98bf1387bc72000d68693a data/aether/tags/items/gravitite_weapons.json
 bcc812fe8c9cd1c675cd91f170cad804bc8da32a data/aether/tags/items/holystone.json
 1af6021073f2b9d774a68d7c423d99ed110fda9f data/aether/tags/items/holystone_tools.json
+6624ffb0cf271b28db56ff67311ffb08a91b248d data/aether/tags/items/holystone_weapons.json
 c294a7ed55dd3893da97c77889a570a9ade6abc8 data/aether/tags/items/locked_dungeon_blocks.json
 1ecd6c92ef18c38c1fea83ec1dbd9a2909d4e3c4 data/aether/tags/items/moa_eggs.json
 9b02e9ee1a3f17d5c6061b4ae7d5b96674c7b4fb data/aether/tags/items/moa_food_items.json
@@ -1344,10 +1347,13 @@ af0c2eedb134c30d4318a59ce358fa88b7a8cf5a data/aether/tags/items/sheepuff_temptat
 d84975c4861b70c3f92cfbad01916658bf6145c7 data/aether/tags/items/skyroot_logs.json
 ef1688d8839282e91b8aa07f3029cefcf02df64e data/aether/tags/items/skyroot_stick.json
 69066826c7925cc083e02158348c83b97698c58c data/aether/tags/items/skyroot_tools.json
+61db9e4c0d6abea345b4f2a5b1f61fe4738b53ed data/aether/tags/items/skyroot_weapons.json
 83f64b5a1c3a1caaa395b34f29e2dfefd04a19c4 data/aether/tags/items/stone_crafting.json
 999af6754446aa73b45312bf631ed4ac234ec764 data/aether/tags/items/trapped_dungeon_blocks.json
 8f8f0e16bb000c5f7503a95c7fcf7b19e42774af data/aether/tags/items/valkyrie_tools.json
+3ef8f0511e04a8d24f707a860d15c25fab1c721c data/aether/tags/items/valkyrie_weapons.json
 7857dbef719f59695d7f3f80ae5a7b2090dabd97 data/aether/tags/items/zanite_tools.json
+a18802f0fa2697768ff4ee83a2701033b7b8be22 data/aether/tags/items/zanite_weapons.json
 c23b0a6bd27ae1a6e1f38b83d768975d685a60d3 data/aether/worldgen/biome/golden_forest.json
 f8a843d107d489c403773ae8f3cd5b71f82a3a89 data/aether/worldgen/biome/skyroot_forest.json
 05c1f7f1c4cc22aa823ecb7a540ca6d2405a2db0 data/aether/worldgen/biome/skyroot_grove.json

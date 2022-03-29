@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.item.materials.util;
 
 import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
-import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
+import com.gildedgames.aether.common.event.hooks.AetherHooks;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.google.common.collect.Maps;
 import net.minecraft.core.Holder;
@@ -89,7 +89,7 @@ public interface ISwetBallConversion
             }
         }
 
-        SwetBallConvertEvent event = AetherEventHooks.onSwetBallConvert(player, world, pos, heldItem, oldBlockState, newBlockState);
+        SwetBallConvertEvent event = AetherHooks.onSwetBallConvert(player, world, pos, heldItem, oldBlockState, newBlockState);
         if (!event.isCanceled()) {
             newBlockState = event.getNewBlockState();
             if (newBlockState != oldBlockState && world.getBlockState(pos.above()).isAir()) {
@@ -122,7 +122,7 @@ public interface ISwetBallConversion
             }
         }
 
-        SwetBallConvertEvent event = AetherEventHooks.onSwetBallConvert(null, world, pos, stack, oldBlockState, newBlockState);
+        SwetBallConvertEvent event = AetherHooks.onSwetBallConvert(null, world, pos, stack, oldBlockState, newBlockState);
         if (!event.isCanceled()) {
             newBlockState = event.getNewBlockState();
             if (newBlockState != oldBlockState && world.getBlockState(pos.above()).isAir()) {

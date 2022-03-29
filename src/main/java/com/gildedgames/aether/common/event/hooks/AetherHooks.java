@@ -8,14 +8,13 @@ import com.gildedgames.aether.common.event.events.FreezeEvent;
 import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.common.MinecraftForge;
 
-public class AetherEventHooks
+public class AetherHooks
 {
 	public static void onItemBanned(LevelAccessor world, BlockPos pos, @Nullable Direction face, ItemStack itemStack) {
 		AetherBannedItemEvent.SpawnParticles event = new AetherBannedItemEvent.SpawnParticles(world, pos, face, itemStack);

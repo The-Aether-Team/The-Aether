@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.event.listeners;
 
 import com.gildedgames.aether.common.event.events.AetherBannedItemEvent;
-import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
+import com.gildedgames.aether.common.event.hooks.AetherHooks;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
@@ -62,8 +62,8 @@ public class DimensionListener
 
         if (world.dimensionTypeRegistration().is(AetherTags.Dimensions.ULTRACOLD)) {
             if (stack.is(AetherTags.Items.BANNED_IN_AETHER)) {
-                if (AetherEventHooks.isItemBanned(stack)) {
-                    AetherEventHooks.onItemBanned(world, pos, face, stack);
+                if (AetherHooks.isItemBanned(stack)) {
+                    AetherHooks.onItemBanned(world, pos, face, stack);
                     event.setCanceled(true);
                 }
             }
