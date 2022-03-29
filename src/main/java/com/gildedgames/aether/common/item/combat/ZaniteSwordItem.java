@@ -13,8 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
-public class ZaniteSwordItem extends SwordItem
-{
+public class ZaniteSwordItem extends SwordItem {
 	public ZaniteSwordItem() {
 		super(AetherItemTiers.ZANITE, 5, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS));
 	}

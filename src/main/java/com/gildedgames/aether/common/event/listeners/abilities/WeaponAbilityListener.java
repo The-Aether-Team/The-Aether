@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.event.listeners.abilities;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDart;
 import com.gildedgames.aether.common.entity.projectile.dart.GoldenDart;
@@ -9,6 +10,8 @@ import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.capability.lightning.LightningTracker;
 import com.gildedgames.aether.core.capability.arrow.PhoenixArrow;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -24,6 +27,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -47,8 +51,7 @@ public class WeaponAbilityListener
             if (source.getDirectEntity() instanceof Player) {
                 Player player = (Player) source.getDirectEntity();
                 ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
-                Item item = stack.getItem();
-                if (item == AetherItems.SKYROOT_SWORD.get() && !entity.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
+                if (stack.is(AetherTags.Items.SKYROOT_WEAPONS) && !entity.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
                     NonNullList<Item> inventory = NonNullList.create();
                     for (ItemStack handStack : entity.getHandSlots()) {
                         inventory.add(handStack.getItem());
@@ -71,8 +74,7 @@ public class WeaponAbilityListener
             if (source.getDirectEntity() instanceof Player) {
                 Player player = (Player) source.getDirectEntity();
                 ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
-                Item item = stack.getItem();
-                if (item == AetherItems.SKYROOT_SWORD.get() && !entity.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
+                if (stack.is(AetherTags.Items.SKYROOT_WEAPONS) && !entity.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
                     ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
                     for (ItemEntity drop : event.getDrops()) {
                         ItemStack droppedStack = drop.getItem();
@@ -131,6 +133,19 @@ public class WeaponAbilityListener
                     }
                 }
             });
+        }
+    }
+
+    @SubscribeEvent
+    public static void onHolystoneWeaponAbility(LivingHurtEvent event) {
+        LivingEntity target = event.getEntityLiving();
+        if (event.getSource() != null && event.getSource().getEntity() instanceof LivingEntity sourceEntity) {
+            ItemStack itemStack = sourceEntity.getMainHandItem();
+            if (itemStack.is(AetherTags.Items.HOLYSTONE_WEAPONS)) {
+                if (!sourceEntity.level.isClientSide && target.level.getRandom().nextInt(20) == 0) {
+                    target.spawnAtLocation(AetherItems.AMBROSIUM_SHARD.get());
+                }
+            }
         }
     }
 }
