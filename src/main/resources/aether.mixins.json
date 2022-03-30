@@ -11,6 +11,7 @@
     "common.CropBlockMixin",
     "common.DimensionTypeMixin",
     "common.FoxEatBerriesGoalMixin",
+    "common.ItemStackMixin",
     "common.LivingEntityMixin",
     "common.PiglinAiMixin"
   ],

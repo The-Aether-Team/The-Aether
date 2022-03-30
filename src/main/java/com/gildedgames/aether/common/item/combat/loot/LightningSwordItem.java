@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.item.combat.loot;
 
 import com.gildedgames.aether.common.registry.AetherItemGroups;
+import com.gildedgames.aether.common.registry.AetherItemTiers;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.lightning.LightningTracker;
 import net.minecraft.world.entity.EntityType;
@@ -15,7 +16,7 @@ import net.minecraft.world.item.Tiers;
 public class LightningSwordItem extends SwordItem
 {
     public LightningSwordItem() {
-        super(Tiers.DIAMOND, 4, -2.4f, new Item.Properties().durability(502).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+        super(AetherItemTiers.LIGHTNING, 4, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override

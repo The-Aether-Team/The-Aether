@@ -25,10 +25,6 @@ import com.gildedgames.aether.common.item.tools.skyroot.SkyrootAxeItem;
 import com.gildedgames.aether.common.item.tools.skyroot.SkyrootHoeItem;
 import com.gildedgames.aether.common.item.tools.skyroot.SkyrootPickaxeItem;
 import com.gildedgames.aether.common.item.tools.skyroot.SkyrootShovelItem;
-import com.gildedgames.aether.common.item.tools.valkyrie.ValkyrieAxeItem;
-import com.gildedgames.aether.common.item.tools.valkyrie.ValkyrieHoeItem;
-import com.gildedgames.aether.common.item.tools.valkyrie.ValkyriePickaxeItem;
-import com.gildedgames.aether.common.item.tools.valkyrie.ValkyrieShovelItem;
 import com.gildedgames.aether.core.registry.AetherDungeonTypes;
 import com.gildedgames.aether.common.item.accessories.ring.ZaniteRingItem;
 import com.gildedgames.aether.common.item.food.HealingStoneItem;
@@ -87,18 +83,18 @@ public class AetherItems
 	public static final RegistryObject<ShovelItem> GRAVITITE_SHOVEL = ITEMS.register("gravitite_shovel", () -> new ShovelItem(AetherItemTiers.GRAVITITE, 1.5F, -3.0F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS)));
 	public static final RegistryObject<HoeItem> GRAVITITE_HOE = ITEMS.register("gravitite_hoe", () -> new HoeItem(AetherItemTiers.GRAVITITE, -3, 0, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS)));
 
-	public static final RegistryObject<PickaxeItem> VALKYRIE_PICKAXE = ITEMS.register("valkyrie_pickaxe", () -> new ValkyriePickaxeItem(2, -2.8F));
-	public static final RegistryObject<AxeItem> VALKYRIE_AXE = ITEMS.register("valkyrie_axe", () -> new ValkyrieAxeItem(6.0F, -3.0F));
-	public static final RegistryObject<ShovelItem> VALKYRIE_SHOVEL = ITEMS.register("valkyrie_shovel", () -> new ValkyrieShovelItem(2.5F, -3.0F));
-	public static final RegistryObject<HoeItem> VALKYRIE_HOE = ITEMS.register("valkyrie_hoe", () -> new ValkyrieHoeItem(-3, 0.0F));
+	public static final RegistryObject<PickaxeItem> VALKYRIE_PICKAXE = ITEMS.register("valkyrie_pickaxe", () -> new PickaxeItem(AetherItemTiers.VALKYRIE, 2, -2.8F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_TOOLS)));
+	public static final RegistryObject<AxeItem> VALKYRIE_AXE = ITEMS.register("valkyrie_axe", () -> new AxeItem(AetherItemTiers.VALKYRIE, 6.0F, -3.0F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_TOOLS)));
+	public static final RegistryObject<ShovelItem> VALKYRIE_SHOVEL = ITEMS.register("valkyrie_shovel", () -> new ShovelItem(AetherItemTiers.VALKYRIE, 2.5F, -3.0F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_TOOLS)));
+	public static final RegistryObject<HoeItem> VALKYRIE_HOE = ITEMS.register("valkyrie_hoe", () -> new HoeItem(AetherItemTiers.VALKYRIE, -3, 0.0F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_TOOLS)));
 
 	// Weapons
 	public static final RegistryObject<SwordItem> SKYROOT_SWORD = ITEMS.register("skyroot_sword", SkyrootSwordItem::new);
 	public static final RegistryObject<SwordItem> HOLYSTONE_SWORD = ITEMS.register("holystone_sword", () -> new SwordItem(AetherItemTiers.HOLYSTONE, 3, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
-	public static final RegistryObject<SwordItem> ZANITE_SWORD = ITEMS.register("zanite_sword", ZaniteSwordItem::new);
-	public static final RegistryObject<SwordItem> GRAVITITE_SWORD = ITEMS.register("gravitite_sword", GravititeSwordItem::new);
+	public static final RegistryObject<SwordItem> ZANITE_SWORD = ITEMS.register("zanite_sword", () -> new SwordItem(AetherItemTiers.ZANITE, 1, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
+	public static final RegistryObject<SwordItem> GRAVITITE_SWORD = ITEMS.register("gravitite_sword", () -> new SwordItem(AetherItemTiers.GRAVITITE, 3, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
 
-	public static final RegistryObject<Item> VALKYRIE_LANCE = ITEMS.register("valkyrie_lance", () -> new ValkyrieLanceItem(Tiers.DIAMOND, 4, -2.4F));
+	public static final RegistryObject<Item> VALKYRIE_LANCE = ITEMS.register("valkyrie_lance", () -> new ValkyrieLanceItem(AetherItemTiers.VALKYRIE, 4, -2.4F));
 
 	public static final RegistryObject<SwordItem> FLAMING_SWORD = ITEMS.register("flaming_sword", FlamingSwordItem::new);
 	public static final RegistryObject<SwordItem> LIGHTNING_SWORD = ITEMS.register("lightning_sword", LightningSwordItem::new);
@@ -228,8 +224,8 @@ public class AetherItems
 	public static final RegistryObject<Item> SKYROOT_REMEDY_BUCKET = ITEMS.register("skyroot_remedy_bucket", () -> new SkyrootRemedyBucketItem(new Item.Properties().craftRemainder(SKYROOT_BUCKET.get()).stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> SKYROOT_MILK_BUCKET = ITEMS.register("skyroot_milk_bucket", () -> new SkyrootMilkBucketItem(new Item.Properties().craftRemainder(SKYROOT_BUCKET.get()).stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
 
-	public static final RegistryObject<Item> COLD_PARACHUTE = ITEMS.register("cold_parachute", () -> new ParachuteItem(AetherEntityTypes.COLD_PARACHUTE::get, new Item.Properties().durability(1).tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> GOLDEN_PARACHUTE = ITEMS.register("golden_parachute", () -> new ParachuteItem(AetherEntityTypes.GOLDEN_PARACHUTE::get, new Item.Properties().durability(20).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> COLD_PARACHUTE = ITEMS.register("cold_parachute", () -> new ParachuteItem(AetherEntityTypes.COLD_PARACHUTE, new Item.Properties().durability(1).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> GOLDEN_PARACHUTE = ITEMS.register("golden_parachute", () -> new ParachuteItem(AetherEntityTypes.GOLDEN_PARACHUTE, new Item.Properties().durability(20).tab(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<Item> BLUE_MOA_EGG = ITEMS.register("blue_moa_egg", () -> new MoaEggItem(() -> AetherMoaTypes.BLUE, 0x7777FF, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> WHITE_MOA_EGG = ITEMS.register("white_moa_egg", () -> new MoaEggItem(() -> AetherMoaTypes.WHITE, 0xFFFFFF, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));

@@ -14,8 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.common.MinecraftForge;
 
-public class AetherHooks
-{
+public class AetherHooks {
 	public static void onItemBanned(LevelAccessor world, BlockPos pos, @Nullable Direction face, ItemStack itemStack) {
 		AetherBannedItemEvent.SpawnParticles event = new AetherBannedItemEvent.SpawnParticles(world, pos, face, itemStack);
 		MinecraftForge.EVENT_BUS.post(event);

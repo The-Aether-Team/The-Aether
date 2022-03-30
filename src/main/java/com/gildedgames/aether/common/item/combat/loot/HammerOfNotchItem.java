@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.item.combat.loot;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectile;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
+import com.gildedgames.aether.common.registry.AetherItemTiers;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -18,7 +19,7 @@ import net.minecraft.world.level.Level;
 public class HammerOfNotchItem extends SwordItem
 {
     public HammerOfNotchItem() {
-        super(Tiers.IRON, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+        super(AetherItemTiers.HAMMER_OF_NOTCH, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override
