@@ -24,11 +24,11 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
 public class Aerwhale extends FlyingMob {
-    public float motionYaw, motionPitch;
 
     public Aerwhale(EntityType<? extends Aerwhale> type, Level level) {
         super(type, level);
@@ -63,11 +63,11 @@ public class Aerwhale extends FlyingMob {
                 Entity entity = passengers.get(0);
                 if (entity instanceof Player player) {
                     this.setYRot(player.getYRot());
-                    this.motionYaw = this.yRotO = this.getYRot();
+                    this.yRotO = this.getYRot();
                     this.setXRot(player.getXRot());
-                    this.motionPitch = this.xRotO = this.getXRot();
+                    this.xRotO = this.getXRot();
 
-                    this.motionYaw = this.yHeadRot = player.yHeadRot;
+                    this.yHeadRot = player.yHeadRot;
 
                     positionIn = new Vec3(player.xxa, 0.0, (player.zza <= 0.0F)? player.zza * 0.25F : player.zza);
 
@@ -121,7 +121,7 @@ public class Aerwhale extends FlyingMob {
 
     @Override
     @Nonnull
-    protected InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
+    protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
         if (player.getUUID().getMostSignificantBits() == 220717875589366683L && player.getUUID().getLeastSignificantBits() == -7181826737698904209L) {
             player.startRiding(this);
             if (!this.level.isClientSide) {
@@ -164,6 +164,7 @@ public class Aerwhale extends FlyingMob {
         private final Mob mob;
         public SetTravelCourseGoal(Mob mob) {
             this.mob = mob;
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
         }
         /**
          * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
@@ -179,7 +180,7 @@ public class Aerwhale extends FlyingMob {
                 double d1 = moveControl.getWantedY() - this.mob.getY();
                 double d2 = moveControl.getWantedZ() - this.mob.getZ();
                 double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-                return d3 < 1.0 || d3 > 3600.0;
+                return d3 < 1.0;
             }
         }
 
@@ -194,11 +195,21 @@ public class Aerwhale extends FlyingMob {
         @Override
         public void start() {
             Random random = this.mob.getRandom();
-            double x = this.mob.getX() + (random.nextFloat() * 2F - 1F) * 16;
-            double y = this.mob.getY() + (random.nextFloat() * 2F - 1F) * 2;
-            double z = this.mob.getZ() + (random.nextFloat() * 2F - 1F) * 16;
+            // Set the x, y, and z targets to n * 16, with n being a random number between -1 and 1.
+            double x = (random.nextFloat() * 2F - 1F) * 16;
+            double z = (random.nextFloat() * 2F - 1F) * 16;
+            double y = this.mob.getY() + (random.nextFloat() * 2F - 1F) * 16;
+
+            // Then increase the distance by 32.
             x = x >= 0 ? x + 32 : x - 32;
             z = z >= 0 ? z + 32 : z - 32;
+
+            x += this.mob.getX();
+            z += this.mob.getZ();
+
+            // Make sure the mob doesn't fly out of the world.
+            y = Mth.clamp(y, this.mob.level.getMinBuildHeight(), this.mob.level.getMaxBuildHeight());
+
             this.mob.getMoveControl().setWantedPosition(x, y, z, 1.0);
         }
     }
@@ -207,7 +218,6 @@ public class Aerwhale extends FlyingMob {
      * Custom aerwhale move controller to help with keeping a smooth travel course.
      */
     public static class AerwhaleMoveControl extends MoveControl {
-        int testCourseChange = 200;
 
         public AerwhaleMoveControl(Mob pMob) {
             super(pMob);
@@ -215,31 +225,30 @@ public class Aerwhale extends FlyingMob {
 
         @Override
         public void tick() {
-            --testCourseChange;
+            if (this.mob.isVehicle()) {
+                return;
+            }
             double x = this.getWantedX() - this.mob.getX();
             double y = this.getWantedY() - this.mob.getY();
             double z = this.getWantedZ() - this.mob.getZ();
             double distance = Math.sqrt(x * x + z * z);
-            if (distance < 3 || testCourseChange <= 0) {
+            if (distance < 3 || this.isColliding(new Vec3(x, y, z).normalize())) {
                 this.operation = Operation.WAIT;
-                testCourseChange = 200;
             }
 
             float xRot = (float) (Mth.atan2(y, distance) * (180F / (float) Math.PI)); // Pitch
-//            xRot = this.rotlerp(this.mob.getXRot(), xRot, 1F);
+            xRot = this.rotlerp(this.mob.getXRot(), xRot, 1F);
             this.mob.setXRot(xRot);
 
             float yRot = (float) Mth.atan2(z, x) * (180F / (float) Math.PI); // Yaw
-//            yRot = this.rotlerp(this.mob.getYRot(), yRot, 90F);
+            yRot = this.rotlerp(this.mob.getYRot(), yRot, 2F);
             this.mob.setYRot(yRot);
             this.mob.yBodyRot = yRot;
-//            System.out.printf("First coords: %f, %f, %f%n", x, y, z);
 
             x = this.mob.getAttributeValue(Attributes.FLYING_SPEED) * Mth.cos(yRot * ((float) Math.PI / 180F));
             y = this.mob.getAttributeValue(Attributes.FLYING_SPEED) * Mth.sin(xRot * ((float) Math.PI / 180F));
             z = this.mob.getAttributeValue(Attributes.FLYING_SPEED) * Mth.sin(yRot * ((float) Math.PI / 180F));
 
-//            System.out.printf("Second coords: %f, %f, %f%n", x, y, z);
             Vec3 motion = new Vec3(x, y, z);
             this.mob.setDeltaMovement(motion);
         }
@@ -247,10 +256,10 @@ public class Aerwhale extends FlyingMob {
         /**
          * Checks if entity bounding box is not colliding with terrain
          */
-        private boolean isColliding(Vec3 pos, int distance) {
+        private boolean isColliding(Vec3 pos) {
             AABB axisalignedbb = this.mob.getBoundingBox();
 
-            for (int i = 1; i < distance; ++i) {
+            for (int i = 1; i < 7; ++i) {
                 axisalignedbb = axisalignedbb.move(pos);
                 if (!this.mob.level.noCollision(this.mob, axisalignedbb)) {
                     return true;
@@ -258,14 +267,10 @@ public class Aerwhale extends FlyingMob {
             }
             return false;
         }
-
-        private boolean isColliding(double x, double y, double z, int distance) {
-            return this.isColliding(new Vec3(x, y, z).normalize(), distance);
-        }
     }
 
     /**
-     * Prevents the mob's rotation from being weird.
+     * This is needed to allow the mob to look up and down in AerwhaleMoveControl.
      */
     public static class BlankLookControl extends LookControl {
 
