@@ -1,0 +1,43 @@
+{
+  "feature": "aether:quicksoil_shelf",
+  "placement": [
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "heightmap": "WORLD_SURFACE_WG",
+      "type": "minecraft:heightmap"
+    },
+    {
+      "type": "aether:elevation_adjustment",
+      "value": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": -4,
+          "max_inclusive": -2
+        }
+      }
+    },
+    {
+      "minimum": 47,
+      "maximum": 70,
+      "type": "aether:elevation_filter"
+    },
+    {
+      "predicate": {
+        "predicates": [
+          {
+            "blocks": "aether:aether_dirt",
+            "type": "minecraft:matching_blocks"
+          },
+          {
+            "tag": "aether:holystone",
+            "type": "minecraft:matching_block_tag"
+          }
+        ],
+        "type": "minecraft:any_of"
+      },
+      "type": "minecraft:block_predicate_filter"
+    }
+  ]
+}

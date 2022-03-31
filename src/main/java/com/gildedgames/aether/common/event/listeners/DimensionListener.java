@@ -4,7 +4,7 @@ import com.gildedgames.aether.common.event.events.AetherBannedItemEvent;
 import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
-import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
@@ -21,7 +21,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.LevelAccessor;
@@ -50,7 +49,7 @@ import net.minecraft.world.damagesource.DamageSource;
 @Mod.EventBusSubscriber
 public class DimensionListener
 {
-    public static boolean leavingAether;
+    public static boolean playerLeavingAether;
 
     @SubscribeEvent
     public static void checkBlockBanned(PlayerInteractEvent.RightClickBlock event) {
@@ -61,7 +60,7 @@ public class DimensionListener
         ItemStack stack = event.getItemStack();
         BlockState state = world.getBlockState(pos);
 
-        if (player.getCommandSenderWorld().dimension() == AetherDimensions.AETHER_WORLD) {
+        if (world.dimensionTypeRegistration().is(AetherTags.Dimensions.ULTRACOLD)) {
             if (stack.is(AetherTags.Items.BANNED_IN_AETHER)) {
                 if (AetherEventHooks.isItemBanned(stack)) {
                     AetherEventHooks.onItemBanned(world, pos, face, stack);
@@ -103,14 +102,12 @@ public class DimensionListener
 
     @SubscribeEvent
     public static void onNeighborNotified(BlockEvent.NeighborNotifyEvent event) {
-        if (event.getWorld() instanceof Level) {
-            Level world = (Level) event.getWorld();
+        if (event.getWorld() instanceof Level world) {
             BlockPos pos = event.getPos();
             FluidState fluidstate = world.getFluidState(pos);
-            if (world.dimension() == AetherDimensions.AETHER_WORLD && fluidstate.getType().is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
+            if (world.dimensionTypeRegistration().is(AetherTags.Dimensions.ULTRACOLD) && fluidstate.is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
                 world.setBlockAndUpdate(pos, AetherBlocks.AEROGEL.get().defaultBlockState());
-                if (world instanceof ServerLevel) {
-                    ServerLevel serverWorld = (ServerLevel) world;
+                if (world instanceof ServerLevel serverWorld) {
                     double x = pos.getX() + 0.5;
                     double y = pos.getY() + 1;
                     double z = pos.getZ() + 0.5;
@@ -126,7 +123,9 @@ public class DimensionListener
 
     @SubscribeEvent
     public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {
-        leavingAether = event.getEntity().level.dimension() == AetherDimensions.AETHER_WORLD && event.getDimension() == Level.OVERWORLD;
+        // The level passed into shouldReturnPlayerToOverworld() is the dimension the player is leaving
+        //  Meaning: We display the Descending GUI text to the player if they're about to leave a dimension that returns them to the OW
+        playerLeavingAether = event.getEntity().level.dimension() == AetherDimensions.AETHER_LEVEL && event.getDimension() == Level.OVERWORLD;
     }
 
     @SubscribeEvent
@@ -143,7 +142,7 @@ public class DimensionListener
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         if (event.side == LogicalSide.SERVER) {
             ServerLevel world = (ServerLevel) event.world;
-            if (world.dimension() == AetherDimensions.AETHER_WORLD) {
+            if (event.world.dimensionTypeRegistration().is(AetherTags.Dimensions.FALL_TO_OVERWORLD)) {
                 if (event.phase == TickEvent.Phase.END) {
                     if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
                         for (Entity entity : world.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {

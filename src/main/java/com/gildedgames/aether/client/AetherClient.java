@@ -9,7 +9,7 @@ import com.gildedgames.aether.client.registry.AetherRenderers;
 import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
 import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.common.registry.AetherContainerTypes;
-import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.client.Minecraft;
@@ -38,7 +38,7 @@ public class AetherClient {
             registerGuiFactories();
             registerItemModelProperties();
             registerColors();
-            DimensionSpecialEffects.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), new AetherSkyRenderInfo());
+            DimensionSpecialEffects.EFFECTS.put(AetherDimensions.AETHER_DIMENSION_TYPE.location(), new AetherSkyRenderInfo());
         });
     }
 

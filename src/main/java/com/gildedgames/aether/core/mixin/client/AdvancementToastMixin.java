@@ -55,6 +55,4 @@ public class AdvancementToastMixin
         }
         return false;
     }
-
-
 }

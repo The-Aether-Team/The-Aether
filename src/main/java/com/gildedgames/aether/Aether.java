@@ -7,6 +7,9 @@ import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
 import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
 import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
 import com.gildedgames.aether.common.registry.*;
+import com.gildedgames.aether.common.registry.worldgen.AetherBiomes;
+import com.gildedgames.aether.common.registry.worldgen.AetherFoliagePlacerTypes;
+import com.gildedgames.aether.common.registry.worldgen.AetherNoiseGeneratorSettings;
 import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.*;
@@ -23,10 +26,13 @@ import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -46,6 +52,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 @Mod(Aether.MODID)
+@Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Aether
 {
     public static final String MODID = "aether";
@@ -64,14 +71,15 @@ public class Aether
                 AetherEntityTypes.ENTITIES,
                 AetherEffects.EFFECTS,
                 AetherItems.ITEMS,
-                AetherFeatures.FEATURES,
                 AetherParticleTypes.PARTICLES,
                 AetherPOI.POI,
                 AetherSoundEvents.SOUNDS,
                 AetherContainerTypes.CONTAINERS,
                 AetherBlockEntityTypes.BLOCK_ENTITIES,
                 AetherRecipes.RECIPE_SERIALIZERS,
-                AetherLootModifiers.GLOBAL_LOOT_MODIFIERS
+                AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
+                AetherBiomes.BIOMES,
+                AetherFoliagePlacerTypes.FOLIAGE_PLACERS
         };
 
         for (DeferredRegister<?> register : registers) {
@@ -80,41 +88,44 @@ public class Aether
 
         File path = new File(FMLPaths.CONFIGDIR.get() + "/aether/");
         path.mkdirs();
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
+    }
+
+    @SubscribeEvent //This is not actually for registering RecipeSerializers.
+    public static void register(RegistryEvent.Register<RecipeSerializer<?>> event) {
         SunAltarWhitelist.initialize();
 
         AetherLoot.init();
         AetherAdvancements.init();
         PlacementModifiers.init();
         AetherTags.init();
+        AetherRecipes.RecipeTypes.init();
+        AetherNoiseGeneratorSettings.init();
 
         AetherBlocks.registerWoodTypes();
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
-
-        AetherStructureIngress.registerEvents(modEventBus);
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
-        AetherPacketHandler.register();
+        event.enqueueWork(() -> {
+            AetherPacketHandler.register();
 
-        AetherBlocks.registerPots();
-        AetherBlocks.registerAxeStrippingBlocks();
-        AetherBlocks.registerShovelFlatteningBlocks();
-        AetherBlocks.registerHoeTillingBlocks();
-        AetherBlocks.registerFlammability();
-        AetherBlocks.registerFreezables();
+            AetherBlocks.registerPots();
+            AetherBlocks.registerAxeStrippingBlocks();
+            AetherBlocks.registerShovelFlatteningBlocks();
+            AetherBlocks.registerHoeTillingBlocks();
+            AetherBlocks.registerFlammability();
+            AetherBlocks.registerFreezables();
 
-        AetherFeatures.registerConfiguredFeatures();
+            AetherEntityTypes.registerSpawnPlacements();
 
-        AetherEntityTypes.registerSpawnPlacements();
+            AetherItems.registerAbilities();
 
-        AetherItems.registerAbilities();
-
-        registerDispenserBehaviors();
-        registerCauldronInteractions();
-        registerComposting();
-        registerFuels();
+            registerDispenserBehaviors();
+            registerCauldronInteractions();
+            registerComposting();
+            registerFuels();
+        });
     }
 
     public void curiosSetup(InterModEnqueueEvent event) {
@@ -144,6 +155,7 @@ public class Aether
             generator.addProvider(new AetherItemTagData(generator, blockTags, helper));
             generator.addProvider(new AetherEntityTagData(generator, helper));
             generator.addProvider(new AetherFluidTagData(generator, helper));
+            generator.addProvider(new AetherDimensionTagData(generator, helper));
             generator.addProvider(new AetherAdvancementData(generator, helper));
             generator.addProvider(new AetherWorldData(generator));
         }

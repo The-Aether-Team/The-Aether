@@ -32,7 +32,7 @@ public class PigSlayerItem extends SwordItem
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (AetherTags.Entities.PIGS.contains(target.getType())) {
+		if (target.getType().is(AetherTags.Entities.PIGS)) {
 			if (target.getHealth() > 0.0F) {
 				target.hurt(DamageSource.mobAttack(attacker), 9999);
 			}
@@ -67,7 +67,7 @@ public class PigSlayerItem extends SwordItem
 						ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
 						for (ItemEntity drop : event.getDrops()) {
 							ItemStack droppedStack = drop.getItem();
-							if (droppedStack.getItem().getTags().contains(AetherTags.Items.PIG_DROPS.getName())) {
+							if (droppedStack.is(AetherTags.Items.PIG_DROPS)) {
 								ItemEntity dropEntity = new ItemEntity(entity.level, drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy());
 								dropEntity.setDefaultPickUpDelay();
 								newDrops.add(dropEntity);
