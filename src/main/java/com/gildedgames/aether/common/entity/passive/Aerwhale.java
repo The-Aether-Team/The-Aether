@@ -236,12 +236,14 @@ public class Aerwhale extends FlyingMob {
                 this.operation = Operation.WAIT;
             }
 
-            float xRot = (float) (Mth.atan2(y, distance) * (180F / (float) Math.PI)); // Pitch
-            xRot = this.rotlerp(this.mob.getXRot(), xRot, 1F);
+            float xRotTarget = (float) (Mth.atan2(y, distance) * (180F / (float) Math.PI)); // Pitch
+            float xRot = Mth.wrapDegrees(this.mob.getXRot());
+            xRot = Mth.approachDegrees(xRot, xRotTarget, 1F);
             this.mob.setXRot(xRot);
 
-            float yRot = (float) Mth.atan2(z, x) * (180F / (float) Math.PI); // Yaw
-            yRot = this.rotlerp(this.mob.getYRot(), yRot, 2F);
+            float yRotTarget = Mth.wrapDegrees((float) Mth.atan2(z, x) * (180F / (float) Math.PI)); // Yaw
+            float yRot = Mth.wrapDegrees(this.mob.getYRot());
+            yRot = Mth.approachDegrees(yRot, yRotTarget, 2F);
             this.mob.setYRot(yRot);
             this.mob.yBodyRot = yRot;
 
