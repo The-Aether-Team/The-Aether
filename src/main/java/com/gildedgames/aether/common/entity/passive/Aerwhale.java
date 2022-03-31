@@ -62,10 +62,10 @@ public class Aerwhale extends FlyingMob {
             if (!passengers.isEmpty()) {
                 Entity entity = passengers.get(0);
                 if (entity instanceof Player player) {
-                    this.setYRot(player.getYRot());
+                    this.setYRot(player.getYRot() + 90F);
                     this.yRotO = this.getYRot();
-                    this.setXRot(player.getXRot());
-                    this.xRotO = this.getXRot();
+                    this.setXRot(-player.getXRot());
+                    this.xRotO = this.getXRot() * 0.5F;
 
                     this.yHeadRot = player.yHeadRot;
 
@@ -74,7 +74,7 @@ public class Aerwhale extends FlyingMob {
                     if (AetherPlayer.get(player).map(AetherPlayer::isJumping).orElse(false)) {
                         this.setDeltaMovement(new Vec3(0.0, 0.0, 0.0));
                     } else {
-                        double d0 = Math.toRadians(player.getYRot() - 90.0);
+                        double d0 = Math.toRadians(this.getYRot());
                         double d1 = Math.toRadians(-player.getXRot());
                         double d2 = Math.cos(d1);
                         this.setDeltaMovement(
