@@ -12,17 +12,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 
-public class LoreBookContainer extends AbstractContainerMenu
+public class LoreBookMenu extends AbstractContainerMenu
 {
     private final LoreInventory bookInventory;
 
     private boolean loreEntryExists;
 
-    public LoreBookContainer(int id, Inventory playerInventory) {
+    public LoreBookMenu(int id, Inventory playerInventory) {
         this(id, playerInventory, new LoreInventory(playerInventory.player));
     }
 
-    public LoreBookContainer(int id, Inventory playerInventory, LoreInventory bookInventory) {
+    public LoreBookMenu(int id, Inventory playerInventory, LoreInventory bookInventory) {
         super(AetherContainerTypes.BOOK_OF_LORE.get(), id);
         checkContainerSize(bookInventory, 1);
         this.bookInventory = bookInventory;
@@ -42,8 +42,8 @@ public class LoreBookContainer extends AbstractContainerMenu
         }
     }
 
-    public static LoreBookContainer create(int id, Inventory playerInventory) {
-        return new LoreBookContainer(id, playerInventory);
+    public static LoreBookMenu create(int id, Inventory playerInventory) {
+        return new LoreBookMenu(id, playerInventory);
     }
 
     @Override

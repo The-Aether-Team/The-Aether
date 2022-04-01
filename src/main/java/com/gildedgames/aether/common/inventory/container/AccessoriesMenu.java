@@ -36,7 +36,7 @@ import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.Optional;
 
-public class AccessoriesContainer extends InventoryMenu
+public class AccessoriesMenu extends InventoryMenu
 {
     private static final ResourceLocation[] ARMOR_SLOT_TEXTURES = new ResourceLocation[] {
             InventoryMenu.EMPTY_ARMOR_SLOT_BOOTS,
@@ -67,11 +67,11 @@ public class AccessoriesContainer extends InventoryMenu
 
     public boolean hasButton;
 
-    public AccessoriesContainer(int containerId, Inventory playerInventory) {
+    public AccessoriesMenu(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, true);
     }
 
-    public AccessoriesContainer(int containerId, Inventory playerInventory, boolean hasButton) {
+    public AccessoriesMenu(int containerId, Inventory playerInventory, boolean hasButton) {
         super(playerInventory, playerInventory.player.level.isClientSide, playerInventory.player);
         this.menuType = AetherContainerTypes.ACCESSORIES.get();
         this.containerId = containerId;
@@ -101,7 +101,7 @@ public class AccessoriesContainer extends InventoryMenu
 
                 @Override
                 public boolean mayPlace(@Nonnull ItemStack stack) {
-                    return stack.canEquip(equipmentSlotType, AccessoriesContainer.this.player);
+                    return stack.canEquip(equipmentSlotType, AccessoriesMenu.this.player);
                 }
 
                 @Override

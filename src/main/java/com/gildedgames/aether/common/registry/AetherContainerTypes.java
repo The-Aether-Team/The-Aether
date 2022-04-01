@@ -12,9 +12,9 @@ public class AetherContainerTypes
 {
 	public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, Aether.MODID);
 
-	public static final RegistryObject<MenuType<AccessoriesContainer>> ACCESSORIES = CONTAINERS.register("accessories", () -> new MenuType<>(AccessoriesContainer::new));
-	public static final RegistryObject<MenuType<LoreBookContainer>> BOOK_OF_LORE = CONTAINERS.register("book_of_lore", () -> new MenuType<>(LoreBookContainer::new));
-	public static final RegistryObject<MenuType<AltarContainer>> ALTAR = CONTAINERS.register("altar", () -> new MenuType<>(AltarContainer::new));
-	public static final RegistryObject<MenuType<FreezerContainer>> FREEZER = CONTAINERS.register("freezer", () -> new MenuType<>(FreezerContainer::new));
-	public static final RegistryObject<MenuType<IncubatorContainer>> INCUBATOR = CONTAINERS.register("incubator", () -> new MenuType<>(IncubatorContainer::new));
+	public static final RegistryObject<MenuType<AccessoriesMenu>> ACCESSORIES = CONTAINERS.register("accessories", () -> new MenuType<>(AccessoriesMenu::new));
+	public static final RegistryObject<MenuType<LoreBookMenu>> BOOK_OF_LORE = CONTAINERS.register("book_of_lore", () -> new MenuType<>(LoreBookMenu::new));
+	public static final RegistryObject<MenuType<AltarMenu>> ALTAR = CONTAINERS.register("altar", () -> new MenuType<>(AltarMenu::new));
+	public static final RegistryObject<MenuType<FreezerMenu>> FREEZER = CONTAINERS.register("freezer", () -> new MenuType<>(FreezerMenu::new));
+	public static final RegistryObject<MenuType<IncubatorMenu>> INCUBATOR = CONTAINERS.register("incubator", () -> new MenuType<>(IncubatorMenu::new));
 }
