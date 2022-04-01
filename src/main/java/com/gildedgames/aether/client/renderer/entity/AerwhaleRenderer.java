@@ -10,9 +10,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
+
+import javax.annotation.Nonnull;
 
 public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<Aerwhale>, AerwhaleModel, ClassicAerwhaleModel> {
     private static final ResourceLocation AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale.png");
@@ -27,34 +27,16 @@ public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<A
     }
 
     @Override
-    protected void scale(Aerwhale aerwhale, PoseStack matrixStackIn, float partialTickTime) {
-        matrixStackIn.translate(0.0, 1.2, 0.0);
-//        if (_staticData == null) {
-//        	_staticData = new float[] {aerwhale.rotationYaw, aerwhale.rotationPitch};
-//        }
-//        float[] prevRotations = (float[]) _staticData;
-//        float prevRotationYaw = prevRotations[0];
-//        float prevRotationPitch = prevRotations[1];
-        
-        Vec3 look = aerwhale.getDeltaMovement().normalize();//getLook(partialTickTime);
-        
-        float yaw = (float)(Mth.atan2(look.z, look.x) * 180.0 / Math.PI);
-        float pitch = -(float)(Math.atan(look.y) * 73.0);
-//        yaw = MathHelper.lerp(partialTickTime, aerwhale.prevRotationYaw, yaw);
-//        float yaw = MathHelper.lerp(partialTickTime, aerwhale.prevRotationYaw, aerwhale.rotationYaw);
-//        float pitch = aerwhale.rotationPitch;
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(yaw + 0.0F));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(pitch));
-//        matrixStackIn.rotate(new Quaternion(Vector3f.ZP, 90.0F, true));
-        matrixStackIn.scale(2.0F, 2.0F, 2.0F);
-        
-//        if (yaw != prevRotationYaw || pitch != prevRotationPitch) {
-////        	System.out.printf("Aerwhale world = %s\n", aerwhale.world);
-//        	float motionYaw = MathHelper.wrapDegrees((float)Math.atan2(aerwhale.getMotion().z, aerwhale.getMotion().x) * (180.0F / (float)Math.PI) - 90.0F); 
-//        	System.out.printf("Get aerwhale (pitch, yaw) =  %+7.2f, %+7.2f  [(x, z):                                       Δ (%+6.2f, %+6.2f)] %+7.2f\n", pitch, MathHelper.wrapDegrees(yaw), aerwhale.getMotion().x, aerwhale.getMotion().z, motionYaw);
-//        	prevRotations[0] = yaw;
-//        	prevRotations[1] = pitch;
-//        }
+    protected void scale(@Nonnull Aerwhale aerwhale, PoseStack pMatrixStack, float partialTickTime) {
+        pMatrixStack.translate(0.0, 1.2, 0.0);
+        pMatrixStack.scale(2.0F, 2.0F, 2.0F);
+    }
+
+    @Override
+    protected void setupRotations(@Nonnull Aerwhale pEntityLiving, @Nonnull PoseStack pMatrixStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {
+        super.setupRotations(pEntityLiving, pMatrixStack, pAgeInTicks, pRotationYaw, pPartialTicks);
+        pMatrixStack.mulPose(Vector3f.YP.rotationDegrees(90F));
+        pMatrixStack.mulPose(Vector3f.XP.rotationDegrees(pEntityLiving.getXRot()));
     }
 
     @Override
