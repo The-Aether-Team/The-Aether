@@ -99,7 +99,6 @@ public class Aether
         AetherLoot.init();
         AetherAdvancements.init();
         PlacementModifiers.init();
-        AetherTags.init();
         AetherRecipes.RecipeTypes.init();
         AetherNoiseGeneratorSettings.init();
 
