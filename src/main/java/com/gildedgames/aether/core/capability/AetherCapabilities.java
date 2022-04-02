@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.capability;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.gildedgames.aether.core.capability.arrow.PhoenixArrowCapability;
 import com.gildedgames.aether.core.capability.arrow.PhoenixArrowProvider;
@@ -77,7 +77,7 @@ public class AetherCapabilities {
 
 		@SubscribeEvent
 		public static void attachWorldCapabilities(AttachCapabilitiesEvent<Level> event) {
-			if (event.getObject().dimensionTypeRegistration().is(AetherTags.Dimensions.ETERNAL_DAY)) {
+			if (event.getObject().dimension() == AetherDimensions.AETHER_LEVEL) {
 				event.addCapability(new ResourceLocation(Aether.MODID, "aether_time"), new AetherTimeProvider(new AetherTimeCapability(event.getObject())));
 			}
 		}
