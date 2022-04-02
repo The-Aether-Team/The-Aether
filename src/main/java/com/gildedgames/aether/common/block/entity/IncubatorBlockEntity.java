@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.passive.Moa;
-import com.gildedgames.aether.common.inventory.container.IncubatorContainer;
+import com.gildedgames.aether.common.inventory.container.IncubatorMenu;
 
 import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
@@ -86,7 +86,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	@Nonnull
 	@Override
 	protected AbstractContainerMenu createMenu(int id, @Nonnull Inventory playerInventory) {
-		return new IncubatorContainer(id, playerInventory, this, this.dataAccess);
+		return new IncubatorMenu(id, playerInventory, this, this.dataAccess);
 	}
 
 	@Nonnull

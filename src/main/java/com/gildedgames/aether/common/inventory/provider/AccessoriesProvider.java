@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.inventory.provider;
 
-import com.gildedgames.aether.common.inventory.container.AccessoriesContainer;
+import com.gildedgames.aether.common.inventory.container.AccessoriesMenu;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -22,6 +22,6 @@ public class AccessoriesProvider implements MenuProvider
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int i, @Nonnull Inventory playerInventory, @Nonnull Player playerEntity) {
-        return new AccessoriesContainer(i, playerInventory);
+        return new AccessoriesMenu(i, playerInventory);
     }
 }

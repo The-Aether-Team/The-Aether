@@ -541,6 +541,9 @@ public class AetherLangData extends AetherLanguageProvider
 
         addGuiText("sun_altar.time", "Time");
 
+        addGuiText("recipebook.toggleRecipes.enchantable", "Showing Enchantable");
+        addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
+
 
         addCustomizationText("title", "Customization & Perks");
         addCustomizationText("gloves.arm", "Glove Layer: Arm");

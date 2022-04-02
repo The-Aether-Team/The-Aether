@@ -2,7 +2,7 @@ package com.gildedgames.aether.common.block.entity;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherRecipes.RecipeTypes;
-import com.gildedgames.aether.common.inventory.container.FreezerContainer;
+import com.gildedgames.aether.common.inventory.container.FreezerMenu;
 
 import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import com.google.common.collect.Maps;
@@ -37,7 +37,7 @@ public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity
 	@Nonnull
 	@Override
 	protected AbstractContainerMenu createMenu(int id, @Nonnull Inventory playerInventory) {
-		return new FreezerContainer(id, playerInventory, this, this.dataAccess);
+		return new FreezerMenu(id, playerInventory, this, this.dataAccess);
 	}
 
 	public static Map<Item, Integer> getFreezingMap() {
