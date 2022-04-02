@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.event.listeners.capability;
 
-import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.gildedgames.aether.core.util.AetherSleepStatus;
 import net.minecraft.server.MinecraftServer;
@@ -33,7 +33,7 @@ public class AetherTimeListener
         if (player != null && player.level instanceof ServerLevel world) {
             MinecraftServer server = world.getServer();
             for (ServerLevel serverworld : server.getAllLevels()) {
-                if (serverworld.dimensionTypeRegistration().is(AetherTags.Dimensions.ETERNAL_DAY)) {
+                if (serverworld.dimension() == AetherDimensions.AETHER_LEVEL) {
                     AetherTime.get(world).ifPresent(AetherTime::syncToClient);
                 }
             }
@@ -45,7 +45,7 @@ public class AetherTimeListener
      */
     @SubscribeEvent
     public static void onWorldLoad(WorldEvent.Load event) {
-        if (!(event.getWorld() instanceof Level level) || !level.dimensionTypeRegistration().is(AetherTags.Dimensions.ETERNAL_DAY)) return;
+        if (!(event.getWorld() instanceof Level level) || level.dimension() != AetherDimensions.AETHER_LEVEL) return;
 
         world = level;
 
@@ -55,14 +55,14 @@ public class AetherTimeListener
 
     @SubscribeEvent
     public static void onWorldUnload(WorldEvent.Unload event) {
-        if (event.getWorld() instanceof Level level && level.dimensionTypeRegistration().is(AetherTags.Dimensions.ETERNAL_DAY)) {
+        if (event.getWorld() instanceof Level level && level.dimension() == AetherDimensions.AETHER_LEVEL) {
             world = null;
         }
     }
 
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
-        if (event.world.dimensionTypeRegistration().is(AetherTags.Dimensions.ETERNAL_DAY) && event.phase == TickEvent.Phase.END) {
+        if (event.world.dimension() == AetherDimensions.AETHER_LEVEL && event.phase == TickEvent.Phase.END) {
             AetherTime.get(event.world).ifPresent(aetherTime -> aetherTime.serverTick((ServerLevel) event.world));
         }
     }

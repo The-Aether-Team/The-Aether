@@ -34,8 +34,6 @@ public class AetherTags {
 		public static final TagKey<Block> ZEPHYR_SPAWNABLE_ON = tag("zephyr_spawnable_on");
 		public static final TagKey<Block> COCKATRICE_SPAWNABLE_BLACKLIST = tag("cockatrice_spawnable_blacklist");
 
-		public static void init() { }
-
 		private static TagKey<Block> tag(String name) {
 			return TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
@@ -89,8 +87,6 @@ public class AetherTags {
 		public static final TagKey<Item> AETHER_ACCESSORY = curio("aether_accessory");
 		public static final TagKey<Item> AETHER_SHIELD = curio("aether_shield");
 
-		public static void init() { }
-
 		private static TagKey<Item> tag(String name) {
 			return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
@@ -107,8 +103,6 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> SWET_TARGETS = tag("swet_targets");
 		public static final TagKey<EntityType<?>> AECHOR_PLANT_TARGETS = tag("aechor_plant_targets");
 
-		public static void init() { }
-
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
@@ -117,37 +111,8 @@ public class AetherTags {
 	public static class Fluids {
 		public static final TagKey<Fluid> FREEZABLE_TO_AEROGEL = tag("freezable_to_aerogel");
 
-		public static void init() { }
-
 		private static TagKey<Fluid> tag(String name) {
 			return TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
-	}
-
-	public static class Dimensions {
-		// This should be our most general tag for any worlds that are "Aether-like"
-		// AYags above should reference this tag, for any dimensions added to this tag should apply for all logic above
-		public static final TagKey<DimensionType> HOSTILE_PARADISE = tag("hostile_paradise");
-
-		public static final TagKey<DimensionType> ULTRACOLD = tag("ultracold");
-		public static final TagKey<DimensionType> ETERNAL_DAY = tag("eternal_day");
-		public static final TagKey<DimensionType> NO_WHEAT_SEEDS = tag("no_wheat_seeds");
-		public static final TagKey<DimensionType> FALL_TO_OVERWORLD = tag("fall_to_overworld");
-		public static final TagKey<DimensionType> AETHER_MUSIC = tag("aether_music");
-
-		public static void init() { }
-
-		private static TagKey<DimensionType> tag(String name) {
-			return TagKey.create(Registry.DIMENSION_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, name));
-		}
-	}
-
-	// Classloads all of the tags.
-	public static void init() {
-		Blocks.init();
-		Items.init();
-		Entities.init();
-		Fluids.init();
-		Dimensions.init();
 	}
 }
