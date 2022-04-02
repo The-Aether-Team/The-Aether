@@ -100,6 +100,7 @@ public class Aether
         AetherAdvancements.init();
         PlacementModifiers.init();
         AetherRecipes.RecipeTypes.init();
+        AetherRecipeBookTypes.init();
         AetherNoiseGeneratorSettings.init();
 
         AetherBlocks.registerWoodTypes();
