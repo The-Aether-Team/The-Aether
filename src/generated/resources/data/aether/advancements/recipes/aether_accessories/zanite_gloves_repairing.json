@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "aether:welcoming_skies_freezing"
+      "aether:zanite_gloves_repairing"
     ]
   },
   "criteria": {
-    "has_aether:music_disc_welcoming_skies": {
+    "has_aether:zanite_gloves": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:music_disc_welcoming_skies"
+              "aether:zanite_gloves"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "aether:welcoming_skies_freezing"
+        "recipe": "aether:zanite_gloves_repairing"
       }
     }
   },
   "requirements": [
     [
-      "has_aether:music_disc_welcoming_skies",
+      "has_aether:zanite_gloves",
       "has_the_recipe"
     ]
   ]

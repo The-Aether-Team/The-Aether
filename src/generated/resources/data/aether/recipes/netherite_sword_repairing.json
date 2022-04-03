@@ -1,5 +1,6 @@
 {
   "type": "aether:repairing",
+  "group": "altar_sword_repair",
   "ingredient": {
     "item": "minecraft:netherite_sword"
   },

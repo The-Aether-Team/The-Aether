@@ -368,8 +368,19 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_disc", has(ingredient));
     }
 
+    public SimpleCookingRecipeBuilder hiddenEnchantingRecipe(ItemLike result, ItemLike ingredient, int duration) {
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(new ItemStack(ingredient, 1)), result, 0.0F, duration, AetherRecipes.ENCHANTING.get())
+                .unlockedBy("has_" + result.asItem().getRegistryName(), has(result));
+    }
+
     public SimpleCookingRecipeBuilder freezingRecipe(ItemLike result, ItemLike ingredient, int duration) {
         return SimpleCookingRecipeBuilder.cooking(Ingredient.of(new ItemStack(ingredient, 1)), result, 0.0F, duration, AetherRecipes.FREEZING.get())
                 .unlockedBy("has_" + ingredient.asItem().getRegistryName(), has(ingredient));
     }
+
+    public SimpleCookingRecipeBuilder hiddenFreezingRecipe(ItemLike result, ItemLike ingredient, int duration) {
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(new ItemStack(ingredient, 1)), result, 0.0F, duration, AetherRecipes.FREEZING.get())
+                .unlockedBy("has_" + result.asItem().getRegistryName(), has(result));
+    }
+
 }
