@@ -46,20 +46,20 @@ public class SunAltarBlock extends BaseEntityBlock {
 		} else {
 			if (AetherConfig.COMMON.sun_altar_whitelist.get() && !player.hasPermissions(4) && !SunAltarWhitelist.INSTANCE.isWhiteListed(player.getGameProfile())) {
 				player.displayClientMessage(new TranslatableComponent(Aether.MODID + ".sun_altar.no_permission"), true);
-				return InteractionResult.FAIL;
+				return InteractionResult.SUCCESS;
 			}
 			AetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
 			if(aetherTime != null) {
 				if(!aetherTime.getEternalDay() || AetherConfig.COMMON.disable_eternal_day.get()) {
 					this.openScreen(level, pos, player);
-					return InteractionResult.CONSUME;
+					return InteractionResult.SUCCESS;
 				} else {
 					player.displayClientMessage(new TranslatableComponent(Aether.MODID + ".sun_altar.in_control"), true);
-					return InteractionResult.FAIL;
+					return InteractionResult.SUCCESS;
 				}
 			} else {
 				player.displayClientMessage(new TranslatableComponent(Aether.MODID + ".sun_altar.no_power"), true);
-				return InteractionResult.FAIL;
+				return InteractionResult.SUCCESS;
 			}
 		}
 	}

@@ -32,6 +32,7 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,6 +45,13 @@ import java.util.function.Supplier;
 public class AetherRenderers {
     public static final Lazy<BlockEntityWithoutLevelRenderer> blockEntityWithoutLevelRenderer = () ->
             new AetherBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+
+    public static final IItemRenderProperties entityBlockItemRenderProperties = new IItemRenderProperties() {
+        @Override
+        public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+            return AetherRenderers.blockEntityWithoutLevelRenderer.get();
+        }
+    };
 
     public static void registerBlockRenderLayers() {
         RenderType cutout = RenderType.cutout();

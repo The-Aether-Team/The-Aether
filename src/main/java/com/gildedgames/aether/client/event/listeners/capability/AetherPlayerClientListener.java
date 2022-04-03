@@ -19,14 +19,15 @@ public class AetherPlayerClientListener
 {
     @SubscribeEvent
     public static void onMove(MovementInputUpdateEvent event) {
-        AetherPlayer.get(event.getPlayer()).ifPresent((aetherPlayer) -> {
+        Player player = event.getPlayer();
+        AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
             Input input = event.getInput();
             boolean isJumping = input.jumping;
             if (isJumping != aetherPlayer.isJumping()) {
                 AetherPacketHandler.sendToServer(new JumpPacket(event.getPlayer().getId(), isJumping));
                 aetherPlayer.setJumping(isJumping);
             }
-            boolean isMoving = isJumping || input.up || input.down || input.left || input.right;
+            boolean isMoving = isJumping || input.up || input.down || input.left || input.right || player.isFallFlying();
             if (isMoving != aetherPlayer.isMoving()) {
                 AetherPacketHandler.sendToServer(new MovementPacket(event.getPlayer().getId(), isMoving));
                 aetherPlayer.setMoving(isMoving);

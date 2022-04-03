@@ -70,7 +70,7 @@ public class FallPathNavigator extends GroundPathNavigation {
             }
         } else {
             if (this.pathToPosition != null) {
-                if (!this.pathToPosition.closerThan(this.mob.position(), Math.max(this.mob.getBbWidth(), 1.0D)) && (!(this.mob.getY() > (double)this.pathToPosition.getY()) || !(new BlockPos(this.pathToPosition.getX(), this.mob.getY(), this.pathToPosition.getZ())).closerThan(this.mob.position(), Math.max(this.mob.getBbWidth(), 1.0D)))) {
+                if (!this.pathToPosition.closerThan(this.mob.blockPosition(), Math.max(this.mob.getBbWidth(), 1.0D)) && (!(this.mob.getY() > (double)this.pathToPosition.getY()) || !(new BlockPos(this.pathToPosition.getX(), this.mob.getY(), this.pathToPosition.getZ())).closerThan(this.mob.blockPosition(), Math.max(this.mob.getBbWidth(), 1.0D)))) {
                     this.mob.getMoveControl().setWantedPosition(this.pathToPosition.getX(), this.pathToPosition.getY(), this.pathToPosition.getZ(), this.speedModifier);
                 } else {
                     this.pathToPosition = null;
