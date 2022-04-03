@@ -115,7 +115,6 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(BlockTags.LOGS_THAT_BURN).addTags(
                 AetherTags.Blocks.SKYROOT_LOGS,
                 AetherTags.Blocks.GOLDEN_OAK_LOGS);
-        tag(BlockTags.SAND).add(AetherBlocks.QUICKSOIL.get());
         tag(BlockTags.STAIRS).add(
                 AetherBlocks.SKYROOT_STAIRS.get(),
                 AetherBlocks.CARVED_STAIRS.get(),
@@ -323,7 +322,6 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.AMBROSIUM_ORE.get(),
                 AetherBlocks.ZANITE_ORE.get(),
                 AetherBlocks.GRAVITITE_ORE.get());
-        tag(Tags.Blocks.SAND_COLORLESS).add(AetherBlocks.QUICKSOIL.get());
         tag(Tags.Blocks.STONE).addTag(AetherTags.Blocks.HOLYSTONE);
         tag(Tags.Blocks.STORAGE_BLOCKS).add(AetherBlocks.ZANITE_BLOCK.get());
     }
