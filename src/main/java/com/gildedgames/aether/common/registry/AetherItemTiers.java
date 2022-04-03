@@ -6,8 +6,7 @@ import net.minecraft.util.LazyLoadedValue;
 
 import java.util.function.Supplier;
 
-public enum AetherItemTiers implements Tier
-{
+public enum AetherItemTiers implements Tier {
 	SKYROOT(0, 59, 2.0F, 0.0F, 15, () -> Ingredient.of(AetherBlocks.SKYROOT_PLANKS.get())),
 	HOLYSTONE(1, 131, 4.0F, 1.0F, 5, () -> Ingredient.of(AetherBlocks.HOLYSTONE.get())),
 	ZANITE(2, 250, 6.0F, 2.0F, 14, () -> Ingredient.of(AetherItems.ZANITE_GEMSTONE.get())),
