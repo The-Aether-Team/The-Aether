@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.Iterator;
 import java.util.UUID;
 
 public interface ZaniteWeapon {
@@ -18,30 +19,19 @@ public interface ZaniteWeapon {
         if (stack.is(AetherTags.Items.ZANITE_WEAPONS) && slot == EquipmentSlot.MAINHAND) {
 			ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();
 			attributeBuilder.putAll(map);
-			attributeBuilder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(DAMAGE_MODIFIER_UUID, "Damage modifier", calculateIncrease(stack), AttributeModifier.Operation.ADDITION));
+			attributeBuilder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(DAMAGE_MODIFIER_UUID, "Damage modifier", calculateIncrease(map, stack), AttributeModifier.Operation.ADDITION));
 			map = attributeBuilder.build();
 		}
 		return map;
     }
 
-	static float calculateIncrease(ItemStack tool) { //TODO: Make less dependent on tier durability values. we have ways of doing this for the zanite accessories.
-		int current = tool.getDamageValue();
-		int maxDamage = tool.getMaxDamage();
-
-		if (maxDamage - 50 <= current) {
-			return 4.0F;
+	static int calculateIncrease(Multimap<Attribute, AttributeModifier> map, ItemStack stack) {
+		float damage = 0.0F;
+		for (Iterator<AttributeModifier> it = map.get(Attributes.ATTACK_DAMAGE).stream().iterator(); it.hasNext();) {
+			AttributeModifier modifier = it.next();
+			damage += modifier.getAmount();
 		}
-		else if (maxDamage - 110 <= current) {
-			return 3.0F;
-		}
-		else if (maxDamage - 200 <= current) {
-			return 2.0F;
-		}
-		else if (maxDamage - 239 <= current) {
-			return 1.0F;
-		}
-		else {
-			return 0.0F;
-		}
+		damage *= (2.0F * ((float) stack.getDamageValue()) / ((float) stack.getMaxDamage() + 0.5F));
+		return Math.round(damage);
 	}
 }

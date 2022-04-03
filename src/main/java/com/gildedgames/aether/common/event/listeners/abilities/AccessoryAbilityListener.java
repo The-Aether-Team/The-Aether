@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.event.listeners.abilities;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.item.accessories.abilities.ZaniteAccessory;
 import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -40,8 +41,10 @@ public class AccessoryAbilityListener
 
     @SubscribeEvent
     public static void onMiningSpeed(PlayerEvent.BreakSpeed event) {
-        CuriosApi.getCuriosHelper().findFirstCurio(event.getPlayer(), AetherItems.ZANITE_RING.get()).ifPresent((slotResult) -> ZaniteAccessory.handleMiningSpeed(event, slotResult));
-        CuriosApi.getCuriosHelper().findFirstCurio(event.getPlayer(), AetherItems.ZANITE_PENDANT.get()).ifPresent((slotResult) -> ZaniteAccessory.handleMiningSpeed(event, slotResult));
+        CuriosApi.getCuriosHelper().findCurios(event.getPlayer(), AetherItems.ZANITE_RING.get()).forEach((slotResult -> event.setNewSpeed(ZaniteAccessory.handleMiningSpeed(event.getNewSpeed(), slotResult))));
+        CuriosApi.getCuriosHelper().findFirstCurio(event.getPlayer(), AetherItems.ZANITE_PENDANT.get()).ifPresent((slotResult) -> event.setNewSpeed(ZaniteAccessory.handleMiningSpeed(event.getNewSpeed(), slotResult)));
+        Aether.LOGGER.info(event.getOriginalSpeed());
+        Aether.LOGGER.info(event.getNewSpeed());
     }
 
     @SubscribeEvent
