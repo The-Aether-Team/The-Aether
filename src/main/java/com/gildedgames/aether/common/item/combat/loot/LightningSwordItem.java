@@ -16,7 +16,7 @@ import net.minecraft.world.item.Tiers;
 public class LightningSwordItem extends SwordItem
 {
     public LightningSwordItem() {
-        super(AetherItemTiers.LIGHTNING, 4, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+        super(AetherItemTiers.LIGHTNING, 3, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override

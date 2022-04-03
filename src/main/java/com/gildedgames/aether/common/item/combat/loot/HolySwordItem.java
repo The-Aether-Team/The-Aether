@@ -18,7 +18,7 @@ import net.minecraft.world.item.Tiers;
 public class HolySwordItem extends SwordItem
 {
     public HolySwordItem() {
-        super(AetherItemTiers.HOLY, 4, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+        super(AetherItemTiers.HOLY, 3, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override
