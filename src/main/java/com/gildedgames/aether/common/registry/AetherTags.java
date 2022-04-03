@@ -102,6 +102,7 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
 		public static final TagKey<EntityType<?>> SWET_TARGETS = tag("swet_targets");
 		public static final TagKey<EntityType<?>> AECHOR_PLANT_TARGETS = tag("aechor_plant_targets");
+		public static final TagKey<EntityType<?>> AERCLOUD_SPAWNABLE = tag("aercloud_spawnable");
 
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, name));

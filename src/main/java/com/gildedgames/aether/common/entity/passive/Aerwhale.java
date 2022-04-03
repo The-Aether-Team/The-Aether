@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.BaseComponent;
@@ -48,8 +49,8 @@ public class Aerwhale extends FlyingMob {
                 .add(Attributes.FLYING_SPEED, 0.2);
     }
 
-    public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType spawnReason, BlockPos pos, Random random) {
-        return level.getFluidState(pos).is(Fluids.EMPTY) && level.getRawBrightness(pos, 0) > 8 && Mob.checkMobSpawnRules(aerwhale, level, spawnReason, pos, random);
+    public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random random) {
+        return level.getFluidState(pos).is(Fluids.EMPTY) && level.getRawBrightness(pos, 0) > 8 && (reason == MobSpawnType.SPAWNER || level.getBlockState(pos.below()).is(AetherTags.Blocks.AERWHALE_SPAWNABLE_ON));
     }
 
     /**

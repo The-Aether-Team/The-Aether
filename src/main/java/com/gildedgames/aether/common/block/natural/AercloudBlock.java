@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.block.natural;
 
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.block.util.IAetherDoubleDropBlock;
+import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;

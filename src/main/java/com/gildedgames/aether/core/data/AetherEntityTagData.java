@@ -74,6 +74,10 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 AetherEntityTypes.PHYG.get(),
                 AetherEntityTypes.SHEEPUFF.get()
         );
+        tag(AetherTags.Entities.AERCLOUD_SPAWNABLE).add(
+                AetherEntityTypes.AERWHALE.get(),
+                AetherEntityTypes.ZEPHYR.get()
+        );
 
         //vanilla
         tag(EntityTypeTags.IMPACT_PROJECTILES).add(

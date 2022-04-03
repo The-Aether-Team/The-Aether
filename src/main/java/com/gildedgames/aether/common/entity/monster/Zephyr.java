@@ -19,7 +19,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -62,11 +61,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	}
 
 	public static boolean checkZephyrSpawnRules(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random random) {
-		return level.getDifficulty() != Difficulty.PEACEFUL && level.getBlockState(pos.below()).is(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON);
-	}
-
-	public boolean checkSpawnObstruction(@Nonnull LevelReader level) {
-		return level.isUnobstructed(this) && !level.containsAnyLiquid(this.getBoundingBox());
+		return level.getDifficulty() != Difficulty.PEACEFUL && (reason == MobSpawnType.SPAWNER || level.getBlockState(pos.below()).is(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON));
 	}
 
 	/**
