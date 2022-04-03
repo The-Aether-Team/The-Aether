@@ -52,7 +52,7 @@ public class AltarRepairRecipe extends AbstractCookingRecipe
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AltarRepairRecipe>
     {
         public AltarRepairRecipe fromJson(ResourceLocation recipeLocation, JsonObject jsonObject) {
-            String group = GsonHelper.getAsString(jsonObject, "group");
+            String group = GsonHelper.getAsString(jsonObject, "group", "");
             Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(jsonObject, "ingredient"));
             int cookingTime = GsonHelper.getAsInt(jsonObject, "repairTime", 200);
             return new AltarRepairRecipe(recipeLocation, group, ingredient, cookingTime);

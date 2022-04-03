@@ -1,6 +1,5 @@
 package com.gildedgames.aether.client.registry;
 
-import com.gildedgames.aether.common.recipe.AltarRepairRecipe;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherRecipeBookTypes;
@@ -39,7 +38,7 @@ public class AetherRecipeCategories {
         RecipeBookRegistry.addCategoriesToType(AetherRecipeBookTypes.ALTAR, ImmutableList.of(ENCHANTING_SEARCH.get(), ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
         RecipeBookRegistry.addAggregateCategories(ENCHANTING_SEARCH.get(), ImmutableList.of(ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
         RecipeBookRegistry.addCategoriesFinder(AetherRecipes.RecipeTypes.ENCHANTING, recipe -> {
-            if (recipe.getId().getPath().contains("_repairing")) {
+            if (recipe.getIngredients().get(0).getItems()[0].getItem() == recipe.getResultItem().getItem()) {
                 return ENCHANTING_REPAIR.get();
             }
             if (recipe.getResultItem().isEdible()) {
