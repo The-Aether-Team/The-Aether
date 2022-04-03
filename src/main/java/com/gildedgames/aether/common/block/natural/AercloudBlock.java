@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.block.natural;
 
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.block.util.IAetherDoubleDropBlock;
+import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,7 +25,7 @@ public class AercloudBlock extends HalfTransparentBlock implements IAetherDouble
 	protected static VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 0.01, 16.0);
 	
 	public AercloudBlock(BlockBehaviour.Properties properties) {
-		super(properties.isRedstoneConductor((state, reader, pos) -> false).isSuffocating((state, reader, pos) -> false).isViewBlocking((state, reader, pos) -> false).isValidSpawn((state, reader, pos, entity) -> state.getLightEmission(reader, pos) < 14));
+		super(properties.isRedstoneConductor((state, reader, pos) -> false).isSuffocating((state, reader, pos) -> false).isViewBlocking((state, reader, pos) -> false));
 		this.registerDefaultState(this.defaultBlockState().setValue(DOUBLE_DROPS, false));
 	}
 

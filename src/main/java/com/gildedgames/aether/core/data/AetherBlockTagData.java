@@ -89,7 +89,6 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
         tag(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON).addTag(AetherTags.Blocks.AERCLOUDS);
         tag(AetherTags.Blocks.COCKATRICE_SPAWNABLE_BLACKLIST).addTags(
-                AetherTags.Blocks.AERCLOUDS,
                 AetherTags.Blocks.DUNGEON_BLOCKS,
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS
