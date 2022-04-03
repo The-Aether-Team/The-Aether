@@ -2,7 +2,7 @@ package com.gildedgames.aether.common.block.entity;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherRecipes.RecipeTypes;
-import com.gildedgames.aether.common.inventory.container.AltarContainer;
+import com.gildedgames.aether.common.inventory.container.AltarMenu;
 
 import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import com.google.common.collect.Maps;
@@ -37,7 +37,7 @@ public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity
 	@Nonnull
 	@Override
 	protected AbstractContainerMenu createMenu(int id, @Nonnull Inventory playerInventory) {
-		return new AltarContainer(id, playerInventory, this, this.dataAccess);
+		return new AltarMenu(id, playerInventory, this, this.dataAccess);
 	}
 
 	public static Map<Item, Integer> getEnchantingMap() {

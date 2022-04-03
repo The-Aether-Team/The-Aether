@@ -99,8 +99,8 @@ public class Aether
         AetherLoot.init();
         AetherAdvancements.init();
         PlacementModifiers.init();
-        AetherTags.init();
         AetherRecipes.RecipeTypes.init();
+        AetherRecipeBookTypes.init();
         AetherNoiseGeneratorSettings.init();
 
         AetherBlocks.registerWoodTypes();
@@ -155,7 +155,6 @@ public class Aether
             generator.addProvider(new AetherItemTagData(generator, blockTags, helper));
             generator.addProvider(new AetherEntityTagData(generator, helper));
             generator.addProvider(new AetherFluidTagData(generator, helper));
-            generator.addProvider(new AetherDimensionTagData(generator, helper));
             generator.addProvider(new AetherAdvancementData(generator, helper));
             generator.addProvider(new AetherWorldData(generator));
         }

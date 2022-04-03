@@ -195,7 +195,6 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(ItemTags.LOGS_THAT_BURN).addTags( //charcoal recipes
                 AetherTags.Items.SKYROOT_LOGS,
                 AetherTags.Items.GOLDEN_OAK_LOGS);
-        tag(ItemTags.SAND).add(AetherBlocks.QUICKSOIL.get().asItem());
         tag(ItemTags.STAIRS).add(
                 AetherBlocks.SKYROOT_STAIRS.get().asItem(),
                 AetherBlocks.CARVED_STAIRS.get().asItem(),
@@ -275,7 +274,6 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherBlocks.ZANITE_ORE.get().asItem(),
                 AetherBlocks.GRAVITITE_ORE.get().asItem());
         tag(Tags.Items.RODS_WOODEN).add(AetherItems.SKYROOT_STICK.get());
-        tag(Tags.Items.SAND_COLORLESS).add(AetherBlocks.QUICKSOIL.get().asItem());
         tag(Tags.Items.STORAGE_BLOCKS).add(AetherBlocks.ZANITE_BLOCK.get().asItem());
     }
 

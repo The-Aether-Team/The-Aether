@@ -16,17 +16,17 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
-public class IncubatorContainer extends AbstractContainerMenu
+public class IncubatorMenu extends AbstractContainerMenu
 {
 	public final Container container;
 	public final ContainerData data;
 	public final Level level;
 
-	public IncubatorContainer(int id, Inventory playerInventoryIn) {
+	public IncubatorMenu(int id, Inventory playerInventoryIn) {
 		this(id, playerInventoryIn, new SimpleContainer(2), new SimpleContainerData(3));
 	}
 	
-	public IncubatorContainer(int id, Inventory playerInventory, Container incubatorInventory, ContainerData incubatorData) {
+	public IncubatorMenu(int id, Inventory playerInventory, Container incubatorInventory, ContainerData incubatorData) {
 		super(AetherContainerTypes.INCUBATOR.get(), id);
 		checkContainerSize(incubatorInventory, 2);
 		checkContainerDataCount(incubatorData, 3);

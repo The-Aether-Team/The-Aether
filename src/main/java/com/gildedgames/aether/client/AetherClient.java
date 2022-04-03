@@ -2,10 +2,7 @@ package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
-import com.gildedgames.aether.client.registry.AetherAtlases;
-import com.gildedgames.aether.client.registry.AetherKeys;
-import com.gildedgames.aether.client.registry.AetherOverlays;
-import com.gildedgames.aether.client.registry.AetherRenderers;
+import com.gildedgames.aether.client.registry.*;
 import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
 import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.common.registry.AetherContainerTypes;
@@ -33,6 +30,7 @@ public class AetherClient {
             AetherAtlases.registerWoodTypeAtlases();
             AetherKeys.registerKeys();
             AetherOverlays.registerOverlays();
+            AetherRecipeCategories.registerRecipeCategories();
             AetherRenderers.registerBlockRenderLayers();
             AetherRenderers.registerCuriosRenderers();
             registerGuiFactories();
