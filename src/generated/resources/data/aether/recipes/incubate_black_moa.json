@@ -1,0 +1,8 @@
+{
+  "type": "aether:incubating",
+  "egg": {
+    "item": "aether:black_moa_egg"
+  },
+  "entity": "aether:moa",
+  "incubateTime": 5700
+}

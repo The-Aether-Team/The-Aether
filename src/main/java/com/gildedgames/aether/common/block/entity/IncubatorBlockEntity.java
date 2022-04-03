@@ -221,6 +221,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		}
 	}
 
+	@Override
 	public boolean canPlaceItemThroughFace(int index, @Nonnull ItemStack stack, @Nullable Direction direction) {
 		 if (index == 0) {
 			 return stack.is(AetherTags.Items.MOA_EGGS);

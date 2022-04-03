@@ -1,9 +1,12 @@
 package com.gildedgames.aether.core.data.provider;
 
 import com.gildedgames.aether.common.recipe.builder.AltarRepairBuilder;
+import com.gildedgames.aether.common.recipe.builder.IncubatorRecipeBuilder;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.*;
 import net.minecraft.world.item.Item;
@@ -371,5 +374,11 @@ public class AetherRecipeProvider extends RecipeProvider
     public SimpleCookingRecipeBuilder freezingRecipe(ItemLike result, ItemLike ingredient, int duration) {
         return SimpleCookingRecipeBuilder.cooking(Ingredient.of(new ItemStack(ingredient, 1)), result, 0.0F, duration, AetherRecipes.FREEZING.get())
                 .unlockedBy("has_" + ingredient.asItem().getRegistryName(), has(ingredient));
+    }
+
+    //Default incubation time is 5700
+    public IncubatorRecipeBuilder incubatingRecipe(ItemLike egg, EntityType<?> entity, int duration) {
+        return new IncubatorRecipeBuilder(Ingredient.of(new ItemStack(egg)), entity, 0.0F, duration, AetherRecipes.INCUBATING.get())
+                .unlockedBy("has_" + egg.asItem().getRegistryName(), has(egg));
     }
 }

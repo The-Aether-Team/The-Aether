@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:incubate_orange_moa"
+    ]
+  },
+  "criteria": {
+    "has_aether:orange_moa_egg": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:orange_moa_egg"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:incubate_orange_moa"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_aether:orange_moa_egg",
+      "has_the_recipe"
+    ]
+  ]
+}

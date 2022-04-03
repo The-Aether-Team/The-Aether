@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.data;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.core.data.provider.AetherRecipeProvider;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -725,6 +726,11 @@ public class AetherRecipeData extends AetherRecipeProvider
 
         freezingRecipe(AetherItems.ICE_PENDANT.get(), AetherItems.IRON_PENDANT.get(), 2500).save(consumer, name("ice_pendant_from_iron_freezing"));
         freezingRecipe(AetherItems.ICE_PENDANT.get(), AetherItems.GOLDEN_PENDANT.get(), 2500).save(consumer, name("ice_pendant_from_gold_freezing"));
+
+        incubatingRecipe(AetherItems.BLUE_MOA_EGG.get(), AetherEntityTypes.MOA.get(), 5700).save(consumer, name("incubate_blue_moa"));
+        incubatingRecipe(AetherItems.WHITE_MOA_EGG.get(), AetherEntityTypes.MOA.get(), 5700).save(consumer, name("incubate_white_moa"));
+        incubatingRecipe(AetherItems.BLACK_MOA_EGG.get(), AetherEntityTypes.MOA.get(), 5700).save(consumer, name("incubate_black_moa"));
+        incubatingRecipe(AetherItems.ORANGE_MOA_EGG.get(), AetherEntityTypes.MOA.get(), 5700).save(consumer, name("incubate_orange_moa"));
     }
 
     private ResourceLocation name(String name) {

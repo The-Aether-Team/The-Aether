@@ -15,6 +15,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 
+import javax.annotation.Nonnull;
+
 public class AltarRepairRecipe extends AbstractCookingRecipe
 {
     public final Ingredient ingredient;
@@ -25,26 +27,31 @@ public class AltarRepairRecipe extends AbstractCookingRecipe
     }
 
     @Override
+    @Nonnull
     public ItemStack assemble(Container inventory) {
         return this.ingredient.getItems()[0];
     }
 
     @Override
+    @Nonnull
     public ItemStack getResultItem() {
         return this.ingredient.getItems()[0];
     }
 
     @Override
+    @Nonnull
     public ItemStack getToastSymbol() {
         return new ItemStack(AetherBlocks.ALTAR.get());
     }
 
     @Override
+    @Nonnull
     public RecipeSerializer<?> getSerializer() {
         return AetherRecipes.ENCHANTING.get();
     }
 
     @Override
+    @Nonnull
     public RecipeType<?> getType() {
         return AetherRecipes.RecipeTypes.ENCHANTING;
     }

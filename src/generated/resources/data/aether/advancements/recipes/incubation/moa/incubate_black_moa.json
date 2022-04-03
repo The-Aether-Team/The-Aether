@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:incubate_black_moa"
+    ]
+  },
+  "criteria": {
+    "has_aether:black_moa_egg": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:black_moa_egg"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:incubate_black_moa"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_aether:black_moa_egg",
+      "has_the_recipe"
+    ]
+  ]
+}

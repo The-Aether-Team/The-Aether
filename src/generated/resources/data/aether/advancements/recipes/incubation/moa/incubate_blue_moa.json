@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:incubate_blue_moa"
+    ]
+  },
+  "criteria": {
+    "has_aether:blue_moa_egg": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:blue_moa_egg"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:incubate_blue_moa"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_aether:blue_moa_egg",
+      "has_the_recipe"
+    ]
+  ]
+}
