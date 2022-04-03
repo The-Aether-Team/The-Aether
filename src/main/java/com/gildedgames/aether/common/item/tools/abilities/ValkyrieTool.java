@@ -23,7 +23,7 @@ public interface ValkyrieTool {
     UUID REACH_MODIFIER_UUID = UUID.fromString("0A87A51E-A43F-4EEF-A770-07C2160D373D");
 
     static Multimap<Attribute, AttributeModifier> extendReachModifier(Multimap<Attribute, AttributeModifier> map, ItemStack stack, EquipmentSlot slot) {
-        if ((stack.is(AetherTags.Items.VALKYRIE_TOOLS) || stack.is(AetherTags.Items.VALKYRIE_WEAPONS)) && slot == EquipmentSlot.MAINHAND) {
+        if ((stack.is(AetherTags.Items.VALKYRIE_TOOLS) || stack.is(AetherTags.Items.VALKYRIE_WEAPONS)) && (slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND)) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();
             attributeBuilder.putAll(map);
             attributeBuilder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(REACH_MODIFIER_UUID, "Reach modifier", getReachDistanceModifier(), AttributeModifier.Operation.ADDITION));
