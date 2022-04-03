@@ -1,5 +1,6 @@
 {
   "type": "aether:freezing",
+  "group": "ice_ring",
   "ingredient": {
     "item": "aether:iron_ring"
   },
