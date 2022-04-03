@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.item.materials.util;
 
 import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
-import com.gildedgames.aether.common.event.hooks.AetherEventDispatch;
+import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.google.common.collect.Maps;
 import net.minecraft.core.Holder;

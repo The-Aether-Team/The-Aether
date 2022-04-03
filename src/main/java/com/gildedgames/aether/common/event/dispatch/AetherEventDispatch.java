@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.event.hooks;
+package com.gildedgames.aether.common.event.dispatch;
 
 import javax.annotation.Nullable;
 

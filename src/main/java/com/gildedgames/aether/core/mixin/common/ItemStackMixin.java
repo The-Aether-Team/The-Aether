@@ -1,6 +1,6 @@
 package com.gildedgames.aether.core.mixin.common;
 
-import com.gildedgames.aether.common.item.combat.abilities.ZaniteWeapon;
+import com.gildedgames.aether.common.item.combat.abilities.weapon.ZaniteWeapon;
 import com.gildedgames.aether.common.item.tools.abilities.ValkyrieTool;
 import com.google.common.collect.Multimap;
 import net.minecraft.world.entity.EquipmentSlot;

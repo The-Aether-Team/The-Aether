@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.mixin.common;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.event.hooks.CapabilityHooks;
 import com.gildedgames.aether.common.event.listeners.capability.AetherTimeListener;
 import com.gildedgames.aether.core.capability.time.AetherTime;
 import net.minecraft.resources.ResourceLocation;
@@ -32,7 +33,7 @@ public class DimensionTypeMixin {
     private void timeOfDay(long dayTime, CallbackInfoReturnable<Float> cir) {
         if (this.effectsLocation.getNamespace().equals(Aether.MODID)) {
             double time = (double) this.fixedTime.orElse(dayTime);
-            Level level = AetherTimeListener.world;
+            Level level = CapabilityHooks.AetherTimeHooks.world;
             if (level != null) {
                 AetherTime aetherTime = AetherTime.get(level).orElse(null);
                 time = aetherTime.getDayTime();
@@ -47,7 +48,7 @@ public class DimensionTypeMixin {
     private void moonPhase(long dayTime, CallbackInfoReturnable<Integer> cir) {
         if (this.effectsLocation.getNamespace().equals(Aether.MODID)) {
             long time = this.fixedTime.orElse(dayTime);
-            Level level = AetherTimeListener.world;
+            Level level = CapabilityHooks.AetherTimeHooks.world;
             if (level != null) {
                 AetherTime aetherTime = AetherTime.get(level).orElse(null);
                 time = aetherTime.getDayTime();

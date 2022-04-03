@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.item.combat.abilities;
+package com.gildedgames.aether.common.item.combat.abilities.weapon;
 
 import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.core.NonNullList;

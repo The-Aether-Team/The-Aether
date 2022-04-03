@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.block.util;
 
 import com.gildedgames.aether.common.event.events.FreezeEvent;
-import com.gildedgames.aether.common.event.hooks.AetherEventDispatch;
+import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;

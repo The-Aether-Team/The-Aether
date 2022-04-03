@@ -1,6 +1,6 @@
 package com.gildedgames.aether.core.mixin.common;
 
-import com.gildedgames.aether.common.item.combat.abilities.GravititeWeapon;
+import com.gildedgames.aether.common.item.combat.abilities.weapon.GravititeWeapon;
 import com.gildedgames.aether.core.capability.cape.CapeEntity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;

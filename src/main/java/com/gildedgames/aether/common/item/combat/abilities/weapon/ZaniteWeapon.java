@@ -1,4 +1,4 @@
-package com.gildedgames.aether.common.item.combat.abilities;
+package com.gildedgames.aether.common.item.combat.abilities.weapon;
 
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.google.common.collect.ImmutableMultimap;
@@ -25,7 +25,7 @@ public interface ZaniteWeapon {
 		return map;
     }
 
-	static int calculateIncrease(Multimap<Attribute, AttributeModifier> map, ItemStack stack) {
+	private static int calculateIncrease(Multimap<Attribute, AttributeModifier> map, ItemStack stack) {
 		float damage = 0.0F;
 		for (Iterator<AttributeModifier> it = map.get(Attributes.ATTACK_DAMAGE).stream().iterator(); it.hasNext();) {
 			AttributeModifier modifier = it.next();

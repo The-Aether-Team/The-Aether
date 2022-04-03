@@ -32,7 +32,7 @@ public interface ValkyrieTool {
         return map;
     }
 
-    static double getReachDistanceModifier() {
+    private static double getReachDistanceModifier() {
         return 3.0D;
     }
 
