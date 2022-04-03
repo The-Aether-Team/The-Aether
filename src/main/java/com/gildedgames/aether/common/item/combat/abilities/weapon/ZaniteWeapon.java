@@ -31,7 +31,11 @@ public interface ZaniteWeapon {
 			AttributeModifier modifier = it.next();
 			damage += modifier.getAmount();
 		}
-		damage *= (2.0F * ((float) stack.getDamageValue()) / ((float) stack.getMaxDamage() + 0.5F));
+		damage *= (2.0F * ((float) stack.getDamageValue()) / ((float) stack.getMaxDamage()) + 0.5F);
+		damage -= 6.0F;
+		if (damage < 0.0F) {
+			damage = 0.0F;
+		}
 		return Math.round(damage);
 	}
 }
