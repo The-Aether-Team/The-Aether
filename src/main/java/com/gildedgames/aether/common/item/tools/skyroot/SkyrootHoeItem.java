@@ -9,8 +9,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 
 import javax.annotation.Nullable;
 
-public class SkyrootHoeItem extends HoeItem
-{
+public class SkyrootHoeItem extends HoeItem {
     public SkyrootHoeItem() {
         super(AetherItemTiers.SKYROOT, 0, -3.0F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
     }

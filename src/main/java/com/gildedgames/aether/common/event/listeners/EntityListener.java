@@ -1,54 +1,29 @@
 package com.gildedgames.aether.common.event.listeners;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.entity.monster.Swet;
-import com.gildedgames.aether.common.entity.passive.MountableAnimal;
-import com.gildedgames.aether.common.entity.passive.FlyingCow;
-import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.common.event.hooks.EntityHooks;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class EntityListener
-{
+public class EntityListener {
     @SubscribeEvent
     public static void onMountEntity(EntityMountEvent event) {
-        Entity rider = event.getEntityMounting();
-        Entity mount = event.getEntityBeingMounted();
-        if(event.isDismounting() && rider.isShiftKeyDown()) {
-            if ((mount instanceof MountableAnimal && !mount.isOnGround()) || (mount instanceof Swet swet && !swet.isFriendly())) {
-                event.setCanceled(true);
-            }
-        }
+        Entity riderEntity = event.getEntityMounting();
+        Entity mountEntity = event.getEntityBeingMounted();
+        boolean isDismounting = event.isDismounting();
+        event.setCanceled(EntityHooks.dismountPrevention(riderEntity, mountEntity, isDismounting));
     }
 
     @SubscribeEvent
     public static void onInteractWithEntity(PlayerInteractEvent.EntityInteractSpecific event) {
-        Entity target = event.getTarget();
-        if ((target instanceof Cow || target instanceof FlyingCow) && !((Animal) target).isBaby()) {
-            Player player = event.getPlayer();
-            InteractionHand hand = event.getHand();
-            ItemStack heldStack = player.getItemInHand(hand);
-            if (heldStack.getItem() == AetherItems.SKYROOT_BUCKET.get()) {
-                if (target instanceof FlyingCow) {
-                    player.playSound(AetherSoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);
-                } else  {
-                    player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
-                }
-                ItemStack filledBucket = ItemUtils.createFilledResult(heldStack, player, AetherItems.SKYROOT_MILK_BUCKET.get().getDefaultInstance());
-                player.swing(hand);
-                player.setItemInHand(hand, filledBucket);
-            }
-        }
+        Entity targetEntity = event.getTarget();
+        Player player = event.getPlayer();
+        InteractionHand interactionHand = event.getHand();
+        EntityHooks.skyrootBucketMilking(targetEntity, player, interactionHand);
     }
 }

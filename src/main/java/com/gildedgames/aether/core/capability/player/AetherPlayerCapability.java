@@ -12,7 +12,6 @@ import com.gildedgames.aether.core.AetherConfig;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.*;
-import com.gildedgames.aether.core.util.EquipmentUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -181,7 +180,6 @@ public class AetherPlayerCapability implements AetherPlayer {
 	@Override
 	public void onUpdate() {
 		this.handleAetherPortal();
-		this.handleWingRotation();
 		this.activateParachute();
 		this.handleRemoveDarts();
 		this.tickDownRemedy();
@@ -245,23 +243,6 @@ public class AetherPlayerCapability implements AetherPlayer {
 			if (this.aetherPortalTimer > 0) {
 				this.aetherPortalTimer -= 4;
 			}
-		}
-	}
-
-	private void handleWingRotation() {
-		if (EquipmentUtil.hasFullValkyrieSet(this.getPlayer())) {
-			if (!this.getPlayer().isOnGround() && (this.getPlayer().getFirstPassenger() != null && !this.getPlayer().getFirstPassenger().isOnGround())) {
-				this.wingRotation += 0.75F;
-			} else {
-				this.wingRotation += 0.15F;
-			}
-			if (this.wingRotation > (Math.PI * 2.0F)) {
-				this.wingRotation -= (Math.PI * 2.0F);
-			} else {
-				this.wingRotation += 0.1F;
-			}
-		} else {
-			this.wingRotation = 0.0F;
 		}
 	}
 
