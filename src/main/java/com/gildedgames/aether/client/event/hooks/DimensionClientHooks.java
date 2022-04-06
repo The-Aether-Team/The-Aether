@@ -38,17 +38,13 @@ public class DimensionClientHooks {
         // The level passed into shouldReturnPlayerToOverworld() is the dimension the player is leaving
         //  Meaning: We display the Descending GUI text to the player if they're about to leave a dimension that returns them to the OW
         if (entity.level.dimension() == AetherDimensions.AETHER_LEVEL && dimension == Level.OVERWORLD) {
+            displayAetherTravel = true;
             playerLeavingAether = true;
-            displayAetherTravel = true;
         } else if (entity.level.dimension() == Level.OVERWORLD && dimension == AetherDimensions.AETHER_LEVEL) {
-            playerLeavingAether = false;
             displayAetherTravel = true;
+            playerLeavingAether = false;
         } else {
             displayAetherTravel = false;
         }
-    }
-
-    public static void disableAetherTravelDisplay() {
-        displayAetherTravel = false;
     }
 }
