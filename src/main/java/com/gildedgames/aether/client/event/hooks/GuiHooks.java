@@ -96,10 +96,12 @@ public class GuiHooks {
     public static void drawAetherTravelMessageWithinLevelScreen(Screen screen, PoseStack poseStack) {
         if (screen instanceof ReceivingLevelScreen) {
             if (Minecraft.getInstance().player != null) {
-                if (Minecraft.getInstance().player.level.dimension() == AetherDimensions.AETHER_LEVEL) {
-                    Screen.drawCenteredString(poseStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.ascending"), screen.width / 2, 50, 16777215);
-                } else if (DimensionHooks.playerLeavingAether) {
-                    Screen.drawCenteredString(poseStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.descending"), screen.width / 2, 50, 16777215);
+                if (DimensionClientHooks.displayAetherTravel) {
+                    if (DimensionClientHooks.playerLeavingAether) {
+                        Screen.drawCenteredString(poseStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.descending"), screen.width / 2, 50, 16777215);
+                    } else {
+                        Screen.drawCenteredString(poseStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.ascending"), screen.width / 2, 50, 16777215);
+                    }
                 }
             }
         }

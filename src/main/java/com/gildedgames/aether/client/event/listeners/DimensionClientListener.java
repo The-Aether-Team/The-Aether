@@ -2,11 +2,17 @@ package com.gildedgames.aether.client.event.listeners;
 
 import com.gildedgames.aether.client.event.hooks.DimensionClientHooks;
 import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
+import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FogType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Triple;
@@ -29,5 +35,17 @@ public class DimensionClientListener {
             event.setGreen(renderFog.getMiddle());
             event.setBlue(renderFog.getRight());
         }
+    }
+
+    @SubscribeEvent
+    public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {
+        Entity entity = event.getEntity();
+        ResourceKey<Level> dimension = event.getDimension();
+        DimensionClientHooks.dimensionTravel(entity, dimension);
+    }
+
+    @SubscribeEvent
+    public static void onWorldLoad(WorldEvent.Load event) {
+        DimensionClientHooks.disableAetherTravelDisplay();
     }
 }
