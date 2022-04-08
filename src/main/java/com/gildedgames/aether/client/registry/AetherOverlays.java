@@ -48,7 +48,7 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent(handler -> renderInebriationOverlay(minecraft, window, handler));
+                AetherPlayer.get(player).ifPresent(handler -> renderInebriationOverlay(pStack, minecraft, window, handler));
             }
         });
         OverlayRegistry.registerOverlayTop("Remedy Vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
@@ -56,7 +56,7 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent(handler -> renderRemedyOverlay(minecraft, window, handler));
+                AetherPlayer.get(player).ifPresent(handler -> renderRemedyOverlay(pStack, minecraft, window, handler));
             }
         });
         OverlayRegistry.registerOverlayTop("Repulsion Shield Vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
@@ -64,7 +64,7 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent(handler -> renderRepulsionShieldOverlay(minecraft, window, handler));
+                AetherPlayer.get(player).ifPresent(handler -> renderRepulsionShieldOverlay(pStack, minecraft, window, handler));
             }
         });
         OverlayRegistry.registerOverlayTop("Hammer Cooldown", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
@@ -119,41 +119,43 @@ public class AetherOverlays {
         }
     }
 
-    private static void renderInebriationOverlay(Minecraft minecraft, Window window, AetherPlayer handler) {
+    private static void renderInebriationOverlay(PoseStack poseStack, Minecraft minecraft, Window window, AetherPlayer handler) {
         Player player = handler.getPlayer();
         MobEffectInstance inebriation = player.getEffect(AetherEffects.INEBRIATION.get());
         float effectScale = minecraft.options.screenEffectScale;
         if (inebriation != null) {
             float inebriationDuration = (float) (inebriation.getDuration() % 50) / 50;
             float alpha = (inebriationDuration * inebriationDuration) / 5.0F + 0.4F;
-            renderVignette(window, effectScale, alpha, TEXTURE_INEBRIATION_VIGNETTE);
+            renderVignette(poseStack, window, effectScale, alpha, TEXTURE_INEBRIATION_VIGNETTE);
         }
     }
 
-    private static void renderRemedyOverlay(Minecraft minecraft, Window window, AetherPlayer handler) {
+    private static void renderRemedyOverlay(PoseStack poseStack, Minecraft minecraft, Window window, AetherPlayer handler) {
         int remedyMaximum = handler.getRemedyMaximum();
         int remedyTimer = handler.getRemedyTimer();
         float effectScale = minecraft.options.screenEffectScale;
         if (remedyTimer > 0) {
             float alpha = ((float) remedyTimer / remedyMaximum) / 1.5F;
-            renderVignette(window, effectScale, alpha, TEXTURE_REMEDY_VIGNETTE);
+            renderVignette(poseStack, window, effectScale, alpha, TEXTURE_REMEDY_VIGNETTE);
         }
     }
 
-    private static void renderRepulsionShieldOverlay(Minecraft minecraft, Window window, AetherPlayer handler) {
+    private static void renderRepulsionShieldOverlay(PoseStack poseStack, Minecraft minecraft, Window window, AetherPlayer handler) {
         int projectileImpactedMaximum = handler.getProjectileImpactedMaximum();
         int projectileImpactedTimer = handler.getProjectileImpactedTimer();
         float effectScale = minecraft.options.screenEffectScale;
         if (projectileImpactedTimer > 0) {
             float alpha = (float) projectileImpactedTimer / projectileImpactedMaximum;
-            renderVignette(window, effectScale, alpha, TEXTURE_REPULSION_SHIELD_VIGNETTE);
+            renderVignette(poseStack, window, effectScale, alpha, TEXTURE_REPULSION_SHIELD_VIGNETTE);
         }
     }
 
-    private static void renderVignette(Window window, float effectScale, float alpha, ResourceLocation resource) {
+    private static void renderVignette(PoseStack poseStack, Window window, float effectScale, float alpha, ResourceLocation resource) {
+        poseStack.pushPose();
         alpha *= Math.sqrt(effectScale);
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(false);
+        RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -167,8 +169,10 @@ public class AetherOverlays {
         bufferbuilder.vertex(0.0, 0.0, -90.0).uv(0.0F, 0.0F).endVertex();
         tessellator.end();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.disableBlend();
         RenderSystem.depthMask(true);
         RenderSystem.enableDepthTest();
+        poseStack.popPose();
     }
 
     private static void renderHammerCooldownOverlay(PoseStack poseStack, Minecraft mc, Window window, LocalPlayer player) {
