@@ -26,16 +26,16 @@ public interface ZaniteWeapon {
     }
 
 	private static int calculateIncrease(Multimap<Attribute, AttributeModifier> map, ItemStack stack) {
-		float damage = 0.0F;
+		float baseDamage = 0.0F;
 		for (Iterator<AttributeModifier> it = map.get(Attributes.ATTACK_DAMAGE).stream().iterator(); it.hasNext();) {
 			AttributeModifier modifier = it.next();
-			damage += modifier.getAmount();
+			baseDamage += modifier.getAmount();
 		}
-		damage *= (2.0F * ((float) stack.getDamageValue()) / ((float) stack.getMaxDamage()) + 0.5F);
-		damage -= 6.0F;
-		if (damage < 0.0F) {
-			damage = 0.0F;
+		float boostedDamage = baseDamage * (2.0F * ((float) stack.getDamageValue()) / ((float) stack.getMaxDamage()) + 0.5F);
+		boostedDamage -= baseDamage;
+		if (boostedDamage < 0.0F) {
+			boostedDamage = 0.0F;
 		}
-		return Math.round(damage);
+		return Math.round(boostedDamage);
 	}
 }
