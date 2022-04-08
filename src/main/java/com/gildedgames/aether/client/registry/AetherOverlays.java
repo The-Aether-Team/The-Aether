@@ -40,7 +40,7 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent(handler -> renderAetherPortalOverlay(minecraft, window, handler, partialTicks));
+                AetherPlayer.get(player).ifPresent(handler -> renderAetherPortalOverlay(pStack, minecraft, window, handler, partialTicks));
             }
         });
         OverlayRegistry.registerOverlayTop("Inebriation Vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
@@ -85,7 +85,7 @@ public class AetherOverlays {
         });
     }
 
-    private static void renderAetherPortalOverlay(Minecraft mc, Window window, AetherPlayer handler, float partialTicks) {
+    private static void renderAetherPortalOverlay(PoseStack poseStack, Minecraft mc, Window window, AetherPlayer handler, float partialTicks) {
         float timeInPortal = handler.getPrevPortalAnimTime() + (handler.getPortalAnimTime() - handler.getPrevPortalAnimTime()) * partialTicks;
         if (timeInPortal > 0.0F) {
             if (timeInPortal < 1.0F) {
@@ -94,6 +94,8 @@ public class AetherOverlays {
                 timeInPortal = timeInPortal * 0.8F + 0.2F;
             }
 
+            poseStack.pushPose();
+            RenderSystem.enableBlend();
             RenderSystem.disableDepthTest();
             RenderSystem.depthMask(false);
             RenderSystem.defaultBlendFunc();
@@ -116,6 +118,8 @@ public class AetherOverlays {
             RenderSystem.depthMask(true);
             RenderSystem.enableDepthTest();
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.disableBlend();
+            poseStack.popPose();
         }
     }
 
