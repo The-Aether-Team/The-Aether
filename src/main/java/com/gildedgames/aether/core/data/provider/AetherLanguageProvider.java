@@ -95,4 +95,8 @@ public abstract class AetherLanguageProvider extends LanguageProvider
     public void addLore(String key, String name) {
         add("lore.aether." + key, name);
     }
+
+    public void addProTip(String key, String name) {
+        add("aether.pro_tips.line.aether." + key, name);
+    }
 }

@@ -98,7 +98,7 @@ public class LoreBookMenu extends AbstractContainerMenu
     }
 
     @OnlyIn(Dist.CLIENT)
-    public String getLoreEntryKey(ItemStack stack) {
+    public String getLoreEntryKey(ItemStack stack) { //TODO: I feel like there has to be a better way to do this than replacing so much.
         return "lore." + stack.getItem().getRegistryName().getNamespace() + "." + stack.getDescriptionId()
                 .replace(stack.getItem().getRegistryName().getNamespace() + ".", "")
                 .replace("item.", "")

@@ -4,9 +4,9 @@ import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.core.data.provider.AetherLanguageProvider;
 import net.minecraft.data.DataGenerator;
 
-public class AetherLangData extends AetherLanguageProvider
+public class AetherLanguageData extends AetherLanguageProvider
 {
-    public AetherLangData(DataGenerator gen) {
+    public AetherLanguageData(DataGenerator gen) {
         super(gen);
     }
 
@@ -826,5 +826,98 @@ public class AetherLangData extends AetherLanguageProvider
         addItemLore(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "A music disc that plays Ascending Dawn by Emile van Krieken.");
         addItemLore(AetherItems.MUSIC_DISC_LEGACY, "A music disc that plays Legacy by Jon Lachney.");
         addItemLore(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "A music disc that plays Welcoming Skies by Voyed.");
+
+        addProTip("skyroot_tool_ability", "Skyroot tools gain double drops from blocks.");
+        addProTip("holystone_tool_ability", "Holystone tools occasionally generate Ambrosium.");
+        addProTip("zanite_tool_ability", "Zanite Tools gain strength the more they are used.");
+        addProTip("gravitite_tool_ability", "Gravitite Tools can levitate blocks when right-clicking.");
+
+
+        addProTip("white_aerclouds", "White Aerclouds prevent fall damage when landed upon.");
+        addProTip("blue_aerclouds", "Blue Aerclouds are bouncy, and launch mobs very high in the air.");
+
+
+        addProTip("phyg_saddle", "Placing a saddle on Flying Pigs makes them a mount.");
+        addProTip("moa_egg_incubation", "Moa Eggs can be incubated into Baby Moas with the Incubator.");
+        addProTip("gravitite_ore_enchanting", "Gravitite Ore can be enchanted into Enchanted Gravitite.");
+        addProTip("enchanted_gravitite_floating", "Enchanted Gravitite only floats up when powered.");
+        addProTip("enchanted_gravitite_crafting", "Enchanted Gravitite can be crafted into armour and tools.");
+        addProTip("gravitite_armour_ability","Gravitite Armour grants you higher jumps and no fall damage.");
+        addProTip("moa_nature_staff", "Baby Moas will stay put when right clicking them with a nature staff.");
+        addProTip("golden_oak_amber", "Golden Oak trees yield valuable Golden Amber in their logs.");
+        addProTip("altar_repairing", "Altars can repair damaged items and enhance existing items.");
+        addProTip("glowstone_portal_forming", "Place water into a Glowstone frame for a Hostile Paradise.");
+        addProTip("champs", "The Champs and Champettes are pretty baller.");
+        addProTip("ambrosium_shard_fuel", "Ambrosium Shards are great for fueling Altars and food.");
+        addProTip("icestone_freezing_blocks", "Icestone freezes water into ice and lava into obsidian.");
+        addProTip("mimic_chest", "Some dungeons in the Aether contain chests which are Mimics.");
+        addProTip("cold_parachute_crafting", "Cloud Parachutes can be crafted with four White Aercloud blocks.");
+        addProTip("parachute_activation", "Parachutes auto-activate when falling off an island.");
+        addProTip("golden_parachute_durability", "Golden Parachutes have twenty uses rather than one.");
+        addProTip("aerogel_explosion_resistance", "Aerogel acts as an explosion-resistant, transparent block.");
+        addProTip("quicksoil_sliding", "Quicksoil increases the speed of walking mobs and sliding items.");
+        addProTip("dungeon_rewards", "Dungeons can contain extremely powerful and unique rewards.");
+        addProTip("dungeon_tiers", "Dungeons have various difficulties: from Bronze, Silver, to Gold.");
+        addProTip("enchant_blue_disk", "Normal music disks can be enchanted into a Blue version.");
+        addProTip("harvest_aechor_poison", "You can harvest Aechor Plant's poison with Skyroot Buckets.");
+        addProTip("darts_no_gravity", "Golden, Poison, and Enchanted Darts are not affected by gravity.");
+        addProTip("dart_shooter_crafting", "Dart Shooters can be crafted with Skyroot Planks and Golden Amber.");
+        addProTip("remedy_bucket_enchanting", "A Remedy Bucket for poison can be obtained by enchanting Poison.");
+        addProTip("gravitite_armour_set", "Gravitite Armour increases your jump-height when a full set is worn.");
+        addProTip("phoenix_armor_submerging", "Try submerging yourself in water while wearing Phoenix Armour.");
+        addProTip("zephyr_shooting", "Zephyrs shoot snowballs with a force that can throw you off islands.");
+        addProTip("aether_day_length", "Days in the Aether realm last three times longer than surface days.");
+        addProTip("sheepuff_puff", "Sheepuff occasionally puff their wool out, making them float.");
+        addProTip("victory_medal_drop", "When Valkyrie's are defeated they will drop a Victory Medal.");
+        addProTip("skeleton_attack", "Skeletons won't shoot if they can't see your face.");
+        addProTip("dig_straight_down", "Never dig straight down.");
+        addProTip("drops", "If a drop looks too big, it probably is.");
+        addProTip("shelter", "A shelter made of dirt is still a shelter.");
+        addProTip("creepers", "Don't fear the Creeper.");
+        addProTip("shallow_water", "Before you jump, make sure the water isn't too shallow.");
+        addProTip("spider_escape", "Watch your back when running from spiders.");
+        addProTip("close_door", "Don't leave your house without closing the door.");
+        addProTip("check_diamonds", "Check underneath a Diamond Ore block before mining it.");
+        addProTip("watch_your_step", "Watch where you step - deep shafts can be anywhere.");
+        addProTip("lighting_glitches", "Cliff overhangs and lighting glitches can spawn hostile mobs.");
+        addProTip("gold_durability", "Gold may be weak, but it's better than nothing.");
+        addProTip("log_supply", "Always bring tons of logs with you when exploring caves.");
+        addProTip("check_surroundings", "Always check your surroundings before entering a fight.");
+        addProTip("tnt_storage", "Don't store spare TNT blocks near your Redstone circuits.");
+        addProTip("mining", "You can always come back later and mine some more.");
+        addProTip("hoe_tilling", "Unlike the other tools, the hoe is used by right-clicking.");
+        addProTip("spare_stack", "Always keep a spare stack of blocks in your active inventory.");
+        addProTip("raw_meat", "Raw meat is better than no meat.");
+        addProTip("click_timing", "Blocks can be mined faster if you time your clicks correctly.");
+        addProTip("torch_sand", "Placing a torch under sand as it falls speeds up the process.");
+        addProTip("animal_push", "Animals push you around if you leave the game idle (again).");
+        addProTip("ghast_health", "Ghasts have lower health than any other hostile mob.");
+        addProTip("ghast_deflection", "You can reflect a Ghast's fireball by simply hitting it.");
+        addProTip("explosion_drops", "Mobs might not drop loot if they die from explosions.");
+        addProTip("risk_taking", "Don't take huge risks far from home.");
+        addProTip("cave_noise", "If you hear a cave noise above ground, there's one nearby.");
+        addProTip("dungeon_location", "If you hear a lot of monsters, it's probably a dungeon.");
+        addProTip("cave_ceilings", "Mining cave ceilings can easily lead to disaster.");
+        addProTip("flammability", "Catching on fire can easily drain an entire health bar.");
+        addProTip("do_things", "The best time to do anything is before it's too late.");
+        addProTip("boats", "One boat is never enough... unless you're using the combat update.");
+        addProTip("wood_versatility", "Wood is the most versatile resource in the game.");
+        addProTip("expectations", "Never expect that nothing will happen while you're gone.");
+        addProTip("respect", "Always treat modders with respect.");
+        addProTip("baby_slimes", "Baby slimes are terribly vulnerable to fall damage.");
+        addProTip("slimes", "Slimes do exist... I think.");
+        addProTip("security", "Only give away your personal information to Paypal.");
+        addProTip("navigation", "The sun and the compass are both useful for directions.");
+        addProTip("paintings", "Paintings aren't considered to be blocks.");
+        addProTip("tnt_trap", "Sand on red dust on TNT can make a falling floor trap.");
+        addProTip("difficulty", "Easier rarely means funner.");
+        addProTip("zombie_attack", "Zombies can reach pretty far and hit pretty hard.");
+        addProTip("arrow_deflection", "Arrows reflect off of creatures recently damaged.");
+        addProTip("portal_misclick", "Be careful not to misclick when building portals.");
+        addProTip("sand_pillar", "Sand is useful for getting down from high places.");
+        addProTip("creeper_sneaking", "If all you can hear is footsteps, it's a Creeper.");
+        addProTip("unreliable_sound", "It's misleading to locate monsters by sound alone.");
+        addProTip("jockey_dismount", "Spider jockeys will dismount after a save and reload.");
+        addProTip("the_game", "The game is only as fun as you make it.");
     }
 }
