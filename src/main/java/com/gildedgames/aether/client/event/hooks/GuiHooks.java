@@ -94,7 +94,7 @@ public class GuiHooks {
 
         if (screen instanceof GenericDirtMessageScreen || screen instanceof LevelLoadingScreen || screen instanceof ReceivingLevelScreen) {
             Component triviaLine = Aether.TRIVIA_READER.getTriviaLine();
-            if (triviaLine != null && !screen.getTitle().equals(new TranslatableComponent("menu.savingLevel")) && AetherConfig.CLIENT.enable_trivia.get()) {
+            if (triviaLine != null && AetherConfig.CLIENT.enable_trivia.get()) {
                 Screen.drawCenteredString(poseStack, screen.getMinecraft().font, triviaLine, screen.width / 2, screen.height - 16, 16777113);
             }
             if (screen != lastScreen) {
