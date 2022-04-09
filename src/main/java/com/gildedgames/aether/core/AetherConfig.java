@@ -1,5 +1,8 @@
 package com.gildedgames.aether.core;
 
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import org.apache.commons.lang3.tuple.Pair;
@@ -29,6 +32,8 @@ public class AetherConfig
         public final ConfigValue<Boolean> disable_aether_portal;
         public final ConfigValue<Boolean> disable_falling_to_overworld;
         public final ConfigValue<Boolean> disable_eternal_day;
+        public final ConfigValue<String> portalDestinationDimensionID;
+        public final ConfigValue<String> portalReturnDimensionID;
 
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("Gameplay");
@@ -97,6 +102,12 @@ public class AetherConfig
             disable_eternal_day = builder
                     .comment("Removes eternal day so that the Aether has a normal daylight cycle even before defeating the Sun Spirit")
                     .define("Disables eternal day", false);
+            portalDestinationDimensionID = builder
+                    .comment("Sets the ID of the dimension that the Aether Portal will send the player to")
+                    .define("Sets portal destination dimension", AetherDimensions.AETHER_LEVEL.location().toString());
+            portalReturnDimensionID = builder
+                    .comment("Sets the ID of the dimension that the Aether Portal will return the player to")
+                    .define("Sets portal return dimension", Level.OVERWORLD.location().toString());
             builder.pop();
         }
     }
