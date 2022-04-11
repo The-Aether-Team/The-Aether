@@ -1,12 +1,19 @@
 package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FogType;
 import org.apache.commons.lang3.tuple.Triple;
 
 public class DimensionClientHooks {
+    public static boolean playerLeavingAether;
+    public static boolean displayAetherTravel;
+
     public static Triple<Float, Float, Float> renderFog(Camera camera, float red, float green, float blue) {
         if (camera.getEntity().level instanceof ClientLevel clientLevel) {
             if (clientLevel.effects() instanceof AetherSkyRenderInfo) {
@@ -25,5 +32,19 @@ public class DimensionClientHooks {
             }
         }
         return Triple.of(null, null, null);
+    }
+
+    public static void dimensionTravel(Entity entity, ResourceKey<Level> dimension) {
+        // The level passed into shouldReturnPlayerToOverworld() is the dimension the player is leaving
+        //  Meaning: We display the Descending GUI text to the player if they're about to leave a dimension that returns them to the OW
+        if (entity.level.dimension() == AetherDimensions.AETHER_LEVEL && dimension == Level.OVERWORLD) {
+            displayAetherTravel = true;
+            playerLeavingAether = true;
+        } else if (entity.level.dimension() == Level.OVERWORLD && dimension == AetherDimensions.AETHER_LEVEL) {
+            displayAetherTravel = true;
+            playerLeavingAether = false;
+        } else {
+            displayAetherTravel = false;
+        }
     }
 }

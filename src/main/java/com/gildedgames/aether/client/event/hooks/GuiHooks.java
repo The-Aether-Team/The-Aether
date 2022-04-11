@@ -1,16 +1,13 @@
 package com.gildedgames.aether.client.event.hooks;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.button.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
 import com.gildedgames.aether.client.registry.AetherKeys;
-import com.gildedgames.aether.common.event.hooks.DimensionHooks;
-import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
-import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.OpenAccessoriesPacket;
-import com.gildedgames.aether.core.util.TriviaReader;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -18,6 +15,7 @@ import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -28,6 +26,8 @@ import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 public class GuiHooks {
     private static boolean shouldAddButton = true;
+    private static boolean generateTrivia = true;
+    private static Screen lastScreen = null;
 
     public static AetherMainMenuScreen openAetherMenu(Screen screen) {
         if (screen instanceof TitleScreen) {
@@ -85,39 +85,40 @@ public class GuiHooks {
     }
 
     public static void drawTrivia(Screen screen, PoseStack poseStack) {
-        if (screen instanceof GenericDirtMessageScreen) {
-            Component triviaLine = TriviaReader.getTriviaLine();
-            if (triviaLine != null && !screen.getTitle().equals(new TranslatableComponent("menu.savingLevel")) && AetherConfig.CLIENT.enable_trivia.get()) {
+        if (screen instanceof SelectWorldScreen) {
+            if (generateTrivia) {
+                Aether.TRIVIA_READER.generateTriviaList();
+                generateTrivia = false;
+            }
+        }
+
+        if (screen instanceof GenericDirtMessageScreen || screen instanceof LevelLoadingScreen || screen instanceof ReceivingLevelScreen) {
+            Component triviaLine = Aether.TRIVIA_READER.getTriviaLine();
+            if (triviaLine != null && AetherConfig.CLIENT.enable_trivia.get()) {
                 Screen.drawCenteredString(poseStack, screen.getMinecraft().font, triviaLine, screen.width / 2, screen.height - 16, 16777113);
             }
-        }
-    }
-
-    public static void drawAetherTravelMessageWithinLevelScreen(Screen screen, PoseStack poseStack) {
-        if (screen instanceof ReceivingLevelScreen) {
-            if (Minecraft.getInstance().player != null) {
-                if (Minecraft.getInstance().player.level.dimension() == AetherDimensions.AETHER_LEVEL) {
-                    Screen.drawCenteredString(poseStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.ascending"), screen.width / 2, 50, 16777215);
-                } else if (DimensionHooks.playerLeavingAether) {
-                    Screen.drawCenteredString(poseStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.descending"), screen.width / 2, 50, 16777215);
+            if (screen != lastScreen) {
+                if (!Aether.TRIVIA_READER.getTrivia().isEmpty()) {
+                    Aether.TRIVIA_READER.randomizeTriviaIndex();
                 }
             }
         }
+        lastScreen = screen;
     }
 
-    public static void drawAetherTravelMessageWithinProgressScreen(Screen screen, PoseStack poseStack) {
-        if (screen instanceof ProgressScreen) {
+    public static void drawAetherTravelMessage(Screen screen, PoseStack poseStack) {
+        if (screen instanceof ReceivingLevelScreen || screen instanceof ProgressScreen) {
             if (Minecraft.getInstance().player != null) {
-                if (Minecraft.getInstance().player.level.dimension() == AetherDimensions.AETHER_LEVEL) {
-                    Screen.drawCenteredString(poseStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.descending"), screen.width / 2, 50, 16777215);
-                } else {
-                    AetherPlayer.get(Minecraft.getInstance().player).ifPresent(aetherPlayer -> {
-                        if (aetherPlayer.isInPortal()) {
-                            Screen.drawCenteredString(poseStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.ascending"), screen.width / 2, 50, 16777215);
-                        }
-                    });
+                if (DimensionClientHooks.displayAetherTravel) {
+                    if (DimensionClientHooks.playerLeavingAether) {
+                        Screen.drawCenteredString(poseStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.descending"), screen.width / 2, 50, 16777215);
+                    } else {
+                        Screen.drawCenteredString(poseStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.ascending"), screen.width / 2, 50, 16777215);
+                    }
                 }
             }
+        } else {
+            DimensionClientHooks.displayAetherTravel = false;
         }
     }
 }

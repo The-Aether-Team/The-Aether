@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class DimensionHooks {
-    public static boolean playerLeavingAether;
 
     public static boolean checkPlacementBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state) {
         if (level.dimension() == AetherDimensions.AETHER_LEVEL) {
@@ -102,12 +101,6 @@ public class DimensionHooks {
             }
         }
         return false;
-    }
-
-    public static void dimensionTravel(Entity entity, ResourceKey<Level> dimension) {
-        // The level passed into shouldReturnPlayerToOverworld() is the dimension the player is leaving
-        //  Meaning: We display the Descending GUI text to the player if they're about to leave a dimension that returns them to the OW
-        playerLeavingAether = entity.level.dimension() == AetherDimensions.AETHER_LEVEL && dimension == Level.OVERWORLD;
     }
 
     public static void fallFromAether(Level level) {
