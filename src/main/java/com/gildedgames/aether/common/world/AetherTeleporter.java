@@ -6,7 +6,6 @@ import com.gildedgames.aether.common.registry.AetherPOI;
 import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.PortalTravelSoundPacket;
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -177,8 +176,8 @@ public class AetherTeleporter implements ITeleporter
         if (entity.level.dimension() != AetherDimensions.AETHER_LEVEL && !isAether) {
             return null;
         }
-        else if(!this.hasFrame) {
-            return new PortalInfo(new Vec3(entity.getX(), destWorld.getHeight(), entity.getZ()), Vec3.ZERO, entity.getYRot(), entity.getXRot()); //For falling out of the Aether
+        else if (!this.hasFrame) {
+            return new PortalInfo(new Vec3(entity.getX(), destWorld.getMaxBuildHeight(), entity.getZ()), Vec3.ZERO, entity.getYRot(), entity.getXRot()); //For falling out of the Aether
         }
         else {
             WorldBorder border = destWorld.getWorldBorder();
