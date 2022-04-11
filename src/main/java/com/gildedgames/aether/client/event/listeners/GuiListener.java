@@ -60,7 +60,6 @@ public class GuiListener {
 		Screen screen = event.getScreen();
 		PoseStack poseStack = event.getPoseStack();
 		GuiHooks.drawTrivia(screen, poseStack);
-		GuiHooks.drawAetherTravelMessageWithinLevelScreen(screen, poseStack);
-		GuiHooks.drawAetherTravelMessageWithinProgressScreen(screen, poseStack);
+		GuiHooks.drawAetherTravelMessage(screen, poseStack);
 	}
 }

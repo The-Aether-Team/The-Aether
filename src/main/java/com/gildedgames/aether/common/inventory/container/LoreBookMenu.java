@@ -99,13 +99,7 @@ public class LoreBookMenu extends AbstractContainerMenu
 
     @OnlyIn(Dist.CLIENT)
     public String getLoreEntryKey(ItemStack stack) {
-        return "lore." + stack.getItem().getRegistryName().getNamespace() + "." + stack.getDescriptionId()
-                .replace(stack.getItem().getRegistryName().getNamespace() + ".", "")
-                .replace("item.", "")
-                .replace("block.", "")
-                .replace("tile.", "")
-                .replace(".name", "")
-                .replace(".", "_");
+        return "lore." + stack.getDescriptionId();
     }
 
     @OnlyIn(Dist.CLIENT)

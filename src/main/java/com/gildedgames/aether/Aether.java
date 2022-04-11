@@ -16,6 +16,7 @@ import com.gildedgames.aether.core.data.*;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.resource.CombinedResourcePack;
 import com.gildedgames.aether.core.util.SunAltarWhitelist;
+import com.gildedgames.aether.core.util.TriviaReader;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.data.DataGenerator;
@@ -58,6 +59,8 @@ public class Aether
     public static final String MODID = "aether";
     public static final Logger LOGGER = LogManager.getLogger();
 
+    public static TriviaReader TRIVIA_READER;
+
     public Aether() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -90,6 +93,8 @@ public class Aether
         path.mkdirs();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
+
+        TRIVIA_READER = new TriviaReader();
     }
 
     @SubscribeEvent //This is not actually for registering RecipeSerializers.
@@ -143,7 +148,7 @@ public class Aether
         if (event.includeClient()) {
             generator.addProvider(new AetherBlockStateData(generator, helper));
             generator.addProvider(new AetherItemModelData(generator, helper));
-            generator.addProvider(new AetherLangData(generator));
+            generator.addProvider(new AetherLanguageData(generator));
             generator.addProvider(new AetherSoundData(generator, helper));
         }
         if (event.includeServer()) {
