@@ -7,6 +7,8 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.List;
+
 public class AetherConfig
 {
     public static class Common
@@ -34,6 +36,11 @@ public class AetherConfig
         public final ConfigValue<Boolean> disable_eternal_day;
         public final ConfigValue<String> portalDestinationDimensionID;
         public final ConfigValue<String> portalReturnDimensionID;
+        public final ConfigValue<List<String>> ultracoldIDs;
+        public final ConfigValue<List<String>> eternalDayIDs;
+        public final ConfigValue<List<String>> noWheatSeedsIDs;
+        public final ConfigValue<List<String>> fallToOverworldIDs;
+        public final ConfigValue<List<String>> aetherMusicIDs;
 
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("Gameplay");
@@ -108,6 +115,21 @@ public class AetherConfig
             portalReturnDimensionID = builder
                     .comment("Sets the ID of the dimension that the Aether Portal will return the player to")
                     .define("Sets portal return dimension", Level.OVERWORLD.location().toString());
+            ultracoldIDs = builder
+                    .comment("Sets IDs for dimensions that are considered ultracold, and will have various fire or lava-related blocks banned; this will be replaced with tags in the future")
+                    .define("Sets ultracold dimensions", List.of(AetherDimensions.AETHER_LEVEL.location().toString()));
+            eternalDayIDs = builder
+                    .comment("Sets IDs for dimensions that will have eternal day, until the Sun Spirit is killed; this will be replaced with tags in the future")
+                    .define("Sets eternal day dimensions", List.of(AetherDimensions.AETHER_LEVEL.location().toString()));
+            noWheatSeedsIDs = builder
+                    .comment("Sets IDs for dimensions that will have wheat seed drops disabled; this will be replaced with tags in the future")
+                    .define("Sets wheat seed disabling dimensions", List.of(AetherDimensions.AETHER_LEVEL.location().toString()));
+            fallToOverworldIDs = builder
+                    .comment("Sets IDs for dimensions that the player can fall to the portal return dimension; this will be replaced with tags in the future")
+                    .define("Sets fallable from dimensions", List.of(AetherDimensions.AETHER_LEVEL.location().toString()));
+            aetherMusicIDs = builder
+                    .comment("Sets IDs for dimensions that have the Aether's music; this will be replaced with tags in the future")
+                    .define("Sets Aether music dimensions", List.of(AetherDimensions.AETHER_LEVEL.location().toString()));
             builder.pop();
         }
     }
