@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 
 public class BlueAercloudBlock extends AercloudBlock
 {
-	protected static VoxelShape SHAPE = Shapes.empty();
+	protected static VoxelShape COLLISION_SHAPE = Shapes.empty();
 
 	public BlueAercloudBlock(BlockBehaviour.Properties properties) {
 		super(properties);
@@ -50,7 +50,7 @@ public class BlueAercloudBlock extends AercloudBlock
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-		return SHAPE;
+	public VoxelShape getAlternateShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		return COLLISION_SHAPE;
 	}
 }
