@@ -27,6 +27,7 @@ public class FloatingBlock extends Block implements Floatable
 
 	@Override
 	public void onPlace(@Nonnull BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState oldState, boolean isMoving) {
+		super.onPlace(state, level, pos, oldState, isMoving);
 		level.scheduleTick(pos, this, this.getDelayAfterPlace());
 	}
 
@@ -38,9 +39,12 @@ public class FloatingBlock extends Block implements Floatable
 	}
 
 	public void tick(@Nonnull BlockState state, @Nonnull ServerLevel level, @Nonnull BlockPos pos, @Nonnull Random random) {
+		super.tick(state, level, pos, random);
 		if ((this.powered && level.hasNeighborSignal(pos)) || (!this.powered && isFree(level.getBlockState(pos.above())) && pos.getY() <= level.getMaxBuildHeight())) {
 			FloatingBlockEntity floatingBlockEntity = new FloatingBlockEntity(level, (double) pos.getX() + 0.5D, pos.getY(), (double) pos.getZ() + 0.5D, level.getBlockState(pos));
 			level.addFreshEntity(floatingBlockEntity);
+		} else {
+			level.scheduleTick(pos, this, this.getDelayAfterPlace());
 		}
 	}
 
