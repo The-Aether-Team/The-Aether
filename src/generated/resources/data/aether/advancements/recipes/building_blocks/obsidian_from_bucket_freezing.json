@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "has_minecraft:obsidian": {
+    "has_minecraft:lava_bucket": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:obsidian"
+              "minecraft:lava_bucket"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_minecraft:obsidian",
+      "has_minecraft:lava_bucket",
       "has_the_recipe"
     ]
   ]

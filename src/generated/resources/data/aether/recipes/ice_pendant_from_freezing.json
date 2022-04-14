@@ -1,10 +1,9 @@
 {
   "type": "aether:freezing",
-  "group": "ice_pendant",
   "ingredient": {
-    "item": "aether:iron_pendant"
+    "tag": "aether:freezable_pendants"
   },
   "result": "aether:ice_pendant",
-  "experience": 0.0,
+  "experience": 1.0,
   "cookingtime": 2500
 }

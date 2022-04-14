@@ -4,6 +4,6 @@
     "item": "aether:gravitite_ore"
   },
   "result": "aether:enchanted_gravitite",
-  "experience": 0.0,
+  "experience": 1.0,
   "cookingtime": 1000
 }

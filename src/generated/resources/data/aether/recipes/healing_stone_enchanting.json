@@ -4,6 +4,6 @@
     "item": "aether:holystone"
   },
   "result": "aether:healing_stone",
-  "experience": 0.0,
+  "experience": 0.35,
   "cookingtime": 750
 }

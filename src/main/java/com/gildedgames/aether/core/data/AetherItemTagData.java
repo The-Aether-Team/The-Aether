@@ -136,6 +136,15 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.WHITE_MOA_EGG.get(),
                 AetherItems.BLACK_MOA_EGG.get(),
                 AetherItems.ORANGE_MOA_EGG.get());
+        tag(AetherTags.Items.FREEZABLE_BUCKETS)
+                .add(Items.WATER_BUCKET)
+                .add(AetherItems.SKYROOT_WATER_BUCKET.get());
+        tag(AetherTags.Items.FREEZABLE_RINGS)
+                .add(AetherItems.IRON_RING.get())
+                .add(AetherItems.GOLDEN_RING.get());
+        tag(AetherTags.Items.FREEZABLE_PENDANTS)
+                .add(AetherItems.IRON_PENDANT.get())
+                .add(AetherItems.GOLDEN_PENDANT.get());
 
         tag(AetherTags.Items.PHYG_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
         tag(AetherTags.Items.FLYING_COW_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
