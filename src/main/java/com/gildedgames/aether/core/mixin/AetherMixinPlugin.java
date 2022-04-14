@@ -22,10 +22,9 @@ public class AetherMixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         boolean apply = true;
-        for (AetherMixinConfig.Entry entry : AetherMixinConfig.load()) {
-            if (entry.path().equals(mixinClassName)) {
-                apply = entry.defaultValue();
-            }
+        AetherMixinConfig.Entry entry = AetherMixinConfig.load(mixinClassName);
+        if (entry != null) {
+            apply = entry.defaultValue();
         }
         return apply;
     }

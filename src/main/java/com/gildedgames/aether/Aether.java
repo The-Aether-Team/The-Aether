@@ -90,8 +90,7 @@ public class Aether
             register.register(modEventBus);
         }
 
-        File path = DIRECTORY.toFile();
-        path.mkdirs();
+        DIRECTORY.toFile().mkdirs();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
 

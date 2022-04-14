@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.gson.*;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class AetherMixinConfig {
@@ -21,6 +20,9 @@ public class AetherMixinConfig {
     );
 
     public static void save() {
+        if (!Aether.DIRECTORY.toFile().exists()) {
+            Aether.DIRECTORY.toFile().mkdirs();
+        }
         if (!MIXIN_CONFIG.exists()) {
             try (FileWriter fileWriter = new FileWriter(MIXIN_CONFIG)) {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -36,23 +38,21 @@ public class AetherMixinConfig {
         }
     }
 
-    public static ArrayList<Entry> load() {
-        ArrayList<Entry> list = new ArrayList<>();
+    public static Entry load(String mixinClassName) {
         if (MIXIN_CONFIG.exists()) {
             try (FileReader fileReader = new FileReader(MIXIN_CONFIG)) {
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(fileReader, JsonObject.class);
                 for (Map.Entry<String, JsonElement> property : jsonObject.entrySet()) {
-                    if (property.getKey().startsWith(MIXIN_PACKAGE_ROOT)) {
-                        Entry entry = new Entry(property.getKey(), property.getValue().getAsBoolean());
-                        list.add(entry);
+                    if (property.getKey().equals(mixinClassName)) {
+                        return new Entry(property.getKey(), property.getValue().getAsBoolean());
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return list;
+        return null;
     }
 
     public record Entry(String path, boolean defaultValue) { }
