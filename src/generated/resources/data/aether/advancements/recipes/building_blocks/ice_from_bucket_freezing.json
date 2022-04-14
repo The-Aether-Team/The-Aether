@@ -2,18 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "aether:ice_pendant_from_iron_freezing"
+      "aether:ice_from_bucket_freezing"
     ]
   },
   "criteria": {
-    "has_aether:iron_pendant": {
+    "has_water_bucket": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": [
-              "aether:iron_pendant"
-            ]
+            "tag": "aether:freezable_buckets"
           }
         ]
       }
@@ -21,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "aether:ice_pendant_from_iron_freezing"
+        "recipe": "aether:ice_from_bucket_freezing"
       }
     }
   },
   "requirements": [
     [
-      "has_aether:iron_pendant",
+      "has_water_bucket",
       "has_the_recipe"
     ]
   ]

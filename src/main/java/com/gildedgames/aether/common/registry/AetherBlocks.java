@@ -21,6 +21,7 @@ import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.*;
@@ -62,8 +63,8 @@ public class AetherBlocks
     public static final RegistryObject<Block> PINK_AERCLOUD = register("pink_aercloud", () -> new PinkAercloudBlock(Block.Properties.of(Material.ICE, MaterialColor.COLOR_PINK).strength(0.2F).sound(SoundType.WOOL).noOcclusion().dynamicShape().isValidSpawn((state, reader, pos, entity) -> entity.is(AetherTags.Entities.AERCLOUD_SPAWNABLE) && state.getLightEmission(reader, pos) < 14)));
 
     public static final RegistryObject<Block> ICESTONE = register("icestone", () -> new IcestoneBlock(Block.Properties.of(Material.STONE, MaterialColor.ICE).strength(3.0F).randomTicks().sound(SoundType.GLASS).requiresCorrectToolForDrops()));
-    public static final RegistryObject<Block> AMBROSIUM_ORE = register("ambrosium_ore", () -> new AetherDoubleDropsOreBlock(0, 2, Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(3.0F).requiresCorrectToolForDrops()));
-    public static final RegistryObject<Block> ZANITE_ORE = register("zanite_ore", () -> new AetherOreBlock(3, 5, Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(3.0F).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> AMBROSIUM_ORE = register("ambrosium_ore", () -> new AetherDoubleDropsOreBlock(UniformInt.of(0, 2), Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(3.0F).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> ZANITE_ORE = register("zanite_ore", () -> new AetherOreBlock(UniformInt.of(3, 5), Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(3.0F).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> GRAVITITE_ORE = register("gravitite_ore", () -> new FloatingBlock(false, Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(3.0F).randomTicks().requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> SKYROOT_LEAVES = register("skyroot_leaves", () -> new AetherDoubleDropsLeaves(Block.Properties.of(Material.LEAVES, MaterialColor.GRASS).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never)));

@@ -699,34 +699,33 @@ public class AetherRecipeData extends AetherRecipeProvider
         repairingRecipe(AetherItems.ZANITE_RING.get(), 2250).group("altar_ring_repair").save(consumer, name("zanite_ring_repairing"));
         repairingRecipe(AetherItems.ZANITE_PENDANT.get(), 2250).group("altar_pendant_repair").save(consumer, name("zanite_pendant_repairing"));
 
-        enchantingRecipe(AetherItems.ENCHANTED_DART.get(), AetherItems.GOLDEN_DART.get(), 250).save(consumer, name("enchanted_dart_enchanting"));
-        enchantingRecipe(AetherItems.ENCHANTED_DART_SHOOTER.get(), AetherItems.GOLDEN_DART_SHOOTER.get(), 500).save(consumer, name("enchanted_dart_shooter_enchanting"));
+        enchantingRecipe(AetherItems.ENCHANTED_DART.get(), AetherItems.GOLDEN_DART.get(), 0.15F, 250).save(consumer, name("enchanted_dart_enchanting"));
+        enchantingRecipe(AetherItems.ENCHANTED_DART_SHOOTER.get(), AetherItems.GOLDEN_DART_SHOOTER.get(), 1.0F, 500).save(consumer, name("enchanted_dart_shooter_enchanting"));
 
-        enchantingRecipe(AetherItems.HEALING_STONE.get(), AetherBlocks.HOLYSTONE.get(), 750).save(consumer, name("healing_stone_enchanting"));
-        enchantingRecipe(AetherBlocks.ENCHANTED_GRAVITITE.get(), AetherBlocks.GRAVITITE_ORE.get(), 1000).save(consumer, name("enchanted_gravitite_enchanting"));
-        enchantingRecipe(AetherBlocks.QUICKSOIL_GLASS.get(), AetherBlocks.QUICKSOIL.get(), 250).save(consumer, name("quicksoil_glass_enchanting"));
+        enchantingRecipe(AetherItems.HEALING_STONE.get(), AetherBlocks.HOLYSTONE.get(), 0.35F, 750).save(consumer, name("healing_stone_enchanting"));
+        enchantingRecipe(AetherBlocks.ENCHANTED_GRAVITITE.get(), AetherBlocks.GRAVITITE_ORE.get(), 1.0F, 1000).save(consumer, name("enchanted_gravitite_enchanting"));
+        enchantingRecipe(AetherBlocks.QUICKSOIL_GLASS.get(), AetherBlocks.QUICKSOIL.get(), 0.1F, 250).save(consumer, name("quicksoil_glass_enchanting"));
 
-        enchantingRecipe(AetherItems.ENCHANTED_BERRY.get(), AetherItems.BLUE_BERRY.get(), 300).save(consumer, name("enchanted_berry_enchanting"));
+        enchantingRecipe(AetherItems.ENCHANTED_BERRY.get(), AetherItems.BLUE_BERRY.get(), 0.35F, 300).save(consumer, name("enchanted_berry_enchanting"));
 
-        enchantingRecipe(AetherItems.MUSIC_DISC_AETHER_TUNE.get(), AetherTags.Items.ACCEPTED_MUSIC_DISCS, 2500).save(consumer, name("aether_tune_enchanting"));
-        hiddenEnchantingRecipe(AetherItems.MUSIC_DISC_LEGACY.get(), Items.MUSIC_DISC_CAT, 2500).save(consumer, name("legacy_enchanting"));
+        enchantingRecipe(AetherItems.MUSIC_DISC_AETHER_TUNE.get(), AetherTags.Items.ACCEPTED_MUSIC_DISCS, 1.0F, 2500).save(consumer, name("aether_tune_enchanting"));
+        hiddenEnchantingRecipe(AetherItems.MUSIC_DISC_LEGACY.get(), Items.MUSIC_DISC_CAT, 1.0F, 2500).save(consumer, name("legacy_enchanting"));
 
-        enchantingRecipe(AetherItems.SKYROOT_REMEDY_BUCKET.get(), AetherItems.SKYROOT_POISON_BUCKET.get(), 1000).save(consumer, name("remedy_bucket_enchanting"));
+        enchantingRecipe(AetherItems.SKYROOT_REMEDY_BUCKET.get(), AetherItems.SKYROOT_POISON_BUCKET.get(), 0.35F, 1000).save(consumer, name("remedy_bucket_enchanting"));
 
-        freezingRecipe(AetherBlocks.BLUE_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 100).save(consumer, name("blue_aercloud_freezing"));
-        freezingRecipe(AetherBlocks.CRYSTAL_LEAVES.get(), AetherBlocks.SKYROOT_LEAVES.get(), 150).save(consumer, name("crystal_leaves_freezing"));
+        freezingRecipe(AetherBlocks.BLUE_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 0.1F, 100).save(consumer, name("blue_aercloud_freezing"));
+        freezingRecipe(AetherBlocks.CRYSTAL_LEAVES.get(), AetherBlocks.SKYROOT_LEAVES.get(), 0.1F, 150).save(consumer, name("crystal_leaves_freezing"));
 
-        hiddenFreezingRecipe(AetherItems.MUSIC_DISC_WELCOMING_SKIES.get(), AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(), 800).save(consumer, name("welcoming_skies_freezing"));
+        hiddenFreezingRecipe(AetherItems.MUSIC_DISC_WELCOMING_SKIES.get(), AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(), 1.0F, 800).save(consumer, name("welcoming_skies_freezing"));
 
-        freezingRecipe(Blocks.ICE, Blocks.PACKED_ICE, 750).save(consumer, name("packed_ice_freezing"));
-        freezingRecipe(Items.WATER_BUCKET, Blocks.ICE, 500).save(consumer, name("ice_from_bucket_freezing"));
-        freezingRecipe(Items.LAVA_BUCKET, Blocks.OBSIDIAN, 500).save(consumer, name("obsidian_from_bucket_freezing"));
+        freezingRecipeWithUnlockTag(Blocks.BLUE_ICE, Blocks.PACKED_ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 1000, "water_bucket").save(consumer, name("blue_ice_freezing"));
+        freezingRecipeWithUnlockTag(Blocks.PACKED_ICE, Blocks.ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 750, "water_bucket").save(consumer, name("packed_ice_freezing"));
+        freezingRecipeWithTag(Blocks.ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 500, "water_bucket").save(consumer, name("ice_from_bucket_freezing"));
+        freezingRecipe(Blocks.OBSIDIAN, Items.LAVA_BUCKET, 0.1F, 500).save(consumer, name("obsidian_from_bucket_freezing"));
 
-        freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.IRON_RING.get(), 2500).group("ice_ring").save(consumer, name("ice_ring_from_iron_freezing"));
-        freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.GOLDEN_RING.get(), 2500).group("ice_ring").save(consumer, name("ice_ring_from_gold_freezing"));
+        freezingRecipeWithTag(AetherItems.ICE_RING.get(), AetherTags.Items.FREEZABLE_RINGS, 1.0F, 2500, "ring").save(consumer, name("ice_ring_from_freezing"));
 
-        freezingRecipe(AetherItems.ICE_PENDANT.get(), AetherItems.IRON_PENDANT.get(), 2500).group("ice_pendant").save(consumer, name("ice_pendant_from_iron_freezing"));
-        freezingRecipe(AetherItems.ICE_PENDANT.get(), AetherItems.GOLDEN_PENDANT.get(), 2500).group("ice_pendant").save(consumer, name("ice_pendant_from_gold_freezing"));
+        freezingRecipeWithTag(AetherItems.ICE_PENDANT.get(), AetherTags.Items.FREEZABLE_PENDANTS, 1.0F, 2500, "pendant").save(consumer, name("ice_pendant_from_freezing"));
     }
 
     private ResourceLocation name(String name) {

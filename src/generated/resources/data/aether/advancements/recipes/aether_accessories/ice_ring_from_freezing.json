@@ -2,18 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "aether:ice_pendant_from_gold_freezing"
+      "aether:ice_ring_from_freezing"
     ]
   },
   "criteria": {
-    "has_aether:golden_pendant": {
+    "has_ring": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": [
-              "aether:golden_pendant"
-            ]
+            "tag": "aether:freezable_rings"
           }
         ]
       }
@@ -21,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "aether:ice_pendant_from_gold_freezing"
+        "recipe": "aether:ice_ring_from_freezing"
       }
     }
   },
   "requirements": [
     [
-      "has_aether:golden_pendant",
+      "has_ring",
       "has_the_recipe"
     ]
   ]
