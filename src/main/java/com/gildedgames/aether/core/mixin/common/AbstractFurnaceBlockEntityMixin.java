@@ -9,7 +9,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -20,8 +19,6 @@ import javax.annotation.Nullable;
 @Mixin(AbstractFurnaceBlockEntity.class)
 public class AbstractFurnaceBlockEntityMixin
 {
-    @Shadow protected NonNullList<ItemStack> items;
-
     @SuppressWarnings("unchecked")
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity;canBurn(Lnet/minecraft/world/item/crafting/Recipe;Lnet/minecraft/core/NonNullList;I)Z", shift = At.Shift.AFTER), method = "burn", cancellable = true)
     private void burn(@Nullable Recipe<?> recipe, @Nonnull NonNullList<ItemStack> stacks, int p_155029_, CallbackInfoReturnable<Boolean> cir) {
