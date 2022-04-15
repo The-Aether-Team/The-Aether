@@ -13,6 +13,8 @@ import net.minecraft.tags.*;
 import net.minecraft.resources.ResourceLocation;
 import top.theillusivec4.curios.api.CuriosApi;
 
+import java.util.ArrayList;
+
 public class AetherTags {
 	public static class Blocks {
 		public static final TagKey<Block> AETHER_PORTAL_BLOCKS = tag("aether_portal_blocks");
@@ -120,6 +122,22 @@ public class AetherTags {
 
 		private static TagKey<Fluid> tag(String name) {
 			return TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Aether.MODID, name));
+		}
+	}
+
+	public static class Dimensions {
+		// This should be our most general tag for any worlds that are "Aether-like"
+		// All tags above should reference this tag, for any dimensions added to this tag should apply for all logic above
+		public static final TagKey<DimensionType> HOSTILE_PARADISE = tag("hostile_paradise");
+
+		public static final TagKey<DimensionType> ULTRACOLD = tag("ultracold");
+		public static final TagKey<DimensionType> ETERNAL_DAY = tag("eternal_day");
+		public static final TagKey<DimensionType> NO_WHEAT_SEEDS = tag("no_wheat_seeds");
+		public static final TagKey<DimensionType> FALL_TO_OVERWORLD = tag("fall_to_overworld");
+		public static final TagKey<DimensionType> AETHER_MUSIC = tag("aether_music");
+
+		private static TagKey<DimensionType> tag(String name) {
+			return TagKey.create(Registry.DIMENSION_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 }
