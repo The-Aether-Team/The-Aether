@@ -58,6 +58,7 @@ public class Aether
 {
     public static final String MODID = "aether";
     public static final Logger LOGGER = LogManager.getLogger();
+    public static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve("aether");
 
     public static TriviaReader TRIVIA_READER;
 
@@ -89,8 +90,7 @@ public class Aether
             register.register(modEventBus);
         }
 
-        File path = new File(FMLPaths.CONFIGDIR.get() + "/aether/");
-        path.mkdirs();
+        DIRECTORY.toFile().mkdirs();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
 
