@@ -1,9 +1,9 @@
 {
   "type": "aether:freezing",
   "ingredient": {
-    "item": "minecraft:packed_ice"
+    "item": "minecraft:ice"
   },
-  "result": "minecraft:ice",
-  "experience": 0.0,
+  "result": "minecraft:packed_ice",
+  "experience": 0.1,
   "cookingtime": 750
 }
