@@ -6,10 +6,10 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.world.AetherTeleporter;
-import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -22,7 +22,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.util.*;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
@@ -93,7 +92,7 @@ public class AetherPortalBlock extends Block
 				if (!entity.level.isClientSide && !pos.equals(entity.portalEntrancePos)) {
 					entity.portalEntrancePos = pos.immutable();
 				}
-				LazyOptional<IAetherPlayer> aetherPlayer = entity.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
+				LazyOptional<AetherPlayer> aetherPlayer = entity.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
 				if (!aetherPlayer.isPresent()) {
 					handleTeleportation(entity);
 				} else {
@@ -124,7 +123,7 @@ public class AetherPortalBlock extends Block
 		Level serverworld = entity.level;
 		if (serverworld != null) {
 			MinecraftServer minecraftserver = serverworld.getServer();
-			ResourceKey<Level> where2go = entity.level.dimension() == AetherDimensions.AETHER_WORLD ? Level.OVERWORLD : AetherDimensions.AETHER_WORLD;
+			ResourceKey<Level> where2go = entity.level.dimension() == AetherDimensions.AETHER_LEVEL ? Level.OVERWORLD : AetherDimensions.AETHER_LEVEL;
 			if (minecraftserver != null) {
 				ServerLevel destination = minecraftserver.getLevel(where2go);
 				if (destination != null && minecraftserver.isNetherEnabled() && !entity.isPassenger()) {
@@ -199,7 +198,7 @@ public class AetherPortalBlock extends Block
 	public static void onBlockRightClicked(PlayerInteractEvent.RightClickBlock event) {
         BlockHitResult hitVec = event.getHitVec();
         BlockPos pos = hitVec.getBlockPos().relative(hitVec.getDirection());
-		if (event.getItemStack().is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS)) {
+		if (event.getItemStack().is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS) && (event.getWorld().dimension() == Level.OVERWORLD || event.getWorld().dimension() == AetherDimensions.AETHER_LEVEL)) {
 			if (!AetherConfig.COMMON.disable_aether_portal.get()) {
 				if (fillPortalBlocks(event.getWorld(), pos, event.getPlayer(), event.getHand(), event.getItemStack())) {
 					event.setCanceled(true);
@@ -215,7 +214,7 @@ public class AetherPortalBlock extends Block
 		BlockState blockstate = world.getBlockState(pos);
 		FluidState fluidstate = world.getFluidState(pos);
 		if (fluidstate.getType() == Fluids.WATER && !blockstate.isAir()) {
-			if (world.dimension() == Level.OVERWORLD || world.dimension() == AetherDimensions.AETHER_WORLD) {
+			if (world.dimension() == Level.OVERWORLD || world.dimension() == AetherDimensions.AETHER_LEVEL) {
 				boolean tryPortal = false;
 				for (Direction direction : Direction.values()) {
 					if (world.getBlockState(pos.relative(direction)).is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)) {
@@ -235,7 +234,7 @@ public class AetherPortalBlock extends Block
 	}
 
 	private static boolean fillPortalBlocks(Level world, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
-		if (world.dimension() == Level.OVERWORLD || world.dimension() == AetherDimensions.AETHER_WORLD) {
+		if (world.dimension() == Level.OVERWORLD || world.dimension() == AetherDimensions.AETHER_LEVEL) {
 			boolean tryPortal = false;
 			for (Direction direction : Direction.values()) {
 				if (world.getBlockState(pos.relative(direction)).is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)) {
@@ -267,7 +266,7 @@ public class AetherPortalBlock extends Block
 	}
 
 	public static boolean fillPortalBlocksWithoutContext(Level world, BlockPos pos, ItemStack stack) {
-		if (world.dimension() == Level.OVERWORLD || world.dimension() == AetherDimensions.AETHER_WORLD) {
+		if (world.dimension() == Level.OVERWORLD || world.dimension() == AetherDimensions.AETHER_LEVEL) {
 			boolean tryPortal = false;
 			for (Direction direction : Direction.values()) {
 				if (world.getBlockState(pos.relative(direction)).is(AetherTags.Blocks.AETHER_PORTAL_BLOCKS)) {

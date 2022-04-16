@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.data.provider;
 
 import com.gildedgames.aether.Aether;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
@@ -35,8 +36,8 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
                 .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()));
     }
 
-    public ItemModelBuilder withExistingParent(Supplier<? extends Item> item, ResourceLocation lookalike) {
-        return withExistingParent(item.get().getRegistryName().getPath(), lookalike);
+    public ItemModelBuilder lookalikeBlock(Supplier<? extends Block> block, ResourceLocation lookalike) {
+        return withExistingParent(block.get().getRegistryName().getPath(), lookalike);
     }
 
     public ItemModelBuilder handheldItem(Supplier<? extends Item> item, String location) {
@@ -115,15 +116,27 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
     }
 
     public ItemModelBuilder itemLockedDungeonBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock) {
-        return withExistingParent(blockName(block), modLoc("item/cube_all_with_overlay"))
-                .texture("overlay", texture("lock", "dungeon/"))
-                .texture("face", texture(blockName(baseBlock), "dungeon/"));
+        return itemOverlayDungeonBlock(block, baseBlock, "lock");
     }
 
     public ItemModelBuilder itemTrappedDungeonBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock) {
-        return withExistingParent(blockName(block), modLoc("item/cube_all_with_overlay"))
-                .texture("overlay", texture("exclamation", "dungeon/"))
-                .texture("face", texture(blockName(baseBlock), "dungeon/"));
+        return itemOverlayDungeonBlock(block, baseBlock, "exclamation");
+    }
+
+    public ItemModelBuilder itemOverlayDungeonBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String overlay) {
+        return withExistingParent(blockName(block), mcLoc("block/cube"))
+                .texture("overlay", texture(overlay, "dungeon/")).texture("face", texture(blockName(baseBlock), "dungeon/"))
+                .element().from(0.0F, 0.0F, 0.0F).to(16.0F, 16.0F, 16.0F).allFaces((direction, builder) -> builder.texture("#face").cullface(direction).end()).end()
+                .element().from(0.0F, 0.0F, -0.1F).to(16.0F, 16.0F, -0.1F).rotation().angle(0.0F).axis(Direction.Axis.Y).origin(8.0F, 8.0F, 6.9F).end().face(Direction.NORTH).texture("#overlay").end().end()
+                .transforms()
+                .transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT).rotation(75.0F, 45.0F, 0.0F).translation(0.0F, 2.5F, 0.0F).scale(0.375F, 0.375F, 0.375F).end()
+                .transform(ModelBuilder.Perspective.THIRDPERSON_LEFT).rotation(75.0F, 45.0F, 0.0F).translation(0.0F, 2.5F, 0.0F).scale(0.375F, 0.375F, 0.375F).end()
+                .transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT).rotation(-90.0F, -180.0F, -45.0F).scale(0.4F, 0.4F, 0.4F).end()
+                .transform(ModelBuilder.Perspective.FIRSTPERSON_LEFT).rotation(-90.0F, -180.0F, -45.0F).scale(0.4F, 0.4F, 0.4F).end()
+                .transform(ModelBuilder.Perspective.GROUND).rotation(90.0F, 0.0F, 0.0F).translation(0.0F, 3.0F, 0.0F).scale(0.25F, 0.25F, 0.25F).end()
+                .transform(ModelBuilder.Perspective.GUI).rotation(30.0F, 135.0F, 0.0F).scale(0.625F, 0.625F, 0.625F).end()
+                .transform(ModelBuilder.Perspective.FIXED).scale(0.5F, 0.5F, 0.5F).end()
+                .end();
     }
 
     public ItemModelBuilder itemFence(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String location) {
@@ -133,5 +146,10 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
 
     public ItemModelBuilder itemWallBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String location) {
         return wallInventory(blockName(block), texture(blockName(baseBlock), location));
+    }
+
+    public ItemModelBuilder itemButton(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String location) {
+        return withExistingParent(blockName(block), mcLoc("block/button_inventory"))
+                .texture("texture", texture(blockName(baseBlock), location));
     }
 }

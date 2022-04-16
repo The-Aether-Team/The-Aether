@@ -1,9 +1,0 @@
-{
-  "type": "aether:freezing",
-  "ingredient": {
-    "item": "aether:golden_pendant"
-  },
-  "result": "aether:ice_pendant",
-  "experience": 0.0,
-  "cookingtime": 2500
-}

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.core.mixin.common;
 
-import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
+import com.gildedgames.aether.core.capability.arrow.PhoenixArrow;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.PhoenixArrowPacket;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -23,10 +23,10 @@ public class AbstractArrowMixin
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/Projectile;tick()V", shift = At.Shift.AFTER), method = "tick")
     private void tick(CallbackInfo ci) {
         AbstractArrow arrow = (AbstractArrow) (Object) this;
-        IPhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
+        PhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
             if (phoenixArrow.isPhoenixArrow()) {
                 if (!arrow.level.isClientSide) {
-                    AetherPacketHandler.sendToNear(new PhoenixArrowPacket(arrow.getId(), true), arrow.getX(), arrow.getY(), arrow.getZ(), 1.0D, arrow.level.dimension());
+                    AetherPacketHandler.sendToAll(new PhoenixArrowPacket(arrow.getId(), true));
                     if (this.inGround) {
                         if (this.inGroundTime % 5 == 0) {
                             for (int i = 0; i < 1; i++) {

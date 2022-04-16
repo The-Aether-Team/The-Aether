@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.inventory.provider;
 
-import com.gildedgames.aether.common.inventory.container.LoreBookContainer;
+import com.gildedgames.aether.common.inventory.container.LoreBookMenu;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -22,6 +22,6 @@ public class LoreBookProvider implements MenuProvider
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int i, @Nonnull Inventory playerInventory, @Nonnull Player playerEntity) {
-        return new LoreBookContainer(i, playerInventory);
+        return new LoreBookMenu(i, playerInventory);
     }
 }

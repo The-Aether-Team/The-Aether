@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.combat.loot;
 
-import com.gildedgames.aether.common.entity.projectile.weapon.LightningKnifeEntity;
+import com.gildedgames.aether.common.entity.projectile.weapon.ThrownLightningKnife;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
@@ -29,7 +29,7 @@ public class LightningKnifeItem extends Item
 			if (!playerIn.getAbilities().instabuild && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, heldItem) == 0) {
 				heldItem.shrink(1);
 			}
-			LightningKnifeEntity lightningKnife = new LightningKnifeEntity(playerIn, worldIn);
+			ThrownLightningKnife lightningKnife = new ThrownLightningKnife(playerIn, worldIn);
 			lightningKnife.shootFromRotation(playerIn, playerIn.getXRot(), playerIn.getYRot(), 0.0F, 0.8F, 1.0F);
 			worldIn.addFreshEntity(lightningKnife);
 		}

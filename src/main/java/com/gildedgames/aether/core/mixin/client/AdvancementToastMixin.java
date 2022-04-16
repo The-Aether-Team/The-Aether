@@ -32,8 +32,7 @@ public class AdvancementToastMixin
     @Inject(at = @At("HEAD"), method = "render")
     private void render(PoseStack poseStack, ToastComponent toastComponent, long timeSinceLastVisible, CallbackInfoReturnable<Toast.Visibility> cir) {
         if (!this.playedSound) {
-            ResourceLocation enterAether = new ResourceLocation(Aether.MODID, "enter_aether");
-            if (this.advancement.getId().equals(enterAether) || (this.advancement.getParent() != null && this.advancement.getParent().getId().equals(enterAether))) {
+            if (this.checkRoot()) {
                 this.playedSound = true;
                 switch (this.advancement.getId().getPath()) {
                     case "like_a_bossaru" -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_BRONZE.get(), 1.0F, 1.0F));
@@ -42,5 +41,18 @@ public class AdvancementToastMixin
                 }
             }
         }
+    }
+
+    /**
+     * Checks all the way up to the root of the advancement tree to determine if it's an Aether advancement.
+     */
+    private boolean checkRoot() {
+        ResourceLocation enterAether = new ResourceLocation(Aether.MODID, "enter_aether");
+        for (Advancement advancement = this.advancement; advancement != null; advancement = advancement.getParent()) {
+            if (advancement.getId().equals(enterAether)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

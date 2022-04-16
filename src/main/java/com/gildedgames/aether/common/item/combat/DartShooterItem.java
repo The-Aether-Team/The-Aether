@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.item.combat;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.entity.projectile.dart.AbstractDartEntity;
+import com.gildedgames.aether.common.entity.projectile.dart.AbstractDart;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -46,7 +46,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable
                 boolean shouldNotPickupAmmo = playerentity.getAbilities().instabuild || (ammoItem.getItem() instanceof DartItem && ((DartItem) ammoItem.getItem()).isInfinite(heldItem));
                 if (!worldIn.isClientSide) {
                     DartItem dartItem = (DartItem) (ammoItem.getItem() instanceof DartItem ? ammoItem.getItem() : this.dartType.get());
-                    AbstractDartEntity abstractDartEntity = dartItem.createDart(worldIn, playerentity);
+                    AbstractDart abstractDartEntity = dartItem.createDart(worldIn, playerentity);
                     abstractDartEntity.shootFromRotation(playerentity, playerentity.getXRot(), playerentity.getYRot(), 0.0F, 1.0F, 1.0F);
                     abstractDartEntity.setNoGravity(true);
 

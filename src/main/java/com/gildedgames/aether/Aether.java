@@ -7,14 +7,18 @@ import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
 import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
 import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
 import com.gildedgames.aether.common.registry.*;
+import com.gildedgames.aether.common.registry.worldgen.AetherBiomes;
+import com.gildedgames.aether.common.registry.worldgen.AetherFoliagePlacerTypes;
+import com.gildedgames.aether.common.registry.worldgen.AetherNoiseGeneratorSettings;
 import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.*;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.resource.CombinedResourcePack;
+import com.gildedgames.aether.core.util.SunAltarWhitelist;
+import com.gildedgames.aether.core.util.TriviaReader;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -22,35 +26,41 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.resource.PathResourcePack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 
 @Mod(Aether.MODID)
+@Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Aether
 {
     public static final String MODID = "aether";
     public static final Logger LOGGER = LogManager.getLogger();
+    public static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve("aether");
+
+    public static TriviaReader TRIVIA_READER;
 
     public Aether() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -65,50 +75,62 @@ public class Aether
                 AetherEntityTypes.ENTITIES,
                 AetherEffects.EFFECTS,
                 AetherItems.ITEMS,
-                AetherFeatures.FEATURES,
                 AetherParticleTypes.PARTICLES,
                 AetherPOI.POI,
                 AetherSoundEvents.SOUNDS,
                 AetherContainerTypes.CONTAINERS,
                 AetherBlockEntityTypes.BLOCK_ENTITIES,
-                AetherRecipes.RECIPE_SERIALIZERS
+                AetherRecipes.RECIPE_SERIALIZERS,
+                AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
+                AetherBiomes.BIOMES,
+                AetherFoliagePlacerTypes.FOLIAGE_PLACERS
         };
 
         for (DeferredRegister<?> register : registers) {
             register.register(modEventBus);
         }
 
-        AetherLoot.init();
-        AetherAdvancements.init();
-        PlacementModifiers.init();
-
-        AetherBlocks.registerWoodTypes();
-
+        DIRECTORY.toFile().mkdirs();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
 
-        AetherStructureIngress.registerEvents(modEventBus);
+        TRIVIA_READER = new TriviaReader();
+    }
+
+    @SubscribeEvent //This is not actually for registering RecipeSerializers.
+    public static void register(RegistryEvent.Register<RecipeSerializer<?>> event) {
+        SunAltarWhitelist.initialize();
+
+        AetherLoot.init();
+        AetherAdvancements.init();
+        PlacementModifiers.init();
+        AetherRecipes.RecipeTypes.init();
+        AetherRecipeBookTypes.init();
+        AetherNoiseGeneratorSettings.init();
+
+        AetherBlocks.registerWoodTypes();
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
-        AetherPacketHandler.register();
+        event.enqueueWork(() -> {
+            AetherPacketHandler.register();
 
-        AetherBlocks.registerPots();
-        AetherBlocks.registerAxeStrippingBlocks();
-        AetherBlocks.registerHoeTillingBlocks();
-        AetherBlocks.registerFlammability();
-        AetherBlocks.registerFreezables();
+            AetherBlocks.registerPots();
+            AetherBlocks.registerAxeStrippingBlocks();
+            AetherBlocks.registerShovelFlatteningBlocks();
+            AetherBlocks.registerHoeTillingBlocks();
+            AetherBlocks.registerFlammability();
+            AetherBlocks.registerFreezables();
 
-        AetherFeatures.registerConfiguredFeatures();
+            AetherEntityTypes.registerSpawnPlacements();
 
-        AetherEntityTypes.registerSpawnPlacements();
+            AetherItems.registerAbilities();
 
-        AetherItems.registerAbilities();
-
-        registerDispenserBehaviors();
-        registerCauldronInteractions();
-        registerComposting();
-        registerFuels();
+            registerDispenserBehaviors();
+            registerCauldronInteractions();
+            registerComposting();
+            registerFuels();
+        });
     }
 
     public void curiosSetup(InterModEnqueueEvent event) {
@@ -126,12 +148,13 @@ public class Aether
         if (event.includeClient()) {
             generator.addProvider(new AetherBlockStateData(generator, helper));
             generator.addProvider(new AetherItemModelData(generator, helper));
-            generator.addProvider(new AetherLangData(generator));
+            generator.addProvider(new AetherLanguageData(generator));
             generator.addProvider(new AetherSoundData(generator, helper));
         }
         if (event.includeServer()) {
             generator.addProvider(new AetherRecipeData(generator));
             generator.addProvider(new AetherLootTableData(generator));
+            generator.addProvider(new AetherLootModifierData(generator));
             AetherBlockTagData blockTags = new AetherBlockTagData(generator, helper);
             generator.addProvider(blockTags);
             generator.addProvider(new AetherItemTagData(generator, blockTags, helper));
@@ -176,6 +199,8 @@ public class Aether
     }
 
     private void registerDispenserBehaviors() {
+        AetherDispenseBehaviors.DEFAULT_FIRE_CHARGE_BEHAVIOR = DispenserBlock.DISPENSER_REGISTRY.get(Items.FIRE_CHARGE);
+        AetherDispenseBehaviors.DEFAULT_FLINT_AND_STEEL_BEHAVIOR = DispenserBlock.DISPENSER_REGISTRY.get(Items.FLINT_AND_STEEL);
         DispenserBlock.registerBehavior(AetherItems.GOLDEN_DART.get(), new DispenseDartBehavior(AetherItems.GOLDEN_DART));
         DispenserBlock.registerBehavior(AetherItems.POISON_DART.get(), new DispenseDartBehavior(AetherItems.POISON_DART));
         DispenserBlock.registerBehavior(AetherItems.ENCHANTED_DART.get(), new DispenseDartBehavior(AetherItems.ENCHANTED_DART));
@@ -185,12 +210,6 @@ public class Aether
 		DispenserBlock.registerBehavior(AetherItems.SKYROOT_BUCKET.get(), AetherDispenseBehaviors.PICKUP_WATER_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.AMBROSIUM_SHARD.get(), AetherDispenseBehaviors.DISPENSE_AMBROSIUM_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.SWET_BALL.get(), AetherDispenseBehaviors.DISPENSE_SWET_BALL_BEHAVIOR);
-        DispenseItemBehavior dispenseSpawnEgg = AetherDispenseBehaviors.DISPENSE_SPAWN_EGG_BEHAVIOR;
-        for (RegistryObject<Item> item : AetherItems.ITEMS.getEntries()) {
-            if (item.get() instanceof SpawnEggItem) {
-                DispenserBlock.registerBehavior(item.get(), dispenseSpawnEgg);
-            }
-        }
         DispenserBlock.registerBehavior(Items.FIRE_CHARGE, AetherDispenseBehaviors.DISPENSE_FIRE_CHARGE_BEHAVIOR);
         DispenserBlock.registerBehavior(Items.FLINT_AND_STEEL, AetherDispenseBehaviors.DISPENSE_FLINT_AND_STEEL);
     }

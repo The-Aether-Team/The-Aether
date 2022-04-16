@@ -3,7 +3,7 @@ package com.gildedgames.aether.common.item.food;
 import com.gildedgames.aether.common.registry.AetherFoods;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +29,7 @@ public class WhiteAppleItem extends Item
         }
         if (entityLiving instanceof Player) {
             Player player = (Player) entityLiving;
-            IAetherPlayer.get(player).ifPresent(aetherPlayer -> {
+            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                 aetherPlayer.setRemedyMaximum(300);
                 aetherPlayer.setRemedyTimer(300);
             });

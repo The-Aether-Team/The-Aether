@@ -12,8 +12,9 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 
-public class FallPathNavigator extends GroundPathNavigation
-{
+import javax.annotation.Nonnull;
+
+public class FallPathNavigator extends GroundPathNavigation {
     private BlockPos pathToPosition;
 
     public FallPathNavigator(Mob mobEntity, Level world) {
@@ -21,7 +22,7 @@ public class FallPathNavigator extends GroundPathNavigation
     }
 
     @Override
-    public Path createPath(BlockPos pos, int length) {
+    public Path createPath(@Nonnull BlockPos pos, int length) {
         this.pathToPosition = pos;
         return super.createPath(pos, length);
     }
@@ -33,7 +34,7 @@ public class FallPathNavigator extends GroundPathNavigation
     }
 
     @Override
-    public boolean moveTo(Entity entity, double speed) {
+    public boolean moveTo(@Nonnull Entity entity, double speed) {
         Path path = this.createPath(entity, 0);
         if (path != null) {
             return this.moveTo(path, speed);
@@ -69,7 +70,7 @@ public class FallPathNavigator extends GroundPathNavigation
             }
         } else {
             if (this.pathToPosition != null) {
-                if (!this.pathToPosition.closerThan(this.mob.position(), Math.max(this.mob.getBbWidth(), 1.0D)) && (!(this.mob.getY() > (double)this.pathToPosition.getY()) || !(new BlockPos(this.pathToPosition.getX(), this.mob.getY(), this.pathToPosition.getZ())).closerThan(this.mob.position(), Math.max(this.mob.getBbWidth(), 1.0D)))) {
+                if (!this.pathToPosition.closerThan(this.mob.blockPosition(), Math.max(this.mob.getBbWidth(), 1.0D)) && (!(this.mob.getY() > (double)this.pathToPosition.getY()) || !(new BlockPos(this.pathToPosition.getX(), this.mob.getY(), this.pathToPosition.getZ())).closerThan(this.mob.blockPosition(), Math.max(this.mob.getBbWidth(), 1.0D)))) {
                     this.mob.getMoveControl().setWantedPosition(this.pathToPosition.getX(), this.pathToPosition.getY(), this.pathToPosition.getZ(), this.speedModifier);
                 } else {
                     this.pathToPosition = null;

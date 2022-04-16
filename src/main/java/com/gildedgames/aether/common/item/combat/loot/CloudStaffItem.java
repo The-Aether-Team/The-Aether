@@ -1,15 +1,15 @@
 package com.gildedgames.aether.common.item.combat.loot;
 
-import com.gildedgames.aether.common.entity.miscellaneous.CloudMinionEntity;
+import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
 import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.capability.interfaces.IAetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayer;
+import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
@@ -25,15 +25,15 @@ public class CloudStaffItem extends Item
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand hand) {
         ItemStack heldItem = playerIn.getItemInHand(hand);
-        IAetherPlayer.get(playerIn).ifPresent(aetherPlayer -> {
+        AetherPlayer.get(playerIn).ifPresent(aetherPlayer -> {
             if (aetherPlayer.getCloudMinions().isEmpty()) {
                 playerIn.swing(hand);
                 if (!worldIn.isClientSide) {
                     if (!playerIn.getAbilities().instabuild) {
                         heldItem.hurtAndBreak(1, playerIn, (p) -> p.broadcastBreakEvent(hand));
                     }
-                    CloudMinionEntity cloudMinionRight = new CloudMinionEntity(worldIn, playerIn, HumanoidArm.RIGHT);
-                    CloudMinionEntity cloudMinionLeft = new CloudMinionEntity(worldIn, playerIn, HumanoidArm.LEFT);
+                    CloudMinion cloudMinionRight = new CloudMinion(worldIn, playerIn, HumanoidArm.RIGHT);
+                    CloudMinion cloudMinionLeft = new CloudMinion(worldIn, playerIn, HumanoidArm.LEFT);
                     worldIn.addFreshEntity(cloudMinionRight);
                     worldIn.addFreshEntity(cloudMinionLeft);
                     aetherPlayer.setCloudMinions(cloudMinionRight, cloudMinionLeft);
@@ -41,8 +41,8 @@ public class CloudStaffItem extends Item
                 this.spawnExplosionParticles(playerIn);
             } else if (playerIn.isShiftKeyDown()) {
                 playerIn.swing(hand);
-                for (CloudMinionEntity cloudMinionEntity : aetherPlayer.getCloudMinions()) {
-                    cloudMinionEntity.setLifeSpan(0);
+                for (CloudMinion cloudMinion : aetherPlayer.getCloudMinions()) {
+                    cloudMinion.setLifeSpan(0);
                 }
             }
         });
@@ -52,14 +52,14 @@ public class CloudStaffItem extends Item
     @Override
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         if (entity instanceof Player) {
-            IAetherPlayer.get((Player) entity).ifPresent(aetherPlayer -> {
+            AetherPlayer.get((Player) entity).ifPresent(aetherPlayer -> {
                 if (!aetherPlayer.getCloudMinions().isEmpty()) {
                     if (!aetherPlayer.getPlayer().getCooldowns().isOnCooldown(this) && aetherPlayer.isHitting()) {
-                        CloudMinionEntity cloudMinionRight = aetherPlayer.getCloudMinions().get(0);
+                        CloudMinion cloudMinionRight = aetherPlayer.getCloudMinions().get(0);
                         if (cloudMinionRight != null) {
                             cloudMinionRight.setShouldShoot(true);
                         }
-                        CloudMinionEntity cloudMinionLeft = aetherPlayer.getCloudMinions().get(1);
+                        CloudMinion cloudMinionLeft = aetherPlayer.getCloudMinions().get(1);
                         if (cloudMinionLeft != null) {
                             cloudMinionLeft.setShouldShoot(true);
                         }
@@ -73,14 +73,9 @@ public class CloudStaffItem extends Item
         return super.onEntitySwing(stack, entity);
     }
 
-    private void spawnExplosionParticles(Player playerEntity) {
-        if (playerEntity.level.isClientSide) {
-            for (int i = 0; i < 20; ++i) {
-                double d0 = playerEntity.getRandom().nextGaussian() * 0.02D;
-                double d1 = playerEntity.getRandom().nextGaussian() * 0.02D;
-                double d2 = playerEntity.getRandom().nextGaussian() * 0.02D;
-                playerEntity.level.addParticle(ParticleTypes.POOF, playerEntity.getX(0.0D) - d0 * 10.0D, playerEntity.getRandomY() - d1 * 10.0D, playerEntity.getRandomZ(1.0D) - d2 * 10.0D, d0, d1, d2);
-            }
+    private void spawnExplosionParticles(Player player) {
+        if (player.level.isClientSide()) {
+            EntityUtil.spawnSummoningExplosionParticles(player);
         }
     }
 

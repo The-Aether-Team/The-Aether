@@ -2,14 +2,11 @@ package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
-import com.gildedgames.aether.client.registry.AetherAtlases;
-import com.gildedgames.aether.client.registry.AetherKeys;
-import com.gildedgames.aether.client.registry.AetherOverlays;
-import com.gildedgames.aether.client.registry.AetherRenderers;
+import com.gildedgames.aether.client.registry.*;
 import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
 import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.common.registry.AetherContainerTypes;
-import com.gildedgames.aether.common.registry.AetherDimensions;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.client.Minecraft;
@@ -26,20 +23,20 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class AetherClient
-{
+public class AetherClient {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             AetherAtlases.registerWoodTypeAtlases();
             AetherKeys.registerKeys();
             AetherOverlays.registerOverlays();
+            AetherRecipeCategories.registerRecipeCategories();
             AetherRenderers.registerBlockRenderLayers();
             AetherRenderers.registerCuriosRenderers();
             registerGuiFactories();
             registerItemModelProperties();
             registerColors();
-            DimensionSpecialEffects.EFFECTS.put(AetherDimensions.AETHER_DIMENSION.location(), new AetherSkyRenderInfo());
+            DimensionSpecialEffects.EFFECTS.put(AetherDimensions.AETHER_DIMENSION_TYPE.location(), new AetherSkyRenderInfo());
         });
     }
 

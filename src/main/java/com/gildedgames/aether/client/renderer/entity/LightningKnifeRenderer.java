@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import com.gildedgames.aether.common.entity.projectile.weapon.LightningKnifeEntity;
+import com.gildedgames.aether.common.entity.projectile.weapon.ThrownLightningKnife;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
@@ -13,31 +13,30 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
-public class LightningKnifeRenderer extends EntityRenderer<LightningKnifeEntity>
-{
-	public LightningKnifeRenderer(EntityRendererProvider.Context renderer) {
-		super(renderer);
+import javax.annotation.Nonnull;
+
+public class LightningKnifeRenderer extends EntityRenderer<ThrownLightningKnife> {
+	public LightningKnifeRenderer(EntityRendererProvider.Context context) {
+		super(context);
 		this.shadowRadius = 0.0F;
 	}
 
 	@Override
-	public void render(LightningKnifeEntity entityIn, float entityYaw, float partialTicks, PoseStack matrix, MultiBufferSource bufferIn, int packedLightIn) {
-		matrix.pushPose();
-		Quaternion base = Vector3f.YP.rotationDegrees(entityIn.getYRot());
-		base.mul(Vector3f.XP.rotationDegrees((-(entityIn.xRotO + (entityIn.getXRot() - entityIn.xRotO) * partialTicks)) - 90.0F));
-		base.mul(Vector3f.ZP.rotationDegrees(-135.0F));
-		matrix.mulPose(base);
-		Minecraft.getInstance().getItemRenderer().renderStatic(entityIn.getItem(), ItemTransforms.TransformType.GUI, packedLightIn, OverlayTexture.NO_OVERLAY, matrix, bufferIn, entityIn.getId());
-		matrix.popPose();
-		super.render(entityIn, entityYaw, partialTicks, matrix, bufferIn, packedLightIn);
+	public void render(ThrownLightningKnife lightningKnife, float entityYaw, float partialTicks, PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
+		poseStack.pushPose();
+		Quaternion quaternion = Vector3f.YP.rotationDegrees(lightningKnife.getYRot());
+		quaternion.mul(Vector3f.XP.rotationDegrees((-(lightningKnife.xRotO + (lightningKnife.getXRot() - lightningKnife.xRotO) * partialTicks)) - 90.0F));
+		quaternion.mul(Vector3f.ZP.rotationDegrees(-135.0F));
+		poseStack.mulPose(quaternion);
+		Minecraft.getInstance().getItemRenderer().renderStatic(lightningKnife.getItem(), ItemTransforms.TransformType.GUI, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer, lightningKnife.getId());
+		poseStack.popPose();
+		super.render(lightningKnife, entityYaw, partialTicks, poseStack, buffer, packedLight);
 	}
 
+	@Nonnull
 	@Override
-	public ResourceLocation getTextureLocation(LightningKnifeEntity entity) {
+	public ResourceLocation getTextureLocation(@Nonnull ThrownLightningKnife lightningKnife) {
 		return TextureAtlas.LOCATION_BLOCKS;
 	}
 }

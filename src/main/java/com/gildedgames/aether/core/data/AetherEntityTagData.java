@@ -6,9 +6,9 @@ import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.tags.Tag;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
@@ -56,7 +56,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 AetherEntityTypes.ZEPHYR_SNOWBALL.get(),
                 AetherEntityTypes.LIGHTNING_KNIFE.get(),
                 AetherEntityTypes.HAMMER_PROJECTILE.get());
-        tag(AetherTags.Entities.SWET_TARGET).add(
+        tag(AetherTags.Entities.SWET_TARGETS).add(
                 EntityType.CHICKEN,
                 EntityType.COW,
                 EntityType.PIG,
@@ -64,6 +64,19 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 AetherEntityTypes.FLYING_COW.get(),
                 AetherEntityTypes.PHYG.get(),
                 AetherEntityTypes.SHEEPUFF.get()
+        );
+        tag(AetherTags.Entities.AECHOR_PLANT_TARGETS).add(
+                EntityType.CHICKEN,
+                EntityType.COW,
+                EntityType.PIG,
+                EntityType.SHEEP,
+                AetherEntityTypes.FLYING_COW.get(),
+                AetherEntityTypes.PHYG.get(),
+                AetherEntityTypes.SHEEPUFF.get()
+        );
+        tag(AetherTags.Entities.AERCLOUD_SPAWNABLE).add(
+                AetherEntityTypes.AERWHALE.get(),
+                AetherEntityTypes.ZEPHYR.get()
         );
 
         //vanilla
@@ -78,7 +91,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
     }
 
     @Nonnull
-    protected TagsProvider.TagAppender<EntityType<?>> tag(@Nonnull Tag.Named<EntityType<?>> tag) {
+    protected TagsProvider.TagAppender<EntityType<?>> tag(@Nonnull TagKey<EntityType<?>> tag) {
         return super.tag(tag);
     }
 }

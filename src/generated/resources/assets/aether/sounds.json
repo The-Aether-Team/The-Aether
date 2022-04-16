@@ -514,10 +514,22 @@
       "mob/slime/big4"
     ]
   },
+  "entity.whirlwind.drop": {
+    "subtitle": "subtitles.entity.item.pickup",
+    "sounds": [
+      "random/pop"
+    ]
+  },
   "entity.aechor_plant.shoot": {
     "subtitle": "subtitles.entity.aechor_plant.shoot",
     "sounds": [
       "random/bow"
+    ]
+  },
+  "entity.aechor_plant.death": {
+    "subtitle": "subtitles.entity.aechor_plant.death",
+    "sounds": [
+      "damage/fallbig"
     ]
   },
   "entity.cockatrice.shoot": {

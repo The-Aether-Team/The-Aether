@@ -199,16 +199,18 @@ public class AetherItemModelData extends AetherItemModelProvider
         eggItem(AetherItems.SHEEPUFF_SPAWN_EGG);
         eggItem(AetherItems.MOA_SPAWN_EGG);
         eggItem(AetherItems.AERWHALE_SPAWN_EGG);
+        eggItem(AetherItems.AERBUNNY_SPAWN_EGG);
         eggItem(AetherItems.WHIRLWIND_SPAWN_EGG);
+        eggItem(AetherItems.BLUE_SWET_SPAWN_EGG);
+        eggItem(AetherItems.GOLDEN_SWET_SPAWN_EGG);
         eggItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG);
         eggItem(AetherItems.AECHOR_PLANT_SPAWN_EGG);
         eggItem(AetherItems.COCKATRICE_SPAWN_EGG);
         eggItem(AetherItems.ZEPHYR_SPAWN_EGG);
         eggItem(AetherItems.SENTRY_SPAWN_EGG);
         eggItem(AetherItems.MIMIC_SPAWN_EGG);
-        eggItem(AetherItems.AERBUNNY_SPAWN_EGG);
-        eggItem(AetherItems.BLUE_SWET_SPAWN_EGG);
-        eggItem(AetherItems.GOLDEN_SWET_SPAWN_EGG);
+        eggItem(AetherItems.VALKYRIE_SPAWN_EGG);
+        eggItem(AetherItems.FIRE_MINION_SPAWN_EGG);
 
         itemBlock(AetherBlocks.AETHER_GRASS_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK);
@@ -217,6 +219,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.HOLYSTONE);
         itemBlock(AetherBlocks.MOSSY_HOLYSTONE);
         itemBlock(AetherBlocks.AETHER_FARMLAND);
+        itemBlock(AetherBlocks.AETHER_DIRT_PATH);
 
         itemBlock(AetherBlocks.COLD_AERCLOUD);
         itemBlock(AetherBlocks.BLUE_AERCLOUD);
@@ -287,6 +290,9 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemTrappedDungeonBlock(AetherBlocks.TRAPPED_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
         itemTrappedDungeonBlock(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE, AetherBlocks.LIGHT_HELLFIRE_STONE);
 
+        lookalikeBlock(AetherBlocks.CHEST_MIMIC, mcLoc("item/chest"));
+        lookalikeBlock(AetherBlocks.TREASURE_CHEST, mcLoc("item/chest"));
+
         itemBlock(AetherBlocks.PILLAR);
         itemBlock(AetherBlocks.PILLAR_TOP);
 
@@ -296,6 +302,11 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.SKYROOT_FENCE_GATE);
         item(() -> AetherBlocks.SKYROOT_DOOR.get().asItem(), "miscellaneous/");
         itemBlock(AetherBlocks.SKYROOT_TRAPDOOR, "_bottom");
+        itemButton(AetherBlocks.SKYROOT_BUTTON, AetherBlocks.SKYROOT_PLANKS, "construction/");
+        itemBlock(AetherBlocks.SKYROOT_PRESSURE_PLATE);
+
+        itemButton(AetherBlocks.HOLYSTONE_BUTTON, AetherBlocks.HOLYSTONE, "natural/");
+        itemBlock(AetherBlocks.HOLYSTONE_PRESSURE_PLATE);
 
         itemWallBlock(AetherBlocks.CARVED_WALL, AetherBlocks.CARVED_STONE, "dungeon/");
         itemWallBlock(AetherBlocks.ANGELIC_WALL, AetherBlocks.ANGELIC_STONE, "dungeon/");
@@ -329,5 +340,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.SUN_ALTAR);
 
         itemBlock(AetherBlocks.SKYROOT_BOOKSHELF);
+
+        lookalikeBlock(AetherBlocks.SKYROOT_BED, mcLoc("item/template_bed"));
     }
 }

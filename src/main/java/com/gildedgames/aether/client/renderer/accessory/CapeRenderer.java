@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.renderer.accessory;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.accessory.model.CapeModel;
 import com.gildedgames.aether.common.item.accessories.cape.CapeItem;
-import com.gildedgames.aether.core.capability.interfaces.ICapeEntity;
+import com.gildedgames.aether.core.capability.cape.CapeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -26,19 +26,18 @@ import top.theillusivec4.caelus.mixin.util.ClientMixinHooks;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
-public class CapeRenderer implements ICurioRenderer
-{
-    private final CapeModel capeModel;
+public class CapeRenderer implements ICurioRenderer {
+    private final CapeModel cape;
 
     public CapeRenderer() {
-        this.capeModel = new CapeModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.CAPE));
+        this.cape = new CapeModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.CAPE));
     }
 
     @Override
-    public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         LivingEntity livingEntity = slotContext.entity();
         CapeItem capeItem = (CapeItem) stack.getItem();
-        ICapeEntity.get(livingEntity).ifPresent((capeEntity) -> {
+        CapeEntity.get(livingEntity).ifPresent((capeEntity) -> {
             if (!livingEntity.isInvisible()) {
                 ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
                 boolean hasCape = livingEntity instanceof AbstractClientPlayer abstractClientPlayer
@@ -48,7 +47,7 @@ public class CapeRenderer implements ICurioRenderer
                 boolean isCapeDisabled = ModList.get().isLoaded("caelus") && livingEntity instanceof Player player && !ClientMixinHooks.canRenderCape(player);
 
                 if (!(itemstack.getItem() instanceof ElytraItem) && !hasCape && !isCapeDisabled) {
-                    this.capeModel.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+                    this.cape.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                     poseStack.pushPose();
                     poseStack.translate(0.0D, 0.0D, 0.125D);
                     double d0 = Mth.lerp(partialTicks, capeEntity.getxCloakO(), capeEntity.getxCloak()) - Mth.lerp(partialTicks, livingEntity.xo, livingEntity.getX());
@@ -76,8 +75,8 @@ public class CapeRenderer implements ICurioRenderer
                     poseStack.mulPose(Vector3f.XP.rotationDegrees(6.0F + f2 / 2.0F + f1));
                     poseStack.mulPose(Vector3f.ZP.rotationDegrees(f3 / 2.0F));
                     poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - f3 / 2.0F));
-                    VertexConsumer vertexconsumer = renderTypeBuffer.getBuffer(RenderType.entitySolid(capeItem.getCapeTexture()));
-                    this.capeModel.renderToBuffer(poseStack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                    VertexConsumer consumer = buffer.getBuffer(RenderType.entitySolid(capeItem.getCapeTexture()));
+                    this.cape.renderToBuffer(poseStack, consumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
                     poseStack.popPose();
                 }
             }

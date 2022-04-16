@@ -1,8 +1,7 @@
 package com.gildedgames.aether.common.inventory;
 
 import com.gildedgames.aether.common.advancement.LoreTrigger;
-import com.gildedgames.aether.common.inventory.container.LoreBookContainer;
-import com.gildedgames.aether.common.registry.AetherAdvancements;
+import com.gildedgames.aether.common.inventory.container.LoreBookMenu;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.LoreExistsPacket;
 import net.minecraft.client.player.LocalPlayer;
@@ -14,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 public class LoreInventory extends SimpleContainer
 {
     private final Player playerEntity;
-    private LoreBookContainer container;
+    private LoreBookMenu container;
 
     public LoreInventory(Player playerEntity) {
         super(1);
@@ -24,7 +23,7 @@ public class LoreInventory extends SimpleContainer
     @Override
     public void setItem(int index, ItemStack stack) {
         if (!stack.isEmpty()) {
-            if (this.playerEntity instanceof LocalPlayer) {
+            if (this.playerEntity.level.isClientSide && this.playerEntity instanceof LocalPlayer) {
                 if (this.container.loreEntryExists(stack)) {
                     AetherPacketHandler.sendToServer(new LoreExistsPacket(this.playerEntity.getId(), stack, true));
                 } else {
@@ -39,7 +38,7 @@ public class LoreInventory extends SimpleContainer
         super.setItem(index, stack);
     }
 
-    public void setContainer(LoreBookContainer container) {
+    public void setContainer(LoreBookMenu container) {
         this.container = container;
     }
 }

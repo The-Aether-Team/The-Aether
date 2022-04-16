@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 
 public class BlueAercloudBlock extends AercloudBlock
 {
-	protected static VoxelShape SHAPE = Shapes.empty();
+	protected static VoxelShape COLLISION_SHAPE = Shapes.empty();
 
 	public BlueAercloudBlock(BlockBehaviour.Properties properties) {
 		super(properties);
@@ -22,7 +22,7 @@ public class BlueAercloudBlock extends AercloudBlock
 	
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		entity.fallDistance *= 0.0F;
+		entity.resetFallDistance();
 		Vec3 motion = entity.getDeltaMovement();
 
 		if (entity.isShiftKeyDown()) {
@@ -33,9 +33,13 @@ public class BlueAercloudBlock extends AercloudBlock
 		}
 		
 		entity.setDeltaMovement(motion.x, 2.0, motion.z);
-		
+
 		if (world.isClientSide) {
-			for (int count = 0; count < 50; count++) {
+			int amount = 50;
+			if (entity.getY() == entity.yOld) {
+				amount = 10;
+			}
+			for (int count = 0; count < amount; count++) {
 				double xOffset = pos.getX() + world.random.nextDouble();
 				double yOffset = pos.getY() + world.random.nextDouble();
 				double zOffset = pos.getZ() + world.random.nextDouble();
@@ -46,7 +50,7 @@ public class BlueAercloudBlock extends AercloudBlock
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-		return SHAPE;
+	public VoxelShape getAlternateShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		return COLLISION_SHAPE;
 	}
 }

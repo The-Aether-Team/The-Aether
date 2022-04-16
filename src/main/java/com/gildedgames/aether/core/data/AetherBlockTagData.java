@@ -3,13 +3,13 @@ package com.gildedgames.aether.core.data;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -83,6 +83,17 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get(),
                 AetherBlocks.TRAPPED_HELLFIRE_STONE.get(),
                 AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE.get());
+        tag(AetherTags.Blocks.GRAVITITE_ABILITY_BLACKLIST);
+        tag(AetherTags.Blocks.AETHER_ANIMALS_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
+        tag(AetherTags.Blocks.AERWHALE_SPAWNABLE_ON).addTag(AetherTags.Blocks.AERCLOUDS);
+        tag(AetherTags.Blocks.SWET_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
+        tag(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
+        tag(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON).addTag(AetherTags.Blocks.AERCLOUDS);
+        tag(AetherTags.Blocks.COCKATRICE_SPAWNABLE_BLACKLIST).addTags(
+                AetherTags.Blocks.DUNGEON_BLOCKS,
+                AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
+                AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS
+        );
 
         //vanilla
         tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).addTag(AetherTags.Blocks.DUNGEON_BLOCKS);
@@ -105,7 +116,6 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(BlockTags.LOGS_THAT_BURN).addTags(
                 AetherTags.Blocks.SKYROOT_LOGS,
                 AetherTags.Blocks.GOLDEN_OAK_LOGS);
-        tag(BlockTags.SAND).add(AetherBlocks.QUICKSOIL.get());
         tag(BlockTags.STAIRS).add(
                 AetherBlocks.SKYROOT_STAIRS.get(),
                 AetherBlocks.CARVED_STAIRS.get(),
@@ -158,7 +168,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.WHITE_FLOWER.get());
         tag(BlockTags.VALID_SPAWN).addTag(AetherTags.Blocks.AETHER_DIRT);
         tag(BlockTags.IMPERMEABLE).add(AetherBlocks.QUICKSOIL_GLASS.get());
-        tag(BlockTags.BAMBOO_PLANTABLE_ON).addTags(AetherTags.Blocks.AETHER_DIRT);
+        tag(BlockTags.BAMBOO_PLANTABLE_ON).addTag(AetherTags.Blocks.AETHER_DIRT);
         tag(BlockTags.SIGNS).add(
                 AetherBlocks.SKYROOT_SIGN.get(),
                 AetherBlocks.SKYROOT_WALL_SIGN.get());
@@ -254,7 +264,8 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(),
                 AetherBlocks.AETHER_DIRT.get(),
                 AetherBlocks.QUICKSOIL.get(),
-                AetherBlocks.AETHER_FARMLAND.get());
+                AetherBlocks.AETHER_FARMLAND.get(),
+                AetherBlocks.AETHER_DIRT_PATH.get());
         tag(BlockTags.MINEABLE_WITH_HOE).add(
                 AetherBlocks.COLD_AERCLOUD.get(),
                 AetherBlocks.BLUE_AERCLOUD.get(),
@@ -312,13 +323,12 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.AMBROSIUM_ORE.get(),
                 AetherBlocks.ZANITE_ORE.get(),
                 AetherBlocks.GRAVITITE_ORE.get());
-        tag(Tags.Blocks.SAND_COLORLESS).add(AetherBlocks.QUICKSOIL.get());
         tag(Tags.Blocks.STONE).addTag(AetherTags.Blocks.HOLYSTONE);
         tag(Tags.Blocks.STORAGE_BLOCKS).add(AetherBlocks.ZANITE_BLOCK.get());
     }
 
     @Nonnull
-    protected TagsProvider.TagAppender<Block> tag(@Nonnull Tag.Named<Block> tag) {
+    protected TagsProvider.TagAppender<Block> tag(@Nonnull TagKey<Block> tag) {
         return super.tag(tag);
     }
 }
