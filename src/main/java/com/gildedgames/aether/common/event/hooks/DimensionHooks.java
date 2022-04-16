@@ -180,14 +180,6 @@ public class DimensionHooks {
         }
     }
 
-    public static void addTrackers(LevelAccessor accessor) {
-        if (accessor instanceof Level level && !level.isClientSide()) {
-            for (TagKey<DimensionType> tag : LevelUtil.getTags()) {
-                LevelUtil.addTracker(level, tag);
-            }
-        }
-    }
-
     public static void syncTrackersFromServer(Level level, Entity entity) {
         if (!level.isClientSide() && level instanceof ServerLevel serverLevel && entity instanceof Player) {
             for (ServerLevel dimension : serverLevel.getServer().getAllLevels()) {

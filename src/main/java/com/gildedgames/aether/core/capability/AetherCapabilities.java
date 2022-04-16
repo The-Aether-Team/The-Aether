@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.capability;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.gildedgames.aether.core.capability.arrow.PhoenixArrowCapability;
 import com.gildedgames.aether.core.capability.arrow.PhoenixArrowProvider;
@@ -20,6 +21,8 @@ import com.gildedgames.aether.core.capability.rankings.AetherRankingsCapability;
 import com.gildedgames.aether.core.capability.rankings.AetherRankingsProvider;
 import com.gildedgames.aether.core.capability.rankings.AetherRankings;
 
+import com.gildedgames.aether.core.util.LevelUtil;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.LightningBolt;
@@ -27,6 +30,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
@@ -76,7 +81,16 @@ public class AetherCapabilities {
 
 		@SubscribeEvent
 		public static void attachWorldCapabilities(AttachCapabilitiesEvent<Level> event) {
+			addTrackers(event.getObject());
 			event.addCapability(new ResourceLocation(Aether.MODID, "aether_time"), new AetherTimeProvider(new AetherTimeCapability(event.getObject())));
+		}
+
+		public static void addTrackers(Level level) {
+			if (!level.isClientSide()) {
+				for (TagKey<DimensionType> tag : LevelUtil.getTags()) {
+					LevelUtil.addTracker(level, tag);
+				}
+			}
 		}
 	}
 }
