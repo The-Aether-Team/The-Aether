@@ -26,6 +26,7 @@ public class AetherPacketHandler {
 	
 	public static synchronized void register() {
 		// CLIENT
+		register(AetherPlayerSyncPacket.class, AetherPlayerSyncPacket::decode);
 		register(AetherTimePacket.class, AetherTimePacket::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);

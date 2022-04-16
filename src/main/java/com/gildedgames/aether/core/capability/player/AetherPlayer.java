@@ -3,6 +3,7 @@ package com.gildedgames.aether.core.capability.player;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.common.entity.passive.Aerbunny;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
+import com.gildedgames.aether.core.capability.INBTSynchable;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
@@ -11,7 +12,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.List;
 
-public interface AetherPlayer extends INBTSerializable<CompoundTag> {
+public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	Player getPlayer();
 
 	static LazyOptional<AetherPlayer> get(Player player) {

@@ -10,6 +10,7 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.AetherConfig;
 
+import com.gildedgames.aether.core.network.AetherPacket;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.*;
 import net.minecraft.client.Minecraft;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AetherPlayerCapability implements AetherPlayer {
+public class AetherPlayerCapability extends AetherPlayerSyncing {
 	private final Player player;
 
 	private static final UUID LIFE_SHARD_HEALTH_ID = UUID.fromString("E11710C8-4247-4CB6-B3B5-729CB34CFC1A");
@@ -78,6 +79,8 @@ public class AetherPlayerCapability implements AetherPlayer {
 
 	private float savedHealth = 0.0F;
 	private static final EntityDataAccessor<Integer> DATA_LIFE_SHARD_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
+
+	//private int testValue = 123;
 	
 	public AetherPlayerCapability(Player player) {
 		this.player = player;
@@ -141,6 +144,32 @@ public class AetherPlayerCapability implements AetherPlayer {
 	}
 
 	@Override
+	public CompoundTag serializeSynchableNBT() {
+		CompoundTag tag = new CompoundTag();
+		//tag.putInt("test", this.getTestValue());
+		return tag;
+	}
+
+	@Override
+	public void deserializeSynchableNBT(CompoundTag tag) {
+		//this.setTestValue(tag.getInt("test"));
+	}
+
+	@Override
+	public AetherPacket.AbstractAetherPacket getSyncPacket(CompoundTag tag) {
+		return new AetherPlayerSyncPacket(tag);
+	}
+
+//	public void setTestValue(int testValue) {
+//		this.markDirty(true);
+//		this.testValue = testValue;
+//	}
+//
+//	public int getTestValue() {
+//		return this.testValue;
+//	}
+
+	@Override
 	public void defineSynchedData() {
 		this.getPlayer().getEntityData().define(DATA_GOLDEN_DART_COUNT_ID, 0);
 		this.getPlayer().getEntityData().define(DATA_POISON_DART_COUNT_ID, 0);
@@ -179,6 +208,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 
 	@Override
 	public void onUpdate() {
+		this.updateSynchableNBT();
 		this.handleAetherPortal();
 		this.activateParachute();
 		this.handleRemoveDarts();
@@ -188,6 +218,11 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.checkToRemoveCloudMinions();
 		this.handleSavedHealth();
 		this.handleLifeShardModifier();
+
+//		Aether.LOGGER.info(this.testValue);
+//		if (this.getPlayer().tickCount % 100 == 0 && !this.getPlayer().level.isClientSide()) {
+//			this.setTestValue(this.getTestValue() + 10);
+//		}
 	}
 
 	private void handleGivePortal() {
