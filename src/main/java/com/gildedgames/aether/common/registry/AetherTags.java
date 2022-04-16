@@ -2,18 +2,14 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 import net.minecraft.core.Registry;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.*;
 import net.minecraft.resources.ResourceLocation;
 import top.theillusivec4.curios.api.CuriosApi;
-
-import java.util.ArrayList;
 
 public class AetherTags {
 	public static class Blocks {
@@ -137,6 +133,7 @@ public class AetherTags {
 		public static final TagKey<DimensionType> ETERNAL_DAY = tag("eternal_day");
 		public static final TagKey<DimensionType> NO_WHEAT_SEEDS = tag("no_wheat_seeds");
 		public static final TagKey<DimensionType> FALL_TO_OVERWORLD = tag("fall_to_overworld");
+		public static final TagKey<DimensionType> DISPLAY_TRAVEL_TEXT = tag("display_travel_text");
 		public static final TagKey<DimensionType> AETHER_MUSIC = tag("aether_music");
 
 		private static TagKey<DimensionType> tag(String name) {

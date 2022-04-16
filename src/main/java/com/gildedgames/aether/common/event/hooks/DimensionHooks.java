@@ -3,11 +3,13 @@ package com.gildedgames.aether.common.event.hooks;
 import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
-import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.AetherTravelPacket;
+import com.gildedgames.aether.core.network.packet.client.LeavingAetherPacket;
 import com.gildedgames.aether.core.network.packet.client.SetVehiclePacket;
+import com.gildedgames.aether.core.util.LevelUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -18,6 +20,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -29,6 +32,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.material.FluidState;
 
@@ -37,9 +41,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class DimensionHooks {
+    public static boolean playerLeavingAether;
+    public static boolean displayAetherTravel;
 
     public static boolean checkPlacementBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state) {
-        if (level.dimension() == AetherDimensions.AETHER_LEVEL) {
+        if (LevelUtil.inTag(level, AetherTags.Dimensions.ULTRACOLD)) {
             if (stack.is(AetherTags.Items.BANNED_IN_AETHER)) {
                 return bannedItemDispatch(level, pos, face, stack);
             }
@@ -86,7 +92,7 @@ public class DimensionHooks {
     public static boolean freezeToAerogel(LevelAccessor accessor, BlockPos pos) {
         if (accessor instanceof Level level) {
             FluidState fluidstate = level.getFluidState(pos);
-            if (level.dimension() == AetherDimensions.AETHER_LEVEL && fluidstate.is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
+            if (LevelUtil.inTag(level, AetherTags.Dimensions.ULTRACOLD) && fluidstate.is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
                 level.setBlockAndUpdate(pos, AetherBlocks.AEROGEL.get().defaultBlockState());
                 if (level instanceof ServerLevel serverLevel) {
                     double x = pos.getX() + 0.5;
@@ -105,7 +111,7 @@ public class DimensionHooks {
 
     public static void fallFromAether(Level level) {
         if (level instanceof ServerLevel serverLevel) {
-            if (serverLevel.dimension() == AetherDimensions.AETHER_LEVEL) {
+            if (LevelUtil.inTag(serverLevel, AetherTags.Dimensions.FALL_TO_OVERWORLD)) {
                 if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
                     for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
                         if (entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger()) {
@@ -127,7 +133,7 @@ public class DimensionHooks {
         Level serverLevel = entity.level;
         MinecraftServer minecraftserver = serverLevel.getServer();
         if (minecraftserver != null) {
-            ServerLevel destination = minecraftserver.getLevel(Level.OVERWORLD);
+            ServerLevel destination = minecraftserver.getLevel(LevelUtil.returnDimension());
             if (destination != null) {
                 List<Entity> passengers = entity.getPassengers();
                 entity.level.getProfiler().push("aether_fall");
@@ -151,5 +157,44 @@ public class DimensionHooks {
             }
         }
         return null;
+    }
+
+    public static void dimensionTravel(Entity entity, ResourceKey<Level> dimension) {
+        // The level passed into shouldReturnPlayerToOverworld() is the dimension the player is leaving
+        //  Meaning: We display the Descending GUI text to the player if they're about to leave a dimension that returns them to the OW
+        if (LevelUtil.inTag(entity.level, AetherTags.Dimensions.DISPLAY_TRAVEL_TEXT)) {
+            if (entity.level.dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) {
+                displayAetherTravel = true;
+                playerLeavingAether = true;
+                AetherPacketHandler.sendToAll(new AetherTravelPacket(true));
+                AetherPacketHandler.sendToAll(new LeavingAetherPacket(true));
+            } else if (entity.level.dimension() == LevelUtil.returnDimension() && dimension == LevelUtil.destinationDimension()) {
+                displayAetherTravel = true;
+                playerLeavingAether = false;
+                AetherPacketHandler.sendToAll(new AetherTravelPacket(true));
+                AetherPacketHandler.sendToAll(new LeavingAetherPacket(false));
+            } else {
+                displayAetherTravel = false;
+                AetherPacketHandler.sendToAll(new AetherTravelPacket(false));
+            }
+        }
+    }
+
+    public static void addTrackers(LevelAccessor accessor) {
+        if (accessor instanceof Level level && !level.isClientSide()) {
+            for (TagKey<DimensionType> tag : LevelUtil.getTags()) {
+                LevelUtil.addTracker(level, tag);
+            }
+        }
+    }
+
+    public static void syncTrackersFromServer(Level level, Entity entity) {
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel && entity instanceof Player) {
+            for (ServerLevel dimension : serverLevel.getServer().getAllLevels()) {
+                for (TagKey<DimensionType> tag : LevelUtil.getTags()) {
+                    LevelUtil.syncTrackerFromServer(dimension, tag);
+                }
+            }
+        }
     }
 }
