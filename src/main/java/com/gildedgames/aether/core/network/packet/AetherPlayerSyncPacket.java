@@ -1,11 +1,11 @@
-package com.gildedgames.aether.core.network.packet.client;
+package com.gildedgames.aether.core.network.packet;
 
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 public class AetherPlayerSyncPacket extends AbstractAetherPacket {
@@ -31,8 +31,12 @@ public class AetherPlayerSyncPacket extends AbstractAetherPacket {
 
     @Override
     public void execute(Player playerEntity) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().level.getEntity(this.playerID) instanceof Player player) {
-            AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.deserializeSynchableNBT(this.tag));
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
+            AetherPlayer.get(serverPlayer).ifPresent(aetherPlayer -> aetherPlayer.deserializeSynchableNBT(this.tag));
+        } else {
+            if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().level.getEntity(this.playerID) instanceof Player player) {
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.deserializeSynchableNBT(this.tag));
+            }
         }
     }
 }

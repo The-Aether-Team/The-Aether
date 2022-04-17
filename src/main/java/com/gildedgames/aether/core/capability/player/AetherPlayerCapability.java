@@ -1,5 +1,6 @@
 package com.gildedgames.aether.core.capability.player;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.common.entity.miscellaneous.Parachute;
@@ -10,7 +11,10 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.AetherConfig;
 
+import com.gildedgames.aether.core.capability.CapabilitySyncing;
+import com.gildedgames.aether.core.network.AetherPacket;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.AetherPlayerSyncPacket;
 import com.gildedgames.aether.core.network.packet.client.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -33,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AetherPlayerCapability extends AetherPlayerSyncing {
+public class AetherPlayerCapability extends CapabilitySyncing implements AetherPlayer {
 	private final Player player;
 
 	private static final UUID LIFE_SHARD_HEALTH_ID = UUID.fromString("E11710C8-4247-4CB6-B3B5-729CB34CFC1A");
@@ -132,50 +136,50 @@ public class AetherPlayerCapability extends AetherPlayerSyncing {
 	@Override
 	public CompoundTag serializeSynchableNBT() {
 		CompoundTag tag = new CompoundTag();
-		tag.putInt("GoldenDartCount", this.getGoldenDartCount());
-		tag.putInt("PoisonDartCount", this.getPoisonDartCount());
-		tag.putInt("EnchantedDartCount", this.getEnchantedDartCount());
-		tag.putInt("RemedyMaximum", this.getRemedyMaximum());
-		tag.putInt("RemedyTimer", this.getRemedyTimer());
-		tag.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
-		tag.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
-		tag.putInt("FlightTimer", this.getFlightTimer());
-		tag.putFloat("FlightModifier", this.getFlightModifier());
-		tag.putInt("LifeShardCount", this.getLifeShardCount());
+		tag.putInt("GoldenDartCount_Syncing", this.getGoldenDartCount());
+		tag.putInt("PoisonDartCount_Syncing", this.getPoisonDartCount());
+		tag.putInt("EnchantedDartCount_Syncing", this.getEnchantedDartCount());
+		tag.putInt("RemedyMaximum_Syncing", this.getRemedyMaximum());
+		tag.putInt("RemedyTimer_Syncing", this.getRemedyTimer());
+		tag.putInt("ProjectileImpactedMaximum_Syncing", this.getProjectileImpactedMaximum());
+		tag.putInt("ProjectileImpactedTimer_Syncing", this.getProjectileImpactedTimer());
+		tag.putInt("FlightTimer_Syncing", this.getFlightTimer());
+		tag.putFloat("FlightModifier_Syncing", this.getFlightModifier());
+		tag.putInt("LifeShardCount_Syncing", this.getLifeShardCount());
 		return tag;
 	}
 
 	@Override
 	public void deserializeSynchableNBT(CompoundTag tag) {
-		if (tag.contains("GoldenDartCount")) {
-			this.setGoldenDartCount(tag.getInt("GoldenDartCount"));
+		if (tag.contains("GoldenDartCount_Syncing")) {
+			this.setGoldenDartCount(tag.getInt("GoldenDartCount_Syncing"));
 		}
-		if (tag.contains("PoisonDartCount")) {
-			this.setPoisonDartCount(tag.getInt("PoisonDartCount"));
+		if (tag.contains("PoisonDartCount_Syncing")) {
+			this.setPoisonDartCount(tag.getInt("PoisonDartCount_Syncing"));
 		}
-		if (tag.contains("EnchantedDartCount")) {
-			this.setEnchantedDartCount(tag.getInt("EnchantedDartCount"));
+		if (tag.contains("EnchantedDartCount_Syncing")) {
+			this.setEnchantedDartCount(tag.getInt("EnchantedDartCount_Syncing"));
 		}
-		if (tag.contains("RemedyMaximum")) {
-			this.setRemedyMaximum(tag.getInt("RemedyMaximum"));
+		if (tag.contains("RemedyMaximum_Syncing")) {
+			this.setRemedyMaximum(tag.getInt("RemedyMaximum_Syncing"));
 		}
-		if (tag.contains("RemedyTimer")) {
-			this.setRemedyTimer(tag.getInt("RemedyTimer"));
+		if (tag.contains("RemedyTimer_Syncing")) {
+			this.setRemedyTimer(tag.getInt("RemedyTimer_Syncing"));
 		}
-		if (tag.contains("ProjectileImpactedMaximum")) {
-			this.setProjectileImpactedMaximum(tag.getInt("ProjectileImpactedMaximum"));
+		if (tag.contains("ProjectileImpactedMaximum_Syncing")) {
+			this.setProjectileImpactedMaximum(tag.getInt("ProjectileImpactedMaximum_Syncing"));
 		}
-		if (tag.contains("ProjectileImpactedTimer")) {
-			this.setProjectileImpactedTimer(tag.getInt("ProjectileImpactedTimer"));
+		if (tag.contains("ProjectileImpactedTimer_Syncing")) {
+			this.setProjectileImpactedTimer(tag.getInt("ProjectileImpactedTimer_Syncing"));
 		}
-		if (tag.contains("FlightTimer")) {
-			this.setFlightTimer(tag.getInt("FlightTimer"));
+		if (tag.contains("FlightTimer_Syncing")) {
+			this.setFlightTimer(tag.getInt("FlightTimer_Syncing"));
 		}
-		if (tag.contains("FlightModifier")) {
-			this.setFlightModifier(tag.getFloat("FlightModifier"));
+		if (tag.contains("FlightModifier_Syncing")) {
+			this.setFlightModifier(tag.getFloat("FlightModifier_Syncing"));
 		}
-		if (tag.contains("LifeShardCount")) {
-			this.setLifeShardCount(tag.getInt("LifeShardCount"));
+		if (tag.contains("LifeShardCount_Syncing")) {
+			this.setLifeShardCount(tag.getInt("LifeShardCount_Syncing"));
 		}
 	}
 
@@ -204,8 +208,7 @@ public class AetherPlayerCapability extends AetherPlayerSyncing {
 
 	@Override
 	public void onUpdate() {
-		this.updateSynchableNBTFromServer();
-
+		this.updateSyncableNBT(this.getPlayer().getLevel());
 		this.handleAetherPortal();
 		this.activateParachute();
 		this.handleRemoveDarts();
@@ -700,5 +703,10 @@ public class AetherPlayerCapability extends AetherPlayerSyncing {
 		if (this.getPlayer() instanceof ServerPlayer serverPlayer && !this.getPlayer().level.isClientSide) {
 			AetherPacketHandler.sendToPlayer(new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
 		}
+	}
+
+	@Override
+	public AetherPacket.AbstractAetherPacket getSyncPacket(CompoundTag tag) {
+		return new AetherPlayerSyncPacket(this.getPlayer().getId(), tag);
 	}
 }
