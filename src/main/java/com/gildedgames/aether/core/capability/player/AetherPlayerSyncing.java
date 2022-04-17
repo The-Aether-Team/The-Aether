@@ -9,7 +9,7 @@ public abstract class AetherPlayerSyncing implements AetherPlayer {
     private CompoundTag storedTag;
     private boolean isDirty = false;
 
-    public void updateSynchableNBT() {
+    public void updateSynchableNBTFromServer() {
         if (!this.getPlayer().level.isClientSide()) {
             if (this.isDirty()) {
                 CompoundTag tag = this.serializeSynchableNBT();
@@ -21,6 +21,8 @@ public abstract class AetherPlayerSyncing implements AetherPlayer {
             }
         }
     }
+
+    public void updateSynchableNBTFromClient() { }
 
     public CompoundTag getStoredTag() {
         return this.storedTag;

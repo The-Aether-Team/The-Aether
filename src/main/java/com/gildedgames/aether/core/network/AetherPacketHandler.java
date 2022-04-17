@@ -27,6 +27,7 @@ public class AetherPacketHandler {
 	public static synchronized void register() {
 		// CLIENT
 		register(AetherPlayerSyncPacket.class, AetherPlayerSyncPacket::decode);
+		register(AetherRankingsClientSyncPacket.class, AetherRankingsClientSyncPacket::decode);
 		register(AetherTimePacket.class, AetherTimePacket::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
@@ -42,6 +43,7 @@ public class AetherPacketHandler {
 		register(ZephyrSnowballHitPacket.class, ZephyrSnowballHitPacket::decode);
 
 		// SERVER
+		register(AetherRankingsServerSyncPacket.class, AetherRankingsServerSyncPacket::decode);
 		register(ExtendedAttackPacket.class, ExtendedAttackPacket::decode);
 		register(HittingPacket.class, HittingPacket::decode);
 		register(JumpPacket.class, JumpPacket::decode);

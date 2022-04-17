@@ -204,7 +204,7 @@ public class AetherPlayerCapability extends AetherPlayerSyncing {
 
 	@Override
 	public void onUpdate() {
-		this.updateSynchableNBT();
+		this.updateSynchableNBTFromServer();
 
 		this.handleAetherPortal();
 		this.activateParachute();
