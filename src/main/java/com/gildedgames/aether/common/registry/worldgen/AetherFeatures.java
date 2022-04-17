@@ -16,13 +16,16 @@ import com.gildedgames.aether.common.world.gen.placement.ElevationFilter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
@@ -120,6 +123,12 @@ public class AetherFeatures {
                         .add(States.BERRY_BUSH, 1)), 64
                 ));
 
+        public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> GRASS_PATCH_CONFIGURED_FEATURE = register("grass_patch", Feature.RANDOM_PATCH,
+                AetherFeatureBuilders.grassPatch(BlockStateProvider.simple(Blocks.GRASS), 32));
+
+        public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> TALL_GRASS_PATCH_CONFIGURED_FEATURE = register("tall_grass_patch", Feature.RANDOM_PATCH,
+                AetherFeatureBuilders.tallGrassPatch(BlockStateProvider.simple(Blocks.TALL_GRASS)));
+
         public static final Holder<ConfiguredFeature<SimpleDiskConfiguration, ?>> QUICKSOIL_SHELF_CONFIGURED_FEATURE = register("quicksoil_shelf", SIMPLE_DISK,
                 new SimpleDiskConfiguration(
                         UniformFloat.of(Mth.sqrt(12), 5), // sqrt(12) is old static value
@@ -168,6 +177,12 @@ public class AetherFeatures {
 
         public static final Holder<PlacedFeature> FLOWER_PATCH_PLACED_FEATURE = register("flower_patch", ConfiguredFeatures.FLOWER_PATCH_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+
+        public static final Holder<PlacedFeature> GRASS_PATCH_PLACED_FEATURE = register("grass_patch", ConfiguredFeatures.GRASS_PATCH_CONFIGURED_FEATURE,
+                VegetationPlacements.worldSurfaceSquaredWithCount(2));
+
+        public static final Holder<PlacedFeature> TALL_GRASS_PATCH_PLACED_FEATURE = register("tall_grass_patch", ConfiguredFeatures.TALL_GRASS_PATCH_CONFIGURED_FEATURE,
+                NoiseThresholdCountPlacement.of(-0.8D, 0, 7), RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
         public static final Holder<PlacedFeature> QUICKSOIL_SHELF_PLACED_FEATURE = register("quicksoil_shelf", ConfiguredFeatures.QUICKSOIL_SHELF_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(),
