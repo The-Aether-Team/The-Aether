@@ -13,6 +13,7 @@ import com.gildedgames.aether.common.world.gen.feature.CrystalIslandFeature;
 import com.gildedgames.aether.common.world.gen.feature.SimpleDiskFeature;
 import com.gildedgames.aether.common.world.gen.placement.ElevationAdjustment;
 import com.gildedgames.aether.common.world.gen.placement.ElevationFilter;
+import com.gildedgames.aether.common.world.gen.placement.TallGrassFilter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -194,7 +195,12 @@ public class AetherFeatures {
                 VegetationPlacements.worldSurfaceSquaredWithCount(2));
 
         public static final Holder<PlacedFeature> TALL_GRASS_PATCH_PLACED_FEATURE = register("tall_grass_patch", ConfiguredFeatures.TALL_GRASS_PATCH_CONFIGURED_FEATURE,
-                NoiseThresholdCountPlacement.of(-0.8D, 0, 7), RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+                TallGrassFilter.getInstance(),
+                NoiseThresholdCountPlacement.of(-0.8D, 0, 7),
+                RarityFilter.onAverageOnceEvery(32),
+                InSquarePlacement.spread(),
+                PlacementUtils.HEIGHTMAP,
+                BiomeFilter.biome());
 
         public static final Holder<PlacedFeature> QUICKSOIL_SHELF_PLACED_FEATURE = register("quicksoil_shelf", ConfiguredFeatures.QUICKSOIL_SHELF_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(),

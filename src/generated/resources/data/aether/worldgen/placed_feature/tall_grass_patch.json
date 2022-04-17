@@ -2,6 +2,9 @@
   "feature": "aether:tall_grass_patch",
   "placement": [
     {
+      "type": "aether:tall_grass_filter"
+    },
+    {
       "noise_level": -0.8,
       "below_noise": 0,
       "above_noise": 7,
