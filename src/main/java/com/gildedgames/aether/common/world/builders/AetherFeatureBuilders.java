@@ -5,6 +5,7 @@ import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.block.Block;
@@ -15,8 +16,10 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.LakeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SpringConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.placement.*;
+import net.minecraft.world.level.material.FluidState;
 
 import java.util.List;
 
@@ -32,6 +35,10 @@ public class AetherFeatureBuilders {
 
     public static LakeFeature.Configuration lake(BlockStateProvider fluid, BlockStateProvider barrier) {
         return new LakeFeature.Configuration(fluid, barrier);
+    }
+
+    public static SpringConfiguration spring(FluidState fluid, boolean requiresBlocksBelow, int rockCount, int holeCount, HolderSet<Block> validBlocks) {
+        return new SpringConfiguration(fluid, requiresBlocksBelow, rockCount, holeCount, validBlocks);
     }
 
     public static RandomPatchConfiguration grassPatch(BlockStateProvider block, int p_195204_) {
@@ -65,4 +72,5 @@ public class AetherFeatureBuilders {
     public static PlacedFeature treeBlendDensity(int perLayerCount) {
         return new PlacedFeature(Holder.hackyErase(AetherFeatures.ConfiguredFeatures.TREE_BLEND), List.of(CountOnEveryLayerPlacement.of(perLayerCount)));
     }
+
 }

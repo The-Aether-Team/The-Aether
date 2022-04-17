@@ -20,7 +20,9 @@
       "aether:gravitite_ore_dense"
     ],
     [],
-    [],
+    [
+      "aether:water_spring"
+    ],
     [
       {
         "feature": "aether:aether_tree_mix",
