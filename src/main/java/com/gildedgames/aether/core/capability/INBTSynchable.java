@@ -9,5 +9,4 @@ public interface INBTSynchable<T extends Tag> extends INBTSerializable<T> {
     T serializeSynchableNBT();
     void deserializeSynchableNBT(T nbt);
     void updateSynchableNBT();
-    AetherPacket.AbstractAetherPacket getSyncPacket(CompoundTag tag);
 }

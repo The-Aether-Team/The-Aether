@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.capability.player;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.AetherPlayerSyncPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 
@@ -14,7 +15,7 @@ public abstract class AetherPlayerSyncing implements AetherPlayer {
                 CompoundTag tag = this.serializeSynchableNBT();
                 if (!NbtUtils.compareNbt(tag, this.getStoredTag(), true)) {
                     this.setStoredTag(tag);
-                    AetherPacketHandler.sendToAll(this.getSyncPacket(this.getStoredTag()));
+                    AetherPacketHandler.sendToAll(new AetherPlayerSyncPacket(this.getStoredTag()));
                     this.markDirty(false);
                 }
             }

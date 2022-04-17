@@ -19,8 +19,6 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 		return player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
 	}
 
-	void defineSynchedData();
-
 	void onLogout();
 	void onLogin();
 
