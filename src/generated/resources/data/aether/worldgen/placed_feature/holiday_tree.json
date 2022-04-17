@@ -1,0 +1,25 @@
+{
+  "feature": "aether:holiday_tree",
+  "placement": [
+    {
+      "count": 1,
+      "type": "minecraft:count_on_every_layer"
+    },
+    {
+      "chance": 8,
+      "type": "minecraft:rarity_filter"
+    },
+    {
+      "predicate": {
+        "state": {
+          "Properties": {
+            "stage": "0"
+          },
+          "Name": "aether:golden_oak_sapling"
+        },
+        "type": "minecraft:would_survive"
+      },
+      "type": "minecraft:block_predicate_filter"
+    }
+  ]
+}

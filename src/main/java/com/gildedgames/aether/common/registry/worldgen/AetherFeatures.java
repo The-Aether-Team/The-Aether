@@ -6,6 +6,7 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.world.builders.AetherFeatureBuilders;
 import com.gildedgames.aether.common.world.foliageplacer.CrystalFoliagePlacer;
+import com.gildedgames.aether.common.world.foliageplacer.HolidayFoliagePlacer;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import com.gildedgames.aether.common.world.gen.configuration.SimpleDiskConfiguration;
 import com.gildedgames.aether.common.world.gen.feature.AercloudFeature;
@@ -21,6 +22,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,6 +35,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.PineFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.SpruceFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer;
@@ -106,12 +110,13 @@ public class AetherFeatures {
                         new CrystalFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(6)),
                         new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build());
 
-//        public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> HOLIDAY_TREE_FEATURE_BASE = register("crystal_tree", new TreeConfiguration.TreeConfigurationBuilder(
-//                BlockStateProvider.simple(AetherFeatureDataProvider.getDoubleDrops(AetherBlocks.SKYROOT_LOG)),
-//                new StraightTrunkPlacer(7, 0, 0),
-//                new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(AetherBlocks.HOLIDAY_LEAVES.get().defaultBlockState(), 4).add(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get().defaultBlockState(), 1).build()),
-//                new HolidayFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(6)),
-//                new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build());
+        public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> HOLIDAY_TREE_CONFIGURED_FEATURE = register("holiday_tree", Feature.TREE,
+                new TreeConfiguration.TreeConfigurationBuilder(
+                        BlockStateProvider.simple(States.SKYROOT_LOG),
+                        new StraightTrunkPlacer(9, 0, 0),
+                        new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(States.HOLIDAY_LEAVES, 4).add(States.DECORATED_HOLIDAY_LEAVES, 1).build()),
+                        new HolidayFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(8)),
+                        new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build());
 
         public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> FLOWER_PATCH_CONFIGURED_FEATURE = register("flower_patch", Feature.FLOWER,
                 AetherFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
@@ -164,7 +169,10 @@ public class AetherFeatures {
                 HeightRangePlacement.uniform(VerticalAnchor.absolute(80), VerticalAnchor.absolute(100)),
                 RarityFilter.onAverageOnceEvery(8));
 
-        //public static final PlacedFeature HOLIDAY_TREE_FEATURE = HOLIDAY_TREE_FEATURE_BASE.placed(VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 1), AetherBlocks.SKYROOT_SAPLING.get()));
+        public static final Holder<PlacedFeature> HOLIDAY_TREE_PLACED_FEATURE = register("holiday_tree", ConfiguredFeatures.HOLIDAY_TREE_CONFIGURED_FEATURE,
+                CountOnEveryLayerPlacement.of(1),
+                RarityFilter.onAverageOnceEvery(8),
+                AetherFeatureBuilders.copyBlockSurvivability(AetherBlocks.GOLDEN_OAK_SAPLING.get()));
 
         public static final Holder<PlacedFeature> FLOWER_PATCH_PLACED_FEATURE = register("flower_patch", ConfiguredFeatures.FLOWER_PATCH_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
@@ -213,6 +221,9 @@ public class AetherFeatures {
 
         public static final BlockState CRYSTAL_LEAVES = AetherBlocks.CRYSTAL_LEAVES.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
         public static final BlockState CRYSTAL_FRUIT_LEAVES = AetherBlocks.CRYSTAL_FRUIT_LEAVES.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
+
+        public static final BlockState HOLIDAY_LEAVES = AetherBlocks.HOLIDAY_LEAVES.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
+        public static final BlockState DECORATED_HOLIDAY_LEAVES = AetherBlocks.DECORATED_HOLIDAY_LEAVES.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
 
         public static final BlockState PURPLE_FLOWER = AetherBlocks.PURPLE_FLOWER.get().defaultBlockState();
         public static final BlockState WHITE_FLOWER = AetherBlocks.WHITE_FLOWER.get().defaultBlockState();
