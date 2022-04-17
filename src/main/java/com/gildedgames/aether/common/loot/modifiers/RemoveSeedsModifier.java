@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.loot.modifiers;
 
-import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.core.util.LevelUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +22,7 @@ public class RemoveSeedsModifier extends LootModifier {
     @Nonnull
     @Override
     public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        if (context.getLevel().dimension() == AetherDimensions.AETHER_LEVEL) {
+        if (LevelUtil.inTag(context.getLevel(), AetherTags.Dimensions.NO_WHEAT_SEEDS)) {
             generatedLoot.removeIf((itemStack) -> itemStack.is(Items.WHEAT_SEEDS));
         }
         return generatedLoot;
