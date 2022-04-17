@@ -16,6 +16,7 @@ import com.gildedgames.aether.common.world.gen.placement.ElevationFilter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.data.worldgen.features.MiscOverworldFeatures;
 import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
@@ -31,6 +32,7 @@ import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.LakeFeature;
 import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
@@ -136,6 +138,9 @@ public class AetherFeatures {
                         3
                 ));
 
+        public static final Holder<ConfiguredFeature<LakeFeature.Configuration, ?>> WATER_LAKE_CONFIGURED_FEATURE = register("water_lake", Feature.LAKE,
+                AetherFeatureBuilders.lake(BlockStateProvider.simple(Blocks.WATER), BlockStateProvider.simple(AetherBlocks.AETHER_GRASS_BLOCK.get())));
+
         public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_AETHER_DIRT_CONFIGURED_FEATURE = register("aether_dirt_ore", Feature.ORE,
                 new OreConfiguration(Tests.HOLYSTONE, States.AETHER_DIRT, 33));
         public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_ICESTONE_CONFIGURED_FEATURE = register("icestone_ore", Feature.ORE,
@@ -191,6 +196,12 @@ public class AetherFeatures {
                 new ElevationFilter(47, 70),
                 BlockPredicateFilter.forPredicate(BlockPredicate.anyOf(BlockPredicate.matchesBlock(AetherBlocks.AETHER_DIRT.get(), BlockPos.ZERO), BlockPredicate.matchesTag(AetherTags.Blocks.HOLYSTONE))));
         // FIXME once Terrain can go above 63 again, change 47 -> 63
+
+        public static final Holder<PlacedFeature> WATER_LAKE_PLACED_FEATURE = register("water_lake", ConfiguredFeatures.WATER_LAKE_CONFIGURED_FEATURE,
+                RarityFilter.onAverageOnceEvery(40),
+                InSquarePlacement.spread(),
+                PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                BiomeFilter.biome());
 
         public static final Holder<PlacedFeature> ORE_AETHER_DIRT_PLACED_FEATURE = register("aether_dirt_ore", ConfiguredFeatures.ORE_AETHER_DIRT_CONFIGURED_FEATURE,
                 AetherFeatureBuilders.commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.belowTop(0))));

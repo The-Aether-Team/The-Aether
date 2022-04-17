@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.LakeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
@@ -27,6 +28,10 @@ public class AetherFeatureBuilders {
     // TODO investigate changing this to triangle
     public static List<PlacementModifier> createAercloudPlacements(int height, int chance) {
         return List.of(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)), InSquarePlacement.spread(), RarityFilter.onAverageOnceEvery(chance));
+    }
+
+    public static LakeFeature.Configuration lake(BlockStateProvider fluid, BlockStateProvider barrier) {
+        return new LakeFeature.Configuration(fluid, barrier);
     }
 
     public static RandomPatchConfiguration grassPatch(BlockStateProvider block, int p_195204_) {
