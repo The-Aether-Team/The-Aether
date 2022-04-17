@@ -1,6 +1,5 @@
 package com.gildedgames.aether.core.capability.player;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.common.entity.miscellaneous.Parachute;
@@ -11,7 +10,6 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.AetherConfig;
 
-import com.gildedgames.aether.core.network.AetherPacket;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.*;
 import net.minecraft.client.Minecraft;
@@ -217,17 +215,6 @@ public class AetherPlayerCapability extends AetherPlayerSyncing {
 		this.checkToRemoveCloudMinions();
 		this.handleSavedHealth();
 		this.handleLifeShardModifier();
-
-//		Aether.LOGGER.info("golden darts: " + this.getGoldenDartCount());
-//		Aether.LOGGER.info("poison darts: " + this.getPoisonDartCount());
-//		Aether.LOGGER.info("enchanted darts: " + this.getEnchantedDartCount());
-//		Aether.LOGGER.info("remedy maximum: " + this.getRemedyMaximum());
-//		Aether.LOGGER.info("remedy timer: " + this.getRemedyTimer());
-//		Aether.LOGGER.info("impacted maximum: " + this.getProjectileImpactedMaximum());
-//		Aether.LOGGER.info("impacted timer: " + this.getProjectileImpactedTimer());
-//		Aether.LOGGER.info("flight timer: " + this.getFlightTimer());
-//		Aether.LOGGER.info("flight modifier: " + this.getFlightModifier());
-//		Aether.LOGGER.info("life shards: " + this.getLifeShardCount());
 	}
 
 	private void handleGivePortal() {

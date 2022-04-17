@@ -15,7 +15,7 @@ public abstract class AetherPlayerSyncing implements AetherPlayer {
                 CompoundTag tag = this.serializeSynchableNBT();
                 if (!NbtUtils.compareNbt(tag, this.getStoredTag(), true)) {
                     this.setStoredTag(tag);
-                    AetherPacketHandler.sendToAll(new AetherPlayerSyncPacket(this.getStoredTag()));
+                    AetherPacketHandler.sendToAll(new AetherPlayerSyncPacket(this.getPlayer().getId(), this.getStoredTag()));
                     this.markDirty(false);
                 }
             }
