@@ -28,7 +28,6 @@ public class AetherTimeListener {
     public static void onWorldLoad(WorldEvent.Load event) {
         LevelAccessor levelAccessor = event.getWorld();
         CapabilityHooks.AetherTimeHooks.load(levelAccessor);
-
     }
 
     @SubscribeEvent
