@@ -56,7 +56,7 @@
         "feature": "aether:tall_grass_patch",
         "placement": [
           {
-            "type": "aether:tall_grass_filter",
+            "type": "aether:config_filter",
             "value": "World Generation, Generate Tall Grass in the Aether"
           },
           {

@@ -4,6 +4,7 @@ import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProp
 import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import com.gildedgames.aether.common.world.gen.placement.ConfigFilter;
+import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -38,7 +39,7 @@ public class AetherFeatureBuilders {
         return List.of(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)),
                 InSquarePlacement.spread(),
                 RarityFilter.onAverageOnceEvery(chance),
-                new ConfigFilter("[World Generation, Generate Tall Grass in the Aether]"));
+                new ConfigFilter(AetherConfig.COMMON.generate_pink_aerclouds));
     }
 
     public static LakeFeature.Configuration lake(BlockStateProvider fluid, BlockStateProvider barrier) {

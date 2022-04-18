@@ -21,8 +21,8 @@
       "type": "minecraft:rarity_filter"
     },
     {
-      "type": "aether:tall_grass_filter",
-      "value": "World Generation, Generate Tall Grass in the Aether"
+      "type": "aether:config_filter",
+      "value": "World Generation, Generate Pink Aerclouds"
     }
   ]
 }

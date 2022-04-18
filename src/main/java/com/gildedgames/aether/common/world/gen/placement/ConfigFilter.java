@@ -19,7 +19,10 @@ import java.util.Random;
  */
 public class ConfigFilter extends PlacementFilter {
 
-    public static final Codec<ConfigFilter> CODEC = Codec.STRING.xmap(ConfigFilter::new, configFilter -> {
+    public static final Codec<ConfigFilter> CODEC = Codec.STRING.xmap(configID -> {
+        List<String> path = Arrays.asList(configID.split(", "));
+        return new ConfigFilter(AetherConfig.COMMON_SPEC.getValues().get(path));
+    }, configFilter -> {
         try {
             return String.join(", ", configFilter.config.getPath());
         } catch (NullPointerException e) {
@@ -30,11 +33,10 @@ public class ConfigFilter extends PlacementFilter {
     private final ForgeConfigSpec.ConfigValue<Boolean> config;
 
     /**
-     * @param configID The definition for the config value to use. Format: "[(Config group), (Config definition)]"
+     * @param config The config value for the filter to use."
      */
-    public ConfigFilter(String configID) {
-        List<String> path = Arrays.asList(configID.replace("[", "").replace("]", "").split(", "));
-        this.config = AetherConfig.COMMON_SPEC.getValues().get(path);
+    public ConfigFilter(ForgeConfigSpec.ConfigValue<Boolean> config) {
+        this.config = config;
     }
 
     @Override
