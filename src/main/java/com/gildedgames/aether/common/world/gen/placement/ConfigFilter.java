@@ -1,10 +1,9 @@
 package com.gildedgames.aether.common.world.gen.placement;
 
 import com.gildedgames.aether.core.AetherConfig;
+import com.google.gson.JsonSyntaxException;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementFilter;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
@@ -20,12 +19,21 @@ import java.util.Random;
  */
 public class ConfigFilter extends PlacementFilter {
 
-    public static final Codec<ConfigFilter> CODEC = Codec.STRING.xmap(ConfigFilter::new, configFilter -> String.join(", ", configFilter.config.getPath()));
+    public static final Codec<ConfigFilter> CODEC = Codec.STRING.xmap(ConfigFilter::new, configFilter -> {
+        try {
+            return String.join(", ", configFilter.config.getPath());
+        } catch (NullPointerException e) {
+            throw new JsonSyntaxException("Error loading placed feature! Maybe the config key is incorrect?");
+        }
+    });
 
     private final ForgeConfigSpec.ConfigValue<Boolean> config;
 
-    public ConfigFilter(String config) {
-        List<String> path = Arrays.asList(config.replace("[", "").replace("]", "").split(", "));
+    /**
+     * @param configID The definition for the config value to use. Format: "[(Config group), (Config definition)]"
+     */
+    public ConfigFilter(String configID) {
+        List<String> path = Arrays.asList(configID.replace("[", "").replace("]", "").split(", "));
         this.config = AetherConfig.COMMON_SPEC.getValues().get(path);
     }
 
