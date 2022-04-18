@@ -27,8 +27,10 @@ public interface RepulsionShieldAccessory {
                         if (impactedLiving instanceof Player player) {
                             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                                 if (!aetherPlayer.isMoving()) {
-                                    aetherPlayer.setProjectileImpactedMaximum(150);
-                                    aetherPlayer.setProjectileImpactedTimer(150);
+                                    if (!player.level.isClientSide()) {
+                                        aetherPlayer.setProjectileImpactedMaximum(150);
+                                        aetherPlayer.setProjectileImpactedTimer(150);
+                                    }
                                     handleDeflection(event, projectile, impactedLiving, slotResult);
                                 }
                             });

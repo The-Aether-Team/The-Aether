@@ -12,7 +12,7 @@ public interface ValkyrieArmor {
             if (entity instanceof Player player) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     Vec3 deltaMovement = player.getDeltaMovement();
-                    if (!player.level.isClientSide) {
+                    if (!player.level.isClientSide()) {
                         if (aetherPlayer.isJumping()) {
                             if (aetherPlayer.getFlightModifier() >= aetherPlayer.getFlightModifierMax()) {
                                 aetherPlayer.setFlightModifier(aetherPlayer.getFlightModifierMax());

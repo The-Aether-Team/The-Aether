@@ -90,7 +90,7 @@ public class AbilityHooks {
         }
 
         public static void stickDart(LivingEntity entity, DamageSource source) {
-            if (entity instanceof Player player) {
+            if (entity instanceof Player player && !player.level.isClientSide()) {
                 Entity sourceEntity = source.getDirectEntity();
                 if (sourceEntity instanceof GoldenDart) {
                     AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setGoldenDartCount(aetherPlayer.getGoldenDartCount() + 1));
