@@ -96,7 +96,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
 
         AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
         if (gravity != null) {
-            double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.01);
+            double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1);
             if (this.getDeltaMovement().y < fallSpeed) {
                 this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
                 this.hasImpulse = true;

@@ -13,7 +13,7 @@ public interface ValkyrieArmor {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     Vec3 deltaMovement = player.getDeltaMovement();
                     if (!player.level.isClientSide) {
-                        if (aetherPlayer.isJumping()) {
+                        if (aetherPlayer.isJumping() && !player.isOnGround()) {
                             if (aetherPlayer.getFlightModifier() >= aetherPlayer.getFlightModifierMax()) {
                                 aetherPlayer.setFlightModifier(aetherPlayer.getFlightModifierMax());
                             }
@@ -33,7 +33,7 @@ public interface ValkyrieArmor {
                             aetherPlayer.setFlightModifier(1.0F);
                         }
                     }
-                    if (aetherPlayer.isJumping() && aetherPlayer.getFlightTimer() > 2 && aetherPlayer.getFlightTimer() < aetherPlayer.getFlightTimerMax()) {
+                    if (aetherPlayer.isJumping() && !player.isOnGround() && aetherPlayer.getFlightTimer() > 2 && aetherPlayer.getFlightTimer() < aetherPlayer.getFlightTimerMax() && aetherPlayer.getFlightModifier() > 1.0F) {
                         player.setDeltaMovement(deltaMovement.x(), 0.025F * aetherPlayer.getFlightModifier(), deltaMovement.z());
                     }
                 });

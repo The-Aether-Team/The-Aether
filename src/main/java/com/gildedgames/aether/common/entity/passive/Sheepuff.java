@@ -194,7 +194,7 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
             this.resetFallDistance();
             AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
             if (gravity != null) {
-                double fallSpeed = Math.max(gravity.getValue() * -0.625, -0.01);
+                double fallSpeed = Math.max(gravity.getValue() * -0.625, -0.05);
                 if (this.getDeltaMovement().y < fallSpeed) {
                     this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
                 }

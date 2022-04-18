@@ -70,7 +70,7 @@ public class Parachute extends Entity {
             if (passenger instanceof LivingEntity livingEntity) {
                 AttributeInstance gravity = livingEntity.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
                 if (gravity != null) {
-                    double fallSpeed = Math.max(gravity.getValue() * -1.875, -0.05);
+                    double fallSpeed = Math.max(gravity.getValue() * -1.875, -0.075);
                     this.setDeltaMovement(parachuteVec2.x(), fallSpeed, parachuteVec2.z());
                 }
             }
