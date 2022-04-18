@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.world.gen.placement;
 
 import com.gildedgames.aether.core.util.ConfigSerializer;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementFilter;
@@ -15,7 +16,7 @@ import java.util.Random;
  * A PlacementFilter to prevent the feature from generating when the specified config condition is set to false.
  */
 public class ConfigFilter extends PlacementFilter {
-    public static final Codec<ConfigFilter> CODEC = Codec.STRING.xmap(configID -> new ConfigFilter(ConfigSerializer.deserialize(configID)), configFilter -> ConfigSerializer.serialize(configFilter.config));
+    public static final Codec<ConfigFilter> CODEC = Codec.STRING.comapFlatMap(ConfigFilter::build, configFilter -> ConfigSerializer.serialize(configFilter.config));
 
     private final ForgeConfigSpec.ConfigValue<Boolean> config;
 
@@ -35,5 +36,17 @@ public class ConfigFilter extends PlacementFilter {
     @Nonnull
     public PlacementModifierType<?> type() {
         return PlacementModifiers.CONFIG_FILTER;
+    }
+
+    private static DataResult<ConfigFilter> build(String configID) {
+        @SuppressWarnings("rawtypes") // The type of value coming from the config ID cannot be trusted
+        ForgeConfigSpec.ConfigValue unsafeConfigEntry = ConfigSerializer.deserialize(configID);
+        // Java erases generics after compile, meaning the code executed during ConfigSerializer.deserialize will not error,
+        // even if the generic type is not Boolean. Otherwise, it will error and crash, while executing `this.config.get()` during Worldgen.
+
+        if (unsafeConfigEntry instanceof ForgeConfigSpec.BooleanValue booleanConfigEntry)
+            return DataResult.success(new ConfigFilter(booleanConfigEntry));
+
+        return DataResult.error("Config entry " + configID + " does not provide a boolean! Must be boolean (true/false), to be valid for ConfigFilter.");
     }
 }
