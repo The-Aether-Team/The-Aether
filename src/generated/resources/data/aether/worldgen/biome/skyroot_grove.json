@@ -37,6 +37,10 @@
         "feature": "aether:grass_patch",
         "placement": [
           {
+            "type": "aether:config_filter",
+            "value": "[World Generation, Generate Tall Grass in the Aether]"
+          },
+          {
             "count": 2,
             "type": "minecraft:count"
           },
@@ -57,7 +61,7 @@
         "placement": [
           {
             "type": "aether:config_filter",
-            "value": "World Generation, Generate Tall Grass in the Aether"
+            "value": "[World Generation, Generate Tall Grass in the Aether]"
           },
           {
             "noise_level": -0.8,
