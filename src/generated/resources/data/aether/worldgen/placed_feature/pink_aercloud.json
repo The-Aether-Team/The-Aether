@@ -22,7 +22,7 @@
     },
     {
       "type": "aether:config_filter",
-      "value": "World Generation, Generate Pink Aerclouds"
+      "value": "[World Generation, Generate Pink Aerclouds]"
     }
   ]
 }

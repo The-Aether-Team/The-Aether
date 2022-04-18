@@ -20,7 +20,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
-import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -190,7 +189,11 @@ public class AetherFeatures {
                 InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
         public static final Holder<PlacedFeature> GRASS_PATCH_PLACED_FEATURE = register("grass_patch", ConfiguredFeatures.GRASS_PATCH_CONFIGURED_FEATURE,
-                VegetationPlacements.worldSurfaceSquaredWithCount(2));
+                new ConfigFilter(AetherConfig.COMMON.generate_tall_grass),
+                CountPlacement.of(2),
+                InSquarePlacement.spread(),
+                PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                BiomeFilter.biome());
 
         public static final Holder<PlacedFeature> TALL_GRASS_PATCH_PLACED_FEATURE = register("tall_grass_patch", ConfiguredFeatures.TALL_GRASS_PATCH_CONFIGURED_FEATURE,
                 new ConfigFilter(AetherConfig.COMMON.generate_tall_grass),
