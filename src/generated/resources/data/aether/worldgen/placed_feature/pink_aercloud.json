@@ -19,6 +19,10 @@
     {
       "chance": 7,
       "type": "minecraft:rarity_filter"
+    },
+    {
+      "type": "aether:tall_grass_filter",
+      "value": "World Generation, Generate Tall Grass in the Aether"
     }
   ]
 }

@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.world.builders;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
+import com.gildedgames.aether.common.world.gen.placement.ConfigFilter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -31,6 +32,13 @@ public class AetherFeatureBuilders {
     // TODO investigate changing this to triangle
     public static List<PlacementModifier> createAercloudPlacements(int height, int chance) {
         return List.of(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)), InSquarePlacement.spread(), RarityFilter.onAverageOnceEvery(chance));
+    }
+
+    public static List<PlacementModifier> createPinkAercloudPlacements(int height, int chance) {
+        return List.of(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)),
+                InSquarePlacement.spread(),
+                RarityFilter.onAverageOnceEvery(chance),
+                new ConfigFilter("[World Generation, Generate Tall Grass in the Aether]"));
     }
 
     public static LakeFeature.Configuration lake(BlockStateProvider fluid, BlockStateProvider barrier) {

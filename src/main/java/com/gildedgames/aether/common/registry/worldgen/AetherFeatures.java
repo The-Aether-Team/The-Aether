@@ -13,13 +13,11 @@ import com.gildedgames.aether.common.world.gen.feature.CrystalIslandFeature;
 import com.gildedgames.aether.common.world.gen.feature.SimpleDiskFeature;
 import com.gildedgames.aether.common.world.gen.placement.ElevationAdjustment;
 import com.gildedgames.aether.common.world.gen.placement.ElevationFilter;
-import com.gildedgames.aether.common.world.gen.placement.TallGrassFilter;
+import com.gildedgames.aether.common.world.gen.placement.ConfigFilter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.features.MiscOverworldFeatures;
-import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceLocation;
@@ -48,7 +46,6 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -179,7 +176,7 @@ public class AetherFeatures {
         public static final Holder<PlacedFeature> COLD_AERCLOUD_PLACED_FEATURE = register("cold_aercloud", ConfiguredFeatures.COLD_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(128, 5));
         public static final Holder<PlacedFeature> BLUE_AERCLOUD_PLACED_FEATURE = register("blue_aercloud", ConfiguredFeatures.BLUE_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(96, 5));
         public static final Holder<PlacedFeature> GOLDEN_AERCLOUD_PLACED_FEATURE = register("golden_aercloud", ConfiguredFeatures.GOLDEN_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(160, 5));
-        public static final Holder<PlacedFeature> PINK_AERCLOUD_PLACED_FEATURE = register("pink_aercloud", ConfiguredFeatures.PINK_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(160, 7));
+        public static final Holder<PlacedFeature> PINK_AERCLOUD_PLACED_FEATURE = register("pink_aercloud", ConfiguredFeatures.PINK_AERCLOUD, AetherFeatureBuilders.createPinkAercloudPlacements(160, 7));
 
         public static final Holder<PlacedFeature> CRYSTAL_ISLAND_PLACED_FEATURE = register("crystal_island", ConfiguredFeatures.CRYSTAL_ISLAND_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(),
@@ -195,7 +192,7 @@ public class AetherFeatures {
                 VegetationPlacements.worldSurfaceSquaredWithCount(2));
 
         public static final Holder<PlacedFeature> TALL_GRASS_PATCH_PLACED_FEATURE = register("tall_grass_patch", ConfiguredFeatures.TALL_GRASS_PATCH_CONFIGURED_FEATURE,
-                TallGrassFilter.getInstance(),
+                new ConfigFilter("[World Generation, Generate Tall Grass in the Aether]"),
                 NoiseThresholdCountPlacement.of(-0.8D, 0, 7),
                 RarityFilter.onAverageOnceEvery(32),
                 InSquarePlacement.spread(),
