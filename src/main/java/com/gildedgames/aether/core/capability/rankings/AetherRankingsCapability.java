@@ -75,13 +75,14 @@ public class AetherRankingsCapability extends CapabilitySyncing implements Aethe
 
     @Override
     public void onUpdate() {
-        this.updateSyncableNBT(this.getPlayer().getLevel());
+        this.updateSyncableNBTFromServer(this.getPlayer().getLevel());
     }
 
     @Override
     public void setSleeveGloves(boolean areHatGloves) {
         this.markDirty(true);
         this.sleeveGloves = areHatGloves;
+        this.updateSyncableNBTFromClient(this.getPlayer().level);
     }
 
     @Override
@@ -93,6 +94,7 @@ public class AetherRankingsCapability extends CapabilitySyncing implements Aethe
     public void setRenderHalo(boolean renderHalo) {
         this.markDirty(true);
         this.renderHalo = renderHalo;
+        this.updateSyncableNBTFromClient(this.getPlayer().level);
     }
 
     @Override
@@ -104,6 +106,7 @@ public class AetherRankingsCapability extends CapabilitySyncing implements Aethe
     public void setRenderDeveloperGlow(boolean renderDeveloperGlow) {
         this.markDirty(true);
         this.renderDeveloperGlow = renderDeveloperGlow;
+        this.updateSyncableNBTFromClient(this.getPlayer().level);
     }
 
     @Override
