@@ -5,13 +5,13 @@ import com.gildedgames.aether.core.AetherConfig;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.world.level.storage.loot.Serializer;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.util.GsonHelper;
 import net.minecraftforge.common.ForgeConfigSpec;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,6 +24,7 @@ public class ConfigEnabled implements LootItemCondition
     }
 
     @Override
+    @Nonnull
     public LootItemConditionType getType() {
         return AetherLoot.CONFIG_ENABLED;
     }
@@ -39,12 +40,12 @@ public class ConfigEnabled implements LootItemCondition
 
     public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<ConfigEnabled>
     {
-        public void serialize(JsonObject object, ConfigEnabled condition, JsonSerializationContext context) {
+        public void serialize(JsonObject object, ConfigEnabled condition, @Nonnull JsonSerializationContext context) {
             object.addProperty("config", condition.config.getPath().toString());
         }
 
-        //TODO: There has to be a better way to do this, I want to look at this again and see if I can specify mod ID anywhere here.
-        public ConfigEnabled deserialize(JsonObject object, JsonDeserializationContext context) {
+        @Nonnull
+        public ConfigEnabled deserialize(@Nonnull JsonObject object, @Nonnull JsonDeserializationContext context) {
             List<String> path = Arrays.asList(GsonHelper.getAsString(object, "config").replace("[", "").replace("]", "").split(", "));
             return new ConfigEnabled(AetherConfig.COMMON_SPEC.getValues().get(path));
         }

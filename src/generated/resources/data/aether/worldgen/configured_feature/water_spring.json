@@ -1,0 +1,19 @@
+{
+  "config": {
+    "rock_count": 4,
+    "hole_count": 1,
+    "valid_blocks": [
+      "aether:holystone",
+      "aether:aether_dirt",
+      "aether:aether_grass_block"
+    ],
+    "state": {
+      "Properties": {
+        "falling": "true"
+      },
+      "Name": "minecraft:water"
+    },
+    "requires_block_below": true
+  },
+  "type": "minecraft:spring_feature"
+}

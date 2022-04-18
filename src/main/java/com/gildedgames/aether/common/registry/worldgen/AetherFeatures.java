@@ -13,21 +13,28 @@ import com.gildedgames.aether.common.world.gen.feature.CrystalIslandFeature;
 import com.gildedgames.aether.common.world.gen.feature.SimpleDiskFeature;
 import com.gildedgames.aether.common.world.gen.placement.ElevationAdjustment;
 import com.gildedgames.aether.common.world.gen.placement.ElevationFilter;
+import com.gildedgames.aether.common.world.gen.placement.ConfigFilter;
+import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.LakeFeature;
 import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
@@ -40,6 +47,7 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -120,12 +128,24 @@ public class AetherFeatures {
                         .add(States.BERRY_BUSH, 1)), 64
                 ));
 
+        public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> GRASS_PATCH_CONFIGURED_FEATURE = register("grass_patch", Feature.RANDOM_PATCH,
+                AetherFeatureBuilders.grassPatch(BlockStateProvider.simple(Blocks.GRASS), 32));
+
+        public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> TALL_GRASS_PATCH_CONFIGURED_FEATURE = register("tall_grass_patch", Feature.RANDOM_PATCH,
+                AetherFeatureBuilders.tallGrassPatch(BlockStateProvider.simple(Blocks.TALL_GRASS)));
+
         public static final Holder<ConfiguredFeature<SimpleDiskConfiguration, ?>> QUICKSOIL_SHELF_CONFIGURED_FEATURE = register("quicksoil_shelf", SIMPLE_DISK,
                 new SimpleDiskConfiguration(
                         UniformFloat.of(Mth.sqrt(12), 5), // sqrt(12) is old static value
                         BlockStateProvider.simple(States.QUICKSOIL),
                         3
                 ));
+
+        public static final Holder<ConfiguredFeature<LakeFeature.Configuration, ?>> WATER_LAKE_CONFIGURED_FEATURE = register("water_lake", Feature.LAKE,
+                AetherFeatureBuilders.lake(BlockStateProvider.simple(Blocks.WATER), BlockStateProvider.simple(AetherBlocks.AETHER_GRASS_BLOCK.get())));
+
+        public static final Holder<ConfiguredFeature<SpringConfiguration, ?>> WATER_SPRING_CONFIGURED_FEATURE = register("water_spring", Feature.SPRING,
+                AetherFeatureBuilders.spring(Fluids.WATER.defaultFluidState(), true, 4, 1, HolderSet.direct(Block::builtInRegistryHolder, AetherBlocks.HOLYSTONE.get(), AetherBlocks.AETHER_DIRT.get(), AetherBlocks.AETHER_GRASS_BLOCK.get())));
 
         public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_AETHER_DIRT_CONFIGURED_FEATURE = register("aether_dirt_ore", Feature.ORE,
                 new OreConfiguration(Tests.HOLYSTONE, States.AETHER_DIRT, 33));
@@ -157,7 +177,7 @@ public class AetherFeatures {
         public static final Holder<PlacedFeature> COLD_AERCLOUD_PLACED_FEATURE = register("cold_aercloud", ConfiguredFeatures.COLD_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(128, 5));
         public static final Holder<PlacedFeature> BLUE_AERCLOUD_PLACED_FEATURE = register("blue_aercloud", ConfiguredFeatures.BLUE_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(96, 5));
         public static final Holder<PlacedFeature> GOLDEN_AERCLOUD_PLACED_FEATURE = register("golden_aercloud", ConfiguredFeatures.GOLDEN_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(160, 5));
-        public static final Holder<PlacedFeature> PINK_AERCLOUD_PLACED_FEATURE = register("pink_aercloud", ConfiguredFeatures.PINK_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(160, 7));
+        public static final Holder<PlacedFeature> PINK_AERCLOUD_PLACED_FEATURE = register("pink_aercloud", ConfiguredFeatures.PINK_AERCLOUD, AetherFeatureBuilders.createPinkAercloudPlacements(160, 7));
 
         public static final Holder<PlacedFeature> CRYSTAL_ISLAND_PLACED_FEATURE = register("crystal_island", ConfiguredFeatures.CRYSTAL_ISLAND_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(),
@@ -169,6 +189,17 @@ public class AetherFeatures {
         public static final Holder<PlacedFeature> FLOWER_PATCH_PLACED_FEATURE = register("flower_patch", ConfiguredFeatures.FLOWER_PATCH_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
+        public static final Holder<PlacedFeature> GRASS_PATCH_PLACED_FEATURE = register("grass_patch", ConfiguredFeatures.GRASS_PATCH_CONFIGURED_FEATURE,
+                VegetationPlacements.worldSurfaceSquaredWithCount(2));
+
+        public static final Holder<PlacedFeature> TALL_GRASS_PATCH_PLACED_FEATURE = register("tall_grass_patch", ConfiguredFeatures.TALL_GRASS_PATCH_CONFIGURED_FEATURE,
+                new ConfigFilter(AetherConfig.COMMON.generate_tall_grass),
+                NoiseThresholdCountPlacement.of(-0.8D, 0, 7),
+                RarityFilter.onAverageOnceEvery(32),
+                InSquarePlacement.spread(),
+                PlacementUtils.HEIGHTMAP,
+                BiomeFilter.biome());
+
         public static final Holder<PlacedFeature> QUICKSOIL_SHELF_PLACED_FEATURE = register("quicksoil_shelf", ConfiguredFeatures.QUICKSOIL_SHELF_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(),
                 PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
@@ -176,6 +207,17 @@ public class AetherFeatures {
                 new ElevationFilter(47, 70),
                 BlockPredicateFilter.forPredicate(BlockPredicate.anyOf(BlockPredicate.matchesBlock(AetherBlocks.AETHER_DIRT.get(), BlockPos.ZERO), BlockPredicate.matchesTag(AetherTags.Blocks.HOLYSTONE))));
         // FIXME once Terrain can go above 63 again, change 47 -> 63
+
+        public static final Holder<PlacedFeature> WATER_LAKE_PLACED_FEATURE = register("water_lake", ConfiguredFeatures.WATER_LAKE_CONFIGURED_FEATURE,
+                RarityFilter.onAverageOnceEvery(40),
+                InSquarePlacement.spread(),
+                PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                BiomeFilter.biome());
+
+        public static final Holder<PlacedFeature> WATER_SPRING_PLACED_FEATURE = register("water_spring", ConfiguredFeatures.WATER_SPRING_CONFIGURED_FEATURE,
+                CountPlacement.of(25),
+                InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(192)), BiomeFilter.biome());
 
         public static final Holder<PlacedFeature> ORE_AETHER_DIRT_PLACED_FEATURE = register("aether_dirt_ore", ConfiguredFeatures.ORE_AETHER_DIRT_CONFIGURED_FEATURE,
                 AetherFeatureBuilders.commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.belowTop(0))));

@@ -1,0 +1,24 @@
+{
+  "config": {
+    "fluid": {
+      "state": {
+        "Properties": {
+          "level": "0"
+        },
+        "Name": "minecraft:water"
+      },
+      "type": "minecraft:simple_state_provider"
+    },
+    "barrier": {
+      "state": {
+        "Properties": {
+          "snowy": "false",
+          "double_drops": "false"
+        },
+        "Name": "aether:aether_grass_block"
+      },
+      "type": "minecraft:simple_state_provider"
+    }
+  },
+  "type": "minecraft:lake"
+}
