@@ -1,21 +1,20 @@
 package com.gildedgames.aether.core.capability.rankings;
 
+import com.gildedgames.aether.core.capability.CapabilitySyncing;
+import com.gildedgames.aether.core.network.AetherPacket;
+import com.gildedgames.aether.core.network.packet.AetherRankingsSyncPacket;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.player.Player;
 
-public class AetherRankingsCapability implements AetherRankings {
+public class AetherRankingsCapability extends CapabilitySyncing implements AetherRankings {
     private final Player player;
 
-    private static final EntityDataAccessor<Boolean> DATA_SLEEVE_GLOVES_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> DATA_RENDER_HALO_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> DATA_RENDER_DEVELOPER_GLOW_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.BOOLEAN);
+    private boolean sleeveGloves = false;
+    private boolean renderHalo = true;
+    private boolean renderDeveloperGlow = false;
 
     public AetherRankingsCapability(Player player) {
         this.player = player;
-        this.defineSynchedData();
     }
 
     @Override
@@ -46,10 +45,25 @@ public class AetherRankingsCapability implements AetherRankings {
     }
 
     @Override
-    public void defineSynchedData() {
-        this.getPlayer().getEntityData().define(DATA_SLEEVE_GLOVES_ID, false);
-        this.getPlayer().getEntityData().define(DATA_RENDER_HALO_ID, true);
-        this.getPlayer().getEntityData().define(DATA_RENDER_DEVELOPER_GLOW_ID, false);
+    public CompoundTag serializeSynchableNBT() {
+        CompoundTag tag = new CompoundTag();
+        tag.putBoolean("HatGloves_Syncing", this.areSleeveGloves());
+        tag.putBoolean("RenderHalo_Syncing", this.shouldRenderHalo());
+        tag.putBoolean("RenderDeveloperGlow_Syncing", this.shouldRenderDeveloperGlow());
+        return tag;
+    }
+
+    @Override
+    public void deserializeSynchableNBT(CompoundTag tag) {
+        if (tag.contains("HatGloves_Syncing")) {
+            this.setSleeveGloves(tag.getBoolean("HatGloves_Syncing"));
+        }
+        if (tag.contains("RenderHalo_Syncing")) {
+            this.setRenderHalo(tag.getBoolean("RenderHalo_Syncing"));
+        }
+        if (tag.contains("RenderDeveloperGlow_Syncing")) {
+            this.setRenderDeveloperGlow(tag.getBoolean("RenderDeveloperGlow_Syncing"));
+        }
     }
 
     @Override
@@ -60,35 +74,45 @@ public class AetherRankingsCapability implements AetherRankings {
     }
 
     @Override
-    public void onUpdate() { }
+    public void onUpdate() {
+        this.updateSyncableNBT(this.getPlayer().getLevel());
+    }
 
     @Override
     public void setSleeveGloves(boolean areHatGloves) {
-        this.getPlayer().getEntityData().set(DATA_SLEEVE_GLOVES_ID, areHatGloves);
+        this.markDirty(true);
+        this.sleeveGloves = areHatGloves;
     }
 
     @Override
     public boolean areSleeveGloves() {
-        return this.getPlayer().getEntityData().get(DATA_SLEEVE_GLOVES_ID);
+        return this.sleeveGloves;
     }
 
     @Override
     public void setRenderHalo(boolean renderHalo) {
-        this.getPlayer().getEntityData().set(DATA_RENDER_HALO_ID, renderHalo);
+        this.markDirty(true);
+        this.renderHalo = renderHalo;
     }
 
     @Override
     public boolean shouldRenderHalo() {
-        return this.getPlayer().getEntityData().get(DATA_RENDER_HALO_ID);
+        return this.renderHalo;
     }
 
     @Override
     public void setRenderDeveloperGlow(boolean renderDeveloperGlow) {
-        this.getPlayer().getEntityData().set(DATA_RENDER_DEVELOPER_GLOW_ID, renderDeveloperGlow);
+        this.markDirty(true);
+        this.renderDeveloperGlow = renderDeveloperGlow;
     }
 
     @Override
     public boolean shouldRenderDeveloperGlow() {
-        return this.getPlayer().getEntityData().get(DATA_RENDER_DEVELOPER_GLOW_ID);
+        return this.renderDeveloperGlow;
+    }
+
+    @Override
+    public AetherPacket.AbstractAetherPacket getSyncPacket(CompoundTag tag) {
+        return new AetherRankingsSyncPacket(this.getPlayer().getId(), tag);
     }
 }
