@@ -1,7 +1,6 @@
 package com.gildedgames.aether.common.world.gen.placement;
 
 import com.gildedgames.aether.core.util.ConfigSerializer;
-import com.google.gson.JsonSyntaxException;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
@@ -16,14 +15,7 @@ import java.util.Random;
  * A PlacementFilter to prevent the feature from generating when the specified config condition is set to false.
  */
 public class ConfigFilter extends PlacementFilter {
-
-    public static final Codec<ConfigFilter> CODEC = Codec.STRING.xmap(configID -> new ConfigFilter(ConfigSerializer.deserialize(configID)), configFilter -> {
-        try {
-            return ConfigSerializer.serialize(configFilter.config);
-        } catch (NullPointerException e) {
-            throw new JsonSyntaxException("Error loading placed feature! Maybe the config key is incorrect?");
-        }
-    });
+    public static final Codec<ConfigFilter> CODEC = Codec.STRING.xmap(configID -> new ConfigFilter(ConfigSerializer.deserialize(configID)), configFilter -> ConfigSerializer.serialize(configFilter.config));
 
     private final ForgeConfigSpec.ConfigValue<Boolean> config;
 

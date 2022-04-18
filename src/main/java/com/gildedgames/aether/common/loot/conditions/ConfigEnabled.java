@@ -16,8 +16,7 @@ import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.List;
 
-public class ConfigEnabled implements LootItemCondition
-{
+public class ConfigEnabled implements LootItemCondition {
     private final ForgeConfigSpec.ConfigValue<Boolean> config;
 
     public ConfigEnabled(ForgeConfigSpec.ConfigValue<Boolean> config) {
@@ -39,8 +38,7 @@ public class ConfigEnabled implements LootItemCondition
         return () -> new ConfigEnabled(config);
     }
 
-    public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<ConfigEnabled>
-    {
+    public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<ConfigEnabled> {
         public void serialize(JsonObject object, ConfigEnabled condition, @Nonnull JsonSerializationContext context) {
             object.addProperty("config", ConfigSerializer.serialize(condition.config));
         }

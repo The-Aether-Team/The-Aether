@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.util;
 
 import com.gildedgames.aether.core.AetherConfig;
+import com.google.gson.JsonSyntaxException;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.Arrays;
@@ -8,7 +9,11 @@ import java.util.List;
 
 public class ConfigSerializer {
     public static String serialize(ForgeConfigSpec.ConfigValue<Boolean> config) {
-        return config.getPath().toString();
+        try {
+            return config.getPath().toString();
+        } catch (NullPointerException e) {
+            throw new JsonSyntaxException("Error loading config entry from JSON! Maybe the config key is incorrect?");
+        }
     }
 
     public static ForgeConfigSpec.ConfigValue<Boolean> deserialize(String string) {
