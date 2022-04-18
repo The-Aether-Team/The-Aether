@@ -9,6 +9,7 @@ import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.ItemStack;
@@ -76,9 +77,12 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public void tick() {
         super.tick();
-        double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.05 : -0.1;
-        if (this.getDeltaMovement().y < fallSpeed) {
-            this.setDeltaMovement(getDeltaMovement().x, fallSpeed, getDeltaMovement().z);
+        AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+        if (gravity != null) {
+            double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.01);
+            if (this.getDeltaMovement().y < fallSpeed) {
+                this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+            }
         }
         this.setPuffiness(this.getPuffiness() - 1);
         if (this.getPuffiness() < 0) {
@@ -89,8 +93,12 @@ public class Aerbunny extends AetherAnimal {
 
             player.resetFallDistance();
             if (!player.isOnGround() && !player.isFallFlying()) {
-                if (!player.getAbilities().flying && !player.isInWater() && !player.isInLava()) {
-                    player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));
+                AttributeInstance playerGravity = player.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+                if (playerGravity != null) {
+                    double additive = 0.625 * playerGravity.getValue();
+                    if (!player.getAbilities().flying && !player.isInWater() && !player.isInLava()) {
+                        player.setDeltaMovement(player.getDeltaMovement().add(0.0, additive, 0.0));
+                    }
                 }
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     if (aetherPlayer.isJumping() && player.getDeltaMovement().y < -0.225) {

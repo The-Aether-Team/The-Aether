@@ -14,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -93,11 +94,14 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
             this.setEntityOnGround(true);
         }
 
-        double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.05 : -0.1;
-        if (this.getDeltaMovement().y < fallSpeed) {
-            this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
-            this.hasImpulse = true;
-            this.setEntityOnGround(false);
+        AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+        if (gravity != null) {
+            double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.01);
+            if (this.getDeltaMovement().y < fallSpeed) {
+                this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+                this.hasImpulse = true;
+                this.setEntityOnGround(false);
+            }
         }
 
         if (this.getFlapCooldown() > 0) {

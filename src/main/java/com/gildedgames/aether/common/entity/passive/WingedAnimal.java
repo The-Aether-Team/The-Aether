@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.entity.passive;
 import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -28,11 +29,14 @@ public abstract class WingedAnimal extends MountableAnimal {
     @Override
     public void tick() {
         super.tick();
-        double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.05 : -0.1;
-        if (this.getDeltaMovement().y < fallSpeed && !this.playerTriedToCrouch()) {
-            this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
-            this.hasImpulse = true;
-            this.setEntityOnGround(false);
+        AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+        if (gravity != null) {
+            double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.01);
+            if (this.getDeltaMovement().y < fallSpeed && !this.playerTriedToCrouch()) {
+                this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+                this.hasImpulse = true;
+                this.setEntityOnGround(false);
+            }
         }
     }
 
