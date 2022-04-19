@@ -162,7 +162,7 @@ public class Aerbunny extends AetherAnimal {
 
     private void puff() {
         this.setPuffiness(11);
-        this.spawnExplosionParticle();
+        this.spawnExplosionParticle(); //TODO: Why don't the particles work anymore.
     }
 
     private void spawnExplosionParticle() {
