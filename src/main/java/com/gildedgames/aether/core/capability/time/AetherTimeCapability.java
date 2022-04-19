@@ -12,8 +12,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 
-import java.util.stream.Collectors;
-
 /**
  * Capability class to handle the Aether's custom day/night cycle.
  * This class makes the day/night cycle longer depending on the time factor, and handles eternal day.
@@ -87,9 +85,7 @@ public class AetherTimeCapability implements AetherTime {
 
     private void wakeUpAllPlayers(ServerLevel level) {
         level.sleepStatus.removeAllSleepers();
-        level.players().stream().filter(LivingEntity::isSleeping).collect(Collectors.toList()).forEach((p_184116_) -> {
-            p_184116_.stopSleepInBed(false, false);
-        });
+        level.players().stream().filter(LivingEntity::isSleeping).toList().forEach((p_184116_) -> p_184116_.stopSleepInBed(false, false));
     }
 
     /**

@@ -11,8 +11,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -65,9 +65,8 @@ public class DimensionListener {
     }
 
     @SubscribeEvent
-    public static void onEntityJoin(EntityJoinWorldEvent event) {
-        Level level = event.getWorld();
-        Entity entity = event.getEntity();
-        DimensionHooks.syncTrackersFromServer(level, entity);
+    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
+        Player player = event.getPlayer();
+        DimensionHooks.syncTrackersFromServer(player);
     }
 }
