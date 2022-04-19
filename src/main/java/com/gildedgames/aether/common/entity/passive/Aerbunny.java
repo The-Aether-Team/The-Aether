@@ -6,6 +6,9 @@ import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.ExplosionParticlePacket;
+import com.gildedgames.aether.core.network.packet.server.AerbunnyPuffPacket;
 import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
@@ -40,6 +43,7 @@ import net.minecraft.world.entity.Mob;
 
 public class Aerbunny extends AetherAnimal {
     public static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Integer> DATA_FALL_TIMER_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
 
     public Aerbunny(EntityType<? extends Aerbunny> type, Level level) {
         super(type, level);
@@ -72,6 +76,7 @@ public class Aerbunny extends AetherAnimal {
     public void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_PUFFINESS_ID, 0);
+        this.entityData.define(DATA_FALL_TIMER_ID, 0);
     }
 
     @Override
@@ -101,10 +106,10 @@ public class Aerbunny extends AetherAnimal {
                     }
                 }
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                    if (aetherPlayer.isJumping() && player.getDeltaMovement().y < -0.225) {
-                        player.setDeltaMovement(player.getDeltaMovement().x, 0.125, player.getDeltaMovement().z);
-                        if (!this.level.isClientSide) {
-                            this.puff();
+                    if (this.level.isClientSide) {
+                        if (aetherPlayer.isJumping() && player.getDeltaMovement().y < -0.225) {
+                            player.setDeltaMovement(player.getDeltaMovement().x, 0.125, player.getDeltaMovement().z);
+                            AetherPacketHandler.sendToServer(new AerbunnyPuffPacket(this.getId()));
                         }
                     }
                 });
@@ -160,16 +165,16 @@ public class Aerbunny extends AetherAnimal {
         this.puff();
     }
 
-    private void puff() {
-        this.setPuffiness(11);
-        this.spawnExplosionParticle(); //TODO: Why don't the particles work anymore.
+    public void puff() {
+        if (this.level instanceof ServerLevel) {
+            this.setPuffiness(11);
+            this.spawnExplosionParticle(); //TODO: Why don't the particles work anymore.
+        }
     }
 
     private void spawnExplosionParticle() {
-        if (this.level instanceof ServerLevel) {
-            for (int i = 0; i < 5; i++) {
-                EntityUtil.spawnMovementExplosionParticles(this);
-            }
+        for (int i = 0; i < 5; i++) {
+            AetherPacketHandler.sendToAll(new ExplosionParticlePacket(this.getId()));
         }
     }
 
@@ -179,6 +184,14 @@ public class Aerbunny extends AetherAnimal {
 
     public void setPuffiness(int i) {
         this.entityData.set(DATA_PUFFINESS_ID, i);
+    }
+
+    public int getFallTimer() {
+        return this.entityData.get(DATA_FALL_TIMER_ID);
+    }
+
+    public void setFallTimer(int i) {
+        this.entityData.set(DATA_FALL_TIMER_ID, i);
     }
 
     @Override
