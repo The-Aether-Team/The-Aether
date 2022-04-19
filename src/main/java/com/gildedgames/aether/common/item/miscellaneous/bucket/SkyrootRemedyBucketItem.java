@@ -29,11 +29,12 @@ public class SkyrootRemedyBucketItem extends Item
             CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
             serverplayerentity.awardStat(Stats.ITEM_USED.get(this));
         }
-        if (entityLiving instanceof Player) {
-            Player player = (Player) entityLiving;
+        if (entityLiving instanceof Player player) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                aetherPlayer.setRemedyMaximum(200);
-                aetherPlayer.setRemedyTimer(200);
+                if (!player.level.isClientSide()) {
+                    aetherPlayer.setRemedyMaximum(200);
+                    aetherPlayer.setRemedyTimer(200);
+                }
             });
             if (!player.getAbilities().instabuild) {
                 stack.shrink(1);
