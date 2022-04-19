@@ -110,7 +110,7 @@ public class Aerbunny extends AetherAnimal {
                     }
                 }
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                    if (this.level.isClientSide) { //TODO: Test on multiplayer.
+                    if (this.level.isClientSide) {
                         if (!player.isOnGround() && aetherPlayer.isJumping() && player.getDeltaMovement().y <= 0.0 && this.getFallTimer() == 0) {
                             player.setDeltaMovement(player.getDeltaMovement().x, 0.125, player.getDeltaMovement().z);
                             AetherPacketHandler.sendToServer(new AerbunnyPuffPacket(this.getId()));
