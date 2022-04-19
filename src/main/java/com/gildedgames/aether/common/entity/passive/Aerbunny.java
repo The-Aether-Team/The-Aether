@@ -104,9 +104,8 @@ public class Aerbunny extends AetherAnimal {
             if (!player.isOnGround() && !player.isFallFlying()) {
                 AttributeInstance playerGravity = player.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
                 if (playerGravity != null) {
-                    double additive = 0.625 * playerGravity.getValue();
-                    if (!player.getAbilities().flying && !player.isInWater() && !player.isInLava()) {
-                        player.setDeltaMovement(player.getDeltaMovement().add(0.0, additive, 0.0));
+                    if (!player.getAbilities().flying && !player.isInWater() && !player.isInLava() && playerGravity.getValue() > 0.02) {
+                        player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));
                     }
                 }
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
