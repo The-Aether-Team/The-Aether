@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.event.hooks;
 
+import com.gildedgames.aether.common.event.hooks.CapabilityHooks;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.HittingPacket;
@@ -48,4 +49,11 @@ public class CapabilityClientHooks {
         }
     }
 
+    public static class AetherTimeHooks {
+        public static void setClientWorld() {
+            if (CapabilityHooks.AetherTimeHooks.world == null) {
+                CapabilityHooks.AetherTimeHooks.world = Minecraft.getInstance().level;
+            }
+        }
+    }
 }
