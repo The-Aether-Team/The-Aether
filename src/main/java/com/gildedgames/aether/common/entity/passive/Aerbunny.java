@@ -93,6 +93,10 @@ public class Aerbunny extends AetherAnimal {
         if (this.getPuffiness() < 0) {
             this.setPuffiness(0);
         }
+        this.setFallTimer(this.getFallTimer() - 1);
+        if (this.getFallTimer() < 0) {
+            this.setFallTimer(0);
+        }
         if (this.getVehicle() instanceof Player player) {
             EntityUtil.copyRotations(this, player);
 
@@ -106,8 +110,8 @@ public class Aerbunny extends AetherAnimal {
                     }
                 }
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                    if (this.level.isClientSide) {
-                        if (aetherPlayer.isJumping() && player.getDeltaMovement().y < -0.225) {
+                    if (this.level.isClientSide) { //TODO: Test on multiplayer.
+                        if (!player.isOnGround() && aetherPlayer.isJumping() && player.getDeltaMovement().y <= 0.0 && this.getFallTimer() == 0) {
                             player.setDeltaMovement(player.getDeltaMovement().x, 0.125, player.getDeltaMovement().z);
                             AetherPacketHandler.sendToServer(new AerbunnyPuffPacket(this.getId()));
                         }
@@ -168,7 +172,8 @@ public class Aerbunny extends AetherAnimal {
     public void puff() {
         if (this.level instanceof ServerLevel) {
             this.setPuffiness(11);
-            this.spawnExplosionParticle(); //TODO: Why don't the particles work anymore.
+            this.spawnExplosionParticle();
+            this.setFallTimer(14);
         }
     }
 
