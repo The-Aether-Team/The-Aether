@@ -3,8 +3,11 @@ package com.gildedgames.aether.common.world.builders;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
+import com.gildedgames.aether.common.world.gen.placement.ConfigFilter;
+import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.block.Block;
@@ -12,13 +15,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.LakeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SpringConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.placement.*;
+import net.minecraft.world.level.material.FluidState;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public class AetherFeatureBuilders {
     public static AercloudConfiguration createAercloudConfig(int bounds, BlockState blockState) {
@@ -30,8 +35,27 @@ public class AetherFeatureBuilders {
         return List.of(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)), InSquarePlacement.spread(), RarityFilter.onAverageOnceEvery(chance));
     }
 
-    public static RandomPatchConfiguration grassPatch(BlockStateProvider p_195203_, int p_195204_) {
-        return FeatureUtils.simpleRandomPatchConfiguration(p_195204_, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(p_195203_)));
+    public static List<PlacementModifier> createPinkAercloudPlacements(int height, int chance) {
+        return List.of(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)),
+                InSquarePlacement.spread(),
+                RarityFilter.onAverageOnceEvery(chance),
+                new ConfigFilter(AetherConfig.COMMON.generate_pink_aerclouds));
+    }
+
+    public static LakeFeature.Configuration lake(BlockStateProvider fluid, BlockStateProvider barrier) {
+        return new LakeFeature.Configuration(fluid, barrier);
+    }
+
+    public static SpringConfiguration spring(FluidState fluid, boolean requiresBlocksBelow, int rockCount, int holeCount, HolderSet<Block> validBlocks) {
+        return new SpringConfiguration(fluid, requiresBlocksBelow, rockCount, holeCount, validBlocks);
+    }
+
+    public static RandomPatchConfiguration grassPatch(BlockStateProvider block, int p_195204_) {
+        return FeatureUtils.simpleRandomPatchConfiguration(p_195204_, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(block)));
+    }
+
+    public static RandomPatchConfiguration tallGrassPatch(BlockStateProvider block) {
+        return FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(block));
     }
 
     public static List<PlacementModifier> orePlacement(PlacementModifier p_195347_, PlacementModifier p_195348_) {
@@ -57,4 +81,5 @@ public class AetherFeatureBuilders {
     public static PlacedFeature treeBlendDensity(int perLayerCount) {
         return new PlacedFeature(Holder.hackyErase(AetherFeatures.ConfiguredFeatures.TREE_BLEND), List.of(CountOnEveryLayerPlacement.of(perLayerCount)));
     }
+
 }

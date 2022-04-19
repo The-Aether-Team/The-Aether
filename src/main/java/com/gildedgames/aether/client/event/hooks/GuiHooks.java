@@ -5,6 +5,7 @@ import com.gildedgames.aether.client.gui.button.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
 import com.gildedgames.aether.client.registry.AetherKeys;
+import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.OpenAccessoriesPacket;
@@ -15,7 +16,6 @@ import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -85,7 +85,7 @@ public class GuiHooks {
     }
 
     public static void drawTrivia(Screen screen, PoseStack poseStack) {
-        if (screen instanceof SelectWorldScreen) {
+        if (screen instanceof TitleScreen) {
             if (generateTrivia) {
                 Aether.TRIVIA_READER.generateTriviaList();
                 generateTrivia = false;
@@ -109,8 +109,8 @@ public class GuiHooks {
     public static void drawAetherTravelMessage(Screen screen, PoseStack poseStack) {
         if (screen instanceof ReceivingLevelScreen || screen instanceof ProgressScreen) {
             if (Minecraft.getInstance().player != null) {
-                if (DimensionClientHooks.displayAetherTravel) {
-                    if (DimensionClientHooks.playerLeavingAether) {
+                if (DimensionHooks.displayAetherTravel) {
+                    if (DimensionHooks.playerLeavingAether) {
                         Screen.drawCenteredString(poseStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.descending"), screen.width / 2, 50, 16777215);
                     } else {
                         Screen.drawCenteredString(poseStack, screen.getMinecraft().font, new TranslatableComponent("gui.aether.ascending"), screen.width / 2, 50, 16777215);
@@ -118,7 +118,7 @@ public class GuiHooks {
                 }
             }
         } else {
-            DimensionClientHooks.displayAetherTravel = false;
+            DimensionHooks.displayAetherTravel = false;
         }
     }
 }
