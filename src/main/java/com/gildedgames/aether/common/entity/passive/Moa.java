@@ -30,6 +30,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -108,11 +109,14 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public void tick() {
 		super.tick();
-		double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.05 : -0.1;
-		if (this.getDeltaMovement().y < fallSpeed && !this.playerTriedToCrouch()) {
-			this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
-			this.hasImpulse = true;
-			this.setEntityOnGround(false);
+		AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+		if (gravity != null) {
+			double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1);
+			if (this.getDeltaMovement().y < fallSpeed && !this.playerTriedToCrouch()) {
+				this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+				this.hasImpulse = true;
+				this.setEntityOnGround(false);
+			}
 		}
 		if (this.isOnGround()) {
 			this.setRemainingJumps(this.getMaxJumps());

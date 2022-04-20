@@ -19,11 +19,6 @@ import top.theillusivec4.curios.api.CuriosApi;
 @Mod.EventBusSubscriber
 public class AccessoryAbilityListener {
     @SubscribeEvent
-    public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
-
-    }
-
-    @SubscribeEvent
     public static void onPlayerAttack(AttackEntityEvent event) {
         Player player = event.getPlayer();
         Entity target = event.getTarget();
