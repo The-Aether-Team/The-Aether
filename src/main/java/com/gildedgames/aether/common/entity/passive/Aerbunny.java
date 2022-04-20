@@ -10,7 +10,6 @@ import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.ExplosionParticlePacket;
 import com.gildedgames.aether.core.network.packet.server.AerbunnyPuffPacket;
 import com.gildedgames.aether.core.util.EntityUtil;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.goal.*;
@@ -40,10 +39,12 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.phys.Vec3;
 
 public class Aerbunny extends AetherAnimal {
     public static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
-    public static final EntityDataAccessor<Integer> DATA_FALL_TIMER_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
+
+    private Vec3 lastPos;
 
     public Aerbunny(EntityType<? extends Aerbunny> type, Level level) {
         super(type, level);
@@ -76,7 +77,6 @@ public class Aerbunny extends AetherAnimal {
     public void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_PUFFINESS_ID, 0);
-        this.entityData.define(DATA_FALL_TIMER_ID, 0);
     }
 
     @Override
@@ -93,10 +93,6 @@ public class Aerbunny extends AetherAnimal {
         if (this.getPuffiness() < 0) {
             this.setPuffiness(0);
         }
-        this.setFallTimer(this.getFallTimer() - 1);
-        if (this.getFallTimer() < 0) {
-            this.setFallTimer(0);
-        }
         if (this.getVehicle() instanceof Player player) {
             EntityUtil.copyRotations(this, player);
 
@@ -110,15 +106,24 @@ public class Aerbunny extends AetherAnimal {
                 }
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     if (this.level.isClientSide) {
-                        if (!player.isOnGround() && aetherPlayer.isJumping() && player.getDeltaMovement().y <= 0.0 && this.getFallTimer() == 0) {
-                            player.setDeltaMovement(player.getDeltaMovement().x, 0.125, player.getDeltaMovement().z);
-                            AetherPacketHandler.sendToServer(new AerbunnyPuffPacket(this.getId()));
+                        if (player.getDeltaMovement().y <= 0.0) {
+                            if (this.lastPos == null) {
+                                this.lastPos = this.position();
+                            }
+                            if (!player.isOnGround() && aetherPlayer.isJumping() && player.getDeltaMovement().y <= 0.0 && this.position().y() < this.lastPos.y() - 0.75) {
+                                player.setDeltaMovement(player.getDeltaMovement().x, 0.125, player.getDeltaMovement().z);
+                                AetherPacketHandler.sendToServer(new AerbunnyPuffPacket(this.getId()));
+                                this.lastPos = null;
+                            }
                         }
                     }
                 });
             } else if (player.isFallFlying()) {
                 this.stopRiding();
             }
+        }
+        if (this.isOnGround() || (this.getVehicle() != null && this.getVehicle().isOnGround())) {
+            this.lastPos = null;
         }
     }
 
@@ -172,7 +177,6 @@ public class Aerbunny extends AetherAnimal {
         if (this.level instanceof ServerLevel) {
             this.setPuffiness(11);
             this.spawnExplosionParticle();
-            this.setFallTimer(14);
         }
     }
 
@@ -188,14 +192,6 @@ public class Aerbunny extends AetherAnimal {
 
     public void setPuffiness(int i) {
         this.entityData.set(DATA_PUFFINESS_ID, i);
-    }
-
-    public int getFallTimer() {
-        return this.entityData.get(DATA_FALL_TIMER_ID);
-    }
-
-    public void setFallTimer(int i) {
-        this.entityData.set(DATA_FALL_TIMER_ID, i);
     }
 
     @Override
