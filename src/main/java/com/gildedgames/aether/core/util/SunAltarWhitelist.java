@@ -11,7 +11,7 @@ import java.io.File;
 public class SunAltarWhitelist {
     public static SunAltarWhitelist INSTANCE;
 
-    public static final File SUN_ALTAR_WHITELIST_FILE = new File(FMLPaths.CONFIGDIR.get() + "/aether/", "sun_altar_whitelist.json");
+    public static final File SUN_ALTAR_WHITELIST_FILE = new File(Aether.DIRECTORY.toString(), "sun_altar_whitelist.json");
     private final UserWhiteList sunAltarWhitelist = new UserWhiteList(SUN_ALTAR_WHITELIST_FILE);
 
     public SunAltarWhitelist() {

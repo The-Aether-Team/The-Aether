@@ -3,6 +3,7 @@
   "package": "com.gildedgames.aether.core.mixin",
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_17",
+  "plugin": "com.gildedgames.aether.core.mixin.AetherMixinPlugin",
   "refmap": "aether.refmap.json",
   "mixins": [
     "common.AbstractArrowMixin",
@@ -10,7 +11,9 @@
     "common.BeeGrowCropGoalMixin",
     "common.CropBlockMixin",
     "common.DimensionTypeMixin",
+    "common.FeatureMixin",
     "common.FoxEatBerriesGoalMixin",
+    "common.ItemStackMixin",
     "common.LivingEntityMixin",
     "common.PiglinAiMixin"
   ],

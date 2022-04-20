@@ -9,8 +9,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 
 import javax.annotation.Nullable;
 
-public class SkyrootSwordItem extends SwordItem
-{
+public class SkyrootSwordItem extends SwordItem {
     public SkyrootSwordItem() {
         super(AetherItemTiers.SKYROOT, 3, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS));
     }

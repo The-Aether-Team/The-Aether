@@ -2,11 +2,9 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 import net.minecraft.core.Registry;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.*;
@@ -27,6 +25,7 @@ public class AetherTags {
 		public static final TagKey<Block> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final TagKey<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final TagKey<Block> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final TagKey<Block> GRAVITITE_ABILITY_BLACKLIST = tag("gravitite_ability_blacklist");
 		public static final TagKey<Block> AETHER_ANIMALS_SPAWNABLE_ON = tag("aether_animals_spawnable_on");
 		public static final TagKey<Block> AERWHALE_SPAWNABLE_ON = tag("aerwhale_spawnable_on");
 		public static final TagKey<Block> SWET_SPAWNABLE_ON = tag("swet_spawnable_on");
@@ -58,10 +57,15 @@ public class AetherTags {
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 		public static final TagKey<Item> SKYROOT_STICKS = tag("skyroot_stick");
 		public static final TagKey<Item> SKYROOT_TOOLS = tag("skyroot_tools");
+		public static final TagKey<Item> SKYROOT_WEAPONS = tag("skyroot_weapons");
 		public static final TagKey<Item> HOLYSTONE_TOOLS = tag("holystone_tools");
+		public static final TagKey<Item> HOLYSTONE_WEAPONS = tag("holystone_weapons");
 		public static final TagKey<Item> ZANITE_TOOLS = tag("zanite_tools");
+		public static final TagKey<Item> ZANITE_WEAPONS = tag("zanite_weapons");
 		public static final TagKey<Item> GRAVITITE_TOOLS = tag("gravitite_tools");
+		public static final TagKey<Item> GRAVITITE_WEAPONS = tag("gravitite_weapons");
 		public static final TagKey<Item> VALKYRIE_TOOLS = tag("valkyrie_tools");
+		public static final TagKey<Item> VALKYRIE_WEAPONS = tag("valkyrie_weapons");
 		public static final TagKey<Item> GOLDEN_AMBER_HARVESTERS = tag("golden_amber_harvesters");
 		public static final TagKey<Item> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 		public static final TagKey<Item> PIG_DROPS = tag("pig_drops");
@@ -72,6 +76,9 @@ public class AetherTags {
 		public static final TagKey<Item> ACCEPTED_MUSIC_DISCS = tag("accepted_music_discs");
 		public static final TagKey<Item> SAVE_NBT_IN_RECIPE = tag("save_nbt_in_recipe");
 		public static final TagKey<Item> MOA_EGGS = tag("moa_eggs");
+		public static final TagKey<Item> FREEZABLE_BUCKETS = tag("freezable_buckets");
+		public static final TagKey<Item> FREEZABLE_RINGS = tag("freezable_rings");
+		public static final TagKey<Item> FREEZABLE_PENDANTS = tag("freezable_pendants");
 
 		public static final TagKey<Item> PHYG_TEMPTATION_ITEMS = tag("phyg_temptation_items");
 		public static final TagKey<Item> FLYING_COW_TEMPTATION_ITEMS = tag("flying_cow_temptation_items");
@@ -102,6 +109,7 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
 		public static final TagKey<EntityType<?>> SWET_TARGETS = tag("swet_targets");
 		public static final TagKey<EntityType<?>> AECHOR_PLANT_TARGETS = tag("aechor_plant_targets");
+		public static final TagKey<EntityType<?>> AERCLOUD_SPAWNABLE = tag("aercloud_spawnable");
 
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, name));
@@ -113,6 +121,23 @@ public class AetherTags {
 
 		private static TagKey<Fluid> tag(String name) {
 			return TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Aether.MODID, name));
+		}
+	}
+
+	public static class Dimensions {
+		// This should be our most general tag for any worlds that are "Aether-like"
+		// All tags above should reference this tag, for any dimensions added to this tag should apply for all logic above
+		public static final TagKey<DimensionType> HOSTILE_PARADISE = tag("hostile_paradise");
+
+		public static final TagKey<DimensionType> ULTRACOLD = tag("ultracold");
+		public static final TagKey<DimensionType> ETERNAL_DAY = tag("eternal_day");
+		public static final TagKey<DimensionType> NO_WHEAT_SEEDS = tag("no_wheat_seeds");
+		public static final TagKey<DimensionType> FALL_TO_OVERWORLD = tag("fall_to_overworld");
+		public static final TagKey<DimensionType> DISPLAY_TRAVEL_TEXT = tag("display_travel_text");
+		public static final TagKey<DimensionType> AETHER_MUSIC = tag("aether_music");
+
+		private static TagKey<DimensionType> tag(String name) {
+			return TagKey.create(Registry.DIMENSION_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 }

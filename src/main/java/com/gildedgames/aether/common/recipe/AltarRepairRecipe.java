@@ -21,8 +21,8 @@ public class AltarRepairRecipe extends AbstractCookingRecipe
 {
     public final Ingredient ingredient;
 
-    public AltarRepairRecipe(ResourceLocation recipeLocation, Ingredient ingredient, int cookingTime) {
-        super(AetherRecipes.RecipeTypes.ENCHANTING, recipeLocation, "", ingredient, ingredient.getItems()[0], 0.0F, cookingTime);
+    public AltarRepairRecipe(ResourceLocation recipeLocation, String groupIn, Ingredient ingredient, int cookingTime) {
+        super(AetherRecipes.RecipeTypes.ENCHANTING, recipeLocation, groupIn, ingredient, ingredient.getItems()[0], 0.0F, cookingTime);
         this.ingredient = ingredient;
     }
 
@@ -59,18 +59,21 @@ public class AltarRepairRecipe extends AbstractCookingRecipe
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AltarRepairRecipe>
     {
         public AltarRepairRecipe fromJson(ResourceLocation recipeLocation, JsonObject jsonObject) {
+            String group = GsonHelper.getAsString(jsonObject, "group", "");
             Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(jsonObject, "ingredient"));
             int cookingTime = GsonHelper.getAsInt(jsonObject, "repairTime", 200);
-            return new AltarRepairRecipe(recipeLocation, ingredient, cookingTime);
+            return new AltarRepairRecipe(recipeLocation, group, ingredient, cookingTime);
         }
 
         public AltarRepairRecipe fromNetwork(ResourceLocation recipeLocation, FriendlyByteBuf buffer) {
+            String group = buffer.readUtf();
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
             int cookingTime = buffer.readVarInt();
-            return new AltarRepairRecipe(recipeLocation, ingredient, cookingTime);
+            return new AltarRepairRecipe(recipeLocation, group, ingredient, cookingTime);
         }
 
         public void toNetwork(FriendlyByteBuf buffer, AltarRepairRecipe recipe) {
+            buffer.writeUtf(recipe.group);
             recipe.ingredient.toNetwork(buffer);
             buffer.writeVarInt(recipe.cookingTime);
         }

@@ -26,7 +26,7 @@ public class AbstractArrowMixin
         PhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
             if (phoenixArrow.isPhoenixArrow()) {
                 if (!arrow.level.isClientSide) {
-                    AetherPacketHandler.sendToNear(new PhoenixArrowPacket(arrow.getId(), true), arrow.getX(), arrow.getY(), arrow.getZ(), 1.0D, arrow.level.dimension());
+                    AetherPacketHandler.sendToAll(new PhoenixArrowPacket(arrow.getId(), true));
                     if (this.inGround) {
                         if (this.inGroundTime % 5 == 0) {
                             for (int i = 0; i < 1; i++) {

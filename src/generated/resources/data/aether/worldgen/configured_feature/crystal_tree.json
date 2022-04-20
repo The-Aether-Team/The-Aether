@@ -37,7 +37,7 @@
           "data": {
             "Properties": {
               "persistent": "false",
-              "double_drops": "false",
+              "double_drops": "true",
               "distance": "7"
             },
             "Name": "aether:crystal_leaves"
@@ -48,7 +48,7 @@
           "data": {
             "Properties": {
               "persistent": "false",
-              "double_drops": "false",
+              "double_drops": "true",
               "distance": "7"
             },
             "Name": "aether:crystal_fruit_leaves"

@@ -5,16 +5,15 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.worldgen.AetherBiomes;
 import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
-import com.gildedgames.aether.common.world.builders.AetherFeatureBuilders;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
 import net.minecraft.sounds.Music;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.placement.CountOnEveryLayerPlacement;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
 
@@ -144,19 +143,17 @@ public class AetherBiomeBuilders {
                         .build(),
                 builder
                         .addFeature(GenerationStep.Decoration.RAW_GENERATION, AetherFeatures.PlacedFeatures.QUICKSOIL_SHELF_PLACED_FEATURE)
-                        //// TODO GenerationStep.Decoration.LAKES
-                        ////  "aether:water_lake"
+                        .addFeature(GenerationStep.Decoration.LAKES, AetherFeatures.PlacedFeatures.WATER_LAKE_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_AETHER_DIRT_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_ICESTONE_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_AMBROSIUM_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_ZANITE_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_GRAVITITE_COMMON_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_GRAVITITE_DENSE_PLACED_FEATURE)
-                        //// TODO GenerationStep.Decoration.FLUID_SPRINGS
-                        ////   "aether:spring_water"
+                        .addFeature(GenerationStep.Decoration.FLUID_SPRINGS, AetherFeatures.PlacedFeatures.WATER_SPRING_PLACED_FEATURE)
                         //// TODO GenerationStep.Decoration.VEGETAL_DECORATION
-                        ////   "aether:grass_patch",
-                        ////   "aether:tall_grass_patch",
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.GRASS_PATCH_PLACED_FEATURE.value()))
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.TALL_GRASS_PATCH_PLACED_FEATURE.value()))
                         ////   "aether:holiday_tree"
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.FLOWER_PATCH_PLACED_FEATURE.value())) //this probably isnt ideal but it can be looked into later, and seems to only happen to vegetal_decorations.
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.CRYSTAL_ISLAND_PLACED_FEATURE.value()))

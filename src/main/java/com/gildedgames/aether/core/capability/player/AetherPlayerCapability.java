@@ -10,9 +10,11 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.AetherConfig;
 
+import com.gildedgames.aether.core.capability.CapabilitySyncing;
+import com.gildedgames.aether.core.network.AetherPacket;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.AetherPlayerSyncPacket;
 import com.gildedgames.aether.core.network.packet.client.*;
-import com.gildedgames.aether.core.util.EquipmentUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -25,9 +27,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AetherPlayerCapability implements AetherPlayer {
+public class AetherPlayerCapability extends CapabilitySyncing implements AetherPlayer {
 	private final Player player;
 
 	private static final UUID LIFE_SHARD_HEALTH_ID = UUID.fromString("E11710C8-4247-4CB6-B3B5-729CB34CFC1A");
@@ -52,18 +51,18 @@ public class AetherPlayerCapability implements AetherPlayer {
 	private boolean isMoving;
 	private boolean isJumping;
 
-	private static final EntityDataAccessor<Integer> DATA_GOLDEN_DART_COUNT_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Integer> DATA_POISON_DART_COUNT_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Integer> DATA_ENCHANTED_DART_COUNT_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
+	private int goldenDartCount;
+	private int poisonDartCount;
+	private int enchantedDartCount;
 	private int removeGoldenDartTime;
 	private int removePoisonDartTime;
 	private int removeEnchantedDartTime;
 
-	private static final EntityDataAccessor<Integer> DATA_REMEDY_MAXIMUM_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Integer> DATA_REMEDY_TIMER_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
+	private int remedyMaximum;
+	private int remedyTimer;
 
-	private static final EntityDataAccessor<Integer> DATA_IMPACTED_MAXIMUM_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Integer> DATA_IMPACTED_TIMER_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
+	private int impactedMaximum;
+	private int impactedTimer;
 
 	private Aerbunny mountedAerbunny;
 	private CompoundTag mountedAerbunnyTag;
@@ -74,15 +73,14 @@ public class AetherPlayerCapability implements AetherPlayer {
 
 	private static final int FLIGHT_TIMER_MAX = 52;
 	private static final float FLIGHT_MODIFIER_MAX = 15.0F;
-	private static final EntityDataAccessor<Integer> DATA_FLIGHT_TIMER_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Float> DATA_FLIGHT_MODIFIER_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.FLOAT);
+	private int flightTimer;
+	private float flightModifier = 1.0F;
 
 	private float savedHealth = 0.0F;
-	private static final EntityDataAccessor<Integer> DATA_LIFE_SHARD_ID = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
+	private int lifeShards;
 	
 	public AetherPlayerCapability(Player player) {
 		this.player = player;
-		this.defineSynchedData();
 	}
 	
 	@Override
@@ -103,13 +101,6 @@ public class AetherPlayerCapability implements AetherPlayer {
 		if (this.getMountedAerbunnyTag() != null) {
 			tag.put("MountedAerbunnyTag", this.getMountedAerbunnyTag());
 		}
-
-		//(leftover reference code)
-		//Set<AetherRank> ranks = AetherRankings.getRanksOf(this.player.getUniqueID());
-//		if (ranks.stream().anyMatch(AetherRank::hasHalo)) {
-//			nbt.putBoolean("Halo", this.shouldRenderHalo);
-//		}
-		//this.accessories.writeToNBT(nbt);
 		return tag;
 	}
 
@@ -142,17 +133,53 @@ public class AetherPlayerCapability implements AetherPlayer {
 	}
 
 	@Override
-	public void defineSynchedData() {
-		this.getPlayer().getEntityData().define(DATA_GOLDEN_DART_COUNT_ID, 0);
-		this.getPlayer().getEntityData().define(DATA_POISON_DART_COUNT_ID, 0);
-		this.getPlayer().getEntityData().define(DATA_ENCHANTED_DART_COUNT_ID, 0);
-		this.getPlayer().getEntityData().define(DATA_REMEDY_MAXIMUM_ID, 0);
-		this.getPlayer().getEntityData().define(DATA_REMEDY_TIMER_ID, 0);
-		this.getPlayer().getEntityData().define(DATA_IMPACTED_MAXIMUM_ID, 0);
-		this.getPlayer().getEntityData().define(DATA_IMPACTED_TIMER_ID, 0);
-		this.getPlayer().getEntityData().define(DATA_FLIGHT_TIMER_ID, 0);
-		this.getPlayer().getEntityData().define(DATA_FLIGHT_MODIFIER_ID, 1.0F);
-		this.getPlayer().getEntityData().define(DATA_LIFE_SHARD_ID, 0);
+	public CompoundTag serializeSynchableNBT() {
+		CompoundTag tag = new CompoundTag();
+		tag.putInt("GoldenDartCount_Syncing", this.getGoldenDartCount());
+		tag.putInt("PoisonDartCount_Syncing", this.getPoisonDartCount());
+		tag.putInt("EnchantedDartCount_Syncing", this.getEnchantedDartCount());
+		tag.putInt("RemedyMaximum_Syncing", this.getRemedyMaximum());
+		tag.putInt("RemedyTimer_Syncing", this.getRemedyTimer());
+		tag.putInt("ProjectileImpactedMaximum_Syncing", this.getProjectileImpactedMaximum());
+		tag.putInt("ProjectileImpactedTimer_Syncing", this.getProjectileImpactedTimer());
+		tag.putInt("FlightTimer_Syncing", this.getFlightTimer());
+		tag.putFloat("FlightModifier_Syncing", this.getFlightModifier());
+		tag.putInt("LifeShardCount_Syncing", this.getLifeShardCount());
+		return tag;
+	}
+
+	@Override
+	public void deserializeSynchableNBT(CompoundTag tag) {
+		if (tag.contains("GoldenDartCount_Syncing")) {
+			this.setGoldenDartCount(tag.getInt("GoldenDartCount_Syncing"));
+		}
+		if (tag.contains("PoisonDartCount_Syncing")) {
+			this.setPoisonDartCount(tag.getInt("PoisonDartCount_Syncing"));
+		}
+		if (tag.contains("EnchantedDartCount_Syncing")) {
+			this.setEnchantedDartCount(tag.getInt("EnchantedDartCount_Syncing"));
+		}
+		if (tag.contains("RemedyMaximum_Syncing")) {
+			this.setRemedyMaximum(tag.getInt("RemedyMaximum_Syncing"));
+		}
+		if (tag.contains("RemedyTimer_Syncing")) {
+			this.setRemedyTimer(tag.getInt("RemedyTimer_Syncing"));
+		}
+		if (tag.contains("ProjectileImpactedMaximum_Syncing")) {
+			this.setProjectileImpactedMaximum(tag.getInt("ProjectileImpactedMaximum_Syncing"));
+		}
+		if (tag.contains("ProjectileImpactedTimer_Syncing")) {
+			this.setProjectileImpactedTimer(tag.getInt("ProjectileImpactedTimer_Syncing"));
+		}
+		if (tag.contains("FlightTimer_Syncing")) {
+			this.setFlightTimer(tag.getInt("FlightTimer_Syncing"));
+		}
+		if (tag.contains("FlightModifier_Syncing")) {
+			this.setFlightModifier(tag.getFloat("FlightModifier_Syncing"));
+		}
+		if (tag.contains("LifeShardCount_Syncing")) {
+			this.setLifeShardCount(tag.getInt("LifeShardCount_Syncing"));
+		}
 	}
 
 	@Override
@@ -180,8 +207,8 @@ public class AetherPlayerCapability implements AetherPlayer {
 
 	@Override
 	public void onUpdate() {
+		this.updateSyncableNBTFromServer(this.getPlayer().getLevel());
 		this.handleAetherPortal();
-		this.handleWingRotation();
 		this.activateParachute();
 		this.handleRemoveDarts();
 		this.tickDownRemedy();
@@ -248,23 +275,6 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
-	private void handleWingRotation() {
-		if (EquipmentUtil.hasFullValkyrieSet(this.getPlayer())) {
-			if (!this.getPlayer().isOnGround() && (this.getPlayer().getFirstPassenger() != null && !this.getPlayer().getFirstPassenger().isOnGround())) {
-				this.wingRotation += 0.75F;
-			} else {
-				this.wingRotation += 0.15F;
-			}
-			if (this.wingRotation > (Math.PI * 2.0F)) {
-				this.wingRotation -= (Math.PI * 2.0F);
-			} else {
-				this.wingRotation += 0.1F;
-			}
-		} else {
-			this.wingRotation = 0.0F;
-		}
-	}
-
 	@OnlyIn(Dist.CLIENT)
 	private void playPortalSound(Minecraft mc) {
 		mc.getSoundManager().play(SimpleSoundInstance.forLocalAmbience(AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER.get(), this.getPlayer().getRandom().nextFloat() * 0.4F + 0.8F, 0.25F));
@@ -298,7 +308,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	}
 
 	private void handleRemoveDarts() {
-		if (!this.getPlayer().level.isClientSide) {
+		if (!this.getPlayer().level.isClientSide()) {
 			if (this.getGoldenDartCount() > 0) {
 				if (this.removeGoldenDartTime <= 0) {
 					this.removeGoldenDartTime = 20 * (30 - this.getGoldenDartCount());
@@ -333,20 +343,24 @@ public class AetherPlayerCapability implements AetherPlayer {
 	}
 
 	private void tickDownRemedy() {
-		if (this.getRemedyTimer() > 0) {
-			this.setRemedyTimer(this.getRemedyTimer() - 1);
-		} else {
-			this.setRemedyMaximum(0);
-			this.setRemedyTimer(0);
+		if (!this.getPlayer().level.isClientSide()) {
+			if (this.getRemedyTimer() > 0) {
+				this.setRemedyTimer(this.getRemedyTimer() - 1);
+			} else {
+				this.setRemedyMaximum(0);
+				this.setRemedyTimer(0);
+			}
 		}
 	}
 
 	private void tickDownProjectileImpact() {
-		if (this.getProjectileImpactedTimer() > 0) {
-			this.setProjectileImpactedTimer(this.getProjectileImpactedTimer() - 1);
-		} else {
-			this.setProjectileImpactedMaximum(0);
-			this.setProjectileImpactedTimer(0);
+		if (!this.getPlayer().level.isClientSide()) {
+			if (this.getProjectileImpactedTimer() > 0) {
+				this.setProjectileImpactedTimer(this.getProjectileImpactedTimer() - 1);
+			} else {
+				this.setProjectileImpactedMaximum(0);
+				this.setProjectileImpactedTimer(0);
+			}
 		}
 	}
 
@@ -497,72 +511,79 @@ public class AetherPlayerCapability implements AetherPlayer {
 
 	@Override
 	public void setGoldenDartCount(int count) {
-		this.getPlayer().getEntityData().set(DATA_GOLDEN_DART_COUNT_ID, count);
+		this.markDirty(true);
+		this.goldenDartCount = count;
 	}
 
 	@Override
 	public int getGoldenDartCount() {
-		return this.getPlayer().getEntityData().get(DATA_GOLDEN_DART_COUNT_ID);
+		return this.goldenDartCount;
 	}
 
 	@Override
 	public void setPoisonDartCount(int count) {
-		this.getPlayer().getEntityData().set(DATA_POISON_DART_COUNT_ID, count);
+		this.markDirty(true);
+		this.poisonDartCount = count;
 	}
 
 	@Override
 	public int getPoisonDartCount() {
-		return this.getPlayer().getEntityData().get(DATA_POISON_DART_COUNT_ID);
+		return this.poisonDartCount;
 	}
 
 	@Override
 	public void setEnchantedDartCount(int count) {
-		this.getPlayer().getEntityData().set(DATA_ENCHANTED_DART_COUNT_ID, count);
+		this.markDirty(true);
+		this.enchantedDartCount = count;
 	}
 
 	@Override
 	public int getEnchantedDartCount() {
-		return this.getPlayer().getEntityData().get(DATA_ENCHANTED_DART_COUNT_ID);
+		return this.enchantedDartCount;
 	}
 
 	@Override
 	public void setRemedyMaximum(int remedyMaximum) {
-		this.getPlayer().getEntityData().set(DATA_REMEDY_MAXIMUM_ID, remedyMaximum);
+		this.markDirty(true);
+		this.remedyMaximum = remedyMaximum;
 	}
 
 	@Override
 	public int getRemedyMaximum() {
-		return this.getPlayer().getEntityData().get(DATA_REMEDY_MAXIMUM_ID);
+		return this.remedyMaximum;
 	}
 
 	@Override
 	public void setRemedyTimer(int timer) {
-		this.getPlayer().getEntityData().set(DATA_REMEDY_TIMER_ID, timer);
+		this.markDirty(true);
+		this.remedyTimer = timer;
 	}
 
 	@Override
 	public int getRemedyTimer() {
-		return this.getPlayer().getEntityData().get(DATA_REMEDY_TIMER_ID);
+		return this.remedyTimer;
 	}
 
 	@Override
 	public void setProjectileImpactedMaximum(int projectileImpactedMaximum) {
-		this.getPlayer().getEntityData().set(DATA_IMPACTED_MAXIMUM_ID, projectileImpactedMaximum);
+		this.markDirty(true);
+		this.impactedMaximum = projectileImpactedMaximum;
 	}
 
 	@Override
 	public int getProjectileImpactedMaximum() {
-		return this.getPlayer().getEntityData().get(DATA_IMPACTED_MAXIMUM_ID);
+		return this.impactedMaximum;
 	}
 
 	@Override
 	public void setProjectileImpactedTimer(int projectileImpactedTimer) {
-		this.getPlayer().getEntityData().set(DATA_IMPACTED_TIMER_ID, projectileImpactedTimer);
+		this.markDirty(true);
+		this.impactedTimer = projectileImpactedTimer;
 	}
 
 	@Override
 	public int getProjectileImpactedTimer() {
-		return this.getPlayer().getEntityData().get(DATA_IMPACTED_TIMER_ID);
+		return this.impactedTimer;
 	}
 
 	@Override
@@ -619,22 +640,24 @@ public class AetherPlayerCapability implements AetherPlayer {
 
 	@Override
 	public void setFlightTimer(int timer) {
-		this.getPlayer().getEntityData().set(DATA_FLIGHT_TIMER_ID, timer);
+		this.markDirty(true);
+		this.flightTimer = timer;
 	}
 
 	@Override
 	public int getFlightTimer() {
-		return this.getPlayer().getEntityData().get(DATA_FLIGHT_TIMER_ID);
+		return this.flightTimer;
 	}
 
 	@Override
 	public void setFlightModifier(float modifier) {
-		this.getPlayer().getEntityData().set(DATA_FLIGHT_MODIFIER_ID, modifier);
+		this.markDirty(true);
+		this.flightModifier = modifier;
 	}
 
 	@Override
 	public float getFlightModifier() {
-		return this.getPlayer().getEntityData().get(DATA_FLIGHT_MODIFIER_ID);
+		return this.flightModifier;
 	}
 
 	@Override
@@ -650,17 +673,19 @@ public class AetherPlayerCapability implements AetherPlayer {
 	@Override
 	public void addToLifeShardCount(int amountToAdd) {
 		int newAmount = this.getLifeShardCount() + amountToAdd;
-		this.getPlayer().getEntityData().set(DATA_LIFE_SHARD_ID, newAmount);
+		this.markDirty(true);
+		this.lifeShards = newAmount;
 	}
 
 	@Override
 	public void setLifeShardCount(int amount) {
-		this.getPlayer().getEntityData().set(DATA_LIFE_SHARD_ID, amount);
+		this.markDirty(true);
+		this.lifeShards = amount;
 	}
 
 	@Override
 	public int getLifeShardCount() {
-		return this.getPlayer().getEntityData().get(DATA_LIFE_SHARD_ID);
+		return this.lifeShards;
 	}
 
 	@Override
@@ -677,5 +702,10 @@ public class AetherPlayerCapability implements AetherPlayer {
 		if (this.getPlayer() instanceof ServerPlayer serverPlayer && !this.getPlayer().level.isClientSide) {
 			AetherPacketHandler.sendToPlayer(new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
 		}
+	}
+
+	@Override
+	public AetherPacket.AbstractAetherPacket getSyncPacket(CompoundTag tag) {
+		return new AetherPlayerSyncPacket(this.getPlayer().getId(), tag);
 	}
 }

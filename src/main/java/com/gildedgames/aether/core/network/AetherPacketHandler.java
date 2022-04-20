@@ -2,6 +2,8 @@ package com.gildedgames.aether.core.network;
 
 import com.gildedgames.aether.Aether;
 
+import com.gildedgames.aether.core.network.packet.AetherPlayerSyncPacket;
+import com.gildedgames.aether.core.network.packet.AetherRankingsSyncPacket;
 import com.gildedgames.aether.core.network.packet.client.*;
 import com.gildedgames.aether.core.network.packet.server.*;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,9 +29,13 @@ public class AetherPacketHandler {
 	public static synchronized void register() {
 		// CLIENT
 		register(AetherTimePacket.class, AetherTimePacket::decode);
+		register(AetherTravelPacket.class, AetherTravelPacket::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
+		register(DimensionTypeHolderPacket.class, DimensionTypeHolderPacket::decode);
 		register(EternalDayPacket.class, EternalDayPacket::decode);
+		register(ExplosionParticlePacket.class, ExplosionParticlePacket::decode);
+		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
@@ -41,6 +47,7 @@ public class AetherPacketHandler {
 		register(ZephyrSnowballHitPacket.class, ZephyrSnowballHitPacket::decode);
 
 		// SERVER
+		register(AerbunnyPuffPacket.class, AerbunnyPuffPacket::decode);
 		register(ExtendedAttackPacket.class, ExtendedAttackPacket::decode);
 		register(HittingPacket.class, HittingPacket::decode);
 		register(JumpPacket.class, JumpPacket::decode);
@@ -49,6 +56,10 @@ public class AetherPacketHandler {
 		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
 		register(SunAltarUpdatePacket.class, SunAltarUpdatePacket::decode);
+
+		// BOTH
+		register(AetherPlayerSyncPacket.class, AetherPlayerSyncPacket::decode);
+		register(AetherRankingsSyncPacket.class, AetherRankingsSyncPacket::decode);
 	}
 
 	private static <MSG extends AetherPacket.AbstractAetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
