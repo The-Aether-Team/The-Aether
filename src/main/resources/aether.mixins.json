@@ -11,6 +11,7 @@
     "common.BeeGrowCropGoalMixin",
     "common.CropBlockMixin",
     "common.DimensionTypeMixin",
+    "common.FeatureMixin",
     "common.FoxEatBerriesGoalMixin",
     "common.ItemStackMixin",
     "common.LivingEntityMixin",
