@@ -32,11 +32,6 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         this.values = values.toArray(Value[]::new);
     }
 
-    public BlockState[] getBlockStates() {
-        this.dissolve();
-        return this.blockStates;
-    }
-
     private void dissolve() {
         if (this.blockStates == null) {
             this.blockStates = Arrays.stream(this.values).flatMap((values) -> values.getStates().stream()).distinct().toArray(BlockState[]::new);

@@ -71,11 +71,13 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
             pJson.add("result", BlockStateIngredient.of(this.result).toJson());
         }
 
+        @Nonnull
         @Override
         public RecipeSerializer<?> getType() {
             return this.serializer;
         }
 
+        @Nonnull
         @Override
         public ResourceLocation getId() {
             return this.id;
