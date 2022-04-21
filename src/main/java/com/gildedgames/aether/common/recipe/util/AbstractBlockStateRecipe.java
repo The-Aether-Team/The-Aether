@@ -2,21 +2,26 @@ package com.gildedgames.aether.common.recipe.util;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 
 public abstract class AbstractBlockStateRecipe implements BlockStateRecipe {
     protected final RecipeType<?> type;
     protected final ResourceLocation id;
     protected final BlockStateIngredient ingredient;
-    protected final BlockState result;
+    protected final Block resultBlock;
+    protected final Map<Property<?>, Comparable<?>> resultProperties;
 
-    public AbstractBlockStateRecipe(RecipeType<?> type, ResourceLocation id, BlockStateIngredient ingredient, BlockState result) {
+    public AbstractBlockStateRecipe(RecipeType<?> type, ResourceLocation id, BlockStateIngredient ingredient, Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {
         this.type = type;
         this.id = id;
         this.ingredient = ingredient;
-        this.result = result;
+        this.resultBlock = resultBlock;
+        this.resultProperties = resultProperties;
     }
 
     public boolean matches(BlockState state) {
@@ -29,8 +34,13 @@ public abstract class AbstractBlockStateRecipe implements BlockStateRecipe {
     }
 
     @Override
-    public BlockState getResultState() {
-        return this.result;
+    public Block getResultBlock() {
+        return this.resultBlock;
+    }
+
+    @Override
+    public Map<Property<?>, Comparable<?>> getResultProperties() {
+        return this.resultProperties;
     }
 
     @Nonnull

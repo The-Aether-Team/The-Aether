@@ -7,13 +7,16 @@ import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherRecipes.RecipeTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 
 public class TestRecipe extends AbstractBlockStateRecipe {
-    public TestRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockState result) {
-        super(RecipeTypes.TEST, id, ingredient, result);
+    public TestRecipe(ResourceLocation id, BlockStateIngredient ingredient, Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {
+        super(RecipeTypes.TEST, id, ingredient, resultBlock, resultProperties);
     }
 
     @Nonnull

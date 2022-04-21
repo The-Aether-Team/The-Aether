@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.data.provider;
 
 import com.gildedgames.aether.common.recipe.builder.AltarRepairBuilder;
+import com.gildedgames.aether.common.recipe.util.BlockPropertyPair;
 import com.gildedgames.aether.common.recipe.util.BlockStateIngredient;
 import com.gildedgames.aether.common.recipe.util.BlockStateRecipeBuilder;
 import com.gildedgames.aether.common.registry.AetherRecipes;
@@ -399,23 +400,11 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + result.asItem().getRegistryName(), has(result));
     }
 
-    public BlockStateRecipeBuilder test(Block result, Map<Property<?>, Comparable<?>> resultProperties, Block ingredient, Map<Property<?>, Comparable<?>> ingredientProperties) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.fromValues(Stream.of(new BlockStateIngredient.StateValue(ingredient, ingredientProperties))), result, resultProperties, AetherRecipes.TEST.get());
-    } //todo: add some kind of basic util record to easily combine a block and properties map
+    public BlockStateRecipeBuilder test(BlockPropertyPair result, BlockPropertyPair ingredient) {
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
+    }
 
-//    public BlockStateRecipeBuilder test(BlockState result, BlockState ingredient) {
-//        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
-//    }
-//
-//    public BlockStateRecipeBuilder test2(BlockState result, Block ingredient) {
-//        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
-//    }
-//
-//    public BlockStateRecipeBuilder test3(BlockState result, TagKey<Block> ingredient) {
-//        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
-//    }
-//
-//    public BlockStateRecipeBuilder test4(BlockState result, Block... ingredient) {
-//        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
-//    }
+    protected BlockPropertyPair pair(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {
+        return new BlockPropertyPair(resultBlock, resultProperties);
+    }
 }

@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.item.materials.util;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
 import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.recipe.util.AbstractBlockStateRecipe;
@@ -82,14 +83,20 @@ public interface ISwetBallConversion
         BlockState newBlockState = oldBlockState;
 
         for (Recipe<?> recipe : world.getRecipeManager().getAllRecipesFor(AetherRecipes.RecipeTypes.TEST)) {
-            if (recipe instanceof AbstractBlockStateRecipe abstractBlockStateRecipe && abstractBlockStateRecipe.matches(oldBlockState)) {
-                world.setBlockAndUpdate(pos, abstractBlockStateRecipe.getResultState());
-                if (player != null && !player.getAbilities().instabuild) {
-                    heldItem.shrink(1);
-                }
-                return InteractionResult.SUCCESS;
+            if (recipe instanceof AbstractBlockStateRecipe abstractBlockStateRecipe) { // && abstractBlockStateRecipe.matches(oldBlockState)
+
+                Aether.LOGGER.info(abstractBlockStateRecipe.getId() + ": " + abstractBlockStateRecipe.getIngredient().getBlocks() + " " + abstractBlockStateRecipe.getIngredient().getProperties() + " " + abstractBlockStateRecipe.getResultBlock() + " " + abstractBlockStateRecipe.getResultProperties());
+
+//                world.setBlockAndUpdate(pos, abstractBlockStateRecipe.getResultState());
+//                if (player != null && !player.getAbilities().instabuild) {
+//                    heldItem.shrink(1);
+//                }
+//                return InteractionResult.SUCCESS;
             }
         }
+
+
+
 
 //        Block oldBlock = oldBlockState.getBlock();
 //        if (DEFAULT_CONVERSIONS.containsKey(oldBlock)) {

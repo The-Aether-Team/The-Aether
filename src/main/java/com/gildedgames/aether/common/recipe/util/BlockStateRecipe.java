@@ -5,14 +5,18 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.Property;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 
 public interface BlockStateRecipe extends Recipe<Container> {
     BlockStateIngredient getIngredient();
 
-    BlockState getResultState();
+    Block getResultBlock();
+
+    Map<Property<?>, Comparable<?>> getResultProperties();
 
     @Override
     default boolean matches(@Nonnull Container container, @Nonnull Level level) {
