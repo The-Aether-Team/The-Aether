@@ -1,0 +1,15 @@
+{
+  "type": "aether:test",
+  "ingredient": {
+    "block": "minecraft:campfire",
+    "properties": {
+      "lit": "true"
+    }
+  },
+  "result": {
+    "block": "minecraft:campfire",
+    "properties": {
+      "lit": "false"
+    }
+  }
+}

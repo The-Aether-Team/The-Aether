@@ -1,8 +1,8 @@
 package com.gildedgames.aether.common.recipe.util;
 
 import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gson.*;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -12,6 +12,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
 
 import javax.annotation.Nullable;
@@ -55,42 +56,14 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         }
     }
 
-    public final void toNetwork(FriendlyByteBuf buf) {
-        this.dissolve();
-        buf.writeCollection(Arrays.asList(this.blockStates), BlockStateRecipeUtil::writeBlock);
-    }
-
-    public JsonElement toJson() {
-        if (this.values.length == 1) {
-            return this.values[0].serialize();
-        } else {
-            JsonArray jsonArray = new JsonArray();
-            for (BlockStateIngredient.Value value : this.values) {
-                jsonArray.add(value.serialize());
-            }
-            return jsonArray;
-        }
-    }
-
     public boolean isEmpty() {
         return this.values.length == 0 && (this.blockStates == null || this.blockStates.length == 0);
     }
 
-    public static BlockStateIngredient fromValues(Stream<? extends BlockStateIngredient.Value> stream) {
-        BlockStateIngredient ingredient = new BlockStateIngredient(stream);
-        return ingredient.values.length == 0 ? EMPTY : ingredient;
-    }
+    //TODO: of() blockstates
 
     public static BlockStateIngredient of() {
         return EMPTY;
-    }
-
-    public static BlockStateIngredient of(BlockState... states) {
-        return ofState(Arrays.stream(states));
-    }
-
-    public static BlockStateIngredient ofState(Stream<BlockState> states) {
-        return fromValues(states.filter((state) -> !state.isAir()).map(BlockStateIngredient.StateValue::new));
     }
 
     public static BlockStateIngredient of(Block... blocks) {
@@ -105,9 +78,32 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         return fromValues(Stream.of(new BlockStateIngredient.TagValue(tag)));
     }
 
+    public final void toNetwork(FriendlyByteBuf buf) {
+        this.dissolve();
+        buf.writeCollection(Arrays.asList(this.blockStates), BlockStateRecipeUtil::writeBlockState);
+    }
+
     public static BlockStateIngredient fromNetwork(FriendlyByteBuf buf) {
         var size = buf.readVarInt();
-        return fromValues(Stream.generate(() -> new BlockStateIngredient.StateValue(BlockStateRecipeUtil.readBlock(buf))).limit(size));
+        BlockState blockState = BlockStateRecipeUtil.readBlockState(buf);
+        return fromValues(Stream.generate(() -> new BlockStateIngredient.StateValue(blockState.getBlock(), blockState.getValues())).limit(size));
+    }
+
+    public static BlockStateIngredient fromValues(Stream<? extends BlockStateIngredient.Value> stream) {
+        BlockStateIngredient ingredient = new BlockStateIngredient(stream);
+        return ingredient.values.length == 0 ? EMPTY : ingredient;
+    }
+
+    public JsonElement toJson() {
+        if (this.values.length == 1) {
+            return this.values[0].serialize();
+        } else {
+            JsonArray jsonArray = new JsonArray();
+            for (BlockStateIngredient.Value value : this.values) {
+                jsonArray.add(value.serialize());
+            }
+            return jsonArray;
+        }
     }
 
     public static BlockStateIngredient fromJson(@Nullable JsonElement json) {
@@ -135,8 +131,8 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         } else if (json.has("block")) {
             Block block = BlockStateRecipeUtil.blockFromJson(json);
             if (json.has("properties")) {
-                BlockState blockState = BlockStateRecipeUtil.blockStateFromJson(json, block); //TODO: Edit this.
-                return new BlockStateIngredient.StateValue(blockState);
+                Map<Property<?>, Comparable<?>> properties = BlockStateRecipeUtil.propertiesFromJson(json, block);
+                return new BlockStateIngredient.StateValue(block, properties);
             } else {
                 return new BlockStateIngredient.BlockValue(block);
             }
@@ -149,24 +145,39 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         }
     }
 
-    public static class StateValue implements BlockStateIngredient.Value {
-        private final BlockState state;
+    public static class StateValue implements BlockStateIngredient.Value { //in practice, the usage of properties will probably have to be like checking if the input has the property value or something to match it which might be doable in test().
+        private final Block block;
+        private final Map<Property<?>, Comparable<?>> properties;
 
-        public StateValue(BlockState state) {
-            this.state = state;
+        public StateValue(Block block, Map<Property<?>, Comparable<?>> properties) {
+            this.block = block;
+            this.properties = properties;
+        }
+
+        public StateValue put(Property<?> property, Comparable<?> value) {
+            this.properties.put(property, value);
+            return this;
         }
 
         public Collection<BlockState> getStates() {
-            return Collections.singleton(this.state);
+            BlockState blockState = this.block.defaultBlockState();
+            for (Map.Entry<Property<?>, Comparable<?>> entry : this.properties.entrySet()) {
+                BlockStateRecipeUtil.putHelper(this.properties, entry.getKey(), entry.getValue());
+            }
+            return Collections.singleton(blockState);
+        }
+
+        @Override
+        public Map<Property<?>, Comparable<?>> getProperties() {
+            return this.properties;
         }
 
         public JsonObject serialize() {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("block", Registry.BLOCK.getKey(this.state.getBlock()).toString());
+            jsonObject.addProperty("block", Registry.BLOCK.getKey(this.block).toString());
             JsonObject jsonObject1 = new JsonObject();
-            ImmutableMap<Property<?>, Comparable<?>> properties = this.state.getValues();
-            if (!properties.isEmpty()) {
-                for (Map.Entry<Property<?>, Comparable<?>> entry : properties.entrySet()) {
+            if (!this.properties.isEmpty()) {
+                for (Map.Entry<Property<?>, Comparable<?>> entry : this.properties.entrySet()) {
                     Property<?> property = entry.getKey();
                     jsonObject1.addProperty(property.getName(), BlockStateRecipeUtil.getName(property, entry.getValue())); //TODO: verify.
                 }
@@ -191,6 +202,11 @@ public class BlockStateIngredient implements Predicate<BlockState> {
                 }
             }
             return list;
+        }
+
+        @Override
+        public Map<Property<?>, Comparable<?>> getProperties() {
+            return Map.of();
         }
 
         public JsonObject serialize() {
@@ -219,6 +235,11 @@ public class BlockStateIngredient implements Predicate<BlockState> {
             return list;
         }
 
+        @Override
+        public Map<Property<?>, Comparable<?>> getProperties() {
+            return Map.of();
+        }
+
         public JsonObject serialize() {
             JsonObject jsonobject = new JsonObject();
             jsonobject.addProperty("tag", this.tag.location().toString());
@@ -228,6 +249,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
 
     public interface Value {
         Collection<BlockState> getStates();
+        Map<Property<?>, Comparable<?>> getProperties();
 
         JsonObject serialize();
     }

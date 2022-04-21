@@ -48,14 +48,14 @@ public class BlockStateRecipeSerializer<T extends AbstractBlockStateRecipe> exte
     @Override
     public T fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buf) {
         BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buf);
-        BlockState result = BlockStateRecipeUtil.readBlock(buf);
+        BlockState result = BlockStateRecipeUtil.readBlockState(buf);
         return this.factory.create(recipeId, ingredient, result);
     }
 
     @Override
     public void toNetwork(@Nonnull FriendlyByteBuf buf, T recipe) {
         recipe.ingredient.toNetwork(buf);
-        BlockStateRecipeUtil.writeBlock(buf, recipe.result);
+        BlockStateRecipeUtil.writeBlockState(buf, recipe.result);
     }
 
     public interface CookieBaker<T extends AbstractBlockStateRecipe> {

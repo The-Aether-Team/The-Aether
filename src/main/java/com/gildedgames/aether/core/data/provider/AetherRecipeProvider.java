@@ -13,9 +13,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.common.Tags;
 
+import java.util.Map;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -396,19 +399,23 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + result.asItem().getRegistryName(), has(result));
     }
 
-    public BlockStateRecipeBuilder test(BlockState result, BlockState ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
-    }
+    public BlockStateRecipeBuilder test(Block result, Map<Property<?>, Comparable<?>> resultProperties, Block ingredient, Map<Property<?>, Comparable<?>> ingredientProperties) {
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.fromValues(Stream.of(new BlockStateIngredient.StateValue(ingredient, ingredientProperties))), result, resultProperties, AetherRecipes.TEST.get());
+    } //todo: add some kind of basic util record to easily combine a block and properties map
 
-    public BlockStateRecipeBuilder test2(BlockState result, Block ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
-    }
-
-    public BlockStateRecipeBuilder test3(BlockState result, TagKey<Block> ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
-    }
-
-    public BlockStateRecipeBuilder test4(BlockState result, Block... ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
-    }
+//    public BlockStateRecipeBuilder test(BlockState result, BlockState ingredient) {
+//        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
+//    }
+//
+//    public BlockStateRecipeBuilder test2(BlockState result, Block ingredient) {
+//        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
+//    }
+//
+//    public BlockStateRecipeBuilder test3(BlockState result, TagKey<Block> ingredient) {
+//        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
+//    }
+//
+//    public BlockStateRecipeBuilder test4(BlockState result, Block... ingredient) {
+//        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
+//    }
 }
