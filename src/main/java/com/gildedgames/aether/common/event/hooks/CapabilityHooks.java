@@ -3,7 +3,9 @@ package com.gildedgames.aether.common.event.hooks;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.cape.CapeEntity;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayerCapability;
 import com.gildedgames.aether.core.capability.rankings.AetherRankings;
+import com.gildedgames.aether.core.capability.rankings.AetherRankingsCapability;
 import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.gildedgames.aether.core.util.AetherSleepStatus;
 import com.gildedgames.aether.core.util.LevelUtil;
@@ -53,6 +55,16 @@ public class CapabilityHooks {
             }
             originalPlayer.invalidateCaps();
         }
+
+        public static void changeDimension(Player player) {
+            if (!player.level.isClientSide()) {
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                    if (aetherPlayer instanceof AetherPlayerCapability capability) {
+                        capability.updateSyncableNBTFromServer(player.level, true);
+                    }
+                });
+            }
+        }
     }
 
     public static class AetherRankingsHooks {
@@ -70,6 +82,16 @@ public class CapabilityHooks {
                     () -> new IllegalStateException("Player " + newPlayer.getName().getContents() + " has no AetherRankings capability!"));
             newAetherRankings.copyFrom(originalAetherRankings);
             originalPlayer.invalidateCaps();
+        }
+
+        public static void changeDimension(Player player) {
+            if (!player.level.isClientSide()) {
+                AetherRankings.get(player).ifPresent(aetherRankings -> {
+                    if (aetherRankings instanceof AetherRankingsCapability capability) {
+                        capability.updateSyncableNBTFromServer(player.level, true);
+                    }
+                });
+            }
         }
     }
 

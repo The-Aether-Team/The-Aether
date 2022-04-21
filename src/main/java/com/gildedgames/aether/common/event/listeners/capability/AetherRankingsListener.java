@@ -22,4 +22,10 @@ public class AetherRankingsListener {
         Player newPlayer = event.getPlayer();
         CapabilityHooks.AetherRankingsHooks.clone(originalPlayer, newPlayer);
     }
+
+    @SubscribeEvent
+    public static void onPlayerChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        Player player = event.getPlayer();
+        CapabilityHooks.AetherRankingsHooks.changeDimension(player);
+    }
 }

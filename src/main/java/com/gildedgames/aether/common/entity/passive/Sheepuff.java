@@ -18,6 +18,7 @@ import com.google.common.collect.Maps;
 
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -191,9 +192,12 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
         super.tick();
         if (this.getPuffed()) {
             this.resetFallDistance();
-            double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.025 : -0.05;
-            if (this.getDeltaMovement().y < fallSpeed) {
-                this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+            AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+            if (gravity != null) {
+                double fallSpeed = Math.max(gravity.getValue() * -0.625, -0.05);
+                if (this.getDeltaMovement().y < fallSpeed) {
+                    this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+                }
             }
             this.navigation = this.fallNavigation;
         } else {
