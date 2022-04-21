@@ -29,10 +29,6 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
         return new BlockStateRecipeBuilder(result, ingredient, serializer);
     }
 
-    public BlockState getStateResult() {
-        return this.result;
-    }
-
     @Nonnull
     @Override
     public RecipeBuilder unlockedBy(@Nonnull String criterionName, @Nonnull CriterionTriggerInstance criterionTriggerInstance) {

@@ -131,17 +131,15 @@ public class BlockStateIngredient implements Predicate<BlockState> {
             } else {
                 throw new JsonSyntaxException("Expected block to be object or array of objects");
             }
-
         } else {
             throw new JsonSyntaxException("Block cannot be null");
         }
     }
 
     public static BlockStateIngredient.Value valueFromJson(JsonObject json) {
-//        if (pJson.has("block") && pJson.has("tag")) { //TODO: Will need to have more safety checks here for the amount of possible things we do here.
-//            throw new JsonParseException("An ingredient entry is either a tag or an item, not both");
-//        } else
-        if (json.has("block")) {
+        if (json.has("block") && json.has("tag")) {
+            throw new JsonParseException("An ingredient entry is either a tag or a block, not both");
+        } else if (json.has("block")) {
             Block block = BlockStateRecipeUtil.blockFromJson(json);
             if (json.has("properties")) {
                 BlockState blockState = BlockStateRecipeUtil.blockStateFromJson(json, block);
@@ -154,7 +152,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
             TagKey<Block> tagKey = TagKey.create(Registry.BLOCK_REGISTRY, resourcelocation);
             return new BlockStateIngredient.TagValue(tagKey);
         } else {
-            throw new JsonParseException("An ingredient entry needs either a tag or an item");
+            throw new JsonParseException("An ingredient entry needs either a tag or a block");
         }
     }
 
@@ -183,7 +181,6 @@ public class BlockStateIngredient implements Predicate<BlockState> {
             return jsonObject;
         }
     }
-
 
     public static class BlockValue implements BlockStateIngredient.Value { //TODO: verify
         private final Block block;

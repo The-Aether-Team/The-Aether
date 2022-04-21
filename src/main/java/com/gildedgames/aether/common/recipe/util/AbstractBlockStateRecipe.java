@@ -1,9 +1,10 @@
 package com.gildedgames.aether.common.recipe.util;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.Nonnull;
 
 public abstract class AbstractBlockStateRecipe implements BlockStateRecipe {
     protected final RecipeType<?> type;
@@ -32,11 +33,13 @@ public abstract class AbstractBlockStateRecipe implements BlockStateRecipe {
         return this.result;
     }
 
+    @Nonnull
     @Override
     public RecipeType<?> getType() {
         return this.type;
     }
 
+    @Nonnull
     @Override
     public ResourceLocation getId() {
         return this.id;
