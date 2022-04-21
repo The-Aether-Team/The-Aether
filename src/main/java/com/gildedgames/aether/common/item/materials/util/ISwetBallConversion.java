@@ -2,9 +2,15 @@ package com.gildedgames.aether.common.item.materials.util;
 
 import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
 import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
+import com.gildedgames.aether.common.recipe.util.AbstractBlockStateRecipe;
+import com.gildedgames.aether.common.recipe.util.test.TestRecipe;
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.google.common.collect.Maps;
 import net.minecraft.core.Holder;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -75,31 +81,41 @@ public interface ISwetBallConversion
         BlockState oldBlockState = world.getBlockState(pos);
         BlockState newBlockState = oldBlockState;
 
-        Block oldBlock = oldBlockState.getBlock();
-        if (DEFAULT_CONVERSIONS.containsKey(oldBlock)) {
-            newBlockState = DEFAULT_CONVERSIONS.get(oldBlock);
-        }
-
-        Holder<Biome> biome = world.getBiome(pos);
-        ResourceLocation biomeName = biome.value().getRegistryName();
-        if (BIOME_CONVERSIONS.containsKey(biomeName)) {
-            Pair<Block, BlockState> blockPair = BIOME_CONVERSIONS.get(biomeName);
-            if (blockPair.getKey() == oldBlockState.getBlock()) {
-                newBlockState = blockPair.getValue();
-            }
-        }
-
-        SwetBallConvertEvent event = AetherEventDispatch.onSwetBallConvert(player, world, pos, heldItem, oldBlockState, newBlockState);
-        if (!event.isCanceled()) {
-            newBlockState = event.getNewBlockState();
-            if (newBlockState != oldBlockState && world.getBlockState(pos.above()).isAir()) {
-                world.setBlockAndUpdate(pos, newBlockState);
+        for (Recipe<?> recipe : world.getRecipeManager().getAllRecipesFor(AetherRecipes.RecipeTypes.TEST)) {
+            if (recipe instanceof AbstractBlockStateRecipe abstractBlockStateRecipe && abstractBlockStateRecipe.matches(oldBlockState)) {
+                world.setBlockAndUpdate(pos, abstractBlockStateRecipe.getResultState());
                 if (player != null && !player.getAbilities().instabuild) {
                     heldItem.shrink(1);
                 }
                 return InteractionResult.SUCCESS;
             }
         }
+
+//        Block oldBlock = oldBlockState.getBlock();
+//        if (DEFAULT_CONVERSIONS.containsKey(oldBlock)) {
+//            newBlockState = DEFAULT_CONVERSIONS.get(oldBlock);
+//        }
+//
+//        Holder<Biome> biome = world.getBiome(pos);
+//        ResourceLocation biomeName = biome.value().getRegistryName();
+//        if (BIOME_CONVERSIONS.containsKey(biomeName)) {
+//            Pair<Block, BlockState> blockPair = BIOME_CONVERSIONS.get(biomeName);
+//            if (blockPair.getKey() == oldBlockState.getBlock()) {
+//                newBlockState = blockPair.getValue();
+//            }
+//        }
+//
+//        SwetBallConvertEvent event = AetherEventDispatch.onSwetBallConvert(player, world, pos, heldItem, oldBlockState, newBlockState);
+//        if (!event.isCanceled()) {
+//            newBlockState = event.getNewBlockState();
+//            if (newBlockState != oldBlockState && world.getBlockState(pos.above()).isAir()) {
+//                world.setBlockAndUpdate(pos, newBlockState);
+//                if (player != null && !player.getAbilities().instabuild) {
+//                    heldItem.shrink(1);
+//                }
+//                return InteractionResult.SUCCESS;
+//            }
+//        }
 
         return InteractionResult.PASS;
     }

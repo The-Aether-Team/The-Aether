@@ -1,6 +1,8 @@
 package com.gildedgames.aether.core.data.provider;
 
 import com.gildedgames.aether.common.recipe.builder.AltarRepairBuilder;
+import com.gildedgames.aether.common.recipe.util.BlockStateIngredient;
+import com.gildedgames.aether.common.recipe.util.BlockStateRecipeBuilder;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.tags.TagKey;
@@ -10,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 
 import java.util.function.Supplier;
@@ -393,4 +396,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + result.asItem().getRegistryName(), has(result));
     }
 
+    public BlockStateRecipeBuilder test(BlockState result, BlockState ingredient) {
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
+    }
 }

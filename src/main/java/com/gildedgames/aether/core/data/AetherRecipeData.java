@@ -726,6 +726,8 @@ public class AetherRecipeData extends AetherRecipeProvider
         freezingRecipeWithTag(AetherItems.ICE_RING.get(), AetherTags.Items.FREEZABLE_RINGS, 1.0F, 2500, "ring").save(consumer, name("ice_ring_from_freezing"));
 
         freezingRecipeWithTag(AetherItems.ICE_PENDANT.get(), AetherTags.Items.FREEZABLE_PENDANTS, 1.0F, 2500, "pendant").save(consumer, name("ice_pendant_from_freezing"));
+
+        test(Blocks.RED_WOOL.defaultBlockState(), Blocks.BLUE_WOOL.defaultBlockState()).save(consumer, name("test_recipe"));
     }
 
     private ResourceLocation name(String name) {

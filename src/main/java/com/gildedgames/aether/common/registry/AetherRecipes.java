@@ -5,6 +5,9 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.recipe.AltarRepairRecipe;
 import com.gildedgames.aether.common.recipe.EnchantingRecipe;
 import com.gildedgames.aether.common.recipe.FreezingRecipe;
+import com.gildedgames.aether.common.recipe.util.AbstractBlockStateRecipe;
+import com.gildedgames.aether.common.recipe.util.BlockStateRecipeSerializer;
+import com.gildedgames.aether.common.recipe.util.test.TestRecipe;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,14 +28,20 @@ public class AetherRecipes
 	public static final RegistryObject<SimpleCookingSerializer<EnchantingRecipe>> ENCHANTING = RECIPE_SERIALIZERS.register("enchanting", EnchantingRecipe.Serializer::new);
 	public static final RegistryObject<SimpleCookingSerializer<FreezingRecipe>> FREEZING = RECIPE_SERIALIZERS.register("freezing", FreezingRecipe.Serializer::new);
 
+	public static final RegistryObject<BlockStateRecipeSerializer<TestRecipe>> TEST = RECIPE_SERIALIZERS.register("test", TestRecipe.Serializer::new);
+
 	public static class RecipeTypes
 	{
 		public static RecipeType<EnchantingRecipe> ENCHANTING;
 		public static RecipeType<FreezingRecipe> FREEZING;
 
+		public static RecipeType<TestRecipe> TEST;
+
 		public static void init() {
 			ENCHANTING = RecipeType.register(Aether.MODID + ":enchanting");
 			FREEZING = RecipeType.register(Aether.MODID + ":freezing");
+
+			TEST = RecipeType.register(Aether.MODID + ":test");
 		}
 	}
 }
