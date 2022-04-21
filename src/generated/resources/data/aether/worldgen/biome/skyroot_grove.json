@@ -37,7 +37,7 @@
             "type": "minecraft:count_on_every_layer"
           },
           {
-            "chance": 8,
+            "chance": 32,
             "type": "minecraft:rarity_filter"
           },
           {
@@ -46,7 +46,7 @@
                 "Properties": {
                   "stage": "0"
                 },
-                "Name": "aether:golden_oak_sapling"
+                "Name": "aether:skyroot_sapling"
               },
               "type": "minecraft:would_survive"
             },
@@ -81,14 +81,14 @@
                 "absolute": 80
               },
               "max_inclusive": {
-                "absolute": 100
+                "absolute": 120
               },
               "type": "minecraft:uniform"
             },
             "type": "minecraft:height_range"
           },
           {
-            "chance": 8,
+            "chance": 16,
             "type": "minecraft:rarity_filter"
           }
         ]

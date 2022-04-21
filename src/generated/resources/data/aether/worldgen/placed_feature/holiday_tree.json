@@ -6,7 +6,7 @@
       "type": "minecraft:count_on_every_layer"
     },
     {
-      "chance": 8,
+      "chance": 24,
       "type": "minecraft:rarity_filter"
     },
     {
@@ -15,7 +15,7 @@
           "Properties": {
             "stage": "0"
           },
-          "Name": "aether:golden_oak_sapling"
+          "Name": "aether:skyroot_sapling"
         },
         "type": "minecraft:would_survive"
       },
