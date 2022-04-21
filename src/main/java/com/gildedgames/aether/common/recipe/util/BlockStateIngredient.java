@@ -86,11 +86,13 @@ public class BlockStateIngredient implements Predicate<BlockState> { //needs to 
 
     @Nullable
     public List<Block> getBlocks() {
+        this.dissolve();
         return this.blocks;
     }
 
     @Nullable
     public List<Map<Property<?>, Comparable<?>>> getProperties() {
+        this.dissolve();
         return this.properties;
     }
 
