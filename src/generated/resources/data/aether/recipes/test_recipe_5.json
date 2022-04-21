@@ -1,0 +1,15 @@
+{
+  "type": "aether:test",
+  "ingredient": {
+    "block": "minecraft:purple_wool"
+  },
+  "result": {
+    "block": "minecraft:campfire",
+    "properties": {
+      "facing": "north",
+      "lit": "false",
+      "signal_fire": "false",
+      "waterlogged": "false"
+    }
+  }
+}

@@ -35,7 +35,7 @@ public class BlockStateRecipeSerializer<T extends AbstractBlockStateRecipe> exte
             Block block = BlockStateRecipeUtil.blockFromJson(object);
             result = block.defaultBlockState();
             if (object.has("properties")) {
-                result = BlockStateRecipeUtil.blockStateFromJson(object, block);
+                result = BlockStateRecipeUtil.blockStateFromJson(object, block); //TODO: Edit this.
             }
         } else {
             throw new JsonSyntaxException("Expected result to be object");

@@ -399,4 +399,16 @@ public class AetherRecipeProvider extends RecipeProvider
     public BlockStateRecipeBuilder test(BlockState result, BlockState ingredient) {
         return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
     }
+
+    public BlockStateRecipeBuilder test2(BlockState result, Block ingredient) {
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
+    }
+
+    public BlockStateRecipeBuilder test3(BlockState result, TagKey<Block> ingredient) {
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
+    }
+
+    public BlockStateRecipeBuilder test4(BlockState result, Block... ingredient) {
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
+    }
 }

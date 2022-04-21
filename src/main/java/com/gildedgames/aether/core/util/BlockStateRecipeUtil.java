@@ -1,8 +1,6 @@
 package com.gildedgames.aether.core.util;
 
 import com.gildedgames.aether.Aether;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.core.Registry;
@@ -50,22 +48,17 @@ public class BlockStateRecipeUtil {
     public static BlockState blockStateFromJson(JsonObject json, Block block) {
         BlockState blockstate = block.defaultBlockState();
         StateDefinition<Block, BlockState> stateDefinition = block.getStateDefinition();
-        JsonArray jsonArray = GsonHelper.getAsJsonArray(json, "properties");
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JsonElement jsonElement = jsonArray.get(i);
-            if (jsonElement.isJsonObject()) {
-                for (String propertyName : jsonElement.getAsJsonObject().keySet()) {
-                    Property<?> property = stateDefinition.getProperty(propertyName);
-                    if (property != null) {
-                        blockstate = setValueHelper(blockstate, property, propertyName, jsonElement.getAsJsonObject(), json);
-                    }
-                }
+        JsonObject jsonObject = GsonHelper.getAsJsonObject(json, "properties");
+        for (String propertyName : jsonObject.keySet()) {
+            Property<?> property = stateDefinition.getProperty(propertyName);
+            if (property != null) {
+                blockstate = setValueHelper(blockstate, property, propertyName, jsonObject, json);
             }
         }
         return blockstate;
     }
 
-    private static <S extends StateHolder<?, S>, T extends Comparable<T>> S setValueHelper(S stateHolder, Property<T> property, String propertyName, JsonObject propertiesObject, JsonObject blockStateObject) {
+    public static <S extends StateHolder<?, S>, T extends Comparable<T>> S setValueHelper(S stateHolder, Property<T> property, String propertyName, JsonObject propertiesObject, JsonObject blockStateObject) {
         Optional<T> optional = property.getValue(GsonHelper.getAsString(propertiesObject, propertyName));
         if (optional.isPresent()) {
             return stateHolder.setValue(property, optional.get());
@@ -73,5 +66,9 @@ public class BlockStateRecipeUtil {
             Aether.LOGGER.warn("Unable to read property: {} with value: {} for blockstate: {}", propertyName, GsonHelper.getAsString(propertiesObject, propertyName), blockStateObject.toString());
             return stateHolder;
         }
+    }
+
+    public static <T extends Comparable<T>> String getName(Property<T> property, Comparable<?> value) {
+        return property.getName((T) value);
     }
 }

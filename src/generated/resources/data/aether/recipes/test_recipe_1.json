@@ -2,10 +2,10 @@
   "type": "aether:test",
   "ingredient": {
     "block": "minecraft:blue_wool",
-    "properties": []
+    "properties": {}
   },
   "result": {
     "block": "minecraft:red_wool",
-    "properties": []
+    "properties": {}
   }
 }

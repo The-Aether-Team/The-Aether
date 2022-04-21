@@ -1,0 +1,15 @@
+{
+  "type": "aether:test",
+  "ingredient": [
+    {
+      "block": "minecraft:red_wool"
+    },
+    {
+      "block": "minecraft:green_wool"
+    }
+  ],
+  "result": {
+    "block": "minecraft:black_wool",
+    "properties": {}
+  }
+}

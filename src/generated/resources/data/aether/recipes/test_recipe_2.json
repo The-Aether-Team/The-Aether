@@ -1,0 +1,10 @@
+{
+  "type": "aether:test",
+  "ingredient": {
+    "block": "minecraft:yellow_wool"
+  },
+  "result": {
+    "block": "minecraft:purple_wool",
+    "properties": {}
+  }
+}

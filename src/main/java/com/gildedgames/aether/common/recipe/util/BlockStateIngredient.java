@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.recipe.util;
 
 import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.gson.*;
 import net.minecraft.core.Holder;
@@ -14,10 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -137,7 +135,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         } else if (json.has("block")) {
             Block block = BlockStateRecipeUtil.blockFromJson(json);
             if (json.has("properties")) {
-                BlockState blockState = BlockStateRecipeUtil.blockStateFromJson(json, block);
+                BlockState blockState = BlockStateRecipeUtil.blockStateFromJson(json, block); //TODO: Edit this.
                 return new BlockStateIngredient.StateValue(blockState);
             } else {
                 return new BlockStateIngredient.BlockValue(block);
@@ -165,14 +163,15 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         public JsonObject serialize() {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("block", Registry.BLOCK.getKey(this.state.getBlock()).toString());
-            JsonArray jsonArray = new JsonArray();
-            for (Property<?> property : this.state.getProperties()) {
-                JsonObject propertyObject = new JsonObject();
-                String[] propertyString = this.state.getValue(property).toString().split("=");
-                propertyObject.addProperty(propertyString[0], propertyString[1]); //TODO: verify.
-                jsonArray.add(propertyObject);
+            JsonObject jsonObject1 = new JsonObject();
+            ImmutableMap<Property<?>, Comparable<?>> properties = this.state.getValues();
+            if (!properties.isEmpty()) {
+                for (Map.Entry<Property<?>, Comparable<?>> entry : properties.entrySet()) {
+                    Property<?> property = entry.getKey();
+                    jsonObject1.addProperty(property.getName(), BlockStateRecipeUtil.getName(property, entry.getValue())); //TODO: verify.
+                }
             }
-            jsonObject.add("properties", jsonArray);
+            jsonObject.add("properties", jsonObject1);
             return jsonObject;
         }
     }

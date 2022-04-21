@@ -17,6 +17,7 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Items;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraftforge.common.Tags;
 
 import javax.annotation.Nonnull;
@@ -727,7 +728,12 @@ public class AetherRecipeData extends AetherRecipeProvider
 
         freezingRecipeWithTag(AetherItems.ICE_PENDANT.get(), AetherTags.Items.FREEZABLE_PENDANTS, 1.0F, 2500, "pendant").save(consumer, name("ice_pendant_from_freezing"));
 
-        test(Blocks.RED_WOOL.defaultBlockState(), Blocks.BLUE_WOOL.defaultBlockState()).save(consumer, name("test_recipe"));
+        test(Blocks.RED_WOOL.defaultBlockState(), Blocks.BLUE_WOOL.defaultBlockState()).save(consumer, name("test_recipe_1"));
+        test2(Blocks.PURPLE_WOOL.defaultBlockState(), Blocks.YELLOW_WOOL).save(consumer, name("test_recipe_2"));
+        test3(AetherBlocks.PINK_AERCLOUD.get().defaultBlockState(), AetherTags.Blocks.AERCLOUDS).save(consumer, name("test_recipe_3"));
+        test4(Blocks.BLACK_WOOL.defaultBlockState(), Blocks.RED_WOOL, Blocks.GREEN_WOOL).save(consumer, name("test_recipe_4"));
+
+        test2(Blocks.CAMPFIRE.defaultBlockState().setValue(CampfireBlock.LIT, false), Blocks.PURPLE_WOOL).save(consumer, name("test_recipe_5"));
     }
 
     private ResourceLocation name(String name) {
