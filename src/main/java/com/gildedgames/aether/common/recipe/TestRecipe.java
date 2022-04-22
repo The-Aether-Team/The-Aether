@@ -1,14 +1,12 @@
-package com.gildedgames.aether.common.recipe.util.test;
+package com.gildedgames.aether.common.recipe;
 
-import com.gildedgames.aether.common.recipe.util.AbstractBlockStateRecipe;
-import com.gildedgames.aether.common.recipe.util.BlockStateIngredient;
-import com.gildedgames.aether.common.recipe.util.BlockStateRecipeSerializer;
+import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
+import com.gildedgames.aether.common.recipe.serializer.BlockStateRecipeSerializer;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherRecipes.RecipeTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
 import javax.annotation.Nonnull;

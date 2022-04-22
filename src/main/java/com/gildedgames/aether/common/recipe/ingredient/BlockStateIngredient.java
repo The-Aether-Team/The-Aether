@@ -1,8 +1,9 @@
-package com.gildedgames.aether.common.recipe.util;
+package com.gildedgames.aether.common.recipe.ingredient;
 
+import com.gildedgames.aether.common.recipe.util.BlockPropertyPair;
 import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.google.gson.*;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -20,7 +21,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-public class BlockStateIngredient implements Predicate<BlockState> { //needs to stay predicate<blockstate> because blockstate is T which determines things like the method parameter of test(); doesnt mean anything else has to be blockstate though
+public class BlockStateIngredient implements Predicate<BlockState> {
     public static final BlockStateIngredient EMPTY = new BlockStateIngredient(Stream.empty());
     private final BlockStateIngredient.Value[] values;
     @Nullable
@@ -34,10 +35,10 @@ public class BlockStateIngredient implements Predicate<BlockState> { //needs to 
 
     private void dissolve() {
         if (this.blocks == null) {
-            this.blocks = Arrays.stream(this.values).flatMap((values) -> values.getBlocks().stream()).distinct().toList();
+            this.blocks = Arrays.stream(this.values).flatMap((values) -> values.getBlocks().stream()).toList();
         }
         if (this.properties == null) {
-            this.properties = Arrays.stream(this.values).flatMap((values) -> values.getProperties().stream()).distinct().toList();
+            this.properties = Arrays.stream(this.values).flatMap((values) -> values.getProperties().stream()).toList();
         }
     }
 
@@ -49,44 +50,25 @@ public class BlockStateIngredient implements Predicate<BlockState> { //needs to 
         } else {
             boolean isSame = false;
             int index = -1;
-            for (int i = 0; i < this.blocks.size(); i++) { //can i use index of to make this simpler.
-                Block block = this.blocks.get(i);
-                if (state.is(block)) {
+            for (int i = 0; i < this.blocks.size(); i++) {
+                if (state.is(this.blocks.get(i))) {
                     isSame = true;
                     index = i;
                     break;
                 }
             }
             if (isSame) {
-                if (this.properties.size() > index) {
-                    Map<Property<?>, Comparable<?>> propertiesForBlock = this.properties.get(index);
-                    if (!propertiesForBlock.isEmpty()) {
-                        Map<Property<?>, Comparable<?>> matchableProperties = Maps.newHashMap();
-                        Map<Property<?>, Comparable<?>> stateProperties = state.getValues();
-
-                        for (Map.Entry<Property<?>, Comparable<?>> propertyEntry : propertiesForBlock.entrySet()) {
-                            if (stateProperties.containsKey(propertyEntry.getKey())) {
-                                matchableProperties.put(propertyEntry.getKey(), propertyEntry.getValue());
-                            }
-                        }
-
-                        if (!matchableProperties.isEmpty()) {
-                            boolean hasMatchingProperties = true;
-                            for (Map.Entry<Property<?>, Comparable<?>> matchableEntry : matchableProperties.entrySet()) {
-                                if (!stateProperties.get(matchableEntry.getKey()).equals(matchableEntry.getValue())) {
-                                    hasMatchingProperties = false;
-                                }
-                            }
-                            return hasMatchingProperties;
-                        } else {
-                            return false; //something has gone wrong with recipe creation if you managed to get here.
-                        }
-                    }
+                Map<Property<?>, Comparable<?>> propertiesForBlock = this.properties.get(index);
+                if (!propertiesForBlock.isEmpty()) {
+                    HashSet<Map.Entry<Property<?>, Comparable<?>>> stateProperties = Sets.newHashSet();
+                    stateProperties.addAll(state.getValues().entrySet());
+                    return stateProperties.containsAll(propertiesForBlock.entrySet());
                 }
                 return true;
+            } else {
+                return false;
             }
         }
-        return false;
     }
 
     public boolean isEmpty() {
@@ -198,7 +180,7 @@ public class BlockStateIngredient implements Predicate<BlockState> { //needs to 
         return ingredient.values.length == 0 ? EMPTY : ingredient;
     }
 
-    public static class StateValue implements BlockStateIngredient.Value { //in practice, the usage of properties will probably have to be like checking if the input has the property value or something to match it which might be doable in test() or matches().
+    public static class StateValue implements BlockStateIngredient.Value {
         private final Block block;
         private final Map<Property<?>, Comparable<?>> properties;
 
@@ -287,7 +269,7 @@ public class BlockStateIngredient implements Predicate<BlockState> { //needs to 
     }
 
     public interface Value {
-        Collection<Block> getBlocks(); //THESE NEED TO STAY AS WELL, or else tags in these recipes will be made impossible.
+        Collection<Block> getBlocks();
         Collection<Map<Property<?>, Comparable<?>>> getProperties();
 
         JsonObject serialize();

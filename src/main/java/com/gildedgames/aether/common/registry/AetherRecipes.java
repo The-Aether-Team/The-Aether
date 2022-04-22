@@ -5,13 +5,8 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.recipe.AltarRepairRecipe;
 import com.gildedgames.aether.common.recipe.EnchantingRecipe;
 import com.gildedgames.aether.common.recipe.FreezingRecipe;
-import com.gildedgames.aether.common.recipe.util.AbstractBlockStateRecipe;
-import com.gildedgames.aether.common.recipe.util.BlockStateRecipeSerializer;
-import com.gildedgames.aether.common.recipe.util.test.TestRecipe;
-import net.minecraft.world.level.block.Block;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import com.gildedgames.aether.common.recipe.serializer.BlockStateRecipeSerializer;
+import com.gildedgames.aether.common.recipe.TestRecipe;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 

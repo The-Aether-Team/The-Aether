@@ -1,5 +1,7 @@
-package com.gildedgames.aether.common.recipe.util;
+package com.gildedgames.aether.common.recipe.serializer;
 
+import com.gildedgames.aether.common.recipe.AbstractBlockStateRecipe;
+import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
 import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -31,11 +33,21 @@ public class BlockStateRecipeSerializer<T extends AbstractBlockStateRecipe> exte
 
         if (!serializedRecipe.has("result")) throw new JsonSyntaxException("Missing result, expected to find a string or object");
         Block blockResult;
-        Map<Property<?>, Comparable<?>> propertiesResult;
+        Map<Property<?>, Comparable<?>> propertiesResult = Map.of();
         if (serializedRecipe.get("result").isJsonObject()) {
-            JsonObject object = serializedRecipe.getAsJsonObject("result");
-            blockResult = BlockStateRecipeUtil.blockFromJson(object);
-            propertiesResult = BlockStateRecipeUtil.propertiesFromJson(object, blockResult); //TODO: Verify
+            JsonObject resultObject = serializedRecipe.getAsJsonObject("result");
+            if (resultObject.has("block")) {
+                blockResult = BlockStateRecipeUtil.blockFromJson(resultObject);
+                if (resultObject.has("properties")) {
+                    if (resultObject.get("properties").isJsonObject()) {
+                        propertiesResult = BlockStateRecipeUtil.propertiesFromJson(resultObject, blockResult);
+                    } else {
+                        throw new JsonSyntaxException("Expected properties to be object");
+                    }
+                }
+            } else {
+                throw new JsonSyntaxException("Missing block in result");
+            }
         } else {
             throw new JsonSyntaxException("Expected result to be object");
         }
@@ -54,9 +66,9 @@ public class BlockStateRecipeSerializer<T extends AbstractBlockStateRecipe> exte
 
     @Override
     public void toNetwork(@Nonnull FriendlyByteBuf buf, T recipe) {
-        recipe.ingredient.toNetwork(buf);
-        BlockStateRecipeUtil.writeBlock(buf, recipe.resultBlock);
-        BlockStateRecipeUtil.writeProperties(buf, recipe.resultProperties);
+        recipe.getIngredient().toNetwork(buf);
+        BlockStateRecipeUtil.writeBlock(buf, recipe.getResultBlock());
+        BlockStateRecipeUtil.writeProperties(buf, recipe.getResultProperties());
     }
 
     public interface CookieBaker<T extends AbstractBlockStateRecipe> {

@@ -1,5 +1,6 @@
-package com.gildedgames.aether.common.recipe.util;
+package com.gildedgames.aether.common.recipe;
 
+import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
 import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -37,14 +38,14 @@ public abstract class AbstractBlockStateRecipe implements BlockStateRecipe {
     }
 
     public boolean matches(BlockState state) {
-        return this.ingredient.test(state);
+        return this.getIngredient().test(state);
     }
 
     @Override
     public BlockState getResultState(BlockState originalState) {
-        BlockState resultState = this.resultBlock.withPropertiesOf(originalState);
-        for (Map.Entry<Property<?>, Comparable<?>> propertyEntry : this.resultProperties.entrySet()) {
-            resultState = BlockStateRecipeUtil.setHelper(propertyEntry, originalState);
+        BlockState resultState = this.getResultBlock().withPropertiesOf(originalState);
+        for (Map.Entry<Property<?>, Comparable<?>> propertyEntry : this.getResultProperties().entrySet()) {
+            resultState = BlockStateRecipeUtil.setHelper(propertyEntry, resultState);
         }
         return resultState;
     }

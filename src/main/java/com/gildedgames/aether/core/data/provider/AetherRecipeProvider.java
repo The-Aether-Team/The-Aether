@@ -2,8 +2,6 @@ package com.gildedgames.aether.core.data.provider;
 
 import com.gildedgames.aether.common.recipe.builder.AltarRepairBuilder;
 import com.gildedgames.aether.common.recipe.util.BlockPropertyPair;
-import com.gildedgames.aether.common.recipe.util.BlockStateIngredient;
-import com.gildedgames.aether.common.recipe.util.BlockStateRecipeBuilder;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.tags.TagKey;
@@ -13,13 +11,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.common.Tags;
 
 import java.util.Map;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -400,21 +396,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + result.asItem().getRegistryName(), has(result));
     }
 
-    public BlockStateRecipeBuilder test(BlockPropertyPair result, BlockPropertyPair ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
-    }
-
-    public BlockStateRecipeBuilder test2(BlockPropertyPair result, BlockPropertyPair... ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
-    }
-
-    public BlockStateRecipeBuilder test3(BlockPropertyPair result, TagKey<Block> ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.TEST.get());
-    }
-
-    //TODO: Test blocks.
-
     protected BlockPropertyPair pair(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {
-        return new BlockPropertyPair(resultBlock, resultProperties);
+        return BlockPropertyPair.of(resultBlock, resultProperties);
     }
 }

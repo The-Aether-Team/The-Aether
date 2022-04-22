@@ -1,5 +1,6 @@
-package com.gildedgames.aether.common.recipe.util;
+package com.gildedgames.aether.common.recipe;
 
+import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
