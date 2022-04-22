@@ -80,18 +80,19 @@ public interface ISwetBallConversion
         BlockPos pos = context.getClickedPos();
         ItemStack heldItem = context.getItemInHand();
         BlockState oldBlockState = world.getBlockState(pos);
-        BlockState newBlockState = oldBlockState;
+        //BlockState newBlockState = oldBlockState;
 
         for (Recipe<?> recipe : world.getRecipeManager().getAllRecipesFor(AetherRecipes.RecipeTypes.TEST)) {
-            if (recipe instanceof AbstractBlockStateRecipe abstractBlockStateRecipe) { // && abstractBlockStateRecipe.matches(oldBlockState)
-
-                Aether.LOGGER.info(abstractBlockStateRecipe.getId() + ": " + abstractBlockStateRecipe.getIngredient().getBlocks() + " " + abstractBlockStateRecipe.getIngredient().getProperties() + " " + abstractBlockStateRecipe.getResultBlock() + " " + abstractBlockStateRecipe.getResultProperties());
-
-//                world.setBlockAndUpdate(pos, abstractBlockStateRecipe.getResultState());
-//                if (player != null && !player.getAbilities().instabuild) {
-//                    heldItem.shrink(1);
-//                }
-//                return InteractionResult.SUCCESS;
+            if (recipe instanceof AbstractBlockStateRecipe abstractBlockStateRecipe) {
+                if (abstractBlockStateRecipe.matches(oldBlockState)) {
+                    BlockState newBlockState = abstractBlockStateRecipe.getResultState(oldBlockState); //Might need to move to a set() method in AbstractBlockStateRecipe with blockEntity copy coverage.
+                    Aether.LOGGER.info(newBlockState);
+                    world.setBlockAndUpdate(pos, newBlockState);
+                    if (player != null && !player.getAbilities().instabuild) {
+                        heldItem.shrink(1);
+                    }
+                    return InteractionResult.SUCCESS;
+                }
             }
         }
 

@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.recipe.util;
 
 import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gson.*;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -41,43 +42,53 @@ public class BlockStateIngredient implements Predicate<BlockState> { //needs to 
     }
 
     @Override
-    public boolean test(@Nullable BlockState state) { //todo: may remove this and replace it with something else to call from Recipe.matches() thats sensitive to properties as well. but idk if thats even necessary if i have the state.
-        // result.withPropertiesOf(ingredient).setValue(ingredientProps.key(), ingredientProps.value)) //pseudocode to put in the abstract recipe.
-        if (state == null) {
-            return false;
-        } else {
+    public boolean test(@Nullable BlockState state) {
+        if (state != null) {
             this.dissolve();
-            return false;
-////            if (this.blocks.size() == 0) {
-////                return state.isAir();
-////            } else {
-//////                if (this.properties.size() > 0) {
-//////                    for (int i = 0; i < this.blocks.size(); i++) {
-//////                        Block block = this.blocks.get(i);
-//////                        Map<Property<?>, Comparable<?>> ingredientProperties = this.properties.get(i);
-//////                        Map<Property<?>, Comparable<?>> testProperties = state.getValues();
-//////
-//////
-//////
-//////                        //need to somehow... check if multiple values match
-//////
-//////                        boolean propertiesMatch = false;
-//////
-//////                        for (Map.Entry<Property<?>, Comparable<?>> entry : ingredientProperties.entrySet()) {
-//////                            testProperties.entrySet().contains(entry);
-//////                        } //TODO: ILL DO THIS LATER
-//////
-//////                        if (block.defaultBlockState().is(state.getBlock())) {
-//////                            return true;
-//////                        }
-//////
-//////                    }
-////                    return false;
-////                } else {
-////                    return true;
-////                }
-//            }
+            if (this.blocks.size() == 0) {
+                return state.isAir();
+            } else {
+                boolean isSame = false;
+                int index = -1;
+                for (int i = 0; i < this.blocks.size(); i++) {
+                    Block block = this.blocks.get(i);
+                    if (state.is(block)) {
+                        isSame = true;
+                        index = i;
+                        break;
+                    }
+                }
+                if (isSame) {
+                    if (this.properties.size() > 0) {
+                        Map<Property<?>, Comparable<?>> propertiesForBlock = this.properties.get(index);
+                        if (!propertiesForBlock.isEmpty()) {
+                            Map<Property<?>, Comparable<?>> matchableProperties = Maps.newHashMap();
+                            Map<Property<?>, Comparable<?>> stateProperties = state.getValues();
+
+                            for (Map.Entry<Property<?>, Comparable<?>> propertyEntry : propertiesForBlock.entrySet()) {
+                                if (stateProperties.containsKey(propertyEntry.getKey())) {
+                                    matchableProperties.put(propertyEntry.getKey(), propertyEntry.getValue());
+                                }
+                            }
+
+                            if (!matchableProperties.isEmpty()) {
+                                boolean hasMatchingProperties = true;
+                                for (Map.Entry<Property<?>, Comparable<?>> matchableEntry : matchableProperties.entrySet()) {
+                                    if (!stateProperties.get(matchableEntry.getKey()).equals(matchableEntry.getValue())) {
+                                        hasMatchingProperties = false;
+                                    }
+                                }
+                                return hasMatchingProperties;
+                            } else {
+                                return false; //something has gone wrong with recipe creation if you managed to get here.
+                            }
+                        }
+                    }
+                    return true;
+                }
+            }
         }
+        return false;
     }
 
     public boolean isEmpty() {
