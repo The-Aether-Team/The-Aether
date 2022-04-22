@@ -84,10 +84,7 @@ public interface ISwetBallConversion
 
         for (Recipe<?> recipe : world.getRecipeManager().getAllRecipesFor(AetherRecipes.RecipeTypes.TEST)) {
             if (recipe instanceof AbstractBlockStateRecipe abstractBlockStateRecipe) {
-                if (abstractBlockStateRecipe.matches(oldBlockState)) {
-                    BlockState newBlockState = abstractBlockStateRecipe.getResultState(oldBlockState); //Might need to move to a set() method in AbstractBlockStateRecipe with blockEntity copy coverage.
-                    Aether.LOGGER.info(newBlockState);
-                    world.setBlockAndUpdate(pos, newBlockState);
+                if (abstractBlockStateRecipe.set(world, pos, oldBlockState)) {
                     if (player != null && !player.getAbilities().instabuild) {
                         heldItem.shrink(1);
                     }

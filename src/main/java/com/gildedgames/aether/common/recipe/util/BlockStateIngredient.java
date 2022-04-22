@@ -42,50 +42,48 @@ public class BlockStateIngredient implements Predicate<BlockState> { //needs to 
     }
 
     @Override
-    public boolean test(@Nullable BlockState state) {
-        if (state != null) {
-            this.dissolve();
-            if (this.blocks.size() == 0) {
-                return state.isAir();
-            } else {
-                boolean isSame = false;
-                int index = -1;
-                for (int i = 0; i < this.blocks.size(); i++) {
-                    Block block = this.blocks.get(i);
-                    if (state.is(block)) {
-                        isSame = true;
-                        index = i;
-                        break;
-                    }
+    public boolean test(BlockState state) {
+        this.dissolve();
+        if (this.blocks.size() == 0) {
+            return state.isAir();
+        } else {
+            boolean isSame = false;
+            int index = -1;
+            for (int i = 0; i < this.blocks.size(); i++) { //can i use index of to make this simpler.
+                Block block = this.blocks.get(i);
+                if (state.is(block)) {
+                    isSame = true;
+                    index = i;
+                    break;
                 }
-                if (isSame) {
-                    if (this.properties.size() > 0) {
-                        Map<Property<?>, Comparable<?>> propertiesForBlock = this.properties.get(index);
-                        if (!propertiesForBlock.isEmpty()) {
-                            Map<Property<?>, Comparable<?>> matchableProperties = Maps.newHashMap();
-                            Map<Property<?>, Comparable<?>> stateProperties = state.getValues();
+            }
+            if (isSame) {
+                if (this.properties.size() > index) {
+                    Map<Property<?>, Comparable<?>> propertiesForBlock = this.properties.get(index);
+                    if (!propertiesForBlock.isEmpty()) {
+                        Map<Property<?>, Comparable<?>> matchableProperties = Maps.newHashMap();
+                        Map<Property<?>, Comparable<?>> stateProperties = state.getValues();
 
-                            for (Map.Entry<Property<?>, Comparable<?>> propertyEntry : propertiesForBlock.entrySet()) {
-                                if (stateProperties.containsKey(propertyEntry.getKey())) {
-                                    matchableProperties.put(propertyEntry.getKey(), propertyEntry.getValue());
-                                }
-                            }
-
-                            if (!matchableProperties.isEmpty()) {
-                                boolean hasMatchingProperties = true;
-                                for (Map.Entry<Property<?>, Comparable<?>> matchableEntry : matchableProperties.entrySet()) {
-                                    if (!stateProperties.get(matchableEntry.getKey()).equals(matchableEntry.getValue())) {
-                                        hasMatchingProperties = false;
-                                    }
-                                }
-                                return hasMatchingProperties;
-                            } else {
-                                return false; //something has gone wrong with recipe creation if you managed to get here.
+                        for (Map.Entry<Property<?>, Comparable<?>> propertyEntry : propertiesForBlock.entrySet()) {
+                            if (stateProperties.containsKey(propertyEntry.getKey())) {
+                                matchableProperties.put(propertyEntry.getKey(), propertyEntry.getValue());
                             }
                         }
+
+                        if (!matchableProperties.isEmpty()) {
+                            boolean hasMatchingProperties = true;
+                            for (Map.Entry<Property<?>, Comparable<?>> matchableEntry : matchableProperties.entrySet()) {
+                                if (!stateProperties.get(matchableEntry.getKey()).equals(matchableEntry.getValue())) {
+                                    hasMatchingProperties = false;
+                                }
+                            }
+                            return hasMatchingProperties;
+                        } else {
+                            return false; //something has gone wrong with recipe creation if you managed to get here.
+                        }
                     }
-                    return true;
                 }
+                return true;
             }
         }
         return false;

@@ -1,8 +1,10 @@
 package com.gildedgames.aether.common.recipe.util;
 
 import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -25,6 +27,15 @@ public abstract class AbstractBlockStateRecipe implements BlockStateRecipe {
         this.resultProperties = resultProperties;
     }
 
+    public boolean set(Level level, BlockPos pos, BlockState oldState) {
+        if (this.matches(oldState)) {
+            BlockState newState = this.getResultState(oldState);
+            level.setBlockAndUpdate(pos, newState);
+            return true;
+        }
+        return false;
+    }
+
     public boolean matches(BlockState state) {
         return this.ingredient.test(state);
     }
@@ -32,9 +43,9 @@ public abstract class AbstractBlockStateRecipe implements BlockStateRecipe {
     @Override
     public BlockState getResultState(BlockState originalState) {
         BlockState resultState = this.resultBlock.withPropertiesOf(originalState);
-//        for (Map.Entry<Property<T>, Comparable<T>> propertyEntry : ((Map<Property<T>, Comparable<T>>) this.resultProperties).entrySet()) { //TODO: generics my abhorred
-//            BlockStateRecipeUtil.setHelper(propertyEntry, originalState);
-//        }
+        for (Map.Entry<Property<?>, Comparable<?>> propertyEntry : this.resultProperties.entrySet()) {
+            resultState = BlockStateRecipeUtil.setHelper(propertyEntry, originalState);
+        }
         return resultState;
     }
 

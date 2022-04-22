@@ -730,6 +730,9 @@ public class AetherRecipeData extends AetherRecipeProvider
         freezingRecipeWithTag(AetherItems.ICE_PENDANT.get(), AetherTags.Items.FREEZABLE_PENDANTS, 1.0F, 2500, "pendant").save(consumer, name("ice_pendant_from_freezing"));
 
         test(pair(Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, false)), pair(Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, true))).save(consumer, name("test_block_recipe_1"));
+        test(pair(Blocks.RED_WOOL, Map.of()), pair(Blocks.BLUE_WOOL, Map.of())).save(consumer, name("test_block_recipe_2"));
+        test2(pair(Blocks.BLACK_WOOL, Map.of()), pair(Blocks.GREEN_WOOL, Map.of()), pair(Blocks.ORANGE_WOOL, Map.of())).save(consumer, name("test_block_recipe_3"));
+        test3(pair(AetherBlocks.PINK_AERCLOUD.get(), Map.of()), AetherTags.Blocks.AERCLOUDS).save(consumer, name("test_block_recipe_4"));
     }
 
     private ResourceLocation name(String name) {

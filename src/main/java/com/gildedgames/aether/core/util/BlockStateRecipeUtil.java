@@ -1,6 +1,5 @@
 package com.gildedgames.aether.core.util;
 
-import com.gildedgames.aether.Aether;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
@@ -94,10 +93,9 @@ public class BlockStateRecipeUtil {
         return properties;
     }
 
-//    public static <T extends Comparable<T>, V extends T> BlockState setHelper(Map.Entry<Property<?>, Comparable<?>> properties, BlockState state) {
-//        Aether.LOGGER.info(properties.getKey() + " " + properties.getValue());
-//        return state.setValue((Property<T>) properties.getKey(), (V) properties.getValue());
-//    }
+    public static <T extends Comparable<T>, V extends T> BlockState setHelper(Map.Entry<Property<?>, Comparable<?>> properties, BlockState state) {
+        return state.setValue((Property<T>) properties.getKey(), (V) properties.getValue());
+    }
 
     public static <T extends Comparable<T>> String getName(Property<T> pProperty, Comparable<?> pValue) {
         return pProperty.getName((T) pValue);
