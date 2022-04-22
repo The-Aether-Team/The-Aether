@@ -78,7 +78,7 @@ public class BlockStateRecipeUtil {
         }
     }
 
-    public static Map<Property<?>, Comparable<?>> propertiesFromJson(JsonObject json, Block block) { //todo
+    public static Map<Property<?>, Comparable<?>> propertiesFromJson(JsonObject json, Block block) {
         Map<Property<?>, Comparable<?>> properties = Maps.newHashMap();
         StateDefinition<Block, BlockState> stateDefinition = block.getStateDefinition();
         JsonObject propertyObject = GsonHelper.getAsJsonObject(json, "properties");

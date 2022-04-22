@@ -210,7 +210,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
             if (!this.properties.isEmpty()) {
                 for (Map.Entry<Property<?>, Comparable<?>> entry : this.properties.entrySet()) {
                     Property<?> property = entry.getKey();
-                    jsonObject1.addProperty(property.getName(), BlockStateRecipeUtil.getName(property, entry.getValue())); //TODO: verify.
+                    jsonObject1.addProperty(property.getName(), BlockStateRecipeUtil.getName(property, entry.getValue()));
                 }
             }
             jsonObject.add("properties", jsonObject1);
