@@ -35,4 +35,10 @@ public class AetherPlayerListener {
         boolean wasDeath = event.isWasDeath();
         CapabilityHooks.AetherPlayerHooks.clone(originalPlayer, newPlayer, wasDeath);
     }
+
+    @SubscribeEvent
+    public static void onPlayerChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        Player player = event.getPlayer();
+        CapabilityHooks.AetherPlayerHooks.changeDimension(player);
+    }
 }

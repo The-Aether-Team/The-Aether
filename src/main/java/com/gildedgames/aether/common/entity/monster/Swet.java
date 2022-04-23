@@ -346,7 +346,6 @@ public class Swet extends MountableAnimal {
     @Override
     public Vec3 getDismountLocationForPassenger(@Nonnull LivingEntity livingEntity) {
         if (this.isFriendlyTowardEntity(livingEntity)) {
-            Aether.LOGGER.info(true);
             return super.getDismountLocationForPassenger(livingEntity);
         } else {
             return this.position();

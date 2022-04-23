@@ -6,9 +6,12 @@ import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.ExplosionParticlePacket;
+import com.gildedgames.aether.core.network.packet.server.AerbunnyPuffPacket;
 import com.gildedgames.aether.core.util.EntityUtil;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.ItemStack;
@@ -36,9 +39,12 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.phys.Vec3;
 
 public class Aerbunny extends AetherAnimal {
     public static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
+
+    private Vec3 lastPos;
 
     public Aerbunny(EntityType<? extends Aerbunny> type, Level level) {
         super(type, level);
@@ -76,9 +82,12 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public void tick() {
         super.tick();
-        double fallSpeed = this.hasEffect(MobEffects.SLOW_FALLING) ? -0.05 : -0.1;
-        if (this.getDeltaMovement().y < fallSpeed) {
-            this.setDeltaMovement(getDeltaMovement().x, fallSpeed, getDeltaMovement().z);
+        AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+        if (gravity != null) {
+            double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1);
+            if (this.getDeltaMovement().y < fallSpeed) {
+                this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+            }
         }
         this.setPuffiness(this.getPuffiness() - 1);
         if (this.getPuffiness() < 0) {
@@ -89,20 +98,32 @@ public class Aerbunny extends AetherAnimal {
 
             player.resetFallDistance();
             if (!player.isOnGround() && !player.isFallFlying()) {
-                if (!player.getAbilities().flying && !player.isInWater() && !player.isInLava()) {
-                    player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));
+                AttributeInstance playerGravity = player.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+                if (playerGravity != null) {
+                    if (!player.getAbilities().flying && !player.isInWater() && !player.isInLava() && playerGravity.getValue() > 0.02) {
+                        player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));
+                    }
                 }
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                    if (aetherPlayer.isJumping() && player.getDeltaMovement().y < -0.225) {
-                        player.setDeltaMovement(player.getDeltaMovement().x, 0.125, player.getDeltaMovement().z);
-                        if (!this.level.isClientSide) {
-                            this.puff();
+                    if (this.level.isClientSide) {
+                        if (player.getDeltaMovement().y <= 0.0) {
+                            if (this.lastPos == null) {
+                                this.lastPos = this.position();
+                            }
+                            if (!player.isOnGround() && aetherPlayer.isJumping() && player.getDeltaMovement().y <= 0.0 && this.position().y() < this.lastPos.y() - 0.75) {
+                                player.setDeltaMovement(player.getDeltaMovement().x, 0.125, player.getDeltaMovement().z);
+                                AetherPacketHandler.sendToServer(new AerbunnyPuffPacket(this.getId()));
+                                this.lastPos = null;
+                            }
                         }
                     }
                 });
             } else if (player.isFallFlying()) {
                 this.stopRiding();
             }
+        }
+        if (this.isOnGround() || (this.getVehicle() != null && this.getVehicle().isOnGround())) {
+            this.lastPos = null;
         }
     }
 
@@ -152,16 +173,16 @@ public class Aerbunny extends AetherAnimal {
         this.puff();
     }
 
-    private void puff() {
-        this.setPuffiness(11);
-        this.spawnExplosionParticle();
+    public void puff() {
+        if (this.level instanceof ServerLevel) {
+            this.setPuffiness(11);
+            this.spawnExplosionParticle();
+        }
     }
 
     private void spawnExplosionParticle() {
-        if (this.level instanceof ServerLevel) {
-            for (int i = 0; i < 5; i++) {
-                EntityUtil.spawnMovementExplosionParticles(this);
-            }
+        for (int i = 0; i < 5; i++) {
+            AetherPacketHandler.sendToAll(new ExplosionParticlePacket(this.getId()));
         }
     }
 

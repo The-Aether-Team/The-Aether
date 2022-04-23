@@ -3,8 +3,8 @@ package com.gildedgames.aether.common.event.listeners;
 import com.gildedgames.aether.common.event.events.AetherBannedItemEvent;
 import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
@@ -12,6 +12,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -54,5 +55,18 @@ public class DimensionListener {
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
             DimensionHooks.fallFromAether(level);
         }
+    }
+
+    @SubscribeEvent
+    public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {
+        Entity entity = event.getEntity();
+        ResourceKey<Level> dimension = event.getDimension();
+        DimensionHooks.dimensionTravel(entity, dimension);
+    }
+
+    @SubscribeEvent
+    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
+        Player player = event.getPlayer();
+        DimensionHooks.syncTrackersFromServer(player);
     }
 }

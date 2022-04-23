@@ -4,7 +4,7 @@ import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectile;
 import com.gildedgames.aether.common.entity.projectile.weapon.ThrownLightningKnife;
 import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
 import com.gildedgames.aether.common.item.miscellaneous.bucket.SkyrootWaterBucketItem;
-import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import com.gildedgames.aether.core.util.LevelUtil;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
@@ -213,7 +213,7 @@ public class AetherDispenseBehaviors {
         @Nonnull
         @Override
         public ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
-            if (source.getLevel().dimension() == AetherDimensions.AETHER_LEVEL) {
+            if (LevelUtil.inTag(source.getLevel(), AetherTags.Dimensions.ULTRACOLD)) {
                 this.setSuccess(false);
                 return stack;
             } else {
@@ -231,7 +231,7 @@ public class AetherDispenseBehaviors {
         @Nonnull
         @Override
         protected ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
-            if (source.getLevel().dimension() == AetherDimensions.AETHER_LEVEL) {
+            if (LevelUtil.inTag(source.getLevel(), AetherTags.Dimensions.ULTRACOLD)) {
                 this.setSuccess(false);
                 return stack;
             } else {

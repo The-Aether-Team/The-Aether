@@ -1,11 +1,14 @@
 package com.gildedgames.aether.common.event.hooks;
 
-import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.cape.CapeEntity;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
+import com.gildedgames.aether.core.capability.player.AetherPlayerCapability;
 import com.gildedgames.aether.core.capability.rankings.AetherRankings;
+import com.gildedgames.aether.core.capability.rankings.AetherRankingsCapability;
 import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.gildedgames.aether.core.util.AetherSleepStatus;
+import com.gildedgames.aether.core.util.LevelUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -52,6 +55,16 @@ public class CapabilityHooks {
             }
             originalPlayer.invalidateCaps();
         }
+
+        public static void changeDimension(Player player) {
+            if (!player.level.isClientSide()) {
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                    if (aetherPlayer instanceof AetherPlayerCapability capability) {
+                        capability.updateSyncableNBTFromServer(player.level, true);
+                    }
+                });
+            }
+        }
     }
 
     public static class AetherRankingsHooks {
@@ -69,6 +82,16 @@ public class CapabilityHooks {
                     () -> new IllegalStateException("Player " + newPlayer.getName().getContents() + " has no AetherRankings capability!"));
             newAetherRankings.copyFrom(originalAetherRankings);
             originalPlayer.invalidateCaps();
+        }
+
+        public static void changeDimension(Player player) {
+            if (!player.level.isClientSide()) {
+                AetherRankings.get(player).ifPresent(aetherRankings -> {
+                    if (aetherRankings instanceof AetherRankingsCapability capability) {
+                        capability.updateSyncableNBTFromServer(player.level, true);
+                    }
+                });
+            }
         }
     }
 
@@ -88,7 +111,7 @@ public class CapabilityHooks {
             if (player != null && player.level instanceof ServerLevel world) {
                 MinecraftServer server = world.getServer();
                 for (ServerLevel serverLevel : server.getAllLevels()) {
-                    if (serverLevel.dimension() == AetherDimensions.AETHER_LEVEL) {
+                    if (LevelUtil.inTag(serverLevel, AetherTags.Dimensions.ETERNAL_DAY)) {
                         AetherTime.get(world).ifPresent(AetherTime::syncToClient);
                     }
                 }
@@ -96,7 +119,7 @@ public class CapabilityHooks {
         }
 
         public static void load(LevelAccessor accessor) {
-            if (accessor instanceof Level level && level.dimension() == AetherDimensions.AETHER_LEVEL) {
+            if (accessor instanceof Level level && LevelUtil.inTag(level, AetherTags.Dimensions.ETERNAL_DAY)) {
                 world = level;
                 if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
                     serverLevel.sleepStatus = new AetherSleepStatus();
@@ -105,13 +128,13 @@ public class CapabilityHooks {
         }
 
         public static void unload(LevelAccessor accessor) {
-            if (accessor instanceof Level level && level.dimension() == AetherDimensions.AETHER_LEVEL) {
+            if (accessor instanceof Level level && LevelUtil.inTag(level, AetherTags.Dimensions.ETERNAL_DAY)) {
                 world = null;
             }
         }
 
         public static void tick(Level level) {
-            if (level instanceof ServerLevel serverLevel && level.dimension() == AetherDimensions.AETHER_LEVEL) {
+            if (level instanceof ServerLevel serverLevel && LevelUtil.inTag(level, AetherTags.Dimensions.ETERNAL_DAY)) {
                 AetherTime.get(serverLevel).ifPresent(aetherTime -> aetherTime.serverTick(serverLevel));
             }
         }
