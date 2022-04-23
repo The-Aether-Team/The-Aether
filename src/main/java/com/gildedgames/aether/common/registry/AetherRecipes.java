@@ -2,10 +2,7 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 
-import com.gildedgames.aether.common.recipe.AltarRepairRecipe;
-import com.gildedgames.aether.common.recipe.EnchantingRecipe;
-import com.gildedgames.aether.common.recipe.FreezingRecipe;
-import com.gildedgames.aether.common.recipe.SwetBallRecipe;
+import com.gildedgames.aether.common.recipe.*;
 import com.gildedgames.aether.common.recipe.serializer.BlockStateRecipeSerializer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
@@ -32,7 +29,6 @@ public class AetherRecipes
 		public static RecipeType<SwetBallRecipe> SWET_BALL_CONVERSION;
 
 		public static void init() {
-
 			ENCHANTING = RecipeType.register(new ResourceLocation(Aether.MODID, "enchanting").toString());
 			FREEZING = RecipeType.register(new ResourceLocation(Aether.MODID, "freezing").toString());
 			SWET_BALL_CONVERSION = RecipeType.register(new ResourceLocation(Aether.MODID, "swet_ball_conversion").toString());

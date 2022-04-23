@@ -6,9 +6,7 @@ import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
 import com.gildedgames.aether.common.recipe.serializer.BlockStateRecipeSerializer;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
@@ -117,12 +115,8 @@ public class SwetBallRecipe extends AbstractBlockStateRecipe {
 
         @Override
         public void toNetwork(@Nonnull FriendlyByteBuf buf, SwetBallRecipe recipe) {
-            if (recipe.getBiomeKey() != null) {
-                BlockStateRecipeUtil.writeBiomeKey(buf, recipe.getBiomeKey());
-            }
-            if (recipe.getBiomeTag() != null) {
-                BlockStateRecipeUtil.writeBiomeTag(buf, recipe.getBiomeTag());
-            }
+            BlockStateRecipeUtil.writeBiomeKey(buf, recipe.getBiomeKey());
+            BlockStateRecipeUtil.writeBiomeTag(buf, recipe.getBiomeTag());
             super.toNetwork(buf, recipe);
         }
     }
