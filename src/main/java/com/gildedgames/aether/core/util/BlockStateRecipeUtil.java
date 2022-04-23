@@ -77,11 +77,13 @@ public class BlockStateRecipeUtil {
             Map<Property<?>, Comparable<?>> properties = Maps.newHashMap();
             StateDefinition<Block, BlockState> stateDefinition = block.getStateDefinition();
             CompoundTag tag = buf.readNbt();
-            for (String propertyName : tag.getAllKeys()) {
-                Property<?> property = stateDefinition.getProperty(propertyName);
-                if (property != null) {
-                    Optional<Comparable<?>> comparable = (Optional<Comparable<?>>) property.getValue(propertyName);
-                    comparable.ifPresent(value -> properties.put(property, value));
+            if (tag != null) {
+                for (String propertyName : tag.getAllKeys()) {
+                    Property<?> property = stateDefinition.getProperty(propertyName);
+                    if (property != null) {
+                        Optional<Comparable<?>> comparable = (Optional<Comparable<?>>) property.getValue(propertyName);
+                        comparable.ifPresent(value -> properties.put(property, value));
+                    }
                 }
             }
             return properties;
