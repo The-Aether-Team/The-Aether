@@ -1,16 +1,22 @@
 package com.gildedgames.aether.common.recipe;
 
+import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
+import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
 import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
 import com.gildedgames.aether.common.recipe.serializer.BlockStateRecipeSerializer;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -34,6 +40,19 @@ public class SwetBallRecipe extends AbstractBlockStateRecipe {
 
     public SwetBallRecipe(ResourceLocation id, BlockStateIngredient ingredient, Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {
         this(id, ingredient, null, null, resultBlock, resultProperties);
+    }
+
+    @Override
+    public boolean set(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState) {
+        if (this.matches(level, pos, oldState)) {
+            BlockState newState = this.getResultState(oldState);
+            SwetBallConvertEvent event = AetherEventDispatch.onSwetBallConvert(player, level, pos, stack, oldState, newState);
+            if (!event.isCanceled()) {
+                level.setBlockAndUpdate(pos, newState);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

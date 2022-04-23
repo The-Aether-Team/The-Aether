@@ -62,13 +62,5 @@ public class SwetBallRecipeBuilder extends BlockStateRecipeBuilder {
             BlockStateRecipeUtil.biomeTagToJson(json, this.biomeTag);
             super.serializeRecipeData(json);
         }
-
-        public ResourceKey<Biome> getBiomeKey() {
-            return this.biomeKey;
-        }
-
-        public TagKey<Biome> getBiomeTag() {
-            return this.biomeTag;
-        }
     }
 }

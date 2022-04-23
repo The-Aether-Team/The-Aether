@@ -4,6 +4,8 @@ import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
 import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -28,7 +30,7 @@ public abstract class AbstractBlockStateRecipe implements BlockStateRecipe {
         this.resultProperties = resultProperties;
     }
 
-    public boolean set(Level level, BlockPos pos, BlockState oldState) {
+    public boolean set(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState) {
         if (this.matches(level, pos, oldState)) {
             BlockState newState = this.getResultState(oldState);
             level.setBlockAndUpdate(pos, newState);
