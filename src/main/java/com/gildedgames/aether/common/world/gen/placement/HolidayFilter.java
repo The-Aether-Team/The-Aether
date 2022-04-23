@@ -16,7 +16,7 @@ public class HolidayFilter extends PlacementFilter {
     @Override
     protected boolean shouldPlace(PlacementContext p_191835_, Random p_191836_, BlockPos p_191837_) {
         Calendar calendar = Calendar.getInstance();
-        boolean isChristmas = calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DAY_OF_MONTH) >= 24 && calendar.get(Calendar.DAY_OF_MONTH) <= 26;
+        boolean isChristmas = calendar.get(Calendar.MONTH) == Calendar.DECEMBER || calendar.get(Calendar.MONTH) == Calendar.JANUARY;
         return AetherConfig.COMMON.generate_holiday_tree_always.get() || (AetherConfig.COMMON.generate_holiday_tree_seasonally.get() && isChristmas);
     }
 
