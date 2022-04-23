@@ -7,6 +7,7 @@ import com.gildedgames.aether.common.recipe.EnchantingRecipe;
 import com.gildedgames.aether.common.recipe.FreezingRecipe;
 import com.gildedgames.aether.common.recipe.SwetBallRecipe;
 import com.gildedgames.aether.common.recipe.serializer.BlockStateRecipeSerializer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -22,18 +23,19 @@ public class AetherRecipes
 	public static final RegistryObject<RecipeSerializer<AltarRepairRecipe>> REPAIRING = RECIPE_SERIALIZERS.register("repairing", AltarRepairRecipe.Serializer::new);
 	public static final RegistryObject<SimpleCookingSerializer<EnchantingRecipe>> ENCHANTING = RECIPE_SERIALIZERS.register("enchanting", EnchantingRecipe.Serializer::new);
 	public static final RegistryObject<SimpleCookingSerializer<FreezingRecipe>> FREEZING = RECIPE_SERIALIZERS.register("freezing", FreezingRecipe.Serializer::new);
-	public static final RegistryObject<BlockStateRecipeSerializer<SwetBallRecipe>> SWET_BALL = RECIPE_SERIALIZERS.register("swet_ball", SwetBallRecipe.Serializer::new);
+	public static final RegistryObject<BlockStateRecipeSerializer<SwetBallRecipe>> SWET_BALL_CONVERSION = RECIPE_SERIALIZERS.register("swet_ball_conversion", SwetBallRecipe.Serializer::new);
 
 	public static class RecipeTypes
 	{
 		public static RecipeType<EnchantingRecipe> ENCHANTING;
 		public static RecipeType<FreezingRecipe> FREEZING;
-		public static RecipeType<SwetBallRecipe> SWET_BALL;
+		public static RecipeType<SwetBallRecipe> SWET_BALL_CONVERSION;
 
 		public static void init() {
-			ENCHANTING = RecipeType.register(Aether.MODID + ":enchanting");
-			FREEZING = RecipeType.register(Aether.MODID + ":freezing");
-			SWET_BALL = RecipeType.register(Aether.MODID + ":swet_ball");
+
+			ENCHANTING = RecipeType.register(new ResourceLocation(Aether.MODID, "enchanting").toString());
+			FREEZING = RecipeType.register(new ResourceLocation(Aether.MODID, "freezing").toString());
+			SWET_BALL_CONVERSION = RecipeType.register(new ResourceLocation(Aether.MODID, "swet_ball_conversion").toString());
 		}
 	}
 }

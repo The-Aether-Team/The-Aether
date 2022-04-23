@@ -26,7 +26,7 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
     private final BlockStateIngredient ingredient;
     private final BlockStateRecipeSerializer<?> serializer;
 
-    private BlockStateRecipeBuilder(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties, BlockStateIngredient ingredient, BlockStateRecipeSerializer<?> serializer) {
+    public BlockStateRecipeBuilder(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties, BlockStateIngredient ingredient, BlockStateRecipeSerializer<?> serializer) {
         this.resultBlock = resultBlock;
         this.resultProperties = resultProperties;
         this.ingredient = ingredient;
@@ -43,6 +43,22 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
 
     public static BlockStateRecipeBuilder recipe(BlockStateIngredient ingredient, Block resultBlock, BlockStateRecipeSerializer<?> serializer) {
         return new BlockStateRecipeBuilder(resultBlock, Map.of(), ingredient, serializer);
+    }
+
+    public BlockStateIngredient getIngredient() {
+        return this.ingredient;
+    }
+
+    public Block getResultBlock() {
+        return this.resultBlock;
+    }
+
+    public Map<Property<?>, Comparable<?>> getResultProperties() {
+        return this.resultProperties;
+    }
+
+    public BlockStateRecipeSerializer<?> getSerializer() {
+        return this.serializer;
     }
 
     @Nonnull
@@ -84,12 +100,12 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
         }
 
         @Override
-        public void serializeRecipeData(JsonObject pJson) {
-            pJson.add("ingredient", this.ingredient.toJson());
+        public void serializeRecipeData(JsonObject json) {
+            json.add("ingredient", this.ingredient.toJson());
             if (this.resultProperties.isEmpty()) {
-                pJson.add("result", BlockStateIngredient.of(this.resultBlock).toJson());
+                json.add("result", BlockStateIngredient.of(this.resultBlock).toJson());
             } else {
-                pJson.add("result", BlockStateIngredient.of(BlockPropertyPair.of(this.resultBlock, this.resultProperties)).toJson());
+                json.add("result", BlockStateIngredient.of(BlockPropertyPair.of(this.resultBlock, this.resultProperties)).toJson());
             }
         }
 

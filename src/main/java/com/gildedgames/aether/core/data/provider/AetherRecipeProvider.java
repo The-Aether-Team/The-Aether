@@ -2,11 +2,13 @@ package com.gildedgames.aether.core.data.provider;
 
 import com.gildedgames.aether.common.recipe.builder.AltarRepairBuilder;
 import com.gildedgames.aether.common.recipe.builder.BlockStateRecipeBuilder;
+import com.gildedgames.aether.common.recipe.builder.SwetBallRecipeBuilder;
 import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
 import com.gildedgames.aether.common.recipe.util.BlockPropertyPair;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.*;
 import net.minecraft.world.item.Item;
@@ -398,8 +400,12 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + result.asItem().getRegistryName(), has(result));
     }
 
-    public BlockStateRecipeBuilder test(Block result, Block ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.SWET_BALL.get());
+    public BlockStateRecipeBuilder swetBallConversion(Block result, Block ingredient) {
+        return SwetBallRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.SWET_BALL_CONVERSION.get());
+    }
+
+    public BlockStateRecipeBuilder swetBallConversionTag(Block result, Block ingredient, TagKey<Biome> tagKey) {
+        return SwetBallRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, tagKey, AetherRecipes.SWET_BALL_CONVERSION.get());
     }
 
     protected BlockPropertyPair pair(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {

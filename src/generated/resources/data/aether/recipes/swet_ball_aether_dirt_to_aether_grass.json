@@ -1,5 +1,5 @@
 {
-  "type": "aether:swet_ball",
+  "type": "aether:swet_ball_conversion",
   "ingredient": {
     "block": "aether:aether_dirt"
   },

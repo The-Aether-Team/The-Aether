@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 import net.minecraft.core.Registry;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.dimension.DimensionType;
@@ -121,6 +122,17 @@ public class AetherTags {
 
 		private static TagKey<Fluid> tag(String name) {
 			return TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Aether.MODID, name));
+		}
+	}
+
+	public static class Biomes {
+		public static final TagKey<Biome> MYCELIUM_CONVERSION = tag("mycelium_conversion");
+		public static final TagKey<Biome> PODZOL_CONVERSION = tag("podzol_conversion");
+		public static final TagKey<Biome> CRIMSON_NYLIUM_CONVERSION = tag("crimson_nylium_conversion");
+		public static final TagKey<Biome> WARPED_NYLIUM_CONVERSION = tag("warped_nylium_conversion");
+
+		private static TagKey<Biome> tag(String name) {
+			return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 

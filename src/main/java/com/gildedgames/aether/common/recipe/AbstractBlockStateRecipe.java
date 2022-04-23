@@ -29,7 +29,7 @@ public abstract class AbstractBlockStateRecipe implements BlockStateRecipe {
     }
 
     public boolean set(Level level, BlockPos pos, BlockState oldState) {
-        if (this.matches(oldState)) {
+        if (this.matches(level, pos, oldState)) {
             BlockState newState = this.getResultState(oldState);
             level.setBlockAndUpdate(pos, newState);
             return true;
@@ -37,7 +37,7 @@ public abstract class AbstractBlockStateRecipe implements BlockStateRecipe {
         return false;
     }
 
-    public boolean matches(BlockState state) {
+    public boolean matches(Level level, BlockPos pos, BlockState state) {
         return this.getIngredient().test(state);
     }
 
