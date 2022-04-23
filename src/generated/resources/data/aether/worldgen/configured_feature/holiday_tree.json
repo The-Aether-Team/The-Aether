@@ -6,6 +6,9 @@
           "entries": [
             {
               "data": {
+                "Properties": {
+                  "layers": "1"
+                },
                 "Name": "minecraft:snow"
               },
               "weight": 10

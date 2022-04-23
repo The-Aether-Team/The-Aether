@@ -2,11 +2,14 @@
   "feature": "aether:holiday_tree",
   "placement": [
     {
+      "type": "aether:holiday_filter"
+    },
+    {
       "count": 1,
       "type": "minecraft:count_on_every_layer"
     },
     {
-      "chance": 24,
+      "chance": 32,
       "type": "minecraft:rarity_filter"
     },
     {
