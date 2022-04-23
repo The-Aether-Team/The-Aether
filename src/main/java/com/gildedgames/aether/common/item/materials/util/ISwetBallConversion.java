@@ -1,8 +1,5 @@
 package com.gildedgames.aether.common.item.materials.util;
 
-import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
-import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
-import com.gildedgames.aether.common.recipe.AbstractBlockStateRecipe;
 import com.gildedgames.aether.common.recipe.SwetBallRecipe;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import net.minecraft.world.item.crafting.Recipe;
@@ -24,7 +21,6 @@ public interface ISwetBallConversion {
 
         for (Recipe<?> recipe : world.getRecipeManager().getAllRecipesFor(AetherRecipes.RecipeTypes.SWET_BALL_CONVERSION)) {
             if (recipe instanceof SwetBallRecipe swetBallRecipe) {
-
                 if (swetBallRecipe.set(player, world, pos, heldItem, oldBlockState)) {
                     if (player != null && !player.getAbilities().instabuild) {
                         heldItem.shrink(1);
