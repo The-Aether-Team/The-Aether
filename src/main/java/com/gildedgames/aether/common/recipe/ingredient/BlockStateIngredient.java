@@ -25,26 +25,18 @@ public class BlockStateIngredient implements Predicate<BlockState> {
     public static final BlockStateIngredient EMPTY = new BlockStateIngredient(Stream.empty());
     private final BlockStateIngredient.Value[] values;
     @Nullable
-    private List<Block> blocks;
+    private final List<Block> blocks;
     @Nullable
-    private List<Map<Property<?>, Comparable<?>>> properties;
+    private final List<Map<Property<?>, Comparable<?>>> properties;
 
     protected BlockStateIngredient(Stream<? extends BlockStateIngredient.Value> values) {
         this.values = values.toArray(Value[]::new);
-    }
-
-    private void dissolve() {
-        if (this.blocks == null) {
-            this.blocks = Arrays.stream(this.values).flatMap((values) -> values.getBlocks().stream()).toList();
-        }
-        if (this.properties == null) {
-            this.properties = Arrays.stream(this.values).flatMap((values) -> values.getProperties().stream()).toList();
-        }
+        this.blocks = Arrays.stream(this.values).flatMap((value) -> value.getBlocks().stream()).toList();
+        this.properties = Arrays.stream(this.values).flatMap((value) -> value.getProperties().stream()).toList();
     }
 
     @Override
     public boolean test(BlockState state) {
-        this.dissolve();
         if (this.blocks.size() == 0) {
             return state.isAir();
         } else {
@@ -77,13 +69,11 @@ public class BlockStateIngredient implements Predicate<BlockState> {
 
     @Nullable
     public List<Block> getBlocks() {
-        this.dissolve();
         return this.blocks;
     }
 
     @Nullable
     public List<Map<Property<?>, Comparable<?>>> getProperties() {
-        this.dissolve();
         return this.properties;
     }
 
@@ -112,7 +102,6 @@ public class BlockStateIngredient implements Predicate<BlockState> {
     }
 
     public final void toNetwork(FriendlyByteBuf buf) {
-        this.dissolve();
         buf.writeCollection(this.blocks, BlockStateRecipeUtil::writeBlock);
         buf.writeCollection(this.properties, BlockStateRecipeUtil::writeProperties);
     }

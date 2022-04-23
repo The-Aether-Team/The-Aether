@@ -1,0 +1,9 @@
+{
+  "type": "aether:swet_ball",
+  "ingredient": {
+    "block": "aether:aether_dirt"
+  },
+  "result": {
+    "block": "aether:aether_grass_block"
+  }
+}

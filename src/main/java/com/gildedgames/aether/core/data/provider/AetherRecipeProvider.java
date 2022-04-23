@@ -1,6 +1,8 @@
 package com.gildedgames.aether.core.data.provider;
 
 import com.gildedgames.aether.common.recipe.builder.AltarRepairBuilder;
+import com.gildedgames.aether.common.recipe.builder.BlockStateRecipeBuilder;
+import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
 import com.gildedgames.aether.common.recipe.util.BlockPropertyPair;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherTags;
@@ -394,6 +396,10 @@ public class AetherRecipeProvider extends RecipeProvider
     public SimpleCookingRecipeBuilder hiddenFreezingRecipe(ItemLike result, ItemLike ingredient, float exp, int duration) {
         return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipes.FREEZING.get())
                 .unlockedBy("has_" + result.asItem().getRegistryName(), has(result));
+    }
+
+    public BlockStateRecipeBuilder test(Block result, Block ingredient) {
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.SWET_BALL.get());
     }
 
     protected BlockPropertyPair pair(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {

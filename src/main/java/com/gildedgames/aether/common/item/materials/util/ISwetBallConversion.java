@@ -78,7 +78,7 @@ public interface ISwetBallConversion
         BlockState oldBlockState = world.getBlockState(pos);
         //BlockState newBlockState = oldBlockState;
 
-        for (Recipe<?> recipe : world.getRecipeManager().getAllRecipesFor(AetherRecipes.RecipeTypes.TEST)) {
+        for (Recipe<?> recipe : world.getRecipeManager().getAllRecipesFor(AetherRecipes.RecipeTypes.SWET_BALL)) {
             if (recipe instanceof AbstractBlockStateRecipe abstractBlockStateRecipe) {
                 if (abstractBlockStateRecipe.set(world, pos, oldBlockState)) {
                     if (player != null && !player.getAbilities().instabuild) {
