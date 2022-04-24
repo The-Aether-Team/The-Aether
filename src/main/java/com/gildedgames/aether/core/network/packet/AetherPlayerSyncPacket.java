@@ -31,10 +31,10 @@ public class AetherPlayerSyncPacket extends AbstractAetherPacket {
 
     @Override
     public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer && this.tag != null) {
             AetherPlayer.get(serverPlayer).ifPresent(aetherPlayer -> aetherPlayer.deserializeSynchableNBT(this.tag));
         } else {
-            if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().level.getEntity(this.playerID) instanceof Player player) {
+            if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().level.getEntity(this.playerID) instanceof Player player && this.tag != null) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.deserializeSynchableNBT(this.tag));
             }
         }
