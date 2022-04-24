@@ -155,6 +155,7 @@ public class AetherBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.GRASS_PATCH_PLACED_FEATURE.value()))
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.TALL_GRASS_PATCH_PLACED_FEATURE.value()))
                         ////   "aether:holiday_tree"
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.HOLIDAY_TREE_PLACED_FEATURE.value()))
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.FLOWER_PATCH_PLACED_FEATURE.value())) //this probably isnt ideal but it can be looked into later, and seems to only happen to vegetal_decorations.
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.CRYSTAL_ISLAND_PLACED_FEATURE.value()))
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.COLD_AERCLOUD_PLACED_FEATURE)

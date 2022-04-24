@@ -6,15 +6,19 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.world.builders.AetherFeatureBuilders;
 import com.gildedgames.aether.common.world.foliageplacer.CrystalFoliagePlacer;
+import com.gildedgames.aether.common.world.foliageplacer.HolidayFoliagePlacer;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import com.gildedgames.aether.common.world.gen.configuration.SimpleDiskConfiguration;
 import com.gildedgames.aether.common.world.gen.feature.AercloudFeature;
 import com.gildedgames.aether.common.world.gen.feature.CrystalIslandFeature;
 import com.gildedgames.aether.common.world.gen.feature.SimpleDiskFeature;
+import com.gildedgames.aether.common.world.gen.placement.ConfigFilter;
 import com.gildedgames.aether.common.world.gen.placement.ElevationAdjustment;
 import com.gildedgames.aether.common.world.gen.placement.ElevationFilter;
-import com.gildedgames.aether.common.world.gen.placement.ConfigFilter;
+import com.gildedgames.aether.common.world.gen.placement.HolidayFilter;
+import com.gildedgames.aether.common.world.treedecorator.HolidayTreeDecorator;
 import com.gildedgames.aether.core.AetherConfig;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -113,12 +117,15 @@ public class AetherFeatures {
                         new CrystalFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(6)),
                         new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build());
 
-//        public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> HOLIDAY_TREE_FEATURE_BASE = register("crystal_tree", new TreeConfiguration.TreeConfigurationBuilder(
-//                BlockStateProvider.simple(AetherFeatureDataProvider.getDoubleDrops(AetherBlocks.SKYROOT_LOG)),
-//                new StraightTrunkPlacer(7, 0, 0),
-//                new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(AetherBlocks.HOLIDAY_LEAVES.get().defaultBlockState(), 4).add(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get().defaultBlockState(), 1).build()),
-//                new HolidayFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(6)),
-//                new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build());
+        public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> HOLIDAY_TREE_CONFIGURED_FEATURE = register("holiday_tree", Feature.TREE,
+                new TreeConfiguration.TreeConfigurationBuilder(
+                        BlockStateProvider.simple(States.SKYROOT_LOG),
+                        new StraightTrunkPlacer(9, 0, 0),
+                        new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(States.HOLIDAY_LEAVES, 4).add(States.DECORATED_HOLIDAY_LEAVES, 1).build()),
+                        new HolidayFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(8)),
+                        new TwoLayersFeatureSize(1, 0, 1)).ignoreVines()
+                        .decorators(ImmutableList.of(new HolidayTreeDecorator(new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(States.SNOW, 10).add(States.PRESENT, 1).build()))))
+                        .build());
 
         public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> FLOWER_PATCH_CONFIGURED_FEATURE = register("flower_patch", Feature.FLOWER,
                 AetherFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
@@ -180,10 +187,15 @@ public class AetherFeatures {
 
         public static final Holder<PlacedFeature> CRYSTAL_ISLAND_PLACED_FEATURE = register("crystal_island", ConfiguredFeatures.CRYSTAL_ISLAND_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(),
-                HeightRangePlacement.uniform(VerticalAnchor.absolute(80), VerticalAnchor.absolute(100)),
-                RarityFilter.onAverageOnceEvery(8));
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(80), VerticalAnchor.absolute(120)),
+                RarityFilter.onAverageOnceEvery(16));
 
-        //public static final PlacedFeature HOLIDAY_TREE_FEATURE = HOLIDAY_TREE_FEATURE_BASE.placed(VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1F, 1), AetherBlocks.SKYROOT_SAPLING.get()));
+        // TODO: Somehow disable this when it's not Christmas
+        public static final Holder<PlacedFeature> HOLIDAY_TREE_PLACED_FEATURE = register("holiday_tree", ConfiguredFeatures.HOLIDAY_TREE_CONFIGURED_FEATURE,
+                new HolidayFilter(),
+                CountOnEveryLayerPlacement.of(1),
+                RarityFilter.onAverageOnceEvery(48),
+                AetherFeatureBuilders.copyBlockSurvivability(AetherBlocks.SKYROOT_SAPLING.get()));
 
         public static final Holder<PlacedFeature> FLOWER_PATCH_PLACED_FEATURE = register("flower_patch", ConfiguredFeatures.FLOWER_PATCH_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
@@ -258,6 +270,12 @@ public class AetherFeatures {
 
         public static final BlockState CRYSTAL_LEAVES = AetherBlocks.CRYSTAL_LEAVES.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
         public static final BlockState CRYSTAL_FRUIT_LEAVES = AetherBlocks.CRYSTAL_FRUIT_LEAVES.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
+
+        public static final BlockState HOLIDAY_LEAVES = AetherBlocks.HOLIDAY_LEAVES.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
+        public static final BlockState DECORATED_HOLIDAY_LEAVES = AetherBlocks.DECORATED_HOLIDAY_LEAVES.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
+        public static final BlockState SNOW = Blocks.SNOW.defaultBlockState();
+        public static final BlockState PRESENT = AetherBlocks.PRESENT.get().defaultBlockState();
+        public static final BlockState AIR = Blocks.AIR.defaultBlockState();
 
         public static final BlockState PURPLE_FLOWER = AetherBlocks.PURPLE_FLOWER.get().defaultBlockState();
         public static final BlockState WHITE_FLOWER = AetherBlocks.WHITE_FLOWER.get().defaultBlockState();

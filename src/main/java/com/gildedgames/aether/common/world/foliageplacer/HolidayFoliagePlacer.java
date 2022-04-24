@@ -4,9 +4,11 @@ import com.gildedgames.aether.common.registry.worldgen.AetherFoliagePlacerTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
@@ -35,37 +37,42 @@ public class HolidayFoliagePlacer extends FoliagePlacer {
         BlockPos blockpos = attachment.pos();
 
         int i = 0;
-        for(int l = offset; l >= offset - 5; --l) {
+        for(int l = offset; l >= offset - 7; --l) {
             switch (i) {
-                default -> this.placeLeavesRow(level, blockSetter, random, config, blockpos, 0, l, attachment.doubleTrunk());
+                default -> this.placeLeavesRow(level, blockSetter, random, config, blockpos, i, l, attachment.doubleTrunk());
                 case 1 -> this.placeLeavesRow(level, blockSetter, random, config, blockpos, 1, l, attachment.doubleTrunk());
-                case 2 -> this.placeLeavesRectangle(level, blockSetter, random, config, blockpos, 1, 1, l);
-                case 3 -> {
-                    this.placeLeavesRectangle(level, blockSetter, random, config, blockpos, 1, 1, l);
-                    this.placeLeavesRectangle(level, blockSetter, random, config, blockpos, 2, 0, l);
-                    this.placeLeavesRectangle(level, blockSetter, random, config, blockpos, 0, 2, l);
+                case 2 -> {
+                    this.placeLeavesRow(level, blockSetter, random, config, blockpos, 1, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, blockSetter, random, config, blockpos.east().north(), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, blockSetter, random, config, blockpos.west().north(), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, blockSetter, random, config, blockpos.east().south(), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, blockSetter, random, config, blockpos.west().south(), 0, l, attachment.doubleTrunk());
                 }
+                case 3 -> disk360(level, blockSetter, random, config, attachment.doubleTrunk(), blockpos, l, 1, 1);
                 case 4 -> {
-                    this.placeLeavesRectangle(level, blockSetter, random, config, blockpos, 2, 2, l);
-                    this.placeLeavesRectangle(level, blockSetter, random, config, blockpos, 3, 0, l);
-                    this.placeLeavesRectangle(level, blockSetter, random, config, blockpos, 0, 3, l);
+                    this.placeLeavesRow(level, blockSetter, random, config, blockpos, 2, l, attachment.doubleTrunk());
+                    disk360(level, blockSetter, random, config, attachment.doubleTrunk(), blockpos, l, 3, 0);
+                    this.placeLeavesRow(level, blockSetter, random, config, blockpos.east(2).north(2), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, blockSetter, random, config, blockpos.west(2).north(2), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, blockSetter, random, config, blockpos.east(2).south(2), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, blockSetter, random, config, blockpos.west(2).south(2), 0, l, attachment.doubleTrunk());
                 }
-                case 5 -> {
-                    this.placeLeavesRectangle(level, blockSetter, random, config, blockpos, 2, 2, l);
-                    this.placeLeavesRectangle(level, blockSetter, random, config, blockpos, 3, 1, l);
-                    this.placeLeavesRectangle(level, blockSetter, random, config, blockpos, 1, 3, l);
+                case 5 -> disk360(level, blockSetter, random, config, attachment.doubleTrunk(), blockpos, l, 1, 2);
+                case 6 -> {
+                    this.placeLeavesRow(level, blockSetter, random, config, blockpos, 3, l, attachment.doubleTrunk());
+                    disk360(level, blockSetter, random, config, attachment.doubleTrunk(), blockpos, l, 4, 0);
                 }
+                case 7 -> disk360(level, blockSetter, random, config, attachment.doubleTrunk(), blockpos, l, 2, 2);
             }
             ++i;
         }
     }
 
-    private void placeLeavesRectangle(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, Random random, TreeConfiguration config, BlockPos blockpos, int radiusX, int radiusZ, int offset) {
-        for (int i = -radiusX; i <= radiusX; i++) {
-            for (int j = -radiusZ; j <= radiusZ; j++) {
-                this.placeLeavesRow(level, blockSetter, random, config, blockpos.offset(i, 0, j), 0, offset, false);
-            }
-        }
+    private void disk360(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, Random random, TreeConfiguration config, boolean doubleTrunk, BlockPos blockpos, int height, int distance, int range) {
+        this.placeLeavesRow(level, blockSetter, random, config, blockpos.east(distance), range, height, doubleTrunk);
+        this.placeLeavesRow(level, blockSetter, random, config, blockpos.south(distance), range, height, doubleTrunk);
+        this.placeLeavesRow(level, blockSetter, random, config, blockpos.west(distance), range, height, doubleTrunk);
+        this.placeLeavesRow(level, blockSetter, random, config, blockpos.north(distance), range, height, doubleTrunk);
     }
 
     public int foliageHeight(Random random, int height, TreeConfiguration config) {

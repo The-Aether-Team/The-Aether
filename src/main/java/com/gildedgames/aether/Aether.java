@@ -10,6 +10,7 @@ import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.common.registry.worldgen.AetherBiomes;
 import com.gildedgames.aether.common.registry.worldgen.AetherFoliagePlacerTypes;
 import com.gildedgames.aether.common.registry.worldgen.AetherNoiseGeneratorSettings;
+import com.gildedgames.aether.common.registry.worldgen.AetherTreeDecoratorTypes;
 import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.*;
@@ -83,7 +84,8 @@ public class Aether
                 AetherRecipes.RECIPE_SERIALIZERS,
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherBiomes.BIOMES,
-                AetherFoliagePlacerTypes.FOLIAGE_PLACERS
+                AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
+                AetherTreeDecoratorTypes.TREE_DECORATORS
         };
 
         for (DeferredRegister<?> register : registers) {

@@ -107,6 +107,34 @@
         ]
       },
       {
+        "feature": "aether:holiday_tree",
+        "placement": [
+          {
+            "type": "aether:holiday_filter"
+          },
+          {
+            "count": 1,
+            "type": "minecraft:count_on_every_layer"
+          },
+          {
+            "chance": 48,
+            "type": "minecraft:rarity_filter"
+          },
+          {
+            "predicate": {
+              "state": {
+                "Properties": {
+                  "stage": "0"
+                },
+                "Name": "aether:skyroot_sapling"
+              },
+              "type": "minecraft:would_survive"
+            },
+            "type": "minecraft:block_predicate_filter"
+          }
+        ]
+      },
+      {
         "feature": "aether:flower_patch",
         "placement": [
           {
@@ -133,14 +161,14 @@
                 "absolute": 80
               },
               "max_inclusive": {
-                "absolute": 100
+                "absolute": 120
               },
               "type": "minecraft:uniform"
             },
             "type": "minecraft:height_range"
           },
           {
-            "chance": 8,
+            "chance": 16,
             "type": "minecraft:rarity_filter"
           }
         ]
