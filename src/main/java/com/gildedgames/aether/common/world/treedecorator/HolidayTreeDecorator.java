@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.world.treedecorator;
 
+import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.registry.worldgen.AetherTreeDecoratorTypes;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
@@ -59,7 +60,7 @@ public class HolidayTreeDecorator extends TreeDecorator {
         for(int i = 9; i >= -4; i--) {
             BlockPos blockpos = pPos.above(i);
             if (Feature.isAir(pLevel, blockpos.above())) {
-                if (!Feature.isAir(pLevel, blockpos) && !pLevel.isStateAtPosition(blockpos, HolidayTreeDecorator::isSnow) && Feature.isAir(pLevel, blockpos.above(4))) {
+                if ((pLevel.isStateAtPosition(blockpos, HolidayTreeDecorator::isAetherGrass) || pLevel.isStateAtPosition(blockpos, HolidayTreeDecorator::isLeaves) || Feature.isGrassOrDirt(pLevel, blockpos)) && Feature.isAir(pLevel, blockpos.above(4))) {
                     if (distance <= pRandom.nextFloat() / 2 * (1 - distance)) {
                         if (pLevel.isStateAtPosition(blockpos, HolidayTreeDecorator::isLeaves)) {
                             pBlockSetter.accept(blockpos.above(), Blocks.SNOW.defaultBlockState());
@@ -71,11 +72,9 @@ public class HolidayTreeDecorator extends TreeDecorator {
             }
         }
     }
-
-    private static boolean isSnow(BlockState state) {
-        return state == Blocks.SNOW.defaultBlockState();
+    private static boolean isAetherGrass(BlockState state) {
+        return state.is(AetherTags.Blocks.AETHER_DIRT);
     }
-
     private static boolean isLeaves(BlockState state) {
         return state.is(BlockTags.LEAVES);
     }
