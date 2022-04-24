@@ -124,7 +124,7 @@ public class AetherFeatures {
                         new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(States.HOLIDAY_LEAVES, 4).add(States.DECORATED_HOLIDAY_LEAVES, 1).build()),
                         new HolidayFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(8)),
                         new TwoLayersFeatureSize(1, 0, 1)).ignoreVines()
-                        .decorators(ImmutableList.of(new HolidayTreeDecorator(new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(States.SNOW, 10).add(States.PRESENT, 1).add(States.AIR, 1).build()))))
+                        .decorators(ImmutableList.of(new HolidayTreeDecorator(new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(States.SNOW, 10).add(States.PRESENT, 1).build()))))
                         .build());
 
         public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> FLOWER_PATCH_CONFIGURED_FEATURE = register("flower_patch", Feature.FLOWER,
@@ -194,7 +194,7 @@ public class AetherFeatures {
         public static final Holder<PlacedFeature> HOLIDAY_TREE_PLACED_FEATURE = register("holiday_tree", ConfiguredFeatures.HOLIDAY_TREE_CONFIGURED_FEATURE,
                 new HolidayFilter(),
                 CountOnEveryLayerPlacement.of(1),
-                RarityFilter.onAverageOnceEvery(32),
+                RarityFilter.onAverageOnceEvery(48),
                 AetherFeatureBuilders.copyBlockSurvivability(AetherBlocks.SKYROOT_SAPLING.get()));
 
         public static final Holder<PlacedFeature> FLOWER_PATCH_PLACED_FEATURE = register("flower_patch", ConfiguredFeatures.FLOWER_PATCH_CONFIGURED_FEATURE,

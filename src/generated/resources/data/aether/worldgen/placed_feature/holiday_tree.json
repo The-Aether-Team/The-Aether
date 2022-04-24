@@ -9,7 +9,7 @@
       "type": "minecraft:count_on_every_layer"
     },
     {
-      "chance": 32,
+      "chance": 48,
       "type": "minecraft:rarity_filter"
     },
     {
