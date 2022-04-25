@@ -30,7 +30,7 @@ public abstract class AbstractBlockStateRecipe implements BlockStateRecipe {
         this.resultProperties = resultProperties;
     }
 
-    public boolean set(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState) {
+    public boolean set(Level level, BlockPos pos, BlockState oldState, int flag) {
         if (this.matches(level, pos, oldState)) {
             BlockState newState = this.getResultState(oldState);
             level.setBlockAndUpdate(pos, newState);

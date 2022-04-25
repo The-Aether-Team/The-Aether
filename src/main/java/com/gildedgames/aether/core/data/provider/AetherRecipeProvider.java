@@ -408,6 +408,14 @@ public class AetherRecipeProvider extends RecipeProvider
         return SwetBallRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, tagKey, AetherRecipes.SWET_BALL_CONVERSION.get());
     }
 
+    public BlockStateRecipeBuilder icestoneFreezable(Block result, Block ingredient) {
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.ICESTONE_FREEZABLE.get());
+    }
+
+    public BlockStateRecipeBuilder accessoryFreezable(Block result, Block ingredient) {
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.ACCESSORY_FREEZABLE.get());
+    }
+
     protected BlockPropertyPair pair(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {
         return BlockPropertyPair.of(resultBlock, resultProperties);
     }

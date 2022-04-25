@@ -40,8 +40,7 @@ public class SwetBallRecipe extends AbstractBlockStateRecipe {
         this(id, ingredient, null, null, resultBlock, resultProperties);
     }
 
-    @Override
-    public boolean set(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState) {
+    public boolean convert(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState) {
         if (this.matches(level, pos, oldState)) {
             BlockState newState = this.getResultState(oldState);
             SwetBallConvertEvent event = AetherEventDispatch.onSwetBallConvert(player, level, pos, stack, oldState, newState);

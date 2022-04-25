@@ -733,6 +733,12 @@ public class AetherRecipeData extends AetherRecipeProvider
         swetBallConversionTag(Blocks.PODZOL, Blocks.GRASS_BLOCK, AetherTags.Biomes.PODZOL_CONVERSION).save(consumer, name("swet_ball_grass_to_podzol"));
         swetBallConversionTag(Blocks.CRIMSON_NYLIUM, Blocks.NETHERRACK, AetherTags.Biomes.CRIMSON_NYLIUM_CONVERSION).save(consumer, name("swet_ball_netherrack_to_crimson_nylium"));
         swetBallConversionTag(Blocks.WARPED_NYLIUM, Blocks.NETHERRACK, AetherTags.Biomes.WARPED_NYLIUM_CONVERSION).save(consumer, name("swet_ball_netherrack_to_warped_nylium"));
+
+        icestoneFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("icestone_freeze_water"));
+        icestoneFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("icestone_freeze_lava"));
+
+        accessoryFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("accessory_freeze_water"));
+        accessoryFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("accessory_freeze_lava"));
     }
 
     private ResourceLocation name(String name) {

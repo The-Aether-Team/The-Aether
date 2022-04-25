@@ -120,7 +120,6 @@ public class Aether
             AetherBlocks.registerShovelFlatteningBlocks();
             AetherBlocks.registerHoeTillingBlocks();
             AetherBlocks.registerFlammability();
-            AetherBlocks.registerFreezables();
 
             AetherEntityTypes.registerSpawnPlacements();
 

@@ -21,7 +21,7 @@ public interface ISwetBallConversion {
 
         for (Recipe<?> recipe : world.getRecipeManager().getAllRecipesFor(AetherRecipes.RecipeTypes.SWET_BALL_CONVERSION)) {
             if (recipe instanceof SwetBallRecipe swetBallRecipe) {
-                if (swetBallRecipe.set(player, world, pos, heldItem, oldBlockState)) {
+                if (swetBallRecipe.convert(player, world, pos, heldItem, oldBlockState)) {
                     if (player != null && !player.getAbilities().instabuild) {
                         heldItem.shrink(1);
                     }
@@ -37,7 +37,7 @@ public interface ISwetBallConversion {
 
         for (Recipe<?> recipe : world.getRecipeManager().getAllRecipesFor(AetherRecipes.RecipeTypes.SWET_BALL_CONVERSION)) {
             if (recipe instanceof SwetBallRecipe swetBallRecipe) {
-                if (swetBallRecipe.set(null, world, pos, null, oldBlockState)) {
+                if (swetBallRecipe.convert(null, world, pos, null, oldBlockState)) {
                     stack.shrink(1);
                     return true;
                 }
