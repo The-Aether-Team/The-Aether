@@ -294,9 +294,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addDiscDesc(AetherItems.MUSIC_DISC_AETHER_TUNE, "Noisestorm - Aether Tune");
         addItem(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Valkyrie Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Emile van Krieken - Ascending Dawn");
-        addItem(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "Welcoming Skies");
+        addItem(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "Frosted Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "Voyed - Welcoming Skies");
-        addItem(AetherItems.MUSIC_DISC_LEGACY, "Legacy");
+        addItem(AetherItems.MUSIC_DISC_LEGACY, "Duck Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_LEGACY, "Jon Lachney - Legacy");
 
         addItem(AetherItems.SKYROOT_BUCKET, "Skyroot Bucket");
