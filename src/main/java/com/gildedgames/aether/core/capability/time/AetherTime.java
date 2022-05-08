@@ -18,23 +18,9 @@ public interface AetherTime extends INBTSerializable<CompoundTag> {
     }
 
     /**
-     * Sends eternal day and Aether time values to the client.
-     */
-    void syncToClient();
-
-    void serverTick(ServerLevel world);
-
-    /**
      * Sends the eternal day value to the client.
      */
     void updateEternalDay();
     void setEternalDay(boolean isEternalDay);
     boolean getEternalDay();
-
-    /**
-     * Sends the Aether time value to the client.
-     */
-    void updateDayTime();
-    void setDayTime(long time);
-    long getDayTime();
 }

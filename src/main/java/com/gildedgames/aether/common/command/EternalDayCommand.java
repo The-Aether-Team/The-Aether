@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.command;
 
+import com.gildedgames.aether.common.world.AetherLevelData;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.mojang.brigadier.CommandDispatcher;
@@ -24,17 +25,23 @@ public class EternalDayCommand {
 
     public static int setEternalDay(CommandSourceStack stack, boolean value) {
         ServerLevel level = stack.getLevel();
-        AetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
-        aetherTime.setEternalDay(value);
-        aetherTime.updateEternalDay();
-        stack.sendSuccess(new TextComponent("Set eternal day to " + value), true);
+        if (level.getLevelData() instanceof AetherLevelData levelData) {
+            levelData.setEternalDay(value);
+            stack.sendSuccess(new TextComponent("Set eternal day to " + value), true);
+        }
+        else {
+            stack.sendFailure(new TextComponent("This dimension can't be influenced by eternal day!"));
+        }
         return 1;
     }
 
     public static int queryEternalDay(CommandSourceStack stack) {
         ServerLevel level = stack.getLevel();
-        AetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
-        stack.sendSuccess(new TextComponent("Eternal day is set to " + aetherTime.getEternalDay()), true);
+        if (level.getLevelData() instanceof AetherLevelData levelData) {
+            stack.sendSuccess(new TextComponent("Eternal day is set to " + levelData.getEternalDay()), true);
+        } else {
+            stack.sendFailure(new TextComponent("This dimension can't be influenced by eternal day!"));
+        }
         return 1;
     }
 }

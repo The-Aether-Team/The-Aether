@@ -3,6 +3,8 @@ package com.gildedgames.aether.common.event.hooks;
 import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import com.gildedgames.aether.common.world.AetherLevelData;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
@@ -21,12 +23,14 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BedBlock;
@@ -109,6 +113,31 @@ public class DimensionHooks {
         return false;
     }
 
+    /**
+     * Ticks time in dimensions with the Aether effects location.
+     */
+    public static void tickTime(Level level) {
+        if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location()) && level instanceof ServerLevel serverLevel) {
+            long i = serverLevel.levelData.getGameTime() + 1L;
+            serverLevel.serverLevelData.setGameTime(i);
+            serverLevel.serverLevelData.getScheduledEvents().tick(serverLevel.getServer(), i);
+            if (serverLevel.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+                if (((AetherLevelData)serverLevel.levelData).getEternalDay() && !AetherConfig.COMMON.disable_eternal_day.get()) {
+                    long dayTime = serverLevel.getDayTime();
+                    if (dayTime != 18000L) {
+                        long target = Mth.clamp(18000L - dayTime, -10, 10);
+                        serverLevel.setDayTime(dayTime + target);
+                    }
+                } else {
+                    serverLevel.setDayTime(serverLevel.levelData.getDayTime() + 1L);
+                }
+            }
+        }
+    }
+
+    /**
+     * This code is used to handle entities falling out of the Aether.
+     */
     public static void fallFromAether(Level level) {
         if (level instanceof ServerLevel serverLevel) {
             if (LevelUtil.inTag(serverLevel, AetherTags.Dimensions.FALL_TO_OVERWORLD)) {

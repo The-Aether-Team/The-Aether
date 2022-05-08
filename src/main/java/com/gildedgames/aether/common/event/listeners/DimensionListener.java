@@ -56,8 +56,13 @@ public class DimensionListener {
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         Level level = event.world;
-        if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
-            DimensionHooks.fallFromAether(level);
+        if (event.side == LogicalSide.SERVER) {
+            if (event.phase == TickEvent.Phase.START) {
+                DimensionHooks.tickTime(level);
+            }
+            else {
+                DimensionHooks.fallFromAether(level);
+            }
         }
     }
 
