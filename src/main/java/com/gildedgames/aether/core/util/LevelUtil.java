@@ -2,6 +2,7 @@ package com.gildedgames.aether.core.util;
 
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.DimensionTypeHolderPacket;
@@ -57,14 +58,5 @@ public class LevelUtil {
 
     public static List<TagKey<DimensionType>> getTags(Level level) {
         return level.dimensionTypeRegistration().getTagKeys().filter(tagKey -> tagKey.location().getNamespace().equals(Aether.MODID)).toList();
-    }
-
-    /**
-     * Use this method to check if the level's dimension type has the same namespace as the Aether's.
-     * @param level
-     * @return
-     */
-    public static boolean checkDimensionType(Level level) {
-        return level.dimensionTypeRegistration().unwrapKey().map(id -> id.equals(AetherDimensions.AETHER_DIMENSION_TYPE)).orElse(false);
     }
 }
