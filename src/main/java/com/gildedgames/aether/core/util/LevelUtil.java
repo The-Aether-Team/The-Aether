@@ -1,7 +1,7 @@
 package com.gildedgames.aether.core.util;
 
-import com.gildedgames.aether.common.registry.AetherTags;
-import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.DimensionTypeHolderPacket;
@@ -55,8 +55,8 @@ public class LevelUtil {
         return Boolean.TRUE.equals(tagTrackers.get(dimensionKey, tagKey));
     }
 
-    public static List<TagKey<DimensionType>> getTags() {
-        return tags;
+    public static List<TagKey<DimensionType>> getTags(Level level) {
+        return level.dimensionTypeRegistration().getTagKeys().filter(tagKey -> tagKey.location().getNamespace().equals(Aether.MODID)).toList();
     }
 
     /**
