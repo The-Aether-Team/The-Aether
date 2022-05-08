@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.util;
 
 import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.DimensionTypeHolderPacket;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class LevelUtil {
     private static final Table<ResourceKey<Level>, TagKey<DimensionType>, Boolean> tagTrackers = HashBasedTable.create();
-    private static final List<TagKey<DimensionType>> tags = List.of(AetherTags.Dimensions.HOSTILE_PARADISE, AetherTags.Dimensions.ULTRACOLD, AetherTags.Dimensions.ETERNAL_DAY, AetherTags.Dimensions.NO_WHEAT_SEEDS, AetherTags.Dimensions.FALL_TO_OVERWORLD, AetherTags.Dimensions.DISPLAY_TRAVEL_TEXT, AetherTags.Dimensions.AETHER_MUSIC);
+    private static final List<TagKey<DimensionType>> tags = List.of(AetherTags.Dimensions.HOSTILE_PARADISE, AetherTags.Dimensions.ULTRACOLD, AetherTags.Dimensions.NO_WHEAT_SEEDS, AetherTags.Dimensions.FALL_TO_OVERWORLD, AetherTags.Dimensions.DISPLAY_TRAVEL_TEXT, AetherTags.Dimensions.AETHER_MUSIC);
 
     public static ResourceKey<Level> destinationDimension() { //Default: aether:the_aether
         return ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(AetherConfig.COMMON.portalDestinationDimensionID.get()));
@@ -56,5 +57,14 @@ public class LevelUtil {
 
     public static List<TagKey<DimensionType>> getTags() {
         return tags;
+    }
+
+    /**
+     * Use this method to check if the level's dimension type has the same namespace as the Aether's.
+     * @param level
+     * @return
+     */
+    public static boolean checkDimensionType(Level level) {
+        return level.dimensionTypeRegistration().unwrapKey().map(id -> id.equals(AetherDimensions.AETHER_DIMENSION_TYPE)).orElse(false);
     }
 }

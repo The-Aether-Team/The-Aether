@@ -10,9 +10,10 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+@Deprecated
 @Mod.EventBusSubscriber
 public class AetherTimeListener {
-    @SubscribeEvent
+    /*@SubscribeEvent
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
         Player player = event.getPlayer();
         CapabilityHooks.AetherTimeHooks.login(player);
@@ -42,5 +43,5 @@ public class AetherTimeListener {
         if (event.phase == TickEvent.Phase.END) {
             CapabilityHooks.AetherTimeHooks.tick(level);
         }
-    }
+    }*/
 }

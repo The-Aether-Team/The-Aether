@@ -95,9 +95,10 @@ public class CapabilityHooks {
         }
     }
 
+    @Deprecated
     public static class AetherTimeHooks {
         // TODO Rebuild into a Level set
-        public static Level world;
+        /*public static Level world;
 
         public static void login(Player player) {
             syncAetherTime(player);
@@ -137,7 +138,7 @@ public class CapabilityHooks {
             if (level instanceof ServerLevel serverLevel && LevelUtil.inTag(level, AetherTags.Dimensions.ETERNAL_DAY)) {
                 AetherTime.get(serverLevel).ifPresent(aetherTime -> aetherTime.serverTick(serverLevel));
             }
-        }
+        }*/
     }
 
     public static class CapeEntityHooks {

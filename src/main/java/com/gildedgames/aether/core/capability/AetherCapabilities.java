@@ -79,11 +79,11 @@ public class AetherCapabilities {
 			}
 		}
 
-		@SubscribeEvent
+		/*@SubscribeEvent
 		public static void attachWorldCapabilities(AttachCapabilitiesEvent<Level> event) {
 			addTrackers(event.getObject());
 			event.addCapability(new ResourceLocation(Aether.MODID, "aether_time"), new AetherTimeProvider(new AetherTimeCapability(event.getObject())));
-		}
+		}*/
 
 		public static void addTrackers(Level level) {
 			if (!level.isClientSide()) {

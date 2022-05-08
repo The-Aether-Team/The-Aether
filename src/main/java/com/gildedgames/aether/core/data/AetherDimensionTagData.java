@@ -20,7 +20,6 @@ public class AetherDimensionTagData extends DimensionTagsProvider {
         tag(AetherTags.Dimensions.HOSTILE_PARADISE).add(AetherDimensions.AETHER_DIMENSION_TYPE);
 
         tag(AetherTags.Dimensions.ULTRACOLD).addTag(AetherTags.Dimensions.HOSTILE_PARADISE);
-        tag(AetherTags.Dimensions.ETERNAL_DAY).addTag(AetherTags.Dimensions.HOSTILE_PARADISE);
         tag(AetherTags.Dimensions.NO_WHEAT_SEEDS).addTag(AetherTags.Dimensions.HOSTILE_PARADISE);
         tag(AetherTags.Dimensions.FALL_TO_OVERWORLD).addTag(AetherTags.Dimensions.HOSTILE_PARADISE);
         tag(AetherTags.Dimensions.DISPLAY_TRAVEL_TEXT).addTag(AetherTags.Dimensions.HOSTILE_PARADISE).add(DimensionType.OVERWORLD_LOCATION);
