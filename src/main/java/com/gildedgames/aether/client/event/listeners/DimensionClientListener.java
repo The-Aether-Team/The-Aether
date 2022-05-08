@@ -4,6 +4,7 @@ import com.gildedgames.aether.client.event.hooks.DimensionClientHooks;
 import net.minecraft.client.Camera;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Triple;
@@ -25,6 +26,16 @@ public class DimensionClientListener {
             event.setRed(renderFog.getLeft());
             event.setGreen(renderFog.getMiddle());
             event.setBlue(renderFog.getRight());
+        }
+    }
+
+    /**
+     * Ticks time in clientside Aether levels.
+     */
+    @SubscribeEvent
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            DimensionClientHooks.tickTime();
         }
     }
 }

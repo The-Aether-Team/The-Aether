@@ -7,6 +7,7 @@ import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.common.world.AetherLevelData;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.AetherConfig;
+import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.AetherTravelPacket;
 import com.gildedgames.aether.core.network.packet.client.LeavingAetherPacket;
@@ -39,6 +40,7 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -122,12 +124,10 @@ public class DimensionHooks {
             serverLevel.serverLevelData.setGameTime(i);
             serverLevel.serverLevelData.getScheduledEvents().tick(serverLevel.getServer(), i);
             if (serverLevel.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
-                if (((AetherLevelData)serverLevel.levelData).getEternalDay() && !AetherConfig.COMMON.disable_eternal_day.get()) {
-                    long dayTime = serverLevel.getDayTime();
-                    if (dayTime != 18000L) {
-                        long target = Mth.clamp(18000L - dayTime, -10, 10);
-                        serverLevel.setDayTime(dayTime + target);
-                    }
+                // Eternal day code
+                LazyOptional<AetherTime> eternalDay = AetherTime.get(level);
+                if (eternalDay.isPresent() && eternalDay.orElse(null).getEternalDay() && !AetherConfig.COMMON.disable_eternal_day.get()) {
+                    serverLevel.setDayTime(eternalDay.orElse(null).correctTimeOfDay(serverLevel));
                 } else {
                     serverLevel.setDayTime(serverLevel.levelData.getDayTime() + 1L);
                 }

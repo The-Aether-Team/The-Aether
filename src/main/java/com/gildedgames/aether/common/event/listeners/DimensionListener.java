@@ -59,8 +59,7 @@ public class DimensionListener {
         if (event.side == LogicalSide.SERVER) {
             if (event.phase == TickEvent.Phase.START) {
                 DimensionHooks.tickTime(level);
-            }
-            else {
+            } else {
                 DimensionHooks.fallFromAether(level);
             }
         }
@@ -81,7 +80,7 @@ public class DimensionListener {
 
     /**
      * Initializes the Aether level data for time separate from the overworld.
-     * tickTime, serverLevelData, levelData are all access transformed.
+     * serverLevelData and levelData are access transformed.
      */
     @SubscribeEvent
     public static void onWorldLoad(WorldEvent.Load event) {
@@ -89,7 +88,6 @@ public class DimensionListener {
             AetherLevelData levelData = new AetherLevelData(level.getServer().getWorldData(), level.getServer().getWorldData().overworldData());
             level.serverLevelData = levelData;
             level.levelData = levelData;
-            level.tickTime = true;
         }
     }
 }

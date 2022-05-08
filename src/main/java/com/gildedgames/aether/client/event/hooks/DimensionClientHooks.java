@@ -1,9 +1,16 @@
 package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import com.gildedgames.aether.core.AetherConfig;
+import com.gildedgames.aether.core.capability.time.AetherTime;
 import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.material.FogType;
+import net.minecraftforge.common.util.LazyOptional;
 import org.apache.commons.lang3.tuple.Triple;
 
 public class DimensionClientHooks {
@@ -25,5 +32,24 @@ public class DimensionClientHooks {
             }
         }
         return Triple.of(null, null, null);
+    }
+
+    /**
+     * Ticks time in clientside Aether levels.
+     */
+    public static void tickTime() {
+        ClientLevel level = Minecraft.getInstance().level;
+        if (level != null && !Minecraft.getInstance().isPaused() && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+            if (level.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+                // Eternal day code
+                LazyOptional<AetherTime> eternalDay = AetherTime.get(level);
+                if (eternalDay.isPresent() && eternalDay.orElse(null).getEternalDay() && !AetherConfig.COMMON.disable_eternal_day.get()) {
+                    long dayTime = level.getDayTime();
+                    if (dayTime != 18000L) {
+                        level.setDayTime(eternalDay.orElse(null).correctTimeOfDay(level));
+                    }
+                }
+            }
+        }
     }
 }

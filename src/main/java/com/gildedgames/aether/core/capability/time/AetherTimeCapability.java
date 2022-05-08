@@ -3,6 +3,7 @@ package com.gildedgames.aether.core.capability.time;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.EternalDayPacket;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 
 /**
@@ -48,6 +49,20 @@ public class AetherTimeCapability implements AetherTime {
     @Override
     public boolean getEternalDay() {
         return this.isEternalDay;
+    }
+
+    @Override
+    public long correctTimeOfDay(Level level) {
+        long dayTime = level.getDayTime();
+        if (dayTime != 18000L) {
+            long tempTime = dayTime % 72000L;
+            if (tempTime > 54000L) {
+                tempTime -= 72000L;
+            }
+            long target = Mth.clamp(18000L - tempTime, -10, 10);
+            dayTime += target;
+        }
+        return dayTime;
     }
 
     @Override

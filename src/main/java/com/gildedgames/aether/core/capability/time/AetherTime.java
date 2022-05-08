@@ -2,7 +2,6 @@ package com.gildedgames.aether.core.capability.time;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -23,4 +22,5 @@ public interface AetherTime extends INBTSerializable<CompoundTag> {
     void updateEternalDay();
     void setEternalDay(boolean isEternalDay);
     boolean getEternalDay();
+    long correctTimeOfDay(Level level);
 }
