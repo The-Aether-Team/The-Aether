@@ -133,7 +133,7 @@ public class FloatingBlockEntity extends Entity {
                             boolean isAboveFree = FloatingBlock.isFree(this.level.getBlockState(blockPos1.above())) && (!isConcrete || !canConvert);
                             boolean canBlockSurvive = this.blockState.canSurvive(this.level, blockPos1) && !isAboveFree;
                             if (canBeReplaced && canBlockSurvive) {
-                                if (this.blockState.hasProperty(BlockStateProperties.WATERLOGGED) && this.level.getFluidState(blockPos1).getType() == Fluids.WATER) {
+                                if (this.blockState.hasProperty(BlockStateProperties.WATERLOGGED) && this.level.getFluidState(blockPos1).is(Fluids.WATER)) {
                                     this.blockState = this.blockState.setValue(BlockStateProperties.WATERLOGGED, true);
                                 }
 

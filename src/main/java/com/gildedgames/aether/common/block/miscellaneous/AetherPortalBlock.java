@@ -214,7 +214,7 @@ public class AetherPortalBlock extends Block
 		Level world = (Level) event.getWorld();
 		BlockState blockstate = world.getBlockState(pos);
 		FluidState fluidstate = world.getFluidState(pos);
-		if (fluidstate.getType() == Fluids.WATER && !blockstate.isAir()) {
+		if (fluidstate.is(Fluids.WATER) && !blockstate.isAir()) {
 			if (world.dimension() == LevelUtil.returnDimension() || world.dimension() == LevelUtil.destinationDimension()) {
 				boolean tryPortal = false;
 				for (Direction direction : Direction.values()) {
