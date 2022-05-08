@@ -189,6 +189,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "miscellaneous/");
         item(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "miscellaneous/");
         item(AetherItems.MUSIC_DISC_LEGACY, "miscellaneous/");
+        item(AetherItems.MUSIC_DISC_CHINCHILLA, "miscellaneous/");
 
         item(AetherItems.BOOK_OF_LORE, "miscellaneous/");
 
