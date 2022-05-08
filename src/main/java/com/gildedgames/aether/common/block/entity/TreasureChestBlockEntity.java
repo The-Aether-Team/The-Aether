@@ -263,7 +263,6 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     }
 
     protected void signalOpenCount(Level level, BlockPos pos, BlockState state, int p_155336_, int p_155337_) {
-        Block block = state.getBlock();
-        level.blockEvent(pos, block, 1, p_155337_);
+        level.blockEvent(pos, state.getBlock(), 1, p_155337_);
     }
 }

@@ -42,8 +42,7 @@ public class SkyrootBucketItem extends Item
             BlockPos blockpos1 = blockpos.relative(direction);
             if (worldIn.mayInteract(playerIn, blockpos) && playerIn.mayUseItemAt(blockpos1, direction, itemstack)) {
                 BlockState blockstate1 = worldIn.getBlockState(blockpos);
-                if (blockstate1.getBlock() instanceof BucketPickup) {
-                    BucketPickup bucketPickup = (BucketPickup)blockstate1.getBlock();
+                if (blockstate1.getBlock() instanceof BucketPickup bucketPickup) {
                     ItemStack itemStack1 = bucketPickup.pickupBlock(worldIn, blockpos, blockstate1);
                     if (itemStack1.is(Items.WATER_BUCKET)) {
                         playerIn.awardStat(Stats.ITEM_USED.get(this));

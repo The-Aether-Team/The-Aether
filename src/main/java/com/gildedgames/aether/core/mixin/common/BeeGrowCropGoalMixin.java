@@ -28,10 +28,9 @@ public class BeeGrowCropGoalMixin
         for (int i = 1; i <= 2; ++i) {
             BlockPos blockPos = this.bee.blockPosition().below(i);
             BlockState blockState = this.bee.level.getBlockState(blockPos);
-            Block block = blockState.getBlock();
             boolean isStem = false;
             if (blockState.is(BlockTags.BEE_GROWABLES)) {
-                if (block == AetherBlocks.BERRY_BUSH_STEM.get()) {
+                if (blockState.is(AetherBlocks.BERRY_BUSH_STEM.get())) {
                     isStem = true;
                 }
                 if (isStem) {

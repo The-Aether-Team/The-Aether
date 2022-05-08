@@ -81,7 +81,7 @@ public class AetherPortalBlock extends Block
 		Axis directionAxis = facing.getAxis();
 		Axis stateAxis = stateIn.getValue(AXIS);
 		boolean flag = stateAxis != directionAxis && directionAxis.isHorizontal();
-		return (!flag && facingState.getBlock() != this && !(new AetherPortalBlock.Size(worldIn, currentPos, stateAxis)).canCreatePortal()) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		return (!flag && !facingState.is(this) && !(new AetherPortalBlock.Size(worldIn, currentPos, stateAxis)).canCreatePortal()) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
 	@Override
@@ -153,7 +153,7 @@ public class AetherPortalBlock extends Block
 			double sZ = (rand.nextFloat() - 0.5) * 0.5;
 			int mul = rand.nextInt(2) * 2 - 1;
 
-			if (worldIn.getBlockState(pos.west()).getBlock() != this && worldIn.getBlockState(pos.east()).getBlock() != this) {
+			if (!worldIn.getBlockState(pos.west()).is(this) && !worldIn.getBlockState(pos.east()).is(this)) {
 				x = pos.getX() + 0.5 + 0.25 * mul;
 				sX = rand.nextFloat() * 2.0 * mul;
 			}
@@ -383,8 +383,7 @@ public class AetherPortalBlock extends Block
 						break outerloop;
 					}
 
-					Block block = blockstate.getBlock();
-					if (block == AetherBlocks.AETHER_PORTAL.get()) {
+					if (blockstate.is(AetherBlocks.AETHER_PORTAL.get())) {
 						++this.portalBlockCount;
 					}
 
@@ -424,8 +423,7 @@ public class AetherPortalBlock extends Block
 
 		@SuppressWarnings("deprecation")
 		protected boolean isEmptyBlock(BlockState pos) {
-			Block block = pos.getBlock();
-			return pos.isAir() || block == Blocks.WATER || block == AetherBlocks.AETHER_PORTAL.get();
+			return pos.isAir() || pos.is(Blocks.WATER) || pos.is(AetherBlocks.AETHER_PORTAL.get());
 		}
 
 		public boolean isValid() {

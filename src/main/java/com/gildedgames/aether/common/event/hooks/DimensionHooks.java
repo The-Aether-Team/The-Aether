@@ -51,14 +51,14 @@ public class DimensionHooks {
             }
 
             if (AetherConfig.COMMON.enable_bed_explosions.get()) {
-                if (state.is(BlockTags.BEDS) && state.getBlock() != AetherBlocks.SKYROOT_BED.get()) {
+                if (state.is(BlockTags.BEDS) && !state.is(AetherBlocks.SKYROOT_BED.get())) {
                     if (!level.isClientSide()) {
                         if (state.getValue(BedBlock.PART) != BedPart.HEAD) {
                             pos = pos.relative(state.getValue(BedBlock.FACING));
                             state = level.getBlockState(pos);
                         }
                         BlockPos blockpos = pos.relative(state.getValue(BedBlock.FACING).getOpposite());
-                        if (level.getBlockState(blockpos).is(BlockTags.BEDS) && level.getBlockState(blockpos).getBlock() != AetherBlocks.SKYROOT_BED.get()) {
+                        if (level.getBlockState(blockpos).is(BlockTags.BEDS) && !level.getBlockState(blockpos).is(AetherBlocks.SKYROOT_BED.get())) {
                             level.removeBlock(blockpos, false);
                         }
                         level.explode(null, DamageSource.badRespawnPointExplosion(), null, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, 5.0F, true, Explosion.BlockInteraction.DESTROY);

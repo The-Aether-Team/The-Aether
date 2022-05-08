@@ -43,8 +43,7 @@ public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRen
 	@Override
 	public void render(T blockEntity, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, int packedOverlay) {
 		BlockState blockState = blockEntity.getLevel() != null ? blockEntity.getBlockState() : AetherBlocks.CHEST_MIMIC.get().defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
-		Block block = blockState.getBlock();
-		if (block instanceof ChestMimicBlock) {
+		if (blockState.getBlock() instanceof ChestMimicBlock) {
 			poseStack.pushPose();
 			float f = blockState.getValue(ChestBlock.FACING).toYRot();
 			poseStack.translate(0.5D, 0.5D, 0.5D);

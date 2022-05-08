@@ -68,7 +68,7 @@ public class AetherFarmlandBlock extends FarmBlock
     private boolean isUnderCrops(BlockGetter p_176529_0_, BlockPos p_176529_1_) {
         BlockState plant = p_176529_0_.getBlockState(p_176529_1_.above());
         BlockState state = p_176529_0_.getBlockState(p_176529_1_);
-        return plant.getBlock() instanceof net.minecraftforge.common.IPlantable && state.canSustainPlant(p_176529_0_, p_176529_1_, Direction.UP, (net.minecraftforge.common.IPlantable)plant.getBlock());
+        return plant.getBlock() instanceof net.minecraftforge.common.IPlantable plantable && state.canSustainPlant(p_176529_0_, p_176529_1_, Direction.UP, plantable);
     }
 
     private static boolean isNearWater(LevelReader p_176530_0_, BlockPos p_176530_1_) {
