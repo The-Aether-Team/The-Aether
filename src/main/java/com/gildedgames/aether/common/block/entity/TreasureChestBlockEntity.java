@@ -191,7 +191,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     public boolean tryUnlock(Player player) {
         ItemStack stack = player.getMainHandItem();
-        boolean keyMatches = stack.getItem() instanceof DungeonKeyItem && this.getKind().equals(((DungeonKeyItem) stack.getItem()).getDungeonType().getRegistryName());
+        boolean keyMatches = stack.getItem() instanceof DungeonKeyItem dungeonKeyItem && this.getKind().equals(dungeonKeyItem.getDungeonType().getRegistryName());
         if (this.getLocked() && keyMatches && this.getLevel() != null) {
             this.setLocked(false);
             this.getLevel().markAndNotifyBlock(this.worldPosition, this.getLevel().getChunkAt(this.worldPosition), this.getBlockState(), this.getBlockState(), 2, 512);
@@ -263,7 +263,6 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     }
 
     protected void signalOpenCount(Level level, BlockPos pos, BlockState state, int p_155336_, int p_155337_) {
-        Block block = state.getBlock();
-        level.blockEvent(pos, block, 1, p_155337_);
+        level.blockEvent(pos, state.getBlock(), 1, p_155337_);
     }
 }

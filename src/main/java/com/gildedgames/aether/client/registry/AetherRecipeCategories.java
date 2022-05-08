@@ -38,7 +38,7 @@ public class AetherRecipeCategories {
         RecipeBookRegistry.addCategoriesToType(AetherRecipeBookTypes.ALTAR, ImmutableList.of(ENCHANTING_SEARCH.get(), ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
         RecipeBookRegistry.addAggregateCategories(ENCHANTING_SEARCH.get(), ImmutableList.of(ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
         RecipeBookRegistry.addCategoriesFinder(AetherRecipes.RecipeTypes.ENCHANTING, recipe -> {
-            if (recipe.getIngredients().get(0).getItems()[0].getItem() == recipe.getResultItem().getItem()) {
+            if (recipe.getIngredients().get(0).getItems()[0].is(recipe.getResultItem().getItem())) {
                 return ENCHANTING_REPAIR.get();
             }
             if (recipe.getResultItem().isEdible()) {

@@ -47,13 +47,13 @@ public interface PhoenixArmor {
             for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
                 if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
                     ItemStack equippedStack = entity.getItemBySlot(equipmentSlot);
-                    if (equippedStack.getItem() == AetherItems.PHOENIX_HELMET.get()) {
+                    if (equippedStack.is(AetherItems.PHOENIX_HELMET.get())) {
                         breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_HELMET.get()), equipmentSlot);
-                    } else if (equippedStack.getItem() == AetherItems.PHOENIX_CHESTPLATE.get()) {
+                    } else if (equippedStack.is(AetherItems.PHOENIX_CHESTPLATE.get())) {
                         breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_CHESTPLATE.get()), equipmentSlot);
-                    } else if (equippedStack.getItem() == AetherItems.PHOENIX_LEGGINGS.get()) {
+                    } else if (equippedStack.is(AetherItems.PHOENIX_LEGGINGS.get())) {
                         breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_LEGGINGS.get()), equipmentSlot);
-                    } else if (equippedStack.getItem() == AetherItems.PHOENIX_BOOTS.get()) {
+                    } else if (equippedStack.is(AetherItems.PHOENIX_BOOTS.get())) {
                         breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_BOOTS.get()), equipmentSlot);
                     }
                 }
