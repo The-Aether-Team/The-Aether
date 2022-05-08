@@ -49,7 +49,7 @@ public class AbilityHooks {
 
     public static class ArmorHooks {
         public static boolean fallCancellation(LivingEntity entity) {
-            return entity.getItemBySlot(EquipmentSlot.FEET).getItem() == AetherItems.SENTRY_BOOTS.get() || EquipmentUtil.hasFullGravititeSet(entity) || EquipmentUtil.hasFullValkyrieSet(entity);
+            return entity.getItemBySlot(EquipmentSlot.FEET).is(AetherItems.SENTRY_BOOTS.get()) || EquipmentUtil.hasFullGravititeSet(entity) || EquipmentUtil.hasFullValkyrieSet(entity);
         }
     }
 

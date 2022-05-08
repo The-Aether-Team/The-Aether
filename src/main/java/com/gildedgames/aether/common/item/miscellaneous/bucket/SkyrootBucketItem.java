@@ -45,7 +45,7 @@ public class SkyrootBucketItem extends Item
                 if (blockstate1.getBlock() instanceof BucketPickup) {
                     BucketPickup bucketPickup = (BucketPickup)blockstate1.getBlock();
                     ItemStack itemStack1 = bucketPickup.pickupBlock(worldIn, blockpos, blockstate1);
-                    if (itemStack1.getItem() == Items.WATER_BUCKET) {
+                    if (itemStack1.is(Items.WATER_BUCKET)) {
                         playerIn.awardStat(Stats.ITEM_USED.get(this));
                         SoundEvent soundevent = SoundEvents.BUCKET_FILL;
                         playerIn.playSound(soundevent, 1.0F, 1.0F);

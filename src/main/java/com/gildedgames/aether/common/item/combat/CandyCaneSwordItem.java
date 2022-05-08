@@ -19,7 +19,7 @@ public class CandyCaneSwordItem extends SwordItem
 
     @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return repair.getItem() == AetherItems.CANDY_CANE.get();
+        return repair.is(AetherItems.CANDY_CANE.get());
     }
 
     @Override

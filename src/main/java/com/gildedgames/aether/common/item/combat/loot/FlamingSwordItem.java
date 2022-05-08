@@ -32,7 +32,7 @@ public class FlamingSwordItem extends SwordItem
 	public static void onEntityAttack(AttackEntityEvent event) {
 		Player player = event.getPlayer();
 		Entity target = event.getTarget();
-		if (player.getMainHandItem().getItem() == AetherItems.FLAMING_SWORD.get()) {
+		if (player.getMainHandItem().is(AetherItems.FLAMING_SWORD.get())) {
 			if (target.isAttackable() && !target.skipAttackInteraction(player)) {
 				if (target instanceof LivingEntity) {
 					int defaultTime = 30;
