@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.event.listeners;
 import com.gildedgames.aether.common.event.events.AetherBannedItemEvent;
 import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import com.gildedgames.aether.common.world.AetherLevelData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -73,10 +74,17 @@ public class DimensionListener {
         DimensionHooks.syncTrackersFromServer(player);
     }
 
+    /**
+     * Initializes the Aether level data for time separate from the overworld.
+     * tickTime, serverLevelData, levelData are all access transformed.
+     */
     @SubscribeEvent
     public static void onWorldLoad(WorldEvent.Load event) {
         if (event.getWorld() instanceof ServerLevel level && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
-
+            AetherLevelData levelData = new AetherLevelData(level.getServer().getWorldData(), level.getServer().getWorldData().overworldData());
+            level.serverLevelData = levelData;
+            level.levelData = levelData;
+            level.tickTime = true;
         }
     }
 }

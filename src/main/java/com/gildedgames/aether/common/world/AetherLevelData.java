@@ -1,15 +1,18 @@
 package com.gildedgames.aether.common.world;
 
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.storage.DerivedLevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
 import net.minecraft.world.level.storage.WorldData;
+
+import javax.annotation.Nonnull;
 
 public class AetherLevelData extends DerivedLevelData {
     private final WorldData worldData;
     private final ServerLevelData wrapped;
 
-    private long dayTime;
-    private boolean eternalDay;
+    private long dayTime = 0;
+    private boolean eternalDay = false;
 
     public AetherLevelData(WorldData worldData, ServerLevelData levelData) {
         super(worldData, levelData);
@@ -48,5 +51,14 @@ public class AetherLevelData extends DerivedLevelData {
 
     public void setEternalDay(boolean pEternalDay) {
         this.eternalDay = pEternalDay;
+    }
+
+    /**
+     * Gets the GameRules class Instance.
+     */
+    @Override
+    @Nonnull
+    public GameRules getGameRules() {
+        return wrapped.getGameRules();
     }
 }
