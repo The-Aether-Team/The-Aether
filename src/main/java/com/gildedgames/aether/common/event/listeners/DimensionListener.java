@@ -4,6 +4,7 @@ import com.gildedgames.aether.common.event.events.AetherBannedItemEvent;
 import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.common.world.AetherLevelData;
+import com.gildedgames.aether.core.capability.time.AetherTime;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -57,9 +59,8 @@ public class DimensionListener {
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         Level level = event.world;
         if (event.side == LogicalSide.SERVER) {
-            if (event.phase == TickEvent.Phase.START) {
+            if (event.phase == TickEvent.Phase.END) {
                 DimensionHooks.tickTime(level);
-            } else {
                 DimensionHooks.fallFromAether(level);
             }
         }
@@ -85,9 +86,11 @@ public class DimensionListener {
     @SubscribeEvent
     public static void onWorldLoad(WorldEvent.Load event) {
         if (event.getWorld() instanceof ServerLevel level && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
-            AetherLevelData levelData = new AetherLevelData(level.getServer().getWorldData(), level.getServer().getWorldData().overworldData());
-            level.serverLevelData = levelData;
-            level.levelData = levelData;
+            AetherTime.get(level).ifPresent(cap -> {
+                AetherLevelData levelData = new AetherLevelData(level.getServer().getWorldData(), level.getServer().getWorldData().overworldData(), cap.getDayTime());
+                level.serverLevelData = levelData;
+                level.levelData = levelData;
+            });
         }
     }
 }

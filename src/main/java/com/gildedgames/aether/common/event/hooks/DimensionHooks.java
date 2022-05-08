@@ -4,7 +4,6 @@ import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
-import com.gildedgames.aether.common.world.AetherLevelData;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.time.AetherTime;
@@ -24,7 +23,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -124,13 +122,7 @@ public class DimensionHooks {
             serverLevel.serverLevelData.setGameTime(i);
             serverLevel.serverLevelData.getScheduledEvents().tick(serverLevel.getServer(), i);
             if (serverLevel.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
-                // Eternal day code
-                LazyOptional<AetherTime> eternalDay = AetherTime.get(level);
-                if (eternalDay.isPresent() && eternalDay.orElse(null).getEternalDay() && !AetherConfig.COMMON.disable_eternal_day.get()) {
-                    serverLevel.setDayTime(eternalDay.orElse(null).correctTimeOfDay(serverLevel));
-                } else {
-                    serverLevel.setDayTime(serverLevel.levelData.getDayTime() + 1L);
-                }
+                AetherTime.get(level).ifPresent(cap -> serverLevel.setDayTime(cap.tickTime(level)));
             }
         }
     }

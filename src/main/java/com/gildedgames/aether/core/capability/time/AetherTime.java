@@ -16,11 +16,14 @@ public interface AetherTime extends INBTSerializable<CompoundTag> {
         return world.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY);
     }
 
+    void setDayTime(long time);
+    long getDayTime();
+
     /**
      * Sends the eternal day value to the client.
      */
     void updateEternalDay();
     void setEternalDay(boolean isEternalDay);
     boolean getEternalDay();
-    long correctTimeOfDay(Level level);
+    long tickTime(Level level);
 }

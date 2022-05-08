@@ -12,13 +12,13 @@ public class AetherLevelData extends DerivedLevelData {
     private final ServerLevelData wrapped;
     private final WrappedGameRules gameRules;
 
-    private long dayTime = 0;
-    private boolean eternalDay = false;
+    private long dayTime;
 
-    public AetherLevelData(WorldData worldData, ServerLevelData levelData) {
+    public AetherLevelData(WorldData worldData, ServerLevelData levelData, long dayTime) {
         super(worldData, levelData);
         this.wrapped = levelData;
         this.gameRules = new WrappedGameRules(worldData.getGameRules(), ImmutableSet.of(GameRules.RULE_WEATHER_CYCLE));
+        this.dayTime = dayTime;
     }
 
     @Override
@@ -44,14 +44,6 @@ public class AetherLevelData extends DerivedLevelData {
     @Override
     public void setThundering(boolean pThundering) {
         this.wrapped.setThundering(pThundering);
-    }
-
-    public boolean getEternalDay() {
-        return this.eternalDay;
-    }
-
-    public void setEternalDay(boolean pEternalDay) {
-        this.eternalDay = pEternalDay;
     }
 
     /**

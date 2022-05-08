@@ -7,10 +7,8 @@ import com.gildedgames.aether.core.capability.time.AetherTime;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.material.FogType;
-import net.minecraftforge.common.util.LazyOptional;
 import org.apache.commons.lang3.tuple.Triple;
 
 public class DimensionClientHooks {
@@ -41,14 +39,7 @@ public class DimensionClientHooks {
         ClientLevel level = Minecraft.getInstance().level;
         if (level != null && !Minecraft.getInstance().isPaused() && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
             if (level.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
-                // Eternal day code
-                LazyOptional<AetherTime> eternalDay = AetherTime.get(level);
-                if (eternalDay.isPresent() && eternalDay.orElse(null).getEternalDay() && !AetherConfig.COMMON.disable_eternal_day.get()) {
-                    long dayTime = level.getDayTime();
-                    if (dayTime != 18000L) {
-                        level.setDayTime(eternalDay.orElse(null).correctTimeOfDay(level));
-                    }
-                }
+                AetherTime.get(level).ifPresent(cap -> level.setDayTime(cap.tickTime(level) - 1)); // The client always increments time by 1 every tick.
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.gildedgames.aether.core.capability.time;
 
+import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.EternalDayPacket;
 import net.minecraft.nbt.CompoundTag;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.Level;
  */
 public class AetherTimeCapability implements AetherTime {
     private final Level level;
+    private long dayTime = 0;
     private boolean isEternalDay = true;
 
     public AetherTimeCapability(Level level) {
@@ -22,15 +24,29 @@ public class AetherTimeCapability implements AetherTime {
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
+        tag.putLong("dayTime", this.level.getDayTime());
         tag.putBoolean("EternalDay", this.getEternalDay());
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag tag) {
+        if (tag.contains("dayTime")) {
+            this.setDayTime(tag.getLong("dayTime"));
+        }
         if (tag.contains("EternalDay")) {
             this.setEternalDay(tag.getBoolean("EternalDay"));
         }
+    }
+
+    @Override
+    public void setDayTime(long time) {
+        this.dayTime = time;
+    }
+
+    @Override
+    public long getDayTime() {
+        return this.dayTime;
     }
 
     /**
@@ -51,16 +67,23 @@ public class AetherTimeCapability implements AetherTime {
         return this.isEternalDay;
     }
 
+    /**
+     * Used to increment the time in Aether levels.
+     */
     @Override
-    public long correctTimeOfDay(Level level) {
+    public long tickTime(Level level) {
         long dayTime = level.getDayTime();
-        if (dayTime != 18000L) {
-            long tempTime = dayTime % 72000L;
-            if (tempTime > 54000L) {
-                tempTime -= 72000L;
+        if (this.getEternalDay() && !AetherConfig.COMMON.disable_eternal_day.get()) {
+            if (dayTime != 18000L) {
+                long tempTime = dayTime % 72000L;
+                if (tempTime > 54000L) {
+                    tempTime -= 72000L;
+                }
+                long target = Mth.clamp(18000L - tempTime, -10, 10);
+                dayTime += target;
             }
-            long target = Mth.clamp(18000L - tempTime, -10, 10);
-            dayTime += target;
+        } else {
+            dayTime++;
         }
         return dayTime;
     }
