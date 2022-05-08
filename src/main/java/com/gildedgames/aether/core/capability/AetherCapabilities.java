@@ -87,7 +87,7 @@ public class AetherCapabilities {
 
 		public static void addTrackers(Level level) {
 			if (!level.isClientSide()) {
-				for (TagKey<DimensionType> tag : LevelUtil.getTags()) {
+				for (TagKey<DimensionType> tag : LevelUtil.getTags(level)) {
 					LevelUtil.addTracker(level, tag);
 				}
 			}

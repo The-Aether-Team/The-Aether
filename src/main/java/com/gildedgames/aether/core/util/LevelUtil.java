@@ -1,6 +1,5 @@
 package com.gildedgames.aether.core.util;
 
-import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.DimensionTypeHolderPacket;
@@ -17,7 +16,6 @@ import java.util.List;
 
 public class LevelUtil {
     private static final Table<ResourceKey<Level>, TagKey<DimensionType>, Boolean> tagTrackers = HashBasedTable.create();
-    private static final List<TagKey<DimensionType>> tags = List.of(AetherTags.Dimensions.HOSTILE_PARADISE, AetherTags.Dimensions.ULTRACOLD, AetherTags.Dimensions.ETERNAL_DAY, AetherTags.Dimensions.NO_WHEAT_SEEDS, AetherTags.Dimensions.FALL_TO_OVERWORLD, AetherTags.Dimensions.DISPLAY_TRAVEL_TEXT, AetherTags.Dimensions.AETHER_MUSIC);
 
     public static ResourceKey<Level> destinationDimension() { //Default: aether:the_aether
         return ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(AetherConfig.COMMON.portalDestinationDimensionID.get()));
@@ -54,7 +52,7 @@ public class LevelUtil {
         return Boolean.TRUE.equals(tagTrackers.get(dimensionKey, tagKey));
     }
 
-    public static List<TagKey<DimensionType>> getTags() {
-        return tags;
+    public static List<TagKey<DimensionType>> getTags(Level level) {
+        return level.dimensionTypeRegistration().getTagKeys().toList();
     }
 }
