@@ -6,6 +6,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 
@@ -65,8 +66,14 @@ public class Parachute extends Entity {
             double z = this.parachuteSpeed * (passengerVec.z() * 12.0);
             this.setDeltaMovement(parachuteVec.add((new Vec3(x, 0.0D, z)).subtract(parachuteVec).scale(0.2)));
             Vec3 parachuteVec2 = this.getDeltaMovement();
-            double fallSpeed = passenger instanceof LivingEntity livingEntity && livingEntity.hasEffect(MobEffects.SLOW_FALLING) ? -0.075 : -0.15;
-            this.setDeltaMovement(parachuteVec2.x(), fallSpeed, parachuteVec2.z());
+
+            if (passenger instanceof LivingEntity livingEntity) {
+                AttributeInstance gravity = livingEntity.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+                if (gravity != null) {
+                    double fallSpeed = Math.max(gravity.getValue() * -1.875, -0.075);
+                    this.setDeltaMovement(parachuteVec2.x(), fallSpeed, parachuteVec2.z());
+                }
+            }
         }
     }
 

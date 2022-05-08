@@ -34,6 +34,7 @@ public class AetherPacketHandler {
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
 		register(DimensionTypeHolderPacket.class, DimensionTypeHolderPacket::decode);
 		register(EternalDayPacket.class, EternalDayPacket::decode);
+		register(ExplosionParticlePacket.class, ExplosionParticlePacket::decode);
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
@@ -46,6 +47,7 @@ public class AetherPacketHandler {
 		register(ZephyrSnowballHitPacket.class, ZephyrSnowballHitPacket::decode);
 
 		// SERVER
+		register(AerbunnyPuffPacket.class, AerbunnyPuffPacket::decode);
 		register(ExtendedAttackPacket.class, ExtendedAttackPacket::decode);
 		register(HittingPacket.class, HittingPacket::decode);
 		register(JumpPacket.class, JumpPacket::decode);

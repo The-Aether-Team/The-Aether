@@ -184,7 +184,7 @@ public class DimensionHooks {
         Level level = player.getLevel();
         if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
             for (ServerLevel dimension : serverLevel.getServer().getAllLevels()) {
-                for (TagKey<DimensionType> tag : LevelUtil.getTags()) {
+                for (TagKey<DimensionType> tag : LevelUtil.getTags(level)) {
                     LevelUtil.syncTrackerFromServer(dimension, tag);
                 }
             }

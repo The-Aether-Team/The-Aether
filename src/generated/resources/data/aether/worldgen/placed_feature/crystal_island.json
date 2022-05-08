@@ -10,14 +10,14 @@
           "absolute": 80
         },
         "max_inclusive": {
-          "absolute": 100
+          "absolute": 120
         },
         "type": "minecraft:uniform"
       },
       "type": "minecraft:height_range"
     },
     {
-      "chance": 8,
+      "chance": 16,
       "type": "minecraft:rarity_filter"
     }
   ]

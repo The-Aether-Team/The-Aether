@@ -102,8 +102,8 @@ public class AetherBlocks
     public static final RegistryObject<Block> BERRY_BUSH = register("berry_bush", () -> new BerryBushBlock(Block.Properties.of(Material.PLANT, MaterialColor.GRASS).strength(0.2F).sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never)));
     public static final RegistryObject<Block> BERRY_BUSH_STEM = register("berry_bush_stem", () -> new BerryBushStemBlock(Block.Properties.of(Material.PLANT, MaterialColor.GRASS).strength(0.2F).sound(SoundType.GRASS).noCollission()));
 
-    public static final RegistryObject<Block> PURPLE_FLOWER = register("purple_flower", () -> new FlowerBlock(MobEffects.SLOW_FALLING, 4, Block.Properties.copy(Blocks.DANDELION)));
-    public static final RegistryObject<Block> WHITE_FLOWER = register("white_flower", () -> new AetherFlowerBlock(AetherEffects.INEBRIATION, 12, Block.Properties.copy(Blocks.DANDELION)));
+    public static final RegistryObject<Block> PURPLE_FLOWER = register("purple_flower", () -> new AetherFlowerBlock(AetherEffects.INEBRIATION, 12, Block.Properties.copy(Blocks.DANDELION)));
+    public static final RegistryObject<Block> WHITE_FLOWER = register("white_flower", () -> new FlowerBlock(MobEffects.SLOW_FALLING, 4, Block.Properties.copy(Blocks.DANDELION)));
     public static final RegistryObject<FlowerPotBlock> POTTED_PURPLE_FLOWER = BLOCKS.register("potted_purple_flower", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, PURPLE_FLOWER, Block.Properties.copy(Blocks.FLOWER_POT)));
     public static final RegistryObject<FlowerPotBlock> POTTED_WHITE_FLOWER = BLOCKS.register("potted_white_flower", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, WHITE_FLOWER, Block.Properties.copy(Blocks.FLOWER_POT)));
 

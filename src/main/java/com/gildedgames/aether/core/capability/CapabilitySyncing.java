@@ -11,16 +11,24 @@ public abstract class CapabilitySyncing implements INBTSynchable<CompoundTag> {
     private boolean isDirty = false;
 
     public void updateSyncableNBTFromServer(Level level) {
+        this.updateSyncableNBTFromServer(level, false);
+    }
+
+    public void updateSyncableNBTFromServer(Level level, boolean force) {
         if (!level.isClientSide()) {
-            if (this.canSendPacket()) {
+            if (this.canSendPacket() || force) {
                 AetherPacketHandler.sendToAll(getSyncPacket(this.getStoredTag()));
             }
         }
     }
 
     public void updateSyncableNBTFromClient(Level level) {
+        this.updateSyncableNBTFromClient(level, false);
+    }
+
+    public void updateSyncableNBTFromClient(Level level, boolean force) {
         if (level.isClientSide()) {
-            if (this.canSendPacket()) {
+            if (this.canSendPacket() || force) {
                 AetherPacketHandler.sendToServer(getSyncPacket(this.getStoredTag()));
             }
         }
