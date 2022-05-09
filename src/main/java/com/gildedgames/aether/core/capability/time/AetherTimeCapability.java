@@ -8,9 +8,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 
 /**
- * Capability class to handle the Aether's custom day/night cycle.
- * This class makes the day/night cycle longer depending on the time factor, and handles eternal day.
- * This capability should ONLY be attached to the Aether dimension!!!
+ * Capability class to store data for the Aether's custom day/night cycle.
+ * This capability only has an effect on levels where the dimension type's effects are set to the Aether's.
  */
 public class AetherTimeCapability implements AetherTime {
     private final Level level;

@@ -1,22 +1,14 @@
 package com.gildedgames.aether.common.event.hooks;
 
-import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.cape.CapeEntity;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.capability.player.AetherPlayerCapability;
 import com.gildedgames.aether.core.capability.rankings.AetherRankings;
 import com.gildedgames.aether.core.capability.rankings.AetherRankingsCapability;
-import com.gildedgames.aether.core.capability.time.AetherTime;
-import com.gildedgames.aether.core.util.AetherSleepStatus;
-import com.gildedgames.aether.core.util.LevelUtil;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 
 public class CapabilityHooks {
     public static class AetherPlayerHooks {
