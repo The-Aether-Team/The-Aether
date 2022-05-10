@@ -38,7 +38,6 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -127,7 +126,7 @@ public class DimensionHooks {
     }
 
     /**
-     * This code is used to handle entities falling out of the Aether.
+     * This code is used to handle entities falling out of the Aether. If an entity is not a player or vehicle, it is removed.
      */
     public static void fallFromAether(Level level) {
         if (level instanceof ServerLevel serverLevel) {
@@ -135,7 +134,7 @@ public class DimensionHooks {
                 if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
                     for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
                         if (entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger()) {
-                            if (!(entity instanceof Player player && player.getAbilities().flying)) {
+                            if ((entity instanceof Player player && !player.getAbilities().flying) || entity.isVehicle()) {
                                 entityFell(entity);
                             }
                         }
@@ -146,7 +145,7 @@ public class DimensionHooks {
     }
 
     /**
-     * Code to handle falling out of the Aether with all of the passengers intact.
+     * Code to handle falling out of the Aether with all passengers intact.
      */
     @Nullable
     private static Entity entityFell(Entity entity) {
