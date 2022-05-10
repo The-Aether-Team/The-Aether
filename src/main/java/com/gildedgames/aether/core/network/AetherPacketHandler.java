@@ -28,7 +28,6 @@ public class AetherPacketHandler {
 	
 	public static synchronized void register() {
 		// CLIENT
-		register(AetherTimePacket.class, AetherTimePacket::decode);
 		register(AetherTravelPacket.class, AetherTravelPacket::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
@@ -81,5 +80,9 @@ public class AetherPacketHandler {
 	public static <MSG> void sendToServer(MSG message)
 	{
 		INSTANCE.sendToServer(message);
+	}
+
+	public static <MSG> void sendToDimension(MSG message, ResourceKey<Level> dimension) {
+		INSTANCE.send(PacketDistributor.DIMENSION.with(() -> dimension), message);
 	}
 }

@@ -3,8 +3,10 @@ package com.gildedgames.aether.common.event.hooks;
 import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.AetherConfig;
+import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.AetherTravelPacket;
 import com.gildedgames.aether.core.network.packet.client.LeavingAetherPacket;
@@ -27,6 +29,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BedBlock;
@@ -35,6 +38,7 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -109,6 +113,23 @@ public class DimensionHooks {
         return false;
     }
 
+    /**
+     * Ticks time in dimensions with the Aether effects location.
+     */
+    public static void tickTime(Level level) {
+        if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location()) && level instanceof ServerLevel serverLevel) {
+            long i = serverLevel.levelData.getGameTime() + 1L;
+            serverLevel.serverLevelData.setGameTime(i);
+            serverLevel.serverLevelData.getScheduledEvents().tick(serverLevel.getServer(), i);
+            if (serverLevel.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+                AetherTime.get(level).ifPresent(cap -> serverLevel.setDayTime(cap.tickTime(level)));
+            }
+        }
+    }
+
+    /**
+     * This code is used to handle entities falling out of the Aether.
+     */
     public static void fallFromAether(Level level) {
         if (level instanceof ServerLevel serverLevel) {
             if (LevelUtil.inTag(serverLevel, AetherTags.Dimensions.FALL_TO_OVERWORLD)) {
