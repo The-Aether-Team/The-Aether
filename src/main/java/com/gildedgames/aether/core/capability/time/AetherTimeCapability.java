@@ -22,57 +22,26 @@ public class AetherTimeCapability implements AetherTime {
     }
 
     @Override
+    public Level getLevel() {
+        return this.level;
+    }
+
+    @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
-        tag.putLong("dayTime", this.level.getDayTime());
+        tag.putLong("DayTime", this.level.getDayTime());
         tag.putBoolean("EternalDay", this.getEternalDay());
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag tag) {
-        if (tag.contains("dayTime")) {
-            this.setDayTime(tag.getLong("dayTime"));
+        if (tag.contains("DayTime")) {
+            this.setDayTime(tag.getLong("DayTime"));
         }
         if (tag.contains("EternalDay")) {
             this.setEternalDay(tag.getBoolean("EternalDay"));
         }
-    }
-
-    @Override
-    public void setDayTime(long time) {
-        this.dayTime = time;
-    }
-
-    @Override
-    public long getDayTime() {
-        return this.dayTime;
-    }
-
-    /**
-     * Sends the eternal day value to the client.
-     */
-    @Override
-    public void updateEternalDay() {
-        AetherPacketHandler.sendToDimension(new EternalDayPacket(this.isEternalDay), this.level.dimension());
-    }
-
-    /**
-     * Sends the eternal day value to the client.
-     */
-    @Override
-    public void updateEternalDay(ServerPlayer player) {
-        AetherPacketHandler.sendToPlayer(new EternalDayPacket(this.isEternalDay), player);
-    }
-
-    @Override
-    public void setEternalDay(boolean isEternalDay) {
-        this.isEternalDay = isEternalDay;
-    }
-
-    @Override
-    public boolean getEternalDay() {
-        return this.isEternalDay;
     }
 
     /**
@@ -96,8 +65,39 @@ public class AetherTimeCapability implements AetherTime {
         return dayTime;
     }
 
+    /**
+     * Sends the eternal day value to the client.
+     */
     @Override
-    public Level getLevel() {
-        return this.level;
+    public void updateEternalDay() {
+        AetherPacketHandler.sendToDimension(new EternalDayPacket(this.isEternalDay), this.level.dimension());
+    }
+
+    /**
+     * Sends the eternal day value to the client.
+     */
+    @Override
+    public void updateEternalDay(ServerPlayer player) {
+        AetherPacketHandler.sendToPlayer(new EternalDayPacket(this.isEternalDay), player);
+    }
+
+    @Override
+    public void setDayTime(long time) {
+        this.dayTime = time;
+    }
+
+    @Override
+    public long getDayTime() {
+        return this.dayTime;
+    }
+
+    @Override
+    public void setEternalDay(boolean isEternalDay) {
+        this.isEternalDay = isEternalDay;
+    }
+
+    @Override
+    public boolean getEternalDay() {
+        return this.isEternalDay;
     }
 }

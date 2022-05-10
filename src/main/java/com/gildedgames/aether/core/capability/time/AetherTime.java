@@ -17,15 +17,17 @@ public interface AetherTime extends INBTSerializable<CompoundTag> {
         return world.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY);
     }
 
-    void setDayTime(long time);
-    long getDayTime();
+    long tickTime(Level level);
 
     /**
      * Sends the eternal day value to the client.
      */
     void updateEternalDay();
     void updateEternalDay(ServerPlayer player);
+
+    void setDayTime(long time);
+    long getDayTime();
+
     void setEternalDay(boolean isEternalDay);
     boolean getEternalDay();
-    long tickTime(Level level);
 }
