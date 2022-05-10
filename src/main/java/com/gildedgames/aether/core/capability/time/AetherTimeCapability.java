@@ -4,6 +4,7 @@ import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.EternalDayPacket;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 
@@ -13,7 +14,7 @@ import net.minecraft.world.level.Level;
  */
 public class AetherTimeCapability implements AetherTime {
     private final Level level;
-    private long dayTime = 0;
+    private long dayTime = 18000L;
     private boolean isEternalDay = true;
 
     public AetherTimeCapability(Level level) {
@@ -53,7 +54,15 @@ public class AetherTimeCapability implements AetherTime {
      */
     @Override
     public void updateEternalDay() {
-        AetherPacketHandler.sendToAll(new EternalDayPacket(this.isEternalDay));
+        AetherPacketHandler.sendToDimension(new EternalDayPacket(this.isEternalDay), this.level.dimension());
+    }
+
+    /**
+     * Sends the eternal day value to the client.
+     */
+    @Override
+    public void updateEternalDay(ServerPlayer player) {
+        AetherPacketHandler.sendToPlayer(new EternalDayPacket(this.isEternalDay), player);
     }
 
     @Override

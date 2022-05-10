@@ -2,6 +2,7 @@ package com.gildedgames.aether.core.capability.time;
 
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -23,6 +24,7 @@ public interface AetherTime extends INBTSerializable<CompoundTag> {
      * Sends the eternal day value to the client.
      */
     void updateEternalDay();
+    void updateEternalDay(ServerPlayer player);
     void setEternalDay(boolean isEternalDay);
     boolean getEternalDay();
     long tickTime(Level level);

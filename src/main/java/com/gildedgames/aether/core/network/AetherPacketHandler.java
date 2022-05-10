@@ -81,4 +81,8 @@ public class AetherPacketHandler {
 	{
 		INSTANCE.sendToServer(message);
 	}
+
+	public static <MSG> void sendToDimension(MSG message, ResourceKey<Level> dimension) {
+		INSTANCE.send(PacketDistributor.DIMENSION.with(() -> dimension), message);
+	}
 }
