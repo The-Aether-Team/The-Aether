@@ -95,7 +95,6 @@ public class CapabilityHooks {
     }
 
     public static class AetherTimeHooks {
-
         public static void login(Player player) {
             syncAetherTime(player);
         }
