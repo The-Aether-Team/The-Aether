@@ -120,7 +120,6 @@ public class DimensionHooks {
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location()) && level instanceof ServerLevel serverLevel) {
             long i = serverLevel.levelData.getGameTime() + 1L;
             serverLevel.serverLevelData.setGameTime(i);
-            serverLevel.serverLevelData.getScheduledEvents().tick(serverLevel.getServer(), i);
             if (serverLevel.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
                 AetherTime.get(level).ifPresent(cap -> serverLevel.setDayTime(cap.tickTime(level)));
             }
