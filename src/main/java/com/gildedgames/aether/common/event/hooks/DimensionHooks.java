@@ -136,8 +136,6 @@ public class DimensionHooks {
                         if (entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger()) {
                             if ((entity instanceof Player player && !player.getAbilities().flying) || entity.isVehicle()) {
                                 entityFell(entity);
-                            } else {
-                                entity.discard();
                             }
                         }
                     }
