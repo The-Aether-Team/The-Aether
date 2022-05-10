@@ -2,7 +2,6 @@ package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
 import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
-import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.time.AetherTime;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
