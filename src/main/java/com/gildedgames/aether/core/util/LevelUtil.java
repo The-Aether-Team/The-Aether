@@ -1,6 +1,5 @@
 package com.gildedgames.aether.core.util;
 
-
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
