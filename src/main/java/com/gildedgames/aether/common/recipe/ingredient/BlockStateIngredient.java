@@ -108,9 +108,12 @@ public class BlockStateIngredient implements Predicate<BlockState> {
 
     public static BlockStateIngredient fromNetwork(FriendlyByteBuf buf) {
         var size = buf.readVarInt();
-        Block block = BlockStateRecipeUtil.readBlock(buf);
-        Map<Property<?>, Comparable<?>> properties = BlockStateRecipeUtil.readProperties(buf, block);
-        return fromValues(Stream.generate(() -> new BlockStateIngredient.StateValue(block, properties)).limit(size));
+        buf.readVarInt();
+        return fromValues(Stream.generate(() -> {
+            Block block = BlockStateRecipeUtil.readBlock(buf);
+            Map<Property<?>, Comparable<?>> properties = BlockStateRecipeUtil.readProperties(buf, block);
+            return new BlockStateIngredient.StateValue(block, properties);
+        }).limit(size));
     }
 
     public JsonElement toJson() {
@@ -247,7 +250,11 @@ public class BlockStateIngredient implements Predicate<BlockState> {
 
         @Override
         public Collection<Map<Property<?>, Comparable<?>>> getProperties() {
-            return Collections.singleton(Map.of());
+            List<Map<Property<?>, Comparable<?>>> list = Lists.newArrayList();
+            for (Holder<Block> blockHolder : Registry.BLOCK.getTagOrEmpty(this.tag)) {
+                list.add(Map.of());
+            }
+            return list;
         }
 
         public JsonObject serialize() {
