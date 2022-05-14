@@ -28,6 +28,7 @@ public class BlockStateRecipeSerializer<T extends AbstractBlockStateRecipe> exte
     @Nonnull
     @Override
     public T fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject serializedRecipe) {
+        if (!serializedRecipe.has("ingredient")) throw new JsonSyntaxException("Missing ingredient, expected to find an object or array");
         JsonElement jsonElement = GsonHelper.isArrayNode(serializedRecipe, "ingredient") ? GsonHelper.getAsJsonArray(serializedRecipe, "ingredient") : GsonHelper.getAsJsonObject(serializedRecipe, "ingredient");
         BlockStateIngredient ingredient = BlockStateIngredient.fromJson(jsonElement);
 

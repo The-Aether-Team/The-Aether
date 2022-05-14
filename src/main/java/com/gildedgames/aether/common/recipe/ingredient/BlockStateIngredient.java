@@ -5,7 +5,6 @@ import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.*;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -25,18 +24,26 @@ public class BlockStateIngredient implements Predicate<BlockState> {
     public static final BlockStateIngredient EMPTY = new BlockStateIngredient(Stream.empty());
     private final BlockStateIngredient.Value[] values;
     @Nullable
-    private final List<Block> blocks;
+    private List<Block> blocks;
     @Nullable
-    private final List<Map<Property<?>, Comparable<?>>> properties;
+    private List<Map<Property<?>, Comparable<?>>> properties;
 
     protected BlockStateIngredient(Stream<? extends BlockStateIngredient.Value> values) {
         this.values = values.toArray(Value[]::new);
-        this.blocks = Arrays.stream(this.values).flatMap((value) -> value.getBlocks().stream()).toList();
-        this.properties = Arrays.stream(this.values).flatMap((value) -> value.getProperties().stream()).toList();
+    }
+
+    private void dissolve() {
+        if (this.blocks == null) {
+            this.blocks = Arrays.stream(this.values).flatMap((value) -> value.getBlocks().stream()).toList();
+        }
+        if (this.properties == null) {
+            this.properties = Arrays.stream(this.values).flatMap((value) -> value.getProperties().stream()).toList();
+        }
     }
 
     @Override
     public boolean test(BlockState state) {
+        this.dissolve();
         if (this.blocks.size() == 0) {
             return state.isAir();
         } else {
@@ -69,11 +76,13 @@ public class BlockStateIngredient implements Predicate<BlockState> {
 
     @Nullable
     public List<Block> getBlocks() {
+        this.dissolve();
         return this.blocks;
     }
 
     @Nullable
     public List<Map<Property<?>, Comparable<?>>> getProperties() {
+        this.dissolve();
         return this.properties;
     }
 
@@ -102,13 +111,13 @@ public class BlockStateIngredient implements Predicate<BlockState> {
     }
 
     public final void toNetwork(FriendlyByteBuf buf) {
+        this.dissolve();
         buf.writeCollection(this.blocks, BlockStateRecipeUtil::writeBlock);
         buf.writeCollection(this.properties, BlockStateRecipeUtil::writeProperties);
     }
 
     public static BlockStateIngredient fromNetwork(FriendlyByteBuf buf) {
         var size = buf.readVarInt();
-        buf.readVarInt();
         return fromValues(Stream.generate(() -> {
             Block block = BlockStateRecipeUtil.readBlock(buf);
             Map<Property<?>, Comparable<?>> properties = BlockStateRecipeUtil.readProperties(buf, block);
@@ -242,18 +251,14 @@ public class BlockStateIngredient implements Predicate<BlockState> {
 
         public Collection<Block> getBlocks() {
             List<Block> list = Lists.newArrayList();
-            for (Holder<Block> blockHolder : Registry.BLOCK.getTagOrEmpty(this.tag)) {
-                list.add(blockHolder.value());
-            }
+            Registry.BLOCK.getTagOrEmpty(this.tag).forEach(holder -> list.add(holder.value()));
             return list;
         }
 
         @Override
         public Collection<Map<Property<?>, Comparable<?>>> getProperties() {
             List<Map<Property<?>, Comparable<?>>> list = Lists.newArrayList();
-            for (Holder<Block> blockHolder : Registry.BLOCK.getTagOrEmpty(this.tag)) {
-                list.add(Map.of());
-            }
+            Registry.BLOCK.getTagOrEmpty(this.tag).forEach(holder -> list.add(Map.of()));
             return list;
         }
 

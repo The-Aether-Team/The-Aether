@@ -83,6 +83,30 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get(),
                 AetherBlocks.TRAPPED_HELLFIRE_STONE.get(),
                 AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE.get());
+        tag(AetherTags.Blocks.SENTRY_BLOCKS).add(
+                AetherBlocks.CARVED_STONE.get(),
+                AetherBlocks.SENTRY_STONE.get(),
+                AetherBlocks.LOCKED_CARVED_STONE.get(),
+                AetherBlocks.LOCKED_SENTRY_STONE.get(),
+                AetherBlocks.CARVED_STAIRS.get(),
+                AetherBlocks.CARVED_SLAB.get(),
+                AetherBlocks.CARVED_WALL.get());
+        tag(AetherTags.Blocks.ANGELIC_BLOCKS).add(
+                AetherBlocks.ANGELIC_STONE.get(),
+                AetherBlocks.LIGHT_ANGELIC_STONE.get(),
+                AetherBlocks.LOCKED_ANGELIC_STONE.get(),
+                AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(),
+                AetherBlocks.ANGELIC_STAIRS.get(),
+                AetherBlocks.ANGELIC_SLAB.get(),
+                AetherBlocks.ANGELIC_WALL.get());
+        tag(AetherTags.Blocks.HELLFIRE_BLOCKS).add(
+                AetherBlocks.HELLFIRE_STONE.get(),
+                AetherBlocks.LIGHT_HELLFIRE_STONE.get(),
+                AetherBlocks.LOCKED_HELLFIRE_STONE.get(),
+                AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get(),
+                AetherBlocks.HELLFIRE_STAIRS.get(),
+                AetherBlocks.HELLFIRE_SLAB.get(),
+                AetherBlocks.HELLFIRE_WALL.get());
         tag(AetherTags.Blocks.GRAVITITE_ABILITY_BLACKLIST);
         tag(AetherTags.Blocks.AETHER_ANIMALS_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
         tag(AetherTags.Blocks.AERWHALE_SPAWNABLE_ON).addTag(AetherTags.Blocks.AERCLOUDS);
@@ -94,6 +118,10 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS
         );
+        tag(AetherTags.Blocks.INFINIBURN).addTag(BlockTags.INFINIBURN_OVERWORLD);
+        tag(AetherTags.Blocks.ALLOWED_FLAMMABLES).addTags(
+                AetherTags.Blocks.INFINIBURN,
+                AetherTags.Blocks.HELLFIRE_BLOCKS);
 
         //vanilla
         tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).addTag(AetherTags.Blocks.DUNGEON_BLOCKS);

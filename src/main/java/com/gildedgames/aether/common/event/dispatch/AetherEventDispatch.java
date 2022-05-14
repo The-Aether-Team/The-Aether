@@ -2,9 +2,10 @@ package com.gildedgames.aether.common.event.dispatch;
 
 import javax.annotation.Nullable;
 
-import com.gildedgames.aether.common.event.events.AetherBannedItemEvent;
+import com.gildedgames.aether.common.event.events.PlacementBanEvent;
 
 import com.gildedgames.aether.common.event.events.FreezeEvent;
+import com.gildedgames.aether.common.event.events.PlacementConvertEvent;
 import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -15,15 +16,28 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.common.MinecraftForge;
 
 public class AetherEventDispatch {
-	public static void onItemBanned(LevelAccessor world, BlockPos pos, @Nullable Direction face, ItemStack itemStack) {
-		AetherBannedItemEvent.SpawnParticles event = new AetherBannedItemEvent.SpawnParticles(world, pos, face, itemStack);
+	public static PlacementBanEvent.SpawnParticles onPlacementSpawnParticles(LevelAccessor world, BlockPos pos, @Nullable Direction face, ItemStack itemStack) {
+		PlacementBanEvent.SpawnParticles event = new PlacementBanEvent.SpawnParticles(world, pos, face, itemStack);
 		MinecraftForge.EVENT_BUS.post(event);
+		return event;
 	}
 
-	public static boolean isItemBanned(ItemStack itemStack) {
-		AetherBannedItemEvent.Check event = new AetherBannedItemEvent.Check(itemStack.copy());
+	public static boolean isItemPlacementBanned(ItemStack stack) {
+		PlacementBanEvent.CheckItem event = new PlacementBanEvent.CheckItem(stack.copy());
 		MinecraftForge.EVENT_BUS.post(event);
 		return event.isBanned();
+	}
+
+	public static boolean isBlockPlacementBanned(BlockState state) {
+		PlacementBanEvent.CheckBlock event = new PlacementBanEvent.CheckBlock(state);
+		MinecraftForge.EVENT_BUS.post(event);
+		return event.isBanned();
+	}
+
+	public static PlacementConvertEvent onPlacementConvert(LevelAccessor world, BlockPos pos, BlockState oldState, BlockState newState)  {
+		PlacementConvertEvent event = new PlacementConvertEvent(world, pos, oldState, newState);
+		MinecraftForge.EVENT_BUS.post(event);
+		return event;
 	}
 
 	public static FreezeEvent.FreezeFromBlock onBlockFreezeFluid(LevelAccessor world, BlockPos pos, BlockState fluidState, BlockState blockState, BlockState sourceBlock) {

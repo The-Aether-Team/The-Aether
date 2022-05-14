@@ -23,6 +23,8 @@ public class AetherRecipes
 	public static final RegistryObject<BlockStateRecipeSerializer<SwetBallRecipe>> SWET_BALL_CONVERSION = RECIPE_SERIALIZERS.register("swet_ball_conversion", SwetBallRecipe.Serializer::new);
 	public static final RegistryObject<BlockStateRecipeSerializer<IcestoneFreezableRecipe>> ICESTONE_FREEZABLE = RECIPE_SERIALIZERS.register("icestone_freezable", IcestoneFreezableRecipe.Serializer::new);
 	public static final RegistryObject<BlockStateRecipeSerializer<AccessoryFreezableRecipe>> ACCESSORY_FREEZABLE = RECIPE_SERIALIZERS.register("accessory_freezable", AccessoryFreezableRecipe.Serializer::new);
+	public static final RegistryObject<BlockStateRecipeSerializer<PlacementConversionRecipe>> PLACEMENT_CONVERSION = RECIPE_SERIALIZERS.register("placement_conversion", PlacementConversionRecipe.Serializer::new);
+	public static final RegistryObject<ItemBanRecipe.Serializer> ITEM_PLACEMENT_BAN = RECIPE_SERIALIZERS.register("item_placement_ban", ItemBanRecipe.Serializer::new);
 
 	public static class RecipeTypes
 	{
@@ -31,6 +33,8 @@ public class AetherRecipes
 		public static RecipeType<SwetBallRecipe> SWET_BALL_CONVERSION;
 		public static RecipeType<IcestoneFreezableRecipe> ICESTONE_FREEZABLE;
 		public static RecipeType<AccessoryFreezableRecipe> ACCESSORY_FREEZABLE;
+		public static RecipeType<PlacementConversionRecipe> PLACEMENT_CONVERSION;
+		public static RecipeType<ItemBanRecipe> ITEM_PLACEMENT_BAN;
 
 		public static void init() {
 			ENCHANTING = RecipeType.register(new ResourceLocation(Aether.MODID, "enchanting").toString());
@@ -38,6 +42,8 @@ public class AetherRecipes
 			SWET_BALL_CONVERSION = RecipeType.register(new ResourceLocation(Aether.MODID, "swet_ball_conversion").toString());
 			ICESTONE_FREEZABLE = RecipeType.register(new ResourceLocation(Aether.MODID, "icestone_freezable").toString());
 			ACCESSORY_FREEZABLE = RecipeType.register(new ResourceLocation(Aether.MODID, "accessory_freezable").toString());
+			PLACEMENT_CONVERSION = RecipeType.register(new ResourceLocation(Aether.MODID, "placement_conversion").toString());
+			ITEM_PLACEMENT_BAN = RecipeType.register(new ResourceLocation(Aether.MODID, "item_placement_ban").toString());
 		}
 	}
 }

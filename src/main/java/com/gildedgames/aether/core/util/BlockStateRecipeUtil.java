@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.dimension.DimensionType;
 
 import java.util.*;
 
@@ -61,6 +62,24 @@ public class BlockStateRecipeUtil {
         }
     }
 
+    public static void writeDimensionTypeKey(FriendlyByteBuf buf, ResourceKey<DimensionType> dimensionTypeKey) {
+        if (dimensionTypeKey == null) {
+            buf.writeBoolean(false);
+        } else {
+            buf.writeBoolean(true);
+            buf.writeResourceLocation(dimensionTypeKey.location());
+        }
+    }
+
+    public static void writeDimensionTypeTag(FriendlyByteBuf buf, TagKey<DimensionType> dimensionTypeTag) {
+        if (dimensionTypeTag == null) {
+            buf.writeBoolean(false);
+        } else {
+            buf.writeBoolean(true);
+            buf.writeResourceLocation(dimensionTypeTag.location());
+        }
+    }
+
     public static Block readBlock(FriendlyByteBuf buf) {
         if (!buf.readBoolean()) {
             return Blocks.AIR;
@@ -76,7 +95,7 @@ public class BlockStateRecipeUtil {
         } else {
             Map<Property<?>, Comparable<?>> properties = Maps.newHashMap();
             StateDefinition<Block, BlockState> stateDefinition = block.getStateDefinition();
-            CompoundTag tag = buf.readNbt();
+            CompoundTag tag = buf.readNbt(); //TODO: networking is failing here. which means this isnt being written properly. although actually it shouldnt even be reaching here whats going on.
             if (tag != null) {
                 for (String propertyName : tag.getAllKeys()) {
                     Property<?> property = stateDefinition.getProperty(propertyName);
@@ -105,6 +124,24 @@ public class BlockStateRecipeUtil {
         } else {
             ResourceLocation tagLocation = buf.readResourceLocation();
             return TagKey.create(Registry.BIOME_REGISTRY, tagLocation);
+        }
+    }
+
+    public static ResourceKey<DimensionType> readDimensionTypeKey(FriendlyByteBuf buf) {
+        if (!buf.readBoolean()) {
+            return null;
+        } else {
+            ResourceLocation dimensionTypeLocation = buf.readResourceLocation();
+            return ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, dimensionTypeLocation);
+        }
+    }
+
+    public static TagKey<DimensionType> readDimensionTypeTag(FriendlyByteBuf buf) {
+        if (!buf.readBoolean()) {
+            return null;
+        } else {
+            ResourceLocation tagLocation = buf.readResourceLocation();
+            return TagKey.create(Registry.DIMENSION_TYPE_REGISTRY, tagLocation);
         }
     }
 
@@ -145,6 +182,18 @@ public class BlockStateRecipeUtil {
         return TagKey.create(Registry.BIOME_REGISTRY, (nameWithId.length > 1) ? new ResourceLocation(nameWithId[0], nameWithId[1]) : new ResourceLocation(biomeName));
     }
 
+    public static ResourceKey<DimensionType> dimensionTypeKeyFromJson(JsonObject json) {
+        String dimensionTypeName = GsonHelper.getAsString(json, "dimension_type");
+        String[] nameWithId = dimensionTypeName.split(":");
+        return ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, (nameWithId.length > 1) ? new ResourceLocation(nameWithId[0], nameWithId[1]) : new ResourceLocation(dimensionTypeName));
+    }
+
+    public static TagKey<DimensionType> dimensionTypeTagFromJson(JsonObject json) {
+        String dimensionTypeName = GsonHelper.getAsString(json, "dimension_type").replace("#", "");
+        String[] nameWithId = dimensionTypeName.split(":");
+        return TagKey.create(Registry.DIMENSION_TYPE_REGISTRY, (nameWithId.length > 1) ? new ResourceLocation(nameWithId[0], nameWithId[1]) : new ResourceLocation(dimensionTypeName));
+    }
+
     public static void biomeKeyToJson(JsonObject json, ResourceKey<Biome> biomeKey) {
         if (biomeKey != null) {
             ResourceLocation biomeLocation = biomeKey.location();
@@ -156,6 +205,20 @@ public class BlockStateRecipeUtil {
         if (biomeTag != null) {
             ResourceLocation tagLocation = biomeTag.location();
             json.addProperty("biome", "#" + tagLocation);
+        }
+    }
+
+    public static void dimensionTypeKeyToJson(JsonObject json, ResourceKey<DimensionType> dimensionTypeKey) {
+        if (dimensionTypeKey != null) {
+            ResourceLocation dimensionTypeLocation = dimensionTypeKey.location();
+            json.addProperty("dimension_type", dimensionTypeLocation.toString());
+        }
+    }
+
+    public static void dimensionTypeTagToJson(JsonObject json, TagKey<DimensionType> dimensionTypeTag) {
+        if (dimensionTypeTag != null) {
+            ResourceLocation tagLocation = dimensionTypeTag.location();
+            json.addProperty("dimension_type", "#" + tagLocation);
         }
     }
 

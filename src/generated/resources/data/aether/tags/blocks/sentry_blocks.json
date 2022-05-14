@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "aether:carved_stone",
+    "aether:sentry_stone",
+    "aether:locked_carved_stone",
+    "aether:locked_sentry_stone",
+    "aether:carved_stairs",
+    "aether:carved_slab",
+    "aether:carved_wall"
+  ]
+}

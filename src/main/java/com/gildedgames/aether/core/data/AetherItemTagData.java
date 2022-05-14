@@ -47,11 +47,6 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.PLANKS_CRAFTING).addTag(ItemTags.PLANKS).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
         tag(AetherTags.Items.STONE_CRAFTING).addTag(ItemTags.STONE_CRAFTING_MATERIALS).add(AetherBlocks.HOLYSTONE.get().asItem());
 
-        tag(AetherTags.Items.BANNED_IN_AETHER).add(
-                Items.FLINT_AND_STEEL,
-                Items.TORCH,
-                Items.SOUL_TORCH,
-                Items.FIRE_CHARGE);
         tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS);
         tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS).addTag(Tags.Items.DUSTS_GLOWSTONE).add(
                 Items.FLINT,

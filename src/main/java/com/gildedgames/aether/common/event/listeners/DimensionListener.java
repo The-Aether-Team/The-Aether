@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.event.listeners;
 
-import com.gildedgames.aether.common.event.events.AetherBannedItemEvent;
+import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.event.events.PlacementBanEvent;
 import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
@@ -32,21 +33,22 @@ public class DimensionListener {
         Direction direction = event.getFace();
         ItemStack itemStack = event.getItemStack();
         BlockState blockState = level.getBlockState(blockPos);
-        event.setCanceled(DimensionHooks.checkPlacementBanned(player, level, blockPos, direction, itemStack, blockState));
+        //event.setCanceled(DimensionHooks.checkPlacementBanned(player, level, blockPos, direction, itemStack, blockState));
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onBanned(AetherBannedItemEvent.SpawnParticles event) {
+    public static void onBanned(PlacementBanEvent.SpawnParticles event) {
         LevelAccessor levelAccessor = event.getWorld();
         BlockPos blockPos = event.getPos();
-        DimensionHooks.onPlacementBanned(levelAccessor, blockPos);
+        //DimensionHooks.onPlacementBanned(levelAccessor, blockPos);
     }
 
     @SubscribeEvent
-    public static void onNeighborNotified(BlockEvent.NeighborNotifyEvent event) {
+    public static void onNeighborNotified(BlockEvent.NeighborNotifyEvent event) { //TODO: This can be used for any blocks placed in the world to remove them, such as fire or lava.
         LevelAccessor levelAccessor = event.getWorld();
         BlockPos blockPos = event.getPos();
-        event.setCanceled(DimensionHooks.freezeToAerogel(levelAccessor, blockPos));
+        //Aether.LOGGER.info(levelAccessor.getBlockState(blockPos));
+        //event.setCanceled(DimensionHooks.freezeToAerogel(levelAccessor, blockPos));
     }
 
     @SubscribeEvent

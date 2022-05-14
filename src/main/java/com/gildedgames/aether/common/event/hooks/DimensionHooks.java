@@ -1,7 +1,8 @@
 package com.gildedgames.aether.common.event.hooks;
 
-import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
+import com.gildedgames.aether.common.recipe.ItemBanRecipe;
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.AetherConfig;
@@ -26,6 +27,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -45,38 +47,40 @@ public class DimensionHooks {
     public static boolean displayAetherTravel;
 
     public static boolean checkPlacementBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state) {
-        if (LevelUtil.inTag(level, AetherTags.Dimensions.ULTRACOLD)) {
-            if (stack.is(AetherTags.Items.BANNED_IN_AETHER)) {
-                return bannedItemDispatch(level, pos, face, stack);
-            }
-
-            if (AetherConfig.COMMON.enable_bed_explosions.get()) {
-                if (state.is(BlockTags.BEDS) && state.getBlock() != AetherBlocks.SKYROOT_BED.get()) {
-                    if (!level.isClientSide()) {
-                        if (state.getValue(BedBlock.PART) != BedPart.HEAD) {
-                            pos = pos.relative(state.getValue(BedBlock.FACING));
-                            state = level.getBlockState(pos);
-                        }
-                        BlockPos blockpos = pos.relative(state.getValue(BedBlock.FACING).getOpposite());
-                        if (level.getBlockState(blockpos).is(BlockTags.BEDS) && level.getBlockState(blockpos).getBlock() != AetherBlocks.SKYROOT_BED.get()) {
-                            level.removeBlock(blockpos, false);
-                        }
-                        level.explode(null, DamageSource.badRespawnPointExplosion(), null, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, 5.0F, true, Explosion.BlockInteraction.DESTROY);
+        if (isItemPlacementBanned(level, pos, face, stack)) {
+            return true;
+        }
+        if (LevelUtil.inTag(level, AetherTags.Dimensions.ULTRACOLD) && AetherConfig.COMMON.enable_bed_explosions.get()) {
+            if (state.is(BlockTags.BEDS) && state.getBlock() != AetherBlocks.SKYROOT_BED.get()) {
+                if (!level.isClientSide()) {
+                    if (state.getValue(BedBlock.PART) != BedPart.HEAD) {
+                        pos = pos.relative(state.getValue(BedBlock.FACING));
+                        state = level.getBlockState(pos);
                     }
-                    player.swing(InteractionHand.MAIN_HAND);
-                    return true;
+                    BlockPos blockpos = pos.relative(state.getValue(BedBlock.FACING).getOpposite());
+                    if (level.getBlockState(blockpos).is(BlockTags.BEDS) && level.getBlockState(blockpos).getBlock() != AetherBlocks.SKYROOT_BED.get()) {
+                        level.removeBlock(blockpos, false);
+                    }
+                    level.explode(null, DamageSource.badRespawnPointExplosion(), null, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, 5.0F, true, Explosion.BlockInteraction.DESTROY);
                 }
+                player.swing(InteractionHand.MAIN_HAND);
+                return true;
             }
         }
         return false;
     }
 
-    public static boolean bannedItemDispatch(Level level, BlockPos pos, Direction face, ItemStack stack) {
-        if (AetherEventDispatch.isItemBanned(stack)) {
-            AetherEventDispatch.onItemBanned(level, pos, face, stack);
-            return true;
+    public static boolean isItemPlacementBanned(Level level, BlockPos pos, Direction face, ItemStack stack) {
+        for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipes.RecipeTypes.ITEM_PLACEMENT_BAN)) {
+            if (recipe instanceof ItemBanRecipe banRecipe) {
+                return banRecipe.banItem(level, pos, face, stack);
+            }
         }
         return false;
+    }
+
+    public static void convertPlacement() {
+
     }
 
     public static void onPlacementBanned(LevelAccessor accessor, BlockPos pos) {

@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "aether:angelic_stone",
+    "aether:light_angelic_stone",
+    "aether:locked_angelic_stone",
+    "aether:locked_light_angelic_stone",
+    "aether:angelic_stairs",
+    "aether:angelic_slab",
+    "aether:angelic_wall"
+  ]
+}

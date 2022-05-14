@@ -26,6 +26,9 @@ public class AetherTags {
 		public static final TagKey<Block> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final TagKey<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final TagKey<Block> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final TagKey<Block> SENTRY_BLOCKS = tag("sentry_blocks");
+		public static final TagKey<Block> ANGELIC_BLOCKS = tag("angelic_blocks");
+		public static final TagKey<Block> HELLFIRE_BLOCKS = tag("hellfire_blocks");
 		public static final TagKey<Block> GRAVITITE_ABILITY_BLACKLIST = tag("gravitite_ability_blacklist");
 		public static final TagKey<Block> AETHER_ANIMALS_SPAWNABLE_ON = tag("aether_animals_spawnable_on");
 		public static final TagKey<Block> AERWHALE_SPAWNABLE_ON = tag("aerwhale_spawnable_on");
@@ -33,6 +36,8 @@ public class AetherTags {
 		public static final TagKey<Block> AECHOR_PLANT_SPAWNABLE_ON = tag("aechor_plant_spawnable_on");
 		public static final TagKey<Block> ZEPHYR_SPAWNABLE_ON = tag("zephyr_spawnable_on");
 		public static final TagKey<Block> COCKATRICE_SPAWNABLE_BLACKLIST = tag("cockatrice_spawnable_blacklist");
+		public static final TagKey<Block> INFINIBURN = tag("infiniburn");
+		public static final TagKey<Block> ALLOWED_FLAMMABLES = tag("allowed_flammables");
 
 		private static TagKey<Block> tag(String name) {
 			return TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Aether.MODID, name));
@@ -53,7 +58,6 @@ public class AetherTags {
 		public static final TagKey<Item> PLANKS_CRAFTING = tag("planks_crafting");
 		public static final TagKey<Item> STONE_CRAFTING = tag("stone_crafting");
 
-		public static final TagKey<Item> BANNED_IN_AETHER = tag("banned_in_aether");
 		public static final TagKey<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 		public static final TagKey<Item> SKYROOT_STICKS = tag("skyroot_stick");

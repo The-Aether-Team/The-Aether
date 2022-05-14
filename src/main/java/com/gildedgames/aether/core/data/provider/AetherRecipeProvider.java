@@ -1,8 +1,6 @@
 package com.gildedgames.aether.core.data.provider;
 
-import com.gildedgames.aether.common.recipe.builder.AltarRepairBuilder;
-import com.gildedgames.aether.common.recipe.builder.BlockStateRecipeBuilder;
-import com.gildedgames.aether.common.recipe.builder.SwetBallRecipeBuilder;
+import com.gildedgames.aether.common.recipe.builder.*;
 import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
 import com.gildedgames.aether.common.recipe.util.BlockPropertyPair;
 import com.gildedgames.aether.common.registry.AetherRecipes;
@@ -15,7 +13,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraftforge.common.Tags;
 
 import java.util.Map;
@@ -414,6 +414,14 @@ public class AetherRecipeProvider extends RecipeProvider
 
     public BlockStateRecipeBuilder accessoryFreezable(Block result, Block ingredient) {
         return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.ACCESSORY_FREEZABLE.get());
+    }
+
+    public PlacementBanBuilder banPlacementWithBypass(ItemLike ingredient, TagKey<Block> bypass, TagKey<DimensionType> dimension) {
+        return ItemBanRecipeBuilder.recipe(Ingredient.of(ingredient), BlockStateIngredient.of(bypass), dimension, AetherRecipes.ITEM_PLACEMENT_BAN.get());
+    }
+
+    public PlacementConversionBuilder convertPlacement(Block result, Block ingredient, TagKey<DimensionType> dimension) {
+        return PlacementConversionBuilder.recipe(BlockStateIngredient.of(ingredient), result, dimension, AetherRecipes.PLACEMENT_CONVERSION.get());
     }
 
     protected BlockPropertyPair pair(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {
