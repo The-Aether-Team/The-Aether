@@ -77,6 +77,8 @@ public class AetherRenderers {
         registerBlockRenderer(AetherBlocks.GOLDEN_OAK_SAPLING, cutout);
         registerBlockRenderer(AetherBlocks.PURPLE_FLOWER, cutout);
         registerBlockRenderer(AetherBlocks.WHITE_FLOWER, cutout);
+        registerBlockRenderer(AetherBlocks.POTTED_BERRY_BUSH, cutout);
+        registerBlockRenderer(AetherBlocks.POTTED_BERRY_BUSH_STEM, cutout);
         registerBlockRenderer(AetherBlocks.POTTED_PURPLE_FLOWER, cutout);
         registerBlockRenderer(AetherBlocks.POTTED_WHITE_FLOWER, cutout);
         registerBlockRenderer(AetherBlocks.POTTED_SKYROOT_SAPLING, cutout);
