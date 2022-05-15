@@ -298,6 +298,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addDiscDesc(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "Voyed - Welcoming Skies");
         addItem(AetherItems.MUSIC_DISC_LEGACY, "Duck Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_LEGACY, "Jon Lachney - Legacy");
+        addItem(AetherItems.MUSIC_DISC_CHINCHILLA, "Sepia Music Disc");
+        addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
 
         addItem(AetherItems.SKYROOT_BUCKET, "Skyroot Bucket");
         addItem(AetherItems.SKYROOT_WATER_BUCKET, "Skyroot Water Bucket");

@@ -1,0 +1,9 @@
+{
+  "type": "aether:enchanting",
+  "ingredient": {
+    "item": "minecraft:music_disc_strad"
+  },
+  "result": "aether:music_disc_chinchilla",
+  "experience": 1.0,
+  "cookingtime": 2500
+}

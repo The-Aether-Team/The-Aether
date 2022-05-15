@@ -138,7 +138,6 @@ public class AetherTags {
 		public static final TagKey<DimensionType> HOSTILE_PARADISE = tag("hostile_paradise");
 
 		public static final TagKey<DimensionType> ULTRACOLD = tag("ultracold");
-		public static final TagKey<DimensionType> ETERNAL_DAY = tag("eternal_day");
 		public static final TagKey<DimensionType> NO_WHEAT_SEEDS = tag("no_wheat_seeds");
 		public static final TagKey<DimensionType> FALL_TO_OVERWORLD = tag("fall_to_overworld");
 		public static final TagKey<DimensionType> DISPLAY_TRAVEL_TEXT = tag("display_travel_text");

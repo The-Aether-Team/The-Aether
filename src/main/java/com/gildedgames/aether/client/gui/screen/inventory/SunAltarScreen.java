@@ -26,8 +26,7 @@ public class SunAltarScreen extends Screen {
     @Override
     public void init() {
         super.init();
-        LazyOptional<AetherTime> aetherTime = this.minecraft.level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY);
-        double value = aetherTime.isPresent() ? (double) aetherTime.orElse(null).getDayTime() / 72000D : 0.5D;
+        double value = this.minecraft.level.getDayTime() / 72000D;
         this.addRenderableWidget(new SunAltarSlider(this.minecraft.level, this.width / 2 - 75, this.height / 2, 150, 20, new TranslatableComponent("gui." + Aether.MODID + ".sun_altar.time"), value));
     }
 

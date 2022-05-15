@@ -6,8 +6,10 @@ import com.gildedgames.aether.common.recipe.PlacementConversionRecipe;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.AetherConfig;
+import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.AetherTravelPacket;
 import com.gildedgames.aether.core.network.packet.client.LeavingAetherPacket;
@@ -31,6 +33,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BedBlock;
@@ -114,6 +117,19 @@ public class DimensionHooks { //todo: i sure hope calling 2 recipes every tick i
         }
     }
 
+    /**
+     * Ticks time in dimensions with the Aether effects location.
+     */
+    public static void tickTime(Level level) {
+        if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location()) && level instanceof ServerLevel serverLevel) {
+            long i = serverLevel.levelData.getGameTime() + 1L;
+            serverLevel.serverLevelData.setGameTime(i);
+            if (serverLevel.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+                AetherTime.get(level).ifPresent(cap -> serverLevel.setDayTime(cap.tickTime(level)));
+            }
+        }
+    }
+
     public static void banOrConvert(LevelAccessor accessor, BlockPos pos) {
         if (accessor instanceof ServerLevel serverLevel) {
             double x = pos.getX() + 0.5;
@@ -126,13 +142,16 @@ public class DimensionHooks { //todo: i sure hope calling 2 recipes every tick i
         }
     }
 
+    /**
+     * This code is used to handle entities falling out of the Aether. If an entity is not a player or vehicle, it is removed.
+     */
     public static void fallFromAether(Level level) {
         if (level instanceof ServerLevel serverLevel) {
             if (LevelUtil.inTag(serverLevel, AetherTags.Dimensions.FALL_TO_OVERWORLD)) {
                 if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
                     for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
                         if (entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger()) {
-                            if (!(entity instanceof Player player && player.getAbilities().flying)) {
+                            if ((entity instanceof Player player && !player.getAbilities().flying) || entity.isVehicle()) {
                                 entityFell(entity);
                             }
                         }
@@ -143,7 +162,7 @@ public class DimensionHooks { //todo: i sure hope calling 2 recipes every tick i
     }
 
     /**
-     * Code to handle falling out of the Aether with all of the passengers intact.
+     * Code to handle falling out of the Aether with all passengers intact.
      */
     @Nullable
     private static Entity entityFell(Entity entity) {

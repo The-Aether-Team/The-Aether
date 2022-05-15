@@ -186,6 +186,8 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(BlockTags.BEDS).add(AetherBlocks.SKYROOT_BED.get());
         tag(BlockTags.DIRT).addTag(AetherTags.Blocks.AETHER_DIRT);
         tag(BlockTags.FLOWER_POTS).add(
+                AetherBlocks.POTTED_BERRY_BUSH.get(),
+                AetherBlocks.POTTED_BERRY_BUSH_STEM.get(),
                 AetherBlocks.POTTED_PURPLE_FLOWER.get(),
                 AetherBlocks.POTTED_WHITE_FLOWER.get(),
                 AetherBlocks.POTTED_SKYROOT_SAPLING.get(),

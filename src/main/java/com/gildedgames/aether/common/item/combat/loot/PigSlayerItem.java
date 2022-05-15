@@ -62,8 +62,7 @@ public class PigSlayerItem extends SwordItem
 			if (source.getDirectEntity() instanceof Player) {
 				Player player = (Player) source.getDirectEntity();
 				ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
-				Item item = stack.getItem();
-				if (item == AetherItems.PIG_SLAYER.get() && entity.getType().is(AetherTags.Entities.PIGS)) {
+				if (stack.is(AetherItems.PIG_SLAYER.get()) && entity.getType().is(AetherTags.Entities.PIGS)) {
 					if (entity.getRandom().nextInt(4) == 0) {
 						ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
 						for (ItemEntity drop : event.getDrops()) {

@@ -237,6 +237,9 @@ public class AetherSoundData extends SoundDefinitionsProvider
         this.add(AetherSoundEvents.ITEM_MUSIC_DISC_LEGACY,
                 definition().with(sound("aether:item/records/legacy").stream())
         );
+        this.add(AetherSoundEvents.ITEM_MUSIC_DISC_CHINCHILLA,
+                definition().with(sound("aether:item/records/chinchilla").stream())
+        );
 
 
         //Entities

@@ -1,8 +1,12 @@
 package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import com.gildedgames.aether.core.capability.time.AetherTime;
 import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.material.FogType;
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -25,5 +29,17 @@ public class DimensionClientHooks {
             }
         }
         return Triple.of(null, null, null);
+    }
+
+    /**
+     * Ticks time in clientside Aether levels.
+     */
+    public static void tickTime() {
+        ClientLevel level = Minecraft.getInstance().level;
+        if (level != null && !Minecraft.getInstance().isPaused() && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+            if (level.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+                AetherTime.get(level).ifPresent(cap -> level.setDayTime(cap.tickTime(level) - 1)); // The client always increments time by 1 every tick.
+            }
+        }
     }
 }

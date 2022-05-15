@@ -3,7 +3,11 @@ package com.gildedgames.aether.common.event.listeners;
 import com.gildedgames.aether.common.event.events.PlacementBanEvent;
 import com.gildedgames.aether.common.event.events.PlacementConvertEvent;
 import com.gildedgames.aether.common.event.hooks.DimensionHooks;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import com.gildedgames.aether.common.world.AetherLevelData;
+import com.gildedgames.aether.core.capability.time.AetherTime;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -16,6 +20,7 @@ import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -65,6 +70,7 @@ public class DimensionListener {
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         Level level = event.world;
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
+            DimensionHooks.tickTime(level);
             DimensionHooks.fallFromAether(level);
         }
     }
@@ -80,5 +86,20 @@ public class DimensionListener {
     public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
         Player player = event.getPlayer();
         DimensionHooks.syncTrackersFromServer(player);
+    }
+
+    /**
+     * Initializes the Aether level data for time separate from the overworld.
+     * serverLevelData and levelData are access transformed.
+     */
+    @SubscribeEvent
+    public static void onWorldLoad(WorldEvent.Load event) {
+        if (event.getWorld() instanceof ServerLevel level && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+            AetherTime.get(level).ifPresent(cap -> {
+                AetherLevelData levelData = new AetherLevelData(level.getServer().getWorldData(), level.getServer().getWorldData().overworldData(), cap.getDayTime());
+                level.serverLevelData = levelData;
+                level.levelData = levelData;
+            });
+        }
     }
 }

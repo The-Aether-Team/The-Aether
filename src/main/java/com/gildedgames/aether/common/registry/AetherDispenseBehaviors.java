@@ -148,8 +148,7 @@ public class AetherDispenseBehaviors {
             LevelAccessor levelaccessor = p_123566_.getLevel();
             BlockPos blockpos = p_123566_.getPos().relative(p_123566_.getBlockState().getValue(DispenserBlock.FACING));
             BlockState blockstate = levelaccessor.getBlockState(blockpos);
-            Block block = blockstate.getBlock();
-            if (block instanceof BucketPickup bucketPickup) {
+            if (blockstate.getBlock() instanceof BucketPickup bucketPickup) {
                 ItemStack itemstack = bucketPickup.pickupBlock(levelaccessor, blockpos, blockstate);
                 if (itemstack.isEmpty() || !itemstack.is(Items.WATER_BUCKET)) {
                     return super.execute(p_123566_, p_123567_);

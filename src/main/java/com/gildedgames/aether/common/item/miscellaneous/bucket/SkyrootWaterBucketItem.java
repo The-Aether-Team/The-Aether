@@ -67,7 +67,7 @@ public class SkyrootWaterBucketItem extends Item
         Block block = blockstate.getBlock();
         Material material = blockstate.getMaterial();
         boolean flag = blockstate.canBeReplaced(Fluids.WATER);
-        boolean flag1 = blockstate.isAir() || flag || block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER);
+        boolean flag1 = blockstate.isAir() || flag || block instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER);
         if (!flag1) {
             return rayTrace != null && this.tryPlaceContainedLiquid(player, worldIn, rayTrace.getBlockPos().relative(rayTrace.getDirection()), null);
         } else if (worldIn.dimensionType().ultraWarm()) {
@@ -81,8 +81,8 @@ public class SkyrootWaterBucketItem extends Item
             }
 
             return true;
-        } else if (block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(worldIn,posIn,blockstate, Fluids.WATER)) {
-            ((LiquidBlockContainer)block).placeLiquid(worldIn, posIn, blockstate, Fluids.WATER.getSource(false));
+        } else if (block instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(worldIn,posIn,blockstate, Fluids.WATER)) {
+            liquidBlockContainer.placeLiquid(worldIn, posIn, blockstate, Fluids.WATER.getSource(false));
             this.playEmptySound(player, worldIn, posIn);
             return true;
         } else {
@@ -100,7 +100,7 @@ public class SkyrootWaterBucketItem extends Item
     }
 
     private boolean canBlockContainFluid(Level worldIn, BlockPos posIn, BlockState blockstate) {
-        return blockstate.getBlock() instanceof LiquidBlockContainer && ((LiquidBlockContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER);
+        return blockstate.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER);
     }
 
     protected void playEmptySound(@Nullable Player player, LevelAccessor worldIn, BlockPos pos) {

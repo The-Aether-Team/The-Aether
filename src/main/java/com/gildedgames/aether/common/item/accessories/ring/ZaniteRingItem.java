@@ -18,7 +18,7 @@ public class ZaniteRingItem extends RingItem
 
     @Override
     public boolean isValidRepairItem(@Nonnull ItemStack repairItem, ItemStack repairMaterial) {
-        return repairMaterial.getItem() == AetherItems.ZANITE_GEMSTONE.get();
+        return repairMaterial.is(AetherItems.ZANITE_GEMSTONE.get());
     }
 
     @Override

@@ -115,13 +115,14 @@ public class AetherItemTagData extends ItemTagsProvider
                 Items.MUSIC_DISC_11,
                 Items.MUSIC_DISC_13,
                 Items.MUSIC_DISC_BLOCKS,
+                Items.MUSIC_DISC_CHIRP,
                 Items.MUSIC_DISC_FAR,
                 Items.MUSIC_DISC_MALL,
                 Items.MUSIC_DISC_MELLOHI,
                 Items.MUSIC_DISC_STAL,
-                Items.MUSIC_DISC_STRAD,
                 Items.MUSIC_DISC_WAIT,
-                Items.MUSIC_DISC_WARD);
+                Items.MUSIC_DISC_WARD,
+                Items.MUSIC_DISC_OTHERSIDE);
         tag(AetherTags.Items.SAVE_NBT_IN_RECIPE).add(
                 AetherItems.ENCHANTED_DART_SHOOTER.get(),
                 AetherItems.ICE_RING.get(),

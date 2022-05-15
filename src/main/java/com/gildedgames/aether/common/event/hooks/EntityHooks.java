@@ -25,7 +25,7 @@ public class EntityHooks {
     public static void skyrootBucketMilking(Entity target, Player player, InteractionHand hand) {
         if ((target instanceof Cow || target instanceof FlyingCow) && !((Animal) target).isBaby()) {
             ItemStack heldStack = player.getItemInHand(hand);
-            if (heldStack.getItem() == AetherItems.SKYROOT_BUCKET.get()) {
+            if (heldStack.is(AetherItems.SKYROOT_BUCKET.get())) {
                 if (target instanceof FlyingCow) {
                     player.playSound(AetherSoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);
                 } else  {
