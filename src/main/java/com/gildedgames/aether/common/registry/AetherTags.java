@@ -121,14 +121,6 @@ public class AetherTags {
 		}
 	}
 
-	public static class Fluids {
-		public static final TagKey<Fluid> FREEZABLE_TO_AEROGEL = tag("freezable_to_aerogel");
-
-		private static TagKey<Fluid> tag(String name) {
-			return TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Aether.MODID, name));
-		}
-	}
-
 	public static class Biomes {
 		public static final TagKey<Biome> MYCELIUM_CONVERSION = tag("mycelium_conversion");
 		public static final TagKey<Biome> PODZOL_CONVERSION = tag("podzol_conversion");
