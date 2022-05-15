@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.level.Level;
@@ -32,12 +33,13 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class SkyrootBucketItem extends BucketItem {
-    public static Map<Supplier<Item>, Supplier<Item>> REPLACEMENTS = Maps.newHashMap(); //thisll contain fish, liquid buckets, and also powder snow.
+    public static Map<Supplier<Item>, Supplier<Item>> REPLACEMENTS = Maps.newHashMap();
 
-    public SkyrootBucketItem(Supplier<? extends Fluid> supplier, Item.Properties builder) {
-        super(supplier, builder);
+    public SkyrootBucketItem(Supplier<? extends Fluid> supplier, Item.Properties properties) {
+        super(supplier, properties);
         REPLACEMENTS.put(Items.WATER_BUCKET.delegate, AetherItems.SKYROOT_WATER_BUCKET);
         REPLACEMENTS.put(Items.POWDER_SNOW_BUCKET.delegate, AetherItems.SKYROOT_POWDER_SNOW_BUCKET);
+        REPLACEMENTS.put(Items.COD_BUCKET.delegate, AetherItems.SKYROOT_COD_BUCKET);
     }
 
     @Nonnull
@@ -58,7 +60,8 @@ public class SkyrootBucketItem extends BucketItem {
             if (level.mayInteract(player, blockPos) && player.mayUseItemAt(relativePos, direction, itemStack)) {
                 if (this.getFluid() == Fluids.EMPTY) {
                     BlockState blockState = level.getBlockState(blockPos);
-                    if (blockState.getBlock() instanceof BucketPickup bucketPickup && blockState.is(AetherTags.Blocks.ALLOWED_BUCKET_PICKUP)) {
+                    FluidState fluidState = level.getFluidState(blockPos);
+                    if (blockState.getBlock() instanceof BucketPickup bucketPickup && (blockState.is(AetherTags.Blocks.ALLOWED_BUCKET_PICKUP) || fluidState.is(AetherTags.Fluids.ALLOWED_BUCKET_PICKUP))) {
                         ItemStack bucketStack = bucketPickup.pickupBlock(level, blockPos, blockState);
                         bucketStack = swapBucketType(bucketStack);
                         if (!bucketStack.isEmpty()) {
