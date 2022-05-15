@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.item.miscellaneous.bucket;
 
 import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.common.registry.AetherTags;
 import com.google.common.collect.Maps;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.nbt.CompoundTag;
@@ -36,6 +37,7 @@ public class SkyrootBucketItem extends BucketItem {
     public SkyrootBucketItem(Supplier<? extends Fluid> supplier, Item.Properties builder) {
         super(supplier, builder);
         REPLACEMENTS.put(Items.WATER_BUCKET.delegate, AetherItems.SKYROOT_WATER_BUCKET);
+        REPLACEMENTS.put(Items.POWDER_SNOW_BUCKET.delegate, AetherItems.SKYROOT_POWDER_SNOW_BUCKET);
     }
 
     @Nonnull
@@ -56,7 +58,7 @@ public class SkyrootBucketItem extends BucketItem {
             if (level.mayInteract(player, blockPos) && player.mayUseItemAt(relativePos, direction, itemStack)) {
                 if (this.getFluid() == Fluids.EMPTY) {
                     BlockState blockState = level.getBlockState(blockPos);
-                    if (blockState.getBlock() instanceof BucketPickup bucketPickup) {
+                    if (blockState.getBlock() instanceof BucketPickup bucketPickup && blockState.is(AetherTags.Blocks.ALLOWED_BUCKET_PICKUP)) {
                         ItemStack bucketStack = bucketPickup.pickupBlock(level, blockPos, blockState);
                         bucketStack = swapBucketType(bucketStack);
                         if (!bucketStack.isEmpty()) {

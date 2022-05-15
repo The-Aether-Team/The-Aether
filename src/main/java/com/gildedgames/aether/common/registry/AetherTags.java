@@ -21,6 +21,7 @@ public class AetherTags {
 		public static final TagKey<Block> AERCLOUDS = tag("aerclouds");
 		public static final TagKey<Block> SKYROOT_LOGS = tag("skyroot_logs");
 		public static final TagKey<Block> GOLDEN_OAK_LOGS = tag("golden_oak_logs");
+		public static final TagKey<Block> ALLOWED_BUCKET_PICKUP = tag("allowed_bucket_pickup");
 		public static final TagKey<Block> AEROGEL = tag("aerogel");
 		public static final TagKey<Block> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final TagKey<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
