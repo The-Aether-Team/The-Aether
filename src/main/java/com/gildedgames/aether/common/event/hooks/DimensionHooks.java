@@ -1,6 +1,8 @@
 package com.gildedgames.aether.common.event.hooks;
 
+import com.gildedgames.aether.common.recipe.BlockBanRecipe;
 import com.gildedgames.aether.common.recipe.ItemBanRecipe;
+import com.gildedgames.aether.common.recipe.PlacementConversionRecipe;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherTags;
@@ -32,21 +34,21 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.entity.EntityTypeTest;
-import net.minecraft.world.level.material.FluidState;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class DimensionHooks {
+public class DimensionHooks { //todo: i sure hope calling 2 recipes every tick isnt bad for performance
     public static boolean playerLeavingAether;
     public static boolean displayAetherTravel;
 
-    public static boolean checkPlacementBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state) {
+    public static boolean checkInteractionBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state) {
         if (isItemPlacementBanned(level, pos, face, stack)) {
             return true;
         }
@@ -70,47 +72,58 @@ public class DimensionHooks {
         return false;
     }
 
-    public static boolean isItemPlacementBanned(Level level, BlockPos pos, Direction face, ItemStack stack) {
+    private static boolean isItemPlacementBanned(Level level, BlockPos pos, Direction face, ItemStack stack) {
         for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipes.RecipeTypes.ITEM_PLACEMENT_BAN)) {
             if (recipe instanceof ItemBanRecipe banRecipe) {
-                return banRecipe.banItem(level, pos, face, stack);
-            }
-        }
-        return false;
-    }
-
-    public static void convertPlacement() {
-
-    }
-
-    public static void onPlacementBanned(LevelAccessor accessor, BlockPos pos) {
-        double x = pos.getX() + 0.5;
-        double y = pos.getY() + 1.0;
-        double z = pos.getZ() + 0.5;
-        for (int i = 0; i < 10; i++) {
-            accessor.addParticle(ParticleTypes.LARGE_SMOKE, x, y, z, 0.0, 0.0, 0.0);
-        }
-        accessor.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.PLAYERS, 1.0F, 1.0F);
-    }
-
-    public static boolean freezeToAerogel(LevelAccessor accessor, BlockPos pos) {
-        if (accessor instanceof Level level) {
-            FluidState fluidstate = level.getFluidState(pos);
-            if (LevelUtil.inTag(level, AetherTags.Dimensions.ULTRACOLD) && fluidstate.is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
-                level.setBlockAndUpdate(pos, AetherBlocks.AEROGEL.get().defaultBlockState());
-                if (level instanceof ServerLevel serverLevel) {
-                    double x = pos.getX() + 0.5;
-                    double y = pos.getY() + 1.0;
-                    double z = pos.getZ() + 0.5;
-                    for (int i = 0; i < 10; i++) {
-                        serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, x, y, z, 1, 0.0D,0.0D, 0.0D, 0.0F);
-                    }
+                if (banRecipe.banItem(level, pos, face, stack)) {
+                    return true;
                 }
-                level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.PLAYERS, 1.0F, 1.0F);
-                return true;
             }
         }
         return false;
+    }
+
+    public static void checkExistenceBanned(LevelAccessor levelAccessor, BlockPos pos) {
+        if (levelAccessor instanceof Level level) {
+            BlockState state = levelAccessor.getBlockState(pos);
+            if (DimensionHooks.isBlockPlacementBanned(level, pos, state)) {
+                level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            }
+            DimensionHooks.isBlockPlacementConvertable(level, pos, state);
+        }
+    }
+
+    private static boolean isBlockPlacementBanned(Level level, BlockPos pos, BlockState state) {
+        for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipes.RecipeTypes.BLOCK_PLACEMENT_BAN)) {
+            if (recipe instanceof BlockBanRecipe banRecipe) {
+                if (banRecipe.banBlock(level, pos, state)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static void isBlockPlacementConvertable(Level level, BlockPos pos, BlockState state) {
+        for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipes.RecipeTypes.PLACEMENT_CONVERSION)) {
+            if (recipe instanceof PlacementConversionRecipe conversionRecipe) {
+                if (conversionRecipe.convert(level, pos, state)) {
+                    return;
+                }
+            }
+        }
+    }
+
+    public static void banOrConvert(LevelAccessor accessor, BlockPos pos) {
+        if (accessor instanceof ServerLevel serverLevel) {
+            double x = pos.getX() + 0.5;
+            double y = pos.getY() + 1.0;
+            double z = pos.getZ() + 0.5;
+            for (int i = 0; i < 10; i++) {
+                serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, x, y, z, 1, 0.0D,0.0D, 0.0D, 0.0F);
+            }
+            serverLevel.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.PLAYERS, 1.0F, 1.0F);
+        }
     }
 
     public static void fallFromAether(Level level) {

@@ -1,11 +1,9 @@
 package com.gildedgames.aether.common.recipe;
 
 import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
-import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
+import com.gildedgames.aether.common.recipe.util.BlockStateRecipeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;

@@ -416,12 +416,24 @@ public class AetherRecipeProvider extends RecipeProvider
         return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipes.ACCESSORY_FREEZABLE.get());
     }
 
-    public PlacementBanBuilder banPlacementWithBypass(ItemLike ingredient, TagKey<Block> bypass, TagKey<DimensionType> dimension) {
+    public PlacementBanBuilder banItemPlacementWithBypass(ItemLike ingredient, TagKey<Block> bypass, TagKey<DimensionType> dimension) {
         return ItemBanRecipeBuilder.recipe(Ingredient.of(ingredient), BlockStateIngredient.of(bypass), dimension, AetherRecipes.ITEM_PLACEMENT_BAN.get());
+    }
+
+    public PlacementBanBuilder banBlockPlacementWithBypass(Block ingredient, TagKey<Block> bypass, TagKey<DimensionType> dimension) {
+        return BlockBanRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), BlockStateIngredient.of(bypass), dimension, AetherRecipes.BLOCK_PLACEMENT_BAN.get());
+    }
+
+    public PlacementBanBuilder banBlockPlacement(Block ingredient, TagKey<DimensionType> dimension) {
+        return BlockBanRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), BlockStateIngredient.EMPTY, dimension, AetherRecipes.BLOCK_PLACEMENT_BAN.get());
     }
 
     public PlacementConversionBuilder convertPlacement(Block result, Block ingredient, TagKey<DimensionType> dimension) {
         return PlacementConversionBuilder.recipe(BlockStateIngredient.of(ingredient), result, dimension, AetherRecipes.PLACEMENT_CONVERSION.get());
+    }
+
+    public PlacementConversionBuilder convertPlacementWithProperties(Block result, Map<Property<?>, Comparable<?>> resultProperties, Block ingredient, Map<Property<?>, Comparable<?>> ingredientProperties, TagKey<DimensionType> dimension) {
+        return PlacementConversionBuilder.recipe(BlockStateIngredient.of(pair(ingredient, ingredientProperties)), result, resultProperties, dimension, AetherRecipes.PLACEMENT_CONVERSION.get());
     }
 
     protected BlockPropertyPair pair(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {

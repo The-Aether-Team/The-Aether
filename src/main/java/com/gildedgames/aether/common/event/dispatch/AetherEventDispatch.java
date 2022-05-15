@@ -16,20 +16,20 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.common.MinecraftForge;
 
 public class AetherEventDispatch {
-	public static PlacementBanEvent.SpawnParticles onPlacementSpawnParticles(LevelAccessor world, BlockPos pos, @Nullable Direction face, ItemStack itemStack) {
-		PlacementBanEvent.SpawnParticles event = new PlacementBanEvent.SpawnParticles(world, pos, face, itemStack);
+	public static PlacementBanEvent.SpawnParticles onPlacementSpawnParticles(LevelAccessor world, BlockPos pos, @Nullable Direction face, @Nullable ItemStack stack, @Nullable BlockState state) {
+		PlacementBanEvent.SpawnParticles event = new PlacementBanEvent.SpawnParticles(world, pos, face, stack, state);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}
 
-	public static boolean isItemPlacementBanned(ItemStack stack) {
-		PlacementBanEvent.CheckItem event = new PlacementBanEvent.CheckItem(stack.copy());
+	public static boolean isItemPlacementBanned(LevelAccessor world, BlockPos pos, ItemStack stack) {
+		PlacementBanEvent.CheckItem event = new PlacementBanEvent.CheckItem(world, pos, stack.copy());
 		MinecraftForge.EVENT_BUS.post(event);
 		return event.isBanned();
 	}
 
-	public static boolean isBlockPlacementBanned(BlockState state) {
-		PlacementBanEvent.CheckBlock event = new PlacementBanEvent.CheckBlock(state);
+	public static boolean isBlockPlacementBanned(LevelAccessor world, BlockPos pos, BlockState state) {
+		PlacementBanEvent.CheckBlock event = new PlacementBanEvent.CheckBlock(world, pos, state);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event.isBanned();
 	}

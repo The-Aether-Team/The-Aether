@@ -15,10 +15,22 @@ import net.minecraftforge.eventbus.api.Event;
 public class PlacementBanEvent extends Event {
 	public static class CheckItem extends PlacementBanEvent {
 		private boolean banned = true;
+		private final LevelAccessor world;
+		private final BlockPos pos;
 		private final ItemStack itemStack;
 
-		public CheckItem(ItemStack itemStack) {
+		public CheckItem(LevelAccessor worldIn, BlockPos pos, ItemStack itemStack) {
+			this.world = Preconditions.checkNotNull(worldIn, "Null world in PlacementBanEvent");
+			this.pos = Preconditions.checkNotNull(pos, "Null position in PlacementBanEvent");
 			this.itemStack = Preconditions.checkNotNull(itemStack, "Null itemStack in PlacementBanEvent");
+		}
+
+		public LevelAccessor getWorld() {
+			return this.world;
+		}
+
+		public BlockPos getPos() {
+			return this.pos;
 		}
 
 		public ItemStack getItemStack() {
@@ -36,10 +48,22 @@ public class PlacementBanEvent extends Event {
 	
 	public static class CheckBlock extends PlacementBanEvent {
 		private boolean banned = true;
+		private final LevelAccessor world;
+		private final BlockPos pos;
 		private final BlockState blockState;
 		
-		public CheckBlock(BlockState blockState) {
+		public CheckBlock(LevelAccessor worldIn, BlockPos pos, BlockState blockState) {
+			this.world = Preconditions.checkNotNull(worldIn, "Null world in PlacementBanEvent");
+			this.pos = Preconditions.checkNotNull(pos, "Null position in PlacementBanEvent");
 			this.blockState = Preconditions.checkNotNull(blockState, "Null blockState in PlacementBanEvent");
+		}
+
+		public LevelAccessor getWorld() {
+			return this.world;
+		}
+
+		public BlockPos getPos() {
+			return this.pos;
 		}
 
 		public BlockState getBlockState() {
@@ -63,12 +87,15 @@ public class PlacementBanEvent extends Event {
 		private final Direction face;
 		@Nullable
 		private final ItemStack itemStack;
+		@Nullable
+		private final BlockState blockState;
 		
-		public SpawnParticles(LevelAccessor worldIn, BlockPos pos, Direction face, @Nullable ItemStack itemStack) {
+		public SpawnParticles(LevelAccessor worldIn, BlockPos pos, @Nullable Direction face, @Nullable ItemStack stack, @Nullable BlockState state) {
 			this.world = Preconditions.checkNotNull(worldIn, "Null world in PlacementBanEvent");
 			this.pos = Preconditions.checkNotNull(pos, "Null position in PlacementBanEvent");
 			this.face = face;
-			this.itemStack = itemStack;
+			this.itemStack = stack;
+			this.blockState = state;
 		}
 		
 		public LevelAccessor getWorld() {
@@ -87,6 +114,11 @@ public class PlacementBanEvent extends Event {
 		@Nullable
 		public ItemStack getItemStack() {
 			return this.itemStack;
+		}
+
+		@Nullable
+		public BlockState getBlockState() {
+			return this.blockState;
 		}
 	}
 }

@@ -119,7 +119,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS
         );
         tag(AetherTags.Blocks.INFINIBURN).addTag(BlockTags.INFINIBURN_OVERWORLD);
-        tag(AetherTags.Blocks.ALLOWED_FLAMMABLES).addTags(
+        tag(AetherTags.Blocks.ALLOWED_FLAMMABLES).add(Blocks.SOUL_SAND, Blocks.SOUL_SOIL).addTags(
                 AetherTags.Blocks.INFINIBURN,
                 AetherTags.Blocks.HELLFIRE_BLOCKS);
 

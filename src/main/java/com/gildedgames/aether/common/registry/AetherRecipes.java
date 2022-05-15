@@ -3,8 +3,13 @@ package com.gildedgames.aether.common.registry;
 import com.gildedgames.aether.Aether;
 
 import com.gildedgames.aether.common.recipe.*;
+import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
 import com.gildedgames.aether.common.recipe.serializer.BlockStateRecipeSerializer;
+import com.gildedgames.aether.common.recipe.serializer.PlacementBanRecipeSerializer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -13,8 +18,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
 import net.minecraftforge.registries.RegistryObject;
 
-public class AetherRecipes
-{
+public class AetherRecipes {
 	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Aether.MODID);
 
 	public static final RegistryObject<RecipeSerializer<AltarRepairRecipe>> REPAIRING = RECIPE_SERIALIZERS.register("repairing", AltarRepairRecipe.Serializer::new);
@@ -24,10 +28,10 @@ public class AetherRecipes
 	public static final RegistryObject<BlockStateRecipeSerializer<IcestoneFreezableRecipe>> ICESTONE_FREEZABLE = RECIPE_SERIALIZERS.register("icestone_freezable", IcestoneFreezableRecipe.Serializer::new);
 	public static final RegistryObject<BlockStateRecipeSerializer<AccessoryFreezableRecipe>> ACCESSORY_FREEZABLE = RECIPE_SERIALIZERS.register("accessory_freezable", AccessoryFreezableRecipe.Serializer::new);
 	public static final RegistryObject<BlockStateRecipeSerializer<PlacementConversionRecipe>> PLACEMENT_CONVERSION = RECIPE_SERIALIZERS.register("placement_conversion", PlacementConversionRecipe.Serializer::new);
-	public static final RegistryObject<ItemBanRecipe.Serializer> ITEM_PLACEMENT_BAN = RECIPE_SERIALIZERS.register("item_placement_ban", ItemBanRecipe.Serializer::new);
+	public static final RegistryObject<PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe>> ITEM_PLACEMENT_BAN = RECIPE_SERIALIZERS.register("item_placement_ban", ItemBanRecipe.Serializer::new);
+	public static final RegistryObject<PlacementBanRecipeSerializer<BlockState, BlockStateIngredient, BlockBanRecipe>> BLOCK_PLACEMENT_BAN = RECIPE_SERIALIZERS.register("block_placement_ban", BlockBanRecipe.Serializer::new);
 
-	public static class RecipeTypes
-	{
+	public static class RecipeTypes {
 		public static RecipeType<EnchantingRecipe> ENCHANTING;
 		public static RecipeType<FreezingRecipe> FREEZING;
 		public static RecipeType<SwetBallRecipe> SWET_BALL_CONVERSION;
@@ -35,6 +39,7 @@ public class AetherRecipes
 		public static RecipeType<AccessoryFreezableRecipe> ACCESSORY_FREEZABLE;
 		public static RecipeType<PlacementConversionRecipe> PLACEMENT_CONVERSION;
 		public static RecipeType<ItemBanRecipe> ITEM_PLACEMENT_BAN;
+		public static RecipeType<BlockBanRecipe> BLOCK_PLACEMENT_BAN;
 
 		public static void init() {
 			ENCHANTING = RecipeType.register(new ResourceLocation(Aether.MODID, "enchanting").toString());
@@ -44,6 +49,7 @@ public class AetherRecipes
 			ACCESSORY_FREEZABLE = RecipeType.register(new ResourceLocation(Aether.MODID, "accessory_freezable").toString());
 			PLACEMENT_CONVERSION = RecipeType.register(new ResourceLocation(Aether.MODID, "placement_conversion").toString());
 			ITEM_PLACEMENT_BAN = RecipeType.register(new ResourceLocation(Aether.MODID, "item_placement_ban").toString());
+			BLOCK_PLACEMENT_BAN = RecipeType.register(new ResourceLocation(Aether.MODID, "block_placement_ban").toString());
 		}
 	}
 }

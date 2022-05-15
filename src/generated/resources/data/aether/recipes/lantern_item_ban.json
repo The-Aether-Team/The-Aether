@@ -1,0 +1,10 @@
+{
+  "type": "aether:item_placement_ban",
+  "dimension_type": "#aether:ultracold",
+  "bypass": {
+    "tag": "aether:allowed_flammables"
+  },
+  "ingredient": {
+    "item": "minecraft:lantern"
+  }
+}

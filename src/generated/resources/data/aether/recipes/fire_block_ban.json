@@ -1,0 +1,10 @@
+{
+  "type": "aether:block_placement_ban",
+  "dimension_type": "#aether:ultracold",
+  "bypass": {
+    "tag": "aether:allowed_flammables"
+  },
+  "ingredient": {
+    "block": "minecraft:fire"
+  }
+}

@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.event.listeners;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.event.events.PlacementBanEvent;
+import com.gildedgames.aether.common.event.events.PlacementConvertEvent;
 import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
@@ -33,22 +33,32 @@ public class DimensionListener {
         Direction direction = event.getFace();
         ItemStack itemStack = event.getItemStack();
         BlockState blockState = level.getBlockState(blockPos);
-        //event.setCanceled(DimensionHooks.checkPlacementBanned(player, level, blockPos, direction, itemStack, blockState));
+        event.setCanceled(DimensionHooks.checkInteractionBanned(player, level, blockPos, direction, itemStack, blockState));
+    }
+
+    @SubscribeEvent
+    public static void onNeighborNotified(BlockEvent.NeighborNotifyEvent event) {
+        LevelAccessor levelAccessor = event.getWorld();
+        BlockPos blockPos = event.getPos();
+        DimensionHooks.checkExistenceBanned(levelAccessor, blockPos);
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onConvert(PlacementConvertEvent event) {
+        LevelAccessor levelAccessor = event.getWorld();
+        BlockPos blockPos = event.getPos();
+        if (!event.isCanceled()) {
+            DimensionHooks.banOrConvert(levelAccessor, blockPos);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onBanned(PlacementBanEvent.SpawnParticles event) {
         LevelAccessor levelAccessor = event.getWorld();
         BlockPos blockPos = event.getPos();
-        //DimensionHooks.onPlacementBanned(levelAccessor, blockPos);
-    }
-
-    @SubscribeEvent
-    public static void onNeighborNotified(BlockEvent.NeighborNotifyEvent event) { //TODO: This can be used for any blocks placed in the world to remove them, such as fire or lava.
-        LevelAccessor levelAccessor = event.getWorld();
-        BlockPos blockPos = event.getPos();
-        //Aether.LOGGER.info(levelAccessor.getBlockState(blockPos));
-        //event.setCanceled(DimensionHooks.freezeToAerogel(levelAccessor, blockPos));
+        if (!event.isCanceled()) {
+            DimensionHooks.banOrConvert(levelAccessor, blockPos);
+        }
     }
 
     @SubscribeEvent

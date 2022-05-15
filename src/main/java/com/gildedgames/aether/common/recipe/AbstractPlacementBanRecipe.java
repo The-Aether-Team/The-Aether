@@ -1,6 +1,8 @@
 package com.gildedgames.aether.common.recipe;
 
 import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
+import com.gildedgames.aether.core.util.LevelUtil;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -30,6 +32,19 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
         this.dimensionTypeTag = dimensionTypeTag;
         this.bypassBlock = bypassBlock;
         this.ingredient = ingredient;
+    }
+
+    public boolean matches(Level level, BlockPos pos, T object) {
+        if (this.bypassBlock.isEmpty() || !this.bypassBlock.test(level.getBlockState(pos))) {
+            if (this.dimensionTypeKey != null) {
+                return level.dimensionTypeRegistration().is(this.dimensionTypeKey) && this.getIngredient().test(object);
+            } else if (this.dimensionTypeTag != null) {
+                return LevelUtil.inTag(level, this.dimensionTypeTag) && this.getIngredient().test(object);
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ResourceKey<DimensionType> getDimensionTypeKey() {

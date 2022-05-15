@@ -5,7 +5,7 @@ import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
 import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
 import com.gildedgames.aether.common.recipe.serializer.BlockStateRecipeSerializer;
 import com.gildedgames.aether.common.registry.AetherRecipes;
-import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
+import com.gildedgames.aether.common.recipe.util.BlockStateRecipeUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

@@ -1,0 +1,10 @@
+{
+  "type": "aether:placement_conversion",
+  "dimension_type": "#aether:ultracold",
+  "ingredient": {
+    "block": "minecraft:lava"
+  },
+  "result": {
+    "block": "aether:aerogel"
+  }
+}

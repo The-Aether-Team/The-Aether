@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.util;
+package com.gildedgames.aether.common.recipe.util;
 
 import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
@@ -95,7 +95,7 @@ public class BlockStateRecipeUtil {
         } else {
             Map<Property<?>, Comparable<?>> properties = Maps.newHashMap();
             StateDefinition<Block, BlockState> stateDefinition = block.getStateDefinition();
-            CompoundTag tag = buf.readNbt(); //TODO: networking is failing here. which means this isnt being written properly. although actually it shouldnt even be reaching here whats going on.
+            CompoundTag tag = buf.readNbt();
             if (tag != null) {
                 for (String propertyName : tag.getAllKeys()) {
                     Property<?> property = stateDefinition.getProperty(propertyName);

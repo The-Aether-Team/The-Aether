@@ -1,0 +1,9 @@
+{
+  "type": "aether:accessory_freezable",
+  "ingredient": {
+    "block": "minecraft:lava"
+  },
+  "result": {
+    "block": "minecraft:obsidian"
+  }
+}

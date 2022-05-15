@@ -1,0 +1,9 @@
+{
+  "type": "aether:icestone_freezable",
+  "ingredient": {
+    "block": "minecraft:water"
+  },
+  "result": {
+    "block": "minecraft:ice"
+  }
+}

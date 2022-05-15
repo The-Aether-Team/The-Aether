@@ -2,7 +2,7 @@ package com.gildedgames.aether.common.recipe.serializer;
 
 import com.gildedgames.aether.common.recipe.AbstractBlockStateRecipe;
 import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
-import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
+import com.gildedgames.aether.common.recipe.util.BlockStateRecipeUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;

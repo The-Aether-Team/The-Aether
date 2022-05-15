@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.recipe.ingredient;
 
 import com.gildedgames.aether.common.recipe.util.BlockPropertyPair;
-import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
+import com.gildedgames.aether.common.recipe.util.BlockStateRecipeUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.*;
@@ -117,12 +117,24 @@ public class BlockStateIngredient implements Predicate<BlockState> {
     }
 
     public static BlockStateIngredient fromNetwork(FriendlyByteBuf buf) {
-        var size = buf.readVarInt();
-        return fromValues(Stream.generate(() -> {
+        var blockSize = buf.readVarInt();
+        List<Block> blocksList = Lists.newArrayList();
+        for (int i = 0; i < blockSize; i++) {
             Block block = BlockStateRecipeUtil.readBlock(buf);
-            Map<Property<?>, Comparable<?>> properties = BlockStateRecipeUtil.readProperties(buf, block);
-            return new BlockStateIngredient.StateValue(block, properties);
-        }).limit(size));
+            blocksList.add(block);
+        }
+        var propertiesSize = buf.readVarInt();
+        List<Map<Property<?>, Comparable<?>>> propertiesList = Lists.newArrayList();
+        for (int i = 0; i < propertiesSize; i++) {
+            Map<Property<?>, Comparable<?>> properties = BlockStateRecipeUtil.readProperties(buf, blocksList.get(i));
+            propertiesList.add(properties);
+        }
+        Collection<BlockStateIngredient.Value> valuesList = Lists.newArrayList();
+        for (int i = 0; i < blocksList.size(); i++) {
+             BlockStateIngredient.StateValue value = new BlockStateIngredient.StateValue(blocksList.get(i), propertiesList.get(i));
+             valuesList.add(value);
+        }
+        return fromValues(valuesList.stream());
     }
 
     public JsonElement toJson() {

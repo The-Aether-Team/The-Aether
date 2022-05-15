@@ -1,0 +1,7 @@
+{
+  "type": "aether:block_placement_ban",
+  "dimension_type": "#aether:ultracold",
+  "ingredient": {
+    "block": "minecraft:torch"
+  }
+}

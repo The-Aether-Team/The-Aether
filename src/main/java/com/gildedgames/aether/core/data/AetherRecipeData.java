@@ -17,9 +17,12 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Items;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.CandleBlock;
 import net.minecraftforge.common.Tags;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class AetherRecipeData extends AetherRecipeProvider
@@ -726,29 +729,33 @@ public class AetherRecipeData extends AetherRecipeProvider
         freezingRecipeWithTag(AetherItems.ICE_RING.get(), AetherTags.Items.FREEZABLE_RINGS, 1.0F, 2500, "ring").save(consumer, name("ice_ring_from_freezing"));
         freezingRecipeWithTag(AetherItems.ICE_PENDANT.get(), AetherTags.Items.FREEZABLE_PENDANTS, 1.0F, 2500, "pendant").save(consumer, name("ice_pendant_from_freezing"));
 
-//        swetBallConversion(Blocks.GRASS_BLOCK, Blocks.DIRT).save(consumer, name("swet_ball_dirt_to_grass"));
-//        swetBallConversion(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT.get()).save(consumer, name("swet_ball_aether_dirt_to_aether_grass"));
-//
-//        swetBallConversionTag(Blocks.MYCELIUM, Blocks.DIRT, AetherTags.Biomes.MYCELIUM_CONVERSION).save(consumer, name("swet_ball_dirt_to_mycelium"));
-//        swetBallConversionTag(Blocks.PODZOL, Blocks.GRASS_BLOCK, AetherTags.Biomes.PODZOL_CONVERSION).save(consumer, name("swet_ball_grass_to_podzol"));
-//        swetBallConversionTag(Blocks.CRIMSON_NYLIUM, Blocks.NETHERRACK, AetherTags.Biomes.CRIMSON_NYLIUM_CONVERSION).save(consumer, name("swet_ball_netherrack_to_crimson_nylium"));
-//        swetBallConversionTag(Blocks.WARPED_NYLIUM, Blocks.NETHERRACK, AetherTags.Biomes.WARPED_NYLIUM_CONVERSION).save(consumer, name("swet_ball_netherrack_to_warped_nylium"));
-//
-//        icestoneFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("icestone_freeze_water"));
-//        icestoneFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("icestone_freeze_lava"));
-//
-//        accessoryFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("accessory_freeze_water"));
-//        accessoryFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("accessory_freeze_lava"));
+        swetBallConversion(Blocks.GRASS_BLOCK, Blocks.DIRT).save(consumer, name("swet_ball_dirt_to_grass"));
+        swetBallConversion(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT.get()).save(consumer, name("swet_ball_aether_dirt_to_aether_grass"));
 
-        banPlacementWithBypass(Items.FLINT_AND_STEEL, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Dimensions.ULTRACOLD).save(consumer, name("flint_and_steel_ban"));
-        /*
-                Items.FLINT_AND_STEEL,
-                Items.TORCH,
-                Items.SOUL_TORCH,
-                Items.FIRE_CHARGE);
-         */
+        swetBallConversionTag(Blocks.MYCELIUM, Blocks.DIRT, AetherTags.Biomes.MYCELIUM_CONVERSION).save(consumer, name("swet_ball_dirt_to_mycelium"));
+        swetBallConversionTag(Blocks.PODZOL, Blocks.GRASS_BLOCK, AetherTags.Biomes.PODZOL_CONVERSION).save(consumer, name("swet_ball_grass_to_podzol"));
+        swetBallConversionTag(Blocks.CRIMSON_NYLIUM, Blocks.NETHERRACK, AetherTags.Biomes.CRIMSON_NYLIUM_CONVERSION).save(consumer, name("swet_ball_netherrack_to_crimson_nylium"));
+        swetBallConversionTag(Blocks.WARPED_NYLIUM, Blocks.NETHERRACK, AetherTags.Biomes.WARPED_NYLIUM_CONVERSION).save(consumer, name("swet_ball_netherrack_to_warped_nylium"));
 
-        //convertPlacement(AetherBlocks.AEROGEL.get(), Blocks.LAVA, AetherTags.Dimensions.ULTRACOLD).save(consumer, name("aerogel_conversion"));
+        icestoneFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("icestone_freeze_water"));
+        icestoneFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("icestone_freeze_lava"));
+
+        accessoryFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("accessory_freeze_water"));
+        accessoryFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("accessory_freeze_lava"));
+
+        banItemPlacementWithBypass(Items.FLINT_AND_STEEL, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Dimensions.ULTRACOLD).save(consumer, name("flint_and_steel_item_ban"));
+        banItemPlacementWithBypass(Items.FIRE_CHARGE, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Dimensions.ULTRACOLD).save(consumer, name("fire_charge_item_ban"));
+        banItemPlacementWithBypass(Items.TORCH, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Dimensions.ULTRACOLD).save(consumer, name("torch_item_ban"));
+        banItemPlacementWithBypass(Items.LANTERN, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Dimensions.ULTRACOLD).save(consumer, name("lantern_item_ban"));
+
+        banBlockPlacementWithBypass(Blocks.FIRE, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Dimensions.ULTRACOLD).save(consumer, name("fire_block_ban"));
+        banBlockPlacement(Blocks.TORCH, AetherTags.Dimensions.ULTRACOLD).save(consumer, name("torch_block_ban"));
+        banBlockPlacement(Blocks.LANTERN, AetherTags.Dimensions.ULTRACOLD).save(consumer, name("lantern_block_ban"));
+
+        convertPlacement(AetherBlocks.AEROGEL.get(), Blocks.LAVA, AetherTags.Dimensions.ULTRACOLD).save(consumer, name("aerogel_conversion"));
+        convertPlacementWithProperties(Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, false), Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, true), AetherTags.Dimensions.ULTRACOLD).save(consumer, name("campfire_conversion"));
+        convertPlacementWithProperties(Blocks.CANDLE, Map.of(CandleBlock.LIT, false), Blocks.CANDLE, Map.of(CandleBlock.LIT, true), AetherTags.Dimensions.ULTRACOLD).save(consumer, name("candle_conversion"));
+        convertPlacement(Blocks.CARVED_PUMPKIN, Blocks.JACK_O_LANTERN, AetherTags.Dimensions.ULTRACOLD).save(consumer, name("jack_o_lantern_conversion"));
     }
 
     private ResourceLocation name(String name) {

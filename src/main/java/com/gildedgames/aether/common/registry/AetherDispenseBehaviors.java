@@ -4,7 +4,6 @@ import com.gildedgames.aether.common.entity.projectile.weapon.HammerProjectile;
 import com.gildedgames.aether.common.entity.projectile.weapon.ThrownLightningKnife;
 import com.gildedgames.aether.common.item.materials.util.ISwetBallConversion;
 import com.gildedgames.aether.common.item.miscellaneous.bucket.SkyrootWaterBucketItem;
-import com.gildedgames.aether.core.util.LevelUtil;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
@@ -37,9 +36,6 @@ import java.util.List;
 import java.util.Map;
 
 public class AetherDispenseBehaviors {
-    public static DispenseItemBehavior DEFAULT_FIRE_CHARGE_BEHAVIOR;
-    public static DispenseItemBehavior DEFAULT_FLINT_AND_STEEL_BEHAVIOR;
-
     public static final DispenseItemBehavior DISPENSE_ACCESSORY_BEHAVIOR = new DefaultDispenseItemBehavior() {
         @Nonnull
         @Override
@@ -206,37 +202,6 @@ public class AetherDispenseBehaviors {
                 this.setSuccess(false);
             }
             return stack;
-        }
-    };
-
-    public static final DispenseItemBehavior DISPENSE_FIRE_CHARGE_BEHAVIOR = new OptionalDispenseItemBehavior() {
-        @Nonnull
-        @Override
-        public ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
-            if (LevelUtil.inTag(source.getLevel(), AetherTags.Dimensions.ULTRACOLD)) {
-                this.setSuccess(false);
-                return stack;
-            } else {
-                return DEFAULT_FIRE_CHARGE_BEHAVIOR.dispense(source, stack);
-            }
-        }
-
-        @Override
-        protected void playSound(BlockSource source) {
-            source.getLevel().levelEvent(this.isSuccess() ? 1018 : 1001, source.getPos(), 0);
-        }
-    };
-
-    public static final DispenseItemBehavior DISPENSE_FLINT_AND_STEEL = new OptionalDispenseItemBehavior() {
-        @Nonnull
-        @Override
-        protected ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
-            if (LevelUtil.inTag(source.getLevel(), AetherTags.Dimensions.ULTRACOLD)) {
-                this.setSuccess(false);
-                return stack;
-            } else {
-                return DEFAULT_FLINT_AND_STEEL_BEHAVIOR.dispense(source, stack);
-            }
         }
     };
 }

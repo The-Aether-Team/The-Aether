@@ -3,7 +3,7 @@ package com.gildedgames.aether.common.recipe.builder;
 import com.gildedgames.aether.common.recipe.AbstractBlockStateRecipe;
 import com.gildedgames.aether.common.recipe.ingredient.BlockStateIngredient;
 import com.gildedgames.aether.common.recipe.serializer.BlockStateRecipeSerializer;
-import com.gildedgames.aether.core.util.BlockStateRecipeUtil;
+import com.gildedgames.aether.common.recipe.util.BlockStateRecipeUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceKey;
