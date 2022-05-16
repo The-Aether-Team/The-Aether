@@ -17,15 +17,12 @@ import com.gildedgames.aether.common.item.block.BurnableBlockItem;
 import com.gildedgames.aether.common.item.block.EntityBlockItem;
 import com.gildedgames.aether.common.world.gen.tree.GoldenOakTree;
 import com.gildedgames.aether.common.world.gen.tree.SkyrootTree;
-import com.google.common.collect.ImmutableMap;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,9 +34,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class AetherBlocks
@@ -210,7 +205,6 @@ public class AetherBlocks
 
     public static final RegistryObject<BedBlock> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(Block.Properties.copy(Blocks.CYAN_BED)));
 
-
     public static void registerPots() {
         FlowerPotBlock pot = (FlowerPotBlock) Blocks.FLOWER_POT;
         pot.addPlant(AetherBlocks.BERRY_BUSH.getId(), AetherBlocks.POTTED_BERRY_BUSH);
@@ -219,35 +213,6 @@ public class AetherBlocks
         pot.addPlant(AetherBlocks.WHITE_FLOWER.getId(), AetherBlocks.POTTED_WHITE_FLOWER);
         pot.addPlant(AetherBlocks.SKYROOT_SAPLING.getId(), AetherBlocks.POTTED_SKYROOT_SAPLING);
         pot.addPlant(AetherBlocks.GOLDEN_OAK_SAPLING.getId(), AetherBlocks.POTTED_GOLDEN_OAK_SAPLING);
-    }
-
-    public static void registerAxeStrippingBlocks() {
-		AxeItem.STRIPPABLES = ImmutableMap.<Block, Block>builder()
-				.putAll(AxeItem.STRIPPABLES)
-				.put(AetherBlocks.SKYROOT_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
-				.put(AetherBlocks.GOLDEN_OAK_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
-				.put(AetherBlocks.SKYROOT_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
-				.put(AetherBlocks.GOLDEN_OAK_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
-				.build();
-    }
-
-    public static void registerShovelFlatteningBlocks() {
-        ShovelItem.FLATTENABLES = ImmutableMap.<Block, BlockState>builder()
-                .putAll(ShovelItem.FLATTENABLES)
-                .put(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT_PATH.get().defaultBlockState())
-                .put(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT_PATH.get().defaultBlockState())
-                .put(AetherBlocks.AETHER_DIRT.get(), AetherBlocks.AETHER_DIRT_PATH.get().defaultBlockState())
-                .build();
-    }
-
-    public static void registerHoeTillingBlocks() {
-		HoeItem.TILLABLES = ImmutableMap.<Block, Pair<Predicate<UseOnContext>, Consumer<UseOnContext>>>builder()
-				.putAll(HoeItem.TILLABLES)
-				.put(AetherBlocks.AETHER_DIRT.get(), Pair.of(HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())))
-				.put(AetherBlocks.AETHER_GRASS_BLOCK.get(), Pair.of(HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())))
-				.put(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), Pair.of(HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())))
-                .put(AetherBlocks.AETHER_DIRT_PATH.get(), Pair.of(HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(AetherBlocks.AETHER_FARMLAND.get().defaultBlockState())))
-				.build();
     }
 
     public static void registerFlammability() {
