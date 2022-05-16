@@ -40,6 +40,10 @@ public class SkyrootBucketItem extends BucketItem {
         REPLACEMENTS.put(Items.WATER_BUCKET.delegate, AetherItems.SKYROOT_WATER_BUCKET);
         REPLACEMENTS.put(Items.POWDER_SNOW_BUCKET.delegate, AetherItems.SKYROOT_POWDER_SNOW_BUCKET);
         REPLACEMENTS.put(Items.COD_BUCKET.delegate, AetherItems.SKYROOT_COD_BUCKET);
+        REPLACEMENTS.put(Items.SALMON_BUCKET.delegate, AetherItems.SKYROOT_SALMON_BUCKET);
+        REPLACEMENTS.put(Items.PUFFERFISH_BUCKET.delegate, AetherItems.SKYROOT_PUFFERFISH_BUCKET);
+        REPLACEMENTS.put(Items.TROPICAL_FISH_BUCKET.delegate, AetherItems.SKYROOT_TROPICAL_FISH_BUCKET);
+        REPLACEMENTS.put(Items.AXOLOTL_BUCKET.delegate, AetherItems.SKYROOT_AXOLOTL_BUCKET);
     }
 
     @Nonnull
