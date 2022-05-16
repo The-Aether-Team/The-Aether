@@ -49,7 +49,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -118,9 +117,6 @@ public class Aether
             AetherPacketHandler.register();
 
             AetherBlocks.registerPots();
-            AetherBlocks.registerAxeStrippingBlocks();
-            AetherBlocks.registerShovelFlatteningBlocks();
-            AetherBlocks.registerHoeTillingBlocks();
             AetherBlocks.registerFlammability();
             AetherBlocks.registerFreezables();
 
