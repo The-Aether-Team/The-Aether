@@ -171,6 +171,12 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.SKYROOT_POISON_BUCKET, "miscellaneous/");
         item(AetherItems.SKYROOT_REMEDY_BUCKET, "miscellaneous/");
         item(AetherItems.SKYROOT_MILK_BUCKET, "miscellaneous/");
+        item(AetherItems.SKYROOT_POWDER_SNOW_BUCKET, "miscellaneous/");
+        item(AetherItems.SKYROOT_COD_BUCKET, "miscellaneous/");
+        item(AetherItems.SKYROOT_SALMON_BUCKET, "miscellaneous/");
+        item(AetherItems.SKYROOT_PUFFERFISH_BUCKET, "miscellaneous/");
+        item(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET, "miscellaneous/");
+        item(AetherItems.SKYROOT_AXOLOTL_BUCKET, "miscellaneous/");
 
         item(AetherItems.COLD_PARACHUTE, "miscellaneous/");
         item(AetherItems.GOLDEN_PARACHUTE, "miscellaneous/");

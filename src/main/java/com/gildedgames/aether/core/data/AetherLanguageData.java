@@ -306,6 +306,12 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.SKYROOT_POISON_BUCKET, "Skyroot Poison Bucket");
         addItem(AetherItems.SKYROOT_REMEDY_BUCKET, "Skyroot Remedy Bucket");
         addItem(AetherItems.SKYROOT_MILK_BUCKET, "Skyroot Milk Bucket");
+        addItem(AetherItems.SKYROOT_POWDER_SNOW_BUCKET, "Skyroot Powder Snow Bucket");
+        addItem(AetherItems.SKYROOT_COD_BUCKET, "Skyroot Bucket of Cod");
+        addItem(AetherItems.SKYROOT_SALMON_BUCKET, "Skyroot Bucket of Salmon");
+        addItem(AetherItems.SKYROOT_PUFFERFISH_BUCKET, "Skyroot Bucket of Pufferfish");
+        addItem(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET, "Skyroot Bucket of Tropical Fish");
+        addItem(AetherItems.SKYROOT_AXOLOTL_BUCKET, "Skyroot Bucket of Axolotl");
 
         addItem(AetherItems.COLD_PARACHUTE, "Cold Parachute");
         addItem(AetherItems.GOLDEN_PARACHUTE, "Golden Parachute");
