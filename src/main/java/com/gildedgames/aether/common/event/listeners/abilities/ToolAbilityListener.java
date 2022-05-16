@@ -9,10 +9,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -23,15 +23,6 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class ToolAbilityListener {
-    @SubscribeEvent
-    public static void doGoldenOakStripping(PlayerInteractEvent.RightClickBlock event) { //todo make use of blocktoolmodification event
-        Level level = event.getWorld();
-        ItemStack itemStack = event.getItemStack();
-        BlockPos blockPos = event.getPos();
-        BlockHitResult blockHitResult = event.getHitVec();
-        AbilityHooks.ToolHooks.stripGoldenOak(level, itemStack, blockPos, blockHitResult);
-    }
-
     @SubscribeEvent
     public static void doHolystoneAbility(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
@@ -81,6 +72,17 @@ public class ToolAbilityListener {
         BlockState newState = AbilityHooks.ToolHooks.setupToolActions(levelAccessor, pos, oldState, toolAction);
         if (newState != oldState && !event.isSimulated()) {
             event.setFinalState(newState);
+        }
+    }
+    @SubscribeEvent
+    public static void doGoldenOakStripping(BlockEvent.BlockToolModificationEvent event) {
+        LevelAccessor levelAccessor = event.getWorld();
+        BlockState oldState = event.getState();
+        ItemStack itemStack = event.getHeldItemStack();
+        ToolAction toolAction = event.getToolAction();
+        UseOnContext context = event.getContext();
+        if (!event.isSimulated()) {
+            AbilityHooks.ToolHooks.stripGoldenOak(levelAccessor, oldState, itemStack, toolAction, context);
         }
     }
 }

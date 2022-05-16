@@ -22,8 +22,8 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -31,7 +31,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -81,28 +80,6 @@ public class AbilityHooks {
                 .put(AetherBlocks.AETHER_DIRT_PATH.get(), AetherBlocks.AETHER_FARMLAND.get())
                 .build();
 
-        public static void stripGoldenOak(Level level, ItemStack stack, BlockPos pos, BlockHitResult result) {
-            if (stack.getItem() instanceof AxeItem) {
-                BlockState blockState = level.getBlockState(pos);
-                if (blockState.is(AetherTags.Blocks.GOLDEN_OAK_LOGS)) {
-                    if (level.getServer() != null) {
-                        Vec3 vector = result.getLocation();
-                        LootContext.Builder lootContext = new LootContext.Builder((ServerLevel) level)
-                                .withParameter(LootContextParams.BLOCK_STATE, blockState)
-                                .withParameter(LootContextParams.ORIGIN, vector)
-                                .withParameter(LootContextParams.TOOL, stack);
-                        LootTable loottable = level.getServer().getLootTables().get(AetherLoot.STRIP_GOLDEN_OAK);
-                        List<ItemStack> list = loottable.getRandomItems(lootContext.create(AetherLoot.STRIPPING));
-                        for (ItemStack itemStack : list) {
-                            ItemEntity itemEntity = new ItemEntity(level, vector.x(), vector.y(), vector.z(), itemStack);
-                            itemEntity.setDefaultPickUpDelay();
-                            level.addFreshEntity(itemEntity);
-                        }
-                    }
-                }
-            }
-        }
-
         public static BlockState setupToolActions(LevelAccessor accessor, BlockPos pos, BlockState old, ToolAction action) {
             Block oldBlock = old.getBlock();
             if (action == ToolActions.AXE_STRIP) {
@@ -121,6 +98,29 @@ public class AbilityHooks {
                 }
             }
             return old;
+        }
+
+        public static void stripGoldenOak(LevelAccessor accessor, BlockState state, ItemStack stack, ToolAction action, UseOnContext context) {
+            if (action == ToolActions.AXE_STRIP) {
+                if (accessor instanceof Level level) {
+                    if (state.is(AetherTags.Blocks.GOLDEN_OAK_LOGS)) {
+                        if (level.getServer() != null) {
+                            Vec3 vector = context.getClickLocation();
+                            LootContext.Builder lootContext = new LootContext.Builder((ServerLevel) level)
+                                    .withParameter(LootContextParams.BLOCK_STATE, state)
+                                    .withParameter(LootContextParams.ORIGIN, vector)
+                                    .withParameter(LootContextParams.TOOL, stack);
+                            LootTable loottable = level.getServer().getLootTables().get(AetherLoot.STRIP_GOLDEN_OAK);
+                            List<ItemStack> list = loottable.getRandomItems(lootContext.create(AetherLoot.STRIPPING));
+                            for (ItemStack itemStack : list) {
+                                ItemEntity itemEntity = new ItemEntity(level, vector.x(), vector.y(), vector.z(), itemStack);
+                                itemEntity.setDefaultPickUpDelay();
+                                level.addFreshEntity(itemEntity);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
