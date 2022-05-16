@@ -59,12 +59,12 @@ public class EntityHooks {
                     bucketable.saveToBucketTag(bucketStack);
                     ItemStack filledStack = ItemUtils.createFilledResult(heldStack, player, bucketStack, false);
                     player.setItemInHand(hand, filledStack);
-                    Level level = livingEntity.level;
-                    if (!level.isClientSide) {
+                    Level level = livingEntity.getLevel();
+                    if (!level.isClientSide()) {
                         CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, bucketStack);
                     }
                     target.discard();
-                    interactionResult = Optional.of(InteractionResult.sidedSuccess(level.isClientSide));
+                    interactionResult = Optional.of(InteractionResult.sidedSuccess(level.isClientSide()));
                 } else {
                     interactionResult = Optional.of(InteractionResult.FAIL);
                 }
