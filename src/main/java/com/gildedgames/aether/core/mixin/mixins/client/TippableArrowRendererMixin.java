@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.mixin.client;
+package com.gildedgames.aether.core.mixin.mixins.client;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.core.capability.arrow.PhoenixArrow;
