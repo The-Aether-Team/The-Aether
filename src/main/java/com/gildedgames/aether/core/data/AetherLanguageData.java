@@ -51,7 +51,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addBlock(AetherBlocks.QUICKSOIL_GLASS, "Quicksoil Glass");
         addBlock(AetherBlocks.AEROGEL, "Aerogel");
 
-        addBlock(AetherBlocks.ZANITE_BLOCK, "Zanite Block");
+        addBlock(AetherBlocks.AMBROSIUM_BLOCK, "Block of Ambrosium");
+        addBlock(AetherBlocks.ZANITE_BLOCK, "Block of Zanite");
         addBlock(AetherBlocks.ENCHANTED_GRAVITITE, "Enchanted Gravitite");
 
         addBlock(AetherBlocks.ALTAR, "Altar");

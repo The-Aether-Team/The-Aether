@@ -6,6 +6,7 @@
 a4475d114e6a058608b1b99ad32cfabc1ad77cc2 assets/aether/blockstates/aether_grass_block.json
 f795af9e1f8139543224421e3cf722f502c5199b assets/aether/blockstates/aether_portal.json
 5924d8f717b2c5b60971d5eb210a70e6a68da693 assets/aether/blockstates/altar.json
+bdfe87aded153a6e945c597cacda52a926748562 assets/aether/blockstates/ambrosium_block.json
 714c9d324aba37fd3eb850a7c7cad7773efc84e9 assets/aether/blockstates/ambrosium_ore.json
 6dc7c7d23665909c001f51b44068585287585230 assets/aether/blockstates/ambrosium_torch.json
 99171bd3e1f27d9e9d5358ec37803d0fbfdbecc2 assets/aether/blockstates/ambrosium_wall_torch.json
@@ -110,7 +111,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-0158f9069246304e3fbc48a39b15d4dd4acb08f2 assets/aether/lang/en_us.json
+4dd71062645147506d537c4201a8774eb2354021 assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -123,6 +124,7 @@ d4fe2e996b2f1f94f410d42e19d6d960944708ba assets/aether/models/block/aether_grass
 e28fef484c8396c8e177a781d459b9b81402e2f7 assets/aether/models/block/aether_portal_ew.json
 5140d67edc359ff123a95e5d61b75ff9ac67e16b assets/aether/models/block/aether_portal_ns.json
 be0ccf115d465bde13c8d2e0ea44b591eb73cdf0 assets/aether/models/block/altar.json
+bd7fd0b6c1508c64d59a15b9da57afa26235e5e4 assets/aether/models/block/ambrosium_block.json
 6cbd2a77a8772e9fc4c003f8847a9b31d92f8056 assets/aether/models/block/ambrosium_ore.json
 84107287bc84cecbc2ba4404b61953d83469feac assets/aether/models/block/ambrosium_torch.json
 311013f2f161e691f4a2e778a05b45440440c2c7 assets/aether/models/block/ambrosium_wall_torch.json
@@ -289,6 +291,7 @@ b2a7358d95c8fc8eba7a7c8620d569dbbe71d151 assets/aether/models/item/aether_dirt_p
 b16cd72a8478c8aafb3fdeb58616bd529e4c033c assets/aether/models/item/aether_portal_frame.json
 0713d78d9f5270a5ede1b7dabb8cc79d9848a13b assets/aether/models/item/agility_cape.json
 a8101e8aa4975d14cba817a3adfa86fd23d51a1c assets/aether/models/item/altar.json
+2ee563dbaab2f8bd6cf319b0f94d1b28a588a5f7 assets/aether/models/item/ambrosium_block.json
 1612dc672b1197efe5fe8f6cece6635fad2b44d7 assets/aether/models/item/ambrosium_ore.json
 04019cab66f6988f1696e51ca0f396fdcbb33eac assets/aether/models/item/ambrosium_shard.json
 9aea673ee09a57cfaeb48bf37a69584534d65839 assets/aether/models/item/ambrosium_torch.json
@@ -603,6 +606,7 @@ ac6d27290ccb8689346f3fb26a28b7bd1f055902 data/aether/advancements/recipes/aether
 d0a1c19803b06ac4204d94d4a12c38d86da6b4d2 data/aether/advancements/recipes/aether_blocks/aerogel_wall.json
 2a5a90ab4eafa9e6e56d4a4eb638935c08a4b161 data/aether/advancements/recipes/aether_blocks/aerogel_wall_stonecutting.json
 4d3d6ba783cded8a50fadff63ad1077fd94400d6 data/aether/advancements/recipes/aether_blocks/altar.json
+25681f0e8b27c0b71fc6aa344892bd95e6c73a2f data/aether/advancements/recipes/aether_blocks/ambrosium_block.json
 880272a44658b82502998da9710a102847dde3fb data/aether/advancements/recipes/aether_blocks/ambrosium_torch.json
 20fa568e359a220ace5670bff714a4df6d4739db data/aether/advancements/recipes/aether_blocks/angelic_slab.json
 6db09e0704c2ac9a62a2c9ac8295b9500679663d data/aether/advancements/recipes/aether_blocks/angelic_slab_stonecutting.json
@@ -691,6 +695,7 @@ c72a0325dec7151cb9834965e4790706e1508e90 data/aether/advancements/recipes/aether
 8bbced7fe236922f7517b2a160d4e48d4e909d18 data/aether/advancements/recipes/aether_blocks/zanite_block.json
 7a7d28ec79c08f7fffd31de9609ca41c5313e71f data/aether/advancements/recipes/aether_food/enchanted_berry_enchanting.json
 6224e1859c62bc620d335dcedb87dfd695bd8426 data/aether/advancements/recipes/aether_food/healing_stone_enchanting.json
+e659c96a404e4a37e06d4c9078f5ccf44fe844c4 data/aether/advancements/recipes/aether_materials/ambrosium_shard.json
 5824b847994cd44bf90fc160d1fa495a2bed00fc data/aether/advancements/recipes/aether_materials/blast_ambrosium.json
 1fe26f71acaaac54e1bd8136331896d871a87c4d data/aether/advancements/recipes/aether_materials/blast_zanite.json
 a37f2c98d84f73b76ed05d6d2c9644beb6b3b319 data/aether/advancements/recipes/aether_materials/skyroot_stick.json
@@ -851,6 +856,7 @@ cf150ff0b2c7467a509bb79e158a178d10952fa2 data/aether/loot_tables/blocks/aerogel_
 ecda99dc85c6da8d203ffe2a5c48d19f3639c523 data/aether/loot_tables/blocks/aether_grass_block.json
 374fc761ad454802cb3e7a484cfec94537b114d8 data/aether/loot_tables/blocks/aether_portal.json
 9d2d77f57171f8452eeb21fdd36a3bbf1473b34a data/aether/loot_tables/blocks/altar.json
+08e132890a7f5ab4c825cd1ca51067104dbf03a8 data/aether/loot_tables/blocks/ambrosium_block.json
 5407b6ee433d1eccd29380582724747a6aa0372a data/aether/loot_tables/blocks/ambrosium_ore.json
 3f8175c49cdf77561e2a6868f4bf1effcb60a602 data/aether/loot_tables/blocks/ambrosium_torch.json
 3f8175c49cdf77561e2a6868f4bf1effcb60a602 data/aether/loot_tables/blocks/ambrosium_wall_torch.json
@@ -1023,6 +1029,8 @@ a45eba6e40486f01955d4fbb8e36522476364575 data/aether/recipes/aerogel_wall_stonec
 a66e8bb00daf9a398c27586fd86fa207df07e95a data/aether/recipes/aether_saddle.json
 0ac96b7c81a082ee65c696902ba76c440fbe6d4d data/aether/recipes/aether_tune_enchanting.json
 5b1de8a286cb743f1244d8d70ab4765a383d5a04 data/aether/recipes/altar.json
+9ec2e5d27f7a503085ba3f50c8a2a3ce5bac06ab data/aether/recipes/ambrosium_block.json
+904b5e7a4149ff39f9234dfc124af597802d1b6f data/aether/recipes/ambrosium_shard.json
 a3f52830965bd3126ece790bc6eaa58ccf9ed999 data/aether/recipes/ambrosium_torch.json
 67bb65c9faf986000003c9cd3cdb0c546db5f0aa data/aether/recipes/angelic_slab.json
 97dc7f282229c9299b15532900d310bfcf7fae63 data/aether/recipes/angelic_slab_stonecutting.json
@@ -1435,7 +1443,7 @@ ef896638976d84e49ea64f3df732b1fa877600bb data/forge/tags/blocks/fence_gates/wood
 f84b72d8d4ac67867e925b9b4116fd7fc7e33ea0 data/forge/tags/blocks/ore_rates/singular.json
 f84b72d8d4ac67867e925b9b4116fd7fc7e33ea0 data/forge/tags/blocks/ores.json
 3efaa4aaad5a363c6a1e36e6827b65f11fea5cb8 data/forge/tags/blocks/stone.json
-1ea00a2a136c31f18e9a99db9584fac2c6e42aa6 data/forge/tags/blocks/storage_blocks.json
+96bcb02037d467940cc136c22db4cea59b1d627a data/forge/tags/blocks/storage_blocks.json
 c3ebaf374fbaf8b34bbf67403812c7ff8e077ea4 data/forge/tags/items/bookshelves.json
 1ecd6c92ef18c38c1fea83ec1dbd9a2909d4e3c4 data/forge/tags/items/eggs.json
 ef896638976d84e49ea64f3df732b1fa877600bb data/forge/tags/items/fence_gates.json
@@ -1447,7 +1455,7 @@ ef896638976d84e49ea64f3df732b1fa877600bb data/forge/tags/items/fence_gates/woode
 f84b72d8d4ac67867e925b9b4116fd7fc7e33ea0 data/forge/tags/items/ore_rates/singular.json
 f84b72d8d4ac67867e925b9b4116fd7fc7e33ea0 data/forge/tags/items/ores.json
 ef1688d8839282e91b8aa07f3029cefcf02df64e data/forge/tags/items/rods/wooden.json
-1ea00a2a136c31f18e9a99db9584fac2c6e42aa6 data/forge/tags/items/storage_blocks.json
+96bcb02037d467940cc136c22db4cea59b1d627a data/forge/tags/items/storage_blocks.json
 4eca19e7372c333e02a61b39149536f67bada489 data/minecraft/tags/blocks/bamboo_plantable_on.json
 ffb3efebcf83f36c1a2e4fec38ab8785be9b8770 data/minecraft/tags/blocks/beacon_base_blocks.json
 d3815d5fe2d05fce780751f7c4231401f3f16a78 data/minecraft/tags/blocks/beds.json
@@ -1463,7 +1471,7 @@ d8c9d238a418f44cafdc190b8fcbf503d4d2f5e5 data/minecraft/tags/blocks/flower_pots.
 a0f3c2f4910e857b799981106ebf4953767be364 data/minecraft/tags/blocks/logs_that_burn.json
 2f260741d01192ff02cb26b95576143579791ba3 data/minecraft/tags/blocks/mineable/axe.json
 24fa6266cd0cff70c0626cf398896d21456875d5 data/minecraft/tags/blocks/mineable/hoe.json
-54d63e58d5e8cb4b0a45271ddac6c50b72c2eea6 data/minecraft/tags/blocks/mineable/pickaxe.json
+30a9a95b038c1e4dbeff6891d88305af531f90ce data/minecraft/tags/blocks/mineable/pickaxe.json
 0414139592fd299af1d9262b39be68e4b9706947 data/minecraft/tags/blocks/mineable/shovel.json
 f80c58119737ea6ba93a2203818cb8b6631fc7f8 data/minecraft/tags/blocks/needs_diamond_tool.json
 c7ad58c327a0a8824204861012f952132cec7c46 data/minecraft/tags/blocks/needs_iron_tool.json

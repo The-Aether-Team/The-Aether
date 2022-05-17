@@ -257,6 +257,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.QUICKSOIL_GLASS);
         itemBlock(AetherBlocks.AEROGEL);
 
+        itemBlock(AetherBlocks.AMBROSIUM_BLOCK);
         itemBlock(AetherBlocks.ZANITE_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_GRAVITITE);
 
