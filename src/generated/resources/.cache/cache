@@ -110,7 +110,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-0158f9069246304e3fbc48a39b15d4dd4acb08f2 assets/aether/lang/en_us.json
+9bae6f6ba0c6f03d2d4392d5c39f63cb152d1213 assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -1008,7 +1008,7 @@ ac593654401f07206226bb7c1651c24f40c30d1e data/aether/loot_tables/entities/sheepu
 e9b8dc48c6062fdb6248030b088aa0ee76c89868 data/aether/loot_tables/entities/sheepuff/red.json
 7888c5edc30843d98b169940017c1a5bceac35dc data/aether/loot_tables/entities/sheepuff/white.json
 9de14e6a605353517ea6bbf274a725aaa63ba293 data/aether/loot_tables/entities/sheepuff/yellow.json
-960d6ed3a3cf93c2fa673a2b766b1230f74f35c2 data/aether/loot_tables/entities/valkyrie.json
+87aedeb226d57fdb8501d1c1fa900e914d16377d data/aether/loot_tables/entities/valkyrie.json
 f0266b86d509baafb030ddb9915394ea06d372cd data/aether/loot_tables/entities/whirlwind.json
 10bf2cbe13442289445bf3efad1ebfbfca1af799 data/aether/loot_tables/entities/zephyr.json
 3038198a0de0e0cb1ffe9ea97e36d3b46f3b4de8 data/aether/loot_tables/selectors/evil_whirlwind_junk.json

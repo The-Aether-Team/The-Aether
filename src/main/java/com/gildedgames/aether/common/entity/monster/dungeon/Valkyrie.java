@@ -3,7 +3,7 @@ package com.gildedgames.aether.common.entity.monster.dungeon;
 import com.gildedgames.aether.common.entity.NotGrounded;
 import com.gildedgames.aether.common.registry.AetherItems;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -21,11 +21,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 
 import javax.annotation.Nonnull;
 
+/**
+ * This class holds the implementation for valkyries. Valkyries are neutral mobs that patrol the silver dungeon.
+ * They won't attack unless provoked. They can teleport within the temple. They respond to the player through chat
+ * messages and drop a victory medal upon their defeat.
+ */
 public class Valkyrie extends Monster implements NotGrounded {
     private int chatTime;
     public float sinage;
@@ -56,77 +59,96 @@ public class Valkyrie extends Monster implements NotGrounded {
     }
 
     @Override
-    public void setEntityOnGround(boolean onGround) {
+    public void setEntityOnGround(boolean onGround) {}
 
+    /**
+     * Sends a message to the player who interacted with the valkyrie.
+     */
+    private void chatItUp(Player player, Component message) {
+        if (chatTime <= 0) {
+            player.sendMessage(message, player.getUUID());
+            chatTime = 60;
+        }
     }
 
-//    @SuppressWarnings("resource")
-//    private void chatItUp(Player player, Component message) {
-//        if (chatTime <= 0) {
-//            DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> () -> {
-//                Minecraft.getInstance().gui.getChat().addMessage(message);
-//            });
-//            chatTime = 60;
-//        }
-//    }
-//
-//    @Override
-//    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-//        ItemStack item = player.getItemInHand(hand);
-//        if (this.getTarget() == null) {
-//            this.lookAt(player, 180.0F, 180.0F);
-//            String translationId;
-//            if (item.getItem() == AetherItems.VICTORY_MEDAL.get()) {
-//                if (item.getCount() >= 10) {
-//                    translationId = "gui.valkyrie.dialog.medal.1";
-//                }
-//                else if (item.getCount() >= 5) {
-//                    translationId = "gui.valkyrie.dialog.medal.2";
-//                }
-//                else {
-//                    translationId = "gui.valkyrie.dialog.medal.3";
-//                }
-//            }
-//            else {
-//                // switch (random.nextInt(3)) {
-//                //     case 0:
-//                //         translationId = "gui.valkyrie.dialog.1";
-//                //         break;
-//                //     case 1:
-//                //         translationId = "gui.valkyrie.dialog.2";
-//                //         break;
-//                //     case 2:
-//                //         translationId = "gui.valkyrie.dialog.3";
-//                //         break;
-//                // }
-//                translationId = "gui.valkyrie.dialog." + (char) (random.nextInt(3) + '1');
-//            }
-//            chatItUp(player, new TranslatableComponent(translationId));
-//            return super.mobInteract(player, hand);
-//        }
-//        return InteractionResult.FAIL;
-//    }
-//
-//    @Override
-//    protected void actuallyHurt(DamageSource ds, float f) {
-//        if (ds.getEntity() instanceof Player && level.getDifficulty() != Difficulty.PEACEFUL) {
-//            Player player = (Player) ds.getEntity();
-//            if (this.getTarget() == null) {
-//                chatTime = 0;
-//                String translationId = "gui.valkyrie.dialog." + (char) (random.nextInt(3) + '1');
-//                chatItUp(player, new TranslatableComponent(translationId));
-//                this.setTarget(player);
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public void tick() {
-//        super.tick();
-//
-//        // TODO: valkyrie logic needs to be reimplemented from scratch
-//        // because all of the old code is useless and irreparably flawed
-//    }
+    /**
+     * Allows the players to chat up the valkyries if they're not provoked. Players will see the chat messages only
+     * if they are the one who interacted with the valkyrie.
+     */
+    @Override
+    @Nonnull
+    protected InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
+        ItemStack item = player.getItemInHand(hand);
+        if (this.getTarget() == null) {
+            this.lookAt(player, 180.0F, 180.0F);
+            String translationId;
+            if (this.level.isClientSide) {
+                if (item.getItem() == AetherItems.VICTORY_MEDAL.get()) {
+                    if (item.getCount() >= 10) {
+                        translationId = "gui.aether.valkyrie.dialog.medal.1";
+                    } else if (item.getCount() >= 5) {
+                        translationId = "gui.aether.valkyrie.dialog.medal.2";
+                    } else {
+                        translationId = "gui.aether.valkyrie.dialog.medal.3";
+                    }
+                } else {
+                    translationId = "gui.aether.valkyrie.dialog." + (char) (random.nextInt(3) + '1');
+                }
+                this.chatItUp(player, new TranslatableComponent(translationId));
+            }
+        }
+        return super.mobInteract(player, hand);
+    }
 
-    
+    /**
+     * The valkyrie will be provoked to attack the player if attacked.
+     */
+    @Override
+    public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
+        boolean result = super.hurt(source, pDamageAmount);
+        if (this.getTarget() == null && source.getEntity() instanceof Player player && level.getDifficulty() != Difficulty.PEACEFUL) {
+            if (this.level.isClientSide) {
+                chatTime = 0;
+                chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.attack." + (char) (random.nextInt(3) + '1')));
+            }
+            this.setTarget(player);
+        }
+        return result;
+    }
+
+    /**
+     * If the valkyrie kills the player, they will speak.
+     */
+    @Override
+    public boolean doHurtTarget(@Nonnull Entity pEntity) {
+        boolean result = super.doHurtTarget(pEntity);
+        if (pEntity instanceof Player player && this.level.isClientSide && player.getHealth() <= 0) {
+            chatTime = 0;
+            this.chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.playerdeath." + (char) (random.nextInt(3) + '1')));
+        }
+        return result;
+    }
+
+    /**
+     * Plays the valkyrie's defeat message.
+     */
+    @Override
+    public void die(DamageSource pCause) {
+        if (pCause.getEntity() instanceof Player player && this.level.isClientSide) {
+            chatTime = 0;
+            this.chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.defeated." + (char) (random.nextInt(3) + '1')));
+        }
+        super.die(pCause);
+    }
+
+    /**
+     * Decrements the chat timer.
+     */
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (this.chatTime > 0) {
+            --this.chatTime;
+        }
+    }
 }

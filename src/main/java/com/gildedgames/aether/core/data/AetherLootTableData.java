@@ -375,7 +375,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             this.add(AetherEntityTypes.VALKYRIE.get(), LootTable.lootTable()
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(AetherItems.VICTORY_MEDAL.get())
-                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
+                                    .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
                             )
                     )
             );

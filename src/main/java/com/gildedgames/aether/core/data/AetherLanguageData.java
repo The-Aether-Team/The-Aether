@@ -552,6 +552,28 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("recipebook.toggleRecipes.enchantable", "Showing Enchantable");
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
 
+        //Valkyrie dialogue
+        addGuiText("valkyrie.dialog.1", "What's that? You want to fight? Aww, what a cute little human.");
+        addGuiText("valkyrie.dialog.2", "You're not thinking of fighting a big, strong Valkyrie are you?");
+        addGuiText("valkyrie.dialog.3", "I don't think you should bother me, you could get really hurt.");
+
+        addGuiText("valkyrie.dialog.attack.1", "I'm not going easy on you!");
+        addGuiText("valkyrie.dialog.attack.2", "You're gonna regret that!");
+        addGuiText("valkyrie.dialog.attack.3", "Now you're in for it!");
+
+        addGuiText("valkyrie.dialog.defeated.1", "Alright, alright! You win!");
+        addGuiText("valkyrie.dialog.defeated.2", "Okay, I give up! Geez!");
+        addGuiText("valkyrie.dialog.defeated.3", "Oww! Fine, here's your medal...");
+
+        addGuiText("valkyrie.dialog.medal.1", "Umm... that's a nice pile of medallions you have there...");
+        addGuiText("valkyrie.dialog.medal.2", "That's pretty impressive, but you won't defeat me.");
+        addGuiText("valkyrie.dialog.medal.3", "You think you're a tough guy, eh? Well, bring it on!");
+
+        addGuiText("valkyrie.dialog.playerdead.1", "You want a medallion? Try being less pathetic.");
+        addGuiText("valkyrie.dialog.playerdead.2", "Maybe some day, %s... maybe some day.");
+        addGuiText("valkyrie.dialog.playerdead.3", "Humans aren't nearly as cute when they're dead.");
+
+
 
         addCustomizationText("title", "Customization & Perks");
         addCustomizationText("gloves.arm", "Glove Layer: Arm");
