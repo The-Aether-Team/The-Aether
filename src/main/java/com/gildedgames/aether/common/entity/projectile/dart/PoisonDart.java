@@ -19,7 +19,7 @@ public class PoisonDart extends AbstractDart {
 
     public PoisonDart(Level level) {
         super(AetherEntityTypes.POISON_DART.get(), level);
-        this.setBaseDamage(1.0);
+        this.setBaseDamage(2.0);
     }
 
     @Override
