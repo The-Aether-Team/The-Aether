@@ -44,7 +44,7 @@ public class AetherMainMenuScreen extends TitleScreen
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected <T extends GuiEventListener & NarratableEntry> T addWidget(T widget) {
+	protected <T extends GuiEventListener & Widget & NarratableEntry> T addRenderableWidget(T widget) {
 		if (widget instanceof Button) {
 			Button button = (Button) widget;
 			Component buttonText = button.getMessage();
@@ -59,7 +59,7 @@ public class AetherMainMenuScreen extends TitleScreen
 				button.setWidth(200);
 				AetherMenuButton aetherButton = new AetherMenuButton(button);
 				this.buttonCount++;
-				return (T) super.addWidget(aetherButton);
+				return (T) super.addRenderableWidget(aetherButton);
 			} else if (buttonText.equals(new TranslatableComponent("narrator.button.accessibility"))) {
 				this.buttonAccessibility = button;
 				return null;
@@ -67,9 +67,9 @@ public class AetherMainMenuScreen extends TitleScreen
 				this.buttonLanguage = button;
 				return null;
 			}
-			return (T) super.addWidget(button);
+			return (T) super.addRenderableWidget(button);
 		}
-		return super.addWidget(widget);
+		return super.addRenderableWidget(widget);
 	}
 
 	@Override
@@ -84,11 +84,11 @@ public class AetherMainMenuScreen extends TitleScreen
 
 		this.buttonLanguage.x = width - 24 + buttonOffset;
 		this.buttonLanguage.y = 4;
-		super.addWidget(this.buttonLanguage);
+		super.addRenderableWidget(this.buttonLanguage);
 
 		this.buttonAccessibility.x = width - 48 + buttonOffset;
 		this.buttonAccessibility.y = 4;
-		super.addWidget(this.buttonAccessibility);
+		super.addRenderableWidget(this.buttonAccessibility);
 
 		this.modUpdateNotification = new AetherNotificationModUpdateScreen();
 		this.modUpdateNotification.init();
@@ -150,11 +150,12 @@ public class AetherMainMenuScreen extends TitleScreen
 				}
 			}
 
-			int copyrightX = this.width - this.font.width("Copyright Mojang AB. Do not distribute!") - 1;
-			drawString(matrixStack, this.font, "Copyright Mojang AB. Do not distribute!", copyrightX, this.height - 10, 0xFFFFFFFF);
-			if (mouseX > copyrightX && mouseX < this.width && mouseY > this.height - 10 && mouseY < this.height) {
-				fill(matrixStack, copyrightX, this.height - 1, copyrightX + this.font.width("Copyright Mojang AB. Do not distribute!"), this.height, 0xFFFFFFFF);
-			}
+			// idk what this is, but it really shouldn't be here
+//			int copyrightX = this.width - this.font.width("Copyright Mojang AB. Do not distribute!") - 1;
+//			drawString(matrixStack, this.font, "Copyright Mojang AB. Do not distribute!", copyrightX, this.height - 10, 0xFFFFFFFF);
+//			if (mouseX > copyrightX && mouseX < this.width && mouseY > this.height - 10 && mouseY < this.height) {
+//				fill(matrixStack, copyrightX, this.height - 1, copyrightX + this.font.width("Copyright Mojang AB. Do not distribute!"), this.height, 0xFFFFFFFF);
+//			}
 
 			this.modUpdateNotification.render(matrixStack, mouseX, mouseY, partialTicks);
 		}

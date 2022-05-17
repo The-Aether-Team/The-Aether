@@ -3,12 +3,12 @@ package com.gildedgames.aether.core.data.provider;
 import com.gildedgames.aether.common.recipe.builder.AltarRepairBuilder;
 import com.gildedgames.aether.common.registry.AetherRecipes;
 import com.gildedgames.aether.common.registry.AetherTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.tags.Tag;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 
@@ -247,7 +247,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + materialIn.get().getRegistryName().getPath(), has(materialIn.get()));
     }
 
-    public ShapedRecipeBuilder makeGlovesWithTag(Supplier<? extends Item> glovesOut, Tags.IOptionalNamedTag<Item> materialTag, String advancementName) {
+    public ShapedRecipeBuilder makeGlovesWithTag(Supplier<? extends Item> glovesOut, TagKey<Item> materialTag, String advancementName) {
         return ShapedRecipeBuilder.shaped(glovesOut.get())
                 .pattern("M M")
                 .define('M', materialTag)
@@ -348,7 +348,7 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlocks("has_" + upgradeItem.get().getRegistryName(), has(upgradeItem.get()));
     }
 
-    public UpgradeRecipeBuilder smithingRecipeWithTag(Supplier<Item> input, Tags.IOptionalNamedTag<Item> upgradeTag, Supplier<Item> result, String advancementName) {
+    public UpgradeRecipeBuilder smithingRecipeWithTag(Supplier<Item> input, TagKey<Item> upgradeTag, Supplier<Item> result, String advancementName) {
         return UpgradeRecipeBuilder.smithing(Ingredient.of(input.get()), Ingredient.of(upgradeTag), result.get())
                 .unlocks("has_" + advancementName, has(upgradeTag));
     }
@@ -358,18 +358,39 @@ public class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + item.asItem().getRegistryName(), has(item));
     }
 
-    public SimpleCookingRecipeBuilder enchantingRecipe(ItemLike result, ItemLike ingredient, int duration) {
-        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(new ItemStack(ingredient, 1)), result, 0.0F, duration, AetherRecipes.ENCHANTING.get())
+    public SimpleCookingRecipeBuilder enchantingRecipe(ItemLike result, ItemLike ingredient, float exp, int duration) {
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(new ItemStack(ingredient, 1)), result, exp, duration, AetherRecipes.ENCHANTING.get())
                 .unlockedBy("has_" + ingredient.asItem().getRegistryName(), has(ingredient));
     }
 
-    public SimpleCookingRecipeBuilder enchantingRecipe(ItemLike result, Tag.Named<Item> ingredient, int duration) {
-        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, 0.0F, duration, AetherRecipes.ENCHANTING.get())
+    public SimpleCookingRecipeBuilder enchantingRecipe(ItemLike result, TagKey<Item> ingredient, float exp, int duration) {
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipes.ENCHANTING.get())
                 .unlockedBy("has_disc", has(ingredient));
     }
 
-    public SimpleCookingRecipeBuilder freezingRecipe(ItemLike result, ItemLike ingredient, int duration) {
-        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(new ItemStack(ingredient, 1)), result, 0.0F, duration, AetherRecipes.FREEZING.get())
+    public SimpleCookingRecipeBuilder hiddenEnchantingRecipe(ItemLike result, ItemLike ingredient, float exp, int duration) {
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipes.ENCHANTING.get())
+                .unlockedBy("has_" + result.asItem().getRegistryName(), has(result));
+    }
+
+    public SimpleCookingRecipeBuilder freezingRecipe(ItemLike result, ItemLike ingredient, float exp, int duration) {
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipes.FREEZING.get())
                 .unlockedBy("has_" + ingredient.asItem().getRegistryName(), has(ingredient));
     }
+
+    public SimpleCookingRecipeBuilder freezingRecipeWithTag(ItemLike result, TagKey<Item> ingredient, float exp, int duration, String advancementName) {
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipes.FREEZING.get())
+                .unlockedBy("has_" + advancementName, has(ingredient));
+    }
+
+    public SimpleCookingRecipeBuilder freezingRecipeWithUnlockTag(ItemLike result, ItemLike ingredient, TagKey<Item> unlock, float exp, int duration, String advancementName) {
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipes.FREEZING.get())
+                .unlockedBy("has_" + advancementName, has(unlock));
+    }
+
+    public SimpleCookingRecipeBuilder hiddenFreezingRecipe(ItemLike result, ItemLike ingredient, float exp, int duration) {
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipes.FREEZING.get())
+                .unlockedBy("has_" + result.asItem().getRegistryName(), has(result));
+    }
+
 }

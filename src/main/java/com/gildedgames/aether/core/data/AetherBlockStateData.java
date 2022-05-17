@@ -75,6 +75,8 @@ public class AetherBlockStateData extends AetherBlockStateProvider
 
         crossBlock(AetherBlocks.BERRY_BUSH_STEM, "natural/");
         berryBush(AetherBlocks.BERRY_BUSH, AetherBlocks.BERRY_BUSH_STEM);
+        pottedStem(AetherBlocks.POTTED_BERRY_BUSH_STEM, "natural/");
+        pottedBush(AetherBlocks.POTTED_BERRY_BUSH, AetherBlocks.POTTED_BERRY_BUSH_STEM, "natural/");
 
         crossBlock(AetherBlocks.PURPLE_FLOWER, "natural/");
         crossBlock(AetherBlocks.WHITE_FLOWER, "natural/");

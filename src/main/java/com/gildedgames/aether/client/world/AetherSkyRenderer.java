@@ -1,7 +1,5 @@
 package com.gildedgames.aether.client.world;
 
-import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -128,8 +126,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
      */
     private void drawCelestialBodies(float pPartialTick, PoseStack pPoseStack, ClientLevel world, BufferBuilder bufferbuilder) {
         // This code determines the current angle of the sun and moon and determines whether they should be visible or not.
-        AetherTime aetherTime = world.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
-        long dayTime = aetherTime.getDayTime() % 72000L;
+        long dayTime = world.getDayTime() % 72000L;
         float sunOpacity;
         float moonOpacity;
         if (dayTime > 71400L) {
@@ -228,10 +225,10 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         pBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
 
         for (int i = 0; i < 1500; ++i) {
-            double d0 = (double) (random.nextFloat() * 2.0F - 1.0F);
-            double d1 = (double) (random.nextFloat() * 2.0F - 1.0F);
-            double d2 = (double) (random.nextFloat() * 2.0F - 1.0F);
-            double d3 = (double) (0.15F + random.nextFloat() * 0.1F);
+            double d0 = random.nextFloat() * 2.0F - 1.0F;
+            double d1 = random.nextFloat() * 2.0F - 1.0F;
+            double d2 = random.nextFloat() * 2.0F - 1.0F;
+            double d3 = 0.15F + random.nextFloat() * 0.1F;
             double d4 = d0 * d0 + d1 * d1 + d2 * d2;
             if (d4 < 1.0D && d4 > 0.01D) {
                 d4 = 1.0D / Math.sqrt(d4);

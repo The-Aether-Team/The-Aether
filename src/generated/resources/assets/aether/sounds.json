@@ -273,6 +273,14 @@
       }
     ]
   },
+  "item.music_disc.chinchilla": {
+    "sounds": [
+      {
+        "name": "aether:item/records/chinchilla",
+        "stream": true
+      }
+    ]
+  },
   "entity.phyg.ambient": {
     "subtitle": "subtitles.entity.phyg.ambient",
     "sounds": [

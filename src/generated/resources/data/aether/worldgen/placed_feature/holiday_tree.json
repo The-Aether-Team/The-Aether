@@ -1,0 +1,28 @@
+{
+  "feature": "aether:holiday_tree",
+  "placement": [
+    {
+      "type": "aether:holiday_filter"
+    },
+    {
+      "count": 1,
+      "type": "minecraft:count_on_every_layer"
+    },
+    {
+      "chance": 48,
+      "type": "minecraft:rarity_filter"
+    },
+    {
+      "predicate": {
+        "state": {
+          "Properties": {
+            "stage": "0"
+          },
+          "Name": "aether:skyroot_sapling"
+        },
+        "type": "minecraft:would_survive"
+      },
+      "type": "minecraft:block_predicate_filter"
+    }
+  ]
+}

@@ -586,145 +586,147 @@ public class AetherRecipeData extends AetherRecipeProvider
 
         repairingRecipe(Items.SHIELD, 3000).save(consumer, name("shield_repairing"));
 
-        repairingRecipe(AetherItems.SKYROOT_PICKAXE.get(), 225).save(consumer, name("skyroot_pickaxe_repairing"));
-        repairingRecipe(AetherItems.SKYROOT_AXE.get(), 225).save(consumer, name("skyroot_axe_repairing"));
-        repairingRecipe(AetherItems.SKYROOT_SHOVEL.get(), 225).save(consumer, name("skyroot_shovel_repairing"));
-        repairingRecipe(AetherItems.SKYROOT_HOE.get(), 225).save(consumer, name("skyroot_hoe_repairing"));
+        repairingRecipe(AetherItems.SKYROOT_PICKAXE.get(), 225).group("altar_pickaxe_repair").save(consumer, name("skyroot_pickaxe_repairing"));
+        repairingRecipe(AetherItems.SKYROOT_AXE.get(), 225).group("altar_axe_repair").save(consumer, name("skyroot_axe_repairing"));
+        repairingRecipe(AetherItems.SKYROOT_SHOVEL.get(), 225).group("altar_shovel_repair").save(consumer, name("skyroot_shovel_repairing"));
+        repairingRecipe(AetherItems.SKYROOT_HOE.get(), 225).group("altar_hoe_repair").save(consumer, name("skyroot_hoe_repairing"));
 
-        repairingRecipe(AetherItems.HOLYSTONE_PICKAXE.get(), 550).save(consumer, name("holystone_pickaxe_repairing"));
-        repairingRecipe(AetherItems.HOLYSTONE_AXE.get(), 550).save(consumer, name("holystone_axe_repairing"));
-        repairingRecipe(AetherItems.HOLYSTONE_SHOVEL.get(), 550).save(consumer, name("holystone_shovel_repairing"));
-        repairingRecipe(AetherItems.HOLYSTONE_HOE.get(), 550).save(consumer, name("holystone_hoe_repairing"));
+        repairingRecipe(AetherItems.HOLYSTONE_PICKAXE.get(), 550).group("altar_pickaxe_repair").save(consumer, name("holystone_pickaxe_repairing"));
+        repairingRecipe(AetherItems.HOLYSTONE_AXE.get(), 550).group("altar_axe_repair").save(consumer, name("holystone_axe_repairing"));
+        repairingRecipe(AetherItems.HOLYSTONE_SHOVEL.get(), 550).group("altar_shovel_repair").save(consumer, name("holystone_shovel_repairing"));
+        repairingRecipe(AetherItems.HOLYSTONE_HOE.get(), 550).group("altar_hoe_repair").save(consumer, name("holystone_hoe_repairing"));
 
-        repairingRecipe(AetherItems.ZANITE_PICKAXE.get(), 2250).save(consumer, name("zanite_pickaxe_repairing"));
-        repairingRecipe(AetherItems.ZANITE_AXE.get(), 2250).save(consumer, name("zanite_axe_repairing"));
-        repairingRecipe(AetherItems.ZANITE_SHOVEL.get(), 2250).save(consumer, name("zanite_shovel_repairing"));
-        repairingRecipe(AetherItems.ZANITE_HOE.get(), 2250).save(consumer, name("zanite_hoe_repairing"));
+        repairingRecipe(AetherItems.ZANITE_PICKAXE.get(), 2250).group("altar_pickaxe_repair").save(consumer, name("zanite_pickaxe_repairing"));
+        repairingRecipe(AetherItems.ZANITE_AXE.get(), 2250).group("altar_axe_repair").save(consumer, name("zanite_axe_repairing"));
+        repairingRecipe(AetherItems.ZANITE_SHOVEL.get(), 2250).group("altar_shovel_repair").save(consumer, name("zanite_shovel_repairing"));
+        repairingRecipe(AetherItems.ZANITE_HOE.get(), 2250).group("altar_hoe_repair").save(consumer, name("zanite_hoe_repairing"));
 
-        repairingRecipe(AetherItems.GRAVITITE_PICKAXE.get(), 5500).save(consumer, name("gravitite_pickaxe_repairing"));
-        repairingRecipe(AetherItems.GRAVITITE_AXE.get(), 5500).save(consumer, name("gravitite_axe_repairing"));
-        repairingRecipe(AetherItems.GRAVITITE_SHOVEL.get(), 5500).save(consumer, name("gravitite_shovel_repairing"));
-        repairingRecipe(AetherItems.GRAVITITE_HOE.get(), 5500).save(consumer, name("gravitite_hoe_repairing"));
+        repairingRecipe(AetherItems.GRAVITITE_PICKAXE.get(), 5500).group("altar_pickaxe_repair").save(consumer, name("gravitite_pickaxe_repairing"));
+        repairingRecipe(AetherItems.GRAVITITE_AXE.get(), 5500).group("altar_axe_repair").save(consumer, name("gravitite_axe_repairing"));
+        repairingRecipe(AetherItems.GRAVITITE_SHOVEL.get(), 5500).group("altar_shovel_repair").save(consumer, name("gravitite_shovel_repairing"));
+        repairingRecipe(AetherItems.GRAVITITE_HOE.get(), 5500).group("altar_hoe_repair").save(consumer, name("gravitite_hoe_repairing"));
 
-        repairingRecipe(AetherItems.SKYROOT_SWORD.get(), 225).save(consumer, name("skyroot_sword_repairing"));
-        repairingRecipe(AetherItems.HOLYSTONE_SWORD.get(), 550).save(consumer, name("holystone_sword_repairing"));
-        repairingRecipe(AetherItems.ZANITE_SWORD.get(), 2250).save(consumer, name("zanite_sword_repairing"));
-        repairingRecipe(AetherItems.GRAVITITE_SWORD.get(), 5500).save(consumer, name("gravitite_sword_repairing"));
+        repairingRecipe(AetherItems.SKYROOT_SWORD.get(), 225).group("altar_sword_repair").save(consumer, name("skyroot_sword_repairing"));
+        repairingRecipe(AetherItems.HOLYSTONE_SWORD.get(), 550).group("altar_sword_repair").save(consumer, name("holystone_sword_repairing"));
+        repairingRecipe(AetherItems.ZANITE_SWORD.get(), 2250).group("altar_sword_repair").save(consumer, name("zanite_sword_repairing"));
+        repairingRecipe(AetherItems.GRAVITITE_SWORD.get(), 5500).group("altar_sword_repair").save(consumer, name("gravitite_sword_repairing"));
 
-        repairingRecipe(AetherItems.ZANITE_HELMET.get(), 6000).save(consumer, name("zanite_helmet_repairing"));
-        repairingRecipe(AetherItems.ZANITE_CHESTPLATE.get(), 6000).save(consumer, name("zanite_chestplate_repairing"));
-        repairingRecipe(AetherItems.ZANITE_LEGGINGS.get(), 6000).save(consumer, name("zanite_leggings_repairing"));
-        repairingRecipe(AetherItems.ZANITE_BOOTS.get(), 6000).save(consumer, name("zanite_boots_repairing"));
+        repairingRecipe(AetherItems.ZANITE_HELMET.get(), 6000).group("altar_helmet_repair").save(consumer, name("zanite_helmet_repairing"));
+        repairingRecipe(AetherItems.ZANITE_CHESTPLATE.get(), 6000).group("altar_chestplate_repair").save(consumer, name("zanite_chestplate_repairing"));
+        repairingRecipe(AetherItems.ZANITE_LEGGINGS.get(), 6000).group("altar_leggings_repair").save(consumer, name("zanite_leggings_repairing"));
+        repairingRecipe(AetherItems.ZANITE_BOOTS.get(), 6000).group("altar_boots_repair").save(consumer, name("zanite_boots_repairing"));
+        repairingRecipe(AetherItems.ZANITE_GLOVES.get(), 6000).group("altar_gloves_repair").save(consumer, name("zanite_gloves_repairing"));
 
-        repairingRecipe(AetherItems.GRAVITITE_HELMET.get(), 13000).save(consumer, name("gravitite_helmet_repairing"));
-        repairingRecipe(AetherItems.GRAVITITE_CHESTPLATE.get(), 13000).save(consumer, name("gravitite_chestplate_repairing"));
-        repairingRecipe(AetherItems.GRAVITITE_LEGGINGS.get(), 13000).save(consumer, name("gravitite_leggings_repairing"));
-        repairingRecipe(AetherItems.GRAVITITE_BOOTS.get(), 13000).save(consumer, name("gravitite_boots_repairing"));
+        repairingRecipe(AetherItems.GRAVITITE_HELMET.get(), 13000).group("altar_helmet_repair").save(consumer, name("gravitite_helmet_repairing"));
+        repairingRecipe(AetherItems.GRAVITITE_CHESTPLATE.get(), 13000).group("altar_chestplate_repair").save(consumer, name("gravitite_chestplate_repairing"));
+        repairingRecipe(AetherItems.GRAVITITE_LEGGINGS.get(), 13000).group("altar_leggings_repair").save(consumer, name("gravitite_leggings_repairing"));
+        repairingRecipe(AetherItems.GRAVITITE_BOOTS.get(), 13000).group("altar_boots_repair").save(consumer, name("gravitite_boots_repairing"));
+        repairingRecipe(AetherItems.GRAVITITE_GLOVES.get(), 13000).group("altar_gloves_repair").save(consumer, name("gravitite_gloves_repairing"));
 
-        repairingRecipe(Items.WOODEN_PICKAXE, 225).save(consumer, name("wooden_pickaxe_repairing"));
-        repairingRecipe(Items.WOODEN_AXE, 225).save(consumer, name("wooden_axe_repairing"));
-        repairingRecipe(Items.WOODEN_SHOVEL, 225).save(consumer, name("wooden_shovel_repairing"));
-        repairingRecipe(Items.WOODEN_HOE, 225).save(consumer, name("wooden_hoe_repairing"));
+        repairingRecipe(Items.WOODEN_PICKAXE, 225).group("altar_pickaxe_repair").save(consumer, name("wooden_pickaxe_repairing"));
+        repairingRecipe(Items.WOODEN_AXE, 225).group("altar_axe_repair").save(consumer, name("wooden_axe_repairing"));
+        repairingRecipe(Items.WOODEN_SHOVEL, 225).group("altar_shovel_repair").save(consumer, name("wooden_shovel_repairing"));
+        repairingRecipe(Items.WOODEN_HOE, 225).group("altar_hoe_repair").save(consumer, name("wooden_hoe_repairing"));
 
-        repairingRecipe(Items.STONE_PICKAXE, 550).save(consumer, name("stone_pickaxe_repairing"));
-        repairingRecipe(Items.STONE_AXE, 550).save(consumer, name("stone_axe_repairing"));
-        repairingRecipe(Items.STONE_SHOVEL, 550).save(consumer, name("stone_shovel_repairing"));
-        repairingRecipe(Items.STONE_HOE, 550).save(consumer, name("stone_hoe_repairing"));
+        repairingRecipe(Items.STONE_PICKAXE, 550).group("altar_pickaxe_repair").save(consumer, name("stone_pickaxe_repairing"));
+        repairingRecipe(Items.STONE_AXE, 550).group("altar_axe_repair").save(consumer, name("stone_axe_repairing"));
+        repairingRecipe(Items.STONE_SHOVEL, 550).group("altar_shovel_repair").save(consumer, name("stone_shovel_repairing"));
+        repairingRecipe(Items.STONE_HOE, 550).group("altar_hoe_repair").save(consumer, name("stone_hoe_repairing"));
 
-        repairingRecipe(Items.IRON_PICKAXE, 2250).save(consumer, name("iron_pickaxe_repairing"));
-        repairingRecipe(Items.IRON_AXE, 2250).save(consumer, name("iron_axe_repairing"));
-        repairingRecipe(Items.IRON_SHOVEL, 2250).save(consumer, name("iron_shovel_repairing"));
-        repairingRecipe(Items.IRON_HOE, 2250).save(consumer, name("iron_hoe_repairing"));
+        repairingRecipe(Items.IRON_PICKAXE, 2250).group("altar_pickaxe_repair").save(consumer, name("iron_pickaxe_repairing"));
+        repairingRecipe(Items.IRON_AXE, 2250).group("altar_axe_repair").save(consumer, name("iron_axe_repairing"));
+        repairingRecipe(Items.IRON_SHOVEL, 2250).group("altar_shovel_repair").save(consumer, name("iron_shovel_repairing"));
+        repairingRecipe(Items.IRON_HOE, 2250).group("altar_hoe_repair").save(consumer, name("iron_hoe_repairing"));
 
-        repairingRecipe(Items.GOLDEN_PICKAXE, 1075).save(consumer, name("golden_pickaxe_repairing"));
-        repairingRecipe(Items.GOLDEN_AXE, 1075).save(consumer, name("golden_axe_repairing"));
-        repairingRecipe(Items.GOLDEN_SHOVEL, 1075).save(consumer, name("golden_shovel_repairing"));
-        repairingRecipe(Items.GOLDEN_HOE, 1075).save(consumer, name("golden_hoe_repairing"));
+        repairingRecipe(Items.GOLDEN_PICKAXE, 1075).group("altar_pickaxe_repair").save(consumer, name("golden_pickaxe_repairing"));
+        repairingRecipe(Items.GOLDEN_AXE, 1075).group("altar_axe_repair").save(consumer, name("golden_axe_repairing"));
+        repairingRecipe(Items.GOLDEN_SHOVEL, 1075).group("altar_shovel_repair").save(consumer, name("golden_shovel_repairing"));
+        repairingRecipe(Items.GOLDEN_HOE, 1075).group("altar_hoe_repair").save(consumer, name("golden_hoe_repairing"));
 
-        repairingRecipe(Items.DIAMOND_PICKAXE, 5500).save(consumer, name("diamond_pickaxe_repairing"));
-        repairingRecipe(Items.DIAMOND_AXE, 5500).save(consumer, name("diamond_axe_repairing"));
-        repairingRecipe(Items.DIAMOND_SHOVEL, 5500).save(consumer, name("diamond_shovel_repairing"));
-        repairingRecipe(Items.DIAMOND_HOE, 5500).save(consumer, name("diamond_hoe_repairing"));
+        repairingRecipe(Items.DIAMOND_PICKAXE, 5500).group("altar_pickaxe_repair").save(consumer, name("diamond_pickaxe_repairing"));
+        repairingRecipe(Items.DIAMOND_AXE, 5500).group("altar_axe_repair").save(consumer, name("diamond_axe_repairing"));
+        repairingRecipe(Items.DIAMOND_SHOVEL, 5500).group("altar_shovel_repair").save(consumer, name("diamond_shovel_repairing"));
+        repairingRecipe(Items.DIAMOND_HOE, 5500).group("altar_hoe_repair").save(consumer, name("diamond_hoe_repairing"));
 
-        repairingRecipe(Items.NETHERITE_PICKAXE, 15000).save(consumer, name("netherite_pickaxe_repairing"));
-        repairingRecipe(Items.NETHERITE_AXE, 15000).save(consumer, name("netherite_axe_repairing"));
-        repairingRecipe(Items.NETHERITE_SHOVEL, 15000).save(consumer, name("netherite_shovel_repairing"));
-        repairingRecipe(Items.NETHERITE_HOE, 15000).save(consumer, name("netherite_hoe_repairing"));
+        repairingRecipe(Items.NETHERITE_PICKAXE, 15000).group("altar_pickaxe_repair").save(consumer, name("netherite_pickaxe_repairing"));
+        repairingRecipe(Items.NETHERITE_AXE, 15000).group("altar_axe_repair").save(consumer, name("netherite_axe_repairing"));
+        repairingRecipe(Items.NETHERITE_SHOVEL, 15000).group("altar_shovel_repair").save(consumer, name("netherite_shovel_repairing"));
+        repairingRecipe(Items.NETHERITE_HOE, 15000).group("altar_hoe_repair").save(consumer, name("netherite_hoe_repairing"));
 
-        repairingRecipe(Items.WOODEN_SWORD, 225).save(consumer, name("wooden_sword_repairing"));
-        repairingRecipe(Items.STONE_SWORD, 550).save(consumer, name("stone_sword_repairing"));
-        repairingRecipe(Items.IRON_SWORD, 2250).save(consumer, name("iron_sword_repairing"));
-        repairingRecipe(Items.GOLDEN_SWORD, 1075).save(consumer, name("golden_sword_repairing"));
-        repairingRecipe(Items.DIAMOND_SWORD, 5500).save(consumer, name("diamond_sword_repairing"));
-        repairingRecipe(Items.NETHERITE_SWORD, 15000).save(consumer, name("netherite_sword_repairing"));
+        repairingRecipe(Items.WOODEN_SWORD, 225).group("altar_sword_repair").save(consumer, name("wooden_sword_repairing"));
+        repairingRecipe(Items.STONE_SWORD, 550).group("altar_sword_repair").save(consumer, name("stone_sword_repairing"));
+        repairingRecipe(Items.IRON_SWORD, 2250).group("altar_sword_repair").save(consumer, name("iron_sword_repairing"));
+        repairingRecipe(Items.GOLDEN_SWORD, 1075).group("altar_sword_repair").save(consumer, name("golden_sword_repairing"));
+        repairingRecipe(Items.DIAMOND_SWORD, 5500).group("altar_sword_repair").save(consumer, name("diamond_sword_repairing"));
+        repairingRecipe(Items.NETHERITE_SWORD, 15000).group("altar_sword_repair").save(consumer, name("netherite_sword_repairing"));
 
-        repairingRecipe(Items.LEATHER_HELMET, 550).save(consumer, name("leather_helmet_repairing"));
-        repairingRecipe(Items.LEATHER_CHESTPLATE, 550).save(consumer, name("leather_chestplate_repairing"));
-        repairingRecipe(Items.LEATHER_LEGGINGS, 550).save(consumer, name("leather_leggings_repairing"));
-        repairingRecipe(Items.LEATHER_BOOTS, 550).save(consumer, name("leather_boots_repairing"));
-        repairingRecipe(AetherItems.LEATHER_GLOVES.get(), 550).save(consumer, name("leather_gloves_repairing"));
+        repairingRecipe(Items.LEATHER_HELMET, 550).group("altar_helmet_repair").save(consumer, name("leather_helmet_repairing"));
+        repairingRecipe(Items.LEATHER_CHESTPLATE, 550).group("altar_chestplate_repair").save(consumer, name("leather_chestplate_repairing"));
+        repairingRecipe(Items.LEATHER_LEGGINGS, 550).group("altar_leggings_repair").save(consumer, name("leather_leggings_repairing"));
+        repairingRecipe(Items.LEATHER_BOOTS, 550).group("altar_boots_repair").save(consumer, name("leather_boots_repairing"));
+        repairingRecipe(AetherItems.LEATHER_GLOVES.get(), 550).group("altar_gloves_repair").save(consumer, name("leather_gloves_repairing"));
 
-        repairingRecipe(Items.IRON_HELMET, 6000).save(consumer, name("iron_helmet_repairing"));
-        repairingRecipe(Items.IRON_CHESTPLATE, 6000).save(consumer, name("iron_chestplate_repairing"));
-        repairingRecipe(Items.IRON_LEGGINGS, 6000).save(consumer, name("iron_leggings_repairing"));
-        repairingRecipe(Items.IRON_BOOTS, 6000).save(consumer, name("iron_boots_repairing"));
-        repairingRecipe(AetherItems.IRON_GLOVES.get(), 6000).save(consumer, name("iron_gloves_repairing"));
+        repairingRecipe(Items.IRON_HELMET, 6000).group("altar_helmet_repair").save(consumer, name("iron_helmet_repairing"));
+        repairingRecipe(Items.IRON_CHESTPLATE, 6000).group("altar_chestplate_repair").save(consumer, name("iron_chestplate_repairing"));
+        repairingRecipe(Items.IRON_LEGGINGS, 6000).group("altar_leggings_repair").save(consumer, name("iron_leggings_repairing"));
+        repairingRecipe(Items.IRON_BOOTS, 6000).group("altar_boots_repair").save(consumer, name("iron_boots_repairing"));
+        repairingRecipe(AetherItems.IRON_GLOVES.get(), 6000).group("altar_gloves_repair").save(consumer, name("iron_gloves_repairing"));
 
-        repairingRecipe(Items.GOLDEN_HELMET, 2250).save(consumer, name("golden_helmet_repairing"));
-        repairingRecipe(Items.GOLDEN_CHESTPLATE, 2250).save(consumer, name("golden_chestplate_repairing"));
-        repairingRecipe(Items.GOLDEN_LEGGINGS, 2250).save(consumer, name("golden_leggings_repairing"));
-        repairingRecipe(Items.GOLDEN_BOOTS, 2250).save(consumer, name("golden_boots_repairing"));
-        repairingRecipe(AetherItems.GOLDEN_GLOVES.get(), 2250).save(consumer, name("golden_gloves_repairing"));
+        repairingRecipe(Items.GOLDEN_HELMET, 2250).group("altar_helmet_repair").save(consumer, name("golden_helmet_repairing"));
+        repairingRecipe(Items.GOLDEN_CHESTPLATE, 2250).group("altar_chestplate_repair").save(consumer, name("golden_chestplate_repairing"));
+        repairingRecipe(Items.GOLDEN_LEGGINGS, 2250).group("altar_leggings_repair").save(consumer, name("golden_leggings_repairing"));
+        repairingRecipe(Items.GOLDEN_BOOTS, 2250).group("altar_boots_repair").save(consumer, name("golden_boots_repairing"));
+        repairingRecipe(AetherItems.GOLDEN_GLOVES.get(), 2250).group("altar_gloves_repair").save(consumer, name("golden_gloves_repairing"));
 
-        repairingRecipe(Items.CHAINMAIL_HELMET, 2250).save(consumer, name("chainmail_helmet_repairing"));
-        repairingRecipe(Items.CHAINMAIL_CHESTPLATE, 2250).save(consumer, name("chainmail_chestplate_repairing"));
-        repairingRecipe(Items.CHAINMAIL_LEGGINGS, 2250).save(consumer, name("chainmail_leggings_repairing"));
-        repairingRecipe(Items.CHAINMAIL_BOOTS, 2250).save(consumer, name("chainmail_boots_repairing"));
-        repairingRecipe(AetherItems.CHAINMAIL_GLOVES.get(), 2250).save(consumer, name("chainmail_gloves_repairing"));
+        repairingRecipe(Items.CHAINMAIL_HELMET, 2250).group("altar_helmet_repair").save(consumer, name("chainmail_helmet_repairing"));
+        repairingRecipe(Items.CHAINMAIL_CHESTPLATE, 2250).group("altar_chestplate_repair").save(consumer, name("chainmail_chestplate_repairing"));
+        repairingRecipe(Items.CHAINMAIL_LEGGINGS, 2250).group("altar_leggings_repair").save(consumer, name("chainmail_leggings_repairing"));
+        repairingRecipe(Items.CHAINMAIL_BOOTS, 2250).group("altar_boots_repair").save(consumer, name("chainmail_boots_repairing"));
+        repairingRecipe(AetherItems.CHAINMAIL_GLOVES.get(), 2250).group("altar_gloves_repair").save(consumer, name("chainmail_gloves_repairing"));
 
-        repairingRecipe(Items.DIAMOND_HELMET, 10000).save(consumer, name("diamond_helmet_repairing"));
-        repairingRecipe(Items.DIAMOND_CHESTPLATE, 10000).save(consumer, name("diamond_chestplate_repairing"));
-        repairingRecipe(Items.DIAMOND_LEGGINGS, 10000).save(consumer, name("diamond_leggings_repairing"));
-        repairingRecipe(Items.DIAMOND_BOOTS, 10000).save(consumer, name("diamond_boots_repairing"));
-        repairingRecipe(AetherItems.DIAMOND_GLOVES.get(), 10000).save(consumer, name("diamond_gloves_repairing"));
+        repairingRecipe(Items.DIAMOND_HELMET, 10000).group("altar_helmet_repair").save(consumer, name("diamond_helmet_repairing"));
+        repairingRecipe(Items.DIAMOND_CHESTPLATE, 10000).group("altar_chestplate_repair").save(consumer, name("diamond_chestplate_repairing"));
+        repairingRecipe(Items.DIAMOND_LEGGINGS, 10000).group("altar_leggings_repair").save(consumer, name("diamond_leggings_repairing"));
+        repairingRecipe(Items.DIAMOND_BOOTS, 10000).group("altar_boots_repair").save(consumer, name("diamond_boots_repairing"));
+        repairingRecipe(AetherItems.DIAMOND_GLOVES.get(), 10000).group("altar_gloves_repair").save(consumer, name("diamond_gloves_repairing"));
 
-        repairingRecipe(Items.NETHERITE_HELMET, 30000).save(consumer, name("netherite_helmet_repairing"));
-        repairingRecipe(Items.NETHERITE_CHESTPLATE, 30000).save(consumer, name("netherite_chestplate_repairing"));
-        repairingRecipe(Items.NETHERITE_LEGGINGS, 30000).save(consumer, name("netherite_leggings_repairing"));
-        repairingRecipe(Items.NETHERITE_BOOTS, 30000).save(consumer, name("netherite_boots_repairing"));
-        repairingRecipe(AetherItems.NETHERITE_GLOVES.get(), 30000).save(consumer, name("netherite_gloves_repairing"));
+        repairingRecipe(Items.NETHERITE_HELMET, 30000).group("altar_helmet_repair").save(consumer, name("netherite_helmet_repairing"));
+        repairingRecipe(Items.NETHERITE_CHESTPLATE, 30000).group("altar_chestplate_repair").save(consumer, name("netherite_chestplate_repairing"));
+        repairingRecipe(Items.NETHERITE_LEGGINGS, 30000).group("altar_leggings_repair").save(consumer, name("netherite_leggings_repairing"));
+        repairingRecipe(Items.NETHERITE_BOOTS, 30000).group("altar_boots_repair").save(consumer, name("netherite_boots_repairing"));
+        repairingRecipe(AetherItems.NETHERITE_GLOVES.get(), 30000).group("altar_gloves_repair").save(consumer, name("netherite_gloves_repairing"));
 
-        repairingRecipe(AetherItems.ZANITE_RING.get(), 2250).save(consumer, name("zanite_ring_repairing"));
-        repairingRecipe(AetherItems.ZANITE_PENDANT.get(), 2250).save(consumer, name("zanite_pendant_repairing"));
+        repairingRecipe(AetherItems.ZANITE_RING.get(), 2250).group("altar_ring_repair").save(consumer, name("zanite_ring_repairing"));
+        repairingRecipe(AetherItems.ZANITE_PENDANT.get(), 2250).group("altar_pendant_repair").save(consumer, name("zanite_pendant_repairing"));
 
-        enchantingRecipe(AetherItems.ENCHANTED_DART.get(), AetherItems.GOLDEN_DART.get(), 250).save(consumer, name("enchanted_dart_enchanting"));
-        enchantingRecipe(AetherItems.ENCHANTED_DART_SHOOTER.get(), AetherItems.GOLDEN_DART_SHOOTER.get(), 500).save(consumer, name("enchanted_dart_shooter_enchanting"));
+        enchantingRecipe(AetherItems.ENCHANTED_DART.get(), AetherItems.GOLDEN_DART.get(), 0.15F, 250).save(consumer, name("enchanted_dart_enchanting"));
+        enchantingRecipe(AetherItems.ENCHANTED_DART_SHOOTER.get(), AetherItems.GOLDEN_DART_SHOOTER.get(), 1.0F, 500).save(consumer, name("enchanted_dart_shooter_enchanting"));
 
-        enchantingRecipe(AetherItems.HEALING_STONE.get(), AetherBlocks.HOLYSTONE.get(), 750).save(consumer, name("healing_stone_enchanting"));
-        enchantingRecipe(AetherBlocks.ENCHANTED_GRAVITITE.get(), AetherBlocks.GRAVITITE_ORE.get(), 1000).save(consumer, name("enchanted_gravitite_enchanting"));
-        enchantingRecipe(AetherBlocks.QUICKSOIL_GLASS.get(), AetherBlocks.QUICKSOIL.get(), 250).save(consumer, name("quicksoil_glass_enchanting"));
+        enchantingRecipe(AetherItems.HEALING_STONE.get(), AetherBlocks.HOLYSTONE.get(), 0.35F, 750).save(consumer, name("healing_stone_enchanting"));
+        enchantingRecipe(AetherBlocks.ENCHANTED_GRAVITITE.get(), AetherBlocks.GRAVITITE_ORE.get(), 1.0F, 1000).save(consumer, name("enchanted_gravitite_enchanting"));
+        enchantingRecipe(AetherBlocks.QUICKSOIL_GLASS.get(), AetherBlocks.QUICKSOIL.get(), 0.1F, 250).save(consumer, name("quicksoil_glass_enchanting"));
 
-        enchantingRecipe(AetherItems.ENCHANTED_BERRY.get(), AetherItems.BLUE_BERRY.get(), 300).save(consumer, name("enchanted_berry_enchanting"));
+        enchantingRecipe(AetherItems.ENCHANTED_BERRY.get(), AetherItems.BLUE_BERRY.get(), 0.35F, 300).save(consumer, name("enchanted_berry_enchanting"));
 
-        enchantingRecipe(AetherItems.MUSIC_DISC_AETHER_TUNE.get(), AetherTags.Items.ACCEPTED_MUSIC_DISCS, 2500).save(consumer, name("aether_tune_enchanting"));
-        enchantingRecipe(AetherItems.MUSIC_DISC_LEGACY.get(), Items.MUSIC_DISC_CAT, 2500).save(consumer, name("legacy_enchanting"));
+        enchantingRecipe(AetherItems.MUSIC_DISC_AETHER_TUNE.get(), AetherTags.Items.ACCEPTED_MUSIC_DISCS, 1.0F, 2500).save(consumer, name("aether_tune_enchanting"));
+        hiddenEnchantingRecipe(AetherItems.MUSIC_DISC_LEGACY.get(), Items.MUSIC_DISC_CAT, 1.0F, 2500).save(consumer, name("legacy_enchanting"));
+        hiddenEnchantingRecipe(AetherItems.MUSIC_DISC_CHINCHILLA.get(), Items.MUSIC_DISC_STRAD, 1.0F, 2500).save(consumer, name("chinchilla_enchanting"));
 
-        enchantingRecipe(AetherItems.SKYROOT_REMEDY_BUCKET.get(), AetherItems.SKYROOT_POISON_BUCKET.get(), 1000).save(consumer, name("remedy_bucket_enchanting"));
+        enchantingRecipe(AetherItems.SKYROOT_REMEDY_BUCKET.get(), AetherItems.SKYROOT_POISON_BUCKET.get(), 0.35F, 1000).save(consumer, name("remedy_bucket_enchanting"));
 
-        freezingRecipe(AetherBlocks.BLUE_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 100).save(consumer, name("blue_aercloud_freezing"));
-        freezingRecipe(AetherBlocks.CRYSTAL_LEAVES.get(), AetherBlocks.SKYROOT_LEAVES.get(), 150).save(consumer, name("crystal_leaves_freezing"));
+        freezingRecipe(AetherBlocks.BLUE_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 0.1F, 100).save(consumer, name("blue_aercloud_freezing"));
+        freezingRecipe(AetherBlocks.CRYSTAL_LEAVES.get(), AetherBlocks.SKYROOT_LEAVES.get(), 0.1F, 150).save(consumer, name("crystal_leaves_freezing"));
 
-        freezingRecipe(AetherItems.MUSIC_DISC_WELCOMING_SKIES.get(), AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(), 800).save(consumer, name("welcoming_skies_freezing"));
+        hiddenFreezingRecipe(AetherItems.MUSIC_DISC_WELCOMING_SKIES.get(), AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(), 1.0F, 800).save(consumer, name("welcoming_skies_freezing"));
 
-        freezingRecipe(Blocks.ICE, Blocks.PACKED_ICE, 750).save(consumer, name("packed_ice_freezing"));
-        freezingRecipe(Items.WATER_BUCKET, Blocks.ICE, 500).save(consumer, name("ice_from_bucket_freezing"));
-        freezingRecipe(Items.LAVA_BUCKET, Blocks.OBSIDIAN, 500).save(consumer, name("obsidian_from_bucket_freezing"));
+        freezingRecipeWithUnlockTag(Blocks.BLUE_ICE, Blocks.PACKED_ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 1000, "water_bucket").save(consumer, name("blue_ice_freezing"));
+        freezingRecipeWithUnlockTag(Blocks.PACKED_ICE, Blocks.ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 750, "water_bucket").save(consumer, name("packed_ice_freezing"));
+        freezingRecipeWithTag(Blocks.ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 500, "water_bucket").save(consumer, name("ice_from_bucket_freezing"));
+        freezingRecipe(Blocks.OBSIDIAN, Items.LAVA_BUCKET, 0.1F, 500).save(consumer, name("obsidian_from_bucket_freezing"));
 
-        freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.IRON_RING.get(), 2500).save(consumer, name("ice_ring_from_iron_freezing"));
-        freezingRecipe(AetherItems.ICE_RING.get(), AetherItems.GOLDEN_RING.get(), 2500).save(consumer, name("ice_ring_from_gold_freezing"));
+        freezingRecipeWithTag(AetherItems.ICE_RING.get(), AetherTags.Items.FREEZABLE_RINGS, 1.0F, 2500, "ring").save(consumer, name("ice_ring_from_freezing"));
 
-        freezingRecipe(AetherItems.ICE_PENDANT.get(), AetherItems.IRON_PENDANT.get(), 2500).save(consumer, name("ice_pendant_from_iron_freezing"));
-        freezingRecipe(AetherItems.ICE_PENDANT.get(), AetherItems.GOLDEN_PENDANT.get(), 2500).save(consumer, name("ice_pendant_from_gold_freezing"));
+        freezingRecipeWithTag(AetherItems.ICE_PENDANT.get(), AetherTags.Items.FREEZABLE_PENDANTS, 1.0F, 2500, "pendant").save(consumer, name("ice_pendant_from_freezing"));
     }
 
     private ResourceLocation name(String name) {

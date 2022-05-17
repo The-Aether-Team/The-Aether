@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.gui.screen.inventory;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.perks.CustomizationScreen;
 import com.gildedgames.aether.client.registry.AetherKeys;
-import com.gildedgames.aether.common.inventory.container.AccessoriesContainer;
+import com.gildedgames.aether.common.inventory.container.AccessoriesMenu;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -36,7 +36,7 @@ import top.theillusivec4.curios.common.network.client.CPacketToggleRender;
 
 import javax.annotation.Nonnull;
 
-public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesContainer> implements RecipeUpdateListener
+public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesMenu> implements RecipeUpdateListener
 {
     public static final ResourceLocation ACCESSORIES_INVENTORY = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories.png");
     public static final ResourceLocation CURIO_INVENTORY = new ResourceLocation(Curios.MODID, "textures/gui/inventory.png");
@@ -48,8 +48,8 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesContai
     private boolean buttonClicked;
     private boolean isRenderButtonHovered;
 
-    public AccessoriesScreen(AccessoriesContainer accessoriesContainer, Inventory playerInventory, Component title) {
-        super(accessoriesContainer, playerInventory, title);
+    public AccessoriesScreen(AccessoriesMenu accessoriesMenu, Inventory playerInventory, Component title) {
+        super(accessoriesMenu, playerInventory, title);
         this.passEvents = true;
     }
 

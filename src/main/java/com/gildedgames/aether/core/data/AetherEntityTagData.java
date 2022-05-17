@@ -6,9 +6,9 @@ import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.tags.Tag;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
@@ -74,6 +74,10 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 AetherEntityTypes.PHYG.get(),
                 AetherEntityTypes.SHEEPUFF.get()
         );
+        tag(AetherTags.Entities.AERCLOUD_SPAWNABLE).add(
+                AetherEntityTypes.AERWHALE.get(),
+                AetherEntityTypes.ZEPHYR.get()
+        );
 
         //vanilla
         tag(EntityTypeTags.IMPACT_PROJECTILES).add(
@@ -87,7 +91,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
     }
 
     @Nonnull
-    protected TagsProvider.TagAppender<EntityType<?>> tag(@Nonnull Tag.Named<EntityType<?>> tag) {
+    protected TagsProvider.TagAppender<EntityType<?>> tag(@Nonnull TagKey<EntityType<?>> tag) {
         return super.tag(tag);
     }
 }

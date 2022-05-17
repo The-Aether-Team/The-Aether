@@ -5,9 +5,9 @@ import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.FluidTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.tags.Tag;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
@@ -30,10 +30,13 @@ public class AetherFluidTagData extends FluidTagsProvider
         tag(AetherTags.Fluids.FREEZABLE_TO_AEROGEL).add(
                 Fluids.LAVA,
                 Fluids.FLOWING_LAVA);
+        tag(AetherTags.Fluids.ALLOWED_BUCKET_PICKUP).add(
+                Fluids.WATER,
+                Fluids.FLOWING_WATER);
     }
 
     @Nonnull
-    protected TagsProvider.TagAppender<Fluid> tag(@Nonnull Tag.Named<Fluid> tag) {
+    protected TagsProvider.TagAppender<Fluid> tag(@Nonnull TagKey<Fluid> tag) {
         return super.tag(tag);
     }
 }

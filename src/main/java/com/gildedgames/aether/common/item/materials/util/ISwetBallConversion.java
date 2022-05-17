@@ -1,9 +1,10 @@
 package com.gildedgames.aether.common.item.materials.util;
 
 import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
-import com.gildedgames.aether.common.event.hooks.AetherEventHooks;
+import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.google.common.collect.Maps;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -79,8 +80,8 @@ public interface ISwetBallConversion
             newBlockState = DEFAULT_CONVERSIONS.get(oldBlock);
         }
 
-        Biome biome = world.getBiome(pos);
-        ResourceLocation biomeName = biome.getRegistryName();
+        Holder<Biome> biome = world.getBiome(pos);
+        ResourceLocation biomeName = biome.value().getRegistryName();
         if (BIOME_CONVERSIONS.containsKey(biomeName)) {
             Pair<Block, BlockState> blockPair = BIOME_CONVERSIONS.get(biomeName);
             if (blockPair.getKey() == oldBlockState.getBlock()) {
@@ -88,7 +89,7 @@ public interface ISwetBallConversion
             }
         }
 
-        SwetBallConvertEvent event = AetherEventHooks.onSwetBallConvert(player, world, pos, heldItem, oldBlockState, newBlockState);
+        SwetBallConvertEvent event = AetherEventDispatch.onSwetBallConvert(player, world, pos, heldItem, oldBlockState, newBlockState);
         if (!event.isCanceled()) {
             newBlockState = event.getNewBlockState();
             if (newBlockState != oldBlockState && world.getBlockState(pos.above()).isAir()) {
@@ -112,8 +113,8 @@ public interface ISwetBallConversion
             newBlockState = DEFAULT_CONVERSIONS.get(oldBlock);
         }
 
-        Biome biome = world.getBiome(pos);
-        ResourceLocation biomeName = biome.getRegistryName();
+        Holder<Biome> biome = world.getBiome(pos);
+        ResourceLocation biomeName = biome.value().getRegistryName();
         if (BIOME_CONVERSIONS.containsKey(biomeName)) {
             Pair<Block, BlockState> blockPair = BIOME_CONVERSIONS.get(biomeName);
             if (blockPair.getKey() == oldBlockState.getBlock()) {
@@ -121,7 +122,7 @@ public interface ISwetBallConversion
             }
         }
 
-        SwetBallConvertEvent event = AetherEventHooks.onSwetBallConvert(null, world, pos, stack, oldBlockState, newBlockState);
+        SwetBallConvertEvent event = AetherEventDispatch.onSwetBallConvert(null, world, pos, stack, oldBlockState, newBlockState);
         if (!event.isCanceled()) {
             newBlockState = event.getNewBlockState();
             if (newBlockState != oldBlockState && world.getBlockState(pos.above()).isAir()) {

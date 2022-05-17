@@ -1,0 +1,294 @@
+{
+  "carvers": {},
+  "features": [
+    [
+      "aether:quicksoil_shelf"
+    ],
+    [
+      "aether:water_lake"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [
+      "aether:aether_dirt_ore",
+      "aether:icestone_ore",
+      "aether:ambrosium_ore",
+      "aether:zanite_ore",
+      "aether:gravitite_ore_common",
+      "aether:gravitite_ore_dense"
+    ],
+    [],
+    [
+      "aether:water_spring"
+    ],
+    [
+      {
+        "feature": "aether:skyroot_tree",
+        "placement": [
+          {
+            "count": 1,
+            "type": "minecraft:count_on_every_layer"
+          },
+          {
+            "predicate": {
+              "state": {
+                "Properties": {
+                  "stage": "0"
+                },
+                "Name": "aether:skyroot_sapling"
+              },
+              "type": "minecraft:would_survive"
+            },
+            "type": "minecraft:block_predicate_filter"
+          }
+        ]
+      },
+      {
+        "feature": "aether:aether_tree_mix",
+        "placement": [
+          {
+            "count": 3,
+            "type": "minecraft:count_on_every_layer"
+          }
+        ]
+      },
+      {
+        "feature": "aether:grass_patch",
+        "placement": [
+          {
+            "type": "aether:config_filter",
+            "value": "[World Generation, Generate Tall Grass in the Aether]"
+          },
+          {
+            "count": 2,
+            "type": "minecraft:count"
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "heightmap": "WORLD_SURFACE_WG",
+            "type": "minecraft:heightmap"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": "aether:tall_grass_patch",
+        "placement": [
+          {
+            "type": "aether:config_filter",
+            "value": "[World Generation, Generate Tall Grass in the Aether]"
+          },
+          {
+            "noise_level": -0.8,
+            "below_noise": 0,
+            "above_noise": 7,
+            "type": "minecraft:noise_threshold_count"
+          },
+          {
+            "chance": 32,
+            "type": "minecraft:rarity_filter"
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "heightmap": "MOTION_BLOCKING",
+            "type": "minecraft:heightmap"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": "aether:holiday_tree",
+        "placement": [
+          {
+            "type": "aether:holiday_filter"
+          },
+          {
+            "count": 1,
+            "type": "minecraft:count_on_every_layer"
+          },
+          {
+            "chance": 48,
+            "type": "minecraft:rarity_filter"
+          },
+          {
+            "predicate": {
+              "state": {
+                "Properties": {
+                  "stage": "0"
+                },
+                "Name": "aether:skyroot_sapling"
+              },
+              "type": "minecraft:would_survive"
+            },
+            "type": "minecraft:block_predicate_filter"
+          }
+        ]
+      },
+      {
+        "feature": "aether:flower_patch",
+        "placement": [
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "heightmap": "MOTION_BLOCKING",
+            "type": "minecraft:heightmap"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": "aether:crystal_island",
+        "placement": [
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "height": {
+              "min_inclusive": {
+                "absolute": 80
+              },
+              "max_inclusive": {
+                "absolute": 120
+              },
+              "type": "minecraft:uniform"
+            },
+            "type": "minecraft:height_range"
+          },
+          {
+            "chance": 16,
+            "type": "minecraft:rarity_filter"
+          }
+        ]
+      }
+    ],
+    [
+      "aether:cold_aercloud",
+      "aether:blue_aercloud",
+      "aether:golden_aercloud",
+      "aether:pink_aercloud"
+    ]
+  ],
+  "spawners": {
+    "monster": [
+      {
+        "type": "aether:whirlwind",
+        "weight": 9,
+        "minCount": 2,
+        "maxCount": 2
+      },
+      {
+        "type": "aether:evil_whirlwind",
+        "weight": 1,
+        "minCount": 2,
+        "maxCount": 2
+      },
+      {
+        "type": "aether:cockatrice",
+        "weight": 100,
+        "minCount": 4,
+        "maxCount": 4
+      },
+      {
+        "type": "aether:zephyr",
+        "weight": 50,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "creature": [
+      {
+        "type": "aether:blue_swet",
+        "weight": 15,
+        "minCount": 3,
+        "maxCount": 4
+      },
+      {
+        "type": "aether:golden_swet",
+        "weight": 15,
+        "minCount": 3,
+        "maxCount": 4
+      },
+      {
+        "type": "aether:aechor_plant",
+        "weight": 29,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aether:phyg",
+        "weight": 12,
+        "minCount": 4,
+        "maxCount": 4
+      },
+      {
+        "type": "aether:aerbunny",
+        "weight": 11,
+        "minCount": 3,
+        "maxCount": 3
+      },
+      {
+        "type": "aether:sheepuff",
+        "weight": 10,
+        "minCount": 4,
+        "maxCount": 4
+      },
+      {
+        "type": "aether:moa",
+        "weight": 10,
+        "minCount": 3,
+        "maxCount": 3
+      },
+      {
+        "type": "aether:flying_cow",
+        "weight": 10,
+        "minCount": 4,
+        "maxCount": 4
+      },
+      {
+        "type": "aether:aerwhale",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {},
+  "forge:registry_name": "aether:skyroot_thicket",
+  "precipitation": "none",
+  "temperature": 0.8,
+  "downfall": 0.0,
+  "category": "none",
+  "effects": {
+    "music": {
+      "sound": "aether:music.aether",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": true
+    },
+    "sky_color": 12632319,
+    "foliage_color": 11665355,
+    "grass_color": 11665355,
+    "fog_color": 9671612,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  }
+}

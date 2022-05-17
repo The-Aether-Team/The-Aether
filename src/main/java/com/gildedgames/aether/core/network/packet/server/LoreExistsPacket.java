@@ -1,6 +1,6 @@
 package com.gildedgames.aether.core.network.packet.server;
 
-import com.gildedgames.aether.common.inventory.container.LoreBookContainer;
+import com.gildedgames.aether.common.inventory.container.LoreBookMenu;
 import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -34,7 +34,7 @@ public class LoreExistsPacket extends AbstractAetherPacket {
 
     @Override
     public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer player && player.containerMenu instanceof LoreBookContainer container) {
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer player && player.containerMenu instanceof LoreBookMenu container) {
             container.setLoreEntryExists(this.exists);
         }
     }
