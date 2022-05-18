@@ -93,6 +93,12 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
                 .texture("layer1", modLoc("item/" + location + "moa_egg_spot"));
     }
 
+    public ItemModelBuilder portalItem(Supplier<? extends Item> item, String location) {
+        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/generated"))
+                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
+                .texture("layer1", modLoc("item/" + location + item.get().getRegistryName().getPath() + "_inside"));
+    }
+
     public ItemModelBuilder eggItem(Supplier<? extends Item> item) {
         return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/template_spawn_egg"));
     }
