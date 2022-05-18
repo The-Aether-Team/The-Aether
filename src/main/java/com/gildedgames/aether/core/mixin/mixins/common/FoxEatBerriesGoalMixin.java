@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.mixin.common;
+package com.gildedgames.aether.core.mixin.mixins.common;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherItems;

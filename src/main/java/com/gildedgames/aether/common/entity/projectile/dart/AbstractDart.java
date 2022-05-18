@@ -66,7 +66,7 @@ public abstract class AbstractDart extends AbstractArrow {
             entity.setSecondsOnFire(5);
         }
 
-        if (entity.hurt(damagesource, (float)i)) {
+        if (this.getBaseDamage() == 0.0 || entity.hurt(damagesource, (float)i)) {
             if (flag) {
                 return;
             }

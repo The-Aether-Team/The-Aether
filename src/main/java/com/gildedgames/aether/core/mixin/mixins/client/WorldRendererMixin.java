@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.mixin.client;
+package com.gildedgames.aether.core.mixin.mixins.client;
 
 import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.mojang.blaze3d.vertex.PoseStack;
