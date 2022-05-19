@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.gui.button;
 
+import com.gildedgames.aether.Aether;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -15,7 +16,7 @@ import net.minecraft.util.Mth;
 
 public class AetherMenuButton extends Button
 {
-	public static final ResourceLocation AETHER_WIDGETS = new ResourceLocation("aether:textures/gui/title/buttons.png");
+	public static final ResourceLocation AETHER_WIDGETS = new ResourceLocation(Aether.MODID, "textures/gui/title/buttons.png");
 	public int initialX;
 	public int renderOffset;
 	
