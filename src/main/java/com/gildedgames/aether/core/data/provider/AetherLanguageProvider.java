@@ -60,6 +60,10 @@ public abstract class AetherLanguageProvider extends LanguageProvider
         addGuiText("menu." + key, name);
     }
 
+    public void addPreviewText(String key, String name) {
+        addGuiText("preview." + key, name);
+    }
+
     public void addLoreBookText(String key, String name) {
         addGuiText("book_of_lore." + key, name);
     }

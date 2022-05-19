@@ -81,10 +81,26 @@ public class GuiHooks {
         }
     }
 
+    public static Button setupWorldPreviewSwitchButton(Screen screen) {
+        if (screen instanceof TitleScreen) {
+            if (AetherConfig.CLIENT.enable_world_preview_button.get()) {
+                return new Button(screen.width - 24, 4, 20, 20, new TextComponent("W"),
+                        (pressed) -> {
+                            AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
+                            AetherConfig.CLIENT.enable_world_preview.save();
+                        },
+                        (button, matrixStack, x, y) -> //todo: dont remember the names of the tooltips, when they're added they need their own translation entries.
+                                screen.renderTooltip(matrixStack, new TranslatableComponent(AetherConfig.CLIENT.enable_world_preview.get() ? "gui.aether.preview.panorama" : "gui.aether.menu.preview"), x + 4, y + 12));
+            }
+        }
+        return null;
+    }
+
     public static Button setupMenuSwitchButton(Screen screen) {
         if (screen instanceof TitleScreen) {
             if (AetherConfig.CLIENT.enable_aether_menu_button.get()) {
-                return new Button(screen.width - 24, 4, 20, 20, new TextComponent("T"),
+                int offset = AetherConfig.CLIENT.enable_world_preview_button.get() ? 48 : 24;
+                return new Button(screen.width - offset, 4, 20, 20, new TextComponent("T"),
                         (pressed) -> {
                             AetherConfig.CLIENT.enable_aether_menu.set(!AetherConfig.CLIENT.enable_aether_menu.get());
                             AetherConfig.CLIENT.enable_aether_menu.save();

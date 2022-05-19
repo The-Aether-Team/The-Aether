@@ -39,6 +39,12 @@ public class GuiListener {
 	@SubscribeEvent
 	public static void onGuiInitialize(ScreenEvent.InitScreenEvent.Post event) {
 		Screen screen = event.getScreen();
+
+		Button worldPreviewSwitchButton = GuiHooks.setupWorldPreviewSwitchButton(screen);
+		if (worldPreviewSwitchButton != null) {
+			event.addListener(worldPreviewSwitchButton);
+		}
+
 		Button menuSwitchButton = GuiHooks.setupMenuSwitchButton(screen);
 		if (menuSwitchButton != null) {
 			event.addListener(menuSwitchButton);
