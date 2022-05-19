@@ -39,19 +39,6 @@ public class AetherTitleScreen extends TitleScreen {
 
 	public AetherTitleScreen() { }
 
-	@SuppressWarnings("unchecked")
-	@Nonnull
-	@Override
-	protected <T extends GuiEventListener & Widget & NarratableEntry> T addRenderableWidget(@Nonnull T widget) {
-		if (widget instanceof Button button) {
-			if (this.isButtonAether(button.getMessage())) {
-				AetherMenuButton aetherButton = new AetherMenuButton(button);
-				return (T) super.addRenderableWidget(aetherButton);
-			}
-		}
-		return super.addRenderableWidget(widget);
-	}
-
 	@Override
 	protected void init() {
 		super.init();
@@ -81,7 +68,6 @@ public class AetherTitleScreen extends TitleScreen {
 		this.modUpdateNotification.init();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
 		if (this.minecraft != null) {
@@ -121,20 +107,34 @@ public class AetherTitleScreen extends TitleScreen {
 
 			for (Widget button : this.renderables) {
 				button.render(poseStack, mouseX, mouseY, partialTicks);
-				if (button instanceof AetherMenuButton) {
-					AetherMenuButton aetherButton = (AetherMenuButton) button;
+				if (button instanceof AetherMenuButton aetherButton) {
 					if (aetherButton.isMouseOver(mouseX, mouseY)) {
-						if (aetherButton.renderOffset < 15)
+						if (aetherButton.renderOffset < 15) {
 							aetherButton.renderOffset += 4;
+						}
 					} else {
-						if (aetherButton.renderOffset > 0)
+						if (aetherButton.renderOffset > 0) {
 							aetherButton.renderOffset -= 4;
+						}
 					}
 				}
 			}
 
 			this.modUpdateNotification.render(poseStack, mouseX, mouseY, partialTicks);
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Nonnull
+	@Override
+	protected <T extends GuiEventListener & Widget & NarratableEntry> T addRenderableWidget(@Nonnull T widget) {
+		if (widget instanceof Button button) {
+			if (this.isButtonAether(button.getMessage())) {
+				AetherMenuButton aetherButton = new AetherMenuButton(button);
+				return (T) super.addRenderableWidget(aetherButton);
+			}
+		}
+		return super.addRenderableWidget(widget);
 	}
 
 	public boolean isButtonAether(Component buttonText) {
