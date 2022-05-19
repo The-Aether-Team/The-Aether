@@ -1,6 +1,6 @@
 package com.gildedgames.aether.core.mixin.mixins.client;
 
-import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
+import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.util.LevelUtil;
@@ -33,7 +33,7 @@ public class MinecraftMixin
     @Inject(at = @At(value = "RETURN", ordinal = 4), method = "getSituationalMusic", cancellable = true)
     public void getSituationalMusic_Menu(CallbackInfoReturnable<Music> cir) {
         if (AetherConfig.CLIENT.enable_aether_menu.get() && !AetherConfig.CLIENT.disable_menu_music.get()) {
-            cir.setReturnValue(AetherMainMenuScreen.MENU);
+            cir.setReturnValue(AetherTitleScreen.MENU);
         }
     }
 }

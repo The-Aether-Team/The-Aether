@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.event.listeners;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.client.gui.button.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
-import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
+import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
@@ -22,7 +22,7 @@ public class GuiListener {
 	@SubscribeEvent
 	public static void onGuiOpen(ScreenOpenEvent event) {
 		Screen screen = event.getScreen();
-		AetherMainMenuScreen aetherMainMenuScreen = GuiHooks.openAetherMenu(screen);
+		AetherTitleScreen aetherMainMenuScreen = GuiHooks.openAetherMenu(screen);
 		if (aetherMainMenuScreen != null) {
 			event.setScreen(aetherMainMenuScreen);
 		}

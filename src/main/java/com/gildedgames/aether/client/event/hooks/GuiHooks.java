@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.event.hooks;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.button.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
-import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
+import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.gildedgames.aether.client.registry.AetherKeys;
 import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import com.gildedgames.aether.core.AetherConfig;
@@ -25,14 +25,27 @@ import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 public class GuiHooks {
+    private static AetherTitleScreen aether_menu = null;
+    private static TitleScreen default_menu = null;
     private static boolean shouldAddButton = true;
     private static boolean generateTrivia = true;
     private static Screen lastScreen = null;
 
-    public static AetherMainMenuScreen openAetherMenu(Screen screen) {
-        if (screen instanceof TitleScreen) {
+    public static void setupMenus(TitleScreen screen) {
+        if (aether_menu == null) {
+            aether_menu = new AetherTitleScreen();
+            aether_menu.setSplash(screen.splash);
+        }
+        if (default_menu == null) {
+            default_menu = screen;
+        }
+    }
+
+    public static AetherTitleScreen openAetherMenu(Screen screen) {
+        if (screen instanceof TitleScreen titleScreen) {
+            setupMenus(titleScreen);
             if (AetherConfig.CLIENT.enable_aether_menu.get()) {
-                return new AetherMainMenuScreen();
+                return aether_menu;
             }
         }
         return null;
@@ -56,7 +69,7 @@ public class GuiHooks {
                         (pressed) -> {
                             AetherConfig.CLIENT.enable_aether_menu.set(!AetherConfig.CLIENT.enable_aether_menu.get());
                             AetherConfig.CLIENT.enable_aether_menu.save();
-                            Minecraft.getInstance().setScreen(AetherConfig.CLIENT.enable_aether_menu.get() ? new AetherMainMenuScreen() : new TitleScreen());
+                            Minecraft.getInstance().setScreen(AetherConfig.CLIENT.enable_aether_menu.get() ? aether_menu : default_menu);
                         },
                         (button, matrixStack, x, y) ->
                                 screen.renderTooltip(matrixStack, new TranslatableComponent(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether"), x + 4, y + 12));
