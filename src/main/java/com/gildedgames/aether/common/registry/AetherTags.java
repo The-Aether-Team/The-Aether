@@ -57,6 +57,7 @@ public class AetherTags {
 		public static final TagKey<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 		public static final TagKey<Item> SKYROOT_STICKS = tag("skyroot_stick");
+		public static final TagKey<Item> EFFECTIVE_IN_AETHER = tag("effective_in_aether");
 		public static final TagKey<Item> SKYROOT_TOOLS = tag("skyroot_tools");
 		public static final TagKey<Item> SKYROOT_WEAPONS = tag("skyroot_weapons");
 		public static final TagKey<Item> HOLYSTONE_TOOLS = tag("holystone_tools");

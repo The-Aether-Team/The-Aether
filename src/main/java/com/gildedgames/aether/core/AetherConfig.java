@@ -14,6 +14,7 @@ public class AetherConfig
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
         public final ConfigValue<Boolean> edible_ambrosium;
+        public final ConfigValue<Boolean> tools_debuff;
         public final ConfigValue<Boolean> healing_gummy_swets;
         public final ConfigValue<Integer> maximum_life_shards;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
@@ -45,6 +46,9 @@ public class AetherConfig
             enable_startup_loot = builder
                     .comment("When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot")
                     .define("Gives starting loot on entry", true);
+            tools_debuff = builder
+                    .comment("Tools that aren't from the Aether will mine all blocks slower than ones that are from the Aether")
+                    .define("Debuff non-Aether tools", false);
             edible_ambrosium = builder
                     .comment("Ambrosium Shards can be eaten to restore a half heart of health")
                     .define("Ambrosium Shards are edible", false);
