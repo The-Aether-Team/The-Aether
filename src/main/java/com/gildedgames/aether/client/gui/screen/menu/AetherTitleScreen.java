@@ -32,7 +32,7 @@ public class AetherTitleScreen extends TitleScreen {
 
 	private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(new ResourceLocation(Aether.MODID, "textures/gui/title/panorama/panorama")));
 	private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
-	private static final ResourceLocation AETHER_LOGO = new ResourceLocation("aether:textures/gui/title/aether.png");
+	private static final ResourceLocation AETHER_LOGO = new ResourceLocation(Aether.MODID, "textures/gui/title/aether.png");
 
 	private AetherNotificationModUpdateScreen modUpdateNotification;
 	private String splash;
