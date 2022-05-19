@@ -89,8 +89,8 @@ public class GuiHooks {
                             AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
                             AetherConfig.CLIENT.enable_world_preview.save();
                         },
-                        (button, matrixStack, x, y) -> //todo: dont remember the names of the tooltips, when they're added they need their own translation entries.
-                                screen.renderTooltip(matrixStack, new TranslatableComponent(AetherConfig.CLIENT.enable_world_preview.get() ? "gui.aether.preview.panorama" : "gui.aether.menu.preview"), x + 4, y + 12));
+                        (button, matrixStack, x, y) ->
+                                screen.renderTooltip(matrixStack, new TranslatableComponent("gui.aether.preview.toggle"), x + 4, y + 12));
             }
         }
         return null;

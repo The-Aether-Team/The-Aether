@@ -540,8 +540,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addMenuText("minecraft", "Normal Theme");
         addMenuText("aether", "Aether Theme");
 
-        addPreviewText("panorama", "WIP");
-        addPreviewText("preview", "WIP");
+        addPreviewText("toggle", "Toggle World");
 
 
         addGuiText("pro_tip", "Pro Tip:");
