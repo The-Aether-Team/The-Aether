@@ -2,6 +2,7 @@ package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.button.AccessoryButton;
+import com.gildedgames.aether.client.gui.button.DynamicMenuButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.gildedgames.aether.client.registry.AetherKeys;
@@ -83,52 +84,47 @@ public class GuiHooks {
 
     public static Button setupToggleWorldButton(Screen screen) {
         if (screen instanceof TitleScreen) {
-            if (AetherConfig.CLIENT.enable_toggle_world_button.get()) {
-                return new Button(screen.width - 24, 4, 20, 20, new TextComponent("W"),
-                        (pressed) -> {
-                            AetherConfig.CLIENT.enable_toggle_world.set(!AetherConfig.CLIENT.enable_toggle_world.get());
-                            AetherConfig.CLIENT.enable_toggle_world.save();
-                        },
-                        (button, matrixStack, x, y) ->
-                                screen.renderTooltip(matrixStack, new TranslatableComponent("gui.aether.menu.preview"), x + 4, y + 12));
-            }
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, new TextComponent("W"),
+                    (pressed) -> {
+                        AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
+                        AetherConfig.CLIENT.enable_world_preview.save();
+                    },
+                    (button, matrixStack, x, y) ->
+                            screen.renderTooltip(matrixStack, new TranslatableComponent("gui.aether.menu.preview"), x + 4, y + 12));
+            dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview_button);
+            return dynamicMenuButton;
         }
         return null;
     }
 
     public static Button setupMenuSwitchButton(Screen screen) {
         if (screen instanceof TitleScreen) {
-            if (AetherConfig.CLIENT.enable_aether_menu_button.get()) {
-                int offset = AetherConfig.CLIENT.enable_toggle_world_button.get() ? 48 : 24;
-                return new Button(screen.width - offset, 4, 20, 20, new TextComponent("T"),
-                        (pressed) -> {
-                            AetherConfig.CLIENT.enable_aether_menu.set(!AetherConfig.CLIENT.enable_aether_menu.get());
-                            AetherConfig.CLIENT.enable_aether_menu.save();
-                            Minecraft.getInstance().setScreen(getMenu());
-                        },
-                        (button, matrixStack, x, y) ->
-                                screen.renderTooltip(matrixStack, new TranslatableComponent(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether"), x + 4, y + 12));
-            }
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, new TextComponent("T"),
+                    (pressed) -> {
+                        AetherConfig.CLIENT.enable_aether_menu.set(!AetherConfig.CLIENT.enable_aether_menu.get());
+                        AetherConfig.CLIENT.enable_aether_menu.save();
+                        Minecraft.getInstance().setScreen(getMenu());
+                    },
+                    (button, matrixStack, x, y) ->
+                            screen.renderTooltip(matrixStack, new TranslatableComponent(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether"), x + 4, y + 12));
+            dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button);
+            dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_aether_menu_button);
+            return dynamicMenuButton;
         }
         return null;
     }
 
-    //TODO: This has to be handled somewhat dynamically more than the other two buttons.
-        //actually tbh all the buttons should probably be handled more dynamically and not just on init so thhey dont require gui reload to respond to config changes.
-            //may need custom classes to handle this in the easiest way.
     public static Button setupQuickLoadButton(Screen screen) {
         if (screen instanceof TitleScreen) {
-            int offset = 24;
-            offset += AetherConfig.CLIENT.enable_toggle_world_button.get() ? 24 : 0;
-            offset += AetherConfig.CLIENT.enable_aether_menu_button.get() ? 24 : 0;
-            if (AetherConfig.CLIENT.enable_toggle_world.get() && AetherConfig.CLIENT.enable_quick_load_button.get()) {
-                return new Button(screen.width - offset, 4, 20, 20, new TextComponent("Q"),
-                        (pressed) -> {
-                            //TODO
-                        },
-                        (button, matrixStack, x, y) ->
-                                screen.renderTooltip(matrixStack, new TranslatableComponent("gui.aether.menu.load"), x + 4, y + 12));
-            }
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, new TextComponent("Q"),
+                    (pressed) -> {
+                        //TODO
+                    },
+                    (button, matrixStack, x, y) ->
+                            screen.renderTooltip(matrixStack, new TranslatableComponent("gui.aether.menu.load"), x + 4, y + 12));
+            dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button, AetherConfig.CLIENT.enable_aether_menu_button);
+            dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview, AetherConfig.CLIENT.enable_quick_load_button);
+            return dynamicMenuButton;
         }
         return null;
     }

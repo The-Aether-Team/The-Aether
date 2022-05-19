@@ -2,6 +2,7 @@ package com.gildedgames.aether.client.gui.screen.menu;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.button.AetherMenuButton;
+import com.gildedgames.aether.client.gui.button.DynamicMenuButton;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.core.AetherConfig;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -50,18 +51,7 @@ public class AetherTitleScreen extends TitleScreen {
 		if (this.splash == null && this.minecraft != null) {
 			this.splash = this.minecraft.getSplashManager().getSplash();
 		}
-
 		int buttonCount = 0;
-		int buttonOffset = 0;
-		if (AetherConfig.CLIENT.enable_toggle_world_button.get()) {
-			buttonOffset -= 24;
-		}
-		if (AetherConfig.CLIENT.enable_aether_menu_button.get()) {
-			buttonOffset -= 24;
-		}
-		if (AetherConfig.CLIENT.enable_toggle_world.get() && AetherConfig.CLIENT.enable_quick_load_button.get()) {
-			buttonOffset -= 24;
-		}
 		for (Widget widget : this.renderables) {
 			if (widget instanceof Button button) {
 				Component buttonText = button.getMessage();
@@ -70,12 +60,6 @@ public class AetherTitleScreen extends TitleScreen {
 					button.y = 80 + buttonCount * 25;
 					button.setWidth(200);
 					buttonCount++;
-				} else if (buttonText.equals(new TranslatableComponent("narrator.button.accessibility"))) {
-					button.x = width - 48 + buttonOffset;
-					button.y = 4;
-				} else if (buttonText.equals(new TranslatableComponent("narrator.button.language"))) {
-					button.x = width - 24 + buttonOffset;
-					button.y = 4;
 				}
 			}
 		}
@@ -139,9 +123,10 @@ public class AetherTitleScreen extends TitleScreen {
 				}
 			}
 
-			for (Widget button : this.renderables) {
-				button.render(poseStack, mouseX, mouseY, partialTicks);
-				if (button instanceof AetherMenuButton aetherButton) {
+			int offset = 0;
+			for (Widget widget : this.renderables) {
+				widget.render(poseStack, mouseX, mouseY, partialTicks);
+				if (widget instanceof AetherMenuButton aetherButton) {
 					if (aetherButton.isMouseOver(mouseX, mouseY)) {
 						if (aetherButton.renderOffset < 15) {
 							aetherButton.renderOffset += 4;
@@ -150,6 +135,24 @@ public class AetherTitleScreen extends TitleScreen {
 						if (aetherButton.renderOffset > 0) {
 							aetherButton.renderOffset -= 4;
 						}
+					}
+				}
+				if (widget instanceof DynamicMenuButton dynamicMenuButton) {
+					if (dynamicMenuButton.enabled) {
+						offset -= 24;
+					}
+				}
+			}
+			for (Widget widget : this.renderables) {
+				Aether.LOGGER.info(offset);
+				if (widget instanceof Button button) {
+					Component buttonText = button.getMessage();
+					if (buttonText.equals(new TranslatableComponent("narrator.button.accessibility"))) {
+						button.x = this.width - 48 + offset;
+						button.y = 4;
+					} else if (buttonText.equals(new TranslatableComponent("narrator.button.language"))) {
+						button.x = this.width - 24 + offset;
+						button.y = 4;
 					}
 				}
 			}
