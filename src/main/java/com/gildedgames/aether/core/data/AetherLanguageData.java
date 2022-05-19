@@ -313,6 +313,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET, "Skyroot Bucket of Tropical Fish");
         addItem(AetherItems.SKYROOT_AXOLOTL_BUCKET, "Skyroot Bucket of Axolotl");
 
+        addItem(AetherItems.SKYROOT_BOAT, "Skyroot Boat");
+
         addItem(AetherItems.COLD_PARACHUTE, "Cold Parachute");
         addItem(AetherItems.GOLDEN_PARACHUTE, "Golden Parachute");
 

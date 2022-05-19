@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.mixin.client;
+package com.gildedgames.aether.core.mixin.mixins.client;
 
 import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
 import com.gildedgames.aether.common.registry.AetherTags;

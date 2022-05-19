@@ -1,15 +1,17 @@
 package com.gildedgames.aether.core.mixin;
 
-import com.gildedgames.aether.Aether;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.*;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.Map;
 
 public class AetherMixinConfig {
     private static final String MIXIN_PACKAGE_ROOT = "com.gildedgames.aether.core.mixin.";
-    private static final File MIXIN_CONFIG = new File(Aether.DIRECTORY.toString(), "mixin_config.json");
+    private static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve("aether");
+    private static final File MIXIN_CONFIG = new File(DIRECTORY.toString(), "mixin_config.json");
 
     private static final ImmutableList<Entry> configEntries = ImmutableList.of(
             new Entry(MIXIN_PACKAGE_ROOT + "client.AdvancementToastMixin", true),
@@ -20,8 +22,8 @@ public class AetherMixinConfig {
     );
 
     public static void save() {
-        if (!Aether.DIRECTORY.toFile().exists()) {
-            Aether.DIRECTORY.toFile().mkdirs();
+        if (!DIRECTORY.toFile().exists()) {
+            DIRECTORY.toFile().mkdirs();
         }
         if (!MIXIN_CONFIG.exists()) {
             try (FileWriter fileWriter = new FileWriter(MIXIN_CONFIG)) {

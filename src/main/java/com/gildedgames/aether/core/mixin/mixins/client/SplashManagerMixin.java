@@ -1,4 +1,4 @@
-package com.gildedgames.aether.core.mixin.client;
+package com.gildedgames.aether.core.mixin.mixins.client;
 
 import net.minecraft.client.resources.SplashManager;
 import org.spongepowered.asm.mixin.Mixin;
