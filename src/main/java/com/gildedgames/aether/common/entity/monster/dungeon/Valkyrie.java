@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +31,6 @@ import javax.annotation.Nonnull;
  * messages and drop a victory medal upon their defeat.
  */
 public class Valkyrie extends Monster implements NotGrounded {
-    private int chatTime;
     public float sinage;
 
     public Valkyrie(EntityType<? extends Valkyrie> type, Level worldIn) {
@@ -39,9 +39,10 @@ public class Valkyrie extends Monster implements NotGrounded {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.5));
-        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 0.65, true));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 0.65, true));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.5));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Valkyrie.class));
     }
 
     @Nonnull
@@ -65,10 +66,7 @@ public class Valkyrie extends Monster implements NotGrounded {
      * Sends a message to the player who interacted with the valkyrie.
      */
     private void chatItUp(Player player, Component message) {
-        if (chatTime <= 0) {
-            player.sendMessage(message, player.getUUID());
-            chatTime = 60;
-        }
+        player.sendMessage(message, player.getUUID());
     }
 
     /**
@@ -102,16 +100,17 @@ public class Valkyrie extends Monster implements NotGrounded {
 
     /**
      * The valkyrie will be provoked to attack the player if attacked.
+     * This also handles the defeat message if their health drops below 0.
      */
     @Override
     public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
         boolean result = super.hurt(source, pDamageAmount);
-        if (this.getTarget() == null && source.getEntity() instanceof Player player && level.getDifficulty() != Difficulty.PEACEFUL) {
-            if (this.level.isClientSide) {
-                chatTime = 0;
-                chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.attack." + (char) (random.nextInt(3) + '1')));
+        if (source.getEntity() instanceof Player player) {
+            if (this.getTarget() == null && level.getDifficulty() != Difficulty.PEACEFUL) {
+                if (!this.level.isClientSide) {
+                    chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.attack." + (char) (random.nextInt(3) + '1')));
+                }
             }
-            this.setTarget(player);
         }
         return result;
     }
@@ -123,7 +122,6 @@ public class Valkyrie extends Monster implements NotGrounded {
     public boolean doHurtTarget(@Nonnull Entity pEntity) {
         boolean result = super.doHurtTarget(pEntity);
         if (pEntity instanceof Player player && this.level.isClientSide && player.getHealth() <= 0) {
-            chatTime = 0;
             this.chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.playerdeath." + (char) (random.nextInt(3) + '1')));
         }
         return result;
@@ -134,8 +132,7 @@ public class Valkyrie extends Monster implements NotGrounded {
      */
     @Override
     public void die(DamageSource pCause) {
-        if (pCause.getEntity() instanceof Player player && this.level.isClientSide) {
-            chatTime = 0;
+        if (pCause.getEntity() instanceof Player player) {
             this.chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.defeated." + (char) (random.nextInt(3) + '1')));
         }
         super.die(pCause);
@@ -147,8 +144,5 @@ public class Valkyrie extends Monster implements NotGrounded {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (this.chatTime > 0) {
-            --this.chatTime;
-        }
     }
 }
