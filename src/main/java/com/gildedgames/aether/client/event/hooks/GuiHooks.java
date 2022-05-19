@@ -2,7 +2,6 @@ package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.button.AccessoryButton;
-import com.gildedgames.aether.client.gui.button.MenuSwitchButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.gildedgames.aether.client.registry.AetherKeys;
@@ -85,7 +84,7 @@ public class GuiHooks {
     public static Button setupMenuSwitchButton(Screen screen) {
         if (screen instanceof TitleScreen) {
             if (AetherConfig.CLIENT.enable_aether_menu_button.get()) {
-                return new MenuSwitchButton(screen.width - 24, 4, 20, 20, new TextComponent("T"),
+                return new Button(screen.width - 24, 4, 20, 20, new TextComponent("T"),
                         (pressed) -> {
                             AetherConfig.CLIENT.enable_aether_menu.set(!AetherConfig.CLIENT.enable_aether_menu.get());
                             AetherConfig.CLIENT.enable_aether_menu.save();
