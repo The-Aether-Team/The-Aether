@@ -35,8 +35,11 @@ public class ToolAbilityListener {
     @SubscribeEvent
     public static void doZaniteAbility(PlayerEvent.BreakSpeed event) {
         Player player = event.getPlayer();
+        BlockState blockState = event.getState();
         ItemStack itemStack = player.getMainHandItem();
+        Level level = player.getLevel();
         event.setNewSpeed(ZaniteTool.increaseSpeed(itemStack, event.getNewSpeed()));
+        event.setNewSpeed(AbilityHooks.ToolHooks.reduceToolEffectiveness(level, blockState, itemStack, event.getNewSpeed()));
     }
 
     @SubscribeEvent
