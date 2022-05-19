@@ -22,6 +22,7 @@ public class GuiListener {
 	@SubscribeEvent
 	public static void onGuiOpen(ScreenOpenEvent event) {
 		Screen screen = event.getScreen();
+		GuiHooks.drawSentryBackground(screen);
 		AetherTitleScreen aetherMainMenuScreen = GuiHooks.openAetherMenu(screen);
 		if (aetherMainMenuScreen != null) {
 			event.setScreen(aetherMainMenuScreen);

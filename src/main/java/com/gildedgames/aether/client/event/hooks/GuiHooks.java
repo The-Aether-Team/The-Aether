@@ -9,8 +9,10 @@ import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.OpenAccessoriesPacket;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.realmsclient.gui.screens.RealmsPlayerScreen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -19,17 +21,35 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 public class GuiHooks {
+    public static final ResourceLocation BACKGROUND_LOCATION = new ResourceLocation(Aether.MODID, "textures/gui/options_background.png");
+    public static ResourceLocation OLD_LOCATION;
+    public static ResourceLocation OLD_REALMS_LOCATION;
+
     private static AetherTitleScreen aether_menu = null;
     private static TitleScreen default_menu = null;
     private static boolean shouldAddButton = true;
     private static boolean generateTrivia = true;
     private static Screen lastScreen = null;
+
+    public static void drawSentryBackground(Screen screen) {
+        if (screen instanceof TitleScreen) {
+            if (OLD_LOCATION == null) {
+                OLD_LOCATION = GuiComponent.BACKGROUND_LOCATION;
+            }
+            if (OLD_REALMS_LOCATION == null) {
+                OLD_REALMS_LOCATION = RealmsPlayerScreen.OPTIONS_BACKGROUND;
+            }
+            GuiComponent.BACKGROUND_LOCATION = AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_LOCATION;
+            RealmsPlayerScreen.OPTIONS_BACKGROUND = AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_REALMS_LOCATION;
+        }
+    }
 
     public static void setupMenus(TitleScreen screen) {
         if (aether_menu == null) {
