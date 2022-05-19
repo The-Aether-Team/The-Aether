@@ -9,6 +9,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import com.mojang.math.Vector3f;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
@@ -36,12 +37,20 @@ public class AetherTitleScreen extends TitleScreen {
 
 	private AetherNotificationModUpdateScreen modUpdateNotification;
 	private String splash;
+	public boolean fading;
+	public long fadeInStart;
 
-	public AetherTitleScreen() { }
+	public AetherTitleScreen() {
+		this.fading = true;
+	}
 
 	@Override
 	protected void init() {
 		super.init();
+		if (this.splash == null && this.minecraft != null) {
+			this.splash = this.minecraft.getSplashManager().getSplash();
+		}
+
 		int buttonCount = 0;
 		int buttonOffset = 0;
 		if (AetherConfig.CLIENT.enable_aether_menu_button.get()) { //todo: second world button will increase offset further.
@@ -71,39 +80,58 @@ public class AetherTitleScreen extends TitleScreen {
 	@Override
 	public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
 		if (this.minecraft != null) {
-			fill(poseStack, 0, 0, this.width, this.height, -1);
-			this.panorama.render(partialTicks, 1.0F);
+			if (this.fadeInStart == 0L && this.fading) {
+				this.fadeInStart = Util.getMillis();
+			}
+			float f = this.fading ? (float) (Util.getMillis() - this.fadeInStart) / 1000.0F : 1.0F;
+			this.panorama.render(partialTicks, Mth.clamp(f, 0.0F, 1.0F));
 			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 			RenderSystem.setShaderTexture(0, PANORAMA_OVERLAY);
 			RenderSystem.enableBlend();
 			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.fading ? (float)Mth.ceil(Mth.clamp(f, 0.0F, 1.0F)) : 1.0F);
 			blit(poseStack, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
+			float f1 = this.fading ? Mth.clamp(f - 1.0F, 0.0F, 1.0F) : 1.0F;
+			int l = Mth.ceil(f1 * 255.0F) << 24;
 
 			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 			RenderSystem.setShaderTexture(0, AETHER_LOGO);
+			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, f1);
 			this.blit(poseStack, 10, 15, 0, 0, 155, 44);
 			this.blit(poseStack, 10 + 155, 15, 0, 45, 155, 44);
 
-			net.minecraftforge.client.ForgeHooksClient.renderMainMenu(this, poseStack, this.font, this.width, this.height, -1);
+			if (f1 > 0.02F) {
+				net.minecraftforge.client.ForgeHooksClient.renderMainMenu(this, poseStack, this.font, this.width, this.height, l);
 
-			if (this.splash != null) {
-				poseStack.pushPose();
-				poseStack.translate((float) 200, 50.0F, 0.0F);
-				poseStack.mulPose(Vector3f.ZP.rotationDegrees(-20.0F));
-				float f2 = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * ((float) Math.PI * 2F)) * 0.1F);
-				f2 = f2 * 100.0F / (float) (this.font.width(this.splash) + 32); poseStack.scale(f2, f2, f2);
-				drawCenteredString(poseStack, this.font, this.splash, 0, -8, 16776960 | 0xFF000000);
-				poseStack.popPose();
+				if (this.splash != null) {
+					poseStack.pushPose();
+					poseStack.translate((float) 200, 50.0F, 0.0F);
+					poseStack.mulPose(Vector3f.ZP.rotationDegrees(-20.0F));
+					float f2 = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * ((float) Math.PI * 2F)) * 0.1F);
+					f2 = f2 * 100.0F / (float) (this.font.width(this.splash) + 32); poseStack.scale(f2, f2, f2);
+					drawCenteredString(poseStack, this.font, this.splash, 0, -8, 16776960 | l);
+					poseStack.popPose();
+				}
+
+				BrandingControl.forEachLine(true, true, (brdline, brd) ->
+						drawString(poseStack, this.font, brd, width - this.font.width(brd) - 1, this.height - (10 + (brdline + 1) * (this.font.lineHeight + 1)), 16777215 | l)
+				);
+
+				BrandingControl.forEachAboveCopyrightLine((brdline, brd) ->
+						drawString(poseStack, this.font, brd, 1, this.height - (brdline + 1) * (this.font.lineHeight + 1), 16777215 | l)
+				);
 			}
 
-			BrandingControl.forEachLine(true, true, (brdline, brd) ->
-					drawString(poseStack, this.font, brd, width - this.font.width(brd) - 1, this.height - (10 + (brdline + 1) * (this.font.lineHeight + 1)), 0xFFFFFFFF)
-			);
-
-			BrandingControl.forEachAboveCopyrightLine((brdline, brd) ->
-					drawString(poseStack, this.font, brd, 1, this.height - (brdline + 1) * (this.font.lineHeight + 1), 0xFFFFFFFF)
-			);
+			for (GuiEventListener guiEventListener : this.children()) {
+				if (guiEventListener instanceof AbstractWidget abstractWidget) {
+					if (f1 > 0.02F) {
+						abstractWidget.setAlpha(f1);
+						abstractWidget.visible = true;
+					} else {
+						abstractWidget.visible = false;
+					}
+				}
+			}
 
 			for (Widget button : this.renderables) {
 				button.render(poseStack, mouseX, mouseY, partialTicks);
@@ -120,7 +148,9 @@ public class AetherTitleScreen extends TitleScreen {
 				}
 			}
 
-			this.modUpdateNotification.render(poseStack, mouseX, mouseY, partialTicks);
+			if (f1 >= 1.0f) {
+				this.modUpdateNotification.render(poseStack, mouseX, mouseY, partialTicks);
+			}
 		}
 	}
 
@@ -144,6 +174,10 @@ public class AetherTitleScreen extends TitleScreen {
 				|| buttonText.equals(new TranslatableComponent("fml.menu.mods"))
 				|| buttonText.equals(new TranslatableComponent("menu.options"))
 				|| buttonText.equals(new TranslatableComponent("menu.quit"));
+	}
+
+	public String getSplash() {
+		return this.splash;
 	}
 
 	public void setSplash(String splash) {

@@ -54,7 +54,6 @@ public class GuiHooks {
     public static void setupMenus(TitleScreen screen) {
         if (aether_menu == null) {
             aether_menu = new AetherTitleScreen();
-            aether_menu.setSplash(screen.splash);
         }
         if (default_menu == null) {
             default_menu = screen;
@@ -89,13 +88,27 @@ public class GuiHooks {
                         (pressed) -> {
                             AetherConfig.CLIENT.enable_aether_menu.set(!AetherConfig.CLIENT.enable_aether_menu.get());
                             AetherConfig.CLIENT.enable_aether_menu.save();
-                            Minecraft.getInstance().setScreen(AetherConfig.CLIENT.enable_aether_menu.get() ? aether_menu : default_menu);
+                            Minecraft.getInstance().setScreen(getMenu());
                         },
                         (button, matrixStack, x, y) ->
                                 screen.renderTooltip(matrixStack, new TranslatableComponent(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether"), x + 4, y + 12));
             }
         }
         return null;
+    }
+
+    private static TitleScreen getMenu() {
+        if (AetherConfig.CLIENT.enable_aether_menu.get()) {
+            aether_menu.setSplash(default_menu.splash);
+            aether_menu.fading = true;
+            aether_menu.fadeInStart = 0L;
+            return aether_menu;
+        } else {
+            default_menu.splash = aether_menu.getSplash();
+            default_menu.fading = true;
+            default_menu.fadeInStart = 0L;
+            return default_menu;
+        }
     }
 
     public static AccessoryButton setupAccessoryButtonWithinInventories(Screen screen, Tuple<Integer, Integer> offsets) {
