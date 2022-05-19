@@ -122,8 +122,9 @@ public class AetherConfig
 
         public final ConfigValue<Boolean> enable_aether_menu;
         public final ConfigValue<Boolean> enable_aether_menu_button;
-        public final ConfigValue<Boolean> enable_world_preview;
-        public final ConfigValue<Boolean> enable_world_preview_button;
+        public final ConfigValue<Boolean> enable_toggle_world;
+        public final ConfigValue<Boolean> enable_toggle_world_button;
+        public final ConfigValue<Boolean> enable_quick_load_button;
         public final ConfigValue<Boolean> enable_trivia;
 
         public final ConfigValue<Boolean> disable_menu_music;
@@ -145,12 +146,15 @@ public class AetherConfig
             enable_aether_menu_button = builder
                     .comment("Adds a button to the top right of the main menu screen to toggle between the Aether and vanilla menu")
                     .define("Enables Aether menu button", true);
-            enable_world_preview = builder
+            enable_toggle_world = builder
                     .comment("Changes the background panorama into a preview of the latest played world")
                     .define("Enables world preview", false);
-            enable_world_preview_button = builder
+            enable_toggle_world_button = builder
                     .comment("Adds a button to the top right of the main menu screen to toggle between the panorama and world preview")
-                    .define("Enables world preview button", true);
+                    .define("Enables toggle world button", true);
+            enable_quick_load_button = builder
+                    .comment("Adds a button to the top right of the main menu screen to allow quick loading into a world if the world preview is enabled")
+                    .define("Enables quick load button", true);
             enable_trivia = builder
                     .comment("Adds random trivia and tips to the bottom of loading screens")
                     .define("Enables random trivia", true);

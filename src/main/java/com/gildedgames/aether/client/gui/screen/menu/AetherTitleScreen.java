@@ -53,10 +53,13 @@ public class AetherTitleScreen extends TitleScreen {
 
 		int buttonCount = 0;
 		int buttonOffset = 0;
-		if (AetherConfig.CLIENT.enable_world_preview_button.get()) {
+		if (AetherConfig.CLIENT.enable_toggle_world_button.get()) {
 			buttonOffset -= 24;
 		}
 		if (AetherConfig.CLIENT.enable_aether_menu_button.get()) {
+			buttonOffset -= 24;
+		}
+		if (AetherConfig.CLIENT.enable_toggle_world.get() && AetherConfig.CLIENT.enable_quick_load_button.get()) {
 			buttonOffset -= 24;
 		}
 		for (Widget widget : this.renderables) {

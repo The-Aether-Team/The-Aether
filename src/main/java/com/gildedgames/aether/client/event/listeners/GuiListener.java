@@ -40,15 +40,20 @@ public class GuiListener {
 	public static void onGuiInitialize(ScreenEvent.InitScreenEvent.Post event) {
 		Screen screen = event.getScreen();
 
-		Button worldPreviewSwitchButton = GuiHooks.setupWorldPreviewSwitchButton(screen);
-		if (worldPreviewSwitchButton != null) {
-			event.addListener(worldPreviewSwitchButton);
+		Button toggleWorldButton = GuiHooks.setupToggleWorldButton(screen);
+		if (toggleWorldButton != null) {
+			event.addListener(toggleWorldButton);
 		}
 
 		Button menuSwitchButton = GuiHooks.setupMenuSwitchButton(screen);
 		if (menuSwitchButton != null) {
 			event.addListener(menuSwitchButton);
 		}
+
+        Button quickLoadButton = GuiHooks.setupQuickLoadButton(screen);
+        if (quickLoadButton != null) {
+            event.addListener(quickLoadButton);
+        }
 
 		Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
 		AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButtonWithinInventories(screen, offsets);
