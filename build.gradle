@@ -119,8 +119,6 @@ dependencies {
 
     //runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 
-    runtimeOnly fg.deobf("curse.maven:shutup-experimental-settings-407174:${project.shutupexperimentalsettings_version}")
-
     //compileOnly fileTree(dir: 'libs', include: '*.jar')
 }
 
