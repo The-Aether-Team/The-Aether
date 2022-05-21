@@ -91,6 +91,8 @@ public class Aether
             register.register(modEventBus);
         }
 
+        AetherBlocks.registerWoodTypes();
+
         DIRECTORY.toFile().mkdirs();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
@@ -108,8 +110,6 @@ public class Aether
         AetherRecipes.RecipeTypes.init();
         AetherRecipeBookTypes.init();
         AetherNoiseGeneratorSettings.init();
-
-        AetherBlocks.registerWoodTypes();
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
