@@ -28,7 +28,6 @@ public class AetherPacketHandler {
 	
 	public static synchronized void register() {
 		// CLIENT
-		register(AetherTimePacket.class, AetherTimePacket::decode);
 		register(AetherTravelPacket.class, AetherTravelPacket::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
@@ -39,7 +38,6 @@ public class AetherPacketHandler {
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
-		register(ResetMaxUpStepPacket.class, ResetMaxUpStepPacket::decode);
 		register(SentryExplosionParticlePacket.class, SentryExplosionParticlePacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
 		register(SwetAttackPacket.class, SwetAttackPacket::decode);
@@ -52,6 +50,7 @@ public class AetherPacketHandler {
 		register(HittingPacket.class, HittingPacket::decode);
 		register(JumpPacket.class, JumpPacket::decode);
 		register(LoreExistsPacket.class, LoreExistsPacket::decode);
+		register(MilkCowPacket.class, MilkCowPacket::decode);
 		register(MovementPacket.class, MovementPacket::decode);
 		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
@@ -81,5 +80,9 @@ public class AetherPacketHandler {
 	public static <MSG> void sendToServer(MSG message)
 	{
 		INSTANCE.sendToServer(message);
+	}
+
+	public static <MSG> void sendToDimension(MSG message, ResourceKey<Level> dimension) {
+		INSTANCE.send(PacketDistributor.DIMENSION.with(() -> dimension), message);
 	}
 }

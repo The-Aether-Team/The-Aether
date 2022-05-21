@@ -3,8 +3,10 @@ package com.gildedgames.aether.common.event.hooks;
 import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.common.world.AetherTeleporter;
 import com.gildedgames.aether.core.AetherConfig;
+import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.AetherTravelPacket;
 import com.gildedgames.aether.core.network.packet.client.LeavingAetherPacket;
@@ -27,6 +29,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BedBlock;
@@ -51,14 +54,14 @@ public class DimensionHooks {
             }
 
             if (AetherConfig.COMMON.enable_bed_explosions.get()) {
-                if (state.is(BlockTags.BEDS) && state.getBlock() != AetherBlocks.SKYROOT_BED.get()) {
+                if (state.is(BlockTags.BEDS) && !state.is(AetherBlocks.SKYROOT_BED.get())) {
                     if (!level.isClientSide()) {
                         if (state.getValue(BedBlock.PART) != BedPart.HEAD) {
                             pos = pos.relative(state.getValue(BedBlock.FACING));
                             state = level.getBlockState(pos);
                         }
                         BlockPos blockpos = pos.relative(state.getValue(BedBlock.FACING).getOpposite());
-                        if (level.getBlockState(blockpos).is(BlockTags.BEDS) && level.getBlockState(blockpos).getBlock() != AetherBlocks.SKYROOT_BED.get()) {
+                        if (level.getBlockState(blockpos).is(BlockTags.BEDS) && !level.getBlockState(blockpos).is(AetherBlocks.SKYROOT_BED.get())) {
                             level.removeBlock(blockpos, false);
                         }
                         level.explode(null, DamageSource.badRespawnPointExplosion(), null, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, 5.0F, true, Explosion.BlockInteraction.DESTROY);
@@ -109,13 +112,29 @@ public class DimensionHooks {
         return false;
     }
 
+    /**
+     * Ticks time in dimensions with the Aether effects location.
+     */
+    public static void tickTime(Level level) {
+        if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location()) && level instanceof ServerLevel serverLevel) {
+            long i = serverLevel.levelData.getGameTime() + 1L;
+            serverLevel.serverLevelData.setGameTime(i);
+            if (serverLevel.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+                AetherTime.get(level).ifPresent(cap -> serverLevel.setDayTime(cap.tickTime(level)));
+            }
+        }
+    }
+
+    /**
+     * This code is used to handle entities falling out of the Aether. If an entity is not a player or vehicle, it is removed.
+     */
     public static void fallFromAether(Level level) {
         if (level instanceof ServerLevel serverLevel) {
             if (LevelUtil.inTag(serverLevel, AetherTags.Dimensions.FALL_TO_OVERWORLD)) {
                 if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
                     for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
                         if (entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger()) {
-                            if (!(entity instanceof Player player && player.getAbilities().flying)) {
+                            if ((entity instanceof Player player && !player.getAbilities().flying) || entity.isVehicle()) {
                                 entityFell(entity);
                             }
                         }
@@ -126,7 +145,7 @@ public class DimensionHooks {
     }
 
     /**
-     * Code to handle falling out of the Aether with all of the passengers intact.
+     * Code to handle falling out of the Aether with all passengers intact.
      */
     @Nullable
     private static Entity entityFell(Entity entity) {
@@ -184,7 +203,7 @@ public class DimensionHooks {
         Level level = player.getLevel();
         if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
             for (ServerLevel dimension : serverLevel.getServer().getAllLevels()) {
-                for (TagKey<DimensionType> tag : LevelUtil.getTags()) {
+                for (TagKey<DimensionType> tag : LevelUtil.getTags(level)) {
                     LevelUtil.syncTrackerFromServer(dimension, tag);
                 }
             }

@@ -1,7 +1,5 @@
 package com.gildedgames.aether.common.command;
 
-import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.commands.CommandSourceStack;
@@ -40,8 +38,7 @@ public class AetherTimeCommand {
      * Returns the day time (time wrapped within a day)
      */
     private static int getDayTime(ServerLevel pLevel) {
-        AetherTime aetherTime = pLevel.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
-        return (int) aetherTime.getDayTime();
+        return (int) pLevel.getDayTime();
     }
 
     private static int queryTime(CommandSourceStack pSource, int pTime) {
@@ -51,20 +48,14 @@ public class AetherTimeCommand {
 
     public static int setTime(CommandSourceStack pSource, int pTime) {
         ServerLevel level = pSource.getLevel();
-        AetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
-        aetherTime.setDayTime(pTime);
-        aetherTime.updateDayTime();
-
+        level.setDayTime(pTime);
         pSource.sendSuccess(new TranslatableComponent("commands.time.set", pTime), true);
         return getDayTime(pSource.getLevel());
     }
 
     public static int addTime(CommandSourceStack pSource, int pAmount) {
         ServerLevel level = pSource.getLevel();
-        AetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
-        aetherTime.setDayTime(aetherTime.getDayTime() + pAmount);
-        aetherTime.updateDayTime();
-
+        level.setDayTime(level.getDayTime() + pAmount);
         int i = getDayTime(pSource.getLevel());
         pSource.sendSuccess(new TranslatableComponent("commands.time.set", i), true);
         return i;

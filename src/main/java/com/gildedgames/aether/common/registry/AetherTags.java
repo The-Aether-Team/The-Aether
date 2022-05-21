@@ -21,6 +21,7 @@ public class AetherTags {
 		public static final TagKey<Block> AERCLOUDS = tag("aerclouds");
 		public static final TagKey<Block> SKYROOT_LOGS = tag("skyroot_logs");
 		public static final TagKey<Block> GOLDEN_OAK_LOGS = tag("golden_oak_logs");
+		public static final TagKey<Block> ALLOWED_BUCKET_PICKUP = tag("allowed_bucket_pickup");
 		public static final TagKey<Block> AEROGEL = tag("aerogel");
 		public static final TagKey<Block> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final TagKey<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
@@ -56,6 +57,7 @@ public class AetherTags {
 		public static final TagKey<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 		public static final TagKey<Item> SKYROOT_STICKS = tag("skyroot_stick");
+		public static final TagKey<Item> EFFECTIVE_IN_AETHER = tag("effective_in_aether");
 		public static final TagKey<Item> SKYROOT_TOOLS = tag("skyroot_tools");
 		public static final TagKey<Item> SKYROOT_WEAPONS = tag("skyroot_weapons");
 		public static final TagKey<Item> HOLYSTONE_TOOLS = tag("holystone_tools");
@@ -118,6 +120,7 @@ public class AetherTags {
 
 	public static class Fluids {
 		public static final TagKey<Fluid> FREEZABLE_TO_AEROGEL = tag("freezable_to_aerogel");
+		public static final TagKey<Fluid> ALLOWED_BUCKET_PICKUP = tag("allowed_bucket_pickup");
 
 		private static TagKey<Fluid> tag(String name) {
 			return TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Aether.MODID, name));
@@ -130,7 +133,6 @@ public class AetherTags {
 		public static final TagKey<DimensionType> HOSTILE_PARADISE = tag("hostile_paradise");
 
 		public static final TagKey<DimensionType> ULTRACOLD = tag("ultracold");
-		public static final TagKey<DimensionType> ETERNAL_DAY = tag("eternal_day");
 		public static final TagKey<DimensionType> NO_WHEAT_SEEDS = tag("no_wheat_seeds");
 		public static final TagKey<DimensionType> FALL_TO_OVERWORLD = tag("fall_to_overworld");
 		public static final TagKey<DimensionType> DISPLAY_TRAVEL_TEXT = tag("display_travel_text");

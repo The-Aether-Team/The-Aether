@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.item.food;
 
 import com.gildedgames.aether.common.registry.AetherFoods;
 import com.gildedgames.aether.common.registry.AetherItemGroups;
+import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +16,7 @@ import net.minecraft.world.level.Level;
 public class GummySwetItem extends Item
 {
 	public GummySwetItem() {
-		super(new Item.Properties().food(AetherFoods.GUMMY_SWET).tab(AetherItemGroups.AETHER_FOOD));
+		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).food(AetherFoods.GUMMY_SWET).tab(AetherItemGroups.AETHER_FOOD));
 	}
 
 	public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {

@@ -1,22 +1,21 @@
 package com.gildedgames.aether.common.event.hooks;
 
 import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.core.capability.cape.CapeEntity;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.capability.player.AetherPlayerCapability;
 import com.gildedgames.aether.core.capability.rankings.AetherRankings;
 import com.gildedgames.aether.core.capability.rankings.AetherRankingsCapability;
 import com.gildedgames.aether.core.capability.time.AetherTime;
-import com.gildedgames.aether.core.util.AetherSleepStatus;
 import com.gildedgames.aether.core.util.LevelUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 
 public class CapabilityHooks {
     public static class AetherPlayerHooks {
@@ -96,9 +95,6 @@ public class CapabilityHooks {
     }
 
     public static class AetherTimeHooks {
-        // TODO Rebuild into a Level set
-        public static Level world;
-
         public static void login(Player player) {
             syncAetherTime(player);
         }
@@ -108,34 +104,10 @@ public class CapabilityHooks {
         }
 
         private static void syncAetherTime(Player player) {
-            if (player != null && player.level instanceof ServerLevel world) {
-                MinecraftServer server = world.getServer();
-                for (ServerLevel serverLevel : server.getAllLevels()) {
-                    if (LevelUtil.inTag(serverLevel, AetherTags.Dimensions.ETERNAL_DAY)) {
-                        AetherTime.get(world).ifPresent(AetherTime::syncToClient);
-                    }
+            if (player instanceof ServerPlayer serverPlayer) {
+                if (player.level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+                    AetherTime.get(serverPlayer.level).ifPresent(cap -> cap.updateEternalDay(serverPlayer));
                 }
-            }
-        }
-
-        public static void load(LevelAccessor accessor) {
-            if (accessor instanceof Level level && LevelUtil.inTag(level, AetherTags.Dimensions.ETERNAL_DAY)) {
-                world = level;
-                if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
-                    serverLevel.sleepStatus = new AetherSleepStatus();
-                }
-            }
-        }
-
-        public static void unload(LevelAccessor accessor) {
-            if (accessor instanceof Level level && LevelUtil.inTag(level, AetherTags.Dimensions.ETERNAL_DAY)) {
-                world = null;
-            }
-        }
-
-        public static void tick(Level level) {
-            if (level instanceof ServerLevel serverLevel && LevelUtil.inTag(level, AetherTags.Dimensions.ETERNAL_DAY)) {
-                AetherTime.get(serverLevel).ifPresent(aetherTime -> aetherTime.serverTick(serverLevel));
             }
         }
     }

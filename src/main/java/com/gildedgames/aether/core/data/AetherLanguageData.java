@@ -294,16 +294,26 @@ public class AetherLanguageData extends AetherLanguageProvider
         addDiscDesc(AetherItems.MUSIC_DISC_AETHER_TUNE, "Noisestorm - Aether Tune");
         addItem(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Valkyrie Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Emile van Krieken - Ascending Dawn");
-        addItem(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "Welcoming Skies");
+        addItem(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "Frosted Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "Voyed - Welcoming Skies");
-        addItem(AetherItems.MUSIC_DISC_LEGACY, "Legacy");
+        addItem(AetherItems.MUSIC_DISC_LEGACY, "Duck Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_LEGACY, "Jon Lachney - Legacy");
+        addItem(AetherItems.MUSIC_DISC_CHINCHILLA, "Sepia Music Disc");
+        addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
 
         addItem(AetherItems.SKYROOT_BUCKET, "Skyroot Bucket");
         addItem(AetherItems.SKYROOT_WATER_BUCKET, "Skyroot Water Bucket");
         addItem(AetherItems.SKYROOT_POISON_BUCKET, "Skyroot Poison Bucket");
         addItem(AetherItems.SKYROOT_REMEDY_BUCKET, "Skyroot Remedy Bucket");
         addItem(AetherItems.SKYROOT_MILK_BUCKET, "Skyroot Milk Bucket");
+        addItem(AetherItems.SKYROOT_POWDER_SNOW_BUCKET, "Skyroot Powder Snow Bucket");
+        addItem(AetherItems.SKYROOT_COD_BUCKET, "Skyroot Bucket of Cod");
+        addItem(AetherItems.SKYROOT_SALMON_BUCKET, "Skyroot Bucket of Salmon");
+        addItem(AetherItems.SKYROOT_PUFFERFISH_BUCKET, "Skyroot Bucket of Pufferfish");
+        addItem(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET, "Skyroot Bucket of Tropical Fish");
+        addItem(AetherItems.SKYROOT_AXOLOTL_BUCKET, "Skyroot Bucket of Axolotl");
+
+        addItem(AetherItems.SKYROOT_BOAT, "Skyroot Boat");
 
         addItem(AetherItems.COLD_PARACHUTE, "Cold Parachute");
         addItem(AetherItems.GOLDEN_PARACHUTE, "Golden Parachute");

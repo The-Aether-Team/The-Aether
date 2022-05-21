@@ -43,9 +43,9 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable
                 if (ammoItem.isEmpty()) {
                     ammoItem = new ItemStack(this.dartType.get());
                 }
-                boolean shouldNotPickupAmmo = playerentity.getAbilities().instabuild || (ammoItem.getItem() instanceof DartItem && ((DartItem) ammoItem.getItem()).isInfinite(heldItem));
+                boolean shouldNotPickupAmmo = playerentity.getAbilities().instabuild || (ammoItem.getItem() instanceof DartItem dartItem && dartItem.isInfinite(heldItem));
                 if (!worldIn.isClientSide) {
-                    DartItem dartItem = (DartItem) (ammoItem.getItem() instanceof DartItem ? ammoItem.getItem() : this.dartType.get());
+                    DartItem dartItem = (DartItem) (ammoItem.getItem() instanceof DartItem dart ? dart : this.dartType.get());
                     AbstractDart abstractDartEntity = dartItem.createDart(worldIn, playerentity);
                     abstractDartEntity.shootFromRotation(playerentity, playerentity.getXRot(), playerentity.getYRot(), 0.0F, 1.0F, 1.0F);
                     abstractDartEntity.setNoGravity(true);
@@ -104,7 +104,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable
 
     @Override
     public Predicate<ItemStack> getAllSupportedProjectiles() {
-        return (stack) -> stack.getItem() == this.dartType.get();
+        return (stack) -> stack.is(this.dartType.get());
     }
 
     @Override

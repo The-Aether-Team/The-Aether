@@ -14,12 +14,12 @@ import javax.annotation.Nonnull;
 public class PoisonDart extends AbstractDart {
     public PoisonDart(EntityType<? extends PoisonDart> type, Level level) {
         super(type, level);
-        this.setBaseDamage(0.5);
+        this.setBaseDamage(2.0);
     }
 
     public PoisonDart(Level level) {
         super(AetherEntityTypes.POISON_DART.get(), level);
-        this.setBaseDamage(0.5);
+        this.setBaseDamage(2.0);
     }
 
     @Override

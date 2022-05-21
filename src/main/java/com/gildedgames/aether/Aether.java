@@ -10,6 +10,7 @@ import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.common.registry.worldgen.AetherBiomes;
 import com.gildedgames.aether.common.registry.worldgen.AetherFoliagePlacerTypes;
 import com.gildedgames.aether.common.registry.worldgen.AetherNoiseGeneratorSettings;
+import com.gildedgames.aether.common.registry.worldgen.AetherTreeDecoratorTypes;
 import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.*;
@@ -48,7 +49,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -83,12 +83,15 @@ public class Aether
                 AetherRecipes.RECIPE_SERIALIZERS,
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherBiomes.BIOMES,
-                AetherFoliagePlacerTypes.FOLIAGE_PLACERS
+                AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
+                AetherTreeDecoratorTypes.TREE_DECORATORS
         };
 
         for (DeferredRegister<?> register : registers) {
             register.register(modEventBus);
         }
+
+        AetherBlocks.registerWoodTypes();
 
         DIRECTORY.toFile().mkdirs();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
@@ -107,8 +110,6 @@ public class Aether
         AetherRecipes.RecipeTypes.init();
         AetherRecipeBookTypes.init();
         AetherNoiseGeneratorSettings.init();
-
-        AetherBlocks.registerWoodTypes();
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
@@ -116,9 +117,6 @@ public class Aether
             AetherPacketHandler.register();
 
             AetherBlocks.registerPots();
-            AetherBlocks.registerAxeStrippingBlocks();
-            AetherBlocks.registerShovelFlatteningBlocks();
-            AetherBlocks.registerHoeTillingBlocks();
             AetherBlocks.registerFlammability();
             AetherBlocks.registerFreezables();
 
@@ -207,8 +205,8 @@ public class Aether
         DispenserBlock.registerBehavior(AetherItems.ENCHANTED_DART.get(), new DispenseDartBehavior(AetherItems.ENCHANTED_DART));
         DispenserBlock.registerBehavior(AetherItems.LIGHTNING_KNIFE.get(), AetherDispenseBehaviors.DISPENSE_LIGHTNING_KNIFE_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.HAMMER_OF_NOTCH.get(), AetherDispenseBehaviors.DISPENSE_NOTCH_HAMMER_BEHAVIOR);
-        DispenserBlock.registerBehavior(AetherItems.SKYROOT_WATER_BUCKET.get(), AetherDispenseBehaviors.DISPENSE_WATER_BEHAVIOR);
-		DispenserBlock.registerBehavior(AetherItems.SKYROOT_BUCKET.get(), AetherDispenseBehaviors.PICKUP_WATER_BEHAVIOR);
+        DispenserBlock.registerBehavior(AetherItems.SKYROOT_WATER_BUCKET.get(), AetherDispenseBehaviors.SKYROOT_BUCKET_DISPENSE_BEHAVIOR);
+		DispenserBlock.registerBehavior(AetherItems.SKYROOT_BUCKET.get(), AetherDispenseBehaviors.SKYROOT_BUCKET_PICKUP_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.AMBROSIUM_SHARD.get(), AetherDispenseBehaviors.DISPENSE_AMBROSIUM_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.SWET_BALL.get(), AetherDispenseBehaviors.DISPENSE_SWET_BALL_BEHAVIOR);
         DispenserBlock.registerBehavior(Items.FIRE_CHARGE, AetherDispenseBehaviors.DISPENSE_FIRE_CHARGE_BEHAVIOR);

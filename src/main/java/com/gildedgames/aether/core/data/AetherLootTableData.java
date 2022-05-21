@@ -117,6 +117,8 @@ public class AetherLootTableData extends AetherLootTableProvider
 
             this.add(AetherBlocks.BERRY_BUSH.get(), (bush) -> droppingBerryBush(bush, AetherBlocks.BERRY_BUSH_STEM.get(), AetherItems.BLUE_BERRY.get()));
             dropSelfDouble(AetherBlocks.BERRY_BUSH_STEM);
+            dropPot(AetherBlocks.POTTED_BERRY_BUSH);
+            dropPot(AetherBlocks.POTTED_BERRY_BUSH_STEM);
 
             dropSelf(AetherBlocks.PURPLE_FLOWER);
             dropSelf(AetherBlocks.WHITE_FLOWER);

@@ -77,6 +77,8 @@ public class AetherRenderers {
         registerBlockRenderer(AetherBlocks.GOLDEN_OAK_SAPLING, cutout);
         registerBlockRenderer(AetherBlocks.PURPLE_FLOWER, cutout);
         registerBlockRenderer(AetherBlocks.WHITE_FLOWER, cutout);
+        registerBlockRenderer(AetherBlocks.POTTED_BERRY_BUSH, cutout);
+        registerBlockRenderer(AetherBlocks.POTTED_BERRY_BUSH_STEM, cutout);
         registerBlockRenderer(AetherBlocks.POTTED_PURPLE_FLOWER, cutout);
         registerBlockRenderer(AetherBlocks.POTTED_WHITE_FLOWER, cutout);
         registerBlockRenderer(AetherBlocks.POTTED_SKYROOT_SAPLING, cutout);
@@ -114,6 +116,7 @@ public class AetherRenderers {
 //        event.registerEntityRenderer(AetherEntityTypes.VALKYRIE_QUEEN.get(), ValkyrieQueenRenderer::new);
 //        event.registerEntityRenderer(AetherEntityTypes.SUN_SPIRIT.get(), SunSpiritRenderer::new);
 
+        event.registerEntityRenderer(AetherEntityTypes.SKYROOT_BOAT.get(), SkyrootBoatRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.CLOUD_MINION.get(), CloudMinionRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.COLD_PARACHUTE.get(), (context) -> new ParachuteRenderer(context, AetherBlocks.COLD_AERCLOUD));
         event.registerEntityRenderer(AetherEntityTypes.GOLDEN_PARACHUTE.get(), (context) -> new ParachuteRenderer(context, AetherBlocks.GOLDEN_AERCLOUD));
@@ -125,7 +128,7 @@ public class AetherRenderers {
         event.registerEntityRenderer(AetherEntityTypes.GOLDEN_DART.get(), GoldenDartRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.POISON_DART.get(), PoisonDartRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.ENCHANTED_DART.get(), EnchantedDartRenderer::new);
-        event.registerEntityRenderer(AetherEntityTypes.POISON_NEEDLE.get(), PoisonDartRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.POISON_NEEDLE.get(), PoisonNeedleRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.LIGHTNING_KNIFE.get(), LightningKnifeRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.HAMMER_PROJECTILE.get(), HammerProjectileRenderer::new);
     }
@@ -169,6 +172,8 @@ public class AetherRenderers {
 //        event.registerLayerDefinition(AetherModelLayers.SLIDER, SliderModel::createBodyLayer);
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_QUEEN, ValkyrieQueenModel:createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SUN_SPIRIT, SunSpiritModel::createBodyLayer);
+
+        event.registerLayerDefinition(AetherModelLayers.SKYROOT_BOAT, BoatModel::createBodyModel);
 
         event.registerLayerDefinition(AetherModelLayers.CLOUD_MINION, CloudMinionModel::createBodyLayer);
 

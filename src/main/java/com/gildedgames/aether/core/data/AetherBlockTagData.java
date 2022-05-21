@@ -58,6 +58,8 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(AetherTags.Blocks.GOLDEN_OAK_LOGS).add(
                 AetherBlocks.GOLDEN_OAK_LOG.get(),
                 AetherBlocks.GOLDEN_OAK_WOOD.get());
+        tag(AetherTags.Blocks.ALLOWED_BUCKET_PICKUP).add(
+                Blocks.POWDER_SNOW);
         tag(AetherTags.Blocks.AEROGEL).add(AetherBlocks.AEROGEL.get(),
                 AetherBlocks.AEROGEL_WALL.get(),
                 AetherBlocks.AEROGEL_STAIRS.get(),
@@ -158,6 +160,8 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(BlockTags.BEDS).add(AetherBlocks.SKYROOT_BED.get());
         tag(BlockTags.DIRT).addTag(AetherTags.Blocks.AETHER_DIRT);
         tag(BlockTags.FLOWER_POTS).add(
+                AetherBlocks.POTTED_BERRY_BUSH.get(),
+                AetherBlocks.POTTED_BERRY_BUSH_STEM.get(),
                 AetherBlocks.POTTED_PURPLE_FLOWER.get(),
                 AetherBlocks.POTTED_WHITE_FLOWER.get(),
                 AetherBlocks.POTTED_SKYROOT_SAPLING.get(),

@@ -2,90 +2,67 @@ package com.gildedgames.aether.core.capability.time;
 
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.client.AetherTimePacket;
 import com.gildedgames.aether.core.network.packet.client.EternalDayPacket;
-import com.gildedgames.aether.core.util.AetherSleepStatus;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 
 /**
- * Capability class to handle the Aether's custom day/night cycle.
- * This class makes the day/night cycle longer depending on the time factor, and handles eternal day.
- * This capability should ONLY be attached to the Aether dimension!!!
+ * Capability class to store data for the Aether's custom day/night cycle.
+ * This capability only has an effect on levels where the dimension type's effects are set to the Aether's.
  */
 public class AetherTimeCapability implements AetherTime {
     private final Level level;
-    private boolean isEternalDay = true;
     private long dayTime = 18000L;
+    private boolean isEternalDay = true;
 
     public AetherTimeCapability(Level level) {
         this.level = level;
     }
 
     @Override
+    public Level getLevel() {
+        return this.level;
+    }
+
+    @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
+        tag.putLong("DayTime", this.level.getDayTime());
         tag.putBoolean("EternalDay", this.getEternalDay());
-        tag.putLong("DayTime", this.getDayTime());
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag tag) {
-        if (tag.contains("EternalDay")) {
-            this.setEternalDay(tag.getBoolean("EternalDay"));
-        }
         if (tag.contains("DayTime")) {
             this.setDayTime(tag.getLong("DayTime"));
         }
+        if (tag.contains("EternalDay")) {
+            this.setEternalDay(tag.getBoolean("EternalDay"));
+        }
     }
 
     /**
-     * Sends eternal day and Aether time values to the client.
+     * Used to increment the time in Aether levels.
      */
     @Override
-    public void syncToClient() {
-        this.updateDayTime();
-        this.updateEternalDay();
-    }
-
-    /**
-     * Ticks time in the Aether. This method is called on the server.
-     */
-    @Override
-    public void serverTick(ServerLevel level) {
-        if (this.isEternalDay && !AetherConfig.COMMON.disable_eternal_day.get()) {
-            if (this.dayTime != 18000L) {
-                long target = Mth.clamp(18000L - this.dayTime, -10, 10);
-                this.dayTime += target;
+    public long tickTime(Level level) {
+        long dayTime = level.getDayTime();
+        if (this.getEternalDay() && !AetherConfig.COMMON.disable_eternal_day.get()) {
+            if (dayTime != 18000L) {
+                long tempTime = dayTime % 72000L;
+                if (tempTime > 54000L) {
+                    tempTime -= 72000L;
+                }
+                long target = Mth.clamp(18000L - tempTime, -10, 10);
+                dayTime += target;
             }
         } else {
-            this.handleSleep(level);
-            if (level.getLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
-                this.dayTime += 1L;
-            }
+            dayTime++;
         }
-        this.updateDayTime();
-    }
-
-    private void handleSleep(ServerLevel level) {
-        int i = level.getGameRules().getInt(GameRules.RULE_PLAYERS_SLEEPING_PERCENTAGE);
-        if (level.sleepStatus instanceof AetherSleepStatus sleepStatus && sleepStatus.areEnoughSleeping(i) && sleepStatus.areEnoughDeepSleepingInAether(i, level.players())) {
-            if (level.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
-                long j = this.getDayTime() + 72000L;
-                this.setDayTime(j - j % 72000L);
-            }
-            this.wakeUpAllPlayers(level);
-        }
-    }
-
-    private void wakeUpAllPlayers(ServerLevel level) {
-        level.sleepStatus.removeAllSleepers();
-        level.players().stream().filter(LivingEntity::isSleeping).toList().forEach((p_184116_) -> p_184116_.stopSleepInBed(false, false));
+        return dayTime;
     }
 
     /**
@@ -93,25 +70,15 @@ public class AetherTimeCapability implements AetherTime {
      */
     @Override
     public void updateEternalDay() {
-        AetherPacketHandler.sendToAll(new EternalDayPacket(this.isEternalDay));
-    }
-
-    @Override
-    public void setEternalDay(boolean isEternalDay) {
-        this.isEternalDay = isEternalDay;
-    }
-
-    @Override
-    public boolean getEternalDay() {
-        return this.isEternalDay;
+        AetherPacketHandler.sendToDimension(new EternalDayPacket(this.isEternalDay), this.level.dimension());
     }
 
     /**
-     * Sends the Aether time value to the client.
+     * Sends the eternal day value to the client.
      */
     @Override
-    public void updateDayTime() {
-        AetherPacketHandler.sendToAll(new AetherTimePacket(this.dayTime));
+    public void updateEternalDay(ServerPlayer player) {
+        AetherPacketHandler.sendToPlayer(new EternalDayPacket(this.isEternalDay), player);
     }
 
     @Override
@@ -125,7 +92,12 @@ public class AetherTimeCapability implements AetherTime {
     }
 
     @Override
-    public Level getLevel() {
-        return this.level;
+    public void setEternalDay(boolean isEternalDay) {
+        this.isEternalDay = isEternalDay;
+    }
+
+    @Override
+    public boolean getEternalDay() {
+        return this.isEternalDay;
     }
 }
