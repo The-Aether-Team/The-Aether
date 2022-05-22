@@ -1,6 +1,5 @@
 package com.gildedgames.aether.core.mixin.mixins.client;
 
-import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
 import com.gildedgames.aether.common.registry.AetherTags;
@@ -8,18 +7,13 @@ import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.util.LevelUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.server.WorldStem;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.Musics;
-import net.minecraft.world.level.storage.LevelStorageSource;
-import org.checkerframework.checker.units.qual.A;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.function.Function;
 
 @Mixin(Minecraft.class)
 public class MinecraftMixin
