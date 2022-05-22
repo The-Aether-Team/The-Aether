@@ -1,0 +1,174 @@
+buildscript {
+    repositories {
+        maven {
+            name 'Forge'
+            url 'https://maven.minecraftforge.net'
+        }
+        maven {
+            name 'Sponge'
+            url 'https://repo.spongepowered.org/maven'
+        }
+        maven {
+            name 'Gradle'
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            name 'Parchment'
+            url 'https://maven.parchmentmc.org'
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+        classpath 'org.parchmentmc:librarian:1.+'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
+
+version = project.mc_version + '-v' + project.aether_version
+group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'aether'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17) // Mojang ships Java 8 to end users, so your mod should target Java 8.
+
+minecraft {
+    mappings channel: 'parchment', version: project.mappings
+
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            //Only uncomment this if you actually need the debug logging! If you enable this the log will be full of incredibly useless information spam
+            //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            //property 'forge.logging.console.level', 'debug'
+
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            arg "--mixin=aether.mixins.json"
+
+            mods {
+                aether {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            //property 'forge.logging.console.level', 'debug'
+
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            arg "--mixin=aether.mixins.json"
+
+            mods {
+                aether {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            //property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'aether', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources/')
+
+            environment 'target', 'fmluserdevdata'
+
+            mods {
+                aether {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5-SNAPSHOT:processor'
+
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}:api")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
+
+    compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}:api")
+    compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
+
+    // compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
+
+    //compileOnly fg.deobf("curse.maven:colytra-280200:${project.colytra_version}")
+    compileOnly fg.deobf("curse.maven:curious-elytra-317716:${project.curiouselytra_version}")
+
+    //runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
+
+<<<<<<< Updated upstream
+=======
+    //runtimeOnly fg.deobf("curse.maven:shutup-experimental-settings-407174:${project.shutupexperimentalsettings_version}")
+
+>>>>>>> Stashed changes
+    //compileOnly fileTree(dir: 'libs', include: '*.jar')
+}
+
+repositories {
+    maven { url = "https://repo.spongepowered.org/maven" }
+    maven { url = "https://maven.blamejared.com" }
+    maven { url = "https://maven.theillusivec4.top/" }
+    maven { url = "https://www.cursemaven.com" }
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : project.name,
+                "Specification-Vendor"    : "Gilded Games",
+                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : "${version}",
+                "Implementation-Vendor"   : "Gilded Games",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs"            : "aether.mixins.json"
+        ])
+    }
+}
+
+def reobfFile = file("$buildDir/reobfJar/output.jar")
+def reobfArtifact = artifacts.add('default', reobfFile) {
+    type 'jar'
+    builtBy 'reobfJar'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact reobfArtifact
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
+
+mixin {
+    config "aether.mixins.json"
+    add sourceSets.main, "aether.refmap.json"
+}

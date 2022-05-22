@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DDD",
+    "DPD",
+    "DDD"
+  ],
+  "key": {
+    "D": {
+      "item": "aether:golden_dart"
+    },
+    "P": {
+      "item": "aether:skyroot_poison_bucket"
+    }
+  },
+  "result": {
+    "item": "aether:poison_dart",
+    "count": 8
+  }
+}

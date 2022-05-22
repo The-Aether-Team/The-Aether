@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:arrows",
+    "minecraft:egg",
+    "minecraft:small_fireball",
+    "minecraft:fireball",
+    "minecraft:snowball",
+    "minecraft:llama_spit",
+    "minecraft:trident",
+    "minecraft:shulker_bullet",
+    "aether:golden_dart",
+    "aether:poison_dart",
+    "aether:enchanted_dart",
+    "aether:poison_needle",
+    "aether:zephyr_snowball",
+    "aether:lightning_knife",
+    "aether:hammer_projectile"
+  ]
+}

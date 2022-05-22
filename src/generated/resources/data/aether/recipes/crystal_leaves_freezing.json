@@ -1,0 +1,9 @@
+{
+  "type": "aether:freezing",
+  "ingredient": {
+    "item": "aether:skyroot_leaves"
+  },
+  "result": "aether:crystal_leaves",
+  "experience": 0.1,
+  "cookingtime": 150
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:nature_staff"
+    ]
+  },
+  "criteria": {
+    "has_zanite": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:zanite_gemstone"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:nature_staff"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_zanite",
+      "has_the_recipe"
+    ]
+  ]
+}

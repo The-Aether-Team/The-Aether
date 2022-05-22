@@ -1,0 +1,8 @@
+{
+  "type": "aether:repairing",
+  "group": "altar_sword_repair",
+  "ingredient": {
+    "item": "minecraft:stone_sword"
+  },
+  "repairTime": 550
+}

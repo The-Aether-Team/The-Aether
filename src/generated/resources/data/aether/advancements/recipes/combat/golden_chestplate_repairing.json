@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:golden_chestplate_repairing"
+    ]
+  },
+  "criteria": {
+    "has_minecraft:golden_chestplate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:golden_chestplate"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:golden_chestplate_repairing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_minecraft:golden_chestplate",
+      "has_the_recipe"
+    ]
+  ]
+}

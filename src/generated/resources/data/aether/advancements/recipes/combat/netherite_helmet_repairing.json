@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:netherite_helmet_repairing"
+    ]
+  },
+  "criteria": {
+    "has_minecraft:netherite_helmet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:netherite_helmet"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:netherite_helmet_repairing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_minecraft:netherite_helmet",
+      "has_the_recipe"
+    ]
+  ]
+}

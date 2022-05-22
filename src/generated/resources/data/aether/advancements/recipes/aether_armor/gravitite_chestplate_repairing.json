@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:gravitite_chestplate_repairing"
+    ]
+  },
+  "criteria": {
+    "has_aether:gravitite_chestplate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:gravitite_chestplate"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:gravitite_chestplate_repairing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_aether:gravitite_chestplate",
+      "has_the_recipe"
+    ]
+  ]
+}

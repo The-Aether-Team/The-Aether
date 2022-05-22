@@ -1,0 +1,15 @@
+{
+  "name": "aether:bronze_dungeon/start_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aether:bronze_dungeon/boss_room",
+        "processors": "aether:bronze_dungeon_sentry_stone",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

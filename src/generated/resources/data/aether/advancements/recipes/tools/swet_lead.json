@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:swet_lead"
+    ]
+  },
+  "criteria": {
+    "has_swet_ball": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:swet_ball"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:swet_lead"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_swet_ball",
+      "has_the_recipe"
+    ]
+  ]
+}

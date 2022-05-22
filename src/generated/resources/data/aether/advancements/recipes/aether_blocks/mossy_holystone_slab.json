@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:mossy_holystone_slab"
+    ]
+  },
+  "criteria": {
+    "has_mossy_holystone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:mossy_holystone"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:mossy_holystone_slab"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_mossy_holystone",
+      "has_the_recipe"
+    ]
+  ]
+}

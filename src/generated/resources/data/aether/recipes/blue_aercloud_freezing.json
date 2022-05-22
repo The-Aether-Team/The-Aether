@@ -1,0 +1,9 @@
+{
+  "type": "aether:freezing",
+  "ingredient": {
+    "item": "aether:cold_aercloud"
+  },
+  "result": "aether:blue_aercloud",
+  "experience": 0.1,
+  "cookingtime": 100
+}

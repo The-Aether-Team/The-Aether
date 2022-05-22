@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "aether:potted_berry_bush",
+    "aether:potted_berry_bush_stem",
+    "aether:potted_purple_flower",
+    "aether:potted_white_flower",
+    "aether:potted_skyroot_sapling",
+    "aether:potted_golden_oak_sapling"
+  ]
+}

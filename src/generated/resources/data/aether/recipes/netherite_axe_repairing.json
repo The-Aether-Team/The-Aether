@@ -1,0 +1,8 @@
+{
+  "type": "aether:repairing",
+  "group": "altar_axe_repair",
+  "ingredient": {
+    "item": "minecraft:netherite_axe"
+  },
+  "repairTime": 15000
+}

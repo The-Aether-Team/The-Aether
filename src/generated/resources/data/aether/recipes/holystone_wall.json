@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MMM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "aether:holystone"
+    }
+  },
+  "result": {
+    "item": "aether:holystone_wall",
+    "count": 6
+  }
+}

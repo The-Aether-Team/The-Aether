@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:stripped_skyroot_wood"
+    ]
+  },
+  "criteria": {
+    "has_stripped_skyroot_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:stripped_skyroot_log"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:stripped_skyroot_wood"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_stripped_skyroot_log",
+      "has_the_recipe"
+    ]
+  ]
+}

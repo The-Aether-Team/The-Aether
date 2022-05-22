@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MM",
+    "MM"
+  ],
+  "key": {
+    "M": {
+      "item": "aether:skyroot_log"
+    }
+  },
+  "result": {
+    "item": "aether:skyroot_wood",
+    "count": 3
+  }
+}

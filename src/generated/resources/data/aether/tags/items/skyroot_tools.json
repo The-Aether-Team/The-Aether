@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "aether:skyroot_pickaxe",
+    "aether:skyroot_axe",
+    "aether:skyroot_shovel",
+    "aether:skyroot_hoe"
+  ]
+}

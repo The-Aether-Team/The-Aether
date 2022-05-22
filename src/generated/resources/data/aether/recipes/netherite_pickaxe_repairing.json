@@ -1,0 +1,8 @@
+{
+  "type": "aether:repairing",
+  "group": "altar_pickaxe_repair",
+  "ingredient": {
+    "item": "minecraft:netherite_pickaxe"
+  },
+  "repairTime": 15000
+}

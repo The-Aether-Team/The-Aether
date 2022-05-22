@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:obsidian_from_bucket_freezing"
+    ]
+  },
+  "criteria": {
+    "has_minecraft:lava_bucket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:lava_bucket"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:obsidian_from_bucket_freezing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_minecraft:lava_bucket",
+      "has_the_recipe"
+    ]
+  ]
+}

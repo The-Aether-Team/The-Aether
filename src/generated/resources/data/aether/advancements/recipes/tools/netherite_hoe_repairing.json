@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:netherite_hoe_repairing"
+    ]
+  },
+  "criteria": {
+    "has_minecraft:netherite_hoe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:netherite_hoe"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:netherite_hoe_repairing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_minecraft:netherite_hoe",
+      "has_the_recipe"
+    ]
+  ]
+}

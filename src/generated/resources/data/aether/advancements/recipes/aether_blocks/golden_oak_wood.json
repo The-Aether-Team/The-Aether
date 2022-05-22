@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:golden_oak_wood"
+    ]
+  },
+  "criteria": {
+    "has_golden_oak_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:golden_oak_log"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:golden_oak_wood"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_golden_oak_log",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:bow_repairing"
+    ]
+  },
+  "criteria": {
+    "has_minecraft:bow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:bow"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:bow_repairing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_minecraft:bow",
+      "has_the_recipe"
+    ]
+  ]
+}

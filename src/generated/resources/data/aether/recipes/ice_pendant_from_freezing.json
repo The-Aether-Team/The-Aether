@@ -1,0 +1,9 @@
+{
+  "type": "aether:freezing",
+  "ingredient": {
+    "tag": "aether:freezable_pendants"
+  },
+  "result": "aether:ice_pendant",
+  "experience": 1.0,
+  "cookingtime": 2500
+}

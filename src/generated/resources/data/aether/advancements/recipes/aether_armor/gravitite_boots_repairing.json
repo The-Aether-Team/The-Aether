@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:gravitite_boots_repairing"
+    ]
+  },
+  "criteria": {
+    "has_aether:gravitite_boots": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:gravitite_boots"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:gravitite_boots_repairing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_aether:gravitite_boots",
+      "has_the_recipe"
+    ]
+  ]
+}

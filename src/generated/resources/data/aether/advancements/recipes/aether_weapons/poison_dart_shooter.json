@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:poison_dart_shooter"
+    ]
+  },
+  "criteria": {
+    "has_golden_dart_shooter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:golden_dart_shooter"
+            ]
+          }
+        ]
+      }
+    },
+    "has_poison_bucket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:skyroot_poison_bucket"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:poison_dart_shooter"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_golden_dart_shooter",
+      "has_poison_bucket",
+      "has_the_recipe"
+    ]
+  ]
+}
