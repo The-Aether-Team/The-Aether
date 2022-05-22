@@ -23,7 +23,8 @@
     "client.LocalPlayerMixin",
     "client.MinecraftMixin",
     "client.SplashManagerMixin",
-    "client.TippableArrowRendererMixin"
+    "client.TippableArrowRendererMixin",
+    "client.PanoramaRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -10,11 +10,15 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import com.mojang.math.Vector3f;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
+import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
+import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.Music;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.components.Button;
@@ -22,12 +26,18 @@ import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.client.renderer.CubeMap;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.LevelStorageException;
+import net.minecraft.world.level.storage.LevelStorageSource;
+import net.minecraft.world.level.storage.LevelSummary;
 import net.minecraftforge.internal.BrandingControl;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
 
 public class AetherTitleScreen extends TitleScreen {
 	public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU.get(), 20, 600, true);
@@ -35,6 +45,7 @@ public class AetherTitleScreen extends TitleScreen {
 	private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(new ResourceLocation(Aether.MODID, "textures/gui/title/panorama/panorama")));
 	private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
 	private static final ResourceLocation AETHER_LOGO = new ResourceLocation(Aether.MODID, "textures/gui/title/aether.png");
+
 
 	private AetherNotificationModUpdateScreen modUpdateNotification;
 	private String splash;
@@ -65,7 +76,13 @@ public class AetherTitleScreen extends TitleScreen {
 		}
 		this.modUpdateNotification = new AetherNotificationModUpdateScreen();
 		this.modUpdateNotification.init();
+
+		if (AetherConfig.CLIENT.enable_world_preview.get()) {
+			AetherWorldDisplayHelper.enableWorldPreview(this);
+		}
 	}
+
+
 
 	@Override
 	public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
@@ -74,13 +91,13 @@ public class AetherTitleScreen extends TitleScreen {
 				this.fadeInStart = Util.getMillis();
 			}
 			float f = this.fading ? (float) (Util.getMillis() - this.fadeInStart) / 1000.0F : 1.0F;
-			this.panorama.render(partialTicks, Mth.clamp(f, 0.0F, 1.0F));
+			if (AetherWorldDisplayHelper.loadedLevel == null || !AetherConfig.CLIENT.enable_world_preview.get() || Minecraft.getInstance().level == null) this.panorama.render(partialTicks, Mth.clamp(f, 0.0F, 1.0F));
 			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 			RenderSystem.setShaderTexture(0, PANORAMA_OVERLAY);
 			RenderSystem.enableBlend();
 			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.fading ? (float)Mth.ceil(Mth.clamp(f, 0.0F, 1.0F)) : 1.0F);
-			blit(poseStack, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
+			if (AetherWorldDisplayHelper.loadedLevel == null || !AetherConfig.CLIENT.enable_world_preview.get() || Minecraft.getInstance().level == null) blit(poseStack, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
 			float f1 = this.fading ? Mth.clamp(f - 1.0F, 0.0F, 1.0F) : 1.0F;
 			int l = Mth.ceil(f1 * 255.0F) << 24;
 

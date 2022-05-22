@@ -19,6 +19,7 @@ import net.minecraft.client.gui.screens.Screen;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class GuiListener {
+
 	@SubscribeEvent
 	public static void onGuiOpen(ScreenOpenEvent event) {
 		Screen screen = event.getScreen();
