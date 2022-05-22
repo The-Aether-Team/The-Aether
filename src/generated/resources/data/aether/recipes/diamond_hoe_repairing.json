@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "minecraft:diamond_hoe"
-  },
-  "repairTime": 5500
-}

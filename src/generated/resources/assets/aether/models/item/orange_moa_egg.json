@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "aether:item/miscellaneous/moa_egg",
-    "layer1": "aether:item/miscellaneous/moa_egg_spot"
-  }
-}

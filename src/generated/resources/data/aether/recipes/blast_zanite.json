@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:blasting",
-  "ingredient": {
-    "item": "aether:zanite_ore"
-  },
-  "result": "aether:zanite_gemstone",
-  "experience": 0.7,
-  "cookingtime": 100
-}

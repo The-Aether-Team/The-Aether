@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "minecraft:shield"
-  },
-  "repairTime": 3000
-}

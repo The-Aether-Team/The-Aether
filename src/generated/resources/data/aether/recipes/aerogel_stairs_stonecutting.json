@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "aether:aerogel"
-  },
-  "result": "aether:aerogel_stairs",
-  "count": 1
-}

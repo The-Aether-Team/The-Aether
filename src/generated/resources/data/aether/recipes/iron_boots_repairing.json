@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "minecraft:iron_boots"
-  },
-  "repairTime": 6000
-}

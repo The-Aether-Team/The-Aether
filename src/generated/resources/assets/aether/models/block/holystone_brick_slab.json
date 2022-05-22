@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "side": "aether:block/construction/holystone_bricks",
-    "bottom": "aether:block/construction/holystone_bricks",
-    "top": "aether:block/construction/holystone_bricks"
-  }
-}

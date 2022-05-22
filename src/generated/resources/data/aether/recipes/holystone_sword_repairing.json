@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "aether:holystone_sword"
-  },
-  "repairTime": 550
-}

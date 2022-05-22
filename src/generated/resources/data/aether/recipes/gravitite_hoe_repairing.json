@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "aether:gravitite_hoe"
-  },
-  "repairTime": 5500
-}

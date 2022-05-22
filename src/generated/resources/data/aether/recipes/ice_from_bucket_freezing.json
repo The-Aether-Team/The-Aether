@@ -1,9 +1,0 @@
-{
-  "type": "aether:freezing",
-  "ingredient": {
-    "item": "minecraft:ice"
-  },
-  "result": "minecraft:water_bucket",
-  "experience": 0.0,
-  "cookingtime": 500
-}

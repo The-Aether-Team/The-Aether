@@ -1,9 +1,0 @@
-{
-  "type": "aether:enchanting",
-  "ingredient": {
-    "tag": "aether:accepted_music_discs"
-  },
-  "result": "aether:music_disc_aether_tune",
-  "experience": 0.0,
-  "cookingtime": 2500
-}

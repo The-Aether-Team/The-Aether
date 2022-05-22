@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "aether:zanite_shovel"
-  },
-  "repairTime": 2250
-}

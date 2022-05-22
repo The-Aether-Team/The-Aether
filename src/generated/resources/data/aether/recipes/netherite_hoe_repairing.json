@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "minecraft:netherite_hoe"
-  },
-  "repairTime": 15000
-}

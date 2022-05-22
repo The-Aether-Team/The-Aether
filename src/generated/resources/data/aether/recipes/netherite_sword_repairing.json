@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "minecraft:netherite_sword"
-  },
-  "repairTime": 15000
-}

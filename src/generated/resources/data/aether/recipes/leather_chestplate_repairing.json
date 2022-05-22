@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "minecraft:leather_chestplate"
-  },
-  "repairTime": 550
-}

@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "aether:item/accessories/leather_gloves",
-    "layer1": "aether:item/accessories/leather_gloves_overlay"
-  }
-}

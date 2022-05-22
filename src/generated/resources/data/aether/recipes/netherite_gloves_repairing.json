@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "aether:netherite_gloves"
-  },
-  "repairTime": 30000
-}

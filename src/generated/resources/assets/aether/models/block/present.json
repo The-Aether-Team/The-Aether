@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "side": "aether:block/miscellaneous/present_side",
-    "bottom": "aether:block/miscellaneous/present_top",
-    "top": "aether:block/miscellaneous/present_top"
-  }
-}

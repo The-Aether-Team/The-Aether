@@ -1,9 +1,0 @@
-{
-  "type": "aether:enchanting",
-  "ingredient": {
-    "item": "aether:quicksoil"
-  },
-  "result": "aether:quicksoil_glass",
-  "experience": 0.0,
-  "cookingtime": 250
-}

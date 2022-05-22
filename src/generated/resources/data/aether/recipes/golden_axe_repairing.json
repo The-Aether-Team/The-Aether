@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "minecraft:golden_axe"
-  },
-  "repairTime": 1075
-}

@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "aether:skyroot_pickaxe"
-  },
-  "repairTime": 225
-}

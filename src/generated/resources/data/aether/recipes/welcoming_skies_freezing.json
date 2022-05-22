@@ -1,9 +1,0 @@
-{
-  "type": "aether:freezing",
-  "ingredient": {
-    "item": "aether:music_disc_ascending_dawn"
-  },
-  "result": "aether:music_disc_welcoming_skies",
-  "experience": 0.0,
-  "cookingtime": 800
-}

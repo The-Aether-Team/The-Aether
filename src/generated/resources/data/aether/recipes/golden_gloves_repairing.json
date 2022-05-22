@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "aether:golden_gloves"
-  },
-  "repairTime": 2250
-}

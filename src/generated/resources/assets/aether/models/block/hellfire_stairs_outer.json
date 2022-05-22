@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "side": "aether:block/dungeon/hellfire_stone",
-    "bottom": "aether:block/dungeon/hellfire_stone",
-    "top": "aether:block/dungeon/hellfire_stone"
-  }
-}

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "side": "aether:block/construction/aerogel",
-    "bottom": "aether:block/construction/aerogel",
-    "top": "aether:block/construction/aerogel"
-  }
-}

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab_top",
-  "textures": {
-    "side": "aether:block/dungeon/angelic_stone",
-    "bottom": "aether:block/dungeon/angelic_stone",
-    "top": "aether:block/dungeon/angelic_stone"
-  }
-}

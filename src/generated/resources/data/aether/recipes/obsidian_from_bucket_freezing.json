@@ -1,9 +1,0 @@
-{
-  "type": "aether:freezing",
-  "ingredient": {
-    "item": "minecraft:obsidian"
-  },
-  "result": "minecraft:lava_bucket",
-  "experience": 0.0,
-  "cookingtime": 500
-}

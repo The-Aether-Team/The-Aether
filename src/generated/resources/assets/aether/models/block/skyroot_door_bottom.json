@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_bottom",
-  "textures": {
-    "bottom": "aether:block/construction/skyroot_door_bottom",
-    "top": "aether:block/construction/skyroot_door_top"
-  }
-}

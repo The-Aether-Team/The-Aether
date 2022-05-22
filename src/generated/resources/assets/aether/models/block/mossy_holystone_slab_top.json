@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab_top",
-  "textures": {
-    "side": "aether:block/natural/mossy_holystone",
-    "bottom": "aether:block/natural/mossy_holystone",
-    "top": "aether:block/natural/mossy_holystone"
-  }
-}

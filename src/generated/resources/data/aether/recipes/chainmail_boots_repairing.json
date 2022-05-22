@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "minecraft:chainmail_boots"
-  },
-  "repairTime": 2250
-}

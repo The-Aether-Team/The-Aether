@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "minecraft:stone_axe"
-  },
-  "repairTime": 550
-}

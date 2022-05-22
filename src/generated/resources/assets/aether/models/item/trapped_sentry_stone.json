@@ -1,7 +1,0 @@
-{
-  "parent": "aether:item/cube_all_with_overlay",
-  "textures": {
-    "overlay": "aether:block/dungeon/exclamation",
-    "face": "aether:block/dungeon/sentry_stone"
-  }
-}

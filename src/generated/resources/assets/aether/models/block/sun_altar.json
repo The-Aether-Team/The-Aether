@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "side": "aether:block/utility/sun_altar_side",
-    "bottom": "aether:block/dungeon/hellfire_stone",
-    "top": "aether:block/utility/sun_altar_top"
-  }
-}

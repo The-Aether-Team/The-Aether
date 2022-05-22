@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "minecraft:iron_helmet"
-  },
-  "repairTime": 6000
-}

@@ -1,7 +1,0 @@
-{
-  "type": "aether:repairing",
-  "ingredient": {
-    "item": "minecraft:wooden_pickaxe"
-  },
-  "repairTime": 225
-}

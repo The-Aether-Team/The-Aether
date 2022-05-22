@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "minecraft:player",
-    "minecraft:wither",
-    "minecraft:ender_dragon"
-  ]
-}

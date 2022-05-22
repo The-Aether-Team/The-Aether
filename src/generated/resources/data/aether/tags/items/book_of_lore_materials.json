@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "minecraft:flint",
-    "#forge:dusts/glowstone",
-    "aether:ambrosium_shard"
-  ]
-}
