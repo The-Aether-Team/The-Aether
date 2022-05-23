@@ -10,7 +10,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.DirectoryLock;
-import net.minecraft.world.entity.player.ChatVisiblity;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
@@ -22,8 +21,6 @@ import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AetherWorldDisplayHelper {
     public static Level loadedLevel = null;
@@ -32,7 +29,6 @@ public class AetherWorldDisplayHelper {
     public static GameType loadedGameMode = null;
     public static Vec3 loadedPosition = null;
     public static GameRules loadedGameRules = null;
-    public static ChatVisiblity loadedChatVisibility = null;
 
     public static void enableWorldPreview(Screen screen) {
         Minecraft minecraft = Minecraft.getInstance();
@@ -44,17 +40,20 @@ public class AetherWorldDisplayHelper {
                 try {
                     var summaryList = source.getLevelList();
                     if (summaryList.size() > 0) {
-                        int i = 0;
-                        boolean enabled = true;
-                        LevelSummary summary = summaryList.get(i);
-                        while (summary.isLocked() || summary.isDisabled()) {
-                            i++;
-                            if (i >= summaryList.size()) {
-                                enabled = false;
-                                break;
+                        boolean enabled = false;
+                        LevelSummary summary = null;
+                        long min = Long.MAX_VALUE;
+                        for (int i = 0; i < summaryList.size(); i++) {
+                            LevelSummary s = summaryList.get(i);
+                            if (!s.isLocked() && !s.isDisabled()) {
+                                if (s.getLastPlayed() < min) {
+                                    min = s.getLastPlayed();
+                                    summary = s;
+                                    enabled = true;
+                                }
                             }
-                            summary = summaryList.get(i);
                         }
+
                         if (enabled) {
                             loadedSummary = summary;
                             loadWorld(screen, summary);
@@ -68,13 +67,15 @@ public class AetherWorldDisplayHelper {
     }
 
     public static void fixWorld() {
-        var player = Minecraft.getInstance().getSingleplayerServer().getPlayerList().getPlayers().get(0);
-        player.setGameMode(loadedGameMode);
-        player.setPos(loadedPosition);
-        var world = (ServerLevel)player.getCommandSenderWorld();
-        world.getGameRules().assignFrom(loadedGameRules, player.getServer());
-        Minecraft.getInstance().options.chatVisibility = AetherWorldDisplayHelper.loadedChatVisibility;
-        AetherWorldDisplayHelper.loadedChatVisibility = null;
+        var server = Minecraft.getInstance().getSingleplayerServer();
+        if (server != null) {
+            var player = server.getPlayerList().getPlayers().get(0);
+            player.setGameMode(loadedGameMode);
+            player.setPos(loadedPosition);
+            var world = (ServerLevel)player.getCommandSenderWorld();
+            world.getGameRules().assignFrom(loadedGameRules, player.getServer());
+        }
+
     }
 
     public static void deleteDir(File file) {
@@ -89,9 +90,13 @@ public class AetherWorldDisplayHelper {
 
     public static void stopWorld() {
         try {
+
             fixWorld();
             Minecraft minecraft =  Minecraft.getInstance();
-            minecraft.getSingleplayerServer().halt(false);
+            var server = minecraft.getSingleplayerServer();
+            if (server != null) {
+                server.halt(false);
+            }
         } catch (Exception e) {
 
         }
@@ -151,9 +156,10 @@ public class AetherWorldDisplayHelper {
         Minecraft minecraft = Minecraft.getInstance();
         if (loadedLevel != null) {
             fixWorld();
-            if (minecraft.getSingleplayerServer() != null) {
+            var server = minecraft.getSingleplayerServer();
+            if (server != null) {
                 //if (!minecraft.getSingleplayerServer().isStopped()) {
-                minecraft.getSingleplayerServer().halt(false);
+                server.halt(false);
 
                 minecraft.level = null;
             }
@@ -168,7 +174,7 @@ public class AetherWorldDisplayHelper {
         if (loadedSummary != null) {
             Minecraft minecraft = Minecraft.getInstance();
             minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-            if (minecraft.getLevelSource().levelExists(loadedSummary.getLevelId())) {
+            if (minecraft.getLevelSource().levelExists(loadedSummary.getLevelId()) && minecraft.getSingleplayerServer() != null ) {
                 //this.minecraft.forceSetScreen(new GenericDirtMessageScreen(new TranslatableComponent("selectWorld.data_read")));
                 loadingLevel = false;
                 openSessionLock();
@@ -178,10 +184,6 @@ public class AetherWorldDisplayHelper {
                 var world = (ServerLevel)player.getCommandSenderWorld();
                 world.getGameRules().assignFrom(loadedGameRules, player.getServer());
                 loadedGameRules = null;
-
-                minecraft.options.chatVisibility = AetherWorldDisplayHelper.loadedChatVisibility;
-                AetherWorldDisplayHelper.loadedChatVisibility = null;
-
 
                 minecraft.forceSetScreen(null);
                 loadedLevel = null;

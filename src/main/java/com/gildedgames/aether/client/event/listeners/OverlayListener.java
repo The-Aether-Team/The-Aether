@@ -5,7 +5,6 @@ import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
-import net.minecraft.world.entity.player.ChatVisiblity;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.phys.Vec3;
@@ -33,8 +32,6 @@ public class OverlayListener {
         AetherWorldDisplayHelper.loadedGameMode = mode;
         AetherWorldDisplayHelper.loadedGameRules = new GameRules();
         AetherWorldDisplayHelper.loadedGameRules.assignFrom(gameRules, server);
-        AetherWorldDisplayHelper.loadedChatVisibility = minecraft.options.chatVisibility;
-        minecraft.options.chatVisibility = ChatVisiblity.HIDDEN;
 
         var stack = server.createCommandSourceStack();
         gameRules.getRule(GameRules.RULE_MOBGRIEFING).set(false, server);
@@ -53,8 +50,11 @@ public class OverlayListener {
                 if (minecraft.screen == null) {
                     setScreen();
                 } else {
-                    minecraft.player.setXRot(0);
-                    minecraft.player.setYRot(minecraft.player.getYRot() + 0.25f);
+                    var player = minecraft.player;
+                    if (player != null) {
+                        player.setXRot(0);
+                        player.setYRot(player.getYRot() + 0.25f);
+                    }
 
                     if (minecraft.screen instanceof PauseScreen) {
                         setScreen();

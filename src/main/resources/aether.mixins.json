@@ -25,7 +25,8 @@
     "client.SplashManagerMixin",
     "client.TippableArrowRendererMixin",
     "client.PanoramaRendererMixin",
-    "client.WorldListEntryMixin"
+    "client.WorldListEntryMixin",
+    "client.ChatComponentMixin"
   ],
   "injectors": {
     "defaultRequire": 1
