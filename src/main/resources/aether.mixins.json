@@ -24,7 +24,8 @@
     "client.MinecraftMixin",
     "client.SplashManagerMixin",
     "client.TippableArrowRendererMixin",
-    "client.PanoramaRendererMixin"
+    "client.PanoramaRendererMixin",
+    "client.WorldListEntryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

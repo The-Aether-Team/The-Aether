@@ -1,7 +1,6 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
 import com.gildedgames.aether.core.AetherConfig;
-import com.mojang.math.Vector3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -9,9 +8,9 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayerGameMode;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.DirectoryLock;
+import net.minecraft.world.entity.player.ChatVisiblity;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
@@ -20,11 +19,11 @@ import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.LevelSummary;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
-import org.jetbrains.annotations.NotNull;
 
-import javax.swing.text.html.parser.Entity;
+import java.io.File;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AetherWorldDisplayHelper {
     public static Level loadedLevel = null;
@@ -33,6 +32,7 @@ public class AetherWorldDisplayHelper {
     public static GameType loadedGameMode = null;
     public static Vec3 loadedPosition = null;
     public static GameRules loadedGameRules = null;
+    public static ChatVisiblity loadedChatVisibility = null;
 
     public static void enableWorldPreview(Screen screen) {
         Minecraft minecraft = Minecraft.getInstance();
@@ -68,13 +68,39 @@ public class AetherWorldDisplayHelper {
     }
 
     public static void fixWorld() {
-        Minecraft minecraft = Minecraft.getInstance();
-        var player = minecraft.getSingleplayerServer().getPlayerList().getPlayers().get(0);
+        var player = Minecraft.getInstance().getSingleplayerServer().getPlayerList().getPlayers().get(0);
         player.setGameMode(loadedGameMode);
         player.setPos(loadedPosition);
         var world = (ServerLevel)player.getCommandSenderWorld();
         world.getGameRules().assignFrom(loadedGameRules, player.getServer());
+        Minecraft.getInstance().options.chatVisibility = AetherWorldDisplayHelper.loadedChatVisibility;
+        AetherWorldDisplayHelper.loadedChatVisibility = null;
     }
+
+    public static void deleteDir(File file) {
+        if (file.isDirectory()) {
+            var list = file.listFiles();
+            for (var f : list) {
+                deleteDir(f);
+            }
+        }
+        file.delete();
+    }
+
+    public static void stopWorld() {
+        try {
+            fixWorld();
+            Minecraft minecraft =  Minecraft.getInstance();
+            minecraft.getSingleplayerServer().halt(false);
+        } catch (Exception e) {
+
+        }
+        Minecraft.getInstance().level = null;
+        loadingLevel = false;
+        loadedLevel = null;
+        loadedSummary = null;
+    }
+
 
     public static LevelStorageSource.LevelStorageAccess getStorageAccess() {
         Minecraft minecraft = Minecraft.getInstance();
@@ -112,7 +138,7 @@ public class AetherWorldDisplayHelper {
 
     public static void loadWorld(Screen screen, LevelSummary summary) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+
         if (minecraft.getLevelSource().levelExists(summary.getLevelId())) {
             minecraft.forceSetScreen(new GenericDirtMessageScreen(new TranslatableComponent("selectWorld.data_read")));
             loadingLevel = true;
@@ -124,16 +150,18 @@ public class AetherWorldDisplayHelper {
     public static void disableWorldPreview(Screen screen) {
         Minecraft minecraft = Minecraft.getInstance();
         if (loadedLevel != null) {
+            fixWorld();
             if (minecraft.getSingleplayerServer() != null) {
                 //if (!minecraft.getSingleplayerServer().isStopped()) {
                 minecraft.getSingleplayerServer().halt(false);
 
                 minecraft.level = null;
             }
+            loadingLevel = false;
+            loadedLevel = null;
+            loadedSummary = null;
         }
-        loadingLevel = false;
-        loadedLevel = null;
-        loadedSummary = null;
+
     }
 
     public static void quickLoad() {
@@ -150,6 +178,11 @@ public class AetherWorldDisplayHelper {
                 var world = (ServerLevel)player.getCommandSenderWorld();
                 world.getGameRules().assignFrom(loadedGameRules, player.getServer());
                 loadedGameRules = null;
+
+                minecraft.options.chatVisibility = AetherWorldDisplayHelper.loadedChatVisibility;
+                AetherWorldDisplayHelper.loadedChatVisibility = null;
+
+
                 minecraft.forceSetScreen(null);
                 loadedLevel = null;
                 loadedSummary = null;

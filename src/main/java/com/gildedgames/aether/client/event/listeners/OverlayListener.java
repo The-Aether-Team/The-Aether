@@ -1,16 +1,11 @@
 package com.gildedgames.aether.client.event.listeners;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
-import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.commands.CommandSource;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayerGameMode;
+import net.minecraft.world.entity.player.ChatVisiblity;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.phys.Vec3;
@@ -29,7 +24,6 @@ public class OverlayListener {
         AetherWorldDisplayHelper.loadedLevel = Minecraft.getInstance().level;
 
         var player = minecraft.getSingleplayerServer().getPlayerList().getPlayers().get(0);
-        var world = (ServerLevel)player.getCommandSenderWorld();
         var server = minecraft.getSingleplayerServer();
         var gameRules = server.getGameRules();
 
@@ -39,11 +33,13 @@ public class OverlayListener {
         AetherWorldDisplayHelper.loadedGameMode = mode;
         AetherWorldDisplayHelper.loadedGameRules = new GameRules();
         AetherWorldDisplayHelper.loadedGameRules.assignFrom(gameRules, server);
+        AetherWorldDisplayHelper.loadedChatVisibility = minecraft.options.chatVisibility;
+        minecraft.options.chatVisibility = ChatVisiblity.HIDDEN;
 
         var stack = server.createCommandSourceStack();
-        server.getCommands().performCommand(stack, "/gamerule mobGriefing false");
-        server.getCommands().performCommand(stack, "/gamerule doMobSpawning false");
-        server.getCommands().performCommand(stack, "/gamerule randomTickSpeed 0");
+        gameRules.getRule(GameRules.RULE_MOBGRIEFING).set(false, server);
+        gameRules.getRule(GameRules.RULE_DOMOBSPAWNING).set(false, server);
+        gameRules.getRule(GameRules.RULE_RANDOMTICKING).set(0, server);
 
         AetherWorldDisplayHelper.deleteSessionLock();
         minecraft.forceSetScreen(GuiHooks.aether_menu);
@@ -58,7 +54,7 @@ public class OverlayListener {
                     setScreen();
                 } else {
                     minecraft.player.setXRot(0);
-                    minecraft.player.setYRot(minecraft.player.getYRot() + 0.5f);
+                    minecraft.player.setYRot(minecraft.player.getYRot() + 0.25f);
 
                     if (minecraft.screen instanceof PauseScreen) {
                         setScreen();
