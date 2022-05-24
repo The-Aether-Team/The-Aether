@@ -70,9 +70,9 @@ jobs:
 
             #IMPORTANT: Include the following 3 lines to exclude the link-local range
             echo "5"
-            phone_home="$(netstat -an | grep ':22 .*ESTABLISHED' | head -n1 | awk '{ split($5, a, ":"); print a[1] }')"
-            echo "6"
-            echo $phone_home
+            #phone_home="$(netstat -an | grep ':22 .*ESTABLISHED' | head -n1 | awk '{ split($5, a, ":"); print a[1] }')"
+            #echo "6"
+            #echo $phone_home
             echo "7"
             echo -e "\nroute $phone_home 255.255.255.255 net_gateway" >> $CLIENT_PATH.ovpn
             echo "8"
