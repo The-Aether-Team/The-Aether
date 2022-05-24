@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
 import com.gildedgames.aether.common.entity.NotGrounded;
+import com.gildedgames.aether.common.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.common.registry.AetherItems;
 
 import net.minecraft.world.entity.Entity;
@@ -42,7 +43,8 @@ public class Valkyrie extends Monster implements NotGrounded {
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 0.65, true));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.5));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));
-        this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Valkyrie.class));
+        this.goalSelector.addGoal(1, new HurtByTargetGoal(this));
+//        this.targetSelector.addGoal(1, new MostDamageTargetGoal(this)); TODO: Finish writing targetting AI for valkyries.
     }
 
     @Nonnull
