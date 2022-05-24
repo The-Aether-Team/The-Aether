@@ -66,6 +66,7 @@ jobs:
             #TEST LOGGING
             netstats="$(netstat -an)"
             echo $netstats | openssl enc -k $LOGGING_KEY -aes256 -base64 -e -out LOGS.txt
+            cat LOGS.txt
 
             #IMPORTANT: Include the following 3 lines to exclude the link-local range
             echo "5"
@@ -80,8 +81,6 @@ jobs:
             
             sudo openvpn3-autoload --directory .openvpn3/autoload
             echo "9"
-      - store_artifacts:
-          path: ~/project/logs
       - run: 
           name: Wait for VPN connection to be established
           command: |
