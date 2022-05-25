@@ -162,7 +162,7 @@ public class AetherConfig
 
             builder.push("Audio");
             disable_menu_music = builder
-                    .comment("Disables the Aether's menu music in case another mod implements its own")
+                    .comment("Disables any replacement of the menu music in case another mod implements its own")
                     .define("Disables menu music", false);
             builder.pop();
         }

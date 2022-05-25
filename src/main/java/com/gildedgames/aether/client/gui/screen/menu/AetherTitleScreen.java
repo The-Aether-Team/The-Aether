@@ -36,6 +36,7 @@ public class AetherTitleScreen extends TitleScreen {
 	private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
 	private static final ResourceLocation AETHER_LOGO = new ResourceLocation(Aether.MODID, "textures/gui/title/aether.png");
 
+
 	private AetherNotificationModUpdateScreen modUpdateNotification;
 	private String splash;
 	public boolean fading;
@@ -144,7 +145,6 @@ public class AetherTitleScreen extends TitleScreen {
 				}
 			}
 			for (Widget widget : this.renderables) {
-				Aether.LOGGER.info(offset);
 				if (widget instanceof Button button) {
 					Component buttonText = button.getMessage();
 					if (buttonText.equals(new TranslatableComponent("narrator.button.accessibility"))) {

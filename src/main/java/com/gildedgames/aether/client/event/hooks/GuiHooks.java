@@ -5,6 +5,7 @@ import com.gildedgames.aether.client.gui.button.AccessoryButton;
 import com.gildedgames.aether.client.gui.button.DynamicMenuButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
+import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
 import com.gildedgames.aether.client.registry.AetherKeys;
 import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import com.gildedgames.aether.core.AetherConfig;
@@ -33,11 +34,12 @@ public class GuiHooks {
     public static ResourceLocation OLD_LOCATION;
     public static ResourceLocation OLD_REALMS_LOCATION;
 
-    private static AetherTitleScreen aether_menu = null;
+    public static AetherTitleScreen aether_menu = null;
     private static TitleScreen default_menu = null;
     private static boolean shouldAddButton = true;
     private static boolean generateTrivia = true;
     private static Screen lastScreen = null;
+
 
     public static void drawSentryBackground(Screen screen) {
         if (screen instanceof TitleScreen) {
@@ -61,11 +63,26 @@ public class GuiHooks {
         }
     }
 
+    public static void setupWorldPreview(Screen screen) {
+        if (screen instanceof TitleScreen && AetherConfig.CLIENT.enable_world_preview.get()) {
+            AetherWorldDisplayHelper.enableWorldPreview();
+        }
+    }
+
     public static AetherTitleScreen openAetherMenu(Screen screen) {
         if (screen instanceof TitleScreen titleScreen) {
             setupMenus(titleScreen);
             if (AetherConfig.CLIENT.enable_aether_menu.get()) {
                 return aether_menu;
+            }
+        }
+        return null;
+    }
+
+    public static GenericDirtMessageScreen openBufferScreen(Screen screen) {
+        if (screen instanceof TitleScreen) {
+            if (AetherConfig.CLIENT.enable_world_preview.get() && AetherWorldDisplayHelper.loadedLevel == null) {
+                return new GenericDirtMessageScreen(new TextComponent(""));
             }
         }
         return null;
@@ -88,6 +105,7 @@ public class GuiHooks {
                     (pressed) -> {
                         AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
                         AetherConfig.CLIENT.enable_world_preview.save();
+                        AetherWorldDisplayHelper.toggleWorldPreview(AetherConfig.CLIENT.enable_world_preview.get());
                     },
                     (button, matrixStack, x, y) ->
                             screen.renderTooltip(matrixStack, new TranslatableComponent("gui.aether.menu.preview"), x + 4, y + 12));
@@ -117,9 +135,7 @@ public class GuiHooks {
     public static Button setupQuickLoadButton(Screen screen) {
         if (screen instanceof TitleScreen) {
             DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, new TextComponent("Q"),
-                    (pressed) -> {
-                        //TODO
-                    },
+                    (pressed) -> AetherWorldDisplayHelper.quickLoad(),
                     (button, matrixStack, x, y) ->
                             screen.renderTooltip(matrixStack, new TranslatableComponent("gui.aether.menu.load"), x + 4, y + 12));
             dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button, AetherConfig.CLIENT.enable_aether_menu_button);
@@ -129,7 +145,7 @@ public class GuiHooks {
         return null;
     }
 
-    private static TitleScreen getMenu() {
+    public static TitleScreen getMenu() {
         if (AetherConfig.CLIENT.enable_aether_menu.get()) {
             aether_menu.setSplash(default_menu.splash);
             aether_menu.fading = true;
