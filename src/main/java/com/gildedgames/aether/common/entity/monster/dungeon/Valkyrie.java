@@ -7,11 +7,12 @@ import com.gildedgames.aether.common.registry.AetherItems;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.ExplosionParticlePacket;
-import com.gildedgames.aether.core.util.EntityUtil;
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -19,6 +20,8 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -30,20 +33,26 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.UUID;
 
 /**
  * This class holds the implementation for valkyries. Valkyries are neutral mobs that patrol the silver dungeon.
  * They won't attack unless provoked. They can teleport within the temple. They respond to the player through chat
  * messages and drop a victory medal upon their defeat.
  */
-public class Valkyrie extends Monster implements NotGrounded {
+public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
     /** Calculates wing angles. */
     public float sinage;
     /** Increments every tick to decide when the valkyries are ready to teleport. */
     private int teleportTimer;
+
+    private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
+    private int remainingPersistentAngerTime;
+    @Nullable
+    private UUID persistentAngerTarget;
 
     public Valkyrie(EntityType<? extends Valkyrie> type, Level worldIn) {
         super(type, worldIn);
@@ -56,8 +65,10 @@ public class Valkyrie extends Monster implements NotGrounded {
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 0.65, true));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.5));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));
-        this.goalSelector.addGoal(1, new HurtByTargetGoal(this));
 //        this.targetSelector.addGoal(1, new MostDamageTargetGoal(this)); TODO: Finish writing targetting AI for valkyries.
+        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
+        this.targetSelector.addGoal(4, new ResetUniversalAngerTargetGoal<>(this, false));
     }
 
     @Nonnull
@@ -199,6 +210,32 @@ public class Valkyrie extends Monster implements NotGrounded {
             this.spawnExplosionParticles();
         }
         return flag;
+    }
+
+    @Override
+    public int getRemainingPersistentAngerTime() {
+        return this.remainingPersistentAngerTime;
+    }
+
+    @Override
+    public void setRemainingPersistentAngerTime(int pTime) {
+        this.remainingPersistentAngerTime = pTime;
+    }
+
+    @Nullable
+    @Override
+    public UUID getPersistentAngerTarget() {
+        return this.persistentAngerTarget;
+    }
+
+    @Override
+    public void setPersistentAngerTarget(@Nullable UUID pTarget) {
+        this.persistentAngerTarget = pTarget;
+    }
+
+    @Override
+    public void startPersistentAngerTimer() {
+        this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
     }
 
     /**
