@@ -11,9 +11,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PanoramaRenderer.class)
 public class PanoramaRendererMixin {
-    @Inject(at=@At(value = "HEAD"), method = "render", cancellable = true)
-    public void render(float pDeltaT, float pAlpha, CallbackInfo info) {
-        if (AetherWorldDisplayHelper.loadedLevel != null && AetherConfig.CLIENT.enable_world_preview.get() && Minecraft.getInstance().level != null) {
+    @Inject(at = @At(value = "HEAD"), method = "render", cancellable = true)
+    public void render(float deltaTick, float alpha, CallbackInfo info) {
+        if (AetherConfig.CLIENT.enable_world_preview.get() && Minecraft.getInstance().level != null && AetherWorldDisplayHelper.loadedLevel != null) {
             info.cancel();
         }
     }

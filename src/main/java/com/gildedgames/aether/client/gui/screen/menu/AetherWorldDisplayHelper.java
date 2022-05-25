@@ -1,13 +1,16 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
+import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.server.IntegratedServer;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.DirectoryLock;
 import net.minecraft.world.level.GameRules;
@@ -17,46 +20,50 @@ import net.minecraft.world.level.storage.LevelStorageException;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.LevelSummary;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
-import java.io.File;
-import java.lang.reflect.Field;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 public class AetherWorldDisplayHelper {
     public static Level loadedLevel = null;
     public static LevelSummary loadedSummary = null;
-    public static boolean loadingLevel = false;
+
     public static GameType loadedGameMode = null;
     public static Vec3 loadedPosition = null;
     public static GameRules loadedGameRules = null;
 
-    public static void enableWorldPreview(Screen screen) {
+    public static void toggleWorldPreview(boolean config) {
+        if (config) {
+            enableWorldPreview();
+        } else {
+            if (disableWorldPreview(new GenericDirtMessageScreen(new TextComponent("")))) {
+                Minecraft.getInstance().forceSetScreen(GuiHooks.getMenu());
+            }
+        }
+    }
+
+    public static void enableWorldPreview() {
         Minecraft minecraft = Minecraft.getInstance();
         if (AetherConfig.CLIENT.enable_world_preview.get()) {
             if (loadedLevel == null) {
-
                 LevelStorageSource source = minecraft.getLevelSource();
-
                 try {
-                    var summaryList = source.getLevelList();
+                    List<LevelSummary> summaryList = source.getLevelList();
+                    Collections.sort(summaryList);
                     if (summaryList.size() > 0) {
-                        boolean enabled = false;
                         LevelSummary summary = null;
-                        long min = Long.MAX_VALUE;
-                        for (int i = 0; i < summaryList.size(); i++) {
+
+                        for (int i = summaryList.size() - 1; i >= 0; i--) {
                             LevelSummary s = summaryList.get(i);
                             if (!s.isLocked() && !s.isDisabled()) {
-                                if (s.getLastPlayed() < min) {
-                                    min = s.getLastPlayed();
-                                    summary = s;
-                                    enabled = true;
-                                }
+                                summary = s;
                             }
                         }
 
-                        if (enabled) {
+                        if (summary != null) {
                             loadedSummary = summary;
-                            loadWorld(screen, summary);
+                            loadWorld(summary);
                         }
                     }
                 } catch (LevelStorageException e) {
@@ -66,108 +73,48 @@ public class AetherWorldDisplayHelper {
         }
     }
 
-    public static void fixWorld() {
-        var server = Minecraft.getInstance().getSingleplayerServer();
-        if (server != null) {
-            var player = server.getPlayerList().getPlayers().get(0);
-            player.setGameMode(loadedGameMode);
-            player.setPos(loadedPosition);
-            var world = (ServerLevel)player.getCommandSenderWorld();
-            world.getGameRules().assignFrom(loadedGameRules, player.getServer());
-        }
-
-    }
-
-    public static void deleteDir(File file) {
-        if (file.isDirectory()) {
-            var list = file.listFiles();
-            for (var f : list) {
-                deleteDir(f);
-            }
-        }
-        file.delete();
-    }
-
-    public static void stopWorld() {
-        try {
-
-            fixWorld();
-            Minecraft minecraft =  Minecraft.getInstance();
-            var server = minecraft.getSingleplayerServer();
-            if (server != null) {
-                server.halt(false);
-            }
-        } catch (Exception e) {
-
-        }
-        Minecraft.getInstance().level = null;
-        loadingLevel = false;
-        loadedLevel = null;
-        loadedSummary = null;
-    }
-
-
-    public static LevelStorageSource.LevelStorageAccess getStorageAccess() {
+    public static boolean disableWorldPreview(Screen screen) {
         Minecraft minecraft = Minecraft.getInstance();
-        Field field = ObfuscationReflectionHelper.findField(MinecraftServer.class, "storageSource");
-        try {
-            return (LevelStorageSource.LevelStorageAccess)field.get(minecraft.getSingleplayerServer());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(1);
+        if (loadedLevel != null) {
+            AetherConfig.CLIENT.enable_world_preview.set(false);
+            AetherConfig.CLIENT.enable_world_preview.save();
+            stopWorld(minecraft, screen);
+            return true;
         }
-        return null;
+        return false;
     }
 
-    public static void deleteSessionLock() {
-
-        try {
-            getStorageAccess().close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void openSessionLock() {
+    public static void loadWorld(LevelSummary summary) {
         Minecraft minecraft = Minecraft.getInstance();
-
-        try {
-            var access = getStorageAccess();
-            Field lockField = ObfuscationReflectionHelper.findField(LevelStorageSource.LevelStorageAccess.class, "lock");
-            lockField.set(access, DirectoryLock.create(access.getWorldDir()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void loadWorld(Screen screen, LevelSummary summary) {
-        Minecraft minecraft = Minecraft.getInstance();
-
         if (minecraft.getLevelSource().levelExists(summary.getLevelId())) {
             minecraft.forceSetScreen(new GenericDirtMessageScreen(new TranslatableComponent("selectWorld.data_read")));
-            loadingLevel = true;
             loadedSummary = summary;
             minecraft.loadLevel(summary.getLevelId());
         }
     }
 
-    public static void disableWorldPreview(Screen screen) {
+    public static void setupLevelForDisplay() {
         Minecraft minecraft = Minecraft.getInstance();
-        if (loadedLevel != null) {
-            fixWorld();
-            var server = minecraft.getSingleplayerServer();
-            if (server != null) {
-                //if (!minecraft.getSingleplayerServer().isStopped()) {
-                server.halt(false);
+        IntegratedServer server = minecraft.getSingleplayerServer();
+        if (server != null) {
+            loadedLevel = minecraft.level;
 
-                minecraft.level = null;
-            }
-            loadingLevel = false;
-            loadedLevel = null;
-            loadedSummary = null;
+            ServerPlayer serverPlayer = minecraft.getSingleplayerServer().getPlayerList().getPlayers().get(0);
+            GameRules gameRules = server.getGameRules();
+
+            loadedGameMode = serverPlayer.gameMode.getGameModeForPlayer();
+            loadedGameRules = new GameRules();
+            loadedGameRules.assignFrom(gameRules, server);
+            loadedPosition = serverPlayer.position();
+
+            serverPlayer.setGameMode(GameType.SPECTATOR);
+            gameRules.getRule(GameRules.RULE_MOBGRIEFING).set(false, server);
+            gameRules.getRule(GameRules.RULE_DOMOBSPAWNING).set(false, server);
+            gameRules.getRule(GameRules.RULE_RANDOMTICKING).set(0, server);
+            serverPlayer.setPos(loadedPosition);
+
+            deleteSessionLock();
         }
-
     }
 
     public static void quickLoad() {
@@ -175,20 +122,85 @@ public class AetherWorldDisplayHelper {
             Minecraft minecraft = Minecraft.getInstance();
             minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
             if (minecraft.getLevelSource().levelExists(loadedSummary.getLevelId()) && minecraft.getSingleplayerServer() != null ) {
-                //this.minecraft.forceSetScreen(new GenericDirtMessageScreen(new TranslatableComponent("selectWorld.data_read")));
-                loadingLevel = false;
                 openSessionLock();
-                var player = minecraft.getSingleplayerServer().getPlayerList().getPlayers().get(0);
-                player.setGameMode(loadedGameMode);
-                player.setPos(loadedPosition);
-                var world = (ServerLevel)player.getCommandSenderWorld();
-                world.getGameRules().assignFrom(loadedGameRules, player.getServer());
-                loadedGameRules = null;
-
-                minecraft.forceSetScreen(null);
+                ServerPlayer player = minecraft.getSingleplayerServer().getPlayerList().getPlayers().get(0);
+                ServerLevel level = (ServerLevel) player.getCommandSenderWorld();
+                resetValues(player, level);
                 loadedLevel = null;
                 loadedSummary = null;
+                minecraft.forceSetScreen(null);
             }
+        }
+    }
+
+    public static void stopWorld(Minecraft minecraft, Screen screen) {
+        fixWorld();
+        IntegratedServer server = minecraft.getSingleplayerServer();
+        if (server != null) {
+            server.halt(false);
+        }
+        if (screen != null) {
+            minecraft.clearLevel(screen);
+        } else {
+            minecraft.clearLevel();
+        }
+    }
+
+    public static void fixWorld() {
+        loadedLevel = null;
+        loadedSummary = null;
+        IntegratedServer server = Minecraft.getInstance().getSingleplayerServer();
+        if (server != null) {
+            ServerPlayer player = server.getPlayerList().getPlayers().get(0);
+            ServerLevel level = (ServerLevel) player.getCommandSenderWorld();
+            resetValues(player, level);
+        }
+    }
+
+    public static void resetValues(ServerPlayer player, ServerLevel level) {
+        if (loadedGameMode != null) {
+            player.setGameMode(loadedGameMode);
+            loadedGameMode = null;
+        }
+        if (loadedGameRules != null) {
+            level.getGameRules().assignFrom(loadedGameRules, player.getServer());
+            loadedGameRules = null;
+        }
+        if (loadedPosition != null) {
+            player.setPos(loadedPosition);
+            loadedPosition = null;
+        }
+    }
+
+    public static void deleteSessionLock() {
+        try {
+            LevelStorageSource.LevelStorageAccess storageAccess = getStorageAccess();
+            if (storageAccess != null) {
+                storageAccess.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void openSessionLock() {
+        try {
+            LevelStorageSource.LevelStorageAccess storageAccess = getStorageAccess();
+            if (storageAccess != null) {
+                storageAccess.lock = DirectoryLock.create(storageAccess.getWorldDir());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static LevelStorageSource.LevelStorageAccess getStorageAccess() {
+        Minecraft minecraft = Minecraft.getInstance();
+        IntegratedServer server = minecraft.getSingleplayerServer();
+        if (server != null) {
+            return server.storageSource;
+        } else {
+            return null;
         }
     }
 }

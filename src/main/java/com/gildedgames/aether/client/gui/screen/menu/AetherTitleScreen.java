@@ -66,13 +66,7 @@ public class AetherTitleScreen extends TitleScreen {
 		}
 		this.modUpdateNotification = new AetherNotificationModUpdateScreen();
 		this.modUpdateNotification.init();
-
-		if (AetherConfig.CLIENT.enable_world_preview.get()) {
-			AetherWorldDisplayHelper.enableWorldPreview(this);
-		}
 	}
-
-
 
 	@Override
 	public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
@@ -151,7 +145,6 @@ public class AetherTitleScreen extends TitleScreen {
 				}
 			}
 			for (Widget widget : this.renderables) {
-				Aether.LOGGER.info(offset);
 				if (widget instanceof Button button) {
 					Component buttonText = button.getMessage();
 					if (buttonText.equals(new TranslatableComponent("narrator.button.accessibility"))) {

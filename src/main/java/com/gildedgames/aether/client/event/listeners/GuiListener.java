@@ -7,6 +7,7 @@ import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
@@ -23,9 +24,14 @@ public class GuiListener {
 	public static void onGuiOpen(ScreenOpenEvent event) {
 		Screen screen = event.getScreen();
 		GuiHooks.drawSentryBackground(screen);
+		GuiHooks.setupWorldPreview(screen);
 		AetherTitleScreen aetherMainMenuScreen = GuiHooks.openAetherMenu(screen);
 		if (aetherMainMenuScreen != null) {
 			event.setScreen(aetherMainMenuScreen);
+		}
+		GenericDirtMessageScreen bufferScreen = GuiHooks.openBufferScreen(screen);
+		if (bufferScreen != null) {
+			event.setScreen(bufferScreen);
 		}
 	}
 
