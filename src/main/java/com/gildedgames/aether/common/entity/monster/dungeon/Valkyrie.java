@@ -83,6 +83,14 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        if (this.level.isClientSide) {
+            this.handleWingSinage();
+        }
+    }
+
+    @Override
     public void customServerAiStep() {
         super.customServerAiStep();
         this.teleportTimer++;
@@ -172,6 +180,25 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
         }
         this.spawnExplosionParticles();
         super.die(pCause);
+    }
+
+    /**
+     * Sets the position of the wings for rendering.
+     */
+    private void handleWingSinage() {
+        if (!this.onGround)
+        {
+            this.sinage += 0.75F;
+        }
+        else
+        {
+            this.sinage += 0.15F;
+        }
+
+        if (this.sinage > 3.141593F * 2F)
+        {
+            this.sinage -= (3.141593F * 2F);
+        }
     }
 
     /**
