@@ -1,18 +1,17 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
 import com.gildedgames.aether.common.entity.NotGrounded;
+import com.gildedgames.aether.common.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.event.events.ValkyrieTeleportEvent;
 import com.gildedgames.aether.common.registry.AetherItems;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.ExplosionParticlePacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -54,6 +53,8 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
     @Nullable
     private UUID persistentAngerTarget;
 
+    MostDamageTargetGoal mostDamageTargetGoal;
+
     public Valkyrie(EntityType<? extends Valkyrie> type, Level worldIn) {
         super(type, worldIn);
         this.teleportTimer = this.getRandom().nextInt(200);
@@ -65,7 +66,8 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 0.65, true));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.5));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));
-//        this.targetSelector.addGoal(1, new MostDamageTargetGoal(this)); TODO: Finish writing targetting AI for valkyries.
+        this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
+        this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
         this.targetSelector.addGoal(4, new ResetUniversalAngerTargetGoal<>(this, false));
@@ -111,8 +113,8 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
         ItemStack item = player.getItemInHand(hand);
         if (this.getTarget() == null) {
             this.lookAt(player, 180.0F, 180.0F);
-            String translationId;
             if (!this.level.isClientSide) {
+                String translationId;
                 if (item.getItem() == AetherItems.VICTORY_MEDAL.get()) {
                     if (item.getCount() >= 10) {
                         translationId = "gui.aether.valkyrie.dialog.medal.1";
@@ -137,12 +139,13 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
     @Override
     public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
         boolean result = super.hurt(source, pDamageAmount);
-        if (source.getEntity() instanceof Player player) {
-            if (this.getTarget() == null && level.getDifficulty() != Difficulty.PEACEFUL) {
-                if (!this.level.isClientSide) {
+        if (!this.level.isClientSide && source.getEntity() instanceof LivingEntity living) {
+            if (source.getEntity() instanceof Player player) {
+                if (this.getTarget() == null && level.getDifficulty() != Difficulty.PEACEFUL) {
                     chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.attack." + (char) (random.nextInt(3) + '1')));
                 }
             }
+            this.mostDamageTargetGoal.addAggro(living, pDamageAmount);
         }
         return result;
     }
@@ -153,7 +156,7 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
     @Override
     public boolean doHurtTarget(@Nonnull Entity pEntity) {
         boolean result = super.doHurtTarget(pEntity);
-        if (pEntity instanceof Player player && !this.level.isClientSide && player.getHealth() <= 0) {
+        if (pEntity instanceof ServerPlayer player && player.getHealth() <= 0) {
             this.chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.playerdeath." + (char) (random.nextInt(3) + '1')));
         }
         return result;
@@ -202,7 +205,9 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
             blockpos$mutableblockpos.move(Direction.DOWN);
         }
 
-        BlockState blockstate = this.level.getBlockState(blockpos$mutableblockpos);*/
+        BlockState blockstate = this.level.getBlockState(blockpos$mutableblockpos);
+        boolean flag = blockstate.is(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON);*/
+        //TODO: Lock teleporting to tagged blocks.
         ValkyrieTeleportEvent event = AetherEventDispatch.onValkyrieTeleport(this, pX, pY, pZ);
         if (event.isCanceled()) return false;
         boolean flag = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), false);
