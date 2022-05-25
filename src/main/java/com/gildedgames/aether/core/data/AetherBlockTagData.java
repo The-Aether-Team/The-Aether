@@ -96,6 +96,10 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS
         );
+        tag(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON).add(
+                AetherBlocks.ANGELIC_STONE.get(),
+                AetherBlocks.LIGHT_ANGELIC_STONE.get()
+        );
 
         //vanilla
         tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).addTag(AetherTags.Blocks.DUNGEON_BLOCKS);
