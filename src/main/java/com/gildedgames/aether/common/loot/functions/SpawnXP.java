@@ -29,7 +29,7 @@ public class SpawnXP extends LootItemConditionalFunction
             while(randomNumber > 0) {
                 int i = ExperienceOrb.getExperienceValue(randomNumber);
                 randomNumber -= i;
-                world.addFreshEntity(new ExperienceOrb(world, vector3d.x() + 0.5D, vector3d.y() + 0.5D, vector3d.z() + 0.5D, i));
+                world.addFreshEntity(new ExperienceOrb(world, vector3d.x(), vector3d.y(), vector3d.z(), i));
             }
         }
         return stack;
