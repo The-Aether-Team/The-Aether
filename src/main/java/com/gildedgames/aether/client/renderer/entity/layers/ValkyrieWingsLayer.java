@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
@@ -32,9 +33,9 @@ public class ValkyrieWingsLayer extends RenderLayer<Valkyrie, ValkyrieModel> {
     }
 
     public void setupWingRotation(@Nonnull Valkyrie entity, float sinage) {
-        this.wings.rightWing.yRot = -((float) Math.sin(sinage) / 6.0F);
-        this.wings.rightWing.zRot = -((float) Math.cos(sinage) / (entity.isOnGround() ? 8.0F : 3.0F));
-        this.wings.leftWing.yRot = (float) Math.sin(sinage) / 6.0F;
-        this.wings.leftWing.zRot = (float) Math.cos(sinage) / (entity.isOnGround() ? 8.0F : 3.0F);
+        this.wings.leftWing.yRot = Mth.sin(sinage) / 6.0F - 0.2F;
+        this.wings.leftWing.zRot = Mth.cos(sinage) / (entity.isEntityOnGround() ? 8.0F : 3.0F) - 0.125F;
+        this.wings.rightWing.yRot = -(Mth.sin(sinage) / 6.0F) + 0.2F;
+        this.wings.rightWing.zRot = -(Mth.cos(sinage) / (entity.isEntityOnGround() ? 8.0F : 3.0F)) + 0.125F;
     }
 }

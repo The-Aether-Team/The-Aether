@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.entity.NotGrounded;
 import com.gildedgames.aether.common.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.event.events.ValkyrieTeleportEvent;
@@ -8,6 +9,9 @@ import com.gildedgames.aether.common.registry.AetherItems;
 
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.ExplosionParticlePacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.TimeUtil;
@@ -44,7 +48,8 @@ import java.util.UUID;
  * They won't attack unless provoked. They can teleport within the temple. They respond to the player through chat
  * messages and drop a victory medal upon their defeat.
  */
-public class Valkyrie extends Monster implements NeutralMob {
+public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
+    private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(Valkyrie.class, EntityDataSerializers.BOOLEAN);
     /** Calculates wing angles. */
     public float sinage;
     /** Increments every tick to decide when the valkyries are ready to teleport. */
@@ -64,6 +69,12 @@ public class Valkyrie extends Monster implements NeutralMob {
     public Valkyrie(EntityType<? extends Valkyrie> type, Level worldIn) {
         super(type, worldIn);
         this.teleportTimer = this.getRandom().nextInt(200);
+    }
+
+    @Override
+    public void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_ENTITY_ON_GROUND_ID, true);
     }
 
     @Override
@@ -95,6 +106,7 @@ public class Valkyrie extends Monster implements NeutralMob {
         if (this.level.isClientSide) {
             this.handleWingSinage();
         }
+        this.setEntityOnGround(this.isOnGround());
     }
 
     /**
@@ -108,6 +120,7 @@ public class Valkyrie extends Monster implements NeutralMob {
             double z = this.getTarget().getZ() - this.getZ();
             double angle = Math.atan2(x, z);
             this.setDeltaMovement(Math.sin(angle) * 0.25, this.getDeltaMovement().y, Math.cos(angle) * 0.25);
+            this.setYRot((float) angle * (180F / (float) Math.PI));
         }
         if (!this.onGround && Math.abs(this.getDeltaMovement().y - this.motionYo) > 0.07D && Math.abs(this.getDeltaMovement().y - this.motionYo) < 0.09D) {
             double fallSpeed;
@@ -124,6 +137,9 @@ public class Valkyrie extends Monster implements NeutralMob {
         }
     }
 
+    /**
+     * Increments the teleport timer.
+     */
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
@@ -216,17 +232,12 @@ public class Valkyrie extends Monster implements NeutralMob {
      * Sets the position of the wings for rendering.
      */
     private void handleWingSinage() {
-        if (!this.onGround)
-        {
+        if (!this.onGround) {
             this.sinage += 0.75F;
-        }
-        else
-        {
+        } else {
             this.sinage += 0.15F;
         }
-
-        if (this.sinage > 3.141593F * 2F)
-        {
+        if (this.sinage > 3.141593F * 2F) {
             this.sinage -= (3.141593F * 2F);
         }
     }
@@ -313,6 +324,16 @@ public class Valkyrie extends Monster implements NeutralMob {
     @Override
     protected SoundEvent getDeathSound() {
         return AetherSoundEvents.ENTITY_VALKYRIE_DEATH.get();
+    }
+
+    @Override
+    public boolean isEntityOnGround() {
+        return this.entityData.get(DATA_ENTITY_ON_GROUND_ID);
+    }
+
+    @Override
+    public void setEntityOnGround(boolean onGround) {
+        this.entityData.set(DATA_ENTITY_ON_GROUND_ID, onGround);
     }
 
     /**
