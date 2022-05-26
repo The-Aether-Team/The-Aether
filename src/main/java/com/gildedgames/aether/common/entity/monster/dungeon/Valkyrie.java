@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.event.events.ValkyrieTeleportEvent;
@@ -9,7 +10,6 @@ import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.ExplosionParticlePacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.*;
@@ -179,7 +179,7 @@ public class Valkyrie extends Monster implements NeutralMob {
         boolean result = super.hurt(source, pDamageAmount);
         if (!this.level.isClientSide && source.getEntity() instanceof LivingEntity living) {
             if (source.getEntity() instanceof Player player) {
-                if (this.getTarget() == null && level.getDifficulty() != Difficulty.PEACEFUL) {
+                if (this.getTarget() == null && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
                     chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.attack." + (char) (random.nextInt(3) + '1')));
                 }
             }
@@ -307,12 +307,12 @@ public class Valkyrie extends Monster implements NeutralMob {
 
     @Override
     protected SoundEvent getHurtSound(@Nonnull DamageSource pDamageSource) {
-        return SoundEvents.GENERIC_HURT;
+        return AetherSoundEvents.ENTITY_VALKYRIE_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.GENERIC_DEATH;
+        return AetherSoundEvents.ENTITY_VALKYRIE_DEATH.get();
     }
 
     /**

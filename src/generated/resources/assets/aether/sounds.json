@@ -676,6 +676,22 @@
       "aether:entity/slider/death"
     ]
   },
+  "entity.valkyrie.death": {
+    "subtitle": "subtitles.entity.valkyrie.death",
+    "sounds": [
+      "damage/hit1",
+      "damage/hit2",
+      "damage/hit3"
+    ]
+  },
+  "entity.valkyrie.hurt": {
+    "subtitle": "subtitles.entity.valkyrie.hurt",
+    "sounds": [
+      "damage/hit1",
+      "damage/hit2",
+      "damage/hit3"
+    ]
+  },
   "entity.sun_spirit.shoot": {
     "subtitle": "subtitles.entity.sun_spirit.shoot",
     "sounds": [

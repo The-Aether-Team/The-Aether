@@ -521,6 +521,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("entity", "slider.move", "Slider slides");
         addSubtitle("entity", "slider.death", "Slider breaks");
 
+        addSubtitle("entity", "valkyrie.death", "Valkyrie dies");
+        addSubtitle("entity", "valkyrie.hurt", "Valkyrie hurts");
+
         addSubtitle("entity", "sun_spirit.shoot", "Sun Spirit shoots");
 
         addSubtitle("entity", "cloud_minion.shoot", "Cloud Minion spits");
