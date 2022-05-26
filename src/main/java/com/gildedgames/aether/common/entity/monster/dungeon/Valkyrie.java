@@ -50,8 +50,6 @@ import java.util.UUID;
  */
 public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(Valkyrie.class, EntityDataSerializers.BOOLEAN);
-    /** Calculates wing angles. */
-    public float sinage;
     /** Increments every tick to decide when the valkyries are ready to teleport. */
     private int teleportTimer;
     /** Prevents the player from quickly talking to the valkyrie in succession. */
@@ -103,9 +101,6 @@ public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
     public void tick() {
         this.motionYo = this.getDeltaMovement().y;
         super.tick();
-        if (this.level.isClientSide) {
-            this.handleWingSinage();
-        }
         if (this.isOnGround()) {
             this.setEntityOnGround(true);
         }
@@ -229,20 +224,6 @@ public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
         }
         this.spawnExplosionParticles();
         super.die(pCause);
-    }
-
-    /**
-     * Sets the position of the wings for rendering.
-     */
-    private void handleWingSinage() {
-        if (!this.isEntityOnGround()) {
-            this.sinage += 0.75F;
-        } else {
-            this.sinage += 0.15F;
-        }
-        if (this.sinage > 3.141593F * 2F) {
-            this.sinage -= (3.141593F * 2F);
-        }
     }
 
     /**
