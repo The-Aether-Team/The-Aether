@@ -28,14 +28,13 @@ public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<A
 
     @Override
     protected void scale(@Nonnull Aerwhale aerwhale, PoseStack pMatrixStack, float partialTickTime) {
-        pMatrixStack.translate(0.0, 1.2, 0.0);
+        pMatrixStack.translate(0.0, -0.5, 0.0);
         pMatrixStack.scale(2.0F, 2.0F, 2.0F);
     }
 
     @Override
     protected void setupRotations(@Nonnull Aerwhale pEntityLiving, @Nonnull PoseStack pMatrixStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {
         super.setupRotations(pEntityLiving, pMatrixStack, pAgeInTicks, pRotationYaw, pPartialTicks);
-        pMatrixStack.mulPose(Vector3f.YP.rotationDegrees(90F));
         pMatrixStack.mulPose(Vector3f.XP.rotationDegrees(pEntityLiving.getXRot()));
     }
 
