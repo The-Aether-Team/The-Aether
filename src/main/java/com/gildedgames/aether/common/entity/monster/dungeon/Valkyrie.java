@@ -51,6 +51,8 @@ public class Valkyrie extends Monster implements NeutralMob {
     private int teleportTimer;
     /** Prevents the player from quickly talking to the valkyrie in succession. */
     private int chatTimer;
+    /** Keeps track of the previous y motion value. */
+    private double motionYo;
     /** General neutral mob necessities */
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
     private int remainingPersistentAngerTime;
@@ -88,13 +90,34 @@ public class Valkyrie extends Monster implements NeutralMob {
 
     @Override
     public void tick() {
+        this.motionYo = this.getDeltaMovement().y;
         super.tick();
         if (this.level.isClientSide) {
             this.handleWingSinage();
         }
-        AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
-        if (gravity != null) {
-            double fallSpeed = Math.max(gravity.getValue() * -0.625, -0.275);
+    }
+
+    /**
+     * Handles some movement logic for the valkyrie.
+     */
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (!this.onGround && this.getTarget() != null && this.motionYo >= 0 && this.getDeltaMovement().y < 0 && this.distanceTo(this.getTarget()) <= 16F && this.hasLineOfSight(this.getTarget())) {
+            double x = this.getTarget().getX() - this.getX();
+            double z = this.getTarget().getZ() - this.getZ();
+            double angle = Math.atan2(x, z);
+            this.setDeltaMovement(Math.sin(angle) * 0.25, this.getDeltaMovement().y, Math.cos(angle) * 0.25);
+        }
+        if (!this.onGround && Math.abs(this.getDeltaMovement().y - this.motionYo) > 0.07D && Math.abs(this.getDeltaMovement().y - this.motionYo) < 0.09D) {
+            double fallSpeed;
+            AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+            if (gravity != null) {
+                fallSpeed = Math.max(gravity.getValue() * -0.625, -0.275);
+            } else {
+                fallSpeed = -0.275;
+            }
+            this.setDeltaMovement(this.getDeltaMovement().add(0, 0.055, 0));
             if (this.getDeltaMovement().y < fallSpeed) {
                 this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
             }
