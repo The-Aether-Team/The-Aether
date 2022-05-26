@@ -127,7 +127,9 @@ public class AetherConfig
         public final ConfigValue<Boolean> enable_quick_load_button;
         public final ConfigValue<Boolean> enable_trivia;
 
-        public final ConfigValue<Boolean> disable_menu_music;
+        public final ConfigValue<Boolean> disable_aether_menu_music;
+        public final ConfigValue<Boolean> disable_vanilla_world_preview_menu_music;
+        public final ConfigValue<Boolean> disable_aether_world_preview_menu_music;
 
         public Client(ForgeConfigSpec.Builder builder) {
             builder.push("Rendering");
@@ -161,9 +163,15 @@ public class AetherConfig
             builder.pop();
 
             builder.push("Audio");
-            disable_menu_music = builder
-                    .comment("Disables any replacement of the menu music in case another mod implements its own")
-                    .define("Disables menu music", false);
+            disable_aether_menu_music = builder
+                    .comment("Disables the Aether's menu music in case another mod implements its own")
+                    .define("Disables Aether menu music", false);
+            disable_vanilla_world_preview_menu_music = builder
+                    .comment("Disables the menu music on the vanilla world preview menu")
+                    .define("Disables vanilla world preview menu music", false);
+            disable_aether_world_preview_menu_music = builder
+                    .comment("Disables the menu music on the Aether world preview menu")
+                    .define("Disables Aether world preview menu music", false);
             builder.pop();
         }
     }

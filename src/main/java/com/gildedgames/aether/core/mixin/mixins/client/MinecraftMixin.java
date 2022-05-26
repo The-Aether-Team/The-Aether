@@ -30,14 +30,23 @@ public class MinecraftMixin {
         }
     }
 
+    @Inject(at = @At(value = "RETURN", ordinal = 4), method = "getSituationalMusic", cancellable = true)
+    public void getSituationalMusic_AetherMenu(CallbackInfoReturnable<Music> cir) {
+        if (AetherConfig.CLIENT.enable_aether_menu.get() && !AetherConfig.CLIENT.disable_aether_menu_music.get()) {
+            cir.setReturnValue(AetherTitleScreen.MENU);
+        }
+    }
+
     @Inject(at = @At(value = "HEAD"), method = "getSituationalMusic", cancellable = true)
-    public void getSituationalMusic_Menu(CallbackInfoReturnable<Music> cir) {
+    public void getSituationalMusic_WorldPreviewMenu(CallbackInfoReturnable<Music> cir) {
         Minecraft minecraft = Minecraft.getInstance();
-        if (!AetherConfig.CLIENT.disable_menu_music.get()) {
-            if (AetherConfig.CLIENT.enable_world_preview.get() && minecraft.player != null && AetherWorldDisplayHelper.loadedLevel != null && AetherWorldDisplayHelper.loadedSummary != null) {
-                if (minecraft.screen instanceof TitleScreen titleScreen) {
+        if (AetherConfig.CLIENT.enable_world_preview.get() && minecraft.player != null && AetherWorldDisplayHelper.loadedLevel != null && AetherWorldDisplayHelper.loadedSummary != null) {
+            if (minecraft.screen instanceof TitleScreen titleScreen) {
+                if (!AetherConfig.CLIENT.disable_vanilla_world_preview_menu_music.get()) {
                     cir.setReturnValue(Musics.MENU);
-                    if (titleScreen instanceof AetherTitleScreen && AetherConfig.CLIENT.enable_aether_menu.get()) {
+                }
+                if (titleScreen instanceof AetherTitleScreen && AetherConfig.CLIENT.enable_aether_menu.get()) {
+                    if (!AetherConfig.CLIENT.disable_aether_world_preview_menu_music.get()) {
                         cir.setReturnValue(AetherTitleScreen.MENU);
                     }
                 }
