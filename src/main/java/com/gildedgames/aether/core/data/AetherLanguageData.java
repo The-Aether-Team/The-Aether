@@ -599,6 +599,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addKeyInfo("category", "Aether");
         addKeyInfo("open_accessories.desc", "Open/Close Accessories Inventory");
+        addKeyInfo("gravitite_jump_ability.desc", "Activate Gravitite Jump");
 
 
 

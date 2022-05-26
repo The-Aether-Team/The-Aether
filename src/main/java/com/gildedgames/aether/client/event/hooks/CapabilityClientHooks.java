@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.event.hooks;
 
+import com.gildedgames.aether.client.registry.AetherKeys;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.HittingPacket;
@@ -28,10 +29,12 @@ public class CapabilityClientHooks {
 
         public static void mouseInput(int button) {
             checkHit(button);
+            checkJumpAbility(button);
         }
 
         public static void keyInput(int key) {
             checkHit(key);
+            checkJumpAbility(key);
         }
 
         private static void checkHit(int input) {
@@ -43,6 +46,17 @@ public class CapabilityClientHooks {
                     boolean isHitting = isAttack && isPressing;
                     AetherPacketHandler.sendToServer(new HittingPacket(player.getId(), isHitting));
                     aetherPlayer.setHitting(isHitting);
+                });
+            }
+        }
+
+        private static void checkJumpAbility(int input) {
+            Player player = Minecraft.getInstance().player;
+            if (player != null) {
+                AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                    if (input == AetherKeys.gravititeJumpAbility.getKey().getValue()) {
+                        aetherPlayer.setGravititeJumpActive(AetherKeys.gravititeJumpAbility.isDown());
+                    }
                 });
             }
         }
