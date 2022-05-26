@@ -33,8 +33,8 @@ public class ValkyrieWingsLayer extends RenderLayer<Valkyrie, ValkyrieModel> {
 
     public void setupWingRotation(@Nonnull Valkyrie entity, float sinage) {
         this.wings.rightWing.yRot = -((float) Math.sin(sinage) / 6.0F);
-        this.wings.rightWing.zRot = -((float) Math.cos(sinage) / (entity.isEntityOnGround() ? 8.0F : 3.0F));
+        this.wings.rightWing.zRot = -((float) Math.cos(sinage) / (entity.isOnGround() ? 8.0F : 3.0F));
         this.wings.leftWing.yRot = (float) Math.sin(sinage) / 6.0F;
-        this.wings.leftWing.zRot = (float) Math.cos(sinage) / (entity.isEntityOnGround() ? 8.0F : 3.0F);
+        this.wings.leftWing.zRot = (float) Math.cos(sinage) / (entity.isOnGround() ? 8.0F : 3.0F);
     }
 }

@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
-import com.gildedgames.aether.common.entity.NotGrounded;
 import com.gildedgames.aether.common.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.event.events.ValkyrieTeleportEvent;
@@ -9,9 +8,12 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.ExplosionParticlePacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -42,17 +44,19 @@ import java.util.UUID;
  * They won't attack unless provoked. They can teleport within the temple. They respond to the player through chat
  * messages and drop a victory medal upon their defeat.
  */
-public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
+public class Valkyrie extends Monster implements NeutralMob {
     /** Calculates wing angles. */
     public float sinage;
     /** Increments every tick to decide when the valkyries are ready to teleport. */
     private int teleportTimer;
-
+    /** Prevents the player from quickly talking to the valkyrie in succession. */
+    private int chatTimer;
+    /** General neutral mob necessities */
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
     private int remainingPersistentAngerTime;
     @Nullable
     private UUID persistentAngerTarget;
-
+    /** Goal for targeting in groups of entities */
     MostDamageTargetGoal mostDamageTargetGoal;
 
     public Valkyrie(EntityType<? extends Valkyrie> type, Level worldIn) {
@@ -88,21 +92,23 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
         if (this.level.isClientSide) {
             this.handleWingSinage();
         }
+        AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+        if (gravity != null) {
+            double fallSpeed = Math.max(gravity.getValue() * -0.625, -0.275);
+            if (this.getDeltaMovement().y < fallSpeed) {
+                this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+            }
+        }
     }
 
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
         this.teleportTimer++;
+        if (this.chatTimer > 0) {
+            this.chatTimer--;
+        }
     }
-
-    @Override
-    public boolean isEntityOnGround() {
-        return false;
-    }
-
-    @Override
-    public void setEntityOnGround(boolean onGround) {}
 
     /**
      * Sends a message to the player who interacted with the valkyrie.
@@ -121,7 +127,7 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
         ItemStack item = player.getItemInHand(hand);
         if (this.getTarget() == null) {
             this.lookAt(player, 180.0F, 180.0F);
-            if (!this.level.isClientSide) {
+            if (!this.level.isClientSide && this.chatTimer <= 0) {
                 String translationId;
                 if (item.getItem() == AetherItems.VICTORY_MEDAL.get()) {
                     if (item.getCount() >= 10) {
@@ -135,6 +141,7 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
                     translationId = "gui.aether.valkyrie.dialog." + (char) (random.nextInt(3) + '1');
                 }
                 this.chatItUp(player, new TranslatableComponent(translationId));
+                this.chatTimer = 60;
             }
         }
         return super.mobInteract(player, hand);
@@ -245,6 +252,11 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
     }
 
     @Override
+    public boolean causeFallDamage(float pFallDistance, float pMultiplier, @Nonnull DamageSource pSource) {
+        return false;
+    }
+
+    @Override
     public int getRemainingPersistentAngerTime() {
         return this.remainingPersistentAngerTime;
     }
@@ -270,6 +282,16 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
         this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
     }
 
+    @Override
+    protected SoundEvent getHurtSound(@Nonnull DamageSource pDamageSource) {
+        return SoundEvents.GENERIC_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.GENERIC_DEATH;
+    }
+
     /**
      * Goal that allows the mob to teleport to a random spot near the target to confuse them.
      */
@@ -287,7 +309,7 @@ public class Valkyrie extends Monster implements NotGrounded, NeutralMob {
         @Override
         public void start() {
             if (this.valkyrie.teleportAroundTarget(valkyrie.getTarget(), 7)) {
-                this.valkyrie.teleportTimer = 400;
+                this.valkyrie.teleportTimer = this.valkyrie.random.nextInt(40);
             } else {
                 this.valkyrie.teleportTimer -= 20;
             }
