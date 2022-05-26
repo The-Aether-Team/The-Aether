@@ -106,7 +106,9 @@ public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
         if (this.level.isClientSide) {
             this.handleWingSinage();
         }
-        this.setEntityOnGround(this.isOnGround());
+        if (this.isOnGround()) {
+            this.setEntityOnGround(true);
+        }
     }
 
     /**
@@ -133,6 +135,7 @@ public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
             this.setDeltaMovement(this.getDeltaMovement().add(0, 0.055, 0));
             if (this.getDeltaMovement().y < fallSpeed) {
                 this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+                this.setEntityOnGround(false);
             }
         }
     }
@@ -232,7 +235,7 @@ public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
      * Sets the position of the wings for rendering.
      */
     private void handleWingSinage() {
-        if (!this.onGround) {
+        if (!this.isEntityOnGround()) {
             this.sinage += 0.75F;
         } else {
             this.sinage += 0.15F;
@@ -283,6 +286,12 @@ public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
             this.spawnExplosionParticles();
         }
         return flag;
+    }
+
+    @Override
+    protected void jumpFromGround() {
+        super.jumpFromGround();
+        this.setEntityOnGround(false);
     }
 
     @Override
