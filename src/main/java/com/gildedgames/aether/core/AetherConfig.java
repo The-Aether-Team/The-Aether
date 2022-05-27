@@ -81,11 +81,11 @@ public class AetherConfig
                     .define("Generate Pink Aerclouds", false);
             generate_holiday_tree_always = builder
                     .comment("Determines whether Holiday Trees should always be able to generate when exploring new chunks in the Aether",
-                            "If true, this overrides 'generate_holiday_tree_seasonally'")
+                            "If true, this overrides 'Generate Holiday Trees seasonally'")
                     .define("Generate Holiday Trees always", false);
             generate_holiday_tree_seasonally = builder
                     .comment("Determines whether Holiday Trees should be able to generate during the time frame of December and January when exploring new chunks in the Aether",
-                            "Only works if 'generate_holiday_tree_always' is set to false")
+                            "Only works if 'Generate Holiday Trees always' is set to false")
                     .define("Generate Holiday Trees seasonally", true);
             builder.pop();
 
@@ -125,6 +125,9 @@ public class AetherConfig
         public final ConfigValue<Boolean> enable_world_preview;
         public final ConfigValue<Boolean> enable_world_preview_button;
         public final ConfigValue<Boolean> enable_quick_load_button;
+        public final ConfigValue<Boolean> menu_type_toggles_alignment;
+        public final ConfigValue<Boolean> align_vanilla_menu_elements_left;
+        public final ConfigValue<Boolean> align_aether_menu_elements_left;
         public final ConfigValue<Boolean> enable_trivia;
 
         public final ConfigValue<Boolean> disable_aether_menu_music;
@@ -157,6 +160,18 @@ public class AetherConfig
             enable_quick_load_button = builder
                     .comment("Adds a button to the top right of the main menu screen to allow quick loading into a world if the world preview is enabled")
                     .define("Enables quick load button", true);
+            menu_type_toggles_alignment = builder
+                    .comment("Determines that menu elements will align left if the menu's world preview is active",
+                            "If true, this overrides 'Align menu elements left'")
+                    .define("Align menu elements left with world preview", false);
+            align_vanilla_menu_elements_left = builder
+                    .comment("Aligns the elements of the vanilla menu to the left",
+                            "Only works if 'Align menu left with world preview' is set to false")
+                    .define("Align vanilla menu elements left", false);
+            align_aether_menu_elements_left = builder
+                    .comment("Aligns the elements of the Aether menu to the left",
+                            "Only works if 'Align menu left with world preview' is set to false")
+                    .define("Align Aether menu elements left", true);
             enable_trivia = builder
                     .comment("Adds random trivia and tips to the bottom of loading screens")
                     .define("Enables random trivia", true);

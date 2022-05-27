@@ -17,18 +17,21 @@ public class AetherMenuButton extends Button
 {
 	public static final ResourceLocation AETHER_WIDGETS = new ResourceLocation("aether:textures/gui/title/buttons.png");
 	public int initialX;
+	public int initialY;
+	public int initialWidth;
 	public int renderOffset;
 	
 	public AetherMenuButton(int xPos, int yPos, int width, int height, Component message, OnPress callback) {
 		super(xPos, yPos, width, height, message, callback);
 		this.initialX = xPos;
+		this.initialY = yPos;
+		this.initialWidth = width;
 	}
 
 	public AetherMenuButton(Button oldButton) {
 		this(oldButton.x, oldButton.y, oldButton.getWidth(), oldButton.getHeight(), oldButton.getMessage(), (button) -> oldButton.onPress());
 		oldButton.visible = false;
 		oldButton.active = false;
-		this.initialX = oldButton.x;
 		this.renderOffset = 0;
 	}
 

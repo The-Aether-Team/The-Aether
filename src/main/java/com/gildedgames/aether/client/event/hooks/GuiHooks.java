@@ -6,6 +6,7 @@ import com.gildedgames.aether.client.gui.button.DynamicMenuButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
+import com.gildedgames.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
 import com.gildedgames.aether.client.registry.AetherKeys;
 import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import com.gildedgames.aether.core.AetherConfig;
@@ -35,11 +36,13 @@ public class GuiHooks {
     public static ResourceLocation OLD_REALMS_LOCATION;
 
     public static AetherTitleScreen aether_menu = null;
-    private static TitleScreen default_menu = null;
+    public static TitleScreen default_menu = null;
+    public static VanillaLeftTitleScreen default_left_menu = null;
     private static boolean shouldAddButton = true;
     private static boolean generateTrivia = true;
     private static Screen lastScreen = null;
 
+    private static boolean alignMenuLeft = false;
 
     public static void drawSentryBackground(Screen screen) {
         if (screen instanceof TitleScreen) {
@@ -58,6 +61,9 @@ public class GuiHooks {
         if (aether_menu == null) {
             aether_menu = new AetherTitleScreen();
         }
+        if (default_left_menu == null) {
+            default_left_menu = new VanillaLeftTitleScreen();
+        }
         if (default_menu == null) {
             default_menu = screen;
         }
@@ -67,6 +73,16 @@ public class GuiHooks {
         if (screen instanceof TitleScreen && AetherConfig.CLIENT.enable_world_preview.get()) {
             AetherWorldDisplayHelper.enableWorldPreview();
         }
+    }
+
+    public static VanillaLeftTitleScreen openLeftDefaultMenu(Screen screen) {
+        if (screen instanceof TitleScreen titleScreen) {
+            setupMenus(titleScreen);
+            if (displayAlignedLeftVanillaMenu()) {
+                return default_left_menu;
+            }
+        }
+        return null;
     }
 
     public static AetherTitleScreen openAetherMenu(Screen screen) {
@@ -86,6 +102,12 @@ public class GuiHooks {
             }
         }
         return null;
+    }
+
+    public static void setupSplash(Screen screen) {
+        if (screen instanceof TitleScreen titleScreen) {
+            titleScreen.splash = default_menu.splash;
+        }
     }
 
     public static void openAccessoryMenu() {
@@ -147,16 +169,24 @@ public class GuiHooks {
 
     public static TitleScreen getMenu() {
         if (AetherConfig.CLIENT.enable_aether_menu.get()) {
-            aether_menu.setSplash(default_menu.splash);
             aether_menu.fading = true;
             aether_menu.fadeInStart = 0L;
             return aether_menu;
         } else {
-            default_menu.splash = aether_menu.getSplash();
-            default_menu.fading = true;
-            default_menu.fadeInStart = 0L;
-            return default_menu;
+            if (displayAlignedLeftVanillaMenu()) {
+                default_left_menu.fading = true;
+                default_left_menu.fadeInStart = 0L;
+                return default_left_menu;
+            } else {
+                default_menu.fading = true;
+                default_menu.fadeInStart = 0L;
+                return default_menu;
+            }
         }
+    }
+
+    public static boolean displayAlignedLeftVanillaMenu() {
+        return (AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get()) || AetherConfig.CLIENT.align_vanilla_menu_elements_left.get();
     }
 
     public static AccessoryButton setupAccessoryButtonWithinInventories(Screen screen, Tuple<Integer, Integer> offsets) {
@@ -176,6 +206,10 @@ public class GuiHooks {
             }
         }
         return null;
+    }
+
+    public static void setMenuAlignment() {
+        alignMenuLeft = displayAlignedLeftVanillaMenu();
     }
 
     public static void drawTrivia(Screen screen, PoseStack poseStack) {
@@ -213,6 +247,24 @@ public class GuiHooks {
             }
         } else {
             DimensionHooks.displayAetherTravel = false;
+        }
+    }
+
+    public static void changeMenuAlignment(Screen screen, Minecraft minecraft) {
+        if (screen instanceof TitleScreen titleScreen) {
+            if (alignMenuLeft != displayAlignedLeftVanillaMenu()) {
+                alignMenuLeft = displayAlignedLeftVanillaMenu();
+                if (alignMenuLeft) {
+                    if (titleScreen != default_left_menu) {
+                        minecraft.forceSetScreen(default_left_menu);
+                    }
+                } else {
+                    TitleScreen defaultMenu = AetherConfig.CLIENT.enable_aether_menu.get() ? aether_menu : default_menu;
+                    if (titleScreen != defaultMenu) {
+                        minecraft.forceSetScreen(defaultMenu);
+                    }
+                }
+            }
         }
     }
 }

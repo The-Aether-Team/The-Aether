@@ -5,7 +5,9 @@ import com.gildedgames.aether.client.gui.button.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 
+import com.gildedgames.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.util.Tuple;
@@ -25,6 +27,10 @@ public class GuiListener {
 		Screen screen = event.getScreen();
 		GuiHooks.drawSentryBackground(screen);
 		GuiHooks.setupWorldPreview(screen);
+		VanillaLeftTitleScreen vanillaLeftTitleScreen = GuiHooks.openLeftDefaultMenu(screen);
+		if (vanillaLeftTitleScreen != null) {
+			event.setScreen(vanillaLeftTitleScreen);
+		}
 		AetherTitleScreen aetherMainMenuScreen = GuiHooks.openAetherMenu(screen);
 		if (aetherMainMenuScreen != null) {
 			event.setScreen(aetherMainMenuScreen);
@@ -33,6 +39,7 @@ public class GuiListener {
 		if (bufferScreen != null) {
 			event.setScreen(bufferScreen);
 		}
+		GuiHooks.setupSplash(screen);
 	}
 
 	@SubscribeEvent
@@ -71,13 +78,17 @@ public class GuiListener {
 		if (accessoryMenuAccessoryButton != null) {
 			event.addListener(accessoryMenuAccessoryButton);
 		}
+
+		GuiHooks.setMenuAlignment();
 	}
 
 	@SubscribeEvent
 	public static void onGuiDraw(ScreenEvent.DrawScreenEvent event) {
 		Screen screen = event.getScreen();
 		PoseStack poseStack = event.getPoseStack();
+		Minecraft minecraft = Minecraft.getInstance();
 		GuiHooks.drawTrivia(screen, poseStack);
 		GuiHooks.drawAetherTravelMessage(screen, poseStack);
+		GuiHooks.changeMenuAlignment(screen, minecraft);
 	}
 }
