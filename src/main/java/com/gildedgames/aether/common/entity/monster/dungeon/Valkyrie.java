@@ -20,6 +20,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
@@ -115,9 +116,9 @@ public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
         if (!this.onGround && this.getTarget() != null && this.motionYo >= 0 && this.getDeltaMovement().y < 0 && this.distanceTo(this.getTarget()) <= 16F && this.hasLineOfSight(this.getTarget())) {
             double x = this.getTarget().getX() - this.getX();
             double z = this.getTarget().getZ() - this.getZ();
-            double angle = Math.atan2(x, z);
-            this.setDeltaMovement(Math.sin(angle) * 0.25, this.getDeltaMovement().y, Math.cos(angle) * 0.25);
-            this.setYRot((float) angle * (180F / (float) Math.PI));
+            double angle = Math.atan2(z, x);
+            this.setDeltaMovement(Math.cos(angle) * 0.25, this.getDeltaMovement().y, Math.sin(angle) * 0.25);
+            this.setYRot((float) angle * (180F / (float) Math.PI) - 90F);
         }
         if (!this.onGround && Math.abs(this.getDeltaMovement().y - this.motionYo) > 0.07D && Math.abs(this.getDeltaMovement().y - this.motionYo) < 0.09D) {
             double fallSpeed;
