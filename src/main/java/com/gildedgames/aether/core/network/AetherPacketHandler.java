@@ -38,7 +38,6 @@ public class AetherPacketHandler {
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
-		register(ResetMaxUpStepPacket.class, ResetMaxUpStepPacket::decode);
 		register(SentryExplosionParticlePacket.class, SentryExplosionParticlePacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
 		register(SwetAttackPacket.class, SwetAttackPacket::decode);
@@ -51,6 +50,7 @@ public class AetherPacketHandler {
 		register(HittingPacket.class, HittingPacket::decode);
 		register(JumpPacket.class, JumpPacket::decode);
 		register(LoreExistsPacket.class, LoreExistsPacket::decode);
+		register(MilkCowPacket.class, MilkCowPacket::decode);
 		register(MovementPacket.class, MovementPacket::decode);
 		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);

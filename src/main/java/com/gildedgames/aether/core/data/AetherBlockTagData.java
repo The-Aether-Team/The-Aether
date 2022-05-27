@@ -58,6 +58,8 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(AetherTags.Blocks.GOLDEN_OAK_LOGS).add(
                 AetherBlocks.GOLDEN_OAK_LOG.get(),
                 AetherBlocks.GOLDEN_OAK_WOOD.get());
+        tag(AetherTags.Blocks.ALLOWED_BUCKET_PICKUP).add(
+                Blocks.POWDER_SNOW);
         tag(AetherTags.Blocks.AEROGEL).add(AetherBlocks.AEROGEL.get(),
                 AetherBlocks.AEROGEL_WALL.get(),
                 AetherBlocks.AEROGEL_STAIRS.get(),

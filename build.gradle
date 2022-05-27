@@ -103,7 +103,7 @@ sourceSets.main.resources {
 dependencies {
     minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.3-SNAPSHOT:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5-SNAPSHOT:processor'
 
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}:api")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
@@ -118,8 +118,6 @@ dependencies {
     compileOnly fg.deobf("curse.maven:curious-elytra-317716:${project.curiouselytra_version}")
 
     //runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
-
-    runtimeOnly fg.deobf("curse.maven:shutup-experimental-settings-407174:${project.shutupexperimentalsettings_version}")
 
     //compileOnly fileTree(dir: 'libs', include: '*.jar')
 }
@@ -166,5 +164,6 @@ publishing {
 }
 
 mixin {
+    config "aether.mixins.json"
     add sourceSets.main, "aether.refmap.json"
 }

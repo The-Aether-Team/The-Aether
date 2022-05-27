@@ -49,6 +49,9 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setJumping(boolean isJumping);
 	boolean isJumping();
 
+	void setGravititeJumpActive(boolean isGravititeJumpActive);
+	boolean isGravititeJumpActive();
+
 	void setGoldenDartCount(int count);
 	int getGoldenDartCount();
 	void setPoisonDartCount(int count);

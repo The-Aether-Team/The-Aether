@@ -22,6 +22,7 @@ public class AetherTags {
 		public static final TagKey<Block> AERCLOUDS = tag("aerclouds");
 		public static final TagKey<Block> SKYROOT_LOGS = tag("skyroot_logs");
 		public static final TagKey<Block> GOLDEN_OAK_LOGS = tag("golden_oak_logs");
+		public static final TagKey<Block> ALLOWED_BUCKET_PICKUP = tag("allowed_bucket_pickup");
 		public static final TagKey<Block> AEROGEL = tag("aerogel");
 		public static final TagKey<Block> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final TagKey<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
@@ -61,6 +62,7 @@ public class AetherTags {
 		public static final TagKey<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 		public static final TagKey<Item> SKYROOT_STICKS = tag("skyroot_stick");
+		public static final TagKey<Item> EFFECTIVE_IN_AETHER = tag("effective_in_aether");
 		public static final TagKey<Item> SKYROOT_TOOLS = tag("skyroot_tools");
 		public static final TagKey<Item> SKYROOT_WEAPONS = tag("skyroot_weapons");
 		public static final TagKey<Item> HOLYSTONE_TOOLS = tag("holystone_tools");
@@ -118,6 +120,14 @@ public class AetherTags {
 
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, name));
+		}
+	}
+
+	public static class Fluids {
+		public static final TagKey<Fluid> ALLOWED_BUCKET_PICKUP = tag("allowed_bucket_pickup");
+
+		private static TagKey<Fluid> tag(String name) {
+			return TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 

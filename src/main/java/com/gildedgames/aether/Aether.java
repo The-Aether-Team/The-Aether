@@ -90,6 +90,8 @@ public class Aether
             register.register(modEventBus);
         }
 
+        AetherBlocks.registerWoodTypes();
+
         DIRECTORY.toFile().mkdirs();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
@@ -107,8 +109,6 @@ public class Aether
         AetherRecipes.RecipeTypes.init();
         AetherRecipeBookTypes.init();
         AetherNoiseGeneratorSettings.init();
-
-        AetherBlocks.registerWoodTypes();
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
@@ -116,9 +116,6 @@ public class Aether
             AetherPacketHandler.register();
 
             AetherBlocks.registerPots();
-            AetherBlocks.registerAxeStrippingBlocks();
-            AetherBlocks.registerShovelFlatteningBlocks();
-            AetherBlocks.registerHoeTillingBlocks();
             AetherBlocks.registerFlammability();
 
             AetherEntityTypes.registerSpawnPlacements();
@@ -156,6 +153,7 @@ public class Aether
             generator.addProvider(blockTags);
             generator.addProvider(new AetherItemTagData(generator, blockTags, helper));
             generator.addProvider(new AetherEntityTagData(generator, helper));
+            generator.addProvider(new AetherFluidTagData(generator, helper));
             generator.addProvider(new AetherBiomeTagData(generator, helper));
             generator.addProvider(new AetherDimensionTagData(generator, helper));
             generator.addProvider(new AetherAdvancementData(generator, helper));
@@ -202,8 +200,8 @@ public class Aether
         DispenserBlock.registerBehavior(AetherItems.ENCHANTED_DART.get(), new DispenseDartBehavior(AetherItems.ENCHANTED_DART));
         DispenserBlock.registerBehavior(AetherItems.LIGHTNING_KNIFE.get(), AetherDispenseBehaviors.DISPENSE_LIGHTNING_KNIFE_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.HAMMER_OF_NOTCH.get(), AetherDispenseBehaviors.DISPENSE_NOTCH_HAMMER_BEHAVIOR);
-        DispenserBlock.registerBehavior(AetherItems.SKYROOT_WATER_BUCKET.get(), AetherDispenseBehaviors.DISPENSE_WATER_BEHAVIOR);
-		DispenserBlock.registerBehavior(AetherItems.SKYROOT_BUCKET.get(), AetherDispenseBehaviors.PICKUP_WATER_BEHAVIOR);
+        DispenserBlock.registerBehavior(AetherItems.SKYROOT_WATER_BUCKET.get(), AetherDispenseBehaviors.SKYROOT_BUCKET_DISPENSE_BEHAVIOR);
+		DispenserBlock.registerBehavior(AetherItems.SKYROOT_BUCKET.get(), AetherDispenseBehaviors.SKYROOT_BUCKET_PICKUP_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.AMBROSIUM_SHARD.get(), AetherDispenseBehaviors.DISPENSE_AMBROSIUM_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.SWET_BALL.get(), AetherDispenseBehaviors.DISPENSE_SWET_BALL_BEHAVIOR);
     }

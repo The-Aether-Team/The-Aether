@@ -52,6 +52,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 Items.FLINT,
                 AetherItems.AMBROSIUM_SHARD.get());
         tag(AetherTags.Items.SKYROOT_STICKS).add(AetherItems.SKYROOT_STICK.get());
+        tag(AetherTags.Items.EFFECTIVE_IN_AETHER);
         tag(AetherTags.Items.SKYROOT_TOOLS).add(
                 AetherItems.SKYROOT_PICKAXE.get(),
                 AetherItems.SKYROOT_AXE.get(),
