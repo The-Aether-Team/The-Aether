@@ -215,8 +215,17 @@ public class GuiHooks {
     public static void drawTrivia(Screen screen, PoseStack poseStack) {
         if (screen instanceof TitleScreen) {
             if (generateTrivia) {
-                Aether.TRIVIA_READER.generateTriviaList();
-                generateTrivia = false;
+                if (Aether.TRIVIA_READER.getTrivia().isEmpty()) {
+                    Aether.TRIVIA_READER.generateTriviaList();
+                    generateTrivia = false;
+                }
+            }
+        } else if (screen instanceof LevelLoadingScreen) {
+            if (generateTrivia) {
+                if (Aether.TRIVIA_READER.getTrivia().isEmpty()) {
+                    Aether.TRIVIA_READER.generateTriviaList();
+                    generateTrivia = false;
+                }
             }
         }
 
