@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 
-import net.minecraft.client.gui.components.Button.OnPress;
 import net.minecraft.util.Mth;
 
 public class AetherMenuButton extends Button
