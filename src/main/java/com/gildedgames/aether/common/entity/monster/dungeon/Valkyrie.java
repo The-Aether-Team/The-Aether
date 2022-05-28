@@ -318,6 +318,11 @@ public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
     }
 
     @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return false;
+    }
+
+    @Override
     public boolean isEntityOnGround() {
         return this.entityData.get(DATA_ENTITY_ON_GROUND_ID);
     }
