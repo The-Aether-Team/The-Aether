@@ -381,6 +381,14 @@ public class AetherLootTableData extends AetherLootTableProvider
             );
 
             this.add(AetherEntityTypes.FIRE_MINION.get(), LootTable.lootTable());
+
+            this.add(AetherEntityTypes.VALKYRIE_QUEEN.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                            .add(LootItem.lootTableItem(AetherItems.SILVER_DUNGEON_KEY.get())
+                                    .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+                            )
+                    )
+            );
         }
 
         private static LootTable.Builder sheepLootTableBuilderWithDrop(ItemLike wool) {

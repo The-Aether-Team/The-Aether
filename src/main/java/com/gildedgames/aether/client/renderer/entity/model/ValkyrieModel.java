@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
+import com.gildedgames.aether.common.entity.monster.dungeon.AbstractValkyrie;
 import com.gildedgames.aether.common.entity.monster.dungeon.Valkyrie;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -11,7 +12,7 @@ import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
-public class ValkyrieModel extends HumanoidModel<Valkyrie> {
+public class ValkyrieModel<T extends AbstractValkyrie> extends HumanoidModel<T> {
     public ModelPart upperBody;
     public ModelPart rightShoulder;
     public ModelPart leftShoulder;
@@ -139,7 +140,7 @@ public class ValkyrieModel extends HumanoidModel<Valkyrie> {
     }
 
     @Override
-    public void setupAnim(@Nonnull Valkyrie valkyrie, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@Nonnull T valkyrie, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.yRot = netHeadYaw * ((float) Math.PI / 180.0F);
         this.head.xRot = headPitch * ((float) Math.PI / 180.0F);
 

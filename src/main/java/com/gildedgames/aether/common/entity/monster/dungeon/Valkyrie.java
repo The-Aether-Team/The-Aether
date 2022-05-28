@@ -1,17 +1,9 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.entity.NotGrounded;
 import com.gildedgames.aether.common.entity.ai.goal.target.MostDamageTargetGoal;
-import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
-import com.gildedgames.aether.common.event.events.ValkyrieTeleportEvent;
 import com.gildedgames.aether.common.registry.AetherItems;
 
-import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.client.ExplosionParticlePacket;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.TimeUtil;
@@ -20,15 +12,12 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.InteractionResult;
@@ -38,7 +27,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec2;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -49,10 +37,7 @@ import java.util.UUID;
  * They won't attack unless provoked. They can teleport within the temple. They respond to the player through chat
  * messages and drop a victory medal upon their defeat.
  */
-public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
-    private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(Valkyrie.class, EntityDataSerializers.BOOLEAN);
-    /** Increments every tick to decide when the valkyries are ready to teleport. */
-    private int teleportTimer;
+public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     /** Prevents the player from quickly talking to the valkyrie in succession. */
     private int chatTimer;
     /** Keeps track of the previous y motion value. */
@@ -71,12 +56,6 @@ public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
     }
 
     @Override
-    public void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_ENTITY_ON_GROUND_ID, true);
-    }
-
-    @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new ValkyrieTeleportGoal(this));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 0.65, true));
@@ -90,7 +69,7 @@ public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
     }
 
     @Nonnull
-    public static AttributeSupplier.Builder createMobAttributes() {
+    public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.FOLLOW_RANGE, 16.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.5)
@@ -137,12 +116,11 @@ public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
     }
 
     /**
-     * Increments the teleport timer.
+     * Increments the chat timer.
      */
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
-        this.teleportTimer++;
         if (this.chatTimer > 0) {
             this.chatTimer--;
         }
@@ -227,60 +205,6 @@ public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
         super.die(pCause);
     }
 
-    /**
-     * Spawns explosion particles.
-     */
-    private void spawnExplosionParticles() {
-        for (int i = 0; i < 5; i++) {
-            AetherPacketHandler.sendToAll(new ExplosionParticlePacket(this.getId()));
-        }
-    }
-
-    /**
-     * Teleports near a target outside of a specified radius. Returns false if it fails.
-     * @param rad - An int equal to the length of the target radius from the target.
-     */
-    protected boolean teleportAroundTarget(Entity target, int rad) {
-        Vec2 targetVec = new Vec2((this.random.nextFloat() - 0.5F), (this.random.nextFloat() - 0.5F)).normalized();
-        double x = target.getX() + targetVec.x * rad;
-        double y = target.getY();
-        double z = target.getZ() + targetVec.y * rad;
-        return this.teleport(x, y, z);
-    }
-
-    /**
-     * Teleports to the specified position. Returns false if it fails.
-     */
-    protected boolean teleport(double pX, double pY, double pZ) {
-        /*BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(pX, pY, pZ);
-
-        while(blockpos$mutableblockpos.getY() > this.level.getMinBuildHeight() && !this.level.getBlockState(blockpos$mutableblockpos).getMaterial().blocksMotion()) {
-            blockpos$mutableblockpos.move(Direction.DOWN);
-        }
-
-        BlockState blockstate = this.level.getBlockState(blockpos$mutableblockpos);
-        boolean flag = blockstate.is(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON);*/
-        //TODO: Lock teleporting to tagged blocks.
-        ValkyrieTeleportEvent event = AetherEventDispatch.onValkyrieTeleport(this, pX, pY, pZ);
-        if (event.isCanceled()) return false;
-        boolean flag = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), false);
-        if (flag) {
-            this.spawnExplosionParticles();
-        }
-        return flag;
-    }
-
-    @Override
-    protected void jumpFromGround() {
-        super.jumpFromGround();
-        this.setEntityOnGround(false);
-    }
-
-    @Override
-    public boolean causeFallDamage(float pFallDistance, float pMultiplier, @Nonnull DamageSource pSource) {
-        return false;
-    }
-
     @Override
     public int getRemainingPersistentAngerTime() {
         return this.remainingPersistentAngerTime;
@@ -320,39 +244,5 @@ public class Valkyrie extends Monster implements NeutralMob, NotGrounded {
     @Override
     protected boolean shouldDespawnInPeaceful() {
         return false;
-    }
-
-    @Override
-    public boolean isEntityOnGround() {
-        return this.entityData.get(DATA_ENTITY_ON_GROUND_ID);
-    }
-
-    @Override
-    public void setEntityOnGround(boolean onGround) {
-        this.entityData.set(DATA_ENTITY_ON_GROUND_ID, onGround);
-    }
-
-    /**
-     * Goal that allows the mob to teleport to a random spot near the target to confuse them.
-     */
-    public static class ValkyrieTeleportGoal extends Goal {
-        private final Valkyrie valkyrie;
-        public ValkyrieTeleportGoal(Valkyrie mob) {
-            this.valkyrie = mob;
-        }
-
-        @Override
-        public boolean canUse() {
-            return this.valkyrie.getTarget() != null && this.valkyrie.teleportTimer >= 450;
-        }
-
-        @Override
-        public void start() {
-            if (this.valkyrie.teleportAroundTarget(valkyrie.getTarget(), 7)) {
-                this.valkyrie.teleportTimer = this.valkyrie.random.nextInt(40);
-            } else {
-                this.valkyrie.teleportTimer -= 20;
-            }
-        }
     }
 }

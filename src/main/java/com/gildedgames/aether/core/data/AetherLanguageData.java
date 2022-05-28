@@ -348,6 +348,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.WHIRLWIND_SPAWN_EGG, "Whirlwind Spawn Egg");
         addItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG, "Evil Whirlwind Spawn Egg");
         addItem(AetherItems.VALKYRIE_SPAWN_EGG, "Valkyrie Spawn Egg");
+        addItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG, "Valkyrie Queen Spawn Egg");
         addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
 
 
@@ -370,6 +371,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.MIMIC, "Mimic");
         addEntityType(AetherEntityTypes.VALKYRIE, "Valkyrie");
         addEntityType(AetherEntityTypes.FIRE_MINION, "Fire Minion");
+
+        addEntityType(AetherEntityTypes.VALKYRIE_QUEEN, "Valkyrie Queen");
 
         addEntityType(AetherEntityTypes.SKYROOT_BOAT, "Boat");
         addEntityType(AetherEntityTypes.CLOUD_MINION, "Cloud Minion");
