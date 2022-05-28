@@ -97,7 +97,7 @@ public class GuiHooks {
 
     public static GenericDirtMessageScreen openBufferScreen(Screen screen) {
         if (screen instanceof TitleScreen) {
-            if (AetherConfig.CLIENT.enable_world_preview.get() && AetherWorldDisplayHelper.loadedLevel == null) {
+            if (AetherConfig.CLIENT.enable_world_preview.get() && AetherWorldDisplayHelper.loadedLevel == null && AetherWorldDisplayHelper.loadedSummary != null) {
                 return new GenericDirtMessageScreen(new TextComponent(""));
             }
         }
