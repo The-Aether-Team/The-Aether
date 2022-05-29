@@ -50,6 +50,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	private boolean isHitting;
 	private boolean isMoving;
 	private boolean isJumping;
+	private boolean isGravititeJumpActive;
 
 	private int goldenDartCount;
 	private int poisonDartCount;
@@ -135,6 +136,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public CompoundTag serializeSynchableNBT() {
 		CompoundTag tag = new CompoundTag();
+		tag.putBoolean("GravititeJump_Syncing", this.isGravititeJumpActive());
 		tag.putInt("GoldenDartCount_Syncing", this.getGoldenDartCount());
 		tag.putInt("PoisonDartCount_Syncing", this.getPoisonDartCount());
 		tag.putInt("EnchantedDartCount_Syncing", this.getEnchantedDartCount());
@@ -150,6 +152,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void deserializeSynchableNBT(CompoundTag tag) {
+		if (tag.contains("GravititeJump_Syncing")) {
+			this.setGravititeJumpActive(tag.getBoolean("GravititeJump_Syncing"));
+		}
 		if (tag.contains("GoldenDartCount_Syncing")) {
 			this.setGoldenDartCount(tag.getInt("GoldenDartCount_Syncing"));
 		}
@@ -507,6 +512,17 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public boolean isJumping() {
 		return this.isJumping;
+	}
+
+	@Override
+	public void setGravititeJumpActive(boolean isGravititeJumpActive) {
+		this.markDirty(true);
+		this.isGravititeJumpActive = isGravititeJumpActive;
+	}
+
+	@Override
+	public boolean isGravititeJumpActive() {
+		return this.isGravititeJumpActive;
 	}
 
 	@Override

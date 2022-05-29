@@ -6,6 +6,8 @@ import com.gildedgames.aether.common.entity.passive.FlyingCow;
 import com.gildedgames.aether.common.entity.passive.MountableAnimal;
 import com.gildedgames.aether.common.item.miscellaneous.bucket.SkyrootBucketItem;
 import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.server.MilkCowPacket;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -35,14 +37,17 @@ public class EntityHooks {
         if ((target instanceof Cow || target instanceof FlyingCow) && !((Animal) target).isBaby()) {
             ItemStack heldStack = player.getItemInHand(hand);
             if (heldStack.is(AetherItems.SKYROOT_BUCKET.get())) {
-                if (target instanceof FlyingCow) {
-                    player.playSound(AetherSoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);
-                } else  {
-                    player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
+                if (target.level.isClientSide()) {
+                    if (target instanceof FlyingCow) {
+                        player.playSound(AetherSoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);
+                    } else  {
+                        player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
+                    }
+                    AetherPacketHandler.sendToServer(new MilkCowPacket(player.getId(), heldStack, hand == InteractionHand.MAIN_HAND)); //necessary due to a Forge bug.
+                    ItemStack filledBucket = ItemUtils.createFilledResult(heldStack, player, AetherItems.SKYROOT_MILK_BUCKET.get().getDefaultInstance());
+                    player.swing(hand);
+                    player.setItemInHand(hand, filledBucket);
                 }
-                ItemStack filledBucket = ItemUtils.createFilledResult(heldStack, player, AetherItems.SKYROOT_MILK_BUCKET.get().getDefaultInstance());
-                player.swing(hand);
-                player.setItemInHand(hand, filledBucket);
             }
         }
     }

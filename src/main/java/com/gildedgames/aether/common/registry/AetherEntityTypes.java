@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.registry;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.miscellaneous.Parachute;
+import com.gildedgames.aether.common.entity.miscellaneous.SkyrootBoat;
 import com.gildedgames.aether.common.entity.monster.*;
 import com.gildedgames.aether.common.entity.monster.dungeon.Mimic;
 import com.gildedgames.aether.common.entity.monster.dungeon.Sentry;
@@ -92,6 +93,9 @@ public class AetherEntityTypes {
 
 
     // Miscellaneous
+    public static final RegistryObject<EntityType<SkyrootBoat>> SKYROOT_BOAT = ENTITIES.register("skyroot_boat",
+            () -> EntityType.Builder.<SkyrootBoat>of(SkyrootBoat::new, MobCategory.MISC).sized(1.375F, 0.5625F).clientTrackingRange(10).build("skyroot_boat"));
+
     public static final RegistryObject<EntityType<CloudMinion>> CLOUD_MINION = ENTITIES.register("cloud_minion",
             () -> EntityType.Builder.<CloudMinion>of(CloudMinion::new, MobCategory.MISC).sized(0.75F, 0.75F).clientTrackingRange(5).build("cloud_minion"));
 

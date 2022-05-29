@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.event.hooks;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDart;
 import com.gildedgames.aether.common.entity.projectile.dart.GoldenDart;
@@ -9,6 +10,8 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherLoot;
 import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.arrow.PhoenixArrow;
 import com.gildedgames.aether.core.capability.lightning.LightningTracker;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
@@ -121,6 +124,20 @@ public class AbilityHooks {
                     }
                 }
             }
+        }
+
+        public static float reduceToolEffectiveness(Level level, BlockState state, ItemStack stack, float amount) {
+            if (AetherConfig.COMMON.tools_debuff.get()) {
+                if (level.dimension() == AetherDimensions.AETHER_LEVEL) {
+                    if (!stack.isEmpty()
+                            && !stack.is(AetherTags.Items.EFFECTIVE_IN_AETHER)
+                            && stack.isCorrectToolForDrops(state)
+                            && stack.getItem().getRegistryName() != null && !stack.getItem().getRegistryName().getNamespace().equals(Aether.MODID)) {
+                        amount = (float) Math.pow(amount, -0.2);
+                    }
+                }
+            }
+            return amount;
         }
     }
 

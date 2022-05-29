@@ -313,6 +313,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET, "Skyroot Bucket of Tropical Fish");
         addItem(AetherItems.SKYROOT_AXOLOTL_BUCKET, "Skyroot Bucket of Axolotl");
 
+        addItem(AetherItems.SKYROOT_BOAT, "Skyroot Boat");
+
         addItem(AetherItems.COLD_PARACHUTE, "Cold Parachute");
         addItem(AetherItems.GOLDEN_PARACHUTE, "Golden Parachute");
 
@@ -353,8 +355,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.FLYING_COW, "Flying Cow");
         addEntityType(AetherEntityTypes.SHEEPUFF, "Sheepuff");
         addEntityType(AetherEntityTypes.MOA, "Moa");
-        addEntityType(AetherEntityTypes.AERBUNNY, "Aerbunny");
         addEntityType(AetherEntityTypes.AERWHALE, "Aerwhale");
+        addEntityType(AetherEntityTypes.AERBUNNY, "Aerbunny");
+
         addEntityType(AetherEntityTypes.BLUE_SWET, "Blue Swet");
         addEntityType(AetherEntityTypes.GOLDEN_SWET, "Golden Swet");
         addEntityType(AetherEntityTypes.WHIRLWIND, "Whirlwind");
@@ -362,17 +365,26 @@ public class AetherLanguageData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.AECHOR_PLANT, "Aechor Plant");
         addEntityType(AetherEntityTypes.COCKATRICE, "Cockatrice");
         addEntityType(AetherEntityTypes.ZEPHYR, "Zephyr");
+
         addEntityType(AetherEntityTypes.SENTRY, "Sentry");
         addEntityType(AetherEntityTypes.MIMIC, "Mimic");
         addEntityType(AetherEntityTypes.VALKYRIE, "Valkyrie");
         addEntityType(AetherEntityTypes.FIRE_MINION, "Fire Minion");
 
+        addEntityType(AetherEntityTypes.SKYROOT_BOAT, "Boat");
+        addEntityType(AetherEntityTypes.CLOUD_MINION, "Cloud Minion");
+        addEntityType(AetherEntityTypes.COLD_PARACHUTE, "Cold Parachute");
+        addEntityType(AetherEntityTypes.GOLDEN_PARACHUTE, "Golden Parachute");
         addEntityType(AetherEntityTypes.FLOATING_BLOCK, "Floating Block");
-        addEntityType(AetherEntityTypes.LIGHTNING_KNIFE, "Lightning Knife");
+        addEntityType(AetherEntityTypes.TNT_PRESENT, "TNT Present");
+
         addEntityType(AetherEntityTypes.ZEPHYR_SNOWBALL, "Zephyr Snowball");
+        addEntityType(AetherEntityTypes.CLOUD_CRYSTAL, "Cloud Crystal");
         addEntityType(AetherEntityTypes.GOLDEN_DART, "Golden Dart");
         addEntityType(AetherEntityTypes.POISON_DART, "Poison Dart");
         addEntityType(AetherEntityTypes.ENCHANTED_DART, "Enchanted Dart");
+        addEntityType(AetherEntityTypes.POISON_NEEDLE, "Poison Needle");
+        addEntityType(AetherEntityTypes.LIGHTNING_KNIFE, "Lightning Knife");
         addEntityType(AetherEntityTypes.HAMMER_PROJECTILE, "Hammer Projectile");
 
 
@@ -597,6 +609,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addKeyInfo("category", "Aether");
         addKeyInfo("open_accessories.desc", "Open/Close Accessories Inventory");
+        addKeyInfo("gravitite_jump_ability.desc", "Activate Gravitite Jump");
 
 
 
