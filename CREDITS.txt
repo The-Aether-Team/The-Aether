@@ -1,4 +1,5 @@
 AerodDev:
+- Implementation of the CTM textures.
 - Fixes to the Aether Dirt Path texture.
 
 Aethyus:
