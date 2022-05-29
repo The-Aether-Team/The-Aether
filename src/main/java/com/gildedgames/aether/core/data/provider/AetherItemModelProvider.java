@@ -1,6 +1,7 @@
 package com.gildedgames.aether.core.data.provider;
 
 import com.gildedgames.aether.Aether;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
@@ -49,8 +50,8 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
         return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/handheld"))
                 .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
                 .transforms()
-                .transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT).rotation(0.0F, -90.0F, 45.0F).translation(0.0F, 1.0F, -5.0F).scale(0.85F, 0.85F, 0.85F).end()
-                .transform(ModelBuilder.Perspective.THIRDPERSON_LEFT).rotation(0.0F, 90.0F, -45.0F).translation(0.0F, 1.0F, -5.0F).scale(0.85F, 0.85F, 0.85F).end()
+                .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND).rotation(0.0F, -90.0F, 45.0F).translation(0.0F, 1.0F, -5.0F).scale(0.85F, 0.85F, 0.85F).end()
+                .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND).rotation(0.0F, 90.0F, -45.0F).translation(0.0F, 1.0F, -5.0F).scale(0.85F, 0.85F, 0.85F).end()
                 .end();
     }
 
@@ -65,8 +66,8 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
         return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/handheld"))
                 .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
                 .transforms()
-                .transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT).rotation(0.0F, -90.0F, 45.0F).translation(0.0F, 1.5F, -1.0F).scale(0.85F, 0.85F, 0.85F).end()
-                .transform(ModelBuilder.Perspective.THIRDPERSON_LEFT).rotation(0.0F, 90.0F, -45.0F).translation(0.0F, 1.5F, -1.0F).scale(0.85F, 0.85F, 0.85F).end()
+                .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND).rotation(0.0F, -90.0F, 45.0F).translation(0.0F, 1.5F, -1.0F).scale(0.85F, 0.85F, 0.85F).end()
+                .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND).rotation(0.0F, 90.0F, -45.0F).translation(0.0F, 1.5F, -1.0F).scale(0.85F, 0.85F, 0.85F).end()
                 .end();
     }
 
@@ -129,13 +130,13 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
                 .element().from(0.0F, 0.0F, 0.0F).to(16.0F, 16.0F, 16.0F).allFaces((direction, builder) -> builder.texture("#face").cullface(direction).end()).end()
                 .element().from(0.0F, 0.0F, -0.1F).to(16.0F, 16.0F, -0.1F).rotation().angle(0.0F).axis(Direction.Axis.Y).origin(8.0F, 8.0F, 6.9F).end().face(Direction.NORTH).texture("#overlay").end().end()
                 .transforms()
-                .transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT).rotation(75.0F, 45.0F, 0.0F).translation(0.0F, 2.5F, 0.0F).scale(0.375F, 0.375F, 0.375F).end()
-                .transform(ModelBuilder.Perspective.THIRDPERSON_LEFT).rotation(75.0F, 45.0F, 0.0F).translation(0.0F, 2.5F, 0.0F).scale(0.375F, 0.375F, 0.375F).end()
-                .transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT).rotation(-90.0F, -180.0F, -45.0F).scale(0.4F, 0.4F, 0.4F).end()
-                .transform(ModelBuilder.Perspective.FIRSTPERSON_LEFT).rotation(-90.0F, -180.0F, -45.0F).scale(0.4F, 0.4F, 0.4F).end()
-                .transform(ModelBuilder.Perspective.GROUND).rotation(90.0F, 0.0F, 0.0F).translation(0.0F, 3.0F, 0.0F).scale(0.25F, 0.25F, 0.25F).end()
-                .transform(ModelBuilder.Perspective.GUI).rotation(30.0F, 135.0F, 0.0F).scale(0.625F, 0.625F, 0.625F).end()
-                .transform(ModelBuilder.Perspective.FIXED).scale(0.5F, 0.5F, 0.5F).end()
+                .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND).rotation(75.0F, 45.0F, 0.0F).translation(0.0F, 2.5F, 0.0F).scale(0.375F, 0.375F, 0.375F).end()
+                .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND).rotation(75.0F, 45.0F, 0.0F).translation(0.0F, 2.5F, 0.0F).scale(0.375F, 0.375F, 0.375F).end()
+                .transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND).rotation(-90.0F, -180.0F, -45.0F).scale(0.4F, 0.4F, 0.4F).end()
+                .transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND).rotation(-90.0F, -180.0F, -45.0F).scale(0.4F, 0.4F, 0.4F).end()
+                .transform(ItemTransforms.TransformType.GROUND).rotation(90.0F, 0.0F, 0.0F).translation(0.0F, 3.0F, 0.0F).scale(0.25F, 0.25F, 0.25F).end()
+                .transform(ItemTransforms.TransformType.GUI).rotation(30.0F, 135.0F, 0.0F).scale(0.625F, 0.625F, 0.625F).end()
+                .transform(ItemTransforms.TransformType.FIXED).scale(0.5F, 0.5F, 0.5F).end()
                 .end();
     }
 
