@@ -11,7 +11,6 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -29,11 +28,12 @@ public class MostDamageTargetGoal extends TargetGoal {
     /** The current target. */
     @Nullable
     private LivingEntity primaryTarget;
-    /** How much aggro each mob loses per tick. */
+    /** How much aggro each mob loses per second. */
     private final float calmDownRate;
+    private int aiTicks;
 
     public MostDamageTargetGoal(Mob pMob) {
-        this(pMob, 0.05F);
+        this(pMob, 1F);
     }
 
     public MostDamageTargetGoal(Mob pMob, float calmDownRate) {
@@ -56,10 +56,8 @@ public class MostDamageTargetGoal extends TargetGoal {
         LivingEntity lastAttacker = this.mob.getLastHurtByMob();
         if (lastAttacker != null && mobTimestamp != this.lastHurtTimestamp) {
             this.primaryTarget = this.getStrongestAttacker();
-            return this.primaryTarget != null;
-        } else {
-            return false;
         }
+        return this.primaryTarget != null;
     }
 
     /**
@@ -71,6 +69,9 @@ public class MostDamageTargetGoal extends TargetGoal {
         return this.mob.getLastHurtByMobTimestamp() == this.lastHurtTimestamp && super.canContinueToUse();
     }
 
+    /**
+     * Sets the target.
+     */
     @Override
     public void start() {
         this.mob.setTarget(this.primaryTarget);
@@ -86,17 +87,20 @@ public class MostDamageTargetGoal extends TargetGoal {
     }
 
     /**
-     * Decreases aggro toward all mobs. Removes mobs that either don't have aggro or are dead.
+     * Decreases aggro toward all mobs every second. This removes mobs that are dead or have no aggro and are dead.
      */
     private void tickAggro() {
-        this.attackers.forEach((livingEntity, oldAggro) -> {
-            double aggro = oldAggro - calmDownRate;
-            if (!livingEntity.isAlive() || aggro <= 0) {
-                this.attackers.removeDouble(livingEntity);
-            } else {
-                this.attackers.put(livingEntity, aggro);
-            }
-        });
+        if (++this.aiTicks >= 10) {
+            this.aiTicks = 0;
+            this.attackers.forEach((livingEntity, oldAggro) -> {
+                double aggro = oldAggro - this.calmDownRate;
+                if (!livingEntity.isAlive() || (aggro <= 0 && !this.canAttack(livingEntity, HURT_BY_TARGETING))) {
+                    this.attackers.removeDouble(livingEntity);
+                } else {
+                    this.attackers.put(livingEntity, aggro);
+                }
+            });
+        }
     }
 
     /**
