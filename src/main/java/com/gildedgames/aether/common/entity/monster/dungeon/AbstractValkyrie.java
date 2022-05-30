@@ -6,6 +6,7 @@ import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.event.events.ValkyrieTeleportEvent;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.ExplosionParticlePacket;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -32,6 +33,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(AbstractValkyrie.class, EntityDataSerializers.BOOLEAN);
     /** Increments every tick to decide when the valkyries are ready to teleport. */
     protected int teleportTimer;
+    /** Prevents the player from quickly talking to the valkyrie in succession. */
+    protected int chatTimer;
     /** Goal for targeting in groups of entities */
     MostDamageTargetGoal mostDamageTargetGoal;
 
@@ -63,6 +66,9 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     public void customServerAiStep() {
         super.customServerAiStep();
         this.teleportTimer++;
+        if (this.chatTimer > 0) {
+            this.chatTimer--;
+        }
     }
 
     @Override
@@ -81,7 +87,6 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
     /**
      * The valkyrie will be provoked to attack the player if attacked.
-     * This also handles the defeat message if their health drops below 0.
      */
     @Override
     public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
@@ -135,6 +140,12 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         return flag;
     }
 
+    /**
+     * Sends a message to the player who interacted with the valkyrie.
+     */
+    protected void chatItUp(Player player, Component message) {
+        player.sendMessage(message, player.getUUID());
+    }
 
     @Override
     public boolean isEntityOnGround() {
@@ -144,6 +155,11 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     public void setEntityOnGround(boolean onGround) {
         this.entityData.set(DATA_ENTITY_ON_GROUND_ID, onGround);
+    }
+
+    @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return false;
     }
 
     /**

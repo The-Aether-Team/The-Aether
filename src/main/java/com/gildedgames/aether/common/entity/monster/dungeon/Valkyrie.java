@@ -1,7 +1,6 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.common.registry.AetherItems;
 
 import net.minecraft.server.level.ServerPlayer;
@@ -12,10 +11,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.player.Player;
@@ -23,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
@@ -38,8 +32,6 @@ import java.util.UUID;
  * messages and drop a victory medal upon their defeat.
  */
 public class Valkyrie extends AbstractValkyrie implements NeutralMob {
-    /** Prevents the player from quickly talking to the valkyrie in succession. */
-    private int chatTimer;
     /** Keeps track of the previous y motion value. */
     private double motionYo;
     /** General neutral mob necessities */
@@ -105,24 +97,6 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
                 this.setEntityOnGround(false);
             }
         }
-    }
-
-    /**
-     * Increments the chat timer.
-     */
-    @Override
-    public void customServerAiStep() {
-        super.customServerAiStep();
-        if (this.chatTimer > 0) {
-            this.chatTimer--;
-        }
-    }
-
-    /**
-     * Sends a message to the player who interacted with the valkyrie.
-     */
-    private void chatItUp(Player player, Component message) {
-        player.sendMessage(message, player.getUUID());
     }
 
     /**
@@ -228,10 +202,5 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     @Override
     protected SoundEvent getDeathSound() {
         return AetherSoundEvents.ENTITY_VALKYRIE_DEATH.get();
-    }
-
-    @Override
-    protected boolean shouldDespawnInPeaceful() {
-        return false;
     }
 }
