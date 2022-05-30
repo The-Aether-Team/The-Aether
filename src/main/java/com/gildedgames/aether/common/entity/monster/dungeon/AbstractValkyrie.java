@@ -91,7 +91,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
         boolean result = super.hurt(source, pDamageAmount);
-        if (!this.level.isClientSide && source.getEntity() instanceof LivingEntity living) {
+        if (!this.level.isClientSide && result && source.getEntity() instanceof LivingEntity living) {
             this.mostDamageTargetGoal.addAggro(living, pDamageAmount);
         }
         return result;
