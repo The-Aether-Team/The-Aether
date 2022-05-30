@@ -47,8 +47,6 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     private int remainingPersistentAngerTime;
     @Nullable
     private UUID persistentAngerTarget;
-    /** Goal for targeting in groups of entities */
-    MostDamageTargetGoal mostDamageTargetGoal;
 
     public Valkyrie(EntityType<? extends Valkyrie> type, Level worldIn) {
         super(type, worldIn);
@@ -56,14 +54,8 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     }
 
     @Override
-    protected void registerGoals() {
-        this.goalSelector.addGoal(1, new ValkyrieTeleportGoal(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 0.65, true));
-        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.5));
-        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));
-        this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
-        this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
-        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+    public void registerGoals() {
+        super.registerGoals();
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
         this.targetSelector.addGoal(4, new ResetUniversalAngerTargetGoal<>(this, false));
     }
@@ -170,13 +162,10 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     @Override
     public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
         boolean result = super.hurt(source, pDamageAmount);
-        if (!this.level.isClientSide && source.getEntity() instanceof LivingEntity living) {
-            if (source.getEntity() instanceof Player player) {
-                if (this.getTarget() == null && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
-                    chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.attack." + (char) (random.nextInt(3) + '1')));
-                }
+        if (!this.level.isClientSide && source.getEntity() instanceof Player player) {
+            if (this.getTarget() == null && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
+                chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.attack." + (char) (random.nextInt(3) + '1')));
             }
-            this.mostDamageTargetGoal.addAggro(living, pDamageAmount);
         }
         return result;
     }

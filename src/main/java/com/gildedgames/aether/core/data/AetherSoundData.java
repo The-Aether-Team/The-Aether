@@ -562,6 +562,18 @@ public class AetherSoundData extends SoundDefinitionsProvider
                                 sound("damage/hit3"))
                         .subtitle("subtitles.entity.valkyrie.hurt")
         );
+        this.add(AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_DEATH,
+                definition().with(sound("damage/hit1"),
+                                sound("damage/hit2"),
+                                sound("damage/hit3"))
+                        .subtitle("subtitles.entity.valkyrie_queen.death")
+        );
+        this.add(AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_HURT,
+                definition().with(sound("damage/hit1"),
+                                sound("damage/hit2"),
+                                sound("damage/hit3"))
+                        .subtitle("subtitles.entity.valkyrie_queen.hurt")
+        );
         this.add(AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT,
                 definition().with(sound("minecraft:mob/ghast/fireball4"))
                 .subtitle("subtitles.entity.sun_spirit.shoot")

@@ -123,6 +123,9 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_DEATH = register("entity.valkyrie.death");
 	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_HURT = register("entity.valkyrie.hurt");
 
+	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_QUEEN_DEATH = register("entity.valkyrie_queen.death");
+	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_QUEEN_HURT = register("entity.valkyrie_queen.hurt");
+
 	public static final RegistryObject<SoundEvent> ENTITY_SUN_SPIRIT_SHOOT = register("entity.sun_spirit.shoot");
 
 	public static final RegistryObject<SoundEvent> ENTITY_CLOUD_MINION_SHOOT = register("entity.cloud_minion.shoot");

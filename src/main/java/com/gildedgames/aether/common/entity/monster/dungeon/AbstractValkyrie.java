@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
 import com.gildedgames.aether.common.entity.NotGrounded;
+import com.gildedgames.aether.common.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.event.events.ValkyrieTeleportEvent;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
@@ -11,8 +12,14 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 
@@ -25,9 +32,22 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(AbstractValkyrie.class, EntityDataSerializers.BOOLEAN);
     /** Increments every tick to decide when the valkyries are ready to teleport. */
     protected int teleportTimer;
+    /** Goal for targeting in groups of entities */
+    MostDamageTargetGoal mostDamageTargetGoal;
 
     public AbstractValkyrie(EntityType<? extends AbstractValkyrie> type, Level level) {
         super(type, level);
+    }
+
+    @Override
+    public void registerGoals() {
+        this.goalSelector.addGoal(2, new ValkyrieTeleportGoal(this));
+        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 0.65, true));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.5));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));
+        this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
+        this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
+        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
     }
 
     @Override
@@ -57,6 +77,19 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     public boolean causeFallDamage(float pFallDistance, float pMultiplier, @Nonnull DamageSource pSource) {
         return false;
+    }
+
+    /**
+     * The valkyrie will be provoked to attack the player if attacked.
+     * This also handles the defeat message if their health drops below 0.
+     */
+    @Override
+    public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
+        boolean result = super.hurt(source, pDamageAmount);
+        if (!this.level.isClientSide && source.getEntity() instanceof LivingEntity living) {
+            this.mostDamageTargetGoal.addAggro(living, pDamageAmount);
+        }
+        return result;
     }
 
     /**

@@ -1,11 +1,14 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.BossInfoPacket;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -19,14 +22,16 @@ import javax.annotation.Nonnull;
  * in the same way, with the additional ability to shoot thunder crystal projectiles at their enemies.
  */
 public class ValkyrieQueen extends AbstractValkyrie {
+
     private final ServerBossEvent bossFight = new ServerBossEvent(new TextComponent("QUEEEEEENNNN"), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
     public ValkyrieQueen(EntityType<? extends ValkyrieQueen> type, Level level) {
         super(type, level);
+        this.xpReward = 50;
     }
 
     @Override
     public void registerGoals() {
-
+        super.registerGoals();
     }
 
     @Nonnull
@@ -63,5 +68,15 @@ public class ValkyrieQueen extends AbstractValkyrie {
         super.stopSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId()), pPlayer);
         this.bossFight.removePlayer(pPlayer);
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(@Nonnull DamageSource pDamageSource) {
+        return AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_DEATH.get();
     }
 }
