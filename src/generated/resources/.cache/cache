@@ -110,7 +110,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-59249291b74cc23b776bc97320ef9e448e381087 assets/aether/lang/en_us.json
+d3d7d876c6ac60cd6447fef6f7c3fbc1ce067532 assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -1347,6 +1347,7 @@ e48ef3421784a8a793f8274d119c5807b45565a3 data/aether/tags/items/book_of_lore_mat
 bf5e985e5af210e8b37065aedb707f859ae37f9e data/aether/tags/items/deployable_parachutes.json
 1bf5110a1d632a35e62cd092d74ddb31b9c649d7 data/aether/tags/items/dungeon_blocks.json
 8413c94479889aa5c01d30d15e2bb9b9c0023aae data/aether/tags/items/dungeon_keys.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/aether/tags/items/effective_in_aether.json
 af0c2eedb134c30d4318a59ce358fa88b7a8cf5a data/aether/tags/items/flying_cow_temptation_items.json
 15abb62625454f10b6e653236021c665d9960192 data/aether/tags/items/freezable_buckets.json
 60d0978e3d0753536745dd9281cf277fe468a4bd data/aether/tags/items/freezable_pendants.json
