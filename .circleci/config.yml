@@ -37,7 +37,7 @@ jobs:
 
   deploy:
     machine:
-        image: ubuntu-2004:202111-02
+        image: ubuntu-2004:202201-02
     steps:
       - run:
           name: Install OpenVPN
@@ -58,14 +58,12 @@ jobs:
             echo $VPN_CLIENT_LOAD | base64 --decode > $CLIENT_PATH.autoload
             echo $VPN_CLIENT_CONFIG | base64 --decode > $CLIENT_PATH.ovpn
 
-            #IMPORTANT: Include the following 3 lines to exclude the link-local range
-            phone_home="$(netstat -an | grep ':22 .*ESTABLISHED' | head -n1 | awk '{ split($5, a, ":"); print a[1] }')"
-            echo $phone_home
-            echo -e "\nroute $phone_home 255.255.255.255 net_gateway" >> $CLIENT_PATH.ovpn
+            ET_phone_home=$(ss -Hnto state established '( sport = :ssh )' | head -n1 | awk '{ split($4, a, ":"); print a[1] }')
+            
+            echo -e "\nroute $ET_phone_home 255.255.255.255 net_gateway" >> $CLIENT_PATH.ovpn
             echo "route 169.254.0.0 255.255.0.0 net_gateway" >> $CLIENT_PATH.ovpn
             
             sudo openvpn3-autoload --directory .openvpn3/autoload
-          
       - run: 
           name: Wait for VPN connection to be established
           command: |
@@ -140,9 +138,7 @@ jobs:
       - run:
           name: Disconnect from OpenVPN
           command: |
-            SESSION_PATH=$(sudo openvpn3 sessions-list | grep Path | awk -F': ' '{print $2}')
-            echo $SESSION_PATH
-            sudo openvpn3 session-manage --session-path $SESSION_PATH --disconnect
+            sudo killall openvpn || true
           when: always
 
 workflows:

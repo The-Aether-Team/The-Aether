@@ -1,15 +1,15 @@
-package com.gildedgames.aether.common.block.natural;
+package com.gildedgames.aether.common.block.construction;
 
-import com.gildedgames.aether.common.block.util.AetherDoubleDropBlock;
 import com.gildedgames.aether.common.block.util.FrictionCapped;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class QuicksoilBlock extends AetherDoubleDropBlock implements FrictionCapped {
-    public QuicksoilBlock(Properties properties) {
+public class QuicksoilGlassBlock extends GlassBlock implements FrictionCapped {
+    public QuicksoilGlassBlock(Properties properties) {
         super(properties);
     }
 

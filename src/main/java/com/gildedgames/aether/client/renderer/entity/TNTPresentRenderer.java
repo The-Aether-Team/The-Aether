@@ -33,9 +33,7 @@ public class TNTPresentRenderer extends EntityRenderer<TntPresent> {
             float f1 = 1.0F + f * 0.3F;
             poseStack.scale(f1, f1, f1);
         }
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
-        poseStack.translate(-0.5, -0.5, 0.5);
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(90.0F));
+        poseStack.translate(-0.5, -0.5, -0.5);
         TntMinecartRenderer.renderWhiteSolidBlock(AetherBlocks.PRESENT.get().defaultBlockState(), poseStack, buffer, packedLight, present.getFuse() / 5 % 2 == 0);
         poseStack.popPose();
         super.render(present, entityYaw, partialTicks, poseStack, buffer, packedLight);
