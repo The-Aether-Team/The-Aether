@@ -20,22 +20,22 @@ public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<A
     private final AerwhaleModel defaultModel;
     private final ClassicAerwhaleModel oldModel;
     
-    public AerwhaleRenderer(EntityRendererProvider.Context renderer) {
-        super(renderer, new AerwhaleModel(renderer.bakeLayer(AetherModelLayers.AERWHALE)), 0.5F);
-        this.defaultModel = new AerwhaleModel(renderer.bakeLayer(AetherModelLayers.AERWHALE));
-        this.oldModel = new ClassicAerwhaleModel(renderer.bakeLayer(AetherModelLayers.AERWHALE_CLASSIC));
+    public AerwhaleRenderer(EntityRendererProvider.Context context) {
+        super(context, new AerwhaleModel(context.bakeLayer(AetherModelLayers.AERWHALE)), 0.5F);
+        this.defaultModel = new AerwhaleModel(context.bakeLayer(AetherModelLayers.AERWHALE));
+        this.oldModel = new ClassicAerwhaleModel(context.bakeLayer(AetherModelLayers.AERWHALE_CLASSIC));
     }
 
     @Override
-    protected void scale(@Nonnull Aerwhale aerwhale, PoseStack pMatrixStack, float partialTickTime) {
-        pMatrixStack.translate(0.0, -0.5, 0.0);
-        pMatrixStack.scale(2.0F, 2.0F, 2.0F);
+    protected void scale(@Nonnull Aerwhale aerwhale, PoseStack poseStack, float partialTickTime) {
+        poseStack.translate(0.0, -0.5, 0.0);
+        poseStack.scale(2.0F, 2.0F, 2.0F);
     }
 
     @Override
-    protected void setupRotations(@Nonnull Aerwhale pEntityLiving, @Nonnull PoseStack pMatrixStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {
-        super.setupRotations(pEntityLiving, pMatrixStack, pAgeInTicks, pRotationYaw, pPartialTicks);
-        pMatrixStack.mulPose(Vector3f.XP.rotationDegrees(pEntityLiving.getXRot()));
+    protected void setupRotations(@Nonnull Aerwhale aerwhale, @Nonnull PoseStack poseStack, float ageInTicks, float pRotationYaw, float partialTicks) {
+        poseStack.mulPose(Vector3f.XP.rotationDegrees(aerwhale.getXRot()));
+        super.setupRotations(aerwhale, poseStack, ageInTicks, pRotationYaw, partialTicks);
     }
 
     @Override
