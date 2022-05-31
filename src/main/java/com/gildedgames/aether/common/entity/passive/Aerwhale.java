@@ -247,6 +247,7 @@ public class Aerwhale extends FlyingMob {
             yRot = Mth.approachDegrees(yRot, yRotTarget, 2F);
             this.mob.setYRot(yRot);
             this.mob.yBodyRot = yRot;
+            this.mob.yHeadRot = yRot;
 
             x = this.mob.getAttributeValue(Attributes.FLYING_SPEED) * Mth.cos(yRot * ((float) Math.PI / 180F));
             y = this.mob.getAttributeValue(Attributes.FLYING_SPEED) * Mth.sin(xRot * ((float) Math.PI / 180F));
