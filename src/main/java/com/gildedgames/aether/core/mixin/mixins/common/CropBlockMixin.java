@@ -13,6 +13,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(CropBlock.class)
 public class CropBlockMixin
 {
+    /**
+     * Vanilla crops are hardcoded to check for normal farmland to determine whether they can live there. This injector
+     * mixin bypasses that by checking for Aether farmland as well.
+     */
     @Inject(at = @At("HEAD"), method = "mayPlaceOn", cancellable = true)
     private void mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (state.is(AetherBlocks.AETHER_FARMLAND.get())) {
