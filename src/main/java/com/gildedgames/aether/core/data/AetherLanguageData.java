@@ -795,7 +795,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.SKYROOT_MILK_BUCKET, "A bucket full of fresh Milk, drink it to heal potion effects.");
         addLore(AetherItems.SKYROOT_PICKAXE, "One of Aether's wooden tools, when mining Holystone or Ambrosium ore, it will double the drops. This is even better when combined with an enchantment such as Fortune when mining Ambrosium Shards!");
         addLore(AetherBlocks.SKYROOT_PLANKS, "Skyroot Planks can be made into various tools, blocks and items. They are crafted from Skyroot Logs, and make a great building material.");
-        addLore(AetherBlocks.SKYROOT_PRESSURE_PLATE, "Crafted from Skyroot Planks. A wooden pressure plate used to activate mechanisms and restone.");
+        addLore(AetherBlocks.SKYROOT_PRESSURE_PLATE, "Crafted from Skyroot Planks. A wooden pressure plate used to activate mechanisms and redstone.");
         addLore(AetherItems.SKYROOT_POISON_BUCKET, "A Skyroot Bucket that has been filled with a deadly poison. Better not drink it! It can be used to craft Poison Darts and Dart Shooters. Enchant it to cure the poison in it.");
         addLore(AetherItems.SKYROOT_POWDER_SNOW_BUCKET, "A Skyroot Bucket that has been filled with powder snow. With quick reactions it can be used to break the most deadly of falls, even in the Nether!");
         addLore(AetherItems.SKYROOT_PUFFERFISH_BUCKET, "A Skyroot Bucket with a Pufferfish inside. This item serves as a useful way to transport the defensive and poisonous Pufferfish.");
