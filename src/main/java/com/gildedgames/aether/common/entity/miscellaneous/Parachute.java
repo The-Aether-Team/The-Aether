@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.entity.miscellaneous;
 import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -42,10 +43,6 @@ public class Parachute extends Entity {
             this.resetFallDistance();
             this.moveParachute(passenger);
             this.move(MoverType.SELF, this.getDeltaMovement());
-            if (!passenger.level.isClientSide()) {
-                passenger.verticalCollisionBelow = true;
-                this.verticalCollisionBelow = true;
-            }
             this.spawnExplosionParticle();
             if (this.isOnGround() || this.isInWater() || this.isInLava()) {
                 this.ejectPassengers();
@@ -76,6 +73,10 @@ public class Parachute extends Entity {
                     double fallSpeed = Math.max(gravity.getValue() * -1.875, -0.075);
                     this.setDeltaMovement(parachuteVec2.x(), fallSpeed, parachuteVec2.z());
                 }
+            }
+            if (passenger instanceof ServerPlayer serverPlayer) {
+                serverPlayer.connection.aboveGroundTickCount = 0;
+                serverPlayer.connection.aboveGroundVehicleTickCount = 0;
             }
         }
     }
