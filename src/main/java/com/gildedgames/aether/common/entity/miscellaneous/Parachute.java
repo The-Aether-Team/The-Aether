@@ -4,7 +4,6 @@ import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.util.Mth;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.phys.Vec3;
@@ -43,6 +42,10 @@ public class Parachute extends Entity {
             this.resetFallDistance();
             this.moveParachute(passenger);
             this.move(MoverType.SELF, this.getDeltaMovement());
+            if (!passenger.level.isClientSide()) {
+                passenger.verticalCollisionBelow = true;
+                this.verticalCollisionBelow = true;
+            }
             this.spawnExplosionParticle();
             if (this.isOnGround() || this.isInWater() || this.isInLava()) {
                 this.ejectPassengers();
