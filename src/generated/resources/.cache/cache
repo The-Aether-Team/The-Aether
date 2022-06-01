@@ -110,7 +110,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-921bfcb2e21b42826746370e28ef7b798a117c8d assets/aether/lang/en_us.json
+dd79fc7329cec87085dd13c43202eba771ae41b5 assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -286,7 +286,7 @@ a1fccfdbe00979538284826306b945ddaae55298 assets/aether/models/item/aether_dirt.j
 b2a7358d95c8fc8eba7a7c8620d569dbbe71d151 assets/aether/models/item/aether_dirt_path.json
 937216ab80b9a713ebe0debb71b700aa4849d53e assets/aether/models/item/aether_farmland.json
 6841f385fb96cd3876a7c2dc1996a4195aa7c931 assets/aether/models/item/aether_grass_block.json
-b16cd72a8478c8aafb3fdeb58616bd529e4c033c assets/aether/models/item/aether_portal_frame.json
+0b3fde628fa5a2d6f6f0c4064aa2c5e5a7a80391 assets/aether/models/item/aether_portal_frame.json
 0713d78d9f5270a5ede1b7dabb8cc79d9848a13b assets/aether/models/item/agility_cape.json
 a8101e8aa4975d14cba817a3adfa86fd23d51a1c assets/aether/models/item/altar.json
 1612dc672b1197efe5fe8f6cece6635fad2b44d7 assets/aether/models/item/ambrosium_ore.json
