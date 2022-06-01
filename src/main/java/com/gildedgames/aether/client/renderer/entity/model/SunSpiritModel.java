@@ -14,50 +14,29 @@ import net.minecraft.util.Mth;
 import javax.annotation.Nonnull;
 
 public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
-    public ModelPart head;
-    public ModelPart jaw;
+    public ModelPart base;
     public ModelPart torso;
-    public ModelPart chest;
-    public ModelPart rightBase;
-    public ModelPart leftBase;
+    public ModelPart head;
     public ModelPart rightArm;
-    public ModelPart rightShoulder;
-    public ModelPart rightBracelet;
     public ModelPart leftArm;
-    public ModelPart leftShoulder;
-    public ModelPart leftBracelet;
 
     public SunSpiritModel(ModelPart root) {
-        this.head = root.getChild("head");
-        this.jaw = this.head.getChild("jaw");
-        this.torso = root.getChild("torso");
-        this.chest = this.torso.getChild("chest");
-        this.rightBase = this.torso.getChild("right_base");
-        this.leftBase = this.torso.getChild("left_base");
-        this.rightArm = root.getChild("right_arm");
-        this.rightShoulder = this.rightArm.getChild("right_shoulder");
-        this.rightBracelet = this.rightArm.getChild("right_bracelet");
-        this.leftArm = root.getChild("left_arm");
-        this.leftShoulder = this.leftArm.getChild("left_shoulder");
-        this.leftBracelet = this.leftArm.getChild("left_bracelet");
+        this.base = root.getChild("base");
+        this.torso = this.base.getChild("torso");
+        this.head = this.torso.getChild("head");
+        this.rightArm = this.torso.getChild("right_arm");
+        this.leftArm = this.torso.getChild("left_arm");
     }
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();
         PartDefinition partDefinition = meshDefinition.getRoot();
-        PartDefinition head = partDefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -3.0F, 8.0F, 5.0F, 7.0F), PartPose.ZERO);
-        head.addOrReplaceChild("jaw", CubeListBuilder.create().texOffs(32, 0).addBox(-4.0F, -3.0F, -4.0F, 8.0F, 3.0F, 8.0F), PartPose.ZERO);
-        PartDefinition torso = partDefinition.addOrReplaceChild("torso", CubeListBuilder.create().texOffs(0, 23).addBox(-4.5F, 6.0F, -2.0F, 9.0F, 5.0F, 4.0F), PartPose.ZERO);
-        torso.addOrReplaceChild("chest", CubeListBuilder.create().texOffs(0, 12).addBox(-5.0F, 0.0F, -2.5F, 10.0F, 6.0F, 5.0F), PartPose.ZERO);
-        torso.addOrReplaceChild("right_base", CubeListBuilder.create().texOffs(30, 27).addBox(-4.5F, 11.0F, -2.0F, 5.0F, 1.0F, 4.0F, new CubeDeformation(0.5F)), PartPose.ZERO);
-        torso.addOrReplaceChild("left_base", CubeListBuilder.create().texOffs(30, 27).addBox(-0.5F, 11.0F, -2.0F, 5.0F, 1.0F, 4.0F, new CubeDeformation(0.5F)), PartPose.ZERO);
-        PartDefinition rightArm = partDefinition.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(30, 11).addBox(-2.5F, 2.5F, -2.5F, 5.0F, 10.0F, 5.0F), PartPose.offset(-8.0F, 2.0F, 0.0F));
-        rightArm.addOrReplaceChild("right_shoulder", CubeListBuilder.create().texOffs(30, 11).addBox(-2.5F, -2.5F, -2.5F, 5.0F, 5.0F, 5.0F, new CubeDeformation(0.5F)), PartPose.ZERO);
-        rightArm.addOrReplaceChild("right_bracelet", CubeListBuilder.create().texOffs(30, 26).addBox(-2.5F, 7.5F, -2.5F, 5.0F, 1.0F, 5.0F, new CubeDeformation(0.25F)), PartPose.ZERO);
-        PartDefinition leftArm = partDefinition.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(30, 11).addBox(-2.5F, 2.5F, -2.5F, 5.0F, 10.0F, 5.0F).mirror(true), PartPose.offset(8.0F, 2.0F, 0.0F));
-        leftArm.addOrReplaceChild("left_shoulder", CubeListBuilder.create().texOffs(30, 11).addBox(-2.5F, -2.5F, -2.5F, 5.0F, 5.0F, 5.0F, new CubeDeformation(0.5F)).mirror(true), PartPose.ZERO);
-        leftArm.addOrReplaceChild("left_bracelet", CubeListBuilder.create().texOffs(30, 11).addBox(-2.5F, 7.5F, -2.5F, 5.0F, 1.0F, 5.0F, new CubeDeformation(0.25F)).mirror(true), PartPose.ZERO);
-        return LayerDefinition.create(meshDefinition, 64, 32);
+        PartDefinition base = partDefinition.addOrReplaceChild("base", CubeListBuilder.create(), PartPose.ZERO);
+        PartDefinition torso = base.addOrReplaceChild("torso", CubeListBuilder.create().texOffs(34, 0).addBox(-5.0F, -5.75F, -2.5F, 10.0F, 6.0F, 5.0F, CubeDeformation.NONE).texOffs(34, 11).addBox(-4.5F, 0.25F, -2.0F, 9.0F, 5.0F, 4.0F, CubeDeformation.NONE).texOffs(0, 54).addBox(-4.5F, 5.25F, -2.5F, 9.0F, 1.0F, 5.0F, new CubeDeformation(0.25F)), PartPose.ZERO);
+        torso.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 5.0F, 7.0F, CubeDeformation.NONE).texOffs(0, 12).addBox(-4.0F, -3.0F, -5.0F, 8.0F, 3.0F, 8.0F, CubeDeformation.NONE), PartPose.offset(0.0F, -5.75F, 0.5F));
+        torso.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(20, 33).mirror().addBox(0.5F, 2.5F, -2.5F, 5.0F, 10.0F, 5.0F, CubeDeformation.NONE).mirror(false).texOffs(20, 23).mirror().addBox(0.5F, -2.5F, -2.5F, 5.0F, 5.0F, 5.0F, new CubeDeformation(0.5F)).mirror(false).texOffs(20, 48).addBox(0.5F, 7.5F, -2.5F, 5.0F, 1.0F, 5.0F, new CubeDeformation(0.25F)), PartPose.offset(5.0F, -3.75F, 0.0F));
+        torso.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(0, 23).addBox(-5.5F, -2.5F, -2.5F, 5.0F, 5.0F, 5.0F, new CubeDeformation(0.5F)).texOffs(0, 33).addBox(-5.5F, 2.5F, -2.5F, 5.0F, 10.0F, 5.0F, CubeDeformation.NONE).texOffs(0, 48).mirror().addBox(-5.5F, 7.5F, -2.5F, 5.0F, 1.0F, 5.0F, new CubeDeformation(0.25F)).mirror(false), PartPose.offset(-5.0F, -3.75F, 0.0F));
+        return LayerDefinition.create(meshDefinition, 64, 64);
     }
 
     @Override
@@ -75,9 +54,6 @@ public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
 
     @Override
     public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.head.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.torso.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.rightArm.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.leftArm.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.base.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

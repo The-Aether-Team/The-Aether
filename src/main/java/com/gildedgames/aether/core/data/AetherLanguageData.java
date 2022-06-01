@@ -779,10 +779,13 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherBlocks.SENTRY_STONE, "The Light version of Carved Stone, also found in Bronze Dungeons.");
         addLore(AetherItems.SILVER_DUNGEON_KEY, "A reflective key that is given to you by the Valkyrie Queen after defeating her. Use it to claim the treasure she left behind!");
         addLore(AetherItems.SKYROOT_AXE, "One of Aether's wooden tools, it can be used to double Skyroot Log drops. Simple but useful for beginners.");
+        addLore(AetherItems.SKYROOT_AXOLOTL_BUCKET,"A Skyroot Bucket with a friendly Axolotl in. Axolotls can be incredibly helpful aquatic partners. So it's best to keep one on hand if you're exploring wet environments.");
         addLore(AetherBlocks.SKYROOT_BED, "Crafted with cyan wool and skyroot planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
+        addLore(AetherItems.SKYROOT_BOAT, "While the Aether does not have many large bodies of water, a boat can occasionally be a useful tool for crossing large distances over ice!");
         addLore(AetherBlocks.SKYROOT_BOOKSHELF, "Crafted from Skyroot Planks and Books. Bookshelves can be used to enhance the enchanting capabilities of an enchanting table.");
         addLore(AetherItems.SKYROOT_BUCKET, "A hand crafted bucket, used to contain Aechor poison, a nice Remedy or even just plain Water!");
         addLore(AetherBlocks.SKYROOT_BUTTON, "Crafted from Skyroot Planks, a button used to activate mechanisms and redstone.");
+        addLore(AetherItems.SKYROOT_COD_BUCKET, "A bucket with a Cod in it! Make sure to keep the water topped up or your new friend won't survive the journey home.");
         addLore(AetherBlocks.SKYROOT_DOOR, "Crafted from Skyroot Planks, an ornate door helpful for keeping an enclosed and safe space without worry of monsters wandering in.");
         addLore(AetherBlocks.SKYROOT_FENCE, "Crafted from Skyroot planks and Sticks. Great for keeping your livestock safe from wandering predators!");
         addLore(AetherBlocks.SKYROOT_FENCE_GATE, "Crafted from Sticks and Skyroot planks. Gives a homely entrance and exit to your precious enclosures.");
@@ -792,9 +795,12 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.SKYROOT_MILK_BUCKET, "A bucket full of fresh Milk, drink it to heal potion effects.");
         addLore(AetherItems.SKYROOT_PICKAXE, "One of Aether's wooden tools, when mining Holystone or Ambrosium ore, it will double the drops. This is even better when combined with an enchantment such as Fortune when mining Ambrosium Shards!");
         addLore(AetherBlocks.SKYROOT_PLANKS, "Skyroot Planks can be made into various tools, blocks and items. They are crafted from Skyroot Logs, and make a great building material.");
-        addLore(AetherBlocks.SKYROOT_PRESSURE_PLATE, "Crafted from Skyroot Planks. A wooden pressure plate used to activate mechanisms and restone.");
+        addLore(AetherBlocks.SKYROOT_PRESSURE_PLATE, "Crafted from Skyroot Planks. A wooden pressure plate used to activate mechanisms and redstone.");
         addLore(AetherItems.SKYROOT_POISON_BUCKET, "A Skyroot Bucket that has been filled with a deadly poison. Better not drink it! It can be used to craft Poison Darts and Dart Shooters. Enchant it to cure the poison in it.");
+        addLore(AetherItems.SKYROOT_POWDER_SNOW_BUCKET, "A Skyroot Bucket that has been filled with powder snow. With quick reactions it can be used to break the most deadly of falls, even in the Nether!");
+        addLore(AetherItems.SKYROOT_PUFFERFISH_BUCKET, "A Skyroot Bucket with a Pufferfish inside. This item serves as a useful way to transport the defensive and poisonous Pufferfish.");
         addLore(AetherItems.SKYROOT_REMEDY_BUCKET, "A Skyroot Bucket containing a soothing remedy. It has a strong smell. Drinking this cures deadly poison, and prevents it for a short time.");
+        addLore(AetherItems.SKYROOT_SALMON_BUCKET, "A Skyroot Bucket containing a Salmon fish. Useful for transporting live salmon over long stretches of land.");
         addLore(AetherBlocks.SKYROOT_SAPLING, "These small green saplings will grow into Skyroot Trees. They can be grown faster with Bone Meal.");
         addLore(AetherItems.SKYROOT_SHOVEL, "One of Aether's wooden tools, it doubles Aether dirt and Quicksoil drops.");
         addLore(AetherBlocks.SKYROOT_SIGN, "Crafted from Skyroot Planks and Sticks. A helpful sign perfect for writing messages and directions on.");
@@ -803,6 +809,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.SKYROOT_STICK, "Crafted from Skyroot Planks. Used to create various aether tools and items. Nothing else too special about it.");
         addLore(AetherItems.SKYROOT_SWORD, "One of Aether's wooden tools, it has a low amount of durability, and doubles mob drops. It makes an excellent food collected when combined with enchantments such as Looting and Fire Aspect.");
         addLore(AetherBlocks.SKYROOT_TRAPDOOR, "Crafted from Skyroot Planks. A Trapdoor useful for covering entryways one block wide. Often used to add extra protection to staircases.");
+        addLore(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET,"A Skyroot Bucket containing a Tropical Fish. A Helpful way to transport and catalogue the numerous varieties of Tropical Fish.");
         addLore(AetherItems.SKYROOT_WATER_BUCKET, "A Skyroot Bucket that is filled to the brim with Water.");
         addLore(AetherBlocks.STRIPPED_SKYROOT_LOG, "A Skyroot Log that has had its bark stripped away with an Axe. When put in a crafting table they will provide 4 Skyroot Planks.");
         addLore(AetherBlocks.STRIPPED_SKYROOT_WOOD, "A Skyroot Log that has had its bark stripped away with an Axe. When put in a crafting table they will provide 4 Skyroot Planks. Crafted to be smooth on all sides.");
@@ -847,6 +854,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "A music disc that plays Ascending Dawn by Emile van Krieken.");
         addLore(AetherItems.MUSIC_DISC_LEGACY, "A music disc that plays Legacy by Jon Lachney.");
         addLore(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "A music disc that plays Welcoming Skies by Voyed.");
+        addLore(AetherItems.MUSIC_DISC_CHINCHILLA,"A music disc that plays chinchilla by RENREN.");
 
 
         addProTip("skyroot_tool_ability", "Skyroot tools gain double drops from blocks.");
