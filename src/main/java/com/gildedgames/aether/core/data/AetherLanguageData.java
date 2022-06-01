@@ -848,16 +848,13 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.MUSIC_DISC_LEGACY, "A music disc that plays Legacy by Jon Lachney.");
         addLore(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "A music disc that plays Welcoming Skies by Voyed.");
 
+
         addProTip("skyroot_tool_ability", "Skyroot tools gain double drops from blocks.");
         addProTip("holystone_tool_ability", "Holystone tools occasionally generate Ambrosium.");
         addProTip("zanite_tool_ability", "Zanite Tools gain strength the more they are used.");
         addProTip("gravitite_tool_ability", "Gravitite Tools can levitate blocks when right-clicking.");
-
-
         addProTip("white_aerclouds", "White Aerclouds prevent fall damage when landed upon.");
         addProTip("blue_aerclouds", "Blue Aerclouds are bouncy, and launch mobs very high in the air.");
-
-
         addProTip("phyg_saddle", "Placing a saddle on Flying Pigs makes them a mount.");
         addProTip("moa_egg_incubation", "Moa Eggs can be incubated into Baby Moas with the Incubator.");
         addProTip("gravitite_ore_enchanting", "Gravitite Ore can be enchanted into Enchanted Gravitite.");
