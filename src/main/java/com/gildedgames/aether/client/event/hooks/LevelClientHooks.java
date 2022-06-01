@@ -17,9 +17,6 @@ public class LevelClientHooks {
                     if (player != null) {
                         player.setXRot(0);
                         player.setYRot(player.getYRot() + 0.05F);
-                        if (AetherWorldDisplayHelper.loadedPosition != null) {
-                            player.setPos(AetherWorldDisplayHelper.loadedPosition);
-                        }
                     }
                     if (minecraft.screen instanceof PauseScreen) {
                         setupMenu(minecraft);

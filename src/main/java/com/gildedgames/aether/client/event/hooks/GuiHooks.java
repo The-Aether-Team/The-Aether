@@ -276,4 +276,17 @@ public class GuiHooks {
             }
         }
     }
+
+    public static void tickMenuWhenPaused(Minecraft minecraft) {
+        if (minecraft != null && minecraft.level != null && minecraft.player != null) {
+            if (AetherWorldDisplayHelper.loadedLevel != null && AetherWorldDisplayHelper.loadedSummary != null && minecraft.isPaused()) {
+                minecraft.gameRenderer.tick();
+                minecraft.levelRenderer.tick();
+                minecraft.getMusicManager().tick();
+                minecraft.getSoundManager().tick(false);
+                minecraft.level.animateTick(minecraft.player.getBlockX(), minecraft.player.getBlockY(), minecraft.player.getBlockZ());
+                Minecraft.getInstance().particleEngine.tick();
+            }
+        }
+    }
 }

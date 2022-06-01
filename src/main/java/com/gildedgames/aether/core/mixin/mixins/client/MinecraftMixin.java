@@ -41,14 +41,13 @@ public class MinecraftMixin {
     public void getSituationalMusic_WorldPreviewMenu(CallbackInfoReturnable<Music> cir) {
         Minecraft minecraft = Minecraft.getInstance();
         if (AetherConfig.CLIENT.enable_world_preview.get() && minecraft.player != null && AetherWorldDisplayHelper.loadedLevel != null && AetherWorldDisplayHelper.loadedSummary != null) {
-            if (minecraft.screen instanceof TitleScreen titleScreen) {
+            if (minecraft.screen instanceof AetherTitleScreen && AetherConfig.CLIENT.enable_aether_menu.get()) {
+                if (!AetherConfig.CLIENT.disable_aether_world_preview_menu_music.get()) {
+                    cir.setReturnValue(AetherTitleScreen.MENU);
+                }
+            } else if (minecraft.screen instanceof TitleScreen) {
                 if (!AetherConfig.CLIENT.disable_vanilla_world_preview_menu_music.get()) {
                     cir.setReturnValue(Musics.MENU);
-                }
-                if (titleScreen instanceof AetherTitleScreen && AetherConfig.CLIENT.enable_aether_menu.get()) {
-                    if (!AetherConfig.CLIENT.disable_aether_world_preview_menu_music.get()) {
-                        cir.setReturnValue(AetherTitleScreen.MENU);
-                    }
                 }
             }
         }
@@ -61,18 +60,10 @@ public class MinecraftMixin {
         }
     }
 
-
     @Inject(at = @At(value = "HEAD"), method = "loadLevel")
     private void loadLevel(String levelName, CallbackInfo info)  {
         if (AetherWorldDisplayHelper.loadedLevel != null && AetherWorldDisplayHelper.loadedSummary != null) {
             AetherWorldDisplayHelper.stopWorld(Minecraft.getInstance(), new GenericDirtMessageScreen(new TextComponent("")));
-        }
-    }
-
-    @Inject(at = @At(value = "HEAD"), method = "stop")
-    public void stop(CallbackInfo info) {
-        if (AetherWorldDisplayHelper.loadedLevel != null) {
-            AetherWorldDisplayHelper.fixWorld();
         }
     }
 }

@@ -91,4 +91,12 @@ public class GuiListener {
 		GuiHooks.drawAetherTravelMessage(screen, poseStack);
 		GuiHooks.changeMenuAlignment(screen, minecraft);
 	}
+
+	@SubscribeEvent
+	public static void onMenuTick(TickEvent.ClientTickEvent event) {
+		Minecraft minecraft = Minecraft.getInstance();
+		if (event.phase == TickEvent.Phase.END) {
+			GuiHooks.tickMenuWhenPaused(minecraft);
+		}
+	}
 }

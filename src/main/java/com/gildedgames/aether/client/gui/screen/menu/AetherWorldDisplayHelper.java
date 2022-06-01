@@ -9,17 +9,12 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.DirectoryLock;
-import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelStorageException;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.LevelSummary;
-import net.minecraft.world.phys.Vec3;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -28,10 +23,6 @@ import java.util.List;
 public class AetherWorldDisplayHelper {
     public static Level loadedLevel = null;
     public static LevelSummary loadedSummary = null;
-
-    public static GameType loadedGameMode = null;
-    public static Vec3 loadedPosition = null;
-    public static GameRules loadedGameRules = null;
 
     public static void toggleWorldPreview(boolean config) {
         if (config) {
@@ -98,21 +89,7 @@ public class AetherWorldDisplayHelper {
         IntegratedServer server = minecraft.getSingleplayerServer();
         if (server != null) {
             loadedLevel = minecraft.level;
-
-            ServerPlayer serverPlayer = minecraft.getSingleplayerServer().getPlayerList().getPlayers().get(0);
-            GameRules gameRules = server.getGameRules();
-
-            loadedGameMode = serverPlayer.gameMode.getGameModeForPlayer();
-            loadedGameRules = new GameRules();
-            loadedGameRules.assignFrom(gameRules, server);
-            loadedPosition = serverPlayer.position();
-
-            serverPlayer.setGameMode(GameType.SPECTATOR);
-            gameRules.getRule(GameRules.RULE_MOBGRIEFING).set(false, server);
-            gameRules.getRule(GameRules.RULE_DOMOBSPAWNING).set(false, server);
-            gameRules.getRule(GameRules.RULE_RANDOMTICKING).set(0, server);
-            serverPlayer.setPos(loadedPosition);
-
+            Minecraft.getInstance().options.hideGui = true;
             deleteSessionLock();
         }
     }
@@ -123,11 +100,7 @@ public class AetherWorldDisplayHelper {
             minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
             if (minecraft.getLevelSource().levelExists(loadedSummary.getLevelId()) && minecraft.getSingleplayerServer() != null ) {
                 openSessionLock();
-                ServerPlayer player = minecraft.getSingleplayerServer().getPlayerList().getPlayers().get(0);
-                ServerLevel level = (ServerLevel) player.getCommandSenderWorld();
-                resetValues(player, level);
-                loadedLevel = null;
-                loadedSummary = null;
+                fixWorld();
                 minecraft.forceSetScreen(null);
             }
         }
@@ -147,29 +120,9 @@ public class AetherWorldDisplayHelper {
     }
 
     public static void fixWorld() {
+        Minecraft.getInstance().options.hideGui = false;
         loadedLevel = null;
         loadedSummary = null;
-        IntegratedServer server = Minecraft.getInstance().getSingleplayerServer();
-        if (server != null) {
-            ServerPlayer player = server.getPlayerList().getPlayers().get(0);
-            ServerLevel level = (ServerLevel) player.getCommandSenderWorld();
-            resetValues(player, level);
-        }
-    }
-
-    public static void resetValues(ServerPlayer player, ServerLevel level) {
-        if (loadedGameMode != null) {
-            player.setGameMode(loadedGameMode);
-            loadedGameMode = null;
-        }
-        if (loadedGameRules != null) {
-            level.getGameRules().assignFrom(loadedGameRules, player.getServer());
-            loadedGameRules = null;
-        }
-        if (loadedPosition != null) {
-            player.setPos(loadedPosition);
-            loadedPosition = null;
-        }
     }
 
     public static void deleteSessionLock() {
