@@ -110,7 +110,7 @@ b10b8c30834253a0192fa64a12e679cfd2d9d2bc assets/aether/blockstates/treasure_ches
 b5a7007da183ae1ed5f3e44362a29ca001064728 assets/aether/blockstates/white_flower.json
 c7f7ed006f3ca0ad3467a2b432de1b12d8f922d5 assets/aether/blockstates/zanite_block.json
 3c0b8bdcb3a99f28ef0788ad5d0b0d0653b91275 assets/aether/blockstates/zanite_ore.json
-0158f9069246304e3fbc48a39b15d4dd4acb08f2 assets/aether/lang/en_us.json
+0d915665f6b22010d137590ee90078a2e82dc051 assets/aether/lang/en_us.json
 9fe0a1fd4da004494c4d6a1c0d972962801dd178 assets/aether/models/block/aerogel.json
 710930d47f09854e50b260744c3aba97e312c46e assets/aether/models/block/aerogel_slab.json
 3daf833c19354f64592d43f5c668d0549020e1b2 assets/aether/models/block/aerogel_slab_top.json
@@ -465,6 +465,7 @@ c57d5418306dee3d4f54b861b1461a033d1e11e2 assets/aether/models/item/sentry_stone.
 5ce4e5f7202326f50df071220daca13cacbe3097 assets/aether/models/item/skyroot_axe.json
 8c723ba9fd55b8cb9a4860f4ba19df6134a6642e assets/aether/models/item/skyroot_axolotl_bucket.json
 8cd1f21ecc132b873de060cbf8cad33077924a4e assets/aether/models/item/skyroot_bed.json
+59d537e547e3516b0742483b511e1cd587c3d300 assets/aether/models/item/skyroot_boat.json
 48f1b0e6d43dbd249b641a1f58f0fa7643d7c5c2 assets/aether/models/item/skyroot_bookshelf.json
 192d68968cf2a87bb16e41bfa5abba0fe377a24c assets/aether/models/item/skyroot_bucket.json
 3a7b9d01f1ae85ca364046e39ca8a701ca828b82 assets/aether/models/item/skyroot_button.json
@@ -1346,6 +1347,7 @@ e48ef3421784a8a793f8274d119c5807b45565a3 data/aether/tags/items/book_of_lore_mat
 bf5e985e5af210e8b37065aedb707f859ae37f9e data/aether/tags/items/deployable_parachutes.json
 1bf5110a1d632a35e62cd092d74ddb31b9c649d7 data/aether/tags/items/dungeon_blocks.json
 8413c94479889aa5c01d30d15e2bb9b9c0023aae data/aether/tags/items/dungeon_keys.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/aether/tags/items/effective_in_aether.json
 af0c2eedb134c30d4318a59ce358fa88b7a8cf5a data/aether/tags/items/flying_cow_temptation_items.json
 15abb62625454f10b6e653236021c665d9960192 data/aether/tags/items/freezable_buckets.json
 60d0978e3d0753536745dd9281cf277fe468a4bd data/aether/tags/items/freezable_pendants.json

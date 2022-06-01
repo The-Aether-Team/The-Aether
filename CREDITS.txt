@@ -1,0 +1,35 @@
+3vorp
+- Contribution of the algae overlay texture for the Skyroot Boat programmer art texture.
+
+AerodDev:
+- Implementation of the CTM textures.
+- Fixes to the Aether Dirt Path texture.
+
+Aethyus:
+- fr_fr translation.
+
+baguchan:
+- ja_jp translation.
+- Improvements to entity AI to avoid entities falling out of the Aether.
+- Contributions to the Swet death animation.
+- Contributions to Skyroot Bed renderer.
+- Fixes to the Sheepuff renderer.
+- Fixes to the Dart layer renderers.
+
+CartoonishVillain:
+- Fixes to the Sentry.
+- Fixes to the Aechor Plant.
+
+CDAGaming:
+- Fixes to the Aether main menu.
+
+Parallel011:
+- zh_cn translation.
+
+StonedCoal:
+- Implementation of the Aether's main menu.
+- Fixes to the Aerbunny.
+
+ZolaKluke:
+- de_de translation.
+- en_ud translation.
