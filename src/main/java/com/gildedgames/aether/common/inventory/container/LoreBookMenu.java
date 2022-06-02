@@ -13,6 +13,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 
+import javax.annotation.Nonnull;
+
 public class LoreBookMenu extends AbstractContainerMenu
 {
     private final LoreInventory bookInventory;
@@ -84,12 +86,12 @@ public class LoreBookMenu extends AbstractContainerMenu
     }
 
     @Override
-    public void removed(Player playerIn) {
+    public void removed(@Nonnull Player playerIn) {
         super.removed(playerIn);
-        if (playerIn instanceof ServerPlayer) {
+        if (playerIn instanceof ServerPlayer serverPlayer) {
             ItemStack stack = this.bookInventory.getItem(0);
             if (!stack.isEmpty()) {
-                if (playerIn.isAlive() && !((ServerPlayer) playerIn).hasDisconnected()) {
+                if (playerIn.isAlive() && !serverPlayer.hasDisconnected()) {
                     playerIn.getInventory().placeItemBackInInventory(stack);
                 } else {
                     playerIn.drop(stack, false);
