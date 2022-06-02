@@ -17,9 +17,9 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nonnull;
-import java.awt.*;
 
 public class PlayerHaloLayer<T extends Player, M extends PlayerModel<T>> extends RenderLayer<T, M> {
     private static final ResourceLocation PLAYER_HALO_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/perks/halo.png");
@@ -38,10 +38,10 @@ public class PlayerHaloLayer<T extends Player, M extends PlayerModel<T>> extends
                 this.playerHalo.halo.yRot = this.getParentModel().head.yRot;
                 this.playerHalo.halo.xRot = this.getParentModel().head.xRot;
                 this.playerHalo.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-                Color color = SkinCustomizations.INSTANCE.getHaloColor();
+                Triple<Float, Float, Float> color = SkinCustomizations.INSTANCE.getHaloColor();
                 if (color != null) {
                     VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(PLAYER_HALO_GRAYSCALE_LOCATION));
-                    this.playerHalo.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue(), 1.0F);
+                    this.playerHalo.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, color.getLeft(), color.getMiddle(), color.getRight(), 1.0F);
                 } else {
                     VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(PLAYER_HALO_LOCATION));
                     this.playerHalo.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

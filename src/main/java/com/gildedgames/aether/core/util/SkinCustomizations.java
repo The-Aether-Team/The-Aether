@@ -2,6 +2,7 @@ package com.gildedgames.aether.core.util;
 
 import com.gildedgames.aether.Aether;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.tuple.Triple;
 
 import java.awt.*;
 import java.io.File;
@@ -104,9 +105,9 @@ public class SkinCustomizations {
         }
     }
 
-    public Color getHaloColor() {
+    public Triple<Float, Float, Float> getHaloColor() {
         try {
-            return Color.decode("#" + this.getHaloHex());
+            return this.getColor(this.getHaloHex());
         } catch (NumberFormatException exception) {
             return null;
         }
@@ -138,9 +139,9 @@ public class SkinCustomizations {
         }
     }
 
-    public Color getDeveloperGlowColor() {
+    public Triple<Float, Float, Float> getDeveloperGlowColor() {
         try {
-            return Color.decode("#" + this.getDeveloperGlowHex());
+            return this.getColor(this.getDeveloperGlowHex());
         } catch (NumberFormatException exception) {
             return null;
         }
@@ -148,6 +149,18 @@ public class SkinCustomizations {
 
     public void setDeveloperGlowColor(String value) {
         this.set("developerGlowColor", value);
+    }
+
+    public Triple<Float, Float, Float> getColor(String hex) {
+        try {
+            int decimal = Integer.parseInt(hex, 16);
+            int r = (decimal & 16711680) >> 16;
+            int g = (decimal & '\uff00') >> 8;
+            int b = (decimal & 255);
+            return Triple.of((float) r / 255.0F, (float) g / 255.0F, (float) b / 255.0F);
+        } catch (NumberFormatException exception) {
+            return null;
+        }
     }
 
     public Object get(String string) {

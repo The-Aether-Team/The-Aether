@@ -12,9 +12,9 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.player.Player;
+import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nonnull;
-import java.awt.*;
 
 public class DeveloperGlowLayer<T extends Player, M extends PlayerModel<T>> extends RenderLayer<T, M> {
     public DeveloperGlowLayer(RenderLayerParent<T, M> renderer) {
@@ -25,9 +25,9 @@ public class DeveloperGlowLayer<T extends Player, M extends PlayerModel<T>> exte
         if (pLivingEntity instanceof AbstractClientPlayer abstractClientPlayer) {
             if (AetherPlayerRankings.hasDevGlow(abstractClientPlayer.getUUID()) && SkinCustomizations.INSTANCE.isDeveloperGlowEnabled()) {
                 VertexConsumer vertexconsumer = pBuffer.getBuffer(RenderType.eyes(abstractClientPlayer.getSkinTextureLocation()));
-                Color color = SkinCustomizations.INSTANCE.getDeveloperGlowColor();
+                Triple<Float, Float, Float> color = SkinCustomizations.INSTANCE.getDeveloperGlowColor();
                 if (color != null) {
-                    this.getParentModel().renderToBuffer(pMatrixStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, 255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue(), 1.0F);
+                    this.getParentModel().renderToBuffer(pMatrixStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, color.getLeft(), color.getMiddle(), color.getRight(), 1.0F);
                 } else {
                     this.getParentModel().renderToBuffer(pMatrixStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
                 }
