@@ -571,8 +571,12 @@ public class AetherLanguageData extends AetherLanguageProvider
         addCustomizationText("gloves.sleeve", "Glove Layer: Sleeve");
         addCustomizationText("halo.on", "Player Halo: ON");
         addCustomizationText("halo.off", "Player Halo: OFF");
+        addCustomizationText("halo.color", "Halo Color");
         addCustomizationText("developer_glow.on", "Developer Glow: ON");
         addCustomizationText("developer_glow.off", "Developer Glow: OFF");
+        addCustomizationText("developer_glow.color", "Developer Glow Color");
+        addCustomizationText("undo", "Undo");
+        addCustomizationText("save", "Save");
 
 
         addLoreBookText("previous", "Prev.");

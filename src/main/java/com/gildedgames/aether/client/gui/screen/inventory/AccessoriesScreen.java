@@ -81,7 +81,7 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesMenu> 
             this.updateRenderButtons();
         }
         this.addRenderableWidget(new ImageButton(this.leftPos - 22, this.topPos + 2, 20, 20, 0, 0, 20, SKINS_BUTTON, 20, 40,
-                (pressed) -> this.minecraft.setScreen(new CustomizationScreen(this)),
+                (pressed) -> Aether.LOGGER.info("WIP"), //todo
                 (button, poseStack, x, y) -> this.renderTooltip(poseStack, new TranslatableComponent("gui.aether.accessories.skins_button"), x, y),
                 new TranslatableComponent("gui.aether.accessories.skins_button"))
         );
@@ -172,7 +172,7 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesMenu> 
             int i = this.getGuiLeft();
             int j = this.getGuiTop();
             this.blit(matrixStack, i, j, 0, 0, this.getXSize(), this.getYSize());
-            InventoryScreen.renderEntityInInventory(i + 33, j + 75, 30, (float) (i + 51) - mouseX, (float) (j + 75 - 50) - mouseY, this.minecraft.player);
+            InventoryScreen.renderEntityInInventory(i + 33, j + 75, 30, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.minecraft.player);
         }
     }
 

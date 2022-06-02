@@ -95,15 +95,19 @@ public class SkinCustomizations {
         this.set("haloEnabled", value);
     }
 
-    public Color getHaloColor() {
+    public String getHaloHex() {
         Object value = this.get("haloColor");
         if (value instanceof String string) {
-            try {
-                return Color.decode(string);
-            } catch (NumberFormatException exception) {
-                return null;
-            }
+            return string;
         } else {
+            return null;
+        }
+    }
+
+    public Color getHaloColor() {
+        try {
+            return Color.decode("#" + this.getHaloHex());
+        } catch (NumberFormatException exception) {
             return null;
         }
     }
@@ -125,15 +129,19 @@ public class SkinCustomizations {
         this.set("developerGlowEnabled", value);
     }
 
-    public Color getDeveloperGlowColor() {
+    public String getDeveloperGlowHex() {
         Object value = this.get("developerGlowColor");
         if (value instanceof String string) {
-            try {
-                return Color.decode(string);
-            } catch (NumberFormatException exception) {
-                return null;
-            }
+            return string;
         } else {
+            return null;
+        }
+    }
+
+    public Color getDeveloperGlowColor() {
+        try {
+            return Color.decode("#" + this.getDeveloperGlowHex());
+        } catch (NumberFormatException exception) {
             return null;
         }
     }
