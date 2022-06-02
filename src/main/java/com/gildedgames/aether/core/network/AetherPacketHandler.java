@@ -3,7 +3,6 @@ package com.gildedgames.aether.core.network;
 import com.gildedgames.aether.Aether;
 
 import com.gildedgames.aether.core.network.packet.AetherPlayerSyncPacket;
-import com.gildedgames.aether.core.network.packet.AetherRankingsSyncPacket;
 import com.gildedgames.aether.core.network.packet.client.*;
 import com.gildedgames.aether.core.network.packet.server.*;
 import net.minecraft.server.level.ServerPlayer;
@@ -57,7 +56,6 @@ public class AetherPacketHandler {
 
 		// BOTH
 		register(AetherPlayerSyncPacket.class, AetherPlayerSyncPacket::decode);
-		register(AetherRankingsSyncPacket.class, AetherRankingsSyncPacket::decode);
 	}
 
 	private static <MSG extends AetherPacket.AbstractAetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {

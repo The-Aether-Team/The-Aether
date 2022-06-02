@@ -556,7 +556,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("descending", "Descending from the Aether");
 
 
-        addGuiText("accessories.perks_button", "Customization & Perks");
+        addGuiText("accessories.skins_button", "Skins");
+        addGuiText("accessories.customization_button", "Customization");
 
 
         addGuiText("sun_altar.time", "Time");
@@ -565,7 +566,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
 
 
-        addCustomizationText("title", "Customization & Perks");
+        addCustomizationText("title", "Customization");
         addCustomizationText("gloves.arm", "Glove Layer: Arm");
         addCustomizationText("gloves.sleeve", "Glove Layer: Sleeve");
         addCustomizationText("halo.on", "Player Halo: ON");

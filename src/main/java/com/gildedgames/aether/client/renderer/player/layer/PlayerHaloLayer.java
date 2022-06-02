@@ -3,8 +3,8 @@ package com.gildedgames.aether.client.renderer.player.layer;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.HaloModel;
-import com.gildedgames.aether.core.capability.rankings.AetherRankings;
 import com.gildedgames.aether.core.registry.AetherPlayerRankings;
+import com.gildedgames.aether.core.util.SkinCustomizations;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.PlayerModel;
@@ -32,15 +32,13 @@ public class PlayerHaloLayer<T extends Player, M extends PlayerModel<T>> extends
     @Override
     public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, @Nonnull T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (entity instanceof AbstractClientPlayer abstractClientPlayer) {
-            AetherRankings.get(abstractClientPlayer).ifPresent(aetherRankings -> {
-                if (AetherPlayerRankings.hasHalo(abstractClientPlayer.getUUID()) && aetherRankings.shouldRenderHalo() && !abstractClientPlayer.isInvisible()) {
-                    this.playerHalo.halo.yRot = this.getParentModel().head.yRot;
-                    this.playerHalo.halo.xRot = this.getParentModel().head.xRot;
-                    this.playerHalo.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-                    VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(PLAYER_HALO_LOCATION));
-                    this.playerHalo.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-                }
-            });
+            if (AetherPlayerRankings.hasHalo(abstractClientPlayer.getUUID()) && SkinCustomizations.INSTANCE.isHaloEnabled() && !abstractClientPlayer.isInvisible()) {
+                this.playerHalo.halo.yRot = this.getParentModel().head.yRot;
+                this.playerHalo.halo.xRot = this.getParentModel().head.xRot;
+                this.playerHalo.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+                VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(PLAYER_HALO_LOCATION));
+                this.playerHalo.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            }
         }
     }
 }

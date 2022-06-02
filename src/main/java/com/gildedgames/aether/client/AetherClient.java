@@ -9,6 +9,7 @@ import com.gildedgames.aether.common.registry.AetherContainerTypes;
 import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 
 import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.core.util.SkinCustomizations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -26,6 +27,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class AetherClient {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
+        SkinCustomizations.initialize();
         event.enqueueWork(() -> {
             AetherAtlases.registerWoodTypeAtlases();
             AetherKeys.registerKeys();
