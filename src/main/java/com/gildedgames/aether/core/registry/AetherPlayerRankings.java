@@ -90,13 +90,11 @@ public class AetherPlayerRankings
     }
 
     public static boolean hasHalo(UUID uuid) {
-        //return getPrimaryRankOf(uuid).hasHalo();
-        return true;
+        return getPrimaryRankOf(uuid).hasHalo();
     }
 
     public static boolean hasDevGlow(UUID uuid) {
-        //return getPrimaryRankOf(uuid).hasDevGlow() || uuid.toString().equals("cf51ef47-04a8-439a-aa41-47d871b0b837");
-        return true;
+        return getPrimaryRankOf(uuid).hasDevGlow() || uuid.toString().equals("cf51ef47-04a8-439a-aa41-47d871b0b837");
     }
 
     public static boolean isPatron(UUID uuid) {
