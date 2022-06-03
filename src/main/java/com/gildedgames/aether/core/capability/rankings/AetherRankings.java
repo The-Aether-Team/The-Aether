@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import org.apache.commons.lang3.tuple.Triple;
 
 public interface AetherRankings extends INBTSynchable<CompoundTag> {
     Player getPlayer();
@@ -18,12 +19,20 @@ public interface AetherRankings extends INBTSynchable<CompoundTag> {
 
     void onUpdate();
 
-    void setSleeveGloves(boolean areHatGloves);
+    void setAreSleeveGloves(boolean areHatGloves);
     boolean areSleeveGloves();
 
-    void setRenderHalo(boolean renderHalo);
-    boolean shouldRenderHalo();
+    void setIsHaloEnabled(boolean renderHalo);
+    boolean isHaloEnabled();
 
-    void setRenderDeveloperGlow(boolean renderDeveloperGlow);
-    boolean shouldRenderDeveloperGlow();
+    void setHaloColor(String color);
+    Triple<Float, Float, Float> getHaloColor();
+    String getHaloHex();
+
+    void setIsDeveloperGlowEnabled(boolean renderDeveloperGlow);
+    boolean isDeveloperGlowEnabled();
+
+    void setDeveloperGlowColor(String color);
+    Triple<Float, Float, Float> getDeveloperGlowColor();
+    String getDeveloperGlowHex();
 }

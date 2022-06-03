@@ -556,7 +556,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("descending", "Descending from the Aether");
 
 
-        addGuiText("accessories.perks_button", "Customization & Perks");
+        addGuiText("accessories.skins_button", "Skins");
+        addGuiText("accessories.customization_button", "Customization");
 
 
         addGuiText("sun_altar.time", "Time");
@@ -565,13 +566,17 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
 
 
-        addCustomizationText("title", "Customization & Perks");
+        addCustomizationText("title", "Customization");
         addCustomizationText("gloves.arm", "Glove Layer: Arm");
         addCustomizationText("gloves.sleeve", "Glove Layer: Sleeve");
         addCustomizationText("halo.on", "Player Halo: ON");
         addCustomizationText("halo.off", "Player Halo: OFF");
+        addCustomizationText("halo.color", "Halo Color");
         addCustomizationText("developer_glow.on", "Developer Glow: ON");
         addCustomizationText("developer_glow.off", "Developer Glow: OFF");
+        addCustomizationText("developer_glow.color", "Developer Glow Color");
+        addCustomizationText("undo", "Undo");
+        addCustomizationText("save", "Save");
 
 
         addLoreBookText("previous", "Prev.");
