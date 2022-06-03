@@ -106,7 +106,13 @@ public class AetherRankingsCapability extends CapabilitySyncing implements Aethe
 
     @Override
     public void onUpdate() {
-        this.updateSyncableNBTFromServer(this.getPlayer().getLevel());
+        this.updateSyncableNBTFromServer(this.getPlayer().getLevel(), true);
+        if (this.getPlayer().level.isClientSide()) {
+            AetherCustomizations.INSTANCE.sync();
+        }
+
+        Aether.LOGGER.info(this.getPlayer().getDisplayName().getString() + ": halo: " + this.getHaloHex());
+        Aether.LOGGER.info(this.getPlayer().getDisplayName().getString() + ": glow: " + this.getDeveloperGlowHex());
     }
 
     @Override

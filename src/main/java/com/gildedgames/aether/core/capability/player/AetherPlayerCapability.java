@@ -212,7 +212,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void onUpdate() {
-		this.updateSyncableNBTFromServer(this.getPlayer().getLevel());
+		this.updateSyncableNBTFromServer(this.getPlayer().getLevel(), true);
 		this.handleAetherPortal();
 		this.activateParachute();
 		this.handleRemoveDarts();

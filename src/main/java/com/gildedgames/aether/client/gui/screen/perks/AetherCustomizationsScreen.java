@@ -159,6 +159,6 @@ public class AetherCustomizationsScreen extends Screen
     private void updateValues() {
         this.customizations.save();
         this.customizations.load();
-        this.customizations.sync(Minecraft.getInstance().player);
+        this.customizations.sync();
     }
 }

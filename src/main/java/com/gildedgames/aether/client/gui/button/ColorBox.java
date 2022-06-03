@@ -37,7 +37,6 @@ public class ColorBox extends EditBox {
         if (this.getValue().length() == 6) {
             try {
                 AetherCustomizations.INSTANCE.set(this.colorKey, this.getValue());
-                AetherCustomizations.INSTANCE.sync(Minecraft.getInstance().player);
                 int decimal = Integer.parseInt(this.getValue(), 16);
                 this.setTextColor(decimal);
                 this.hasValidColor = true;

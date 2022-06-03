@@ -3,9 +3,8 @@ package com.gildedgames.aether.core.util;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.core.capability.rankings.AetherRankings;
 import com.google.common.collect.Maps;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.world.entity.player.Player;
-import org.apache.commons.lang3.tuple.Triple;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -72,14 +71,17 @@ public class AetherCustomizations {
         }
     }
 
-    public void sync(Player player) {
-        AetherRankings.get(player).ifPresent(aetherRankings -> {
-            aetherRankings.setAreSleeveGloves(this.areSleeveGloves());
-            aetherRankings.setIsHaloEnabled(this.isHaloEnabled());
-            aetherRankings.setHaloColor(this.getHaloHex());
-            aetherRankings.setIsDeveloperGlowEnabled(this.isDeveloperGlowEnabled());
-            aetherRankings.setDeveloperGlowColor(this.getDeveloperGlowHex());
-        });
+    public void sync() {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player != null) {
+            AetherRankings.get(player).ifPresent(aetherRankings -> {
+                aetherRankings.setAreSleeveGloves(this.areSleeveGloves());
+                aetherRankings.setIsHaloEnabled(this.isHaloEnabled());
+                aetherRankings.setHaloColor(this.getHaloHex());
+                aetherRankings.setIsDeveloperGlowEnabled(this.isDeveloperGlowEnabled());
+                aetherRankings.setDeveloperGlowColor(this.getDeveloperGlowHex());
+            });
+        }
     }
 
     public boolean areSleeveGloves() {

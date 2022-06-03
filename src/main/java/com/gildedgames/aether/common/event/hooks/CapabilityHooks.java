@@ -68,7 +68,7 @@ public class CapabilityHooks {
         public static void join(Entity entity) {
             if (entity instanceof Player player && player.level.isClientSide()) {
                 AetherCustomizations.INSTANCE.load();
-                AetherCustomizations.INSTANCE.sync(player);
+                AetherCustomizations.INSTANCE.sync();
             }
         }
 
