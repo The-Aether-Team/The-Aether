@@ -10,6 +10,7 @@ import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.ExplosionParticlePacket;
 import com.gildedgames.aether.core.network.packet.server.AerbunnyPuffPacket;
 import com.gildedgames.aether.core.util.EntityUtil;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.goal.*;
@@ -120,6 +121,9 @@ public class Aerbunny extends AetherAnimal {
                 });
             } else if (player.isFallFlying()) {
                 this.stopRiding();
+            }
+            if (player instanceof ServerPlayer serverPlayer) {
+                serverPlayer.connection.aboveGroundTickCount = 0;
             }
         }
         if (this.isOnGround() || (this.getVehicle() != null && this.getVehicle().isOnGround())) {
