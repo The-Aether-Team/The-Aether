@@ -16,6 +16,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -68,6 +69,12 @@ public class DimensionListener {
         Entity entity = event.getEntity();
         ResourceKey<Level> dimension = event.getDimension();
         DimensionHooks.dimensionTravel(entity, dimension);
+    }
+
+    @SubscribeEvent
+    public static void onPlayerTraveling(TickEvent.PlayerTickEvent event) {
+        Player player = event.player;
+        DimensionHooks.travelling(player);
     }
 
     @SubscribeEvent
