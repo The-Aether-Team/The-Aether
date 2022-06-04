@@ -549,6 +549,8 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addMenuText("minecraft", "Normal Theme");
         addMenuText("aether", "Aether Theme");
+        addMenuText("preview", "Toggle World");
+        addMenuText("load", "Quick Load");
 
 
         addGuiText("pro_tip", "Pro Tip:");
@@ -779,10 +781,13 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherBlocks.SENTRY_STONE, "The Light version of Carved Stone, also found in Bronze Dungeons.");
         addLore(AetherItems.SILVER_DUNGEON_KEY, "A reflective key that is given to you by the Valkyrie Queen after defeating her. Use it to claim the treasure she left behind!");
         addLore(AetherItems.SKYROOT_AXE, "One of Aether's wooden tools, it can be used to double Skyroot Log drops. Simple but useful for beginners.");
+        addLore(AetherItems.SKYROOT_AXOLOTL_BUCKET,"A Skyroot Bucket with a friendly Axolotl in. Axolotls can be incredibly helpful aquatic partners. So it's best to keep one on hand if you're exploring wet environments.");
         addLore(AetherBlocks.SKYROOT_BED, "Crafted with cyan wool and skyroot planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
+        addLore(AetherItems.SKYROOT_BOAT, "While the Aether does not have many large bodies of water, a boat can occasionally be a useful tool for crossing large distances over ice!");
         addLore(AetherBlocks.SKYROOT_BOOKSHELF, "Crafted from Skyroot Planks and Books. Bookshelves can be used to enhance the enchanting capabilities of an enchanting table.");
         addLore(AetherItems.SKYROOT_BUCKET, "A hand crafted bucket, used to contain Aechor poison, a nice Remedy or even just plain Water!");
         addLore(AetherBlocks.SKYROOT_BUTTON, "Crafted from Skyroot Planks, a button used to activate mechanisms and redstone.");
+        addLore(AetherItems.SKYROOT_COD_BUCKET, "A bucket with a Cod in it! Make sure to keep the water topped up or your new friend won't survive the journey home.");
         addLore(AetherBlocks.SKYROOT_DOOR, "Crafted from Skyroot Planks, an ornate door helpful for keeping an enclosed and safe space without worry of monsters wandering in.");
         addLore(AetherBlocks.SKYROOT_FENCE, "Crafted from Skyroot planks and Sticks. Great for keeping your livestock safe from wandering predators!");
         addLore(AetherBlocks.SKYROOT_FENCE_GATE, "Crafted from Sticks and Skyroot planks. Gives a homely entrance and exit to your precious enclosures.");
@@ -792,9 +797,12 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.SKYROOT_MILK_BUCKET, "A bucket full of fresh Milk, drink it to heal potion effects.");
         addLore(AetherItems.SKYROOT_PICKAXE, "One of Aether's wooden tools, when mining Holystone or Ambrosium ore, it will double the drops. This is even better when combined with an enchantment such as Fortune when mining Ambrosium Shards!");
         addLore(AetherBlocks.SKYROOT_PLANKS, "Skyroot Planks can be made into various tools, blocks and items. They are crafted from Skyroot Logs, and make a great building material.");
-        addLore(AetherBlocks.SKYROOT_PRESSURE_PLATE, "Crafted from Skyroot Planks. A wooden pressure plate used to activate mechanisms and restone.");
+        addLore(AetherBlocks.SKYROOT_PRESSURE_PLATE, "Crafted from Skyroot Planks. A wooden pressure plate used to activate mechanisms and redstone.");
         addLore(AetherItems.SKYROOT_POISON_BUCKET, "A Skyroot Bucket that has been filled with a deadly poison. Better not drink it! It can be used to craft Poison Darts and Dart Shooters. Enchant it to cure the poison in it.");
+        addLore(AetherItems.SKYROOT_POWDER_SNOW_BUCKET, "A Skyroot Bucket that has been filled with powder snow. With quick reactions it can be used to break the most deadly of falls, even in the Nether!");
+        addLore(AetherItems.SKYROOT_PUFFERFISH_BUCKET, "A Skyroot Bucket with a Pufferfish inside. This item serves as a useful way to transport the defensive and poisonous Pufferfish.");
         addLore(AetherItems.SKYROOT_REMEDY_BUCKET, "A Skyroot Bucket containing a soothing remedy. It has a strong smell. Drinking this cures deadly poison, and prevents it for a short time.");
+        addLore(AetherItems.SKYROOT_SALMON_BUCKET, "A Skyroot Bucket containing a Salmon fish. Useful for transporting live salmon over long stretches of land.");
         addLore(AetherBlocks.SKYROOT_SAPLING, "These small green saplings will grow into Skyroot Trees. They can be grown faster with Bone Meal.");
         addLore(AetherItems.SKYROOT_SHOVEL, "One of Aether's wooden tools, it doubles Aether dirt and Quicksoil drops.");
         addLore(AetherBlocks.SKYROOT_SIGN, "Crafted from Skyroot Planks and Sticks. A helpful sign perfect for writing messages and directions on.");
@@ -803,6 +811,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.SKYROOT_STICK, "Crafted from Skyroot Planks. Used to create various aether tools and items. Nothing else too special about it.");
         addLore(AetherItems.SKYROOT_SWORD, "One of Aether's wooden tools, it has a low amount of durability, and doubles mob drops. It makes an excellent food collected when combined with enchantments such as Looting and Fire Aspect.");
         addLore(AetherBlocks.SKYROOT_TRAPDOOR, "Crafted from Skyroot Planks. A Trapdoor useful for covering entryways one block wide. Often used to add extra protection to staircases.");
+        addLore(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET,"A Skyroot Bucket containing a Tropical Fish. A Helpful way to transport and catalogue the numerous varieties of Tropical Fish.");
         addLore(AetherItems.SKYROOT_WATER_BUCKET, "A Skyroot Bucket that is filled to the brim with Water.");
         addLore(AetherBlocks.STRIPPED_SKYROOT_LOG, "A Skyroot Log that has had its bark stripped away with an Axe. When put in a crafting table they will provide 4 Skyroot Planks.");
         addLore(AetherBlocks.STRIPPED_SKYROOT_WOOD, "A Skyroot Log that has had its bark stripped away with an Axe. When put in a crafting table they will provide 4 Skyroot Planks. Crafted to be smooth on all sides.");
@@ -847,17 +856,15 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "A music disc that plays Ascending Dawn by Emile van Krieken.");
         addLore(AetherItems.MUSIC_DISC_LEGACY, "A music disc that plays Legacy by Jon Lachney.");
         addLore(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "A music disc that plays Welcoming Skies by Voyed.");
+        addLore(AetherItems.MUSIC_DISC_CHINCHILLA,"A music disc that plays chinchilla by RENREN.");
+
 
         addProTip("skyroot_tool_ability", "Skyroot tools gain double drops from blocks.");
         addProTip("holystone_tool_ability", "Holystone tools occasionally generate Ambrosium.");
         addProTip("zanite_tool_ability", "Zanite Tools gain strength the more they are used.");
         addProTip("gravitite_tool_ability", "Gravitite Tools can levitate blocks when right-clicking.");
-
-
         addProTip("white_aerclouds", "White Aerclouds prevent fall damage when landed upon.");
         addProTip("blue_aerclouds", "Blue Aerclouds are bouncy, and launch mobs very high in the air.");
-
-
         addProTip("phyg_saddle", "Placing a saddle on Flying Pigs makes them a mount.");
         addProTip("moa_egg_incubation", "Moa Eggs can be incubated into Baby Moas with the Incubator.");
         addProTip("gravitite_ore_enchanting", "Gravitite Ore can be enchanted into Enchanted Gravitite.");
@@ -872,7 +879,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addProTip("ambrosium_shard_fuel", "Ambrosium Shards are great for fueling Altars and food.");
         addProTip("icestone_freezing_blocks", "Icestone freezes water into ice and lava into obsidian.");
         addProTip("mimic_chest", "Some dungeons in the Aether contain chests which are Mimics.");
-        addProTip("cold_parachute_crafting", "Cloud Parachutes can be crafted with four White Aercloud blocks.");
+        addProTip("cold_parachute_crafting", "Cloud Parachutes can be crafted with four Cold Aercloud blocks.");
         addProTip("parachute_activation", "Parachutes auto-activate when falling off an island.");
         addProTip("golden_parachute_durability", "Golden Parachutes have twenty uses rather than one.");
         addProTip("aerogel_explosion_resistance", "Aerogel acts as an explosion-resistant, transparent block.");
@@ -884,61 +891,29 @@ public class AetherLanguageData extends AetherLanguageProvider
         addProTip("darts_no_gravity", "Golden, Poison, and Enchanted Darts are not affected by gravity.");
         addProTip("dart_shooter_crafting", "Dart Shooters can be crafted with Skyroot Planks and Golden Amber.");
         addProTip("remedy_bucket_enchanting", "A Remedy Bucket for poison can be obtained by enchanting Poison.");
-        addProTip("gravitite_armour_set", "Gravitite Armour increases your jump-height when a full set is worn.");
         addProTip("phoenix_armor_submerging", "Try submerging yourself in water while wearing Phoenix Armour.");
         addProTip("zephyr_shooting", "Zephyrs shoot snowballs with a force that can throw you off islands.");
         addProTip("aether_day_length", "Days in the Aether realm last three times longer than surface days.");
         addProTip("sheepuff_puff", "Sheepuff occasionally puff their wool out, making them float.");
         addProTip("victory_medal_drop", "When Valkyrie's are defeated they will drop a Victory Medal.");
-        addProTip("skeleton_attack", "Skeletons won't shoot if they can't see your face.");
         addProTip("dig_straight_down", "Never dig straight down.");
         addProTip("drops", "If a drop looks too big, it probably is.");
         addProTip("shelter", "A shelter made of dirt is still a shelter.");
         addProTip("creepers", "Don't fear the Creeper.");
-        addProTip("shallow_water", "Before you jump, make sure the water isn't too shallow.");
-        addProTip("spider_escape", "Watch your back when running from spiders.");
         addProTip("close_door", "Don't leave your house without closing the door.");
-        addProTip("check_diamonds", "Check underneath a Diamond Ore block before mining it.");
         addProTip("watch_your_step", "Watch where you step - deep shafts can be anywhere.");
-        addProTip("lighting_glitches", "Cliff overhangs and lighting glitches can spawn hostile mobs.");
-        addProTip("gold_durability", "Gold may be weak, but it's better than nothing.");
-        addProTip("log_supply", "Always bring tons of logs with you when exploring caves.");
         addProTip("check_surroundings", "Always check your surroundings before entering a fight.");
-        addProTip("tnt_storage", "Don't store spare TNT blocks near your Redstone circuits.");
         addProTip("mining", "You can always come back later and mine some more.");
-        addProTip("hoe_tilling", "Unlike the other tools, the hoe is used by right-clicking.");
         addProTip("spare_stack", "Always keep a spare stack of blocks in your active inventory.");
         addProTip("raw_meat", "Raw meat is better than no meat.");
-        addProTip("click_timing", "Blocks can be mined faster if you time your clicks correctly.");
-        addProTip("torch_sand", "Placing a torch under sand as it falls speeds up the process.");
-        addProTip("animal_push", "Animals push you around if you leave the game idle (again).");
-        addProTip("ghast_health", "Ghasts have lower health than any other hostile mob.");
-        addProTip("ghast_deflection", "You can reflect a Ghast's fireball by simply hitting it.");
-        addProTip("explosion_drops", "Mobs might not drop loot if they die from explosions.");
         addProTip("risk_taking", "Don't take huge risks far from home.");
-        addProTip("cave_noise", "If you hear a cave noise above ground, there's one nearby.");
-        addProTip("dungeon_location", "If you hear a lot of monsters, it's probably a dungeon.");
-        addProTip("cave_ceilings", "Mining cave ceilings can easily lead to disaster.");
-        addProTip("flammability", "Catching on fire can easily drain an entire health bar.");
         addProTip("do_things", "The best time to do anything is before it's too late.");
-        addProTip("boats", "One boat is never enough... unless you're using the combat update.");
-        addProTip("wood_versatility", "Wood is the most versatile resource in the game.");
         addProTip("expectations", "Never expect that nothing will happen while you're gone.");
         addProTip("respect", "Always treat modders with respect.");
-        addProTip("baby_slimes", "Baby slimes are terribly vulnerable to fall damage.");
         addProTip("slimes", "Slimes do exist... I think.");
         addProTip("security", "Only give away your personal information to Paypal.");
-        addProTip("navigation", "The sun and the compass are both useful for directions.");
-        addProTip("paintings", "Paintings aren't considered to be blocks.");
-        addProTip("tnt_trap", "Sand on red dust on TNT can make a falling floor trap.");
         addProTip("difficulty", "Easier rarely means funner.");
-        addProTip("zombie_attack", "Zombies can reach pretty far and hit pretty hard.");
-        addProTip("arrow_deflection", "Arrows reflect off of creatures recently damaged.");
         addProTip("portal_misclick", "Be careful not to misclick when building portals.");
-        addProTip("sand_pillar", "Sand is useful for getting down from high places.");
-        addProTip("creeper_sneaking", "If all you can hear is footsteps, it's a Creeper.");
-        addProTip("unreliable_sound", "It's misleading to locate monsters by sound alone.");
-        addProTip("jockey_dismount", "Spider jockeys will dismount after a save and reload.");
         addProTip("the_game", "The game is only as fun as you make it.");
     }
 }

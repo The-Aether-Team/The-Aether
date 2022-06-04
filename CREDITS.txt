@@ -1,4 +1,8 @@
+3vorp
+- Contribution of the algae overlay texture for the Skyroot Boat programmer art texture.
+
 AerodDev:
+- Implementation of the CTM textures.
 - Fixes to the Aether Dirt Path texture.
 
 Aethyus:
@@ -18,6 +22,12 @@ CartoonishVillain:
 
 CDAGaming:
 - Fixes to the Aether main menu.
+
+InsomniaKitten
+- Providing the accessory inventory texture.
+
+Kelvin285
+- Implementation of the world preview feature for the Aether's main menu.
 
 Parallel011:
 - zh_cn translation.
