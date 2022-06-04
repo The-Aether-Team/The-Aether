@@ -16,9 +16,11 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.SleepFinishedTimeEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -71,6 +73,12 @@ public class DimensionListener {
     }
 
     @SubscribeEvent
+    public static void onPlayerTraveling(TickEvent.PlayerTickEvent event) {
+        Player player = event.player;
+        DimensionHooks.travelling(player);
+    }
+
+    @SubscribeEvent
     public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
         Player player = event.getPlayer();
         DimensionHooks.syncTrackersFromServer(player);
@@ -88,6 +96,20 @@ public class DimensionListener {
                 level.serverLevelData = levelData;
                 level.levelData = levelData;
             });
+        }
+    }
+
+    /**
+     * Resets the weather cycle if players finish sleeping in an Aether dimension.
+     */
+    @SubscribeEvent
+    public static void onSleepFinish(SleepFinishedTimeEvent event) {
+        ServerLevel level = (ServerLevel) event.getWorld();
+        if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+            level.serverLevelData.setRainTime(0);
+            level.serverLevelData.setRaining(false);
+            level.serverLevelData.setThunderTime(0);
+            level.serverLevelData.setThundering(false);
         }
     }
 }

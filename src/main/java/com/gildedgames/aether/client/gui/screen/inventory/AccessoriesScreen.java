@@ -1,13 +1,14 @@
 package com.gildedgames.aether.client.gui.screen.inventory;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.gui.screen.perks.CustomizationScreen;
+import com.gildedgames.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.gildedgames.aether.client.registry.AetherKeys;
 import com.gildedgames.aether.common.inventory.container.AccessoriesMenu;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
@@ -43,6 +44,9 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesMenu> 
 
     public static final ResourceLocation ACCESSORIES_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/inventory/button/accessories_button.png");
 
+    public static final ResourceLocation SKINS_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/skins_button.png");
+    public static final ResourceLocation CUSTOMIZATION_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/customization_button.png");
+
     private final RecipeBookComponent recipeBookGui = new RecipeBookComponent();
 
     private boolean buttonClicked;
@@ -77,9 +81,15 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesMenu> 
         if (this.minecraft != null) {
             this.updateRenderButtons();
         }
-        this.addRenderableWidget(new Button(this.leftPos - 22, this.topPos + 2, 20, 20, new TextComponent("?"),
-                (pressed) -> this.minecraft.setScreen(new CustomizationScreen(this)),
-                (button, matrixStack, x, y) -> this.renderTooltip(matrixStack, new TranslatableComponent("gui.aether.accessories.perks_button"), x, y))
+        this.addRenderableWidget(new ImageButton(this.leftPos - 22, this.topPos + 2, 20, 20, 0, 0, 20, SKINS_BUTTON, 20, 40,
+                (pressed) -> Aether.LOGGER.info("WIP"), //todo
+                (button, poseStack, x, y) -> this.renderTooltip(poseStack, new TranslatableComponent("gui.aether.accessories.skins_button"), x, y),
+                new TranslatableComponent("gui.aether.accessories.skins_button"))
+        );
+        this.addRenderableWidget(new ImageButton(this.leftPos - 22, this.topPos + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
+                (pressed) -> this.minecraft.setScreen(new AetherCustomizationsScreen(this)),
+                (button, poseStack, x, y) -> this.renderTooltip(poseStack, new TranslatableComponent("gui.aether.accessories.customization_button"), x, y),
+                new TranslatableComponent("gui.aether.accessories.customization_button"))
         );
     }
 
@@ -163,7 +173,7 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesMenu> 
             int i = this.getGuiLeft();
             int j = this.getGuiTop();
             this.blit(matrixStack, i, j, 0, 0, this.getXSize(), this.getYSize());
-            InventoryScreen.renderEntityInInventory(i + 33, j + 75, 30, (float) (i + 51) - mouseX, (float) (j + 75 - 50) - mouseY, this.minecraft.player);
+            InventoryScreen.renderEntityInInventory(i + 33, j + 75, 30, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.minecraft.player);
         }
     }
 
