@@ -13,17 +13,16 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
 public class DimensionClientHooks {
-    public static Pair<Float, Float> renderFog(Camera camera, FogRenderer.FogMode mode, float far) {
+    public static Float renderNearFog(Camera camera, FogRenderer.FogMode mode, float far) {
         if (camera.getEntity().level instanceof ClientLevel clientLevel) {
             if (clientLevel.effects() instanceof AetherSkyRenderInfo) {
                 FogType fluidState = camera.getFluidInCamera();
                 if (mode == FogRenderer.FogMode.FOG_TERRAIN && fluidState == FogType.NONE) {
-                    float near = far / 2.0F;
-                    return Pair.of(near, far);
+                    return far / 2.0F;
                 }
             }
         }
-        return Pair.of(null, null);
+        return null;
     }
 
     public static Triple<Float, Float, Float> renderFogColors(Camera camera, float red, float green, float blue) {

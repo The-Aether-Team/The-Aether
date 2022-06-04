@@ -18,10 +18,9 @@ public class DimensionClientListener {
         Camera camera = event.getCamera();
         FogRenderer.FogMode fogMode = event.getMode();
         float farDistance = event.getFarPlaneDistance();
-        Pair<Float, Float> renderFog = DimensionClientHooks.renderFog(camera, fogMode, farDistance);
-        if (renderFog.getLeft() != null && renderFog.getRight() != null) {
-            event.setNearPlaneDistance(renderFog.getLeft());
-            event.setFarPlaneDistance(renderFog.getRight());
+        Float renderNearFog = DimensionClientHooks.renderNearFog(camera, fogMode, farDistance);
+        if (renderNearFog != null) {
+            event.setNearPlaneDistance(renderNearFog);
             event.setCanceled(true);
         }
     }
