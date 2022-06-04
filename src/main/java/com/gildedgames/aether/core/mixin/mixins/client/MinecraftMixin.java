@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
-    @Inject(at = @At(value = "RETURN", ordinal = 2), method = "getSituationalMusic", cancellable = true)
+    /*@Inject(at = @At(value = "RETURN", ordinal = 2), method = "getSituationalMusic", cancellable = true)
     public void getSituationalMusic_Dimension(CallbackInfoReturnable<Music> cir) {
         Minecraft minecraft = (Minecraft) (Object) this;
         if (minecraft.player != null && minecraft.level != null && LevelUtil.inTag(minecraft.level, AetherTags.Dimensions.AETHER_MUSIC)) {
@@ -51,7 +51,7 @@ public class MinecraftMixin {
                 }
             }
         }
-    }
+    }*/
 
     @Inject(at = @At(value = "HEAD"), method = "createLevel")
     public void createLevel(String levelName, LevelSettings levelSettings, RegistryAccess registryAccess, WorldGenSettings worldGenSettings, CallbackInfo ci) {

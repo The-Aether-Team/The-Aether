@@ -1,19 +1,28 @@
 package com.gildedgames.aether.client.event.listeners;
 
+import com.gildedgames.aether.client.AetherMusicManager;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.client.gui.button.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 
 import com.gildedgames.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
+import com.gildedgames.aether.common.registry.AetherTags;
+import com.gildedgames.aether.core.util.LevelUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.sounds.Musics;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.client.event.ScreenOpenEvent;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -40,13 +49,6 @@ public class GuiListener {
 			event.setScreen(bufferScreen);
 		}
 		GuiHooks.setupSplash(screen);
-	}
-
-	@SubscribeEvent
-	public static void onInput(TickEvent.ClientTickEvent event) {
-		if (event.phase == TickEvent.Phase.END) {
-			GuiHooks.openAccessoryMenu();
-		}
 	}
 
 	@SubscribeEvent
@@ -92,11 +94,37 @@ public class GuiListener {
 		GuiHooks.changeMenuAlignment(screen, minecraft);
 	}
 
+
 	@SubscribeEvent
-	public static void onMenuTick(TickEvent.ClientTickEvent event) {
+	public static void onClientTick(TickEvent.ClientTickEvent event) {
 		Minecraft minecraft = Minecraft.getInstance();
 		if (event.phase == TickEvent.Phase.END) {
+			GuiHooks.openAccessoryMenu();
 			GuiHooks.tickMenuWhenPaused(minecraft);
+		} else if (!minecraft.isPaused()) {
+			AetherMusicManager.tick();
 		}
+	}
+
+	/**
+	 * Stops vanilla music in favor of Aether music. The logic is handled in AetherMusicManager.
+	 * @see com.gildedgames.aether.client.AetherMusicManager
+	 */
+	/*
+	@SubscribeEvent
+	public static void onSoundPlay(PlaySoundEvent event) {
+		if (event.getSound().getSource() == SoundSource.MUSIC) {
+			if (AetherMusicManager.isPlayingMusic()) {
+				event.setSound(null);
+			}
+		}
+	}*/
+
+	/**
+	 * Resets the music on respawn.
+	 */
+	@SubscribeEvent
+	public static void onPlayerRespawn(ClientPlayerNetworkEvent.RespawnEvent event) {
+		AetherMusicManager.stopPlaying();
 	}
 }
