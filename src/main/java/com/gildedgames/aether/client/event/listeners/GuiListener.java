@@ -3,10 +3,13 @@ package com.gildedgames.aether.client.event.listeners;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.client.gui.button.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
-import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
+import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 
+import com.gildedgames.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
@@ -31,10 +34,21 @@ public class GuiListener {
 	@SubscribeEvent
 	public static void onGuiOpen(ScreenOpenEvent event) {
 		Screen screen = event.getScreen();
-		AetherMainMenuScreen aetherMainMenuScreen = GuiHooks.openAetherMenu(screen);
+		GuiHooks.drawSentryBackground(screen);
+		GuiHooks.setupWorldPreview(screen);
+		VanillaLeftTitleScreen vanillaLeftTitleScreen = GuiHooks.openLeftDefaultMenu(screen);
+		if (vanillaLeftTitleScreen != null) {
+			event.setScreen(vanillaLeftTitleScreen);
+		}
+		AetherTitleScreen aetherMainMenuScreen = GuiHooks.openAetherMenu(screen);
 		if (aetherMainMenuScreen != null) {
 			event.setScreen(aetherMainMenuScreen);
 		}
+		GenericDirtMessageScreen bufferScreen = GuiHooks.openBufferScreen(screen);
+		if (bufferScreen != null) {
+			event.setScreen(bufferScreen);
+		}
+		GuiHooks.setupSplash(screen);
 	}
 
 	@SubscribeEvent
@@ -47,10 +61,21 @@ public class GuiListener {
 	@SubscribeEvent
 	public static void onGuiInitialize(ScreenEvent.InitScreenEvent.Post event) {
 		Screen screen = event.getScreen();
+
+		Button toggleWorldButton = GuiHooks.setupToggleWorldButton(screen);
+		if (toggleWorldButton != null) {
+			event.addListener(toggleWorldButton);
+		}
+
 		Button menuSwitchButton = GuiHooks.setupMenuSwitchButton(screen);
 		if (menuSwitchButton != null) {
 			event.addListener(menuSwitchButton);
 		}
+
+        Button quickLoadButton = GuiHooks.setupQuickLoadButton(screen);
+        if (quickLoadButton != null) {
+            event.addListener(quickLoadButton);
+        }
 
 		Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
 		AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButtonWithinInventories(screen, offsets);
@@ -62,14 +87,26 @@ public class GuiListener {
 		if (accessoryMenuAccessoryButton != null) {
 			event.addListener(accessoryMenuAccessoryButton);
 		}
+
+		GuiHooks.setMenuAlignment();
 	}
 
 	@SubscribeEvent
 	public static void onGuiDraw(ScreenEvent.DrawScreenEvent event) {
 		Screen screen = event.getScreen();
 		PoseStack poseStack = event.getPoseStack();
+		Minecraft minecraft = Minecraft.getInstance();
 		GuiHooks.drawTrivia(screen, poseStack);
 		GuiHooks.drawAetherTravelMessage(screen, poseStack);
+		GuiHooks.changeMenuAlignment(screen, minecraft);
+	}
+
+	@SubscribeEvent
+	public static void onMenuTick(TickEvent.ClientTickEvent event) {
+		Minecraft minecraft = Minecraft.getInstance();
+		if (event.phase == TickEvent.Phase.END) {
+			GuiHooks.tickMenuWhenPaused(minecraft);
+		}
 	}
 
 	/**

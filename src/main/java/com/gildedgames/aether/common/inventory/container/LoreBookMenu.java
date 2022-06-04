@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.inventory.container;
 import com.gildedgames.aether.common.inventory.LoreInventory;
 import com.gildedgames.aether.common.registry.AetherContainerTypes;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -11,6 +12,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
+
+import javax.annotation.Nonnull;
 
 public class LoreBookMenu extends AbstractContainerMenu
 {
@@ -83,9 +86,19 @@ public class LoreBookMenu extends AbstractContainerMenu
     }
 
     @Override
-    public void removed(Player playerIn) {
-        playerIn.drop(this.bookInventory.getItem(0), false);
+    public void removed(@Nonnull Player playerIn) {
         super.removed(playerIn);
+        if (playerIn instanceof ServerPlayer serverPlayer) {
+            ItemStack stack = this.bookInventory.getItem(0);
+            if (!stack.isEmpty()) {
+                if (playerIn.isAlive() && !serverPlayer.hasDisconnected()) {
+                    playerIn.getInventory().placeItemBackInInventory(stack);
+                } else {
+                    playerIn.drop(stack, false);
+                }
+                this.bookInventory.setItem(0, ItemStack.EMPTY);
+            }
+        }
         this.bookInventory.stopOpen(playerIn);
     }
 

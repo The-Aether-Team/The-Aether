@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.item.accessories.abilities;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 
@@ -12,5 +13,8 @@ public interface SlowFallAccessory {
             }
         }
         livingEntity.resetFallDistance();
+        if (livingEntity instanceof ServerPlayer serverPlayer) {
+            serverPlayer.connection.aboveGroundTickCount = 0;
+        }
     }
 }

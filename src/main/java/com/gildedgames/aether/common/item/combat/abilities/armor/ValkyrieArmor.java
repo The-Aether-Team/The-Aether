@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.item.combat.abilities.armor;
 
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.util.EquipmentUtil;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
@@ -35,6 +36,9 @@ public interface ValkyrieArmor {
                     }
                     if (aetherPlayer.isJumping() && !player.isOnGround() && aetherPlayer.getFlightTimer() > 2 && aetherPlayer.getFlightTimer() < aetherPlayer.getFlightTimerMax() && aetherPlayer.getFlightModifier() > 1.0F) {
                         player.setDeltaMovement(deltaMovement.x(), 0.025F * aetherPlayer.getFlightModifier(), deltaMovement.z());
+                    }
+                    if (player instanceof ServerPlayer serverPlayer) {
+                        serverPlayer.connection.aboveGroundTickCount = 0;
                     }
                 });
             }

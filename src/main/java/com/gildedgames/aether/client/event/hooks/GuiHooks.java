@@ -2,13 +2,17 @@ package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.button.AccessoryButton;
+import com.gildedgames.aether.client.gui.button.DynamicMenuButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
-import com.gildedgames.aether.client.gui.screen.menu.AetherMainMenuScreen;
+import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
+import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
+import com.gildedgames.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
 import com.gildedgames.aether.client.registry.AetherKeys;
 import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.OpenAccessoriesPacket;
+import com.mojang.realmsclient.gui.screens.RealmsPlayerScreen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -30,18 +34,84 @@ import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 public class GuiHooks {
+    public static final ResourceLocation BACKGROUND_LOCATION = new ResourceLocation(Aether.MODID, "textures/gui/options_background.png");
+    public static ResourceLocation OLD_LOCATION;
+    public static ResourceLocation OLD_REALMS_LOCATION;
+
+    public static AetherTitleScreen aether_menu = null;
+    public static TitleScreen default_menu = null;
+    public static VanillaLeftTitleScreen default_left_menu = null;
     private static final ResourceLocation AETHER_BARS_LOCATION = new ResourceLocation(Aether.MODID, "textures/gui/boss_bar.png");
     private static boolean shouldAddButton = true;
     private static boolean generateTrivia = true;
     private static Screen lastScreen = null;
 
-    public static AetherMainMenuScreen openAetherMenu(Screen screen) {
+    private static boolean alignMenuLeft = false;
+
+    public static void drawSentryBackground(Screen screen) {
         if (screen instanceof TitleScreen) {
-            if (AetherConfig.CLIENT.enable_aether_menu.get()) {
-                return new AetherMainMenuScreen();
+            if (OLD_LOCATION == null) {
+                OLD_LOCATION = GuiComponent.BACKGROUND_LOCATION;
+            }
+            if (OLD_REALMS_LOCATION == null) {
+                OLD_REALMS_LOCATION = RealmsPlayerScreen.OPTIONS_BACKGROUND;
+            }
+            GuiComponent.BACKGROUND_LOCATION = AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_LOCATION;
+            RealmsPlayerScreen.OPTIONS_BACKGROUND = AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_REALMS_LOCATION;
+        }
+    }
+
+    public static void setupMenus(TitleScreen screen) {
+        if (aether_menu == null) {
+            aether_menu = new AetherTitleScreen();
+        }
+        if (default_left_menu == null) {
+            default_left_menu = new VanillaLeftTitleScreen();
+        }
+        if (default_menu == null) {
+            default_menu = screen;
+        }
+    }
+
+    public static void setupWorldPreview(Screen screen) {
+        if (screen instanceof TitleScreen && AetherConfig.CLIENT.enable_world_preview.get()) {
+            AetherWorldDisplayHelper.enableWorldPreview();
+        }
+    }
+
+    public static VanillaLeftTitleScreen openLeftDefaultMenu(Screen screen) {
+        if (screen instanceof TitleScreen titleScreen) {
+            setupMenus(titleScreen);
+            if (displayAlignedLeftVanillaMenu()) {
+                return default_left_menu;
             }
         }
         return null;
+    }
+
+    public static AetherTitleScreen openAetherMenu(Screen screen) {
+        if (screen instanceof TitleScreen titleScreen) {
+            setupMenus(titleScreen);
+            if (AetherConfig.CLIENT.enable_aether_menu.get()) {
+                return aether_menu;
+            }
+        }
+        return null;
+    }
+
+    public static GenericDirtMessageScreen openBufferScreen(Screen screen) {
+        if (screen instanceof TitleScreen) {
+            if (AetherConfig.CLIENT.enable_world_preview.get() && AetherWorldDisplayHelper.loadedLevel == null && AetherWorldDisplayHelper.loadedSummary != null) {
+                return new GenericDirtMessageScreen(new TextComponent(""));
+            }
+        }
+        return null;
+    }
+
+    public static void setupSplash(Screen screen) {
+        if (screen instanceof TitleScreen titleScreen) {
+            titleScreen.splash = default_menu.splash;
+        }
     }
 
     public static void openAccessoryMenu() {
@@ -55,20 +125,72 @@ public class GuiHooks {
         }
     }
 
-    public static Button setupMenuSwitchButton(Screen screen) {
+    public static Button setupToggleWorldButton(Screen screen) {
         if (screen instanceof TitleScreen) {
-            if (AetherConfig.CLIENT.enable_aether_menu_button.get()) {
-                return new Button(screen.width - 24, 4, 20, 20, new TextComponent("T"),
-                        (pressed) -> {
-                            AetherConfig.CLIENT.enable_aether_menu.set(!AetherConfig.CLIENT.enable_aether_menu.get());
-                            AetherConfig.CLIENT.enable_aether_menu.save();
-                            Minecraft.getInstance().setScreen(AetherConfig.CLIENT.enable_aether_menu.get() ? new AetherMainMenuScreen() : new TitleScreen());
-                        },
-                        (button, matrixStack, x, y) ->
-                                screen.renderTooltip(matrixStack, new TranslatableComponent(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether"), x + 4, y + 12));
-            }
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, new TextComponent("W"),
+                    (pressed) -> {
+                        AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
+                        AetherConfig.CLIENT.enable_world_preview.save();
+                        AetherWorldDisplayHelper.toggleWorldPreview(AetherConfig.CLIENT.enable_world_preview.get());
+                    },
+                    (button, matrixStack, x, y) ->
+                            screen.renderTooltip(matrixStack, new TranslatableComponent("gui.aether.menu.preview"), x + 4, y + 12));
+            dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview_button);
+            return dynamicMenuButton;
         }
         return null;
+    }
+
+    public static Button setupMenuSwitchButton(Screen screen) {
+        if (screen instanceof TitleScreen) {
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, new TextComponent("T"),
+                    (pressed) -> {
+                        AetherConfig.CLIENT.enable_aether_menu.set(!AetherConfig.CLIENT.enable_aether_menu.get());
+                        AetherConfig.CLIENT.enable_aether_menu.save();
+                        Minecraft.getInstance().setScreen(getMenu());
+                    },
+                    (button, matrixStack, x, y) ->
+                            screen.renderTooltip(matrixStack, new TranslatableComponent(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether"), x + 4, y + 12));
+            dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button);
+            dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_aether_menu_button);
+            return dynamicMenuButton;
+        }
+        return null;
+    }
+
+    public static Button setupQuickLoadButton(Screen screen) {
+        if (screen instanceof TitleScreen) {
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, new TextComponent("Q"),
+                    (pressed) -> AetherWorldDisplayHelper.quickLoad(),
+                    (button, matrixStack, x, y) ->
+                            screen.renderTooltip(matrixStack, new TranslatableComponent("gui.aether.menu.load"), x + 4, y + 12));
+            dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button, AetherConfig.CLIENT.enable_aether_menu_button);
+            dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview, AetherConfig.CLIENT.enable_quick_load_button);
+            return dynamicMenuButton;
+        }
+        return null;
+    }
+
+    public static TitleScreen getMenu() {
+        if (AetherConfig.CLIENT.enable_aether_menu.get()) {
+            aether_menu.fading = true;
+            aether_menu.fadeInStart = 0L;
+            return aether_menu;
+        } else {
+            if (displayAlignedLeftVanillaMenu()) {
+                default_left_menu.fading = true;
+                default_left_menu.fadeInStart = 0L;
+                return default_left_menu;
+            } else {
+                default_menu.fading = true;
+                default_menu.fadeInStart = 0L;
+                return default_menu;
+            }
+        }
+    }
+
+    public static boolean displayAlignedLeftVanillaMenu() {
+        return (AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get()) || AetherConfig.CLIENT.align_vanilla_menu_elements_left.get();
     }
 
     public static AccessoryButton setupAccessoryButtonWithinInventories(Screen screen, Tuple<Integer, Integer> offsets) {
@@ -90,11 +212,24 @@ public class GuiHooks {
         return null;
     }
 
+    public static void setMenuAlignment() {
+        alignMenuLeft = displayAlignedLeftVanillaMenu();
+    }
+
     public static void drawTrivia(Screen screen, PoseStack poseStack) {
         if (screen instanceof TitleScreen) {
             if (generateTrivia) {
-                Aether.TRIVIA_READER.generateTriviaList();
-                generateTrivia = false;
+                if (Aether.TRIVIA_READER.getTrivia().isEmpty()) {
+                    Aether.TRIVIA_READER.generateTriviaList();
+                    generateTrivia = false;
+                }
+            }
+        } else if (screen instanceof LevelLoadingScreen) {
+            if (generateTrivia) {
+                if (Aether.TRIVIA_READER.getTrivia().isEmpty()) {
+                    Aether.TRIVIA_READER.generateTriviaList();
+                    generateTrivia = false;
+                }
             }
         }
 
@@ -125,6 +260,37 @@ public class GuiHooks {
             }
         } else {
             DimensionHooks.displayAetherTravel = false;
+        }
+    }
+
+    public static void changeMenuAlignment(Screen screen, Minecraft minecraft) {
+        if (screen instanceof TitleScreen titleScreen) {
+            if (alignMenuLeft != displayAlignedLeftVanillaMenu()) {
+                alignMenuLeft = displayAlignedLeftVanillaMenu();
+                if (alignMenuLeft) {
+                    if (titleScreen != default_left_menu) {
+                        minecraft.forceSetScreen(default_left_menu);
+                    }
+                } else {
+                    TitleScreen defaultMenu = AetherConfig.CLIENT.enable_aether_menu.get() ? aether_menu : default_menu;
+                    if (titleScreen != defaultMenu) {
+                        minecraft.forceSetScreen(defaultMenu);
+                    }
+                }
+            }
+        }
+    }
+
+    public static void tickMenuWhenPaused(Minecraft minecraft) {
+        if (minecraft != null && minecraft.level != null && minecraft.player != null) {
+            if (AetherWorldDisplayHelper.loadedLevel != null && AetherWorldDisplayHelper.loadedSummary != null && minecraft.isPaused()) {
+                minecraft.gameRenderer.tick();
+                minecraft.levelRenderer.tick();
+                minecraft.getMusicManager().tick();
+                minecraft.getSoundManager().tick(false);
+                minecraft.level.animateTick(minecraft.player.getBlockX(), minecraft.player.getBlockY(), minecraft.player.getBlockZ());
+                Minecraft.getInstance().particleEngine.tick();
+            }
         }
     }
 
