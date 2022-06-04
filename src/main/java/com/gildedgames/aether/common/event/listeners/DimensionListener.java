@@ -20,6 +20,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.SleepFinishedTimeEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -95,6 +96,20 @@ public class DimensionListener {
                 level.serverLevelData = levelData;
                 level.levelData = levelData;
             });
+        }
+    }
+
+    /**
+     * Resets the weather cycle if players finish sleeping in an Aether dimension.
+     */
+    @SubscribeEvent
+    public static void onSleepFinish(SleepFinishedTimeEvent event) {
+        ServerLevel level = (ServerLevel) event.getWorld();
+        if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+            level.serverLevelData.setRainTime(0);
+            level.serverLevelData.setRaining(false);
+            level.serverLevelData.setThunderTime(0);
+            level.serverLevelData.setThundering(false);
         }
     }
 }
