@@ -6,12 +6,27 @@ import com.gildedgames.aether.core.capability.time.AetherTime;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.material.FogType;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
 public class DimensionClientHooks {
-    public static Triple<Float, Float, Float> renderFog(Camera camera, float red, float green, float blue) {
+    public static Pair<Float, Float> renderFog(Camera camera, FogRenderer.FogMode mode, float far) {
+        if (camera.getEntity().level instanceof ClientLevel clientLevel) {
+            if (clientLevel.effects() instanceof AetherSkyRenderInfo) {
+                FogType fluidState = camera.getFluidInCamera();
+                if (mode == FogRenderer.FogMode.FOG_TERRAIN && fluidState == FogType.NONE) {
+                    float near = far / 2.0F;
+                    return Pair.of(near, far);
+                }
+            }
+        }
+        return Pair.of(null, null);
+    }
+
+    public static Triple<Float, Float, Float> renderFogColors(Camera camera, float red, float green, float blue) {
         if (camera.getEntity().level instanceof ClientLevel clientLevel) {
             if (clientLevel.effects() instanceof AetherSkyRenderInfo) {
                 ClientLevel.ClientLevelData worldInfo = clientLevel.getLevelData();
