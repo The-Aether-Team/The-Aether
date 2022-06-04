@@ -1,6 +1,5 @@
 package com.gildedgames.aether.core.capability.rankings;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.core.capability.CapabilitySyncing;
 import com.gildedgames.aether.core.network.AetherPacket;
 import com.gildedgames.aether.core.network.packet.AetherRankingsSyncPacket;
@@ -110,9 +109,6 @@ public class AetherRankingsCapability extends CapabilitySyncing implements Aethe
         if (this.getPlayer().level.isClientSide()) {
             AetherCustomizations.INSTANCE.sync();
         }
-
-        Aether.LOGGER.info(this.getPlayer().getDisplayName().getString() + ": halo: " + this.getHaloHex());
-        Aether.LOGGER.info(this.getPlayer().getDisplayName().getString() + ": glow: " + this.getDeveloperGlowHex());
     }
 
     @Override
