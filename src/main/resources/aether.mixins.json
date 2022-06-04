@@ -19,11 +19,15 @@
   ],
   "client": [
     "client.AdvancementToastMixin",
+    "client.ConnectScreenMixin",
     "client.ElytraLayerMixin",
     "client.LocalPlayerMixin",
     "client.MinecraftMixin",
+    "client.PanoramaRendererMixin",
     "client.SplashManagerMixin",
-    "client.TippableArrowRendererMixin"
+    "client.TippableArrowRendererMixin",
+    "client.TitleScreenMixin",
+    "client.WorldListEntryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

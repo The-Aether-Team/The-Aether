@@ -23,6 +23,12 @@ CartoonishVillain:
 CDAGaming:
 - Fixes to the Aether main menu.
 
+InsomniaKitten
+- Providing the accessory inventory texture.
+
+Kelvin285
+- Implementation of the world preview feature for the Aether's main menu.
+
 Parallel011:
 - zh_cn translation.
 
