@@ -41,9 +41,25 @@ public class AetherLevelData extends DerivedLevelData {
         this.wrapped.setRaining(pRaining);
     }
 
+    /**
+     * Sets the number of ticks until rain.
+     */
+    @Override
+    public void setRainTime(int pTime) {
+        this.wrapped.setRainTime(pTime);
+    }
+
     @Override
     public void setThundering(boolean pThundering) {
         this.wrapped.setThundering(pThundering);
+    }
+
+    /**
+     * Defines the number of ticks until next thunderbolt.
+     */
+    @Override
+    public void setThunderTime(int pTime) {
+        this.wrapped.setThunderTime(pTime);
     }
 
     /**
