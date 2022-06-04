@@ -1,6 +1,7 @@
 package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
+import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.util.LevelUtil;
@@ -66,15 +67,22 @@ public class AetherMusicManager {
      */
     @Nullable
     public static Music checkForReplacements(Music music) {
+        if ((AetherWorldDisplayHelper.loadedLevel != null || music == Musics.MENU) && AetherConfig.CLIENT.enable_aether_menu.get() && !AetherConfig.CLIENT.disable_aether_menu_music.get()) {
+            return AetherTitleScreen.MENU;
+        }
+        if (AetherWorldDisplayHelper.loadedLevel != null) {
+            return Musics.MENU;
+        }
         if (music == Musics.CREATIVE && minecraft.player != null && minecraft.level != null && LevelUtil.inTag(minecraft.level, AetherTags.Dimensions.AETHER_MUSIC)) {
             return minecraft.player.level.getBiome(minecraft.player.blockPosition()).value().getBackgroundMusic().orElse(Musics.GAME);
-        }
-        if (music == Musics.MENU && AetherConfig.CLIENT.enable_aether_menu.get() && !AetherConfig.CLIENT.disable_aether_menu_music.get()) {
-            return AetherTitleScreen.MENU;
         }
         return null;
     }
 
+    /**
+     * Vanilla copy
+     * @see MusicManager#startPlaying(Music) 
+     */
     public static void startPlaying(Music pSelector) {
         currentMusic = SimpleSoundInstance.forMusic(pSelector.getEvent());
         if (currentMusic.getSound() != SoundManager.EMPTY_SOUND) {
@@ -84,6 +92,10 @@ public class AetherMusicManager {
         nextSongDelay = Integer.MAX_VALUE;
     }
 
+    /**
+     * Vanilla copy
+     * @see MusicManager#stopPlaying() 
+     */
     public static void stopPlaying() {
         if (currentMusic != null) {
             minecraft.getSoundManager().stop(currentMusic);
