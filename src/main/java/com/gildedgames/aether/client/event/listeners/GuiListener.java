@@ -6,6 +6,7 @@ import com.gildedgames.aether.client.gui.button.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 
+import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
 import com.gildedgames.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -94,7 +95,7 @@ public class GuiListener {
 		if (event.phase == TickEvent.Phase.END) {
 			GuiHooks.openAccessoryMenu();
 			GuiHooks.tickMenuWhenPaused(minecraft);
-		} else {
+		} else if (!minecraft.isPaused() || AetherWorldDisplayHelper.loadedLevel != null) {
 			AetherMusicManager.tick();
 		}
 	}

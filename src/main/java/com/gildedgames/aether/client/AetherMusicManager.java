@@ -36,29 +36,49 @@ public class AetherMusicManager {
         Music minecraftMusic = minecraft.getSituationalMusic();
         Music aetherMusic = checkForReplacements(minecraftMusic);
         if (currentMusic != null) {
+            boolean shouldStopVanilla = true;
             if (aetherMusic != null) {
-                if (aetherMusic.replaceCurrentMusic()) {
-                    if (!aetherMusic.getEvent().getLocation().equals(currentMusic.getLocation())) {
-                        minecraft.getSoundManager().stop(currentMusic);
-                        nextSongDelay = Mth.nextInt(random, 0, minecraftMusic.getMinDelay() / 2);
-                    }
+                if (!aetherMusic.getEvent().getLocation().equals(currentMusic.getLocation()) && aetherMusic.replaceCurrentMusic()) {
+                    minecraft.getSoundManager().stop(currentMusic);
+                    nextSongDelay = Mth.nextInt(random, 0, aetherMusic.getMinDelay() / 2);
                 }
-                //Stops vanilla music from playing.
-                if (musicManager.isPlayingMusic(minecraftMusic)) {
-                    musicManager.stopPlaying();
+                if (!minecraft.getSoundManager().isActive(currentMusic)) {
+                    currentMusic = null;
+                    nextSongDelay = Math.min(nextSongDelay, Mth.nextInt(random, aetherMusic.getMinDelay(), aetherMusic.getMaxDelay()));
+                    shouldStopVanilla = false;
                 }
-            } else if (!minecraftMusic.getEvent().getLocation().equals(currentMusic.getLocation()) && minecraftMusic.replaceCurrentMusic()) {
-                minecraft.getSoundManager().stop(currentMusic);
-                nextSongDelay = Mth.nextInt(random, 0, minecraftMusic.getMinDelay() / 2);
+            } else {
+                if (!minecraftMusic.getEvent().getLocation().equals(currentMusic.getLocation()) && minecraftMusic.replaceCurrentMusic()) {
+                    minecraft.getSoundManager().stop(currentMusic);
+                    nextSongDelay = Mth.nextInt(random, 0, minecraftMusic.getMinDelay() / 2);
+                    shouldStopVanilla = false;
+                }
+                if (!minecraft.getSoundManager().isActive(currentMusic)) {
+                    currentMusic = null;
+                    nextSongDelay = Math.min(nextSongDelay, Mth.nextInt(random, minecraftMusic.getMinDelay(), minecraftMusic.getMaxDelay()));
+                    shouldStopVanilla = false;
+                }
             }
-            if (!minecraft.getSoundManager().isActive(currentMusic)) {
-                currentMusic = null;
-                nextSongDelay = Math.min(nextSongDelay, Mth.nextInt(random, minecraftMusic.getMinDelay(), minecraftMusic.getMaxDelay()));
+            if (shouldStopVanilla) {
+                //Stops vanilla music from playing.
+                stopVanillaMusic();
             }
         }
-        nextSongDelay = Math.min(nextSongDelay, minecraftMusic.getMaxDelay());
-        if (aetherMusic != null && currentMusic == null && nextSongDelay-- <= 0) {
-            startPlaying(aetherMusic);
+        nextSongDelay--;
+        if (aetherMusic != null) {
+            nextSongDelay = Math.min(nextSongDelay, aetherMusic.getMaxDelay());
+            boolean vanillaPlaying = musicManager.isPlayingMusic(minecraftMusic);
+            if (vanillaPlaying) {
+                stopVanillaMusic();
+            }
+            if (currentMusic == null) {
+                if (vanillaPlaying) {
+                    nextSongDelay = 0;
+                }
+                if (nextSongDelay <= 0) {
+                    startPlaying(aetherMusic);
+                }
+            }
         }
     }
 
@@ -93,6 +113,13 @@ public class AetherMusicManager {
     }
 
     /**
+     * Cuts off the music that MusicManager is playing.
+     */
+    public static void stopVanillaMusic() {
+        musicManager.stopPlaying();
+    }
+
+    /**
      * Vanilla copy
      * @see MusicManager#stopPlaying() 
      */
@@ -102,5 +129,13 @@ public class AetherMusicManager {
             currentMusic = null;
         }
         nextSongDelay += 100;
+    }
+
+    /**
+     * Vanilla copy
+     * @see MusicManager#isPlayingMusic(Music) 
+     */
+    public boolean isPlayingMusic(Music pSelector) {
+        return currentMusic != null && pSelector.getEvent().getLocation().equals(currentMusic.getLocation());
     }
 }
