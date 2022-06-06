@@ -14,8 +14,7 @@
     "common.FeatureMixin",
     "common.FoxEatBerriesGoalMixin",
     "common.ItemStackMixin",
-    "common.LivingEntityMixin",
-    "common.PiglinAiMixin"
+    "common.LivingEntityMixin"
   ],
   "client": [
     "client.AdvancementToastMixin",

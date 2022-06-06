@@ -1,10 +1,12 @@
 package com.gildedgames.aether.client.event.listeners;
 
+import com.gildedgames.aether.client.AetherMusicManager;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.client.gui.button.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 
+import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
 import com.gildedgames.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -12,6 +14,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.client.event.ScreenOpenEvent;
 import net.minecraftforge.event.TickEvent;
@@ -40,13 +43,6 @@ public class GuiListener {
 			event.setScreen(bufferScreen);
 		}
 		GuiHooks.setupSplash(screen);
-	}
-
-	@SubscribeEvent
-	public static void onInput(TickEvent.ClientTickEvent event) {
-		if (event.phase == TickEvent.Phase.END) {
-			GuiHooks.openAccessoryMenu();
-		}
 	}
 
 	@SubscribeEvent
@@ -92,11 +88,23 @@ public class GuiListener {
 		GuiHooks.changeMenuAlignment(screen, minecraft);
 	}
 
+
 	@SubscribeEvent
-	public static void onMenuTick(TickEvent.ClientTickEvent event) {
+	public static void onClientTick(TickEvent.ClientTickEvent event) {
 		Minecraft minecraft = Minecraft.getInstance();
 		if (event.phase == TickEvent.Phase.END) {
+			GuiHooks.openAccessoryMenu();
 			GuiHooks.tickMenuWhenPaused(minecraft);
+		} else if (!minecraft.isPaused() || AetherWorldDisplayHelper.loadedLevel != null) {
+			AetherMusicManager.tick();
 		}
+	}
+
+	/**
+	 * Resets the music on respawn.
+	 */
+	@SubscribeEvent
+	public static void onPlayerRespawn(ClientPlayerNetworkEvent.RespawnEvent event) {
+		AetherMusicManager.stopPlaying();
 	}
 }
