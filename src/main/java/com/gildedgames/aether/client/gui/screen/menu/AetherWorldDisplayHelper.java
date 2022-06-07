@@ -3,6 +3,7 @@ package com.gildedgames.aether.client.gui.screen.menu;
 import com.gildedgames.aether.client.AetherMusicManager;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.core.AetherConfig;
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -91,6 +92,7 @@ public class AetherWorldDisplayHelper {
         if (server != null) {
             loadedLevel = minecraft.level;
             Minecraft.getInstance().options.hideGui = true;
+            Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
             deleteSessionLock();
         }
     }
@@ -123,6 +125,7 @@ public class AetherWorldDisplayHelper {
 
     public static void fixWorld() {
         Minecraft.getInstance().options.hideGui = false;
+        Minecraft.getInstance().options.setCameraType(CameraType.FIRST_PERSON);
         loadedLevel = null;
         loadedSummary = null;
     }
