@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
+import com.gildedgames.aether.client.AetherMusicManager;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.client.Minecraft;
@@ -98,7 +99,8 @@ public class AetherWorldDisplayHelper {
         if (loadedSummary != null) {
             Minecraft minecraft = Minecraft.getInstance();
             minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-            if (minecraft.getLevelSource().levelExists(loadedSummary.getLevelId()) && minecraft.getSingleplayerServer() != null ) {
+            if (minecraft.getLevelSource().levelExists(loadedSummary.getLevelId()) && minecraft.getSingleplayerServer() != null) {
+                AetherMusicManager.stopPlaying();
                 openSessionLock();
                 fixWorld();
                 minecraft.forceSetScreen(null);
