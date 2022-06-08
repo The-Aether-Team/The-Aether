@@ -44,6 +44,10 @@ public class ColorBox extends EditBox {
                 this.setTextColor(14737632);
                 this.hasValidColor = false;
             }
+        } else if (this.getValue().length() == 0) {
+            AetherCustomizations.INSTANCE.set(this.colorKey, null);
+            this.setTextColor(14737632);
+            this.hasValidColor = true;
         } else {
             this.setTextColor(14737632);
             this.hasValidColor = false;
