@@ -201,6 +201,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.GRAVITITE_ORE.get(),
                 AetherBlocks.HOLYSTONE_BRICKS.get(),
                 AetherBlocks.AEROGEL.get(),
+                AetherBlocks.AMBROSIUM_BLOCK.get(),
                 AetherBlocks.ZANITE_BLOCK.get(),
                 AetherBlocks.ENCHANTED_GRAVITITE.get(),
                 AetherBlocks.ALTAR.get(),
@@ -328,7 +329,9 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.ZANITE_ORE.get(),
                 AetherBlocks.GRAVITITE_ORE.get());
         tag(Tags.Blocks.STONE).addTag(AetherTags.Blocks.HOLYSTONE);
-        tag(Tags.Blocks.STORAGE_BLOCKS).add(AetherBlocks.ZANITE_BLOCK.get());
+        tag(Tags.Blocks.STORAGE_BLOCKS).add(
+                AetherBlocks.AMBROSIUM_BLOCK.get(),
+                AetherBlocks.ZANITE_BLOCK.get());
     }
 
     @Nonnull

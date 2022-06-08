@@ -102,6 +102,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropSilk(AetherBlocks.QUICKSOIL_GLASS);
             dropSelf(AetherBlocks.AEROGEL);
 
+            dropSelf(AetherBlocks.AMBROSIUM_BLOCK);
             dropSelf(AetherBlocks.ZANITE_BLOCK);
             dropSelf(AetherBlocks.ENCHANTED_GRAVITITE);
 
