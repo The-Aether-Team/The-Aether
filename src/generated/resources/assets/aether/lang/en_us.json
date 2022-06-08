@@ -480,6 +480,7 @@
   "lore.block.aether.aether_dirt": "A pale dirt. It can be found in the Aether, and can also be used to grow the native trees. It can grow into grass with enough light.",
   "lore.block.aether.aether_grass_block": "Grass found in the Aether dimension. It can be used to grow the trees native to the Aether. It is much more pale than normal Grass.",
   "lore.block.aether.altar": "Used to enchant items and repair armor. They are powered by Ambrosium Shards. The enchanting process can take some time, but if you place an Enchanted Gravitite block under it, the process is sped up by a huge amount.",
+  "lore.block.aether.ambrosium_block": "A block of pure Ambrosium, useful for storing large quantities of fuel.",
   "lore.block.aether.ambrosium_ore": "The most common ore in the Aether. The drops can be doubled with Skyroot tools.",
   "lore.block.aether.ambrosium_torch": "The main light source for the Aether, made with a Skyroot Stick and Ambrosium.",
   "lore.block.aether.angelic_slab": "Crafted from Angelic Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building\u00E2\u20AC\u2122s roofing!",
