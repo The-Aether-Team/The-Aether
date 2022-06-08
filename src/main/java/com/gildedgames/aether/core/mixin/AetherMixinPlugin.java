@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 public class AetherMixinPlugin implements IMixinConfigPlugin {
-
     @Override
     public void onLoad(String mixinPackage) {
         AetherMixinConfig.save();

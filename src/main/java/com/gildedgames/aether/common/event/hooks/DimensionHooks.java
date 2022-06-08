@@ -46,6 +46,7 @@ import java.util.Objects;
 public class DimensionHooks {
     public static boolean playerLeavingAether;
     public static boolean displayAetherTravel;
+    public static int teleportationTimer;
 
     public static boolean checkPlacementBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state) {
         if (LevelUtil.inTag(level, AetherTags.Dimensions.ULTRACOLD)) {
@@ -166,10 +167,13 @@ public class DimensionHooks {
                         Entity nextPassenger = entityFell(passenger);
                         if (nextPassenger != null) {
                             nextPassenger.startRiding(target);
-                            if (target instanceof ServerPlayer) { // Fixes a desync between the server and client
-                                AetherPacketHandler.sendToPlayer(new SetVehiclePacket(nextPassenger.getId(), target.getId()), (ServerPlayer) target);
+                            if (target instanceof ServerPlayer serverPlayer) { // Fixes a desync between the server and client
+                                AetherPacketHandler.sendToPlayer(new SetVehiclePacket(nextPassenger.getId(), target.getId()), serverPlayer);
                             }
                         }
+                    }
+                    if (target instanceof ServerPlayer) {
+                        teleportationTimer = 500;
                     }
                 }
                 return target;
@@ -195,6 +199,19 @@ public class DimensionHooks {
             } else {
                 displayAetherTravel = false;
                 AetherPacketHandler.sendToAll(new AetherTravelPacket(false));
+            }
+        }
+    }
+
+    public static void travelling(Player player) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            if (teleportationTimer > 0) {
+                serverPlayer.connection.aboveGroundTickCount = 0;
+                serverPlayer.connection.aboveGroundVehicleTickCount = 0;
+                teleportationTimer--;
+            }
+            if (teleportationTimer < 0 || serverPlayer.verticalCollisionBelow) {
+                teleportationTimer = 0;
             }
         }
     }

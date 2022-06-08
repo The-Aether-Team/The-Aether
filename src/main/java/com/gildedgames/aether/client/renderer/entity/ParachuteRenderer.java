@@ -27,9 +27,7 @@ public class ParachuteRenderer extends EntityRenderer<Parachute> {
     @Override
     public void render(@Nonnull Parachute parachute, float entityYaw, float partialTicks, PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
-        poseStack.translate(-0.5, 0.0, 0.5);
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(90.0F));
+        poseStack.translate(-0.5, 0.0, -0.5);
         Minecraft.getInstance().getBlockRenderer().renderSingleBlock(this.parachuteBlock.get().defaultBlockState(), poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();
         super.render(parachute, entityYaw, partialTicks, poseStack, buffer, packedLight);
