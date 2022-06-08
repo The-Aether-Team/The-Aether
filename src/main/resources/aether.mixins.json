@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.gildedgames.aether.core.mixin",
+  "package": "com.gildedgames.aether.core.mixin.mixins",
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_17",
   "plugin": "com.gildedgames.aether.core.mixin.AetherMixinPlugin",
@@ -14,16 +14,19 @@
     "common.FeatureMixin",
     "common.FoxEatBerriesGoalMixin",
     "common.ItemStackMixin",
-    "common.LivingEntityMixin",
-    "common.PiglinAiMixin"
+    "common.LivingEntityMixin"
   ],
   "client": [
     "client.AdvancementToastMixin",
+    "client.ConnectScreenMixin",
     "client.ElytraLayerMixin",
     "client.LocalPlayerMixin",
     "client.MinecraftMixin",
+    "client.PanoramaRendererMixin",
     "client.SplashManagerMixin",
-    "client.TippableArrowRendererMixin"
+    "client.TippableArrowRendererMixin",
+    "client.TitleScreenMixin",
+    "client.WorldListEntryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

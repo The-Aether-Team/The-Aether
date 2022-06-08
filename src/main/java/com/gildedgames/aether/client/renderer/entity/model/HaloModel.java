@@ -33,6 +33,6 @@ public class HaloModel<T extends Entity> extends EntityModel<T> {
 
     @Override
     public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.halo.render(poseStack, consumer, packedLight, packedOverlay);
+        this.halo.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

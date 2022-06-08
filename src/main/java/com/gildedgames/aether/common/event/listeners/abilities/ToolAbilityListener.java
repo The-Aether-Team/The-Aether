@@ -3,7 +3,6 @@ package com.gildedgames.aether.common.event.listeners.abilities;
 import com.gildedgames.aether.common.event.hooks.AbilityHooks;
 import com.gildedgames.aether.common.item.tools.abilities.GravititeTool;
 import com.gildedgames.aether.common.item.tools.abilities.HolystoneTool;
-import com.gildedgames.aether.common.item.tools.abilities.ValkyrieTool;
 import com.gildedgames.aether.common.item.tools.abilities.ZaniteTool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -35,8 +34,11 @@ public class ToolAbilityListener {
     @SubscribeEvent
     public static void doZaniteAbility(PlayerEvent.BreakSpeed event) {
         Player player = event.getPlayer();
+        BlockState blockState = event.getState();
         ItemStack itemStack = player.getMainHandItem();
+        Level level = player.getLevel();
         event.setNewSpeed(ZaniteTool.increaseSpeed(itemStack, event.getNewSpeed()));
+        event.setNewSpeed(AbilityHooks.ToolHooks.reduceToolEffectiveness(level, blockState, itemStack, event.getNewSpeed()));
     }
 
     @SubscribeEvent
@@ -50,16 +52,6 @@ public class ToolAbilityListener {
         if (GravititeTool.floatBlock(level, blockPos, itemStack, blockState, player, interactionHand)) {
             event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide));
             event.setCanceled(true);
-        }
-    }
-
-    @SubscribeEvent
-    public static void checkCancelExtendedReach(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        InteractionHand interactionHand = event.getHand();
-        ItemStack itemStack = player.getItemInHand(interactionHand);
-        if (event.isCancelable()) {
-            event.setCanceled(ValkyrieTool.tooFar(itemStack, player, interactionHand));
         }
     }
 

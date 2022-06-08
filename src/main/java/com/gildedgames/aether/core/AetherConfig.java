@@ -14,6 +14,7 @@ public class AetherConfig
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
         public final ConfigValue<Boolean> edible_ambrosium;
+        public final ConfigValue<Boolean> tools_debuff;
         public final ConfigValue<Boolean> healing_gummy_swets;
         public final ConfigValue<Integer> maximum_life_shards;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
@@ -45,6 +46,9 @@ public class AetherConfig
             enable_startup_loot = builder
                     .comment("When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot")
                     .define("Gives starting loot on entry", true);
+            tools_debuff = builder
+                    .comment("Tools that aren't from the Aether will mine all blocks slower than ones that are from the Aether")
+                    .define("Debuff non-Aether tools", false);
             edible_ambrosium = builder
                     .comment("Ambrosium Shards can be eaten to restore a half heart of health")
                     .define("Ambrosium Shards are edible", false);
@@ -77,11 +81,11 @@ public class AetherConfig
                     .define("Generate Pink Aerclouds", false);
             generate_holiday_tree_always = builder
                     .comment("Determines whether Holiday Trees should always be able to generate when exploring new chunks in the Aether",
-                            "If true, this overrides 'generate_holiday_tree_seasonally'")
+                            "If true, this overrides 'Generate Holiday Trees seasonally'")
                     .define("Generate Holiday Trees always", false);
             generate_holiday_tree_seasonally = builder
                     .comment("Determines whether Holiday Trees should be able to generate during the time frame of December and January when exploring new chunks in the Aether",
-                            "Only works if 'generate_holiday_tree_always' is set to false")
+                            "Only works if 'Generate Holiday Trees always' is set to false")
                     .define("Generate Holiday Trees seasonally", true);
             builder.pop();
 
@@ -118,9 +122,17 @@ public class AetherConfig
 
         public final ConfigValue<Boolean> enable_aether_menu;
         public final ConfigValue<Boolean> enable_aether_menu_button;
+        public final ConfigValue<Boolean> enable_world_preview;
+        public final ConfigValue<Boolean> enable_world_preview_button;
+        public final ConfigValue<Boolean> enable_quick_load_button;
+        public final ConfigValue<Boolean> menu_type_toggles_alignment;
+        public final ConfigValue<Boolean> align_vanilla_menu_elements_left;
+        public final ConfigValue<Boolean> align_aether_menu_elements_left;
         public final ConfigValue<Boolean> enable_trivia;
 
-        public final ConfigValue<Boolean> disable_menu_music;
+        public final ConfigValue<Boolean> disable_aether_menu_music;
+        public final ConfigValue<Boolean> disable_vanilla_world_preview_menu_music;
+        public final ConfigValue<Boolean> disable_aether_world_preview_menu_music;
 
         public Client(ForgeConfigSpec.Builder builder) {
             builder.push("Rendering");
@@ -139,15 +151,42 @@ public class AetherConfig
             enable_aether_menu_button = builder
                     .comment("Adds a button to the top right of the main menu screen to toggle between the Aether and vanilla menu")
                     .define("Enables Aether menu button", true);
+            enable_world_preview = builder
+                    .comment("Changes the background panorama into a preview of the latest played world")
+                    .define("Enables world preview", false);
+            enable_world_preview_button = builder
+                    .comment("Adds a button to the top right of the main menu screen to toggle between the panorama and world preview")
+                    .define("Enables toggle world button", true);
+            enable_quick_load_button = builder
+                    .comment("Adds a button to the top right of the main menu screen to allow quick loading into a world if the world preview is enabled")
+                    .define("Enables quick load button", true);
+            menu_type_toggles_alignment = builder
+                    .comment("Determines that menu elements will align left if the menu's world preview is active",
+                            "If true, this overrides 'Align menu elements left'")
+                    .define("Align menu elements left with world preview", false);
+            align_vanilla_menu_elements_left = builder
+                    .comment("Aligns the elements of the vanilla menu to the left",
+                            "Only works if 'Align menu left with world preview' is set to false")
+                    .define("Align vanilla menu elements left", false);
+            align_aether_menu_elements_left = builder
+                    .comment("Aligns the elements of the Aether menu to the left",
+                            "Only works if 'Align menu left with world preview' is set to false")
+                    .define("Align Aether menu elements left", true);
             enable_trivia = builder
                     .comment("Adds random trivia and tips to the bottom of loading screens")
                     .define("Enables random trivia", true);
             builder.pop();
 
             builder.push("Audio");
-            disable_menu_music = builder
+            disable_aether_menu_music = builder
                     .comment("Disables the Aether's menu music in case another mod implements its own")
-                    .define("Disables menu music", false);
+                    .define("Disables Aether menu music", false);
+            disable_vanilla_world_preview_menu_music = builder
+                    .comment("Disables the menu music on the vanilla world preview menu")
+                    .define("Disables vanilla world preview menu music", false);
+            disable_aether_world_preview_menu_music = builder
+                    .comment("Disables the menu music on the Aether world preview menu")
+                    .define("Disables Aether world preview menu music", false);
             builder.pop();
         }
     }

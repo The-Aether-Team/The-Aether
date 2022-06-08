@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.common.entity.NotGrounded;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -116,6 +117,10 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 				if (this.onGround) {
 					this.setPlayerJumped(false);
 					this.setMountJumping(false);
+				}
+				if (player instanceof ServerPlayer serverPlayer) {
+					serverPlayer.connection.aboveGroundTickCount = 0;
+					serverPlayer.connection.aboveGroundVehicleTickCount = 0;
 				}
 			} else {
 				this.maxUpStep = 0.5F;

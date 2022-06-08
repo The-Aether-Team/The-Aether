@@ -23,19 +23,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu>
-{
+public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
     private static final ResourceLocation TEXTURE_LORE_BACKING = new ResourceLocation(Aether.MODID, "textures/gui/container/lore_backing.png");
     private static final ResourceLocation TEXTURE_LORE_BOOK = new ResourceLocation(Aether.MODID, "textures/gui/container/lore_book.png");
 
-    private Map<Integer, List<FormattedCharSequence>> pages = new HashMap<>();
+    private final Map<Integer, List<FormattedCharSequence>> pages = new HashMap<>();
 
     private LorePageButton previousButton, nextButton;
     private int currentPageNumber;
 
     public LoreBookScreen(LoreBookMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
-
         this.imageWidth = 256;
         this.imageHeight = 199;
     }
@@ -46,11 +44,11 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu>
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - (this.imageHeight)) / 2;
 
-        this.previousButton = this.addWidget(new LorePageButton(i + 14, j + 169, 20, 20, new TextComponent("<"), (p_214201_1_) -> {
+        this.previousButton = this.addRenderableWidget(new LorePageButton(i + 14, j + 169, 20, 20, new TextComponent("<"), (p_214201_1_) -> {
             if (this.currentPageNumber > 0) currentPageNumber--;
         }));
 
-        this.nextButton = this.addWidget(new LorePageButton(i + 221, j + 169, 20, 20, new TextComponent(">"), (p_214201_1_) -> {
+        this.nextButton = this.addRenderableWidget(new LorePageButton(i + 221, j + 169, 20, 20, new TextComponent(">"), (p_214201_1_) -> {
             if (this.currentPageNumber < this.pages.size() - 1) currentPageNumber++;
         }));
     }
@@ -134,7 +132,7 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu>
 
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
-        //RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F); //TODO
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - (this.imageHeight)) / 2;
 

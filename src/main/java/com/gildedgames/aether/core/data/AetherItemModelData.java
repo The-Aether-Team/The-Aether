@@ -178,6 +178,8 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET, "miscellaneous/");
         item(AetherItems.SKYROOT_AXOLOTL_BUCKET, "miscellaneous/");
 
+        item(AetherItems.SKYROOT_BOAT, "miscellaneous/");
+
         item(AetherItems.COLD_PARACHUTE, "miscellaneous/");
         item(AetherItems.GOLDEN_PARACHUTE, "miscellaneous/");
 
@@ -199,7 +201,7 @@ public class AetherItemModelData extends AetherItemModelProvider
 
         item(AetherItems.BOOK_OF_LORE, "miscellaneous/");
 
-        item(AetherItems.AETHER_PORTAL_FRAME, "miscellaneous/");
+        portalItem(AetherItems.AETHER_PORTAL_FRAME, "miscellaneous/");
 
         eggItem(AetherItems.PHYG_SPAWN_EGG);
         eggItem(AetherItems.FLYING_COW_SPAWN_EGG);
