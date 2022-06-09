@@ -57,7 +57,8 @@ public class CapabilityHooks {
             if (!player.level.isClientSide()) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     if (aetherPlayer instanceof AetherPlayerCapability capability) {
-                        capability.updateSyncableNBTFromServer(player.level, true);
+                        capability.markForced(true);
+                        capability.updateSyncableNBTFromServer(player.level);
                     }
                 });
             }
@@ -92,7 +93,8 @@ public class CapabilityHooks {
             if (!player.level.isClientSide()) {
                 AetherRankings.get(player).ifPresent(aetherRankings -> {
                     if (aetherRankings instanceof AetherRankingsCapability capability) {
-                        capability.updateSyncableNBTFromServer(player.level, true);
+                        capability.markForced(true);
+                        capability.updateSyncableNBTFromServer(player.level);
                     }
                 });
             }
