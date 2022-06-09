@@ -9,27 +9,22 @@ import net.minecraft.world.level.Level;
 public abstract class CapabilitySyncing implements INBTSynchable<CompoundTag> {
     private CompoundTag storedTag;
     private boolean isDirty = false;
+    private boolean shouldForce = false;
 
     public void updateSyncableNBTFromServer(Level level) {
-        this.updateSyncableNBTFromServer(level, false);
-    }
-
-    public void updateSyncableNBTFromServer(Level level, boolean force) {
         if (!level.isClientSide()) {
-            if (this.canSendPacket() || force) {
-                AetherPacketHandler.sendToAll(getSyncPacket(this.getStoredTag()));
+            if (this.canSendPacket() || this.shouldForce()) {
+                AetherPacketHandler.sendToAll(this.getSyncPacket(this.getStoredTag()));
+                this.markForced(false);
             }
         }
     }
 
     public void updateSyncableNBTFromClient(Level level) {
-        this.updateSyncableNBTFromClient(level, false);
-    }
-
-    public void updateSyncableNBTFromClient(Level level, boolean force) {
         if (level.isClientSide()) {
-            if (this.canSendPacket() || force) {
-                AetherPacketHandler.sendToServer(getSyncPacket(this.getStoredTag()));
+            if (this.canSendPacket() || this.shouldForce()) {
+                AetherPacketHandler.sendToServer(this.getSyncPacket(this.getStoredTag()));
+                this.markForced(false);
             }
         }
     }
@@ -60,6 +55,14 @@ public abstract class CapabilitySyncing implements INBTSynchable<CompoundTag> {
 
     public void markDirty(boolean isDirty) {
         this.isDirty = isDirty;
+    }
+
+    public boolean shouldForce() {
+        return this.shouldForce;
+    }
+
+    public void markForced(boolean shouldForce) {
+        this.shouldForce = shouldForce;
     }
 
     public abstract AetherPacket.AbstractAetherPacket getSyncPacket(CompoundTag tag);
