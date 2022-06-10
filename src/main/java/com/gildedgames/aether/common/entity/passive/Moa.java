@@ -23,13 +23,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -39,6 +37,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
@@ -107,6 +106,25 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
+	public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+		if (tag != null) {
+			if (tag.contains("IsBaby")) {
+				this.setBaby(tag.getBoolean("IsBaby"));
+			}
+			if (tag.contains("MoaType")) {
+				this.setMoaType(AetherMoaTypes.MOA_TYPES.get(tag.getString("MoaType")));
+			}
+			if (tag.contains("Hungry")) {
+				this.setHungry(tag.getBoolean("Hungry"));
+			}
+			if (tag.contains("PlayerGrown")) {
+				this.setPlayerGrown(tag.getBoolean("PlayerGrown"));
+			}
+		}
+		return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
+	}
+
+	@Override
 	public void tick() {
 		super.tick();
 		AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
@@ -144,8 +162,9 @@ public class Moa extends MountableAnimal implements WingedBird {
 					this.level.addParticle(ParticleTypes.ANGRY_VILLAGER, this.getX() + (this.random.nextDouble() - 0.5) * this.getBbWidth(), this.getY() + 1, this.getZ() + (this.random.nextDouble() - 0.5) * this.getBbWidth(), 0.0, 0.0, 0.0);
 				}
 			}
-		} else if (this.isHungry()) {
+		} else {
 			this.setHungry(false);
+			this.setAmountFed(0);
 		}
 	}
 
@@ -443,9 +462,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		if (compound.contains("MoaType")) {
-			this.setMoaType(AetherMoaTypes.MOA_TYPES.get(compound.getString("MoaType")));
-		}
+		this.setBaby(compound.getBoolean("IsBaby"));
+		this.setMoaType(AetherMoaTypes.MOA_TYPES.get(compound.getString("MoaType")));
 		if (compound.hasUUID("Rider")) {
 			this.setRider(compound.getUUID("Rider"));
 		}
@@ -462,6 +480,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public void addAdditionalSaveData(@Nonnull CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
+		compound.putBoolean("IsBaby", this.isBaby());
 		compound.putString("MoaType", this.getMoaType().getRegistryName());
 		if (this.getRider() != null) {
 			compound.putUUID("Rider", this.getRider());

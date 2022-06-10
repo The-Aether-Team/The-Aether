@@ -188,13 +188,8 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		if (!itemStack.isEmpty() && itemStack.getItem() instanceof MoaEggItem moaEggItem) {
 			BlockPos spawnPos = this.worldPosition.above();
 			if (this.getLevel() != null && !this.getLevel().isClientSide() && this.getLevel() instanceof ServerLevel serverLevel) {
-				Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, itemStack, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
-				if (entity instanceof Moa moa) {
-					moa.setMoaType(moaEggItem.getMoaType().get());
-					moa.setBaby(true);
-					moa.setPlayerGrown(true);
-					moa.setHungry(true);
-				}
+				ItemStack spawnStack = moaEggItem.getStackWithTags(itemStack, true, moaEggItem.getMoaType().get(), true, true);
+				AetherEntityTypes.MOA.get().spawn(serverLevel, spawnStack, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
 			}
 			itemStack.shrink(1);
 		}
