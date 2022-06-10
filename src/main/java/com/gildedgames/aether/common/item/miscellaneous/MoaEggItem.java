@@ -73,6 +73,7 @@ public class MoaEggItem extends Item
                         EntityType<Moa> entityType1 = AetherEntityTypes.MOA.get();
                         basespawner.setEntityId(entityType1);
                         basespawner.nextSpawnData.getEntityToSpawn().putString("MoaType", this.getMoaType().get().getRegistryName());
+                        basespawner.nextSpawnData.getEntityToSpawn().putBoolean("PlayerGrown", true);
                         blockentity.setChanged();
                         level.sendBlockUpdated(blockPos, blockState, blockState, 3);
                         itemStack.shrink(1);
@@ -114,13 +115,11 @@ public class MoaEggItem extends Item
                 if (!(level.getBlockState(blockpos).getBlock() instanceof LiquidBlock)) {
                     return InteractionResultHolder.pass(itemstack);
                 } else if (level.mayInteract(player, blockpos) && player.mayUseItemAt(blockpos, hitResult.getDirection(), itemstack)) {
-                    Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, itemstack, player, blockpos, MobSpawnType.SPAWN_EGG, false, false);
+                    ItemStack spawnStack = this.getStackWithTags(itemstack, false, this.getMoaType().get(), false, true);
+                    Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, spawnStack, player, blockpos, MobSpawnType.SPAWN_EGG, false, false);
                     if (entity == null) {
                         return InteractionResultHolder.pass(itemstack);
                     } else {
-                        if (entity instanceof Moa moa) {
-                            moa.setMoaType(this.getMoaType().get());
-                        }
                         player.awardStat(Stats.ITEM_USED.get(this));
                         level.gameEvent(GameEvent.ENTITY_PLACE, player);
                         return InteractionResultHolder.consume(itemstack);
@@ -135,12 +134,13 @@ public class MoaEggItem extends Item
     }
 
     public ItemStack getStackWithTags(ItemStack stack, boolean isBaby, MoaType moaType, boolean isHungry, boolean isPlayerGrown) {
-        CompoundTag tag = stack.getOrCreateTag();
+        ItemStack itemStack = stack.copy();
+        CompoundTag tag = itemStack.getOrCreateTag();
         tag.putBoolean("IsBaby", isBaby);
         tag.putString("MoaType", moaType.getRegistryName());
         tag.putBoolean("Hungry", isHungry);
         tag.putBoolean("PlayerGrown", isPlayerGrown);
-        return stack;
+        return itemStack;
     }
 
     @OnlyIn(Dist.CLIENT)
