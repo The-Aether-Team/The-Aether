@@ -35,6 +35,7 @@ public class AetherPacketHandler {
 		register(EternalDayPacket.class, EternalDayPacket::decode);
 		register(ExplosionParticlePacket.class, ExplosionParticlePacket::decode);
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
+		register(MoaInteractPacket.class, MoaInteractPacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);

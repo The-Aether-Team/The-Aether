@@ -144,7 +144,7 @@ public class MoaEggItem extends Item
     }
 
     @OnlyIn(Dist.CLIENT)
-    public int getColor(int color) {
+    public int getColor() {
         return this.color;
     }
 

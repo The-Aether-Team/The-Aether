@@ -12,6 +12,8 @@ import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.api.registers.MoaType;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.MoaInteractPacket;
 import com.gildedgames.aether.core.registry.AetherMoaTypes;
 import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.core.particles.ParticleTypes;
@@ -146,16 +148,23 @@ public class Moa extends MountableAnimal implements WingedBird {
 			this.setMountJumping(false);
 		}
 
-		if (!this.level.isClientSide && this.isAlive() && !this.isBaby() && this.getPassengers().isEmpty() && --this.eggTime <= 0) {
-			this.playSound(AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-			this.spawnAtLocation(this.getMoaType().getEgg());
-			this.eggTime = this.getEggTime();
+		if (!this.level.isClientSide() && this.isAlive()) {
+			if (this.random.nextInt(900) == 0 && this.deathTime == 0) {
+				this.heal(1.0F);
+			}
+			if (!this.isBaby() && this.getPassengers().isEmpty() && --this.eggTime <= 0) {
+				this.playSound(AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+				this.spawnAtLocation(this.getMoaType().getEgg());
+				this.eggTime = this.getEggTime();
+			}
 		}
 
 		if (this.isBaby()) {
 			if (!this.isHungry()) {
-				if (this.random.nextInt(2000) == 0) {
-					this.setHungry(true);
+				if (!this.level.isClientSide()) {
+					if (this.random.nextInt(2000) == 0) {
+						this.setHungry(true);
+					}
 				}
 			} else {
 				if (this.random.nextInt(10) == 0) {
@@ -226,7 +235,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 			this.setSitting(!this.isSitting());
 			this.spawnExplosionParticle();
 			return InteractionResult.sidedSuccess(this.level.isClientSide);
-		} else if (this.isPlayerGrown() && this.isBaby() && this.isHungry() && this.getAmountFed() < 3 && itemStack.is(AetherTags.Items.MOA_FOOD_ITEMS)) {
+		} else if (!this.level.isClientSide() && this.isPlayerGrown() && this.isBaby() && this.isHungry() && this.getAmountFed() < 3 && itemStack.is(AetherTags.Items.MOA_FOOD_ITEMS)) {
 			if (!playerEntity.getAbilities().instabuild) {
 				itemStack.shrink(1);
 			}
@@ -235,6 +244,10 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.setAge(0);
 			}
 			this.setHungry(false);
+			AetherPacketHandler.sendToAll(new MoaInteractPacket(playerEntity.getId(), hand == InteractionHand.MAIN_HAND));
+			return InteractionResult.CONSUME;
+		} else if (this.isPlayerGrown() && !this.isBaby() && this.getHealth() < this.getMaxHealth() && itemStack.is(AetherTags.Items.MOA_FOOD_ITEMS)) {
+			this.heal(5.0F);
 			return InteractionResult.sidedSuccess(this.level.isClientSide);
 		} else {
 			return super.mobInteract(playerEntity, hand);
