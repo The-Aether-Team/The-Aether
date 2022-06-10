@@ -244,9 +244,12 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.setAge(0);
 			}
 			this.setHungry(false);
-			AetherPacketHandler.sendToAll(new MoaInteractPacket(playerEntity.getId(), hand == InteractionHand.MAIN_HAND));
+			AetherPacketHandler.sendToAll(new MoaInteractPacket(playerEntity.getId(), hand == InteractionHand.MAIN_HAND)); // packet necessary to play animation because this code segment is server-side only, so no animations.
 			return InteractionResult.CONSUME;
 		} else if (this.isPlayerGrown() && !this.isBaby() && this.getHealth() < this.getMaxHealth() && itemStack.is(AetherTags.Items.MOA_FOOD_ITEMS)) {
+			if (!playerEntity.getAbilities().instabuild) {
+				itemStack.shrink(1);
+			}
 			this.heal(5.0F);
 			return InteractionResult.sidedSuccess(this.level.isClientSide);
 		} else {
@@ -408,6 +411,11 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	protected SoundEvent getSaddledSound() {
 		return AetherSoundEvents.ENTITY_MOA_SADDLE.get();
+	}
+
+	@Override
+	protected float getSoundVolume() {
+		return 0.25F;
 	}
 
 	@Override
