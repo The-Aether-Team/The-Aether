@@ -383,6 +383,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addEntityType(AetherEntityTypes.ZEPHYR_SNOWBALL, "Zephyr Snowball");
         addEntityType(AetherEntityTypes.CLOUD_CRYSTAL, "Cloud Crystal");
+        addEntityType(AetherEntityTypes.THUNDER_CRYSTAL, "Thunder Crystal");
         addEntityType(AetherEntityTypes.GOLDEN_DART, "Golden Dart");
         addEntityType(AetherEntityTypes.POISON_DART, "Poison Dart");
         addEntityType(AetherEntityTypes.ENCHANTED_DART, "Enchanted Dart");
@@ -545,6 +546,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("entity", "cloud_minion.shoot", "Cloud Minion spits");
 
         addSubtitle("entity", "cloud_crystal.explode", "Crystal explodes");
+        addSubtitle("entity", "thunder_crystal.explode", "Crystal explodes");
 
         addSubtitle("entity", "dart.hit", "Dart hits");
 

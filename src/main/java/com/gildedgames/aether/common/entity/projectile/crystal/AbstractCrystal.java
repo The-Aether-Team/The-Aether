@@ -20,7 +20,7 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nonnull;
 
 public abstract class AbstractCrystal extends Projectile {
-    private int ticksInAir = 0;
+    protected int ticksInAir = 0;
 
     protected AbstractCrystal(EntityType<? extends AbstractCrystal> entityType, Level level) {
         super(entityType, level);
@@ -60,6 +60,13 @@ public abstract class AbstractCrystal extends Projectile {
             this.onHit(result);
         }
         this.checkInsideBlocks();
+        this.tickMovement();
+    }
+
+    /**
+     * Handles the crystal's movement. Override this if you need different movement code.
+     */
+    protected void tickMovement() {
         Vec3 vector3d = this.getDeltaMovement();
         double d2 = this.getX() + vector3d.x;
         double d0 = this.getY() + vector3d.y;
@@ -69,16 +76,7 @@ public abstract class AbstractCrystal extends Projectile {
         this.setPos(d2, d0, d1);
     }
 
-    @Override
-    protected void onHitBlock(@Nonnull BlockHitResult result) {
-        super.onHitBlock(result);
-        this.spawnExplosionParticles();
-        this.discard();
-    }
-
     public void spawnExplosionParticles() { }
-
-    public abstract SoundEvent getImpactExplosionSoundEvent();
 
     public int getLifeSpan() {
         return 300;

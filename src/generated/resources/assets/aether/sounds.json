@@ -728,6 +728,14 @@
       "random/glass3"
     ]
   },
+  "entity.thunder_crystal.explode": {
+    "subtitle": "subtitles.entity.thunder_crystal.explode",
+    "sounds": [
+      "random/glass1",
+      "random/glass2",
+      "random/glass3"
+    ]
+  },
   "entity.dart.hit": {
     "subtitle": "subtitles.entity.dart.hit",
     "sounds": [

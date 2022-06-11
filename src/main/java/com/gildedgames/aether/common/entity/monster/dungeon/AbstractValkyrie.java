@@ -44,7 +44,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
     @Override
     public void registerGoals() {
-        this.goalSelector.addGoal(2, new ValkyrieTeleportGoal(this));
+        this.goalSelector.addGoal(1, new ValkyrieTeleportGoal(this));
         this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 0.65, true));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.5));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));

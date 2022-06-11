@@ -14,7 +14,7 @@ public class IceCrystalRenderer<T extends AbstractCrystal> extends AbstractCryst
     private static final ResourceLocation ICE_CRYSTAL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/crystals/ice_ball.png");
 
     public IceCrystalRenderer(EntityRendererProvider.Context context) {
-        super(context, new CrystalModel<>(context.bakeLayer(AetherModelLayers.ICE_CRYSTAL)));
+        super(context, new CrystalModel<>(context.bakeLayer(AetherModelLayers.CRYSTAL)));
     }
 
     @Nonnull

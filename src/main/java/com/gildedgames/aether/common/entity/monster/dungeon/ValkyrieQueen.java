@@ -1,6 +1,8 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.entity.projectile.crystal.ThunderCrystal;
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.BossInfoPacket;
@@ -20,9 +22,13 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -33,7 +39,7 @@ import javax.annotation.Nonnull;
  * This class holds the implementation of valkyrie queens. They are the boss version of valkyries, and they fight
  * in the same way, with the additional ability to shoot thunder crystal projectiles at their enemies.
  */
-public class ValkyrieQueen extends AbstractValkyrie {
+public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob {
     public static final EntityDataAccessor<Boolean> DATA_IS_INVULNERABLE = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     /** Boss health bar manager */
     private final ServerBossEvent bossFight;
@@ -48,6 +54,7 @@ public class ValkyrieQueen extends AbstractValkyrie {
     @Override
     public void registerGoals() {
         super.registerGoals();
+        this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0, 60, 28F));
     }
 
     @Nonnull
@@ -66,13 +73,13 @@ public class ValkyrieQueen extends AbstractValkyrie {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
+    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("invulnerable", this.entityData.get(DATA_IS_INVULNERABLE));
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
+    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.entityData.set(DATA_IS_INVULNERABLE, tag.getBoolean("invulnerable"));
     }
@@ -187,5 +194,23 @@ public class ValkyrieQueen extends AbstractValkyrie {
     @Override
     protected SoundEvent getDeathSound() {
         return AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_DEATH.get();
+    }
+
+    @Override
+    public void performRangedAttack(@Nonnull LivingEntity pTarget, float pDistanceFactor) {
+        ThunderCrystal thunderCrystal = new ThunderCrystal(AetherEntityTypes.THUNDER_CRYSTAL.get(), this.level, this, pTarget, this.getX(), this.getY(), this.getZ());
+        this.level.addFreshEntity(thunderCrystal);
+    }
+
+    public static class ThunderCrystalAttackGoal extends Goal {
+        private Mob mob;
+        public ThunderCrystalAttackGoal(Mob mob) {
+            this.mob = mob;
+        }
+
+        @Override
+        public boolean canUse() {
+            return false;
+        }
     }
 }

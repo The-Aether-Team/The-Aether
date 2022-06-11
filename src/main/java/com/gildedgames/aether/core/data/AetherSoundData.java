@@ -589,6 +589,13 @@ public class AetherSoundData extends SoundDefinitionsProvider
                         sound("minecraft:random/glass3")
                 ).subtitle("subtitles.entity.cloud_crystal.explode")
         );
+        this.add(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE,
+                definition().with(
+                        sound("minecraft:random/glass1"),
+                        sound("minecraft:random/glass2"),
+                        sound("minecraft:random/glass3")
+                ).subtitle("subtitles.entity.thunder_crystal.explode")
+        );
         this.add(AetherSoundEvents.ENTITY_DART_HIT,
                 definition().with(sound("aether:entity/projectile/shoot"))
                 .subtitle("subtitles.entity.dart.hit")
