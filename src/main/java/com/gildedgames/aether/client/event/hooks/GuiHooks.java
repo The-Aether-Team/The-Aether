@@ -321,10 +321,10 @@ public class GuiHooks {
      */
     public static void drawBar(PoseStack pPoseStack, int pX, int pY, BossEvent pBossEvent) {
         pX -= 37; // The default boss health bar is offset by -91. We need -128.
-        GuiComponent.blit(pPoseStack, pX, pY, -90, 0, 16, 256, 16, 256, 32);
+        GuiComponent.blit(pPoseStack, pX, pY, -90, 0, 16, 256, 16, 256, 256);
         int health = (int)(pBossEvent.getProgress() * 256.0F);
         if (health > 0) {
-            GuiComponent.blit(pPoseStack, pX, pY, -90, 0, 0, health, 16, 256, 32);
+            GuiComponent.blit(pPoseStack, pX, pY, -90, 0, 0, health, 16, 256, 256);
         }
     }
 }
