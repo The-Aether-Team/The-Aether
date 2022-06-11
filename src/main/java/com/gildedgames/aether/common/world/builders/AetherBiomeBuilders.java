@@ -151,10 +151,8 @@ public class AetherBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_GRAVITITE_COMMON_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_GRAVITITE_DENSE_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.FLUID_SPRINGS, AetherFeatures.PlacedFeatures.WATER_SPRING_PLACED_FEATURE)
-                        //// TODO GenerationStep.Decoration.VEGETAL_DECORATION
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.GRASS_PATCH_PLACED_FEATURE.value()))
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.TALL_GRASS_PATCH_PLACED_FEATURE.value()))
-                        ////   "aether:holiday_tree"
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.HOLIDAY_TREE_PLACED_FEATURE.value()))
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.FLOWER_PATCH_PLACED_FEATURE.value())) //this probably isnt ideal but it can be looked into later, and seems to only happen to vegetal_decorations.
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.CRYSTAL_ISLAND_PLACED_FEATURE.value()))
