@@ -8,8 +8,10 @@ import com.gildedgames.aether.common.world.builders.AetherFeatureBuilders;
 import com.gildedgames.aether.common.world.foliageplacer.CrystalFoliagePlacer;
 import com.gildedgames.aether.common.world.foliageplacer.HolidayFoliagePlacer;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
+import com.gildedgames.aether.common.world.gen.configuration.AetherLakeConfiguration;
 import com.gildedgames.aether.common.world.gen.configuration.SimpleDiskConfiguration;
 import com.gildedgames.aether.common.world.gen.feature.AercloudFeature;
+import com.gildedgames.aether.common.world.gen.feature.AetherLakeFeature;
 import com.gildedgames.aether.common.world.gen.feature.CrystalIslandFeature;
 import com.gildedgames.aether.common.world.gen.feature.SimpleDiskFeature;
 import com.gildedgames.aether.common.world.gen.placement.ConfigFilter;
@@ -65,6 +67,7 @@ public class AetherFeatures {
     public static Feature<AercloudConfiguration> AERCLOUD = new AercloudFeature(AercloudConfiguration.CODEC);
     //public static Feature<NoneFeatureConfiguration> HOLYSTONE_SPHERE = new HolystoneSphereFeature(NoneFeatureConfiguration.CODEC); // This is for Gold Dungeons
     public static Feature<NoneFeatureConfiguration> CRYSTAL_ISLAND = new CrystalIslandFeature(NoneFeatureConfiguration.CODEC);
+    public static Feature<AetherLakeConfiguration> LAKE = new AetherLakeFeature(AetherLakeConfiguration.CODEC);
 
     @SubscribeEvent //This cannot be moved to DeferredRegister or the features won't be able to be added to the biomes at registry time.
     public static void register(RegistryEvent.Register<Feature<?>> event) {
@@ -72,6 +75,7 @@ public class AetherFeatures {
         register(registry, "simple_disk", SIMPLE_DISK);
         register(registry, "aercloud", AERCLOUD);
         register(registry, "crystal_island", CRYSTAL_ISLAND);
+        register(registry, "lake", LAKE);
     }
 
     private static <C extends FeatureConfiguration, F extends Feature<C>> void register(IForgeRegistry<Feature<?>> registry, String name, F value) {
@@ -147,7 +151,7 @@ public class AetherFeatures {
                         3
                 ));
 
-        public static final Holder<ConfiguredFeature<LakeFeature.Configuration, ?>> WATER_LAKE_CONFIGURED_FEATURE = register("water_lake", Feature.LAKE,
+        public static final Holder<ConfiguredFeature<AetherLakeConfiguration, ?>> WATER_LAKE_CONFIGURED_FEATURE = register("water_lake", LAKE,
                 AetherFeatureBuilders.lake(BlockStateProvider.simple(Blocks.WATER), BlockStateProvider.simple(AetherBlocks.AETHER_GRASS_BLOCK.get())));
 
         public static final Holder<ConfiguredFeature<SpringConfiguration, ?>> WATER_SPRING_CONFIGURED_FEATURE = register("water_spring", Feature.SPRING,
@@ -190,7 +194,6 @@ public class AetherFeatures {
                 HeightRangePlacement.uniform(VerticalAnchor.absolute(80), VerticalAnchor.absolute(120)),
                 RarityFilter.onAverageOnceEvery(16));
 
-        // TODO: Somehow disable this when it's not Christmas
         public static final Holder<PlacedFeature> HOLIDAY_TREE_PLACED_FEATURE = register("holiday_tree", ConfiguredFeatures.HOLIDAY_TREE_CONFIGURED_FEATURE,
                 new HolidayFilter(),
                 CountOnEveryLayerPlacement.of(1),

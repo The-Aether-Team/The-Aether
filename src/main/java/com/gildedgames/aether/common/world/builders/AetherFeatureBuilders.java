@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.world.builders;
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
+import com.gildedgames.aether.common.world.gen.configuration.AetherLakeConfiguration;
 import com.gildedgames.aether.common.world.gen.placement.ConfigFilter;
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.core.BlockPos;
@@ -42,8 +43,8 @@ public class AetherFeatureBuilders {
                 new ConfigFilter(AetherConfig.COMMON.generate_pink_aerclouds));
     }
 
-    public static LakeFeature.Configuration lake(BlockStateProvider fluid, BlockStateProvider barrier) {
-        return new LakeFeature.Configuration(fluid, barrier);
+    public static AetherLakeConfiguration lake(BlockStateProvider fluid, BlockStateProvider top) {
+        return new AetherLakeConfiguration(fluid, top);
     }
 
     public static SpringConfiguration spring(FluidState fluid, boolean requiresBlocksBelow, int rockCount, int holeCount, HolderSet<Block> validBlocks) {
