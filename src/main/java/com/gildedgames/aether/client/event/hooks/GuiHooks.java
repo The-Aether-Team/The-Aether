@@ -110,7 +110,11 @@ public class GuiHooks {
 
     public static void setupSplash(Screen screen) {
         if (screen instanceof TitleScreen titleScreen) {
-            titleScreen.splash = default_menu.splash;
+            if (default_menu.splash != null) {
+                titleScreen.splash = default_menu.splash;
+            } else {
+                default_menu.splash = titleScreen.splash;
+            }
         }
     }
 

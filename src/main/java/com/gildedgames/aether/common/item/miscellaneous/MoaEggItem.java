@@ -7,6 +7,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -72,6 +73,7 @@ public class MoaEggItem extends Item
                         EntityType<Moa> entityType1 = AetherEntityTypes.MOA.get();
                         basespawner.setEntityId(entityType1);
                         basespawner.nextSpawnData.getEntityToSpawn().putString("MoaType", this.getMoaType().get().getRegistryName());
+                        basespawner.nextSpawnData.getEntityToSpawn().putBoolean("PlayerGrown", true);
                         blockentity.setChanged();
                         level.sendBlockUpdated(blockPos, blockState, blockState, 3);
                         itemStack.shrink(1);
@@ -86,9 +88,9 @@ public class MoaEggItem extends Item
                     blockPos1 = blockPos.relative(direction);
                 }
 
-                Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, itemStack, player, blockPos1, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, blockPos1) && direction == Direction.UP);
-                if (entity instanceof Moa moa) {
-                    moa.setMoaType(this.getMoaType().get());
+                ItemStack spawnStack = this.getStackWithTags(itemStack, false, this.getMoaType().get(), false, true);
+                Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, spawnStack, player, blockPos1, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, blockPos1) && direction == Direction.UP);
+                if (entity instanceof Moa) {
                     level.gameEvent(player, GameEvent.ENTITY_PLACE, blockPos);
                 }
                 return InteractionResult.CONSUME;
@@ -113,13 +115,11 @@ public class MoaEggItem extends Item
                 if (!(level.getBlockState(blockpos).getBlock() instanceof LiquidBlock)) {
                     return InteractionResultHolder.pass(itemstack);
                 } else if (level.mayInteract(player, blockpos) && player.mayUseItemAt(blockpos, hitResult.getDirection(), itemstack)) {
-                    Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, itemstack, player, blockpos, MobSpawnType.SPAWN_EGG, false, false);
+                    ItemStack spawnStack = this.getStackWithTags(itemstack, false, this.getMoaType().get(), false, true);
+                    Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, spawnStack, player, blockpos, MobSpawnType.SPAWN_EGG, false, false);
                     if (entity == null) {
                         return InteractionResultHolder.pass(itemstack);
                     } else {
-                        if (entity instanceof Moa moa) {
-                            moa.setMoaType(this.getMoaType().get());
-                        }
                         player.awardStat(Stats.ITEM_USED.get(this));
                         level.gameEvent(GameEvent.ENTITY_PLACE, player);
                         return InteractionResultHolder.consume(itemstack);
@@ -133,9 +133,18 @@ public class MoaEggItem extends Item
         }
     }
 
+    public ItemStack getStackWithTags(ItemStack stack, boolean isBaby, MoaType moaType, boolean isHungry, boolean isPlayerGrown) {
+        ItemStack itemStack = stack.copy();
+        CompoundTag tag = itemStack.getOrCreateTag();
+        tag.putBoolean("IsBaby", isBaby);
+        tag.putString("MoaType", moaType.getRegistryName());
+        tag.putBoolean("Hungry", isHungry);
+        tag.putBoolean("PlayerGrown", isPlayerGrown);
+        return itemStack;
+    }
 
     @OnlyIn(Dist.CLIENT)
-    public int getColor(int color) {
+    public int getColor() {
         return this.color;
     }
 

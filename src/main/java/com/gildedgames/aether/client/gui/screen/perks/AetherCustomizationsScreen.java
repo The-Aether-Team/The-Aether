@@ -4,6 +4,8 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.button.ColorBox;
 import com.gildedgames.aether.client.gui.button.CustomizationSaveButton;
 import com.gildedgames.aether.client.gui.button.CustomizationUndoButton;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.server.RankingsForcePacket;
 import com.gildedgames.aether.core.registry.AetherPlayerRankings;
 import com.gildedgames.aether.core.util.AetherCustomizations;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -64,7 +66,7 @@ public class AetherCustomizationsScreen extends Screen
                         (button, poseStack, x, y) -> button.setMessage(new TranslatableComponent(this.customizations.isHaloEnabled() ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"))
                 ));
                 ColorBox colorBox = new ColorBox("haloEnabled", "haloColor", Minecraft.getInstance().font, xPos + 155, yPos + (25 * i), 60, 20, new TranslatableComponent("gui.aether.customization.halo.color"));
-                if (this.customizations.getHaloHex() != null && !this.customizations.getHaloHex().isEmpty()) {
+                if (this.customizations.getHaloHex() != null && !this.customizations.getHaloHex().isEmpty() && !this.customizations.getHaloHex().equals("null")) {
                     colorBox.setSavedValue(this.customizations.getHaloHex());
                     colorBox.setValue(colorBox.getSavedValue());
                 }
@@ -105,7 +107,7 @@ public class AetherCustomizationsScreen extends Screen
                         (button, poseStack, x, y) -> button.setMessage(new TranslatableComponent(this.customizations.isDeveloperGlowEnabled() ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"))
                 ));
                 ColorBox colorBox = new ColorBox("developerGlowEnabled", "developerGlowColor", Minecraft.getInstance().font, xPos + 155, yPos + (25 * i), 60, 20, new TranslatableComponent("gui.aether.customization.developer_glow.color"));
-                if (this.customizations.getDeveloperGlowHex() != null && !this.customizations.getDeveloperGlowHex().isEmpty()) {
+                if (this.customizations.getDeveloperGlowHex() != null && !this.customizations.getDeveloperGlowHex().isEmpty() && !this.customizations.getDeveloperGlowHex().equals("null")) {
                     colorBox.setSavedValue(this.customizations.getDeveloperGlowHex());
                     colorBox.setValue(colorBox.getSavedValue());
                 }
@@ -160,5 +162,8 @@ public class AetherCustomizationsScreen extends Screen
         this.customizations.save();
         this.customizations.load();
         this.customizations.sync();
+        if (this.minecraft != null && this.minecraft.player != null) {
+            AetherPacketHandler.sendToServer(new RankingsForcePacket(this.minecraft.player.getId()));
+        }
     }
 }

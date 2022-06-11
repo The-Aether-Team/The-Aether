@@ -74,7 +74,7 @@ public class AetherClient {
         colors.register((color, itemProvider) -> itemProvider > 0 ? -1 : ((DyeableLeatherItem) color.getItem()).getColor(color), AetherItems.LEATHER_GLOVES.get());
 
         for (MoaEggItem moaEggItem : MoaEggItem.moaEggs()) {
-            colors.register((color, itemProvider) -> moaEggItem.getColor(itemProvider), moaEggItem);
+            colors.register((color, itemProvider) -> moaEggItem.getColor(), moaEggItem);
         }
     }
 

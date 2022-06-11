@@ -42,6 +42,7 @@ public class AetherRecipeData extends AetherRecipeProvider
         makePlanks(AetherBlocks.SKYROOT_PLANKS, AetherBlocks.GOLDEN_OAK_WOOD).save(consumer, name("golden_wood_to_planks"));
         makeBricks(AetherBlocks.HOLYSTONE_BRICKS, AetherBlocks.HOLYSTONE).save(consumer);
 
+        makeOreToBlock(AetherBlocks.AMBROSIUM_BLOCK, AetherItems.AMBROSIUM_SHARD).save(consumer);
         makeOreToBlock(AetherBlocks.ZANITE_BLOCK, AetherItems.ZANITE_GEMSTONE).save(consumer);
 
         ShapedRecipeBuilder.shaped(AetherBlocks.ALTAR.get(), 1)
@@ -151,6 +152,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .group("white_dye")
                 .save(consumer, name("flower_to_white_dye"));
 
+        makeBlockToOre(AetherItems.AMBROSIUM_SHARD, AetherBlocks.AMBROSIUM_BLOCK).save(consumer);
         makeBlockToOre(AetherItems.ZANITE_GEMSTONE, AetherBlocks.ZANITE_BLOCK).save(consumer);
 
 

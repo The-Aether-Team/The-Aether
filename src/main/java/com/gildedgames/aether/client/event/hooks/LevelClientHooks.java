@@ -5,6 +5,7 @@ import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 
 public class LevelClientHooks {
     public static void renderMenuWithWorld(Minecraft minecraft) {
@@ -16,7 +17,7 @@ public class LevelClientHooks {
                     LocalPlayer player = minecraft.player;
                     if (player != null) {
                         player.setXRot(0);
-                        player.setYRot(player.getYRot() + 0.05F);
+                        player.setYRot(player.getYRot() + 0.02F);
                     }
                     if (minecraft.screen instanceof PauseScreen) {
                         setupMenu(minecraft);
@@ -32,5 +33,19 @@ public class LevelClientHooks {
     public static void setupMenu(Minecraft minecraft) {
         AetherWorldDisplayHelper.setupLevelForDisplay();
         minecraft.forceSetScreen(GuiHooks.getMenu());
+    }
+
+    public static boolean shouldRenderPlayer() {
+        return AetherConfig.CLIENT.enable_world_preview.get() && AetherWorldDisplayHelper.loadedLevel != null && AetherWorldDisplayHelper.loadedSummary != null;
+    }
+
+    public static void adjustShadow(PlayerRenderer renderer) {
+        if (shouldRenderPlayer()) {
+            renderer.shadowRadius = 0.0F;
+        } else {
+            if (renderer.shadowRadius == 0.0F) {
+                renderer.shadowRadius = 0.5F;
+            }
+        }
     }
 }
