@@ -157,7 +157,7 @@ public class AetherFeatures {
                 AetherFeatureBuilders.lake(BlockStateProvider.simple(Blocks.WATER), BlockStateProvider.simple(AetherBlocks.AETHER_GRASS_BLOCK.get())));
 
         public static final Holder<ConfiguredFeature<SpringConfiguration, ?>> WATER_SPRING_CONFIGURED_FEATURE = register("water_spring", Feature.SPRING,
-                AetherFeatureBuilders.spring(Fluids.WATER.defaultFluidState(), true, 4, 1, HolderSet.direct(Block::builtInRegistryHolder, AetherBlocks.HOLYSTONE.get(), AetherBlocks.AETHER_DIRT.get(), AetherBlocks.AETHER_GRASS_BLOCK.get())));
+                AetherFeatureBuilders.spring(Fluids.WATER.defaultFluidState(), true, 4, 1, HolderSet.direct(Block::builtInRegistryHolder, AetherBlocks.HOLYSTONE.get(), AetherBlocks.AETHER_DIRT.get())));
 
         public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_AETHER_DIRT_CONFIGURED_FEATURE = register("aether_dirt_ore", Feature.ORE,
                 new OreConfiguration(Tests.HOLYSTONE, States.AETHER_DIRT, 33));
@@ -181,15 +181,6 @@ public class AetherFeatures {
                 new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
                         PlacementUtils.inlinePlaced(SKYROOT_TREE_CONFIGURED_FEATURE, PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get())), 0.1F)),
                         PlacementUtils.inlinePlaced(GOLDEN_OAK_TREE_CONFIGURED_FEATURE, PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get()))));
-
-
-//        public static final Holder<ConfiguredFeature<RandomFeatureConfiguration, ?>> TREE_BLEND = register("aether_tree_mix", Feature.RANDOM_SELECTOR,
-//                new RandomFeatureConfiguration(
-//                        List.of(new WeightedPlacedFeature(
-//                                Holder.direct(new PlacedFeature(Holder.hackyErase(ConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURED_FEATURE), List.of(PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get())))), 0.01F)),
-//                        Holder.direct(new PlacedFeature(
-//                                Holder.hackyErase(ConfiguredFeatures.SKYROOT_TREE_CONFIGURED_FEATURE), List.of(PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()))))
-//                ));
 
         public static <FC extends FeatureConfiguration, F extends Feature<FC>> Holder<ConfiguredFeature<FC, ?>> register(String name, F feature, FC configuration) {
             return BuiltinRegistries.registerExact(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name).toString(), new ConfiguredFeature<>(feature, configuration));
@@ -248,7 +239,7 @@ public class AetherFeatures {
                 PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
                 new ElevationAdjustment(UniformInt.of(-4, -2)),
                 new ElevationFilter(47, 70),
-                BlockPredicateFilter.forPredicate(BlockPredicate.anyOf(BlockPredicate.matchesBlock(AetherBlocks.AETHER_DIRT.get(), BlockPos.ZERO), BlockPredicate.matchesTag(AetherTags.Blocks.HOLYSTONE))));
+                BlockPredicateFilter.forPredicate(BlockPredicate.matchesTag(AetherTags.Blocks.QUICKSOIL_CAN_GENERATE)));
         // FIXME once Terrain can go above 63 again, change 47 -> 63
 
         public static final Holder<PlacedFeature> WATER_LAKE_PLACED_FEATURE = register("water_lake", ConfiguredFeatures.WATER_LAKE_CONFIGURED_FEATURE,

@@ -96,6 +96,10 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS
         );
+        tag(AetherTags.Blocks.QUICKSOIL_CAN_GENERATE).add(
+                AetherBlocks.AETHER_DIRT.get(),
+                AetherBlocks.HOLYSTONE.get()
+        );
 
         //vanilla
         tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).addTag(AetherTags.Blocks.DUNGEON_BLOCKS);

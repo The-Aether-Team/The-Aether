@@ -4,8 +4,7 @@
     "hole_count": 1,
     "valid_blocks": [
       "aether:holystone",
-      "aether:aether_dirt",
-      "aether:aether_grass_block"
+      "aether:aether_dirt"
     ],
     "state": {
       "Properties": {

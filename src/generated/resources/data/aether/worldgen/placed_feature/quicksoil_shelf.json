@@ -25,17 +25,8 @@
     },
     {
       "predicate": {
-        "predicates": [
-          {
-            "blocks": "aether:aether_dirt",
-            "type": "minecraft:matching_blocks"
-          },
-          {
-            "tag": "aether:holystone",
-            "type": "minecraft:matching_block_tag"
-          }
-        ],
-        "type": "minecraft:any_of"
+        "tag": "aether:quicksoil_can_generate",
+        "type": "minecraft:matching_block_tag"
       },
       "type": "minecraft:block_predicate_filter"
     }

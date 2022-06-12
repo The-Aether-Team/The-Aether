@@ -44,12 +44,12 @@ public class AetherFeatureBuilders {
                 new ConfigFilter(AetherConfig.COMMON.generate_pink_aerclouds));
     }
 
-    public static AetherLakeConfiguration lake(BlockStateProvider fluid, BlockStateProvider top) {
-        return new AetherLakeConfiguration(fluid, top);
+    private static ImmutableList.Builder<PlacementModifier> treePlacementBase(PlacementModifier p_195485_) {
+        return ImmutableList.<PlacementModifier>builder().add(p_195485_).add(InSquarePlacement.spread()).add(TREE_THRESHOLD).add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4)).add(BiomeFilter.biome());
     }
 
-    public static SpringConfiguration spring(FluidState fluid, boolean requiresBlocksBelow, int rockCount, int holeCount, HolderSet<Block> validBlocks) {
-        return new SpringConfiguration(fluid, requiresBlocksBelow, rockCount, holeCount, validBlocks);
+    public static List<PlacementModifier> treePlacement(PlacementModifier p_195480_) {
+        return treePlacementBase(p_195480_).build();
     }
 
     public static RandomPatchConfiguration grassPatch(BlockStateProvider block, int p_195204_) {
@@ -60,6 +60,14 @@ public class AetherFeatureBuilders {
         return FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(block));
     }
 
+    public static AetherLakeConfiguration lake(BlockStateProvider fluid, BlockStateProvider top) {
+        return new AetherLakeConfiguration(fluid, top);
+    }
+
+    public static SpringConfiguration spring(FluidState fluid, boolean requiresBlocksBelow, int rockCount, int holeCount, HolderSet<Block> validBlocks) {
+        return new SpringConfiguration(fluid, requiresBlocksBelow, rockCount, holeCount, validBlocks);
+    }
+
     public static List<PlacementModifier> orePlacement(PlacementModifier p_195347_, PlacementModifier p_195348_) {
         return List.of(p_195347_, InSquarePlacement.spread(), p_195348_, BiomeFilter.biome());
     }
@@ -67,17 +75,4 @@ public class AetherFeatureBuilders {
     public static List<PlacementModifier> commonOrePlacement(int p_195344_, PlacementModifier p_195345_) {
         return orePlacement(CountPlacement.of(p_195344_), p_195345_);
     }
-
-    private static ImmutableList.Builder<PlacementModifier> treePlacementBase(PlacementModifier p_195485_) {
-        return ImmutableList.<PlacementModifier>builder().add(p_195485_).add(InSquarePlacement.spread()).add(TREE_THRESHOLD).add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4)).add(BiomeFilter.biome());
-    }
-
-    public static List<PlacementModifier> treePlacement(PlacementModifier p_195480_) {
-        return treePlacementBase(p_195480_).build();
-    }
-
-//    public static PlacedFeature treeBlendDensity(int perLayerCount) {
-//        return new PlacedFeature(Holder.hackyErase(AetherFeatures.ConfiguredFeatures.TREE_BLEND), List.of(CountOnEveryLayerPlacement.of(perLayerCount)));
-//    }
-
 }
