@@ -18,16 +18,10 @@ import com.gildedgames.aether.common.world.gen.placement.*;
 import com.gildedgames.aether.common.world.treedecorator.HolidayTreeDecorator;
 import com.gildedgames.aether.core.AetherConfig;
 import com.google.common.collect.ImmutableList;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.features.FeatureUtils;
-import net.minecraft.data.worldgen.features.TreeFeatures;
-import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
-import net.minecraft.data.worldgen.placement.TreePlacements;
-import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -41,7 +35,6 @@ import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.LakeFeature;
 import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
@@ -109,10 +102,10 @@ public class AetherFeatures {
         public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> GOLDEN_OAK_TREE_CONFIGURED_FEATURE = register("golden_oak_tree", Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
                         BlockStateProvider.simple(States.GOLDEN_OAK_LOG),
-                        new FancyTrunkPlacer(3, 11, 0),
+                        new FancyTrunkPlacer(9, 5, 0),
                         BlockStateProvider.simple(States.GOLDEN_OAK_LEAVES),
                         new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
-                        new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))
+                        new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(10))
                 ).ignoreVines().build());
 
         public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> CRYSTAL_TREE_CONFIGURED_FEATURE = register("crystal_tree", Feature.TREE,
