@@ -48,13 +48,9 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
                 int x = pos.getX();
                 int z = pos.getZ();
                 int height = context.getHeight(this.heightmap, x, z);
-                if (j > 0) {
-                    x += random.nextInt(4) + 1;
-                    z += random.nextInt(4) + 1;
-                }
-                int y = this.findOnGroundYPosition(context, x, height, z, i);
-                if (y != Integer.MAX_VALUE) {
-                    builder.add(new BlockPos(x, y, z));
+                BlockPos blockPos = this.findOnGroundPosition(context, random, new BlockPos(x, height, z), i);
+                if (blockPos != null) {
+                    builder.add(blockPos);
                     flag = true;
                 }
             }
@@ -69,20 +65,29 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
         return PlacementModifiers.IMPROVED_LAYER_PLACEMENT;
     }
 
-    private int findOnGroundYPosition(PlacementContext context, int x, int y, int z, int count) {
+    private BlockPos findOnGroundPosition(PlacementContext context, Random random, BlockPos pos, int count) {
         int i = 0;
+        int x;
+        int z;
+        int y = pos.getY();
         for (int j = y; j >= context.getMinBuildHeight() + 1; --j) {
+            x = pos.getX();
+            z = pos.getZ();
+            if (j < y) {
+                x += random.nextBoolean() ? -(random.nextInt(2) + 1) : random.nextInt(2) + 1;
+                z += random.nextBoolean() ? -(random.nextInt(2) + 1) : random.nextInt(2) + 1;
+            }
             BlockPos blockPos = new BlockPos(x, j, z);
             BlockState blockState = context.getBlockState(blockPos);
             BlockState blockState1 = context.getBlockState(blockPos.below());
             if (blockState.isAir() && this.isSolid(blockState1) && !blockState1.is(Blocks.BEDROCK) && checkVerticalBounds(context, blockPos)) {
                 if (i == count) {
-                    return blockPos.getY();
+                    return blockPos;
                 }
                 ++i;
             }
         }
-        return Integer.MAX_VALUE;
+        return null;
     }
 
     private boolean checkVerticalBounds(PlacementContext context, BlockPos pos) {

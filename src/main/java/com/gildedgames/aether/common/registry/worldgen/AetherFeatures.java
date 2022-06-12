@@ -177,6 +177,11 @@ public class AetherFeatures {
                         PlacementUtils.inlinePlaced(GOLDEN_OAK_TREE_CONFIGURED_FEATURE, PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get())), 0.01F)),
                         PlacementUtils.inlinePlaced(SKYROOT_TREE_CONFIGURED_FEATURE, PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()))));
 
+        public static final Holder<ConfiguredFeature<RandomFeatureConfiguration, ?>> TREES_GOLDEN_OAK_AND_SKYROOT_CONFIGURED_FEATURE = register("trees_golden_oak_and_skyroot", Feature.RANDOM_SELECTOR,
+                new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
+                        PlacementUtils.inlinePlaced(SKYROOT_TREE_CONFIGURED_FEATURE, PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get())), 0.1F)),
+                        PlacementUtils.inlinePlaced(GOLDEN_OAK_TREE_CONFIGURED_FEATURE, PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get()))));
+
 
 //        public static final Holder<ConfiguredFeature<RandomFeatureConfiguration, ?>> TREE_BLEND = register("aether_tree_mix", Feature.RANDOM_SELECTOR,
 //                new RandomFeatureConfiguration(
@@ -197,14 +202,17 @@ public class AetherFeatures {
         public static final Holder<PlacedFeature> GOLDEN_AERCLOUD_PLACED_FEATURE = register("golden_aercloud", ConfiguredFeatures.GOLDEN_AERCLOUD, AetherFeatureBuilders.createAercloudPlacements(160, 5));
         public static final Holder<PlacedFeature> PINK_AERCLOUD_PLACED_FEATURE = register("pink_aercloud", ConfiguredFeatures.PINK_AERCLOUD, AetherFeatureBuilders.createPinkAercloudPlacements(160, 7));
 
-        public static final Holder<PlacedFeature> SKYROOT_TREE_PLACED_FEATURE = register("skyroot_tree", ConfiguredFeatures.SKYROOT_TREE_CONFIGURED_FEATURE,
-                PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()));
-
-        public static final Holder<PlacedFeature> GOLDEN_OAK_TREE_PLACED_FEATURE = register("golden_oak_tree", ConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURED_FEATURE,
-                PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get()));
-
         public static final Holder<PlacedFeature> SKYROOT_GROVE_TREES_PLACED_FEATURE = register("skyroot_grove_trees_placed_feature", ConfiguredFeatures.TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURED_FEATURE,
-                AetherFeatureBuilders.treePlacement(PlacementUtils.countExtra(20, 0.1F, 1)));
+                AetherFeatureBuilders.treePlacement(PlacementUtils.countExtra(2, 0.1F, 1)));
+
+        public static final Holder<PlacedFeature> SKYROOT_FOREST_TREES_PLACED_FEATURE = register("skyroot_forest_trees_placed_feature", ConfiguredFeatures.TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURED_FEATURE,
+                AetherFeatureBuilders.treePlacement(PlacementUtils.countExtra(7, 0.1F, 1)));
+
+        public static final Holder<PlacedFeature> SKYROOT_THICKET_TREES_PLACED_FEATURE = register("skyroot_thicket_trees_placed_feature", ConfiguredFeatures.TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURED_FEATURE,
+                AetherFeatureBuilders.treePlacement(PlacementUtils.countExtra(15, 0.1F, 1)));
+
+        public static final Holder<PlacedFeature> GOLDEN_FOREST_TREES_PLACED_FEATURE = register("golden_forest_trees_placed_feature", ConfiguredFeatures.TREES_GOLDEN_OAK_AND_SKYROOT_CONFIGURED_FEATURE,
+                AetherFeatureBuilders.treePlacement(PlacementUtils.countExtra(10, 0.1F, 1)));
 
         public static final Holder<PlacedFeature> CRYSTAL_ISLAND_PLACED_FEATURE = register("crystal_island", ConfiguredFeatures.CRYSTAL_ISLAND_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(),

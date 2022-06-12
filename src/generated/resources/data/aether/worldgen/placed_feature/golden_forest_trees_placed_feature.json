@@ -1,15 +1,15 @@
 {
-  "feature": "aether:trees_skyroot_and_golden_oak",
+  "feature": "aether:trees_golden_oak_and_skyroot",
   "placement": [
     {
       "count": {
         "distribution": [
           {
-            "data": 2,
+            "data": 10,
             "weight": 9
           },
           {
-            "data": 3,
+            "data": 11,
             "weight": 1
           }
         ],
