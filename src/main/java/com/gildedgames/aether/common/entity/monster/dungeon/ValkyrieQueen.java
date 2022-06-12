@@ -1,12 +1,16 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.common.entity.BossMob;
 import com.gildedgames.aether.common.entity.projectile.crystal.ThunderCrystal;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.BossInfoPacket;
+import com.gildedgames.aether.core.util.BossNameGenerator;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -15,15 +19,9 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.BossEvent;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -32,23 +30,34 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * This class holds the implementation of valkyrie queens. They are the boss version of valkyries, and they fight
  * in the same way, with the additional ability to shoot thunder crystal projectiles at their enemies.
  */
-public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob {
+public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, BossMob {
     public static final EntityDataAccessor<Boolean> DATA_IS_INVULNERABLE = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
     /** Boss health bar manager */
     private final ServerBossEvent bossFight;
 
     public ValkyrieQueen(EntityType<? extends ValkyrieQueen> type, Level level) {
         super(type, level);
-        this.bossFight  = new ServerBossEvent(new TextComponent("QUEEEEEENNNN"), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
+        this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
         this.bossFight.setVisible(false);
         this.xpReward = 50;
+    }
+
+    @Override
+    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+        SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+        BossNameGenerator.generateValkyrieName(this);
+        return data;
     }
 
     @Override
@@ -70,18 +79,24 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob {
     public void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_IS_INVULNERABLE, true);
+        this.entityData.define(DATA_BOSS_NAME, new TextComponent("Valkyrie Queen"));
     }
 
     @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean("invulnerable", this.entityData.get(DATA_IS_INVULNERABLE));
+        tag.putBoolean("Invulnerable", this.entityData.get(DATA_IS_INVULNERABLE));
+        tag.putString("BossName", Component.Serializer.toJson(this.entityData.get(DATA_BOSS_NAME)));
     }
 
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.entityData.set(DATA_IS_INVULNERABLE, tag.getBoolean("invulnerable"));
+        this.entityData.set(DATA_IS_INVULNERABLE, tag.getBoolean("Invulnerable"));
+        Component name = Component.Serializer.fromJson(tag.getString("BossName"));
+        if (name != null) {
+            this.entityData.set(DATA_BOSS_NAME, name);
+        }
     }
 
     @Override
@@ -101,7 +116,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob {
             if (!this.level.isClientSide && this.level.getDifficulty() == Difficulty.PEACEFUL && this.chatTimer <= 0) {
                 this.chatItUp(player, new TranslatableComponent("gui.aether.queen.peaceful"));
                 this.chatTimer = 60;
-            } else {
+            } else /*{
+                this.lookAt(player, 180F, 180F);
+                if (this.level.isClientSide && this.isInvulnerable()) {
+                    Minecraft.getInstance().setScreen(new ValkyrieQueenDialogueScreen(this));
+                }
+            }*/
+                {
                 this.lookAt(player, 180.0F, 180.0F);
                 if (!this.level.isClientSide && this.chatTimer <= 0) {
                     if (!this.isInvulnerable() || item.getItem() == AetherItems.VICTORY_MEDAL.get() && item.getCount() >= 10) {
@@ -158,6 +179,14 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob {
     }
 
     /**
+     * Sends a message to the player who interacted with the valkyrie.
+     */
+    @Override
+    protected void chatItUp(Player player, Component message) {
+        player.sendMessage(new TextComponent("[").append(this.getBossName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(message), player.getUUID());
+    }
+
+    /**
      * Add the given player to the list of players tracking this entity. For instance, a player may track a boss in order
      * to view its associated boss bar.
      */
@@ -178,12 +207,29 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob {
         this.bossFight.removePlayer(pPlayer);
     }
 
+    @Override
+    public void setCustomName(@Nullable Component pName) {
+        super.setCustomName(pName);
+        this.setBossName(pName);
+    }
+
     public boolean isInvulnerable() {
         return this.entityData.get(DATA_IS_INVULNERABLE);
     }
 
     public void setInvulnerable(boolean invulnerable) {
         this.entityData.set(DATA_IS_INVULNERABLE, invulnerable);
+    }
+
+    @Override
+    public Component getBossName() {
+        return this.entityData.get(DATA_BOSS_NAME);
+    }
+
+    @Override
+    public void setBossName(Component component) {
+        this.entityData.set(DATA_BOSS_NAME, component);
+        this.bossFight.setName(component);
     }
 
     @Override
@@ -203,7 +249,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob {
     }
 
     public static class ThunderCrystalAttackGoal extends Goal {
-        private Mob mob;
+        private final Mob mob;
         public ThunderCrystalAttackGoal(Mob mob) {
             this.mob = mob;
         }

@@ -1,9 +1,7 @@
-package com.gildedgames.aether.client.gui.screen.inventory;
+package com.gildedgames.aether.client.gui.screen;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.button.SunAltarSlider;
-import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
@@ -13,7 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.LazyOptional;
+
+import javax.annotation.Nonnull;
 
 @OnlyIn(Dist.CLIENT)
 public class SunAltarScreen extends Screen {
@@ -31,7 +30,7 @@ public class SunAltarScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void render(@Nonnull PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         this.renderBackground(pPoseStack);
         RenderSystem.setShaderTexture(0, TEXTURE);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

@@ -308,10 +308,10 @@ public class GuiHooks {
         RenderSystem.setShaderTexture(0, AETHER_BARS_LOCATION);
         drawBar(poseStack, x, y, bossEvent);
         Component component = bossEvent.getName();
-        int l = Minecraft.getInstance().font.width(component);
-        int i1 = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - l / 2;
-        int j1 = y - 9;
-        Minecraft.getInstance().font.drawShadow(poseStack, component, (float)i1, (float)j1, 16777215);
+        int nameLength = Minecraft.getInstance().font.width(component);
+        int nameX = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - nameLength / 2;
+        int nameY = y - 9;
+        Minecraft.getInstance().font.drawShadow(poseStack, component, (float)nameX, (float)nameY, 16777215);
     }
 
     /**
