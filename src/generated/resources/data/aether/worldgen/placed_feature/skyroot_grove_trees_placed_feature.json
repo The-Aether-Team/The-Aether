@@ -5,11 +5,11 @@
       "count": {
         "distribution": [
           {
-            "data": 50,
+            "data": 20,
             "weight": 9
           },
           {
-            "data": 51,
+            "data": 21,
             "weight": 1
           }
         ],
@@ -26,7 +26,15 @@
     },
     {
       "heightmap": "OCEAN_FLOOR",
-      "type": "aether:range_from_heightmap"
+      "count": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": 0,
+          "max_inclusive": 1
+        }
+      },
+      "verticalBounds": 4,
+      "type": "aether:improved_layer_placement"
     },
     {
       "type": "minecraft:biome"

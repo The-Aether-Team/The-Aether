@@ -12,7 +12,7 @@ public class PlacementModifiers {
     public static final PlacementModifierType<ElevationFilter> ELEVATION_FILTER = register(new ResourceLocation(Aether.MODID, "elevation_filter"), ElevationFilter.CODEC);
     public static final PlacementModifierType<ConfigFilter> CONFIG_FILTER = register(new ResourceLocation(Aether.MODID, "config_filter"), ConfigFilter.CODEC);
     public static final PlacementModifierType<HolidayFilter> HOLIDAY_FILTER = register(new ResourceLocation(Aether.MODID, "holiday_filter"), HolidayFilter.CODEC);
-    public static final PlacementModifierType<RangeFromHeightmapPlacement> RANGE_FROM_HEIGHTMAP = register(new ResourceLocation(Aether.MODID, "range_from_heightmap"), RangeFromHeightmapPlacement.CODEC);
+    public static final PlacementModifierType<ImprovedLayerPlacementModifier> IMPROVED_LAYER_PLACEMENT = register(new ResourceLocation(Aether.MODID, "improved_layer_placement"), ImprovedLayerPlacementModifier.CODEC);
 
     // You HAVE to call this. This class won't load otherwise until this problem is properly addressed
     public static void init() { }

@@ -4,12 +4,13 @@ import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProp
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import com.gildedgames.aether.common.world.gen.configuration.AetherLakeConfiguration;
 import com.gildedgames.aether.common.world.gen.placement.ConfigFilter;
-import com.gildedgames.aether.common.world.gen.placement.RangeFromHeightmapPlacement;
+import com.gildedgames.aether.common.world.gen.placement.ImprovedLayerPlacementModifier;
 import com.gildedgames.aether.core.AetherConfig;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.HolderSet;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -67,9 +68,8 @@ public class AetherFeatureBuilders {
         return orePlacement(CountPlacement.of(p_195344_), p_195345_);
     }
 
-    private static ImmutableList.Builder<PlacementModifier> treePlacementBase(PlacementModifier p_195485_) { //todo see if rearranging the heightmap thing somewhere else will fix spawning in lakes. also spawning on crystal trees is still not solved.
-        return ImmutableList.<PlacementModifier>builder().add(p_195485_).add(InSquarePlacement.spread()).add(TREE_THRESHOLD).add(RangeFromHeightmapPlacement.onHeightmap(Heightmap.Types.OCEAN_FLOOR)).add(BiomeFilter.biome());
-        //return ImmutableList.<PlacementModifier>builder().add(p_195485_).add(InSquarePlacement.spread()).add(TREE_THRESHOLD).add(PlacementUtils.HEIGHTMAP_OCEAN_FLOOR).add(BiomeFilter.biome());
+    private static ImmutableList.Builder<PlacementModifier> treePlacementBase(PlacementModifier p_195485_) {
+        return ImmutableList.<PlacementModifier>builder().add(p_195485_).add(InSquarePlacement.spread()).add(TREE_THRESHOLD).add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4)).add(BiomeFilter.biome());
     }
 
     public static List<PlacementModifier> treePlacement(PlacementModifier p_195480_) {

@@ -204,12 +204,12 @@ public class AetherFeatures {
                 PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get()));
 
         public static final Holder<PlacedFeature> SKYROOT_GROVE_TREES_PLACED_FEATURE = register("skyroot_grove_trees_placed_feature", ConfiguredFeatures.TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURED_FEATURE,
-                AetherFeatureBuilders.treePlacement(PlacementUtils.countExtra(50, 0.1F, 1)));
+                AetherFeatureBuilders.treePlacement(PlacementUtils.countExtra(20, 0.1F, 1)));
 
         public static final Holder<PlacedFeature> CRYSTAL_ISLAND_PLACED_FEATURE = register("crystal_island", ConfiguredFeatures.CRYSTAL_ISLAND_CONFIGURED_FEATURE,
                 InSquarePlacement.spread(),
                 HeightRangePlacement.uniform(VerticalAnchor.absolute(80), VerticalAnchor.absolute(120)),
-                RarityFilter.onAverageOnceEvery(2)); //16
+                RarityFilter.onAverageOnceEvery(16));
 
         public static final Holder<PlacedFeature> HOLIDAY_TREE_PLACED_FEATURE = register("holiday_tree", ConfiguredFeatures.HOLIDAY_TREE_CONFIGURED_FEATURE,
                 new HolidayFilter(),
