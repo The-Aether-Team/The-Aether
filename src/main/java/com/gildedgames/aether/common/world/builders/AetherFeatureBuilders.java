@@ -1,22 +1,20 @@
 package com.gildedgames.aether.common.world.builders;
 
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
-import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import com.gildedgames.aether.common.world.gen.configuration.AetherLakeConfiguration;
 import com.gildedgames.aether.common.world.gen.placement.ConfigFilter;
+import com.gildedgames.aether.common.world.gen.placement.RangeFromHeightmapPlacement;
 import com.gildedgames.aether.core.AetherConfig;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.core.HolderSet;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.LakeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.SpringConfiguration;
@@ -25,6 +23,8 @@ import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.material.FluidState;
 
 import java.util.List;
+
+import static net.minecraft.data.worldgen.placement.VegetationPlacements.TREE_THRESHOLD;
 
 public class AetherFeatureBuilders {
     public static AercloudConfiguration createAercloudConfig(int bounds, BlockState blockState) {
@@ -67,20 +67,17 @@ public class AetherFeatureBuilders {
         return orePlacement(CountPlacement.of(p_195344_), p_195345_);
     }
 
-    public static List<PlacementModifier> rareOrePlacement(int p_195350_, PlacementModifier p_195351_) {
-        return orePlacement(RarityFilter.onAverageOnceEvery(p_195350_), p_195351_);
+    private static ImmutableList.Builder<PlacementModifier> treePlacementBase(PlacementModifier p_195485_) { //todo see if rearranging the heightmap thing somewhere else will fix spawning in lakes. also spawning on crystal trees is still not solved.
+        return ImmutableList.<PlacementModifier>builder().add(p_195485_).add(InSquarePlacement.spread()).add(TREE_THRESHOLD).add(RangeFromHeightmapPlacement.onHeightmap(Heightmap.Types.OCEAN_FLOOR)).add(BiomeFilter.biome());
+        //return ImmutableList.<PlacementModifier>builder().add(p_195485_).add(InSquarePlacement.spread()).add(TREE_THRESHOLD).add(PlacementUtils.HEIGHTMAP_OCEAN_FLOOR).add(BiomeFilter.biome());
     }
 
-    public static BlockPredicateFilter copyBlockSurvivability(Block block) {
-        return copyBlockSurvivability(block.defaultBlockState());
+    public static List<PlacementModifier> treePlacement(PlacementModifier p_195480_) {
+        return treePlacementBase(p_195480_).build();
     }
 
-    public static BlockPredicateFilter copyBlockSurvivability(BlockState blockState) {
-        return BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(blockState, BlockPos.ZERO));
-    }
-
-    public static PlacedFeature treeBlendDensity(int perLayerCount) {
-        return new PlacedFeature(Holder.hackyErase(AetherFeatures.ConfiguredFeatures.TREE_BLEND), List.of(CountOnEveryLayerPlacement.of(perLayerCount)));
-    }
+//    public static PlacedFeature treeBlendDensity(int perLayerCount) {
+//        return new PlacedFeature(Holder.hackyErase(AetherFeatures.ConfiguredFeatures.TREE_BLEND), List.of(CountOnEveryLayerPlacement.of(perLayerCount)));
+//    }
 
 }
