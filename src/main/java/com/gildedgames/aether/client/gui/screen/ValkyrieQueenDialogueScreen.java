@@ -95,7 +95,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
 
     private void positionDialogueOptions() {
         this.dialogue.reposition(this.width, this.height);
-        int lineNumber = this.dialogue.height / 12;
+        int lineNumber = this.dialogue.height / 12 + 1;
         for (Widget widget : this.renderables) {
             if (widget instanceof PlayerDialogueOption option) {
                 option.x = this.width / 2 - option.getWidth() / 2;
@@ -130,7 +130,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
     }
 
     private void setDialogue(Component component) {
-        this.dialogue.message = setupQueenName(this.queen.getBossName()).append(": ").append(component);
+        this.dialogue.updateDialogue(setupQueenName(this.queen.getBossName()).append(": ").append(component));
     }
 
     public static MutableComponent setupQueenName(Component component) {
