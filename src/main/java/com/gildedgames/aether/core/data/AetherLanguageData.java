@@ -601,12 +601,20 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("valkyrie.dialog.playerdead.3", "Humans aren't nearly as cute when they're dead.");
 
         //Valkyrie queen dialogue
-        addGuiText("queen.defeated", "You are truly... a mighty warrior...");
-        addGuiText("queen.fight", "This will be your final battle!");
-        addGuiText("queen.no_medals", "Try defeating some weaker valkyries first.");
-        addGuiText("queen.peaceful", "Sorry, I don't fight with weaklings.");
-        addGuiText("queen.playerdeath", "As expected of a human.");
-        addGuiText("queen.ready", "If you wish to challenge me, strike at any time.");
+        addGuiText("queen.dialog.challenge", "Very well then. Bring me ten medals from my subordinates to prove your worth, then we'll see.");
+        addGuiText("queen.dialog.defeated", "You are truly... a mighty warrior...");
+        addGuiText("queen.dialog.fight", "This will be your final battle!");
+        addGuiText("queen.dialog.peaceful", "Sorry, I don't fight with weaklings.");
+        addGuiText("queen.dialog.playerdeath", "As expected of a human.");
+        addGuiText("queen.dialog.ready", "If you wish to challenge me, strike at any time.");
+        addGuiText("queen.title", "the Valkyrie Queen");
+
+        addGuiText("player.dialog.challenge", "I wish to fight you!");
+        addGuiText("player.dialog.deny_fight", "On second thought, I'd rather not.");
+        addGuiText("player.dialog.have_medals", "I'm ready, I have the medals right here!");
+        addGuiText("player.dialog.leave", "Nevermind.");
+        addGuiText("player.dialog.no_medals", "I'll return when I have them.");
+        addGuiText("player.dialog.question", "What can you tell me about this place?");
 
 
 

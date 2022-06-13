@@ -2,6 +2,7 @@ package com.gildedgames.aether.core.util;
 
 import com.gildedgames.aether.common.entity.monster.dungeon.ValkyrieQueen;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.Random;
 
@@ -82,6 +83,7 @@ public class BossNameGenerator {
             result += valkyrieNameMiddle[random.nextInt(valkyrieNameMiddle.length)];
             result += valkyrieNameLast[random.nextInt(valkyrieNameLast.length)];
         }
-        valkyrieQueen.setBossName(new TextComponent(result).append(new TextComponent(", the Valkyrie Queen")));
+        result += ", ";
+        valkyrieQueen.setBossName(new TextComponent(result).append(new TranslatableComponent("gui.aether.queen.title")));
     }
 }

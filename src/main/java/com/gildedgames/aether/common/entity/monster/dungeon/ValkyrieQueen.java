@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
+import com.gildedgames.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.BossMob;
 import com.gildedgames.aether.common.entity.projectile.crystal.ThunderCrystal;
@@ -9,6 +10,7 @@ import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.BossInfoPacket;
 import com.gildedgames.aether.core.util.BossNameGenerator;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -26,6 +28,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +37,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Optional;
 
 /**
  * This class holds the implementation of valkyrie queens. They are the boss version of valkyries, and they fight
@@ -116,13 +118,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
             if (!this.level.isClientSide && this.level.getDifficulty() == Difficulty.PEACEFUL && this.chatTimer <= 0) {
                 this.chatItUp(player, new TranslatableComponent("gui.aether.queen.peaceful"));
                 this.chatTimer = 60;
-            } else /*{
+            } else {
                 this.lookAt(player, 180F, 180F);
                 if (this.level.isClientSide && this.isInvulnerable()) {
                     Minecraft.getInstance().setScreen(new ValkyrieQueenDialogueScreen(this));
                 }
-            }*/
-                {
+            }
+                /*{
                 this.lookAt(player, 180.0F, 180.0F);
                 if (!this.level.isClientSide && this.chatTimer <= 0) {
                     if (!this.isInvulnerable() || item.getItem() == AetherItems.VICTORY_MEDAL.get() && item.getCount() >= 10) {
@@ -133,7 +135,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
                     }
                     this.chatTimer = 60;
                 }
-            }
+            }*/
         }
         return super.mobInteract(player, hand);
     }
@@ -176,6 +178,11 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
         }
         this.spawnExplosionParticles();
         super.die(pCause);
+    }
+
+    public void readyUp() {
+        TranslatableComponent message = new TranslatableComponent("gui.aether.queen.ready");
+        this.level.getNearbyPlayers(TargetingConditions.DEFAULT, this, this.getBoundingBox().inflate(16, 16, 16)).forEach(player -> this.chatItUp(player, message));
     }
 
     /**
