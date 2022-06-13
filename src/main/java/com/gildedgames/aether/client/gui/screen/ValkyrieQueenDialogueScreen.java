@@ -4,6 +4,8 @@ import com.gildedgames.aether.client.gui.button.NpcDialogueComponent;
 import com.gildedgames.aether.client.gui.button.PlayerDialogueOption;
 import com.gildedgames.aether.common.entity.monster.dungeon.ValkyrieQueen;
 import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.server.NpcPlayerInteractPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -13,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -37,24 +40,39 @@ public class ValkyrieQueenDialogueScreen extends Screen {
     @Override
     protected void init() {
         this.addDialogueOptions(
-                new PlayerDialogueOption(buildPlayerDialogue("question"), pButton -> this.onClose()),
+                new PlayerDialogueOption(buildPlayerDialogue("question"), pButton -> this.finishChat((byte) 0)),
                 new PlayerDialogueOption(buildPlayerDialogue("challenge"), pButton -> {
                     this.setDialogue(new TranslatableComponent("gui.aether.queen.dialog.challenge"));
                     PlayerDialogueOption option;
                     int count = this.minecraft.player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get());
                     if (count >= 10) {
-                        option = new PlayerDialogueOption(buildPlayerDialogue("have_medals"), button -> this.onClose());
+                        option = new PlayerDialogueOption(buildPlayerDialogue("have_medals"), button -> this.finishChat((byte) 1));
                     } else {
-                        option = new PlayerDialogueOption(buildPlayerDialogue("no_medals").append(new TextComponent("I'll return when I have them. (" + count + "/10)")), button -> this.onClose());
+                        option = new PlayerDialogueOption(buildPlayerDialogue("no_medals").append(new TextComponent("I'll return when I have them. (" + count + "/10)")), button -> this.finishChat((byte) 1));
                     }
                     this.addDialogueOptions(
                             option,
-                            new PlayerDialogueOption(buildPlayerDialogue("deny_fight"), button -> this.onClose())
+                            new PlayerDialogueOption(buildPlayerDialogue("deny_fight"), button -> this.finishChat((byte) 2))
                     );
                 }),
-                new PlayerDialogueOption(buildPlayerDialogue("leave"), pButton -> this.onClose())
+                new PlayerDialogueOption(buildPlayerDialogue("leave"), pButton -> this.finishChat((byte) 3))
         );
         this.positionDialogueOptions();
+    }
+
+    /**
+     * Sends an NPC interaction to the server.
+     * @see com.gildedgames.aether.core.network.packet.server.NpcPlayerInteractPacket
+     * @see ValkyrieQueen#handleNpcInteraction(Player, byte)
+     * @param interactionID - A code for which interaction was performed on the client.
+     *                      0 - What can you tell me about this place?
+     *                      1 - Challenged to a fight.
+     *                      2 - Actually, I changed my mind (fight)
+     *                      3 - Nevermind
+     */
+    private void finishChat(byte interactionID) {
+        AetherPacketHandler.sendToServer(new NpcPlayerInteractPacket(this.queen.getId(), interactionID));
+        this.onClose();
     }
 
     @Override

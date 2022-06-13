@@ -55,6 +55,7 @@ public class AetherPacketHandler {
 		register(LoreExistsPacket.class, LoreExistsPacket::decode);
 		register(MilkCowPacket.class, MilkCowPacket::decode);
 		register(MovementPacket.class, MovementPacket::decode);
+		register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);
 		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
 		register(RankingsForcePacket.class, RankingsForcePacket::decode);

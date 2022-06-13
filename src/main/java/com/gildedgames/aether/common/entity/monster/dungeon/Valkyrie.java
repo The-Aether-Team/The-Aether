@@ -34,6 +34,8 @@ import java.util.UUID;
 public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     /** Keeps track of the previous y motion value. */
     private double motionYo;
+    /** Prevents the player from quickly talking to the valkyrie in succession. */
+    protected int chatTimer;
     /** General neutral mob necessities */
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
     private int remainingPersistentAngerTime;
@@ -96,6 +98,17 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
                 this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
                 this.setEntityOnGround(false);
             }
+        }
+    }
+
+    /**
+     * Increments the chat timer.
+     */
+    @Override
+    public void customServerAiStep() {
+        super.customServerAiStep();
+        if (this.chatTimer > 0) {
+            this.chatTimer--;
         }
     }
 

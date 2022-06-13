@@ -601,9 +601,12 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("valkyrie.dialog.playerdead.3", "Humans aren't nearly as cute when they're dead.");
 
         //Valkyrie queen dialogue
+        addGuiText("queen.dialog.answer", "This is a sanctuary for us Valkyries who seek rest.");
         addGuiText("queen.dialog.challenge", "Very well then. Bring me ten medals from my subordinates to prove your worth, then we'll see.");
         addGuiText("queen.dialog.defeated", "You are truly... a mighty warrior...");
+        addGuiText("queen.dialog.deny_fight", "So be it then. Goodbye adventurer.");
         addGuiText("queen.dialog.fight", "This will be your final battle!");
+        addGuiText("queen.dialog.goodbye", "Goodbye adventurer.");
         addGuiText("queen.dialog.peaceful", "Sorry, I don't fight with weaklings.");
         addGuiText("queen.dialog.playerdeath", "As expected of a human.");
         addGuiText("queen.dialog.ready", "If you wish to challenge me, strike at any time.");

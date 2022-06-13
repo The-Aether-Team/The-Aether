@@ -33,8 +33,6 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(AbstractValkyrie.class, EntityDataSerializers.BOOLEAN);
     /** Increments every tick to decide when the valkyries are ready to teleport. */
     protected int teleportTimer;
-    /** Prevents the player from quickly talking to the valkyrie in succession. */
-    protected int chatTimer;
     /** Goal for targeting in groups of entities */
     MostDamageTargetGoal mostDamageTargetGoal;
 
@@ -66,9 +64,6 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     public void customServerAiStep() {
         super.customServerAiStep();
         this.teleportTimer++;
-        if (this.chatTimer > 0) {
-            this.chatTimer--;
-        }
     }
 
     @Override

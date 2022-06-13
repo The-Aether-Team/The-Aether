@@ -6,6 +6,7 @@ import com.gildedgames.aether.common.entity.BossMob;
 import com.gildedgames.aether.common.entity.NpcDialogue;
 import com.gildedgames.aether.common.entity.projectile.crystal.ThunderCrystal;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
+import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.BossInfoPacket;
 import com.gildedgames.aether.core.network.packet.client.OpenNpcDialoguePacket;
@@ -46,6 +47,7 @@ import javax.annotation.Nullable;
  * in the same way, with the additional ability to shoot thunder crystal projectiles at their enemies.
  */
 public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, BossMob, NpcDialogue {
+    public static final TargetingConditions NON_COMBAT = TargetingConditions.forNonCombat();
     public static final EntityDataAccessor<Boolean> DATA_IS_INVULNERABLE = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
     /** Boss health bar manager */
@@ -116,29 +118,11 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
     @Override
     @Nonnull
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
-        ItemStack item = player.getItemInHand(hand);
         if (this.getTarget() == null) {
-            if (!this.level.isClientSide && this.level.getDifficulty() == Difficulty.PEACEFUL && this.chatTimer <= 0) {
-                this.chatItUp(player, new TranslatableComponent("gui.aether.queen.peaceful"));
-                this.chatTimer = 60;
-            } else {
-                this.lookAt(player, 180F, 180F);
-                if (player instanceof ServerPlayer serverPlayer && this.isInvulnerable()) {
-                    AetherPacketHandler.sendToPlayer(new OpenNpcDialoguePacket(this.getId()), serverPlayer);
-                }
+            this.lookAt(player, 180F, 180F);
+            if (player instanceof ServerPlayer serverPlayer && this.isInvulnerable()) {
+                AetherPacketHandler.sendToPlayer(new OpenNpcDialoguePacket(this.getId()), serverPlayer);
             }
-                /*{
-                this.lookAt(player, 180.0F, 180.0F);
-                if (!this.level.isClientSide && this.chatTimer <= 0) {
-                    if (!this.isInvulnerable() || item.getItem() == AetherItems.VICTORY_MEDAL.get() && item.getCount() >= 10) {
-                        this.setInvulnerable(false);
-                        this.chatItUp(player, new TranslatableComponent("gui.aether.queen.ready"));
-                    } else {
-                        this.chatItUp(player, new TranslatableComponent("gui.aether.queen.no_medals"));
-                    }
-                    this.chatTimer = 60;
-                }
-            }*/
         }
         return super.mobInteract(player, hand);
     }
@@ -152,7 +136,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
         if (!this.level.isClientSide && source.getEntity() instanceof Player player) {
             if (this.getTarget() == null && flag && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
                 this.bossFight.setVisible(true);
-                chatItUp(player, new TranslatableComponent("gui.aether.queen.fight"));
+                chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.fight"));
             }
         }
         return flag;
@@ -165,7 +149,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
     public boolean doHurtTarget(@Nonnull Entity pEntity) {
         boolean result = super.doHurtTarget(pEntity);
         if (pEntity instanceof ServerPlayer player && player.getHealth() <= 0) {
-            this.chatItUp(player, new TranslatableComponent("gui.aether.queen.playerdeath"));
+            this.chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.playerdeath"));
         }
         return result;
     }
@@ -175,17 +159,18 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
      * Plays the valkyrie's defeat message.
      */
     @Override
-    public void die(DamageSource pCause) {
-        if (pCause.getEntity() instanceof Player player) {
-            this.chatItUp(player, new TranslatableComponent("gui.aether.queen.defeated"));
+    public void die(@Nonnull DamageSource pCause) {
+        if (!this.level.isClientSide) {
+            this.chatWithNearby(new TranslatableComponent("gui.aether.queen.dialog.defeated"));
+            this.spawnExplosionParticles();
         }
-        this.spawnExplosionParticles();
         super.die(pCause);
     }
 
     public void readyUp() {
-        TranslatableComponent message = new TranslatableComponent("gui.aether.queen.ready");
-        this.level.getNearbyPlayers(TargetingConditions.DEFAULT, this, this.getBoundingBox().inflate(16, 16, 16)).forEach(player -> this.chatItUp(player, message));
+        TranslatableComponent message = new TranslatableComponent("gui.aether.queen.dialog.ready");
+        this.chatWithNearby(message);
+        this.setInvulnerable(false);
     }
 
     /**
@@ -194,6 +179,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
     @Override
     protected void chatItUp(Player player, Component message) {
         player.sendMessage(new TextComponent("[").append(this.getBossName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(message), player.getUUID());
+    }
+
+    /**
+     * Sends a message to nearby players. Useful for the boss fight.
+     */
+    protected void chatWithNearby(Component message) {
+        this.level.getNearbyPlayers(NON_COMBAT, this, this.getBoundingBox().inflate(16, 16, 16)).forEach(player -> this.chatItUp(player, message));
     }
 
     /**
@@ -265,6 +257,55 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
     @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen() {
         Minecraft.getInstance().setScreen(new ValkyrieQueenDialogueScreen(this));
+    }
+
+    /**
+     * Handles an NPC interaction on the server.
+     * @see com.gildedgames.aether.core.network.packet.server.NpcPlayerInteractPacket
+     * @param interactionID - A code for which interaction was performed on the client.
+     *                      0 - What can you tell me about this place?
+     *                      1 - Challenged to a fight.
+     *                      2 - Actually, I changed my mind (fight)
+     *                      3 - Nevermind
+     */
+    @Override
+    public void handleNpcInteraction(Player player, byte interactionID) {
+        switch (interactionID) {
+            case 0: // Responds to the player's question of where they are.
+                this.chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.answer"));
+                break;
+            case 1: // Tells the players nearby to ready up for a fight.
+                if (level.getDifficulty() == Difficulty.PEACEFUL) {
+                    this.chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.peaceful"));
+                } else {
+                    if (player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get()) >= 10) {
+                        this.readyUp();
+                        int count = 10;
+                        for (ItemStack item : player.inventoryMenu.getItems()) {
+                            if (item.is(AetherItems.VICTORY_MEDAL.get())) {
+                                if (item.getCount() > count) {
+                                    item.shrink(count);
+                                    break;
+                                } else {
+                                    count -= item.getCount();
+                                    item.setCount(0);
+                                }
+                            }
+                            if (count <= 0) break;
+                        }
+                    } else {
+                        this.chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.challenge"));
+                    }
+                }
+                break;
+            case 2:
+                this.chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.deny_fight"));
+                break;
+            case 3:
+            default: //Goodbye.
+                this.chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.goodbye"));
+                break;
+        }
     }
 
     public static class ThunderCrystalAttackGoal extends Goal {
