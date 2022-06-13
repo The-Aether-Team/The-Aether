@@ -29,6 +29,7 @@ public class ParachuteItem extends Item
             Entity entity = this.getParachuteEntity().get().create(world);
             if (entity instanceof Parachute parachute) {
                 parachute.setPos(playerEntity.getX(), playerEntity.getY() - 1.0D, playerEntity.getZ());
+                parachute.setDeltaMovement(playerEntity.getDeltaMovement());
                 if (playerEntity.isPassenger()) {
                     if (playerEntity.getVehicle() instanceof Parachute) {
                         playerEntity.getVehicle().ejectPassengers();
