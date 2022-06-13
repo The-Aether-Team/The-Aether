@@ -5,7 +5,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
@@ -30,18 +29,5 @@ public class AetherMixinHooks {
             }
         }
         return null;
-    }
-
-    public static boolean piglinAiMixin(LivingEntity player) {
-        LazyOptional<IItemHandlerModifiable> curiosHandler = CuriosApi.getCuriosHelper().getEquippedCurios(player);
-        if (curiosHandler.resolve().isPresent()) {
-            for (int i = 0; i < curiosHandler.resolve().get().getSlots(); i++) {
-                ItemStack itemStack = curiosHandler.resolve().get().getStackInSlot(i);
-                if (itemStack.makesPiglinsNeutral(player)) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }

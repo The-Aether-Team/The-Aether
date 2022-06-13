@@ -102,6 +102,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropSilk(AetherBlocks.QUICKSOIL_GLASS);
             dropSelf(AetherBlocks.AEROGEL);
 
+            dropSelf(AetherBlocks.AMBROSIUM_BLOCK);
             dropSelf(AetherBlocks.ZANITE_BLOCK);
             dropSelf(AetherBlocks.ENCHANTED_GRAVITITE);
 
@@ -406,6 +407,7 @@ public class AetherLootTableData extends AetherLootTableProvider
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_AXE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_SWORD.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_SHOVEL.get()).setWeight(1))
+                            .add(LootItem.lootTableItem(AetherItems.ZANITE_HOE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.SWET_CAPE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.AMBROSIUM_SHARD.get()).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 10.0F))))
                             .add(LootItem.lootTableItem(AetherItems.GOLDEN_DART.get()).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 5.0F))))
@@ -536,6 +538,7 @@ public class AetherLootTableData extends AetherLootTableProvider
                             .add(LootItem.lootTableItem(AetherItems.VALKYRIE_AXE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.VALKYRIE_SHOVEL.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.VALKYRIE_PICKAXE.get()).setWeight(1))
+                            .add(LootItem.lootTableItem(AetherItems.VALKYRIE_HOE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.HOLY_SWORD.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.VALKYRIE_HELMET.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.REGENERATION_STONE.get()).setWeight(1))

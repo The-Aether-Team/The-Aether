@@ -22,12 +22,10 @@ public class AetherNotificationModUpdateScreen extends NotificationModUpdateScre
 		super(null);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void render(PoseStack mStack, int mouseX, int mouseY, float partialTicks) {
 		if (this.showNotification != null && this.showNotification.shouldDraw() && FMLConfig.runVersionCheck() && Minecraft.getInstance().screen != null) {
-			Minecraft.getInstance().getTextureManager().bindForSetup(VERSION_CHECK_ICONS);
-			RenderSystem.clearColor(1, 1, 1, 1);
+			RenderSystem.setShaderTexture(0, VERSION_CHECK_ICONS);
 
 			this.width = Minecraft.getInstance().screen.width;
 			this.height = Minecraft.getInstance().screen.height;
@@ -36,7 +34,6 @@ public class AetherNotificationModUpdateScreen extends NotificationModUpdateScre
 			String modLine = ForgeI18n.parseMessage("fml.menu.loadingmods", tModCount);
 
 			blit(mStack, width - font.width(modLine) - 11, height - font.lineHeight - 11, this.showNotification.getSheetOffset() * 8, (this.showNotification.isAnimated() && ((System.currentTimeMillis() / 800 & 1) == 1)) ? 8 : 0, 8, 8, 64, 16);
-
 		}
 	}
 

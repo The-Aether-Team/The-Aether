@@ -62,6 +62,7 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         block(AetherBlocks.QUICKSOIL_GLASS, "construction/");
         block(AetherBlocks.AEROGEL, "construction/");
 
+        block(AetherBlocks.AMBROSIUM_BLOCK, "construction/");
         block(AetherBlocks.ZANITE_BLOCK, "construction/");
         block(AetherBlocks.ENCHANTED_GRAVITITE, "construction/");
 

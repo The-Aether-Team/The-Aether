@@ -124,6 +124,10 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(AetherTags.Blocks.ALLOWED_FLAMMABLES).add(Blocks.SOUL_SAND, Blocks.SOUL_SOIL).addTags(
                 AetherTags.Blocks.INFINIBURN,
                 AetherTags.Blocks.HELLFIRE_BLOCKS);
+        tag(AetherTags.Blocks.QUICKSOIL_CAN_GENERATE).add(
+                AetherBlocks.AETHER_DIRT.get(),
+                AetherBlocks.HOLYSTONE.get()
+        );
 
         //vanilla
         tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).addTag(AetherTags.Blocks.DUNGEON_BLOCKS);
@@ -229,6 +233,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.GRAVITITE_ORE.get(),
                 AetherBlocks.HOLYSTONE_BRICKS.get(),
                 AetherBlocks.AEROGEL.get(),
+                AetherBlocks.AMBROSIUM_BLOCK.get(),
                 AetherBlocks.ZANITE_BLOCK.get(),
                 AetherBlocks.ENCHANTED_GRAVITITE.get(),
                 AetherBlocks.ALTAR.get(),
@@ -356,7 +361,9 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.ZANITE_ORE.get(),
                 AetherBlocks.GRAVITITE_ORE.get());
         tag(Tags.Blocks.STONE).addTag(AetherTags.Blocks.HOLYSTONE);
-        tag(Tags.Blocks.STORAGE_BLOCKS).add(AetherBlocks.ZANITE_BLOCK.get());
+        tag(Tags.Blocks.STORAGE_BLOCKS).add(
+                AetherBlocks.AMBROSIUM_BLOCK.get(),
+                AetherBlocks.ZANITE_BLOCK.get());
     }
 
     @Nonnull

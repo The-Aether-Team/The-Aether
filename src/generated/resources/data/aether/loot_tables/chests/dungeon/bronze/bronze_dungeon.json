@@ -27,6 +27,10 @@
         },
         {
           "type": "minecraft:item",
+          "name": "aether:zanite_hoe"
+        },
+        {
+          "type": "minecraft:item",
           "name": "aether:swet_cape"
         },
         {

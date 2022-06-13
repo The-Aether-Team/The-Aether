@@ -5,6 +5,8 @@ import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.SunSpiritModel;
 
 import com.gildedgames.aether.common.entity.monster.dungeon.FireMinion;
+import com.gildedgames.aether.common.entity.passive.Aerwhale;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.resources.ResourceLocation;
 
@@ -16,6 +18,11 @@ public class FireMinionRenderer extends MobRenderer<FireMinion, SunSpiritModel<F
     
     public FireMinionRenderer(EntityRendererProvider.Context context) {
         super(context, new SunSpiritModel<>(context.bakeLayer(AetherModelLayers.FIRE_MINION)), 0.8F);
+    }
+
+    @Override
+    protected void scale(@Nonnull FireMinion fireMinion, PoseStack poseStack, float partialTickTime) {
+        poseStack.translate(0.0, 0.35, 0.0);
     }
     
     @Nonnull

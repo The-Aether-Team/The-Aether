@@ -35,6 +35,7 @@ public class AetherPacketHandler {
 		register(EternalDayPacket.class, EternalDayPacket::decode);
 		register(ExplosionParticlePacket.class, ExplosionParticlePacket::decode);
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
+		register(MoaInteractPacket.class, MoaInteractPacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
@@ -46,7 +47,6 @@ public class AetherPacketHandler {
 
 		// SERVER
 		register(AerbunnyPuffPacket.class, AerbunnyPuffPacket::decode);
-		register(ExtendedAttackPacket.class, ExtendedAttackPacket::decode);
 		register(HittingPacket.class, HittingPacket::decode);
 		register(JumpPacket.class, JumpPacket::decode);
 		register(LoreExistsPacket.class, LoreExistsPacket::decode);
@@ -54,6 +54,7 @@ public class AetherPacketHandler {
 		register(MovementPacket.class, MovementPacket::decode);
 		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
+		register(RankingsForcePacket.class, RankingsForcePacket::decode);
 		register(SunAltarUpdatePacket.class, SunAltarUpdatePacket::decode);
 
 		// BOTH

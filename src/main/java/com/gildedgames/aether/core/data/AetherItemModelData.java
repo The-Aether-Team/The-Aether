@@ -201,7 +201,7 @@ public class AetherItemModelData extends AetherItemModelProvider
 
         item(AetherItems.BOOK_OF_LORE, "miscellaneous/");
 
-        item(AetherItems.AETHER_PORTAL_FRAME, "miscellaneous/");
+        portalItem(AetherItems.AETHER_PORTAL_FRAME, "miscellaneous/");
 
         eggItem(AetherItems.PHYG_SPAWN_EGG);
         eggItem(AetherItems.FLYING_COW_SPAWN_EGG);
@@ -259,6 +259,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.QUICKSOIL_GLASS);
         itemBlock(AetherBlocks.AEROGEL);
 
+        itemBlock(AetherBlocks.AMBROSIUM_BLOCK);
         itemBlock(AetherBlocks.ZANITE_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_GRAVITITE);
 

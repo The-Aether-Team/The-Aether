@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aether:ambrosium_block"
+    ]
+  },
+  "criteria": {
+    "has_ambrosium_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:ambrosium_shard"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aether:ambrosium_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ambrosium_shard",
+      "has_the_recipe"
+    ]
+  ]
+}
