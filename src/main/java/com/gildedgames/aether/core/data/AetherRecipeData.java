@@ -292,6 +292,14 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .group("book_of_lore")
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(AetherItems.SKYROOT_BOAT.get(), 1)
+                .group("boat")
+                .pattern("P P")
+                .pattern("PPP")
+                .define('P', AetherBlocks.SKYROOT_PLANKS.get().asItem())
+                .unlockedBy("in_water", insideOf(Blocks.WATER))
+                .save(consumer);
+
 
         ShapedRecipeBuilder.shaped(Items.SADDLE, 1)
                 .pattern("LLL")

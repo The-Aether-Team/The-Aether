@@ -297,6 +297,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 							Parachute parachute = parachuteItem.getParachuteEntity().get().create(level);
 							if (parachute != null) {
 								parachute.setPos(player.getX(), player.getY() - 1.0D, player.getZ());
+								parachute.setDeltaMovement(player.getDeltaMovement());
 								if (!level.isClientSide) {
 									level.addFreshEntity(parachute);
 									player.startRiding(parachute);
