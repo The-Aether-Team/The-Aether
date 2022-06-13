@@ -3,11 +3,12 @@ package com.gildedgames.aether.common.entity.monster.dungeon;
 import com.gildedgames.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.BossMob;
+import com.gildedgames.aether.common.entity.NpcDialogue;
 import com.gildedgames.aether.common.entity.projectile.crystal.ThunderCrystal;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.BossInfoPacket;
+import com.gildedgames.aether.core.network.packet.client.OpenNpcDialoguePacket;
 import com.gildedgames.aether.core.util.BossNameGenerator;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -34,6 +35,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,7 +45,7 @@ import javax.annotation.Nullable;
  * This class holds the implementation of valkyrie queens. They are the boss version of valkyries, and they fight
  * in the same way, with the additional ability to shoot thunder crystal projectiles at their enemies.
  */
-public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, BossMob {
+public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, BossMob, NpcDialogue {
     public static final EntityDataAccessor<Boolean> DATA_IS_INVULNERABLE = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
     /** Boss health bar manager */
@@ -120,8 +123,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
                 this.chatTimer = 60;
             } else {
                 this.lookAt(player, 180F, 180F);
-                if (this.level.isClientSide && this.isInvulnerable()) {
-                    Minecraft.getInstance().setScreen(new ValkyrieQueenDialogueScreen(this));
+                if (player instanceof ServerPlayer serverPlayer && this.isInvulnerable()) {
+                    AetherPacketHandler.sendToPlayer(new OpenNpcDialoguePacket(this.getId()), serverPlayer);
                 }
             }
                 /*{
@@ -253,6 +256,15 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
     public void performRangedAttack(@Nonnull LivingEntity pTarget, float pDistanceFactor) {
         ThunderCrystal thunderCrystal = new ThunderCrystal(AetherEntityTypes.THUNDER_CRYSTAL.get(), this.level, this, pTarget, this.getX(), this.getY(), this.getZ());
         this.level.addFreshEntity(thunderCrystal);
+    }
+
+    /**
+     * Opens an NPC dialogue window for this entity. Only call this on the client.
+     */
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void openDialogueScreen() {
+        Minecraft.getInstance().setScreen(new ValkyrieQueenDialogueScreen(this));
     }
 
     public static class ThunderCrystalAttackGoal extends Goal {

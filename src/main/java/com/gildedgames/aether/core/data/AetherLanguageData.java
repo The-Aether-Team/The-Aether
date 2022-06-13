@@ -612,7 +612,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("player.dialog.challenge", "I wish to fight you!");
         addGuiText("player.dialog.deny_fight", "On second thought, I'd rather not.");
         addGuiText("player.dialog.have_medals", "I'm ready, I have the medals right here!");
-        addGuiText("player.dialog.leave", "Nevermind.");
+        addGuiText("player.dialog.leave", "Nevermind");
         addGuiText("player.dialog.no_medals", "I'll return when I have them.");
         addGuiText("player.dialog.question", "What can you tell me about this place?");
 

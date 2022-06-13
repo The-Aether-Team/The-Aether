@@ -76,9 +76,8 @@ public class ValkyrieQueenDialogueScreen extends Screen {
     }
 
     private void positionDialogueOptions() {
+        this.dialogue.reposition(this.width, this.height);
         int lineNumber = this.dialogue.height / 12;
-        this.dialogue.x = this.width / 2 - this.dialogue.width / 2;
-        this.dialogue.y = this.height / 2;
         for (Widget widget : this.renderables) {
             if (widget instanceof PlayerDialogueOption option) {
                 option.x = this.width / 2 - option.getWidth() / 2;

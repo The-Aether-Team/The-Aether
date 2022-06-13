@@ -38,6 +38,7 @@ public class AetherPacketHandler {
 		register(ExplosionParticlePacket.class, ExplosionParticlePacket::decode);
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
 		register(MoaInteractPacket.class, MoaInteractPacket::decode);
+		register(OpenNpcDialoguePacket.class, OpenNpcDialoguePacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
@@ -64,8 +65,8 @@ public class AetherPacketHandler {
 		register(AetherRankingsSyncPacket.class, AetherRankingsSyncPacket::decode);
 	}
 
-	private static <MSG extends AetherPacket.AbstractAetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
-		INSTANCE.messageBuilder(packet, index++).encoder(AetherPacket.AbstractAetherPacket::encode).decoder(decoder).consumer(AetherPacket.AbstractAetherPacket::handle).add();
+	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
+		INSTANCE.messageBuilder(packet, index++).encoder(AetherPacket::encode).decoder(decoder).consumer(AetherPacket::handle).add();
 	}
 
 	public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {
