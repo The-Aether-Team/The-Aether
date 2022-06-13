@@ -33,6 +33,7 @@ public class AetherTags {
 		public static final TagKey<Block> AECHOR_PLANT_SPAWNABLE_ON = tag("aechor_plant_spawnable_on");
 		public static final TagKey<Block> ZEPHYR_SPAWNABLE_ON = tag("zephyr_spawnable_on");
 		public static final TagKey<Block> COCKATRICE_SPAWNABLE_BLACKLIST = tag("cockatrice_spawnable_blacklist");
+		public static final TagKey<Block> QUICKSOIL_CAN_GENERATE = tag("quicksoil_can_generate");
 
 		private static TagKey<Block> tag(String name) {
 			return TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Aether.MODID, name));
