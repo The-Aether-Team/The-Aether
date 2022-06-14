@@ -20,6 +20,6 @@ public class ArmRenderListener {
         int packedLight = event.getPackedLight();
         HumanoidArm humanoidArm = event.getArm();
         ArmRenderHooks.renderGloveArmOverlay(abstractClientPlayer, poseStack, multiBufferSource, packedLight, humanoidArm);
-        ArmRenderHooks.renderRepulsionShieldArmOverlay(abstractClientPlayer, poseStack, multiBufferSource, packedLight, humanoidArm);
+        ArmRenderHooks.renderShieldOfRepulsionArmOverlay(abstractClientPlayer, poseStack, multiBufferSource, packedLight, humanoidArm);
     }
 }

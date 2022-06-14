@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.accessory.CapeRenderer;
 import com.gildedgames.aether.client.renderer.accessory.GlovesRenderer;
 import com.gildedgames.aether.client.renderer.accessory.PendantRenderer;
-import com.gildedgames.aether.client.renderer.accessory.RepulsionShieldRenderer;
+import com.gildedgames.aether.client.renderer.accessory.ShieldOfRepulsionRenderer;
 import com.gildedgames.aether.client.renderer.accessory.model.CapeModel;
 import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
 import com.gildedgames.aether.client.renderer.accessory.model.PendantModel;
@@ -224,7 +224,7 @@ public class AetherRenderers {
         CuriosRendererRegistry.register(AetherItems.AGILITY_CAPE.get(), CapeRenderer::new);
         CuriosRendererRegistry.register(AetherItems.VALKYRIE_CAPE.get(), CapeRenderer::new);
 
-        CuriosRendererRegistry.register(AetherItems.SHIELD_OF_REPULSION.get(), RepulsionShieldRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.SHIELD_OF_REPULSION.get(), ShieldOfRepulsionRenderer::new);
     }
 
     @SubscribeEvent

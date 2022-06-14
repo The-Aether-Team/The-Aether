@@ -16,7 +16,7 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
-public interface RepulsionShieldAccessory {
+public interface ShieldOfRepulsionAccessory {
     static void deflectProjectile(ProjectileImpactEvent event, HitResult hitResult, Projectile projectile) {
         if (hitResult.getType() == HitResult.Type.ENTITY && hitResult instanceof EntityHitResult entityHitResult) {
             Entity impactedEntity = entityHitResult.getEntity();

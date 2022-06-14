@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.client.renderer.accessory.GlovesRenderer;
-import com.gildedgames.aether.client.renderer.accessory.RepulsionShieldRenderer;
+import com.gildedgames.aether.client.renderer.accessory.ShieldOfRepulsionRenderer;
 import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.common.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -32,7 +32,7 @@ public class ArmRenderHooks {
         }
     }
 
-    public static void renderRepulsionShieldArmOverlay(AbstractClientPlayer player, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, HumanoidArm arm) {
+    public static void renderShieldOfRepulsionArmOverlay(AbstractClientPlayer player, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, HumanoidArm arm) {
         if (player != null) {
             CuriosApi.getCuriosHelper().findFirstCurio(player, (item) -> item.getItem() instanceof ShieldOfRepulsionItem).ifPresent((slotResult) -> {
                 String identifier = slotResult.slotContext().identifier();
@@ -41,7 +41,7 @@ public class ArmRenderHooks {
                 CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(handler -> handler.getStacksHandler(identifier).ifPresent(stacksHandler -> {
                     if (stacksHandler.getRenders().get(id)) {
                         CuriosRendererRegistry.getRenderer(itemStack.getItem()).ifPresent((renderer) -> {
-                            if (renderer instanceof RepulsionShieldRenderer shieldRenderer) {
+                            if (renderer instanceof ShieldOfRepulsionRenderer shieldRenderer) {
                                 shieldRenderer.renderFirstPerson(itemStack, poseStack, buffer, combinedLight, player, arm);
                             }
                         });

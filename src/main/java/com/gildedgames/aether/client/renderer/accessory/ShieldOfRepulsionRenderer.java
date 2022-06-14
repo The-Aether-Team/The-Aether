@@ -29,7 +29,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
-public class RepulsionShieldRenderer implements ICurioRenderer {
+public class ShieldOfRepulsionRenderer implements ICurioRenderer {
     private final HumanoidModel<LivingEntity> shieldModel;
     private final PlayerModel<LivingEntity> shieldModelSlim;
     public final HumanoidModel<LivingEntity> shieldModelArm;
@@ -37,7 +37,7 @@ public class RepulsionShieldRenderer implements ICurioRenderer {
     public final PlayerModel<LivingEntity> dummyArm;
     public final PlayerModel<LivingEntity> dummyArmSlim;
 
-    public RepulsionShieldRenderer() {
+    public ShieldOfRepulsionRenderer() {
         this.shieldModel = new HumanoidModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION));
         this.shieldModelSlim = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION_SLIM) , true);
         this.shieldModelArm = new HumanoidModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION_ARM));
