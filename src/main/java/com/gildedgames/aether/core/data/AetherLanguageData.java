@@ -49,6 +49,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addBlock(AetherBlocks.SKYROOT_PLANKS, "Skyroot Planks");
         addBlock(AetherBlocks.HOLYSTONE_BRICKS, "Holystone Bricks");
         addBlock(AetherBlocks.QUICKSOIL_GLASS, "Quicksoil Glass");
+        addBlock(AetherBlocks.QUICKSOIL_GLASS_PANE, "Quicksoil Glass Pane");
         addBlock(AetherBlocks.AEROGEL, "Aerogel");
 
         addBlock(AetherBlocks.AMBROSIUM_BLOCK, "Block of Ambrosium");

@@ -257,6 +257,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.SKYROOT_PLANKS);
         itemBlock(AetherBlocks.HOLYSTONE_BRICKS);
         itemBlock(AetherBlocks.QUICKSOIL_GLASS);
+        pane(AetherBlocks.QUICKSOIL_GLASS_PANE, AetherBlocks.QUICKSOIL_GLASS, "construction/");
         itemBlock(AetherBlocks.AEROGEL);
 
         itemBlock(AetherBlocks.AMBROSIUM_BLOCK);

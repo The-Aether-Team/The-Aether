@@ -276,6 +276,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.ORANGE_MOA_EGG.get());
         tag(Tags.Items.GEMS).add(AetherItems.ZANITE_GEMSTONE.get());
         tag(Tags.Items.GLASS_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS.get().asItem());
+        tag(Tags.Items.GLASS_PANES_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS_PANE.get().asItem());
         tag(Tags.Items.ORE_RATES_SINGULAR).add(
                 AetherBlocks.AMBROSIUM_ORE.get().asItem(),
                 AetherBlocks.ZANITE_ORE.get().asItem(),
