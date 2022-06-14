@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.accessory;
 
 import com.gildedgames.aether.client.registry.AetherModelLayers;
-import com.gildedgames.aether.common.item.accessories.miscellaneous.RepulsionShieldItem;
+import com.gildedgames.aether.common.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.gildedgames.aether.core.util.ConstantsUtil;
@@ -38,10 +38,10 @@ public class RepulsionShieldRenderer implements ICurioRenderer {
     public final PlayerModel<LivingEntity> dummyArmSlim;
 
     public RepulsionShieldRenderer() {
-        this.shieldModel = new HumanoidModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.REPULSION_SHIELD));
-        this.shieldModelSlim = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.REPULSION_SHIELD_SLIM) , true);
-        this.shieldModelArm = new HumanoidModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.REPULSION_SHIELD_ARM));
-        this.shieldModelArmSlim = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.REPULSION_SHIELD_ARM_SLIM) , true);
+        this.shieldModel = new HumanoidModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION));
+        this.shieldModelSlim = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION_SLIM) , true);
+        this.shieldModelArm = new HumanoidModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION_ARM));
+        this.shieldModelArmSlim = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION_ARM_SLIM) , true);
         this.dummyArm = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER), false);
         this.dummyArmSlim = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER_SLIM), true);
     }
@@ -49,9 +49,9 @@ public class RepulsionShieldRenderer implements ICurioRenderer {
     @Override
     public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         LivingEntity livingEntity = slotContext.entity();
-        CuriosApi.getCuriosHelper().findFirstCurio(livingEntity, AetherItems.REPULSION_SHIELD.get()).ifPresent((slotResult) -> CuriosApi.getCuriosHelper().getCuriosHandler(livingEntity).ifPresent(handler ->
+        CuriosApi.getCuriosHelper().findFirstCurio(livingEntity, AetherItems.SHIELD_OF_REPULSION.get()).ifPresent((slotResult) -> CuriosApi.getCuriosHelper().getCuriosHandler(livingEntity).ifPresent(handler ->
                 handler.getStacksHandler(slotResult.slotContext().identifier()).ifPresent(stacksHandler -> {
-                    RepulsionShieldItem shield = (RepulsionShieldItem) slotResult.stack().getItem();
+                    ShieldOfRepulsionItem shield = (ShieldOfRepulsionItem) slotResult.stack().getItem();
                     if (stacksHandler.getRenders().get(slotResult.slotContext().index())) {
                         ResourceLocation texture;
                         HumanoidModel<LivingEntity> model;
@@ -60,17 +60,17 @@ public class RepulsionShieldRenderer implements ICurioRenderer {
                             model = playerModel.slim ? this.shieldModelSlim : this.shieldModel;
                             AetherPlayer aetherPlayer = AetherPlayer.get(player).orElse(null);
                             if (!aetherPlayer.isMoving()) {
-                                texture = playerModel.slim ? shield.getRepulsionShieldSlimTexture() : shield.getRepulsionShieldTexture();
+                                texture = playerModel.slim ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
                             } else {
-                                texture = playerModel.slim ? shield.getRepulsionShieldSlimInactiveTexture() : shield.getRepulsionShieldInactiveTexture();
+                                texture = playerModel.slim ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
                             }
                         } else {
                             model = this.shieldModel;
                             Vec3 motion = livingEntity.getDeltaMovement();
                             if (motion.x() == 0.0 && (motion.y() == ConstantsUtil.DEFAULT_DELTA_MOVEMENT_Y || motion.y() == 0.0) && motion.z() == 0.0) {
-                                texture = shield.getRepulsionShieldTexture();
+                                texture = shield.getShieldOfRepulsionTexture();
                             } else {
-                                texture = shield.getRepulsionShieldInactiveTexture();
+                                texture = shield.getShieldOfRepulsionInactiveTexture();
                             }
                         }
 
@@ -93,13 +93,13 @@ public class RepulsionShieldRenderer implements ICurioRenderer {
         this.setupModel(model, player);
 
         ResourceLocation texture;
-        RepulsionShieldItem shield = (RepulsionShieldItem) stack.getItem();
+        ShieldOfRepulsionItem shield = (ShieldOfRepulsionItem) stack.getItem();
 
         AetherPlayer aetherPlayer = AetherPlayer.get(player).orElse(null);
         if (!aetherPlayer.isMoving()) {
-            texture = isSlim ? shield.getRepulsionShieldSlimTexture() : shield.getRepulsionShieldTexture();
+            texture = isSlim ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
         } else {
-            texture = isSlim ? shield.getRepulsionShieldSlimInactiveTexture() : shield.getRepulsionShieldInactiveTexture();
+            texture = isSlim ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
         }
 
         VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false, stack.isEnchanted());

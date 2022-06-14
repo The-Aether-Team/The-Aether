@@ -22,7 +22,7 @@ public interface RepulsionShieldAccessory {
             Entity impactedEntity = entityHitResult.getEntity();
             if (impactedEntity instanceof LivingEntity impactedLiving) {
                 if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
-                    CuriosApi.getCuriosHelper().findFirstCurio(impactedLiving, AetherItems.REPULSION_SHIELD.get()).ifPresent((slotResult) -> {
+                    CuriosApi.getCuriosHelper().findFirstCurio(impactedLiving, AetherItems.SHIELD_OF_REPULSION.get()).ifPresent((slotResult) -> {
                         Vec3 motion = impactedLiving.getDeltaMovement();
                         if (impactedLiving instanceof Player player) {
                             AetherPlayer.get(player).ifPresent(aetherPlayer -> {

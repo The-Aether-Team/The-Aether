@@ -189,10 +189,10 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), false));
         event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), true));
         event.registerLayerDefinition(AetherModelLayers.CAPE, CapeModel::createLayer);
-        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), false), 64, 64));
-        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), true), 64, 64));
-        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), false), 64, 64));
-        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), true), 64, 64));
+        event.registerLayerDefinition(AetherModelLayers.SHIELD_OF_REPULSION, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), false), 64, 64));
+        event.registerLayerDefinition(AetherModelLayers.SHIELD_OF_REPULSION_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), true), 64, 64));
+        event.registerLayerDefinition(AetherModelLayers.SHIELD_OF_REPULSION_ARM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), false), 64, 64));
+        event.registerLayerDefinition(AetherModelLayers.SHIELD_OF_REPULSION_ARM_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), true), 64, 64));
 
         event.registerLayerDefinition(AetherModelLayers.PLAYER_HALO, () -> HaloModel.createLayer(0.0F, 0.0F, 0.0F, 0.0F));
     }
@@ -224,7 +224,7 @@ public class AetherRenderers {
         CuriosRendererRegistry.register(AetherItems.AGILITY_CAPE.get(), CapeRenderer::new);
         CuriosRendererRegistry.register(AetherItems.VALKYRIE_CAPE.get(), CapeRenderer::new);
 
-        CuriosRendererRegistry.register(AetherItems.REPULSION_SHIELD.get(), RepulsionShieldRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.SHIELD_OF_REPULSION.get(), RepulsionShieldRenderer::new);
     }
 
     @SubscribeEvent
