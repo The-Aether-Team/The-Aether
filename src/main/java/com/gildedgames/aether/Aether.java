@@ -204,7 +204,7 @@ public class Aether
             PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
             event.addRepositorySource((packConsumer, packConstructor) ->
                 packConsumer.accept(packConstructor.create(
-                        "builtin/aether_ctm_fix", new TextComponent("Aether CTM Fix"), false, () -> pack,
+                        "builtin/aether_ctm_fix", new TextComponent("Aether CTM Fix"), true, () -> pack,
                         new PackMetadataSection(new TextComponent("Fixes Quicksoil Glass Panes when using CTM"), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())),
                         Pack.Position.TOP, PackSource.BUILT_IN, false)
                 ));
