@@ -186,6 +186,10 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider
         axisBlock(block.get(), texture(name(baseBlock), "natural/"), texture(name(baseBlock), "natural/"));
     }
 
+    public void pane(Supplier<? extends IronBarsBlock> block, Supplier<? extends GlassBlock> glass, String location) {
+        paneBlock(block.get(), texture(name(glass), location), extend(texture(name(block), location), "_top"));
+    }
+
     public void altar(Supplier<? extends Block> block) {
         ModelFile altar = cubeBottomTop(name(block), extend(texture(name(block), "utility/"), "_side"), extend(texture(name(block), "utility/"), "_bottom"), extend(texture(name(block), "utility/"), "_bottom"));
         getVariantBuilder(block.get()).partialState().addModels(new ConfiguredModel(altar));
