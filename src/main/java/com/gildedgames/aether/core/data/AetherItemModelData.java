@@ -151,7 +151,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.GOLDEN_FEATHER, "accessories/");
         item(AetherItems.REGENERATION_STONE, "accessories/");
         item(AetherItems.IRON_BUBBLE, "accessories/");
-        item(AetherItems.REPULSION_SHIELD, "accessories/");
+        item(AetherItems.SHIELD_OF_REPULSION, "accessories/");
 
         handheldItem(AetherItems.SKYROOT_STICK, "materials/");
         item(AetherItems.GOLDEN_AMBER, "materials/");

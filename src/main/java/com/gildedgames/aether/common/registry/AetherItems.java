@@ -11,7 +11,7 @@ import com.gildedgames.aether.common.item.accessories.gloves.GoldGlovesItem;
 import com.gildedgames.aether.common.item.accessories.miscellaneous.GoldenFeatherItem;
 import com.gildedgames.aether.common.item.accessories.miscellaneous.IronBubbleItem;
 import com.gildedgames.aether.common.item.accessories.miscellaneous.RegenerationStoneItem;
-import com.gildedgames.aether.common.item.accessories.miscellaneous.RepulsionShieldItem;
+import com.gildedgames.aether.common.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.gildedgames.aether.common.item.accessories.pendant.IcePendantItem;
 import com.gildedgames.aether.common.item.accessories.pendant.PendantItem;
 import com.gildedgames.aether.common.item.accessories.pendant.ZanitePendantItem;
@@ -189,7 +189,7 @@ public class AetherItems
 	public static final RegistryObject<Item> GOLDEN_FEATHER = ITEMS.register("golden_feather", () -> new GoldenFeatherItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> REGENERATION_STONE = ITEMS.register("regeneration_stone", () -> new RegenerationStoneItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> IRON_BUBBLE = ITEMS.register("iron_bubble", () -> new IronBubbleItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ACCESSORIES)));
-	public static final RegistryObject<Item> REPULSION_SHIELD = ITEMS.register("repulsion_shield", () -> new RepulsionShieldItem(new Item.Properties().durability(512).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> SHIELD_OF_REPULSION = ITEMS.register("shield_of_repulsion", () -> new ShieldOfRepulsionItem(new Item.Properties().durability(512).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
 	// Materials
 	public static final RegistryObject<Item> SKYROOT_STICK = ITEMS.register("skyroot_stick", () -> new SkyrootStickItem(new Item.Properties().tab(AetherItemGroups.AETHER_MATERIALS)));

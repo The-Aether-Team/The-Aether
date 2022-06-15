@@ -16,13 +16,13 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
-public interface RepulsionShieldAccessory {
+public interface ShieldOfRepulsionAccessory {
     static void deflectProjectile(ProjectileImpactEvent event, HitResult hitResult, Projectile projectile) {
         if (hitResult.getType() == HitResult.Type.ENTITY && hitResult instanceof EntityHitResult entityHitResult) {
             Entity impactedEntity = entityHitResult.getEntity();
             if (impactedEntity instanceof LivingEntity impactedLiving) {
                 if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
-                    CuriosApi.getCuriosHelper().findFirstCurio(impactedLiving, AetherItems.REPULSION_SHIELD.get()).ifPresent((slotResult) -> {
+                    CuriosApi.getCuriosHelper().findFirstCurio(impactedLiving, AetherItems.SHIELD_OF_REPULSION.get()).ifPresent((slotResult) -> {
                         Vec3 motion = impactedLiving.getDeltaMovement();
                         if (impactedLiving instanceof Player player) {
                             AetherPlayer.get(player).ifPresent(aetherPlayer -> {

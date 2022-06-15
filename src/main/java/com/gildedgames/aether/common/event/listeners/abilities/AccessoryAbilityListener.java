@@ -1,7 +1,7 @@
 package com.gildedgames.aether.common.event.listeners.abilities;
 
 import com.gildedgames.aether.common.event.hooks.AbilityHooks;
-import com.gildedgames.aether.common.item.accessories.abilities.RepulsionShieldAccessory;
+import com.gildedgames.aether.common.item.accessories.abilities.ShieldOfRepulsionAccessory;
 import com.gildedgames.aether.common.item.accessories.abilities.ZaniteAccessory;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.world.entity.Entity;
@@ -40,6 +40,6 @@ public class AccessoryAbilityListener {
     public static void onProjectileImpact(ProjectileImpactEvent event) {
         HitResult hitResult = event.getRayTraceResult();
         Projectile projectile = event.getProjectile();
-        RepulsionShieldAccessory.deflectProjectile(event, hitResult, projectile); //Has to take event due to the event being canceled within a lambda.
+        ShieldOfRepulsionAccessory.deflectProjectile(event, hitResult, projectile); //Has to take event due to the event being canceled within a lambda.
     }
 }
