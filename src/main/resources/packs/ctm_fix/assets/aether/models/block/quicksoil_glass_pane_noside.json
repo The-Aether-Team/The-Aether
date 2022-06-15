@@ -5,7 +5,8 @@
 		"pane": "aether:block/construction/quicksoil_glass"
 	},
     "elements": [
-        {   "from": [ 7, 0, 7 ],
+        {   
+			"from": [ 7, 0, 7 ],
             "to": [ 9, 16, 9 ],
             "faces": {
                 "north": { "uv": [  7, 0,  9, 16 ], "texture": "#pane" }
