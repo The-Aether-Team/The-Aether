@@ -60,6 +60,7 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         block(AetherBlocks.SKYROOT_PLANKS, "construction/");
         block(AetherBlocks.HOLYSTONE_BRICKS, "construction/");
         block(AetherBlocks.QUICKSOIL_GLASS, "construction/");
+        pane(AetherBlocks.QUICKSOIL_GLASS_PANE, AetherBlocks.QUICKSOIL_GLASS, "construction/");
         block(AetherBlocks.AEROGEL, "construction/");
 
         block(AetherBlocks.AMBROSIUM_BLOCK, "construction/");

@@ -324,6 +324,7 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(Tags.Blocks.FENCE_GATES_WOODEN).add(AetherBlocks.SKYROOT_FENCE_GATE.get());
         tag(Tags.Blocks.FENCES_WOODEN).add(AetherBlocks.SKYROOT_FENCE.get());
         tag(Tags.Blocks.GLASS_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS.get());
+        tag(Tags.Blocks.GLASS_PANES_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS_PANE.get());
         tag(Tags.Blocks.ORE_RATES_SINGULAR).add(
                 AetherBlocks.AMBROSIUM_ORE.get(),
                 AetherBlocks.ZANITE_ORE.get(),

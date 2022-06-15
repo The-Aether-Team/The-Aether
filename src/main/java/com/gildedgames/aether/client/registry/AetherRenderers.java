@@ -68,6 +68,7 @@ public class AetherRenderers {
         registerBlockRenderer(AetherBlocks.AEROGEL_STAIRS, translucent);
         registerBlockRenderer(AetherBlocks.AEROGEL_WALL, translucent);
         registerBlockRenderer(AetherBlocks.QUICKSOIL_GLASS, translucent);
+        registerBlockRenderer(AetherBlocks.QUICKSOIL_GLASS_PANE, translucent);
         registerBlockRenderer(AetherBlocks.AETHER_PORTAL, translucent);
         registerBlockRenderer(AetherBlocks.BERRY_BUSH, cutout);
         registerBlockRenderer(AetherBlocks.BERRY_BUSH_STEM, cutout);

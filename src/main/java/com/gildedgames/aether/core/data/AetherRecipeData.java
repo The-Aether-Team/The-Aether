@@ -45,6 +45,13 @@ public class AetherRecipeData extends AetherRecipeProvider
         makeOreToBlock(AetherBlocks.AMBROSIUM_BLOCK, AetherItems.AMBROSIUM_SHARD).save(consumer);
         makeOreToBlock(AetherBlocks.ZANITE_BLOCK, AetherItems.ZANITE_GEMSTONE).save(consumer);
 
+        ShapedRecipeBuilder.shaped(AetherBlocks.QUICKSOIL_GLASS_PANE.get(), 16)
+                .pattern("GGG")
+                .pattern("GGG")
+                .define('G', AetherBlocks.QUICKSOIL_GLASS.get())
+                .unlockedBy("has_quicksoil_glass", has(AetherBlocks.QUICKSOIL_GLASS.get()))
+                .save(consumer);
+
         ShapedRecipeBuilder.shaped(AetherBlocks.ALTAR.get(), 1)
                 .pattern("HHH")
                 .pattern("HZH")

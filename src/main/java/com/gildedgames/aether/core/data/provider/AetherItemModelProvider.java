@@ -7,6 +7,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.GlassBlock;
+import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelBuilder;
@@ -110,6 +112,11 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
 
     public ItemModelBuilder itemBlock(Supplier<? extends Block> block, String suffix) {
         return withExistingParent(blockName(block), texture(blockName(block) + suffix));
+    }
+
+    public ItemModelBuilder pane(Supplier<? extends IronBarsBlock> block, Supplier<? extends GlassBlock> glass, String location) {
+        return withExistingParent(blockName(block), mcLoc("item/generated"))
+                .texture("layer0", texture(blockName(glass), location));
     }
 
     public ItemModelBuilder itemBlockFlat(Supplier<? extends Block> block, String location) {
