@@ -31,6 +31,10 @@
         },
         {
           "type": "minecraft:item",
+          "name": "aether:valkyrie_hoe"
+        },
+        {
+          "type": "minecraft:item",
           "name": "aether:holy_sword"
         },
         {

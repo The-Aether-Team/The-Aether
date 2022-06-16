@@ -45,6 +45,13 @@ public class AetherRecipeData extends AetherRecipeProvider
         makeOreToBlock(AetherBlocks.AMBROSIUM_BLOCK, AetherItems.AMBROSIUM_SHARD).save(consumer);
         makeOreToBlock(AetherBlocks.ZANITE_BLOCK, AetherItems.ZANITE_GEMSTONE).save(consumer);
 
+        ShapedRecipeBuilder.shaped(AetherBlocks.QUICKSOIL_GLASS_PANE.get(), 16)
+                .pattern("GGG")
+                .pattern("GGG")
+                .define('G', AetherBlocks.QUICKSOIL_GLASS.get())
+                .unlockedBy("has_quicksoil_glass", has(AetherBlocks.QUICKSOIL_GLASS.get()))
+                .save(consumer);
+
         ShapedRecipeBuilder.shaped(AetherBlocks.ALTAR.get(), 1)
                 .pattern("HHH")
                 .pattern("HZH")
@@ -290,6 +297,14 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .requires(AetherTags.Items.BOOK_OF_LORE_MATERIALS)
                 .unlockedBy("has_book", has(Items.BOOK))
                 .group("book_of_lore")
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(AetherItems.SKYROOT_BOAT.get(), 1)
+                .group("boat")
+                .pattern("P P")
+                .pattern("PPP")
+                .define('P', AetherBlocks.SKYROOT_PLANKS.get().asItem())
+                .unlockedBy("in_water", insideOf(Blocks.WATER))
                 .save(consumer);
 
 

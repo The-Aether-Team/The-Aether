@@ -59,10 +59,10 @@ public class AetherModelLayers {
     public static final ModelLayerLocation GLOVES_SLEEVE = register("gloves_sleeve");
     public static final ModelLayerLocation GLOVES_SLEEVE_SLIM = register("gloves_sleeve_slim");
     public static final ModelLayerLocation CAPE = register("cape");
-    public static final ModelLayerLocation REPULSION_SHIELD = register("repulsion_shield");
-    public static final ModelLayerLocation REPULSION_SHIELD_SLIM = register("repulsion_shield_slim");
-    public static final ModelLayerLocation REPULSION_SHIELD_ARM = register("repulsion_shield_arm");
-    public static final ModelLayerLocation REPULSION_SHIELD_ARM_SLIM = register("repulsion_shield_arm_slim");
+    public static final ModelLayerLocation SHIELD_OF_REPULSION = register("shield_of_repulsion");
+    public static final ModelLayerLocation SHIELD_OF_REPULSION_SLIM = register("shield_of_repulsion_slim");
+    public static final ModelLayerLocation SHIELD_OF_REPULSION_ARM = register("shield_of_repulsion_arm");
+    public static final ModelLayerLocation SHIELD_OF_REPULSION_ARM_SLIM = register("shield_of_repulsion_arm_slim");
 
     public static final ModelLayerLocation PLAYER_HALO = register("player_halo");
 

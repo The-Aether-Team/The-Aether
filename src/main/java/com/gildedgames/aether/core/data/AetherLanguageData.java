@@ -49,6 +49,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addBlock(AetherBlocks.SKYROOT_PLANKS, "Skyroot Planks");
         addBlock(AetherBlocks.HOLYSTONE_BRICKS, "Holystone Bricks");
         addBlock(AetherBlocks.QUICKSOIL_GLASS, "Quicksoil Glass");
+        addBlock(AetherBlocks.QUICKSOIL_GLASS_PANE, "Quicksoil Glass Pane");
         addBlock(AetherBlocks.AEROGEL, "Aerogel");
 
         addBlock(AetherBlocks.AMBROSIUM_BLOCK, "Block of Ambrosium");
@@ -276,7 +277,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.GOLDEN_FEATHER, "Golden Feather");
         addItem(AetherItems.REGENERATION_STONE, "Regeneration Stone");
         addItem(AetherItems.IRON_BUBBLE, "Iron Bubble");
-        addItem(AetherItems.REPULSION_SHIELD, "Repulsion Shield");
+        addItem(AetherItems.SHIELD_OF_REPULSION, "Shield of Repulsion");
 
         addItem(AetherItems.SKYROOT_STICK, "Skyroot Stick");
         addItem(AetherItems.GOLDEN_AMBER, "Golden Amber");
@@ -832,10 +833,11 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherBlocks.PRESENT, "A wonderful holiday gift, open it for a surprise! Be careful, as there's a chance you could get ssssssurprised!");
         addLore(AetherBlocks.PURPLE_FLOWER, "These pretty violet flowers can be found in large numbers around the Aether. They can be crafted into purple dye when placed into a Crafting Table.");
         addLore(AetherBlocks.QUICKSOIL, "A silky sand with extremely slippery properties. It can be seen floating on the side of Aether islands. Be careful around it, or you'll fall off.");
-        addLore(AetherBlocks.QUICKSOIL_GLASS, "After enchanting Quicksoil you can get this tinted glass. It is slightly slippery and makes a for a great window.");
+        addLore(AetherBlocks.QUICKSOIL_GLASS, "After enchanting Quicksoil you can get this tinted glass. It is slightly slippery and makes for a great window.");
+        addLore(AetherBlocks.QUICKSOIL_GLASS_PANE, "A thin decorative variant of Quicksoil glass. It is slightly slippery and makes for a great window.");
         addLore(AetherItems.RED_CAPE, "A rough feeling cape that is crafted using Red Wool.");
         addLore(AetherItems.REGENERATION_STONE, "A treasure found in Silver Dungeons. This stone makes the wearer feel healthy, and heals their wounds. The effects can stack with other Regeneration Stones.");
-        addLore(AetherItems.REPULSION_SHIELD, "A shield that protects the user from most projectiles. It will reflect the projectile back at the thrower and cause damage to them. Each time a projectile is reflected the shield will be damaged.");
+        addLore(AetherItems.SHIELD_OF_REPULSION, "A shield that protects the user from most projectiles. It will reflect the projectile back at the thrower and cause damage to them. Each time a projectile is reflected the shield will be damaged.");
         addLore(AetherItems.SENTRY_BOOTS, "Found in Bronze Dungeons, these boots protect you from fall damage, allowing you to fall from great heights.");
         addLore(AetherBlocks.SENTRY_STONE, "The Light version of Carved Stone, also found in Bronze Dungeons.");
         addLore(AetherItems.SILVER_DUNGEON_KEY, "A reflective key that is given to you by the Valkyrie Queen after defeating her. Use it to claim the treasure she left behind!");

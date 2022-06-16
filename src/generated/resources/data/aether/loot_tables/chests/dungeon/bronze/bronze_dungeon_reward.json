@@ -39,7 +39,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:repulsion_shield"
+          "name": "aether:shield_of_repulsion"
         },
         {
           "type": "minecraft:item",

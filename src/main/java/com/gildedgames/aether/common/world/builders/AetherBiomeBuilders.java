@@ -80,34 +80,24 @@ public class AetherBiomeBuilders {
         )));
     }
 
-    // No fancy variations with trees are required, so inline these different tree decoration patterns instead
     public static Biome skyrootGroveBiome() {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder()
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatureBuilders.treeBlendDensity(2))));
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.SKYROOT_GROVE_TREES_PLACED_FEATURE));
     }
 
     public static Biome skyrootForestBiome() {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder()
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatureBuilders.treeBlendDensity(2)))
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherFeatures.ConfiguredFeatures.SKYROOT_TREE_CONFIGURED_FEATURE), List.of(
-                        CountOnEveryLayerPlacement.of(1),
-                        AetherFeatureBuilders.copyBlockSurvivability(AetherBlocks.SKYROOT_SAPLING.get()))))));
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.SKYROOT_FOREST_TREES_PLACED_FEATURE));
     }
 
     public static Biome skyrootThicketBiome() {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder()
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherFeatures.ConfiguredFeatures.SKYROOT_TREE_CONFIGURED_FEATURE), List.of(
-                        CountOnEveryLayerPlacement.of(1),
-                        AetherFeatureBuilders.copyBlockSurvivability(AetherBlocks.SKYROOT_SAPLING.get())))))
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatureBuilders.treeBlendDensity(3))));
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.SKYROOT_THICKET_TREES_PLACED_FEATURE));
     }
 
     public static Biome goldenForestBiome() {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder()
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(new PlacedFeature(Holder.hackyErase(AetherFeatures.ConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURED_FEATURE), List.of(
-                        CountOnEveryLayerPlacement.of(2),
-                        AetherFeatureBuilders.copyBlockSurvivability(AetherBlocks.GOLDEN_OAK_SAPLING.get())))))
-                .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatureBuilders.treeBlendDensity(2))));
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.GOLDEN_FOREST_TREES_PLACED_FEATURE));
     }
 
     public static Biome makeDefaultBiome(BiomeGenerationSettings.Builder builder) {
@@ -151,13 +141,11 @@ public class AetherBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_GRAVITITE_COMMON_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_GRAVITITE_DENSE_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.FLUID_SPRINGS, AetherFeatures.PlacedFeatures.WATER_SPRING_PLACED_FEATURE)
-                        //// TODO GenerationStep.Decoration.VEGETAL_DECORATION
-                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.GRASS_PATCH_PLACED_FEATURE.value()))
-                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.TALL_GRASS_PATCH_PLACED_FEATURE.value()))
-                        ////   "aether:holiday_tree"
-                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.HOLIDAY_TREE_PLACED_FEATURE.value()))
-                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.FLOWER_PATCH_PLACED_FEATURE.value())) //this probably isnt ideal but it can be looked into later, and seems to only happen to vegetal_decorations.
-                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(AetherFeatures.PlacedFeatures.CRYSTAL_ISLAND_PLACED_FEATURE.value()))
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.GRASS_PATCH_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.TALL_GRASS_PATCH_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.HOLIDAY_TREE_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.FLOWER_PATCH_PLACED_FEATURE)
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.CRYSTAL_ISLAND_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.COLD_AERCLOUD_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.BLUE_AERCLOUD_PLACED_FEATURE)
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.GOLDEN_AERCLOUD_PLACED_FEATURE)

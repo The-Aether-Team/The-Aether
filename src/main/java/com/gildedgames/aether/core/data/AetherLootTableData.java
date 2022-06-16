@@ -100,6 +100,7 @@ public class AetherLootTableData extends AetherLootTableProvider
             dropSelf(AetherBlocks.SKYROOT_PLANKS);
             dropSelf(AetherBlocks.HOLYSTONE_BRICKS);
             dropSilk(AetherBlocks.QUICKSOIL_GLASS);
+            dropSilk(AetherBlocks.QUICKSOIL_GLASS_PANE);
             dropSelf(AetherBlocks.AEROGEL);
 
             dropSelf(AetherBlocks.AMBROSIUM_BLOCK);
@@ -415,6 +416,7 @@ public class AetherLootTableData extends AetherLootTableProvider
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_AXE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_SWORD.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.ZANITE_SHOVEL.get()).setWeight(1))
+                            .add(LootItem.lootTableItem(AetherItems.ZANITE_HOE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.SWET_CAPE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.AMBROSIUM_SHARD.get()).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 10.0F))))
                             .add(LootItem.lootTableItem(AetherItems.GOLDEN_DART.get()).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 5.0F))))
@@ -461,7 +463,7 @@ public class AetherLootTableData extends AetherLootTableProvider
                             .add(LootItem.lootTableItem(AetherItems.VALKYRIE_LANCE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.AGILITY_CAPE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.SENTRY_BOOTS.get()).setWeight(1))
-                            .add(LootItem.lootTableItem(AetherItems.REPULSION_SHIELD.get()).setWeight(1))
+                            .add(LootItem.lootTableItem(AetherItems.SHIELD_OF_REPULSION.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.HAMMER_OF_NOTCH.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.CLOUD_STAFF.get()).setWeight(1))
                     )
@@ -545,6 +547,7 @@ public class AetherLootTableData extends AetherLootTableProvider
                             .add(LootItem.lootTableItem(AetherItems.VALKYRIE_AXE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.VALKYRIE_SHOVEL.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.VALKYRIE_PICKAXE.get()).setWeight(1))
+                            .add(LootItem.lootTableItem(AetherItems.VALKYRIE_HOE.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.HOLY_SWORD.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.VALKYRIE_HELMET.get()).setWeight(1))
                             .add(LootItem.lootTableItem(AetherItems.REGENERATION_STONE.get()).setWeight(1))
