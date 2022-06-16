@@ -29,7 +29,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
@@ -48,7 +47,7 @@ import javax.annotation.Nullable;
  */
 public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, BossMob, NpcDialogue {
     public static final TargetingConditions NON_COMBAT = TargetingConditions.forNonCombat();
-    public static final EntityDataAccessor<Boolean> DATA_IS_INVULNERABLE = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
     /** Boss health bar manager */
     private final ServerBossEvent bossFight;
@@ -70,7 +69,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
     @Override
     public void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0, 60, 28F));
+//        this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0, 60, 28F));
     }
 
     @Nonnull
@@ -85,21 +84,21 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
     @Override
     public void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_IS_INVULNERABLE, true);
+        this.entityData.define(DATA_IS_READY, false);
         this.entityData.define(DATA_BOSS_NAME, new TextComponent("Valkyrie Queen"));
     }
 
     @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean("Invulnerable", this.isInvulnerable());
+        tag.putBoolean("Ready", this.isReady());
         tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
     }
 
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.setInvulnerable(tag.getBoolean("Invulnerable"));
+        this.setReady(tag.getBoolean("Ready"));
         Component name = Component.Serializer.fromJson(tag.getString("BossName"));
         if (name != null) {
             this.setBossName(name);
@@ -118,11 +117,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
     @Override
     @Nonnull
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
-        if (this.getTarget() == null) {
+        if (!this.isReady()) {
             this.lookAt(player, 180F, 180F);
-            if (player instanceof ServerPlayer serverPlayer && this.isInvulnerable()) {
+            if (player instanceof ServerPlayer serverPlayer) {
                 AetherPacketHandler.sendToPlayer(new OpenNpcDialoguePacket(this.getId()), serverPlayer);
             }
+            return InteractionResult.SUCCESS;
         }
         return super.mobInteract(player, hand);
     }
@@ -132,7 +132,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
      */
     @Override
     public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
-        boolean flag = !this.isInvulnerable() && super.hurt(source, pDamageAmount);
+        boolean flag = this.isReady() && super.hurt(source, pDamageAmount);
         if (!this.level.isClientSide && source.getEntity() instanceof Player player) {
             if (this.getTarget() == null && flag && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
                 this.bossFight.setVisible(true);
@@ -170,7 +170,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
     public void readyUp() {
         TranslatableComponent message = new TranslatableComponent("gui.aether.queen.dialog.ready");
         this.chatWithNearby(message);
-        this.setInvulnerable(false);
+        this.setReady(true);
     }
 
     /**
@@ -215,12 +215,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
         this.setBossName(pName);
     }
 
-    public boolean isInvulnerable() {
-        return this.entityData.get(DATA_IS_INVULNERABLE);
+    public boolean isReady() {
+        return this.entityData.get(DATA_IS_READY);
     }
 
-    public void setInvulnerable(boolean invulnerable) {
-        this.entityData.set(DATA_IS_INVULNERABLE, invulnerable);
+    public void setReady(boolean ready) {
+        this.entityData.set(DATA_IS_READY, ready);
     }
 
     @Override
