@@ -176,10 +176,10 @@ public class AetherEntityTypes {
 
         event.put(AetherEntityTypes.SENTRY.get(), Sentry.createMobAttributes().build());
         event.put(AetherEntityTypes.MIMIC.get(), Mimic.createMobAttributes().build());
-        event.put(AetherEntityTypes.VALKYRIE.get(), Valkyrie.createAttributes().build());
+        event.put(AetherEntityTypes.VALKYRIE.get(), Valkyrie.createValkyrieAttributes().build());
         event.put(AetherEntityTypes.FIRE_MINION.get(), FireMinion.createMobAttributes().build());
 
-        event.put(AetherEntityTypes.VALKYRIE_QUEEN.get(), ValkyrieQueen.createAttributes().build());
+        event.put(AetherEntityTypes.VALKYRIE_QUEEN.get(), ValkyrieQueen.createQueenAttributes().build());
 
         event.put(AetherEntityTypes.CLOUD_MINION.get(), CloudMinion.createMobAttributes().build());
     }

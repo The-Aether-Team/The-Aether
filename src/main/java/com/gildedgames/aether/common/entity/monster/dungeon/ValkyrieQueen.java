@@ -30,7 +30,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -45,7 +44,7 @@ import javax.annotation.Nullable;
  * This class holds the implementation of valkyrie queens. They are the boss version of valkyries, and they fight
  * in the same way, with the additional ability to shoot thunder crystal projectiles at their enemies.
  */
-public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, BossMob, NpcDialogue {
+public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialogue {
     public static final TargetingConditions NON_COMBAT = TargetingConditions.forNonCombat();
     public static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
@@ -69,14 +68,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
     @Override
     public void registerGoals() {
         super.registerGoals();
-//        this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0, 60, 28F));
+        this.goalSelector.addGoal(1, new ThunderCrystalAttackGoal(this, 450, 28.0F));
     }
 
     @Nonnull
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes()
+    public static AttributeSupplier.Builder createQueenAttributes() {
+        return AbstractValkyrie.createAttributes()
                 .add(Attributes.FOLLOW_RANGE, 28.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.5)
                 .add(Attributes.ATTACK_DAMAGE, 13.5)
                 .add(Attributes.MAX_HEALTH, 500.0);
     }
@@ -244,12 +242,6 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
         return AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_DEATH.get();
     }
 
-    @Override
-    public void performRangedAttack(@Nonnull LivingEntity pTarget, float pDistanceFactor) {
-        ThunderCrystal thunderCrystal = new ThunderCrystal(AetherEntityTypes.THUNDER_CRYSTAL.get(), this.level, this, pTarget, this.getX(), this.getEyeY(), this.getZ());
-        this.level.addFreshEntity(thunderCrystal);
-    }
-
     /**
      * Opens an NPC dialogue window for this entity. Only call this on the client.
      */
@@ -308,15 +300,48 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
         }
     }
 
+
+    /**
+     * Shoots thunder crystals without cancelling the movement of the mob.
+     */
     public static class ThunderCrystalAttackGoal extends Goal {
         private final Mob mob;
-        public ThunderCrystalAttackGoal(Mob mob) {
+        @Nullable
+        private LivingEntity target;
+        private final int attackInterval;
+        private int attackTime = 0;
+        private final float attackRadius;
+        public ThunderCrystalAttackGoal(Mob mob, int attackInterval, float attackRadius) {
             this.mob = mob;
+            this.attackInterval = attackInterval;
+            this.attackRadius = attackRadius;
         }
 
         @Override
         public boolean canUse() {
-            return false;
+            LivingEntity target = this.mob.getTarget();
+            if (target != null && target.isAlive()) {
+                this.target = target;
+                return this.mob.level.getDifficulty() != Difficulty.PEACEFUL;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public void tick() {
+            double distance = this.mob.distanceTo(this.target);
+            if (distance < this.attackRadius) {
+                if (++this.attackTime >= this.attackInterval) {
+                    ThunderCrystal thunderCrystal = new ThunderCrystal(AetherEntityTypes.THUNDER_CRYSTAL.get(), this.mob.level, this.mob, this.target);
+                    this.mob.level.addFreshEntity(thunderCrystal);
+                    this.attackTime = this.mob.random.nextInt(40);
+                }
+            }
+        }
+
+        public boolean requiresUpdateEveryTick() {
+            return true;
         }
     }
 }

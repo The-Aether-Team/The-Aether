@@ -36,11 +36,11 @@ public class ThunderCrystal extends AbstractCrystal {
     /**
      * @param target - The target to home in on.
      */
-    public ThunderCrystal(EntityType<? extends ThunderCrystal> entityType, Level level, Entity shooter, Entity target, double x, double y, double z) {
+    public ThunderCrystal(EntityType<? extends ThunderCrystal> entityType, Level level, Entity shooter, Entity target) {
         super(entityType, level);
         this.setOwner(shooter);
         this.target = target;
-        this.setPos(x, y, z);
+        this.setPos(shooter.getX(), shooter.getEyeY(), shooter.getZ());
     }
 
     @Override

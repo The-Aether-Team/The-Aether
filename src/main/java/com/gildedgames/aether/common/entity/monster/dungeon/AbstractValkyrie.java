@@ -1,7 +1,9 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.NotGrounded;
 import com.gildedgames.aether.common.entity.ai.goal.target.MostDamageTargetGoal;
+import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.event.events.ValkyrieTeleportEvent;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
@@ -14,17 +16,25 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 
 import javax.annotation.Nonnull;
+import java.util.EnumSet;
 
 /**
  * Abstract class that holds common code for Valkyrie and ValkyrieQueen, both of which are children of this class.
@@ -51,10 +61,49 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
     }
 
+    @Nonnull
+    public static AttributeSupplier.Builder createAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MOVEMENT_SPEED, 0.5)
+                .add(Attributes.FLYING_SPEED, 0.5);
+    }
+
     @Override
     public void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_ENTITY_ON_GROUND_ID, true);
+    }
+
+    @Override
+    @Nonnull
+    protected PathNavigation createNavigation(@Nonnull Level level) {
+        return new FallPathNavigator(this, level);
+    }
+
+    /**
+     * Handles some movement logic for the valkyrie.
+     */
+    @Override
+    public void tick() {
+        double motionYo = this.getDeltaMovement().y;
+        super.tick();
+        if (this.isOnGround()) {
+            this.setEntityOnGround(true);
+        }
+        if (!this.onGround && Math.abs(this.getDeltaMovement().y - motionYo) > 0.07D && Math.abs(this.getDeltaMovement().y - motionYo) < 0.09D) {
+            double fallSpeed;
+            AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+            if (gravity != null) {
+                fallSpeed = Math.max(gravity.getValue() * -0.625, -0.275);
+            } else {
+                fallSpeed = -0.275;
+            }
+            this.setDeltaMovement(this.getDeltaMovement().add(0, 0.055, 0));
+            if (this.getDeltaMovement().y < fallSpeed) {
+                this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+                this.setEntityOnGround(false);
+            }
+        }
     }
 
     /**

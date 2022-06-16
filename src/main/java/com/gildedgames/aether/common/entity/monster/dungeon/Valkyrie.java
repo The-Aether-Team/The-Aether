@@ -8,7 +8,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -32,8 +31,6 @@ import java.util.UUID;
  * messages and drop a victory medal upon their defeat.
  */
 public class Valkyrie extends AbstractValkyrie implements NeutralMob {
-    /** Keeps track of the previous y motion value. */
-    private double motionYo;
     /** Prevents the player from quickly talking to the valkyrie in succession. */
     protected int chatTimer;
     /** General neutral mob necessities */
@@ -55,50 +52,11 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     }
 
     @Nonnull
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes()
+    public static AttributeSupplier.Builder createValkyrieAttributes() {
+        return AbstractValkyrie.createAttributes()
                 .add(Attributes.FOLLOW_RANGE, 16.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.5)
                 .add(Attributes.ATTACK_DAMAGE, 10.0)
                 .add(Attributes.MAX_HEALTH, 50.0);
-    }
-
-    @Override
-    public void tick() {
-        this.motionYo = this.getDeltaMovement().y;
-        super.tick();
-        if (this.isOnGround()) {
-            this.setEntityOnGround(true);
-        }
-    }
-
-    /**
-     * Handles some movement logic for the valkyrie.
-     */
-    @Override
-    public void aiStep() {
-        super.aiStep();
-        if (!this.onGround && this.getTarget() != null && this.motionYo >= 0 && this.getDeltaMovement().y < 0 && this.distanceTo(this.getTarget()) <= 16F && this.hasLineOfSight(this.getTarget())) {
-            double x = this.getTarget().getX() - this.getX();
-            double z = this.getTarget().getZ() - this.getZ();
-            double angle = Math.atan2(z, x);
-            this.setDeltaMovement(Math.cos(angle) * 0.25, this.getDeltaMovement().y, Math.sin(angle) * 0.25);
-            this.setYRot((float) angle * (180F / (float) Math.PI) - 90F);
-        }
-        if (!this.onGround && Math.abs(this.getDeltaMovement().y - this.motionYo) > 0.07D && Math.abs(this.getDeltaMovement().y - this.motionYo) < 0.09D) {
-            double fallSpeed;
-            AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
-            if (gravity != null) {
-                fallSpeed = Math.max(gravity.getValue() * -0.625, -0.275);
-            } else {
-                fallSpeed = -0.275;
-            }
-            this.setDeltaMovement(this.getDeltaMovement().add(0, 0.055, 0));
-            if (this.getDeltaMovement().y < fallSpeed) {
-                this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
-                this.setEntityOnGround(false);
-            }
-        }
     }
 
     /**
