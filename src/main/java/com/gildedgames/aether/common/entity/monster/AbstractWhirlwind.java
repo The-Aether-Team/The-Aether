@@ -8,13 +8,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.registry.AetherTags;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -32,8 +30,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -184,6 +181,11 @@ public abstract class AbstractWhirlwind extends Mob {
         return false;
     }
 
+    @Override
+    public void kill() {
+        this.remove(Entity.RemovalReason.KILLED);
+    }
+
     public abstract void updateParticles();
 
     public abstract ResourceLocation getLootLocation();
@@ -241,8 +243,6 @@ public abstract class AbstractWhirlwind extends Mob {
 
         public MoveGoal(AbstractWhirlwind entity) {
             this.whirlwind = entity;
-            this.movementAngle = whirlwind.movementAngle;
-            this.movementCurve = whirlwind.movementCurve;
             this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
@@ -253,9 +253,18 @@ public abstract class AbstractWhirlwind extends Mob {
 
         @Override
         public void tick() {
+            if (this.movementAngle == 0) {
+                this.movementAngle = this.whirlwind.movementAngle;
+                this.movementCurve = this.whirlwind.movementCurve;
+            }
             if (!this.whirlwind.isEvil || this.whirlwind.getTarget() == null) {
+                BlockPos offset = new BlockPos(this.whirlwind.position().add(this.whirlwind.getDeltaMovement()));
+                if (this.whirlwind.level.getHeight(Heightmap.Types.WORLD_SURFACE, offset.getX(), offset.getZ()) < offset.getY() - 7) {
+                    this.movementAngle += 180;
+                } else {
+                    this.movementAngle += this.movementCurve;
+                }
                 this.whirlwind.setDeltaMovement(Math.cos(0.01745329F * this.movementAngle) * this.whirlwind.getAttribute(Attributes.MOVEMENT_SPEED).getValue(), this.whirlwind.getDeltaMovement().y, -Math.sin(0.01745329F * this.movementAngle) * this.whirlwind.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
-                this.movementAngle += this.movementCurve;
             } else {
                 this.whirlwind.setDeltaMovement(Vec3.ZERO);
             }
