@@ -92,17 +92,17 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
     @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean("Invulnerable", this.entityData.get(DATA_IS_INVULNERABLE));
-        tag.putString("BossName", Component.Serializer.toJson(this.entityData.get(DATA_BOSS_NAME)));
+        tag.putBoolean("Invulnerable", this.isInvulnerable());
+        tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
     }
 
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.entityData.set(DATA_IS_INVULNERABLE, tag.getBoolean("Invulnerable"));
+        this.setInvulnerable(tag.getBoolean("Invulnerable"));
         Component name = Component.Serializer.fromJson(tag.getString("BossName"));
         if (name != null) {
-            this.entityData.set(DATA_BOSS_NAME, name);
+            this.setBossName(name);
         }
     }
 
