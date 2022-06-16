@@ -246,7 +246,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements RangedAttackMob, 
 
     @Override
     public void performRangedAttack(@Nonnull LivingEntity pTarget, float pDistanceFactor) {
-        ThunderCrystal thunderCrystal = new ThunderCrystal(AetherEntityTypes.THUNDER_CRYSTAL.get(), this.level, this, pTarget, this.getX(), this.getY(), this.getZ());
+        ThunderCrystal thunderCrystal = new ThunderCrystal(AetherEntityTypes.THUNDER_CRYSTAL.get(), this.level, this, pTarget, this.getX(), this.getEyeY(), this.getZ());
         this.level.addFreshEntity(thunderCrystal);
     }
 

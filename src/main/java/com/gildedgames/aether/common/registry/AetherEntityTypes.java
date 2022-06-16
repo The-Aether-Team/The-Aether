@@ -120,7 +120,7 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.<CloudCrystal>of(CloudCrystal::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(10).build("cloud_crystal"));
 
     public static final RegistryObject<EntityType<ThunderCrystal>> THUNDER_CRYSTAL = ENTITIES.register("thunder_crystal",
-            () -> EntityType.Builder.<ThunderCrystal>of(ThunderCrystal::new, MobCategory.MISC).sized(0.7F, 0.7F).clientTrackingRange(4).updateInterval(10).build("thunder_crystal"));
+            () -> EntityType.Builder.<ThunderCrystal>of(ThunderCrystal::new, MobCategory.MISC).sized(0.7F, 0.7F).updateInterval(2).build("thunder_crystal"));
 
     public static final RegistryObject<EntityType<GoldenDart>> GOLDEN_DART = ENTITIES.register("golden_dart",
             () -> EntityType.Builder.<GoldenDart>of(GoldenDart::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).build("golden_dart"));

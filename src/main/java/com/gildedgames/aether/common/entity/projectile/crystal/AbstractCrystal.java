@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.entity.projectile.crystal;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.EntityType;
@@ -14,7 +15,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
@@ -80,6 +80,18 @@ public abstract class AbstractCrystal extends Projectile {
 
     public int getLifeSpan() {
         return 300;
+    }
+
+    @Override
+    public void readAdditionalSaveData(@Nonnull CompoundTag nbt) {
+        super.readAdditionalSaveData(nbt);
+        this.ticksInAir = nbt.getInt("TicksInAir");
+    }
+
+    @Override
+    public void addAdditionalSaveData(@Nonnull CompoundTag nbt) {
+        super.addAdditionalSaveData(nbt);
+        nbt.putInt("TicksInAir", this.ticksInAir);
     }
 
     @Nonnull

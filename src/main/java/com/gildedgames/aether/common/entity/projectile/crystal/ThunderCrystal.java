@@ -4,22 +4,17 @@ import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.core.capability.lightning.LightningTracker;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
@@ -27,9 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Homing projectile used by the Valkyrie Queen for ranged lightning attacks.
  */
-public class ThunderCrystal extends AbstractCrystal implements IEntityAdditionalSpawnData {
-    public static final EntityDataAccessor<Float> DATA_X_ROT_ID = SynchedEntityData.defineId(ThunderCrystal.class, EntityDataSerializers.FLOAT);
-    public static final EntityDataAccessor<Float> DATA_Y_ROT_ID = SynchedEntityData.defineId(ThunderCrystal.class, EntityDataSerializers.FLOAT);
+public class ThunderCrystal extends AbstractCrystal {
     private Entity target;
     private int health = 20;
 
@@ -51,44 +44,20 @@ public class ThunderCrystal extends AbstractCrystal implements IEntityAdditional
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(DATA_X_ROT_ID, 0F);
-        this.entityData.define(DATA_Y_ROT_ID, 0F);
-    }
-
-    @Override
     public void tickMovement() {
-        if (this.ticksInAir >= this.getLifeSpan() || this.target == null || !this.target.isAlive()) {
-            this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
-            this.discard();
-        } else {
-            this.updateRotationAngles();
-            this.setDeltaMovement(
-                    this.getDeltaMovement().x * 0.98 - Mth.sin(this.getYRotation()) * 0.02,
-                    this.getDeltaMovement().y * 0.98 + Mth.sin(this.getXRot()) * 0.02,
-                    this.getDeltaMovement().z * 0.98 + Mth.cos(this.getYRotation()) * 0.02
-            );
+        if (!this.level.isClientSide) {
+            if (this.ticksInAir >= this.getLifeSpan() || this.target == null || !this.target.isAlive()) {
+                this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
+                this.discard();
+            } else {
+                Vec3 motion = this.getDeltaMovement().scale(0.9);
+                Vec3 targetMotion = new Vec3(this.target.getX() - this.getX(), (this.target.getEyeY() - 0.1) - this.getY(), this.target.getZ() - this.getZ()).normalize();
+                this.setDeltaMovement(motion.add(targetMotion.scale(0.02)));
+            }
         }
         this.checkInsideBlocks();
         Vec3 motion = this.getDeltaMovement();
         this.setPos(this.getX() + motion.x, this.getY() + motion.y, this.getZ() + motion.z);
-    }
-
-    private void updateRotationAngles() {
-        double x = this.target.getX() - this.getX();
-        double z = this.target.getZ() - this.getZ();
-        double y = this.target.getEyeY() - this.getEyeY();
-        double distance = Math.sqrt(x * x + z * z);
-
-        float targetYaw = (float) (Mth.atan2(z, x) * (180F / Mth.PI) - 90F);
-        float yRot = Mth.wrapDegrees(this.getYRotation());
-        this.setYRotation(Mth.approachDegrees(yRot, targetYaw, 10F));
-        this.setYRot(this.getYRotation());
-
-        float targetPitch = (float) (Mth.atan2(y, distance) * (180F / Mth.PI));
-        float xRot = Mth.wrapDegrees(this.getXRotation());
-        this.setXRotation(Mth.approachDegrees(xRot, targetPitch, 10F));
-        this.setXRot(this.getXRotation());
     }
 
     /**
@@ -96,6 +65,12 @@ public class ThunderCrystal extends AbstractCrystal implements IEntityAdditional
      */
     @Override
     protected void onHitEntity(@Nonnull EntityHitResult pResult) {
+        this.placeLightning();
+        this.discard();
+    }
+
+    @Override
+    protected void onHitBlock(@Nonnull BlockHitResult pResult) {
         this.placeLightning();
         this.discard();
     }
@@ -124,9 +99,27 @@ public class ThunderCrystal extends AbstractCrystal implements IEntityAdditional
             if (this.health <= 0) {
                 this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
                 this.discard();
+            } else {
+                Entity attacker = pSource.getEntity();
+                if (attacker != null) {
+                    double x = attacker.getX() - this.getX();
+                    double z = attacker.getZ() - this.getZ();
+                    this.knockback(x, z);
+                }
             }
         }
         return true;
+    }
+
+    /**
+     * @see net.minecraft.world.entity.LivingEntity#knockback(double, double, double)
+     * Allows the player to push back a thunder ball.
+     */
+    private void knockback(double xAngle, double zAngle) {
+        this.hasImpulse = true;
+        Vec3 motion = this.getDeltaMovement();
+        Vec3 pushback = new Vec3(xAngle, 0.0D, zAngle).normalize().scale(0.4);
+        this.setDeltaMovement(motion.x / 2.0D - pushback.x, Math.min(motion.y, 0.1), motion.z / 2.0D - pushback.z);
     }
 
     /**
@@ -152,22 +145,6 @@ public class ThunderCrystal extends AbstractCrystal implements IEntityAdditional
         }
     }
 
-    private float getXRotation() {
-        return this.entityData.get(DATA_X_ROT_ID);
-    }
-
-    private void setXRotation(float pitch) {
-        this.entityData.set(DATA_X_ROT_ID, pitch);
-    }
-
-    private float getYRotation() {
-        return this.entityData.get(DATA_Y_ROT_ID);
-    }
-
-    private void setYRotation(float pitch) {
-        this.entityData.set(DATA_Y_ROT_ID, pitch);
-    }
-
     @Nonnull
     @Override
     public Packet<?> getAddEntityPacket() {
@@ -177,41 +154,16 @@ public class ThunderCrystal extends AbstractCrystal implements IEntityAdditional
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        this.target = this.level.getEntity(nbt.getInt("target"));
+        this.health = nbt.getInt("Health");
+        this.target = this.level.getEntity(nbt.getInt("Target"));
     }
 
     @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
+        nbt.putInt("Health", this.health);
         if (this.target != null) {
-            nbt.putInt("target", this.target.getId());
-        }
-    }
-
-    /**
-     * Synchronizes target data with the client.
-     */
-    @Override
-    public void writeSpawnData(FriendlyByteBuf buffer) {
-        CompoundTag nbt = new CompoundTag();
-        if (this.getOwner() != null) {
-            nbt.putInt("owner", this.getOwner().getId());
-        }
-        if (this.target != null) {
-            nbt.putInt("target", this.target.getId());
-        }
-        buffer.writeNbt(nbt);
-    }
-
-    /**
-     * Synchronizes target data with the client.
-     */
-    @Override
-    public void readSpawnData(FriendlyByteBuf additionalData) {
-        CompoundTag nbt = additionalData.readNbt();
-        if (nbt != null) {
-            this.setOwner(this.level.getEntity(nbt.getInt("owner")));
-            this.target = this.level.getEntity(nbt.getInt("target"));
+            nbt.putInt("Target", this.target.getId());
         }
     }
 }
