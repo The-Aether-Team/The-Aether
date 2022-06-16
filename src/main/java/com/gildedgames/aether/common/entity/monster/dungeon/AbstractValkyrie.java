@@ -1,9 +1,7 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.NotGrounded;
 import com.gildedgames.aether.common.entity.ai.goal.target.MostDamageTargetGoal;
-import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
 import com.gildedgames.aether.common.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.common.event.events.ValkyrieTeleportEvent;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
@@ -26,15 +24,16 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.*;
 import net.minecraft.world.phys.Vec2;
 
 import javax.annotation.Nonnull;
-import java.util.EnumSet;
+import javax.annotation.Nullable;
 
 /**
  * Abstract class that holds common code for Valkyrie and ValkyrieQueen, both of which are children of this class.
@@ -48,6 +47,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
     public AbstractValkyrie(EntityType<? extends AbstractValkyrie> type, Level level) {
         super(type, level);
+        this.moveControl = new ValkyrieMoveControl(this);
     }
 
     @Override
@@ -64,8 +64,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Nonnull
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MOVEMENT_SPEED, 0.5)
-                .add(Attributes.FLYING_SPEED, 0.5);
+                .add(Attributes.MOVEMENT_SPEED, 0.5);
     }
 
     @Override
@@ -77,7 +76,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     @Nonnull
     protected PathNavigation createNavigation(@Nonnull Level level) {
-        return new FallPathNavigator(this, level);
+        return new ValkyriePathNavigation(this, level);
     }
 
     /**
@@ -85,12 +84,11 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      */
     @Override
     public void tick() {
-        double motionYo = this.getDeltaMovement().y;
         super.tick();
         if (this.isOnGround()) {
             this.setEntityOnGround(true);
         }
-        if (!this.onGround && Math.abs(this.getDeltaMovement().y - motionYo) > 0.07D && Math.abs(this.getDeltaMovement().y - motionYo) < 0.09D) {
+        if (!this.onGround) {
             double fallSpeed;
             AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
             if (gravity != null) {
@@ -152,13 +150,12 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
     /**
      * Teleports near a target outside of a specified radius. Returns false if it fails.
-     * @param rad - An int equal to the length of the target radius from the target.
      */
-    protected boolean teleportAroundTarget(Entity target, int rad) {
+    protected boolean teleportAroundTarget(Entity target) {
         Vec2 targetVec = new Vec2((this.random.nextFloat() - 0.5F), (this.random.nextFloat() - 0.5F)).normalized();
-        double x = target.getX() + targetVec.x * rad;
+        double x = target.getX() + targetVec.x * 7;
         double y = target.getY();
-        double z = target.getZ() + targetVec.y * rad;
+        double z = target.getZ() + targetVec.y * 7;
         return this.teleport(x, y, z);
     }
 
@@ -222,11 +219,73 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
         @Override
         public void start() {
-            if (this.valkyrie.teleportAroundTarget(valkyrie.getTarget(), 7)) {
+            if (this.valkyrie.teleportAroundTarget(valkyrie.getTarget())) {
                 this.valkyrie.teleportTimer = this.valkyrie.random.nextInt(40);
             } else {
                 this.valkyrie.teleportTimer -= 20;
             }
+        }
+    }
+
+    /**
+     * When the valkyrie is in the air, it will keep advancing toward the player.
+     */
+    public static class ValkyrieMoveControl extends MoveControl {
+        public ValkyrieMoveControl(Mob pMob) {
+            super(pMob);
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            if (!this.mob.isOnGround()) {
+                this.mob.setZza(1.5F);
+            }
+        }
+    }
+
+    /**
+     * Allows the valkyrie to update paths when in the sky.
+     */
+    public static class ValkyriePathNavigation extends GroundPathNavigation {
+        public ValkyriePathNavigation(Mob mob, Level level) {
+            super(mob, level);
+        }
+
+        @Override
+        @Nonnull
+        protected PathFinder createPathFinder(int maxVisitedNodes) {
+            this.nodeEvaluator = new ValkyrieNodeEvaluator();
+            this.nodeEvaluator.setCanPassDoors(true);
+            return new PathFinder(this.nodeEvaluator, maxVisitedNodes);
+        }
+
+        @Override
+        protected boolean canUpdatePath() {
+            return true;
+        }
+    }
+
+    /**
+     * Allows the valkyrie to establish a path through the air while descending.
+     */
+    public static class ValkyrieNodeEvaluator extends FlyNodeEvaluator {
+
+        /**
+         * Returns a mapped point or creates and adds one
+         */
+        @Override
+        @Nullable
+        protected Node getNode(int pX, int pY, int pZ) {
+            Node node = null;
+            BlockPathTypes blockpathtypes = this.getCachedBlockPathType(pX, pY, pZ);
+            float f = this.mob.getPathfindingMalus(blockpathtypes);
+            if (f >= 0.0F) {
+                node = this.nodes.computeIfAbsent(Node.createHash(pX, pY, pZ), (p_77332_) -> new Node(pX, pY, pZ));
+                node.type = blockpathtypes;
+                node.costMalus = Math.max(node.costMalus, f);
+            }
+            return node;
         }
     }
 }
