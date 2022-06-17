@@ -159,6 +159,7 @@ public class Aether
             generator.addProvider(true, new AetherEntityTagData(generator, helper));
             generator.addProvider(true, new AetherFluidTagData(generator, helper));
             generator.addProvider(true, new AetherDimensionTagData(generator, helper));
+            generator.addProvider(true, new AetherBiomeTagData(generator, helper));
             generator.addProvider(true, new AetherAdvancementData(generator, helper));
             generator.addProvider(true, new AetherWorldData(generator));
         }
