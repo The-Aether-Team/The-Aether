@@ -9,6 +9,7 @@ import com.mojang.serialization.Encoder;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
@@ -41,11 +42,11 @@ public abstract class WorldProvider extends WorldgenRegistryDumpReport {
         this.generator = generator;
     }
 
-    protected <T> void dumpRegistryCap(HashCache cache, Path pathRoot, RegistryAccess registryAccess, DynamicOps<JsonElement> jsonOps, RegistryAccess.RegistryData<T> p_194688_) {
+    protected <T> void dumpRegistryCap(CachedOutput cache, Path pathRoot, RegistryAccess registryAccess, DynamicOps<JsonElement> jsonOps, RegistryAccess.RegistryData<T> p_194688_) {
         this.dumpRegistry(pathRoot, cache, jsonOps, p_194688_.key(), registryAccess.ownedRegistryOrThrow(p_194688_.key()), p_194688_.codec());
     }
 
-    protected <E, T extends Registry<E>> void dumpRegistry(Path p_194698_, HashCache p_194699_, DynamicOps<JsonElement> p_194700_, ResourceKey<? extends T> p_194701_, T p_194702_, Encoder<E> p_194703_) {
+    protected <E, T extends Registry<E>> void dumpRegistry(Path p_194698_, CachedOutput p_194699_, DynamicOps<JsonElement> p_194700_, ResourceKey<? extends T> p_194701_, T p_194702_, Encoder<E> p_194703_) {
         for (Map.Entry<ResourceKey<E>, E> entry : p_194702_.entrySet()) {
             if (!this.shouldSerialize(entry.getKey(), entry.getValue())) continue;
             // ^^^ Addition - Determine if an object is acceptable for serialization
@@ -54,7 +55,7 @@ public abstract class WorldProvider extends WorldgenRegistryDumpReport {
         }
     }
 
-    protected <E> void dumpValue(Path p_194692_, HashCache p_194693_, DynamicOps<JsonElement> p_194694_, Encoder<E> p_194695_, E p_194696_) {
+    protected <E> void dumpValue(Path p_194692_, CachedOutput p_194693_, DynamicOps<JsonElement> p_194694_, Encoder<E> p_194695_, E p_194696_) {
         try {
             Optional<JsonElement> optional = p_194695_.encodeStart(p_194694_, p_194696_).resultOrPartial((p_206405_) -> {
                 LOGGER.error("Couldn't serialize element {}: {}", p_194692_, p_206405_);

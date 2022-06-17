@@ -5,8 +5,8 @@ import com.gildedgames.aether.core.data.provider.AetherWorldProvider;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.DynamicOps;
 import net.minecraft.core.*;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceKey;
 
 import java.nio.file.Path;
@@ -23,7 +23,7 @@ public class AetherWorldData extends AetherWorldProvider {
     }
 
     @Override
-    protected void dumpRegistries(RegistryAccess registryAccess, HashCache cache, Path path, DynamicOps<JsonElement> dynamicOps) {
+    protected void dumpRegistries(RegistryAccess registryAccess, CachedOutput cache, Path path, DynamicOps<JsonElement> dynamicOps) {
         this.registerDimensionType(cache, path, dynamicOps);
         this.registerLevelStem(registryAccess, cache, path, dynamicOps);
     }
