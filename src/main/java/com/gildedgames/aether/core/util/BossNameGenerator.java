@@ -1,8 +1,7 @@
 package com.gildedgames.aether.core.util;
 
 import com.gildedgames.aether.common.entity.monster.dungeon.ValkyrieQueen;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 import java.util.Random;
 

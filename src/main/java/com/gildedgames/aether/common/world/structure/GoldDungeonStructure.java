@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
+//import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 //import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
 //import net.minecraft.world.level.levelgen.structure.NoiseAffectingStructureFeature;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;

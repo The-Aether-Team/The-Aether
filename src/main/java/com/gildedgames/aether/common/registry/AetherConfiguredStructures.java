@@ -5,8 +5,8 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.PlainVillagePools;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
+//import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+//import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 
 public class AetherConfiguredStructures {
 //    public static ConfiguredStructureFeature<?, ?> CONFIGURED_BRONZE_DUNGEON = AetherStructures.BRONZE_DUNGEON.get()
