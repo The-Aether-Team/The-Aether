@@ -259,12 +259,12 @@ public abstract class AbstractWhirlwind extends Mob {
             }
             if (!this.whirlwind.isEvil || this.whirlwind.getTarget() == null) {
                 BlockPos offset = new BlockPos(this.whirlwind.position().add(this.whirlwind.getDeltaMovement()));
-                if (this.whirlwind.level.getHeight(Heightmap.Types.WORLD_SURFACE, offset.getX(), offset.getZ()) < offset.getY() - 7) {
+                if (this.whirlwind.level.getHeight(Heightmap.Types.WORLD_SURFACE, offset.getX(), offset.getZ()) < offset.getY() - this.whirlwind.getMaxFallDistance()) {
                     this.movementAngle += 180;
                 } else {
                     this.movementAngle += this.movementCurve;
                 }
-                this.whirlwind.setDeltaMovement(Math.cos(0.01745329F * this.movementAngle) * this.whirlwind.getAttribute(Attributes.MOVEMENT_SPEED).getValue(), this.whirlwind.getDeltaMovement().y, -Math.sin(0.01745329F * this.movementAngle) * this.whirlwind.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
+                this.whirlwind.setDeltaMovement(Math.cos(this.movementAngle * ((float) Math.PI / 180)) * this.whirlwind.getAttribute(Attributes.MOVEMENT_SPEED).getValue(), this.whirlwind.getDeltaMovement().y, Math.sin(this.movementAngle * ((float) Math.PI / 180)) * this.whirlwind.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
             } else {
                 this.whirlwind.setDeltaMovement(Vec3.ZERO);
             }
