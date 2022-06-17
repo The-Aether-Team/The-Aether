@@ -31,7 +31,7 @@ public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity
 	@Nonnull
 	@Override
 	protected Component getDefaultName() {
-		return new TranslatableComponent("container." + Aether.MODID + ".freezer");
+		return Component.translatable("container." + Aether.MODID + ".freezer");
 	}
 
 	@Nonnull

@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.entity.monster.dungeon;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherItems;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.TimeUtil;
@@ -17,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
 
@@ -93,7 +93,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
                 } else {
                     translationId = "gui.aether.valkyrie.dialog." + (char) (random.nextInt(3) + '1');
                 }
-                this.chatItUp(player, new TranslatableComponent(translationId));
+                this.chatItUp(player, Component.translatable(translationId));
                 this.chatTimer = 60;
             }
         }
@@ -109,7 +109,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
         boolean result = super.hurt(source, pDamageAmount);
         if (!this.level.isClientSide && source.getEntity() instanceof Player player) {
             if (this.getTarget() == null && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
-                chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.attack." + (char) (random.nextInt(3) + '1')));
+                chatItUp(player, Component.translatable("gui.aether.valkyrie.dialog.attack." + (char) (random.nextInt(3) + '1')));
             }
         }
         return result;
@@ -122,7 +122,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     public boolean doHurtTarget(@Nonnull Entity pEntity) {
         boolean result = super.doHurtTarget(pEntity);
         if (pEntity instanceof ServerPlayer player && player.getHealth() <= 0) {
-            this.chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.playerdeath." + (char) (random.nextInt(3) + '1')));
+            this.chatItUp(player, Component.translatable("gui.aether.valkyrie.dialog.playerdeath." + (char) (random.nextInt(3) + '1')));
         }
         return result;
     }
@@ -133,7 +133,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     @Override
     public void die(DamageSource pCause) {
         if (pCause.getEntity() instanceof Player player) {
-            this.chatItUp(player, new TranslatableComponent("gui.aether.valkyrie.dialog.defeated." + (char) (random.nextInt(3) + '1')));
+            this.chatItUp(player, Component.translatable("gui.aether.valkyrie.dialog.defeated." + (char) (random.nextInt(3) + '1')));
         }
         this.spawnExplosionParticles();
         super.die(pCause);

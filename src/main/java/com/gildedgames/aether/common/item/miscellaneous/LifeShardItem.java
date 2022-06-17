@@ -1,12 +1,12 @@
 package com.gildedgames.aether.common.item.miscellaneous;
 
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 
 public class LifeShardItem extends Item
@@ -30,7 +30,7 @@ public class LifeShardItem extends Item
                 }
                 return InteractionResultHolder.success(itemstack);
             } else if (aetherPlayer.getLifeShardCount() >= aetherPlayer.getLifeShardLimit()) {
-                playerEntity.displayClientMessage(new TranslatableComponent("aether.life_shard_limit", aetherPlayer.getLifeShardLimit()), true);
+                playerEntity.displayClientMessage(Component.translatable("aether.life_shard_limit", aetherPlayer.getLifeShardLimit()), true);
             }
         }
         return InteractionResultHolder.pass(itemstack);

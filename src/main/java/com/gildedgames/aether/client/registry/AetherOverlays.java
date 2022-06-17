@@ -21,7 +21,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.gui.OverlayRegistry;
@@ -192,7 +191,7 @@ public class AetherOverlays {
                         } else if (player.getOffhandItem().getItem() == item) {
                             itemStack = player.getOffhandItem();
                         }
-                        String text = itemStack.getHoverName().getString().concat(" ").concat(new TranslatableComponent("aether.hammer_of_notch_cooldown").getString());
+                        String text = itemStack.getHoverName().getString().concat(" ").concat(Component.translatable("aether.hammer_of_notch_cooldown").getString());
                         mc.font.drawShadow(poseStack, text, (window.getGuiScaledWidth() / 2.0F) - (mc.font.width(text) / 2.0F), 32, 16777215);
                         RenderSystem.setShader(GameRenderer::getPositionTexShader);
                         RenderSystem.setShaderTexture(0, TEXTURE_COOLDOWN_BAR);

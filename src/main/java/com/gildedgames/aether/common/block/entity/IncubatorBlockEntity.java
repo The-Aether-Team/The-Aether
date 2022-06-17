@@ -92,7 +92,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	@Nonnull
 	@Override
 	protected Component getDefaultName() {
-		return new TranslatableComponent("container." + Aether.MODID + ".incubator");
+		return Component.translatable("container." + Aether.MODID + ".incubator");
 	}
 
 	public static Map<Item, Integer> getIncubatingMap() {

@@ -84,6 +84,6 @@ public class BossNameGenerator {
             result += valkyrieNameLast[random.nextInt(valkyrieNameLast.length)];
         }
         result += ", ";
-        valkyrieQueen.setBossName(new TextComponent(result).append(new TranslatableComponent("gui.aether.queen.title")));
+        valkyrieQueen.setBossName(Component.literal(result).append(Component.translatable("gui.aether.queen.title")));
     }
 }

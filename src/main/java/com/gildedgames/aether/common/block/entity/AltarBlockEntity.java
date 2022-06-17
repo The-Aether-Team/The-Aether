@@ -31,7 +31,7 @@ public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity
 	@Nonnull
 	@Override
 	protected Component getDefaultName() {
-		return new TranslatableComponent("container." + Aether.MODID + ".altar");
+		return Component.translatable("container." + Aether.MODID + ".altar");
 	}
 
 	@Nonnull

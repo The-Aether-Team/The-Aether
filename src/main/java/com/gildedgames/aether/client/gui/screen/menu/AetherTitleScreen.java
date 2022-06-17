@@ -24,7 +24,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
 import net.minecraft.util.Mth;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.internal.BrandingControl;
 
 import javax.annotation.Nonnull;
@@ -168,10 +167,10 @@ public class AetherTitleScreen extends TitleScreen {
 			for (Widget widget : this.renderables) {
 				if (widget instanceof Button button) {
 					Component buttonText = button.getMessage();
-					if (buttonText.equals(new TranslatableComponent("narrator.button.accessibility"))) {
+					if (buttonText.equals(Component.translatable("narrator.button.accessibility"))) {
 						button.x = this.width - 48 + offset;
 						button.y = 4;
-					} else if (buttonText.equals(new TranslatableComponent("narrator.button.language"))) {
+					} else if (buttonText.equals(Component.translatable("narrator.button.language"))) {
 						button.x = this.width - 24 + offset;
 						button.y = 4;
 					}
@@ -198,12 +197,12 @@ public class AetherTitleScreen extends TitleScreen {
 	}
 
 	public boolean isButtonAether(Component buttonText) {
-		return buttonText.equals(new TranslatableComponent("menu.singleplayer"))
-				|| buttonText.equals(new TranslatableComponent("menu.multiplayer"))
-				|| buttonText.equals(new TranslatableComponent("menu.online"))
-				|| buttonText.equals(new TranslatableComponent("fml.menu.mods"))
-				|| buttonText.equals(new TranslatableComponent("menu.options"))
-				|| buttonText.equals(new TranslatableComponent("menu.quit"));
+		return buttonText.equals(Component.translatable("menu.singleplayer"))
+				|| buttonText.equals(Component.translatable("menu.multiplayer"))
+				|| buttonText.equals(Component.translatable("menu.online"))
+				|| buttonText.equals(Component.translatable("fml.menu.mods"))
+				|| buttonText.equals(Component.translatable("menu.options"))
+				|| buttonText.equals(Component.translatable("menu.quit"));
 	}
 
 	public boolean alignElementsLeft() {

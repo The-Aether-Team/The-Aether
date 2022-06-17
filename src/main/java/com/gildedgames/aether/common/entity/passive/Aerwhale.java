@@ -4,10 +4,11 @@ import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.BaseComponent;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -126,7 +127,7 @@ public class Aerwhale extends FlyingMob {
         if (player.getUUID().getMostSignificantBits() == 220717875589366683L && player.getUUID().getLeastSignificantBits() == -7181826737698904209L) {
             player.startRiding(this);
             if (!this.level.isClientSide) {
-                BaseComponent msg = new TextComponent("Serenity is the queen of W(h)ales!!");
+                MutableComponent msg = Component.literal("Serenity is the queen of W(h)ales!!");
                 player.level.players().forEach(p -> p.sendMessage(msg, player.getUUID()));
             }
             return InteractionResult.sidedSuccess(this.level.isClientSide);
@@ -195,7 +196,7 @@ public class Aerwhale extends FlyingMob {
          */
         @Override
         public void start() {
-            Random random = this.mob.getRandom();
+            RandomSource random = this.mob.getRandom();
             // Set the x, y, and z targets to n * 16, with n being a random number between -1 and 1.
             double x = (random.nextFloat() * 2F - 1F) * 16;
             double z = (random.nextFloat() * 2F - 1F) * 16;

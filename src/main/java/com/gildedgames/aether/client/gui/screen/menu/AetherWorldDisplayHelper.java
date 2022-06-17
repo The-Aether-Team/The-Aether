@@ -9,8 +9,7 @@ import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.server.IntegratedServer;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.DirectoryLock;
 import net.minecraft.world.level.Level;
@@ -30,7 +29,7 @@ public class AetherWorldDisplayHelper {
         if (config) {
             enableWorldPreview();
         } else {
-            if (disableWorldPreview(new GenericDirtMessageScreen(new TextComponent("")))) {
+            if (disableWorldPreview(new GenericDirtMessageScreen(Component.literal("")))) {
                 Minecraft.getInstance().forceSetScreen(GuiHooks.getMenu());
             }
         }
@@ -80,7 +79,7 @@ public class AetherWorldDisplayHelper {
     public static void loadWorld(LevelSummary summary) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.getLevelSource().levelExists(summary.getLevelId())) {
-            minecraft.forceSetScreen(new GenericDirtMessageScreen(new TranslatableComponent("selectWorld.data_read")));
+            minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("selectWorld.data_read")));
             loadedSummary = summary;
             minecraft.loadLevel(summary.getLevelId());
         }

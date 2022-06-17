@@ -24,8 +24,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.network.PacketDistributor;
 import top.theillusivec4.curios.Curios;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
@@ -83,13 +81,13 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesMenu> 
         }
         this.addRenderableWidget(new ImageButton(this.leftPos - 22, this.topPos + 2, 20, 20, 0, 0, 20, SKINS_BUTTON, 20, 40,
                 (pressed) -> Aether.LOGGER.info("WIP"), //todo
-                (button, poseStack, x, y) -> this.renderTooltip(poseStack, new TranslatableComponent("gui.aether.accessories.skins_button"), x, y),
-                new TranslatableComponent("gui.aether.accessories.skins_button"))
+                (button, poseStack, x, y) -> this.renderTooltip(poseStack, Component.translatable("gui.aether.accessories.skins_button"), x, y),
+                Component.translatable("gui.aether.accessories.skins_button"))
         );
         this.addRenderableWidget(new ImageButton(this.leftPos - 22, this.topPos + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
                 (pressed) -> this.minecraft.setScreen(new AetherCustomizationsScreen(this)),
-                (button, poseStack, x, y) -> this.renderTooltip(poseStack, new TranslatableComponent("gui.aether.accessories.customization_button"), x, y),
-                new TranslatableComponent("gui.aether.accessories.customization_button"))
+                (button, poseStack, x, y) -> this.renderTooltip(poseStack, Component.translatable("gui.aether.accessories.customization_button"), x, y),
+                Component.translatable("gui.aether.accessories.customization_button"))
         );
     }
 
@@ -123,7 +121,7 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesMenu> 
         if (!this.isRenderButtonHovered && clientPlayer != null && clientPlayer.inventoryMenu.getCarried().isEmpty() && this.getSlotUnderMouse() != null) {
             Slot slot = this.getSlotUnderMouse();
             if (slot instanceof CurioSlot curioSlot && !slot.hasItem()) {
-                this.renderTooltip(poseStack, new TextComponent(curioSlot.getSlotName()), mouseX, mouseY);
+                this.renderTooltip(poseStack, Component.literal(curioSlot.getSlotName()), mouseX, mouseY);
             }
         }
         this.renderTooltip(poseStack, mouseX, mouseY);
@@ -136,7 +134,7 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesMenu> 
             LocalPlayer clientPlayer = mc.player;
             if (clientPlayer != null && clientPlayer.inventoryMenu.getCarried().isEmpty()) {
                 if (this.isRenderButtonHovered) {
-                    this.renderTooltip(matrixStack, new TranslatableComponent("gui.curios.toggle"), mouseX, mouseY);
+                    this.renderTooltip(matrixStack, Component.translatable("gui.curios.toggle"), mouseX, mouseY);
                 } else if (this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
                     this.renderTooltip(matrixStack, this.hoveredSlot.getItem(), mouseX, mouseY);
                 }

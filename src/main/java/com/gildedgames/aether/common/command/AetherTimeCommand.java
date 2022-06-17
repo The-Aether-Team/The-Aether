@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.TimeArgument;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 
 // Vanilla copy of TimeCommand
@@ -42,14 +42,14 @@ public class AetherTimeCommand {
     }
 
     private static int queryTime(CommandSourceStack pSource, int pTime) {
-        pSource.sendSuccess(new TranslatableComponent("commands.time.query", pTime), false);
+        pSource.sendSuccess(Component.translatable("commands.time.query", pTime), false);
         return pTime;
     }
 
     public static int setTime(CommandSourceStack pSource, int pTime) {
         ServerLevel level = pSource.getLevel();
         level.setDayTime(pTime);
-        pSource.sendSuccess(new TranslatableComponent("commands.time.set", pTime), true);
+        pSource.sendSuccess(Component.translatable("commands.time.set", pTime), true);
         return getDayTime(pSource.getLevel());
     }
 
@@ -57,7 +57,7 @@ public class AetherTimeCommand {
         ServerLevel level = pSource.getLevel();
         level.setDayTime(level.getDayTime() + pAmount);
         int i = getDayTime(pSource.getLevel());
-        pSource.sendSuccess(new TranslatableComponent("commands.time.set", i), true);
+        pSource.sendSuccess(Component.translatable("commands.time.set", i), true);
         return i;
     }
 }

@@ -16,8 +16,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -88,7 +87,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     public void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_IS_READY, false);
-        this.entityData.define(DATA_BOSS_NAME, new TextComponent("Valkyrie Queen"));
+        this.entityData.define(DATA_BOSS_NAME, Component.literal("Valkyrie Queen"));
     }
 
     @Override
@@ -142,7 +141,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
         if (!this.level.isClientSide && source.getEntity() instanceof Player player) {
             if (this.getTarget() == null && flag && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
                 this.bossFight.setVisible(true);
-                chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.fight"));
+                chatItUp(player, Component.translatable("gui.aether.queen.dialog.fight"));
             }
         }
         return flag;
@@ -155,7 +154,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     public boolean doHurtTarget(@Nonnull Entity pEntity) {
         boolean result = super.doHurtTarget(pEntity);
         if (pEntity instanceof ServerPlayer player && player.getHealth() <= 0) {
-            this.chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.playerdeath"));
+            this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.playerdeath"));
         }
         return result;
     }
@@ -167,14 +166,14 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     @Override
     public void die(@Nonnull DamageSource pCause) {
         if (!this.level.isClientSide) {
-            this.chatWithNearby(new TranslatableComponent("gui.aether.queen.dialog.defeated"));
+            this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.defeated"));
             this.spawnExplosionParticles();
         }
         super.die(pCause);
     }
 
     public void readyUp() {
-        TranslatableComponent message = new TranslatableComponent("gui.aether.queen.dialog.ready");
+        MutableComponent message = Component.translatable("gui.aether.queen.dialog.ready");
         this.chatWithNearby(message);
         this.setReady(true);
     }
@@ -184,7 +183,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
      */
     @Override
     protected void chatItUp(Player player, Component message) {
-        player.sendMessage(new TextComponent("[").append(this.getBossName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(message), player.getUUID());
+        player.sendMessage(Component.literal("[").append(this.getBossName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(message), player.getUUID());
     }
 
     /**
@@ -272,11 +271,11 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID) {
             case 0: // Responds to the player's question of where they are.
-                this.chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.answer"));
+                this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.answer"));
                 break;
             case 1: // Tells the players nearby to ready up for a fight.
                 if (level.getDifficulty() == Difficulty.PEACEFUL) {
-                    this.chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.peaceful"));
+                    this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.peaceful"));
                 } else {
                     if (player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get()) >= 10) {
                         this.readyUp();
@@ -294,16 +293,16 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
                             if (count <= 0) break;
                         }
                     } else {
-                        this.chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.challenge"));
+                        this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.challenge"));
                     }
                 }
                 break;
             case 2:
-                this.chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.deny_fight"));
+                this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.deny_fight"));
                 break;
             case 3:
             default: //Goodbye.
-                this.chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.goodbye"));
+                this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.goodbye"));
                 break;
         }
         this.setTradingPlayer(null);

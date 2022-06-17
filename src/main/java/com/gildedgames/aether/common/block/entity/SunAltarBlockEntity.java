@@ -7,7 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -47,7 +46,7 @@ public class SunAltarBlockEntity extends BlockEntity implements Nameable {
 
     @Nonnull
     public Component getName() {
-        return this.name != null ? this.name : new TranslatableComponent("container." + Aether.MODID + ".sun_altar");
+        return this.name != null ? this.name : Component.translatable("container." + Aether.MODID + ".sun_altar");
     }
 
     public void setCustomName(@Nullable Component pName) {
