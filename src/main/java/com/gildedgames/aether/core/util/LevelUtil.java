@@ -19,11 +19,11 @@ public class LevelUtil {
     private static final Table<ResourceKey<Level>, TagKey<DimensionType>, Boolean> tagTrackers = HashBasedTable.create();
 
     public static ResourceKey<Level> destinationDimension() { //Default: aether:the_aether
-        return ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(AetherConfig.COMMON.portalDestinationDimensionID.get()));
+        return ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(AetherConfig.COMMON.portal_destination_dimension_ID.get()));
     }
 
     public static ResourceKey<Level> returnDimension() { //Default: minecraft:overworld
-        return ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(AetherConfig.COMMON.portalReturnDimensionID.get()));
+        return ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(AetherConfig.COMMON.portal_return_dimension_ID.get()));
     }
 
     public static void addTracker(Level level, TagKey<DimensionType> tagKey) {
