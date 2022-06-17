@@ -12,7 +12,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -25,7 +24,6 @@ import javax.annotation.Nonnull;
  */
 public class ThunderCrystal extends AbstractCrystal {
     private Entity target;
-    private int health = 20;
 
     /**
      * Used for registering the entity. Use the other constructor to provide more context.
@@ -49,7 +47,6 @@ public class ThunderCrystal extends AbstractCrystal {
         if (!this.level.isClientSide) {
             if (this.ticksInAir >= this.getLifeSpan() || this.target == null || !this.target.isAlive()) {
                 this.placeLightning();
-                this.discard();
             } else {
                 Vec3 motion = this.getDeltaMovement().scale(0.9);
                 Vec3 targetMotion = new Vec3(this.target.getX() - this.getX(), (this.target.getEyeY() - 0.1) - this.getY(), this.target.getZ() - this.getZ()).normalize();
@@ -68,8 +65,9 @@ public class ThunderCrystal extends AbstractCrystal {
     protected void onHit(@Nonnull HitResult pResult) {
         super.onHit(pResult);
         if (!this.level.isClientSide) {
+            if (pResult instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() == this.getOwner())
+                return;
             this.placeLightning();
-            this.discard();
         }
     }
 
@@ -83,6 +81,7 @@ public class ThunderCrystal extends AbstractCrystal {
             lightningBolt.moveTo(this.getX(), this.getY(), this.getZ());
             this.level.addFreshEntity(lightningBolt);
         }
+        this.discard();
     }
 
 
@@ -93,11 +92,8 @@ public class ThunderCrystal extends AbstractCrystal {
     public boolean hurt(@Nonnull DamageSource pSource, float pAmount) {
         if (!this.level.isClientSide) {
             ((ServerLevel) this.level).sendParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 15, 0.2D, 0.2D, 0.2D, 0.0D);
-            this.health -= pAmount;
-            if (this.health <= 0) {
-                this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
-                this.discard();
-            }
+            this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
+            this.discard();
         }
         return true;
     }
@@ -134,14 +130,12 @@ public class ThunderCrystal extends AbstractCrystal {
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        this.health = nbt.getInt("Health");
         this.target = this.level.getEntity(nbt.getInt("Target"));
     }
 
     @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
-        nbt.putInt("Health", this.health);
         if (this.target != null) {
             nbt.putInt("Target", this.target.getId());
         }
