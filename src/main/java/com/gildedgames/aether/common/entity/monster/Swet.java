@@ -527,7 +527,7 @@ public class Swet extends MountableAnimal {
         public void tick() {
             MoveHelperController moveHelperController = (MoveHelperController) this.swet.getMoveControl();
             float rot = moveHelperController.yRot;
-            Vec3 offset = new Vec3(Math.cos((rot + 90) * ((float) Math.PI / 180)) * 2, 0.0, Math.sin((rot + 90) * ((float) Math.PI / 180)) * 2);
+            Vec3 offset = new Vec3(-Math.sin(rot * ((float) Math.PI / 180)) * 2, 0.0, Math.cos(rot * ((float) Math.PI / 180)) * 2);
             BlockPos pos = new BlockPos(this.swet.position().add(offset));
             if (this.swet.level.getHeight(Heightmap.Types.WORLD_SURFACE, pos.getX(), pos.getZ()) < pos.getY() - this.swet.getMaxFallDistance()) {
                 this.nextRandomizeTime = this.adjustedTickDelay(40 + this.swet.getRandom().nextInt(60));
