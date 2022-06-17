@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.entity.ai.goal.target;
 
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;

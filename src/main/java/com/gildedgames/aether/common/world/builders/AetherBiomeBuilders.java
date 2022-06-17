@@ -103,7 +103,6 @@ public class AetherBiomeBuilders {
     public static Biome makeDefaultBiome(BiomeGenerationSettings.Builder builder) {
         return fullDefinition(
                 Biome.Precipitation.NONE,
-                Biome.BiomeCategory.NONE,
                 0.8F,
                 0.0F,
                 new BiomeSpecialEffects.Builder()
@@ -155,10 +154,9 @@ public class AetherBiomeBuilders {
         );
     }
 
-    public static Biome fullDefinition(Biome.Precipitation precipitation, Biome.BiomeCategory category, float temperature, float downfall, BiomeSpecialEffects effects, MobSpawnSettings spawnSettings, BiomeGenerationSettings generationSettings, Biome.TemperatureModifier temperatureModifier) {
+    public static Biome fullDefinition(Biome.Precipitation precipitation, float temperature, float downfall, BiomeSpecialEffects effects, MobSpawnSettings spawnSettings, BiomeGenerationSettings generationSettings, Biome.TemperatureModifier temperatureModifier) {
         return new Biome.BiomeBuilder()
                 .precipitation(precipitation)
-                .biomeCategory(category)
                 .temperature(temperature)
                 .downfall(downfall)
                 .specialEffects(effects)

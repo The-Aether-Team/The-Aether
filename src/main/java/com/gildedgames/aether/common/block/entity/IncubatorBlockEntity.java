@@ -4,7 +4,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.entity.passive.Moa;
 import com.gildedgames.aether.common.inventory.container.IncubatorMenu;
 
 import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
@@ -12,11 +11,10 @@ import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.google.common.collect.Maps;
-import net.minecraft.core.BlockPos;
+import net.minecraft.core.*;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
@@ -31,11 +29,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -99,9 +94,9 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		return incubatingMap;
 	}
 
-	private static void addItemTagIncubatingTime(Tag<Item> itemTag, int burnTime) {
-		for (Item item : itemTag.getValues()) {
-			incubatingMap.put(item, burnTime);
+	private static void addItemTagIncubatingTime(TagKey<Item> itemTag, int burnTime) {
+		for(Holder<Item> holder : Registry.ITEM.getTagOrEmpty(itemTag)) {
+			incubatingMap.put(holder.value(), burnTime);
 		}
 	}
 
