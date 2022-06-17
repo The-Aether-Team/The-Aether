@@ -33,6 +33,8 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
@@ -523,12 +525,22 @@ public class Swet extends MountableAnimal {
         }
 
         public void tick() {
-            if (--this.nextRandomizeTime <= 0) {
+            MoveHelperController moveHelperController = (MoveHelperController) this.swet.getMoveControl();
+            float rot = moveHelperController.yRot;
+            Vec3 offset = new Vec3(-Math.sin(rot * ((float) Math.PI / 180)) * 2, 0.0, Math.cos(rot * ((float) Math.PI / 180)) * 2);
+            BlockPos pos = new BlockPos(this.swet.position().add(offset));
+            if (this.swet.level.getHeight(Heightmap.Types.WORLD_SURFACE, pos.getX(), pos.getZ()) < pos.getY() - this.swet.getMaxFallDistance()) {
                 this.nextRandomizeTime = this.adjustedTickDelay(40 + this.swet.getRandom().nextInt(60));
-                this.chosenDegrees = (float) this.swet.getRandom().nextInt(360);
+                this.chosenDegrees += 180;
+                moveHelperController.setCanJump(false);
+            } else {
+                if (--this.nextRandomizeTime <= 0) {
+                    this.nextRandomizeTime = this.adjustedTickDelay(40 + this.swet.getRandom().nextInt(60));
+                    this.chosenDegrees = (float) this.swet.getRandom().nextInt(360);
+                }
+                moveHelperController.setCanJump(true);
             }
-
-            ((MoveHelperController) this.swet.getMoveControl()).setDirection(this.chosenDegrees, false);
+            moveHelperController.setDirection(this.chosenDegrees, false);
         }
     }
 
@@ -541,7 +553,7 @@ public class Swet extends MountableAnimal {
         }
 
         public boolean canUse() {
-            return !this.swet.isPassenger();
+            return !this.swet.isPassenger() && this.swet.getMoveControl() instanceof MoveHelperController moveHelperController && moveHelperController.canJump;
         }
 
         public void tick() {
@@ -554,6 +566,7 @@ public class Swet extends MountableAnimal {
         private int jumpDelay;
         private final Swet swet;
         private boolean isAggressive;
+        private boolean canJump;
 
         public MoveHelperController(Swet swet) {
             super(swet);
@@ -569,6 +582,10 @@ public class Swet extends MountableAnimal {
         public void setWantedMovement(double speed) {
             this.speedModifier = speed;
             this.operation = Operation.MOVE_TO;
+        }
+
+        public void setCanJump(boolean canJump) {
+            this.canJump = canJump;
         }
 
         public void tick() {

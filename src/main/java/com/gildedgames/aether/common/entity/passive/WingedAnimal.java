@@ -1,7 +1,6 @@
 package com.gildedgames.aether.common.entity.passive;
 
-import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
-import net.minecraft.world.effect.MobEffects;
+import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -23,7 +22,7 @@ public abstract class WingedAnimal extends MountableAnimal {
     @Nonnull
     @Override
     protected PathNavigation createNavigation(@Nonnull Level level) {
-        return new FallPathNavigator(this, level);
+        return new FallPathNavigation(this, level);
     }
 
     @Override

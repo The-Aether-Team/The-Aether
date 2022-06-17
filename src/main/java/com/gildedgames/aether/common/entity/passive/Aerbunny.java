@@ -2,7 +2,7 @@ package com.gildedgames.aether.common.entity.passive;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
-import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
+import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigation;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
@@ -65,7 +65,7 @@ public class Aerbunny extends AetherAnimal {
     @Nonnull
     @Override
     protected PathNavigation createNavigation(@Nonnull Level level) {
-        return new FallPathNavigator(this, level);
+        return new FallPathNavigation(this, level);
     }
 
     @Nonnull
