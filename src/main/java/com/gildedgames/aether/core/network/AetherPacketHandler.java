@@ -29,6 +29,8 @@ public class AetherPacketHandler {
 	public static synchronized void register() {
 		// CLIENT
 		register(AetherTravelPacket.class, AetherTravelPacket::decode);
+		register(BossInfoPacket.Display.class, BossInfoPacket.Display::decode);
+		register(BossInfoPacket.Remove.class, BossInfoPacket.Remove::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
 		register(DimensionTypeHolderPacket.class, DimensionTypeHolderPacket::decode);
@@ -36,6 +38,7 @@ public class AetherPacketHandler {
 		register(ExplosionParticlePacket.class, ExplosionParticlePacket::decode);
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
 		register(MoaInteractPacket.class, MoaInteractPacket::decode);
+		register(OpenNpcDialoguePacket.class, OpenNpcDialoguePacket::decode);
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
@@ -52,6 +55,7 @@ public class AetherPacketHandler {
 		register(LoreExistsPacket.class, LoreExistsPacket::decode);
 		register(MilkCowPacket.class, MilkCowPacket::decode);
 		register(MovementPacket.class, MovementPacket::decode);
+		register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);
 		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
 		register(RankingsForcePacket.class, RankingsForcePacket::decode);
@@ -62,8 +66,8 @@ public class AetherPacketHandler {
 		register(AetherRankingsSyncPacket.class, AetherRankingsSyncPacket::decode);
 	}
 
-	private static <MSG extends AetherPacket.AbstractAetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
-		INSTANCE.messageBuilder(packet, index++).encoder(AetherPacket.AbstractAetherPacket::encode).decoder(decoder).consumer(AetherPacket.AbstractAetherPacket::handle).add();
+	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
+		INSTANCE.messageBuilder(packet, index++).encoder(AetherPacket::encode).decoder(decoder).consumer(AetherPacket::handle).add();
 	}
 
 	public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

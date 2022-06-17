@@ -100,6 +100,10 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.AETHER_DIRT.get(),
                 AetherBlocks.HOLYSTONE.get()
         );
+        tag(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON).add(
+                AetherBlocks.ANGELIC_STONE.get(),
+                AetherBlocks.LIGHT_ANGELIC_STONE.get()
+        );
 
         //vanilla
         tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).addTag(AetherTags.Blocks.DUNGEON_BLOCKS);

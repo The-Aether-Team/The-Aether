@@ -676,6 +676,38 @@
       "aether:entity/slider/death"
     ]
   },
+  "entity.valkyrie.death": {
+    "subtitle": "subtitles.entity.valkyrie.death",
+    "sounds": [
+      "damage/hit1",
+      "damage/hit2",
+      "damage/hit3"
+    ]
+  },
+  "entity.valkyrie.hurt": {
+    "subtitle": "subtitles.entity.valkyrie.hurt",
+    "sounds": [
+      "damage/hit1",
+      "damage/hit2",
+      "damage/hit3"
+    ]
+  },
+  "entity.valkyrie_queen.death": {
+    "subtitle": "subtitles.entity.valkyrie_queen.death",
+    "sounds": [
+      "damage/hit1",
+      "damage/hit2",
+      "damage/hit3"
+    ]
+  },
+  "entity.valkyrie_queen.hurt": {
+    "subtitle": "subtitles.entity.valkyrie_queen.hurt",
+    "sounds": [
+      "damage/hit1",
+      "damage/hit2",
+      "damage/hit3"
+    ]
+  },
   "entity.sun_spirit.shoot": {
     "subtitle": "subtitles.entity.sun_spirit.shoot",
     "sounds": [
@@ -690,6 +722,14 @@
   },
   "entity.cloud_crystal.explode": {
     "subtitle": "subtitles.entity.cloud_crystal.explode",
+    "sounds": [
+      "random/glass1",
+      "random/glass2",
+      "random/glass3"
+    ]
+  },
+  "entity.thunder_crystal.explode": {
+    "subtitle": "subtitles.entity.thunder_crystal.explode",
     "sounds": [
       "random/glass1",
       "random/glass2",

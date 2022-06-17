@@ -47,6 +47,7 @@ public class AetherLootTableData extends AetherLootTableProvider
     }
 
     @Override
+    @Nonnull
     public String getName() {
         return "Aether Loot Tables";
     }
@@ -377,12 +378,24 @@ public class AetherLootTableData extends AetherLootTableProvider
             this.add(AetherEntityTypes.VALKYRIE.get(), LootTable.lootTable()
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(AetherItems.VICTORY_MEDAL.get())
-                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 1.0F)))
+                                    .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
                             )
                     )
             );
 
             this.add(AetherEntityTypes.FIRE_MINION.get(), LootTable.lootTable());
+
+            this.add(AetherEntityTypes.VALKYRIE_QUEEN.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                            .add(LootItem.lootTableItem(AetherItems.SILVER_DUNGEON_KEY.get())
+                                    .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+                            )
+                    )
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                            .add(LootItem.lootTableItem(Items.GOLDEN_SWORD)
+                                    .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+                            ))
+            );
         }
 
         private static LootTable.Builder sheepLootTableBuilderWithDrop(ItemLike wool) {

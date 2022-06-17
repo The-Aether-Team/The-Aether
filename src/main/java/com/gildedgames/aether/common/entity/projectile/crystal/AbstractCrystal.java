@@ -1,5 +1,6 @@
 package com.gildedgames.aether.common.entity.projectile.crystal;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.EntityType;
@@ -14,13 +15,12 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 
 public abstract class AbstractCrystal extends Projectile {
-    private int ticksInAir = 0;
+    protected int ticksInAir = 0;
 
     protected AbstractCrystal(EntityType<? extends AbstractCrystal> entityType, Level level) {
         super(entityType, level);
@@ -60,6 +60,13 @@ public abstract class AbstractCrystal extends Projectile {
             this.onHit(result);
         }
         this.checkInsideBlocks();
+        this.tickMovement();
+    }
+
+    /**
+     * Handles the crystal's movement. Override this if you need different movement code.
+     */
+    protected void tickMovement() {
         Vec3 vector3d = this.getDeltaMovement();
         double d2 = this.getX() + vector3d.x;
         double d0 = this.getY() + vector3d.y;
@@ -69,19 +76,22 @@ public abstract class AbstractCrystal extends Projectile {
         this.setPos(d2, d0, d1);
     }
 
-    @Override
-    protected void onHitBlock(@Nonnull BlockHitResult result) {
-        super.onHitBlock(result);
-        this.spawnExplosionParticles();
-        this.discard();
-    }
-
     public void spawnExplosionParticles() { }
-
-    public abstract SoundEvent getImpactExplosionSoundEvent();
 
     public int getLifeSpan() {
         return 300;
+    }
+
+    @Override
+    public void readAdditionalSaveData(@Nonnull CompoundTag nbt) {
+        super.readAdditionalSaveData(nbt);
+        this.ticksInAir = nbt.getInt("TicksInAir");
+    }
+
+    @Override
+    public void addAdditionalSaveData(@Nonnull CompoundTag nbt) {
+        super.addAdditionalSaveData(nbt);
+        nbt.putInt("TicksInAir", this.ticksInAir);
     }
 
     @Nonnull

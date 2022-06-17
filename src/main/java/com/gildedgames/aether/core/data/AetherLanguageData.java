@@ -350,6 +350,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.WHIRLWIND_SPAWN_EGG, "Whirlwind Spawn Egg");
         addItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG, "Evil Whirlwind Spawn Egg");
         addItem(AetherItems.VALKYRIE_SPAWN_EGG, "Valkyrie Spawn Egg");
+        addItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG, "Valkyrie Queen Spawn Egg");
         addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
 
 
@@ -373,6 +374,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.VALKYRIE, "Valkyrie");
         addEntityType(AetherEntityTypes.FIRE_MINION, "Fire Minion");
 
+        addEntityType(AetherEntityTypes.VALKYRIE_QUEEN, "Valkyrie Queen");
+
         addEntityType(AetherEntityTypes.SKYROOT_BOAT, "Boat");
         addEntityType(AetherEntityTypes.CLOUD_MINION, "Cloud Minion");
         addEntityType(AetherEntityTypes.COLD_PARACHUTE, "Cold Parachute");
@@ -382,6 +385,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addEntityType(AetherEntityTypes.ZEPHYR_SNOWBALL, "Zephyr Snowball");
         addEntityType(AetherEntityTypes.CLOUD_CRYSTAL, "Cloud Crystal");
+        addEntityType(AetherEntityTypes.THUNDER_CRYSTAL, "Thunder Crystal");
         addEntityType(AetherEntityTypes.GOLDEN_DART, "Golden Dart");
         addEntityType(AetherEntityTypes.POISON_DART, "Poison Dart");
         addEntityType(AetherEntityTypes.ENCHANTED_DART, "Enchanted Dart");
@@ -533,11 +537,18 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("entity", "slider.move", "Slider slides");
         addSubtitle("entity", "slider.death", "Slider breaks");
 
+        addSubtitle("entity", "valkyrie.death", "Valkyrie dies");
+        addSubtitle("entity", "valkyrie.hurt", "Valkyrie hurts");
+
+        addSubtitle("entity", "valkyrie_queen.death", "Valkyrie Queen dies");
+        addSubtitle("entity", "valkyrie_queen.hurt", "Valkyrie Queen hurts");
+
         addSubtitle("entity", "sun_spirit.shoot", "Sun Spirit shoots");
 
         addSubtitle("entity", "cloud_minion.shoot", "Cloud Minion spits");
 
         addSubtitle("entity", "cloud_crystal.explode", "Crystal explodes");
+        addSubtitle("entity", "thunder_crystal.explode", "Crystal explodes");
 
         addSubtitle("entity", "dart.hit", "Dart hits");
 
@@ -568,6 +579,47 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addGuiText("recipebook.toggleRecipes.enchantable", "Showing Enchantable");
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
+
+        //Valkyrie dialogue
+        addGuiText("valkyrie.dialog.1", "What's that? You want to fight? Aww, what a cute little human.");
+        addGuiText("valkyrie.dialog.2", "You're not thinking of fighting a big, strong Valkyrie are you?");
+        addGuiText("valkyrie.dialog.3", "I don't think you should bother me, you could get really hurt.");
+
+        addGuiText("valkyrie.dialog.attack.1", "I'm not going easy on you!");
+        addGuiText("valkyrie.dialog.attack.2", "You're gonna regret that!");
+        addGuiText("valkyrie.dialog.attack.3", "Now you're in for it!");
+
+        addGuiText("valkyrie.dialog.defeated.1", "Alright, alright! You win!");
+        addGuiText("valkyrie.dialog.defeated.2", "Okay, I give up! Geez!");
+        addGuiText("valkyrie.dialog.defeated.3", "Oww! Fine, here's your medal...");
+
+        addGuiText("valkyrie.dialog.medal.1", "Umm... that's a nice pile of medallions you have there...");
+        addGuiText("valkyrie.dialog.medal.2", "That's pretty impressive, but you won't defeat me.");
+        addGuiText("valkyrie.dialog.medal.3", "You think you're a tough guy, eh? Well, bring it on!");
+
+        addGuiText("valkyrie.dialog.playerdead.1", "You want a medallion? Try being less pathetic.");
+        addGuiText("valkyrie.dialog.playerdead.2", "Maybe some day, %s... maybe some day.");
+        addGuiText("valkyrie.dialog.playerdead.3", "Humans aren't nearly as cute when they're dead.");
+
+        //Valkyrie queen dialogue
+        addGuiText("queen.dialog.answer", "This is a sanctuary for us Valkyries who seek rest.");
+        addGuiText("queen.dialog.challenge", "Very well then. Bring me ten medals from my subordinates to prove your worth, then we'll see.");
+        addGuiText("queen.dialog.defeated", "You are truly... a mighty warrior...");
+        addGuiText("queen.dialog.deny_fight", "So be it then. Goodbye adventurer.");
+        addGuiText("queen.dialog.fight", "This will be your final battle!");
+        addGuiText("queen.dialog.goodbye", "Goodbye adventurer.");
+        addGuiText("queen.dialog.peaceful", "Sorry, I don't fight with weaklings.");
+        addGuiText("queen.dialog.playerdeath", "As expected of a human.");
+        addGuiText("queen.dialog.ready", "If you wish to challenge me, strike at any time.");
+        addGuiText("queen.title", "the Valkyrie Queen");
+
+        addGuiText("player.dialog.challenge", "I wish to fight you!");
+        addGuiText("player.dialog.deny_fight", "On second thought, I'd rather not.");
+        addGuiText("player.dialog.have_medals", "I'm ready, I have the medals right here!");
+        addGuiText("player.dialog.leave", "Nevermind");
+        addGuiText("player.dialog.no_medals", "I'll return when I have them.");
+        addGuiText("player.dialog.question", "What can you tell me about this place?");
+
 
 
         addCustomizationText("title", "Customization");

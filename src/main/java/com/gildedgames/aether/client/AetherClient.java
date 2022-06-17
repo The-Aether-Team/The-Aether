@@ -1,6 +1,7 @@
 package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.gui.screen.SunAltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
 import com.gildedgames.aether.client.registry.*;
 import com.gildedgames.aether.client.world.AetherSkyRenderInfo;

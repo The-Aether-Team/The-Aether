@@ -221,6 +221,8 @@ public class AetherItemModelData extends AetherItemModelProvider
         eggItem(AetherItems.VALKYRIE_SPAWN_EGG);
         eggItem(AetherItems.FIRE_MINION_SPAWN_EGG);
 
+        eggItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG);
+
         itemBlock(AetherBlocks.AETHER_GRASS_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK);
         itemBlock(AetherBlocks.AETHER_DIRT);

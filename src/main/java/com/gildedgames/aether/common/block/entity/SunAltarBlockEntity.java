@@ -2,9 +2,7 @@ package com.gildedgames.aether.common.block.entity;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.AetherClient;
-import com.gildedgames.aether.client.gui.screen.inventory.SunAltarScreen;
 import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -12,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Nameable;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -27,7 +24,7 @@ public class SunAltarBlockEntity extends BlockEntity implements Nameable {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
+    protected void saveAdditional(@Nonnull CompoundTag pTag) {
         super.saveAdditional(pTag);
         if (this.hasCustomName()) {
             pTag.putString("CustomName", Component.Serializer.toJson(this.name));
@@ -35,7 +32,7 @@ public class SunAltarBlockEntity extends BlockEntity implements Nameable {
     }
 
     @Override
-    public void load(CompoundTag pTag) {
+    public void load(@Nonnull CompoundTag pTag) {
         super.load(pTag);
         if (pTag.contains("CustomName", 8)) {
             this.name = Component.Serializer.fromJson(pTag.getString("CustomName"));
