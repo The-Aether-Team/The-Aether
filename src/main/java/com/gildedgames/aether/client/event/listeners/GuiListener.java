@@ -125,7 +125,7 @@ public class GuiListener {
 		LerpingBossEvent bossEvent = event.getBossEvent();
 		if (BOSS_EVENTS.contains(bossEvent.getId())) {
 			GuiHooks.drawBossHealthBar(event.getMatrixStack(), event.getX(), event.getY(), bossEvent);
-			event.setIncrement(event.getIncrement() + 11);
+			event.setIncrement(event.getIncrement() + 13);
 			event.setCanceled(true);
 		}
 	}

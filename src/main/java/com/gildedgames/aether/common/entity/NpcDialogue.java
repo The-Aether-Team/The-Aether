@@ -19,4 +19,13 @@ public interface NpcDialogue {
      * Handles an NPC reaction on the server. The interactionID corresponds to the option the player chose.
      */
     void handleNpcInteraction(Player player, byte interactionID);
+
+    /**
+     * These methods are used to store and retrieve the player whom the NPC is conversing with.
+     */
+    Player getTradingPlayer();
+    default boolean isTrading() {
+        return this.getTradingPlayer() != null;
+    }
+    void setTradingPlayer(Player player);
 }

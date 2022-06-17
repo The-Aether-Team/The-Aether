@@ -306,7 +306,7 @@ public class GuiHooks {
     public static void drawBossHealthBar(PoseStack poseStack, int x, int y, LerpingBossEvent bossEvent) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, AETHER_BARS_LOCATION);
-        drawBar(poseStack, x, y, bossEvent);
+        drawBar(poseStack, x + 2, y + 2, bossEvent);
         Component component = bossEvent.getName();
         int nameLength = Minecraft.getInstance().font.width(component);
         int nameX = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - nameLength / 2;

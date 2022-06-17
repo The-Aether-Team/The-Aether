@@ -48,7 +48,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
                     if (count >= 10) {
                         option = new PlayerDialogueOption(buildPlayerDialogue("have_medals"), button -> this.finishChat((byte) 1));
                     } else {
-                        option = new PlayerDialogueOption(buildPlayerDialogue("no_medals").append(new TextComponent("I'll return when I have them. (" + count + "/10)")), button -> this.finishChat((byte) 1));
+                        option = new PlayerDialogueOption(buildPlayerDialogue("no_medals").append(" (" + count + "/10)"), button -> this.finishChat((byte) 1));
                     }
                     this.addDialogueOptions(
                             option,
@@ -72,7 +72,12 @@ public class ValkyrieQueenDialogueScreen extends Screen {
      */
     private void finishChat(byte interactionID) {
         AetherPacketHandler.sendToServer(new NpcPlayerInteractPacket(this.queen.getId(), interactionID));
-        this.onClose();
+        super.onClose();
+    }
+
+    @Override
+    public void onClose() {
+        this.finishChat((byte) 3);
     }
 
     @Override

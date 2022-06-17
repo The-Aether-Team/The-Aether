@@ -4,6 +4,7 @@ import com.gildedgames.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.BossMob;
 import com.gildedgames.aether.common.entity.NpcDialogue;
+import com.gildedgames.aether.common.entity.ai.goal.NpcDialogueGoal;
 import com.gildedgames.aether.common.entity.projectile.crystal.ThunderCrystal;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -48,6 +49,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     public static final TargetingConditions NON_COMBAT = TargetingConditions.forNonCombat();
     public static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
+    /** The player whom the valkyrie queen is currently conversing with */
+    @Nullable
+    private Player tradingPlayer;
     /** Boss health bar manager */
     private final ServerBossEvent bossFight;
 
@@ -68,7 +72,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     @Override
     public void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(1, new ThunderCrystalAttackGoal(this, 450, 28.0F));
+        this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));
+        this.goalSelector.addGoal(2, new ThunderCrystalAttackGoal(this, 450, 28.0F));
     }
 
     @Nonnull
@@ -118,7 +123,10 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
         if (!this.isReady()) {
             this.lookAt(player, 180F, 180F);
             if (player instanceof ServerPlayer serverPlayer) {
-                AetherPacketHandler.sendToPlayer(new OpenNpcDialoguePacket(this.getId()), serverPlayer);
+                if (!this.isTrading()) {
+                    AetherPacketHandler.sendToPlayer(new OpenNpcDialoguePacket(this.getId()), serverPlayer);
+                    this.setTradingPlayer(serverPlayer);
+                }
             }
             return InteractionResult.SUCCESS;
         }
@@ -298,6 +306,18 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
                 this.chatItUp(player, new TranslatableComponent("gui.aether.queen.dialog.goodbye"));
                 break;
         }
+        this.setTradingPlayer(null);
+    }
+
+    @Override
+    @Nullable
+    public Player getTradingPlayer() {
+        return this.tradingPlayer;
+    }
+
+    @Override
+    public void setTradingPlayer(@Nullable Player player) {
+        this.tradingPlayer = player;
     }
 
 

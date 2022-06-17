@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -47,7 +48,7 @@ public class ThunderCrystal extends AbstractCrystal {
     public void tickMovement() {
         if (!this.level.isClientSide) {
             if (this.ticksInAir >= this.getLifeSpan() || this.target == null || !this.target.isAlive()) {
-                this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
+                this.placeLightning();
                 this.discard();
             } else {
                 Vec3 motion = this.getDeltaMovement().scale(0.9);
@@ -64,15 +65,12 @@ public class ThunderCrystal extends AbstractCrystal {
      * Called when the projectile hits an entity
      */
     @Override
-    protected void onHitEntity(@Nonnull EntityHitResult pResult) {
-        this.placeLightning();
-        this.discard();
-    }
-
-    @Override
-    protected void onHitBlock(@Nonnull BlockHitResult pResult) {
-        this.placeLightning();
-        this.discard();
+    protected void onHit(@Nonnull HitResult pResult) {
+        super.onHit(pResult);
+        if (!this.level.isClientSide) {
+            this.placeLightning();
+            this.discard();
+        }
     }
 
     /**
@@ -99,27 +97,9 @@ public class ThunderCrystal extends AbstractCrystal {
             if (this.health <= 0) {
                 this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
                 this.discard();
-            } else {
-                Entity attacker = pSource.getEntity();
-                if (attacker != null) {
-                    double x = attacker.getX() - this.getX();
-                    double z = attacker.getZ() - this.getZ();
-                    this.knockback(x, z);
-                }
             }
         }
         return true;
-    }
-
-    /**
-     * @see net.minecraft.world.entity.LivingEntity#knockback(double, double, double)
-     * Allows the player to push back a thunder ball.
-     */
-    private void knockback(double xAngle, double zAngle) {
-        this.hasImpulse = true;
-        Vec3 motion = this.getDeltaMovement();
-        Vec3 pushback = new Vec3(xAngle, 0.0D, zAngle).normalize().scale(0.4);
-        this.setDeltaMovement(motion.x / 2.0D - pushback.x, Math.min(motion.y, 0.1), motion.z / 2.0D - pushback.z);
     }
 
     /**

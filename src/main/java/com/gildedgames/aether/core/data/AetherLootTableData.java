@@ -47,6 +47,7 @@ public class AetherLootTableData extends AetherLootTableProvider
     }
 
     @Override
+    @Nonnull
     public String getName() {
         return "Aether Loot Tables";
     }
@@ -390,6 +391,10 @@ public class AetherLootTableData extends AetherLootTableProvider
                                     .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
                             )
                     )
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                            .add(LootItem.lootTableItem(Items.GOLDEN_SWORD)
+                                    .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+                            ))
             );
         }
 
