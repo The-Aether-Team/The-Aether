@@ -8,7 +8,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -49,7 +48,7 @@ public class AltarRepairRecipe extends AbstractCookingRecipe
         return AetherRecipes.RecipeTypes.ENCHANTING;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AltarRepairRecipe>
+    public static class Serializer implements RecipeSerializer<AltarRepairRecipe>
     {
         public AltarRepairRecipe fromJson(ResourceLocation recipeLocation, JsonObject jsonObject) {
             String group = GsonHelper.getAsString(jsonObject, "group", "");
