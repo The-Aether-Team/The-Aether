@@ -3,8 +3,7 @@ package com.gildedgames.aether.common.entity.monster;
 import com.gildedgames.aether.common.entity.NotGrounded;
 import com.gildedgames.aether.common.entity.WingedBird;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
-import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
-import com.gildedgames.aether.common.entity.passive.MountableAnimal;
+import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigation;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherTags;
@@ -12,7 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.goal.*;
@@ -22,7 +20,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvent;
@@ -67,7 +64,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     @Nonnull
     @Override
     protected PathNavigation createNavigation(@Nonnull Level level) {
-        return new FallPathNavigator(this, level);
+        return new FallPathNavigation(this, level);
     }
 
     @Nonnull

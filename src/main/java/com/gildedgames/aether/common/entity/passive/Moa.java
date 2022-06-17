@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.WingedBird;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
-import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
+import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigation;
 
 import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.common.registry.AetherItems;
@@ -83,7 +83,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Nonnull
 	@Override
 	protected PathNavigation createNavigation(@Nonnull Level level) {
-		return new FallPathNavigator(this, level);
+		return new FallPathNavigation(this, level);
 	}
 
 	@Nonnull
