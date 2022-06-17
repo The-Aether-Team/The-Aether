@@ -20,21 +20,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.HashSet;
 
-@Mixin(DebugPackets.class)
-public class DebugPacketsMixin {
-    @Shadow
-    private static void sendPacketToAllPlayers(ServerLevel serverLevel, FriendlyByteBuf friendlyByteBuf, ResourceLocation resourceLocation) { }
-
-    @Inject(at = @At("HEAD"), method = "sendPathFindingPacket", remap = false)
-    private static void sendPathFindingPacket(Level level, Mob mob, Path path, float maxDistanceToWaypoint, CallbackInfo ci) {
-        if (level instanceof ServerLevel serverLevel && path != null) {
-            path.targetNodes = new HashSet<>();
-            path.targetNodes.add(new Target(0, 0, 0));
-            FriendlyByteBuf friendlyByteBuf = new FriendlyByteBuf(Unpooled.buffer());
-            friendlyByteBuf.writeInt(mob.getId());
-            friendlyByteBuf.writeFloat(maxDistanceToWaypoint);
-            path.writeToStream(friendlyByteBuf);
-            sendPacketToAllPlayers(serverLevel, friendlyByteBuf, ClientboundCustomPayloadPacket.DEBUG_PATHFINDING_PACKET);
-        }
-    }
-}
+//@Mixin(DebugPackets.class)
+//public class DebugPacketsMixin {
+//    @Shadow
+//    private static void sendPacketToAllPlayers(ServerLevel serverLevel, FriendlyByteBuf friendlyByteBuf, ResourceLocation resourceLocation) { }
+//
+//    @Inject(at = @At("HEAD"), method = "sendPathFindingPacket", remap = false)
+//    private static void sendPathFindingPacket(Level level, Mob mob, Path path, float maxDistanceToWaypoint, CallbackInfo ci) {
+//        if (level instanceof ServerLevel serverLevel && path != null) {
+//            path.targetNodes = new HashSet<>();
+//            path.targetNodes.add(new Target(0, 0, 0));
+//            FriendlyByteBuf friendlyByteBuf = new FriendlyByteBuf(Unpooled.buffer());
+//            friendlyByteBuf.writeInt(mob.getId());
+//            friendlyByteBuf.writeFloat(maxDistanceToWaypoint);
+//            path.writeToStream(friendlyByteBuf);
+//            sendPacketToAllPlayers(serverLevel, friendlyByteBuf, ClientboundCustomPayloadPacket.DEBUG_PATHFINDING_PACKET);
+//        }
+//    }
+//}

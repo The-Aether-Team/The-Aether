@@ -14,8 +14,7 @@
     "common.FeatureMixin",
     "common.FoxEatBerriesGoalMixin",
     "common.ItemStackMixin",
-    "common.LivingEntityMixin",
-    "debug.DebugPacketsMixin"
+    "common.LivingEntityMixin"
   ],
   "client": [
     "client.AdvancementToastMixin",
@@ -27,8 +26,7 @@
     "client.SplashManagerMixin",
     "client.TippableArrowRendererMixin",
     "client.TitleScreenMixin",
-    "client.WorldListEntryMixin",
-    "debug.DebugRendererMixin"
+    "client.WorldListEntryMixin"
   ],
   "injectors": {
     "defaultRequire": 1
