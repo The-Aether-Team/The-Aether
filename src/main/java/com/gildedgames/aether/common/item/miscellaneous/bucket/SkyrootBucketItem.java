@@ -4,6 +4,7 @@ import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.google.common.collect.Maps;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.*;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,17 +35,17 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class SkyrootBucketItem extends BucketItem {
-    public static Map<Supplier<Fluid>, Supplier<Item>> REPLACEMENTS = Maps.newHashMap();
+    public static Map<Holder<Item>, Supplier<Item>> REPLACEMENTS = Maps.newHashMap();
 
     public SkyrootBucketItem(Supplier<? extends Fluid> supplier, Item.Properties properties) {
         super(supplier, properties);
-        REPLACEMENTS.put(Items.WATER_BUCKET.delegate, AetherItems.SKYROOT_WATER_BUCKET);
-        REPLACEMENTS.put(Items.POWDER_SNOW_BUCKET.delegate, AetherItems.SKYROOT_POWDER_SNOW_BUCKET);
-        REPLACEMENTS.put(Items.COD_BUCKET.delegate, AetherItems.SKYROOT_COD_BUCKET);
-        REPLACEMENTS.put(Items.SALMON_BUCKET.delegate, AetherItems.SKYROOT_SALMON_BUCKET);
-        REPLACEMENTS.put(Items.PUFFERFISH_BUCKET.delegate, AetherItems.SKYROOT_PUFFERFISH_BUCKET);
-        REPLACEMENTS.put(Items.TROPICAL_FISH_BUCKET.delegate, AetherItems.SKYROOT_TROPICAL_FISH_BUCKET);
-        REPLACEMENTS.put(Items.AXOLOTL_BUCKET.delegate, AetherItems.SKYROOT_AXOLOTL_BUCKET);
+        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.WATER_BUCKET), AetherItems.SKYROOT_WATER_BUCKET);
+        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.POWDER_SNOW_BUCKET), AetherItems.SKYROOT_POWDER_SNOW_BUCKET);
+        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.COD_BUCKET), AetherItems.SKYROOT_COD_BUCKET);
+        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.SALMON_BUCKET), AetherItems.SKYROOT_SALMON_BUCKET);
+        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.PUFFERFISH_BUCKET), AetherItems.SKYROOT_PUFFERFISH_BUCKET);
+        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.TROPICAL_FISH_BUCKET), AetherItems.SKYROOT_TROPICAL_FISH_BUCKET);
+        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.AXOLOTL_BUCKET), AetherItems.SKYROOT_AXOLOTL_BUCKET);
     }
 
     @Nonnull
@@ -101,7 +103,7 @@ public class SkyrootBucketItem extends BucketItem {
     }
 
     public static ItemStack swapBucketType(ItemStack filledStack) {
-        Supplier<Item> filledItem = filledStack.getItem().delegate;
+        Supplier<Item> filledItem = ForgeRegistries.ITEMS.getDelegateOrThrow(filledStack.getItem());
         if (REPLACEMENTS.containsKey(filledItem)) {
             Item replacedItem = REPLACEMENTS.get(filledItem).get();
             ItemStack newStack = new ItemStack(replacedItem);
