@@ -4,6 +4,7 @@ import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,7 +15,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 
 import javax.annotation.Nonnull;
-import java.util.Random;
 
 public class FloatingBlock extends Block implements Floatable
 {
@@ -38,7 +38,7 @@ public class FloatingBlock extends Block implements Floatable
 		return super.updateShape(state, facing, facingState, level, pos, facingPos);
 	}
 
-	public void tick(@Nonnull BlockState state, @Nonnull ServerLevel level, @Nonnull BlockPos pos, @Nonnull Random random) {
+	public void tick(@Nonnull BlockState state, @Nonnull ServerLevel level, @Nonnull BlockPos pos, @Nonnull RandomSource random) {
 		super.tick(state, level, pos, random);
 		if ((this.powered && level.hasNeighborSignal(pos)) || (!this.powered && isFree(level.getBlockState(pos.above())) && pos.getY() <= level.getMaxBuildHeight())) {
 			FloatingBlockEntity floatingBlockEntity = new FloatingBlockEntity(level, (double) pos.getX() + 0.5D, pos.getY(), (double) pos.getZ() + 0.5D, level.getBlockState(pos));

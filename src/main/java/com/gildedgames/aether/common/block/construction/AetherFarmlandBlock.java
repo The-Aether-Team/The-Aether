@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.block.construction;
 
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -11,8 +12,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-
-import java.util.Random;
 
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,14 +28,14 @@ public class AetherFarmlandBlock extends FarmBlock
     }
 
     @Override
-    public void tick(BlockState p_225534_1_, ServerLevel p_225534_2_, BlockPos p_225534_3_, Random p_225534_4_) {
+    public void tick(BlockState p_225534_1_, ServerLevel p_225534_2_, BlockPos p_225534_3_, RandomSource p_225534_4_) {
         if (!p_225534_1_.canSurvive(p_225534_2_, p_225534_3_)) {
             turnToDirt(p_225534_1_, p_225534_2_, p_225534_3_);
         }
     }
 
     @Override
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource rand) {
         if (!state.canSurvive(worldIn, pos)) {
             turnToDirt(state, worldIn, pos);
         } else {

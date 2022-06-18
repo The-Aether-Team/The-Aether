@@ -5,6 +5,7 @@ import com.gildedgames.aether.common.registry.worldgen.AetherTreeDecoratorTypes;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,7 +15,6 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 
 import java.util.List;
-import java.util.Random;
 import java.util.function.BiConsumer;
 
 public class HolidayTreeDecorator extends TreeDecorator {
@@ -31,7 +31,7 @@ public class HolidayTreeDecorator extends TreeDecorator {
         return AetherTreeDecoratorTypes.HOLIDAY_TREE_DECORATOR.get();
     }
 
-    public void place(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, Random pRandom, List<BlockPos> logPositions, List<BlockPos> leafPositions) {
+    public void place(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource pRandom, List<BlockPos> logPositions, List<BlockPos> leafPositions) {
         if (!logPositions.isEmpty()) {
             int i = logPositions.get(0).getY();
             logPositions.stream().filter((logs) -> logs.getY() == i).forEach((logPos) -> {
@@ -40,7 +40,7 @@ public class HolidayTreeDecorator extends TreeDecorator {
         }
     }
 
-    private void placeCircle(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, Random pRandom, BlockPos pPos) {
+    private void placeCircle(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, BlockPos pPos) {
         this.placeBlockAt(pLevel, pBlockSetter, pRandom, pPos, 0.0F);
         int radius = 10;
 
@@ -56,7 +56,7 @@ public class HolidayTreeDecorator extends TreeDecorator {
         }
     }
 
-    private void placeBlockAt(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, Random pRandom, BlockPos pPos, float distance) {
+    private void placeBlockAt(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, BlockPos pPos, float distance) {
         for(int i = 9; i >= -4; i--) {
             BlockPos blockpos = pPos.above(i);
             if (Feature.isAir(pLevel, blockpos.above())) {

@@ -4,13 +4,13 @@ import com.gildedgames.aether.core.util.ConfigSerializer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementFilter;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import javax.annotation.Nonnull;
-import java.util.Random;
 
 /**
  * A PlacementFilter to prevent the feature from generating when the specified config condition is set to false.
@@ -28,7 +28,7 @@ public class ConfigFilter extends PlacementFilter {
     }
 
     @Override
-    protected boolean shouldPlace(@Nonnull PlacementContext context, @Nonnull Random random, @Nonnull BlockPos pos) {
+    protected boolean shouldPlace(@Nonnull PlacementContext context, @Nonnull RandomSource random, @Nonnull BlockPos pos) {
         return this.config.get();
     }
 

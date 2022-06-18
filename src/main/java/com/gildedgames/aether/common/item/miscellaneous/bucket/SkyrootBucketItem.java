@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class SkyrootBucketItem extends BucketItem {
-    public static Map<Supplier<Item>, Supplier<Item>> REPLACEMENTS = Maps.newHashMap();
+    public static Map<Supplier<Fluid>, Supplier<Item>> REPLACEMENTS = Maps.newHashMap();
 
     public SkyrootBucketItem(Supplier<? extends Fluid> supplier, Item.Properties properties) {
         super(supplier, properties);

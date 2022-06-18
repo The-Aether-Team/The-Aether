@@ -4,16 +4,14 @@ import com.gildedgames.aether.common.registry.worldgen.AetherFoliagePlacerTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 
-import java.util.Random;
 import java.util.function.BiConsumer;
 
 public class HolidayFoliagePlacer extends FoliagePlacer {
@@ -33,7 +31,7 @@ public class HolidayFoliagePlacer extends FoliagePlacer {
         return AetherFoliagePlacerTypes.HOLIDAY_FOLIAGE_PLACER.get();
     }
 
-    protected void createFoliage(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, Random random, TreeConfiguration config, int maxFreeTreeHeight, FoliagePlacer.FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
+    protected void createFoliage(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource random, TreeConfiguration config, int maxFreeTreeHeight, FoliagePlacer.FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
         BlockPos blockpos = attachment.pos();
 
         int i = 0;
@@ -68,14 +66,14 @@ public class HolidayFoliagePlacer extends FoliagePlacer {
         }
     }
 
-    private void disk360(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, Random random, TreeConfiguration config, boolean doubleTrunk, BlockPos blockpos, int height, int distance, int range) {
+    private void disk360(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource random, TreeConfiguration config, boolean doubleTrunk, BlockPos blockpos, int height, int distance, int range) {
         this.placeLeavesRow(level, blockSetter, random, config, blockpos.east(distance), range, height, doubleTrunk);
         this.placeLeavesRow(level, blockSetter, random, config, blockpos.south(distance), range, height, doubleTrunk);
         this.placeLeavesRow(level, blockSetter, random, config, blockpos.west(distance), range, height, doubleTrunk);
         this.placeLeavesRow(level, blockSetter, random, config, blockpos.north(distance), range, height, doubleTrunk);
     }
 
-    public int foliageHeight(Random random, int height, TreeConfiguration config) {
+    public int foliageHeight(RandomSource random, int height, TreeConfiguration config) {
         return Math.max(4, height - this.trunkHeight.sample(random));
     }
 
@@ -83,7 +81,7 @@ public class HolidayFoliagePlacer extends FoliagePlacer {
      * Skips certain positions based on the provided shape, such as rounding corners randomly.
      * The coordinates are passed in as absolute value, and should be within [0, {@code range}].
      */
-    protected boolean shouldSkipLocation(Random random, int localX, int localY, int localZ, int range, boolean large) {
+    protected boolean shouldSkipLocation(RandomSource random, int localX, int localY, int localZ, int range, boolean large) {
         return localX == range && localZ == range && range > 0;
     }
 }

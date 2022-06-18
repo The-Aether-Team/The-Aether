@@ -94,8 +94,8 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
 	}
 
 	@Override
-	public void spawnAfterBreak(@Nonnull BlockState state, @Nonnull ServerLevel level, @Nonnull BlockPos pos, @Nonnull ItemStack stack) {
-		super.spawnAfterBreak(state, level, pos, stack);
+	public void spawnAfterBreak(@Nonnull BlockState state, @Nonnull ServerLevel level, @Nonnull BlockPos pos, @Nonnull ItemStack stack, boolean flag) {
+		super.spawnAfterBreak(state, level, pos, stack, flag);
 		spawnMimic(state, level, pos);
 	}
 

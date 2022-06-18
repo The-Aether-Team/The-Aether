@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -12,8 +13,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.material.Material;
-
-import java.util.Random;
 
 public class AetherLakeFeature extends Feature<AetherLakeConfiguration> {
     private static final BlockState AIR = Blocks.CAVE_AIR.defaultBlockState();
@@ -25,7 +24,7 @@ public class AetherLakeFeature extends Feature<AetherLakeConfiguration> {
     public boolean place(FeaturePlaceContext<AetherLakeConfiguration> p_159958_) {
         BlockPos blockpos = p_159958_.origin();
         WorldGenLevel worldgenlevel = p_159958_.level();
-        Random random = p_159958_.random();
+        RandomSource random = p_159958_.random();
         AetherLakeConfiguration aetherLakeConfiguration = p_159958_.config();
         if (blockpos.getY() <= worldgenlevel.getMinBuildHeight() + 4) {
             return false;

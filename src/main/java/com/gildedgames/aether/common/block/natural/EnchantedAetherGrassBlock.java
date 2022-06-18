@@ -1,8 +1,7 @@
 package com.gildedgames.aether.common.block.natural;
 
-import java.util.Random;
-
 import com.gildedgames.aether.common.registry.AetherBlocks;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.SnowyDirtBlock;
 import net.minecraft.core.Direction;
@@ -27,7 +26,7 @@ public class EnchantedAetherGrassBlock extends SnowyDirtBlock
 	}
 
 	@Override
-	public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+	public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
 		if (!canBlockStay(state, worldIn, pos)) {
 			worldIn.setBlockAndUpdate(pos, AetherBlocks.AETHER_DIRT.get().defaultBlockState());
 		}

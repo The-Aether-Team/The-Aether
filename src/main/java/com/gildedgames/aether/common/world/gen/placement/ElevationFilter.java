@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.world.gen.placement;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementFilter;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
@@ -24,7 +25,7 @@ public class ElevationFilter extends PlacementFilter {
     }
 
     @Override
-    protected boolean shouldPlace(PlacementContext context, Random random, BlockPos pos) {
+    protected boolean shouldPlace(PlacementContext context, RandomSource random, BlockPos pos) {
         return this.minimum <= pos.getY() && pos.getY() <= this.maximum;
     }
 

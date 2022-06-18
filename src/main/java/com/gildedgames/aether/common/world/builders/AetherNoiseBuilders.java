@@ -2,35 +2,31 @@ package com.gildedgames.aether.common.world.builders;
 
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.registry.AetherBlocks;
-import net.minecraft.data.worldgen.TerrainProvider;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.*;
+
+import java.util.List;
 
 public class AetherNoiseBuilders {
     private static final SurfaceRules.RuleSource GRASS_BLOCK = makeStateRule(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
     private static final SurfaceRules.RuleSource DIRT = makeStateRule(AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
 
     public static NoiseGeneratorSettings skylandsNoiseSettings() {
+        BlockState holystone = AetherBlocks.HOLYSTONE.get().defaultBlockState();
+        holystone.setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
         return new NoiseGeneratorSettings(
                 //new StructureSettings(Optional.empty(), Map.of(
                 //        //AetherStructures.BRONZE_DUNGEON_INSTANCE, new StructureFeatureConfiguration(6, 4, 16811681)//,
                 //        //AetherStructures.GOLD_DUNGEON.get(), new StructureFeatureConfiguration(24, 12, 120320420)
                 //)),
-                new NoiseSettings(
-                        0,
-                        128,
-                        new NoiseSamplingSettings(2, 1, 80, 160),
-                        new NoiseSlider(-3, 40, -22),
-                        new NoiseSlider(-0.234375D, 7, 1),
-                        2,
-                        1,
-                        TerrainProvider.floatingIslands()
-                ),
-                AetherBlocks.HOLYSTONE.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true),
+                new NoiseSettings(0, 128, 1, 1),
+                holystone,
                 Blocks.WATER.defaultBlockState(),
-                NoiseRouterData.overworldWithoutCaves(NoiseSettings.FLOATING_ISLANDS_NOISE_SETTINGS),
+                NoiseRouterData.floatingIslands(BuiltinRegistries.DENSITY_FUNCTION),
                 aetherSurfaceRules(),
+                List.of(), // spawnTarget
                 -64, // seaLevel
                 false, // disableMobGeneration
                 false, // aquifersEnabled
