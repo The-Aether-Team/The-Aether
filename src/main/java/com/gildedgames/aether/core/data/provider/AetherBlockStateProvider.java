@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
 
@@ -31,7 +32,7 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider
     protected ResourceLocation texture(String name, String location, String suffix) { return modLoc("block/" + location + name + suffix); }
 
     protected String name(Supplier<? extends Block> block) {
-        return block.get().getRegistryName().getPath();
+        return ForgeRegistries.BLOCKS.getKey(block.get()).getPath();
     }
 
     public void block(Supplier<? extends Block> block, String location) {

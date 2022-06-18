@@ -100,7 +100,7 @@ public class AetherWorldDisplayHelper {
             Minecraft minecraft = Minecraft.getInstance();
             minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
             if (minecraft.getLevelSource().levelExists(loadedSummary.getLevelId()) && minecraft.getSingleplayerServer() != null) {
-                AetherMusicManager.stopPlaying();
+//                AetherMusicManager.stopPlaying(); TODO: Aether music
                 openSessionLock();
                 fixWorld();
                 minecraft.forceSetScreen(null);

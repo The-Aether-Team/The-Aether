@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
 
@@ -23,7 +23,7 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
     }
 
     public String blockName(Supplier<? extends Block> block) {
-        return block.get().getRegistryName().getPath();
+        return ForgeRegistries.BLOCKS.getKey(block.get()).getPath();
     }
 
     protected ResourceLocation texture(String name) {
@@ -35,22 +35,25 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
     }
 
     public ItemModelBuilder item(Supplier<? extends Item> item, String location) {
-        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/generated"))
-                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()));
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
+        return withExistingParent(id.getPath(), mcLoc("item/generated"))
+                .texture("layer0", modLoc("item/" + location + id.getPath()));
     }
 
     public ItemModelBuilder lookalikeBlock(Supplier<? extends Block> block, ResourceLocation lookalike) {
-        return withExistingParent(block.get().getRegistryName().getPath(), lookalike);
+        return withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), lookalike);
     }
 
     public ItemModelBuilder handheldItem(Supplier<? extends Item> item, String location) {
-        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/handheld"))
-                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()));
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
+        return withExistingParent(id.getPath(), mcLoc("item/handheld"))
+                .texture("layer0", modLoc("item/" + location + id.getPath()));
     }
 
     public ItemModelBuilder lanceItem(Supplier<? extends Item> item, String location) {
-        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/handheld"))
-                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
+        return withExistingParent(id.getPath(), mcLoc("item/handheld"))
+                .texture("layer0", modLoc("item/" + location + id.getPath()))
                 .transforms()
                 .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND).rotation(0.0F, -90.0F, 45.0F).translation(0.0F, 1.0F, -5.0F).scale(0.85F, 0.85F, 0.85F).end()
                 .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND).rotation(0.0F, 90.0F, -45.0F).translation(0.0F, 1.0F, -5.0F).scale(0.85F, 0.85F, 0.85F).end()
@@ -59,14 +62,16 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
 
     public ItemModelBuilder nameableWeapon(Supplier<? extends Item> item, String location, String renamedVariant) {
         withExistingParent(renamedVariant, mcLoc("item/handheld")).texture("layer0", modLoc("item/" + location + renamedVariant));
-        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/handheld"))
-                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
+        return withExistingParent(id.getPath(), mcLoc("item/handheld"))
+                .texture("layer0", modLoc("item/" + location + id.getPath()))
                 .override().predicate(new ResourceLocation(Aether.MODID, "named"), 1).model(getExistingFile(modLoc("item/" + renamedVariant))).end();
     }
 
     public ItemModelBuilder dartShooterItem(Supplier<? extends Item> item, String location) {
-        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/handheld"))
-                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
+        return withExistingParent(id.getPath(), mcLoc("item/handheld"))
+                .texture("layer0", modLoc("item/" + location + id.getPath()))
                 .transforms()
                 .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND).rotation(0.0F, -90.0F, 45.0F).translation(0.0F, 1.5F, -1.0F).scale(0.85F, 0.85F, 0.85F).end()
                 .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND).rotation(0.0F, 90.0F, -45.0F).translation(0.0F, 1.5F, -1.0F).scale(0.85F, 0.85F, 0.85F).end()
@@ -74,36 +79,39 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
     }
 
     public ItemModelBuilder bowItem(Supplier<? extends Item> item, String location) {
-        withExistingParent(item.get().getRegistryName().getPath() + "_pulling_0", mcLoc("item/bow")).texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath() + "_pulling_0"));
-        withExistingParent(item.get().getRegistryName().getPath() + "_pulling_1", mcLoc("item/bow")).texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath() + "_pulling_1"));
-        withExistingParent(item.get().getRegistryName().getPath() + "_pulling_2", mcLoc("item/bow")).texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath() + "_pulling_2"));
-        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/bow"))
-                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
-                .override().predicate(new ResourceLocation("pulling"), 1).model(getExistingFile(modLoc("item/" + item.get().getRegistryName().getPath() + "_pulling_0"))).end()
-                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 0.65F).model(getExistingFile(modLoc("item/" + item.get().getRegistryName().getPath() + "_pulling_1"))).end()
-                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 0.9F).model(getExistingFile(modLoc("item/" + item.get().getRegistryName().getPath() + "_pulling_2"))).end();
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
+        withExistingParent(id.getPath() + "_pulling_0", mcLoc("item/bow")).texture("layer0", modLoc("item/" + location + id.getPath() + "_pulling_0"));
+        withExistingParent(id.getPath() + "_pulling_1", mcLoc("item/bow")).texture("layer0", modLoc("item/" + location + id.getPath() + "_pulling_1"));
+        withExistingParent(id.getPath() + "_pulling_2", mcLoc("item/bow")).texture("layer0", modLoc("item/" + location + id.getPath() + "_pulling_2"));
+        return withExistingParent(id.getPath(), mcLoc("item/bow"))
+                .texture("layer0", modLoc("item/" + location + id.getPath()))
+                .override().predicate(new ResourceLocation("pulling"), 1).model(getExistingFile(modLoc("item/" + id.getPath() + "_pulling_0"))).end()
+                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 0.65F).model(getExistingFile(modLoc("item/" + id.getPath() + "_pulling_1"))).end()
+                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 0.9F).model(getExistingFile(modLoc("item/" + id.getPath() + "_pulling_2"))).end();
     }
 
     public ItemModelBuilder dyedItem(Supplier<? extends Item> item, String location) {
-        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/generated"))
-                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
-                .texture("layer1", modLoc("item/" + location + item.get().getRegistryName().getPath() + "_overlay"));
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
+        return withExistingParent(id.getPath(), mcLoc("item/generated"))
+                .texture("layer0", modLoc("item/" + location + id.getPath()))
+                .texture("layer1", modLoc("item/" + location + id.getPath() + "_overlay"));
     }
 
     public ItemModelBuilder moaEggItem(Supplier<? extends Item> item, String location) {
-        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/generated"))
+        return withExistingParent(ForgeRegistries.ITEMS.getKey(item.get()).getPath(), mcLoc("item/generated"))
                 .texture("layer0", modLoc("item/" + location + "moa_egg"))
                 .texture("layer1", modLoc("item/" + location + "moa_egg_spot"));
     }
 
     public ItemModelBuilder portalItem(Supplier<? extends Item> item, String location) {
-        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/generated"))
-                .texture("layer0", modLoc("item/" + location + item.get().getRegistryName().getPath()))
-                .texture("layer1", modLoc("item/" + location + item.get().getRegistryName().getPath() + "_inside"));
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
+        return withExistingParent(id.getPath(), mcLoc("item/generated"))
+                .texture("layer0", modLoc("item/" + location + id.getPath()))
+                .texture("layer1", modLoc("item/" + location + id.getPath() + "_inside"));
     }
 
     public ItemModelBuilder eggItem(Supplier<? extends Item> item) {
-        return withExistingParent(item.get().getRegistryName().getPath(), mcLoc("item/template_spawn_egg"));
+        return withExistingParent(ForgeRegistries.ITEMS.getKey(item.get()).getPath(), mcLoc("item/template_spawn_egg"));
     }
 
     public ItemModelBuilder itemBlock(Supplier<? extends Block> block) {

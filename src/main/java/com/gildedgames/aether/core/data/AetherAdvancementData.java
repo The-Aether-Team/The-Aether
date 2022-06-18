@@ -13,6 +13,7 @@ import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.commands.CommandFunction;
@@ -52,7 +53,7 @@ public class AetherAdvancementData extends AdvancementProvider
     }
 
     @Override
-    public void run(@Nonnull HashCache cache) {
+    public void run(@Nonnull CachedOutput cache) {
         Path path = this.generator.getOutputFolder();
         Set<ResourceLocation> set = Sets.newHashSet();
         Consumer<Advancement> consumer = (advancement) -> {
@@ -62,7 +63,7 @@ public class AetherAdvancementData extends AdvancementProvider
                 Path path1 = getPath(path, advancement);
 
                 try {
-                    DataProvider.save(GSON, cache, advancement.deconstruct().serializeToJson(), path1);
+                    DataProvider.saveStable(cache, advancement.deconstruct().serializeToJson(), path1);
                 } catch (IOException ioexception) {
                     LOGGER.error("Couldn't save advancement {}", path1, ioexception);
                 }
