@@ -18,6 +18,7 @@ import com.google.common.collect.Maps;
 
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -388,11 +389,7 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
     }
 
     private static CraftingContainer makeContainer(DyeColor dyeColor1, DyeColor dyeColor2) {
-        CraftingContainer craftingInventory = new CraftingContainer(new AbstractContainerMenu(null, -1) {
-            public boolean stillValid(@Nonnull Player player) {
-                return false;
-            }
-        }, 2, 1);
+        CraftingContainer craftingInventory = new CraftingContainer(new SheepuffContainer(null, -1), 2, 1);
         craftingInventory.setItem(0, new ItemStack(DyeItem.byColor(dyeColor1)));
         craftingInventory.setItem(1, new ItemStack(DyeItem.byColor(dyeColor2)));
         return craftingInventory;
@@ -444,5 +441,23 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
         this.setSheared(compound.getBoolean("Sheared"));
         this.setPuffed(compound.getBoolean("Puffed"));
         this.setColor(DyeColor.byId(compound.getByte("Color")));
+    }
+
+    public static class SheepuffContainer extends AbstractContainerMenu {
+
+        public SheepuffContainer(@Nullable MenuType<?> pMenuType, int pContainerId) {
+            super(pMenuType, pContainerId);
+        }
+
+        @Override
+        @Nonnull
+        public ItemStack quickMoveStack(@Nullable Player pPlayer, int pIndex) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public boolean stillValid(@Nonnull Player player) {
+            return false;
+        }
     }
 }
