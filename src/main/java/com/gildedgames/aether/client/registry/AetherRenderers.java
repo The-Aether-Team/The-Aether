@@ -175,7 +175,8 @@ public class AetherRenderers {
 //        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_QUEEN, ValkyrieQueenModel:createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.SUN_SPIRIT, SunSpiritModel::createBodyLayer);
 
-        event.registerLayerDefinition(AetherModelLayers.SKYROOT_BOAT, BoatModel::createBodyModel);
+        event.registerLayerDefinition(AetherModelLayers.SKYROOT_BOAT, () -> BoatModel.createBodyModel(false));
+        event.registerLayerDefinition(AetherModelLayers.SKYROOT_CHEST_BOAT, () -> BoatModel.createBodyModel(true));
 
         event.registerLayerDefinition(AetherModelLayers.CLOUD_MINION, CloudMinionModel::createBodyLayer);
 

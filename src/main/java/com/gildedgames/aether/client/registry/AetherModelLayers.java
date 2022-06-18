@@ -44,6 +44,7 @@ public class AetherModelLayers {
     public static final ModelLayerLocation SUN_SPIRIT = register("sun_spirit");
 
     public static final ModelLayerLocation SKYROOT_BOAT = register("skyroot_boat");
+    public static final ModelLayerLocation SKYROOT_CHEST_BOAT = register("skyroot_chest_boat");
 
     public static final ModelLayerLocation CLOUD_MINION = register("cloud_minion");
 
