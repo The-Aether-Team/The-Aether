@@ -48,47 +48,36 @@ import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
 import java.util.OptionalInt;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherFeatures {
-    public static Feature<SimpleDiskConfiguration> SIMPLE_DISK = new SimpleDiskFeature(SimpleDiskConfiguration.CODEC);
-    public static Feature<AercloudConfiguration> AERCLOUD = new AercloudFeature(AercloudConfiguration.CODEC);
+    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Aether.MODID);
+
+    public static RegistryObject<Feature<SimpleDiskConfiguration>> SIMPLE_DISK = FEATURES.register("simple_disk", () -> new SimpleDiskFeature(SimpleDiskConfiguration.CODEC));
+    public static RegistryObject<Feature<AercloudConfiguration>> AERCLOUD = FEATURES.register("aercloud", () -> new AercloudFeature(AercloudConfiguration.CODEC));
+    public static RegistryObject<Feature<NoneFeatureConfiguration>> CRYSTAL_ISLAND = FEATURES.register("crystal_island", () -> new CrystalIslandFeature(NoneFeatureConfiguration.CODEC));
+    public static RegistryObject<Feature<AetherLakeConfiguration>> LAKE = FEATURES.register("lake", () -> new AetherLakeFeature(AetherLakeConfiguration.CODEC));
+
     //public static Feature<NoneFeatureConfiguration> HOLYSTONE_SPHERE = new HolystoneSphereFeature(NoneFeatureConfiguration.CODEC); // This is for Gold Dungeons
-    public static Feature<NoneFeatureConfiguration> CRYSTAL_ISLAND = new CrystalIslandFeature(NoneFeatureConfiguration.CODEC);
-    public static Feature<AetherLakeConfiguration> LAKE = new AetherLakeFeature(AetherLakeConfiguration.CODEC);
-
-    @SubscribeEvent //This cannot be moved to DeferredRegister or the features won't be able to be added to the biomes at registry time.
-    public static void register(RegistryEvent.Register<Feature<?>> event) {
-        IForgeRegistry<Feature<?>> registry = event.getRegistry();
-        register(registry, "simple_disk", SIMPLE_DISK);
-        register(registry, "aercloud", AERCLOUD);
-        register(registry, "crystal_island", CRYSTAL_ISLAND);
-        register(registry, "lake", LAKE);
-    }
-
-    private static <C extends FeatureConfiguration, F extends Feature<C>> void register(IForgeRegistry<Feature<?>> registry, String name, F value) {
-        value.setRegistryName(new ResourceLocation(Aether.MODID, name).toString());
-        registry.register(value);
-    }
 
     public static class ConfiguredFeatures {
-        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> COLD_AERCLOUD = register("cold_aercloud", AERCLOUD,
+        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> COLD_AERCLOUD = register("cold_aercloud", AERCLOUD.get(),
                 AetherFeatureBuilders.createAercloudConfig(16, States.COLD_AERCLOUD));
-        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> BLUE_AERCLOUD = register("blue_aercloud", AERCLOUD,
+        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> BLUE_AERCLOUD = register("blue_aercloud", AERCLOUD.get(),
                 AetherFeatureBuilders.createAercloudConfig(8, States.BLUE_AERCLOUD));
-        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> GOLDEN_AERCLOUD = register("golden_aercloud", AERCLOUD,
+        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> GOLDEN_AERCLOUD = register("golden_aercloud", AERCLOUD.get(),
                 AetherFeatureBuilders.createAercloudConfig(4, States.GOLDEN_AERCLOUD));
-        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> PINK_AERCLOUD = register("pink_aercloud", AERCLOUD,
+        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> PINK_AERCLOUD = register("pink_aercloud", AERCLOUD.get(),
                 AetherFeatureBuilders.createAercloudConfig(1, States.PINK_AERCLOUD));
 
-        public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> CRYSTAL_ISLAND_CONFIGURED_FEATURE = register("crystal_island", CRYSTAL_ISLAND, NoneFeatureConfiguration.INSTANCE);
+        public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> CRYSTAL_ISLAND_CONFIGURED_FEATURE = register("crystal_island", CRYSTAL_ISLAND.get(), NoneFeatureConfiguration.INSTANCE);
 
         public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> SKYROOT_TREE_CONFIGURED_FEATURE = register("skyroot_tree", Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
@@ -139,14 +128,14 @@ public class AetherFeatures {
         public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> TALL_GRASS_PATCH_CONFIGURED_FEATURE = register("tall_grass_patch", Feature.RANDOM_PATCH,
                 AetherFeatureBuilders.tallGrassPatch(BlockStateProvider.simple(Blocks.TALL_GRASS)));
 
-        public static final Holder<ConfiguredFeature<SimpleDiskConfiguration, ?>> QUICKSOIL_SHELF_CONFIGURED_FEATURE = register("quicksoil_shelf", SIMPLE_DISK,
+        public static final Holder<ConfiguredFeature<SimpleDiskConfiguration, ?>> QUICKSOIL_SHELF_CONFIGURED_FEATURE = register("quicksoil_shelf", SIMPLE_DISK.get(),
                 new SimpleDiskConfiguration(
                         UniformFloat.of(Mth.sqrt(12), 5), // sqrt(12) is old static value
                         BlockStateProvider.simple(States.QUICKSOIL),
                         3
                 ));
 
-        public static final Holder<ConfiguredFeature<AetherLakeConfiguration, ?>> WATER_LAKE_CONFIGURED_FEATURE = register("water_lake", LAKE,
+        public static final Holder<ConfiguredFeature<AetherLakeConfiguration, ?>> WATER_LAKE_CONFIGURED_FEATURE = register("water_lake", LAKE.get(),
                 AetherFeatureBuilders.lake(BlockStateProvider.simple(Blocks.WATER), BlockStateProvider.simple(AetherBlocks.AETHER_GRASS_BLOCK.get())));
 
         public static final Holder<ConfiguredFeature<SpringConfiguration, ?>> WATER_SPRING_CONFIGURED_FEATURE = register("water_spring", Feature.SPRING,
