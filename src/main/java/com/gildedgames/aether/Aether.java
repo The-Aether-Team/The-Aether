@@ -145,7 +145,7 @@ public class Aether
         }
         if (event.includeServer()) {
             generator.addProvider(true, new AetherRecipeData(generator));
-//            generator.addProvider(true, new AetherLootTableData(generator)); TODO: Registry.getKey() not working?
+            generator.addProvider(true, new AetherLootTableData(generator)); //TODO: Registry.getKey() not working?
             generator.addProvider(true, new AetherLootModifierData(generator));
             AetherBlockTagData blockTags = new AetherBlockTagData(generator, helper);
             generator.addProvider(true, blockTags);
