@@ -1,6 +1,5 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
-import com.gildedgames.aether.client.AetherMusicManager;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.client.CameraType;

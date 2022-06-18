@@ -12,17 +12,17 @@ import org.apache.commons.lang3.tuple.Triple;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class DimensionClientListener {
-    @SubscribeEvent
+    /*@SubscribeEvent
     public static void onRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
         Camera camera = event.getCamera();
-        FogRenderer.FogMode fogMode = event.getMode();
+        FogRenderer.FogMode fogMode = event.getMode(); TODO: Need to get the fog mode somehow.
         float farDistance = event.getFarPlaneDistance();
         Float renderNearFog = DimensionClientHooks.renderNearFog(camera, fogMode, farDistance);
         if (renderNearFog != null) {
             event.setNearPlaneDistance(renderNearFog);
             event.setCanceled(true);
         }
-    }
+    }*/
 
     /**
      * The purpose of this event handler is to prevent the fog from turning black near the void in the Aether.

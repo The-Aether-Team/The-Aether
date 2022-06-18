@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.goal.*;
@@ -34,7 +35,6 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 import javax.annotation.Nonnull;
-import java.util.Random;
 
 public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, NotGrounded {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(Cockatrice.class, EntityDataSerializers.BOOLEAN);
@@ -80,7 +80,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
         this.entityData.define(DATA_ENTITY_ON_GROUND_ID, true);
     }
 
-    public static boolean checkCockatriceSpawnRules(EntityType<? extends Cockatrice> cockatrice, ServerLevelAccessor level, MobSpawnType spawnReason, BlockPos pos, Random random) {
+    public static boolean checkCockatriceSpawnRules(EntityType<? extends Cockatrice> cockatrice, ServerLevelAccessor level, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
         return !level.getBlockState(pos.below()).is(AetherTags.Blocks.COCKATRICE_SPAWNABLE_BLACKLIST) && Monster.checkMonsterSpawnRules(cockatrice, level, spawnReason, pos, random);
     }
 

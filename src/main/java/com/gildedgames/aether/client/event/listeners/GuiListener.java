@@ -1,6 +1,5 @@
 package com.gildedgames.aether.client.event.listeners;
 
-import com.gildedgames.aether.client.AetherMusicManager;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.client.gui.button.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
@@ -104,18 +103,18 @@ public class GuiListener {
 		if (event.phase == TickEvent.Phase.END) {
 			GuiHooks.openAccessoryMenu();
 			GuiHooks.tickMenuWhenPaused(minecraft);
-		} else if (!minecraft.isPaused() || AetherWorldDisplayHelper.loadedLevel != null) {
-			AetherMusicManager.tick();
-		}
+		}/* else if (!minecraft.isPaused() || AetherWorldDisplayHelper.loadedLevel != null) {
+			AetherMusicManager.tick(); TODO: Aether music system
+		}*/
 	}
 
 	/**
 	 * Resets the music on respawn.
 	 */
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public static void onPlayerRespawn(ClientPlayerNetworkEvent.RespawnEvent event) {
 		AetherMusicManager.stopPlaying();
-	}
+	}*/
 
 	/**
 	 * Draws the Aether boss bar.
@@ -124,7 +123,7 @@ public class GuiListener {
 	public static void onRenderBoss(RenderGameOverlayEvent.BossInfo event) {
 		LerpingBossEvent bossEvent = event.getBossEvent();
 		if (BOSS_EVENTS.contains(bossEvent.getId())) {
-			GuiHooks.drawBossHealthBar(event.getMatrixStack(), event.getX(), event.getY(), bossEvent);
+			GuiHooks.drawBossHealthBar(event.getPoseStack(), event.getX(), event.getY(), bossEvent);
 			event.setIncrement(event.getIncrement() + 13);
 			event.setCanceled(true);
 		}

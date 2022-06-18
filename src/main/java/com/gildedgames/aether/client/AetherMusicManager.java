@@ -1,3 +1,4 @@
+/*
 package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
@@ -17,11 +18,13 @@ import net.minecraft.util.Mth;
 import javax.annotation.Nullable;
 import java.util.Random;
 
+*/
 /**
  * Handles the Aether title screen music.
  * Based off of MusicManager.
- */
-public class AetherMusicManager {
+ *//*
+
+public class AetherMusicManager { TODO: Implement Aether music system
     private static final Minecraft minecraft = Minecraft.getInstance();
     private static final MusicManager musicManager = Minecraft.getInstance().getMusicManager();
     private static final Random random = new Random();
@@ -29,9 +32,11 @@ public class AetherMusicManager {
     private static SoundInstance currentMusic;
     private static int nextSongDelay = 100;
 
-    /**
+    */
+/**
      * Checks every client tick if the requirements for Aether music are fulfilled.
-     */
+     *//*
+
     public static void tick() {
         Music minecraftMusic = minecraft.getSituationalMusic();
         Music aetherMusic = checkForReplacements(minecraftMusic);
@@ -82,9 +87,11 @@ public class AetherMusicManager {
         }
     }
 
-    /**
+    */
+/**
      * Corrects the music to the corresponding Aether music if the situation is appropriate.
-     */
+     *//*
+
     @Nullable
     public static Music checkForReplacements(Music music) {
         if ((AetherWorldDisplayHelper.loadedLevel != null || music == Musics.MENU) && AetherConfig.CLIENT.enable_aether_menu.get() && !AetherConfig.CLIENT.disable_aether_menu_music.get()) {
@@ -99,10 +106,12 @@ public class AetherMusicManager {
         return null;
     }
 
-    /**
+    */
+/**
      * Vanilla copy
      * @see MusicManager#startPlaying(Music) 
-     */
+     *//*
+
     public static void startPlaying(Music pSelector) {
         currentMusic = SimpleSoundInstance.forMusic(pSelector.getEvent());
         if (currentMusic.getSound() != SoundManager.EMPTY_SOUND) {
@@ -112,17 +121,21 @@ public class AetherMusicManager {
         nextSongDelay = Integer.MAX_VALUE;
     }
 
-    /**
+    */
+/**
      * Cuts off the music that MusicManager is playing.
-     */
+     *//*
+
     public static void stopVanillaMusic() {
         musicManager.stopPlaying();
     }
 
-    /**
+    */
+/**
      * Vanilla copy
      * @see MusicManager#stopPlaying() 
-     */
+     *//*
+
     public static void stopPlaying() {
         if (currentMusic != null) {
             minecraft.getSoundManager().stop(currentMusic);
@@ -131,11 +144,14 @@ public class AetherMusicManager {
         nextSongDelay += 100;
     }
 
-    /**
+    */
+/**
      * Vanilla copy
      * @see MusicManager#isPlayingMusic(Music) 
-     */
+     *//*
+
     public boolean isPlayingMusic(Music pSelector) {
         return currentMusic != null && pSelector.getEvent().getLocation().equals(currentMusic.getLocation());
     }
 }
+*/

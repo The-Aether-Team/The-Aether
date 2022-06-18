@@ -28,7 +28,6 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nonnull;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Random;
 
 public class Aerwhale extends FlyingMob {
 
@@ -50,7 +49,7 @@ public class Aerwhale extends FlyingMob {
                 .add(Attributes.FLYING_SPEED, 0.2);
     }
 
-    public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random random) {
+    public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
         return level.getFluidState(pos).is(Fluids.EMPTY) && level.getRawBrightness(pos, 0) > 8 && (reason == MobSpawnType.SPAWNER || level.getBlockState(pos.below()).is(AetherTags.Blocks.AERWHALE_SPAWNABLE_ON));
     }
 
@@ -128,7 +127,7 @@ public class Aerwhale extends FlyingMob {
             player.startRiding(this);
             if (!this.level.isClientSide) {
                 MutableComponent msg = Component.literal("Serenity is the queen of W(h)ales!!");
-                player.level.players().forEach(p -> p.sendMessage(msg, player.getUUID()));
+                player.level.players().forEach(p -> p.sendSystemMessage(msg));
             }
             return InteractionResult.sidedSuccess(this.level.isClientSide);
         }
