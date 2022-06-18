@@ -33,7 +33,7 @@ public class GuiListener {
 	/** Set of UUIDs of boss bars that belong to Aether bosses. */
 	public static final Set<UUID> BOSS_EVENTS = new HashSet<>();
 
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public static void onGuiOpen(ScreenOpenEvent event) {
 		Screen screen = event.getScreen();
 		GuiHooks.drawSentryBackground(screen);
@@ -51,9 +51,9 @@ public class GuiListener {
 			event.setScreen(bufferScreen);
 		}
 		GuiHooks.setupSplash(screen);
-	}
+	}*/
 
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public static void onGuiInitialize(ScreenEvent.InitScreenEvent.Post event) {
 		Screen screen = event.getScreen();
 
@@ -84,9 +84,9 @@ public class GuiListener {
 		}
 
 		GuiHooks.setMenuAlignment();
-	}
+	}*/
 
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public static void onGuiDraw(ScreenEvent.DrawScreenEvent event) {
 		Screen screen = event.getScreen();
 		PoseStack poseStack = event.getPoseStack();
@@ -94,7 +94,7 @@ public class GuiListener {
 		GuiHooks.drawTrivia(screen, poseStack);
 		GuiHooks.drawAetherTravelMessage(screen, poseStack);
 		GuiHooks.changeMenuAlignment(screen, minecraft);
-	}
+	}*/
 
 
 	@SubscribeEvent

@@ -15,9 +15,9 @@ public class SkyrootBoatRenderer extends BoatRenderer {
     private static final ResourceLocation SKYROOT_BOAT = new ResourceLocation(Aether.MODID, "textures/entity/miscellaneous/boat/skyroot.png");
     private final Pair<ResourceLocation, BoatModel> skyrootBoatResource;
 
-    public SkyrootBoatRenderer(EntityRendererProvider.Context context) {
-        super(context);
-        this.skyrootBoatResource = Pair.of(SKYROOT_BOAT, new BoatModel(context.bakeLayer(AetherModelLayers.SKYROOT_BOAT)));
+    public SkyrootBoatRenderer(EntityRendererProvider.Context context, boolean chest) {
+        super(context, chest);
+        this.skyrootBoatResource = Pair.of(SKYROOT_BOAT, new BoatModel(context.bakeLayer(AetherModelLayers.SKYROOT_BOAT), chest));
     }
 
     @Nonnull

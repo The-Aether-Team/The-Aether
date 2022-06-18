@@ -172,7 +172,7 @@ public class Swet extends MountableAnimal {
     public void travel(@Nonnull Vec3 vector3d) {
         if (this.isAlive()) {
             super.travel(vector3d);
-            if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player) {
+            if (this.isVehicle() && this.isControlledByLocalInstance() && this.getControllingPassenger() instanceof Player) {
                 if (this.onGround && !this.getPlayerJumped() && (this.getDeltaMovement().x != 0 || this.getDeltaMovement().z != 0)) {
                     this.setDeltaMovement(this.getDeltaMovement().x(), 0.42F, this.getDeltaMovement().z);
                 }
@@ -310,7 +310,7 @@ public class Swet extends MountableAnimal {
     }
 
     @Override
-    public boolean canBeControlledByRider() {
+    public boolean isControlledByLocalInstance() {
         return this.isFriendly();
     }
 

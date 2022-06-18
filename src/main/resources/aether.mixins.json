@@ -8,7 +8,6 @@
   "mixins": [
     "common.AbstractArrowMixin",
     "common.AbstractFurnaceBlockEntityMixin",
-    "common.BeeGrowCropGoalMixin",
     "common.CropBlockMixin",
     "common.DimensionTypeMixin",
     "common.FeatureMixin",

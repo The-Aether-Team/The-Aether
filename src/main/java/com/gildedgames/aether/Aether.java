@@ -7,10 +7,7 @@ import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
 import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
 import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
 import com.gildedgames.aether.common.registry.*;
-import com.gildedgames.aether.common.registry.worldgen.AetherBiomes;
-import com.gildedgames.aether.common.registry.worldgen.AetherFoliagePlacerTypes;
-import com.gildedgames.aether.common.registry.worldgen.AetherNoiseGeneratorSettings;
-import com.gildedgames.aether.common.registry.worldgen.AetherTreeDecoratorTypes;
+import com.gildedgames.aether.common.registry.worldgen.*;
 import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.*;
@@ -28,7 +25,6 @@ import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
@@ -72,6 +68,7 @@ public class Aether
 
         DeferredRegister<?>[] registers = {
                 AetherBlocks.BLOCKS,
+                AetherFeatures.FEATURES,
                 AetherEntityTypes.ENTITIES,
                 AetherEffects.EFFECTS,
                 AetherItems.ITEMS,

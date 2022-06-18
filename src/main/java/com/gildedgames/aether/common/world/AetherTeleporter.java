@@ -47,8 +47,7 @@ public class AetherTeleporter implements ITeleporter
     public Optional<BlockUtil.FoundRectangle> getExistingPortal(BlockPos pos) {
         PoiManager poiManager = this.world.getPoiManager();
         poiManager.ensureLoadedAndValid(this.world, pos, 128);
-        Optional<PoiRecord> optional = poiManager.getInSquare((poiType) ->
-                poiType == AetherPOI.AETHER_PORTAL.get(), pos, 128, PoiManager.Occupancy.ANY).sorted(Comparator.<PoiRecord>comparingDouble((poi) ->
+        Optional<PoiRecord> optional = poiManager.getInSquare((poiType) -> poiType.is(AetherPOI.AETHER_PORTAL.getKey()), pos, 128, PoiManager.Occupancy.ANY).sorted(Comparator.<PoiRecord>comparingDouble((poi) ->
                 poi.getPos().distSqr(pos)).thenComparingInt((poi) ->
                 poi.getPos().getY())).filter((poi) ->
                 this.world.getBlockState(poi.getPos()).hasProperty(BlockStateProperties.HORIZONTAL_AXIS)).findFirst();
