@@ -12,13 +12,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.DirectoryLock;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.LevelStorageException;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.LevelSummary;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class AetherWorldDisplayHelper {
     public static Level loadedLevel = null;
@@ -40,7 +40,7 @@ public class AetherWorldDisplayHelper {
             if (loadedLevel == null) {
                 LevelStorageSource source = minecraft.getLevelSource();
                 try {
-                    List<LevelSummary> summaryList = source.getLevelList();
+                    List<LevelSummary> summaryList = source.loadLevelSummaries(source.findLevelCandidates()).get();
                     Collections.sort(summaryList);
                     if (summaryList.size() > 0) {
                         LevelSummary summary = null;
@@ -57,7 +57,7 @@ public class AetherWorldDisplayHelper {
                             loadWorld(summary);
                         }
                     }
-                } catch (LevelStorageException e) {
+                } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -80,7 +80,7 @@ public class AetherWorldDisplayHelper {
         if (minecraft.getLevelSource().levelExists(summary.getLevelId())) {
             minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("selectWorld.data_read")));
             loadedSummary = summary;
-            minecraft.loadLevel(summary.getLevelId());
+            minecraft.createWorldOpenFlows().loadLevel(minecraft.screen, summary.getLevelId());
         }
     }
 
