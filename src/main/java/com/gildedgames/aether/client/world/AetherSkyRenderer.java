@@ -31,7 +31,6 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
     private static final ResourceLocation MOON_LOCATION = new ResourceLocation("textures/environment/moon_phases.png");
     private static final ResourceLocation SUN_LOCATION = new ResourceLocation("textures/environment/sun.png");
 
-    private final VertexFormat skyFormat = DefaultVertexFormat.POSITION;
     private VertexBuffer starBuffer, skyBuffer;
 
     public AetherSkyRenderer() {
@@ -85,8 +84,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
                 bufferbuilder.vertex(matrix4f, f8 * 120.0F, f9 * 120.0F, -f9 * 40.0F * sunRiseRGBA[3]).color(sunRiseRGBA[0], sunRiseRGBA[1], sunRiseRGBA[2], 0.0F).endVertex();
             }
 
-            bufferbuilder.end();
-            BufferUploader.end(bufferbuilder);
+            BufferUploader.drawWithShader(bufferbuilder.end());
             pPoseStack.popPose();
         }
 
@@ -159,8 +157,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         bufferbuilder.vertex(matrix4f1, celestialOffset, 100.0F, -celestialOffset).uv(1.0F, 0.0F).endVertex();
         bufferbuilder.vertex(matrix4f1, celestialOffset, 100.0F, celestialOffset).uv(1.0F, 1.0F).endVertex();
         bufferbuilder.vertex(matrix4f1, -celestialOffset, 100.0F, celestialOffset).uv(0.0F, 1.0F).endVertex();
-        bufferbuilder.end();
-        BufferUploader.end(bufferbuilder);
+        BufferUploader.drawWithShader(bufferbuilder.end());
 
         // Render the moon
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, moonOpacity);
@@ -178,8 +175,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         bufferbuilder.vertex(matrix4f1, celestialOffset, -100.0F, celestialOffset).uv(uLeft, vUp).endVertex();
         bufferbuilder.vertex(matrix4f1, celestialOffset, -100.0F, -celestialOffset).uv(uLeft, vDown).endVertex();
         bufferbuilder.vertex(matrix4f1, -celestialOffset, -100.0F, -celestialOffset).uv(uRight, vDown).endVertex();
-        bufferbuilder.end();
-        BufferUploader.end(bufferbuilder);
+        BufferUploader.drawWithShader(bufferbuilder.end());
     }
 
     private void createLightSky() {
@@ -190,12 +186,11 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         }
 
         this.skyBuffer = new VertexBuffer();
-        this.drawSkyHemisphere(bufferbuilder, 16.0F);
-        bufferbuilder.end();
-        this.skyBuffer.upload(bufferbuilder);
+        BufferBuilder.RenderedBuffer renderedBuffer = this.drawSkyHemisphere(bufferbuilder, 16.0F);
+        this.skyBuffer.upload(renderedBuffer);
     }
 
-    private void drawSkyHemisphere(BufferBuilder pBuilder, float pY) {
+    private BufferBuilder.RenderedBuffer drawSkyHemisphere(BufferBuilder pBuilder, float pY) {
         float f = Math.signum(pY) * 512.0F;
         RenderSystem.setShader(GameRenderer::getPositionShader);
         pBuilder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION);
@@ -204,6 +199,8 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         for (int i = -180; i <= 180; i += 45) {
             pBuilder.vertex((double) (f * Mth.cos((float) i * ((float) Math.PI / 180F))), (double) pY, (double) (512.0F * Mth.sin((float) i * ((float) Math.PI / 180F)))).endVertex();
         }
+
+        return pBuilder.end();
     }
 
     private void createStars() {
@@ -215,12 +212,11 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         }
 
         this.starBuffer = new VertexBuffer();
-        this.drawStars(bufferbuilder);
-        bufferbuilder.end();
-        this.starBuffer.upload(bufferbuilder);
+        BufferBuilder.RenderedBuffer renderedBuffer = this.drawStars(bufferbuilder);
+        this.starBuffer.upload(renderedBuffer);
     }
 
-    private void drawStars(BufferBuilder pBuilder) {
+    private BufferBuilder.RenderedBuffer drawStars(BufferBuilder pBuilder) {
         Random random = new Random(10842L);
         pBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
 
@@ -263,5 +259,6 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
                 }
             }
         }
+        return pBuilder.end();
     }
 }
