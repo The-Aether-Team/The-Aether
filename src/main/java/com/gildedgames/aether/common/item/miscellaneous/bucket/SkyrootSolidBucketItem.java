@@ -34,7 +34,7 @@ public class SkyrootSolidBucketItem extends SolidBucketItem {
     }
 
     public void fillItemCategory(@Nonnull CreativeModeTab category, @Nonnull NonNullList<ItemStack> items) {
-        if (this.allowdedIn(category)) {
+        if (this.allowedIn(category)) {
             items.add(new ItemStack(this));
         }
     }

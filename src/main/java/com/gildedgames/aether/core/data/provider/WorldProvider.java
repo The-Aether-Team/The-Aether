@@ -6,21 +6,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.Encoder;
-import com.mojang.serialization.JsonOps;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.data.info.WorldgenRegistryDumpReport;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.level.dimension.LevelStem;
-import net.minecraft.world.level.levelgen.WorldGenSettings;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
@@ -61,7 +54,7 @@ public abstract class WorldProvider extends WorldgenRegistryDumpReport {
                 LOGGER.error("Couldn't serialize element {}: {}", p_194692_, p_206405_);
             });
             if (optional.isPresent()) {
-                DataProvider.save(GSON, p_194693_, optional.get(), p_194692_);
+                DataProvider.saveStable(p_194693_, optional.get(), p_194692_);
             }
         } catch (IOException ioexception) {
             LOGGER.error("Couldn't save element {}", p_194692_, ioexception);

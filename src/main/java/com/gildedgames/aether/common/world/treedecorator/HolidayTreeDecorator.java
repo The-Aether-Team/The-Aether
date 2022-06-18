@@ -31,41 +31,45 @@ public class HolidayTreeDecorator extends TreeDecorator {
         return AetherTreeDecoratorTypes.HOLIDAY_TREE_DECORATOR.get();
     }
 
-    public void place(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource pRandom, List<BlockPos> logPositions, List<BlockPos> leafPositions) {
+    @Override
+    public void place(Context context) {
+        List<BlockPos> logPositions = context.logs();
         if (!logPositions.isEmpty()) {
             int i = logPositions.get(0).getY();
             logPositions.stream().filter((logs) -> logs.getY() == i).forEach((logPos) -> {
-                this.placeCircle(level, blockSetter, pRandom, logPos);
+                this.placeCircle(context, logPos);
             });
         }
     }
 
-    private void placeCircle(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, BlockPos pPos) {
-        this.placeBlockAt(pLevel, pBlockSetter, pRandom, pPos, 0.0F);
+    private void placeCircle(Context context, BlockPos pPos) {
+        LevelSimulatedReader level = context.level();
+        RandomSource random = context.random();
+        this.placeBlockAt(context, level, random, pPos, 0.0F);
         int radius = 10;
 
         for (int z = 1; z < radius; z++) {
             for (int x = 0; x < radius; x++) {
                 if (x * x + z * z > radius*radius) continue;
                 float distance = (float) Math.sqrt(x*x + z*z) / (radius*radius);
-                this.placeBlockAt(pLevel, pBlockSetter, pRandom, pPos.offset(x, 0, z), distance);
-                this.placeBlockAt(pLevel, pBlockSetter, pRandom, pPos.offset(-x, 0, -z), distance);
-                this.placeBlockAt(pLevel, pBlockSetter, pRandom, pPos.offset(-z, 0, x), distance);
-                this.placeBlockAt(pLevel, pBlockSetter, pRandom, pPos.offset(z, 0, -x), distance);
+                this.placeBlockAt(context, level, random, pPos.offset(x, 0, z), distance);
+                this.placeBlockAt(context, level, random, pPos.offset(-x, 0, -z), distance);
+                this.placeBlockAt(context, level, random, pPos.offset(-z, 0, x), distance);
+                this.placeBlockAt(context, level, random, pPos.offset(z, 0, -x), distance);
             }
         }
     }
 
-    private void placeBlockAt(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, BlockPos pPos, float distance) {
+    private void placeBlockAt(Context context, LevelSimulatedReader pLevel, RandomSource pRandom, BlockPos pPos, float distance) {
         for(int i = 9; i >= -4; i--) {
             BlockPos blockpos = pPos.above(i);
-            if (Feature.isAir(pLevel, blockpos.above())) {
-                if ((pLevel.isStateAtPosition(blockpos, HolidayTreeDecorator::isAetherGrass) || pLevel.isStateAtPosition(blockpos, HolidayTreeDecorator::isLeaves) || Feature.isGrassOrDirt(pLevel, blockpos)) && Feature.isAir(pLevel, blockpos.above(4))) {
+            if (context.isAir(blockpos.above())) {
+                if ((pLevel.isStateAtPosition(blockpos, HolidayTreeDecorator::isAetherGrass) || pLevel.isStateAtPosition(blockpos, HolidayTreeDecorator::isLeaves) || Feature.isGrassOrDirt(pLevel, blockpos)) && context.isAir(blockpos.above(4))) {
                     if (distance <= pRandom.nextFloat() / 2 * (1 - distance)) {
                         if (pLevel.isStateAtPosition(blockpos, HolidayTreeDecorator::isLeaves)) {
-                            pBlockSetter.accept(blockpos.above(), Blocks.SNOW.defaultBlockState());
+                            context.setBlock(blockpos.above(), Blocks.SNOW.defaultBlockState());
                         } else {
-                            pBlockSetter.accept(blockpos.above(), this.provider.getState(pRandom, blockpos));
+                            context.setBlock(blockpos.above(), this.provider.getState(pRandom, blockpos));
                         }
                     }
                 }
