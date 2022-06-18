@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 public class EnchantingRecipe extends AbstractCookingRecipe
 {
 	public EnchantingRecipe(ResourceLocation idIn, String groupIn, Ingredient ingredientIn, ItemStack resultIn, float experienceIn, int cookTimeIn) {
-		super(RecipeTypes.ENCHANTING, idIn, groupIn, ingredientIn, resultIn, experienceIn, cookTimeIn);
+		super(RecipeTypes.ENCHANTING.get(), idIn, groupIn, ingredientIn, resultIn, experienceIn, cookTimeIn);
 	}
 
 	@Override

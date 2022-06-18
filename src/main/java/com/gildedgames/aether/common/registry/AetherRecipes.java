@@ -5,6 +5,9 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.recipe.AltarRepairRecipe;
 import com.gildedgames.aether.common.recipe.EnchantingRecipe;
 import com.gildedgames.aether.common.recipe.FreezingRecipe;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -21,14 +24,25 @@ public class AetherRecipes
 	public static final RegistryObject<SimpleCookingSerializer<EnchantingRecipe>> ENCHANTING = RECIPE_SERIALIZERS.register("enchanting", EnchantingRecipe.Serializer::new);
 	public static final RegistryObject<SimpleCookingSerializer<FreezingRecipe>> FREEZING = RECIPE_SERIALIZERS.register("freezing", FreezingRecipe.Serializer::new);
 
-	public static class RecipeTypes
-	{
-		public static RecipeType<EnchantingRecipe> ENCHANTING;
-		public static RecipeType<FreezingRecipe> FREEZING;
+	public static class RecipeTypes {
+		public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, Aether.MODID);
+		public static RegistryObject<RecipeType<EnchantingRecipe>> ENCHANTING = RECIPE_TYPES.register("enchanting", () -> new RecipeType<>() {
+			public String toString() {
+				return "enchanting";
+			}
+		});
+		public static RegistryObject<RecipeType<FreezingRecipe>> FREEZING = RECIPE_TYPES.register("freezing", () -> new RecipeType<>() {
+			public String toString() {
+				return "freezing";
+			}
+		});
 
-		public static void init() {
-			ENCHANTING = RecipeType.register(Aether.MODID + ":enchanting");
-			FREEZING = RecipeType.register(Aether.MODID + ":freezing");
+		static <T extends Recipe<?>> RecipeType<T> register(final String pIdentifier) {
+			return new RecipeType<T>() {
+				public String toString() {
+					return pIdentifier;
+				}
+			};
 		}
 	}
 }

@@ -26,7 +26,7 @@ public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity
 	private static final Map<Item, Integer> freezingMap = Maps.newLinkedHashMap();
 
 	public FreezerBlockEntity(BlockPos pos, BlockState state) {
-		super(AetherBlockEntityTypes.FREEZER.get(), pos, state, RecipeTypes.FREEZING);
+		super(AetherBlockEntityTypes.FREEZER.get(), pos, state, RecipeTypes.FREEZING.get());
 	}
 	
 	@Nonnull

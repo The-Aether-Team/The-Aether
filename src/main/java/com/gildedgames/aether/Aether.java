@@ -78,6 +78,7 @@ public class Aether
                 AetherContainerTypes.CONTAINERS,
                 AetherBlockEntityTypes.BLOCK_ENTITIES,
                 AetherRecipes.RECIPE_SERIALIZERS,
+                AetherRecipes.RecipeTypes.RECIPE_TYPES,
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherBiomes.BIOMES,
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
@@ -97,18 +98,6 @@ public class Aether
         TRIVIA_READER = new TriviaReader();
     }
 
-    @SubscribeEvent
-    public static void register(RegisterEvent event) { //todo: idk if this is the correct replacement.
-        SunAltarWhitelist.initialize();
-
-        AetherLoot.init();
-        AetherAdvancements.init();
-        PlacementModifiers.init();
-        AetherRecipes.RecipeTypes.init();
-        AetherRecipeBookTypes.init();
-        AetherNoiseGeneratorSettings.init();
-    }
-
     public void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             AetherPacketHandler.register();
@@ -126,6 +115,14 @@ public class Aether
             registerComposting();
             registerFuels();
         });
+
+        SunAltarWhitelist.initialize();
+
+        AetherLoot.init();
+        AetherAdvancements.init();
+        PlacementModifiers.init();
+        AetherRecipeBookTypes.init();
+        AetherNoiseGeneratorSettings.init();
     }
 
     public void curiosSetup(InterModEnqueueEvent event) {

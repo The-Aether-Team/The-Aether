@@ -26,7 +26,7 @@ public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity
 	private static final Map<Item, Integer> enchantingMap = Maps.newLinkedHashMap();
 
 	public AltarBlockEntity(BlockPos pos, BlockState state) {
-		super(AetherBlockEntityTypes.ALTAR.get(), pos, state, RecipeTypes.ENCHANTING);
+		super(AetherBlockEntityTypes.ALTAR.get(), pos, state, RecipeTypes.ENCHANTING.get());
 	}
 
 	@Nonnull

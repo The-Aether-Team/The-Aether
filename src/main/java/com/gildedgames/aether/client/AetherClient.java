@@ -39,7 +39,7 @@ public class AetherClient {
             registerGuiFactories();
             registerItemModelProperties();
             registerColors();
-            DimensionSpecialEffects.EFFECTS.put(AetherDimensions.AETHER_DIMENSION_TYPE.location(), new AetherSkyRenderInfo());
+//            DimensionSpecialEffects.EFFECTS.put(new ResourceLocation(Aether.MODID, "the_aether"), new AetherSkyRenderInfo());
         });
     }
 

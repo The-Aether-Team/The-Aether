@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 public class FreezingRecipe extends AbstractCookingRecipe
 {
 	public FreezingRecipe(ResourceLocation idIn, String groupIn, Ingredient ingredientIn, ItemStack resultIn, float experienceIn, int cookTimeIn) {
-		super(RecipeTypes.FREEZING, idIn, groupIn, ingredientIn, resultIn, experienceIn, cookTimeIn);
+		super(RecipeTypes.FREEZING.get(), idIn, groupIn, ingredientIn, resultIn, experienceIn, cookTimeIn);
 	}
 
 	@Override
