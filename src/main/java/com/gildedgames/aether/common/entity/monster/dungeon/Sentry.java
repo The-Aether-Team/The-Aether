@@ -131,7 +131,7 @@ public class Sentry extends Slime {
 	public void remove(@Nonnull Entity.RemovalReason reason) {
 		this.setRemoved(reason);
 		if (reason == Entity.RemovalReason.KILLED) {
-			this.gameEvent(GameEvent.ENTITY_KILLED);
+			this.gameEvent(GameEvent.ENTITY_DIE);
 		}
 		this.invalidateCaps();
 	}

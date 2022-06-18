@@ -307,7 +307,7 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
         this.entityData.set(DATA_WOOL_COLOR_ID, (byte) (b0 & 240 | dyeColor.getId() & 15));
     }
 
-    public static DyeColor getRandomSheepuffColor(Random random) {
+    public static DyeColor getRandomSheepuffColor(RandomSource random) {
         int i = random.nextInt(100);
         if (i < 5) {
             return DyeColor.LIGHT_BLUE;

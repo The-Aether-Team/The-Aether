@@ -1,11 +1,10 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import java.util.Random;
-
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
@@ -40,7 +39,7 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 				for (net.minecraft.client.renderer.RenderType type : net.minecraft.client.renderer.RenderType.chunkBufferLayers()) {
 					if (ItemBlockRenderTypes.canRenderInLayer(blockState, type)) {
 						net.minecraftforge.client.ForgeHooksClient.setRenderType(type);
-						blockRenderDispatcher.getModelRenderer().tesselateBlock(world, blockRenderDispatcher.getBlockModel(blockState), blockState, blockPos, poseStack, buffer.getBuffer(type), false, new Random(), blockState.getSeed(floatingBlock.getStartPos()), OverlayTexture.NO_OVERLAY);
+						blockRenderDispatcher.getModelRenderer().tesselateBlock(world, blockRenderDispatcher.getBlockModel(blockState), blockState, blockPos, poseStack, buffer.getBuffer(type), false, RandomSource.create(), blockState.getSeed(floatingBlock.getStartPos()), OverlayTexture.NO_OVERLAY);
 					}
 				}
 				net.minecraftforge.client.ForgeHooksClient.setRenderType(null);

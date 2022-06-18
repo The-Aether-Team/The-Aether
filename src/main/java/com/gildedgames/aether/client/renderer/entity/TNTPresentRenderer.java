@@ -5,19 +5,21 @@ import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.TntMinecartRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import com.mojang.math.Vector3f;
 
 import javax.annotation.Nonnull;
 
 public class TNTPresentRenderer extends EntityRenderer<TntPresent> {
+    private final BlockRenderDispatcher blockRenderer;
     public TNTPresentRenderer(EntityRendererProvider.Context context) {
         super(context);
+        this.blockRenderer = context.getBlockRenderDispatcher();
         this.shadowRadius = 0.5F;
     }
 
@@ -34,7 +36,7 @@ public class TNTPresentRenderer extends EntityRenderer<TntPresent> {
             poseStack.scale(f1, f1, f1);
         }
         poseStack.translate(-0.5, -0.5, -0.5);
-        TntMinecartRenderer.renderWhiteSolidBlock(AetherBlocks.PRESENT.get().defaultBlockState(), poseStack, buffer, packedLight, present.getFuse() / 5 % 2 == 0);
+        TntMinecartRenderer.renderWhiteSolidBlock(this.blockRenderer, AetherBlocks.PRESENT.get().defaultBlockState(), poseStack, buffer, packedLight, present.getFuse() / 5 % 2 == 0);
         poseStack.popPose();
         super.render(present, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }

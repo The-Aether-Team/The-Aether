@@ -8,7 +8,6 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.particles.ParticleOptions;
@@ -44,7 +43,7 @@ public class FireMinion extends Monster {
         super.tick();
         ParticleOptions particle = ParticleTypes.FLAME;
         if (this.hasCustomName()) {
-            String name = this.getName().getContents();
+            String name = this.getName().getContents().toString();
             if (name.equals("JorgeQ") || name.equals("Jorge_SunSpirit")) {
                 particle = ParticleTypes.ITEM_SNOWBALL;
             }

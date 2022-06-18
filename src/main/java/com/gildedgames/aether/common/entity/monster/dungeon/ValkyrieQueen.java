@@ -183,7 +183,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
      */
     @Override
     protected void chatItUp(Player player, Component message) {
-        player.sendSystemMessage(Component.literal("[").append(this.getBossName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(message), player.getUUID());
+        player.sendSystemMessage(Component.literal("[").append(this.getBossName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(message));
     }
 
     /**
