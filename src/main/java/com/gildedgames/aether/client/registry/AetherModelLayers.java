@@ -47,7 +47,8 @@ public class AetherModelLayers {
 
     public static final ModelLayerLocation CLOUD_MINION = register("cloud_minion");
 
-    public static final ModelLayerLocation ICE_CRYSTAL = register("ice_crystal");
+    public static final ModelLayerLocation CLOUD_CRYSTAL = register("cloud_crystal");
+    public static final ModelLayerLocation THUNDER_CRYSTAL = register("thunder_crystal");
 
     public static final ModelLayerLocation VALKYRIE_ARMOR_WINGS = register("valkyrie_armor_wings");
 
@@ -59,10 +60,10 @@ public class AetherModelLayers {
     public static final ModelLayerLocation GLOVES_SLEEVE = register("gloves_sleeve");
     public static final ModelLayerLocation GLOVES_SLEEVE_SLIM = register("gloves_sleeve_slim");
     public static final ModelLayerLocation CAPE = register("cape");
-    public static final ModelLayerLocation REPULSION_SHIELD = register("repulsion_shield");
-    public static final ModelLayerLocation REPULSION_SHIELD_SLIM = register("repulsion_shield_slim");
-    public static final ModelLayerLocation REPULSION_SHIELD_ARM = register("repulsion_shield_arm");
-    public static final ModelLayerLocation REPULSION_SHIELD_ARM_SLIM = register("repulsion_shield_arm_slim");
+    public static final ModelLayerLocation SHIELD_OF_REPULSION = register("shield_of_repulsion");
+    public static final ModelLayerLocation SHIELD_OF_REPULSION_SLIM = register("shield_of_repulsion_slim");
+    public static final ModelLayerLocation SHIELD_OF_REPULSION_ARM = register("shield_of_repulsion_arm");
+    public static final ModelLayerLocation SHIELD_OF_REPULSION_ARM_SLIM = register("shield_of_repulsion_arm_slim");
 
     public static final ModelLayerLocation PLAYER_HALO = register("player_halo");
 

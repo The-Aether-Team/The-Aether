@@ -10,13 +10,12 @@ import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.EatAetherGrassGoal;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.common.entity.ai.controller.FallingMovementController;
-import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
+import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigation;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.AetherLoot;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.google.common.collect.Maps;
 
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.level.block.state.BlockState;
@@ -88,7 +87,7 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
     private int eatAnimationTick, amountEaten;
     private EatAetherGrassGoal eatBlockGoal;
 
-    protected final FallPathNavigator fallNavigation;
+    protected final FallPathNavigation fallNavigation;
     protected final GroundPathNavigation groundNavigation;
 
     private static float[] createSheepColor(DyeColor p_192020_0_) {
@@ -107,7 +106,7 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
     public Sheepuff(EntityType<? extends Sheepuff> type, Level level) {
         super(type, level);
         this.moveControl = new FallingMovementController(this);
-        this.fallNavigation = new FallPathNavigator(this, level);
+        this.fallNavigation = new FallPathNavigation(this, level);
         this.groundNavigation = new GroundPathNavigation(this, level);
     }
 

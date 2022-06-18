@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "boat",
+  "pattern": [
+    "P P",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "aether:skyroot_planks"
+    }
+  },
+  "result": {
+    "item": "aether:skyroot_boat"
+  }
+}

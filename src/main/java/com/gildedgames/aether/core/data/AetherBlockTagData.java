@@ -96,6 +96,14 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS
         );
+        tag(AetherTags.Blocks.QUICKSOIL_CAN_GENERATE).add(
+                AetherBlocks.AETHER_DIRT.get(),
+                AetherBlocks.HOLYSTONE.get()
+        );
+        tag(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON).add(
+                AetherBlocks.ANGELIC_STONE.get(),
+                AetherBlocks.LIGHT_ANGELIC_STONE.get()
+        );
 
         //vanilla
         tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).addTag(AetherTags.Blocks.DUNGEON_BLOCKS);
@@ -201,6 +209,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.GRAVITITE_ORE.get(),
                 AetherBlocks.HOLYSTONE_BRICKS.get(),
                 AetherBlocks.AEROGEL.get(),
+                AetherBlocks.AMBROSIUM_BLOCK.get(),
                 AetherBlocks.ZANITE_BLOCK.get(),
                 AetherBlocks.ENCHANTED_GRAVITITE.get(),
                 AetherBlocks.ALTAR.get(),
@@ -319,6 +328,7 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(Tags.Blocks.FENCE_GATES_WOODEN).add(AetherBlocks.SKYROOT_FENCE_GATE.get());
         tag(Tags.Blocks.FENCES_WOODEN).add(AetherBlocks.SKYROOT_FENCE.get());
         tag(Tags.Blocks.GLASS_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS.get());
+        tag(Tags.Blocks.GLASS_PANES_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS_PANE.get());
         tag(Tags.Blocks.ORE_RATES_SINGULAR).add(
                 AetherBlocks.AMBROSIUM_ORE.get(),
                 AetherBlocks.ZANITE_ORE.get(),
@@ -328,7 +338,9 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.ZANITE_ORE.get(),
                 AetherBlocks.GRAVITITE_ORE.get());
         tag(Tags.Blocks.STONE).addTag(AetherTags.Blocks.HOLYSTONE);
-        tag(Tags.Blocks.STORAGE_BLOCKS).add(AetherBlocks.ZANITE_BLOCK.get());
+        tag(Tags.Blocks.STORAGE_BLOCKS).add(
+                AetherBlocks.AMBROSIUM_BLOCK.get(),
+                AetherBlocks.ZANITE_BLOCK.get());
     }
 
     @Nonnull

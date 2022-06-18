@@ -91,4 +91,12 @@ public abstract class AetherLanguageProvider extends LanguageProvider
     public void addProTip(String key, String name) {
         add("aether.pro_tips.line.aether." + key, name);
     }
+
+    public void addCommonConfig(String prefix, String key, String name) {
+        add("config.aether.common." + prefix + "." + key, name);
+    }
+
+    public void addClientConfig(String prefix, String key, String name) {
+        add("config.aether.client." + prefix + "." + key, name);
+    }
 }

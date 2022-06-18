@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.event.hooks;
 
-import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
 import com.gildedgames.aether.core.capability.cape.CapeEntity;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
@@ -8,10 +7,11 @@ import com.gildedgames.aether.core.capability.player.AetherPlayerCapability;
 import com.gildedgames.aether.core.capability.rankings.AetherRankings;
 import com.gildedgames.aether.core.capability.rankings.AetherRankingsCapability;
 import com.gildedgames.aether.core.capability.time.AetherTime;
-import com.gildedgames.aether.core.util.LevelUtil;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.server.RankingsForcePacket;
+import com.gildedgames.aether.core.util.AetherCustomizations;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -59,7 +59,8 @@ public class CapabilityHooks {
             if (!player.level.isClientSide()) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     if (aetherPlayer instanceof AetherPlayerCapability capability) {
-                        capability.updateSyncableNBTFromServer(player.level, true);
+                        capability.markForced(true);
+                        capability.updateSyncableNBTFromServer(player.level);
                     }
                 });
             }
@@ -67,6 +68,14 @@ public class CapabilityHooks {
     }
 
     public static class AetherRankingsHooks {
+        public static void join(Entity entity) {
+            if (entity instanceof Player player && player.level.isClientSide()) {
+                AetherCustomizations.INSTANCE.load();
+                AetherCustomizations.INSTANCE.sync();
+                AetherPacketHandler.sendToServer(new RankingsForcePacket(player.getId()));
+            }
+        }
+
         public static void update(LivingEntity entity) {
             if (entity instanceof Player player) {
                 AetherRankings.get(player).ifPresent(AetherRankings::onUpdate);
@@ -87,7 +96,8 @@ public class CapabilityHooks {
             if (!player.level.isClientSide()) {
                 AetherRankings.get(player).ifPresent(aetherRankings -> {
                     if (aetherRankings instanceof AetherRankingsCapability capability) {
-                        capability.updateSyncableNBTFromServer(player.level, true);
+                        capability.markForced(true);
+                        capability.updateSyncableNBTFromServer(player.level);
                     }
                 });
             }

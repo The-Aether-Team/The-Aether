@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.accessory.CapeRenderer;
 import com.gildedgames.aether.client.renderer.accessory.GlovesRenderer;
 import com.gildedgames.aether.client.renderer.accessory.PendantRenderer;
-import com.gildedgames.aether.client.renderer.accessory.RepulsionShieldRenderer;
+import com.gildedgames.aether.client.renderer.accessory.ShieldOfRepulsionRenderer;
 import com.gildedgames.aether.client.renderer.accessory.model.CapeModel;
 import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
 import com.gildedgames.aether.client.renderer.accessory.model.PendantModel;
@@ -68,6 +68,7 @@ public class AetherRenderers {
         registerBlockRenderer(AetherBlocks.AEROGEL_STAIRS, translucent);
         registerBlockRenderer(AetherBlocks.AEROGEL_WALL, translucent);
         registerBlockRenderer(AetherBlocks.QUICKSOIL_GLASS, translucent);
+        registerBlockRenderer(AetherBlocks.QUICKSOIL_GLASS_PANE, translucent);
         registerBlockRenderer(AetherBlocks.AETHER_PORTAL, translucent);
         registerBlockRenderer(AetherBlocks.BERRY_BUSH, cutout);
         registerBlockRenderer(AetherBlocks.BERRY_BUSH_STEM, cutout);
@@ -113,7 +114,7 @@ public class AetherRenderers {
         event.registerEntityRenderer(AetherEntityTypes.FIRE_MINION.get(), FireMinionRenderer::new);
 
 //        event.registerEntityRenderer(AetherEntityTypes.SLIDER.get(), SliderRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.VALKYRIE_QUEEN.get(), ValkyrieQueenRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.VALKYRIE_QUEEN.get(), ValkyrieQueenRenderer::new);
 //        event.registerEntityRenderer(AetherEntityTypes.SUN_SPIRIT.get(), SunSpiritRenderer::new);
 
         event.registerEntityRenderer(AetherEntityTypes.SKYROOT_BOAT.get(), SkyrootBoatRenderer::new);
@@ -125,6 +126,7 @@ public class AetherRenderers {
 
         event.registerEntityRenderer(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), (context) -> new ThrownItemRenderer<>(context, 3.0F, true));
         event.registerEntityRenderer(AetherEntityTypes.CLOUD_CRYSTAL.get(), IceCrystalRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.THUNDER_CRYSTAL.get(), ThunderCrystalRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.GOLDEN_DART.get(), GoldenDartRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.POISON_DART.get(), PoisonDartRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.ENCHANTED_DART.get(), EnchantedDartRenderer::new);
@@ -177,7 +179,8 @@ public class AetherRenderers {
 
         event.registerLayerDefinition(AetherModelLayers.CLOUD_MINION, CloudMinionModel::createBodyLayer);
 
-        event.registerLayerDefinition(AetherModelLayers.ICE_CRYSTAL, CrystalModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.CLOUD_CRYSTAL, CrystalModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.THUNDER_CRYSTAL, CrystalModel::createBodyLayer);
 
         event.registerLayerDefinition(AetherModelLayers.VALKYRIE_ARMOR_WINGS, () -> ValkyrieWingsModel.createMainLayer(3.5F, 3.375F));
 
@@ -189,10 +192,10 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), false));
         event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), true));
         event.registerLayerDefinition(AetherModelLayers.CAPE, CapeModel::createLayer);
-        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), false), 64, 64));
-        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), true), 64, 64));
-        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), false), 64, 64));
-        event.registerLayerDefinition(AetherModelLayers.REPULSION_SHIELD_ARM_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), true), 64, 64));
+        event.registerLayerDefinition(AetherModelLayers.SHIELD_OF_REPULSION, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), false), 64, 64));
+        event.registerLayerDefinition(AetherModelLayers.SHIELD_OF_REPULSION_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), true), 64, 64));
+        event.registerLayerDefinition(AetherModelLayers.SHIELD_OF_REPULSION_ARM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), false), 64, 64));
+        event.registerLayerDefinition(AetherModelLayers.SHIELD_OF_REPULSION_ARM_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), true), 64, 64));
 
         event.registerLayerDefinition(AetherModelLayers.PLAYER_HALO, () -> HaloModel.createLayer(0.0F, 0.0F, 0.0F, 0.0F));
     }
@@ -224,7 +227,7 @@ public class AetherRenderers {
         CuriosRendererRegistry.register(AetherItems.AGILITY_CAPE.get(), CapeRenderer::new);
         CuriosRendererRegistry.register(AetherItems.VALKYRIE_CAPE.get(), CapeRenderer::new);
 
-        CuriosRendererRegistry.register(AetherItems.REPULSION_SHIELD.get(), RepulsionShieldRenderer::new);
+        CuriosRendererRegistry.register(AetherItems.SHIELD_OF_REPULSION.get(), ShieldOfRepulsionRenderer::new);
     }
 
     @SubscribeEvent

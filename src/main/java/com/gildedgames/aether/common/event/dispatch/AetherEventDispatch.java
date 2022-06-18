@@ -6,6 +6,8 @@ import com.gildedgames.aether.common.event.events.AetherBannedItemEvent;
 
 import com.gildedgames.aether.common.event.events.FreezeEvent;
 import com.gildedgames.aether.common.event.events.SwetBallConvertEvent;
+import com.gildedgames.aether.common.event.events.ValkyrieTeleportEvent;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -40,6 +42,12 @@ public class AetherEventDispatch {
 
 	public static SwetBallConvertEvent onSwetBallConvert(Player player, LevelAccessor world, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState) {
 		SwetBallConvertEvent event = new SwetBallConvertEvent(player, world, pos, stack, oldState, newState);
+		MinecraftForge.EVENT_BUS.post(event);
+		return event;
+	}
+
+	public static ValkyrieTeleportEvent onValkyrieTeleport(LivingEntity entity, double targetX, double targetY, double targetZ) {
+		ValkyrieTeleportEvent event = new ValkyrieTeleportEvent(entity, targetX, targetY, targetZ);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}

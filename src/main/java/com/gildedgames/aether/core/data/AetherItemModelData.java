@@ -151,7 +151,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.GOLDEN_FEATHER, "accessories/");
         item(AetherItems.REGENERATION_STONE, "accessories/");
         item(AetherItems.IRON_BUBBLE, "accessories/");
-        item(AetherItems.REPULSION_SHIELD, "accessories/");
+        item(AetherItems.SHIELD_OF_REPULSION, "accessories/");
 
         handheldItem(AetherItems.SKYROOT_STICK, "materials/");
         item(AetherItems.GOLDEN_AMBER, "materials/");
@@ -221,6 +221,8 @@ public class AetherItemModelData extends AetherItemModelProvider
         eggItem(AetherItems.VALKYRIE_SPAWN_EGG);
         eggItem(AetherItems.FIRE_MINION_SPAWN_EGG);
 
+        eggItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG);
+
         itemBlock(AetherBlocks.AETHER_GRASS_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK);
         itemBlock(AetherBlocks.AETHER_DIRT);
@@ -257,8 +259,10 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemBlock(AetherBlocks.SKYROOT_PLANKS);
         itemBlock(AetherBlocks.HOLYSTONE_BRICKS);
         itemBlock(AetherBlocks.QUICKSOIL_GLASS);
+        pane(AetherBlocks.QUICKSOIL_GLASS_PANE, AetherBlocks.QUICKSOIL_GLASS, "construction/");
         itemBlock(AetherBlocks.AEROGEL);
 
+        itemBlock(AetherBlocks.AMBROSIUM_BLOCK);
         itemBlock(AetherBlocks.ZANITE_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_GRAVITITE);
 

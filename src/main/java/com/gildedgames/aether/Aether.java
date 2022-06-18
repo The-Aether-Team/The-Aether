@@ -167,6 +167,7 @@ public class Aether
     public void packSetup(AddPackFindersEvent event) {
         setupReleasePack(event);
         setupBetaPack(event);
+        setupCTMFixPack(event);
     }
 
     private void setupReleasePack(AddPackFindersEvent event) {
@@ -195,6 +196,19 @@ public class Aether
                         () -> new CombinedResourcePack(name, title, new PackMetadataSection(new TextComponent(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())), mergedPacks, sourcePath),
                         packConstructor, Pack.Position.TOP, PackSource.BUILT_IN)
                 ));
+    }
+
+    private void setupCTMFixPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("ctm")) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ctm_fix");
+            PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+            event.addRepositorySource((packConsumer, packConstructor) ->
+                packConsumer.accept(packConstructor.create(
+                        "builtin/aether_ctm_fix", new TextComponent("Aether CTM Fix"), true, () -> pack,
+                        new PackMetadataSection(new TextComponent("Fixes Quicksoil Glass Panes when using CTM"), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())),
+                        Pack.Position.TOP, PackSource.BUILT_IN, false)
+                ));
+        }
     }
 
     private void registerDispenserBehaviors() {

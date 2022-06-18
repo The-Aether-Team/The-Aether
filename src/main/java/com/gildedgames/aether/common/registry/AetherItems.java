@@ -11,7 +11,7 @@ import com.gildedgames.aether.common.item.accessories.gloves.GoldGlovesItem;
 import com.gildedgames.aether.common.item.accessories.miscellaneous.GoldenFeatherItem;
 import com.gildedgames.aether.common.item.accessories.miscellaneous.IronBubbleItem;
 import com.gildedgames.aether.common.item.accessories.miscellaneous.RegenerationStoneItem;
-import com.gildedgames.aether.common.item.accessories.miscellaneous.RepulsionShieldItem;
+import com.gildedgames.aether.common.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.gildedgames.aether.common.item.accessories.pendant.IcePendantItem;
 import com.gildedgames.aether.common.item.accessories.pendant.PendantItem;
 import com.gildedgames.aether.common.item.accessories.pendant.ZanitePendantItem;
@@ -189,7 +189,7 @@ public class AetherItems
 	public static final RegistryObject<Item> GOLDEN_FEATHER = ITEMS.register("golden_feather", () -> new GoldenFeatherItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> REGENERATION_STONE = ITEMS.register("regeneration_stone", () -> new RegenerationStoneItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 	public static final RegistryObject<Item> IRON_BUBBLE = ITEMS.register("iron_bubble", () -> new IronBubbleItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ACCESSORIES)));
-	public static final RegistryObject<Item> REPULSION_SHIELD = ITEMS.register("repulsion_shield", () -> new RepulsionShieldItem(new Item.Properties().durability(512).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ACCESSORIES)));
+	public static final RegistryObject<Item> SHIELD_OF_REPULSION = ITEMS.register("shield_of_repulsion", () -> new ShieldOfRepulsionItem(new Item.Properties().durability(512).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_ACCESSORIES)));
 
 	// Materials
 	public static final RegistryObject<Item> SKYROOT_STICK = ITEMS.register("skyroot_stick", () -> new SkyrootStickItem(new Item.Properties().tab(AetherItemGroups.AETHER_MATERIALS)));
@@ -245,7 +245,7 @@ public class AetherItems
 
 	public static final RegistryObject<SpawnEggItem> AECHOR_PLANT_SPAWN_EGG = ITEMS.register("aechor_plant_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.AECHOR_PLANT, 0x076178, 0x4BC69E, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<SpawnEggItem> AERBUNNY_SPAWN_EGG = ITEMS.register("aerbunny_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.AERBUNNY, 0xe2fcff, 0xffdff9, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<SpawnEggItem> AERWHALE_SPAWN_EGG = ITEMS.register("aerwhale_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.AERWHALE, 0x79B7D1, 0xE0D25C, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<SpawnEggItem> AERWHALE_SPAWN_EGG = ITEMS.register("aerwhale_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.AERWHALE, 0xC0E7FD, 0x879EAA, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<SpawnEggItem> COCKATRICE_SPAWN_EGG = ITEMS.register("cockatrice_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.COCKATRICE, 0x6CB15C, 0x6C579D, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<SpawnEggItem> FIRE_MINION_SPAWN_EGG = ITEMS.register("fire_minion_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.FIRE_MINION, 0xFF6D01, 0xFEF500, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<SpawnEggItem> FLYING_COW_SPAWN_EGG = ITEMS.register("flying_cow_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.FLYING_COW, 0xD8D8D8, 0xFFD939, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
@@ -259,6 +259,7 @@ public class AetherItems
 	public static final RegistryObject<SpawnEggItem> WHIRLWIND_SPAWN_EGG = ITEMS.register("whirlwind_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.WHIRLWIND, 0x9fc3f7, 0xffffff, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<SpawnEggItem> EVIL_WHIRLWIND_SPAWN_EGG = ITEMS.register("evil_whirlwind_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.EVIL_WHIRLWIND, 0x9fc3f7, 0x111111, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<SpawnEggItem> VALKYRIE_SPAWN_EGG = ITEMS.register("valkyrie_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.VALKYRIE, 0xF9F5E3, 0xF2D200, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<SpawnEggItem> VALKYRIE_QUEEN_SPAWN_EGG = ITEMS.register("valkyrie_queen_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.VALKYRIE_QUEEN, 0xF2D200, 0xF9F5E3, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.ZEPHYR, 0xDFDFDF, 0x99CFE8, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 
 	public static void registerAbilities() {

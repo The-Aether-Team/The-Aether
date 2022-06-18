@@ -9,6 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
@@ -16,6 +17,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.IndirectEntityDamageSource;
+
+import javax.annotation.Nonnull;
 
 public class CloudCrystal extends AbstractCrystal {
     public CloudCrystal(EntityType<? extends CloudCrystal> entityType, Level level) {
@@ -53,6 +56,12 @@ public class CloudCrystal extends AbstractCrystal {
     }
 
     @Override
+    protected void onHitBlock(@Nonnull BlockHitResult result) {
+        super.onHitBlock(result);
+        this.spawnExplosionParticles();
+        this.discard();
+    }
+
     public SoundEvent getImpactExplosionSoundEvent() {
         return AetherSoundEvents.ENTITY_CLOUD_CRYSTAL_EXPLODE.get();
     }

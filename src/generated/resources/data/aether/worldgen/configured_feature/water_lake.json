@@ -9,7 +9,7 @@
       },
       "type": "minecraft:simple_state_provider"
     },
-    "barrier": {
+    "top": {
       "state": {
         "Properties": {
           "snowy": "false",
@@ -20,5 +20,5 @@
       "type": "minecraft:simple_state_provider"
     }
   },
-  "type": "minecraft:lake"
+  "type": "aether:lake"
 }

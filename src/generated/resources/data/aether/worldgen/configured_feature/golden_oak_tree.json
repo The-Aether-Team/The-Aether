@@ -13,7 +13,7 @@
       "limit": 0,
       "lower_size": 0,
       "upper_size": 0,
-      "min_clipped_height": 4,
+      "min_clipped_height": 10,
       "type": "minecraft:two_layers_feature_size"
     },
     "trunk_provider": {
@@ -27,8 +27,8 @@
       "type": "minecraft:simple_state_provider"
     },
     "trunk_placer": {
-      "base_height": 3,
-      "height_rand_a": 11,
+      "base_height": 9,
+      "height_rand_a": 5,
       "height_rand_b": 0,
       "type": "minecraft:fancy_trunk_placer"
     },

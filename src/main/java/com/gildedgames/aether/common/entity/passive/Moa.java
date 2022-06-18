@@ -6,12 +6,14 @@ import javax.annotation.Nullable;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.WingedBird;
 import com.gildedgames.aether.common.entity.ai.FallingRandomStrollGoal;
-import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigator;
+import com.gildedgames.aether.common.entity.ai.navigator.FallPathNavigation;
 
 import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.api.registers.MoaType;
+import com.gildedgames.aether.core.network.AetherPacketHandler;
+import com.gildedgames.aether.core.network.packet.client.MoaInteractPacket;
 import com.gildedgames.aether.core.registry.AetherMoaTypes;
 import com.gildedgames.aether.core.util.EntityUtil;
 import net.minecraft.core.particles.ParticleTypes;
@@ -23,13 +25,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -39,6 +39,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
@@ -82,7 +83,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Nonnull
 	@Override
 	protected PathNavigation createNavigation(@Nonnull Level level) {
-		return new FallPathNavigator(this, level);
+		return new FallPathNavigation(this, level);
 	}
 
 	@Nonnull
@@ -107,6 +108,25 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
+	public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+		if (tag != null) {
+			if (tag.contains("IsBaby")) {
+				this.setBaby(tag.getBoolean("IsBaby"));
+			}
+			if (tag.contains("MoaType")) {
+				this.setMoaType(AetherMoaTypes.MOA_TYPES.get(tag.getString("MoaType")));
+			}
+			if (tag.contains("Hungry")) {
+				this.setHungry(tag.getBoolean("Hungry"));
+			}
+			if (tag.contains("PlayerGrown")) {
+				this.setPlayerGrown(tag.getBoolean("PlayerGrown"));
+			}
+		}
+		return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
+	}
+
+	@Override
 	public void tick() {
 		super.tick();
 		AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
@@ -128,24 +148,32 @@ public class Moa extends MountableAnimal implements WingedBird {
 			this.setMountJumping(false);
 		}
 
-		if (!this.level.isClientSide && this.isAlive() && !this.isBaby() && this.getPassengers().isEmpty() && --this.eggTime <= 0) {
-			this.playSound(AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-			this.spawnAtLocation(this.getMoaType().getEgg());
-			this.eggTime = this.getEggTime();
+		if (!this.level.isClientSide() && this.isAlive()) {
+			if (this.random.nextInt(900) == 0 && this.deathTime == 0) {
+				this.heal(1.0F);
+			}
+			if (!this.isBaby() && this.getPassengers().isEmpty() && --this.eggTime <= 0) {
+				this.playSound(AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+				this.spawnAtLocation(this.getMoaType().getEgg());
+				this.eggTime = this.getEggTime();
+			}
 		}
 
 		if (this.isBaby()) {
 			if (!this.isHungry()) {
-				if (this.random.nextInt(2000) == 0) {
-					this.setHungry(true);
+				if (!this.level.isClientSide()) {
+					if (this.random.nextInt(2000) == 0) {
+						this.setHungry(true);
+					}
 				}
 			} else {
 				if (this.random.nextInt(10) == 0) {
 					this.level.addParticle(ParticleTypes.ANGRY_VILLAGER, this.getX() + (this.random.nextDouble() - 0.5) * this.getBbWidth(), this.getY() + 1, this.getZ() + (this.random.nextDouble() - 0.5) * this.getBbWidth(), 0.0, 0.0, 0.0);
 				}
 			}
-		} else if (this.isHungry()) {
+		} else {
 			this.setHungry(false);
+			this.setAmountFed(0);
 		}
 	}
 
@@ -207,7 +235,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 			this.setSitting(!this.isSitting());
 			this.spawnExplosionParticle();
 			return InteractionResult.sidedSuccess(this.level.isClientSide);
-		} else if (this.isPlayerGrown() && this.isBaby() && this.isHungry() && this.getAmountFed() < 3 && itemStack.is(AetherTags.Items.MOA_FOOD_ITEMS)) {
+		} else if (!this.level.isClientSide() && this.isPlayerGrown() && this.isBaby() && this.isHungry() && this.getAmountFed() < 3 && itemStack.is(AetherTags.Items.MOA_FOOD_ITEMS)) {
 			if (!playerEntity.getAbilities().instabuild) {
 				itemStack.shrink(1);
 			}
@@ -216,6 +244,13 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.setAge(0);
 			}
 			this.setHungry(false);
+			AetherPacketHandler.sendToAll(new MoaInteractPacket(playerEntity.getId(), hand == InteractionHand.MAIN_HAND)); // packet necessary to play animation because this code segment is server-side only, so no animations.
+			return InteractionResult.CONSUME;
+		} else if (this.isPlayerGrown() && !this.isBaby() && this.getHealth() < this.getMaxHealth() && itemStack.is(AetherTags.Items.MOA_FOOD_ITEMS)) {
+			if (!playerEntity.getAbilities().instabuild) {
+				itemStack.shrink(1);
+			}
+			this.heal(5.0F);
 			return InteractionResult.sidedSuccess(this.level.isClientSide);
 		} else {
 			return super.mobInteract(playerEntity, hand);
@@ -379,6 +414,11 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
+	protected float getSoundVolume() {
+		return 0.25F;
+	}
+
+	@Override
 	public boolean isFood(@Nonnull ItemStack stack) {
 		return false;
 	}
@@ -443,9 +483,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		if (compound.contains("MoaType")) {
-			this.setMoaType(AetherMoaTypes.MOA_TYPES.get(compound.getString("MoaType")));
-		}
+		this.setBaby(compound.getBoolean("IsBaby"));
+		this.setMoaType(AetherMoaTypes.MOA_TYPES.get(compound.getString("MoaType")));
 		if (compound.hasUUID("Rider")) {
 			this.setRider(compound.getUUID("Rider"));
 		}
@@ -462,6 +501,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public void addAdditionalSaveData(@Nonnull CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
+		compound.putBoolean("IsBaby", this.isBaby());
 		compound.putString("MoaType", this.getMoaType().getRegistryName());
 		if (this.getRider() != null) {
 			compound.putUUID("Rider", this.getRider());

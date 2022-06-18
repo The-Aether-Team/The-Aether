@@ -42,7 +42,15 @@ public class AetherRecipeData extends AetherRecipeProvider
         makePlanks(AetherBlocks.SKYROOT_PLANKS, AetherBlocks.GOLDEN_OAK_WOOD).save(consumer, name("golden_wood_to_planks"));
         makeBricks(AetherBlocks.HOLYSTONE_BRICKS, AetherBlocks.HOLYSTONE).save(consumer);
 
+        makeOreToBlock(AetherBlocks.AMBROSIUM_BLOCK, AetherItems.AMBROSIUM_SHARD).save(consumer);
         makeOreToBlock(AetherBlocks.ZANITE_BLOCK, AetherItems.ZANITE_GEMSTONE).save(consumer);
+
+        ShapedRecipeBuilder.shaped(AetherBlocks.QUICKSOIL_GLASS_PANE.get(), 16)
+                .pattern("GGG")
+                .pattern("GGG")
+                .define('G', AetherBlocks.QUICKSOIL_GLASS.get())
+                .unlockedBy("has_quicksoil_glass", has(AetherBlocks.QUICKSOIL_GLASS.get()))
+                .save(consumer);
 
         ShapedRecipeBuilder.shaped(AetherBlocks.ALTAR.get(), 1)
                 .pattern("HHH")
@@ -151,6 +159,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .group("white_dye")
                 .save(consumer, name("flower_to_white_dye"));
 
+        makeBlockToOre(AetherItems.AMBROSIUM_SHARD, AetherBlocks.AMBROSIUM_BLOCK).save(consumer);
         makeBlockToOre(AetherItems.ZANITE_GEMSTONE, AetherBlocks.ZANITE_BLOCK).save(consumer);
 
 
@@ -288,6 +297,14 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .requires(AetherTags.Items.BOOK_OF_LORE_MATERIALS)
                 .unlockedBy("has_book", has(Items.BOOK))
                 .group("book_of_lore")
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(AetherItems.SKYROOT_BOAT.get(), 1)
+                .group("boat")
+                .pattern("P P")
+                .pattern("PPP")
+                .define('P', AetherBlocks.SKYROOT_PLANKS.get().asItem())
+                .unlockedBy("in_water", insideOf(Blocks.WATER))
                 .save(consumer);
 
 

@@ -120,11 +120,19 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_MOVE = register("entity.slider.move");
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_DEATH = register("entity.slider.death");
 
+	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_DEATH = register("entity.valkyrie.death");
+	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_HURT = register("entity.valkyrie.hurt");
+
+	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_QUEEN_DEATH = register("entity.valkyrie_queen.death");
+	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_QUEEN_HURT = register("entity.valkyrie_queen.hurt");
+
 	public static final RegistryObject<SoundEvent> ENTITY_SUN_SPIRIT_SHOOT = register("entity.sun_spirit.shoot");
 
 	public static final RegistryObject<SoundEvent> ENTITY_CLOUD_MINION_SHOOT = register("entity.cloud_minion.shoot");
 
 	public static final RegistryObject<SoundEvent> ENTITY_CLOUD_CRYSTAL_EXPLODE = register("entity.cloud_crystal.explode");
+
+	public static final RegistryObject<SoundEvent> ENTITY_THUNDER_CRYSTAL_EXPLODE = register("entity.thunder_crystal.explode");
 
 	public static final RegistryObject<SoundEvent> ENTITY_DART_HIT = register("entity.dart.hit");
 

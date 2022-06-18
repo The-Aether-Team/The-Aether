@@ -49,9 +49,11 @@ public class AetherLanguageData extends AetherLanguageProvider
         addBlock(AetherBlocks.SKYROOT_PLANKS, "Skyroot Planks");
         addBlock(AetherBlocks.HOLYSTONE_BRICKS, "Holystone Bricks");
         addBlock(AetherBlocks.QUICKSOIL_GLASS, "Quicksoil Glass");
+        addBlock(AetherBlocks.QUICKSOIL_GLASS_PANE, "Quicksoil Glass Pane");
         addBlock(AetherBlocks.AEROGEL, "Aerogel");
 
-        addBlock(AetherBlocks.ZANITE_BLOCK, "Zanite Block");
+        addBlock(AetherBlocks.AMBROSIUM_BLOCK, "Block of Ambrosium");
+        addBlock(AetherBlocks.ZANITE_BLOCK, "Block of Zanite");
         addBlock(AetherBlocks.ENCHANTED_GRAVITITE, "Enchanted Gravitite");
 
         addBlock(AetherBlocks.ALTAR, "Altar");
@@ -275,7 +277,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.GOLDEN_FEATHER, "Golden Feather");
         addItem(AetherItems.REGENERATION_STONE, "Regeneration Stone");
         addItem(AetherItems.IRON_BUBBLE, "Iron Bubble");
-        addItem(AetherItems.REPULSION_SHIELD, "Repulsion Shield");
+        addItem(AetherItems.SHIELD_OF_REPULSION, "Shield of Repulsion");
 
         addItem(AetherItems.SKYROOT_STICK, "Skyroot Stick");
         addItem(AetherItems.GOLDEN_AMBER, "Golden Amber");
@@ -348,6 +350,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.WHIRLWIND_SPAWN_EGG, "Whirlwind Spawn Egg");
         addItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG, "Evil Whirlwind Spawn Egg");
         addItem(AetherItems.VALKYRIE_SPAWN_EGG, "Valkyrie Spawn Egg");
+        addItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG, "Valkyrie Queen Spawn Egg");
         addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
 
 
@@ -371,6 +374,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.VALKYRIE, "Valkyrie");
         addEntityType(AetherEntityTypes.FIRE_MINION, "Fire Minion");
 
+        addEntityType(AetherEntityTypes.VALKYRIE_QUEEN, "Valkyrie Queen");
+
         addEntityType(AetherEntityTypes.SKYROOT_BOAT, "Boat");
         addEntityType(AetherEntityTypes.CLOUD_MINION, "Cloud Minion");
         addEntityType(AetherEntityTypes.COLD_PARACHUTE, "Cold Parachute");
@@ -380,6 +385,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addEntityType(AetherEntityTypes.ZEPHYR_SNOWBALL, "Zephyr Snowball");
         addEntityType(AetherEntityTypes.CLOUD_CRYSTAL, "Cloud Crystal");
+        addEntityType(AetherEntityTypes.THUNDER_CRYSTAL, "Thunder Crystal");
         addEntityType(AetherEntityTypes.GOLDEN_DART, "Golden Dart");
         addEntityType(AetherEntityTypes.POISON_DART, "Poison Dart");
         addEntityType(AetherEntityTypes.ENCHANTED_DART, "Enchanted Dart");
@@ -531,11 +537,18 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("entity", "slider.move", "Slider slides");
         addSubtitle("entity", "slider.death", "Slider breaks");
 
+        addSubtitle("entity", "valkyrie.death", "Valkyrie dies");
+        addSubtitle("entity", "valkyrie.hurt", "Valkyrie hurts");
+
+        addSubtitle("entity", "valkyrie_queen.death", "Valkyrie Queen dies");
+        addSubtitle("entity", "valkyrie_queen.hurt", "Valkyrie Queen hurts");
+
         addSubtitle("entity", "sun_spirit.shoot", "Sun Spirit shoots");
 
         addSubtitle("entity", "cloud_minion.shoot", "Cloud Minion spits");
 
         addSubtitle("entity", "cloud_crystal.explode", "Crystal explodes");
+        addSubtitle("entity", "thunder_crystal.explode", "Crystal explodes");
 
         addSubtitle("entity", "dart.hit", "Dart hits");
 
@@ -558,7 +571,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("descending", "Descending from the Aether");
 
 
-        addGuiText("accessories.perks_button", "Customization & Perks");
+        addGuiText("accessories.skins_button", "Skins");
+        addGuiText("accessories.customization_button", "Customization");
 
 
         addGuiText("sun_altar.time", "Time");
@@ -566,14 +580,59 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("recipebook.toggleRecipes.enchantable", "Showing Enchantable");
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
 
+        //Valkyrie dialogue
+        addGuiText("valkyrie.dialog.1", "What's that? You want to fight? Aww, what a cute little human.");
+        addGuiText("valkyrie.dialog.2", "You're not thinking of fighting a big, strong Valkyrie are you?");
+        addGuiText("valkyrie.dialog.3", "I don't think you should bother me, you could get really hurt.");
 
-        addCustomizationText("title", "Customization & Perks");
+        addGuiText("valkyrie.dialog.attack.1", "I'm not going easy on you!");
+        addGuiText("valkyrie.dialog.attack.2", "You're gonna regret that!");
+        addGuiText("valkyrie.dialog.attack.3", "Now you're in for it!");
+
+        addGuiText("valkyrie.dialog.defeated.1", "Alright, alright! You win!");
+        addGuiText("valkyrie.dialog.defeated.2", "Okay, I give up! Geez!");
+        addGuiText("valkyrie.dialog.defeated.3", "Oww! Fine, here's your medal...");
+
+        addGuiText("valkyrie.dialog.medal.1", "Umm... that's a nice pile of medallions you have there...");
+        addGuiText("valkyrie.dialog.medal.2", "That's pretty impressive, but you won't defeat me.");
+        addGuiText("valkyrie.dialog.medal.3", "You think you're a tough guy, eh? Well, bring it on!");
+
+        addGuiText("valkyrie.dialog.playerdead.1", "You want a medallion? Try being less pathetic.");
+        addGuiText("valkyrie.dialog.playerdead.2", "Maybe some day, %s... maybe some day.");
+        addGuiText("valkyrie.dialog.playerdead.3", "Humans aren't nearly as cute when they're dead.");
+
+        //Valkyrie queen dialogue
+        addGuiText("queen.dialog.answer", "This is a sanctuary for us Valkyries who seek rest.");
+        addGuiText("queen.dialog.challenge", "Very well then. Bring me ten medals from my subordinates to prove your worth, then we'll see.");
+        addGuiText("queen.dialog.defeated", "You are truly... a mighty warrior...");
+        addGuiText("queen.dialog.deny_fight", "So be it then. Goodbye adventurer.");
+        addGuiText("queen.dialog.fight", "This will be your final battle!");
+        addGuiText("queen.dialog.goodbye", "Goodbye adventurer.");
+        addGuiText("queen.dialog.peaceful", "Sorry, I don't fight with weaklings.");
+        addGuiText("queen.dialog.playerdeath", "As expected of a human.");
+        addGuiText("queen.dialog.ready", "If you wish to challenge me, strike at any time.");
+        addGuiText("queen.title", "the Valkyrie Queen");
+
+        addGuiText("player.dialog.challenge", "I wish to fight you!");
+        addGuiText("player.dialog.deny_fight", "On second thought, I'd rather not.");
+        addGuiText("player.dialog.have_medals", "I'm ready, I have the medals right here!");
+        addGuiText("player.dialog.leave", "Nevermind");
+        addGuiText("player.dialog.no_medals", "I'll return when I have them.");
+        addGuiText("player.dialog.question", "What can you tell me about this place?");
+
+
+
+        addCustomizationText("title", "Customization");
         addCustomizationText("gloves.arm", "Glove Layer: Arm");
         addCustomizationText("gloves.sleeve", "Glove Layer: Sleeve");
         addCustomizationText("halo.on", "Player Halo: ON");
         addCustomizationText("halo.off", "Player Halo: OFF");
+        addCustomizationText("halo.color", "Halo Color");
         addCustomizationText("developer_glow.on", "Developer Glow: ON");
         addCustomizationText("developer_glow.off", "Developer Glow: OFF");
+        addCustomizationText("developer_glow.color", "Developer Glow Color");
+        addCustomizationText("undo", "Undo");
+        addCustomizationText("save", "Save");
 
 
         addLoreBookText("previous", "Prev.");
@@ -637,6 +696,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherBlocks.ALTAR, "Used to enchant items and repair armor. They are powered by Ambrosium Shards. The enchanting process can take some time, but if you place an Enchanted Gravitite block under it, the process is sped up by a huge amount.");
         addLore(AetherBlocks.AMBROSIUM_ORE, "The most common ore in the Aether. The drops can be doubled with Skyroot tools.");
         addLore(AetherItems.AMBROSIUM_SHARD, "Aether's coal equivalent, they have a healing property when eaten, and restore a small amount of health.");
+        addLore(AetherBlocks.AMBROSIUM_BLOCK, "A block of pure Ambrosium, useful for storing large quantities of fuel.");
         addLore(AetherBlocks.AMBROSIUM_TORCH, "The main light source for the Aether, made with a Skyroot Stick and Ambrosium.");
         addLore(AetherBlocks.ANGELIC_SLAB, "Crafted from Angelic Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
         addLore(AetherBlocks.ANGELIC_STONE, "Angelic Stone is the main block that makes up Silver Dungeons. There is a chance some of them can be traps when generated in dungeons, but you cannot collect them as traps. It is unbreakable until you have defeated the boss, but it's worth it for that block.");
@@ -773,10 +833,11 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherBlocks.PRESENT, "A wonderful holiday gift, open it for a surprise! Be careful, as there's a chance you could get ssssssurprised!");
         addLore(AetherBlocks.PURPLE_FLOWER, "These pretty violet flowers can be found in large numbers around the Aether. They can be crafted into purple dye when placed into a Crafting Table.");
         addLore(AetherBlocks.QUICKSOIL, "A silky sand with extremely slippery properties. It can be seen floating on the side of Aether islands. Be careful around it, or you'll fall off.");
-        addLore(AetherBlocks.QUICKSOIL_GLASS, "After enchanting Quicksoil you can get this tinted glass. It is slightly slippery and makes a for a great window.");
+        addLore(AetherBlocks.QUICKSOIL_GLASS, "After enchanting Quicksoil you can get this tinted glass. It is slightly slippery and makes for a great window.");
+        addLore(AetherBlocks.QUICKSOIL_GLASS_PANE, "A thin decorative variant of Quicksoil glass. It is slightly slippery and makes for a great window.");
         addLore(AetherItems.RED_CAPE, "A rough feeling cape that is crafted using Red Wool.");
         addLore(AetherItems.REGENERATION_STONE, "A treasure found in Silver Dungeons. This stone makes the wearer feel healthy, and heals their wounds. The effects can stack with other Regeneration Stones.");
-        addLore(AetherItems.REPULSION_SHIELD, "A shield that protects the user from most projectiles. It will reflect the projectile back at the thrower and cause damage to them. Each time a projectile is reflected the shield will be damaged.");
+        addLore(AetherItems.SHIELD_OF_REPULSION, "A shield that protects the user from most projectiles. It will reflect the projectile back at the thrower and cause damage to them. Each time a projectile is reflected the shield will be damaged.");
         addLore(AetherItems.SENTRY_BOOTS, "Found in Bronze Dungeons, these boots protect you from fall damage, allowing you to fall from great heights.");
         addLore(AetherBlocks.SENTRY_STONE, "The Light version of Carved Stone, also found in Bronze Dungeons.");
         addLore(AetherItems.SILVER_DUNGEON_KEY, "A reflective key that is given to you by the Valkyrie Queen after defeating her. Use it to claim the treasure she left behind!");
@@ -915,5 +976,49 @@ public class AetherLanguageData extends AetherLanguageProvider
         addProTip("difficulty", "Easier rarely means funner.");
         addProTip("portal_misclick", "Be careful not to misclick when building portals.");
         addProTip("the_game", "The game is only as fun as you make it.");
+
+
+        addCommonConfig("gameplay", "enable_bed_explosions", "Vanilla's beds will explode in the Aether");
+        addCommonConfig("gameplay", "start_with_portal", "On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with");
+        addCommonConfig("gameplay", "enable_startup_loot", "When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot");
+        addCommonConfig("gameplay", "tools_debuff", "Tools that aren't from the Aether will mine all blocks slower than ones that are from the Aether");
+        addCommonConfig("gameplay", "edible_ambrosium", "Ambrosium Shards can be eaten to restore a half heart of health");
+        addCommonConfig("gameplay", "healing_gummy_swets", "Gummy Swets when eaten restore full health instead of full hunger");
+        addCommonConfig("gameplay", "maximum_life_shards", "Determines the limit of the amount of Life Shards a player can consume to increase their health");
+        addCommonConfig("gameplay", "repeat_sun_spirit_dialogue", "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
+
+        addCommonConfig("loot", "spawn_golden_feather", "Allows the Golden Feather to spawn in the Silver Dungeon loot table");
+        addCommonConfig("loot", "spawn_valkyrie_cape", "Allows the Valkyrie Cape to spawn in the Silver Dungeon loot table");
+
+        addCommonConfig("world_generation", "generate_tall_grass", "Determines whether the Aether should generate Tall Grass blocks on terrain or not");
+        addCommonConfig("world_generation", "generate_pink_aerclouds", "Determines whether Pink Aerclouds should generate in the skies of the Aether along with other Aerclouds");
+        addCommonConfig("world_generation", "generate_holiday_tree_always", "Determines whether Holiday Trees should always be able to generate when exploring new chunks in the Aether, if true, this overrides 'Generate Holiday Trees seasonally'");
+        addCommonConfig("world_generation", "generate_holiday_tree_seasonally", "Determines whether Holiday Trees should be able to generate during the time frame of December and January when exploring new chunks in the Aether, only works if 'Generate Holiday Trees always' is set to false");
+
+        addCommonConfig("multiplayer", "sun_altar_whitelist", "Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server");
+
+        addCommonConfig("modpack", "disable_aether_portal", "Prevents the Aether Portal from being created normally in the mod");
+        addCommonConfig("modpack", "disable_falling_to_overworld", "Prevents the player from falling back to the Overworld when they fall out of the Aether");
+        addCommonConfig("modpack", "disable_eternal_day", "Removes eternal day so that the Aether has a normal daylight cycle even before defeating the Sun Spirit");
+        addCommonConfig("modpack", "portal_destination_dimension_ID", "Sets the ID of the dimension that the Aether Portal will send the player to");
+        addCommonConfig("modpack", "portal_return_dimension_ID", "Sets the ID of the dimension that the Aether Portal will return the player to");
+
+
+        addClientConfig("rendering", "legacy_models", "Changes Zephyr and Aerwhale rendering to use their old models from the b1.7.3 version of the mod");
+        addClientConfig("rendering", "disable_aether_skybox", "Disables the Aether's custom skybox in case you have a shader that is incompatible with custom skyboxes");
+
+        addClientConfig("gui", "enable_aether_menu", "Changes the vanilla Minecraft menu into the Aether menu");
+        addClientConfig("gui", "enable_aether_menu_button", "Adds a button to the top right of the main menu screen to toggle between the Aether and vanilla menu");
+        addClientConfig("gui", "enable_world_preview", "Changes the background panorama into a preview of the latest played world");
+        addClientConfig("gui", "enable_world_preview_button", "Adds a button to the top right of the main menu screen to toggle between the panorama and world preview");
+        addClientConfig("gui", "enable_quick_load_button", "Adds a button to the top right of the main menu screen to allow quick loading into a world if the world preview is enabled");
+        addClientConfig("gui", "menu_type_toggles_alignment", "Determines that menu elements will align left if the menu's world preview is active, if true, this overrides 'Align menu elements left'");
+        addClientConfig("gui", "align_vanilla_menu_elements_left", "Aligns the elements of the vanilla menu to the left, only works if 'Align menu left with world preview' is set to false");
+        addClientConfig("gui", "align_aether_menu_elements_left", "Aligns the elements of the Aether menu to the left, only works if 'Align menu left with world preview' is set to false");
+        addClientConfig("gui", "enable_trivia", "Adds random trivia and tips to the bottom of loading screens");
+
+        addClientConfig("audio", "disable_aether_menu_music", "Disables the Aether's menu music in case another mod implements its own");
+        addClientConfig("audio", "disable_vanilla_world_preview_menu_music", "Disables the menu music on the vanilla world preview menu");
+        addClientConfig("audio", "disable_aether_world_preview_menu_music", "Disables the menu music on the Aether world preview menu");
     }
 }

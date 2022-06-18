@@ -2,6 +2,7 @@ package com.gildedgames.aether.client.event.listeners;
 
 import com.gildedgames.aether.client.event.hooks.DimensionClientHooks;
 import net.minecraft.client.Camera;
+import net.minecraft.client.renderer.FogRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.event.TickEvent;
@@ -11,6 +12,18 @@ import org.apache.commons.lang3.tuple.Triple;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class DimensionClientListener {
+    @SubscribeEvent
+    public static void onRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
+        Camera camera = event.getCamera();
+        FogRenderer.FogMode fogMode = event.getMode();
+        float farDistance = event.getFarPlaneDistance();
+        Float renderNearFog = DimensionClientHooks.renderNearFog(camera, fogMode, farDistance);
+        if (renderNearFog != null) {
+            event.setNearPlaneDistance(renderNearFog);
+            event.setCanceled(true);
+        }
+    }
+
     /**
      * The purpose of this event handler is to prevent the fog from turning black near the void in the Aether.
      * This works with any dimension using the Aether's dimension effects.
@@ -21,11 +34,11 @@ public class DimensionClientListener {
         float red = event.getRed();
         float green = event.getGreen();
         float blue = event.getBlue();
-        Triple<Float, Float, Float> renderFog = DimensionClientHooks.renderFog(camera, red, green, blue);
-        if (renderFog.getLeft() != null && renderFog.getMiddle() != null && renderFog.getRight() != null) {
-            event.setRed(renderFog.getLeft());
-            event.setGreen(renderFog.getMiddle());
-            event.setBlue(renderFog.getRight());
+        Triple<Float, Float, Float> renderFogColors = DimensionClientHooks.renderFogColors(camera, red, green, blue);
+        if (renderFogColors.getLeft() != null && renderFogColors.getMiddle() != null && renderFogColors.getRight() != null) {
+            event.setRed(renderFogColors.getLeft());
+            event.setGreen(renderFogColors.getMiddle());
+            event.setBlue(renderFogColors.getRight());
         }
     }
 

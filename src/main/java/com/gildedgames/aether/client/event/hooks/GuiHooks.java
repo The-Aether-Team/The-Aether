@@ -12,11 +12,13 @@ import com.gildedgames.aether.common.event.hooks.DimensionHooks;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.server.OpenAccessoriesPacket;
-import com.mojang.blaze3d.vertex.*;
 import com.mojang.realmsclient.gui.screens.RealmsPlayerScreen;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
@@ -26,6 +28,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
@@ -38,6 +41,7 @@ public class GuiHooks {
     public static AetherTitleScreen aether_menu = null;
     public static TitleScreen default_menu = null;
     public static VanillaLeftTitleScreen default_left_menu = null;
+    private static final ResourceLocation AETHER_BARS_LOCATION = new ResourceLocation(Aether.MODID, "textures/gui/boss_bar.png");
     private static boolean shouldAddButton = true;
     private static boolean generateTrivia = true;
     private static Screen lastScreen = null;
@@ -106,7 +110,11 @@ public class GuiHooks {
 
     public static void setupSplash(Screen screen) {
         if (screen instanceof TitleScreen titleScreen) {
-            titleScreen.splash = default_menu.splash;
+            if (default_menu.splash != null) {
+                titleScreen.splash = default_menu.splash;
+            } else {
+                default_menu.splash = titleScreen.splash;
+            }
         }
     }
 
@@ -287,6 +295,36 @@ public class GuiHooks {
                 minecraft.level.animateTick(minecraft.player.getBlockX(), minecraft.player.getBlockY(), minecraft.player.getBlockZ());
                 Minecraft.getInstance().particleEngine.tick();
             }
+        }
+    }
+
+    /**
+     * Vanilla copy
+     * @see net.minecraft.client.gui.components.BossHealthOverlay#render(PoseStack)
+     * This is used to draw the Aether's custom boss health bars.
+     */
+    public static void drawBossHealthBar(PoseStack poseStack, int x, int y, LerpingBossEvent bossEvent) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, AETHER_BARS_LOCATION);
+        drawBar(poseStack, x + 2, y + 2, bossEvent);
+        Component component = bossEvent.getName();
+        int nameLength = Minecraft.getInstance().font.width(component);
+        int nameX = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - nameLength / 2;
+        int nameY = y - 9;
+        Minecraft.getInstance().font.drawShadow(poseStack, component, (float)nameX, (float)nameY, 16777215);
+    }
+
+    /**
+     * @see net.minecraft.client.gui.components.BossHealthOverlay#drawBar(PoseStack, int, int, BossEvent)
+     * Draws the boss health bar. This version of the method doesn't account for other types of boss bars because the
+     * Aether only has one.
+     */
+    public static void drawBar(PoseStack pPoseStack, int pX, int pY, BossEvent pBossEvent) {
+        pX -= 37; // The default boss health bar is offset by -91. We need -128.
+        GuiComponent.blit(pPoseStack, pX, pY, -90, 0, 16, 256, 16, 256, 256);
+        int health = (int)(pBossEvent.getProgress() * 256.0F);
+        if (health > 0) {
+            GuiComponent.blit(pPoseStack, pX, pY, -90, 0, 0, health, 16, 256, 256);
         }
     }
 }

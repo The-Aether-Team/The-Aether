@@ -4,18 +4,16 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.miscellaneous.Parachute;
 import com.gildedgames.aether.common.entity.miscellaneous.SkyrootBoat;
 import com.gildedgames.aether.common.entity.monster.*;
-import com.gildedgames.aether.common.entity.monster.dungeon.Mimic;
-import com.gildedgames.aether.common.entity.monster.dungeon.Sentry;
-import com.gildedgames.aether.common.entity.monster.dungeon.Valkyrie;
+import com.gildedgames.aether.common.entity.monster.dungeon.*;
 import com.gildedgames.aether.common.entity.passive.*;
 import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.common.entity.block.TntPresent;
 import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
-import com.gildedgames.aether.common.entity.monster.dungeon.FireMinion;
 import com.gildedgames.aether.common.entity.passive.Aerbunny;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.common.entity.projectile.ZephyrSnowball;
 import com.gildedgames.aether.common.entity.projectile.crystal.CloudCrystal;
+import com.gildedgames.aether.common.entity.projectile.crystal.ThunderCrystal;
 import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDart;
 import com.gildedgames.aether.common.entity.projectile.dart.GoldenDart;
 import com.gildedgames.aether.common.entity.projectile.dart.PoisonDart;
@@ -91,6 +89,9 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<FireMinion>> FIRE_MINION = ENTITIES.register("fire_minion",
             () -> EntityType.Builder.of(FireMinion::new, MobCategory.MONSTER).fireImmune().sized(0.8F, 1.95F).clientTrackingRange(8).build("fire_minion"));
 
+    public static final RegistryObject<EntityType<ValkyrieQueen>> VALKYRIE_QUEEN = ENTITIES.register("valkyrie_queen",
+            () -> EntityType.Builder.of(ValkyrieQueen::new, MobCategory.MONSTER).sized(0.8F, 1.95F).fireImmune().clientTrackingRange(10).build("valkyrie_queen"));
+
 
     // Miscellaneous
     public static final RegistryObject<EntityType<SkyrootBoat>> SKYROOT_BOAT = ENTITIES.register("skyroot_boat",
@@ -117,6 +118,9 @@ public class AetherEntityTypes {
 
     public static final RegistryObject<EntityType<CloudCrystal>> CLOUD_CRYSTAL = ENTITIES.register("cloud_crystal",
             () -> EntityType.Builder.<CloudCrystal>of(CloudCrystal::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(10).build("cloud_crystal"));
+
+    public static final RegistryObject<EntityType<ThunderCrystal>> THUNDER_CRYSTAL = ENTITIES.register("thunder_crystal",
+            () -> EntityType.Builder.<ThunderCrystal>of(ThunderCrystal::new, MobCategory.MISC).sized(0.7F, 0.7F).updateInterval(2).build("thunder_crystal"));
 
     public static final RegistryObject<EntityType<GoldenDart>> GOLDEN_DART = ENTITIES.register("golden_dart",
             () -> EntityType.Builder.<GoldenDart>of(GoldenDart::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).build("golden_dart"));
@@ -172,8 +176,10 @@ public class AetherEntityTypes {
 
         event.put(AetherEntityTypes.SENTRY.get(), Sentry.createMobAttributes().build());
         event.put(AetherEntityTypes.MIMIC.get(), Mimic.createMobAttributes().build());
-        event.put(AetherEntityTypes.VALKYRIE.get(), Valkyrie.createMobAttributes().build());
+        event.put(AetherEntityTypes.VALKYRIE.get(), Valkyrie.createValkyrieAttributes().build());
         event.put(AetherEntityTypes.FIRE_MINION.get(), FireMinion.createMobAttributes().build());
+
+        event.put(AetherEntityTypes.VALKYRIE_QUEEN.get(), ValkyrieQueen.createQueenAttributes().build());
 
         event.put(AetherEntityTypes.CLOUD_MINION.get(), CloudMinion.createMobAttributes().build());
     }
