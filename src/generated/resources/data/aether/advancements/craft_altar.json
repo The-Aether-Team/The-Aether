@@ -1,23 +1,7 @@
 {
   "parent": "aether:enter_aether",
-  "display": {
-    "icon": {
-      "item": "aether:altar"
-    },
-    "title": {
-      "translate": "advancement.aether.altar"
-    },
-    "description": {
-      "translate": "advancement.aether.altar.desc"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
     "craft_altar": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -26,7 +10,23 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.aether.altar.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:altar"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.aether.altar"
     }
   },
   "requirements": [

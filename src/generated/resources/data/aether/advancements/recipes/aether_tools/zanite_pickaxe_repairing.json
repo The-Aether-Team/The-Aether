@@ -1,13 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "aether:zanite_pickaxe_repairing"
-    ]
-  },
   "criteria": {
-    "has_aether:zanite_pickaxe": {
-      "trigger": "minecraft:inventory_changed",
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:zanite_pickaxe_repairing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_zanite_pickaxe": {
       "conditions": {
         "items": [
           {
@@ -16,19 +16,19 @@
             ]
           }
         ]
-      }
-    },
-    "has_the_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
-      "conditions": {
-        "recipe": "aether:zanite_pickaxe_repairing"
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
     [
-      "has_aether:zanite_pickaxe",
+      "has_zanite_pickaxe",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:zanite_pickaxe_repairing"
+    ]
+  }
 }

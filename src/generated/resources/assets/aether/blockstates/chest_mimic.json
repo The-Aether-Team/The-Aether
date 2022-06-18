@@ -1,5 +1,8 @@
 {
   "variants": {
+    "facing=east": {
+      "model": "aether:block/chest_mimic"
+    },
     "facing=north": {
       "model": "aether:block/chest_mimic"
     },
@@ -7,9 +10,6 @@
       "model": "aether:block/chest_mimic"
     },
     "facing=west": {
-      "model": "aether:block/chest_mimic"
-    },
-    "facing=east": {
       "model": "aether:block/chest_mimic"
     }
   }

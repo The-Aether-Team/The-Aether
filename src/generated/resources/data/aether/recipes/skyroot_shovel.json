@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "#",
-    "/",
-    "/"
-  ],
   "key": {
     "#": {
       "item": "aether:skyroot_planks"
@@ -13,6 +8,11 @@
       "tag": "aether:skyroot_stick"
     }
   },
+  "pattern": [
+    "#",
+    "/",
+    "/"
+  ],
   "result": {
     "item": "aether:skyroot_shovel"
   }

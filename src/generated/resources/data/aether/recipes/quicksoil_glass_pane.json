@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "GGG",
-    "GGG"
-  ],
   "key": {
     "G": {
       "item": "aether:quicksoil_glass"
     }
   },
+  "pattern": [
+    "GGG",
+    "GGG"
+  ],
   "result": {
-    "item": "aether:quicksoil_glass_pane",
-    "count": 16
+    "count": 16,
+    "item": "aether:quicksoil_glass_pane"
   }
 }

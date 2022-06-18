@@ -1,14 +1,28 @@
 {
   "parent": "minecraft:block/block",
-  "textures": {
-    "particle": "minecraft:block/flower_pot",
-    "stem": "aether:block/natural/potted_berry_bush_stem",
-    "dirt": "minecraft:block/dirt",
-    "flowerpot": "minecraft:block/flower_pot",
-    "bush": "aether:block/natural/potted_berry_bush"
-  },
   "elements": [
     {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#flowerpot"
+        },
+        "east": {
+          "texture": "#flowerpot"
+        },
+        "north": {
+          "texture": "#flowerpot"
+        },
+        "south": {
+          "texture": "#flowerpot"
+        },
+        "up": {
+          "texture": "#flowerpot"
+        },
+        "west": {
+          "texture": "#flowerpot"
+        }
+      },
       "from": [
         5,
         0,
@@ -18,13 +32,15 @@
         6,
         6,
         11
-      ],
+      ]
+    },
+    {
       "faces": {
         "down": {
-          "texture": "#flowerpot",
-          "cullface": "down"
+          "cullface": "down",
+          "texture": "#flowerpot"
         },
-        "up": {
+        "east": {
           "texture": "#flowerpot"
         },
         "north": {
@@ -33,15 +49,13 @@
         "south": {
           "texture": "#flowerpot"
         },
-        "west": {
+        "up": {
           "texture": "#flowerpot"
         },
-        "east": {
+        "west": {
           "texture": "#flowerpot"
         }
-      }
-    },
-    {
+      },
       "from": [
         10,
         0,
@@ -51,13 +65,12 @@
         11,
         6,
         11
-      ],
+      ]
+    },
+    {
       "faces": {
         "down": {
-          "texture": "#flowerpot",
-          "cullface": "down"
-        },
-        "up": {
+          "cullface": "down",
           "texture": "#flowerpot"
         },
         "north": {
@@ -66,15 +79,10 @@
         "south": {
           "texture": "#flowerpot"
         },
-        "west": {
-          "texture": "#flowerpot"
-        },
-        "east": {
+        "up": {
           "texture": "#flowerpot"
         }
-      }
-    },
-    {
+      },
       "from": [
         6,
         0,
@@ -84,13 +92,12 @@
         10,
         6,
         6
-      ],
+      ]
+    },
+    {
       "faces": {
         "down": {
-          "texture": "#flowerpot",
-          "cullface": "down"
-        },
-        "up": {
+          "cullface": "down",
           "texture": "#flowerpot"
         },
         "north": {
@@ -98,10 +105,11 @@
         },
         "south": {
           "texture": "#flowerpot"
+        },
+        "up": {
+          "texture": "#flowerpot"
         }
-      }
-    },
-    {
+      },
       "from": [
         6,
         0,
@@ -111,24 +119,24 @@
         10,
         6,
         11
-      ],
-      "faces": {
-        "down": {
-          "texture": "#flowerpot",
-          "cullface": "down"
-        },
-        "up": {
-          "texture": "#flowerpot"
-        },
-        "north": {
-          "texture": "#flowerpot"
-        },
-        "south": {
-          "texture": "#flowerpot"
-        }
-      }
+      ]
     },
     {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#flowerpot",
+          "uv": [
+            6.0,
+            12.0,
+            10.0,
+            16.0
+          ]
+        },
+        "up": {
+          "texture": "#dirt"
+        }
+      },
       "from": [
         6,
         0,
@@ -138,43 +146,9 @@
         10,
         4,
         10
-      ],
-      "faces": {
-        "down": {
-          "texture": "#flowerpot",
-          "uv": [
-            6.0,
-            12.0,
-            10.0,
-            16.0
-          ],
-          "cullface": "down"
-        },
-        "up": {
-          "texture": "#dirt"
-        }
-      }
+      ]
     },
     {
-      "from": [
-        1,
-        4,
-        8
-      ],
-      "to": [
-        15,
-        16,
-        8
-      ],
-      "rotation": {
-        "origin": [
-          8,
-          8,
-          8
-        ],
-        "axis": "y",
-        "angle": 45.0
-      },
       "faces": {
         "north": {
           "texture": "#stem",
@@ -194,38 +168,29 @@
             16.0
           ]
         }
-      }
-    },
-    {
+      },
       "from": [
-        8,
+        1,
         4,
-        1
-      ],
-      "to": [
-        8,
-        16,
-        15
+        8
       ],
       "rotation": {
+        "angle": 45.0,
+        "axis": "y",
         "origin": [
           8,
           8,
           8
-        ],
-        "axis": "y",
-        "angle": 45.0
+        ]
       },
+      "to": [
+        15,
+        16,
+        8
+      ]
+    },
+    {
       "faces": {
-        "west": {
-          "texture": "#stem",
-          "uv": [
-            0.0,
-            4.0,
-            16.0,
-            16.0
-          ]
-        },
         "east": {
           "texture": "#stem",
           "uv": [
@@ -234,10 +199,82 @@
             16.0,
             16.0
           ]
+        },
+        "west": {
+          "texture": "#stem",
+          "uv": [
+            0.0,
+            4.0,
+            16.0,
+            16.0
+          ]
         }
-      }
+      },
+      "from": [
+        8,
+        4,
+        1
+      ],
+      "rotation": {
+        "angle": 45.0,
+        "axis": "y",
+        "origin": [
+          8,
+          8,
+          8
+        ]
+      },
+      "to": [
+        8,
+        16,
+        15
+      ]
     },
     {
+      "faces": {
+        "down": {
+          "texture": "#bush"
+        },
+        "east": {
+          "texture": "#bush",
+          "uv": [
+            3.0,
+            3.0,
+            13.0,
+            13.0
+          ]
+        },
+        "north": {
+          "texture": "#bush",
+          "uv": [
+            3.0,
+            3.0,
+            13.0,
+            13.0
+          ]
+        },
+        "south": {
+          "texture": "#bush",
+          "uv": [
+            3.0,
+            3.0,
+            13.0,
+            13.0
+          ]
+        },
+        "up": {
+          "texture": "#bush"
+        },
+        "west": {
+          "texture": "#bush",
+          "uv": [
+            3.0,
+            3.0,
+            13.0,
+            13.0
+          ]
+        }
+      },
       "from": [
         3,
         6,
@@ -247,51 +284,14 @@
         13,
         16,
         13
-      ],
-      "faces": {
-        "down": {
-          "texture": "#bush"
-        },
-        "up": {
-          "texture": "#bush"
-        },
-        "north": {
-          "texture": "#bush",
-          "uv": [
-            3.0,
-            3.0,
-            13.0,
-            13.0
-          ]
-        },
-        "south": {
-          "texture": "#bush",
-          "uv": [
-            3.0,
-            3.0,
-            13.0,
-            13.0
-          ]
-        },
-        "west": {
-          "texture": "#bush",
-          "uv": [
-            3.0,
-            3.0,
-            13.0,
-            13.0
-          ]
-        },
-        "east": {
-          "texture": "#bush",
-          "uv": [
-            3.0,
-            3.0,
-            13.0,
-            13.0
-          ]
-        }
-      }
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "bush": "aether:block/natural/potted_berry_bush",
+    "dirt": "minecraft:block/dirt",
+    "flowerpot": "minecraft:block/flower_pot",
+    "particle": "minecraft:block/flower_pot",
+    "stem": "aether:block/natural/potted_berry_bush_stem"
+  }
 }

@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "PPP",
-    "PPP",
-    " S "
-  ],
   "key": {
     "P": {
       "item": "aether:skyroot_planks"
@@ -13,8 +8,13 @@
       "tag": "aether:skyroot_stick"
     }
   },
+  "pattern": [
+    "PPP",
+    "PPP",
+    " S "
+  ],
   "result": {
-    "item": "aether:skyroot_sign",
-    "count": 3
+    "count": 3,
+    "item": "aether:skyroot_sign"
   }
 }

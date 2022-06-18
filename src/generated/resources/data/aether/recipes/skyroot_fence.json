@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "/": {
+      "tag": "aether:skyroot_stick"
+    },
+    "M": {
+      "item": "aether:skyroot_planks"
+    }
+  },
   "pattern": [
     "M/M",
     "M/M"
   ],
-  "key": {
-    "M": {
-      "item": "aether:skyroot_planks"
-    },
-    "/": {
-      "tag": "aether:skyroot_stick"
-    }
-  },
   "result": {
-    "item": "aether:skyroot_fence",
-    "count": 3
+    "count": 3,
+    "item": "aether:skyroot_fence"
   }
 }

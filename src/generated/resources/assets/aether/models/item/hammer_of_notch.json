@@ -1,14 +1,14 @@
 {
   "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "aether:item/weapons/hammer_of_notch"
-  },
   "overrides": [
     {
+      "model": "aether:item/hammer_of_jeb",
       "predicate": {
         "aether:named": 1.0
-      },
-      "model": "aether:item/hammer_of_jeb"
+      }
     }
-  ]
+  ],
+  "textures": {
+    "layer0": "aether:item/weapons/hammer_of_notch"
+  }
 }

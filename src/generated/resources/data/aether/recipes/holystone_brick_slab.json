@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "MMM"
-  ],
   "key": {
     "M": {
       "item": "aether:holystone_bricks"
     }
   },
+  "pattern": [
+    "MMM"
+  ],
   "result": {
-    "item": "aether:holystone_brick_slab",
-    "count": 6
+    "count": 6,
+    "item": "aether:holystone_brick_slab"
   }
 }

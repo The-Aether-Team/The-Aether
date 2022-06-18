@@ -1,9 +1,9 @@
 {
   "type": "aether:enchanting",
+  "cookingtime": 1000,
+  "experience": 1.0,
   "ingredient": {
     "item": "aether:gravitite_ore"
   },
-  "result": "aether:enchanted_gravitite",
-  "experience": 1.0,
-  "cookingtime": 1000
+  "result": "aether:enchanted_gravitite"
 }

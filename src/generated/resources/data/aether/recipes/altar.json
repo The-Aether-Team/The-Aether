@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "HHH",
-    "HZH",
-    "HHH"
-  ],
   "key": {
     "H": {
       "item": "aether:holystone"
@@ -13,6 +8,11 @@
       "item": "aether:zanite_gemstone"
     }
   },
+  "pattern": [
+    "HHH",
+    "HZH",
+    "HHH"
+  ],
   "result": {
     "item": "aether:altar"
   }

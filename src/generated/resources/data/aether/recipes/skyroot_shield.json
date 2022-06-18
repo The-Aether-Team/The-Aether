@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "shield",
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "S": {
+      "tag": "aether:planks_crafting"
+    }
+  },
   "pattern": [
     "SIS",
     "SSS",
     " S "
   ],
-  "key": {
-    "S": {
-      "tag": "aether:planks_crafting"
-    },
-    "I": {
-      "tag": "forge:ingots/iron"
-    }
-  },
   "result": {
     "item": "minecraft:shield"
   }

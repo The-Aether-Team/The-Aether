@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "G": {
+      "item": "aether:golden_amber"
+    },
+    "S": {
+      "item": "aether:skyroot_planks"
+    }
+  },
   "pattern": [
     "S",
     "S",
     "G"
   ],
-  "key": {
-    "S": {
-      "item": "aether:skyroot_planks"
-    },
-    "G": {
-      "item": "aether:golden_amber"
-    }
-  },
   "result": {
     "item": "aether:golden_dart_shooter"
   }

@@ -1,23 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "F": {
+      "tag": "forge:feathers"
+    },
+    "G": {
+      "item": "aether:golden_amber"
+    },
+    "S": {
+      "tag": "aether:skyroot_stick"
+    }
+  },
   "pattern": [
     "F",
     "S",
     "G"
   ],
-  "key": {
-    "F": {
-      "tag": "forge:feathers"
-    },
-    "S": {
-      "tag": "aether:skyroot_stick"
-    },
-    "G": {
-      "item": "aether:golden_amber"
-    }
-  },
   "result": {
-    "item": "aether:golden_dart",
-    "count": 4
+    "count": 4,
+    "item": "aether:golden_dart"
   }
 }

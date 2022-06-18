@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/template_glass_pane_side",
   "textures": {
-    "pane": "aether:block/construction/quicksoil_glass",
-    "edge": "aether:block/construction/quicksoil_glass_pane_top"
+    "edge": "aether:block/construction/quicksoil_glass_pane_top",
+    "pane": "aether:block/construction/quicksoil_glass"
   }
 }

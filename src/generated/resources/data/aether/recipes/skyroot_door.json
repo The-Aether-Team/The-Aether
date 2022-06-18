@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "wooden_door",
-  "pattern": [
-    "SS",
-    "SS",
-    "SS"
-  ],
   "key": {
     "S": {
       "item": "aether:skyroot_planks"
     }
   },
+  "pattern": [
+    "SS",
+    "SS",
+    "SS"
+  ],
   "result": {
-    "item": "aether:skyroot_door",
-    "count": 3
+    "count": 3,
+    "item": "aether:skyroot_door"
   }
 }

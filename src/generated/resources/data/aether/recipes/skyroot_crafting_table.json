@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "crafting_table",
-  "pattern": [
-    "SS",
-    "SS"
-  ],
   "key": {
     "S": {
       "tag": "aether:planks_crafting"
     }
   },
+  "pattern": [
+    "SS",
+    "SS"
+  ],
   "result": {
     "item": "minecraft:crafting_table"
   }

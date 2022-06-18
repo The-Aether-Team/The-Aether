@@ -1,17 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "wooden_trapdoor",
-  "pattern": [
-    "SSS",
-    "SSS"
-  ],
   "key": {
     "S": {
       "item": "aether:skyroot_planks"
     }
   },
+  "pattern": [
+    "SSS",
+    "SSS"
+  ],
   "result": {
-    "item": "aether:skyroot_trapdoor",
-    "count": 2
+    "count": 2,
+    "item": "aether:skyroot_trapdoor"
   }
 }

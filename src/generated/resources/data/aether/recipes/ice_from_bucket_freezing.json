@@ -1,9 +1,9 @@
 {
   "type": "aether:freezing",
+  "cookingtime": 500,
+  "experience": 0.1,
   "ingredient": {
     "tag": "aether:freezable_buckets"
   },
-  "result": "minecraft:ice",
-  "experience": 0.1,
-  "cookingtime": 500
+  "result": "minecraft:ice"
 }

@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "MMM",
-    "MMM"
-  ],
   "key": {
     "M": {
       "item": "aether:carved_stone"
     }
   },
+  "pattern": [
+    "MMM",
+    "MMM"
+  ],
   "result": {
-    "item": "aether:carved_wall",
-    "count": 6
+    "count": 6,
+    "item": "aether:carved_wall"
   }
 }

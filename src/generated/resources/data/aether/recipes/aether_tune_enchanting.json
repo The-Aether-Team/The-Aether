@@ -1,9 +1,9 @@
 {
   "type": "aether:enchanting",
+  "cookingtime": 2500,
+  "experience": 1.0,
   "ingredient": {
     "tag": "aether:accepted_music_discs"
   },
-  "result": "aether:music_disc_aether_tune",
-  "experience": 1.0,
-  "cookingtime": 2500
+  "result": "aether:music_disc_aether_tune"
 }

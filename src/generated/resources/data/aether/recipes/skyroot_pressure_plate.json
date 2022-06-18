@@ -1,14 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "wooden_pressure_plate",
-  "pattern": [
-    "SS"
-  ],
   "key": {
     "S": {
       "item": "aether:skyroot_planks"
     }
   },
+  "pattern": [
+    "SS"
+  ],
   "result": {
     "item": "aether:skyroot_pressure_plate"
   }

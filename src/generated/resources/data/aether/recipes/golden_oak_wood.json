@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "MM",
-    "MM"
-  ],
   "key": {
     "M": {
       "item": "aether:golden_oak_log"
     }
   },
+  "pattern": [
+    "MM",
+    "MM"
+  ],
   "result": {
-    "item": "aether:golden_oak_wood",
-    "count": 3
+    "count": 3,
+    "item": "aether:golden_oak_wood"
   }
 }

@@ -1,15 +1,16 @@
 {
+  "type": "aether:remove_seeds",
   "conditions": [
     {
       "condition": "minecraft:alternative",
       "terms": [
         {
-          "condition": "minecraft:block_state_property",
-          "block": "minecraft:grass"
+          "block": "minecraft:grass",
+          "condition": "minecraft:block_state_property"
         },
         {
-          "condition": "minecraft:block_state_property",
-          "block": "minecraft:tall_grass"
+          "block": "minecraft:tall_grass",
+          "condition": "minecraft:block_state_property"
         }
       ]
     },
@@ -24,6 +25,5 @@
         }
       }
     }
-  ],
-  "type": "aether:remove_seeds"
+  ]
 }

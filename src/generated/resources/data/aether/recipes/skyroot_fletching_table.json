@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "fletching_table",
-  "pattern": [
-    "FF",
-    "SS",
-    "SS"
-  ],
   "key": {
     "F": {
       "item": "minecraft:flint"
@@ -14,6 +9,11 @@
       "tag": "aether:planks_crafting"
     }
   },
+  "pattern": [
+    "FF",
+    "SS",
+    "SS"
+  ],
   "result": {
     "item": "minecraft:fletching_table"
   }

@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " M ",
-    "M M",
-    " M "
-  ],
   "key": {
     "M": {
       "item": "minecraft:iron_ingot"
     }
   },
+  "pattern": [
+    " M ",
+    "M M",
+    " M "
+  ],
   "result": {
     "item": "aether:iron_ring"
   }

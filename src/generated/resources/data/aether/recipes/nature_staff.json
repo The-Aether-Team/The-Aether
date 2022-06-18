@@ -1,17 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "tag": "aether:skyroot_stick"
+    },
+    "Z": {
+      "item": "aether:zanite_gemstone"
+    }
+  },
   "pattern": [
     "Z",
     "S"
   ],
-  "key": {
-    "Z": {
-      "item": "aether:zanite_gemstone"
-    },
-    "S": {
-      "tag": "aether:skyroot_stick"
-    }
-  },
   "result": {
     "item": "aether:nature_staff"
   }

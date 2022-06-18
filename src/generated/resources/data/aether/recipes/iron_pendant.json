@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "M": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "tag": "forge:string"
+    }
+  },
   "pattern": [
     "SSS",
     "S S",
     " M "
   ],
-  "key": {
-    "S": {
-      "tag": "forge:string"
-    },
-    "M": {
-      "item": "minecraft:iron_ingot"
-    }
-  },
   "result": {
     "item": "aether:iron_pendant"
   }

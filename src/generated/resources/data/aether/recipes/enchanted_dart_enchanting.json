@@ -1,9 +1,9 @@
 {
   "type": "aether:enchanting",
+  "cookingtime": 250,
+  "experience": 0.15,
   "ingredient": {
     "item": "aether:golden_dart"
   },
-  "result": "aether:enchanted_dart",
-  "experience": 0.15,
-  "cookingtime": 250
+  "result": "aether:enchanted_dart"
 }
