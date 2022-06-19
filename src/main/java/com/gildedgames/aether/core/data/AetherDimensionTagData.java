@@ -18,7 +18,7 @@ public class AetherDimensionTagData extends DimensionTagsProvider {
 
     @Override
     protected void addTags() {
-        tag(AetherTags.Dimensions.HOSTILE_PARADISE).add(AetherDimensions.AETHER_DIMENSION_TYPE);
+        tag(AetherTags.Dimensions.HOSTILE_PARADISE).add(AetherDimensions.AETHER_DIMENSION_TYPE.get());
 
         tag(AetherTags.Dimensions.ULTRACOLD).addTag(AetherTags.Dimensions.HOSTILE_PARADISE);
         tag(AetherTags.Dimensions.NO_WHEAT_SEEDS).addTag(AetherTags.Dimensions.HOSTILE_PARADISE);

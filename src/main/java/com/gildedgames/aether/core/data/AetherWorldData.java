@@ -24,8 +24,8 @@ public class AetherWorldData extends AetherWorldProvider {
 
     @Override
     protected void dumpRegistries(RegistryAccess registryAccess, CachedOutput cache, Path path, DynamicOps<JsonElement> dynamicOps) {
-        this.registerDimensionType(cache, path, dynamicOps);
-        this.registerLevelStem(registryAccess, cache, path, dynamicOps);
+//        this.registerDimensionType(cache, path, dynamicOps);
+//        this.registerLevelStem(registryAccess, cache, path, dynamicOps);
     }
 
     @Override

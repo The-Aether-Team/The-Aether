@@ -90,7 +90,7 @@ public class DimensionListener {
      */
     @SubscribeEvent
     public static void onWorldLoad(WorldEvent.Load event) {
-        if (event.getWorld() instanceof ServerLevel level && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+        if (event.getWorld() instanceof ServerLevel level && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_LEVEL_ID)) {
             AetherTime.get(level).ifPresent(cap -> {
                 AetherLevelData levelData = new AetherLevelData(level.getServer().getWorldData(), level.getServer().getWorldData().overworldData(), cap.getDayTime());
                 level.serverLevelData = levelData;
@@ -105,7 +105,7 @@ public class DimensionListener {
     @SubscribeEvent
     public static void onSleepFinish(SleepFinishedTimeEvent event) {
         ServerLevel level = (ServerLevel) event.getWorld();
-        if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+        if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_LEVEL_ID)) {
             level.serverLevelData.setRainTime(0);
             level.serverLevelData.setRaining(false);
             level.serverLevelData.setThunderTime(0);

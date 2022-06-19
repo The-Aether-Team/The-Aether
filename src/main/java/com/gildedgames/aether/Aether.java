@@ -66,7 +66,7 @@ public class Aether
         modEventBus.addListener(this::dataSetup);
         modEventBus.addListener(this::packSetup);
 
-        DeferredRegister<?>[] registers = {
+        DeferredRegister<?>[] registers = { //todo keep up with vanilla/forge registry order.
                 AetherBlocks.BLOCKS,
                 AetherFeatures.FEATURES,
                 AetherEntityTypes.ENTITIES,
@@ -84,7 +84,8 @@ public class Aether
                 AetherLoot.LOOT_CONDITION_TYPES,
                 AetherBiomes.BIOMES,
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
-                AetherTreeDecoratorTypes.TREE_DECORATORS
+                AetherTreeDecoratorTypes.TREE_DECORATORS,
+                AetherDimensions.DIMENSION_TYPES
         };
 
         for (DeferredRegister<?> register : registers) {
@@ -146,14 +147,14 @@ public class Aether
         }
         if (event.includeServer()) {
             generator.addProvider(true, new AetherRecipeData(generator));
-            generator.addProvider(true, new AetherLootTableData(generator)); //TODO: Registry.getKey() not working?
+            generator.addProvider(true, new AetherLootTableData(generator));
             generator.addProvider(true, new AetherLootModifierData(generator));
             AetherBlockTagData blockTags = new AetherBlockTagData(generator, helper);
             generator.addProvider(true, blockTags);
             generator.addProvider(true, new AetherItemTagData(generator, blockTags, helper));
             generator.addProvider(true, new AetherEntityTagData(generator, helper));
             generator.addProvider(true, new AetherFluidTagData(generator, helper));
-//            generator.addProvider(true, new AetherDimensionTagData(generator, helper)); TODO: Missing resourcekey for the dimension type?
+            generator.addProvider(true, new AetherDimensionTagData(generator, helper));
             generator.addProvider(true, new AetherBiomeTagData(generator, helper));
             generator.addProvider(true, new AetherAdvancementData(generator, helper));
 //            generator.addProvider(true, new AetherWorldData(generator)); TODO: Missing resource key for aether skylands noise settings?

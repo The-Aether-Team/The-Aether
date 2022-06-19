@@ -81,7 +81,7 @@ public class AetherCapabilities {
 		@SubscribeEvent
 		public static void attachWorldCapabilities(AttachCapabilitiesEvent<Level> event) {
 			addTrackers(event.getObject());
-			if (event.getObject().dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+			if (event.getObject().dimensionType().effectsLocation().equals(AetherDimensions.AETHER_LEVEL_ID)) {
 				event.addCapability(new ResourceLocation(Aether.MODID, "aether_time"), new AetherTimeProvider(new AetherTimeCapability(event.getObject())));
 			}
 		}

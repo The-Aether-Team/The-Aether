@@ -117,7 +117,7 @@ public class DimensionHooks {
      * Ticks time in dimensions with the Aether effects location.
      */
     public static void tickTime(Level level) {
-        if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location()) && level instanceof ServerLevel serverLevel) {
+        if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_LEVEL_ID) && level instanceof ServerLevel serverLevel) {
             long i = serverLevel.levelData.getGameTime() + 1L;
             serverLevel.serverLevelData.setGameTime(i);
             if (serverLevel.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
