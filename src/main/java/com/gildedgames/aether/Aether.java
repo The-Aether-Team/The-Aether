@@ -31,12 +31,10 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -47,7 +45,6 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.resource.PathResourcePack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -113,28 +110,28 @@ public class Aether
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            AetherPacketHandler.register();
+        AetherItems.registerAbilities();
+        AetherPacketHandler.register();
 
+        AetherAdvancements.init();
+        PlacementModifiers.init();
+        AetherRecipeBookTypes.init();
+
+        SunAltarWhitelist.initialize();
+
+        registerFuels();
+
+        event.enqueueWork(() -> {
             AetherBlocks.registerPots();
             AetherBlocks.registerFlammability();
             AetherBlocks.registerFreezables();
 
             AetherEntityTypes.registerSpawnPlacements();
 
-            AetherItems.registerAbilities();
-
             registerDispenserBehaviors();
             registerCauldronInteractions();
             registerComposting();
-            registerFuels();
         });
-
-        SunAltarWhitelist.initialize();
-
-        AetherAdvancements.init();
-        PlacementModifiers.init();
-        AetherRecipeBookTypes.init();
     }
 
     public void curiosSetup(InterModEnqueueEvent event) {
