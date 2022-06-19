@@ -1,14 +1,25 @@
 package com.gildedgames.aether.core.data.provider;
 
+import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.core.*;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.DataProvider;
 import net.minecraft.resources.RegistryOps;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.JsonCodecProvider;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class AetherWorldProvider extends WorldProvider {
     public AetherWorldProvider(DataGenerator generator) {
@@ -26,6 +37,7 @@ public abstract class AetherWorldProvider extends WorldProvider {
     }
 
     protected abstract void dumpRegistries(RegistryAccess registryAccess, CachedOutput cache, Path path, DynamicOps<JsonElement> dynamicOps);
+
 
 //    protected void registerDimensionType(CachedOutput cache, Path path, DynamicOps<JsonElement> dynamicOps) {
 //        WritableRegistry<DimensionType> writableRegistry = new MappedRegistry<>(Registry.DIMENSION_TYPE_REGISTRY, Lifecycle.experimental(), null);

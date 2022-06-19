@@ -1,0 +1,44 @@
+{
+  "feature": {
+    "type": "minecraft:spring_feature",
+    "config": {
+      "hole_count": 1,
+      "requires_block_below": true,
+      "rock_count": 4,
+      "state": {
+        "Name": "minecraft:water",
+        "Properties": {
+          "falling": "true"
+        }
+      },
+      "valid_blocks": [
+        "aether:holystone",
+        "aether:aether_dirt"
+      ]
+    }
+  },
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 25
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": {
+          "absolute": 192
+        },
+        "min_inclusive": {
+          "above_bottom": 0
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

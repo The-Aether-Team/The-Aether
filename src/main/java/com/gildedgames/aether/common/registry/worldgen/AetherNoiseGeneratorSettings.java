@@ -6,16 +6,14 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class AetherNoiseGeneratorSettings {
-    public static final ResourceKey<NoiseGeneratorSettings> SKYLANDS = ResourceKey.create(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY, new ResourceLocation(Aether.MODID, "skylands"));
+    public static final DeferredRegister<NoiseGeneratorSettings> NOISE_GENERATOR_SETTINGS = DeferredRegister.create(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY, Aether.MODID);
 
-    public static void register(ResourceKey<NoiseGeneratorSettings> pKey, NoiseGeneratorSettings pSettings) {
-        BuiltinRegistries.register(BuiltinRegistries.NOISE_GENERATOR_SETTINGS, pKey.location(), pSettings);
-    }
-
-    public static void init() {
-        register(SKYLANDS, AetherNoiseBuilders.skylandsNoiseSettings());
-    }
+    public static final RegistryObject<NoiseGeneratorSettings> SKYLANDS = NOISE_GENERATOR_SETTINGS.register("skylands", AetherNoiseBuilders::skylandsNoiseSettings);
 }

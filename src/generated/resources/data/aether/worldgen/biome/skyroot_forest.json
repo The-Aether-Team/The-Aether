@@ -1,0 +1,1213 @@
+{
+  "carvers": {},
+  "downfall": 0.0,
+  "effects": {
+    "fog_color": 9671612,
+    "foliage_color": 11665355,
+    "grass_color": 11665355,
+    "music": {
+      "max_delay": 24000,
+      "min_delay": 12000,
+      "replace_current_music": true,
+      "sound": "aether:music.aether"
+    },
+    "sky_color": 12632319,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "features": [
+    [
+      {
+        "feature": {
+          "type": "aether:simple_disk",
+          "config": {
+            "block": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "aether:quicksoil",
+                "Properties": {
+                  "double_drops": "true"
+                }
+              }
+            },
+            "clearance_radius": 3,
+            "radius": {
+              "max_exclusive": 5.0,
+              "min_inclusive": 3.4641016
+            }
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:heightmap",
+            "heightmap": "WORLD_SURFACE_WG"
+          },
+          {
+            "type": "aether:elevation_adjustment",
+            "value": {
+              "type": "minecraft:uniform",
+              "value": {
+                "max_inclusive": -2,
+                "min_inclusive": -4
+              }
+            }
+          },
+          {
+            "type": "aether:elevation_filter",
+            "maximum": 70,
+            "minimum": 47
+          },
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:matching_block_tag",
+              "tag": "aether:quicksoil_can_generate"
+            }
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "feature": {
+          "type": "aether:lake",
+          "config": {
+            "fluid": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "minecraft:water",
+                "Properties": {
+                  "level": "0"
+                }
+              }
+            },
+            "top": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "aether:aether_grass_block",
+                "Properties": {
+                  "double_drops": "false",
+                  "snowy": "false"
+                }
+              }
+            }
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 40
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:heightmap",
+            "heightmap": "WORLD_SURFACE_WG"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      }
+    ],
+    [],
+    [],
+    [],
+    [],
+    [
+      {
+        "feature": {
+          "type": "minecraft:ore",
+          "config": {
+            "discard_chance_on_air_exposure": 0.0,
+            "size": 33,
+            "targets": [
+              {
+                "state": {
+                  "Name": "aether:aether_dirt",
+                  "Properties": {
+                    "double_drops": "true"
+                  }
+                },
+                "target": {
+                  "predicate_type": "minecraft:tag_match",
+                  "tag": "aether:holystone"
+                }
+              }
+            ]
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": 10
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:uniform",
+              "max_inclusive": {
+                "below_top": 0
+              },
+              "min_inclusive": {
+                "above_bottom": 0
+              }
+            }
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "minecraft:ore",
+          "config": {
+            "discard_chance_on_air_exposure": 0.0,
+            "size": 16,
+            "targets": [
+              {
+                "state": {
+                  "Name": "aether:icestone"
+                },
+                "target": {
+                  "predicate_type": "minecraft:tag_match",
+                  "tag": "aether:holystone"
+                }
+              }
+            ]
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": 10
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:uniform",
+              "max_inclusive": {
+                "below_top": 0
+              },
+              "min_inclusive": {
+                "above_bottom": 0
+              }
+            }
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "minecraft:ore",
+          "config": {
+            "discard_chance_on_air_exposure": 0.0,
+            "size": 16,
+            "targets": [
+              {
+                "state": {
+                  "Name": "aether:ambrosium_ore",
+                  "Properties": {
+                    "double_drops": "true"
+                  }
+                },
+                "target": {
+                  "predicate_type": "minecraft:tag_match",
+                  "tag": "aether:holystone"
+                }
+              }
+            ]
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": 10
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:uniform",
+              "max_inclusive": {
+                "below_top": 0
+              },
+              "min_inclusive": {
+                "above_bottom": 0
+              }
+            }
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "minecraft:ore",
+          "config": {
+            "discard_chance_on_air_exposure": 0.0,
+            "size": 8,
+            "targets": [
+              {
+                "state": {
+                  "Name": "aether:zanite_ore"
+                },
+                "target": {
+                  "predicate_type": "minecraft:tag_match",
+                  "tag": "aether:holystone"
+                }
+              }
+            ]
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": 10
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:uniform",
+              "max_inclusive": {
+                "below_top": 0
+              },
+              "min_inclusive": {
+                "above_bottom": 0
+              }
+            }
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "minecraft:ore",
+          "config": {
+            "discard_chance_on_air_exposure": 0.9,
+            "size": 6,
+            "targets": [
+              {
+                "state": {
+                  "Name": "aether:gravitite_ore"
+                },
+                "target": {
+                  "predicate_type": "minecraft:tag_match",
+                  "tag": "aether:holystone"
+                }
+              }
+            ]
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": 7
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:uniform",
+              "max_inclusive": {
+                "below_top": 0
+              },
+              "min_inclusive": {
+                "above_bottom": 0
+              }
+            }
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "minecraft:ore",
+          "config": {
+            "discard_chance_on_air_exposure": 0.5,
+            "size": 3,
+            "targets": [
+              {
+                "state": {
+                  "Name": "aether:gravitite_ore"
+                },
+                "target": {
+                  "predicate_type": "minecraft:tag_match",
+                  "tag": "aether:holystone"
+                }
+              }
+            ]
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": 3
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:trapezoid",
+              "max_inclusive": {
+                "below_top": 0
+              },
+              "min_inclusive": {
+                "above_bottom": 0
+              }
+            }
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      }
+    ],
+    [],
+    [
+      {
+        "feature": {
+          "type": "minecraft:spring_feature",
+          "config": {
+            "hole_count": 1,
+            "requires_block_below": true,
+            "rock_count": 4,
+            "state": {
+              "Name": "minecraft:water",
+              "Properties": {
+                "falling": "true"
+              }
+            },
+            "valid_blocks": [
+              "aether:holystone",
+              "aether:aether_dirt"
+            ]
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": 25
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:uniform",
+              "max_inclusive": {
+                "absolute": 192
+              },
+              "min_inclusive": {
+                "above_bottom": 0
+              }
+            }
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "feature": {
+          "type": "minecraft:random_selector",
+          "config": {
+            "default": {
+              "feature": {
+                "type": "minecraft:tree",
+                "config": {
+                  "decorators": [],
+                  "dirt_provider": {
+                    "type": "minecraft:simple_state_provider",
+                    "state": {
+                      "Name": "minecraft:dirt"
+                    }
+                  },
+                  "foliage_placer": {
+                    "type": "minecraft:blob_foliage_placer",
+                    "height": 3,
+                    "offset": 0,
+                    "radius": 2
+                  },
+                  "foliage_provider": {
+                    "type": "minecraft:simple_state_provider",
+                    "state": {
+                      "Name": "aether:skyroot_leaves",
+                      "Properties": {
+                        "distance": "7",
+                        "double_drops": "true",
+                        "persistent": "false",
+                        "waterlogged": "false"
+                      }
+                    }
+                  },
+                  "force_dirt": false,
+                  "ignore_vines": true,
+                  "minimum_size": {
+                    "type": "minecraft:two_layers_feature_size",
+                    "limit": 1,
+                    "lower_size": 0,
+                    "upper_size": 1
+                  },
+                  "trunk_placer": {
+                    "type": "minecraft:straight_trunk_placer",
+                    "base_height": 4,
+                    "height_rand_a": 2,
+                    "height_rand_b": 0
+                  },
+                  "trunk_provider": {
+                    "type": "minecraft:simple_state_provider",
+                    "state": {
+                      "Name": "aether:skyroot_log",
+                      "Properties": {
+                        "axis": "y",
+                        "double_drops": "true"
+                      }
+                    }
+                  }
+                }
+              },
+              "placement": [
+                {
+                  "type": "minecraft:block_predicate_filter",
+                  "predicate": {
+                    "type": "minecraft:would_survive",
+                    "state": {
+                      "Name": "aether:skyroot_sapling",
+                      "Properties": {
+                        "stage": "0"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "features": [
+              {
+                "chance": 0.01,
+                "feature": {
+                  "feature": {
+                    "type": "minecraft:tree",
+                    "config": {
+                      "decorators": [],
+                      "dirt_provider": {
+                        "type": "minecraft:simple_state_provider",
+                        "state": {
+                          "Name": "minecraft:dirt"
+                        }
+                      },
+                      "foliage_placer": {
+                        "type": "minecraft:fancy_foliage_placer",
+                        "height": 4,
+                        "offset": 4,
+                        "radius": 2
+                      },
+                      "foliage_provider": {
+                        "type": "minecraft:simple_state_provider",
+                        "state": {
+                          "Name": "aether:golden_oak_leaves",
+                          "Properties": {
+                            "distance": "7",
+                            "double_drops": "true",
+                            "persistent": "false",
+                            "waterlogged": "false"
+                          }
+                        }
+                      },
+                      "force_dirt": false,
+                      "ignore_vines": true,
+                      "minimum_size": {
+                        "type": "minecraft:two_layers_feature_size",
+                        "limit": 0,
+                        "lower_size": 0,
+                        "min_clipped_height": 10,
+                        "upper_size": 0
+                      },
+                      "trunk_placer": {
+                        "type": "minecraft:fancy_trunk_placer",
+                        "base_height": 9,
+                        "height_rand_a": 5,
+                        "height_rand_b": 0
+                      },
+                      "trunk_provider": {
+                        "type": "minecraft:simple_state_provider",
+                        "state": {
+                          "Name": "aether:golden_oak_log",
+                          "Properties": {
+                            "axis": "y",
+                            "double_drops": "true"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "placement": [
+                    {
+                      "type": "minecraft:block_predicate_filter",
+                      "predicate": {
+                        "type": "minecraft:would_survive",
+                        "state": {
+                          "Name": "aether:golden_oak_sapling",
+                          "Properties": {
+                            "stage": "0"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": {
+              "type": "minecraft:weighted_list",
+              "distribution": [
+                {
+                  "data": 7,
+                  "weight": 9
+                },
+                {
+                  "data": 8,
+                  "weight": 1
+                }
+              ]
+            }
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:surface_water_depth_filter",
+            "max_water_depth": 0
+          },
+          {
+            "type": "aether:improved_layer_placement",
+            "count": {
+              "type": "minecraft:uniform",
+              "value": {
+                "max_inclusive": 1,
+                "min_inclusive": 0
+              }
+            },
+            "heightmap": "OCEAN_FLOOR",
+            "verticalBounds": 4
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "minecraft:random_patch",
+          "config": {
+            "feature": {
+              "feature": {
+                "type": "minecraft:simple_block",
+                "config": {
+                  "to_place": {
+                    "type": "minecraft:simple_state_provider",
+                    "state": {
+                      "Name": "minecraft:grass"
+                    }
+                  }
+                }
+              },
+              "placement": [
+                {
+                  "type": "minecraft:block_predicate_filter",
+                  "predicate": {
+                    "type": "minecraft:matching_blocks",
+                    "blocks": "minecraft:air"
+                  }
+                }
+              ]
+            },
+            "tries": 32,
+            "xz_spread": 7,
+            "y_spread": 3
+          }
+        },
+        "placement": [
+          {
+            "type": "aether:config_filter",
+            "value": "[World Generation, Generate Tall Grass in the Aether]"
+          },
+          {
+            "type": "minecraft:count",
+            "count": 2
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:heightmap",
+            "heightmap": "WORLD_SURFACE_WG"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "minecraft:random_patch",
+          "config": {
+            "feature": {
+              "feature": {
+                "type": "minecraft:simple_block",
+                "config": {
+                  "to_place": {
+                    "type": "minecraft:simple_state_provider",
+                    "state": {
+                      "Name": "minecraft:tall_grass",
+                      "Properties": {
+                        "half": "lower"
+                      }
+                    }
+                  }
+                }
+              },
+              "placement": [
+                {
+                  "type": "minecraft:block_predicate_filter",
+                  "predicate": {
+                    "type": "minecraft:matching_blocks",
+                    "blocks": "minecraft:air"
+                  }
+                }
+              ]
+            },
+            "tries": 96,
+            "xz_spread": 7,
+            "y_spread": 3
+          }
+        },
+        "placement": [
+          {
+            "type": "aether:config_filter",
+            "value": "[World Generation, Generate Tall Grass in the Aether]"
+          },
+          {
+            "type": "minecraft:noise_threshold_count",
+            "above_noise": 7,
+            "below_noise": 0,
+            "noise_level": -0.8
+          },
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 32
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:heightmap",
+            "heightmap": "MOTION_BLOCKING"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "minecraft:tree",
+          "config": {
+            "decorators": [
+              {
+                "type": "aether:holiday_tree_decorator",
+                "provider": {
+                  "type": "minecraft:weighted_state_provider",
+                  "entries": [
+                    {
+                      "data": {
+                        "Name": "minecraft:snow",
+                        "Properties": {
+                          "layers": "1"
+                        }
+                      },
+                      "weight": 10
+                    },
+                    {
+                      "data": {
+                        "Name": "aether:present"
+                      },
+                      "weight": 1
+                    }
+                  ]
+                }
+              }
+            ],
+            "dirt_provider": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "minecraft:dirt"
+              }
+            },
+            "foliage_placer": {
+              "type": "aether:holiday_foliage_placer",
+              "offset": 0,
+              "radius": 0,
+              "trunk_height": 8
+            },
+            "foliage_provider": {
+              "type": "minecraft:weighted_state_provider",
+              "entries": [
+                {
+                  "data": {
+                    "Name": "aether:holiday_leaves",
+                    "Properties": {
+                      "distance": "7",
+                      "double_drops": "true",
+                      "persistent": "false",
+                      "waterlogged": "false"
+                    }
+                  },
+                  "weight": 4
+                },
+                {
+                  "data": {
+                    "Name": "aether:decorated_holiday_leaves",
+                    "Properties": {
+                      "distance": "7",
+                      "double_drops": "true",
+                      "persistent": "false",
+                      "waterlogged": "false"
+                    }
+                  },
+                  "weight": 1
+                }
+              ]
+            },
+            "force_dirt": false,
+            "ignore_vines": true,
+            "minimum_size": {
+              "type": "minecraft:two_layers_feature_size",
+              "limit": 1,
+              "lower_size": 0,
+              "upper_size": 1
+            },
+            "trunk_placer": {
+              "type": "minecraft:straight_trunk_placer",
+              "base_height": 9,
+              "height_rand_a": 0,
+              "height_rand_b": 0
+            },
+            "trunk_provider": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "aether:skyroot_log",
+                "Properties": {
+                  "axis": "y",
+                  "double_drops": "true"
+                }
+              }
+            }
+          }
+        },
+        "placement": [
+          {
+            "type": "aether:holiday_filter"
+          },
+          {
+            "type": "minecraft:count_on_every_layer",
+            "count": 1
+          },
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 48
+          },
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": {
+                "Name": "aether:skyroot_sapling",
+                "Properties": {
+                  "stage": "0"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "minecraft:flower",
+          "config": {
+            "feature": {
+              "feature": {
+                "type": "minecraft:simple_block",
+                "config": {
+                  "to_place": {
+                    "type": "minecraft:weighted_state_provider",
+                    "entries": [
+                      {
+                        "data": {
+                          "Name": "aether:purple_flower"
+                        },
+                        "weight": 2
+                      },
+                      {
+                        "data": {
+                          "Name": "aether:white_flower"
+                        },
+                        "weight": 2
+                      },
+                      {
+                        "data": {
+                          "Name": "aether:berry_bush",
+                          "Properties": {
+                            "double_drops": "true"
+                          }
+                        },
+                        "weight": 1
+                      }
+                    ]
+                  }
+                }
+              },
+              "placement": [
+                {
+                  "type": "minecraft:block_predicate_filter",
+                  "predicate": {
+                    "type": "minecraft:matching_blocks",
+                    "blocks": "minecraft:air"
+                  }
+                }
+              ]
+            },
+            "tries": 64,
+            "xz_spread": 7,
+            "y_spread": 3
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:heightmap",
+            "heightmap": "MOTION_BLOCKING"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "feature": {
+          "type": "aether:crystal_island",
+          "config": {}
+        },
+        "placement": [
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:uniform",
+              "max_inclusive": {
+                "absolute": 120
+              },
+              "min_inclusive": {
+                "absolute": 80
+              }
+            }
+          },
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 16
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "aether:aercloud",
+          "config": {
+            "blocks": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "aether:cold_aercloud",
+                "Properties": {
+                  "double_drops": "true"
+                }
+              }
+            },
+            "bounds": 16
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:uniform",
+              "max_inclusive": {
+                "absolute": 128
+              },
+              "min_inclusive": {
+                "above_bottom": 0
+              }
+            }
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 5
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "aether:aercloud",
+          "config": {
+            "blocks": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "aether:blue_aercloud",
+                "Properties": {
+                  "double_drops": "true"
+                }
+              }
+            },
+            "bounds": 8
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:uniform",
+              "max_inclusive": {
+                "absolute": 96
+              },
+              "min_inclusive": {
+                "above_bottom": 0
+              }
+            }
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 5
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "aether:aercloud",
+          "config": {
+            "blocks": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "aether:golden_aercloud",
+                "Properties": {
+                  "double_drops": "true"
+                }
+              }
+            },
+            "bounds": 4
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:uniform",
+              "max_inclusive": {
+                "absolute": 160
+              },
+              "min_inclusive": {
+                "above_bottom": 0
+              }
+            }
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 5
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "aether:aercloud",
+          "config": {
+            "blocks": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "aether:pink_aercloud",
+                "Properties": {
+                  "double_drops": "true"
+                }
+              }
+            },
+            "bounds": 1
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:uniform",
+              "max_inclusive": {
+                "absolute": 160
+              },
+              "min_inclusive": {
+                "above_bottom": 0
+              }
+            }
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 7
+          },
+          {
+            "type": "aether:config_filter",
+            "value": "[World Generation, Generate Pink Aerclouds]"
+          }
+        ]
+      }
+    ]
+  ],
+  "precipitation": "none",
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "aether:blue_swet",
+        "maxCount": 4,
+        "minCount": 3,
+        "weight": 15
+      },
+      {
+        "type": "aether:golden_swet",
+        "maxCount": 4,
+        "minCount": 3,
+        "weight": 15
+      },
+      {
+        "type": "aether:aechor_plant",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 29
+      },
+      {
+        "type": "aether:phyg",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 12
+      },
+      {
+        "type": "aether:aerbunny",
+        "maxCount": 3,
+        "minCount": 3,
+        "weight": 11
+      },
+      {
+        "type": "aether:sheepuff",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 10
+      },
+      {
+        "type": "aether:moa",
+        "maxCount": 3,
+        "minCount": 3,
+        "weight": 10
+      },
+      {
+        "type": "aether:flying_cow",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 10
+      },
+      {
+        "type": "aether:aerwhale",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 2
+      }
+    ],
+    "misc": [],
+    "monster": [
+      {
+        "type": "aether:whirlwind",
+        "maxCount": 2,
+        "minCount": 2,
+        "weight": 9
+      },
+      {
+        "type": "aether:evil_whirlwind",
+        "maxCount": 2,
+        "minCount": 2,
+        "weight": 1
+      },
+      {
+        "type": "aether:cockatrice",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 100
+      },
+      {
+        "type": "aether:zephyr",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 50
+      }
+    ],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.8
+}

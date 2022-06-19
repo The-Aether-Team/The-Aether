@@ -1,0 +1,42 @@
+{
+  "feature": {
+    "type": "aether:lake",
+    "config": {
+      "fluid": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "minecraft:water",
+          "Properties": {
+            "level": "0"
+          }
+        }
+      },
+      "top": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "aether:aether_grass_block",
+          "Properties": {
+            "double_drops": "false",
+            "snowy": "false"
+          }
+        }
+      }
+    }
+  },
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 40
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "WORLD_SURFACE_WG"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

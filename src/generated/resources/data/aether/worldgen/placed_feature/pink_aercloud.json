@@ -1,0 +1,42 @@
+{
+  "feature": {
+    "type": "aether:aercloud",
+    "config": {
+      "blocks": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "aether:pink_aercloud",
+          "Properties": {
+            "double_drops": "true"
+          }
+        }
+      },
+      "bounds": 1
+    }
+  },
+  "placement": [
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": {
+          "absolute": 160
+        },
+        "min_inclusive": {
+          "above_bottom": 0
+        }
+      }
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 7
+    },
+    {
+      "type": "aether:config_filter",
+      "value": "[World Generation, Generate Pink Aerclouds]"
+    }
+  ]
+}
