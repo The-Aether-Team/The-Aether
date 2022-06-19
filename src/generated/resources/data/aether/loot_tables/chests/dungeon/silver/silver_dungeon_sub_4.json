@@ -1,0 +1,51 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:zanite_boots",
+          "weight": 200
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:zanite_helmet",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:zanite_leggings",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:zanite_chestplate",
+          "weight": 25
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:ambrosium_torch",
+          "weight": 25
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": {
+            "type": "minecraft:uniform",
+            "max": 4.0,
+            "min": 1.0
+          },
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    }
+  ]
+}

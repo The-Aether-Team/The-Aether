@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:zanite_ring"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:ambrosium_torch",
+          "weight": 14
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": {
+            "type": "minecraft:uniform",
+            "max": 4.0,
+            "min": 1.0
+          },
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    }
+  ]
+}

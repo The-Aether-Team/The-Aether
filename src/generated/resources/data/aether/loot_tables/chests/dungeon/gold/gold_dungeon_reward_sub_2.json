@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:phoenix_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:phoenix_gloves"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    }
+  ]
+}

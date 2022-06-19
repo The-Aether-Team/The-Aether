@@ -34,7 +34,7 @@ public class DoubleDrops extends LootItemConditionalFunction
 
     @Override
     public LootItemFunctionType getType() {
-        return AetherLoot.DOUBLE_DROPS;
+        return AetherLoot.DOUBLE_DROPS.get();
     }
 
     public static class Serializer extends LootItemConditionalFunction.Serializer<DoubleDrops>

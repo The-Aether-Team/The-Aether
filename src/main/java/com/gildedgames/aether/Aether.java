@@ -80,6 +80,8 @@ public class Aether
                 AetherRecipes.RECIPE_SERIALIZERS,
                 AetherRecipes.RecipeTypes.RECIPE_TYPES,
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
+                AetherLoot.LOOT_FUNCTION_TYPES,
+                AetherLoot.LOOT_CONDITION_TYPES,
                 AetherBiomes.BIOMES,
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
                 AetherTreeDecoratorTypes.TREE_DECORATORS
@@ -118,7 +120,6 @@ public class Aether
 
         SunAltarWhitelist.initialize();
 
-        AetherLoot.init();
         AetherAdvancements.init();
         PlacementModifiers.init();
         AetherRecipeBookTypes.init();

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:block",
+  "functions": [
+    {
+      "function": "aether:double_drops"
+    }
+  ],
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:aether_dirt"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

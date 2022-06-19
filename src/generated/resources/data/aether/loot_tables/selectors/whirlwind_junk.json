@@ -1,0 +1,65 @@
+{
+  "type": "minecraft:selector",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:diamond"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_ingot",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gold_ingot",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:coal",
+          "weight": 9
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:pumpkin",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gravel",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:clay",
+          "weight": 11
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:stick",
+          "weight": 12
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:flint",
+          "weight": 14
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:oak_log",
+          "weight": 17
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:sand",
+          "weight": 20
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}
