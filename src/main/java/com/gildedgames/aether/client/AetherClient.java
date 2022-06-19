@@ -29,17 +29,17 @@ public class AetherClient {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         AetherCustomizations.initialize();
+        DimensionSpecialEffects.EFFECTS.put(new ResourceLocation(Aether.MODID, "the_aether"), new AetherSkyRenderInfo());
+        AetherKeys.registerKeys();
+        AetherOverlays.registerOverlays();
+        AetherRenderers.registerCuriosRenderers();
         event.enqueueWork(() -> {
             AetherAtlases.registerWoodTypeAtlases();
-            AetherKeys.registerKeys();
-            AetherOverlays.registerOverlays();
             AetherRecipeCategories.registerRecipeCategories();
             AetherRenderers.registerBlockRenderLayers();
-            AetherRenderers.registerCuriosRenderers();
             registerGuiFactories();
             registerItemModelProperties();
             registerColors();
-//            DimensionSpecialEffects.EFFECTS.put(new ResourceLocation(Aether.MODID, "the_aether"), new AetherSkyRenderInfo());
         });
     }
 
