@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.resources.RegistryOps;
@@ -20,7 +21,7 @@ import java.util.Map;
 
 public class AetherDataGenerator<T> {
     public DataProvider create(DataGenerator generator, ExistingFileHelper helper, DeferredRegister<T> registry, ResourceKey<Registry<T>> registryKey) {
-        RegistryAccess registryAccess = RegistryAccess.builtinCopy();
+        RegistryAccess registryAccess = BuiltinRegistries.ACCESS; //RegistryAccess.builtinCopy()
         RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, registryAccess);
         Map<ResourceLocation, T> map = new HashMap<>();
         for (RegistryObject<T> object : registry.getEntries()) {

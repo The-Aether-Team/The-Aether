@@ -24,7 +24,7 @@ public class AetherDimensions {
 	public static RegistryObject<DimensionType> AETHER_DIMENSION_TYPE = DIMENSION_TYPES.register("the_aether", () -> new DimensionType(OptionalLong.empty(), true, false, false, true, 1.0D, true, false, 0, 256, 256, BlockTags.INFINIBURN_OVERWORLD, new ResourceLocation(Aether.MODID, "the_aether"), 0.1F, new DimensionType.MonsterSettings(false, false, UniformInt.of(0, 7), 0)));
 
 //	// Dimension Type - Specifies logic that impacts an entire dimension
-//	public static final ResourceKey<DimensionType> AETHER_DIMENSION_TYPE = ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, AetherDimensions.AETHER_LEVEL_ID);
+//	public static final ResourceKey<DimensionType> AETHER_DIMENSION_TYPE = ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, AetherDimensions.AETHER_LEVEL_ID); //todo reimplement?
 	// Level Stem - Begins the dimension's lifecycle
 	public static final ResourceKey<LevelStem> AETHER_LEVEL_STEM = ResourceKey.create(Registry.LEVEL_STEM_REGISTRY, AetherDimensions.AETHER_LEVEL_ID);
 	// Level - Actual runtime dimension
