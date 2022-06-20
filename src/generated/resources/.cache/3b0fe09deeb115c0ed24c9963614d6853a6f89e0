@@ -1,5 +1,5 @@
-// 1.19	2022-06-19T18:59:03.8134431	worldgen/biome generator for aether
-1ffadad3408e0e66fba59810c4c2612777fee60a data/aether/worldgen/biome/golden_forest.json
-02ffbc781401a94622eb3330a5c74612f558b897 data/aether/worldgen/biome/skyroot_forest.json
-efdcc148a72c001b02dcc8eb8ca4c6133b3ca1d8 data/aether/worldgen/biome/skyroot_grove.json
-611671c819debae81d1d5da8095948a4669868bd data/aether/worldgen/biome/skyroot_thicket.json
+// 1.19	2022-06-20T10:17:08.564632	worldgen/biome generator for aether
+e9f020e47540c453177ff443732cb29d136ae151 data/aether/worldgen/biome/golden_forest.json
+1abafe70b7c15ca998135ec5472e7082521ed9f8 data/aether/worldgen/biome/skyroot_forest.json
+1d578cc6b9d2901de2b1a457fcc8cf32ef5e2bc6 data/aether/worldgen/biome/skyroot_grove.json
+05685256a7eed9328b875c7545302d9206bd6396 data/aether/worldgen/biome/skyroot_thicket.json

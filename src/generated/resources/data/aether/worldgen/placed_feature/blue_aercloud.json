@@ -1,19 +1,5 @@
 {
-  "feature": {
-    "type": "aether:aercloud",
-    "config": {
-      "blocks": {
-        "type": "minecraft:simple_state_provider",
-        "state": {
-          "Name": "aether:blue_aercloud",
-          "Properties": {
-            "double_drops": "true"
-          }
-        }
-      },
-      "bounds": 8
-    }
-  },
+  "feature": "aether:blue_aercloud",
   "placement": [
     {
       "type": "minecraft:height_range",

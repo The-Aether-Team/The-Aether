@@ -1,28 +1,5 @@
 {
-  "feature": {
-    "type": "aether:lake",
-    "config": {
-      "fluid": {
-        "type": "minecraft:simple_state_provider",
-        "state": {
-          "Name": "minecraft:water",
-          "Properties": {
-            "level": "0"
-          }
-        }
-      },
-      "top": {
-        "type": "minecraft:simple_state_provider",
-        "state": {
-          "Name": "aether:aether_grass_block",
-          "Properties": {
-            "double_drops": "false",
-            "snowy": "false"
-          }
-        }
-      }
-    }
-  },
+  "feature": "aether:water_lake",
   "placement": [
     {
       "type": "minecraft:rarity_filter",

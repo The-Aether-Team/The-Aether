@@ -1,23 +1,5 @@
 {
-  "feature": {
-    "type": "aether:simple_disk",
-    "config": {
-      "block": {
-        "type": "minecraft:simple_state_provider",
-        "state": {
-          "Name": "aether:quicksoil",
-          "Properties": {
-            "double_drops": "true"
-          }
-        }
-      },
-      "clearance_radius": 3,
-      "radius": {
-        "max_exclusive": 5.0,
-        "min_inclusive": 3.4641016
-      }
-    }
-  },
+  "feature": "aether:quicksoil_shelf",
   "placement": [
     {
       "type": "minecraft:in_square"

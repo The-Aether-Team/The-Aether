@@ -1,4 +1,4 @@
-// 1.19	2022-06-19T18:59:03.8084559	worldgen/configured_feature generator for aether
+// 1.19	2022-06-20T10:17:08.5696185	worldgen/configured_feature generator for aether
 18a65f6608e5a7aca8d2a54e9c2d73c87bc03dd6 data/aether/worldgen/configured_feature/aether_dirt_ore.json
 16a2ae74f54e0744b412dfca906201c5df3d3653 data/aether/worldgen/configured_feature/ambrosium_ore.json
 72653fc7374866ed421de23ca9e6aa202e88efed data/aether/worldgen/configured_feature/blue_aercloud.json
@@ -17,8 +17,8 @@ df7baff686b5d66e4e816e1ef2716751fe927f0e data/aether/worldgen/configured_feature
 a0650ffce1169e7d15f9aa207b6b139fa905c5b2 data/aether/worldgen/configured_feature/quicksoil_shelf.json
 f46be64b74246276492162453c5ad440bb09a3fb data/aether/worldgen/configured_feature/skyroot_tree.json
 06029a837eb77f1213cdb3c86f3b30cfa877ba18 data/aether/worldgen/configured_feature/tall_grass_patch.json
-6ca8427c2ee4905927dc62724cc4487b679c3100 data/aether/worldgen/configured_feature/trees_golden_oak_and_skyroot.json
-bfbc959d0ac07779e05c0b399544011372ae6580 data/aether/worldgen/configured_feature/trees_skyroot_and_golden_oak.json
+dde58eb494781d69e8c8545e7e013e2c558be608 data/aether/worldgen/configured_feature/trees_golden_oak_and_skyroot.json
+ad9a38a87e4927b4b215fd473dbc459ed0a462bf data/aether/worldgen/configured_feature/trees_skyroot_and_golden_oak.json
 e3a804c5d61371bc4fdfe9132d82488a30f465e8 data/aether/worldgen/configured_feature/water_lake.json
 07742c52dac96e2e6dff9d8a1385bd2e81dcc4d5 data/aether/worldgen/configured_feature/water_spring.json
 d42cdab79461449679a4a4ba478d5ca037b578ab data/aether/worldgen/configured_feature/zanite_ore.json

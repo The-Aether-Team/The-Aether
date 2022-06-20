@@ -6,7 +6,6 @@ import com.gildedgames.aether.common.registry.worldgen.AetherNoiseGeneratorSetti
 import com.gildedgames.aether.common.world.builders.AetherBiomeBuilders;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.BuiltinRegistries;
@@ -31,6 +30,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AetherDataGenerators<T> {
+    //    public DataProvider createBuiltinAccess(DataGenerator generator, ExistingFileHelper helper, ResourceKey<Registry<T>> registryKey) {
+//        return create(BuiltinRegistries.ACCESS, generator, helper, registryKey);
+//    }
+
+    public DataProvider createBuiltinCopy(DataGenerator generator, ExistingFileHelper helper, ResourceKey<Registry<T>> registryKey) {
+        return create(RegistryAccess.builtinCopy(), generator, helper, registryKey);
+    }
+
+    public DataProvider create(RegistryAccess registryAccess, DataGenerator generator, ExistingFileHelper helper, ResourceKey<Registry<T>> registryKey) {
+        RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, registryAccess);
+        Map<ResourceLocation, T> map = new HashMap<>();
+        Registry<T> registry = registryAccess.registryOrThrow(registryKey);
+        registry.entrySet().forEach((entry) -> {
+            if (entry.getKey().location().getNamespace().equals(Aether.MODID)) {
+                map.put(entry.getKey().location(), entry.getValue());
+            }
+        });
+        return JsonCodecProvider.forDatapackRegistry(generator, helper, Aether.MODID, registryOps, registryKey, map);
+    }
+
     public DataProvider create(DataGenerator generator, ExistingFileHelper helper, DeferredRegister<T> registry, ResourceKey<Registry<T>> registryKey) {
         RegistryAccess registryAccess = BuiltinRegistries.ACCESS; //RegistryAccess.builtinCopy()
         RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, registryAccess);

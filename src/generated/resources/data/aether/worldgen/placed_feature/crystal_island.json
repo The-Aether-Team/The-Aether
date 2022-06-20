@@ -1,8 +1,5 @@
 {
-  "feature": {
-    "type": "aether:crystal_island",
-    "config": {}
-  },
+  "feature": "aether:crystal_island",
   "placement": [
     {
       "type": "minecraft:in_square"

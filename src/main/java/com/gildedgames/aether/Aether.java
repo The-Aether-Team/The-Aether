@@ -92,8 +92,6 @@ public class Aether
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
                 AetherTreeDecoratorTypes.TREE_DECORATORS,
                 AetherDimensions.DIMENSION_TYPES,
-                AetherFeatures.ConfiguredFeatures.CONFIGURED_FEATURES,
-                AetherFeatures.PlacedFeatures.PLACED_FEATURES,
                 AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS
         };
 
@@ -164,9 +162,9 @@ public class Aether
         generator.addProvider(event.includeServer(), new AetherDimensionTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherAdvancementData(generator, helper));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<ConfiguredFeature<?, ?>>().createBuiltinCopy(generator, helper, Registry.CONFIGURED_FEATURE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<PlacedFeature>().createBuiltinCopy(generator, helper, Registry.PLACED_FEATURE_REGISTRY));
         //TODO: Move these generators off of DeferredRegister and to regular builtin registers because they're datagenned.
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<ConfiguredFeature<?, ?>>().create(generator, helper, AetherFeatures.ConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<PlacedFeature>().create(generator, helper, AetherFeatures.PlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<Biome>().create(generator, helper, AetherBiomes.BIOMES, ForgeRegistries.Keys.BIOMES));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<DimensionType>().create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<NoiseGeneratorSettings>().create(generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
