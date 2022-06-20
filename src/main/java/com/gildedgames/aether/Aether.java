@@ -171,8 +171,6 @@ public class Aether
         generator.addProvider(event.includeServer(), new AetherDataGenerators<DimensionType>().create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<NoiseGeneratorSettings>().create(generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<LevelStem>().levelStem(generator, helper));
-//            generator.addProvider(true, new AetherWorldData(generator)); TODO: Missing resource key for aether skylands noise settings?
-
     }
 
     public void packSetup(AddPackFindersEvent event) {
