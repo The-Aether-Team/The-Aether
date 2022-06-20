@@ -29,6 +29,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -163,11 +164,13 @@ public class Aether
         generator.addProvider(event.includeServer(), new AetherDimensionTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherAdvancementData(generator, helper));
-        generator.addProvider(event.includeServer(), new AetherDataGenerator<ConfiguredFeature<?, ?>>().create(generator, helper, AetherFeatures.ConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerator<PlacedFeature>().create(generator, helper, AetherFeatures.PlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerator<Biome>().create(generator, helper, AetherBiomes.BIOMES, ForgeRegistries.Keys.BIOMES));
-        generator.addProvider(event.includeServer(), new AetherDataGenerator<DimensionType>().create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerator<NoiseGeneratorSettings>().create(generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
+        //TODO: Move these generators off of DeferredRegister and to regular builtin registers because they're datagenned.
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<ConfiguredFeature<?, ?>>().create(generator, helper, AetherFeatures.ConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<PlacedFeature>().create(generator, helper, AetherFeatures.PlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<Biome>().create(generator, helper, AetherBiomes.BIOMES, ForgeRegistries.Keys.BIOMES));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<DimensionType>().create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<NoiseGeneratorSettings>().create(generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<LevelStem>().levelStem(generator, helper));
 //            generator.addProvider(true, new AetherWorldData(generator)); TODO: Missing resource key for aether skylands noise settings?
 
     }

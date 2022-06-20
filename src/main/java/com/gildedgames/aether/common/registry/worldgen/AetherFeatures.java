@@ -147,7 +147,7 @@ public class AetherFeatures {
                     PlacementUtils.inlinePlaced(Holder.direct(GOLDEN_OAK_TREE_CONFIGURATION.get()), PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get())))));
     }
 
-    public static class PlacedFeatures {
+    public static class PlacedFeatures { //TODO: STOP USING HOLDER.DIRECT() FOR ALL OF THESE ONCE THEYRE MOVED OFF OF DEFERRED.
         public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, Aether.MODID);
 
         public static final RegistryObject<PlacedFeature> COLD_AERCLOUD_PLACEMENT = PLACED_FEATURES.register("cold_aercloud", () -> new PlacedFeature(Holder.direct(ConfiguredFeatures.COLD_AERCLOUD_CONFIGURATION.get()), AetherFeatureBuilders.createAercloudPlacements(128, 5)));
