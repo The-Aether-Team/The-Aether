@@ -34,31 +34,37 @@ public class AetherDataGenerators<T> {
 //        return create(BuiltinRegistries.ACCESS, generator, helper, registryKey);
 //    }
 
-    public DataProvider createBuiltinCopy(DataGenerator generator, ExistingFileHelper helper, ResourceKey<Registry<T>> registryKey) {
-        return create(RegistryAccess.builtinCopy(), generator, helper, registryKey);
+//    public DataProvider createBuiltinCopy(DataGenerator generator, ExistingFileHelper helper, ResourceKey<Registry<T>> registryKey) {
+//        return create(RegistryAccess.builtinCopy(), generator, helper, registryKey);
+//    }
+
+    public static RegistryAccess DATA_REGISTRY = RegistryAccess.builtinCopy();
+
+    public DataProvider create(DataGenerator generator, ExistingFileHelper helper, Map<ResourceLocation, T> map, ResourceKey<Registry<T>> registryKey) {
+        return JsonCodecProvider.forDatapackRegistry(generator, helper, Aether.MODID, RegistryOps.create(JsonOps.INSTANCE, DATA_REGISTRY), registryKey, map);
     }
 
-    public DataProvider create(RegistryAccess registryAccess, DataGenerator generator, ExistingFileHelper helper, ResourceKey<Registry<T>> registryKey) {
-        RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, registryAccess);
-        Map<ResourceLocation, T> map = new HashMap<>();
-        Registry<T> registry = registryAccess.registryOrThrow(registryKey);
-        registry.entrySet().forEach((entry) -> {
-            if (entry.getKey().location().getNamespace().equals(Aether.MODID)) {
-                map.put(entry.getKey().location(), entry.getValue());
-            }
-        });
-        return JsonCodecProvider.forDatapackRegistry(generator, helper, Aether.MODID, registryOps, registryKey, map);
-    }
+//    public DataProvider create(RegistryAccess registryAccess, DataGenerator generator, ExistingFileHelper helper, ResourceKey<Registry<T>> registryKey) {
+//        RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, registryAccess);
+//        Map<ResourceLocation, T> map = new HashMap<>();
+//        Registry<T> registry = registryAccess.registryOrThrow(registryKey);
+//        registry.entrySet().forEach((entry) -> {
+//            if (entry.getKey().location().getNamespace().equals(Aether.MODID)) {
+//                map.put(entry.getKey().location(), entry.getValue());
+//            }
+//        });
+//        return JsonCodecProvider.forDatapackRegistry(generator, helper, Aether.MODID, registryOps, registryKey, map);
+//    }
 
-    public DataProvider create(DataGenerator generator, ExistingFileHelper helper, DeferredRegister<T> registry, ResourceKey<Registry<T>> registryKey) {
-        RegistryAccess registryAccess = BuiltinRegistries.ACCESS; //RegistryAccess.builtinCopy()
-        RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, registryAccess);
-        Map<ResourceLocation, T> map = new HashMap<>();
-        for (RegistryObject<T> object : registry.getEntries()) {
-            map.put(object.getId(), object.get());
-        }
-        return JsonCodecProvider.forDatapackRegistry(generator, helper, Aether.MODID, registryOps, registryKey, map);
-    }
+//    public DataProvider create(DataGenerator generator, ExistingFileHelper helper, DeferredRegister<T> registry, ResourceKey<Registry<T>> registryKey) {
+//        RegistryAccess registryAccess = BuiltinRegistries.ACCESS; //RegistryAccess.builtinCopy()
+//        RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, registryAccess);
+//        Map<ResourceLocation, T> map = new HashMap<>();
+//        for (RegistryObject<T> object : registry.getEntries()) {
+//            map.put(object.getId(), object.get());
+//        }
+//        return JsonCodecProvider.forDatapackRegistry(generator, helper, Aether.MODID, registryOps, registryKey, map);
+//    }
 
     public DataProvider levelStem(DataGenerator generator, ExistingFileHelper helper) {
         RegistryAccess registryAccess = BuiltinRegistries.ACCESS;

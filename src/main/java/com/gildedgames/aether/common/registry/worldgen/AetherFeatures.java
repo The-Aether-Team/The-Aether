@@ -17,11 +17,13 @@ import com.gildedgames.aether.common.world.gen.feature.SimpleDiskFeature;
 import com.gildedgames.aether.common.world.gen.placement.*;
 import com.gildedgames.aether.common.world.treedecorator.HolidayTreeDecorator;
 import com.gildedgames.aether.core.AetherConfig;
+import com.gildedgames.aether.core.data.AetherDataGenerators;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -52,7 +54,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.OptionalInt;
 
 public class AetherFeatures {
@@ -66,18 +70,20 @@ public class AetherFeatures {
     //public static Feature<NoneFeatureConfiguration> HOLYSTONE_SPHERE = new HolystoneSphereFeature(NoneFeatureConfiguration.CODEC); // This is for Gold Dungeons
 
     public static class ConfiguredFeatures {
-        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> COLD_AERCLOUD_CONFIGURATION = register("cold_aercloud", AERCLOUD.get(),
+        public static final Map<ResourceLocation, ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = new HashMap<>();
+
+        public static final Holder<ConfiguredFeature<?, ?>> COLD_AERCLOUD_CONFIGURATION = register("cold_aercloud", AERCLOUD.get(),
                 AetherFeatureBuilders.createAercloudConfig(16, States.COLD_AERCLOUD));
-        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> BLUE_AERCLOUD_CONFIGURATION = register("blue_aercloud", AERCLOUD.get(),
+        public static final Holder<ConfiguredFeature<?, ?>> BLUE_AERCLOUD_CONFIGURATION = register("blue_aercloud", AERCLOUD.get(),
                 AetherFeatureBuilders.createAercloudConfig(8, States.BLUE_AERCLOUD));
-        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> GOLDEN_AERCLOUD_CONFIGURATION = register("golden_aercloud", AERCLOUD.get(),
+        public static final Holder<ConfiguredFeature<?, ?>> GOLDEN_AERCLOUD_CONFIGURATION = register("golden_aercloud", AERCLOUD.get(),
                 AetherFeatureBuilders.createAercloudConfig(4, States.GOLDEN_AERCLOUD));
-        public static final Holder<ConfiguredFeature<AercloudConfiguration, ?>> PINK_AERCLOUD_CONFIGURATION = register("pink_aercloud", AERCLOUD.get(),
+        public static final Holder<ConfiguredFeature<?, ?>> PINK_AERCLOUD_CONFIGURATION = register("pink_aercloud", AERCLOUD.get(),
                 AetherFeatureBuilders.createAercloudConfig(1, States.PINK_AERCLOUD));
 
-        public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> CRYSTAL_ISLAND_CONFIGURATION = register("crystal_island", CRYSTAL_ISLAND.get(), NoneFeatureConfiguration.INSTANCE);
+        public static final Holder<ConfiguredFeature<?, ?>> CRYSTAL_ISLAND_CONFIGURATION = register("crystal_island", CRYSTAL_ISLAND.get(), NoneFeatureConfiguration.INSTANCE);
 
-        public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> SKYROOT_TREE_CONFIGURATION = register("skyroot_tree", Feature.TREE,
+        public static final Holder<ConfiguredFeature<?, ?>> SKYROOT_TREE_CONFIGURATION = register("skyroot_tree", Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
                         BlockStateProvider.simple(States.SKYROOT_LOG),
                         new StraightTrunkPlacer(4, 2, 0),
@@ -86,7 +92,7 @@ public class AetherFeatures {
                         new TwoLayersFeatureSize(1, 0, 1)
                 ).ignoreVines().build());
 
-        public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> GOLDEN_OAK_TREE_CONFIGURATION = register("golden_oak_tree", Feature.TREE,
+        public static final Holder<ConfiguredFeature<?, ?>> GOLDEN_OAK_TREE_CONFIGURATION = register("golden_oak_tree", Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
                         BlockStateProvider.simple(States.GOLDEN_OAK_LOG),
                         new FancyTrunkPlacer(9, 5, 0),
@@ -95,7 +101,7 @@ public class AetherFeatures {
                         new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(10))
                 ).ignoreVines().build());
 
-        public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> CRYSTAL_TREE_CONFIGURATION = register("crystal_tree", Feature.TREE,
+        public static final Holder<ConfiguredFeature<?, ?>> CRYSTAL_TREE_CONFIGURATION = register("crystal_tree", Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
                         BlockStateProvider.simple(States.SKYROOT_LOG),
                         new StraightTrunkPlacer(7, 0, 0),
@@ -103,7 +109,7 @@ public class AetherFeatures {
                         new CrystalFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), ConstantInt.of(6)),
                         new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build());
 
-        public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> HOLIDAY_TREE_CONFIGURATION = register("holiday_tree", Feature.TREE,
+        public static final Holder<ConfiguredFeature<?, ?>> HOLIDAY_TREE_CONFIGURATION = register("holiday_tree", Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
                         BlockStateProvider.simple(States.SKYROOT_LOG),
                         new StraightTrunkPlacer(9, 0, 0),
@@ -113,61 +119,66 @@ public class AetherFeatures {
                         .decorators(ImmutableList.of(new HolidayTreeDecorator(new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(States.SNOW, 10).add(States.PRESENT, 1).build()))))
                         .build());
 
-        public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> FLOWER_PATCH_CONFIGURATION = register("flower_patch", Feature.FLOWER,
+        public static final Holder<ConfiguredFeature<?, ?>> FLOWER_PATCH_CONFIGURATION = register("flower_patch", Feature.FLOWER,
                 AetherFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                         .add(States.PURPLE_FLOWER, 2)
                         .add(States.WHITE_FLOWER, 2)
                         .add(States.BERRY_BUSH, 1)), 64
                 ));
 
-        public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> GRASS_PATCH_CONFIGURATION = register("grass_patch", Feature.RANDOM_PATCH,
+        public static final Holder<ConfiguredFeature<?, ?>> GRASS_PATCH_CONFIGURATION = register("grass_patch", Feature.RANDOM_PATCH,
                 AetherFeatureBuilders.grassPatch(BlockStateProvider.simple(Blocks.GRASS), 32));
 
-        public static final Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> TALL_GRASS_PATCH_CONFIGURATION = register("tall_grass_patch", Feature.RANDOM_PATCH,
+        public static final Holder<ConfiguredFeature<?, ?>> TALL_GRASS_PATCH_CONFIGURATION = register("tall_grass_patch", Feature.RANDOM_PATCH,
                 AetherFeatureBuilders.tallGrassPatch(BlockStateProvider.simple(Blocks.TALL_GRASS)));
 
-        public static final Holder<ConfiguredFeature<SimpleDiskConfiguration, ?>> QUICKSOIL_SHELF_CONFIGURATION = register("quicksoil_shelf", SIMPLE_DISK.get(),
+        public static final Holder<ConfiguredFeature<?, ?>> QUICKSOIL_SHELF_CONFIGURATION = register("quicksoil_shelf", SIMPLE_DISK.get(),
                 new SimpleDiskConfiguration(
                         UniformFloat.of(Mth.sqrt(12), 5), // sqrt(12) is old static value
                         BlockStateProvider.simple(States.QUICKSOIL),
                         3
                 ));
 
-        public static final Holder<ConfiguredFeature<AetherLakeConfiguration, ?>> WATER_LAKE_CONFIGURATION = register("water_lake", LAKE.get(),
+        public static final Holder<ConfiguredFeature<?, ?>> WATER_LAKE_CONFIGURATION = register("water_lake", LAKE.get(),
                 AetherFeatureBuilders.lake(BlockStateProvider.simple(Blocks.WATER), BlockStateProvider.simple(AetherBlocks.AETHER_GRASS_BLOCK.get())));
 
-        public static final Holder<ConfiguredFeature<SpringConfiguration, ?>> WATER_SPRING_CONFIGURATION = register("water_spring", Feature.SPRING,
+        public static final Holder<ConfiguredFeature<?, ?>> WATER_SPRING_CONFIGURATION = register("water_spring", Feature.SPRING,
                 AetherFeatureBuilders.spring(Fluids.WATER.defaultFluidState(), true, 4, 1, HolderSet.direct(Block::builtInRegistryHolder, AetherBlocks.HOLYSTONE.get(), AetherBlocks.AETHER_DIRT.get())));
 
-        public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_AETHER_DIRT_CONFIGURATION = register("aether_dirt_ore", Feature.ORE,
+        public static final Holder<ConfiguredFeature<?, ?>> ORE_AETHER_DIRT_CONFIGURATION = register("aether_dirt_ore", Feature.ORE,
                 new OreConfiguration(Tests.HOLYSTONE, States.AETHER_DIRT, 33));
-        public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_ICESTONE_CONFIGURATION = register("icestone_ore", Feature.ORE,
+        public static final Holder<ConfiguredFeature<?, ?>> ORE_ICESTONE_CONFIGURATION = register("icestone_ore", Feature.ORE,
                 new OreConfiguration(Tests.HOLYSTONE, States.ICESTONE, 16));
-        public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_AMBROSIUM_CONFIGURATION = register("ambrosium_ore", Feature.ORE,
+        public static final Holder<ConfiguredFeature<?, ?>> ORE_AMBROSIUM_CONFIGURATION = register("ambrosium_ore", Feature.ORE,
                 new OreConfiguration(Tests.HOLYSTONE, States.AMBROSIUM_ORE, 16));
-        public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_ZANITE_CONFIGURATION = register("zanite_ore", Feature.ORE,
+        public static final Holder<ConfiguredFeature<?, ?>> ORE_ZANITE_CONFIGURATION = register("zanite_ore", Feature.ORE,
                 new OreConfiguration(Tests.HOLYSTONE, States.ZANITE_ORE, 8));
-        public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_GRAVITITE_COMMON_CONFIGURATION = register("gravitite_ore_common", Feature.ORE,
+        public static final Holder<ConfiguredFeature<?, ?>> ORE_GRAVITITE_COMMON_CONFIGURATION = register("gravitite_ore_common", Feature.ORE,
                 new OreConfiguration(Tests.HOLYSTONE, States.GRAVITITE_ORE, 6, 0.9F));
-        public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_GRAVITITE_DENSE_CONFIGURATION = register("gravitite_ore_dense", Feature.ORE,
+        public static final Holder<ConfiguredFeature<?, ?>> ORE_GRAVITITE_DENSE_CONFIGURATION = register("gravitite_ore_dense", Feature.ORE,
                 new OreConfiguration(Tests.HOLYSTONE, States.GRAVITITE_ORE, 3, 0.5F));
 
-        public static final Holder<ConfiguredFeature<RandomFeatureConfiguration, ?>> TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION = register("trees_skyroot_and_golden_oak", Feature.RANDOM_SELECTOR,
+        public static final Holder<ConfiguredFeature<?, ?>> TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION = register("trees_skyroot_and_golden_oak", Feature.RANDOM_SELECTOR,
                 new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
                         PlacementUtils.inlinePlaced(GOLDEN_OAK_TREE_CONFIGURATION, PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get())), 0.01F)),
                         PlacementUtils.inlinePlaced(SKYROOT_TREE_CONFIGURATION, PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()))));
 
-        public static final Holder<ConfiguredFeature<RandomFeatureConfiguration, ?>> TREES_GOLDEN_OAK_AND_SKYROOT_CONFIGURATION = register("trees_golden_oak_and_skyroot", Feature.RANDOM_SELECTOR,
+        public static final Holder<ConfiguredFeature<?, ?>> TREES_GOLDEN_OAK_AND_SKYROOT_CONFIGURATION = register("trees_golden_oak_and_skyroot", Feature.RANDOM_SELECTOR,
                 new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
                         PlacementUtils.inlinePlaced(SKYROOT_TREE_CONFIGURATION, PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get())), 0.1F)),
                         PlacementUtils.inlinePlaced(GOLDEN_OAK_TREE_CONFIGURATION, PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get()))));
 
-        public static <FC extends FeatureConfiguration, F extends Feature<FC>> Holder<ConfiguredFeature<FC, ?>> register(String name, F feature, FC configuration) {
-            return BuiltinRegistries.registerExact(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name).toString(), new ConfiguredFeature<>(feature, configuration));
+        public static <FC extends FeatureConfiguration, F extends Feature<FC>> Holder<ConfiguredFeature<?, ?>> register(String name, F feature, FC configuration) {
+            ResourceKey<Registry<ConfiguredFeature<?, ?>>> registry = Registry.CONFIGURED_FEATURE_REGISTRY;
+            ResourceLocation location = new ResourceLocation(Aether.MODID, name);
+            CONFIGURED_FEATURES.put(location, new ConfiguredFeature<>(feature, configuration));
+            return AetherDataGenerators.DATA_REGISTRY.registryOrThrow(registry).getOrCreateHolderOrThrow(ResourceKey.create(registry, location));
         }
     }
 
     public static class PlacedFeatures {
+        public static final Map<ResourceLocation, PlacedFeature> PLACED_FEATURES = new HashMap<>();
+
         public static final Holder<PlacedFeature> COLD_AERCLOUD_PLACEMENT = register("cold_aercloud", ConfiguredFeatures.COLD_AERCLOUD_CONFIGURATION, AetherFeatureBuilders.createAercloudPlacements(128, 5));
         public static final Holder<PlacedFeature> BLUE_AERCLOUD_PLACEMENT = register("blue_aercloud", ConfiguredFeatures.BLUE_AERCLOUD_CONFIGURATION, AetherFeatureBuilders.createAercloudPlacements(96, 5));
         public static final Holder<PlacedFeature> GOLDEN_AERCLOUD_PLACEMENT = register("golden_aercloud", ConfiguredFeatures.GOLDEN_AERCLOUD_CONFIGURATION, AetherFeatureBuilders.createAercloudPlacements(160, 5));
@@ -247,7 +258,10 @@ public class AetherFeatures {
                 AetherFeatureBuilders.commonOrePlacement(3, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(0), VerticalAnchor.belowTop(0))));
 
         public static Holder<PlacedFeature> register(String name, Holder<? extends ConfiguredFeature<?, ?>> configuredFeature, List<PlacementModifier> placementModifiers) {
-            return BuiltinRegistries.register(BuiltinRegistries.PLACED_FEATURE, new ResourceLocation(Aether.MODID, name).toString(), new PlacedFeature(Holder.hackyErase(configuredFeature), List.copyOf(placementModifiers)));
+            ResourceKey<Registry<PlacedFeature>> registry = Registry.PLACED_FEATURE_REGISTRY;
+            ResourceLocation location = new ResourceLocation(Aether.MODID, name);
+            PLACED_FEATURES.put(location, new PlacedFeature(Holder.hackyErase(configuredFeature), List.copyOf(placementModifiers)));
+            return AetherDataGenerators.DATA_REGISTRY.registryOrThrow(registry).getOrCreateHolderOrThrow(ResourceKey.create(registry, location));
         }
 
         public static Holder<PlacedFeature> register(String name, Holder<? extends ConfiguredFeature<?, ?>> configuredFeature, PlacementModifier... placementModifiers) {

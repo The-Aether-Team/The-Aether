@@ -17,6 +17,7 @@ import com.gildedgames.aether.core.util.SunAltarWhitelist;
 import com.gildedgames.aether.core.util.TriviaReader;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.network.chat.Component;
@@ -88,7 +89,6 @@ public class Aether
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherLoot.LOOT_FUNCTION_TYPES,
                 AetherLoot.LOOT_CONDITION_TYPES,
-                AetherBiomes.BIOMES,
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
                 AetherTreeDecoratorTypes.TREE_DECORATORS,
                 AetherDimensions.DIMENSION_TYPES,
@@ -146,7 +146,7 @@ public class Aether
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper helper = event.getExistingFileHelper();
 
-        generator.addProvider(event.includeClient(), new AetherBlockStateData(generator, helper)); //todo is includeClient() correct here?
+        generator.addProvider(event.includeClient(), new AetherBlockStateData(generator, helper));
         generator.addProvider(event.includeClient(), new AetherItemModelData(generator, helper));
         generator.addProvider(event.includeClient(), new AetherLanguageData(generator));
         generator.addProvider(event.includeClient(), new AetherSoundData(generator, helper));
@@ -162,13 +162,12 @@ public class Aether
         generator.addProvider(event.includeServer(), new AetherDimensionTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherAdvancementData(generator, helper));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<ConfiguredFeature<?, ?>>().createBuiltinCopy(generator, helper, Registry.CONFIGURED_FEATURE_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<PlacedFeature>().createBuiltinCopy(generator, helper, Registry.PLACED_FEATURE_REGISTRY));
-        //TODO: Move these generators off of DeferredRegister and to regular builtin registers because they're datagenned.
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<Biome>().create(generator, helper, AetherBiomes.BIOMES, ForgeRegistries.Keys.BIOMES));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<DimensionType>().create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<NoiseGeneratorSettings>().create(generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<LevelStem>().levelStem(generator, helper));
+        //generator.addProvider(event.includeServer(), new AetherDataGenerators<ConfiguredFeature<?, ?>>().create(generator, helper, AetherFeatures.ConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
+        //generator.addProvider(event.includeServer(), new AetherDataGenerators<PlacedFeature>().create(generator, helper, AetherFeatures.PlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
+        //generator.addProvider(event.includeServer(), new AetherDataGenerators<Biome>().create(generator, helper, AetherBiomes.BIOMES, ForgeRegistries.Keys.BIOMES));
+        //generator.addProvider(event.includeServer(), new AetherDataGenerators<DimensionType>().create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
+        //generator.addProvider(event.includeServer(), new AetherDataGenerators<NoiseGeneratorSettings>().create(generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
+        //generator.addProvider(event.includeServer(), new AetherDataGenerators<LevelStem>().levelStem(generator, helper));
     }
 
     public void packSetup(AddPackFindersEvent event) {

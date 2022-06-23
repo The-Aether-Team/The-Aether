@@ -16,10 +16,10 @@ public class AetherBiomeTagData extends BiomeTagsProvider {
     @Override
     protected void addTags() {
         this.tag(AetherTags.Biomes.IS_AETHER).add(
-                AetherBiomes.GOLDEN_FOREST.get(),
-                AetherBiomes.SKYROOT_FOREST.get(),
-                AetherBiomes.SKYROOT_GROVE.get(),
-                AetherBiomes.SKYROOT_THICKET.get()
+                AetherBiomes.Keys.GOLDEN_FOREST,
+                AetherBiomes.Keys.SKYROOT_FOREST,
+                AetherBiomes.Keys.SKYROOT_GROVE,
+                AetherBiomes.Keys.SKYROOT_THICKET
         );
     }
 }
