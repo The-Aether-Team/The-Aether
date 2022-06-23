@@ -1,4 +1,4 @@
-// 1.19	2022-06-18T13:35:22.5028265	Recipes
+// 1.19	2022-06-23T18:09:20.1961195	Recipes
 d000da625d82240dda7b149bfae6cafbdc56d4c0 data/aether/advancements/recipes/aether_accessories/blue_cape.json
 e51fddb0b890fa94472e7882ae603719607fc2d6 data/aether/advancements/recipes/aether_accessories/chainmail_gloves_repairing.json
 6a4414227977f3bc902dbeb8a926309ccbe75688 data/aether/advancements/recipes/aether_accessories/diamond_gloves.json
@@ -158,6 +158,7 @@ f5c6d7e3169a15326e99e738912f0863767db3a5 data/aether/advancements/recipes/aether
 6dcfed6e98b83b93615f892eca612ea8a3e1bb0e data/aether/advancements/recipes/aether_misc/remedy_bucket_enchanting.json
 31c9c42c92a9cca2988470528fb56a43e2941de5 data/aether/advancements/recipes/aether_misc/skyroot_boat.json
 ff3e2b0cf3eeb3e4cf8b66dcadb4efc899d6fd57 data/aether/advancements/recipes/aether_misc/skyroot_bucket.json
+66a5e5d37d06389684abf6a7c58cc70674e69654 data/aether/advancements/recipes/aether_misc/skyroot_chest_boat.json
 df926bce4f33057224e58abf001817cf79ba0582 data/aether/advancements/recipes/aether_misc/welcoming_skies_freezing.json
 fcac6dc709b170888e4f5b71f30f97e523aedfc9 data/aether/advancements/recipes/aether_tools/gravitite_axe.json
 a53925e63b68c0a6b61e9f809a20ee10b11bfadb data/aether/advancements/recipes/aether_tools/gravitite_axe_repairing.json
@@ -501,6 +502,7 @@ d3dc6f296cfa4bf913a12b82377637fee4826876 data/aether/recipes/skyroot_bucket.json
 24c8b28f3b35cda947dc3b08f994b07b3e1a3152 data/aether/recipes/skyroot_button.json
 38b2f2ba1b2296cc1a5fc5e02bf882694169869c data/aether/recipes/skyroot_cartography_table.json
 85b10247bb68899ae9ce634126799553a3252131 data/aether/recipes/skyroot_chest.json
+4e0507357fbf5e7800b5f4eb9b503bab0a096254 data/aether/recipes/skyroot_chest_boat.json
 0a7edb78cf72fb2863afb8a7ba4d64a1742b8060 data/aether/recipes/skyroot_crafting_table.json
 a103351f59ce1169421eb9971d181d356c60d8b0 data/aether/recipes/skyroot_door.json
 02a3162e4c4f4fe137f19b7b2c21bbbd2083f195 data/aether/recipes/skyroot_fence.json

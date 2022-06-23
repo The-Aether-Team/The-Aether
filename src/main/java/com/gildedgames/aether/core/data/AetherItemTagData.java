@@ -263,7 +263,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.ZANITE_GEMSTONE.get(),
                 AetherBlocks.ENCHANTED_GRAVITITE.get().asItem());
         tag(ItemTags.BOATS).add(AetherItems.SKYROOT_BOAT.get());
-//        tag(ItemTags.CHEST_BOATS).add(AetherItems.SKYROOT_CHEST_BOAT.get()); TODO: Skyroot chest boats
+        tag(ItemTags.CHEST_BOATS).add(AetherItems.SKYROOT_CHEST_BOAT.get());
 
         //forge
         tag(Tags.Items.BOOKSHELVES).add(AetherBlocks.SKYROOT_BOOKSHELF.get().asItem());

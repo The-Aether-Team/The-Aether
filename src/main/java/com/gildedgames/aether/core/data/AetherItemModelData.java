@@ -179,6 +179,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.SKYROOT_AXOLOTL_BUCKET, "miscellaneous/");
 
         item(AetherItems.SKYROOT_BOAT, "miscellaneous/");
+        item(AetherItems.SKYROOT_CHEST_BOAT, "miscellaneous/");
 
         item(AetherItems.COLD_PARACHUTE, "miscellaneous/");
         item(AetherItems.GOLDEN_PARACHUTE, "miscellaneous/");
