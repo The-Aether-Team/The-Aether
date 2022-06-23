@@ -57,7 +57,8 @@ public class AetherWorldDisplayHelper {
                             loadWorld(summary);
                         }
                     }
-                } catch (ExecutionException | InterruptedException e) {
+                } catch (ExecutionException | InterruptedException | UnsupportedOperationException e) {
+                    AetherConfig.CLIENT.enable_world_preview.set(false);
                     e.printStackTrace();
                 }
             }

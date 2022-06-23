@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.event.listeners;
 
+import com.gildedgames.aether.client.AetherMusicManager;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.client.gui.button.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
@@ -12,12 +13,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.components.LerpingBossEvent;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.client.event.ScreenOpenEvent;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -33,7 +38,7 @@ public class GuiListener {
 	/** Set of UUIDs of boss bars that belong to Aether bosses. */
 	public static final Set<UUID> BOSS_EVENTS = new HashSet<>();
 
-	/*@SubscribeEvent
+	@SubscribeEvent
 	public static void onGuiOpen(ScreenOpenEvent event) {
 		Screen screen = event.getScreen();
 		GuiHooks.drawSentryBackground(screen);
@@ -51,9 +56,9 @@ public class GuiListener {
 			event.setScreen(bufferScreen);
 		}
 		GuiHooks.setupSplash(screen);
-	}*/
+	}
 
-	/*@SubscribeEvent
+	@SubscribeEvent
 	public static void onGuiInitialize(ScreenEvent.InitScreenEvent.Post event) {
 		Screen screen = event.getScreen();
 
@@ -84,9 +89,9 @@ public class GuiListener {
 		}
 
 		GuiHooks.setMenuAlignment();
-	}*/
+	}
 
-	/*@SubscribeEvent
+	@SubscribeEvent
 	public static void onGuiDraw(ScreenEvent.DrawScreenEvent event) {
 		Screen screen = event.getScreen();
 		PoseStack poseStack = event.getPoseStack();
@@ -94,7 +99,7 @@ public class GuiListener {
 		GuiHooks.drawTrivia(screen, poseStack);
 		GuiHooks.drawAetherTravelMessage(screen, poseStack);
 		GuiHooks.changeMenuAlignment(screen, minecraft);
-	}*/
+	}
 
 
 	@SubscribeEvent
@@ -103,18 +108,37 @@ public class GuiListener {
 		if (event.phase == TickEvent.Phase.END) {
 			GuiHooks.openAccessoryMenu();
 			GuiHooks.tickMenuWhenPaused(minecraft);
-		}/* else if (!minecraft.isPaused() || AetherWorldDisplayHelper.loadedLevel != null) {
-			AetherMusicManager.tick(); TODO: Aether music system
-		}*/
+			AetherMusicManager.tick();
+		}
 	}
 
 	/**
 	 * Resets the music on respawn.
 	 */
-	/*@SubscribeEvent
+	@SubscribeEvent
 	public static void onPlayerRespawn(ClientPlayerNetworkEvent.RespawnEvent event) {
-		AetherMusicManager.stopPlaying();
-	}*/
+		AetherMusicManager.stopMusic();
+	}
+
+	/**
+	 * Stops other music from playing over Aether music.
+	 */
+	@SubscribeEvent
+	public static void onPlaySound(PlaySoundEvent event) {
+		SoundInstance sound = event.getOriginalSound();
+		if (sound.getSource() == SoundSource.MUSIC) {
+			if (sound.getLocation().equals(SoundEvents.MUSIC_MENU.getLocation())) {
+				AetherMusicManager.handleMenuMusic();
+			} else if (AetherWorldDisplayHelper.loadedLevel != null) {
+				AetherMusicManager.handleWorldPreviewMusic();
+			} else if (sound.getLocation().equals(SoundEvents.MUSIC_CREATIVE.getLocation())) {
+				AetherMusicManager.handleCreativeMusic();
+			}
+			if (AetherMusicManager.isPlaying) {
+				event.setSound(null);
+			}
+		}
+	}
 
 	/**
 	 * Draws the Aether boss bar.

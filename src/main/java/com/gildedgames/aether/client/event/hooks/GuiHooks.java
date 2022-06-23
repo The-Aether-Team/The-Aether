@@ -1,6 +1,7 @@
 package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.AetherMusicManager;
 import com.gildedgames.aether.client.gui.button.AccessoryButton;
 import com.gildedgames.aether.client.gui.button.DynamicMenuButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
@@ -150,6 +151,8 @@ public class GuiHooks {
                         AetherConfig.CLIENT.enable_aether_menu.set(!AetherConfig.CLIENT.enable_aether_menu.get());
                         AetherConfig.CLIENT.enable_aether_menu.save();
                         Minecraft.getInstance().setScreen(getMenu());
+                        Minecraft.getInstance().getMusicManager().stopPlaying();
+                        AetherMusicManager.stopMusic();
                     },
                     (button, matrixStack, x, y) ->
                             screen.renderTooltip(matrixStack, Component.translatable(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether"), x + 4, y + 12));
