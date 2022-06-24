@@ -314,6 +314,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.SKYROOT_PUFFERFISH_BUCKET, "Skyroot Bucket of Pufferfish");
         addItem(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET, "Skyroot Bucket of Tropical Fish");
         addItem(AetherItems.SKYROOT_AXOLOTL_BUCKET, "Skyroot Bucket of Axolotl");
+        addItem(AetherItems.SKYROOT_TADPOLE_BUCKET, "Skyroot Bucket of Tadpole");
 
         addItem(AetherItems.SKYROOT_BOAT, "Skyroot Boat");
         addItem(AetherItems.SKYROOT_CHEST_BOAT, "Skyroot Boat with Chest");
@@ -874,6 +875,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherBlocks.SKYROOT_STAIRS, "Crafted from Skyroot Planks. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherItems.SKYROOT_STICK, "Crafted from Skyroot Planks. Used to create various aether tools and items. Nothing else too special about it.");
         addLore(AetherItems.SKYROOT_SWORD, "One of Aether's wooden tools, it has a low amount of durability, and doubles mob drops. It makes an excellent food collected when combined with enchantments such as Looting and Fire Aspect.");
+        addLore(AetherItems.SKYROOT_TADPOLE_BUCKET, "A Skyroot Bucket with a Tadpole inside. Transporting a Tadpole to a new biome can change what type of Frog it grows up into!");
         addLore(AetherBlocks.SKYROOT_TRAPDOOR, "Crafted from Skyroot Planks. A Trapdoor useful for covering entryways one block wide. Often used to add extra protection to staircases.");
         addLore(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET,"A Skyroot Bucket containing a Tropical Fish. A Helpful way to transport and catalogue the numerous varieties of Tropical Fish.");
         addLore(AetherItems.SKYROOT_WATER_BUCKET, "A Skyroot Bucket that is filled to the brim with Water.");

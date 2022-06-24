@@ -46,6 +46,7 @@ public class SkyrootBucketItem extends BucketItem {
         REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.PUFFERFISH_BUCKET), AetherItems.SKYROOT_PUFFERFISH_BUCKET);
         REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.TROPICAL_FISH_BUCKET), AetherItems.SKYROOT_TROPICAL_FISH_BUCKET);
         REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.AXOLOTL_BUCKET), AetherItems.SKYROOT_AXOLOTL_BUCKET);
+        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.TADPOLE_BUCKET), AetherItems.SKYROOT_TADPOLE_BUCKET);
     }
 
     @Nonnull
