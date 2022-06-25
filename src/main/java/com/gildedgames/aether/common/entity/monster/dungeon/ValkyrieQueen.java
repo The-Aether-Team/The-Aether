@@ -61,10 +61,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
         this.xpReward = 50;
     }
 
+    /**
+     * Generates a name for the boss.
+     */
     @Override
     public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
-        BossNameGenerator.generateValkyrieName(this);
+        this.setBossName(BossNameGenerator.generateValkyrieName());
         return data;
     }
 

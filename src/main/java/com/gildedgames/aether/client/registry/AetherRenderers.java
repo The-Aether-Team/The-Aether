@@ -115,7 +115,7 @@ public class AetherRenderers {
 
 //        event.registerEntityRenderer(AetherEntityTypes.SLIDER.get(), SliderRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.VALKYRIE_QUEEN.get(), ValkyrieQueenRenderer::new);
-//        event.registerEntityRenderer(AetherEntityTypes.SUN_SPIRIT.get(), SunSpiritRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.SUN_SPIRIT.get(), SunSpiritRenderer::new);
 
         event.registerEntityRenderer(AetherEntityTypes.SKYROOT_BOAT.get(), (context) -> new SkyrootBoatRenderer(context, false));
         event.registerEntityRenderer(AetherEntityTypes.SKYROOT_CHEST_BOAT.get(), (context) -> new SkyrootBoatRenderer(context, true));
