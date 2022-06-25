@@ -1,9 +1,11 @@
 package com.gildedgames.aether.common.entity.monster.dungeon;
 
 import com.gildedgames.aether.common.entity.BossMob;
+import com.gildedgames.aether.core.capability.AetherCapabilities;
 import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.BossInfoPacket;
 import com.gildedgames.aether.core.util.BossNameGenerator;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -13,12 +15,14 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
@@ -81,6 +85,29 @@ public class SunSpirit extends Monster implements BossMob {
     public void customServerAiStep() {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
+    }
+
+    /**
+     * Plays the valkyrie's defeat message.
+     */
+    @Override
+    public void die(@Nonnull DamageSource pCause) {
+        if (!this.level.isClientSide) {
+            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.dead").withStyle(ChatFormatting.AQUA));
+            this.level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent(aetherTime -> {
+                aetherTime.setEternalDay(false);
+                aetherTime.updateEternalDay();
+            });
+        }
+        super.die(pCause);
+    }
+
+    /**
+     * Sends a message to nearby players. Useful for the boss fight.
+     */
+    protected void chatWithNearby(Component message) {
+        this.level.getNearbyPlayers(NON_COMBAT, this, this.getBoundingBox().inflate(16, 16, 16)).forEach(player ->
+                player.sendSystemMessage(message));
     }
 
     /**

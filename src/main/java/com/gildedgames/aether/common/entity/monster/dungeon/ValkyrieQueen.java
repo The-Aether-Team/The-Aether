@@ -29,7 +29,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -45,7 +44,6 @@ import javax.annotation.Nullable;
  * in the same way, with the additional ability to shoot thunder crystal projectiles at their enemies.
  */
 public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialogue {
-    public static final TargetingConditions NON_COMBAT = TargetingConditions.forNonCombat();
     public static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
     /** The player whom the valkyrie queen is currently conversing with */
@@ -190,7 +188,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     }
 
     /**
-     * Sends a message to nearby players. Useful for the boss fight.
+     * Sends a message to nearby players. Useful for boss fights.
      */
     protected void chatWithNearby(Component message) {
         this.level.getNearbyPlayers(NON_COMBAT, this, this.getBoundingBox().inflate(16, 16, 16)).forEach(player -> this.chatItUp(player, message));
