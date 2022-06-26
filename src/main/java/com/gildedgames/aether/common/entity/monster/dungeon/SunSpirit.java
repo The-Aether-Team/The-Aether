@@ -14,6 +14,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -22,7 +23,6 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
@@ -85,10 +85,11 @@ public class SunSpirit extends Monster implements BossMob {
     public void customServerAiStep() {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
+        this.setFrozen(this.hurtTime > 0);
     }
 
     /**
-     * Plays the valkyrie's defeat message.
+     * Plays the sun spirit's defeat message and ends eternal day.
      */
     @Override
     public void die(@Nonnull DamageSource pCause) {
@@ -103,7 +104,7 @@ public class SunSpirit extends Monster implements BossMob {
     }
 
     /**
-     * Sends a message to nearby players. Useful for the boss fight.
+     * Sends a message to nearby players. Useful for boss fights.
      */
     protected void chatWithNearby(Component message) {
         this.level.getNearbyPlayers(NON_COMBAT, this, this.getBoundingBox().inflate(16, 16, 16)).forEach(player ->
