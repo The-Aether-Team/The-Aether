@@ -6,6 +6,7 @@ import com.gildedgames.aether.core.network.AetherPacketHandler;
 import com.gildedgames.aether.core.network.packet.client.BossInfoPacket;
 import com.gildedgames.aether.core.util.BossNameGenerator;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -13,8 +14,8 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -22,17 +23,25 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/**
+ * Implementation for the sun spirit, the final boss of the Aether. When the sun spirit is defeated, eternal day will
+ * end in the dimension.
+ */
 public class SunSpirit extends Monster implements BossMob {
     public static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
 
+    /** The sun spirit will return here when not in a fight. */
+    private BlockPos originPos;
     /** Boss health bar manager */
     private final ServerBossEvent bossFight;
 
@@ -40,7 +49,7 @@ public class SunSpirit extends Monster implements BossMob {
         super(entityType, level);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
 //        this.bossFight.setVisible(false);
-        this.xpReward = 50;
+        this.xpReward = XP_REWARD_BOSS;
     }
 
     /**
@@ -50,7 +59,14 @@ public class SunSpirit extends Monster implements BossMob {
     public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
         this.setBossName(BossNameGenerator.generateSunSpiritName());
+        this.originPos = new BlockPos(this.position());
         return data;
+    }
+
+    @Override
+    public void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 48.0F));
     }
 
     public static AttributeSupplier.Builder createSunSpiritAttributes() {
@@ -70,6 +86,9 @@ public class SunSpirit extends Monster implements BossMob {
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
+        tag.putInt("OriginX", this.originPos.getX());
+        tag.putInt("OriginY", this.originPos.getY());
+        tag.putInt("OriginZ", this.originPos.getZ());
     }
 
     @Override
@@ -78,6 +97,9 @@ public class SunSpirit extends Monster implements BossMob {
         Component name = Component.Serializer.fromJson(tag.getString("BossName"));
         if (name != null) {
             this.setBossName(name);
+        }
+        if (tag.contains("OriginX")) {
+            this.originPos = new BlockPos(tag.getInt("OriginX"), tag.getInt("OriginY"), tag.getInt("OriginZ"));
         }
     }
 
@@ -149,5 +171,15 @@ public class SunSpirit extends Monster implements BossMob {
     public void setBossName(Component component) {
         this.entityData.set(DATA_BOSS_NAME, component);
         this.bossFight.setName(component);
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(@Nonnull DamageSource pDamageSource) {
+        return null;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return null;
     }
 }

@@ -353,6 +353,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG, "Evil Whirlwind Spawn Egg");
         addItem(AetherItems.VALKYRIE_SPAWN_EGG, "Valkyrie Spawn Egg");
         addItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG, "Valkyrie Queen Spawn Egg");
+        addItem(AetherItems.SUN_SPIRIT_SPAWN_EGG, "Sun Spirit Spawn Egg");
         addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
 
 
@@ -377,6 +378,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.FIRE_MINION, "Fire Minion");
 
         addEntityType(AetherEntityTypes.VALKYRIE_QUEEN, "Valkyrie Queen");
+        addEntityType(AetherEntityTypes.SUN_SPIRIT, "Sun Spirit");
 
         addEntityType(AetherEntityTypes.SKYROOT_BOAT, "Boat");
         addEntityType(AetherEntityTypes.SKYROOT_CHEST_BOAT, "Boat with Chest");
@@ -622,6 +624,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("player.dialog.leave", "Nevermind");
         addGuiText("player.dialog.no_medals", "I'll return when I have them.");
         addGuiText("player.dialog.question", "What can you tell me about this place?");
+
+        //Sun spirit dialogue
+        addGuiText("sun_spirit.title", "the Sun Spirit");
 
 
 
