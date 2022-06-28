@@ -13,6 +13,6 @@ public class GoldenOakTree extends AbstractTreeGrower {
 	@Nullable
 	@Override
 	protected Holder<? extends ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource random, boolean largeHive) {
-		return Holder.direct(AetherFeatures.ConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION.get());
+		return AetherFeatures.ConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION;
 	}
 }

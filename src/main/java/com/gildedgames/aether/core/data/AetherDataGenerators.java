@@ -17,65 +17,40 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.JsonCodecProvider;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class AetherDataGenerators<T> {
-    //    public DataProvider createBuiltinAccess(DataGenerator generator, ExistingFileHelper helper, ResourceKey<Registry<T>> registryKey) {
-//        return create(BuiltinRegistries.ACCESS, generator, helper, registryKey);
-//    }
-
-//    public DataProvider createBuiltinCopy(DataGenerator generator, ExistingFileHelper helper, ResourceKey<Registry<T>> registryKey) {
-//        return create(RegistryAccess.builtinCopy(), generator, helper, registryKey);
-//    }
-
     public static RegistryAccess DATA_REGISTRY = RegistryAccess.builtinCopy();
 
     public DataProvider create(DataGenerator generator, ExistingFileHelper helper, Map<ResourceLocation, T> map, ResourceKey<Registry<T>> registryKey) {
         return JsonCodecProvider.forDatapackRegistry(generator, helper, Aether.MODID, RegistryOps.create(JsonOps.INSTANCE, DATA_REGISTRY), registryKey, map);
     }
 
-//    public DataProvider create(RegistryAccess registryAccess, DataGenerator generator, ExistingFileHelper helper, ResourceKey<Registry<T>> registryKey) {
-//        RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, registryAccess);
-//        Map<ResourceLocation, T> map = new HashMap<>();
-//        Registry<T> registry = registryAccess.registryOrThrow(registryKey);
-//        registry.entrySet().forEach((entry) -> {
-//            if (entry.getKey().location().getNamespace().equals(Aether.MODID)) {
-//                map.put(entry.getKey().location(), entry.getValue());
-//            }
-//        });
-//        return JsonCodecProvider.forDatapackRegistry(generator, helper, Aether.MODID, registryOps, registryKey, map);
-//    }
-
-//    public DataProvider create(DataGenerator generator, ExistingFileHelper helper, DeferredRegister<T> registry, ResourceKey<Registry<T>> registryKey) {
-//        RegistryAccess registryAccess = BuiltinRegistries.ACCESS; //RegistryAccess.builtinCopy()
-//        RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, registryAccess);
-//        Map<ResourceLocation, T> map = new HashMap<>();
-//        for (RegistryObject<T> object : registry.getEntries()) {
-//            map.put(object.getId(), object.get());
-//        }
-//        return JsonCodecProvider.forDatapackRegistry(generator, helper, Aether.MODID, registryOps, registryKey, map);
-//    }
+    public DataProvider create(RegistryAccess registryAccess, DataGenerator generator, ExistingFileHelper helper, Map<ResourceLocation, T> map, ResourceKey<Registry<T>> registryKey) {
+        return JsonCodecProvider.forDatapackRegistry(generator, helper, Aether.MODID, RegistryOps.create(JsonOps.INSTANCE, registryAccess), registryKey, map);
+    }
 
     public DataProvider levelStem(DataGenerator generator, ExistingFileHelper helper) {
-        RegistryAccess registryAccess = BuiltinRegistries.ACCESS;
-        RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, registryAccess);
+        RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, BuiltinRegistries.ACCESS);
         Map<ResourceLocation, LevelStem> map = new HashMap<>();
         Registry<Biome> biomeRegistry = registryOps.registry(Registry.BIOME_REGISTRY).orElseThrow();
+        Registry<DimensionType> dimensionTypeRegistry = registryOps.registry(Registry.DIMENSION_TYPE_REGISTRY).orElseThrow();
         Registry<StructureSet> structureSetRegistry = registryOps.registry(Registry.STRUCTURE_SET_REGISTRY).orElseThrow();
         Registry<NormalNoise.NoiseParameters> noiseParametersRegistry = registryOps.registry(Registry.NOISE_REGISTRY).orElseThrow();
+        Registry<NoiseGeneratorSettings> noiseGeneratorSettingsRegistry = registryOps.registry(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY).orElseThrow();
         BiomeSource source = AetherBiomeBuilders.buildAetherBiomeSource(biomeRegistry);
-        NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(structureSetRegistry, noiseParametersRegistry, source, AetherNoiseGeneratorSettings.SKYLANDS.getHolder().get());
-        LevelStem levelStem = new LevelStem(AetherDimensions.AETHER_DIMENSION_TYPE.getHolder().get(), aetherChunkGen);
+        NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(structureSetRegistry, noiseParametersRegistry, source, AetherNoiseGeneratorSettings.getHolder(AetherNoiseGeneratorSettings.SKYLANDS, noiseGeneratorSettingsRegistry));
+        LevelStem levelStem = new LevelStem(AetherDimensions.getHolder(AetherDimensions.AETHER_DIMENSION_TYPE, dimensionTypeRegistry), aetherChunkGen);
         map.put(AetherDimensions.AETHER_LEVEL_STEM.location(), levelStem);
         final ResourceLocation registryId = Registry.LEVEL_STEM_REGISTRY.location();
         final String registryFolder = registryId.getPath();

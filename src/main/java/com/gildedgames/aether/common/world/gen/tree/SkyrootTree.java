@@ -13,6 +13,6 @@ public class SkyrootTree extends AbstractTreeGrower {
 	@Nullable
 	@Override
 	protected Holder<? extends ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource random, boolean largeHive) {
-		return Holder.direct(AetherFeatures.ConfiguredFeatures.SKYROOT_TREE_CONFIGURATION.get());
+		return AetherFeatures.ConfiguredFeatures.SKYROOT_TREE_CONFIGURATION;
 	}
 }

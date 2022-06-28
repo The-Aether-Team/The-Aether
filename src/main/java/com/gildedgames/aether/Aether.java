@@ -19,6 +19,7 @@ import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -90,9 +91,7 @@ public class Aether
                 AetherLoot.LOOT_FUNCTION_TYPES,
                 AetherLoot.LOOT_CONDITION_TYPES,
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
-                AetherTreeDecoratorTypes.TREE_DECORATORS,
-                AetherDimensions.DIMENSION_TYPES,
-                AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS
+                AetherTreeDecoratorTypes.TREE_DECORATORS
         };
 
         for (DeferredRegister<?> register : registers) {
@@ -154,20 +153,20 @@ public class Aether
         generator.addProvider(event.includeServer(), new AetherRecipeData(generator));
         generator.addProvider(event.includeServer(), new AetherLootTableData(generator));
         generator.addProvider(event.includeServer(), new AetherLootModifierData(generator));
+        generator.addProvider(event.includeServer(), new AetherAdvancementData(generator, helper));
         AetherBlockTagData blockTags = new AetherBlockTagData(generator, helper);
         generator.addProvider(event.includeServer(), blockTags);
         generator.addProvider(event.includeServer(), new AetherItemTagData(generator, blockTags, helper));
         generator.addProvider(event.includeServer(), new AetherEntityTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherFluidTagData(generator, helper));
-        generator.addProvider(event.includeServer(), new AetherDimensionTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(generator, helper));
-        generator.addProvider(event.includeServer(), new AetherAdvancementData(generator, helper));
-        //generator.addProvider(event.includeServer(), new AetherDataGenerators<ConfiguredFeature<?, ?>>().create(generator, helper, AetherFeatures.ConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
-        //generator.addProvider(event.includeServer(), new AetherDataGenerators<PlacedFeature>().create(generator, helper, AetherFeatures.PlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
-        //generator.addProvider(event.includeServer(), new AetherDataGenerators<Biome>().create(generator, helper, AetherBiomes.BIOMES, ForgeRegistries.Keys.BIOMES));
-        //generator.addProvider(event.includeServer(), new AetherDataGenerators<DimensionType>().create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
-        //generator.addProvider(event.includeServer(), new AetherDataGenerators<NoiseGeneratorSettings>().create(generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
-        //generator.addProvider(event.includeServer(), new AetherDataGenerators<LevelStem>().levelStem(generator, helper));
+        generator.addProvider(event.includeServer(), new AetherDimensionTagData(generator, helper));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<ConfiguredFeature<?, ?>>().create(generator, helper, AetherFeatures.ConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<PlacedFeature>().create(generator, helper, AetherFeatures.PlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<Biome>().create(generator, helper, AetherBiomes.BIOMES, ForgeRegistries.Keys.BIOMES));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<DimensionType>().create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<NoiseGeneratorSettings>().create(BuiltinRegistries.ACCESS, generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<LevelStem>().levelStem(generator, helper));
     }
 
     public void packSetup(AddPackFindersEvent event) {

@@ -115,7 +115,7 @@ public class CapabilityHooks {
 
         private static void syncAetherTime(Player player) {
             if (player instanceof ServerPlayer serverPlayer) {
-                if (player.level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_LEVEL_ID)) {
+                if (player.level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
                     AetherTime.get(serverPlayer.level).ifPresent(cap -> cap.updateEternalDay(serverPlayer));
                 }
             }
