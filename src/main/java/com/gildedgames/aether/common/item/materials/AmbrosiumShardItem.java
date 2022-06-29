@@ -36,7 +36,7 @@ public class AmbrosiumShardItem extends Item
 				if (!playerentity.getAbilities().instabuild) {
 					context.getItemInHand().shrink(1);
 				}
-				return InteractionResult.SUCCESS;
+				return InteractionResult.sidedSuccess(world.isClientSide);
 			}
 		}
 		return super.useOn(context);
@@ -46,7 +46,7 @@ public class AmbrosiumShardItem extends Item
 	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		if (AetherConfig.COMMON.edible_ambrosium.get()) {
 			ItemStack itemstack = playerIn.getItemInHand(handIn);
-			if (playerIn.getHealth() < playerIn.getMaxHealth() && !playerIn.isCreative()) {
+			if (playerIn.getHealth() < playerIn.getMaxHealth() || playerIn.isCreative()) {
 				playerIn.startUsingItem(handIn);
 				return InteractionResultHolder.consume(itemstack);
 			} else {
@@ -59,7 +59,7 @@ public class AmbrosiumShardItem extends Item
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack stackIn, Level worldIn, LivingEntity playerIn) {
-		if (AetherConfig.COMMON.edible_ambrosium.get()) {
+		if (AetherConfig.COMMON.edible_ambrosium.get() && playerIn instanceof Player player && !player.isCreative()) {
 			playerIn.heal(1);
 			stackIn.shrink(1);
 		}
