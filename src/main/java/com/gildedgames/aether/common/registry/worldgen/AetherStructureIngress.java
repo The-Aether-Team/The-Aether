@@ -30,8 +30,8 @@ import java.util.Map;
 //TODO: This can be removed now that we're in 1.18.2 when we start registering structures through datapacks.
 // About goddamn time -Drull
 // Further addendum: 1.19 will introduce changes that will be even more helpful https://youtu.be/Az_BA5ka8C4
-@Deprecated // This class is NOT going to stay.
-public final class AetherStructureIngress {
+//@Deprecated // This class is NOT going to stay.
+//public final class AetherStructureIngress {
 //    public static void registerEvents(IEventBus modEventBus) {
 //        AetherStructures.STRUCTURES.register(modEventBus);
 //        modEventBus.addListener(AetherStructureIngress::setup);
@@ -114,4 +114,4 @@ public final class AetherStructureIngress {
 //
 //    private AetherStructureIngress() {
 //    }
-}
+//}
