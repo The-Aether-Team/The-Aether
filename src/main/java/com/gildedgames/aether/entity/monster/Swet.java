@@ -3,7 +3,7 @@ package com.gildedgames.aether.entity.monster;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.entity.ai.goal.target.NearestTaggedTargetGoal;
 import com.gildedgames.aether.entity.passive.MountableAnimal;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.SwetAttackPacket;
 import com.gildedgames.aether.network.packet.client.SwetDeathParticlePacket;

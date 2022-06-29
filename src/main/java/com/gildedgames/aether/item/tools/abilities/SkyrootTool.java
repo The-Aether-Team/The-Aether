@@ -2,7 +2,7 @@ package com.gildedgames.aether.item.tools.abilities;
 
 import com.gildedgames.aether.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.block.util.IAetherDoubleDropBlock;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;

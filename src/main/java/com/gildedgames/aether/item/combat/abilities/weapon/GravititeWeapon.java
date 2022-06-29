@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item.combat.abilities.weapon;
 
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;

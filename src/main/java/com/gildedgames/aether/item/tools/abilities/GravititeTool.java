@@ -1,7 +1,7 @@
 package com.gildedgames.aether.item.tools.abilities;
 
 import com.gildedgames.aether.entity.block.FloatingBlockEntity;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;

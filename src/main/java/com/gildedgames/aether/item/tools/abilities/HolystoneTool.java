@@ -1,7 +1,7 @@
 package com.gildedgames.aether.item.tools.abilities;
 
 import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;

@@ -9,7 +9,7 @@ import com.gildedgames.aether.inventory.container.IncubatorMenu;
 import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.block.AetherBlockEntityTypes;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import com.google.common.collect.Maps;
 import net.minecraft.core.*;
 import net.minecraft.server.level.ServerLevel;

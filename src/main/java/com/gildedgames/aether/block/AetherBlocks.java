@@ -23,7 +23,7 @@ import com.gildedgames.aether.item.block.BurnableBlockItem;
 import com.gildedgames.aether.item.block.EntityBlockItem;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.world.generation.tree.GoldenOakTree;
 import com.gildedgames.aether.world.generation.tree.SkyrootTree;
 import net.minecraft.core.BlockPos;

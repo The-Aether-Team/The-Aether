@@ -1,7 +1,7 @@
 package com.gildedgames.aether.item.accessories.abilities;
 
 import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.util.ConstantsUtil;
 import net.minecraft.world.entity.Entity;

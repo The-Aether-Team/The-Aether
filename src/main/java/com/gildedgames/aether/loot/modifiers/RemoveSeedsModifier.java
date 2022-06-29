@@ -1,6 +1,6 @@
 package com.gildedgames.aether.loot.modifiers;
 
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.util.LevelUtil;
 import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;

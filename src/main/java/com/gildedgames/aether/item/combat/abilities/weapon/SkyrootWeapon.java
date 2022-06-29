@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item.combat.abilities.weapon;
 
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;

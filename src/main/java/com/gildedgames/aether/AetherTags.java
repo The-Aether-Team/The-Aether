@@ -1,6 +1,5 @@
-package com.gildedgames.aether.api;
+package com.gildedgames.aether;
 
-import com.gildedgames.aether.Aether;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;

@@ -7,7 +7,7 @@ import com.gildedgames.aether.loot.functions.SpawnXP;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.AetherLoot;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.critereon.BlockPredicate;

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.block.natural;
 
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.core.BlockPos;

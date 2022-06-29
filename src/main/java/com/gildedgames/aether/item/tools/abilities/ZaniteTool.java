@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item.tools.abilities;
 
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import net.minecraft.world.item.ItemStack;
 
 public interface ZaniteTool {

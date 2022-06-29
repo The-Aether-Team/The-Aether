@@ -2,7 +2,7 @@ package com.gildedgames.aether.data.provider;
 
 import com.gildedgames.aether.recipe.builder.AltarRepairBuilder;
 import com.gildedgames.aether.recipe.AetherRecipes;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.*;

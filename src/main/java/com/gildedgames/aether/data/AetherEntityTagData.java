@@ -2,7 +2,7 @@ package com.gildedgames.aether.data;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.data.tags.TagsProvider;

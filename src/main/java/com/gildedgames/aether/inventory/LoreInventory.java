@@ -1,6 +1,6 @@
 package com.gildedgames.aether.inventory;
 
-import com.gildedgames.aether.advancement.LoreTrigger;
+import com.gildedgames.aether.advancement.triggers.LoreTrigger;
 import com.gildedgames.aether.inventory.container.LoreBookMenu;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.server.LoreExistsPacket;

@@ -13,7 +13,7 @@ import com.gildedgames.aether.entity.ai.controller.FallingMovementController;
 import com.gildedgames.aether.entity.ai.navigator.FallPathNavigation;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.loot.AetherLoot;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import com.google.common.collect.Maps;
 
 import net.minecraft.world.entity.*;

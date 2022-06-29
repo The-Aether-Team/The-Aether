@@ -1,4 +1,4 @@
-package com.gildedgames.aether.advancement;
+package com.gildedgames.aether.advancement.triggers;
 
 import com.gildedgames.aether.Aether;
 import com.google.common.collect.ImmutableSet;

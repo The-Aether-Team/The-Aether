@@ -1,6 +1,6 @@
 package com.gildedgames.aether.data;
 
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.data.provider.AetherLootTableProvider;
 import com.gildedgames.aether.entity.AetherEntityTypes;

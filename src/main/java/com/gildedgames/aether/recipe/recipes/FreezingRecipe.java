@@ -1,6 +1,7 @@
-package com.gildedgames.aether.recipe;
+package com.gildedgames.aether.recipe.recipes;
 
 import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.recipe.AetherRecipes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;

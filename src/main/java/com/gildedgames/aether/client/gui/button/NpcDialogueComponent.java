@@ -1,4 +1,4 @@
-package com.gildedgames.aether.api.client;
+package com.gildedgames.aether.client.gui.button;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;

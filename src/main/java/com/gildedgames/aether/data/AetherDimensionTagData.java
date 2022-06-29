@@ -1,7 +1,7 @@
 package com.gildedgames.aether.data;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.world.AetherDimensions;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;

@@ -1,7 +1,7 @@
 package com.gildedgames.aether.mixin.mixins.common;
 
 import com.gildedgames.aether.block.AetherBlockEntityTypes;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;

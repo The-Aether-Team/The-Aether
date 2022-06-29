@@ -2,9 +2,9 @@ package com.gildedgames.aether.recipe;
 
 import com.gildedgames.aether.Aether;
 
-import com.gildedgames.aether.recipe.AltarRepairRecipe;
-import com.gildedgames.aether.recipe.EnchantingRecipe;
-import com.gildedgames.aether.recipe.FreezingRecipe;
+import com.gildedgames.aether.recipe.recipes.AltarRepairRecipe;
+import com.gildedgames.aether.recipe.recipes.EnchantingRecipe;
+import com.gildedgames.aether.recipe.recipes.FreezingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

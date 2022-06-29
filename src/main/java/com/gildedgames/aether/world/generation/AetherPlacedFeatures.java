@@ -2,9 +2,8 @@ package com.gildedgames.aether.world.generation;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.world.builders.AetherFeatureBuilders;
-import com.gildedgames.aether.world.generation.AetherConfiguredFeatures;
 import com.gildedgames.aether.world.generation.placement.ConfigFilter;
 import com.gildedgames.aether.world.generation.placement.ElevationAdjustment;
 import com.gildedgames.aether.world.generation.placement.ElevationFilter;

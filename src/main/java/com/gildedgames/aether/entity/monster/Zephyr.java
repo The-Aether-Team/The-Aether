@@ -2,7 +2,7 @@ package com.gildedgames.aether.entity.monster;
 
 import com.gildedgames.aether.entity.projectile.ZephyrSnowball;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;

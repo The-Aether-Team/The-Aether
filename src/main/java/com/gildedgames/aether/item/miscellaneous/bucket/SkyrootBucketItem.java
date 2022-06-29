@@ -1,7 +1,7 @@
 package com.gildedgames.aether.item.miscellaneous.bucket;
 
 import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import com.google.common.collect.Maps;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.Holder;

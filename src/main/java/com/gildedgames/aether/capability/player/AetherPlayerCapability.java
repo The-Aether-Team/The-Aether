@@ -9,7 +9,7 @@ import com.gildedgames.aether.network.packet.client.CloudMinionPacket;
 import com.gildedgames.aether.network.packet.client.RemountAerbunnyPacket;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.AetherConfig;
 
 import com.gildedgames.aether.capability.CapabilitySyncing;

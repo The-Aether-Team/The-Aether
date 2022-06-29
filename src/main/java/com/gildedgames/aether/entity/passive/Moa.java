@@ -10,7 +10,7 @@ import com.gildedgames.aether.entity.ai.navigator.FallPathNavigation;
 
 import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.api.registers.MoaType;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.MoaInteractPacket;

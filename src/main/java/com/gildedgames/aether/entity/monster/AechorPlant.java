@@ -5,7 +5,7 @@ import com.gildedgames.aether.entity.ai.goal.target.NearestTaggedTargetGoal;
 import com.gildedgames.aether.entity.projectile.PoisonNeedle;
 
 import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.api.AetherTags;
+import com.gildedgames.aether.AetherTags;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
