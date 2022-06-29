@@ -396,6 +396,14 @@ public class AetherLootTableData extends AetherLootTableProvider
                                     .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
                             ))
             );
+
+            this.add(AetherEntityTypes.SUN_SPIRIT.get(), LootTable.lootTable()
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                            .add(LootItem.lootTableItem(AetherItems.GOLD_DUNGEON_KEY.get())
+                                    .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+                            )
+                    )
+            );
         }
 
         private static LootTable.Builder sheepLootTableBuilderWithDrop(ItemLike wool) {

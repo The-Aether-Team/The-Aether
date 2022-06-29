@@ -1,4 +1,4 @@
-// 1.19	2022-06-23T19:00:50.1584103	Aether Item Models
+// 1.19	2022-06-28T01:26:38.3964843	Aether Item Models
 88dbeab79e0017737773db746d2e719a21fdb198 assets/aether/models/item/aechor_petal.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aechor_plant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aerbunny_spawn_egg.json
@@ -228,6 +228,7 @@ e0387df2707c173961406c32ca673a4e5fba405d assets/aether/models/item/skyroot_tropi
 35509e4f53fd8b6519f382ee0f85006d094ad023 assets/aether/models/item/stripped_skyroot_log.json
 2738e8e7598c8b3c1659ea7a07ddb5167c59efad assets/aether/models/item/stripped_skyroot_wood.json
 93fdd82aa5b74627525621d3924796b4da7a1f57 assets/aether/models/item/sun_altar.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/sun_spirit_spawn_egg.json
 3ae7127b69ef7ba9076fc41a14a0cdb86c185d70 assets/aether/models/item/swet_ball.json
 6f8516aafdcbbd75021e5e2ab82e570c4ea28c11 assets/aether/models/item/swet_cape.json
 0b3f0f24069e28feaf8acf2a70e3f6c8940da702 assets/aether/models/item/trapped_angelic_stone.json

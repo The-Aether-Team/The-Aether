@@ -1,8 +1,8 @@
 package com.gildedgames.aether.core.util;
 
-import com.gildedgames.aether.common.entity.monster.dungeon.ValkyrieQueen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
+import net.minecraft.network.chat.MutableComponent;
 
 public class BossNameGenerator {
     public static RandomSource random = RandomSource.create();
@@ -71,9 +71,23 @@ public class BossNameGenerator {
             "dal", "gant", "el", "tyn", "air", "gine", "boo" };
 
     /**
+     * Generates a generic boss name.
+     */
+    public static MutableComponent generateBossName() {
+        String result = "";
+        result += name1[random.nextInt(name1.length)];
+        int middle = 2 + random.nextInt(2);
+        for (int i = 0; i < middle; i++)
+            result += name2[random.nextInt(name2.length)];
+        result += name3[random.nextInt(name3.length)];
+        result += ", ";
+        return Component.literal(result);
+    }
+
+    /**
      * Generates a name for the valkyrie queen boss.
      */
-    public static void generateValkyrieName(ValkyrieQueen valkyrieQueen) {
+    public static MutableComponent generateValkyrieName() {
         String result = "";
         int index = random.nextInt(valkyrieNameFirst.length);
         result += valkyrieNameFirst[index];
@@ -82,6 +96,15 @@ public class BossNameGenerator {
             result += valkyrieNameLast[random.nextInt(valkyrieNameLast.length)];
         }
         result += ", ";
-        valkyrieQueen.setBossName(Component.literal(result).append(Component.translatable("gui.aether.queen.title")));
+        return Component.literal(result).append(Component.translatable("gui.aether.queen.title"));
+    }
+
+    /**
+     * Generates a name for the sun spirit boss.
+     */
+    public static MutableComponent generateSunSpiritName() {
+        int index = random.nextInt(name1.length + 1);
+        MutableComponent result = index == 0 ? Component.literal("Karthuul, ") : generateBossName();
+        return result.append(Component.translatable("gui.aether.sun_spirit.title"));
     }
 }
