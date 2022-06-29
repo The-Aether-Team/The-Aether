@@ -42,6 +42,6 @@ public class AgilityCapeItem extends CapeItem {
     }
 
     public AttributeModifier getStepHeightModifier() {
-        return new AttributeModifier(STEP_HEIGHT_UUID, "Step height increase", 1.0F, AttributeModifier.Operation.ADDITION);
+        return new AttributeModifier(STEP_HEIGHT_UUID, "Step height increase", 0.4F, AttributeModifier.Operation.ADDITION);
     }
 }
