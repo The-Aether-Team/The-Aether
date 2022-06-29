@@ -14,8 +14,7 @@ public class AetherNoiseBuilders {
     private static final SurfaceRules.RuleSource DIRT = makeStateRule(AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
 
     public static NoiseGeneratorSettings skylandsNoiseSettings() {
-        BlockState holystone = AetherBlocks.HOLYSTONE.get().defaultBlockState();
-        holystone.setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
+        BlockState holystone = AetherBlocks.HOLYSTONE.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
         return new NoiseGeneratorSettings(
                 //new StructureSettings(Optional.empty(), Map.of(
                 //        //AetherStructures.BRONZE_DUNGEON_INSTANCE, new StructureFeatureConfiguration(6, 4, 16811681)//,
