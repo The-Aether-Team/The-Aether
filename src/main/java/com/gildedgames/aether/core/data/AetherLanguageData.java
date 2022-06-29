@@ -314,8 +314,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.SKYROOT_PUFFERFISH_BUCKET, "Skyroot Bucket of Pufferfish");
         addItem(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET, "Skyroot Bucket of Tropical Fish");
         addItem(AetherItems.SKYROOT_AXOLOTL_BUCKET, "Skyroot Bucket of Axolotl");
+        addItem(AetherItems.SKYROOT_TADPOLE_BUCKET, "Skyroot Bucket of Tadpole");
 
         addItem(AetherItems.SKYROOT_BOAT, "Skyroot Boat");
+        addItem(AetherItems.SKYROOT_CHEST_BOAT, "Skyroot Boat with Chest");
 
         addItem(AetherItems.COLD_PARACHUTE, "Cold Parachute");
         addItem(AetherItems.GOLDEN_PARACHUTE, "Golden Parachute");
@@ -377,6 +379,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.VALKYRIE_QUEEN, "Valkyrie Queen");
 
         addEntityType(AetherEntityTypes.SKYROOT_BOAT, "Boat");
+        addEntityType(AetherEntityTypes.SKYROOT_CHEST_BOAT, "Boat with Chest");
         addEntityType(AetherEntityTypes.CLOUD_MINION, "Cloud Minion");
         addEntityType(AetherEntityTypes.COLD_PARACHUTE, "Cold Parachute");
         addEntityType(AetherEntityTypes.GOLDEN_PARACHUTE, "Golden Parachute");
@@ -845,6 +848,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.SKYROOT_AXOLOTL_BUCKET,"A Skyroot Bucket with a friendly Axolotl in. Axolotls can be incredibly helpful aquatic partners. So it's best to keep one on hand if you're exploring wet environments.");
         addLore(AetherBlocks.SKYROOT_BED, "Crafted with cyan wool and skyroot planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
         addLore(AetherItems.SKYROOT_BOAT, "While the Aether does not have many large bodies of water, a boat can occasionally be a useful tool for crossing large distances over ice!");
+        addLore(AetherItems.SKYROOT_CHEST_BOAT, "A Skyroot Boat with a handy chest in the back. Helpful for transporting more items over long stretches of water, which are famously difficult to find in the Aether.");
         addLore(AetherBlocks.SKYROOT_BOOKSHELF, "Crafted from Skyroot Planks and Books. Bookshelves can be used to enhance the enchanting capabilities of an enchanting table.");
         addLore(AetherItems.SKYROOT_BUCKET, "A hand crafted bucket, used to contain Aechor poison, a nice Remedy or even just plain Water!");
         addLore(AetherBlocks.SKYROOT_BUTTON, "Crafted from Skyroot Planks, a button used to activate mechanisms and redstone.");
@@ -871,6 +875,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherBlocks.SKYROOT_STAIRS, "Crafted from Skyroot Planks. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherItems.SKYROOT_STICK, "Crafted from Skyroot Planks. Used to create various aether tools and items. Nothing else too special about it.");
         addLore(AetherItems.SKYROOT_SWORD, "One of Aether's wooden tools, it has a low amount of durability, and doubles mob drops. It makes an excellent food collected when combined with enchantments such as Looting and Fire Aspect.");
+        addLore(AetherItems.SKYROOT_TADPOLE_BUCKET, "A Skyroot Bucket with a Tadpole inside. Transporting a Tadpole to a new biome can change what type of Frog it grows up into!");
         addLore(AetherBlocks.SKYROOT_TRAPDOOR, "Crafted from Skyroot Planks. A Trapdoor useful for covering entryways one block wide. Often used to add extra protection to staircases.");
         addLore(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET,"A Skyroot Bucket containing a Tropical Fish. A Helpful way to transport and catalogue the numerous varieties of Tropical Fish.");
         addLore(AetherItems.SKYROOT_WATER_BUCKET, "A Skyroot Bucket that is filled to the brim with Water.");

@@ -307,6 +307,12 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .unlockedBy("in_water", insideOf(Blocks.WATER))
                 .save(consumer);
 
+        ShapelessRecipeBuilder.shapeless(AetherItems.SKYROOT_CHEST_BOAT.get(), 1)
+                .requires(AetherItems.SKYROOT_BOAT.get())
+                .requires(Tags.Items.CHESTS)
+                .unlockedBy("has_boat", has(AetherItems.SKYROOT_BOAT.get()))
+                .group("chest_boat")
+                .save(consumer);
 
         ShapedRecipeBuilder.shaped(Items.SADDLE, 1)
                 .pattern("LLL")
