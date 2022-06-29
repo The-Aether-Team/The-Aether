@@ -2,11 +2,10 @@ package com.gildedgames.aether.core.util;
 
 import com.gildedgames.aether.common.entity.monster.dungeon.ValkyrieQueen;
 import net.minecraft.network.chat.Component;
-
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 public class BossNameGenerator {
-    public static Random random = new Random();
+    public static RandomSource random = RandomSource.create();
     /**
      * Valkyrie names
      */

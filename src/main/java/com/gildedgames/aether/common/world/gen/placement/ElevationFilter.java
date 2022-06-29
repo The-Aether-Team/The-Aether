@@ -8,8 +8,6 @@ import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementFilter;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
-import java.util.Random;
-
 public class ElevationFilter extends PlacementFilter {
     public static final Codec<ElevationFilter> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("minimum").forGetter(o -> o.minimum),

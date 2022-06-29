@@ -2,13 +2,13 @@ package com.gildedgames.aether.core.util;
 
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class TriviaReader {
-    private final Random random = new Random();
+    private final RandomSource random = RandomSource.create();
     private final List<Component> trivia = new ArrayList<>();
     private int index;
 
