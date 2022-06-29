@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.SunSpiritModel;
 
-import com.gildedgames.aether.common.entity.monster.dungeon.FireMinion;
+import com.gildedgames.aether.entity.monster.dungeon.FireMinion;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.resources.ResourceLocation;

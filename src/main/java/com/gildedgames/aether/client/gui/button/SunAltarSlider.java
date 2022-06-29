@@ -1,8 +1,8 @@
 package com.gildedgames.aether.client.gui.button;
 
-import com.gildedgames.aether.core.capability.AetherCapabilities;
-import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.server.SunAltarUpdatePacket;
+import com.gildedgames.aether.capability.AetherCapabilities;
+import com.gildedgames.aether.network.AetherPacketHandler;
+import com.gildedgames.aether.network.packet.server.SunAltarUpdatePacket;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;

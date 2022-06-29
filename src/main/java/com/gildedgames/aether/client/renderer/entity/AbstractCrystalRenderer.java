@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.client.renderer.entity.model.CrystalModel;
-import com.gildedgames.aether.common.entity.projectile.crystal.AbstractCrystal;
+import com.gildedgames.aether.entity.projectile.crystal.AbstractCrystal;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.event.listeners.abilities;
 
-import com.gildedgames.aether.common.registry.AetherItems;
+import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraftforge.api.distmarker.Dist;

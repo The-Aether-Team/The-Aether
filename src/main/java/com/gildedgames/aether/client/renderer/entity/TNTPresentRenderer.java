@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import com.gildedgames.aether.common.entity.block.TntPresent;
-import com.gildedgames.aether.common.registry.AetherBlocks;
+import com.gildedgames.aether.entity.block.TntPresent;
+import com.gildedgames.aether.block.AetherBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.renderer.MultiBufferSource;

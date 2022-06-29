@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.particle;
 
-import com.gildedgames.aether.common.entity.monster.PassiveWhirlwind;
+import com.gildedgames.aether.entity.monster.PassiveWhirlwind;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.SimpleParticleType;

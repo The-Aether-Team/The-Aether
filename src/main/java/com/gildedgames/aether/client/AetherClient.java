@@ -4,13 +4,11 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.SunAltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
 import com.gildedgames.aether.client.registry.*;
-import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
-import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
-import com.gildedgames.aether.common.registry.AetherContainerTypes;
-import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
+import com.gildedgames.aether.inventory.AetherContainerTypes;
 
-import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.util.AetherCustomizations;
+import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.util.AetherCustomizations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;

@@ -1,8 +1,7 @@
 package com.gildedgames.aether.client.gui.button;
 
-import com.gildedgames.aether.core.util.AetherCustomizations;
+import com.gildedgames.aether.util.AetherCustomizations;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;

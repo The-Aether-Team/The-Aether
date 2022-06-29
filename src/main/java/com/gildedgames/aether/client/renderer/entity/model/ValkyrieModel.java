@@ -1,7 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
-import com.gildedgames.aether.common.entity.monster.dungeon.AbstractValkyrie;
-import com.gildedgames.aether.common.entity.monster.dungeon.Valkyrie;
+import com.gildedgames.aether.entity.monster.dungeon.AbstractValkyrie;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HumanoidModel;

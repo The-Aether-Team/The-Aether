@@ -1,9 +1,9 @@
 package com.gildedgames.aether.client.registry;
 
-import com.gildedgames.aether.common.registry.AetherBlocks;
-import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.common.registry.AetherRecipeBookTypes;
-import com.gildedgames.aether.common.registry.AetherRecipes;
+import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
+import com.gildedgames.aether.recipe.AetherRecipes;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.RecipeBookCategories;

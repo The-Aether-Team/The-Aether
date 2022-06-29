@@ -1,10 +1,9 @@
 package com.gildedgames.aether.client.renderer.player.layer;
 
-import com.gildedgames.aether.common.entity.projectile.dart.AbstractDart;
-import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDart;
-import com.gildedgames.aether.common.entity.projectile.dart.PoisonDart;
-import com.gildedgames.aether.common.registry.AetherEntityTypes;
-import com.gildedgames.aether.core.capability.player.AetherPlayer;
+import com.gildedgames.aether.entity.projectile.dart.AbstractDart;
+import com.gildedgames.aether.entity.projectile.dart.PoisonDart;
+import com.gildedgames.aether.entity.AetherEntityTypes;
+import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.MultiBufferSource;

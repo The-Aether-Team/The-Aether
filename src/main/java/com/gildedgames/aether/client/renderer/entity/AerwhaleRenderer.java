@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.AerwhaleModel;
 import com.gildedgames.aether.client.renderer.entity.model.ClassicAerwhaleModel;
-import com.gildedgames.aether.common.entity.passive.Aerwhale;
+import com.gildedgames.aether.entity.passive.Aerwhale;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.model.EntityModel;

@@ -1,11 +1,11 @@
 package com.gildedgames.aether.client.gui.screen;
 
-import com.gildedgames.aether.client.gui.button.NpcDialogueComponent;
-import com.gildedgames.aether.client.gui.button.PlayerDialogueOption;
-import com.gildedgames.aether.common.entity.monster.dungeon.ValkyrieQueen;
-import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.server.NpcPlayerInteractPacket;
+import com.gildedgames.aether.api.client.NpcDialogueComponent;
+import com.gildedgames.aether.api.client.PlayerDialogueOption;
+import com.gildedgames.aether.entity.monster.dungeon.ValkyrieQueen;
+import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.network.AetherPacketHandler;
+import com.gildedgames.aether.network.packet.server.NpcPlayerInteractPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -60,7 +60,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
 
     /**
      * Sends an NPC interaction to the server.
-     * @see com.gildedgames.aether.core.network.packet.server.NpcPlayerInteractPacket
+     * @see NpcPlayerInteractPacket
      * @see ValkyrieQueen#handleNpcInteraction(Player, byte)
      * @param interactionID - A code for which interaction was performed on the client.
      *                      0 - What can you tell me about this place?

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.blockentity;
 
-import com.gildedgames.aether.common.item.block.EntityBlockItem;
+import com.gildedgames.aether.item.block.EntityBlockItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;

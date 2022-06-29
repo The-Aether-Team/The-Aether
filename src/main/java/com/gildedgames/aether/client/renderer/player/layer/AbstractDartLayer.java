@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.player.layer;
 
-import com.gildedgames.aether.common.entity.projectile.dart.AbstractDart;
+import com.gildedgames.aether.entity.projectile.dart.AbstractDart;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.MultiBufferSource;

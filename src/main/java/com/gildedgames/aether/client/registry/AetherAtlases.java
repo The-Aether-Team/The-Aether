@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.registry.AetherWoodTypes;
+import com.gildedgames.aether.block.AetherWoodTypes;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;

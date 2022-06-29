@@ -2,7 +2,7 @@ package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.client.registry.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.SwetOuterLayer;
-import com.gildedgames.aether.common.entity.monster.Swet;
+import com.gildedgames.aether.entity.monster.Swet;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.model;
 
-import com.gildedgames.aether.common.entity.miscellaneous.CloudMinion;
+import com.gildedgames.aether.entity.miscellaneous.CloudMinion;
 import com.google.common.collect.ImmutableList;
 
 import net.minecraft.client.model.ListModel;

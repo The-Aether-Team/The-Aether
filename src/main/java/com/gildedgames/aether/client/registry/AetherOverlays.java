@@ -1,11 +1,11 @@
 package com.gildedgames.aether.client.registry;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.entity.passive.Moa;
-import com.gildedgames.aether.common.registry.AetherBlocks;
-import com.gildedgames.aether.common.registry.AetherEffects;
-import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.capability.player.AetherPlayer;
+import com.gildedgames.aether.entity.passive.Moa;
+import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.effect.AetherEffects;
+import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.platform.Window;

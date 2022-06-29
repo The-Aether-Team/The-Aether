@@ -2,7 +2,7 @@ package com.gildedgames.aether.client.renderer.entity.layers;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.model.BipedBirdModel;
-import com.gildedgames.aether.common.entity.monster.Cockatrice;
+import com.gildedgames.aether.entity.monster.Cockatrice;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;

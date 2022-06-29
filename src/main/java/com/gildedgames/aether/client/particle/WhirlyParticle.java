@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.particle;
 
-import com.gildedgames.aether.common.entity.monster.AbstractWhirlwind;
+import com.gildedgames.aether.entity.monster.AbstractWhirlwind;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.util.Mth;

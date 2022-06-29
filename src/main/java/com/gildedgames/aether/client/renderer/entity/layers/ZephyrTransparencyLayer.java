@@ -2,7 +2,7 @@ package com.gildedgames.aether.client.renderer.entity.layers;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.model.ZephyrModel;
-import com.gildedgames.aether.common.entity.monster.Zephyr;
+import com.gildedgames.aether.entity.monster.Zephyr;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 

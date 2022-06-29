@@ -1,9 +1,9 @@
 package com.gildedgames.aether.client.gui.button;
 
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
-import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.server.OpenAccessoriesPacket;
-import com.gildedgames.aether.core.network.packet.server.OpenInventoryPacket;
+import com.gildedgames.aether.network.AetherPacketHandler;
+import com.gildedgames.aether.network.packet.server.OpenAccessoriesPacket;
+import com.gildedgames.aether.network.packet.server.OpenInventoryPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

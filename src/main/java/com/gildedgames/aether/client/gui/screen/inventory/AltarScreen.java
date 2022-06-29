@@ -2,7 +2,7 @@ package com.gildedgames.aether.client.gui.screen.inventory;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.inventory.recipebook.AltarRecipeBookComponent;
-import com.gildedgames.aether.common.inventory.container.AltarMenu;
+import com.gildedgames.aether.inventory.container.AltarMenu;
 
 import net.minecraft.client.gui.screens.inventory.AbstractFurnaceScreen;
 import net.minecraft.world.entity.player.Inventory;
