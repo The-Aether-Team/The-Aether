@@ -25,7 +25,7 @@ public class SentryRenderer extends MobRenderer<Sentry, SlimeModel<Sentry>> {
 	protected void scale(Sentry sentry, PoseStack poseStack, float partialTickTime) {
 		float f = 0.879F;
 		poseStack.scale(f, f, f);
-		float f1 = sentry.getSize();
+		float f1 = sentry.getSize() + 1.0F;
 		float f2 = 0.0F;
 		float f3 = 1.0F / (f2 + 1.0F);
 		poseStack.scale(f3 * f1, 1.0F / f3 * f1, f3 * f1);

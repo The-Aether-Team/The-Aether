@@ -1,19 +1,15 @@
 package com.gildedgames.aether.common.world.builders;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.registry.AetherBlocks;
 import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.common.registry.worldgen.AetherBiomes;
-import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
+import com.gildedgames.aether.common.registry.worldgen.AetherPlacedFeatures;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
 import net.minecraft.sounds.Music;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
 
@@ -31,7 +27,7 @@ public class AetherBiomeBuilders {
                                 FULL_RANGE,
                                 Climate.Parameter.span(1.0F, 2.0F),
                                 0
-                        ), Holder.Reference.createStandAlone(registry, AetherBiomes.Keys.GOLDEN_FOREST)
+                        ), AetherBiomes.getHolder(AetherBiomes.GOLDEN_FOREST, registry)
                 ),
                 Pair.of(
                         new Climate.ParameterPoint(
@@ -42,7 +38,7 @@ public class AetherBiomeBuilders {
                                 FULL_RANGE,
                                 Climate.Parameter.span(0.5F, 1.0F),
                                 0
-                        ), Holder.Reference.createStandAlone(registry, AetherBiomes.Keys.SKYROOT_FOREST)
+                        ), AetherBiomes.getHolder(AetherBiomes.SKYROOT_FOREST, registry)
                 ),
                 Pair.of(
                         new Climate.ParameterPoint(
@@ -53,7 +49,7 @@ public class AetherBiomeBuilders {
                                 FULL_RANGE,
                                 Climate.Parameter.span(-0.1F, 0.5F),
                                 0
-                        ), Holder.Reference.createStandAlone(registry, AetherBiomes.Keys.SKYROOT_THICKET)
+                        ), AetherBiomes.getHolder(AetherBiomes.SKYROOT_THICKET, registry)
                 ),
                 Pair.of(
                         new Climate.ParameterPoint(
@@ -64,7 +60,7 @@ public class AetherBiomeBuilders {
                                 FULL_RANGE,
                                 Climate.Parameter.span(-0.7F, -0.1F),
                                 0
-                        ), Holder.Reference.createStandAlone(registry, AetherBiomes.Keys.SKYROOT_FOREST)
+                        ), AetherBiomes.getHolder(AetherBiomes.SKYROOT_FOREST, registry)
                 ),
                 Pair.of(
                         new Climate.ParameterPoint(
@@ -75,29 +71,29 @@ public class AetherBiomeBuilders {
                                 FULL_RANGE,
                                 Climate.Parameter.span(-2.0F, -0.7F),
                                 0
-                        ), Holder.Reference.createStandAlone(registry, AetherBiomes.Keys.SKYROOT_GROVE)
+                        ), AetherBiomes.getHolder(AetherBiomes.SKYROOT_GROVE, registry)
                 )
         )));
     }
 
     public static Biome skyrootGroveBiome() {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder()
-                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.SKYROOT_GROVE_TREES_PLACEMENT));
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.SKYROOT_GROVE_TREES_PLACEMENT));
     }
 
     public static Biome skyrootForestBiome() {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder()
-                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.SKYROOT_FOREST_TREES_PLACEMENT));
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.SKYROOT_FOREST_TREES_PLACEMENT));
     }
 
     public static Biome skyrootThicketBiome() {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder()
-                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.SKYROOT_THICKET_TREES_PLACEMENT));
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.SKYROOT_THICKET_TREES_PLACEMENT));
     }
 
     public static Biome goldenForestBiome() {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder()
-                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.GOLDEN_FOREST_TREES_PLACEMENT));
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.GOLDEN_FOREST_TREES_PLACEMENT));
     }
 
     public static Biome makeDefaultBiome(BiomeGenerationSettings.Builder builder) {
@@ -131,24 +127,24 @@ public class AetherBiomeBuilders {
                         .addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(AetherEntityTypes.AERWHALE.get(), 2, 1, 1))
                         .build(),
                 builder
-                        .addFeature(GenerationStep.Decoration.RAW_GENERATION, AetherFeatures.PlacedFeatures.QUICKSOIL_SHELF_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.LAKES, AetherFeatures.PlacedFeatures.WATER_LAKE_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_AETHER_DIRT_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_ICESTONE_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_AMBROSIUM_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_ZANITE_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_GRAVITITE_COMMON_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherFeatures.PlacedFeatures.ORE_GRAVITITE_DENSE_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.FLUID_SPRINGS, AetherFeatures.PlacedFeatures.WATER_SPRING_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.GRASS_PATCH_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.TALL_GRASS_PATCH_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.HOLIDAY_TREE_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherFeatures.PlacedFeatures.FLOWER_PATCH_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.CRYSTAL_ISLAND_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.COLD_AERCLOUD_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.BLUE_AERCLOUD_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.GOLDEN_AERCLOUD_PLACEMENT)
-                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherFeatures.PlacedFeatures.PINK_AERCLOUD_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.RAW_GENERATION, AetherPlacedFeatures.QUICKSOIL_SHELF_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.LAKES, AetherPlacedFeatures.WATER_LAKE_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherPlacedFeatures.ORE_AETHER_DIRT_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherPlacedFeatures.ORE_ICESTONE_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherPlacedFeatures.ORE_AMBROSIUM_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherPlacedFeatures.ORE_ZANITE_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherPlacedFeatures.ORE_GRAVITITE_COMMON_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, AetherPlacedFeatures.ORE_GRAVITITE_DENSE_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.FLUID_SPRINGS, AetherPlacedFeatures.WATER_SPRING_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.GRASS_PATCH_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.TALL_GRASS_PATCH_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.HOLIDAY_TREE_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.FLOWER_PATCH_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherPlacedFeatures.CRYSTAL_ISLAND_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherPlacedFeatures.COLD_AERCLOUD_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherPlacedFeatures.BLUE_AERCLOUD_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherPlacedFeatures.GOLDEN_AERCLOUD_PLACEMENT)
+                        .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, AetherPlacedFeatures.PINK_AERCLOUD_PLACEMENT)
                         .build(),
                 Biome.TemperatureModifier.NONE
         );

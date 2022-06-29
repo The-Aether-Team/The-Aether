@@ -88,7 +88,10 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 AetherEntityTypes.HAMMER_PROJECTILE.get());
         tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(AetherEntityTypes.AERBUNNY.get());
         tag(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES).add(AetherEntityTypes.FIRE_MINION.get());
-        tag(EntityTypeTags.FROG_FOOD).add(AetherEntityTypes.BLUE_SWET.get(), AetherEntityTypes.GOLDEN_SWET.get());
+        tag(EntityTypeTags.FROG_FOOD).add(
+                AetherEntityTypes.BLUE_SWET.get(),
+                AetherEntityTypes.GOLDEN_SWET.get(),
+                AetherEntityTypes.SENTRY.get());
     }
 
     @Nonnull

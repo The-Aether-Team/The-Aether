@@ -18,13 +18,12 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import com.mojang.math.Matrix4f;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.math.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ISkyRenderHandler;
-
-import java.util.Random;
 
 @OnlyIn(Dist.CLIENT)
 public class AetherSkyRenderer implements ISkyRenderHandler {
@@ -217,7 +216,7 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
     }
 
     private BufferBuilder.RenderedBuffer drawStars(BufferBuilder pBuilder) {
-        Random random = new Random(10842L);
+        RandomSource random = RandomSource.create(10842L);
         pBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
 
         for (int i = 0; i < 1500; ++i) {

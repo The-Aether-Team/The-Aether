@@ -2,6 +2,7 @@ package com.gildedgames.aether.core.registry;
 
 import com.gildedgames.aether.common.registry.AetherItems;
 import com.gildedgames.aether.core.api.registers.MoaType;
+import net.minecraft.util.RandomSource;
 
 import java.util.*;
 
@@ -21,7 +22,7 @@ public class AetherMoaTypes
     }
 
     public static MoaType getRandomMoaType() {
-        Random random = new Random();
+        RandomSource random = RandomSource.create();
         List<MoaType> moaTypes = new ArrayList<>(MOA_TYPES.values());
         return moaTypes.get(random.nextInt(moaTypes.size()));
     }

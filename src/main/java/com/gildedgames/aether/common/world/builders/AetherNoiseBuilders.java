@@ -21,7 +21,7 @@ public class AetherNoiseBuilders {
                 //        //AetherStructures.BRONZE_DUNGEON_INSTANCE, new StructureFeatureConfiguration(6, 4, 16811681)//,
                 //        //AetherStructures.GOLD_DUNGEON.get(), new StructureFeatureConfiguration(24, 12, 120320420)
                 //)),
-                new NoiseSettings(0, 128, 1, 1),
+                new NoiseSettings(0, 128, 2, 1),
                 holystone,
                 Blocks.WATER.defaultBlockState(),
                 NoiseRouterData.floatingIslands(BuiltinRegistries.DENSITY_FUNCTION),

@@ -1,10 +1,10 @@
 package com.gildedgames.aether.common.block.dungeon;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
@@ -19,8 +19,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class TrappedBlock extends Block
 {
 	private final Supplier<EntityType<?>> entityTypeSupplier;
@@ -34,7 +32,7 @@ public class TrappedBlock extends Block
 
 	@Override
 	public void stepOn(Level world, BlockPos pos, BlockState state, Entity entityIn) {
-		Random random = new Random();
+		RandomSource random = RandomSource.create();
 		if (entityIn instanceof Player) {
 			world.setBlockAndUpdate(pos, untrappedVariantSupplier.get());
 			if (!world.isClientSide) {

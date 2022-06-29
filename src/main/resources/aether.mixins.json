@@ -18,9 +18,9 @@
   "client": [
     "client.AdvancementToastMixin",
     "client.ConnectScreenMixin",
+    "client.CreateWorldScreenMixin",
     "client.ElytraLayerMixin",
     "client.LocalPlayerMixin",
-    "client.MinecraftMixin",
     "client.PanoramaRendererMixin",
     "client.SplashManagerMixin",
     "client.TippableArrowRendererMixin",

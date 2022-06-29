@@ -22,7 +22,7 @@ public class DimensionTypeMixin {
 
     @Inject(at = @At("HEAD"), method = "timeOfDay", cancellable = true)
     private void timeOfDay(long dayTime, CallbackInfoReturnable<Float> cir) {
-        if (this.effectsLocation.equals(AetherDimensions.AETHER_LEVEL_ID)) {
+        if (this.effectsLocation.equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
             double d0 = Mth.frac(dayTime / 72000.0D - 0.25D);
             double d1 = 0.5D - Math.cos(d0 * Math.PI) / 2.0D;
             cir.setReturnValue((float)(d0 * 2.0D + d1) / 3.0F);
@@ -31,7 +31,7 @@ public class DimensionTypeMixin {
 
     @Inject(at = @At("HEAD"), method = "moonPhase", cancellable = true)
     private void moonPhase(long dayTime, CallbackInfoReturnable<Integer> cir) {
-        if (this.effectsLocation.equals(AetherDimensions.AETHER_LEVEL_ID)) {
+        if (this.effectsLocation.equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
             cir.setReturnValue((int) (dayTime / 72000L % 8L + 8L) % 8);
         }
     }

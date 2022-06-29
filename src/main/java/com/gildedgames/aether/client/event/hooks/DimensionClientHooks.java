@@ -49,7 +49,7 @@ public class DimensionClientHooks {
      */
     public static void tickTime() {
         ClientLevel level = Minecraft.getInstance().level;
-        if (level != null && !Minecraft.getInstance().isPaused() && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_LEVEL_ID)) {
+        if (level != null && !Minecraft.getInstance().isPaused() && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
             if (level.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
                 AetherTime.get(level).ifPresent(cap -> level.setDayTime(cap.tickTime(level) - 1)); // The client always increments time by 1 every tick.
             }

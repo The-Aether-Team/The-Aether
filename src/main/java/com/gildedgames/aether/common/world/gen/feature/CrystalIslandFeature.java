@@ -1,9 +1,10 @@
 package com.gildedgames.aether.common.world.gen.feature;
 
-import com.gildedgames.aether.common.registry.worldgen.AetherFeatures;
+import com.gildedgames.aether.common.registry.worldgen.AetherConfiguredFeatures;
+import com.gildedgames.aether.common.registry.worldgen.AetherFeatureStates;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -20,14 +21,14 @@ public class CrystalIslandFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        PlacedFeature feature = PlacementUtils.inlinePlaced(Holder.direct(AetherFeatures.ConfiguredFeatures.CRYSTAL_TREE_CONFIGURATION.get())).value();
+        PlacedFeature feature = PlacementUtils.inlinePlaced(AetherConfiguredFeatures.copy(AetherConfiguredFeatures.CRYSTAL_TREE_CONFIGURATION, BuiltinRegistries.CONFIGURED_FEATURE)).get();
         if (feature.place(context.level(), context.chunkGenerator(), context.random(), context.origin().above())) {
             for (int i = 0; i < 3; i++) {
                 BlockState state;
                 if (i == 0) {
-                    state = AetherFeatures.States.AETHER_GRASS_BLOCK;
+                    state = AetherFeatureStates.AETHER_GRASS_BLOCK;
                 } else {
-                    state = AetherFeatures.States.HOLYSTONE;
+                    state = AetherFeatureStates.HOLYSTONE;
                 }
                 int offset = i;
                 this.setBlock(context.level(), context.origin().below(offset), state);

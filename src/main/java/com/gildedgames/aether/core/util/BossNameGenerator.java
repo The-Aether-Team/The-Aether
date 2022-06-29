@@ -1,12 +1,11 @@
 package com.gildedgames.aether.core.util;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
 import net.minecraft.network.chat.MutableComponent;
 
-import java.util.Random;
-
 public class BossNameGenerator {
-    public static Random random = new Random();
+    public static RandomSource random = RandomSource.create();
     /**
      * Valkyrie names
      */
@@ -71,9 +70,8 @@ public class BossNameGenerator {
             "geth", "car", "lin", "ydd", "ris", "nyd", "ance", "luth", "ar",
             "dal", "gant", "el", "tyn", "air", "gine", "boo" };
 
-
     /**
-     * Generates a name for the valkyrie queen boss.
+     * Generates a generic boss name.
      */
     public static MutableComponent generateBossName() {
         String result = "";

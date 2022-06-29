@@ -151,6 +151,6 @@ workflows:
           filters:
             branches:
               only: 
-                - "1.18"
+                - "1.19"
           requires:
             - build
