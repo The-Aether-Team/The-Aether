@@ -1,4 +1,4 @@
-// 1.19	2022-06-18T13:35:22.5108047	Aether Block States
+// 1.19	2022-06-28T18:31:32.8257549	Aether Block States
 79cb0c0ea34a92e86b03080a209cb60f268cb31e assets/aether/blockstates/aerogel.json
 28f7eea22b621bda459b2328c2252cdebe0bcdb9 assets/aether/blockstates/aerogel_slab.json
 0866f96b2339b894ff4c8a01aebb3d87103eb0fb assets/aether/blockstates/aether_dirt.json
@@ -86,6 +86,7 @@ f2a7d8f1efb6ef0cdef2f972181962b6b13163fc assets/aether/blockstates/quicksoil_gla
 277e22ab0f54ecee5894658e987a79db691a9ff2 assets/aether/blockstates/skyroot_bed.json
 ec5213edca4c40dc00ba62e8ca018910f8094b65 assets/aether/blockstates/skyroot_bookshelf.json
 e8539f9de046e03c644e1d5213185507155aab81 assets/aether/blockstates/skyroot_button.json
+3d4fc85f12a399f3d53e5f672b10d7cd41738ecf assets/aether/blockstates/skyroot_door.json
 f001b8c8d046c742f5cd37f226b28c3b87e481e8 assets/aether/blockstates/skyroot_fence.json
 8c307e5b3c469d3a57ce0cc64d27b8f9716159f7 assets/aether/blockstates/skyroot_fence_gate.json
 55451162e1954ca09b0c98b7b77d95de7b63d52a assets/aether/blockstates/skyroot_leaves.json
@@ -244,6 +245,14 @@ b7ebe949c7d6e08e44b94c4a467e8969c7752b05 assets/aether/models/block/skyroot_bed_
 02110b4652725cacd424dbeff6902c4da48c8807 assets/aether/models/block/skyroot_bookshelf.json
 5d71f80f238bc94ab50bccf1c3333f4680c64008 assets/aether/models/block/skyroot_button.json
 4af14a3f91c91e62fb00a931ff1f9768def778be assets/aether/models/block/skyroot_button_pressed.json
+2c8434d8e62b5cd951f3aaf0b50d36e356c71a06 assets/aether/models/block/skyroot_door_bottom_left.json
+8d91ed7efeec4279565029d43a6545aa168d098e assets/aether/models/block/skyroot_door_bottom_left_open.json
+4fdfc832929ea47106e5c6578129d8b728983da1 assets/aether/models/block/skyroot_door_bottom_right.json
+f113aa5fa20e0d949f00fcc9932f279b278ddc23 assets/aether/models/block/skyroot_door_bottom_right_open.json
+6d9b0cb82fd1291df161f148ab9e32aae169d2b7 assets/aether/models/block/skyroot_door_top_left.json
+65e54de90407cefa6bb355712d4bf97bbe1d9e14 assets/aether/models/block/skyroot_door_top_left_open.json
+758ef0ab9debddda48f74dae98ac8ce90c336250 assets/aether/models/block/skyroot_door_top_right.json
+d34c4ac13ae9bf4e3bf471417fbd03757c90827c assets/aether/models/block/skyroot_door_top_right_open.json
 1889ecb290aa5d4480ccde2c3d945db04914cc0a assets/aether/models/block/skyroot_fence_gate.json
 8ce92bcad4ca906cfee94de19263a222f2e1566a assets/aether/models/block/skyroot_fence_gate_open.json
 d1d80c9cdc15dbf85a3caa64e9ec5bc9dce7c49d assets/aether/models/block/skyroot_fence_gate_wall.json
