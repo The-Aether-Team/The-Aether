@@ -16,6 +16,7 @@ import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.LevelSummary;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -40,7 +41,7 @@ public class AetherWorldDisplayHelper {
             if (loadedLevel == null) {
                 LevelStorageSource source = minecraft.getLevelSource();
                 try {
-                    List<LevelSummary> summaryList = source.loadLevelSummaries(source.findLevelCandidates()).get();
+                    List<LevelSummary> summaryList = new ArrayList<>(source.loadLevelSummaries(source.findLevelCandidates()).get());
                     Collections.sort(summaryList);
                     if (summaryList.size() > 0) {
                         LevelSummary summary = null;
@@ -101,7 +102,6 @@ public class AetherWorldDisplayHelper {
             Minecraft minecraft = Minecraft.getInstance();
             minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
             if (minecraft.getLevelSource().levelExists(loadedSummary.getLevelId()) && minecraft.getSingleplayerServer() != null) {
-//                AetherMusicManager.stopPlaying(); TODO: Aether music
                 openSessionLock();
                 fixWorld();
                 minecraft.forceSetScreen(null);
