@@ -17,7 +17,6 @@ import com.gildedgames.aether.core.util.SunAltarWhitelist;
 import com.gildedgames.aether.core.util.TriviaReader;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
@@ -74,24 +73,24 @@ public class Aether
         modEventBus.addListener(this::dataSetup);
         modEventBus.addListener(this::packSetup);
 
-        DeferredRegister<?>[] registers = { //todo keep up with vanilla/forge registry order.
+        DeferredRegister<?>[] registers = {
                 AetherBlocks.BLOCKS,
-                AetherFeatures.FEATURES,
-                AetherEntityTypes.ENTITIES,
-                AetherEffects.EFFECTS,
                 AetherItems.ITEMS,
-                AetherParticleTypes.PARTICLES,
-                AetherPOI.POI,
-                AetherSoundEvents.SOUNDS,
-                AetherContainerTypes.CONTAINERS,
+                AetherEntityTypes.ENTITIES,
                 AetherBlockEntityTypes.BLOCK_ENTITIES,
-                AetherRecipes.RECIPE_SERIALIZERS,
+                AetherContainerTypes.CONTAINERS,
+                AetherEffects.EFFECTS,
+                AetherParticleTypes.PARTICLES,
+                AetherFeatures.FEATURES,
+                AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
+                AetherTreeDecoratorTypes.TREE_DECORATORS,
+                AetherPOI.POI,
                 AetherRecipes.RecipeTypes.RECIPE_TYPES,
-                AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
+                AetherRecipes.RECIPE_SERIALIZERS,
                 AetherLoot.LOOT_FUNCTION_TYPES,
                 AetherLoot.LOOT_CONDITION_TYPES,
-                AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
-                AetherTreeDecoratorTypes.TREE_DECORATORS
+                AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
+                AetherSoundEvents.SOUNDS
         };
 
         for (DeferredRegister<?> register : registers) {
@@ -161,8 +160,8 @@ public class Aether
         generator.addProvider(event.includeServer(), new AetherFluidTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherDimensionTagData(generator, helper));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<ConfiguredFeature<?, ?>>().create(generator, helper, AetherFeatures.ConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<PlacedFeature>().create(generator, helper, AetherFeatures.PlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<ConfiguredFeature<?, ?>>().create(generator, helper, AetherConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<PlacedFeature>().create(generator, helper, AetherPlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<Biome>().create(generator, helper, AetherBiomes.BIOMES, ForgeRegistries.Keys.BIOMES));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<DimensionType>().create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<NoiseGeneratorSettings>().create(BuiltinRegistries.ACCESS, generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
