@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.gui.screen.inventory;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.gui.button.LorePageButton;
+import com.gildedgames.aether.client.gui.component.LorePageButton;
 import com.gildedgames.aether.inventory.menu.LoreBookMenu;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;

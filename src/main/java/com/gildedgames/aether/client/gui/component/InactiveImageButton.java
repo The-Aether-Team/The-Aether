@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.gui.button;
+package com.gildedgames.aether.client.gui.component;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;

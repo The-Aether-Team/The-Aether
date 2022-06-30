@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.gui.button;
+package com.gildedgames.aether.client.gui.component;
 
 import com.gildedgames.aether.capability.AetherCapabilities;
 import com.gildedgames.aether.network.AetherPacketHandler;

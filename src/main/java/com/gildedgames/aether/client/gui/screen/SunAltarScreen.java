@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.gui.screen;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.gui.button.SunAltarSlider;
+import com.gildedgames.aether.client.gui.component.SunAltarSlider;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;

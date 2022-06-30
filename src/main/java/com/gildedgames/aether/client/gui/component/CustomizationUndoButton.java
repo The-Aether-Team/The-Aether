@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.gui.button;
+package com.gildedgames.aether.client.gui.component;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

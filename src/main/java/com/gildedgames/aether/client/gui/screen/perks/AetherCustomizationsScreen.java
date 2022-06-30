@@ -2,9 +2,9 @@ package com.gildedgames.aether.client.gui.screen.perks;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.CustomizationsOptions;
-import com.gildedgames.aether.client.gui.button.ColorBox;
-import com.gildedgames.aether.client.gui.button.CustomizationSaveButton;
-import com.gildedgames.aether.client.gui.button.CustomizationUndoButton;
+import com.gildedgames.aether.client.gui.component.ColorBox;
+import com.gildedgames.aether.client.gui.component.CustomizationSaveButton;
+import com.gildedgames.aether.client.gui.component.CustomizationUndoButton;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.server.RankingsForcePacket;
 import com.gildedgames.aether.api.AetherPlayerRankings;
