@@ -1,7 +1,6 @@
 package com.gildedgames.aether.data;
 
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.data.provider.AetherLanguageProvider;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;

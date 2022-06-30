@@ -16,7 +16,6 @@ import com.gildedgames.aether.capability.CapabilitySyncing;
 import com.gildedgames.aether.network.AetherPacket;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.AetherPlayerSyncPacket;
-import com.gildedgames.aether.core.network.packet.client.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

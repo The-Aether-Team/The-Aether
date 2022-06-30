@@ -4,8 +4,6 @@ import com.gildedgames.aether.Aether;
 
 import com.gildedgames.aether.network.packet.AetherPlayerSyncPacket;
 import com.gildedgames.aether.network.packet.AetherRankingsSyncPacket;
-import com.gildedgames.aether.core.network.packet.client.*;
-import com.gildedgames.aether.core.network.packet.server.*;
 import com.gildedgames.aether.network.packet.client.*;
 import com.gildedgames.aether.network.packet.server.*;
 import net.minecraft.server.level.ServerPlayer;

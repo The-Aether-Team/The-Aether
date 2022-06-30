@@ -1,7 +1,6 @@
 package com.gildedgames.aether.event.listeners.abilities;
 
 import com.gildedgames.aether.event.hooks.AbilityHooks;
-import com.gildedgames.aether.common.item.combat.abilities.armor.*;
 import com.gildedgames.aether.item.combat.abilities.armor.*;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;

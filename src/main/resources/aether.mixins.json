@@ -1,31 +1,31 @@
 {
   "required": true,
-  "package": "com.gildedgames.aether.core.mixin.mixins",
+  "package": "com.gildedgames.aether.mixin.mixins",
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_17",
   "plugin": "com.gildedgames.aether.mixin.AetherMixinPlugin",
   "refmap": "aether.refmap.json",
   "mixins": [
-    "com.gildedgames.aether.mixin.mixins.common.AbstractArrowMixin",
-    "com.gildedgames.aether.mixin.mixins.common.AbstractFurnaceBlockEntityMixin",
-    "com.gildedgames.aether.mixin.mixins.common.CropBlockMixin",
-    "com.gildedgames.aether.mixin.mixins.common.DimensionTypeMixin",
-    "com.gildedgames.aether.mixin.mixins.common.FeatureMixin",
-    "com.gildedgames.aether.mixin.mixins.common.FoxEatBerriesGoalMixin",
-    "com.gildedgames.aether.mixin.mixins.common.ItemStackMixin",
-    "com.gildedgames.aether.mixin.mixins.common.LivingEntityMixin"
+    "common.AbstractArrowMixin",
+    "common.AbstractFurnaceBlockEntityMixin",
+    "common.CropBlockMixin",
+    "common.DimensionTypeMixin",
+    "common.FeatureMixin",
+    "common.FoxEatBerriesGoalMixin",
+    "common.ItemStackMixin",
+    "common.LivingEntityMixin"
   ],
   "client": [
-    "com.gildedgames.aether.mixin.mixins.client.AdvancementToastMixin",
-    "com.gildedgames.aether.mixin.mixins.client.ConnectScreenMixin",
-    "com.gildedgames.aether.mixin.mixins.client.CreateWorldScreenMixin",
-    "com.gildedgames.aether.mixin.mixins.client.ElytraLayerMixin",
-    "com.gildedgames.aether.mixin.mixins.client.LocalPlayerMixin",
-    "com.gildedgames.aether.mixin.mixins.client.PanoramaRendererMixin",
-    "com.gildedgames.aether.mixin.mixins.client.SplashManagerMixin",
-    "com.gildedgames.aether.mixin.mixins.client.TippableArrowRendererMixin",
-    "com.gildedgames.aether.mixin.mixins.client.TitleScreenMixin",
-    "com.gildedgames.aether.mixin.mixins.client.WorldListEntryMixin"
+    "client.AdvancementToastMixin",
+    "client.ConnectScreenMixin",
+    "client.CreateWorldScreenMixin",
+    "client.ElytraLayerMixin",
+    "client.LocalPlayerMixin",
+    "client.PanoramaRendererMixin",
+    "client.SplashManagerMixin",
+    "client.TippableArrowRendererMixin",
+    "client.TitleScreenMixin",
+    "client.WorldListEntryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

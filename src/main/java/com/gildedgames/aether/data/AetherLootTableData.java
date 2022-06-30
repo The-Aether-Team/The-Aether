@@ -9,7 +9,6 @@ import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.loot.conditions.ConfigEnabled;
 import com.gildedgames.aether.loot.functions.WhirlwindSpawnEntity;
 import com.gildedgames.aether.AetherConfig;
-import com.gildedgames.aether.common.registry.*;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;

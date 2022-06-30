@@ -2,7 +2,6 @@ package com.gildedgames.aether.data;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.advancement.triggers.LoreTrigger;
-import com.gildedgames.aether.common.registry.*;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.item.AetherItems;
