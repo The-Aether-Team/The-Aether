@@ -1,4 +1,4 @@
-package com.gildedgames.aether;
+package com.gildedgames.aether.world;
 
 import net.minecraft.world.level.GameRules;
 

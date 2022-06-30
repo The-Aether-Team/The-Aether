@@ -1,6 +1,5 @@
 package com.gildedgames.aether.world;
 
-import com.gildedgames.aether.WrappedGameRules;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.storage.DerivedLevelData;

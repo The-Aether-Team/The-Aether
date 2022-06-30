@@ -10,12 +10,12 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 import java.util.stream.Stream;
 
-public class ElevationAdjustment extends PlacementModifier {
-    public static final Codec<ElevationAdjustment> CODEC = IntProvider.CODEC.xmap(ElevationAdjustment::new, v -> v.adjustment);
+public class ElevationAdjustmentModifier extends PlacementModifier {
+    public static final Codec<ElevationAdjustmentModifier> CODEC = IntProvider.CODEC.xmap(ElevationAdjustmentModifier::new, v -> v.adjustment);
 
     private final IntProvider adjustment;
 
-    public ElevationAdjustment(IntProvider adjustment) {
+    public ElevationAdjustmentModifier(IntProvider adjustment) {
         this.adjustment = adjustment;
     }
 

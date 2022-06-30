@@ -5,7 +5,7 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.world.builders.AetherFeatureBuilders;
 import com.gildedgames.aether.world.generation.placement.ConfigFilter;
-import com.gildedgames.aether.world.generation.placement.ElevationAdjustment;
+import com.gildedgames.aether.world.generation.placement.ElevationAdjustmentModifier;
 import com.gildedgames.aether.world.generation.placement.ElevationFilter;
 import com.gildedgames.aether.world.generation.placement.HolidayFilter;
 import com.gildedgames.aether.AetherConfig;
@@ -77,7 +77,7 @@ public class AetherPlacedFeatures {
     public static final Holder<PlacedFeature> QUICKSOIL_SHELF_PLACEMENT = register("quicksoil_shelf", AetherConfiguredFeatures.QUICKSOIL_SHELF_CONFIGURATION,
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
-            new ElevationAdjustment(UniformInt.of(-4, -2)),
+            new ElevationAdjustmentModifier(UniformInt.of(-4, -2)),
             new ElevationFilter(47, 70),
             BlockPredicateFilter.forPredicate(BlockPredicate.matchesTag(AetherTags.Blocks.QUICKSOIL_CAN_GENERATE)));
     // FIXME once Terrain can go above 63 again, change 47 -> 63
