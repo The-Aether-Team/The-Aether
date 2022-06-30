@@ -6,6 +6,7 @@ import com.gildedgames.aether.world.AetherNoiseGeneratorSettings;
 import com.gildedgames.aether.world.builders.AetherBiomeBuilders;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.BuiltinRegistries;
@@ -41,7 +42,7 @@ public class AetherDataGenerators<T> {
     }
 
     public DataProvider levelStem(DataGenerator generator, ExistingFileHelper helper) {
-        RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, BuiltinRegistries.ACCESS);
+        RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, RegistryAccess.builtinCopy());
         Map<ResourceLocation, LevelStem> map = new HashMap<>();
         Registry<Biome> biomeRegistry = registryOps.registry(Registry.BIOME_REGISTRY).orElseThrow();
         Registry<DimensionType> dimensionTypeRegistry = registryOps.registry(Registry.DIMENSION_TYPE_REGISTRY).orElseThrow();
@@ -49,11 +50,18 @@ public class AetherDataGenerators<T> {
         Registry<NormalNoise.NoiseParameters> noiseParametersRegistry = registryOps.registry(Registry.NOISE_REGISTRY).orElseThrow();
         Registry<NoiseGeneratorSettings> noiseGeneratorSettingsRegistry = registryOps.registry(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY).orElseThrow();
         BiomeSource source = AetherBiomeBuilders.buildAetherBiomeSource(biomeRegistry);
-        NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(structureSetRegistry, noiseParametersRegistry, source, AetherNoiseGeneratorSettings.getHolder(AetherNoiseGeneratorSettings.SKYLANDS, noiseGeneratorSettingsRegistry));
-        LevelStem levelStem = new LevelStem(AetherDimensions.getHolder(AetherDimensions.AETHER_DIMENSION_TYPE, dimensionTypeRegistry), aetherChunkGen);
+        NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(structureSetRegistry, noiseParametersRegistry, source, getNoiseGeneratorSettings(noiseGeneratorSettingsRegistry));
+        LevelStem levelStem = new LevelStem(dimensionTypeRegistry.getOrCreateHolderOrThrow(AetherDimensions.AETHER_DIMENSION_TYPE), aetherChunkGen);
         map.put(AetherDimensions.AETHER_LEVEL_STEM.location(), levelStem);
         final ResourceLocation registryId = Registry.LEVEL_STEM_REGISTRY.location();
         final String registryFolder = registryId.getPath();
         return new JsonCodecProvider<>(generator, helper, Aether.MODID, registryOps, PackType.SERVER_DATA, registryFolder, LevelStem.CODEC, map);
+    }
+
+    public Holder<NoiseGeneratorSettings> getNoiseGeneratorSettings(Registry<NoiseGeneratorSettings> registry) {
+        Holder.Reference<NoiseGeneratorSettings> holder = (Holder.Reference<NoiseGeneratorSettings>) registry.getOrCreateHolderOrThrow(AetherNoiseGeneratorSettings.SKYLANDS); // BuiltinRegistries.NOISE_GENERATOR_SETTINGS.getOrCreateHolderOrThrow(AetherNoiseGeneratorSettings.SKYLANDS)
+        NoiseGeneratorSettings noiseGeneratorSettings = AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS.get(AetherNoiseGeneratorSettings.SKYLANDS.location());
+        holder.bind(AetherNoiseGeneratorSettings.SKYLANDS, noiseGeneratorSettings);
+        return holder;
     }
 }

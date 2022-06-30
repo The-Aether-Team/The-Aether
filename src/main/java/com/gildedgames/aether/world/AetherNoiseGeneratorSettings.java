@@ -2,7 +2,6 @@ package com.gildedgames.aether.world;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.world.builders.AetherNoiseBuilders;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -20,12 +19,5 @@ public class AetherNoiseGeneratorSettings {
         ResourceLocation location = new ResourceLocation(Aether.MODID, name);
         NOISE_GENERATOR_SETTINGS.putIfAbsent(location, noiseGeneratorSettings);
         return ResourceKey.create(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY, location);
-    }
-
-    public static Holder<NoiseGeneratorSettings> getHolder(ResourceKey<NoiseGeneratorSettings> key, Registry<NoiseGeneratorSettings> registry) {
-        NoiseGeneratorSettings noiseGeneratorSettings = NOISE_GENERATOR_SETTINGS.get(key.location());
-        Holder.Reference<NoiseGeneratorSettings> noiseGeneratorSettingsHolder = (Holder.Reference<NoiseGeneratorSettings>) registry.getOrCreateHolderOrThrow(key);
-        noiseGeneratorSettingsHolder.bind(key, noiseGeneratorSettings);
-        return noiseGeneratorSettingsHolder;
     }
 }

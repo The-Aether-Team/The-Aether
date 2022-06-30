@@ -116,12 +116,4 @@ public class AetherPlacedFeatures {
     public static Holder<PlacedFeature> register(String name, Holder<? extends ConfiguredFeature<?, ?>> configuredFeature, PlacementModifier... placementModifiers) {
         return register(name, configuredFeature, List.of(placementModifiers));
     }
-
-    public static Holder<PlacedFeature> copy(Holder<PlacedFeature> oldHolder, Registry<PlacedFeature> registry) {
-        ResourceKey<PlacedFeature> key = oldHolder.unwrapKey().orElseThrow();
-        PlacedFeature placedFeature = PLACED_FEATURES.get(key.location());
-        Holder.Reference<PlacedFeature> configuredFeatureHolder = (Holder.Reference<PlacedFeature>) registry.getOrCreateHolderOrThrow(key);
-        configuredFeatureHolder.bind(key, placedFeature);
-        return configuredFeatureHolder;
-    }
 }

@@ -2,7 +2,6 @@ package com.gildedgames.aether.world;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.world.builders.AetherBiomeBuilders;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -23,12 +22,5 @@ public class AetherBiomes {
         ResourceLocation location = new ResourceLocation(Aether.MODID, name);
         BIOMES.putIfAbsent(location, biome);
         return ResourceKey.create(Registry.BIOME_REGISTRY, location);
-    }
-
-    public static Holder<Biome> getHolder(ResourceKey<Biome> key, Registry<Biome> registry) {
-        Biome biome = BIOMES.get(key.location());
-        Holder.Reference<Biome> biomeHolder = (Holder.Reference<Biome>) registry.getOrCreateHolderOrThrow(key);
-        biomeHolder.bind(key, biome);
-        return biomeHolder;
     }
 }

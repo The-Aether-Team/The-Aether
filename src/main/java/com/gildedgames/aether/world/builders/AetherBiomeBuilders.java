@@ -5,6 +5,7 @@ import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.world.AetherBiomes;
 import com.gildedgames.aether.world.generation.AetherPlacedFeatures;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.sounds.Music;
 import net.minecraft.world.entity.MobCategory;
@@ -16,63 +17,17 @@ import java.util.List;
 public class AetherBiomeBuilders {
     public static BiomeSource buildAetherBiomeSource(Registry<Biome> registry) {
         final Climate.Parameter FULL_RANGE = Climate.Parameter.span(-1.0F, 1.0F);
-
         return new MultiNoiseBiomeSource(new Climate.ParameterList<>(List.of(
-                Pair.of(
-                        new Climate.ParameterPoint(
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                Climate.Parameter.span(1.0F, 2.0F),
-                                0
-                        ), AetherBiomes.getHolder(AetherBiomes.GOLDEN_FOREST, registry)
-                ),
-                Pair.of(
-                        new Climate.ParameterPoint(
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                Climate.Parameter.span(0.5F, 1.0F),
-                                0
-                        ), AetherBiomes.getHolder(AetherBiomes.SKYROOT_FOREST, registry)
-                ),
-                Pair.of(
-                        new Climate.ParameterPoint(
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                Climate.Parameter.span(-0.1F, 0.5F),
-                                0
-                        ), AetherBiomes.getHolder(AetherBiomes.SKYROOT_THICKET, registry)
-                ),
-                Pair.of(
-                        new Climate.ParameterPoint(
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                Climate.Parameter.span(-0.7F, -0.1F),
-                                0
-                        ), AetherBiomes.getHolder(AetherBiomes.SKYROOT_FOREST, registry)
-                ),
-                Pair.of(
-                        new Climate.ParameterPoint(
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                FULL_RANGE,
-                                Climate.Parameter.span(-2.0F, -0.7F),
-                                0
-                        ), AetherBiomes.getHolder(AetherBiomes.SKYROOT_GROVE, registry)
-                )
+                Pair.of(new Climate.ParameterPoint(FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, Climate.Parameter.span(1.0F, 2.0F), 0),
+                        Holder.Reference.createStandAlone(registry, AetherBiomes.GOLDEN_FOREST)),
+                Pair.of(new Climate.ParameterPoint(FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, Climate.Parameter.span(0.5F, 1.0F), 0),
+                        Holder.Reference.createStandAlone(registry, AetherBiomes.SKYROOT_FOREST)),
+                Pair.of(new Climate.ParameterPoint(FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, Climate.Parameter.span(-0.1F, 0.5F), 0),
+                        Holder.Reference.createStandAlone(registry, AetherBiomes.SKYROOT_THICKET)),
+                Pair.of(new Climate.ParameterPoint(FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, Climate.Parameter.span(-0.7F, -0.1F), 0),
+                        Holder.Reference.createStandAlone(registry, AetherBiomes.SKYROOT_FOREST)),
+                Pair.of(new Climate.ParameterPoint(FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, Climate.Parameter.span(-2.0F, -0.7F), 0),
+                        Holder.Reference.createStandAlone(registry, AetherBiomes.SKYROOT_GROVE))
         )));
     }
 

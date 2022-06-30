@@ -1,7 +1,6 @@
 package com.gildedgames.aether.world;
 
 import com.gildedgames.aether.Aether;
-import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
@@ -32,12 +31,5 @@ public class AetherDimensions {
 		ResourceLocation location = new ResourceLocation(Aether.MODID, name);
 		DIMENSION_TYPES.putIfAbsent(location, dimensionType);
 		return ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, location);
-	}
-
-	public static Holder<DimensionType> getHolder(ResourceKey<DimensionType> key, Registry<DimensionType> registry) {
-		DimensionType dimensionType = DIMENSION_TYPES.get(key.location());
-		Holder.Reference<DimensionType> dimensionTypeHolder = (Holder.Reference<DimensionType>) registry.getOrCreateHolderOrThrow(key);
-		dimensionTypeHolder.bind(key, dimensionType);
-		return dimensionTypeHolder;
 	}
 }
