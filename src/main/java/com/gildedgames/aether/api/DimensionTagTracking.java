@@ -1,4 +1,4 @@
-package com.gildedgames.aether.util;
+package com.gildedgames.aether.api;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.network.AetherPacketHandler;

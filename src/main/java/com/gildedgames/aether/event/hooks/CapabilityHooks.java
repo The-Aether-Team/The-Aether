@@ -1,5 +1,6 @@
 package com.gildedgames.aether.event.hooks;
 
+import com.gildedgames.aether.api.CustomizationsOptions;
 import com.gildedgames.aether.world.AetherDimensions;
 import com.gildedgames.aether.capability.cape.CapeEntity;
 import com.gildedgames.aether.capability.player.AetherPlayer;
@@ -9,7 +10,6 @@ import com.gildedgames.aether.capability.rankings.AetherRankingsCapability;
 import com.gildedgames.aether.capability.time.AetherTime;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.server.RankingsForcePacket;
-import com.gildedgames.aether.util.AetherCustomizations;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -70,8 +70,8 @@ public class CapabilityHooks {
     public static class AetherRankingsHooks {
         public static void join(Entity entity) {
             if (entity instanceof Player player && player.level.isClientSide()) {
-                AetherCustomizations.INSTANCE.load();
-                AetherCustomizations.INSTANCE.sync();
+                CustomizationsOptions.INSTANCE.load();
+                CustomizationsOptions.INSTANCE.sync();
                 AetherPacketHandler.sendToServer(new RankingsForcePacket(player.getId()));
             }
         }

@@ -1,4 +1,4 @@
-package com.gildedgames.aether.util;
+package com.gildedgames.aether.api;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;

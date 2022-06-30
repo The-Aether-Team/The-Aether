@@ -1,7 +1,7 @@
 package com.gildedgames.aether.world.generation.feature;
 
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.util.BlockPlacers;
+import com.gildedgames.aether.util.BlockPlacementUtil;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
@@ -22,7 +22,7 @@ public class HolystoneSphereFeature extends Feature<NoneFeatureConfiguration> {
         BlockPos pos = context.origin();
         WorldGenLevel reader = context.level();
 
-        BlockPlacers.placeSphere(pos, 4.5f, reader, this.holystone, context.random());
+        BlockPlacementUtil.placeSphere(pos, 4.5f, reader, this.holystone, context.random());
 
         return true;
     }

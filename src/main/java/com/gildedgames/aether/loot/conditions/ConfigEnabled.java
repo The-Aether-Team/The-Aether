@@ -1,7 +1,7 @@
 package com.gildedgames.aether.loot.conditions;
 
 import com.gildedgames.aether.loot.AetherLoot;
-import com.gildedgames.aether.util.ConfigSerializer;
+import com.gildedgames.aether.util.ConfigSerializationUtil;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -37,12 +37,12 @@ public class ConfigEnabled implements LootItemCondition {
 
     public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<ConfigEnabled> {
         public void serialize(JsonObject object, ConfigEnabled condition, @Nonnull JsonSerializationContext context) {
-            object.addProperty("config", ConfigSerializer.serialize(condition.config));
+            object.addProperty("config", ConfigSerializationUtil.serialize(condition.config));
         }
 
         @Nonnull
         public ConfigEnabled deserialize(@Nonnull JsonObject object, @Nonnull JsonDeserializationContext context) {
-            return new ConfigEnabled(ConfigSerializer.deserialize(GsonHelper.getAsString(object, "config")));
+            return new ConfigEnabled(ConfigSerializationUtil.deserialize(GsonHelper.getAsString(object, "config")));
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.gildedgames.aether.command;
 
 import com.gildedgames.aether.AetherConfig;
-import com.gildedgames.aether.util.SunAltarWhitelist;
+import com.gildedgames.aether.api.SunAltarWhitelist;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.gui.button;
 
-import com.gildedgames.aether.util.AetherCustomizations;
+import com.gildedgames.aether.api.CustomizationsOptions;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
@@ -35,7 +35,7 @@ public class ColorBox extends EditBox {
     public void renderButton(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         if (this.getValue().length() == 6) {
             try {
-                AetherCustomizations.INSTANCE.set(this.colorKey, this.getValue());
+                CustomizationsOptions.INSTANCE.set(this.colorKey, this.getValue());
                 int decimal = Integer.parseInt(this.getValue(), 16);
                 this.setTextColor(decimal);
                 this.hasValidColor = true;
@@ -44,7 +44,7 @@ public class ColorBox extends EditBox {
                 this.hasValidColor = false;
             }
         } else if (this.getValue().length() == 0) {
-            AetherCustomizations.INSTANCE.set(this.colorKey, null);
+            CustomizationsOptions.INSTANCE.set(this.colorKey, null);
             this.setTextColor(14737632);
             this.hasValidColor = true;
         } else {
@@ -71,7 +71,7 @@ public class ColorBox extends EditBox {
     }
 
     public boolean isValueActive() {
-        Object value = AetherCustomizations.INSTANCE.get(this.valueKey);
+        Object value = CustomizationsOptions.INSTANCE.get(this.valueKey);
         if (value instanceof Boolean bool) {
             return bool;
         } else {

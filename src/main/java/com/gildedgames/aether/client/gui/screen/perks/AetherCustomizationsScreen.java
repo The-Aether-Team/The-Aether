@@ -1,13 +1,13 @@
 package com.gildedgames.aether.client.gui.screen.perks;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.api.CustomizationsOptions;
 import com.gildedgames.aether.client.gui.button.ColorBox;
 import com.gildedgames.aether.client.gui.button.CustomizationSaveButton;
 import com.gildedgames.aether.client.gui.button.CustomizationUndoButton;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.server.RankingsForcePacket;
 import com.gildedgames.aether.api.AetherPlayerRankings;
-import com.gildedgames.aether.util.AetherCustomizations;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -23,7 +23,7 @@ import java.util.UUID;
 public class AetherCustomizationsScreen extends Screen
 {
     private final Screen lastScreen;
-    private final AetherCustomizations customizations = AetherCustomizations.INSTANCE;
+    private final CustomizationsOptions customizations = CustomizationsOptions.INSTANCE;
 
     public static final ResourceLocation SAVE_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/config/save_button.png");
     public static final ResourceLocation UNDO_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/config/undo_button.png");

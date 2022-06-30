@@ -31,8 +31,8 @@ import com.gildedgames.aether.world.generation.AetherPlacedFeatures;
 import com.gildedgames.aether.world.generation.placement.PlacementModifiers;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.client.CombinedResourcePack;
-import com.gildedgames.aether.util.SunAltarWhitelist;
-import com.gildedgames.aether.util.TriviaReader;
+import com.gildedgames.aether.api.SunAltarWhitelist;
+import com.gildedgames.aether.api.TriviaGenerator;
 import com.gildedgames.aether.world.treedecorator.AetherTreeDecoratorTypes;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
@@ -82,7 +82,7 @@ public class Aether
     public static final Logger LOGGER = LogManager.getLogger();
     public static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve("aether");
 
-    public static TriviaReader TRIVIA_READER;
+    public static TriviaGenerator TRIVIA_READER;
 
     public Aether() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -122,7 +122,7 @@ public class Aether
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
 
-        TRIVIA_READER = new TriviaReader();
+        TRIVIA_READER = new TriviaGenerator();
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {

@@ -7,7 +7,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import java.util.Arrays;
 import java.util.List;
 
-public class ConfigSerializer {
+public class ConfigSerializationUtil {
     public static String serialize(ForgeConfigSpec.ConfigValue<Boolean> config) {
         try {
             return config.getPath().toString();

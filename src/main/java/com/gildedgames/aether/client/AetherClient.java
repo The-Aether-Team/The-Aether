@@ -1,6 +1,7 @@
 package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.api.CustomizationsOptions;
 import com.gildedgames.aether.client.gui.screen.SunAltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
 import com.gildedgames.aether.client.registry.*;
@@ -8,7 +9,6 @@ import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.inventory.AetherMenuTypes;
 
 import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.util.AetherCustomizations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -26,7 +26,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class AetherClient {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
-        AetherCustomizations.initialize();
+        CustomizationsOptions.initialize();
         DimensionSpecialEffects.EFFECTS.put(new ResourceLocation(Aether.MODID, "the_aether"), new AetherSkyRenderInfo());
         AetherKeys.registerKeys();
         AetherOverlays.registerOverlays();

@@ -2,7 +2,7 @@ package com.gildedgames.aether.network.packet.server;
 
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
-import com.gildedgames.aether.util.SunAltarWhitelist;
+import com.gildedgames.aether.api.SunAltarWhitelist;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundSetTimePacket;
 import net.minecraft.server.level.ServerLevel;

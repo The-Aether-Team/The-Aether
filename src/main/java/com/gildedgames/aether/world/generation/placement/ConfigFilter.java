@@ -1,6 +1,6 @@
 package com.gildedgames.aether.world.generation.placement;
 
-import com.gildedgames.aether.util.ConfigSerializer;
+import com.gildedgames.aether.util.ConfigSerializationUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import net.minecraft.core.BlockPos;
@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * A PlacementFilter to prevent the feature from generating when the specified config condition is set to false.
  */
 public class ConfigFilter extends PlacementFilter {
-    public static final Codec<ConfigFilter> CODEC = Codec.STRING.comapFlatMap(ConfigFilter::build, configFilter -> ConfigSerializer.serialize(configFilter.config));
+    public static final Codec<ConfigFilter> CODEC = Codec.STRING.comapFlatMap(ConfigFilter::build, configFilter -> ConfigSerializationUtil.serialize(configFilter.config));
 
     private final ForgeConfigSpec.ConfigValue<Boolean> config;
 
@@ -40,7 +40,7 @@ public class ConfigFilter extends PlacementFilter {
 
     private static DataResult<ConfigFilter> build(String configID) {
         @SuppressWarnings("rawtypes") // The type of value coming from the config ID cannot be trusted
-        ForgeConfigSpec.ConfigValue unsafeConfigEntry = ConfigSerializer.deserialize(configID);
+        ForgeConfigSpec.ConfigValue unsafeConfigEntry = ConfigSerializationUtil.deserialize(configID);
         // Java erases generics after compile, meaning the code executed during ConfigSerializer.deserialize will not error,
         // even if the generic type is not Boolean. Otherwise, it will error and crash, while executing `this.config.get()` during Worldgen.
 

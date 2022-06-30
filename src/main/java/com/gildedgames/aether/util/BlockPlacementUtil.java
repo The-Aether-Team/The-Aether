@@ -5,10 +5,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
-public class BlockPlacers
-{
-    private BlockPlacers() { }
-
+public class BlockPlacementUtil {
     public static void placeDisk(BlockPos center, float radius, WorldGenLevel level, BlockStateProvider blockProvider, RandomSource random) {
         float radiusSq = radius * radius;
 

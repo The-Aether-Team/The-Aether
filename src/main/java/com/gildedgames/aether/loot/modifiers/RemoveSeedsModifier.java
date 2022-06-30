@@ -1,7 +1,7 @@
 package com.gildedgames.aether.loot.modifiers;
 
 import com.gildedgames.aether.AetherTags;
-import com.gildedgames.aether.util.DimensionTagTracking;
+import com.gildedgames.aether.api.DimensionTagTracking;
 import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;

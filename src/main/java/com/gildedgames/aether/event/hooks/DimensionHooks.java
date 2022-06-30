@@ -3,7 +3,7 @@ package com.gildedgames.aether.event.hooks;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.AetherTags;
-import com.gildedgames.aether.util.DimensionTagTracking;
+import com.gildedgames.aether.api.DimensionTagTracking;
 import com.gildedgames.aether.util.LevelUtil;
 import com.gildedgames.aether.world.AetherDimensions;
 import com.gildedgames.aether.world.AetherTeleporter;

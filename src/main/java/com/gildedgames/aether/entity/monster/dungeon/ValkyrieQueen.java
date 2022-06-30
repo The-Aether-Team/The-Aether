@@ -12,7 +12,7 @@ import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.BossInfoPacket;
 import com.gildedgames.aether.network.packet.client.OpenNpcDialoguePacket;
-import com.gildedgames.aether.util.BossNameGenerator;
+import com.gildedgames.aether.api.BossNameGenerator;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;

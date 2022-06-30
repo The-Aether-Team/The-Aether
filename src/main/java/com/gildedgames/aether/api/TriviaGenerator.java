@@ -1,4 +1,4 @@
-package com.gildedgames.aether.util;
+package com.gildedgames.aether.api;
 
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
@@ -7,12 +7,12 @@ import net.minecraft.util.RandomSource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TriviaReader {
+public class TriviaGenerator {
     private final RandomSource random = RandomSource.create();
     private final List<Component> trivia = new ArrayList<>();
     private int index;
 
-    public TriviaReader() { }
+    public TriviaGenerator() { }
 
     public void generateTriviaList() {
         for (String string : I18n.language.getLanguageData().keySet()) {

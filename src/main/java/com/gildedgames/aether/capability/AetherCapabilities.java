@@ -19,7 +19,7 @@ import com.gildedgames.aether.capability.rankings.AetherRankingsProvider;
 import com.gildedgames.aether.capability.time.AetherTime;
 import com.gildedgames.aether.capability.time.AetherTimeCapability;
 import com.gildedgames.aether.capability.time.AetherTimeProvider;
-import com.gildedgames.aether.util.DimensionTagTracking;
+import com.gildedgames.aether.api.DimensionTagTracking;
 import com.gildedgames.aether.world.AetherDimensions;
 
 import net.minecraft.tags.TagKey;

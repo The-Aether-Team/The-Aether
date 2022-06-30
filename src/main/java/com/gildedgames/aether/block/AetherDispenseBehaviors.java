@@ -6,7 +6,7 @@ import com.gildedgames.aether.entity.projectile.weapon.ThrownLightningKnife;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.item.materials.behavior.SwetBallConversion;
 import com.gildedgames.aether.item.miscellaneous.bucket.SkyrootBucketItem;
-import com.gildedgames.aether.util.DimensionTagTracking;
+import com.gildedgames.aether.api.DimensionTagTracking;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;

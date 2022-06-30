@@ -1,7 +1,7 @@
 package com.gildedgames.aether.network.packet.client;
 
 import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
-import com.gildedgames.aether.util.DimensionTagTracking;
+import com.gildedgames.aether.api.DimensionTagTracking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;

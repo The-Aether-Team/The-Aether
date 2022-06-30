@@ -1,9 +1,9 @@
 package com.gildedgames.aether.capability.rankings;
 
+import com.gildedgames.aether.api.CustomizationsOptions;
 import com.gildedgames.aether.capability.CapabilitySyncing;
 import com.gildedgames.aether.network.AetherPacket;
 import com.gildedgames.aether.network.packet.AetherRankingsSyncPacket;
-import com.gildedgames.aether.util.AetherCustomizations;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.tuple.Triple;
@@ -107,7 +107,7 @@ public class AetherRankingsCapability extends CapabilitySyncing implements Aethe
     public void onUpdate() {
         this.updateSyncableNBTFromServer(this.getPlayer().getLevel());
         if (this.getPlayer().level.isClientSide()) {
-            AetherCustomizations.INSTANCE.sync();
+            CustomizationsOptions.INSTANCE.sync();
         }
     }
 

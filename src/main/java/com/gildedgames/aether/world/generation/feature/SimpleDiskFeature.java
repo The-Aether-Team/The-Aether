@@ -1,8 +1,8 @@
 package com.gildedgames.aether.world.generation.feature;
 
 import com.gildedgames.aether.world.generation.configuration.SimpleDiskConfiguration;
-import com.gildedgames.aether.util.BlockLogic;
-import com.gildedgames.aether.util.BlockPlacers;
+import com.gildedgames.aether.util.BlockLogicUtil;
+import com.gildedgames.aether.util.BlockPlacementUtil;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
@@ -20,8 +20,8 @@ public class SimpleDiskFeature extends Feature<SimpleDiskConfiguration> {
         WorldGenLevel reader = context.level();
         SimpleDiskConfiguration config = context.config();
 
-        if (BlockLogic.doesAirExistNearby(pos, config.clearanceRadius(), reader))
-            BlockPlacers.placeDisk(pos, config.radius().sample(context.random()), reader, config.block(), context.random());
+        if (BlockLogicUtil.doesAirExistNearby(pos, config.clearanceRadius(), reader))
+            BlockPlacementUtil.placeDisk(pos, config.radius().sample(context.random()), reader, config.block(), context.random());
 
         return true;
     }

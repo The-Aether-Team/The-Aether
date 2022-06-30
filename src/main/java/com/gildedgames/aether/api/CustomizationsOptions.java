@@ -1,4 +1,4 @@
-package com.gildedgames.aether.util;
+package com.gildedgames.aether.api;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.capability.rankings.AetherRankings;
@@ -13,14 +13,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class AetherCustomizations {
-    public static AetherCustomizations INSTANCE;
+public class CustomizationsOptions {
+    public static CustomizationsOptions INSTANCE;
 
     private static final File CUSTOMIZATIONS_FILE = new File(Aether.DIRECTORY.toString(), "aether_customizations.txt");
 
     private final LinkedHashMap<String, Object> customizations = Maps.newLinkedHashMap();
 
-    public AetherCustomizations() {
+    public CustomizationsOptions() {
         if (CUSTOMIZATIONS_FILE.exists()) {
             this.load();
         } else {
@@ -34,7 +34,7 @@ public class AetherCustomizations {
     }
 
     public static void initialize() {
-        INSTANCE = new AetherCustomizations();
+        INSTANCE = new CustomizationsOptions();
     }
 
     public void load() {

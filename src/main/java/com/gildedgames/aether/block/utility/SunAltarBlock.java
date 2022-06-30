@@ -5,7 +5,7 @@ import com.gildedgames.aether.block.entity.SunAltarBlockEntity;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.capability.AetherCapabilities;
 import com.gildedgames.aether.capability.time.AetherTime;
-import com.gildedgames.aether.util.SunAltarWhitelist;
+import com.gildedgames.aether.api.SunAltarWhitelist;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
