@@ -1,6 +1,6 @@
 package com.gildedgames.aether.entity.projectile.dart;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

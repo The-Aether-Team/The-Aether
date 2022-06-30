@@ -1,6 +1,6 @@
 package com.gildedgames.aether.world.builders;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.world.AetherBiomes;
 import com.gildedgames.aether.world.generation.AetherPlacedFeatures;

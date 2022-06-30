@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.registry;
+package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.AetherItems;

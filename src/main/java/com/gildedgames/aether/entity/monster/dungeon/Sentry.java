@@ -3,7 +3,7 @@ package com.gildedgames.aether.entity.monster.dungeon;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.block.AetherBlocks;
 
 import com.gildedgames.aether.network.AetherPacketHandler;

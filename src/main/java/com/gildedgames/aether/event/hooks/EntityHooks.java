@@ -1,6 +1,6 @@
 package com.gildedgames.aether.event.hooks;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.monster.Swet;
 import com.gildedgames.aether.entity.passive.FlyingCow;
 import com.gildedgames.aether.entity.passive.MountableAnimal;

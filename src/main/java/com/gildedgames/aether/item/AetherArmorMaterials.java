@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.block.AetherBlocks;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;

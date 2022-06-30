@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item.accessories;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.block.AetherDispenseBehaviors;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.item.enchantment.Enchantment;

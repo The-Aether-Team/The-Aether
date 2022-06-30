@@ -2,7 +2,7 @@ package com.gildedgames.aether.block.dungeon;
 
 import java.util.function.Supplier;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;

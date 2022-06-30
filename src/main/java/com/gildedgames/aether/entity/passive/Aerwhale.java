@@ -1,6 +1,6 @@
 package com.gildedgames.aether.entity.passive;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import net.minecraft.core.BlockPos;

@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.registry;
+package com.gildedgames.aether.client;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.ClientRegistry;

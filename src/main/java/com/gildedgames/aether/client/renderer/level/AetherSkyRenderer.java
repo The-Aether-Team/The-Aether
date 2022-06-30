@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client;
+package com.gildedgames.aether.client.renderer.level;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item.combat;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.projectile.dart.AbstractDart;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.world.entity.LivingEntity;

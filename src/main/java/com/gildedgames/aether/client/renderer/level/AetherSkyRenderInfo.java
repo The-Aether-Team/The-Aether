@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client;
+package com.gildedgames.aether.client.renderer.level;
 
 import com.gildedgames.aether.AetherConfig;
 import net.minecraft.client.renderer.DimensionSpecialEffects;

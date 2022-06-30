@@ -1,6 +1,6 @@
 package com.gildedgames.aether.entity.monster;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.ai.goal.target.NearestTaggedTargetGoal;
 import com.gildedgames.aether.entity.passive.MountableAnimal;
 import com.gildedgames.aether.AetherTags;

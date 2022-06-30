@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item.block;
 
-import com.gildedgames.aether.client.registry.AetherRenderers;
+import com.gildedgames.aether.client.renderer.AetherRenderers;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;

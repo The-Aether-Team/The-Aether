@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.event.hooks;
 
-import com.gildedgames.aether.client.registry.AetherKeys;
+import com.gildedgames.aether.client.AetherKeys;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.server.HittingPacket;

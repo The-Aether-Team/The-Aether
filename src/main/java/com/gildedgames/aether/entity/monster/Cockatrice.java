@@ -5,7 +5,7 @@ import com.gildedgames.aether.entity.WingedBird;
 import com.gildedgames.aether.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.entity.ai.navigator.FallPathNavigation;
 import com.gildedgames.aether.entity.projectile.PoisonNeedle;
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.AetherTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;

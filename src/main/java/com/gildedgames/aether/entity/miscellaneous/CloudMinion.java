@@ -1,6 +1,6 @@
 package com.gildedgames.aether.entity.miscellaneous;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.projectile.crystal.CloudCrystal;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.util.EntityUtil;

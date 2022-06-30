@@ -3,7 +3,7 @@ package com.gildedgames.aether.item.combat.loot;
 import com.gildedgames.aether.entity.projectile.weapon.ThrownLightningKnife;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;

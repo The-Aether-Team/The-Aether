@@ -1,7 +1,7 @@
 package com.gildedgames.aether.mixin.mixins.client;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;

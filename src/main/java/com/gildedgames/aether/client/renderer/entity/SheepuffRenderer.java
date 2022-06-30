@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherModelLayers;
+import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.SheepuffWoolLayer;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffModel;
 import com.gildedgames.aether.client.renderer.entity.model.SheepuffWoolModel;

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.entity.projectile.crystal;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.capability.lightning.LightningTracker;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;

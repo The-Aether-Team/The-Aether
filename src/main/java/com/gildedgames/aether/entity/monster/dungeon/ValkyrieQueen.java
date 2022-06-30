@@ -1,7 +1,7 @@
 package com.gildedgames.aether.entity.monster.dungeon;
 
 import com.gildedgames.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.entity.NpcDialogue;
 import com.gildedgames.aether.entity.ai.goal.NpcDialogueGoal;

@@ -4,7 +4,9 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.CustomizationsOptions;
 import com.gildedgames.aether.client.gui.screen.SunAltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
-import com.gildedgames.aether.client.registry.*;
+import com.gildedgames.aether.client.renderer.AetherOverlays;
+import com.gildedgames.aether.client.renderer.AetherRenderers;
+import com.gildedgames.aether.client.renderer.level.AetherSkyRenderInfo;
 import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.inventory.AetherMenuTypes;
 

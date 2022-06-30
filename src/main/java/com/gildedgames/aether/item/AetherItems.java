@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.item.miscellaneous.SkyrootBoatItem;
 import com.gildedgames.aether.item.accessories.gloves.GlovesItem;

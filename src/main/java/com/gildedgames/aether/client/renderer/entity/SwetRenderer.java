@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import com.gildedgames.aether.client.registry.AetherModelLayers;
+import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.SwetOuterLayer;
 import com.gildedgames.aether.entity.monster.Swet;
 import com.mojang.blaze3d.vertex.PoseStack;

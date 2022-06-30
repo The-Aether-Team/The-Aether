@@ -1,6 +1,5 @@
 package com.gildedgames.aether.client;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.AetherConfig;
 import net.minecraft.client.Minecraft;

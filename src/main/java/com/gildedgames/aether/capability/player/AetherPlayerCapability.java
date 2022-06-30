@@ -1,6 +1,6 @@
 package com.gildedgames.aether.capability.player;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.entity.miscellaneous.Parachute;
 import com.gildedgames.aether.entity.passive.Aerbunny;

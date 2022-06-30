@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.player.layer;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherModelLayers;
+import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.ValkyrieWingsModel;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.util.EquipmentUtil;

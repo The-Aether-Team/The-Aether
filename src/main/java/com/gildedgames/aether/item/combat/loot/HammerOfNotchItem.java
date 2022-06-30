@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item.combat.loot;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.projectile.weapon.HammerProjectile;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItemTiers;

@@ -1,7 +1,7 @@
 package com.gildedgames.aether.entity.projectile.crystal;
 
-import com.gildedgames.aether.client.registry.AetherParticleTypes;
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.particle.AetherParticleTypes;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

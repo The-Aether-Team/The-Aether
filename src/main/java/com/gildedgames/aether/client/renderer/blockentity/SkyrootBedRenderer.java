@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.blockentity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherModelLayers;
+import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.block.entity.SkyrootBedBlockEntity;
 import com.gildedgames.aether.block.utility.SkyrootBedBlock;
 import com.gildedgames.aether.block.AetherBlockEntityTypes;

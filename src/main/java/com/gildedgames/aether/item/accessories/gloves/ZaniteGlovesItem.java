@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item.accessories.gloves;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.world.entity.ai.attributes.Attribute;

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.entity.monster;
 
-import com.gildedgames.aether.client.registry.AetherParticleTypes;
+import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.loot.AetherLoot;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;

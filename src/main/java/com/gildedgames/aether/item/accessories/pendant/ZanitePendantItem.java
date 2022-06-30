@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item.accessories.pendant;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;

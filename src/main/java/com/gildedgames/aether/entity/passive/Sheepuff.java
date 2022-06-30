@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.ai.EatAetherGrassGoal;
 import com.gildedgames.aether.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.entity.ai.controller.FallingMovementController;

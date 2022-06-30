@@ -1,7 +1,7 @@
 package com.gildedgames.aether.item.accessories.cape;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.item.accessories.AccessoryItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;

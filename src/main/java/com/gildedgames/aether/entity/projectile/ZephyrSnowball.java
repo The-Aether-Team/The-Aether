@@ -1,6 +1,6 @@
 package com.gildedgames.aether.entity.projectile;
 
-import com.gildedgames.aether.client.registry.AetherParticleTypes;
+import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 
 import com.gildedgames.aether.network.AetherPacketHandler;

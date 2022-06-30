@@ -1,6 +1,6 @@
 package com.gildedgames.aether.entity.passive;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.entity.ai.navigator.FallPathNavigation;
 import com.gildedgames.aether.entity.AetherEntityTypes;

@@ -1,9 +1,9 @@
 package com.gildedgames.aether.block.miscellaneous;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherParticleTypes;
+import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.util.LevelUtil;
 import com.gildedgames.aether.world.AetherTeleporter;

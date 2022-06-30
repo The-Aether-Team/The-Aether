@@ -1,6 +1,6 @@
 package com.gildedgames.aether.entity.monster.dungeon;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 
 import com.gildedgames.aether.util.EntityUtil;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;

@@ -8,7 +8,7 @@ import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
 import com.gildedgames.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
-import com.gildedgames.aether.client.registry.AetherKeys;
+import com.gildedgames.aether.client.AetherKeys;
 import com.gildedgames.aether.event.hooks.DimensionHooks;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.network.AetherPacketHandler;

@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.registry;
+package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherWoodTypes;

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.block.dungeon;
 
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.monster.dungeon.Mimic;
 import com.gildedgames.aether.block.entity.ChestMimicBlockEntity;
 import com.gildedgames.aether.entity.AetherEntityTypes;

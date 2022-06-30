@@ -1,4 +1,4 @@
-package com.gildedgames.aether.client.registry;
+package com.gildedgames.aether.client.renderer;
 
 import com.gildedgames.aether.Aether;
 import net.minecraft.client.model.geom.ModelLayerLocation;
