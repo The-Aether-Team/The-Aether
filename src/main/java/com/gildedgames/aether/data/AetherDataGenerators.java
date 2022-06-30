@@ -9,7 +9,6 @@ import com.mojang.serialization.JsonOps;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.resources.RegistryOps;
@@ -42,7 +41,7 @@ public class AetherDataGenerators<T> {
     }
 
     public DataProvider levelStem(DataGenerator generator, ExistingFileHelper helper) {
-        RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, RegistryAccess.builtinCopy());
+        RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, DATA_REGISTRY);
         Map<ResourceLocation, LevelStem> map = new HashMap<>();
         Registry<Biome> biomeRegistry = registryOps.registry(Registry.BIOME_REGISTRY).orElseThrow();
         Registry<DimensionType> dimensionTypeRegistry = registryOps.registry(Registry.DIMENSION_TYPE_REGISTRY).orElseThrow();
@@ -59,7 +58,7 @@ public class AetherDataGenerators<T> {
     }
 
     public Holder<NoiseGeneratorSettings> getNoiseGeneratorSettings(Registry<NoiseGeneratorSettings> registry) {
-        Holder.Reference<NoiseGeneratorSettings> holder = (Holder.Reference<NoiseGeneratorSettings>) registry.getOrCreateHolderOrThrow(AetherNoiseGeneratorSettings.SKYLANDS); // BuiltinRegistries.NOISE_GENERATOR_SETTINGS.getOrCreateHolderOrThrow(AetherNoiseGeneratorSettings.SKYLANDS)
+        Holder.Reference<NoiseGeneratorSettings> holder = (Holder.Reference<NoiseGeneratorSettings>) registry.getOrCreateHolderOrThrow(AetherNoiseGeneratorSettings.SKYLANDS);
         NoiseGeneratorSettings noiseGeneratorSettings = AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS.get(AetherNoiseGeneratorSettings.SKYLANDS.location());
         holder.bind(AetherNoiseGeneratorSettings.SKYLANDS, noiseGeneratorSettings);
         return holder;
