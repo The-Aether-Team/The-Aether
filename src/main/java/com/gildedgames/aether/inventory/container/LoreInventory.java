@@ -1,7 +1,7 @@
-package com.gildedgames.aether.inventory;
+package com.gildedgames.aether.inventory.container;
 
 import com.gildedgames.aether.advancement.triggers.LoreTrigger;
-import com.gildedgames.aether.inventory.container.LoreBookMenu;
+import com.gildedgames.aether.inventory.menu.LoreBookMenu;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.server.LoreExistsPacket;
 import net.minecraft.client.player.LocalPlayer;

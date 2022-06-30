@@ -1,6 +1,6 @@
-package com.gildedgames.aether.inventory.container.slot;
+package com.gildedgames.aether.inventory.menu.slot;
 
-import com.gildedgames.aether.inventory.container.IncubatorMenu;
+import com.gildedgames.aether.inventory.menu.IncubatorMenu;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;

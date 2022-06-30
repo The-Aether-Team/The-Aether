@@ -5,7 +5,7 @@ import com.gildedgames.aether.client.gui.screen.SunAltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
 import com.gildedgames.aether.client.registry.*;
 import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
-import com.gildedgames.aether.inventory.AetherContainerTypes;
+import com.gildedgames.aether.inventory.AetherMenuTypes;
 
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.util.AetherCustomizations;
@@ -42,11 +42,11 @@ public class AetherClient {
     }
 
     public static void registerGuiFactories() {
-        MenuScreens.register(AetherContainerTypes.ACCESSORIES.get(), AccessoriesScreen::new);
-        MenuScreens.register(AetherContainerTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
-        MenuScreens.register(AetherContainerTypes.ALTAR.get(), AltarScreen::new);
-        MenuScreens.register(AetherContainerTypes.FREEZER.get(), FreezerScreen::new);
-        MenuScreens.register(AetherContainerTypes.INCUBATOR.get(), IncubatorScreen::new);
+        MenuScreens.register(AetherMenuTypes.ACCESSORIES.get(), AccessoriesScreen::new);
+        MenuScreens.register(AetherMenuTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
+        MenuScreens.register(AetherMenuTypes.ALTAR.get(), AltarScreen::new);
+        MenuScreens.register(AetherMenuTypes.FREEZER.get(), FreezerScreen::new);
+        MenuScreens.register(AetherMenuTypes.INCUBATOR.get(), IncubatorScreen::new);
     }
 
     public static void registerItemModelProperties() {

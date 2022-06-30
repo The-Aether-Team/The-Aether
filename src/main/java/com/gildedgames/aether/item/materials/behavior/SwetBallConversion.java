@@ -1,4 +1,4 @@
-package com.gildedgames.aether.item.materials.util;
+package com.gildedgames.aether.item.materials.behavior;
 
 import com.gildedgames.aether.event.events.SwetBallConvertEvent;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
@@ -22,7 +22,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public interface ISwetBallConversion
+public interface SwetBallConversion
 {
     Map<Block, BlockState> DEFAULT_CONVERSIONS = Maps.newHashMap();
     Map<ResourceLocation, Pair<Block, BlockState>> BIOME_CONVERSIONS = Maps.newHashMap();

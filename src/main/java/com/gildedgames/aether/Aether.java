@@ -14,7 +14,7 @@ import com.gildedgames.aether.block.entity.FreezerBlockEntity;
 import com.gildedgames.aether.data.*;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import com.gildedgames.aether.inventory.AetherContainerTypes;
+import com.gildedgames.aether.inventory.AetherMenuTypes;
 import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.AetherLoot;
@@ -97,7 +97,7 @@ public class Aether
                 AetherItems.ITEMS,
                 AetherEntityTypes.ENTITIES,
                 AetherBlockEntityTypes.BLOCK_ENTITIES,
-                AetherContainerTypes.CONTAINERS,
+                AetherMenuTypes.CONTAINERS,
                 AetherEffects.EFFECTS,
                 AetherParticleTypes.PARTICLES,
                 AetherFeatures.FEATURES,

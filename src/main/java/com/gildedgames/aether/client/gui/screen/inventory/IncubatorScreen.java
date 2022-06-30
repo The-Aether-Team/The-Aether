@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.gui.screen.inventory;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.inventory.container.IncubatorMenu;
+import com.gildedgames.aether.inventory.menu.IncubatorMenu;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 
 public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu>
 {
-	private static final ResourceLocation INCUBATOR_GUI_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/container/incubator.png");
+	private static final ResourceLocation INCUBATOR_GUI_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/menu/incubator.png");
 	
 	public IncubatorScreen(IncubatorMenu container, Inventory inventory, Component name) {
 		super(container, inventory, name);

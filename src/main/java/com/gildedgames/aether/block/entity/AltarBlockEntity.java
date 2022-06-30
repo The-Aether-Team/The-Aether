@@ -2,7 +2,7 @@ package com.gildedgames.aether.block.entity;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.recipe.AetherRecipes.RecipeTypes;
-import com.gildedgames.aether.inventory.container.AltarMenu;
+import com.gildedgames.aether.inventory.menu.AltarMenu;
 
 import com.gildedgames.aether.block.AetherBlockEntityTypes;
 import com.google.common.collect.Maps;
@@ -32,7 +32,7 @@ public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity
 	@Nonnull
 	@Override
 	protected Component getDefaultName() {
-		return Component.translatable("container." + Aether.MODID + ".altar");
+		return Component.translatable("menu." + Aether.MODID + ".altar");
 	}
 
 	@Nonnull

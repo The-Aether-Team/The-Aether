@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.inventory.container.IncubatorMenu;
+import com.gildedgames.aether.inventory.menu.IncubatorMenu;
 
 import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.block.AetherBlockEntityTypes;
@@ -87,7 +87,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	@Nonnull
 	@Override
 	protected Component getDefaultName() {
-		return Component.translatable("container." + Aether.MODID + ".incubator");
+		return Component.translatable("menu." + Aether.MODID + ".incubator");
 	}
 
 	public static Map<Item, Integer> getIncubatingMap() {

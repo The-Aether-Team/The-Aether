@@ -1,10 +1,10 @@
-package com.gildedgames.aether.inventory.container;
+package com.gildedgames.aether.inventory.menu;
 
 import com.gildedgames.aether.block.entity.IncubatorBlockEntity;
 
-import com.gildedgames.aether.inventory.container.slot.IncubatorEggSlot;
-import com.gildedgames.aether.inventory.container.slot.IncubatorFuelSlot;
-import com.gildedgames.aether.inventory.AetherContainerTypes;
+import com.gildedgames.aether.inventory.menu.slot.IncubatorEggSlot;
+import com.gildedgames.aether.inventory.menu.slot.IncubatorFuelSlot;
+import com.gildedgames.aether.inventory.AetherMenuTypes;
 import com.gildedgames.aether.AetherTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,7 +27,7 @@ public class IncubatorMenu extends AbstractContainerMenu
 	}
 	
 	public IncubatorMenu(int id, Inventory playerInventory, Container incubatorInventory, ContainerData incubatorData) {
-		super(AetherContainerTypes.INCUBATOR.get(), id);
+		super(AetherMenuTypes.INCUBATOR.get(), id);
 		checkContainerSize(incubatorInventory, 2);
 		checkContainerDataCount(incubatorData, 3);
 		this.container = incubatorInventory;

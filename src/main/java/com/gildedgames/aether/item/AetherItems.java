@@ -18,7 +18,7 @@ import com.gildedgames.aether.item.accessories.ring.IceRingItem;
 import com.gildedgames.aether.item.accessories.ring.RingItem;
 import com.gildedgames.aether.item.food.WhiteAppleItem;
 import com.gildedgames.aether.item.materials.AmbrosiumShardItem;
-import com.gildedgames.aether.item.materials.util.ISwetBallConversion;
+import com.gildedgames.aether.item.materials.behavior.SwetBallConversion;
 import com.gildedgames.aether.item.tools.skyroot.SkyrootAxeItem;
 import com.gildedgames.aether.item.tools.skyroot.SkyrootHoeItem;
 import com.gildedgames.aether.item.tools.skyroot.SkyrootPickaxeItem;
@@ -270,7 +270,7 @@ public class AetherItems
 	public static final RegistryObject<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.ZEPHYR, 0xDFDFDF, 0x99CFE8, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 
 	public static void registerAbilities() {
-		ISwetBallConversion.registerDefaultConversions();
-		ISwetBallConversion.registerBiomeConversions();
+		SwetBallConversion.registerDefaultConversions();
+		SwetBallConversion.registerBiomeConversions();
 	}
 }

@@ -1,7 +1,7 @@
-package com.gildedgames.aether.inventory.container;
+package com.gildedgames.aether.inventory.menu;
 
-import com.gildedgames.aether.inventory.LoreInventory;
-import com.gildedgames.aether.inventory.AetherContainerTypes;
+import com.gildedgames.aether.inventory.container.LoreInventory;
+import com.gildedgames.aether.inventory.AetherMenuTypes;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +26,7 @@ public class LoreBookMenu extends AbstractContainerMenu
     }
 
     public LoreBookMenu(int id, Inventory playerInventory, LoreInventory bookInventory) {
-        super(AetherContainerTypes.BOOK_OF_LORE.get(), id);
+        super(AetherMenuTypes.BOOK_OF_LORE.get(), id);
         checkContainerSize(bookInventory, 1);
         this.bookInventory = bookInventory;
         bookInventory.setContainer(this);

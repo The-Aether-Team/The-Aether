@@ -1,7 +1,7 @@
 package com.gildedgames.aether.network.packet.client;
 
 import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
-import com.gildedgames.aether.util.LevelUtil;
+import com.gildedgames.aether.util.DimensionTagTracking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
@@ -39,7 +39,7 @@ public class DimensionTypeHolderPacket extends AbstractAetherPacket {
     @Override
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            LevelUtil.getTagTrackers().put(this.dimensionKey, this.tagKey, this.value);
+            DimensionTagTracking.getTagTrackers().put(this.dimensionKey, this.tagKey, this.value);
         }
     }
 }

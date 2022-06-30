@@ -86,7 +86,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     @Nonnull
     @Override
     protected Component getDefaultName() {
-        return Component.translatable("container.aether." + this.getKind() + "_dungeon_chest");
+        return Component.translatable("menu.aether." + this.getKind() + "_dungeon_chest");
     }
 
     @Override

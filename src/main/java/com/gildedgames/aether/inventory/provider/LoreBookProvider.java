@@ -1,6 +1,6 @@
 package com.gildedgames.aether.inventory.provider;
 
-import com.gildedgames.aether.inventory.container.LoreBookMenu;
+import com.gildedgames.aether.inventory.menu.LoreBookMenu;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -15,7 +15,7 @@ public class LoreBookProvider implements MenuProvider
     @Nonnull
     @Override
     public Component getDisplayName() {
-        return Component.translatable("container.aether.book_of_lore");
+        return Component.translatable("menu.aether.book_of_lore");
     }
 
     @Nullable

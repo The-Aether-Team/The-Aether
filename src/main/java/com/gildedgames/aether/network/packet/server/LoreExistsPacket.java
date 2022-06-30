@@ -1,6 +1,6 @@
 package com.gildedgames.aether.network.packet.server;
 
-import com.gildedgames.aether.inventory.container.LoreBookMenu;
+import com.gildedgames.aether.inventory.menu.LoreBookMenu;
 import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;

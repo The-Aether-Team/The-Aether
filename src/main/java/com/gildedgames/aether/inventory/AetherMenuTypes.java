@@ -2,13 +2,13 @@ package com.gildedgames.aether.inventory;
 
 import com.gildedgames.aether.Aether;
 
-import com.gildedgames.aether.inventory.container.*;
+import com.gildedgames.aether.inventory.menu.*;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-public class AetherContainerTypes
+public class AetherMenuTypes
 {
 	public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, Aether.MODID);
 

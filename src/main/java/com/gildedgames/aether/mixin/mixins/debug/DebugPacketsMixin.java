@@ -18,7 +18,7 @@ package com.gildedgames.aether.mixin.mixins.debug;
 //import org.spongepowered.asm.mixin.injection.Inject;
 //import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 //
-//import java.util.HashSet;
+//import java.behavior.HashSet;
 //
 //@Mixin(DebugPackets.class)
 //public class DebugPacketsMixin {

@@ -2,7 +2,7 @@ package com.gildedgames.aether.client.gui.screen.inventory;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.button.LorePageButton;
-import com.gildedgames.aether.inventory.container.LoreBookMenu;
+import com.gildedgames.aether.inventory.menu.LoreBookMenu;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
-    private static final ResourceLocation TEXTURE_LORE_BACKING = new ResourceLocation(Aether.MODID, "textures/gui/container/lore_backing.png");
-    private static final ResourceLocation TEXTURE_LORE_BOOK = new ResourceLocation(Aether.MODID, "textures/gui/container/lore_book.png");
+    private static final ResourceLocation TEXTURE_LORE_BACKING = new ResourceLocation(Aether.MODID, "textures/gui/menu/lore_backing.png");
+    private static final ResourceLocation TEXTURE_LORE_BOOK = new ResourceLocation(Aether.MODID, "textures/gui/menu/lore_book.png");
 
     private final Map<Integer, List<FormattedCharSequence>> pages = new HashMap<>();
 

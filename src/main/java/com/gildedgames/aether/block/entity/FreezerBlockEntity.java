@@ -2,7 +2,7 @@ package com.gildedgames.aether.block.entity;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.recipe.AetherRecipes.RecipeTypes;
-import com.gildedgames.aether.inventory.container.FreezerMenu;
+import com.gildedgames.aether.inventory.menu.FreezerMenu;
 
 import com.gildedgames.aether.block.AetherBlockEntityTypes;
 import com.google.common.collect.Maps;
@@ -32,7 +32,7 @@ public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity
 	@Nonnull
 	@Override
 	protected Component getDefaultName() {
-		return Component.translatable("container." + Aether.MODID + ".freezer");
+		return Component.translatable("menu." + Aether.MODID + ".freezer");
 	}
 
 	@Nonnull

@@ -4,7 +4,7 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.data.provider.AetherLanguageProvider;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import com.gildedgames.aether.inventory.AetherContainerTypes;
+import com.gildedgames.aether.inventory.AetherMenuTypes;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.data.DataGenerator;
@@ -407,10 +407,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addEffect(AetherEffects.INEBRIATION, "Inebriation");
 
 
-        addContainerType(AetherContainerTypes.BOOK_OF_LORE, "Book of Lore");
-        addContainerType(AetherContainerTypes.ALTAR, "Altar");
-        addContainerType(AetherContainerTypes.FREEZER, "Freezer");
-        addContainerType(AetherContainerTypes.INCUBATOR, "Incubator");
+        addContainerType(AetherMenuTypes.BOOK_OF_LORE, "Book of Lore");
+        addContainerType(AetherMenuTypes.ALTAR, "Altar");
+        addContainerType(AetherMenuTypes.FREEZER, "Freezer");
+        addContainerType(AetherMenuTypes.INCUBATOR, "Incubator");
         addContainerType("bronze_dungeon_chest", "Bronze Dungeon Chest");
         addContainerType("silver_dungeon_chest", "Silver Dungeon Chest");
         addContainerType("gold_dungeon_chest", "Gold Dungeon Chest");

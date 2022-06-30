@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 
 @OnlyIn(Dist.CLIENT)
 public class SunAltarScreen extends Screen {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/container/sun_altar.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/sun_altar.png");
 
     public SunAltarScreen(Component title) {
         super(title);

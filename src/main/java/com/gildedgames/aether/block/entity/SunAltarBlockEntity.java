@@ -46,7 +46,7 @@ public class SunAltarBlockEntity extends BlockEntity implements Nameable {
 
     @Nonnull
     public Component getName() {
-        return this.name != null ? this.name : Component.translatable("container." + Aether.MODID + ".sun_altar");
+        return this.name != null ? this.name : Component.translatable("menu." + Aether.MODID + ".sun_altar");
     }
 
     public void setCustomName(@Nullable Component pName) {

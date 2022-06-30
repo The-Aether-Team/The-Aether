@@ -1,13 +1,12 @@
 package com.gildedgames.aether.block;
 
 import com.gildedgames.aether.AetherTags;
-import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.projectile.weapon.HammerProjectile;
 import com.gildedgames.aether.entity.projectile.weapon.ThrownLightningKnife;
 import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.item.materials.util.ISwetBallConversion;
+import com.gildedgames.aether.item.materials.behavior.SwetBallConversion;
 import com.gildedgames.aether.item.miscellaneous.bucket.SkyrootBucketItem;
-import com.gildedgames.aether.util.LevelUtil;
+import com.gildedgames.aether.util.DimensionTagTracking;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
@@ -207,7 +206,7 @@ public class AetherDispenseBehaviors {
             this.setSuccess(true);
             Level world = source.getLevel();
             BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
-            if (!ISwetBallConversion.convertBlockWithoutContext(world, blockpos, stack)) {
+            if (!SwetBallConversion.convertBlockWithoutContext(world, blockpos, stack)) {
                 this.setSuccess(false);
             }
             return stack;
@@ -218,7 +217,7 @@ public class AetherDispenseBehaviors {
         @Nonnull
         @Override
         public ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
-            if (LevelUtil.inTag(source.getLevel(), AetherTags.Dimensions.ULTRACOLD)) {
+            if (DimensionTagTracking.inTag(source.getLevel(), AetherTags.Dimensions.ULTRACOLD)) {
                 this.setSuccess(false);
                 return stack;
             } else {
@@ -236,7 +235,7 @@ public class AetherDispenseBehaviors {
         @Nonnull
         @Override
         protected ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
-            if (LevelUtil.inTag(source.getLevel(), AetherTags.Dimensions.ULTRACOLD)) {
+            if (DimensionTagTracking.inTag(source.getLevel(), AetherTags.Dimensions.ULTRACOLD)) {
                 this.setSuccess(false);
                 return stack;
             } else {

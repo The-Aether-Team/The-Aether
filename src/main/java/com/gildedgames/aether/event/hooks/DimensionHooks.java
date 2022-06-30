@@ -3,6 +3,8 @@ package com.gildedgames.aether.event.hooks;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.util.DimensionTagTracking;
+import com.gildedgames.aether.util.LevelUtil;
 import com.gildedgames.aether.world.AetherDimensions;
 import com.gildedgames.aether.world.AetherTeleporter;
 import com.gildedgames.aether.AetherConfig;
@@ -11,7 +13,6 @@ import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.AetherTravelPacket;
 import com.gildedgames.aether.network.packet.client.LeavingAetherPacket;
 import com.gildedgames.aether.network.packet.client.SetVehiclePacket;
-import com.gildedgames.aether.util.LevelUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -49,7 +50,7 @@ public class DimensionHooks {
     public static int teleportationTimer;
 
     public static boolean checkPlacementBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state) {
-        if (LevelUtil.inTag(level, AetherTags.Dimensions.ULTRACOLD)) {
+        if (DimensionTagTracking.inTag(level, AetherTags.Dimensions.ULTRACOLD)) {
             if (stack.is(AetherTags.Items.BANNED_IN_AETHER)) {
                 return bannedItemDispatch(level, pos, face, stack);
             }
@@ -96,7 +97,7 @@ public class DimensionHooks {
     public static boolean freezeToAerogel(LevelAccessor accessor, BlockPos pos) {
         if (accessor instanceof Level level) {
             FluidState fluidstate = level.getFluidState(pos);
-            if (LevelUtil.inTag(level, AetherTags.Dimensions.ULTRACOLD) && fluidstate.is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
+            if (DimensionTagTracking.inTag(level, AetherTags.Dimensions.ULTRACOLD) && fluidstate.is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
                 level.setBlockAndUpdate(pos, AetherBlocks.AEROGEL.get().defaultBlockState());
                 if (level instanceof ServerLevel serverLevel) {
                     double x = pos.getX() + 0.5;
@@ -131,7 +132,7 @@ public class DimensionHooks {
      */
     public static void fallFromAether(Level level) {
         if (level instanceof ServerLevel serverLevel) {
-            if (LevelUtil.inTag(serverLevel, AetherTags.Dimensions.FALL_TO_OVERWORLD)) {
+            if (DimensionTagTracking.inTag(serverLevel, AetherTags.Dimensions.FALL_TO_OVERWORLD)) {
                 if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
                     for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
                         if (entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger()) {
@@ -185,7 +186,7 @@ public class DimensionHooks {
     public static void dimensionTravel(Entity entity, ResourceKey<Level> dimension) {
         // The level passed into shouldReturnPlayerToOverworld() is the dimension the player is leaving
         //  Meaning: We display the Descending GUI text to the player if they're about to leave a dimension that returns them to the OW
-        if (LevelUtil.inTag(entity.level, AetherTags.Dimensions.DISPLAY_TRAVEL_TEXT)) {
+        if (DimensionTagTracking.inTag(entity.level, AetherTags.Dimensions.DISPLAY_TRAVEL_TEXT)) {
             if (entity.level.dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) {
                 displayAetherTravel = true;
                 playerLeavingAether = true;
@@ -220,8 +221,8 @@ public class DimensionHooks {
         Level level = player.getLevel();
         if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
             for (ServerLevel dimension : serverLevel.getServer().getAllLevels()) {
-                for (TagKey<DimensionType> tag : LevelUtil.getTags(level)) {
-                    LevelUtil.syncTrackerFromServer(dimension, tag);
+                for (TagKey<DimensionType> tag : DimensionTagTracking.getTags(level)) {
+                    DimensionTagTracking.syncTrackerFromServer(dimension, tag);
                 }
             }
         }

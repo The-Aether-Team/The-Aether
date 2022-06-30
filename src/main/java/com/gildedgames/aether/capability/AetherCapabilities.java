@@ -19,9 +19,9 @@ import com.gildedgames.aether.capability.rankings.AetherRankingsProvider;
 import com.gildedgames.aether.capability.time.AetherTime;
 import com.gildedgames.aether.capability.time.AetherTimeCapability;
 import com.gildedgames.aether.capability.time.AetherTimeProvider;
+import com.gildedgames.aether.util.DimensionTagTracking;
 import com.gildedgames.aether.world.AetherDimensions;
 
-import com.gildedgames.aether.util.LevelUtil;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -88,8 +88,8 @@ public class AetherCapabilities {
 
 		public static void addTrackers(Level level) {
 			if (!level.isClientSide()) {
-				for (TagKey<DimensionType> tag : LevelUtil.getTags(level)) {
-					LevelUtil.addTracker(level, tag);
+				for (TagKey<DimensionType> tag : DimensionTagTracking.getTags(level)) {
+					DimensionTagTracking.addTracker(level, tag);
 				}
 			}
 		}

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.inventory.provider;
 
-import com.gildedgames.aether.inventory.container.AccessoriesMenu;
+import com.gildedgames.aether.inventory.menu.AccessoriesMenu;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -15,7 +15,7 @@ public class AccessoriesProvider implements MenuProvider
     @Nonnull
     @Override
     public Component getDisplayName() {
-        return Component.translatable("container.crafting");
+        return Component.translatable("menu.crafting");
     }
 
     @Nullable
