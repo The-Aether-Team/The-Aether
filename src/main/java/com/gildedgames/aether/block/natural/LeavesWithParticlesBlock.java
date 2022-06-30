@@ -1,7 +1,7 @@
 package com.gildedgames.aether.block.natural;
 
-import com.gildedgames.aether.block.state.properties.AetherBlockStateProperties;
-import com.gildedgames.aether.block.util.IAetherDoubleDropBlock;
+import com.gildedgames.aether.block.AetherBlockStateProperties;
+import com.gildedgames.aether.block.DoubleDrops;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
@@ -19,7 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
-public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoubleDropBlock
+public class LeavesWithParticlesBlock extends LeavesBlock implements DoubleDrops
 {
 	private final Supplier<SimpleParticleType> particle;
 

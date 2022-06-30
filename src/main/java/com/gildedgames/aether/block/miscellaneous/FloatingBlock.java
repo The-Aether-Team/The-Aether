@@ -1,5 +1,6 @@
-package com.gildedgames.aether.block.util;
+package com.gildedgames.aether.block.miscellaneous;
 
+import com.gildedgames.aether.block.Floatable;
 import com.gildedgames.aether.entity.block.FloatingBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

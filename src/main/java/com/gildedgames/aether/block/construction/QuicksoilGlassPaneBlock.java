@@ -1,6 +1,6 @@
 package com.gildedgames.aether.block.construction;
 
-import com.gildedgames.aether.block.util.FrictionCapped;
+import com.gildedgames.aether.block.FrictionCapped;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.LevelReader;

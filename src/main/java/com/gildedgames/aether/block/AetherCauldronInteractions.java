@@ -1,4 +1,4 @@
-package com.gildedgames.aether;
+package com.gildedgames.aether.block;
 
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.core.BlockPos;

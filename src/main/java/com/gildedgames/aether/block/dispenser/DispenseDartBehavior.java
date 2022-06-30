@@ -1,4 +1,4 @@
-package com.gildedgames.aether.block.util.dispenser;
+package com.gildedgames.aether.block.dispenser;
 
 import com.gildedgames.aether.entity.projectile.dart.AbstractDart;
 import com.gildedgames.aether.item.combat.DartItem;

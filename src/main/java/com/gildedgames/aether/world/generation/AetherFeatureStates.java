@@ -1,6 +1,6 @@
 package com.gildedgames.aether.world.generation;
 
-import com.gildedgames.aether.block.state.properties.AetherBlockStateProperties;
+import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.block.AetherBlocks;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;

@@ -1,4 +1,4 @@
-package com.gildedgames.aether.block.state.properties;
+package com.gildedgames.aether.block;
 
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 

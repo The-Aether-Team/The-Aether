@@ -1,7 +1,7 @@
 package com.gildedgames.aether.block.natural;
 
-import com.gildedgames.aether.block.util.IAetherDoubleDropBlock;
-import com.gildedgames.aether.block.state.properties.AetherBlockStateProperties;
+import com.gildedgames.aether.block.DoubleDrops;
+import com.gildedgames.aether.block.AetherBlockStateProperties;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-public class AetherLogBlock extends RotatedPillarBlock implements IAetherDoubleDropBlock
+public class AetherLogBlock extends RotatedPillarBlock implements DoubleDrops
 {
 	public AetherLogBlock(BlockBehaviour.Properties properties) {
 		super(properties);

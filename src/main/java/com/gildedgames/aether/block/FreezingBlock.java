@@ -1,4 +1,4 @@
-package com.gildedgames.aether.block.util;
+package com.gildedgames.aether.block;
 
 import com.gildedgames.aether.event.events.FreezeEvent;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.block.natural;
 
-import com.gildedgames.aether.block.state.properties.AetherBlockStateProperties;
+import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.block.AetherBlocks;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

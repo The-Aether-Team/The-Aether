@@ -1,7 +1,7 @@
 package com.gildedgames.aether.block.natural;
 
-import com.gildedgames.aether.block.util.IAetherDoubleDropBlock;
-import com.gildedgames.aether.block.state.properties.AetherBlockStateProperties;
+import com.gildedgames.aether.block.DoubleDrops;
+import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.block.AetherBlocks;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class AetherGrassBlock extends GrassBlock implements IAetherDoubleDropBlock
+public class AetherGrassBlock extends GrassBlock implements DoubleDrops
 {
 	private static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
 

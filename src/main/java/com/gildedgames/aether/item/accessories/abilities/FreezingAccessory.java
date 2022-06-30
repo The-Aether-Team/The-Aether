@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item.accessories.abilities;
 
-import com.gildedgames.aether.block.util.FreezingBehavior;
+import com.gildedgames.aether.block.FreezingBehavior;
 import com.gildedgames.aether.event.events.FreezeEvent;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import net.minecraft.core.BlockPos;

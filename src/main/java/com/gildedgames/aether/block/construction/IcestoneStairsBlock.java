@@ -1,6 +1,6 @@
 package com.gildedgames.aether.block.construction;
 
-import com.gildedgames.aether.block.util.FreezingBlock;
+import com.gildedgames.aether.block.FreezingBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

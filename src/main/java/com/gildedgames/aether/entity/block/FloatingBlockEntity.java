@@ -1,8 +1,8 @@
 package com.gildedgames.aether.entity.block;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.block.util.Floatable;
-import com.gildedgames.aether.block.util.FloatingBlock;
+import com.gildedgames.aether.block.Floatable;
+import com.gildedgames.aether.block.miscellaneous.FloatingBlock;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.core.BlockPos;

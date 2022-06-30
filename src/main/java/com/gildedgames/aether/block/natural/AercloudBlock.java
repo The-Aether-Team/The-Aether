@@ -1,7 +1,7 @@
 package com.gildedgames.aether.block.natural;
 
-import com.gildedgames.aether.block.state.properties.AetherBlockStateProperties;
-import com.gildedgames.aether.block.util.IAetherDoubleDropBlock;
+import com.gildedgames.aether.block.AetherBlockStateProperties;
+import com.gildedgames.aether.block.DoubleDrops;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class AercloudBlock extends HalfTransparentBlock implements IAetherDoubleDropBlock
+public class AercloudBlock extends HalfTransparentBlock implements DoubleDrops
 {
 	private static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
 	protected static final VoxelShape COLLISION_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 0.01, 16.0);

@@ -1,6 +1,7 @@
-package com.gildedgames.aether.block.util;
+package com.gildedgames.aether.block.natural;
 
-import com.gildedgames.aether.block.state.properties.AetherBlockStateProperties;
+import com.gildedgames.aether.block.DoubleDrops;
+import com.gildedgames.aether.block.AetherBlockStateProperties;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -9,7 +10,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-public class AetherDoubleDropBlock extends Block implements IAetherDoubleDropBlock
+public class AetherDoubleDropBlock extends Block implements DoubleDrops
 {
 	private static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
 

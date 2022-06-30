@@ -1,4 +1,4 @@
-package com.gildedgames.aether.block.util;
+package com.gildedgames.aether.block;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;

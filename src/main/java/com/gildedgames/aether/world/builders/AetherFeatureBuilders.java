@@ -1,6 +1,6 @@
 package com.gildedgames.aether.world.builders;
 
-import com.gildedgames.aether.block.state.properties.AetherBlockStateProperties;
+import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.world.generation.configuration.AercloudConfiguration;
 import com.gildedgames.aether.world.generation.configuration.AetherLakeConfiguration;
 import com.gildedgames.aether.world.generation.placement.ConfigFilter;
