@@ -1,7 +1,7 @@
 package com.gildedgames.aether.event.hooks;
 
 import com.gildedgames.aether.api.CustomizationsOptions;
-import com.gildedgames.aether.world.AetherDimensions;
+import com.gildedgames.aether.data.resources.AetherDimensions;
 import com.gildedgames.aether.capability.cape.CapeEntity;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.capability.player.AetherPlayerCapability;

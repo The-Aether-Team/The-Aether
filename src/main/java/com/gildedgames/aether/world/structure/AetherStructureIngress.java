@@ -75,7 +75,7 @@ import java.util.Map;
 //                }
 //            }
 //
-//            ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> tempStructureToMultiMap = ImmutableMap.builder();
+//            ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> tempStructureToMultiMap = ImmutableMap.builders();
 //            worldStructureConfig.configuredStructures.entrySet().stream().filter(entry -> !aetherStructure2BiomeMap.containsKey(entry.getKey())).forEach(tempStructureToMultiMap::put);
 //
 //            aetherStructure2BiomeMap.forEach((key, value) -> tempStructureToMultiMap.put(key, ImmutableMultimap.copyOf(value)));

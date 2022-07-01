@@ -2,7 +2,7 @@ package com.gildedgames.aether.event.listeners;
 
 import com.gildedgames.aether.event.events.AetherBannedItemEvent;
 import com.gildedgames.aether.event.hooks.DimensionHooks;
-import com.gildedgames.aether.world.AetherDimensions;
+import com.gildedgames.aether.data.resources.AetherDimensions;
 import com.gildedgames.aether.world.AetherLevelData;
 import com.gildedgames.aether.capability.time.AetherTime;
 import net.minecraft.resources.ResourceKey;

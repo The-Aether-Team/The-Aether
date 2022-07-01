@@ -1,6 +1,6 @@
 package com.gildedgames.aether.block.natural;
 
-import com.gildedgames.aether.world.generation.tree.LevelTreeGrower;
+import com.gildedgames.aether.world.treegrower.LevelTreeGrower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

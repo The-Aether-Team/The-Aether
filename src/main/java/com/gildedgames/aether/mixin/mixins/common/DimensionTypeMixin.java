@@ -1,6 +1,6 @@
 package com.gildedgames.aether.mixin.mixins.common;
 
-import com.gildedgames.aether.world.AetherDimensions;
+import com.gildedgames.aether.data.resources.AetherDimensions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.dimension.DimensionType;

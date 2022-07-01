@@ -39,12 +39,12 @@ import java.util.Map;
 //        StructureFeature.STRUCTURES_REGISTRY.put(structure.getRegistryName().toString(), structure);
 //
 //        if (transformSurroundingLand)
-//            StructureFeature.NOISE_AFFECTING_FEATURES = ImmutableList.<StructureFeature<?>>builder()
+//            StructureFeature.NOISE_AFFECTING_FEATURES = ImmutableList.<StructureFeature<?>>builders()
 //                    .addAll(StructureFeature.NOISE_AFFECTING_FEATURES)
 //                    .add(structure)
 //                    .build();
 //
-//        StructureSettings.DEFAULTS = ImmutableMap.<StructureFeature<?>, StructureFeatureConfiguration>builder()
+//        StructureSettings.DEFAULTS = ImmutableMap.<StructureFeature<?>, StructureFeatureConfiguration>builders()
 //                        .putAll(StructureSettings.DEFAULTS)
 //                        .put(structure, structureFeatureConfiguration)
 //                        .build();

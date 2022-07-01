@@ -5,7 +5,7 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.api.DimensionTagTracking;
 import com.gildedgames.aether.util.LevelUtil;
-import com.gildedgames.aether.world.AetherDimensions;
+import com.gildedgames.aether.data.resources.AetherDimensions;
 import com.gildedgames.aether.world.AetherTeleporter;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.capability.time.AetherTime;

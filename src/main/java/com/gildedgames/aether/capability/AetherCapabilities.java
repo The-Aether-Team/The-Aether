@@ -20,7 +20,7 @@ import com.gildedgames.aether.capability.time.AetherTime;
 import com.gildedgames.aether.capability.time.AetherTimeCapability;
 import com.gildedgames.aether.capability.time.AetherTimeProvider;
 import com.gildedgames.aether.api.DimensionTagTracking;
-import com.gildedgames.aether.world.AetherDimensions;
+import com.gildedgames.aether.data.resources.AetherDimensions;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
