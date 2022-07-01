@@ -1,51 +1,37 @@
 package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.advancement.triggers.LoreTrigger;
+import com.gildedgames.aether.advancement.LoreTrigger;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.data.resources.AetherDimensions;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Sets;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.*;
-import net.minecraft.data.CachedOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DataProvider;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
 
 public class AetherAdvancementData extends AdvancementProvider
 {
-    private static final Logger LOGGER = LogManager.getLogger();
-    private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
-    private final DataGenerator generator;
-    public final List<Consumer<Consumer<Advancement>>> advancements = ImmutableList.of(new RegisterAdvancements());
+    public final List<Consumer<Consumer<Advancement>>> advancements = ImmutableList.of(new AetherAdvancements());
 
     public AetherAdvancementData(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
         super(generatorIn, existingFileHelper);
-        this.generator = generatorIn;
     }
 
     @Nonnull
@@ -55,34 +41,13 @@ public class AetherAdvancementData extends AdvancementProvider
     }
 
     @Override
-    public void run(@Nonnull CachedOutput cache) {
-        Path path = this.generator.getOutputFolder();
-        Set<ResourceLocation> set = Sets.newHashSet();
-        Consumer<Advancement> consumer = (advancement) -> {
-            if (!set.add(advancement.getId())) {
-                throw new IllegalStateException("Duplicate advancement " + advancement.getId());
-            } else {
-                Path path1 = getPath(path, advancement);
-
-                try {
-                    DataProvider.saveStable(cache, advancement.deconstruct().serializeToJson(), path1);
-                } catch (IOException ioexception) {
-                    LOGGER.error("Couldn't save advancement {}", path1, ioexception);
-                }
-
-            }
-        };
-
-        for(Consumer<Consumer<Advancement>> consumer1 : this.advancements) {
+    protected void registerAdvancements(Consumer<Advancement> consumer, ExistingFileHelper fileHelper) {
+        for (Consumer<Consumer<Advancement>> consumer1 : this.advancements) {
             consumer1.accept(consumer);
         }
     }
 
-    private static Path getPath(Path pathIn, Advancement advancementIn) {
-        return pathIn.resolve("data/aether/advancements/" + advancementIn.getId().getPath() + ".json");
-    }
-
-    public static class RegisterAdvancements implements Consumer<Consumer<Advancement>>
+    public static class AetherAdvancements implements Consumer<Consumer<Advancement>>
     {
         @Override
         public void accept(Consumer<Advancement> consumer) {

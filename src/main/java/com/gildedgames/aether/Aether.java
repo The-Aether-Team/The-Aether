@@ -1,6 +1,6 @@
 package com.gildedgames.aether;
 
-import com.gildedgames.aether.advancement.AetherAdvancements;
+import com.gildedgames.aether.advancement.AetherAdvancementTriggers;
 import com.gildedgames.aether.block.AetherBlockEntityTypes;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.block.AetherCauldronInteractions;
@@ -130,7 +130,7 @@ public class Aether
         AetherItems.registerAbilities();
         AetherPacketHandler.register();
 
-        AetherAdvancements.init();
+        AetherAdvancementTriggers.init();
         AetherPlacementModifiers.init();
         AetherRecipeBookTypes.init();
 
