@@ -20,10 +20,11 @@ import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.loot.AetherLootModifiers;
-import com.gildedgames.aether.recipe.AetherRecipes;
+import com.gildedgames.aether.recipe.AetherRecipeSerializers;
 import com.gildedgames.aether.data.resources.AetherBiomes;
 import com.gildedgames.aether.data.resources.AetherDimensions;
 import com.gildedgames.aether.data.resources.AetherNoiseGeneratorSettings;
+import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.world.AetherPOI;
 import com.gildedgames.aether.world.foliageplacer.AetherFoliagePlacerTypes;
 import com.gildedgames.aether.data.resources.AetherConfiguredFeatures;
@@ -105,8 +106,8 @@ public class Aether
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
                 AetherTreeDecoratorTypes.TREE_DECORATORS,
                 AetherPOI.POI,
-                AetherRecipes.RecipeTypes.RECIPE_TYPES,
-                AetherRecipes.RECIPE_SERIALIZERS,
+                AetherRecipeTypes.RECIPE_TYPES,
+                AetherRecipeSerializers.RECIPE_SERIALIZERS,
                 AetherLoot.LOOT_FUNCTION_TYPES,
                 AetherLoot.LOOT_CONDITION_TYPES,
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,

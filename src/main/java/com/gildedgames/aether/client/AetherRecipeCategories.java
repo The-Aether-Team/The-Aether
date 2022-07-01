@@ -3,7 +3,8 @@ package com.gildedgames.aether.client;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
-import com.gildedgames.aether.recipe.AetherRecipes;
+import com.gildedgames.aether.recipe.AetherRecipeSerializers;
+import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.RecipeBookCategories;
@@ -37,7 +38,7 @@ public class AetherRecipeCategories {
     public static void registerRecipeCategories() {
         RecipeBookRegistry.addCategoriesToType(AetherRecipeBookTypes.ALTAR, ImmutableList.of(ENCHANTING_SEARCH.get(), ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
         RecipeBookRegistry.addAggregateCategories(ENCHANTING_SEARCH.get(), ImmutableList.of(ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
-        RecipeBookRegistry.addCategoriesFinder(AetherRecipes.RecipeTypes.ENCHANTING.get(), recipe -> {
+        RecipeBookRegistry.addCategoriesFinder(AetherRecipeTypes.ENCHANTING.get(), recipe -> {
             if (recipe.getIngredients().get(0).getItems()[0].is(recipe.getResultItem().getItem())) {
                 return ENCHANTING_REPAIR.get();
             }
@@ -51,7 +52,7 @@ public class AetherRecipeCategories {
         });
         RecipeBookRegistry.addCategoriesToType(AetherRecipeBookTypes.FREEZER, ImmutableList.of(FREEZABLE_SEARCH.get(), FREEZABLE_BLOCKS.get(), FREEZABLE_MISC.get()));
         RecipeBookRegistry.addAggregateCategories(FREEZABLE_SEARCH.get(), ImmutableList.of(FREEZABLE_BLOCKS.get(), FREEZABLE_MISC.get()));
-        RecipeBookRegistry.addCategoriesFinder(AetherRecipes.RecipeTypes.FREEZING.get(), recipe -> recipe.getResultItem().getItem() instanceof BlockItem ? FREEZABLE_BLOCKS.get() : FREEZABLE_MISC.get());
+        RecipeBookRegistry.addCategoriesFinder(AetherRecipeTypes.FREEZING.get(), recipe -> recipe.getResultItem().getItem() instanceof BlockItem ? FREEZABLE_BLOCKS.get() : FREEZABLE_MISC.get());
     }
 
 }

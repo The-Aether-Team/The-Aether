@@ -1,10 +1,10 @@
 package com.gildedgames.aether.block.entity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.recipe.AetherRecipes.RecipeTypes;
 import com.gildedgames.aether.inventory.menu.AltarMenu;
 
 import com.gildedgames.aether.block.AetherBlockEntityTypes;
+import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -26,7 +26,7 @@ public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity
 	private static final Map<Item, Integer> enchantingMap = Maps.newLinkedHashMap();
 
 	public AltarBlockEntity(BlockPos pos, BlockState state) {
-		super(AetherBlockEntityTypes.ALTAR.get(), pos, state, RecipeTypes.ENCHANTING.get());
+		super(AetherBlockEntityTypes.ALTAR.get(), pos, state, AetherRecipeTypes.ENCHANTING.get());
 	}
 
 	@Nonnull

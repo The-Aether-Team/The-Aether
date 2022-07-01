@@ -1,7 +1,7 @@
 package com.gildedgames.aether.data.providers;
 
 import com.gildedgames.aether.recipe.builder.AltarRepairBuilder;
-import com.gildedgames.aether.recipe.AetherRecipes;
+import com.gildedgames.aether.recipe.AetherRecipeSerializers;
 import com.gildedgames.aether.AetherTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
@@ -355,42 +355,42 @@ public abstract class AetherRecipeProvider extends RecipeProvider
     }
 
     public AltarRepairBuilder repairingRecipe(ItemLike item, int duration) {
-        return AltarRepairBuilder.repair(Ingredient.of(new ItemStack(item, 1)), duration, AetherRecipes.REPAIRING.get())
+        return AltarRepairBuilder.repair(Ingredient.of(new ItemStack(item, 1)), duration, AetherRecipeSerializers.REPAIRING.get())
                 .unlockedBy("has_" + ForgeRegistries.ITEMS.getKey(item.asItem()).getPath(), has(item));
     }
 
     public SimpleCookingRecipeBuilder enchantingRecipe(ItemLike result, ItemLike ingredient, float exp, int duration) {
-        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(new ItemStack(ingredient, 1)), result, exp, duration, AetherRecipes.ENCHANTING.get())
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(new ItemStack(ingredient, 1)), result, exp, duration, AetherRecipeSerializers.ENCHANTING.get())
                 .unlockedBy("has_" + ForgeRegistries.ITEMS.getKey(ingredient.asItem()).getPath(), has(ingredient));
     }
 
     public SimpleCookingRecipeBuilder enchantingRecipe(ItemLike result, TagKey<Item> ingredient, float exp, int duration) {
-        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipes.ENCHANTING.get())
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipeSerializers.ENCHANTING.get())
                 .unlockedBy("has_disc", has(ingredient));
     }
 
     public SimpleCookingRecipeBuilder hiddenEnchantingRecipe(ItemLike result, ItemLike ingredient, float exp, int duration) {
-        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipes.ENCHANTING.get())
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipeSerializers.ENCHANTING.get())
                 .unlockedBy("has_" + ForgeRegistries.ITEMS.getKey(result.asItem()).getPath(), has(result));
     }
 
     public SimpleCookingRecipeBuilder freezingRecipe(ItemLike result, ItemLike ingredient, float exp, int duration) {
-        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipes.FREEZING.get())
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipeSerializers.FREEZING.get())
                 .unlockedBy("has_" + ForgeRegistries.ITEMS.getKey(ingredient.asItem()).getPath(), has(ingredient));
     }
 
     public SimpleCookingRecipeBuilder freezingRecipeWithTag(ItemLike result, TagKey<Item> ingredient, float exp, int duration, String advancementName) {
-        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipes.FREEZING.get())
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipeSerializers.FREEZING.get())
                 .unlockedBy("has_" + advancementName, has(ingredient));
     }
 
     public SimpleCookingRecipeBuilder freezingRecipeWithUnlockTag(ItemLike result, ItemLike ingredient, TagKey<Item> unlock, float exp, int duration, String advancementName) {
-        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipes.FREEZING.get())
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipeSerializers.FREEZING.get())
                 .unlockedBy("has_" + advancementName, has(unlock));
     }
 
     public SimpleCookingRecipeBuilder hiddenFreezingRecipe(ItemLike result, ItemLike ingredient, float exp, int duration) {
-        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipes.FREEZING.get())
+        return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipeSerializers.FREEZING.get())
                 .unlockedBy("has_" + ForgeRegistries.ITEMS.getKey(result.asItem()).getPath(), has(result));
     }
 

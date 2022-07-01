@@ -2,7 +2,7 @@ package com.gildedgames.aether.inventory.menu;
 
 import com.gildedgames.aether.block.entity.FreezerBlockEntity;
 import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
-import com.gildedgames.aether.recipe.AetherRecipes.RecipeTypes;
+import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.inventory.AetherMenuTypes;
 
 import net.minecraft.world.entity.player.Inventory;
@@ -13,11 +13,11 @@ import net.minecraft.world.inventory.ContainerData;
 
 public class FreezerMenu extends AbstractFurnaceMenu {
 	public FreezerMenu(int windowId, Inventory playerInventory) {
-		super(AetherMenuTypes.FREEZER.get(), RecipeTypes.FREEZING.get(), AetherRecipeBookTypes.FREEZER, windowId, playerInventory);
+		super(AetherMenuTypes.FREEZER.get(), AetherRecipeTypes.FREEZING.get(), AetherRecipeBookTypes.FREEZER, windowId, playerInventory);
 	}
 
 	public FreezerMenu(int windowId, Inventory playerInventory, Container freezingInventory, ContainerData furnaceData) {
-		super(AetherMenuTypes.FREEZER.get(), RecipeTypes.FREEZING.get(), AetherRecipeBookTypes.FREEZER, windowId, playerInventory, freezingInventory, furnaceData);
+		super(AetherMenuTypes.FREEZER.get(), AetherRecipeTypes.FREEZING.get(), AetherRecipeBookTypes.FREEZER, windowId, playerInventory, freezingInventory, furnaceData);
 	}
 
 	@Override

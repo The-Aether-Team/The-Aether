@@ -1,10 +1,10 @@
 package com.gildedgames.aether.block.entity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.recipe.AetherRecipes.RecipeTypes;
 import com.gildedgames.aether.inventory.menu.FreezerMenu;
 
 import com.gildedgames.aether.block.AetherBlockEntityTypes;
+import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -26,7 +26,7 @@ public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity
 	private static final Map<Item, Integer> freezingMap = Maps.newLinkedHashMap();
 
 	public FreezerBlockEntity(BlockPos pos, BlockState state) {
-		super(AetherBlockEntityTypes.FREEZER.get(), pos, state, RecipeTypes.FREEZING.get());
+		super(AetherBlockEntityTypes.FREEZER.get(), pos, state, AetherRecipeTypes.FREEZING.get());
 	}
 	
 	@Nonnull

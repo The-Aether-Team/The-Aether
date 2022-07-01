@@ -1,7 +1,8 @@
 package com.gildedgames.aether.recipe.recipes;
 
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.recipe.AetherRecipes;
+import com.gildedgames.aether.recipe.AetherRecipeSerializers;
+import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
@@ -12,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 public class EnchantingRecipe extends AbstractCookingRecipe
 {
 	public EnchantingRecipe(ResourceLocation idIn, String groupIn, Ingredient ingredientIn, ItemStack resultIn, float experienceIn, int cookTimeIn) {
-		super(AetherRecipes.RecipeTypes.ENCHANTING.get(), idIn, groupIn, ingredientIn, resultIn, experienceIn, cookTimeIn);
+		super(AetherRecipeTypes.ENCHANTING.get(), idIn, groupIn, ingredientIn, resultIn, experienceIn, cookTimeIn);
 	}
 
 	@Override
@@ -22,7 +23,7 @@ public class EnchantingRecipe extends AbstractCookingRecipe
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return AetherRecipes.ENCHANTING.get();
+		return AetherRecipeSerializers.ENCHANTING.get();
 	}
 
 	public static class Serializer extends SimpleCookingSerializer<EnchantingRecipe>

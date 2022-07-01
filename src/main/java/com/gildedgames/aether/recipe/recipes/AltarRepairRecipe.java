@@ -1,7 +1,8 @@
 package com.gildedgames.aether.recipe.recipes;
 
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.recipe.AetherRecipes;
+import com.gildedgames.aether.recipe.AetherRecipeSerializers;
+import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +20,7 @@ public class AltarRepairRecipe extends AbstractCookingRecipe
     public final Ingredient ingredient;
 
     public AltarRepairRecipe(ResourceLocation recipeLocation, String groupIn, Ingredient ingredient, int cookingTime) {
-        super(AetherRecipes.RecipeTypes.ENCHANTING.get(), recipeLocation, groupIn, ingredient, ingredient.getItems()[0], 0.0F, cookingTime);
+        super(AetherRecipeTypes.ENCHANTING.get(), recipeLocation, groupIn, ingredient, ingredient.getItems()[0], 0.0F, cookingTime);
         this.ingredient = ingredient;
     }
 
@@ -40,12 +41,12 @@ public class AltarRepairRecipe extends AbstractCookingRecipe
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return AetherRecipes.ENCHANTING.get();
+        return AetherRecipeSerializers.ENCHANTING.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return AetherRecipes.RecipeTypes.ENCHANTING.get();
+        return AetherRecipeTypes.ENCHANTING.get();
     }
 
     public static class Serializer implements RecipeSerializer<AltarRepairRecipe>

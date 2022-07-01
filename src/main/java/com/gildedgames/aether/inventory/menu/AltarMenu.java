@@ -2,7 +2,7 @@ package com.gildedgames.aether.inventory.menu;
 
 import com.gildedgames.aether.block.entity.AltarBlockEntity;
 import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
-import com.gildedgames.aether.recipe.AetherRecipes.RecipeTypes;
+import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.inventory.AetherMenuTypes;
 
 import net.minecraft.world.entity.player.Inventory;
@@ -14,11 +14,11 @@ import net.minecraft.world.inventory.ContainerData;
 public class AltarMenu extends AbstractFurnaceMenu
 {
 	public AltarMenu(int windowId, Inventory playerInventory) {
-		super(AetherMenuTypes.ALTAR.get(), RecipeTypes.ENCHANTING.get(), AetherRecipeBookTypes.ALTAR, windowId, playerInventory);
+		super(AetherMenuTypes.ALTAR.get(), AetherRecipeTypes.ENCHANTING.get(), AetherRecipeBookTypes.ALTAR, windowId, playerInventory);
 	}
 
 	public AltarMenu(int windowId, Inventory playerInventory, Container enchantingInventory, ContainerData furnaceData) {
-		super(AetherMenuTypes.ALTAR.get(), RecipeTypes.ENCHANTING.get(), AetherRecipeBookTypes.ALTAR, windowId, playerInventory, enchantingInventory, furnaceData);
+		super(AetherMenuTypes.ALTAR.get(), AetherRecipeTypes.ENCHANTING.get(), AetherRecipeBookTypes.ALTAR, windowId, playerInventory, enchantingInventory, furnaceData);
 	}
 
 	@Override
