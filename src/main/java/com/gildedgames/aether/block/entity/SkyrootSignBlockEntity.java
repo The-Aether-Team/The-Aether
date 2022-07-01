@@ -1,6 +1,5 @@
 package com.gildedgames.aether.block.entity;
 
-import com.gildedgames.aether.block.AetherBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;

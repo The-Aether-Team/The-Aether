@@ -1,10 +1,10 @@
 package com.gildedgames.aether;
 
 import com.gildedgames.aether.advancement.AetherAdvancementTriggers;
-import com.gildedgames.aether.block.AetherBlockEntityTypes;
+import com.gildedgames.aether.block.entity.AetherBlockEntityTypes;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.block.AetherCauldronInteractions;
-import com.gildedgames.aether.block.AetherDispenseBehaviors;
+import com.gildedgames.aether.block.dispenser.AetherDispenseBehaviors;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.block.entity.IncubatorBlockEntity;
@@ -15,11 +15,13 @@ import com.gildedgames.aether.data.generators.*;
 import com.gildedgames.aether.data.generators.tags.*;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import com.gildedgames.aether.inventory.AetherMenuTypes;
+import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
 import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.AetherLoot;
-import com.gildedgames.aether.loot.AetherLootModifiers;
+import com.gildedgames.aether.loot.conditions.AetherLootConditions;
+import com.gildedgames.aether.loot.functions.AetherLootFunctions;
+import com.gildedgames.aether.loot.modifiers.AetherLootModifiers;
 import com.gildedgames.aether.recipe.AetherRecipeSerializers;
 import com.gildedgames.aether.data.resources.AetherBiomes;
 import com.gildedgames.aether.data.resources.AetherDimensions;
@@ -108,8 +110,8 @@ public class Aether
                 AetherPOI.POI,
                 AetherRecipeTypes.RECIPE_TYPES,
                 AetherRecipeSerializers.RECIPE_SERIALIZERS,
-                AetherLoot.LOOT_FUNCTION_TYPES,
-                AetherLoot.LOOT_CONDITION_TYPES,
+                AetherLootFunctions.LOOT_FUNCTION_TYPES,
+                AetherLootConditions.LOOT_CONDITION_TYPES,
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherSoundEvents.SOUNDS
         };

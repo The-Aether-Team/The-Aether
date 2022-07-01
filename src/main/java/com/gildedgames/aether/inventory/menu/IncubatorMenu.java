@@ -4,7 +4,6 @@ import com.gildedgames.aether.block.entity.IncubatorBlockEntity;
 
 import com.gildedgames.aether.inventory.menu.slot.IncubatorEggSlot;
 import com.gildedgames.aether.inventory.menu.slot.IncubatorFuelSlot;
-import com.gildedgames.aether.inventory.AetherMenuTypes;
 import com.gildedgames.aether.AetherTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;

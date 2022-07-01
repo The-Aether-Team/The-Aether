@@ -1,7 +1,8 @@
-package com.gildedgames.aether.item;
+package com.gildedgames.aether.item.combat;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;

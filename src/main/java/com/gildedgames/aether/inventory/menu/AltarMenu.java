@@ -3,7 +3,6 @@ package com.gildedgames.aether.inventory.menu;
 import com.gildedgames.aether.block.entity.AltarBlockEntity;
 import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
-import com.gildedgames.aether.inventory.AetherMenuTypes;
 
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;

@@ -1,7 +1,7 @@
 package com.gildedgames.aether.item.combat.loot;
 
 import com.gildedgames.aether.item.AetherItemGroups;
-import com.gildedgames.aether.item.AetherItemTiers;
+import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.Entity;

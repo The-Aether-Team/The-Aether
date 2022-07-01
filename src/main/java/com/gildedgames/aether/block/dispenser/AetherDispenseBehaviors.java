@@ -1,6 +1,7 @@
-package com.gildedgames.aether.block;
+package com.gildedgames.aether.block.dispenser;
 
 import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.projectile.weapon.HammerProjectile;
 import com.gildedgames.aether.entity.projectile.weapon.ThrownLightningKnife;
 import com.gildedgames.aether.item.AetherItems;

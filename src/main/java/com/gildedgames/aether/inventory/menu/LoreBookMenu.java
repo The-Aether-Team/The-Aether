@@ -1,7 +1,6 @@
 package com.gildedgames.aether.inventory.menu;
 
 import com.gildedgames.aether.inventory.container.LoreInventory;
-import com.gildedgames.aether.inventory.AetherMenuTypes;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;

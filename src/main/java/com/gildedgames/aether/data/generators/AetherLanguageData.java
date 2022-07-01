@@ -4,7 +4,7 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.data.providers.AetherLanguageProvider;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import com.gildedgames.aether.inventory.AetherMenuTypes;
+import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.data.DataGenerator;

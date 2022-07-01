@@ -2,7 +2,7 @@ package com.gildedgames.aether.block.utility;
 
 import com.gildedgames.aether.block.entity.IncubatorBlockEntity;
 
-import com.gildedgames.aether.block.AetherBlockEntityTypes;
+import com.gildedgames.aether.block.entity.AetherBlockEntityTypes;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;

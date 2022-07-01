@@ -7,7 +7,6 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.inventory.menu.IncubatorMenu;
 
 import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
-import com.gildedgames.aether.block.AetherBlockEntityTypes;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.AetherTags;
 import com.google.common.collect.Maps;

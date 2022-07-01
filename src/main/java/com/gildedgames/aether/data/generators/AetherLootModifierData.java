@@ -2,7 +2,7 @@ package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.loot.modifiers.RemoveSeedsModifier;
-import com.gildedgames.aether.loot.AetherLootModifiers;
+import com.gildedgames.aether.loot.modifiers.AetherLootModifiers;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;

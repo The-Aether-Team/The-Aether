@@ -3,7 +3,7 @@ package com.gildedgames.aether.block.utility;
 import com.gildedgames.aether.block.entity.FreezerBlockEntity;
 
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
-import com.gildedgames.aether.block.AetherBlockEntityTypes;
+import com.gildedgames.aether.block.entity.AetherBlockEntityTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;

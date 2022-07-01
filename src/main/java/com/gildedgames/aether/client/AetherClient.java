@@ -8,7 +8,7 @@ import com.gildedgames.aether.client.renderer.AetherOverlays;
 import com.gildedgames.aether.client.renderer.AetherRenderers;
 import com.gildedgames.aether.client.renderer.level.AetherSkyRenderInfo;
 import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
-import com.gildedgames.aether.inventory.AetherMenuTypes;
+import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
 
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.client.Minecraft;

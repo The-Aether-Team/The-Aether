@@ -1,4 +1,4 @@
-package com.gildedgames.aether.loot;
+package com.gildedgames.aether.loot.modifiers;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.loot.modifiers.RemoveSeedsModifier;

@@ -1,6 +1,5 @@
 package com.gildedgames.aether.block.entity;
 
-import com.gildedgames.aether.block.AetherBlockEntityTypes;
 import com.gildedgames.aether.block.AetherBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;

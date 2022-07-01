@@ -41,7 +41,7 @@ public class SpawnTNT extends LootItemConditionalFunction
 
     @Override
     public LootItemFunctionType getType() {
-        return AetherLoot.SPAWN_TNT.get();
+        return AetherLootFunctions.SPAWN_TNT.get();
     }
 
     public static class Serializer extends LootItemConditionalFunction.Serializer<SpawnTNT>

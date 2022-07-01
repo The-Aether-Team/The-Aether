@@ -1,4 +1,4 @@
-package com.gildedgames.aether.inventory;
+package com.gildedgames.aether.inventory.menu;
 
 import com.gildedgames.aether.Aether;
 

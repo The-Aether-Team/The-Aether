@@ -1,7 +1,6 @@
 package com.gildedgames.aether.item.combat;
 
 import com.gildedgames.aether.item.AetherItemGroups;
-import com.gildedgames.aether.item.AetherItemTiers;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;

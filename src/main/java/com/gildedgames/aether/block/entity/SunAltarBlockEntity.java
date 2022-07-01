@@ -2,7 +2,6 @@ package com.gildedgames.aether.block.entity;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.AetherClient;
-import com.gildedgames.aether.block.AetherBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;

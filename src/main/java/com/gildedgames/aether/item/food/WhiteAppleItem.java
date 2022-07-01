@@ -1,6 +1,5 @@
 package com.gildedgames.aether.item.food;
 
-import com.gildedgames.aether.item.AetherFoods;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.capability.player.AetherPlayer;

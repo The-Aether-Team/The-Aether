@@ -1,4 +1,4 @@
-package com.gildedgames.aether.item;
+package com.gildedgames.aether.item.food;
 
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.effect.MobEffectInstance;

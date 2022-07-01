@@ -1,7 +1,7 @@
 package com.gildedgames.aether.item.tools.skyroot;
 
 import com.gildedgames.aether.item.AetherItemGroups;
-import com.gildedgames.aether.item.AetherItemTiers;
+import com.gildedgames.aether.item.combat.AetherItemTiers;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShovelItem;

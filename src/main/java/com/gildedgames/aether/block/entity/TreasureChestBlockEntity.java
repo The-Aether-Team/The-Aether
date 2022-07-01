@@ -1,7 +1,6 @@
 package com.gildedgames.aether.block.entity;
 
 import com.gildedgames.aether.item.miscellaneous.DungeonKeyItem;
-import com.gildedgames.aether.block.AetherBlockEntityTypes;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.api.AetherDungeonTypes;
 import net.minecraft.core.BlockPos;

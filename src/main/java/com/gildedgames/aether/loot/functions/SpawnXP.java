@@ -41,7 +41,7 @@ public class SpawnXP extends LootItemConditionalFunction
 
     @Override
     public LootItemFunctionType getType() {
-        return AetherLoot.SPAWN_XP.get();
+        return AetherLootFunctions.SPAWN_XP.get();
     }
 
     public static class Serializer extends LootItemConditionalFunction.Serializer<SpawnXP>

@@ -14,6 +14,7 @@ import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.capability.arrow.PhoenixArrow;
 import com.gildedgames.aether.capability.lightning.LightningTracker;
 import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.loot.AetherLootContexts;
 import com.gildedgames.aether.util.EquipmentUtil;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
@@ -113,7 +114,7 @@ public class AbilityHooks {
                                     .withParameter(LootContextParams.ORIGIN, vector)
                                     .withParameter(LootContextParams.TOOL, stack);
                             LootTable loottable = level.getServer().getLootTables().get(AetherLoot.STRIP_GOLDEN_OAK);
-                            List<ItemStack> list = loottable.getRandomItems(lootContext.create(AetherLoot.STRIPPING));
+                            List<ItemStack> list = loottable.getRandomItems(lootContext.create(AetherLootContexts.STRIPPING));
                             for (ItemStack itemStack : list) {
                                 ItemEntity itemEntity = new ItemEntity(level, vector.x(), vector.y(), vector.z(), itemStack);
                                 itemEntity.setDefaultPickUpDelay();

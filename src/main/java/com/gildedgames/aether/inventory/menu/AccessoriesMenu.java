@@ -1,6 +1,5 @@
 package com.gildedgames.aether.inventory.menu;
 
-import com.gildedgames.aether.inventory.AetherMenuTypes;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.MinecraftServer;

@@ -2,6 +2,7 @@ package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.data.generators.loot.*;
 import com.gildedgames.aether.loot.AetherLoot;
+import com.gildedgames.aether.loot.AetherLootContexts;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.DataGenerator;
@@ -41,7 +42,7 @@ public class AetherLootTableData extends LootTableProvider {
                 Pair.of(AetherDungeonLootData::new, LootContextParamSets.CHEST),
                 Pair.of(AetherAdvancementLootData::new, LootContextParamSets.ADVANCEMENT_REWARD),
                 Pair.of(AetherSelectorLootData::new, LootContextParamSets.SELECTOR),
-                Pair.of(AetherStrippingLootData::new, AetherLoot.STRIPPING));
+                Pair.of(AetherStrippingLootData::new, AetherLootContexts.STRIPPING));
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.gildedgames.aether.item.combat;
 
 import com.gildedgames.aether.item.AetherItemGroups;
-import com.gildedgames.aether.item.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;

@@ -1,6 +1,5 @@
 package com.gildedgames.aether.item.food;
 
-import com.gildedgames.aether.item.AetherFoods;
 import com.gildedgames.aether.item.AetherItemGroups;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.entity.LivingEntity;

@@ -1,6 +1,7 @@
-package com.gildedgames.aether.item;
+package com.gildedgames.aether.item.combat;
 
 import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.LazyLoadedValue;

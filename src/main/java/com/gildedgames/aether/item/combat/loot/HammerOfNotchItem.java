@@ -3,7 +3,7 @@ package com.gildedgames.aether.item.combat.loot;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.projectile.weapon.HammerProjectile;
 import com.gildedgames.aether.item.AetherItemGroups;
-import com.gildedgames.aether.item.AetherItemTiers;
+import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;

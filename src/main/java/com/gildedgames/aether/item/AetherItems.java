@@ -2,6 +2,7 @@ package com.gildedgames.aether.item;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.item.food.AetherFoods;
 import com.gildedgames.aether.item.miscellaneous.SkyrootBoatItem;
 import com.gildedgames.aether.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.item.accessories.gloves.LeatherGlovesItem;

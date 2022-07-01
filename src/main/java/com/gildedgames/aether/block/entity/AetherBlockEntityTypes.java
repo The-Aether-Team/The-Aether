@@ -1,7 +1,8 @@
-package com.gildedgames.aether.block;
+package com.gildedgames.aether.block.entity;
 
 import com.gildedgames.aether.Aether;
 
+import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.block.entity.*;
 import com.gildedgames.aether.block.entity.SkyrootSignBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
