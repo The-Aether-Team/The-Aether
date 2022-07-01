@@ -10,11 +10,11 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class AetherMenuTypes
 {
-	public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, Aether.MODID);
+	public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, Aether.MODID);
 
-	public static final RegistryObject<MenuType<AccessoriesMenu>> ACCESSORIES = CONTAINERS.register("accessories", () -> new MenuType<>(AccessoriesMenu::new));
-	public static final RegistryObject<MenuType<LoreBookMenu>> BOOK_OF_LORE = CONTAINERS.register("book_of_lore", () -> new MenuType<>(LoreBookMenu::new));
-	public static final RegistryObject<MenuType<AltarMenu>> ALTAR = CONTAINERS.register("altar", () -> new MenuType<>(AltarMenu::new));
-	public static final RegistryObject<MenuType<FreezerMenu>> FREEZER = CONTAINERS.register("freezer", () -> new MenuType<>(FreezerMenu::new));
-	public static final RegistryObject<MenuType<IncubatorMenu>> INCUBATOR = CONTAINERS.register("incubator", () -> new MenuType<>(IncubatorMenu::new));
+	public static final RegistryObject<MenuType<AccessoriesMenu>> ACCESSORIES = MENU_TYPES.register("accessories", () -> new MenuType<>(AccessoriesMenu::new));
+	public static final RegistryObject<MenuType<LoreBookMenu>> BOOK_OF_LORE = MENU_TYPES.register("book_of_lore", () -> new MenuType<>(LoreBookMenu::new));
+	public static final RegistryObject<MenuType<AltarMenu>> ALTAR = MENU_TYPES.register("altar", () -> new MenuType<>(AltarMenu::new));
+	public static final RegistryObject<MenuType<FreezerMenu>> FREEZER = MENU_TYPES.register("freezer", () -> new MenuType<>(FreezerMenu::new));
+	public static final RegistryObject<MenuType<IncubatorMenu>> INCUBATOR = MENU_TYPES.register("incubator", () -> new MenuType<>(IncubatorMenu::new));
 }

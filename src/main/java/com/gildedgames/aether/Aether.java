@@ -99,7 +99,7 @@ public class Aether
                 AetherItems.ITEMS,
                 AetherEntityTypes.ENTITIES,
                 AetherBlockEntityTypes.BLOCK_ENTITIES,
-                AetherMenuTypes.CONTAINERS,
+                AetherMenuTypes.MENU_TYPES,
                 AetherEffects.EFFECTS,
                 AetherParticleTypes.PARTICLES,
                 AetherFeatures.FEATURES,
