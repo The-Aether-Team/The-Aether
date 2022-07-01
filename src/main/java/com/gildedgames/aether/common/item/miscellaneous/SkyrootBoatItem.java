@@ -1,6 +1,7 @@
 package com.gildedgames.aether.common.item.miscellaneous;
 
 import com.gildedgames.aether.common.entity.miscellaneous.SkyrootBoat;
+import com.gildedgames.aether.common.entity.miscellaneous.SkyrootChestBoat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -8,6 +9,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
@@ -23,14 +25,16 @@ import java.util.function.Predicate;
 
 public class SkyrootBoatItem extends Item {
     private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);
+    private final boolean hasChest;
 
-    public SkyrootBoatItem(Item.Properties properties) {
+    public SkyrootBoatItem(boolean hasChest, Item.Properties properties) {
         super(properties);
+        this.hasChest = hasChest;
     }
 
     @Nonnull
     @Override
-    public InteractionResultHolder<ItemStack> use(@Nonnull Level level, Player player, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(@Nonnull Level level, Player player, @Nonnull InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
         HitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.ANY);
         if (hitResult.getType() == HitResult.Type.MISS) {
@@ -48,7 +52,7 @@ public class SkyrootBoatItem extends Item {
                 }
             }
             if (hitResult.getType() == HitResult.Type.BLOCK) {
-                SkyrootBoat boat = new SkyrootBoat(level, hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z);
+                Boat boat = this.getBoat(level, hitResult);
                 boat.setYRot(player.getYRot());
                 if (!level.noCollision(boat, boat.getBoundingBox())) {
                     return InteractionResultHolder.fail(heldStack);
@@ -67,5 +71,9 @@ public class SkyrootBoatItem extends Item {
                 return InteractionResultHolder.pass(heldStack);
             }
         }
+    }
+
+    private Boat getBoat(Level level, HitResult hitResult) {
+        return this.hasChest ? new SkyrootChestBoat(level, hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z) : new SkyrootBoat(level, hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z);
     }
 }

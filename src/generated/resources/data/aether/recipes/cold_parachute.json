@@ -1,14 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "AA",
-    "AA"
-  ],
   "key": {
     "A": {
       "item": "aether:cold_aercloud"
     }
   },
+  "pattern": [
+    "AA",
+    "AA"
+  ],
   "result": {
     "item": "aether:cold_parachute"
   }

@@ -7,6 +7,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.data.LanguageProvider;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
 
@@ -29,7 +30,7 @@ public abstract class AetherLanguageProvider extends LanguageProvider
     }
 
     public void addContainerType(Supplier<? extends MenuType<?>> key, String name) {
-        add("container." + key.get().getRegistryName().toString().replace(":", "."), name);
+        add("container." + ForgeRegistries.CONTAINERS.getKey(key.get()).toString().replace(":", "."), name);
     }
 
     public void addContainerType(String key, String name) {

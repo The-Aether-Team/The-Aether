@@ -6,7 +6,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.api.distmarker.Dist;
@@ -26,7 +25,7 @@ public class SunAltarScreen extends Screen {
     public void init() {
         super.init();
         double value = this.minecraft.level.getDayTime() / 72000D;
-        this.addRenderableWidget(new SunAltarSlider(this.minecraft.level, this.width / 2 - 75, this.height / 2, 150, 20, new TranslatableComponent("gui." + Aether.MODID + ".sun_altar.time"), value));
+        this.addRenderableWidget(new SunAltarSlider(this.minecraft.level, this.width / 2 - 75, this.height / 2, 150, 20, Component.translatable("gui." + Aether.MODID + ".sun_altar.time"), value));
     }
 
     @Override

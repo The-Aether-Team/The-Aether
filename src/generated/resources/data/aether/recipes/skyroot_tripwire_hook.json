@@ -1,24 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "tripwire_hook",
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "S": {
+      "tag": "aether:planks_crafting"
+    },
+    "T": {
+      "tag": "forge:rods/wooden"
+    }
+  },
   "pattern": [
     "I",
     "T",
     "S"
   ],
-  "key": {
-    "I": {
-      "tag": "forge:ingots/iron"
-    },
-    "T": {
-      "tag": "forge:rods/wooden"
-    },
-    "S": {
-      "tag": "aether:planks_crafting"
-    }
-  },
   "result": {
-    "item": "minecraft:tripwire_hook",
-    "count": 2
+    "count": 2,
+    "item": "minecraft:tripwire_hook"
   }
 }

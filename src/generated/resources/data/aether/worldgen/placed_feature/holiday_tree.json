@@ -5,24 +5,24 @@
       "type": "aether:holiday_filter"
     },
     {
-      "count": 1,
-      "type": "minecraft:count_on_every_layer"
+      "type": "minecraft:count_on_every_layer",
+      "count": 1
     },
     {
-      "chance": 48,
-      "type": "minecraft:rarity_filter"
+      "type": "minecraft:rarity_filter",
+      "chance": 48
     },
     {
+      "type": "minecraft:block_predicate_filter",
       "predicate": {
+        "type": "minecraft:would_survive",
         "state": {
+          "Name": "aether:skyroot_sapling",
           "Properties": {
             "stage": "0"
-          },
-          "Name": "aether:skyroot_sapling"
-        },
-        "type": "minecraft:would_survive"
-      },
-      "type": "minecraft:block_predicate_filter"
+          }
+        }
+      }
     }
   ]
 }

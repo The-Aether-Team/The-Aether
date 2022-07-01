@@ -15,8 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,11 +42,11 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - (this.imageHeight)) / 2;
 
-        this.previousButton = this.addRenderableWidget(new LorePageButton(i + 14, j + 169, 20, 20, new TextComponent("<"), (p_214201_1_) -> {
+        this.previousButton = this.addRenderableWidget(new LorePageButton(i + 14, j + 169, 20, 20, Component.literal("<"), (p_214201_1_) -> {
             if (this.currentPageNumber > 0) currentPageNumber--;
         }));
 
-        this.nextButton = this.addRenderableWidget(new LorePageButton(i + 221, j + 169, 20, 20, new TextComponent(">"), (p_214201_1_) -> {
+        this.nextButton = this.addRenderableWidget(new LorePageButton(i + 221, j + 169, 20, 20, Component.literal(">"), (p_214201_1_) -> {
             if (this.currentPageNumber < this.pages.size() - 1) currentPageNumber++;
         }));
     }
@@ -63,17 +61,17 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
 
     @Override
     protected void renderLabels(PoseStack matrixStack, int x, int y) {
-        Component previous = new TranslatableComponent("gui.aether.book_of_lore.previous");
-        Component next = new TranslatableComponent("gui.aether.book_of_lore.next");
+        Component previous = Component.translatable("gui.aether.book_of_lore.previous");
+        Component next = Component.translatable("gui.aether.book_of_lore.next");
         this.drawBookText(matrixStack, this.font, previous, 13, 158);
         this.drawBookText(matrixStack, this.font, next, 221, 158);
 
-        Component book = new TranslatableComponent("gui.aether.book_of_lore.book");
-        Component ofLore = new TranslatableComponent("gui.aether.book_of_lore.of_lore");
+        Component book = Component.translatable("gui.aether.book_of_lore.book");
+        Component ofLore = Component.translatable("gui.aether.book_of_lore.of_lore");
         this.drawCenteredBookText(matrixStack, this.font, book, 75, 20);
         this.drawCenteredBookText(matrixStack, this.font, ofLore, 75, 20 + 10);
 
-        Component item = new TranslatableComponent("gui.aether.book_of_lore.item");
+        Component item = Component.translatable("gui.aether.book_of_lore.item");
         this.drawRightBookText(matrixStack, this.font, item, 78, 67);
 
         ItemStack itemStack = this.menu.slots.get(0).getItem();
@@ -81,11 +79,11 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
             String entryKey = this.menu.getLoreEntryKey(itemStack);
 
             if (I18n.exists(entryKey)) {
-                Component entry = new TranslatableComponent(entryKey);
+                Component entry = Component.translatable(entryKey);
                 this.createPages(entry);
 
                 if (this.currentPageNumber == 0) {
-                    Component title = new TranslatableComponent(itemStack.getDescriptionId());
+                    Component title = Component.translatable(itemStack.getDescriptionId());
                     createText(matrixStack, this.font.split(title, 98), 136, 10);
 
                     createText(matrixStack, this.pages.get(0), 136, 32);

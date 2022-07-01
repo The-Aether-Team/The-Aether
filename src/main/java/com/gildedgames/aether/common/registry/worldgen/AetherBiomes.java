@@ -2,32 +2,33 @@ package com.gildedgames.aether.common.registry.worldgen;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.world.builders.AetherBiomeBuilders;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
-import java.util.function.Supplier;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AetherBiomes {
-    public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, Aether.MODID);
+    public static final Map<ResourceLocation, Biome> BIOMES = new HashMap<>();
 
-    public static final RegistryObject<Biome> SKYROOT_GROVE = register(AetherBiomes.Keys.SKYROOT_GROVE, AetherBiomeBuilders::skyrootGroveBiome);
-    public static final RegistryObject<Biome> SKYROOT_FOREST = register(AetherBiomes.Keys.SKYROOT_FOREST, AetherBiomeBuilders::skyrootForestBiome);
-    public static final RegistryObject<Biome> SKYROOT_THICKET = register(AetherBiomes.Keys.SKYROOT_THICKET, AetherBiomeBuilders::skyrootThicketBiome);
-    public static final RegistryObject<Biome> GOLDEN_FOREST = register(AetherBiomes.Keys.GOLDEN_FOREST, AetherBiomeBuilders::goldenForestBiome);
+    public static final ResourceKey<Biome> SKYROOT_GROVE = register("skyroot_grove", AetherBiomeBuilders.skyrootGroveBiome());
+    public static final ResourceKey<Biome> SKYROOT_FOREST = register("skyroot_forest", AetherBiomeBuilders.skyrootForestBiome());
+    public static final ResourceKey<Biome> SKYROOT_THICKET = register("skyroot_thicket", AetherBiomeBuilders.skyrootThicketBiome());
+    public static final ResourceKey<Biome> GOLDEN_FOREST = register("golden_forest", AetherBiomeBuilders.goldenForestBiome());
 
-    private static RegistryObject<Biome> register(ResourceKey<Biome> biomeResourceKey, Supplier<Biome> biome) {
-        return BIOMES.register(biomeResourceKey.location().getPath(), biome);
+    public static ResourceKey<Biome> register(String name, Biome biome) {
+        ResourceLocation location = new ResourceLocation(Aether.MODID, name);
+        BIOMES.putIfAbsent(location, biome);
+        return ResourceKey.create(Registry.BIOME_REGISTRY, location);
     }
 
-    public static class Keys {
-        public static final ResourceKey<Biome> SKYROOT_GROVE = ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Aether.MODID, "skyroot_grove"));
-        public static final ResourceKey<Biome> SKYROOT_FOREST = ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Aether.MODID, "skyroot_forest"));
-        public static final ResourceKey<Biome> SKYROOT_THICKET = ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Aether.MODID, "skyroot_thicket"));
-        public static final ResourceKey<Biome> GOLDEN_FOREST = ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Aether.MODID, "golden_forest"));
+    public static Holder<Biome> getHolder(ResourceKey<Biome> key, Registry<Biome> registry) {
+        Biome biome = BIOMES.get(key.location());
+        Holder.Reference<Biome> biomeHolder = (Holder.Reference<Biome>) registry.getOrCreateHolderOrThrow(key);
+        biomeHolder.bind(key, biome);
+        return biomeHolder;
     }
 }

@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Map;
@@ -81,7 +82,7 @@ public interface ISwetBallConversion
         }
 
         Holder<Biome> biome = world.getBiome(pos);
-        ResourceLocation biomeName = biome.value().getRegistryName();
+        ResourceLocation biomeName = ForgeRegistries.BIOMES.getKey(biome.value());
         if (BIOME_CONVERSIONS.containsKey(biomeName)) {
             Pair<Block, BlockState> blockPair = BIOME_CONVERSIONS.get(biomeName);
             if (blockPair.getKey() == oldBlockState.getBlock()) {
@@ -114,7 +115,7 @@ public interface ISwetBallConversion
         }
 
         Holder<Biome> biome = world.getBiome(pos);
-        ResourceLocation biomeName = biome.value().getRegistryName();
+        ResourceLocation biomeName = ForgeRegistries.BIOMES.getKey(biome.value());
         if (BIOME_CONVERSIONS.containsKey(biomeName)) {
             Pair<Block, BlockState> blockPair = BIOME_CONVERSIONS.get(biomeName);
             if (blockPair.getKey() == oldBlockState.getBlock()) {

@@ -2,8 +2,12 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
@@ -14,29 +18,25 @@
             },
             {
               "function": "minecraft:copy_nbt",
-              "source": "block_entity",
               "ops": [
                 {
+                  "op": "replace",
                   "source": "Locked",
-                  "target": "BlockEntityTag.Locked",
-                  "op": "replace"
+                  "target": "BlockEntityTag.Locked"
                 },
                 {
+                  "op": "replace",
                   "source": "Kind",
-                  "target": "BlockEntityTag.Kind",
-                  "op": "replace"
+                  "target": "BlockEntityTag.Kind"
                 }
-              ]
+              ],
+              "source": "block_entity"
             }
           ],
           "name": "aether:treasure_chest"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+      "rolls": 1.0
     }
   ]
 }

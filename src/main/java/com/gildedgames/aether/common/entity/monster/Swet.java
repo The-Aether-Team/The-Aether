@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.entity.monster;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.entity.ai.goal.target.NearestTaggedTargetGoal;
 import com.gildedgames.aether.common.entity.passive.MountableAnimal;
@@ -18,6 +17,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -33,14 +33,12 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
-import java.util.Random;
 
 public class Swet extends MountableAnimal {
     private static final EntityDataAccessor<Boolean> DATA_MID_JUMP_ID = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.BOOLEAN);
@@ -93,7 +91,7 @@ public class Swet extends MountableAnimal {
         super.onSyncedDataUpdated(dataAccessor);
     }
 
-    public static boolean checkSwetSpawnRules(EntityType<? extends Swet> swet, LevelAccessor level, MobSpawnType spawnReason, BlockPos pos, Random random) {
+    public static boolean checkSwetSpawnRules(EntityType<? extends Swet> swet, LevelAccessor level, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
         return level.getDifficulty() != Difficulty.PEACEFUL && level.getBlockState(pos.below()).is(AetherTags.Blocks.SWET_SPAWNABLE_ON) && level.getRawBrightness(pos, 0) > 8;
     }
 
@@ -174,7 +172,7 @@ public class Swet extends MountableAnimal {
     public void travel(@Nonnull Vec3 vector3d) {
         if (this.isAlive()) {
             super.travel(vector3d);
-            if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player) {
+            if (this.isVehicle() && this.isControlledByLocalInstance() && this.getControllingPassenger() instanceof Player) {
                 if (this.onGround && !this.getPlayerJumped() && (this.getDeltaMovement().x != 0 || this.getDeltaMovement().z != 0)) {
                     this.setDeltaMovement(this.getDeltaMovement().x(), 0.42F, this.getDeltaMovement().z);
                 }
@@ -312,7 +310,7 @@ public class Swet extends MountableAnimal {
     }
 
     @Override
-    public boolean canBeControlledByRider() {
+    public boolean isControlledByLocalInstance() {
         return this.isFriendly();
     }
 

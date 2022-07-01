@@ -199,7 +199,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 			super.travel(vector3d);
 		} else {
 			if (this.isAlive()) {
-				if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player player) {
+				if (this.isVehicle() && this.isControlledByLocalInstance() && this.getControllingPassenger() instanceof Player player) {
 					EntityUtil.copyRotations(this, player);
 					if (this.isControlledByLocalInstance()) {
 						this.travelWithInput(new Vec3(0, vector3d.y(), 0));

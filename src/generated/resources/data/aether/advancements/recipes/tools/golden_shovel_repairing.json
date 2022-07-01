@@ -1,13 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "aether:golden_shovel_repairing"
-    ]
-  },
   "criteria": {
-    "has_minecraft:golden_shovel": {
-      "trigger": "minecraft:inventory_changed",
+    "has_golden_shovel": {
       "conditions": {
         "items": [
           {
@@ -16,19 +10,25 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "has_the_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
       "conditions": {
         "recipe": "aether:golden_shovel_repairing"
-      }
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_minecraft:golden_shovel",
+      "has_golden_shovel",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:golden_shovel_repairing"
+    ]
+  }
 }

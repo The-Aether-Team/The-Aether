@@ -6,9 +6,8 @@ import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.capability.AetherCapabilities;
 import com.gildedgames.aether.core.capability.time.AetherTime;
 import com.gildedgames.aether.core.util.SunAltarWhitelist;
-import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
@@ -45,7 +44,7 @@ public class SunAltarBlock extends BaseEntityBlock {
 			return InteractionResult.SUCCESS;
 		} else {
 			if (AetherConfig.COMMON.sun_altar_whitelist.get() && !player.hasPermissions(4) && !SunAltarWhitelist.INSTANCE.isWhiteListed(player.getGameProfile())) {
-				player.displayClientMessage(new TranslatableComponent(Aether.MODID + ".sun_altar.no_permission"), true);
+				player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.no_permission"), true);
 				return InteractionResult.SUCCESS;
 			}
 			AetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
@@ -54,11 +53,11 @@ public class SunAltarBlock extends BaseEntityBlock {
 					this.openScreen(level, pos, player);
 					return InteractionResult.SUCCESS;
 				} else {
-					player.displayClientMessage(new TranslatableComponent(Aether.MODID + ".sun_altar.in_control"), true);
+					player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.in_control"), true);
 					return InteractionResult.SUCCESS;
 				}
 			} else {
-				player.displayClientMessage(new TranslatableComponent(Aether.MODID + ".sun_altar.no_power"), true);
+				player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.no_power"), true);
 				return InteractionResult.SUCCESS;
 			}
 		}

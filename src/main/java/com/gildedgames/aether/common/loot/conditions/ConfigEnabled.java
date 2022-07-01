@@ -26,7 +26,7 @@ public class ConfigEnabled implements LootItemCondition {
     @Override
     @Nonnull
     public LootItemConditionType getType() {
-        return AetherLoot.CONFIG_ENABLED;
+        return AetherLoot.CONFIG_ENABLED.get();
     }
 
     @Override

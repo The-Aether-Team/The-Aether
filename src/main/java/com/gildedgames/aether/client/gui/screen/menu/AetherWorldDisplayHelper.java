@@ -1,6 +1,5 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
-import com.gildedgames.aether.client.AetherMusicManager;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.core.AetherConfig;
 import net.minecraft.client.CameraType;
@@ -9,18 +8,18 @@ import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.server.IntegratedServer;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.DirectoryLock;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.LevelStorageException;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.LevelSummary;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class AetherWorldDisplayHelper {
     public static Level loadedLevel = null;
@@ -30,7 +29,7 @@ public class AetherWorldDisplayHelper {
         if (config) {
             enableWorldPreview();
         } else {
-            if (disableWorldPreview(new GenericDirtMessageScreen(new TextComponent("")))) {
+            if (disableWorldPreview(new GenericDirtMessageScreen(Component.literal("")))) {
                 Minecraft.getInstance().forceSetScreen(GuiHooks.getMenu());
             }
         }
@@ -42,7 +41,7 @@ public class AetherWorldDisplayHelper {
             if (loadedLevel == null) {
                 LevelStorageSource source = minecraft.getLevelSource();
                 try {
-                    List<LevelSummary> summaryList = source.getLevelList();
+                    List<LevelSummary> summaryList = new ArrayList<>(source.loadLevelSummaries(source.findLevelCandidates()).get());
                     Collections.sort(summaryList);
                     if (summaryList.size() > 0) {
                         LevelSummary summary = null;
@@ -59,7 +58,8 @@ public class AetherWorldDisplayHelper {
                             loadWorld(summary);
                         }
                     }
-                } catch (LevelStorageException e) {
+                } catch (ExecutionException | InterruptedException | UnsupportedOperationException e) {
+                    AetherConfig.CLIENT.enable_world_preview.set(false);
                     e.printStackTrace();
                 }
             }
@@ -80,9 +80,9 @@ public class AetherWorldDisplayHelper {
     public static void loadWorld(LevelSummary summary) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.getLevelSource().levelExists(summary.getLevelId())) {
-            minecraft.forceSetScreen(new GenericDirtMessageScreen(new TranslatableComponent("selectWorld.data_read")));
+            minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("selectWorld.data_read")));
             loadedSummary = summary;
-            minecraft.loadLevel(summary.getLevelId());
+            minecraft.createWorldOpenFlows().loadLevel(minecraft.screen, summary.getLevelId());
         }
     }
 
@@ -102,7 +102,6 @@ public class AetherWorldDisplayHelper {
             Minecraft minecraft = Minecraft.getInstance();
             minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
             if (minecraft.getLevelSource().levelExists(loadedSummary.getLevelId()) && minecraft.getSingleplayerServer() != null) {
-                AetherMusicManager.stopPlaying();
                 openSessionLock();
                 fixWorld();
                 minecraft.forceSetScreen(null);

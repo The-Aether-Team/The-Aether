@@ -1,14 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "S S",
-    " S "
-  ],
   "key": {
     "S": {
       "item": "aether:skyroot_planks"
     }
   },
+  "pattern": [
+    "S S",
+    " S "
+  ],
   "result": {
     "item": "aether:skyroot_bucket"
   }

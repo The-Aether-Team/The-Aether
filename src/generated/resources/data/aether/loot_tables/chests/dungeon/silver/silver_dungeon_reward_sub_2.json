@@ -2,11 +2,6 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": {
-        "type": "minecraft:uniform",
-        "min": 1.0,
-        "max": 1.0
-      },
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -29,7 +24,12 @@
           ],
           "name": "aether:golden_feather"
         }
-      ]
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
     }
   ]
 }

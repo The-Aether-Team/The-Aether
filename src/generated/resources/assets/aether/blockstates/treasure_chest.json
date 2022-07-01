@@ -1,5 +1,8 @@
 {
   "variants": {
+    "facing=east": {
+      "model": "aether:block/treasure_chest"
+    },
     "facing=north": {
       "model": "aether:block/treasure_chest"
     },
@@ -7,9 +10,6 @@
       "model": "aether:block/treasure_chest"
     },
     "facing=west": {
-      "model": "aether:block/treasure_chest"
-    },
-    "facing=east": {
       "model": "aether:block/treasure_chest"
     }
   }

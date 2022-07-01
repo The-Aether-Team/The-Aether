@@ -1,44 +1,44 @@
 {
+  "type": "minecraft:random_selector",
   "config": {
-    "features": [
-      {
-        "feature": {
-          "feature": "aether:golden_oak_tree",
-          "placement": [
-            {
-              "predicate": {
-                "state": {
-                  "Properties": {
-                    "stage": "0"
-                  },
-                  "Name": "aether:golden_oak_sapling"
-                },
-                "type": "minecraft:would_survive"
-              },
-              "type": "minecraft:block_predicate_filter"
-            }
-          ]
-        },
-        "chance": 0.01
-      }
-    ],
     "default": {
       "feature": "aether:skyroot_tree",
       "placement": [
         {
+          "type": "minecraft:block_predicate_filter",
           "predicate": {
+            "type": "minecraft:would_survive",
             "state": {
+              "Name": "aether:skyroot_sapling",
               "Properties": {
                 "stage": "0"
-              },
-              "Name": "aether:skyroot_sapling"
-            },
-            "type": "minecraft:would_survive"
-          },
-          "type": "minecraft:block_predicate_filter"
+              }
+            }
+          }
         }
       ]
-    }
-  },
-  "type": "minecraft:random_selector"
+    },
+    "features": [
+      {
+        "chance": 0.01,
+        "feature": {
+          "feature": "aether:golden_oak_tree",
+          "placement": [
+            {
+              "type": "minecraft:block_predicate_filter",
+              "predicate": {
+                "type": "minecraft:would_survive",
+                "state": {
+                  "Name": "aether:golden_oak_sapling",
+                  "Properties": {
+                    "stage": "0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

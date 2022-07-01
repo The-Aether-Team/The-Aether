@@ -1,15 +1,8 @@
 {
   "variants": {
-    "facing=north,part=head": {
-      "model": "aether:block/skyroot_bed_head"
-    },
-    "facing=south,part=head": {
-      "model": "aether:block/skyroot_bed_head",
-      "y": 180
-    },
-    "facing=west,part=head": {
-      "model": "aether:block/skyroot_bed_head",
-      "y": 270
+    "facing=east,part=foot": {
+      "model": "aether:block/skyroot_bed_foot",
+      "y": 90
     },
     "facing=east,part=head": {
       "model": "aether:block/skyroot_bed_head",
@@ -18,17 +11,24 @@
     "facing=north,part=foot": {
       "model": "aether:block/skyroot_bed_foot"
     },
+    "facing=north,part=head": {
+      "model": "aether:block/skyroot_bed_head"
+    },
     "facing=south,part=foot": {
       "model": "aether:block/skyroot_bed_foot",
+      "y": 180
+    },
+    "facing=south,part=head": {
+      "model": "aether:block/skyroot_bed_head",
       "y": 180
     },
     "facing=west,part=foot": {
       "model": "aether:block/skyroot_bed_foot",
       "y": 270
     },
-    "facing=east,part=foot": {
-      "model": "aether:block/skyroot_bed_foot",
-      "y": 90
+    "facing=west,part=head": {
+      "model": "aether:block/skyroot_bed_head",
+      "y": 270
     }
   }
 }

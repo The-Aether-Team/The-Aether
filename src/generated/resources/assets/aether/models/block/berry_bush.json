@@ -1,12 +1,27 @@
 {
   "parent": "minecraft:block/block",
-  "textures": {
-    "particle": "aether:block/natural/berry_bush",
-    "bush": "aether:block/natural/berry_bush",
-    "stem": "aether:block/natural/berry_bush_stem"
-  },
   "elements": [
     {
+      "faces": {
+        "down": {
+          "texture": "#bush"
+        },
+        "east": {
+          "texture": "#bush"
+        },
+        "north": {
+          "texture": "#bush"
+        },
+        "south": {
+          "texture": "#bush"
+        },
+        "up": {
+          "texture": "#bush"
+        },
+        "west": {
+          "texture": "#bush"
+        }
+      },
       "from": [
         0,
         0,
@@ -16,87 +31,72 @@
         16,
         16,
         16
-      ],
-      "faces": {
-        "down": {
-          "texture": "#bush"
-        },
-        "up": {
-          "texture": "#bush"
-        },
-        "north": {
-          "texture": "#bush"
-        },
-        "south": {
-          "texture": "#bush"
-        },
-        "west": {
-          "texture": "#bush"
-        },
-        "east": {
-          "texture": "#bush"
-        }
-      }
+      ]
     },
     {
+      "faces": {
+        "north": {
+          "texture": "#stem"
+        },
+        "south": {
+          "texture": "#stem"
+        }
+      },
       "from": [
         0.8,
         0,
         8
       ],
-      "to": [
-        15.2,
-        16,
-        8
-      ],
       "rotation": {
+        "angle": 45.0,
+        "axis": "y",
         "origin": [
           8,
           8,
           8
         ],
-        "axis": "y",
-        "angle": 45.0,
         "rescale": true
       },
-      "faces": {
-        "north": {
-          "texture": "#stem"
-        },
-        "south": {
-          "texture": "#stem"
-        }
-      }
+      "to": [
+        15.2,
+        16,
+        8
+      ]
     },
     {
+      "faces": {
+        "east": {
+          "texture": "#stem"
+        },
+        "west": {
+          "texture": "#stem"
+        }
+      },
       "from": [
         8,
         0,
         0.8
       ],
-      "to": [
-        8,
-        16,
-        15.2
-      ],
       "rotation": {
+        "angle": 45.0,
+        "axis": "y",
         "origin": [
           8,
           8,
           8
         ],
-        "axis": "y",
-        "angle": 45.0,
         "rescale": true
       },
-      "faces": {
-        "west": {
-          "texture": "#stem"
-        },
-        "east": {
-          "texture": "#stem"
-        }
-      }
+      "to": [
+        8,
+        16,
+        15.2
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "bush": "aether:block/natural/berry_bush",
+    "particle": "aether:block/natural/berry_bush",
+    "stem": "aether:block/natural/berry_bush_stem"
+  }
 }

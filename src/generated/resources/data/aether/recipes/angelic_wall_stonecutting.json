@@ -1,8 +1,8 @@
 {
   "type": "minecraft:stonecutting",
+  "count": 1,
   "ingredient": {
     "item": "aether:angelic_stone"
   },
-  "result": "aether:angelic_wall",
-  "count": 1
+  "result": "aether:angelic_wall"
 }

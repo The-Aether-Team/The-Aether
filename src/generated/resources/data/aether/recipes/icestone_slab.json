@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "MMM"
-  ],
   "key": {
     "M": {
       "item": "aether:icestone"
     }
   },
+  "pattern": [
+    "MMM"
+  ],
   "result": {
-    "item": "aether:icestone_slab",
-    "count": 6
+    "count": 6,
+    "item": "aether:icestone_slab"
   }
 }

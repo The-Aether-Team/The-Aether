@@ -1,9 +1,9 @@
 {
   "type": "aether:enchanting",
+  "cookingtime": 300,
+  "experience": 0.35,
   "ingredient": {
     "item": "aether:blue_berry"
   },
-  "result": "aether:enchanted_berry",
-  "experience": 0.35,
-  "cookingtime": 300
+  "result": "aether:enchanted_berry"
 }

@@ -1,21 +1,21 @@
 {
+  "type": "minecraft:ore",
   "config": {
+    "discard_chance_on_air_exposure": 0.0,
+    "size": 16,
     "targets": [
       {
-        "target": {
-          "tag": "aether:holystone",
-          "predicate_type": "minecraft:tag_match"
-        },
         "state": {
+          "Name": "aether:ambrosium_ore",
           "Properties": {
             "double_drops": "true"
-          },
-          "Name": "aether:ambrosium_ore"
+          }
+        },
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "aether:holystone"
         }
       }
-    ],
-    "size": 16,
-    "discard_chance_on_air_exposure": 0.0
-  },
-  "type": "minecraft:ore"
+    ]
+  }
 }

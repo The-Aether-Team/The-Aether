@@ -3,11 +3,10 @@ package com.gildedgames.aether.common.world.gen.feature;
 import com.gildedgames.aether.common.world.gen.configuration.AercloudConfiguration;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-
-import java.util.Random;
 
 public class AercloudFeature extends Feature<AercloudConfiguration> {
     public AercloudFeature(Codec<AercloudConfiguration> codec) {
@@ -17,7 +16,7 @@ public class AercloudFeature extends Feature<AercloudConfiguration> {
     @Override
     public boolean place(FeaturePlaceContext<AercloudConfiguration> context) {
         WorldGenLevel reader = context.level();
-        Random rand = context.random();
+        RandomSource rand = context.random();
         boolean direction = rand.nextBoolean();
         BlockPos position = context.origin().offset(-rand.nextInt(8), 0, (direction ? 8 : 0) - rand.nextInt(8));
         AercloudConfiguration config = context.config();

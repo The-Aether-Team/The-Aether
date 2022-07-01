@@ -121,7 +121,7 @@ public class MoaEggItem extends Item
                         return InteractionResultHolder.pass(itemstack);
                     } else {
                         player.awardStat(Stats.ITEM_USED.get(this));
-                        level.gameEvent(GameEvent.ENTITY_PLACE, player);
+                        level.gameEvent(player, GameEvent.ENTITY_PLACE, blockpos);
                         return InteractionResultHolder.consume(itemstack);
                     }
                 } else {

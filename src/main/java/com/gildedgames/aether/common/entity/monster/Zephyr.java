@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.entity.monster;
 import com.gildedgames.aether.common.entity.projectile.ZephyrSnowball;
 import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,7 +30,6 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 import java.util.EnumSet;
-import java.util.Random;
 
 public class Zephyr extends FlyingMob implements Enemy {
 	public static final EntityDataAccessor<Integer> ATTACK_CHARGE = SynchedEntityData.defineId(Zephyr.class, EntityDataSerializers.INT);
@@ -60,7 +60,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 		this.entityData.define(ATTACK_CHARGE, 0);
 	}
 
-	public static boolean checkZephyrSpawnRules(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random random) {
+	public static boolean checkZephyrSpawnRules(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
 		return level.getDifficulty() != Difficulty.PEACEFUL && (reason == MobSpawnType.SPAWNER || level.getBlockState(pos.below()).is(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON));
 	}
 
@@ -234,7 +234,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 		 */
 		@Override
 		public void start() {
-			Random random = this.parentEntity.getRandom();
+			RandomSource random = this.parentEntity.getRandom();
 			double d0 = this.parentEntity.getX() + (random.nextFloat() * 2.0F - 1.0F) * 16.0F;
 			double d1 = this.parentEntity.getY() + (random.nextFloat() * 2.0F - 1.0F) * 16.0F;
 			double d2 = this.parentEntity.getZ() + (random.nextFloat() * 2.0F - 1.0F) * 16.0F;

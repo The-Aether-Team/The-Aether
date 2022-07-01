@@ -4,6 +4,7 @@ import com.gildedgames.aether.common.block.entity.TreasureChestBlockEntity;
 import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
@@ -33,7 +34,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 import net.minecraft.core.Direction;
@@ -243,7 +243,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 	}
 
 	@Override
-	public void tick(@Nonnull BlockState state, ServerLevel level, @Nonnull BlockPos pos, @Nonnull Random random) {
+	public void tick(@Nonnull BlockState state, ServerLevel level, @Nonnull BlockPos pos, @Nonnull RandomSource random) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (blockEntity instanceof TreasureChestBlockEntity treasureChestBlockEntity) {
 			treasureChestBlockEntity.recheckOpen();

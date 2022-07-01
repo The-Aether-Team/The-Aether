@@ -1,5 +1,20 @@
 {
   "carvers": {},
+  "downfall": 0.0,
+  "effects": {
+    "fog_color": 9671612,
+    "foliage_color": 11665355,
+    "grass_color": 11665355,
+    "music": {
+      "max_delay": 24000,
+      "min_delay": 12000,
+      "replace_current_music": true,
+      "sound": "aether:music.aether"
+    },
+    "sky_color": 12632319,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
   "features": [
     [
       "aether:quicksoil_shelf"
@@ -24,7 +39,7 @@
       "aether:water_spring"
     ],
     [
-      "aether:skyroot_thicket_trees_placed_feature",
+      "aether:skyroot_thicket_trees",
       "aether:grass_patch",
       "aether:tall_grass_patch",
       "aether:holiday_tree",
@@ -38,114 +53,97 @@
       "aether:pink_aercloud"
     ]
   ],
+  "precipitation": "none",
+  "spawn_costs": {},
   "spawners": {
-    "monster": [
-      {
-        "type": "aether:whirlwind",
-        "weight": 9,
-        "minCount": 2,
-        "maxCount": 2
-      },
-      {
-        "type": "aether:evil_whirlwind",
-        "weight": 1,
-        "minCount": 2,
-        "maxCount": 2
-      },
-      {
-        "type": "aether:cockatrice",
-        "weight": 100,
-        "minCount": 4,
-        "maxCount": 4
-      },
-      {
-        "type": "aether:zephyr",
-        "weight": 50,
-        "minCount": 1,
-        "maxCount": 1
-      }
-    ],
+    "ambient": [],
+    "axolotls": [],
     "creature": [
       {
         "type": "aether:blue_swet",
-        "weight": 15,
+        "maxCount": 4,
         "minCount": 3,
-        "maxCount": 4
+        "weight": 15
       },
       {
         "type": "aether:golden_swet",
-        "weight": 15,
+        "maxCount": 4,
         "minCount": 3,
-        "maxCount": 4
+        "weight": 15
       },
       {
         "type": "aether:aechor_plant",
-        "weight": 29,
+        "maxCount": 1,
         "minCount": 1,
-        "maxCount": 1
+        "weight": 29
       },
       {
         "type": "aether:phyg",
-        "weight": 12,
+        "maxCount": 4,
         "minCount": 4,
-        "maxCount": 4
+        "weight": 12
       },
       {
         "type": "aether:aerbunny",
-        "weight": 11,
+        "maxCount": 3,
         "minCount": 3,
-        "maxCount": 3
+        "weight": 11
       },
       {
         "type": "aether:sheepuff",
-        "weight": 10,
+        "maxCount": 4,
         "minCount": 4,
-        "maxCount": 4
+        "weight": 10
       },
       {
         "type": "aether:moa",
-        "weight": 10,
+        "maxCount": 3,
         "minCount": 3,
-        "maxCount": 3
+        "weight": 10
       },
       {
         "type": "aether:flying_cow",
-        "weight": 10,
+        "maxCount": 4,
         "minCount": 4,
-        "maxCount": 4
+        "weight": 10
       },
       {
         "type": "aether:aerwhale",
-        "weight": 2,
+        "maxCount": 1,
         "minCount": 1,
-        "maxCount": 1
+        "weight": 2
       }
     ],
-    "ambient": [],
-    "axolotls": [],
+    "misc": [],
+    "monster": [
+      {
+        "type": "aether:whirlwind",
+        "maxCount": 2,
+        "minCount": 2,
+        "weight": 9
+      },
+      {
+        "type": "aether:evil_whirlwind",
+        "maxCount": 2,
+        "minCount": 2,
+        "weight": 1
+      },
+      {
+        "type": "aether:cockatrice",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 100
+      },
+      {
+        "type": "aether:zephyr",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 50
+      }
+    ],
     "underground_water_creature": [],
-    "water_creature": [],
     "water_ambient": [],
-    "misc": []
+    "water_creature": []
   },
-  "spawn_costs": {},
-  "forge:registry_name": "aether:skyroot_thicket",
-  "precipitation": "none",
-  "temperature": 0.8,
-  "downfall": 0.0,
-  "category": "none",
-  "effects": {
-    "music": {
-      "sound": "aether:music.aether",
-      "min_delay": 12000,
-      "max_delay": 24000,
-      "replace_current_music": true
-    },
-    "sky_color": 12632319,
-    "foliage_color": 11665355,
-    "grass_color": 11665355,
-    "fog_color": 9671612,
-    "water_color": 4159204,
-    "water_fog_color": 329011
-  }
+  "temperature": 0.8
 }

@@ -2,11 +2,6 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": {
-        "type": "minecraft:uniform",
-        "min": 5.0,
-        "max": 6.0
-      },
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -89,7 +84,12 @@
           "type": "minecraft:loot_table",
           "name": "aether:chests/dungeon/silver/silver_dungeon_reward_sub_2"
         }
-      ]
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 6.0,
+        "min": 5.0
+      }
     }
   ]
 }

@@ -80,7 +80,7 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 	@Override
 	public void travel(@Nonnull Vec3 vector3d) {
 		if (this.isAlive()) {
-			if (this.isVehicle() && this.canBeControlledByRider() && this.getControllingPassenger() instanceof Player player) {
+			if (this.isVehicle() && this.isControlledByLocalInstance() && this.getControllingPassenger() instanceof Player player) {
 				this.setYRot(player.getYRot());
 				this.yRotO = this.getYRot();
 				this.setXRot(player.getXRot() * 0.5F);
@@ -206,7 +206,7 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 	}
 
 	@Override
-	public boolean canBeControlledByRider() {
+	public boolean isControlledByLocalInstance() {
 		Entity entity = this.getControllingPassenger();
 		return entity instanceof Player && this.isSaddled();
 	}

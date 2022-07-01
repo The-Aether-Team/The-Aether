@@ -1,141 +1,85 @@
 package com.gildedgames.aether.client;
 
-import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
-import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
+import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.AetherConfig;
-import com.gildedgames.aether.core.util.LevelUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
-import net.minecraft.client.sounds.MusicManager;
-import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.sounds.Music;
 import net.minecraft.sounds.Musics;
-import net.minecraft.util.Mth;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 /**
- * Handles the Aether title screen music.
- * Based off of MusicManager.
+ * This class is used to replace the menu screen music when applicable, and replace the creative mode music when in an Aether biome.
  */
 public class AetherMusicManager {
-    private static final Minecraft minecraft = Minecraft.getInstance();
-    private static final MusicManager musicManager = Minecraft.getInstance().getMusicManager();
-    private static final Random random = new Random();
+    public static Minecraft minecraft = Minecraft.getInstance();
+    public static boolean isPlaying = false;
     @Nullable
-    private static SoundInstance currentMusic;
-    private static int nextSongDelay = 100;
+    public static SoundInstance currentMusic;
 
     /**
-     * Checks every client tick if the requirements for Aether music are fulfilled.
+     * Sets the game's music depending on the situation. This method runs every tick.
      */
     public static void tick() {
-        Music minecraftMusic = minecraft.getSituationalMusic();
-        Music aetherMusic = checkForReplacements(minecraftMusic);
         if (currentMusic != null) {
-            boolean shouldStopVanilla = true;
-            if (aetherMusic != null) {
-                if (!aetherMusic.getEvent().getLocation().equals(currentMusic.getLocation()) && aetherMusic.replaceCurrentMusic()) {
-                    minecraft.getSoundManager().stop(currentMusic);
-                    nextSongDelay = Mth.nextInt(random, 0, aetherMusic.getMinDelay() / 2);
-                }
-                if (!minecraft.getSoundManager().isActive(currentMusic)) {
-                    currentMusic = null;
-                    nextSongDelay = Math.min(nextSongDelay, Mth.nextInt(random, aetherMusic.getMinDelay(), aetherMusic.getMaxDelay()));
-                    shouldStopVanilla = false;
-                }
-            } else {
-                if (!minecraftMusic.getEvent().getLocation().equals(currentMusic.getLocation()) && minecraftMusic.replaceCurrentMusic()) {
-                    minecraft.getSoundManager().stop(currentMusic);
-                    nextSongDelay = Mth.nextInt(random, 0, minecraftMusic.getMinDelay() / 2);
-                    shouldStopVanilla = false;
-                }
-                if (!minecraft.getSoundManager().isActive(currentMusic)) {
-                    currentMusic = null;
-                    nextSongDelay = Math.min(nextSongDelay, Mth.nextInt(random, minecraftMusic.getMinDelay(), minecraftMusic.getMaxDelay()));
-                    shouldStopVanilla = false;
-                }
-            }
-            if (shouldStopVanilla) {
-                //Stops vanilla music from playing.
-                stopVanillaMusic();
+            if (!minecraft.getSoundManager().isActive(currentMusic)) {
+                minecraft.getSoundManager().stop(currentMusic);
+                currentMusic = null;
             }
         }
-        nextSongDelay--;
-        if (aetherMusic != null) {
-            nextSongDelay = Math.min(nextSongDelay, aetherMusic.getMaxDelay());
-            boolean vanillaPlaying = musicManager.isPlayingMusic(minecraftMusic);
-            if (vanillaPlaying) {
-                stopVanillaMusic();
-            }
-            if (currentMusic == null) {
-                if (vanillaPlaying) {
-                    nextSongDelay = 0;
-                }
-                if (nextSongDelay <= 0) {
-                    startPlaying(aetherMusic);
-                }
-            }
+        isPlaying = currentMusic != null;
+        if (isPlaying) {
+            minecraft.getMusicManager().stopPlaying();
         }
     }
 
     /**
-     * Corrects the music to the corresponding Aether music if the situation is appropriate.
+     * Stops whatever music is currently playing.
      */
-    @Nullable
-    public static Music checkForReplacements(Music music) {
-        if ((AetherWorldDisplayHelper.loadedLevel != null || music == Musics.MENU) && AetherConfig.CLIENT.enable_aether_menu.get() && !AetherConfig.CLIENT.disable_aether_menu_music.get()) {
-            return AetherTitleScreen.MENU;
-        }
-        if (AetherWorldDisplayHelper.loadedLevel != null) {
-            return Musics.MENU;
-        }
-        if (music == Musics.CREATIVE && minecraft.player != null && minecraft.level != null && LevelUtil.inTag(minecraft.level, AetherTags.Dimensions.AETHER_MUSIC)) {
-            return minecraft.player.level.getBiome(minecraft.player.blockPosition()).value().getBackgroundMusic().orElse(Musics.GAME);
-        }
-        return null;
-    }
-
-    /**
-     * Vanilla copy
-     * @see MusicManager#startPlaying(Music) 
-     */
-    public static void startPlaying(Music pSelector) {
-        currentMusic = SimpleSoundInstance.forMusic(pSelector.getEvent());
-        if (currentMusic.getSound() != SoundManager.EMPTY_SOUND) {
-            minecraft.getSoundManager().play(currentMusic);
-        }
-
-        nextSongDelay = Integer.MAX_VALUE;
-    }
-
-    /**
-     * Cuts off the music that MusicManager is playing.
-     */
-    public static void stopVanillaMusic() {
-        musicManager.stopPlaying();
-    }
-
-    /**
-     * Vanilla copy
-     * @see MusicManager#stopPlaying() 
-     */
-    public static void stopPlaying() {
+    public static void stopMusic() {
         if (currentMusic != null) {
             minecraft.getSoundManager().stop(currentMusic);
             currentMusic = null;
         }
-        nextSongDelay += 100;
     }
 
     /**
-     * Vanilla copy
-     * @see MusicManager#isPlayingMusic(Music) 
+     * Play the Aether menu music over the vanilla menu music.
      */
-    public boolean isPlayingMusic(Music pSelector) {
-        return currentMusic != null && pSelector.getEvent().getLocation().equals(currentMusic.getLocation());
+    public static void handleMenuMusic() {
+        if (currentMusic == null && AetherConfig.CLIENT.enable_aether_menu.get() && !AetherConfig.CLIENT.disable_aether_menu_music.get()) {
+            SoundEvent sound = AetherSoundEvents.MUSIC_MENU.get();
+            currentMusic = SimpleSoundInstance.forMusic(sound);
+            minecraft.getSoundManager().play(currentMusic);
+            isPlaying = true;
+        }
+    }
+
+    /**
+     * Handles the music for the world preview.
+     */
+    public static void handleWorldPreviewMusic() {
+        if (currentMusic == null) {
+            SoundEvent sound = AetherConfig.CLIENT.enable_aether_menu.get() && !AetherConfig.CLIENT.disable_aether_menu_music.get() ? AetherSoundEvents.MUSIC_MENU.get() : SoundEvents.MUSIC_MENU;
+            currentMusic = SimpleSoundInstance.forMusic(sound);
+            minecraft.getSoundManager().play(currentMusic);
+            isPlaying = true;
+        }
+    }
+
+    /**
+     * Plays the biome's music over the creative music.
+     */
+    public static void handleCreativeMusic() {
+        if (currentMusic == null && minecraft.player != null && minecraft.player.level.dimensionTypeRegistration().containsTag(AetherTags.Dimensions.AETHER_MUSIC) && minecraft.player.getAbilities().instabuild && minecraft.player.getAbilities().mayfly) {
+            SoundEvent sound = minecraft.player.level.getBiome(minecraft.player.blockPosition()).get().getBackgroundMusic().orElse(Musics.GAME).getEvent();
+            currentMusic = SimpleSoundInstance.forMusic(sound);
+            minecraft.getSoundManager().play(currentMusic);
+            isPlaying = true;
+        }
     }
 }

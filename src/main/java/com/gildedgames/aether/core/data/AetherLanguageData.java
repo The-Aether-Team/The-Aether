@@ -314,8 +314,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.SKYROOT_PUFFERFISH_BUCKET, "Skyroot Bucket of Pufferfish");
         addItem(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET, "Skyroot Bucket of Tropical Fish");
         addItem(AetherItems.SKYROOT_AXOLOTL_BUCKET, "Skyroot Bucket of Axolotl");
+        addItem(AetherItems.SKYROOT_TADPOLE_BUCKET, "Skyroot Bucket of Tadpole");
 
         addItem(AetherItems.SKYROOT_BOAT, "Skyroot Boat");
+        addItem(AetherItems.SKYROOT_CHEST_BOAT, "Skyroot Boat with Chest");
 
         addItem(AetherItems.COLD_PARACHUTE, "Cold Parachute");
         addItem(AetherItems.GOLDEN_PARACHUTE, "Golden Parachute");
@@ -351,6 +353,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG, "Evil Whirlwind Spawn Egg");
         addItem(AetherItems.VALKYRIE_SPAWN_EGG, "Valkyrie Spawn Egg");
         addItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG, "Valkyrie Queen Spawn Egg");
+        addItem(AetherItems.SUN_SPIRIT_SPAWN_EGG, "Sun Spirit Spawn Egg");
         addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
 
 
@@ -375,8 +378,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.FIRE_MINION, "Fire Minion");
 
         addEntityType(AetherEntityTypes.VALKYRIE_QUEEN, "Valkyrie Queen");
+        addEntityType(AetherEntityTypes.SUN_SPIRIT, "Sun Spirit");
 
         addEntityType(AetherEntityTypes.SKYROOT_BOAT, "Boat");
+        addEntityType(AetherEntityTypes.SKYROOT_CHEST_BOAT, "Boat with Chest");
         addEntityType(AetherEntityTypes.CLOUD_MINION, "Cloud Minion");
         addEntityType(AetherEntityTypes.COLD_PARACHUTE, "Cold Parachute");
         addEntityType(AetherEntityTypes.GOLDEN_PARACHUTE, "Golden Parachute");
@@ -620,6 +625,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("player.dialog.no_medals", "I'll return when I have them.");
         addGuiText("player.dialog.question", "What can you tell me about this place?");
 
+        //Sun spirit dialogue
+        addGuiText("sun_spirit.title", "the Sun Spirit");
+
 
 
         addCustomizationText("title", "Customization");
@@ -686,7 +694,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addLore(AetherItems.AECHOR_PETAL, "The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.");
         addLore(AetherBlocks.AEROGEL, "The result of the Aether's unique climate and lava combining. It can be crafted into various decorative blocks and is blast resistant.");
-        addLore(AetherBlocks.AEROGEL_SLAB, "Crafted from Aerogel. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
+        addLore(AetherBlocks.AEROGEL_SLAB, "Crafted from Aerogel. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.AEROGEL_STAIRS, "Crafted from Aerogel. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherBlocks.AEROGEL_WALL, "Crafted from Aerogel. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addLore(AetherBlocks.AETHER_DIRT, "A pale dirt. It can be found in the Aether, and can also be used to grow the native trees. It can grow into grass with enough light.");
@@ -698,7 +706,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.AMBROSIUM_SHARD, "Aether's coal equivalent, they have a healing property when eaten, and restore a small amount of health.");
         addLore(AetherBlocks.AMBROSIUM_BLOCK, "A block of pure Ambrosium, useful for storing large quantities of fuel.");
         addLore(AetherBlocks.AMBROSIUM_TORCH, "The main light source for the Aether, made with a Skyroot Stick and Ambrosium.");
-        addLore(AetherBlocks.ANGELIC_SLAB, "Crafted from Angelic Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
+        addLore(AetherBlocks.ANGELIC_SLAB, "Crafted from Angelic Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.ANGELIC_STONE, "Angelic Stone is the main block that makes up Silver Dungeons. There is a chance some of them can be traps when generated in dungeons, but you cannot collect them as traps. It is unbreakable until you have defeated the boss, but it's worth it for that block.");
         addLore(AetherBlocks.ANGELIC_WALL, "Crafted from Angelic Stone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addLore(AetherBlocks.ANGELIC_STAIRS, "Crafted from Angelic Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
@@ -708,13 +716,13 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherBlocks.BLUE_AERCLOUD, "A pale blue cloud found close to the ground. It has very bouncy properties, and can help you reach high places.");
         addLore(AetherItems.BLUE_BERRY, "Harvested from Berry Bushes, this is the most common food source in the Aether. It has very weak hunger restoration. You can enchant these in an Altar for much better hunger restoration.");
         addLore(AetherItems.BLUE_CAPE, "A Blue Cape that has a silky feeling to it. It's crafted using Blue Wool.");
-        addLore(AetherItems.BLUE_GUMMY_SWET, "A sweet smelling gummy, it can be found in random chests in Bronze and Silver dungeons. It restores the player’s hunger to full. Very useful for boss fights.");
+        addLore(AetherItems.BLUE_GUMMY_SWET, "A sweet smelling gummy, it can be found in random chests in Bronze and Silver dungeons. It restores the player's hunger to full. Very useful for boss fights.");
         addLore(AetherItems.BLUE_MOA_EGG, "An Egg laid by a Blue Moa. Hatching this provides a Blue Moa with 3 mid-air jumps. The most common Moa.");
         addLore(AetherItems.BOOK_OF_LORE, "A large book containing many lore entries written by the wise Lorist. It describes every object in detail.");
         addLore(AetherItems.BRONZE_DUNGEON_KEY, "A dull key that is dropped from the Slider after being defeated. You can use it to claim the treasure you earned!");
         addLore(AetherItems.CANDY_CANE, "Found in presents under Holiday trees! They can be used to repair Candy Cane swords, and are a very tasty treat.");
         addLore(AetherItems.CANDY_CANE_SWORD, "A sword made from decorative candy. Randomly drops Candy Canes when used. These are dropped from presents that are under Holiday Trees.");
-        addLore(AetherBlocks.CARVED_SLAB, "Crafted from Carved Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
+        addLore(AetherBlocks.CARVED_SLAB, "Crafted from Carved Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.CARVED_STAIRS, "Crafted from Sentry Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherBlocks.CARVED_STONE, "The Stone found in Bronze Dungeons. This stone has a gray color to it, and can be mined as a decorative block.");
         addLore(AetherBlocks.CARVED_WALL, "Crafted from Carved Stone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
@@ -738,7 +746,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.GOLD_DUNGEON_KEY, "A key that has a shiny finish. It is dropped by the Sun Spirit after you defeat him. You can use it to claim the legendary treasure in the back room!");
         addLore(AetherBlocks.GOLDEN_AERCLOUD, "A golden cloud found in small quantities, higher in the air than normal. The properties are similar to Cold Aerclouds, but the Parachutes they produce have much more durability.");
         addLore(AetherItems.GOLDEN_AMBER, "These round golden orbs can be obtained by mining Golden Oak Logs with a Gravitite Axe. Their main purpose is to craft Golden Darts, and Dart Shooters.");
-        addLore(AetherItems.GOLDEN_GUMMY_SWET, "A sour tasting gummy, it can be found in random chests in Bronze and Silver dungeons. It restores the player’s hunger to full. Very useful for boss fights.");
+        addLore(AetherItems.GOLDEN_GUMMY_SWET, "A sour tasting gummy, it can be found in random chests in Bronze and Silver dungeons. It restores the player's hunger to full. Very useful for boss fights.");
         addLore(AetherItems.GOLDEN_DART, "The ammo for Golden Dart Shooters. Crafted with Skyroot Sticks and Golden Amber, enchanting these converts them to Enchanted Darts.");
         addLore(AetherItems.GOLDEN_DART_SHOOTER, "A Dart Shooter which shoots Golden Darts, enchanting it on an Altar improves it's attack power!");
         addLore(AetherItems.GOLDEN_FEATHER, "A fluffy feather found in Silver Dungeons. When worn, the wearer becomes lighter than air and can descend slowly.");
@@ -762,7 +770,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.GRAVITITE_SWORD, "Part of Aether's best tool tier, when attacking with this powerful weapon, anything you hit will be flung into the air, causing lots of damage! Use this to your advantage, as it works even while your sword is cooling down!");
         addLore(AetherItems.GRAVITITE_HOE, "Part of Aether's best tool tier, this hoe not only can make weirdly specific blocks float, but it can also till dirt which totally justifies it's existence.");
         addLore(AetherItems.HEALING_STONE, "Obtained from enchanting Holystone, it can be used as a reliable healing source, providing Regeneration. It has a surprisingly juicy flavor.");
-        addLore(AetherBlocks.HELLFIRE_SLAB, "Crafted from Hellfire Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
+        addLore(AetherBlocks.HELLFIRE_SLAB, "Crafted from Hellfire Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.HELLFIRE_STONE, "A warm, red stone that makes up 90%% of Gold Dungeon interior. It cannot be destroyed until the Sun Spirit is defeated.");
         addLore(AetherBlocks.HELLFIRE_WALL, "Crafted from Hellfire Stone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addLore(AetherBlocks.HELLFIRE_STAIRS, "Crafted from Hellfire Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
@@ -771,7 +779,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherBlocks.HOLYSTONE, "The Aether's native rock. It can be used in various ways such as creating tools, construction, as well being able to be crafted into Holystone Bricks.");
         addLore(AetherItems.HOLYSTONE_AXE, "One of Aether's stone tools, it mines faster than Skyroot Tools, as well as dropping random Ambrosium Shards.");
         addLore(AetherBlocks.HOLYSTONE_BRICKS, "Used as a building material native to the Aether. It is made from Holystone and is more sturdy than it too.");
-        addLore(AetherBlocks.HOLYSTONE_BRICK_SLAB, "Crafted from Holystone Bricks. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
+        addLore(AetherBlocks.HOLYSTONE_BRICK_SLAB, "Crafted from Holystone Bricks. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.HOLYSTONE_BRICK_STAIRS, "Crafted from Holystone Bricks. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherBlocks.HOLYSTONE_BRICK_WALL, "Crafted from Holystone Bricks. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addLore(AetherBlocks.HOLYSTONE_BUTTON, "Crafted from Holystone, a button used to activate mechanisms and redstone.");
@@ -779,14 +787,14 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.HOLYSTONE_PICKAXE, "One of Aether's stone tools, it can mine Zanite, and will randomly drop Ambrosium Shards while mining.");
         addLore(AetherBlocks.HOLYSTONE_PRESSURE_PLATE, "Crafted from Holystone, a pressure plate used to activate mechanisms and redstone.");
         addLore(AetherItems.HOLYSTONE_SHOVEL, "One of Aether's stone tools, it can mine Quicksoil, and all other blocks a Stone Shovel can mine, except it drops random Ambrosium Shards.");
-        addLore(AetherBlocks.HOLYSTONE_SLAB, "Crafted from Holystone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
+        addLore(AetherBlocks.HOLYSTONE_SLAB, "Crafted from Holystone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.HOLYSTONE_STAIRS, "Crafted from Holystone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherItems.HOLYSTONE_SWORD, "One of Aether's stone tools, it can drop Ambrosium Shards at random while attacking.");
         addLore(AetherBlocks.HOLYSTONE_WALL, "Crafted from Holystone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addLore(AetherItems.ICE_PENDANT, "A pendant which allows you to freeze water, and lava when walked on.");
         addLore(AetherItems.ICE_RING, "A ring which allows you to freeze water, and lava when walked on.");
         addLore(AetherBlocks.ICESTONE, "Icestone is a common ore that can be used as fuel for a Freezer. It can be used to freeze nearby liquids such as Lava and Water.");
-        addLore(AetherBlocks.ICESTONE_SLAB, "Crafted from Icestone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
+        addLore(AetherBlocks.ICESTONE_SLAB, "Crafted from Icestone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.ICESTONE_STAIRS, "Crafted from Icestone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherBlocks.ICESTONE_WALL, "Crafted from Icestone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addLore(AetherBlocks.INCUBATOR, "Used to incubate Moa's. You use Ambrosium Torches for the fuel. The process can take quite some time, but it is worth the wait once your Moa of choice hatches!");
@@ -802,7 +810,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.LIGHTNING_KNIFE, "Small knives that when thrown, summon lightning bolts where they land.");
         addLore(AetherItems.LIGHTNING_SWORD, "An ancient sword which summons lightning to its foes.");
         addLore(AetherBlocks.MOSSY_HOLYSTONE, "A more aged Holystone, it is found near dungeons, and has pale colored vines growing on it, very decorative.");
-        addLore(AetherBlocks.MOSSY_HOLYSTONE_SLAB, "Crafted from Mossy Holystone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
+        addLore(AetherBlocks.MOSSY_HOLYSTONE_SLAB, "Crafted from Mossy Holystone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.MOSSY_HOLYSTONE_STAIRS, "Crafted from Mossy Holystone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherBlocks.MOSSY_HOLYSTONE_WALL, "Crafted from Mossy Holystone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addLore(AetherItems.NATURE_STAFF, "A staff that can allow for commanding tamed Moas. It can allow them to sit on the ground.");
@@ -845,6 +853,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.SKYROOT_AXOLOTL_BUCKET,"A Skyroot Bucket with a friendly Axolotl in. Axolotls can be incredibly helpful aquatic partners. So it's best to keep one on hand if you're exploring wet environments.");
         addLore(AetherBlocks.SKYROOT_BED, "Crafted with cyan wool and skyroot planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
         addLore(AetherItems.SKYROOT_BOAT, "While the Aether does not have many large bodies of water, a boat can occasionally be a useful tool for crossing large distances over ice!");
+        addLore(AetherItems.SKYROOT_CHEST_BOAT, "A Skyroot Boat with a handy chest in the back. Helpful for transporting more items over long stretches of water, which are famously difficult to find in the Aether.");
         addLore(AetherBlocks.SKYROOT_BOOKSHELF, "Crafted from Skyroot Planks and Books. Bookshelves can be used to enhance the enchanting capabilities of an enchanting table.");
         addLore(AetherItems.SKYROOT_BUCKET, "A hand crafted bucket, used to contain Aechor poison, a nice Remedy or even just plain Water!");
         addLore(AetherBlocks.SKYROOT_BUTTON, "Crafted from Skyroot Planks, a button used to activate mechanisms and redstone.");
@@ -867,10 +876,11 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherBlocks.SKYROOT_SAPLING, "These small green saplings will grow into Skyroot Trees. They can be grown faster with Bone Meal.");
         addLore(AetherItems.SKYROOT_SHOVEL, "One of Aether's wooden tools, it doubles Aether dirt and Quicksoil drops.");
         addLore(AetherBlocks.SKYROOT_SIGN, "Crafted from Skyroot Planks and Sticks. A helpful sign perfect for writing messages and directions on.");
-        addLore(AetherBlocks.SKYROOT_SLAB, "Crafted from Skyroot. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!");
+        addLore(AetherBlocks.SKYROOT_SLAB, "Crafted from Skyroot. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.SKYROOT_STAIRS, "Crafted from Skyroot Planks. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherItems.SKYROOT_STICK, "Crafted from Skyroot Planks. Used to create various aether tools and items. Nothing else too special about it.");
         addLore(AetherItems.SKYROOT_SWORD, "One of Aether's wooden tools, it has a low amount of durability, and doubles mob drops. It makes an excellent food collected when combined with enchantments such as Looting and Fire Aspect.");
+        addLore(AetherItems.SKYROOT_TADPOLE_BUCKET, "A Skyroot Bucket with a Tadpole inside. Transporting a Tadpole to a new biome can change what type of Frog it grows up into!");
         addLore(AetherBlocks.SKYROOT_TRAPDOOR, "Crafted from Skyroot Planks. A Trapdoor useful for covering entryways one block wide. Often used to add extra protection to staircases.");
         addLore(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET,"A Skyroot Bucket containing a Tropical Fish. A Helpful way to transport and catalogue the numerous varieties of Tropical Fish.");
         addLore(AetherItems.SKYROOT_WATER_BUCKET, "A Skyroot Bucket that is filled to the brim with Water.");

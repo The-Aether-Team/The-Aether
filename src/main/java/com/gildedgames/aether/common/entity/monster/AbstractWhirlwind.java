@@ -2,7 +2,6 @@ package com.gildedgames.aether.common.entity.monster;
 
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Random;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -13,6 +12,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -79,7 +79,7 @@ public abstract class AbstractWhirlwind extends Mob {
         return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
     }
 
-    public static boolean checkWhirlwindSpawnRules(EntityType<? extends AbstractWhirlwind> whirlwind, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random random) {
+    public static boolean checkWhirlwindSpawnRules(EntityType<? extends AbstractWhirlwind> whirlwind, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
         return level.getDifficulty() != Difficulty.PEACEFUL && level.getRawBrightness(pos, 0) > 12 && Mob.checkMobSpawnRules(whirlwind, level, reason, pos, random);
     }
 

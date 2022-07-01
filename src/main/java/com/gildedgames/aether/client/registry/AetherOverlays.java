@@ -15,13 +15,13 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.gui.OverlayRegistry;
@@ -126,7 +126,7 @@ public class AetherOverlays {
     private static void renderInebriationOverlay(PoseStack poseStack, Minecraft minecraft, Window window, AetherPlayer handler) {
         Player player = handler.getPlayer();
         MobEffectInstance inebriation = player.getEffect(AetherEffects.INEBRIATION.get());
-        float effectScale = minecraft.options.screenEffectScale;
+        double effectScale = minecraft.options.screenEffectScale().get();
         if (inebriation != null) {
             float inebriationDuration = (float) (inebriation.getDuration() % 50) / 50;
             float alpha = (inebriationDuration * inebriationDuration) / 5.0F + 0.4F;
@@ -137,7 +137,7 @@ public class AetherOverlays {
     private static void renderRemedyOverlay(PoseStack poseStack, Minecraft minecraft, Window window, AetherPlayer handler) {
         int remedyMaximum = handler.getRemedyMaximum();
         int remedyTimer = handler.getRemedyTimer();
-        float effectScale = minecraft.options.screenEffectScale;
+        double effectScale = minecraft.options.screenEffectScale().get();
         if (remedyTimer > 0) {
             float alpha = ((float) remedyTimer / remedyMaximum) / 1.5F;
             renderVignette(poseStack, window, effectScale, alpha, TEXTURE_REMEDY_VIGNETTE);
@@ -147,14 +147,14 @@ public class AetherOverlays {
     private static void renderRepulsionOverlay(PoseStack poseStack, Minecraft minecraft, Window window, AetherPlayer handler) {
         int projectileImpactedMaximum = handler.getProjectileImpactedMaximum();
         int projectileImpactedTimer = handler.getProjectileImpactedTimer();
-        float effectScale = minecraft.options.screenEffectScale;
+        double effectScale = minecraft.options.screenEffectScale().get();
         if (projectileImpactedTimer > 0) {
             float alpha = (float) projectileImpactedTimer / projectileImpactedMaximum;
             renderVignette(poseStack, window, effectScale, alpha, TEXTURE_SHIELD_OF_REPULSION_VIGNETTE);
         }
     }
 
-    private static void renderVignette(PoseStack poseStack, Window window, float effectScale, float alpha, ResourceLocation resource) {
+    private static void renderVignette(PoseStack poseStack, Window window, double effectScale, float alpha, ResourceLocation resource) {
         poseStack.pushPose();
         alpha *= Math.sqrt(effectScale);
         RenderSystem.disableDepthTest();
@@ -192,7 +192,7 @@ public class AetherOverlays {
                         } else if (player.getOffhandItem().getItem() == item) {
                             itemStack = player.getOffhandItem();
                         }
-                        String text = itemStack.getHoverName().getString().concat(" ").concat(new TranslatableComponent("aether.hammer_of_notch_cooldown").getString());
+                        String text = itemStack.getHoverName().getString().concat(" ").concat(Component.translatable("aether.hammer_of_notch_cooldown").getString());
                         mc.font.drawShadow(poseStack, text, (window.getGuiScaledWidth() / 2.0F) - (mc.font.width(text) / 2.0F), 32, 16777215);
                         RenderSystem.setShader(GameRenderer::getPositionTexShader);
                         RenderSystem.setShaderTexture(0, TEXTURE_COOLDOWN_BAR);

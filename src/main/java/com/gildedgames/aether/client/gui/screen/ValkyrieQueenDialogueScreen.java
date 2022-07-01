@@ -13,8 +13,6 @@ import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -42,7 +40,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
         this.addDialogueOptions(
                 new PlayerDialogueOption(buildPlayerDialogue("question"), pButton -> this.finishChat((byte) 0)),
                 new PlayerDialogueOption(buildPlayerDialogue("challenge"), pButton -> {
-                    this.setDialogue(new TranslatableComponent("gui.aether.queen.dialog.challenge"));
+                    this.setDialogue(Component.translatable("gui.aether.queen.dialog.challenge"));
                     PlayerDialogueOption option;
                     int count = this.minecraft.player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get());
                     if (count >= 10) {
@@ -139,10 +137,10 @@ public class ValkyrieQueenDialogueScreen extends Screen {
     }
 
     public static MutableComponent setupQueenName(Component component) {
-        return new TextComponent("[").append(component.copy().withStyle(ChatFormatting.YELLOW)).append("]");
+        return Component.literal("[").append(component.copy().withStyle(ChatFormatting.YELLOW)).append("]");
     }
 
-    public static TranslatableComponent buildPlayerDialogue(String id) {
-        return new TranslatableComponent("gui.aether.player.dialog." + id);
+    public static MutableComponent buildPlayerDialogue(String id) {
+        return Component.translatable("gui.aether.player.dialog." + id);
     }
 }

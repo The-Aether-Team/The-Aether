@@ -1,15 +1,15 @@
 {
+  "type": "aether:aercloud",
   "config": {
-    "bounds": 1,
     "blocks": {
+      "type": "minecraft:simple_state_provider",
       "state": {
+        "Name": "aether:pink_aercloud",
         "Properties": {
           "double_drops": "true"
-        },
-        "Name": "aether:pink_aercloud"
-      },
-      "type": "minecraft:simple_state_provider"
-    }
-  },
-  "type": "aether:aercloud"
+        }
+      }
+    },
+    "bounds": 1
+  }
 }

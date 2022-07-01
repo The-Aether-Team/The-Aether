@@ -2,20 +2,30 @@ package com.gildedgames.aether.common.registry.worldgen;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.world.builders.AetherNoiseBuilders;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 
-public class AetherNoiseGeneratorSettings {
-    public static final ResourceKey<NoiseGeneratorSettings> SKYLANDS = ResourceKey.create(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY, new ResourceLocation(Aether.MODID, "skylands"));
+import java.util.HashMap;
+import java.util.Map;
 
-    public static void register(ResourceKey<NoiseGeneratorSettings> pKey, NoiseGeneratorSettings pSettings) {
-        BuiltinRegistries.register(BuiltinRegistries.NOISE_GENERATOR_SETTINGS, pKey.location(), pSettings);
+public class AetherNoiseGeneratorSettings {
+    public static final Map<ResourceLocation, NoiseGeneratorSettings> NOISE_GENERATOR_SETTINGS = new HashMap<>();
+
+    public static final ResourceKey<NoiseGeneratorSettings> SKYLANDS = register("skylands", AetherNoiseBuilders.skylandsNoiseSettings());
+
+    public static ResourceKey<NoiseGeneratorSettings> register(String name, NoiseGeneratorSettings noiseGeneratorSettings) {
+        ResourceLocation location = new ResourceLocation(Aether.MODID, name);
+        NOISE_GENERATOR_SETTINGS.putIfAbsent(location, noiseGeneratorSettings);
+        return ResourceKey.create(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY, location);
     }
 
-    public static void init() {
-        register(SKYLANDS, AetherNoiseBuilders.skylandsNoiseSettings());
+    public static Holder<NoiseGeneratorSettings> getHolder(ResourceKey<NoiseGeneratorSettings> key, Registry<NoiseGeneratorSettings> registry) {
+        NoiseGeneratorSettings noiseGeneratorSettings = NOISE_GENERATOR_SETTINGS.get(key.location());
+        Holder.Reference<NoiseGeneratorSettings> noiseGeneratorSettingsHolder = (Holder.Reference<NoiseGeneratorSettings>) registry.getOrCreateHolderOrThrow(key);
+        noiseGeneratorSettingsHolder.bind(key, noiseGeneratorSettings);
+        return noiseGeneratorSettingsHolder;
     }
 }

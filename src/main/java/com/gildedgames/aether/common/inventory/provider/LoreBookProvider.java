@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -16,7 +15,7 @@ public class LoreBookProvider implements MenuProvider
     @Nonnull
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.aether.book_of_lore");
+        return Component.translatable("container.aether.book_of_lore");
     }
 
     @Nullable

@@ -10,8 +10,8 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.GameProfileArgument;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.players.PlayerList;
 import net.minecraft.server.players.UserWhiteList;
 import net.minecraft.server.players.UserWhiteListEntry;
@@ -19,10 +19,10 @@ import net.minecraft.server.players.UserWhiteListEntry;
 import java.util.Collection;
 
 public class SunAltarWhitelistCommand {
-    private static final SimpleCommandExceptionType ERROR_ALREADY_ENABLED = new SimpleCommandExceptionType(new TranslatableComponent("commands.aether.sun_altar_whitelist.alreadyOn"));
-    private static final SimpleCommandExceptionType ERROR_ALREADY_DISABLED = new SimpleCommandExceptionType(new TranslatableComponent("commands.aether.sun_altar_whitelist.alreadyOff"));
-    private static final SimpleCommandExceptionType ERROR_ALREADY_WHITELISTED = new SimpleCommandExceptionType(new TranslatableComponent("commands.aether.sun_altar_whitelist.add.failed"));
-    private static final SimpleCommandExceptionType ERROR_NOT_WHITELISTED = new SimpleCommandExceptionType(new TranslatableComponent("commands.aether.sun_altar_whitelist.remove.failed"));
+    private static final SimpleCommandExceptionType ERROR_ALREADY_ENABLED = new SimpleCommandExceptionType(Component.translatable("commands.aether.sun_altar_whitelist.alreadyOn"));
+    private static final SimpleCommandExceptionType ERROR_ALREADY_DISABLED = new SimpleCommandExceptionType(Component.translatable("commands.aether.sun_altar_whitelist.alreadyOff"));
+    private static final SimpleCommandExceptionType ERROR_ALREADY_WHITELISTED = new SimpleCommandExceptionType(Component.translatable("commands.aether.sun_altar_whitelist.add.failed"));
+    private static final SimpleCommandExceptionType ERROR_NOT_WHITELISTED = new SimpleCommandExceptionType(Component.translatable("commands.aether.sun_altar_whitelist.remove.failed"));
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("aether")
@@ -48,7 +48,7 @@ public class SunAltarWhitelistCommand {
 
     private static int reload(CommandSourceStack source) {
         SunAltarWhitelist.INSTANCE.reload();
-        source.sendSuccess(new TranslatableComponent("commands.aether.sun_altar_whitelist.reloaded"), true);
+        source.sendSuccess(Component.translatable("commands.aether.sun_altar_whitelist.reloaded"), true);
         return 1;
     }
 
@@ -60,7 +60,7 @@ public class SunAltarWhitelistCommand {
             if (!sunAltarWhiteList.isWhiteListed(gameProfile)) {
                 UserWhiteListEntry entry = new UserWhiteListEntry(gameProfile);
                 sunAltarWhiteList.add(entry);
-                source.sendSuccess(new TranslatableComponent("commands.aether.sun_altar_whitelist.add.success", ComponentUtils.getDisplayName(gameProfile)), true);
+                source.sendSuccess(Component.translatable("commands.aether.sun_altar_whitelist.add.success", ComponentUtils.getDisplayName(gameProfile)), true);
                 ++i;
             }
         }
@@ -80,7 +80,7 @@ public class SunAltarWhitelistCommand {
             if (sunAltarWhiteList.isWhiteListed(gameProfile)) {
                 UserWhiteListEntry userwhitelistentry = new UserWhiteListEntry(gameProfile);
                 sunAltarWhiteList.remove(userwhitelistentry);
-                source.sendSuccess(new TranslatableComponent("commands.aether.sun_altar_whitelist.remove.success", ComponentUtils.getDisplayName(gameProfile)), true);
+                source.sendSuccess(Component.translatable("commands.aether.sun_altar_whitelist.remove.success", ComponentUtils.getDisplayName(gameProfile)), true);
                 ++i;
             }
         }
@@ -99,7 +99,7 @@ public class SunAltarWhitelistCommand {
         } else {
             AetherConfig.COMMON.sun_altar_whitelist.set(true);
             AetherConfig.COMMON.sun_altar_whitelist.save();
-            source.sendSuccess(new TranslatableComponent("commands.aether.sun_altar_whitelist.enabled"), true);
+            source.sendSuccess(Component.translatable("commands.aether.sun_altar_whitelist.enabled"), true);
             return 1;
         }
     }
@@ -110,7 +110,7 @@ public class SunAltarWhitelistCommand {
         } else {
             AetherConfig.COMMON.sun_altar_whitelist.set(false);
             AetherConfig.COMMON.sun_altar_whitelist.save();
-            source.sendSuccess(new TranslatableComponent("commands.aether.sun_altar_whitelist.disabled"), true);
+            source.sendSuccess(Component.translatable("commands.aether.sun_altar_whitelist.disabled"), true);
             return 1;
         }
     }
@@ -118,9 +118,9 @@ public class SunAltarWhitelistCommand {
     private static int showList(CommandSourceStack source) {
         String[] names = SunAltarWhitelist.INSTANCE.getSunAltarWhiteListNames();
         if (names.length == 0) {
-            source.sendSuccess(new TranslatableComponent("commands.aether.sun_altar_whitelist.none"), false);
+            source.sendSuccess(Component.translatable("commands.aether.sun_altar_whitelist.none"), false);
         } else {
-            source.sendSuccess(new TranslatableComponent("commands.aether.sun_altar_whitelist.list", names.length, String.join(", ", names)), false);
+            source.sendSuccess(Component.translatable("commands.aether.sun_altar_whitelist.list", names.length, String.join(", ", names)), false);
         }
         return names.length;
     }

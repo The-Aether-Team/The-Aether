@@ -121,7 +121,7 @@ public class AetherBlockStateData extends AetherBlockStateProvider
 
         fence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS, "construction/");
         fenceGateBlock(AetherBlocks.SKYROOT_FENCE_GATE, AetherBlocks.SKYROOT_PLANKS, "construction/");
-        doorBlock(AetherBlocks.SKYROOT_DOOR.get(), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_bottom"), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_top"));
+        fixedDoorBlock(AetherBlocks.SKYROOT_DOOR, texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_bottom"), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_top"));
         trapdoorBlock(AetherBlocks.SKYROOT_TRAPDOOR.get(), texture(name(AetherBlocks.SKYROOT_TRAPDOOR), "construction/"), false);
         buttonBlock(AetherBlocks.SKYROOT_BUTTON, texture(name(AetherBlocks.SKYROOT_PLANKS), "construction/"));
         pressurePlateBlock(AetherBlocks.SKYROOT_PRESSURE_PLATE, texture(name(AetherBlocks.SKYROOT_PLANKS), "construction/"));

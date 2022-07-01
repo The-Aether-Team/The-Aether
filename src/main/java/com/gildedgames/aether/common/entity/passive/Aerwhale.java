@@ -4,10 +4,11 @@ import com.gildedgames.aether.client.registry.AetherSoundEvents;
 import com.gildedgames.aether.common.registry.AetherTags;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.BaseComponent;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -27,7 +28,6 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nonnull;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Random;
 
 public class Aerwhale extends FlyingMob {
 
@@ -49,7 +49,7 @@ public class Aerwhale extends FlyingMob {
                 .add(Attributes.FLYING_SPEED, 0.2);
     }
 
-    public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, Random random) {
+    public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
         return level.getFluidState(pos).is(Fluids.EMPTY) && level.getRawBrightness(pos, 0) > 8 && (reason == MobSpawnType.SPAWNER || level.getBlockState(pos.below()).is(AetherTags.Blocks.AERWHALE_SPAWNABLE_ON));
     }
 
@@ -126,8 +126,8 @@ public class Aerwhale extends FlyingMob {
         if (player.getUUID().getMostSignificantBits() == 220717875589366683L && player.getUUID().getLeastSignificantBits() == -7181826737698904209L) {
             player.startRiding(this);
             if (!this.level.isClientSide) {
-                BaseComponent msg = new TextComponent("Serenity is the queen of W(h)ales!!");
-                player.level.players().forEach(p -> p.sendMessage(msg, player.getUUID()));
+                MutableComponent msg = Component.literal("Serenity is the queen of W(h)ales!!");
+                player.level.players().forEach(p -> p.sendSystemMessage(msg));
             }
             return InteractionResult.sidedSuccess(this.level.isClientSide);
         }
@@ -195,7 +195,7 @@ public class Aerwhale extends FlyingMob {
          */
         @Override
         public void start() {
-            Random random = this.mob.getRandom();
+            RandomSource random = this.mob.getRandom();
             // Set the x, y, and z targets to n * 16, with n being a random number between -1 and 1.
             double x = (random.nextFloat() * 2F - 1F) * 16;
             double z = (random.nextFloat() * 2F - 1F) * 16;

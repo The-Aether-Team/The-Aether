@@ -1,11 +1,10 @@
 package com.gildedgames.aether.common.block.utility;
 
-import java.util.Random;
-
 import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
 
 import com.gildedgames.aether.client.registry.AetherParticleTypes;
 import com.gildedgames.aether.common.registry.AetherBlockEntityTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -48,7 +47,7 @@ public class FreezerBlock extends AbstractFurnaceBlock
 	}
 	
 	@Override
-	public void animateTick(BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull Random random) {
+	public void animateTick(BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull RandomSource random) {
 		if (state.getValue(LIT)) {
 			double x = pos.getX() + 0.5;
 			double y = pos.getY() + 1.0 + (random.nextFloat() * 6.0) / 16.0;

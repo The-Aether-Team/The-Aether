@@ -1,16 +1,15 @@
 package com.gildedgames.aether.core.util;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-
-import java.util.Random;
 
 public class BlockPlacers
 {
     private BlockPlacers() { }
 
-    public static void placeDisk(BlockPos center, float radius, WorldGenLevel level, BlockStateProvider blockProvider, Random random) {
+    public static void placeDisk(BlockPos center, float radius, WorldGenLevel level, BlockStateProvider blockProvider, RandomSource random) {
         float radiusSq = radius * radius;
 
         placeProvidedBlock(level, blockProvider, center, random);
@@ -27,7 +26,7 @@ public class BlockPlacers
         }
     }
 
-    public static void placeSphere(BlockPos center, float radius, WorldGenLevel level, BlockStateProvider blockProvider, Random random) {
+    public static void placeSphere(BlockPos center, float radius, WorldGenLevel level, BlockStateProvider blockProvider, RandomSource random) {
         float radiusSq = radius * radius;
 
         placeProvidedBlock(level, blockProvider, center, random);
@@ -61,7 +60,7 @@ public class BlockPlacers
     }
 
     @SuppressWarnings("UnusedReturnValue") // Retain the boolean feedback from setting block
-    public static boolean placeProvidedBlock(WorldGenLevel level, BlockStateProvider provider, BlockPos pos, Random random) {
+    public static boolean placeProvidedBlock(WorldGenLevel level, BlockStateProvider provider, BlockPos pos, RandomSource random) {
         return level.setBlock(pos, provider.getState(random, pos), 2);
     }
 }

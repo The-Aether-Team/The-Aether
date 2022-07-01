@@ -1,12 +1,15 @@
 package com.gildedgames.aether.client.renderer.player.layer;
 
+import com.gildedgames.aether.common.entity.projectile.dart.AbstractDart;
 import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDart;
+import com.gildedgames.aether.common.registry.AetherEntityTypes;
 import com.gildedgames.aether.core.capability.player.AetherPlayer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
@@ -28,8 +31,9 @@ public class EnchantedDartLayer<T extends LivingEntity, M extends PlayerModel<T>
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        EnchantedDart enchantedDart = new EnchantedDart(entity.level);
-        this.renderDart(poseStack, buffer, enchantedDart, packedLight, entity, partialTicks, 3.0F);
+    protected void renderStuckItem(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, @Nonnull Entity entity, float f, float f1, float f2, float partialTicks) {
+        AbstractDart dart = new EnchantedDart(AetherEntityTypes.ENCHANTED_DART.get(), entity.level);
+        dart.setPos(entity.getX(), entity.getY(), entity.getZ());
+        this.renderStuckDart(dart, poseStack, buffer, packedLight, entity, f, f1, f2, partialTicks);
     }
 }

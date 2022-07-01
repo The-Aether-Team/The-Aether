@@ -5,20 +5,20 @@
       "type": "minecraft:in_square"
     },
     {
+      "type": "minecraft:height_range",
       "height": {
-        "min_inclusive": {
-          "absolute": 80
-        },
+        "type": "minecraft:uniform",
         "max_inclusive": {
           "absolute": 120
         },
-        "type": "minecraft:uniform"
-      },
-      "type": "minecraft:height_range"
+        "min_inclusive": {
+          "absolute": 80
+        }
+      }
     },
     {
-      "chance": 16,
-      "type": "minecraft:rarity_filter"
+      "type": "minecraft:rarity_filter",
+      "chance": 16
     }
   ]
 }

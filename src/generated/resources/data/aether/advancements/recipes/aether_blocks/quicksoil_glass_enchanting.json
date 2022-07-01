@@ -1,13 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "aether:quicksoil_glass_enchanting"
-    ]
-  },
   "criteria": {
-    "has_aether:quicksoil": {
-      "trigger": "minecraft:inventory_changed",
+    "has_quicksoil": {
       "conditions": {
         "items": [
           {
@@ -16,19 +10,25 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "has_the_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
       "conditions": {
         "recipe": "aether:quicksoil_glass_enchanting"
-      }
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_aether:quicksoil",
+      "has_quicksoil",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:quicksoil_glass_enchanting"
+    ]
+  }
 }

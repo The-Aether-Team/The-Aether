@@ -1,6 +1,5 @@
 package com.gildedgames.aether.common.event.hooks;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.common.entity.projectile.dart.EnchantedDart;
 import com.gildedgames.aether.common.entity.projectile.dart.GoldenDart;
@@ -131,8 +130,7 @@ public class AbilityHooks {
                 if (level.dimension() == AetherDimensions.AETHER_LEVEL) {
                     if (!stack.isEmpty()
                             && !stack.is(AetherTags.Items.EFFECTIVE_IN_AETHER)
-                            && stack.isCorrectToolForDrops(state)
-                            && stack.getItem().getRegistryName() != null && !stack.getItem().getRegistryName().getNamespace().equals(Aether.MODID)) {
+                            && stack.isCorrectToolForDrops(state)) {
                         amount = (float) Math.pow(amount, -0.2);
                     }
                 }

@@ -10,9 +10,9 @@ import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.PlainVillagePools;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
-import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
+//import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+//import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
+//import net.minecraft.world.level.levelgen.feature.StructureFeature;
 //import net.minecraft.world.level.levelgen.StructureSettings;
 //import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
 import net.minecraftforge.registries.DeferredRegister;
@@ -24,7 +24,7 @@ import java.util.Map;
 
 //TODO: Redone in 1.18.2
 // Further addendum: 1.19 will introduce changes that will be even more helpful https://youtu.be/Az_BA5ka8C4
-public class AetherStructures {
+//public class AetherStructures {
 //    public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Aether.MODID);
 //
 //    public static final RegistryObject<StructureFeature<JigsawConfiguration>> BRONZE_DUNGEON = STRUCTURES.register("bronze_dungeon", BronzeDungeonStructure::new);
@@ -63,4 +63,4 @@ public class AetherStructures {
 //            structureMap.put(structure, structureFeatureConfiguration);
 //        }
 //    }
-}
+//}

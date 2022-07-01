@@ -6,7 +6,7 @@
     }
   ],
   "result": {
-    "item": "aether:zanite_gemstone",
-    "count": 9
+    "count": 9,
+    "item": "aether:zanite_gemstone"
   }
 }

@@ -14,7 +14,6 @@ import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.client.gui.NotificationModUpdateScreen;
@@ -53,7 +52,7 @@ public class VanillaLeftTitleScreen extends TitleScreen {
                     button.y = 80 + buttonCount * 25;
                     button.setWidth(200);
                     buttonCount++;
-                    if (button.getMessage().equals(new TranslatableComponent("fml.menu.mods"))) {
+                    if (button.getMessage().equals(Component.translatable("fml.menu.mods"))) {
                         this.modUpdateNotification = NotificationModUpdateScreen.init(this, button);
                     }
                 }
@@ -143,10 +142,10 @@ public class VanillaLeftTitleScreen extends TitleScreen {
             for (Widget widget : this.renderables) {
                 if (widget instanceof Button button) {
                     Component buttonText = button.getMessage();
-                    if (buttonText.equals(new TranslatableComponent("narrator.button.accessibility"))) {
+                    if (buttonText.equals(Component.translatable("narrator.button.accessibility"))) {
                         button.x = this.width - 48 + offset;
                         button.y = 4;
-                    } else if (buttonText.equals(new TranslatableComponent("narrator.button.language"))) {
+                    } else if (buttonText.equals(Component.translatable("narrator.button.language"))) {
                         button.x = this.width - 24 + offset;
                         button.y = 4;
                     }
@@ -160,11 +159,11 @@ public class VanillaLeftTitleScreen extends TitleScreen {
     }
 
     public boolean isButtonLeft(Component buttonText) {
-        return buttonText.equals(new TranslatableComponent("menu.singleplayer"))
-                || buttonText.equals(new TranslatableComponent("menu.multiplayer"))
-                || buttonText.equals(new TranslatableComponent("menu.online"))
-                || buttonText.equals(new TranslatableComponent("fml.menu.mods"))
-                || buttonText.equals(new TranslatableComponent("menu.options"))
-                || buttonText.equals(new TranslatableComponent("menu.quit"));
+        return buttonText.equals(Component.translatable("menu.singleplayer"))
+                || buttonText.equals(Component.translatable("menu.multiplayer"))
+                || buttonText.equals(Component.translatable("menu.online"))
+                || buttonText.equals(Component.translatable("fml.menu.mods"))
+                || buttonText.equals(Component.translatable("menu.options"))
+                || buttonText.equals(Component.translatable("menu.quit"));
     }
 }

@@ -27,7 +27,6 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -88,7 +87,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     @Nonnull
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container.aether." + this.getKind() + "_dungeon_chest");
+        return Component.translatable("container.aether." + this.getKind() + "_dungeon_chest");
     }
 
     @Override
@@ -197,7 +196,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
             this.getLevel().markAndNotifyBlock(this.worldPosition, this.getLevel().getChunkAt(this.worldPosition), this.getBlockState(), this.getBlockState(), 2, 512);
             return true;
         } else {
-            player.displayClientMessage(new TranslatableComponent("aether." + this.getKind() + "_dungeon_chest_locked"), true);
+            player.displayClientMessage(Component.translatable("aether." + this.getKind() + "_dungeon_chest_locked"), true);
             return false;
         }
     }

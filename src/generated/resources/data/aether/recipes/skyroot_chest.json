@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "chest",
-  "pattern": [
-    "SSS",
-    "S S",
-    "SSS"
-  ],
   "key": {
     "S": {
       "tag": "aether:planks_crafting"
     }
   },
+  "pattern": [
+    "SSS",
+    "S S",
+    "SSS"
+  ],
   "result": {
     "item": "minecraft:chest"
   }

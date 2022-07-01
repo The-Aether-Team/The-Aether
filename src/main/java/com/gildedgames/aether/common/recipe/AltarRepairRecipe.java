@@ -8,7 +8,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -20,7 +19,7 @@ public class AltarRepairRecipe extends AbstractCookingRecipe
     public final Ingredient ingredient;
 
     public AltarRepairRecipe(ResourceLocation recipeLocation, String groupIn, Ingredient ingredient, int cookingTime) {
-        super(AetherRecipes.RecipeTypes.ENCHANTING, recipeLocation, groupIn, ingredient, ingredient.getItems()[0], 0.0F, cookingTime);
+        super(AetherRecipes.RecipeTypes.ENCHANTING.get(), recipeLocation, groupIn, ingredient, ingredient.getItems()[0], 0.0F, cookingTime);
         this.ingredient = ingredient;
     }
 
@@ -46,10 +45,10 @@ public class AltarRepairRecipe extends AbstractCookingRecipe
 
     @Override
     public RecipeType<?> getType() {
-        return AetherRecipes.RecipeTypes.ENCHANTING;
+        return AetherRecipes.RecipeTypes.ENCHANTING.get();
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AltarRepairRecipe>
+    public static class Serializer implements RecipeSerializer<AltarRepairRecipe>
     {
         public AltarRepairRecipe fromJson(ResourceLocation recipeLocation, JsonObject jsonObject) {
             String group = GsonHelper.getAsString(jsonObject, "group", "");

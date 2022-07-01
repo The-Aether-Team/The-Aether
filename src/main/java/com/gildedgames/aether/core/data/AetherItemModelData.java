@@ -177,8 +177,10 @@ public class AetherItemModelData extends AetherItemModelProvider
         item(AetherItems.SKYROOT_PUFFERFISH_BUCKET, "miscellaneous/");
         item(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET, "miscellaneous/");
         item(AetherItems.SKYROOT_AXOLOTL_BUCKET, "miscellaneous/");
+        item(AetherItems.SKYROOT_TADPOLE_BUCKET, "miscellaneous/");
 
         item(AetherItems.SKYROOT_BOAT, "miscellaneous/");
+        item(AetherItems.SKYROOT_CHEST_BOAT, "miscellaneous/");
 
         item(AetherItems.COLD_PARACHUTE, "miscellaneous/");
         item(AetherItems.GOLDEN_PARACHUTE, "miscellaneous/");
@@ -222,6 +224,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         eggItem(AetherItems.FIRE_MINION_SPAWN_EGG);
 
         eggItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG);
+        eggItem(AetherItems.SUN_SPIRIT_SPAWN_EGG);
 
         itemBlock(AetherBlocks.AETHER_GRASS_BLOCK);
         itemBlock(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK);

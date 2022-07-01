@@ -70,7 +70,7 @@ public class Sentry extends Slime {
 
 	@Override
 	public @Nullable SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
-		this.setSize(2, true);
+		this.setSize(1, true);
 		this.getAttribute(Attributes.FOLLOW_RANGE).addPermanentModifier(new AttributeModifier("Random spawn bonus", this.random.nextGaussian() * 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
 		this.setLeftHanded(false);
 		return spawnData;
@@ -131,7 +131,7 @@ public class Sentry extends Slime {
 	public void remove(@Nonnull Entity.RemovalReason reason) {
 		this.setRemoved(reason);
 		if (reason == Entity.RemovalReason.KILLED) {
-			this.gameEvent(GameEvent.ENTITY_KILLED);
+			this.gameEvent(GameEvent.ENTITY_DIE);
 		}
 		this.invalidateCaps();
 	}

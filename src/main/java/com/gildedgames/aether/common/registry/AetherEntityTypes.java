@@ -3,6 +3,7 @@ package com.gildedgames.aether.common.registry;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.common.entity.miscellaneous.Parachute;
 import com.gildedgames.aether.common.entity.miscellaneous.SkyrootBoat;
+import com.gildedgames.aether.common.entity.miscellaneous.SkyrootChestBoat;
 import com.gildedgames.aether.common.entity.monster.*;
 import com.gildedgames.aether.common.entity.monster.dungeon.*;
 import com.gildedgames.aether.common.entity.passive.*;
@@ -92,10 +93,16 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<ValkyrieQueen>> VALKYRIE_QUEEN = ENTITIES.register("valkyrie_queen",
             () -> EntityType.Builder.of(ValkyrieQueen::new, MobCategory.MONSTER).sized(0.8F, 1.95F).fireImmune().clientTrackingRange(10).build("valkyrie_queen"));
 
+    public static final RegistryObject<EntityType<SunSpirit>> SUN_SPIRIT = ENTITIES.register("sun_spirit",
+            () -> EntityType.Builder.of(SunSpirit::new, MobCategory.MONSTER).sized(2.5F, 2.8F).fireImmune().clientTrackingRange(10).build("sun_spirit"));
+
 
     // Miscellaneous
     public static final RegistryObject<EntityType<SkyrootBoat>> SKYROOT_BOAT = ENTITIES.register("skyroot_boat",
             () -> EntityType.Builder.<SkyrootBoat>of(SkyrootBoat::new, MobCategory.MISC).sized(1.375F, 0.5625F).clientTrackingRange(10).build("skyroot_boat"));
+
+    public static final RegistryObject<EntityType<SkyrootChestBoat>> SKYROOT_CHEST_BOAT = ENTITIES.register("skyroot_chest_boat",
+            () -> EntityType.Builder.<SkyrootChestBoat>of(SkyrootChestBoat::new, MobCategory.MISC).sized(1.375F, 0.5625F).clientTrackingRange(10).build("skyroot_boat"));
 
     public static final RegistryObject<EntityType<CloudMinion>> CLOUD_MINION = ENTITIES.register("cloud_minion",
             () -> EntityType.Builder.<CloudMinion>of(CloudMinion::new, MobCategory.MISC).sized(0.75F, 0.75F).clientTrackingRange(5).build("cloud_minion"));
@@ -180,6 +187,7 @@ public class AetherEntityTypes {
         event.put(AetherEntityTypes.FIRE_MINION.get(), FireMinion.createMobAttributes().build());
 
         event.put(AetherEntityTypes.VALKYRIE_QUEEN.get(), ValkyrieQueen.createQueenAttributes().build());
+        event.put(AetherEntityTypes.SUN_SPIRIT.get(), SunSpirit.createSunSpiritAttributes().build());
 
         event.put(AetherEntityTypes.CLOUD_MINION.get(), CloudMinion.createMobAttributes().build());
     }

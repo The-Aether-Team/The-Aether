@@ -1,9 +1,9 @@
 package com.gildedgames.aether.common.world.gen.placement;
 
-import com.gildedgames.aether.Aether;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,7 +13,6 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 import javax.annotation.Nonnull;
-import java.util.Random;
 import java.util.stream.Stream;
 
 public class ImprovedLayerPlacementModifier extends PlacementModifier {
@@ -38,7 +37,7 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
 
     @Nonnull
     @Override
-    public Stream<BlockPos> getPositions(@Nonnull PlacementContext context, @Nonnull Random random, @Nonnull BlockPos pos) {
+    public Stream<BlockPos> getPositions(@Nonnull PlacementContext context, @Nonnull RandomSource random, @Nonnull BlockPos pos) {
         Stream.Builder<BlockPos> builder = Stream.builder();
         int i = 0;
         boolean flag;
@@ -65,7 +64,7 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
         return PlacementModifiers.IMPROVED_LAYER_PLACEMENT;
     }
 
-    private BlockPos findOnGroundPosition(PlacementContext context, Random random, BlockPos pos, int count) {
+    private BlockPos findOnGroundPosition(PlacementContext context, RandomSource random, BlockPos pos, int count) {
         int i = 0;
         int x;
         int z;

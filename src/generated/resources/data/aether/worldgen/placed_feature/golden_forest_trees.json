@@ -2,7 +2,9 @@
   "feature": "aether:trees_golden_oak_and_skyroot",
   "placement": [
     {
+      "type": "minecraft:count",
       "count": {
+        "type": "minecraft:weighted_list",
         "distribution": [
           {
             "data": 10,
@@ -12,29 +14,27 @@
             "data": 11,
             "weight": 1
           }
-        ],
-        "type": "minecraft:weighted_list"
-      },
-      "type": "minecraft:count"
+        ]
+      }
     },
     {
       "type": "minecraft:in_square"
     },
     {
-      "max_water_depth": 0,
-      "type": "minecraft:surface_water_depth_filter"
+      "type": "minecraft:surface_water_depth_filter",
+      "max_water_depth": 0
     },
     {
-      "heightmap": "OCEAN_FLOOR",
+      "type": "aether:improved_layer_placement",
       "count": {
         "type": "minecraft:uniform",
         "value": {
-          "min_inclusive": 0,
-          "max_inclusive": 1
+          "max_inclusive": 1,
+          "min_inclusive": 0
         }
       },
-      "verticalBounds": 4,
-      "type": "aether:improved_layer_placement"
+      "heightmap": "OCEAN_FLOOR",
+      "verticalBounds": 4
     },
     {
       "type": "minecraft:biome"

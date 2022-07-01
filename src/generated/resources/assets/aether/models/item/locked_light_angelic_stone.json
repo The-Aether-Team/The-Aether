@@ -1,38 +1,16 @@
 {
   "parent": "minecraft:block/cube",
   "display": {
-    "thirdperson_righthand": {
+    "firstperson_lefthand": {
       "rotation": [
-        75,
-        45,
-        0
-      ],
-      "translation": [
-        0,
-        2.5,
-        0
+        -90,
+        -180,
+        -45
       ],
       "scale": [
-        0.375,
-        0.375,
-        0.375
-      ]
-    },
-    "thirdperson_lefthand": {
-      "rotation": [
-        75,
-        45,
-        0
-      ],
-      "translation": [
-        0,
-        2.5,
-        0
-      ],
-      "scale": [
-        0.375,
-        0.375,
-        0.375
+        0.4,
+        0.4,
+        0.4
       ]
     },
     "firstperson_righthand": {
@@ -47,16 +25,11 @@
         0.4
       ]
     },
-    "firstperson_lefthand": {
-      "rotation": [
-        -90,
-        -180,
-        -45
-      ],
+    "fixed": {
       "scale": [
-        0.4,
-        0.4,
-        0.4
+        0.5,
+        0.5,
+        0.5
       ]
     },
     "ground": {
@@ -65,15 +38,15 @@
         0,
         0
       ],
-      "translation": [
-        0,
-        3,
-        0
-      ],
       "scale": [
         0.25,
         0.25,
         0.25
+      ],
+      "translation": [
+        0,
+        3,
+        0
       ]
     },
     "gui": {
@@ -88,20 +61,69 @@
         0.625
       ]
     },
-    "fixed": {
+    "thirdperson_lefthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
       "scale": [
-        0.5,
-        0.5,
-        0.5
+        0.375,
+        0.375,
+        0.375
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
       ]
     }
   },
-  "textures": {
-    "overlay": "aether:block/dungeon/lock",
-    "face": "aether:block/dungeon/light_angelic_stone"
-  },
   "elements": [
     {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#face"
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#face"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#face"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#face"
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#face"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#face"
+        }
+      },
       "from": [
         0,
         0,
@@ -111,59 +133,37 @@
         16,
         16,
         16
-      ],
-      "faces": {
-        "down": {
-          "texture": "#face",
-          "cullface": "down"
-        },
-        "up": {
-          "texture": "#face",
-          "cullface": "up"
-        },
-        "north": {
-          "texture": "#face",
-          "cullface": "north"
-        },
-        "south": {
-          "texture": "#face",
-          "cullface": "south"
-        },
-        "west": {
-          "texture": "#face",
-          "cullface": "west"
-        },
-        "east": {
-          "texture": "#face",
-          "cullface": "east"
-        }
-      }
+      ]
     },
     {
+      "faces": {
+        "north": {
+          "texture": "#overlay"
+        }
+      },
       "from": [
         0,
         0,
         -0.1
       ],
-      "to": [
-        16,
-        16,
-        -0.1
-      ],
       "rotation": {
+        "angle": 0.0,
+        "axis": "y",
         "origin": [
           8,
           8,
           6.9
-        ],
-        "axis": "y",
-        "angle": 0.0
+        ]
       },
-      "faces": {
-        "north": {
-          "texture": "#overlay"
-        }
-      }
+      "to": [
+        16,
+        16,
+        -0.1
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "face": "aether:block/dungeon/light_angelic_stone",
+    "overlay": "aether:block/dungeon/lock"
+  }
 }

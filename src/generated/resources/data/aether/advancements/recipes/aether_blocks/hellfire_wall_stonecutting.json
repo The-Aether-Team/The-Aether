@@ -1,13 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "aether:hellfire_wall_stonecutting"
-    ]
-  },
   "criteria": {
-    "has_aether:hellfire_stone": {
-      "trigger": "minecraft:inventory_changed",
+    "has_hellfire_stone": {
       "conditions": {
         "items": [
           {
@@ -16,19 +10,25 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "has_the_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
       "conditions": {
         "recipe": "aether:hellfire_wall_stonecutting"
-      }
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_aether:hellfire_stone",
+      "has_hellfire_stone",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:hellfire_wall_stonecutting"
+    ]
+  }
 }

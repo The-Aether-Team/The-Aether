@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "grindstone",
-  "pattern": [
-    "THT",
-    "S S"
-  ],
   "key": {
-    "T": {
-      "tag": "forge:rods/wooden"
-    },
     "H": {
       "item": "minecraft:stone_slab"
     },
     "S": {
       "tag": "aether:planks_crafting"
+    },
+    "T": {
+      "tag": "forge:rods/wooden"
     }
   },
+  "pattern": [
+    "THT",
+    "S S"
+  ],
   "result": {
     "item": "minecraft:grindstone"
   }

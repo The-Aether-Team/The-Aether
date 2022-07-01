@@ -7,10 +7,7 @@ import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
 import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
 import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
 import com.gildedgames.aether.common.registry.*;
-import com.gildedgames.aether.common.registry.worldgen.AetherBiomes;
-import com.gildedgames.aether.common.registry.worldgen.AetherFoliagePlacerTypes;
-import com.gildedgames.aether.common.registry.worldgen.AetherNoiseGeneratorSettings;
-import com.gildedgames.aether.common.registry.worldgen.AetherTreeDecoratorTypes;
+import com.gildedgames.aether.common.registry.worldgen.*;
 import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
 import com.gildedgames.aether.core.AetherConfig;
 import com.gildedgames.aether.core.data.*;
@@ -19,22 +16,27 @@ import com.gildedgames.aether.core.resource.CombinedResourcePack;
 import com.gildedgames.aether.core.util.SunAltarWhitelist;
 import com.gildedgames.aether.core.util.TriviaReader;
 import net.minecraft.SharedConstants;
+import net.minecraft.core.Registry;
 import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.dimension.LevelStem;
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -44,6 +46,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.resource.PathResourcePack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -72,19 +75,22 @@ public class Aether
 
         DeferredRegister<?>[] registers = {
                 AetherBlocks.BLOCKS,
-                AetherEntityTypes.ENTITIES,
-                AetherEffects.EFFECTS,
                 AetherItems.ITEMS,
-                AetherParticleTypes.PARTICLES,
-                AetherPOI.POI,
-                AetherSoundEvents.SOUNDS,
-                AetherContainerTypes.CONTAINERS,
+                AetherEntityTypes.ENTITIES,
                 AetherBlockEntityTypes.BLOCK_ENTITIES,
-                AetherRecipes.RECIPE_SERIALIZERS,
-                AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
-                AetherBiomes.BIOMES,
+                AetherContainerTypes.CONTAINERS,
+                AetherEffects.EFFECTS,
+                AetherParticleTypes.PARTICLES,
+                AetherFeatures.FEATURES,
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
-                AetherTreeDecoratorTypes.TREE_DECORATORS
+                AetherTreeDecoratorTypes.TREE_DECORATORS,
+                AetherPOI.POI,
+                AetherRecipes.RecipeTypes.RECIPE_TYPES,
+                AetherRecipes.RECIPE_SERIALIZERS,
+                AetherLoot.LOOT_FUNCTION_TYPES,
+                AetherLoot.LOOT_CONDITION_TYPES,
+                AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
+                AetherSoundEvents.SOUNDS
         };
 
         for (DeferredRegister<?> register : registers) {
@@ -100,34 +106,28 @@ public class Aether
         TRIVIA_READER = new TriviaReader();
     }
 
-    @SubscribeEvent //This is not actually for registering RecipeSerializers.
-    public static void register(RegistryEvent.Register<RecipeSerializer<?>> event) {
-        SunAltarWhitelist.initialize();
+    public void commonSetup(FMLCommonSetupEvent event) {
+        AetherItems.registerAbilities();
+        AetherPacketHandler.register();
 
-        AetherLoot.init();
         AetherAdvancements.init();
         PlacementModifiers.init();
-        AetherRecipes.RecipeTypes.init();
         AetherRecipeBookTypes.init();
-        AetherNoiseGeneratorSettings.init();
-    }
 
-    public void commonSetup(FMLCommonSetupEvent event) {
+        SunAltarWhitelist.initialize();
+
+        registerFuels();
+
         event.enqueueWork(() -> {
-            AetherPacketHandler.register();
-
             AetherBlocks.registerPots();
             AetherBlocks.registerFlammability();
             AetherBlocks.registerFreezables();
 
             AetherEntityTypes.registerSpawnPlacements();
 
-            AetherItems.registerAbilities();
-
             registerDispenserBehaviors();
             registerCauldronInteractions();
             registerComposting();
-            registerFuels();
         });
     }
 
@@ -143,25 +143,29 @@ public class Aether
     public void dataSetup(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper helper = event.getExistingFileHelper();
-        if (event.includeClient()) {
-            generator.addProvider(new AetherBlockStateData(generator, helper));
-            generator.addProvider(new AetherItemModelData(generator, helper));
-            generator.addProvider(new AetherLanguageData(generator));
-            generator.addProvider(new AetherSoundData(generator, helper));
-        }
-        if (event.includeServer()) {
-            generator.addProvider(new AetherRecipeData(generator));
-            generator.addProvider(new AetherLootTableData(generator));
-            generator.addProvider(new AetherLootModifierData(generator));
-            AetherBlockTagData blockTags = new AetherBlockTagData(generator, helper);
-            generator.addProvider(blockTags);
-            generator.addProvider(new AetherItemTagData(generator, blockTags, helper));
-            generator.addProvider(new AetherEntityTagData(generator, helper));
-            generator.addProvider(new AetherFluidTagData(generator, helper));
-            generator.addProvider(new AetherDimensionTagData(generator, helper));
-            generator.addProvider(new AetherAdvancementData(generator, helper));
-            generator.addProvider(new AetherWorldData(generator));
-        }
+
+        generator.addProvider(event.includeClient(), new AetherBlockStateData(generator, helper));
+        generator.addProvider(event.includeClient(), new AetherItemModelData(generator, helper));
+        generator.addProvider(event.includeClient(), new AetherLanguageData(generator));
+        generator.addProvider(event.includeClient(), new AetherSoundData(generator, helper));
+
+        generator.addProvider(event.includeServer(), new AetherRecipeData(generator));
+        generator.addProvider(event.includeServer(), new AetherLootTableData(generator));
+        generator.addProvider(event.includeServer(), new AetherLootModifierData(generator));
+        generator.addProvider(event.includeServer(), new AetherAdvancementData(generator, helper));
+        AetherBlockTagData blockTags = new AetherBlockTagData(generator, helper);
+        generator.addProvider(event.includeServer(), blockTags);
+        generator.addProvider(event.includeServer(), new AetherItemTagData(generator, blockTags, helper));
+        generator.addProvider(event.includeServer(), new AetherEntityTagData(generator, helper));
+        generator.addProvider(event.includeServer(), new AetherFluidTagData(generator, helper));
+        generator.addProvider(event.includeServer(), new AetherBiomeTagData(generator, helper));
+        generator.addProvider(event.includeServer(), new AetherDimensionTagData(generator, helper));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<ConfiguredFeature<?, ?>>().create(generator, helper, AetherConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<PlacedFeature>().create(generator, helper, AetherPlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<Biome>().create(generator, helper, AetherBiomes.BIOMES, ForgeRegistries.Keys.BIOMES));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<DimensionType>().create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<NoiseGeneratorSettings>().create(BuiltinRegistries.ACCESS, generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<LevelStem>().levelStem(generator, helper));
     }
 
     public void packSetup(AddPackFindersEvent event) {
@@ -193,7 +197,7 @@ public class Aether
         event.addRepositorySource((packConsumer, packConstructor) ->
                 packConsumer.accept(Pack.create(
                         name, false,
-                        () -> new CombinedResourcePack(name, title, new PackMetadataSection(new TextComponent(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())), mergedPacks, sourcePath),
+                        () -> new CombinedResourcePack(name, title, new PackMetadataSection(Component.literal(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())), mergedPacks, sourcePath),
                         packConstructor, Pack.Position.TOP, PackSource.BUILT_IN)
                 ));
     }
@@ -204,8 +208,8 @@ public class Aether
             PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
             event.addRepositorySource((packConsumer, packConstructor) ->
                 packConsumer.accept(packConstructor.create(
-                        "builtin/aether_ctm_fix", new TextComponent("Aether CTM Fix"), true, () -> pack,
-                        new PackMetadataSection(new TextComponent("Fixes Quicksoil Glass Panes when using CTM"), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())),
+                        "builtin/aether_ctm_fix", Component.literal("Aether CTM Fix"), true, () -> pack,
+                        new PackMetadataSection(Component.literal("Fixes Quicksoil Glass Panes when using CTM"), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())),
                         Pack.Position.TOP, PackSource.BUILT_IN, false)
                 ));
         }

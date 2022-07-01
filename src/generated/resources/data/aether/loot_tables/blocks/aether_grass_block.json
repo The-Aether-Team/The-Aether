@@ -1,8 +1,12 @@
 {
   "type": "minecraft:block",
+  "functions": [
+    {
+      "function": "aether:double_drops"
+    }
+  ],
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -38,12 +42,8 @@
             }
           ]
         }
-      ]
-    }
-  ],
-  "functions": [
-    {
-      "function": "aether:double_drops"
+      ],
+      "rolls": 1.0
     }
   ]
 }

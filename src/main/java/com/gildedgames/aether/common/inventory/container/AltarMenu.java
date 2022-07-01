@@ -14,11 +14,11 @@ import net.minecraft.world.inventory.ContainerData;
 public class AltarMenu extends AbstractFurnaceMenu
 {
 	public AltarMenu(int windowId, Inventory playerInventory) {
-		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING, AetherRecipeBookTypes.ALTAR, windowId, playerInventory);
+		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING.get(), AetherRecipeBookTypes.ALTAR, windowId, playerInventory);
 	}
 
 	public AltarMenu(int windowId, Inventory playerInventory, Container enchantingInventory, ContainerData furnaceData) {
-		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING, AetherRecipeBookTypes.ALTAR, windowId, playerInventory, enchantingInventory, furnaceData);
+		super(AetherContainerTypes.ALTAR.get(), RecipeTypes.ENCHANTING.get(), AetherRecipeBookTypes.ALTAR, windowId, playerInventory, enchantingInventory, furnaceData);
 	}
 
 	@Override

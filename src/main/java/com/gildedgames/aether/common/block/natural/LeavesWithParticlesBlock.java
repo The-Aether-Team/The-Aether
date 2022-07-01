@@ -2,6 +2,7 @@ package com.gildedgames.aether.common.block.natural;
 
 import com.gildedgames.aether.common.block.state.properties.AetherBlockStateProperties;
 import com.gildedgames.aether.common.block.util.IAetherDoubleDropBlock;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoubleDropBlock
@@ -38,11 +38,11 @@ public class LeavesWithParticlesBlock extends LeavesBlock implements IAetherDoub
 	
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
+	public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
 		super.animateTick(stateIn, worldIn, pos, rand);
 		
 		if (worldIn.isClientSide) {
-			if (Minecraft.getInstance().options.particles != ParticleStatus.MINIMAL) {
+			if (Minecraft.getInstance().options.particles().get() != ParticleStatus.MINIMAL) {
 				if (rand.nextInt(10) == 0) {
 					for (int i = 0; i < 15; i++) {
 						double x = pos.getX() + (rand.nextFloat() - 0.5) * 8.0;

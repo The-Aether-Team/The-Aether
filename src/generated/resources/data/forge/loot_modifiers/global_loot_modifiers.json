@@ -1,6 +1,6 @@
 {
-  "replace": false,
   "entries": [
     "aether:remove_seeds"
-  ]
+  ],
+  "replace": false
 }

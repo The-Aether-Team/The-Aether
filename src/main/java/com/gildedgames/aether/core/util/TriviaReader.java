@@ -2,15 +2,13 @@ package com.gildedgames.aether.core.util;
 
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.RandomSource;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class TriviaReader {
-    private final Random random = new Random();
+    private final RandomSource random = RandomSource.create();
     private final List<Component> trivia = new ArrayList<>();
     private int index;
 
@@ -19,7 +17,7 @@ public class TriviaReader {
     public void generateTriviaList() {
         for (String string : I18n.language.getLanguageData().keySet()) {
             if (string.startsWith("aether.pro_tips.line.")) {
-                this.getTrivia().add(new TranslatableComponent(string));
+                this.getTrivia().add(Component.translatable(string));
             }
         }
     }
@@ -32,7 +30,7 @@ public class TriviaReader {
 
     public Component getTriviaLine() {
         if (this.getTriviaComponent() != null) {
-            return new TranslatableComponent("gui.aether.pro_tip").append(new TextComponent(" ").append(this.getTriviaComponent()));
+            return Component.translatable("gui.aether.pro_tip").append(Component.literal(" ").append(this.getTriviaComponent()));
         }
         return null;
     }

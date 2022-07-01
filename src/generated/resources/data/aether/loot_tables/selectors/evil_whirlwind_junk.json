@@ -2,7 +2,6 @@
   "type": "minecraft:selector",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -11,67 +10,68 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "name": "minecraft:iron_ingot"
+          "name": "minecraft:iron_ingot",
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "minecraft:gold_ingot"
+          "name": "minecraft:gold_ingot",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "weight": 9,
-          "name": "minecraft:coal"
+          "name": "minecraft:coal",
+          "weight": 9
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "name": "minecraft:pumpkin"
+          "name": "minecraft:pumpkin",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "minecraft:gravel"
+          "name": "minecraft:gravel",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "weight": 11,
-          "name": "minecraft:clay"
+          "name": "minecraft:clay",
+          "weight": 11
         },
         {
           "type": "minecraft:item",
-          "weight": 12,
-          "name": "minecraft:stick"
+          "name": "minecraft:stick",
+          "weight": 12
         },
         {
           "type": "minecraft:item",
-          "weight": 14,
-          "name": "minecraft:flint"
+          "name": "minecraft:flint",
+          "weight": 14
         },
         {
           "type": "minecraft:item",
-          "weight": 17,
-          "name": "minecraft:oak_log"
+          "name": "minecraft:oak_log",
+          "weight": 17
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "minecraft:sand"
+          "name": "minecraft:sand",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 60,
           "functions": [
             {
-              "function": "aether:whirlwind_spawn_entity",
+              "count": 1,
               "entity": "minecraft:creeper",
-              "count": 1
+              "function": "aether:whirlwind_spawn_entity"
             }
           ],
-          "name": "minecraft:air"
+          "name": "minecraft:air",
+          "weight": 60
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

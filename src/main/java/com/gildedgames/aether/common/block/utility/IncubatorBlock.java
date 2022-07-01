@@ -7,6 +7,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
@@ -28,7 +29,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
-import java.util.Random;
 
 public class IncubatorBlock extends BaseEntityBlock
 {
@@ -71,7 +71,7 @@ public class IncubatorBlock extends BaseEntityBlock
 	}
 
 	@Override
-	public void animateTick(BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull Random random) {
+	public void animateTick(BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull RandomSource random) {
 		if (state.getValue(LIT)) {
 			double f = pos.getX() + 0.5;
 			double f1 = pos.getY() + 1.0 + (random.nextFloat() * 15.0D) / 16.0;

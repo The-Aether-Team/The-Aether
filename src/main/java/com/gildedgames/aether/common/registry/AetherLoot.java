@@ -18,20 +18,25 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 
 public class AetherLoot
 {
+	public static final DeferredRegister<LootItemConditionType> LOOT_CONDITION_TYPES = DeferredRegister.create(Registry.LOOT_ITEM_REGISTRY, Aether.MODID);
+	public static final DeferredRegister<LootItemFunctionType> LOOT_FUNCTION_TYPES = DeferredRegister.create(Registry.LOOT_FUNCTION_REGISTRY, Aether.MODID);
+
 	private static final Set<ResourceLocation> LOOT_TABLES = Sets.newHashSet();
+
+	public static final RegistryObject<LootItemConditionType> CONFIG_ENABLED = LOOT_CONDITION_TYPES.register("config_enabled", () -> new LootItemConditionType(new ConfigEnabled.Serializer()));
+
+	public static final RegistryObject<LootItemFunctionType> DOUBLE_DROPS = LOOT_FUNCTION_TYPES.register("double_drops", () -> new LootItemFunctionType(new DoubleDrops.Serializer()));
+	public static final RegistryObject<LootItemFunctionType> SPAWN_TNT = LOOT_FUNCTION_TYPES.register("spawn_tnt", () -> new LootItemFunctionType(new SpawnTNT.Serializer()));
+	public static final RegistryObject<LootItemFunctionType> SPAWN_XP = LOOT_FUNCTION_TYPES.register("spawn_xp", () -> new LootItemFunctionType(new SpawnXP.Serializer()));
+	public static final RegistryObject<LootItemFunctionType> WHIRLWIND_SPAWN_ENTITY = LOOT_FUNCTION_TYPES.register("whirlwind_spawn_entity", () -> new LootItemFunctionType(new WhirlwindSpawnEntity.Serializer()));
 
 	public static final LootContextParamSet STRIPPING = LootContextParamSets.register("aether:stripping", (p_237455_0_) ->
 			p_237455_0_.required(LootContextParams.BLOCK_STATE).required(LootContextParams.ORIGIN).required(LootContextParams.TOOL));
-
-	public static final LootItemConditionType CONFIG_ENABLED = new LootItemConditionType(new ConfigEnabled.Serializer());
-
-	public static final LootItemFunctionType DOUBLE_DROPS = new LootItemFunctionType(new DoubleDrops.Serializer());
-	public static final LootItemFunctionType SPAWN_TNT = new LootItemFunctionType(new SpawnTNT.Serializer());
-	public static final LootItemFunctionType SPAWN_XP = new LootItemFunctionType(new SpawnXP.Serializer());
-	public static final LootItemFunctionType WHIRLWIND_SPAWN_ENTITY = new LootItemFunctionType(new WhirlwindSpawnEntity.Serializer());
 
 	public static final ResourceLocation ENTITIES_SHEEPUFF_WHITE = register("entities/sheepuff/white");
 	public static final ResourceLocation ENTITIES_SHEEPUFF_ORANGE = register("entities/sheepuff/orange");
@@ -95,13 +100,5 @@ public class AetherLoot
 		else {
 			throw new IllegalArgumentException(id + " is already a registered built-in loot table");
 		}
-	}
-
-	public static void init() {
-		Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(Aether.MODID, "config_enabled").toString(), CONFIG_ENABLED);
-		Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Aether.MODID, "double_drops").toString(), DOUBLE_DROPS);
-		Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Aether.MODID, "spawn_tnt").toString(), SPAWN_TNT);
-		Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Aether.MODID, "spawn_xp").toString(), SPAWN_XP);
-		Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Aether.MODID, "whirlwind_spawn_entity").toString(), WHIRLWIND_SPAWN_ENTITY);
 	}
 }

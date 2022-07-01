@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 
 public class AetherSkyRenderInfo extends DimensionSpecialEffects
 {
-    private ISkyRenderHandler skyRenderer = new AetherSkyRenderer();
+    private ISkyRenderHandler skyRenderer;
     public AetherSkyRenderInfo() {
         super(-5.0F, true, DimensionSpecialEffects.SkyType.NORMAL, false, false);
     }
@@ -27,6 +27,7 @@ public class AetherSkyRenderInfo extends DimensionSpecialEffects
     @Nullable
     @Override
     public ISkyRenderHandler getSkyRenderHandler() {
+        if (this.skyRenderer == null) skyRenderer = new AetherSkyRenderer();
        return AetherConfig.CLIENT.disable_aether_skybox.get() ? null : skyRenderer;
     }
 }

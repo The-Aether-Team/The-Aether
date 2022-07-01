@@ -3,11 +3,10 @@ package com.gildedgames.aether.common.block.construction;
 import com.gildedgames.aether.common.block.util.FreezingBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.Random;
 
 public class IcestoneWallBlock extends WallBlock implements FreezingBlock
 {
@@ -22,7 +21,7 @@ public class IcestoneWallBlock extends WallBlock implements FreezingBlock
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         super.tick(state, worldIn, pos, random);
         this.freezeBlocks(worldIn, pos, state, FreezingBlock.SQRT_8);
         worldIn.scheduleTick(pos, this, 10);

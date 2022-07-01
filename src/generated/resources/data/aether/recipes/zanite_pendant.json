@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "M": {
+      "item": "aether:zanite_gemstone"
+    },
+    "S": {
+      "tag": "forge:string"
+    }
+  },
   "pattern": [
     "SSS",
     "S S",
     " M "
   ],
-  "key": {
-    "S": {
-      "tag": "forge:string"
-    },
-    "M": {
-      "item": "aether:zanite_gemstone"
-    }
-  },
   "result": {
     "item": "aether:zanite_pendant"
   }

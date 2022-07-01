@@ -323,6 +323,19 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.AEROGEL_STAIRS.get(),
                 AetherBlocks.AEROGEL_SLAB.get(),
                 AetherBlocks.AEROGEL_WALL.get());
+        tag(BlockTags.CONVERTABLE_TO_MUD).add(AetherBlocks.AETHER_DIRT.get());
+        tag(BlockTags.SCULK_REPLACEABLE).addTag(AetherTags.Blocks.HOLYSTONE).add(
+                AetherBlocks.AETHER_DIRT.get(),
+                AetherBlocks.QUICKSOIL.get()
+        );
+        tag(BlockTags.SNAPS_GOAT_HORN).addTag(AetherTags.Blocks.SKYROOT_LOGS).add(
+                AetherBlocks.HOLYSTONE.get(),
+                AetherBlocks.ICESTONE.get(),
+                AetherBlocks.AMBROSIUM_ORE.get(),
+                AetherBlocks.ZANITE_ORE.get(),
+                AetherBlocks.GRAVITITE_ORE.get()
+        );
+        tag(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON).add(AetherBlocks.ICESTONE.get());
 
         //forge
         tag(Tags.Blocks.FENCE_GATES_WOODEN).add(AetherBlocks.SKYROOT_FENCE_GATE.get());

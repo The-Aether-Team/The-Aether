@@ -1,23 +1,7 @@
 {
   "parent": "aether:enter_aether",
-  "display": {
-    "icon": {
-      "item": "aether:incubator"
-    },
-    "title": {
-      "translate": "advancement.aether.incubator"
-    },
-    "description": {
-      "translate": "advancement.aether.incubator.desc"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
     "craft_incubator": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -26,7 +10,23 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.aether.incubator.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:incubator"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.aether.incubator"
     }
   },
   "requirements": [
