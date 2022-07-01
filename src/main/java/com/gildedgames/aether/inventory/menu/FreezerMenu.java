@@ -1,6 +1,6 @@
 package com.gildedgames.aether.inventory.menu;
 
-import com.gildedgames.aether.block.entity.FreezerBlockEntity;
+import com.gildedgames.aether.blockentity.FreezerBlockEntity;
 import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 

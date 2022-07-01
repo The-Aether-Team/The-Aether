@@ -1,4 +1,4 @@
-package com.gildedgames.aether.block.entity;
+package com.gildedgames.aether.blockentity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

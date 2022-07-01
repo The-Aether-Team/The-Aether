@@ -1,7 +1,7 @@
 package com.gildedgames.aether.block.utility;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.block.entity.SunAltarBlockEntity;
+import com.gildedgames.aether.blockentity.SunAltarBlockEntity;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.capability.AetherCapabilities;
 import com.gildedgames.aether.capability.time.AetherTime;

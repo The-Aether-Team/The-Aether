@@ -1,7 +1,7 @@
 package com.gildedgames.aether.block.dungeon;
 
-import com.gildedgames.aether.block.entity.TreasureChestBlockEntity;
-import com.gildedgames.aether.block.entity.AetherBlockEntityTypes;
+import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
+import com.gildedgames.aether.blockentity.AetherBlockEntityTypes;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

@@ -2,9 +2,9 @@ package com.gildedgames.aether.client.renderer.blockentity;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.AetherModelLayers;
-import com.gildedgames.aether.block.entity.SkyrootBedBlockEntity;
+import com.gildedgames.aether.blockentity.SkyrootBedBlockEntity;
 import com.gildedgames.aether.block.utility.SkyrootBedBlock;
-import com.gildedgames.aether.block.entity.AetherBlockEntityTypes;
+import com.gildedgames.aether.blockentity.AetherBlockEntityTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;

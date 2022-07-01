@@ -1,4 +1,4 @@
-package com.gildedgames.aether.block.entity;
+package com.gildedgames.aether.blockentity;
 
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;

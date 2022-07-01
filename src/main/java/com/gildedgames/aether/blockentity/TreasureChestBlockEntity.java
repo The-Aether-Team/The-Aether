@@ -1,4 +1,4 @@
-package com.gildedgames.aether.block.entity;
+package com.gildedgames.aether.blockentity;
 
 import com.gildedgames.aether.item.miscellaneous.DungeonKeyItem;
 import com.gildedgames.aether.block.AetherBlocks;

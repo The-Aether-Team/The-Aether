@@ -2,7 +2,7 @@ package com.gildedgames.aether.block.dungeon;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.monster.dungeon.Mimic;
-import com.gildedgames.aether.block.entity.ChestMimicBlockEntity;
+import com.gildedgames.aether.blockentity.ChestMimicBlockEntity;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.*;

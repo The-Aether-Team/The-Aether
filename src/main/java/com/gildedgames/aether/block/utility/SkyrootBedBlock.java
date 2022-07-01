@@ -1,6 +1,6 @@
 package com.gildedgames.aether.block.utility;
 
-import com.gildedgames.aether.block.entity.SkyrootBedBlockEntity;
+import com.gildedgames.aether.blockentity.SkyrootBedBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.BedBlock;

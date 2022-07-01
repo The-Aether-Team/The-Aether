@@ -1,4 +1,4 @@
-package com.gildedgames.aether.block.entity;
+package com.gildedgames.aether.blockentity;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.AetherClient;

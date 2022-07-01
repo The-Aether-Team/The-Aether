@@ -16,7 +16,7 @@ import com.gildedgames.aether.client.renderer.blockentity.AetherBlockEntityWitho
 import com.gildedgames.aether.client.renderer.blockentity.ChestMimicRenderer;
 import com.gildedgames.aether.client.renderer.blockentity.SkyrootBedRenderer;
 import com.gildedgames.aether.client.renderer.blockentity.TreasureChestRenderer;
-import com.gildedgames.aether.block.entity.AetherBlockEntityTypes;
+import com.gildedgames.aether.blockentity.AetherBlockEntityTypes;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.item.AetherItems;

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.inventory.menu;
 
-import com.gildedgames.aether.block.entity.IncubatorBlockEntity;
+import com.gildedgames.aether.blockentity.IncubatorBlockEntity;
 
 import com.gildedgames.aether.inventory.menu.slot.IncubatorEggSlot;
 import com.gildedgames.aether.inventory.menu.slot.IncubatorFuelSlot;
