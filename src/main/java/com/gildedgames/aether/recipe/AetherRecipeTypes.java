@@ -10,6 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class AetherRecipeTypes {
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, Aether.MODID);
+
     public static RegistryObject<RecipeType<EnchantingRecipe>> ENCHANTING = RECIPE_TYPES.register("enchanting", () -> new RecipeType<>() {
         public String toString() {
             return "enchanting";
