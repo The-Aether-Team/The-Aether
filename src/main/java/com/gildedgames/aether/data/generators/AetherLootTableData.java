@@ -1,7 +1,6 @@
 package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.data.generators.loot.*;
-import com.gildedgames.aether.data.loot.*;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
