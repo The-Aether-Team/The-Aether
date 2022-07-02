@@ -33,8 +33,8 @@ public class SunAltarScreen extends Screen {
         this.renderBackground(pPoseStack);
         RenderSystem.setShaderTexture(0, TEXTURE);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        int xSize = 175;
-        int ySize = 78;
+        int xSize = 176;
+        int ySize = 79;
         int x = (this.width - xSize) / 2;
         int y = (this.height - ySize) / 2;
         this.blit(pPoseStack, x, y, 0, 0, xSize, ySize);

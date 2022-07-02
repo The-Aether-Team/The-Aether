@@ -21,10 +21,10 @@ public class AgilityCapeItem extends CapeItem {
         LivingEntity livingEntity = slotContext.entity();
         AttributeInstance stepHeight = livingEntity.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
         if (stepHeight != null) {
-            if (!stepHeight.hasModifier(this.getStepHeightModifier()) && !livingEntity.isCrouching()) {
+            if (!stepHeight.hasModifier(this.getStepHeightModifier()) && !livingEntity.isShiftKeyDown()) {
                 stepHeight.addTransientModifier(this.getStepHeightModifier());
             }
-            if (livingEntity.isCrouching()) {
+            if (livingEntity.isShiftKeyDown()) {
                 stepHeight.removeModifier(this.getStepHeightModifier());
             }
         }
