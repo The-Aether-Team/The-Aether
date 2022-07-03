@@ -18,41 +18,44 @@ import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.NbtPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 
-public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance>
-{
+import javax.annotation.Nonnull;
+
+public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
     private static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "lore_entry");
     public static final LoreTrigger INSTANCE = new LoreTrigger();
 
+    @Nonnull
+    @Override
     public ResourceLocation getId() {
         return ID;
     }
 
+    @Nonnull
     @Override
-    public LoreTrigger.Instance createInstance(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
+    public LoreTrigger.Instance createInstance(JsonObject json, @Nonnull EntityPredicate.Composite entity, @Nonnull DeserializationContext conditions) {
         ItemPredicate itemPredicate = ItemPredicate.fromJson(json.get("item"));
-        return new LoreTrigger.Instance(entityPredicate, itemPredicate);
+        return new LoreTrigger.Instance(entity, itemPredicate);
     }
 
     public void trigger(ServerPlayer player, ItemStack stack) {
         this.trigger(player, (instance) -> instance.test(stack));
     }
 
-    public static class Instance extends AbstractCriterionTriggerInstance
-    {
+    public static class Instance extends AbstractCriterionTriggerInstance {
         private final ItemPredicate item;
 
-        public Instance(EntityPredicate.Composite player, ItemPredicate item) {
-            super(LoreTrigger.ID, player);
+        public Instance(EntityPredicate.Composite entity, ItemPredicate item) {
+            super(LoreTrigger.ID, entity);
             this.item = item;
         }
 
-        public static LoreTrigger.Instance forItem(ItemPredicate itemConditions) {
-            return new LoreTrigger.Instance(EntityPredicate.Composite.ANY, itemConditions);
+        public static LoreTrigger.Instance forItem(ItemPredicate item) {
+            return new LoreTrigger.Instance(EntityPredicate.Composite.ANY, item);
         }
 
         public static LoreTrigger.Instance forItem(ItemLike item) {
-            ItemPredicate predicate = new ItemPredicate(null, ImmutableSet.of(item.asItem()), MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, EnchantmentPredicate.NONE, EnchantmentPredicate.NONE, null, NbtPredicate.ANY);
-            return forItem(predicate);
+            ItemPredicate itemPredicate = new ItemPredicate(null, ImmutableSet.of(item.asItem()), MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, EnchantmentPredicate.NONE, EnchantmentPredicate.NONE, null, NbtPredicate.ANY);
+            return forItem(itemPredicate);
         }
 
         public static LoreTrigger.Instance forAny() {
@@ -63,11 +66,12 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance>
             return this.item.matches(stack);
         }
 
+        @Nonnull
         @Override
-        public JsonObject serializeToJson(SerializationContext conditions) {
-            JsonObject jsonobject = super.serializeToJson(conditions);
-            jsonobject.add("item", this.item.serializeToJson());
-            return jsonobject;
+        public JsonObject serializeToJson(@Nonnull SerializationContext conditions) {
+            JsonObject jsonObject = super.serializeToJson(conditions);
+            jsonObject.add("item", this.item.serializeToJson());
+            return jsonObject;
         }
     }
 }
