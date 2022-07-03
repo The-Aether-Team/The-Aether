@@ -21,11 +21,11 @@ public record MoaInteractPacket(int playerID, boolean mainHand) implements Aethe
     }
 
     @Override
-    public void execute(Player player) {
+    public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Entity entity = Minecraft.getInstance().player.level.getEntity(this.playerID);
-            if (entity instanceof Player playerEntity) {
-                playerEntity.swing(this.mainHand ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND);
+            if (entity instanceof Player player) {
+                player.swing(this.mainHand ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND);
             }
         }
     }

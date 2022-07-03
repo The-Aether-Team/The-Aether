@@ -11,17 +11,17 @@ import net.minecraft.world.entity.player.Player;
 public record NpcPlayerInteractPacket(int entityID, byte interactionID) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(entityID);
-        buf.writeByte(interactionID);
+        buf.writeInt(this.entityID);
+        buf.writeByte(this.interactionID);
     }
 
     public static NpcPlayerInteractPacket decode(FriendlyByteBuf buf) {
         return new NpcPlayerInteractPacket(buf.readInt(), buf.readByte());
     }
 
-    public void execute(Player player) {
-        if (player != null && player.getServer() != null && player.level.getEntity(this.entityID) instanceof NpcDialogue npc) {
-            npc.handleNpcInteraction(player, this.interactionID);
+    public void execute(Player playerEntity) {
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.entityID) instanceof NpcDialogue npc) {
+            npc.handleNpcInteraction(playerEntity, this.interactionID);
         }
     }
 }

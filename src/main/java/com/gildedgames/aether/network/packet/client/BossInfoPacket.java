@@ -31,12 +31,12 @@ public abstract class BossInfoPacket implements AetherPacket {
         }
 
         public static Display decode(FriendlyByteBuf buf) {
-            UUID pId = buf.readUUID();
-            return new Display(pId);
+            UUID bossEvent = buf.readUUID();
+            return new Display(bossEvent);
         }
 
         @Override
-        public void execute(Player player) {
+        public void execute(Player playerEntity) {
             GuiListener.BOSS_EVENTS.add(this.bossEvent);
         }
     }
@@ -50,12 +50,12 @@ public abstract class BossInfoPacket implements AetherPacket {
         }
 
         public static Remove decode(FriendlyByteBuf buf) {
-            UUID pId = buf.readUUID();
-            return new Remove(pId);
+            UUID bossEvent = buf.readUUID();
+            return new Remove(bossEvent);
         }
 
         @Override
-        public void execute(Player player) {
+        public void execute(Player playerEntity) {
             GuiListener.BOSS_EVENTS.remove(this.bossEvent);
         }
     }

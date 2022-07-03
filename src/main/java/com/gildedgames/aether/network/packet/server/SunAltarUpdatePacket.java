@@ -16,16 +16,16 @@ public record SunAltarUpdatePacket(long dayTime) implements AetherPacket {
     }
 
     public static SunAltarUpdatePacket decode(FriendlyByteBuf buf) {
-        long time = buf.readLong();
-        return new SunAltarUpdatePacket(time);
+        long dayTime = buf.readLong();
+        return new SunAltarUpdatePacket(dayTime);
     }
 
     /**
      * Updates the time on the server, then updates that time for all players in the Aether.
      */
     @Override
-    public void execute(Player player) {
-        if (player != null && player.level instanceof ServerLevel level && (!AetherConfig.COMMON.sun_altar_whitelist.get() || player.hasPermissions(4) || SunAltarWhitelist.INSTANCE.isWhiteListed(player.getGameProfile()))) {
+    public void execute(Player playerEntity) {
+        if (playerEntity != null && playerEntity.level instanceof ServerLevel level && (!AetherConfig.COMMON.sun_altar_whitelist.get() || playerEntity.hasPermissions(4) || SunAltarWhitelist.INSTANCE.isWhiteListed(playerEntity.getGameProfile()))) {
             level.setDayTime(this.dayTime);
             level.getServer().getPlayerList().broadcastAll(new ClientboundSetTimePacket(level.getGameTime(), level.getDayTime(), level.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)), level.dimension());
         }

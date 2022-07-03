@@ -15,8 +15,8 @@ public record JumpPacket(int playerID, boolean isJumping) implements AetherPacke
 
 	public static JumpPacket decode(FriendlyByteBuf buf) {
 		int playerID = buf.readInt();
-		boolean jumping = buf.readBoolean();
-		return new JumpPacket(playerID, jumping);
+		boolean isJumping = buf.readBoolean();
+		return new JumpPacket(playerID, isJumping);
 	}
 
 	@Override

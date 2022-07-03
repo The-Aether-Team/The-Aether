@@ -8,20 +8,20 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
-public record SwetDeathParticlePacket(int swetID) implements AetherPacket {
+public record SwetDeathParticlePacket(int entityID) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(this.swetID);
+        buf.writeInt(this.entityID);
     }
 
     public static SwetDeathParticlePacket decode(FriendlyByteBuf buf) {
-        int id = buf.readInt();
-        return new SwetDeathParticlePacket(id);
+        int entityID = buf.readInt();
+        return new SwetDeathParticlePacket(entityID);
     }
 
     @Override
-    public void execute(Player player) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().player.level.getEntity(this.swetID) instanceof Swet swet) {
+    public void execute(Player playerEntity) {
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().player.level.getEntity(this.entityID) instanceof Swet swet) {
             for (int i = 0; i < 10; i++) {
                 double f = swet.random.nextFloat() * (float) Math.PI * 2.0F;
                 double f1 = swet.random.nextFloat() * swet.swetWidth + 0.25F;

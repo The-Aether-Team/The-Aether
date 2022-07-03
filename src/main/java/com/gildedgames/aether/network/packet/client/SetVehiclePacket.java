@@ -14,13 +14,13 @@ public record SetVehiclePacket(int passengerID, int vehicleID) implements Aether
     }
 
     public static SetVehiclePacket decode(FriendlyByteBuf buf) {
-        int passenger = buf.readInt();
-        int vehicle = buf.readInt();
-        return new SetVehiclePacket(passenger, vehicle);
+        int passengerID = buf.readInt();
+        int vehicleID = buf.readInt();
+        return new SetVehiclePacket(passengerID, vehicleID);
     }
 
     @Override
-    public void execute(Player player) {
+    public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Entity passenger = Minecraft.getInstance().player.level.getEntity(this.passengerID);
             Entity vehicle = Minecraft.getInstance().player.level.getEntity(this.vehicleID);

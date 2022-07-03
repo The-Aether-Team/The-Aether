@@ -20,7 +20,7 @@ public record EternalDayPacket(boolean isEternalDay) implements AetherPacket {
     @Override
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            Minecraft.getInstance().level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent((aetherTime -> aetherTime.setEternalDay(this.isEternalDay)));
+            Minecraft.getInstance().level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent(aetherTime -> aetherTime.setEternalDay(this.isEternalDay));
         }
     }
 }

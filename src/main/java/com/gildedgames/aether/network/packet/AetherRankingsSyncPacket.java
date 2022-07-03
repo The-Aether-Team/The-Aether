@@ -25,7 +25,7 @@ public record AetherRankingsSyncPacket(int playerID, CompoundTag tag) implements
     public void execute(Player playerEntity) {
         if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer && this.tag != null) {
             AetherRankings.get(serverPlayer).ifPresent(aetherRankings -> aetherRankings.deserializeSynchableNBT(this.tag));
-        }  else {
+        } else {
             if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().level.getEntity(this.playerID) instanceof Player player && this.tag != null) {
                 AetherRankings.get(player).ifPresent(aetherRankings -> aetherRankings.deserializeSynchableNBT(this.tag));
             }

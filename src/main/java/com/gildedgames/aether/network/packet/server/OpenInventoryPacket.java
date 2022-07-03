@@ -24,7 +24,7 @@ public record OpenInventoryPacket(int playerID, ItemStack carryStack) implements
     @Override
     public void execute(Player playerEntity) {
         if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
-            ItemStack itemStack = serverPlayer.isCreative() ?  this.carryStack : serverPlayer.containerMenu.getCarried();
+            ItemStack itemStack = serverPlayer.isCreative() ? this.carryStack : serverPlayer.containerMenu.getCarried();
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
             serverPlayer.doCloseContainer();
             if (!itemStack.isEmpty()) {

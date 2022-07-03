@@ -16,13 +16,14 @@ public record OpenNpcDialoguePacket(int entityID) implements AetherPacket {
     }
 
     public static OpenNpcDialoguePacket decode(FriendlyByteBuf buf) {
-        return new OpenNpcDialoguePacket(buf.readInt());
+        int entityID = buf.readInt();
+        return new OpenNpcDialoguePacket(entityID);
     }
 
     @Override
-    public void execute(Player player) {
+    public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            if (Minecraft.getInstance().level.getEntity(entityID) instanceof NpcDialogue npc) {
+            if (Minecraft.getInstance().level.getEntity(this.entityID) instanceof NpcDialogue npc) {
                 npc.openDialogueScreen();
             }
         }

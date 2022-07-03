@@ -18,14 +18,14 @@ public record ZephyrSnowballHitPacket(int entityID, double xSpeed, double zSpeed
     }
 
     public static ZephyrSnowballHitPacket decode(FriendlyByteBuf buf) {
-        int id = buf.readInt();
+        int entityID = buf.readInt();
         double x = buf.readDouble();
         double z = buf.readDouble();
-        return new ZephyrSnowballHitPacket(id, x, z);
+        return new ZephyrSnowballHitPacket(entityID, x, z);
     }
 
     @Override
-    public void execute(Player player) {
+    public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().player.level.getEntity(this.entityID) instanceof LocalPlayer localPlayer) {
             if (!localPlayer.isBlocking()) {
                 localPlayer.setDeltaMovement(localPlayer.getDeltaMovement().x, localPlayer.getDeltaMovement().y + 0.5, localPlayer.getDeltaMovement().z);

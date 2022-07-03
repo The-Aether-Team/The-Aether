@@ -15,8 +15,8 @@ public record HittingPacket(int playerID, boolean isHitting) implements AetherPa
 
     public static HittingPacket decode(FriendlyByteBuf buf) {
         int playerID = buf.readInt();
-        boolean hitting = buf.readBoolean();
-        return new HittingPacket(playerID, hitting);
+        boolean isHitting = buf.readBoolean();
+        return new HittingPacket(playerID, isHitting);
     }
 
     @Override
