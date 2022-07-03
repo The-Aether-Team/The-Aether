@@ -8,15 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
-public class AetherPlayerSyncPacket extends AetherPacket.AbstractAetherPacket {
-    private final int playerID;
-    private final CompoundTag tag;
-
-    public AetherPlayerSyncPacket(int playerID, CompoundTag tag) {
-        this.playerID = playerID;
-        this.tag = tag;
-    }
-
+public record AetherPlayerSyncPacket(int playerID, CompoundTag tag) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID);

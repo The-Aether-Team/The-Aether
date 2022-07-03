@@ -1,18 +1,12 @@
 package com.gildedgames.aether.network.packet.client;
 
 import com.gildedgames.aether.capability.AetherCapabilities;
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
-public class EternalDayPacket extends AbstractAetherPacket {
-    private final boolean isEternalDay;
-
-    public EternalDayPacket(boolean isEternalDay) {
-        this.isEternalDay = isEternalDay;
-    }
-
+public record EternalDayPacket(boolean isEternalDay) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeBoolean(this.isEternalDay);

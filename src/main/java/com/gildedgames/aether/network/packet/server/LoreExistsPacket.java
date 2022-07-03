@@ -1,23 +1,13 @@
 package com.gildedgames.aether.network.packet.server;
 
 import com.gildedgames.aether.inventory.menu.LoreBookMenu;
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class LoreExistsPacket extends AbstractAetherPacket {
-    private final int playerID;
-    private final ItemStack itemStack;
-    private final boolean exists;
-
-    public LoreExistsPacket(int playerID, ItemStack itemStack, boolean exists) {
-        this.playerID = playerID;
-        this.itemStack = itemStack;
-        this.exists = exists;
-    }
-
+public record LoreExistsPacket(int playerID, ItemStack itemStack, boolean exists) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID);

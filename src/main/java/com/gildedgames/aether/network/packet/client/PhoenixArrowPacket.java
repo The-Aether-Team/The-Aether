@@ -1,21 +1,13 @@
 package com.gildedgames.aether.network.packet.client;
 
 import com.gildedgames.aether.capability.arrow.PhoenixArrow;
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class PhoenixArrowPacket extends AbstractAetherPacket {
-    private final int entityID;
-    private final boolean isPhoenix;
-
-    public PhoenixArrowPacket(int entityID, boolean isPhoenix) {
-        this.entityID = entityID;
-        this.isPhoenix = isPhoenix;
-    }
-
+public record PhoenixArrowPacket(int entityID, boolean isPhoenix) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.entityID);

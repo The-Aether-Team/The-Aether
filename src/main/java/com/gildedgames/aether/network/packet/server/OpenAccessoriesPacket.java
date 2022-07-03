@@ -1,7 +1,7 @@
 package com.gildedgames.aether.network.packet.server;
 
 import com.gildedgames.aether.inventory.provider.AccessoriesProvider;
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ClientGrabItemPacket;
 import net.minecraft.world.entity.player.Player;
@@ -10,15 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkHooks;
 
-public class OpenAccessoriesPacket extends AbstractAetherPacket {
-    private final int playerID;
-    private final ItemStack carryStack;
-
-    public OpenAccessoriesPacket(int playerID, ItemStack carryStack) {
-        this.playerID = playerID;
-        this.carryStack = carryStack;
-    }
-
+public record OpenAccessoriesPacket(int playerID, ItemStack carryStack) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID);

@@ -9,18 +9,10 @@ import java.util.function.Supplier;
 public interface AetherPacket {
     void encode(FriendlyByteBuf buf);
 
-    boolean handle(Supplier<NetworkEvent.Context> context);
-
-    class AbstractAetherPacket implements AetherPacket {
-        @Override
-        public void encode(FriendlyByteBuf buf) { }
-
-        @Override
-        public boolean handle(Supplier<NetworkEvent.Context> context) {
-            context.get().enqueueWork(() -> execute(context.get().getSender()));
-            return true;
-        }
-
-        public void execute(Player player) { }
+    default boolean handle(Supplier<NetworkEvent.Context> context) {
+        context.get().enqueueWork(() -> execute(context.get().getSender()));
+        return true;
     }
+
+    void execute(Player player);
 }

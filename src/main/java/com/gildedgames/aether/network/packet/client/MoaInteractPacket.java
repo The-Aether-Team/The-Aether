@@ -7,15 +7,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-public class MoaInteractPacket extends AetherPacket.AbstractAetherPacket {
-    private final int playerID;
-    private final boolean mainHand;
-
-    public MoaInteractPacket(int playerID, boolean mainHand) {
-        this.playerID = playerID;
-        this.mainHand = mainHand;
-    }
-
+public record MoaInteractPacket(int playerID, boolean mainHand) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID);

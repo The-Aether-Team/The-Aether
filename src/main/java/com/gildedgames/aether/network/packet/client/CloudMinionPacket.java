@@ -2,22 +2,13 @@ package com.gildedgames.aether.network.packet.client;
 
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.entity.miscellaneous.CloudMinion;
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 
-public class CloudMinionPacket extends AbstractAetherPacket {
-    private final int entityID;
-    private final int rightCloudMinionID, leftCloudMinionID;
-
-    public CloudMinionPacket(int entityID, int rightCloudMinionID, int leftCloudMinionID) {
-        this.entityID = entityID;
-        this.rightCloudMinionID = rightCloudMinionID;
-        this.leftCloudMinionID = leftCloudMinionID;
-    }
-
+public record CloudMinionPacket(int entityID, int rightCloudMinionID, int leftCloudMinionID) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.entityID);

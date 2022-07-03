@@ -1,20 +1,12 @@
 package com.gildedgames.aether.network.packet.client;
 
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class SetVehiclePacket extends AbstractAetherPacket {
-    private final int passengerID;
-    private final int vehicleID;
-
-    public SetVehiclePacket(int passenger, int vehicle) {
-        this.passengerID = passenger;
-        this.vehicleID = vehicle;
-    }
-
+public record SetVehiclePacket(int passengerID, int vehicleID) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.passengerID);

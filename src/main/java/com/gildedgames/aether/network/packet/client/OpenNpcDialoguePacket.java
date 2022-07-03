@@ -4,9 +4,7 @@ import com.gildedgames.aether.entity.NpcDialogue;
 import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
-
-import java.util.function.Supplier;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Packet sent to the client to initiate an NPC dialogue.
@@ -22,13 +20,11 @@ public record OpenNpcDialoguePacket(int entityID) implements AetherPacket {
     }
 
     @Override
-    public boolean handle(Supplier<NetworkEvent.Context> context) {
-        Minecraft minecraft = Minecraft.getInstance();
+    public void execute(Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            if (minecraft.level.getEntity(entityID) instanceof NpcDialogue npc) {
+            if (Minecraft.getInstance().level.getEntity(entityID) instanceof NpcDialogue npc) {
                 npc.openDialogueScreen();
             }
         }
-        return true;
     }
 }

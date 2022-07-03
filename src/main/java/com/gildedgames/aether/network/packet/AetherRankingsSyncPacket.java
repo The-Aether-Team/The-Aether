@@ -1,22 +1,14 @@
 package com.gildedgames.aether.network.packet;
 
 import com.gildedgames.aether.capability.rankings.AetherRankings;
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
-public class AetherRankingsSyncPacket extends AbstractAetherPacket {
-    private final int playerID;
-    private final CompoundTag tag;
-
-    public AetherRankingsSyncPacket(int playerID, CompoundTag tag) {
-        this.playerID = playerID;
-        this.tag = tag;
-    }
-
+public record AetherRankingsSyncPacket(int playerID, CompoundTag tag) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID);

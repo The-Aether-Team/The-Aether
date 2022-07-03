@@ -1,20 +1,14 @@
 package com.gildedgames.aether.network.packet.client;
 
 import com.gildedgames.aether.entity.monster.Swet;
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
-public class SwetDeathParticlePacket extends AbstractAetherPacket {
-    private final int swetID;
-
-    public SwetDeathParticlePacket(int id) {
-        this.swetID = id;
-    }
-
+public record SwetDeathParticlePacket(int swetID) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.swetID);

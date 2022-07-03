@@ -1,20 +1,12 @@
 package com.gildedgames.aether.network.packet.server;
 
 import com.gildedgames.aether.capability.player.AetherPlayer;
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class JumpPacket extends AbstractAetherPacket {
-	private final int playerID;
-	private final boolean isJumping;
-	
-	public JumpPacket(int playerID, boolean isJumping) {
-		this.playerID = playerID;
-		this.isJumping = isJumping;
-	}
-
+public record JumpPacket(int playerID, boolean isJumping) implements AetherPacket {
 	@Override
 	public void encode(FriendlyByteBuf buf) {
 		buf.writeInt(this.playerID);

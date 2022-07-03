@@ -1,21 +1,13 @@
 package com.gildedgames.aether.network.packet.client;
 
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class ClientGrabItemPacket extends AbstractAetherPacket {
-    private final int playerID;
-    private final ItemStack stack;
-
-    public ClientGrabItemPacket(int playerID, ItemStack stack) {
-        this.playerID = playerID;
-        this.stack = stack;
-    }
-
+public record ClientGrabItemPacket(int playerID, ItemStack stack) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID);

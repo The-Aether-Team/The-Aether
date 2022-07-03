@@ -1,6 +1,6 @@
 package com.gildedgames.aether.network.packet.client;
 
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import com.gildedgames.aether.api.DimensionTagTracking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
@@ -11,17 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 
-public class DimensionTypeHolderPacket extends AbstractAetherPacket {
-    private final ResourceKey<Level> dimensionKey;
-    private final TagKey<DimensionType> tagKey;
-    private final boolean value;
-
-    public DimensionTypeHolderPacket(ResourceKey<Level> dimensionKey, TagKey<DimensionType> tagKey, boolean value) {
-        this.dimensionKey = dimensionKey;
-        this.tagKey = tagKey;
-        this.value = value;
-    }
-
+public record DimensionTypeHolderPacket(ResourceKey<Level> dimensionKey, TagKey<DimensionType> tagKey, boolean value) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeResourceLocation(this.dimensionKey.location());

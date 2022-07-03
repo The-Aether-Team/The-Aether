@@ -1,24 +1,12 @@
 package com.gildedgames.aether.network.packet.client;
 
 import com.gildedgames.aether.entity.monster.Swet;
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
-public class SwetAttackPacket extends AbstractAetherPacket {
-    private final int swetID;
-    private final double xPos;
-    private final double yPos;
-    private final double zPos;
-
-    public SwetAttackPacket(int id, double x, double y, double z) {
-        this.swetID = id;
-        this.xPos = x;
-        this.yPos = y;
-        this.zPos = z;
-    }
-
+public record SwetAttackPacket(int swetID, double xPos, double yPos, double zPos) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.swetID);

@@ -182,7 +182,7 @@ public class AetherRankingsCapability extends CapabilitySyncing implements Aethe
     }
 
     @Override
-    public AetherPacket.AbstractAetherPacket getSyncPacket(CompoundTag tag) {
+    public AetherPacket getSyncPacket(CompoundTag tag) {
         return new AetherRankingsSyncPacket(this.getPlayer().getId(), tag);
     }
 

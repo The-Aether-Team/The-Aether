@@ -723,7 +723,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	@Override
-	public AetherPacket.AbstractAetherPacket getSyncPacket(CompoundTag tag) {
+	public AetherPacket getSyncPacket(CompoundTag tag) {
 		return new AetherPlayerSyncPacket(this.getPlayer().getId(), tag);
 	}
 }

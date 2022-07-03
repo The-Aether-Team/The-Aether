@@ -65,5 +65,5 @@ public abstract class CapabilitySyncing implements INBTSynchable<CompoundTag> {
         this.shouldForce = shouldForce;
     }
 
-    public abstract AetherPacket.AbstractAetherPacket getSyncPacket(CompoundTag tag);
+    public abstract AetherPacket getSyncPacket(CompoundTag tag);
 }

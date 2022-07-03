@@ -7,13 +7,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-public class ExplosionParticlePacket extends AetherPacket.AbstractAetherPacket {
-    private final int entityID;
-
-    public ExplosionParticlePacket(int entityID) {
-        this.entityID = entityID;
-    }
-
+public record ExplosionParticlePacket(int entityID) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.entityID);

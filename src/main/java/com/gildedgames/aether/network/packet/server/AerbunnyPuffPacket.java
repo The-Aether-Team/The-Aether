@@ -5,13 +5,7 @@ import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
-public class AerbunnyPuffPacket extends AetherPacket.AbstractAetherPacket {
-    private final int entityID;
-
-    public AerbunnyPuffPacket(int entityID) {
-        this.entityID = entityID;
-    }
-
+public record AerbunnyPuffPacket(int entityID) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.entityID);

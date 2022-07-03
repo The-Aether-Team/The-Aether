@@ -1,18 +1,12 @@
 package com.gildedgames.aether.network.packet.client;
 
 import com.gildedgames.aether.event.hooks.DimensionHooks;
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
-public class LeavingAetherPacket extends AbstractAetherPacket {
-    private final boolean playerLeavingAether;
-
-    public LeavingAetherPacket(boolean playerLeavingAether) {
-        this.playerLeavingAether = playerLeavingAether;
-    }
-
+public record LeavingAetherPacket(boolean playerLeavingAether) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeBoolean(this.playerLeavingAether);

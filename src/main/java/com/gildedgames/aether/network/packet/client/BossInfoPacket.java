@@ -10,8 +10,9 @@ import java.util.UUID;
 /**
  * Packets to help sync the server's Aether boss bars with the client's.
  */
-public abstract class BossInfoPacket extends AetherPacket.AbstractAetherPacket {
+public abstract class BossInfoPacket implements AetherPacket {
     protected final UUID bossEvent;
+
     public BossInfoPacket(UUID bossEvent) {
         this.bossEvent = bossEvent;
     }

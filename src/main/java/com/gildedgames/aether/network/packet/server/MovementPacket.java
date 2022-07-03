@@ -1,20 +1,12 @@
 package com.gildedgames.aether.network.packet.server;
 
 import com.gildedgames.aether.capability.player.AetherPlayer;
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class MovementPacket extends AbstractAetherPacket {
-    private final int playerID;
-    private final boolean isMoving;
-
-    public MovementPacket(int playerID, boolean isMoving) {
-        this.playerID = playerID;
-        this.isMoving = isMoving;
-    }
-
+public record MovementPacket(int playerID, boolean isMoving) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID);

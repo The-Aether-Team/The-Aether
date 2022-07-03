@@ -1,7 +1,7 @@
 package com.gildedgames.aether.network.packet.server;
 
 import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -9,17 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 
-public class MilkCowPacket extends AbstractAetherPacket {
-    private final int playerID;
-    private final ItemStack stack;
-    private final boolean isMainHand;
-
-    public MilkCowPacket(int playerID, ItemStack stack, boolean isMainHand) {
-        this.playerID = playerID;
-        this.stack = stack;
-        this.isMainHand = isMainHand;
-    }
-
+public record MilkCowPacket(int playerID, ItemStack stack, boolean isMainHand) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID);
