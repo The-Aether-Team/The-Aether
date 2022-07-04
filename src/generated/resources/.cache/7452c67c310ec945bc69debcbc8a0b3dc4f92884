@@ -1,4 +1,4 @@
-// 1.19	2022-06-18T13:35:22.50881	Aether Block Tags
+// 1.19	2022-07-04T13:05:53.3175914	Aether Block Tags
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/aechor_plant_spawnable_on.json
 f2dedadb4e94e780ebd949b551d3349f0210feb9 data/aether/tags/blocks/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/blocks/aerogel.json
@@ -12,7 +12,7 @@ bc8701774f57ab000a8f0f1d390702175a6cdbb8 data/aether/tags/blocks/allowed_bucket_
 b7b37d30e23e65ee6925f4068e6d142f874fadd6 data/aether/tags/blocks/dungeon_blocks.json
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/enchantable_grass_blocks.json
 65976e3564baed2ae1f9323801f6fdc2faa84331 data/aether/tags/blocks/golden_oak_logs.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/blocks/gravitite_ability_blacklist.json
+919fec6673778567a924cacfa590d985b91709d9 data/aether/tags/blocks/gravitite_ability_blacklist.json
 7a6ab5f621a7a401034f482edac807cc203ff72b data/aether/tags/blocks/holystone.json
 022a06d2a296e488a68e47fe0cebd62c586c55ea data/aether/tags/blocks/locked_dungeon_blocks.json
 72fbe793b5c4be3b794fd87fd89b3a6293d2241c data/aether/tags/blocks/quicksoil_can_generate.json

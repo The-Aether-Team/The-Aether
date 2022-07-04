@@ -42,15 +42,14 @@ public class ToolAbilityListener {
     }
 
     @SubscribeEvent
-    public static void doGravititeAbility(PlayerInteractEvent.RightClickBlock event) {
-        Level level = event.getWorld();
+    public static void doGravititeAbility(BlockEvent.BlockToolModificationEvent event) {
+        Level level = event.getContext().getLevel();
         BlockPos blockPos = event.getPos();
-        ItemStack itemStack = event.getItemStack();
-        BlockState blockState = level.getBlockState(blockPos);
+        ItemStack itemStack = event.getContext().getItemInHand();
+        BlockState blockState = event.getState();
         Player player = event.getPlayer();
-        InteractionHand interactionHand = event.getHand();
+        InteractionHand interactionHand = event.getContext().getHand();
         if (GravititeTool.floatBlock(level, blockPos, itemStack, blockState, player, interactionHand)) {
-            event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide));
             event.setCanceled(true);
         }
     }
