@@ -1,20 +1,42 @@
 package com.gildedgames.aether;
 
-import com.gildedgames.aether.client.registry.AetherParticleTypes;
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.common.block.entity.IncubatorBlockEntity;
-import com.gildedgames.aether.common.block.util.dispenser.DispenseDartBehavior;
-import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
-import com.gildedgames.aether.common.block.entity.FreezerBlockEntity;
-import com.gildedgames.aether.common.registry.*;
-import com.gildedgames.aether.common.registry.worldgen.*;
-import com.gildedgames.aether.common.world.gen.placement.PlacementModifiers;
-import com.gildedgames.aether.core.AetherConfig;
-import com.gildedgames.aether.core.data.*;
-import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.resource.CombinedResourcePack;
-import com.gildedgames.aether.core.util.SunAltarWhitelist;
-import com.gildedgames.aether.core.util.TriviaReader;
+import com.gildedgames.aether.advancement.AetherAdvancementTriggers;
+import com.gildedgames.aether.blockentity.AetherBlockEntityTypes;
+import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.block.AetherCauldronInteractions;
+import com.gildedgames.aether.block.dispenser.AetherDispenseBehaviors;
+import com.gildedgames.aether.client.particle.AetherParticleTypes;
+import com.gildedgames.aether.client.AetherSoundEvents;
+import com.gildedgames.aether.blockentity.IncubatorBlockEntity;
+import com.gildedgames.aether.block.dispenser.DispenseDartBehavior;
+import com.gildedgames.aether.blockentity.AltarBlockEntity;
+import com.gildedgames.aether.blockentity.FreezerBlockEntity;
+import com.gildedgames.aether.data.generators.*;
+import com.gildedgames.aether.data.generators.tags.*;
+import com.gildedgames.aether.effect.AetherEffects;
+import com.gildedgames.aether.entity.AetherEntityTypes;
+import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
+import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
+import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.loot.conditions.AetherLootConditions;
+import com.gildedgames.aether.loot.functions.AetherLootFunctions;
+import com.gildedgames.aether.loot.modifiers.AetherLootModifiers;
+import com.gildedgames.aether.recipe.AetherRecipeSerializers;
+import com.gildedgames.aether.data.resources.AetherBiomes;
+import com.gildedgames.aether.data.resources.AetherDimensions;
+import com.gildedgames.aether.data.resources.AetherNoiseGeneratorSettings;
+import com.gildedgames.aether.recipe.AetherRecipeTypes;
+import com.gildedgames.aether.world.AetherPOI;
+import com.gildedgames.aether.world.foliageplacer.AetherFoliagePlacerTypes;
+import com.gildedgames.aether.data.resources.AetherConfiguredFeatures;
+import com.gildedgames.aether.world.feature.AetherFeatures;
+import com.gildedgames.aether.data.resources.AetherPlacedFeatures;
+import com.gildedgames.aether.world.placementmodifier.AetherPlacementModifiers;
+import com.gildedgames.aether.network.AetherPacketHandler;
+import com.gildedgames.aether.client.CombinedResourcePack;
+import com.gildedgames.aether.api.SunAltarWhitelist;
+import com.gildedgames.aether.api.TriviaGenerator;
+import com.gildedgames.aether.world.treedecorator.AetherTreeDecoratorTypes;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -63,7 +85,7 @@ public class Aether
     public static final Logger LOGGER = LogManager.getLogger();
     public static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve("aether");
 
-    public static TriviaReader TRIVIA_READER;
+    public static TriviaGenerator TRIVIA_READER;
 
     public Aether() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -78,17 +100,17 @@ public class Aether
                 AetherItems.ITEMS,
                 AetherEntityTypes.ENTITIES,
                 AetherBlockEntityTypes.BLOCK_ENTITIES,
-                AetherContainerTypes.CONTAINERS,
+                AetherMenuTypes.MENU_TYPES,
                 AetherEffects.EFFECTS,
                 AetherParticleTypes.PARTICLES,
                 AetherFeatures.FEATURES,
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
                 AetherTreeDecoratorTypes.TREE_DECORATORS,
                 AetherPOI.POI,
-                AetherRecipes.RecipeTypes.RECIPE_TYPES,
-                AetherRecipes.RECIPE_SERIALIZERS,
-                AetherLoot.LOOT_FUNCTION_TYPES,
-                AetherLoot.LOOT_CONDITION_TYPES,
+                AetherRecipeTypes.RECIPE_TYPES,
+                AetherRecipeSerializers.RECIPE_SERIALIZERS,
+                AetherLootFunctions.LOOT_FUNCTION_TYPES,
+                AetherLootConditions.LOOT_CONDITION_TYPES,
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherSoundEvents.SOUNDS
         };
@@ -103,15 +125,15 @@ public class Aether
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
 
-        TRIVIA_READER = new TriviaReader();
+        TRIVIA_READER = new TriviaGenerator();
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
         AetherItems.registerAbilities();
         AetherPacketHandler.register();
 
-        AetherAdvancements.init();
-        PlacementModifiers.init();
+        AetherAdvancementTriggers.init();
+        AetherPlacementModifiers.init();
         AetherRecipeBookTypes.init();
 
         SunAltarWhitelist.initialize();

@@ -1,11 +1,11 @@
 package com.gildedgames.aether.client.gui.screen;
 
-import com.gildedgames.aether.client.gui.button.NpcDialogueComponent;
-import com.gildedgames.aether.client.gui.button.PlayerDialogueOption;
-import com.gildedgames.aether.common.entity.monster.dungeon.ValkyrieQueen;
-import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.server.NpcPlayerInteractPacket;
+import com.gildedgames.aether.client.gui.component.NpcDialogueComponent;
+import com.gildedgames.aether.client.gui.component.PlayerDialogueButton;
+import com.gildedgames.aether.entity.monster.dungeon.ValkyrieQueen;
+import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.network.AetherPacketHandler;
+import com.gildedgames.aether.network.packet.server.NpcPlayerInteractPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 
 /**
  * Screen for speaking with the valkyrie queen.
- * @see PlayerDialogueOption
+ * @see PlayerDialogueButton
  */
 @OnlyIn(Dist.CLIENT)
 public class ValkyrieQueenDialogueScreen extends Screen {
@@ -38,29 +38,29 @@ public class ValkyrieQueenDialogueScreen extends Screen {
     @Override
     protected void init() {
         this.addDialogueOptions(
-                new PlayerDialogueOption(buildPlayerDialogue("question"), pButton -> this.finishChat((byte) 0)),
-                new PlayerDialogueOption(buildPlayerDialogue("challenge"), pButton -> {
+                new PlayerDialogueButton(buildPlayerDialogue("question"), pButton -> this.finishChat((byte) 0)),
+                new PlayerDialogueButton(buildPlayerDialogue("challenge"), pButton -> {
                     this.setDialogue(Component.translatable("gui.aether.queen.dialog.challenge"));
-                    PlayerDialogueOption option;
+                    PlayerDialogueButton option;
                     int count = this.minecraft.player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get());
                     if (count >= 10) {
-                        option = new PlayerDialogueOption(buildPlayerDialogue("have_medals"), button -> this.finishChat((byte) 1));
+                        option = new PlayerDialogueButton(buildPlayerDialogue("have_medals"), button -> this.finishChat((byte) 1));
                     } else {
-                        option = new PlayerDialogueOption(buildPlayerDialogue("no_medals").append(" (" + count + "/10)"), button -> this.finishChat((byte) 1));
+                        option = new PlayerDialogueButton(buildPlayerDialogue("no_medals").append(" (" + count + "/10)"), button -> this.finishChat((byte) 1));
                     }
                     this.addDialogueOptions(
                             option,
-                            new PlayerDialogueOption(buildPlayerDialogue("deny_fight"), button -> this.finishChat((byte) 2))
+                            new PlayerDialogueButton(buildPlayerDialogue("deny_fight"), button -> this.finishChat((byte) 2))
                     );
                 }),
-                new PlayerDialogueOption(buildPlayerDialogue("leave"), pButton -> this.finishChat((byte) 3))
+                new PlayerDialogueButton(buildPlayerDialogue("leave"), pButton -> this.finishChat((byte) 3))
         );
         this.positionDialogueOptions();
     }
 
     /**
      * Sends an NPC interaction to the server.
-     * @see com.gildedgames.aether.core.network.packet.server.NpcPlayerInteractPacket
+     * @see NpcPlayerInteractPacket
      * @see ValkyrieQueen#handleNpcInteraction(Player, byte)
      * @param interactionID - A code for which interaction was performed on the client.
      *                      0 - What can you tell me about this place?
@@ -88,9 +88,9 @@ public class ValkyrieQueenDialogueScreen extends Screen {
     /**
      * Adds and repositions a new set of dialogue options.
      */
-    public void addDialogueOptions(PlayerDialogueOption... options) {
+    public void addDialogueOptions(PlayerDialogueButton... options) {
         this.clearWidgets();
-        for (PlayerDialogueOption option : options) {
+        for (PlayerDialogueButton option : options) {
             this.addRenderableWidget(option);
         }
         this.positionDialogueOptions();
@@ -100,7 +100,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
         this.dialogue.reposition(this.width, this.height);
         int lineNumber = this.dialogue.height / 12 + 1;
         for (Widget widget : this.renderables) {
-            if (widget instanceof PlayerDialogueOption option) {
+            if (widget instanceof PlayerDialogueButton option) {
                 option.x = this.width / 2 - option.getWidth() / 2;
                 option.y = this.height / 2 + 12 * lineNumber;
                 lineNumber++;

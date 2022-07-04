@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
-import com.gildedgames.aether.core.AetherConfig;
+import com.gildedgames.aether.AetherConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.player.LocalPlayer;

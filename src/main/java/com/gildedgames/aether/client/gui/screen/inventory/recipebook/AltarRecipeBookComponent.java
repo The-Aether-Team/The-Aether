@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.gui.screen.inventory.recipebook;
 
-import com.gildedgames.aether.common.block.entity.AltarBlockEntity;
+import com.gildedgames.aether.blockentity.AltarBlockEntity;
 import net.minecraft.client.gui.screens.recipebook.AbstractFurnaceRecipeBookComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;

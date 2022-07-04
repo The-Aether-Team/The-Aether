@@ -1,10 +1,10 @@
 package com.gildedgames.aether.client.renderer.player.layer;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherModelLayers;
+import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.ValkyrieWingsModel;
-import com.gildedgames.aether.core.capability.player.AetherPlayer;
-import com.gildedgames.aether.core.util.EquipmentUtil;
+import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.util.EquipmentUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.PlayerModel;

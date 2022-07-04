@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.player.layer;
 
-import com.gildedgames.aether.core.capability.rankings.AetherRankings;
-import com.gildedgames.aether.core.registry.AetherPlayerRankings;
+import com.gildedgames.aether.capability.rankings.AetherRankings;
+import com.gildedgames.aether.api.AetherPlayerRankings;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.PlayerModel;

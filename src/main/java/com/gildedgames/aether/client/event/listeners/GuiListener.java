@@ -2,7 +2,7 @@ package com.gildedgames.aether.client.event.listeners;
 
 import com.gildedgames.aether.client.AetherMusicManager;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
-import com.gildedgames.aether.client.gui.button.AccessoryButton;
+import com.gildedgames.aether.client.gui.component.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 

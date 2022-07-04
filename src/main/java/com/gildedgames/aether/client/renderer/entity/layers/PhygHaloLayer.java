@@ -2,7 +2,7 @@ package com.gildedgames.aether.client.renderer.entity.layers;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.model.HaloModel;
-import com.gildedgames.aether.common.entity.passive.Phyg;
+import com.gildedgames.aether.entity.passive.Phyg;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.PigModel;

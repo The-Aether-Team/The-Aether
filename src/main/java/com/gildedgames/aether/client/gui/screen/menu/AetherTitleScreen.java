@@ -1,10 +1,10 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.gui.button.AetherMenuButton;
-import com.gildedgames.aether.client.gui.button.DynamicMenuButton;
-import com.gildedgames.aether.client.registry.AetherSoundEvents;
-import com.gildedgames.aether.core.AetherConfig;
+import com.gildedgames.aether.client.gui.component.AetherMenuButton;
+import com.gildedgames.aether.client.gui.component.DynamicMenuButton;
+import com.gildedgames.aether.client.AetherSoundEvents;
+import com.gildedgames.aether.AetherConfig;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;

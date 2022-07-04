@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
-import com.gildedgames.aether.core.AetherConfig;
+import com.gildedgames.aether.AetherConfig;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;

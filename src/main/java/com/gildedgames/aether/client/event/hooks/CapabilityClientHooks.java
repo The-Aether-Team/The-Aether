@@ -1,11 +1,11 @@
 package com.gildedgames.aether.client.event.hooks;
 
-import com.gildedgames.aether.client.registry.AetherKeys;
-import com.gildedgames.aether.core.capability.player.AetherPlayer;
-import com.gildedgames.aether.core.network.AetherPacketHandler;
-import com.gildedgames.aether.core.network.packet.server.HittingPacket;
-import com.gildedgames.aether.core.network.packet.server.JumpPacket;
-import com.gildedgames.aether.core.network.packet.server.MovementPacket;
+import com.gildedgames.aether.client.AetherKeys;
+import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.network.AetherPacketHandler;
+import com.gildedgames.aether.network.packet.server.HittingPacket;
+import com.gildedgames.aether.network.packet.server.JumpPacket;
+import com.gildedgames.aether.network.packet.server.MovementPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.Input;
 import net.minecraft.world.entity.player.Player;

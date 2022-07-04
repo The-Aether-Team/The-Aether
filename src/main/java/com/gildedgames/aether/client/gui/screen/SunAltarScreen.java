@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.gui.screen;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.gui.button.SunAltarSlider;
+import com.gildedgames.aether.client.gui.component.SunAltarSlider;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 
 @OnlyIn(Dist.CLIENT)
 public class SunAltarScreen extends Screen {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/container/sun_altar.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/sun_altar.png");
 
     public SunAltarScreen(Component title) {
         super(title);
@@ -33,8 +33,8 @@ public class SunAltarScreen extends Screen {
         this.renderBackground(pPoseStack);
         RenderSystem.setShaderTexture(0, TEXTURE);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        int xSize = 175;
-        int ySize = 78;
+        int xSize = 176;
+        int ySize = 79;
         int x = (this.width - xSize) / 2;
         int y = (this.height - ySize) / 2;
         this.blit(pPoseStack, x, y, 0, 0, xSize, ySize);

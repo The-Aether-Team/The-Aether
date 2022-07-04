@@ -1,12 +1,12 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherModelLayers;
+import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.PhygHaloLayer;
 import com.gildedgames.aether.client.renderer.entity.layers.QuadrupedWingsLayer;
 import com.gildedgames.aether.client.renderer.entity.model.QuadrupedWingsModel;
 import com.gildedgames.aether.client.renderer.entity.model.HaloModel;
-import com.gildedgames.aether.common.entity.passive.Phyg;
+import com.gildedgames.aether.entity.passive.Phyg;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;

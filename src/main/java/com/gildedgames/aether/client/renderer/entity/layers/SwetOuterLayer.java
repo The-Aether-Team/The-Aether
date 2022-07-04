@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.entity.layers;
 
-import com.gildedgames.aether.common.entity.monster.Swet;
+import com.gildedgames.aether.entity.monster.Swet;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

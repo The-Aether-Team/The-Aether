@@ -1,10 +1,10 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherModelLayers;
+import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.ZephyrTransparencyLayer;
 import com.gildedgames.aether.client.renderer.entity.model.*;
-import com.gildedgames.aether.common.entity.monster.Zephyr;
+import com.gildedgames.aether.entity.monster.Zephyr;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.model.EntityModel;

@@ -1,16 +1,16 @@
 package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.api.CustomizationsOptions;
 import com.gildedgames.aether.client.gui.screen.SunAltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
-import com.gildedgames.aether.client.registry.*;
-import com.gildedgames.aether.client.world.AetherSkyRenderInfo;
-import com.gildedgames.aether.common.item.miscellaneous.MoaEggItem;
-import com.gildedgames.aether.common.registry.AetherContainerTypes;
-import com.gildedgames.aether.common.registry.worldgen.AetherDimensions;
+import com.gildedgames.aether.client.renderer.AetherOverlays;
+import com.gildedgames.aether.client.renderer.AetherRenderers;
+import com.gildedgames.aether.client.renderer.level.AetherSkyRenderInfo;
+import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
+import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
 
-import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.util.AetherCustomizations;
+import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -28,7 +28,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class AetherClient {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
-        AetherCustomizations.initialize();
+        CustomizationsOptions.initialize();
         DimensionSpecialEffects.EFFECTS.put(new ResourceLocation(Aether.MODID, "the_aether"), new AetherSkyRenderInfo());
         AetherKeys.registerKeys();
         AetherOverlays.registerOverlays();
@@ -44,11 +44,11 @@ public class AetherClient {
     }
 
     public static void registerGuiFactories() {
-        MenuScreens.register(AetherContainerTypes.ACCESSORIES.get(), AccessoriesScreen::new);
-        MenuScreens.register(AetherContainerTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
-        MenuScreens.register(AetherContainerTypes.ALTAR.get(), AltarScreen::new);
-        MenuScreens.register(AetherContainerTypes.FREEZER.get(), FreezerScreen::new);
-        MenuScreens.register(AetherContainerTypes.INCUBATOR.get(), IncubatorScreen::new);
+        MenuScreens.register(AetherMenuTypes.ACCESSORIES.get(), AccessoriesScreen::new);
+        MenuScreens.register(AetherMenuTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
+        MenuScreens.register(AetherMenuTypes.ALTAR.get(), AltarScreen::new);
+        MenuScreens.register(AetherMenuTypes.FREEZER.get(), FreezerScreen::new);
+        MenuScreens.register(AetherMenuTypes.INCUBATOR.get(), IncubatorScreen::new);
     }
 
     public static void registerItemModelProperties() {

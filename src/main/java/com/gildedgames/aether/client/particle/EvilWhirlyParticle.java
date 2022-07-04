@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.particle;
 
-import com.gildedgames.aether.common.entity.monster.EvilWhirlwind;
+import com.gildedgames.aether.entity.monster.EvilWhirlwind;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.Camera;

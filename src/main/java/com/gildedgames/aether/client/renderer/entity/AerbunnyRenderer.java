@@ -1,9 +1,9 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherModelLayers;
+import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.AerbunnyModel;
-import com.gildedgames.aether.common.entity.passive.Aerbunny;
+import com.gildedgames.aether.entity.passive.Aerbunny;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

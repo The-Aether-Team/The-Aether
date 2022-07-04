@@ -1,10 +1,10 @@
 package com.gildedgames.aether.client.renderer.accessory;
 
-import com.gildedgames.aether.client.registry.AetherModelLayers;
-import com.gildedgames.aether.common.item.accessories.miscellaneous.ShieldOfRepulsionItem;
-import com.gildedgames.aether.common.registry.AetherItems;
-import com.gildedgames.aether.core.capability.player.AetherPlayer;
-import com.gildedgames.aether.core.util.ConstantsUtil;
+import com.gildedgames.aether.client.renderer.AetherModelLayers;
+import com.gildedgames.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
+import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.util.ConstantsUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

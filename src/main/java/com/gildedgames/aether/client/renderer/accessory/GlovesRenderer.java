@@ -1,9 +1,9 @@
 package com.gildedgames.aether.client.renderer.accessory;
 
-import com.gildedgames.aether.client.registry.AetherModelLayers;
+import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
-import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
-import com.gildedgames.aether.core.capability.rankings.AetherRankings;
+import com.gildedgames.aether.item.accessories.gloves.GlovesItem;
+import com.gildedgames.aether.capability.rankings.AetherRankings;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

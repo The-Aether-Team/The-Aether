@@ -1,10 +1,10 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.registry.AetherModelLayers;
+import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.layers.CockatriceMarkingsLayer;
 import com.gildedgames.aether.client.renderer.entity.model.CockatriceModel;
-import com.gildedgames.aether.common.entity.monster.Cockatrice;
+import com.gildedgames.aether.entity.monster.Cockatrice;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.renderer.MultiBufferSource;

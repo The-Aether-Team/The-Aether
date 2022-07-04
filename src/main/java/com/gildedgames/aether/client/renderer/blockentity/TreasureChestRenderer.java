@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.renderer.blockentity;
 
-import com.gildedgames.aether.client.registry.AetherAtlases;
+import com.gildedgames.aether.client.AetherAtlases;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.renderer.blockentity.ChestRenderer;

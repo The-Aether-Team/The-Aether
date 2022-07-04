@@ -2,12 +2,11 @@ package com.gildedgames.aether.client.gui.screen.inventory;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.perks.AetherCustomizationsScreen;
-import com.gildedgames.aether.client.registry.AetherKeys;
-import com.gildedgames.aether.common.inventory.container.AccessoriesMenu;
+import com.gildedgames.aether.client.AetherKeys;
+import com.gildedgames.aether.inventory.menu.AccessoriesMenu;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;

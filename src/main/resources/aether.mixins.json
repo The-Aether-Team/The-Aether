@@ -1,9 +1,9 @@
 {
   "required": true,
-  "package": "com.gildedgames.aether.core.mixin.mixins",
+  "package": "com.gildedgames.aether.mixin.mixins",
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_17",
-  "plugin": "com.gildedgames.aether.core.mixin.AetherMixinPlugin",
+  "plugin": "com.gildedgames.aether.mixin.AetherMixinPlugin",
   "refmap": "aether.refmap.json",
   "mixins": [
     "common.AbstractArrowMixin",

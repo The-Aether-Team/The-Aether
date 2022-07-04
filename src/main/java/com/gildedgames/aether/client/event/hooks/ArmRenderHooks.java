@@ -2,8 +2,8 @@ package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.client.renderer.accessory.GlovesRenderer;
 import com.gildedgames.aether.client.renderer.accessory.ShieldOfRepulsionRenderer;
-import com.gildedgames.aether.common.item.accessories.gloves.GlovesItem;
-import com.gildedgames.aether.common.item.accessories.miscellaneous.ShieldOfRepulsionItem;
+import com.gildedgames.aether.item.accessories.gloves.GlovesItem;
+import com.gildedgames.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;

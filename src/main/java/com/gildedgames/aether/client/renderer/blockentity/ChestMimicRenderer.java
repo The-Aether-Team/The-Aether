@@ -1,8 +1,8 @@
 package com.gildedgames.aether.client.renderer.blockentity;
 
-import com.gildedgames.aether.client.registry.AetherModelLayers;
-import com.gildedgames.aether.common.registry.AetherBlocks;
-import com.gildedgames.aether.common.block.dungeon.ChestMimicBlock;
+import com.gildedgames.aether.client.renderer.AetherModelLayers;
+import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.block.dungeon.ChestMimicBlock;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
