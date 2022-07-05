@@ -57,7 +57,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
         super(type, level);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
         this.bossFight.setVisible(false);
-        this.xpReward = 50;
+        this.xpReward = XP_REWARD_BOSS;
     }
 
     /**
@@ -113,6 +113,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     public void customServerAiStep() {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
+        if (this.getTarget() == null) {
+            this.bossFight.setVisible(false);
+        }
     }
 
     /**
@@ -141,7 +144,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
         boolean flag = this.isReady() && super.hurt(source, pDamageAmount);
         if (!this.level.isClientSide && source.getEntity() instanceof Player player) {
-            if (this.getTarget() == null && flag && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
+            if (!this.bossFight.isVisible() && flag && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0 && !player.isCreative()) {
                 this.bossFight.setVisible(true);
                 chatItUp(player, Component.translatable("gui.aether.queen.dialog.fight"));
             }
@@ -295,7 +298,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
                             if (count <= 0) break;
                         }
                     } else {
-                        this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.challenge"));
+                        this.chatItUp(player, Component.translatable("queen.dialog.no_medals"));
                     }
                 }
                 break;
