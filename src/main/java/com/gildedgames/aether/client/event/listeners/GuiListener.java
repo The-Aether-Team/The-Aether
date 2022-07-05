@@ -13,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.components.LerpingBossEvent;
+import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -61,34 +62,36 @@ public class GuiListener {
 	@SubscribeEvent
 	public static void onGuiInitialize(ScreenEvent.InitScreenEvent.Post event) {
 		Screen screen = event.getScreen();
+		if (screen instanceof TitleScreen titleScreen) {
+			GuiHooks.setSplashText(titleScreen);
 
-		Button toggleWorldButton = GuiHooks.setupToggleWorldButton(screen);
-		if (toggleWorldButton != null) {
-			event.addListener(toggleWorldButton);
+			Button toggleWorldButton = GuiHooks.setupToggleWorldButton(screen);
+			if (toggleWorldButton != null) {
+				event.addListener(toggleWorldButton);
+			}
+
+			Button menuSwitchButton = GuiHooks.setupMenuSwitchButton(screen);
+			if (menuSwitchButton != null) {
+				event.addListener(menuSwitchButton);
+			}
+
+			Button quickLoadButton = GuiHooks.setupQuickLoadButton(screen);
+			if (quickLoadButton != null) {
+				event.addListener(quickLoadButton);
+			}
+			GuiHooks.setMenuAlignment();
+		} else {
+			Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
+			AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButtonWithinInventories(screen, offsets);
+			if (inventoryAccessoryButton != null) {
+				event.addListener(inventoryAccessoryButton);
+			}
+
+			AccessoryButton accessoryMenuAccessoryButton = GuiHooks.setupAccessoryButtonWithinAccessoryMenu(screen, offsets);
+			if (accessoryMenuAccessoryButton != null) {
+				event.addListener(accessoryMenuAccessoryButton);
+			}
 		}
-
-		Button menuSwitchButton = GuiHooks.setupMenuSwitchButton(screen);
-		if (menuSwitchButton != null) {
-			event.addListener(menuSwitchButton);
-		}
-
-        Button quickLoadButton = GuiHooks.setupQuickLoadButton(screen);
-        if (quickLoadButton != null) {
-            event.addListener(quickLoadButton);
-        }
-
-		Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
-		AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButtonWithinInventories(screen, offsets);
-		if (inventoryAccessoryButton != null) {
-			event.addListener(inventoryAccessoryButton);
-		}
-
-		AccessoryButton accessoryMenuAccessoryButton = GuiHooks.setupAccessoryButtonWithinAccessoryMenu(screen, offsets);
-		if (accessoryMenuAccessoryButton != null) {
-			event.addListener(accessoryMenuAccessoryButton);
-		}
-
-		GuiHooks.setMenuAlignment();
 	}
 
 	@SubscribeEvent
