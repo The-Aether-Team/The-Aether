@@ -161,18 +161,19 @@ public class Swet extends MountableAnimal {
 
     @Nullable
     @Override
-    public Entity getControllingPassenger() {
-        if (this.getFirstPassenger() instanceof LivingEntity passenger && this.isFriendlyTowardEntity(passenger)) {
-            return passenger;
+    public LivingEntity getControllingPassenger() {
+        if (this.getFirstPassenger() instanceof LivingEntity livingEntity && this.isFriendlyTowardEntity(livingEntity)) {
+            return livingEntity;
         }
         return null;
     }
 
     @Override
     public void travel(@Nonnull Vec3 vector3d) {
+        super.travel(vector3d);
         if (this.isAlive()) {
-            super.travel(vector3d);
-            if (this.isVehicle() && this.isControlledByLocalInstance() && this.getControllingPassenger() instanceof Player) {
+            LivingEntity entity = this.getControllingPassenger();
+            if (this.isVehicle() && entity != null) {
                 if (this.onGround && !this.getPlayerJumped() && (this.getDeltaMovement().x != 0 || this.getDeltaMovement().z != 0)) {
                     this.setDeltaMovement(this.getDeltaMovement().x(), 0.42F, this.getDeltaMovement().z);
                 }
@@ -256,7 +257,7 @@ public class Swet extends MountableAnimal {
     }
 
     public boolean isFriendly() {
-        return this.hasPrey() && this.getPassengers().get(0) instanceof LivingEntity livingEntity && isFriendlyTowardEntity(livingEntity);
+        return this.getControllingPassenger() != null;
     }
 
     public int getJumpDelay() {
@@ -307,11 +308,6 @@ public class Swet extends MountableAnimal {
     @Override
     public float getJumpPower() {
         return 0.5F;
-    }
-
-    @Override
-    public boolean isControlledByLocalInstance() {
-        return this.isFriendly();
     }
 
     @Override
