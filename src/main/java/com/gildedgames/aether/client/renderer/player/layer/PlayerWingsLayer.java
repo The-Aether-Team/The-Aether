@@ -43,14 +43,14 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
     private void handleWingRotation(AetherPlayer aetherPlayer) {
         if (EquipmentUtil.hasFullValkyrieSet(aetherPlayer.getPlayer())) {
             if (!aetherPlayer.getPlayer().isOnGround() && (aetherPlayer.getPlayer().getFirstPassenger() != null && !aetherPlayer.getPlayer().getFirstPassenger().isOnGround())) {
-                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.75F / 4.0F));
+                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.75F / 20.0F));
             } else {
-                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.15F / 4.0F));
+                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.15F / 20.0F));
             }
             if (aetherPlayer.getWingRotation() > (Math.PI * 2.0F)) {
                 aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() - ((float) Math.PI * 2.0F));
             } else {
-                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.1F / 4.0F));
+                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.1F / 20.0F));
             }
         } else {
             aetherPlayer.setWingRotation(0.0F);
@@ -63,7 +63,7 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
         this.wings.leftWing.yRot = -0.4F;
         this.wings.leftWing.zRot = -0.125F;
 
-        if (entity.isShiftKeyDown()) {
+        if (entity.isCrouching()) {
             this.wings.rightWing.xRot = 0.45F;
             this.wings.rightWing.y = 3.33F;
             this.wings.rightWing.z = 3.388F;
