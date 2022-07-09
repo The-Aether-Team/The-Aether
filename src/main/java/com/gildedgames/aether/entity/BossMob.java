@@ -10,4 +10,7 @@ public interface BossMob {
     TargetingConditions NON_COMBAT = TargetingConditions.forNonCombat();
     Component getBossName();
     void setBossName(Component component);
+
+    boolean isBossFight();
+    void setBossFight(boolean isFighting);
 }

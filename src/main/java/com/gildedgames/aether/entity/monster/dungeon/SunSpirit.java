@@ -174,6 +174,16 @@ public class SunSpirit extends Monster implements BossMob {
     }
 
     @Override
+    public boolean isBossFight() {
+        return this.bossFight.isVisible();
+    }
+
+    @Override
+    public void setBossFight(boolean isFighting) {
+        this.bossFight.setVisible(isFighting);
+    }
+
+    @Override
     protected SoundEvent getHurtSound(@Nonnull DamageSource pDamageSource) {
         return null;
     }
