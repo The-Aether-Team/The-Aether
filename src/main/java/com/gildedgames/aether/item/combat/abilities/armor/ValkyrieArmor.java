@@ -10,7 +10,7 @@ import net.minecraft.world.phys.Vec3;
 public interface ValkyrieArmor {
     static void handleFlight(LivingEntity entity) {
         if (EquipmentUtil.hasFullValkyrieSet(entity)) {
-            if (entity instanceof Player player) {
+            if (entity instanceof Player player && !player.getAbilities().flying) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     Vec3 deltaMovement = player.getDeltaMovement();
                     if (!player.level.isClientSide()) {

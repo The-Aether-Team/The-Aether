@@ -82,7 +82,7 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
         float rotVal = bipedBird.getPrevWingRotation() + (bipedBird.getWingRotation() - bipedBird.getPrevWingRotation());
         float destVal = bipedBird.getPrevDestPos() + (bipedBird.getDestPos() - bipedBird.getPrevDestPos());
 
-        this.rightWing.yRot = (Mth.sin(rotVal * 0.225F) + 1.0F) * destVal;
+        this.rightWing.yRot = (Mth.sin(rotVal * 0.045F) + 1.0F) * destVal;
         this.leftWing.yRot = -this.rightWing.yRot;
     }
 

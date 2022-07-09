@@ -48,7 +48,7 @@ public interface FreezingBehavior<T>
         for (int x = (int) radius; x >= 0; x--) {
             boolean firstXZ = true;
 
-            for (int z = (int) radius; z > 0; z--) {
+            for (int z = (int) radius; z >= 0; z--) {
                 int xzLengthSq = x * x + z * z;
 
                 if (xzLengthSq > radiusSq) continue;
@@ -57,7 +57,7 @@ public interface FreezingBehavior<T>
                 firstXZ = false;
 
                 boolean firstY = true;
-                for (int y = (int) radius; y > 0; y--) {
+                for (int y = (int) radius; y >= 0; y--) {
 
                     if (xzLengthSq + y * y > radiusSq) continue;
 
