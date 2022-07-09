@@ -32,6 +32,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class GuiHooks {
     public static final ResourceLocation BACKGROUND_LOCATION = new ResourceLocation(Aether.MODID, "textures/gui/options_background.png");
     public static ResourceLocation OLD_LOCATION;
@@ -174,6 +177,17 @@ public class GuiHooks {
             return dynamicMenuButton;
         }
         return null;
+    }
+
+    /**
+     * If the current date is July 22nd, displays the Aether's anniversary splash text.
+     */
+    public static void setSplashText(TitleScreen screen) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        if (calendar.get(Calendar.MONTH) + 1 == 7 && calendar.get(Calendar.DATE) == 22) {
+            screen.splash = "Happy anniversary to the Aether!";
+        }
     }
 
     public static TitleScreen getMenu() {

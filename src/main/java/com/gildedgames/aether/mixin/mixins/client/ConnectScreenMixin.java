@@ -15,6 +15,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ConnectScreen.class)
 public class ConnectScreenMixin {
+    /**
+     * Prevents a deadlock when connecting to servers with the world preview.
+     * @see net.minecraftforge.client.event.ClientPlayerNetworkEvent.LoggedOutEvent for a possible alternative method.
+     */
     @Inject(at = @At(value = "HEAD"), method = "startConnecting")
     private static void startConnecting(Screen screen, Minecraft minecraft, ServerAddress serverAddress, ServerData serverData, CallbackInfo ci) {
         if (AetherWorldDisplayHelper.loadedLevel != null && AetherWorldDisplayHelper.loadedSummary != null) {
