@@ -321,6 +321,7 @@
   "gui.aether.queen.dialog.deny_fight": "So be it then. Goodbye adventurer.",
   "gui.aether.queen.dialog.fight": "This will be your final battle!",
   "gui.aether.queen.dialog.goodbye": "Goodbye adventurer.",
+  "gui.aether.queen.dialog.no_medals": "Take your time.",
   "gui.aether.queen.dialog.peaceful": "Sorry, I don't fight with weaklings.",
   "gui.aether.queen.dialog.playerdeath": "As expected of a human.",
   "gui.aether.queen.dialog.ready": "If you wish to challenge me, strike at any time.",

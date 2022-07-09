@@ -618,6 +618,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("queen.dialog.deny_fight", "So be it then. Goodbye adventurer.");
         addGuiText("queen.dialog.fight", "This will be your final battle!");
         addGuiText("queen.dialog.goodbye", "Goodbye adventurer.");
+        addGuiText("queen.dialog.no_medals", "Take your time.");
         addGuiText("queen.dialog.peaceful", "Sorry, I don't fight with weaklings.");
         addGuiText("queen.dialog.playerdeath", "As expected of a human.");
         addGuiText("queen.dialog.ready", "If you wish to challenge me, strike at any time.");

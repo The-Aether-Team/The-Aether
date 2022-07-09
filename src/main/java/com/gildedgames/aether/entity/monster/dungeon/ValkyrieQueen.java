@@ -30,6 +30,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -57,7 +58,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
         super(type, level);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
         this.bossFight.setVisible(false);
-        this.xpReward = 50;
+        this.xpReward = XP_REWARD_BOSS;
     }
 
     /**
@@ -75,6 +76,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
         super.registerGoals();
         this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));
         this.goalSelector.addGoal(2, new ThunderCrystalAttackGoal(this, 450, 28.0F));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, livingEntity -> this.isBossFight()));
     }
 
     @Nonnull
@@ -95,18 +97,20 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean("Ready", this.isReady());
         tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
+        tag.putBoolean("BossFight", this.isBossFight());
+        tag.putBoolean("Ready", this.isReady());
     }
 
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.setReady(tag.getBoolean("Ready"));
         Component name = Component.Serializer.fromJson(tag.getString("BossName"));
         if (name != null) {
             this.setBossName(name);
         }
+        this.setBossFight(tag.getBoolean("BossFight"));
+        this.setReady(tag.getBoolean("Ready"));
     }
 
     @Override
@@ -141,8 +145,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
         boolean flag = this.isReady() && super.hurt(source, pDamageAmount);
         if (!this.level.isClientSide && source.getEntity() instanceof Player player) {
-            if (this.getTarget() == null && flag && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
-                this.bossFight.setVisible(true);
+            if (!this.isBossFight() && flag && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
+                this.setBossFight(true);
                 chatItUp(player, Component.translatable("gui.aether.queen.dialog.fight"));
             }
         }
@@ -242,6 +246,16 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     }
 
     @Override
+    public boolean isBossFight() {
+        return this.bossFight.isVisible();
+    }
+
+    @Override
+    public void setBossFight(boolean isFighting) {
+        this.bossFight.setVisible(isFighting);
+    }
+
+    @Override
     protected SoundEvent getHurtSound(@Nonnull DamageSource pDamageSource) {
         return AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_HURT.get();
     }
@@ -295,7 +309,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
                             if (count <= 0) break;
                         }
                     } else {
-                        this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.challenge"));
+                        this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.no_medals"));
                     }
                 }
                 break;
