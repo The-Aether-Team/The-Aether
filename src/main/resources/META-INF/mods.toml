@@ -16,7 +16,7 @@ description = '''
 [[dependencies.aether]]
     modId = "forge"
     mandatory = true
-    versionRange = "[41.0.61,)"
+    versionRange = "[41.0.91,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.aether]]
