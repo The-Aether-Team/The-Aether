@@ -19,13 +19,13 @@ public class AetherPlayerClientListener {
     }
 
     @SubscribeEvent
-    public static void onClick(InputEvent.MouseInputEvent event) {
+    public static void onClick(InputEvent.MouseButton.Post event) {
         int button = event.getButton();
         CapabilityClientHooks.AetherPlayerHooks.mouseInput(button);
     }
 
     @SubscribeEvent
-    public static void onClick(InputEvent.KeyInputEvent event) {
+    public static void onClick(InputEvent.Key event) {
         int key = event.getKey();
         CapabilityClientHooks.AetherPlayerHooks.keyInput(key);
     }

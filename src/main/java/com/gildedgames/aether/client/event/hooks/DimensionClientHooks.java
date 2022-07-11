@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.event.hooks;
 
-import com.gildedgames.aether.client.renderer.level.AetherSkyRenderInfo;
+import com.gildedgames.aether.client.renderer.level.AetherSkyRenderEffects;
 import com.gildedgames.aether.data.resources.AetherDimensions;
 import com.gildedgames.aether.capability.time.AetherTime;
 import net.minecraft.client.Camera;
@@ -14,7 +14,7 @@ import org.apache.commons.lang3.tuple.Triple;
 public class DimensionClientHooks {
     public static Float renderNearFog(Camera camera, FogRenderer.FogMode mode, float far) {
         if (camera.getEntity().level instanceof ClientLevel clientLevel) {
-            if (clientLevel.effects() instanceof AetherSkyRenderInfo) {
+            if (clientLevel.effects() instanceof AetherSkyRenderEffects) {
                 FogType fluidState = camera.getFluidInCamera();
                 if (mode == FogRenderer.FogMode.FOG_TERRAIN && fluidState == FogType.NONE) {
                     return far / 2.0F;
@@ -26,7 +26,7 @@ public class DimensionClientHooks {
 
     public static Triple<Float, Float, Float> renderFogColors(Camera camera, float red, float green, float blue) {
         if (camera.getEntity().level instanceof ClientLevel clientLevel) {
-            if (clientLevel.effects() instanceof AetherSkyRenderInfo) {
+            if (clientLevel.effects() instanceof AetherSkyRenderEffects) {
                 ClientLevel.ClientLevelData worldInfo = clientLevel.getLevelData();
                 double d0 = (camera.getPosition().y - (double) clientLevel.getMinBuildHeight()) * worldInfo.getClearColorScale();
                 FogType fluidState = camera.getFluidInCamera();

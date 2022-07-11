@@ -331,7 +331,7 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemWallBlock(AetherBlocks.MOSSY_HOLYSTONE_WALL, AetherBlocks.MOSSY_HOLYSTONE, "natural/");
         itemWallBlock(AetherBlocks.ICESTONE_WALL, AetherBlocks.ICESTONE, "natural/");
         itemWallBlock(AetherBlocks.HOLYSTONE_BRICK_WALL, AetherBlocks.HOLYSTONE_BRICKS, "construction/");
-        itemWallBlock(AetherBlocks.AEROGEL_WALL, AetherBlocks.AEROGEL, "construction/");
+        translucentItemWallBlock(AetherBlocks.AEROGEL_WALL, AetherBlocks.AEROGEL, "construction/");
 
         itemBlock(AetherBlocks.SKYROOT_STAIRS);
         itemBlock(AetherBlocks.CARVED_STAIRS);

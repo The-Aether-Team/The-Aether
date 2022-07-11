@@ -19,10 +19,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.client.event.ScreenOpenEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -40,27 +39,27 @@ public class GuiListener {
 	public static final Set<UUID> BOSS_EVENTS = new HashSet<>();
 
 	@SubscribeEvent
-	public static void onGuiOpen(ScreenOpenEvent event) {
+	public static void onGuiOpen(ScreenEvent.Opening event) {
 		Screen screen = event.getScreen();
 		GuiHooks.drawSentryBackground(screen);
 		GuiHooks.setupWorldPreview(screen);
 		VanillaLeftTitleScreen vanillaLeftTitleScreen = GuiHooks.openLeftDefaultMenu(screen);
 		if (vanillaLeftTitleScreen != null) {
-			event.setScreen(vanillaLeftTitleScreen);
+			event.setNewScreen(vanillaLeftTitleScreen);
 		}
 		AetherTitleScreen aetherMainMenuScreen = GuiHooks.openAetherMenu(screen);
 		if (aetherMainMenuScreen != null) {
-			event.setScreen(aetherMainMenuScreen);
+			event.setNewScreen(aetherMainMenuScreen);
 		}
 		GenericDirtMessageScreen bufferScreen = GuiHooks.openBufferScreen(screen);
 		if (bufferScreen != null) {
-			event.setScreen(bufferScreen);
+			event.setNewScreen(bufferScreen);
 		}
 		GuiHooks.setupSplash(screen);
 	}
 
 	@SubscribeEvent
-	public static void onGuiInitialize(ScreenEvent.InitScreenEvent.Post event) {
+	public static void onGuiInitialize(ScreenEvent.Init.Post event) {
 		Screen screen = event.getScreen();
 		if (screen instanceof TitleScreen titleScreen) {
 			GuiHooks.setSplashText(titleScreen);
@@ -95,7 +94,7 @@ public class GuiListener {
 	}
 
 	@SubscribeEvent
-	public static void onGuiDraw(ScreenEvent.DrawScreenEvent event) {
+	public static void onGuiDraw(ScreenEvent.Render event) {
 		Screen screen = event.getScreen();
 		PoseStack poseStack = event.getPoseStack();
 		Minecraft minecraft = Minecraft.getInstance();
@@ -119,7 +118,7 @@ public class GuiListener {
 	 * Resets the music on respawn.
 	 */
 	@SubscribeEvent
-	public static void onPlayerRespawn(ClientPlayerNetworkEvent.RespawnEvent event) {
+	public static void onPlayerRespawn(ClientPlayerNetworkEvent.Clone event) {
 		AetherMusicManager.stopMusic();
 	}
 
@@ -147,7 +146,7 @@ public class GuiListener {
 	 * Draws the Aether boss bar.
 	 */
 	@SubscribeEvent
-	public static void onRenderBoss(RenderGameOverlayEvent.BossInfo event) {
+	public static void onRenderBoss(CustomizeGuiOverlayEvent.BossEventProgress event) {
 		LerpingBossEvent bossEvent = event.getBossEvent();
 		if (BOSS_EVENTS.contains(bossEvent.getId())) {
 			GuiHooks.drawBossHealthBar(event.getPoseStack(), event.getX(), event.getY(), bossEvent);

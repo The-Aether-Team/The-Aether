@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/wall_inventory",
+  "render_type": "minecraft:translucent",
   "textures": {
     "wall": "aether:block/construction/aerogel"
   }

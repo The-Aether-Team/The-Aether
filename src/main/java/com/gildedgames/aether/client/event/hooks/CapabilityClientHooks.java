@@ -54,8 +54,8 @@ public class CapabilityClientHooks {
             Player player = Minecraft.getInstance().player;
             if (player != null) {
                 AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                    if (input == AetherKeys.gravititeJumpAbility.getKey().getValue()) {
-                        aetherPlayer.setGravititeJumpActive(AetherKeys.gravititeJumpAbility.isDown());
+                    if (input == AetherKeys.GRAVITITE_JUMP_ABILITY.getKey().getValue()) {
+                        aetherPlayer.setGravititeJumpActive(AetherKeys.GRAVITITE_JUMP_ABILITY.isDown());
                     }
                 });
             }

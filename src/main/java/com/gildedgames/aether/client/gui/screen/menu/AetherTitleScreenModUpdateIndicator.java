@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.gui.NotificationModUpdateScreen;
+import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
 import net.minecraftforge.client.loading.ClientModLoader;
 import net.minecraftforge.common.ForgeI18n;
 import net.minecraftforge.fml.ModList;
@@ -12,13 +12,13 @@ import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.fml.loading.FMLConfig;
 import net.minecraftforge.versions.forge.ForgeVersion;
 
-public class AetherNotificationModUpdateScreen extends NotificationModUpdateScreen
+public class AetherTitleScreenModUpdateIndicator extends TitleScreenModUpdateIndicator
 {
 	private static final ResourceLocation VERSION_CHECK_ICONS = new ResourceLocation(ForgeVersion.MOD_ID, "textures/gui/version_check_icons.png");
 	private VersionChecker.Status showNotification = null;
 	private boolean hasCheckedForUpdates = false;
 	
-	public AetherNotificationModUpdateScreen() {
+	public AetherTitleScreenModUpdateIndicator() {
 		super(null);
 	}
 

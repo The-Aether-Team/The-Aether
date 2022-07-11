@@ -2,7 +2,6 @@ package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.loot.modifiers.RemoveSeedsModifier;
-import com.gildedgames.aether.loot.modifiers.AetherLootModifiers;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;
@@ -28,7 +27,7 @@ public class AetherLootModifierData extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
-        add("remove_seeds", AetherLootModifiers.REMOVE_SEEDS.get(), new RemoveSeedsModifier(
+        add("remove_seeds", new RemoveSeedsModifier(
                 new LootItemCondition[] {
                         AlternativeLootItemCondition.alternative(LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.GRASS), LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.TALL_GRASS)).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS)).invert().build()

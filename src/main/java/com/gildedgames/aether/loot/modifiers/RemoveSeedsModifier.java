@@ -2,19 +2,21 @@ package com.gildedgames.aether.loot.modifiers;
 
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.api.DimensionTagTracking;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
 import javax.annotation.Nonnull;
 
 public class RemoveSeedsModifier extends LootModifier {
+    public static final Codec<RemoveSeedsModifier> CODEC = RecordCodecBuilder.create(inst -> LootModifier.codecStart(inst).apply(inst, RemoveSeedsModifier::new));
+
     public RemoveSeedsModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
@@ -28,15 +30,8 @@ public class RemoveSeedsModifier extends LootModifier {
         return generatedLoot;
     }
 
-    public static class Serializer extends GlobalLootModifierSerializer<RemoveSeedsModifier> {
-        @Override
-        public RemoveSeedsModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn) {
-            return new RemoveSeedsModifier(conditionsIn);
-        }
-
-        @Override
-        public JsonObject write(RemoveSeedsModifier instance) {
-            return makeConditions(instance.conditions);
-        }
+    @Override
+    public Codec<? extends IGlobalLootModifier> codec() {
+        return RemoveSeedsModifier.CODEC;
     }
 }

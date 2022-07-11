@@ -23,10 +23,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.gui.OverlayRegistry;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
-@OnlyIn(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD) //todo: verify after refactor
 public class AetherOverlays {
     private static final ResourceLocation TEXTURE_INEBRIATION_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/inebriation_vignette.png");
     private static final ResourceLocation TEXTURE_REMEDY_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/remedy_vignette.png");
@@ -34,8 +35,9 @@ public class AetherOverlays {
     private static final ResourceLocation TEXTURE_COOLDOWN_BAR = new ResourceLocation(Aether.MODID, "textures/gui/cooldown_bar.png");
     private static final ResourceLocation TEXTURE_JUMPS = new ResourceLocation(Aether.MODID, "textures/gui/jumps.png");
 
-    public static void registerOverlays() {
-        OverlayRegistry.registerOverlayTop("Aether Portal Overlay", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+    @SubscribeEvent
+    public static void registerOverlays(RegisterGuiOverlaysEvent event) {
+        event.registerAboveAll("aether_portal_overlay", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -43,7 +45,7 @@ public class AetherOverlays {
                 AetherPlayer.get(player).ifPresent(handler -> renderAetherPortalOverlay(pStack, minecraft, window, handler, partialTicks));
             }
         });
-        OverlayRegistry.registerOverlayTop("Inebriation Vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll("inebriation_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -51,7 +53,7 @@ public class AetherOverlays {
                 AetherPlayer.get(player).ifPresent(handler -> renderInebriationOverlay(pStack, minecraft, window, handler));
             }
         });
-        OverlayRegistry.registerOverlayTop("Remedy Vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll("remedy_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -59,7 +61,7 @@ public class AetherOverlays {
                 AetherPlayer.get(player).ifPresent(handler -> renderRemedyOverlay(pStack, minecraft, window, handler));
             }
         });
-        OverlayRegistry.registerOverlayTop("Shield of Repulsion Vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll("shield_of_repulsion_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -67,7 +69,7 @@ public class AetherOverlays {
                 AetherPlayer.get(player).ifPresent(handler -> renderRepulsionOverlay(pStack, minecraft, window, handler));
             }
         });
-        OverlayRegistry.registerOverlayTop("Hammer Cooldown", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll("hammer_cooldown", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -75,7 +77,7 @@ public class AetherOverlays {
                 renderHammerCooldownOverlay(pStack, minecraft, window, player);
             }
         });
-        OverlayRegistry.registerOverlayTop("Moa Jumps", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll("moa_jumps", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;

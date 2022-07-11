@@ -16,6 +16,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
 
@@ -121,7 +123,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
     @Override
     public void renderBackground(@Nonnull PoseStack pPoseStack, int pVOffset) {
         if (this.minecraft.level != null) {
-            net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.ScreenEvent.BackgroundDrawnEvent(this, pPoseStack));
+            MinecraftForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, pPoseStack));
         } else {
             this.renderDirtBackground(pVOffset);
         }
