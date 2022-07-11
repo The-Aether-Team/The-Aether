@@ -1,221 +1,443 @@
 {
   "multipart": [
     {
+      "apply": {
+        "model": "aether:block/aerogel_wall_post_nosides"
+      },
+      "when": {
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_side_with_post",
+        "uvlock": true
+      },
       "when": {
         "up": "true",
-        "north": "none",
-        "south": "none",
-        "west": "none",
-        "east": "none"
-      },
-      "apply": {
-        "model": "aether:block/aerogel_wall_post"
+        "north": "low"
       }
     },
     {
-      "when": {
-        "north": "none",
-        "up": "true"
-      },
       "apply": {
-        "model": "aether:block/aerogel_wall_post_side",
+        "model": "aether:block/aerogel_wall_side_with_post",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "up": "true",
+        "east": "low"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_side_with_post",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "up": "true",
+        "south": "low"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_side_with_post",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "up": "true",
+        "west": "low"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_side_tall_with_post",
         "uvlock": true
-      }
-    },
-    {
-      "when": {
-        "east": "none",
-        "up": "true"
       },
-      "apply": {
-        "model": "aether:block/aerogel_wall_post_side",
-        "y": 90,
-        "uvlock": true
+      "when": {
+        "up": "true",
+        "north": "tall"
       }
     },
     {
-      "when": {
-        "south": "none",
-        "up": "true"
+      "apply": {
+        "model": "aether:block/aerogel_wall_side_tall_with_post",
+        "uvlock": true,
+        "y": 90
       },
-      "apply": {
-        "model": "aether:block/aerogel_wall_post_side",
-        "y": 180,
-        "uvlock": true
+      "when": {
+        "up": "true",
+        "east": "tall"
       }
     },
     {
-      "when": {
-        "west": "none",
-        "up": "true"
+      "apply": {
+        "model": "aether:block/aerogel_wall_side_tall_with_post",
+        "uvlock": true,
+        "y": 180
       },
-      "apply": {
-        "model": "aether:block/aerogel_wall_post_side",
-        "y": 270,
-        "uvlock": true
+      "when": {
+        "up": "true",
+        "south": "tall"
       }
     },
     {
+      "apply": {
+        "model": "aether:block/aerogel_wall_side_tall_with_post",
+        "uvlock": true,
+        "y": 270
+      },
       "when": {
+        "up": "true",
+        "west": "tall"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_side",
+        "uvlock": true
+      },
+      "when": {
+        "up": "false",
         "north": "low",
-        "up": "true"
-      },
-      "apply": {
-        "model": "aether:block/aerogel_wall_side",
-        "uvlock": true
+        "east": "none|tall",
+        "west": "none|tall"
       }
     },
     {
-      "when": {
-        "east": "low",
-        "up": "true"
-      },
       "apply": {
         "model": "aether:block/aerogel_wall_side",
-        "y": 90,
-        "uvlock": true
-      }
-    },
-    {
+        "uvlock": true,
+        "y": 180
+      },
       "when": {
+        "up": "false",
         "south": "low",
-        "up": "true"
-      },
-      "apply": {
-        "model": "aether:block/aerogel_wall_side",
-        "y": 180,
-        "uvlock": true
+        "east": "none|tall",
+        "west": "none|tall"
       }
     },
     {
-      "when": {
-        "west": "low",
-        "up": "true"
-      },
-      "apply": {
-        "model": "aether:block/aerogel_wall_side",
-        "y": 270,
-        "uvlock": true
-      }
-    },
-    {
-      "when": {
-        "north": "tall",
-        "up": "true"
-      },
-      "apply": { "model": "aether:block/aerogel_wall_side_tall",
-        "uvlock": true
-      }
-    },
-    {
-      "when": {
-        "east": "tall",
-        "up": "true"
-      },
       "apply": {
         "model": "aether:block/aerogel_wall_side_tall",
-        "y": 90,
         "uvlock": true
+      },
+      "when": {
+        "up": "false",
+        "north": "tall",
+        "east": "none|low",
+        "west": "none|low"
       }
     },
     {
-      "when": {
-        "south": "tall",
-        "up": "true"
-      },
       "apply": {
         "model": "aether:block/aerogel_wall_side_tall",
-        "y": 180,
-        "uvlock": true
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "up": "false",
+        "south": "tall",
+        "east": "none|low",
+        "west": "none|low"
       }
     },
     {
-      "when": {
-        "west": "tall",
-        "up": "true"
+      "apply": {
+        "model": "aether:block/aerogel_wall_side",
+        "uvlock": true,
+        "y": 90
       },
+      "when": {
+        "up": "false",
+        "east": "low",
+        "north": "none|tall",
+        "south": "none|tall"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_side",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "up": "false",
+        "west": "low",
+        "north": "none|tall",
+        "south": "none|tall"
+      }
+    },
+    {
       "apply": {
         "model": "aether:block/aerogel_wall_side_tall",
-        "y": 270,
-        "uvlock": true
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "up": "false",
+        "east": "tall",
+        "north": "none|low",
+        "south": "none|low"
       }
     },
     {
+      "apply": {
+        "model": "aether:block/aerogel_wall_side_tall",
+        "uvlock": true,
+        "y": 270
+      },
       "when": {
-        "north": "none",
-        "south": "none",
+        "up": "false",
+        "west": "tall",
+        "north": "none|low",
+        "south": "none|low"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_corner",
+        "uvlock": true
+      },
+      "when": {
+        "up": "false",
+        "north": "low",
+        "east": "low",
+        "south": "none|tall",
+        "west": "none|tall"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_corner",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "up": "false",
+        "east": "low",
+        "south": "low",
+        "west": "none|tall",
+        "north": "none|tall"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_corner",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "up": "false",
+        "south": "low",
+        "west": "low",
+        "north": "none|tall",
+        "east": "none|tall"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_corner",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "up": "false",
+        "west": "low",
+        "north": "low",
+        "east": "none|tall",
+        "south": "none|tall"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_corner_tall",
+        "uvlock": true
+      },
+      "when": {
+        "up": "false",
+        "north": "tall",
+        "east": "tall",
+        "south": "none|low",
+        "west": "none|low"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_corner_tall",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "up": "false",
+        "east": "tall",
+        "south": "tall",
+        "west": "none|low",
+        "north": "none|low"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_corner_tall",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "up": "false",
+        "south": "tall",
+        "west": "tall",
+        "north": "none|low",
+        "east": "none|low"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_corner_tall",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "up": "false",
+        "west": "tall",
+        "north": "tall",
+        "east": "none|low",
+        "south": "none|low"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_t",
+        "uvlock": true
+      },
+      "when": {
+        "up": "false",
+        "north": "low",
+        "east": "low",
+        "west": "low",
+        "south": "none|tall"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_t",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "up": "false",
+        "east": "low",
+        "south": "low",
+        "north": "low",
+        "west": "none|tall"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_t",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "up": "false",
+        "south": "low",
         "west": "low",
         "east": "low",
-        "up": "false"
-      },
-      "apply": {
-        "model": "aether:block/aerogel_wall_straight",
-        "y": 90,
-        "uvlock": true
+        "north": "none|tall"
       }
     },
     {
-      "when": {
-        "north": "low",
-        "south": "low",
-        "west": "none",
-        "east": "none",
-        "up": "false"
-      },
       "apply": {
-        "model": "aether:block/aerogel_wall_straight",
-        "uvlock": true
-      }
-    },
-    {
+        "model": "aether:block/aerogel_wall_t",
+        "uvlock": true,
+        "y": 270
+      },
       "when": {
-        "north": "low",
-        "south": "low",
+        "up": "false",
         "west": "low",
+        "north": "low",
+        "south": "low",
+        "east": "none|tall"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_t_tall",
+        "uvlock": true
+      },
+      "when": {
+        "up": "false",
+        "north": "tall",
+        "east": "tall",
+        "west": "tall",
+        "south": "none|low"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_t_tall",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "up": "false",
+        "east": "tall",
+        "south": "tall",
+        "north": "tall",
+        "west": "none|low"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_t_tall",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "up": "false",
+        "south": "tall",
+        "west": "tall",
+        "east": "tall",
+        "north": "none|low"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_t_tall",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "up": "false",
+        "west": "tall",
+        "north": "tall",
+        "south": "tall",
+        "east": "none|low"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_plus"
+      },
+      "when": {
+        "up": "false",
+        "north": "low",
+        "south": "low",
         "east": "low",
-        "up": "false"
-      },
-      "apply": {
-        "model": "aether:block/aerogel_wall_center"
+        "west": "low"
       }
     },
     {
-      "when": {
-        "north": "none",
-        "south": "none",
-        "west": "tall",
-        "east": "tall",
-        "up": "false"
-      },
       "apply": {
-        "model": "aether:block/aerogel_wall_straight_tall",
-        "y": 90,
-        "uvlock": true
-      }
-    },
-    {
+        "model": "aether:block/aerogel_wall_plus_tall"
+      },
       "when": {
+        "up": "false",
         "north": "tall",
         "south": "tall",
-        "west": "none",
-        "east": "none",
-        "up": "false"
-      },
-      "apply": {
-        "model": "aether:block/aerogel_wall_straight_tall",
-        "uvlock": true
-      }
-    },
-    {
-      "when": {
-        "north": "tall",
-        "south": "tall",
-        "west": "tall",
         "east": "tall",
-        "up": "false"
-      },
-      "apply": {
-        "model": "aether:block/aerogel_wall_center_tall"
+        "west": "tall"
       }
     }
   ]
