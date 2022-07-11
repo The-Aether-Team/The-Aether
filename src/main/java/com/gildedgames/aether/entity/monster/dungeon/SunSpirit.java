@@ -18,6 +18,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
@@ -48,7 +49,7 @@ public class SunSpirit extends Monster implements BossMob {
     public SunSpirit(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
-//        this.bossFight.setVisible(false);
+        this.bossFight.setVisible(false);
         this.xpReward = XP_REWARD_BOSS;
     }
 
@@ -108,6 +109,17 @@ public class SunSpirit extends Monster implements BossMob {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.setFrozen(this.hurtTime > 0);
+    }
+
+    /**
+     * The sun spirit is immune to effects, but there is an event fired in case addons want to change that.
+     */
+    @Override
+    public boolean canBeAffected(@Nonnull MobEffectInstance pEffectInstance) {
+        net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent event = new net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent(this, pEffectInstance);
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event);
+        if (event.getResult() != net.minecraftforge.eventbus.api.Event.Result.DEFAULT) return event.getResult() == net.minecraftforge.eventbus.api.Event.Result.ALLOW;
+        return false;
     }
 
     /**
