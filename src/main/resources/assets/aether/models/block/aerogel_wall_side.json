@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/template_wall_side",
+  "parent": "aether:block/template_translucent_wall_side",
   "textures": {
     "wall": "aether:block/construction/aerogel"
   }

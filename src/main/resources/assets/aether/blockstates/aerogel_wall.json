@@ -10,6 +10,49 @@
     },
     {
       "apply": {
+        "model": "aether:block/aerogel_wall_post_side",
+        "uvlock": true
+      },
+      "when": {
+        "up": "true",
+        "north": "none"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_post_side",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "up": "true",
+        "east": "none"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_post_side",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "up": "true",
+        "south": "none"
+      }
+    },
+    {
+      "apply": {
+        "model": "aether:block/aerogel_wall_post_side",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "up": "true",
+        "west": "none"
+      }
+    },
+    {
+      "apply": {
         "model": "aether:block/aerogel_wall_side_with_post",
         "uvlock": true
       },
