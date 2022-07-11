@@ -1,16 +1,13 @@
 package com.gildedgames.aether.client.particle;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.particle.*;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.particle.SnowflakeParticle;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -32,16 +29,14 @@ public class AetherParticleTypes {
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
-	public static void registerParticleFactories(ParticleFactoryRegisterEvent event) {
-		ParticleEngine particleManager = Minecraft.getInstance().particleEngine;
-
-		particleManager.register(AETHER_PORTAL.get(), AetherPortalParticle.Factory::new);
-		particleManager.register(GOLDEN_OAK_LEAVES.get(), GoldenOakLeavesParticle.Factory::new);
-		particleManager.register(CRYSTAL_LEAVES.get(), CrystalLeavesParticle.Factory::new);
-		particleManager.register(HOLIDAY_LEAVES.get(), HolidayLeavesParticle.Factory::new);
-		particleManager.register(FROZEN.get(), FrozenParticle.Factory::new);
-		particleManager.register(PASSIVE_WHIRLWIND.get(), PassiveWhirlyParticle.Factory::new);
-		particleManager.register(EVIL_WHIRLWIND.get(), EvilWhirlyParticle.Factory::new);
-		particleManager.register(ZEPHYR_SNOWFLAKE.get(), SnowflakeParticle.Provider::new);
+	public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
+		event.register(AETHER_PORTAL.get(), AetherPortalParticle.Factory::new);
+		event.register(GOLDEN_OAK_LEAVES.get(), GoldenOakLeavesParticle.Factory::new);
+		event.register(CRYSTAL_LEAVES.get(), CrystalLeavesParticle.Factory::new);
+		event.register(HOLIDAY_LEAVES.get(), HolidayLeavesParticle.Factory::new);
+		event.register(FROZEN.get(), FrozenParticle.Factory::new);
+		event.register(PASSIVE_WHIRLWIND.get(), PassiveWhirlyParticle.Factory::new);
+		event.register(EVIL_WHIRLWIND.get(), EvilWhirlyParticle.Factory::new);
+		event.register(ZEPHYR_SNOWFLAKE.get(), SnowflakeParticle.Provider::new);
 	}
 }

@@ -124,7 +124,7 @@ public class GuiHooks {
         Minecraft minecraft = Minecraft.getInstance();
         Player entity = minecraft.player;
         if (entity != null) {
-            if (AetherKeys.openAccessoryInventory.consumeClick() && minecraft.isWindowActive()) {
+            if (AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick() && minecraft.isWindowActive()) {
                 AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(entity.getId(), ItemStack.EMPTY));
                 shouldAddButton = false;
             }

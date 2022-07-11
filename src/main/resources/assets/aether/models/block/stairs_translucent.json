@@ -1,4 +1,6 @@
-{   "parent": "block/block",
+{
+  "parent": "block/block",
+  "render_type": "minecraft:translucent",
   "display": {
     "gui": {
       "rotation": [ 30, 135, 0 ],

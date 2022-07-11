@@ -1,4 +1,5 @@
 {
+    "render_type": "minecraft:translucent",
     "ambientocclusion": false,
 	"textures": {
         "particle": "aether:block/construction/quicksoil_glass",

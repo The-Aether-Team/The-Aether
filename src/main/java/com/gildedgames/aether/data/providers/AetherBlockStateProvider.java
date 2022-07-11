@@ -9,8 +9,7 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.state.properties.DoorHingeSide;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -21,6 +20,9 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
     public AetherBlockStateProvider(DataGenerator generator, ExistingFileHelper fileHelper) {
         super(generator, Aether.MODID, fileHelper);
     }
+
+    //todo: https://github.com/MinecraftForge/MinecraftForge/pull/8852 will make some of the new render type-related
+    // methods unnecessary.
 
     protected ResourceLocation texture(String name) {
         return modLoc("block/" + name);
@@ -50,8 +52,12 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
         getVariantBuilder(block.get()).forAllStatesExcept(state -> ConfiguredModel.allYRotations(cubeAll(block, location), 0, false), AetherBlockStateProperties.DOUBLE_DROPS);
     }
 
+    public void translucentBlock(Supplier<? extends Block> block, String location) {
+        simpleBlock(block.get(), cubeAllTranslucent(block, location));
+    }
+
     public void crossBlock(Supplier<? extends Block> block, String location) {
-        crossBlock(block, models().cross(name(block), texture(name(block), location)));
+        crossBlock(block, models().cross(name(block), texture(name(block), location)).renderType(new ResourceLocation("cutout")));
     }
 
     private void crossBlock(Supplier<? extends Block> block, ModelFile model) {
@@ -59,7 +65,7 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
     }
 
     public void saplingBlock(Supplier<? extends Block> block, String location) {
-        ModelFile sapling = models().cross(name(block), texture(name(block), location));
+        ModelFile sapling = models().cross(name(block), texture(name(block), location)).renderType(new ResourceLocation("cutout"));
         getVariantBuilder(block.get()).forAllStatesExcept(state -> ConfiguredModel.builder().modelFile(sapling).build(),
                 SaplingBlock.STAGE);
     }
@@ -70,6 +76,18 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
 
     public void slab(Supplier<? extends SlabBlock> block, Supplier<? extends Block> baseBlock, String location) {
         slabBlock(block.get(), texture(name(baseBlock)), texture(name(baseBlock), location));
+    }
+
+    public void translucentSlab(Supplier<? extends SlabBlock> block, Supplier<? extends Block> baseBlock, String location) {
+        ResourceLocation texture = texture(name(baseBlock), location);
+        translucentSlabBlock(block.get(), models().slab(name(block), texture, texture, texture).renderType(new ResourceLocation("translucent")), models().slabTop(name(block) + "_top", texture, texture, texture).renderType(new ResourceLocation("translucent")), models().getExistingFile(texture(name(baseBlock))));
+    }
+
+    public void translucentSlabBlock(SlabBlock block, ModelFile bottom, ModelFile top, ModelFile doubleslab) {
+        getVariantBuilder(block)
+                .partialState().with(SlabBlock.TYPE, SlabType.BOTTOM).addModels(new ConfiguredModel(bottom))
+                .partialState().with(SlabBlock.TYPE, SlabType.TOP).addModels(new ConfiguredModel(top))
+                .partialState().with(SlabBlock.TYPE, SlabType.DOUBLE).addModels(new ConfiguredModel(doubleslab));
     }
 
     public void buttonBlock(Supplier<? extends ButtonBlock> block, ResourceLocation texture) {
@@ -113,6 +131,33 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
         fenceGateBlock(block, gate, gateOpen, gateWall, gateWallOpen);
     }
 
+    public void doorBlock(Supplier<? extends DoorBlock> block, ResourceLocation bottom, ResourceLocation top) {
+        doorBlockInternal(block.get(), name(block), bottom, top);
+    }
+
+    private void doorBlockInternal(DoorBlock block, String baseName, ResourceLocation bottom, ResourceLocation top) {
+        ModelFile bottomLeft = models().doorBottomLeft(baseName + "_bottom_left", bottom, top).renderType(new ResourceLocation("cutout"));
+        ModelFile bottomLeftOpen = models().doorBottomLeftOpen(baseName + "_bottom_left_open", bottom, top).renderType(new ResourceLocation("cutout"));
+        ModelFile bottomRight = models().doorBottomRight(baseName + "_bottom_right", bottom, top).renderType(new ResourceLocation("cutout"));
+        ModelFile bottomRightOpen = models().doorBottomRightOpen(baseName + "_bottom_right_open", bottom, top).renderType(new ResourceLocation("cutout"));
+        ModelFile topLeft = models().doorTopLeft(baseName + "_top_left", bottom, top).renderType(new ResourceLocation("cutout"));
+        ModelFile topLeftOpen = models().doorTopLeftOpen(baseName + "_top_left_open", bottom, top).renderType(new ResourceLocation("cutout"));
+        ModelFile topRight = models().doorTopRight(baseName + "_top_right", bottom, top).renderType(new ResourceLocation("cutout"));
+        ModelFile topRightOpen = models().doorTopRightOpen(baseName + "_top_right_open", bottom, top).renderType(new ResourceLocation("cutout"));
+        doorBlock(block, bottomLeft, bottomLeftOpen, bottomRight, bottomRightOpen, topLeft, topLeftOpen, topRight, topRightOpen);
+    }
+
+    public void trapdoorBlock(Supplier<? extends TrapDoorBlock> block, ResourceLocation texture, boolean orientable) {
+        trapdoorBlockInternal(block.get(), name(block), texture, orientable);
+    }
+
+    private void trapdoorBlockInternal(TrapDoorBlock block, String baseName, ResourceLocation texture, boolean orientable) {
+        ModelFile bottom = orientable ? models().trapdoorOrientableBottom(baseName + "_bottom", texture) : models().trapdoorBottom(baseName + "_bottom", texture).renderType(new ResourceLocation("cutout"));
+        ModelFile top = orientable ? models().trapdoorOrientableTop(baseName + "_top", texture) : models().trapdoorTop(baseName + "_top", texture).renderType(new ResourceLocation("cutout"));
+        ModelFile open = orientable ? models().trapdoorOrientableOpen(baseName + "_open", texture) : models().trapdoorOpen(baseName + "_open", texture).renderType(new ResourceLocation("cutout"));
+        trapdoorBlock(block, bottom, top, open, orientable);
+    }
+
     public void wallBlock(Supplier<? extends WallBlock> block, Supplier<? extends Block> baseBlock, String location) {
         wallBlockInternal(block.get(), name(block), texture(name(baseBlock), location));
     }
@@ -124,10 +169,12 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
     public void portal(Supplier<? extends Block> block) {
         ModelFile portal_ew = models().withExistingParent(name(block) + "_ew", mcLoc("block/nether_portal_ew"))
                 .texture("particle", modLoc("block/miscellaneous/" + name(block)))
-                .texture("portal", modLoc("block/miscellaneous/" + name(block)));
+                .texture("portal", modLoc("block/miscellaneous/" + name(block)))
+                .renderType(new ResourceLocation("translucent"));
         ModelFile portal_ns = models().withExistingParent(name(block) + "_ns", mcLoc("block/nether_portal_ns"))
                 .texture("particle", modLoc("block/miscellaneous/" + name(block)))
-                .texture("portal", modLoc("block/miscellaneous/" + name(block)));
+                .texture("portal", modLoc("block/miscellaneous/" + name(block)))
+                .renderType(new ResourceLocation("translucent"));
         getVariantBuilder(block.get()).forAllStates(state -> {
             Direction.Axis axis = state.getValue(NetherPortalBlock.AXIS);
             return ConfiguredModel.builder()
@@ -191,7 +238,16 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
     }
 
     public void pane(Supplier<? extends IronBarsBlock> block, Supplier<? extends GlassBlock> glass, String location) {
-        paneBlock(block.get(), texture(name(glass), location), extend(texture(name(block), location), "_top"));
+        paneBlockInternal(block.get(), name(block), texture(name(glass), location), extend(texture(name(block), location), "_top"));
+    }
+
+    private void paneBlockInternal(IronBarsBlock block, String baseName, ResourceLocation pane, ResourceLocation edge) {
+        ModelFile post = models().panePost(baseName + "_post", pane, edge).renderType(new ResourceLocation("translucent"));
+        ModelFile side = models().paneSide(baseName + "_side", pane, edge).renderType(new ResourceLocation("translucent"));
+        ModelFile sideAlt = models().paneSideAlt(baseName + "_side_alt", pane, edge).renderType(new ResourceLocation("translucent"));
+        ModelFile noSide = models().paneNoSide(baseName + "_noside", pane).renderType(new ResourceLocation("translucent"));
+        ModelFile noSideAlt = models().paneNoSideAlt(baseName + "_noside_alt", pane).renderType(new ResourceLocation("translucent"));
+        paneBlock(block, post, side, sideAlt, noSide, noSideAlt);
     }
 
     public void altar(Supplier<? extends Block> block) {
@@ -210,8 +266,8 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
     }
 
     public void torchBlock(Supplier<? extends Block> block, Supplier<? extends Block> wall) {
-        ModelFile torch = models().torch(name(block), texture(name(block), "utility/"));
-        ModelFile torchwall = models().torchWall(name(wall), texture(name(block), "utility/"));
+        ModelFile torch = models().torch(name(block), texture(name(block), "utility/")).renderType(new ResourceLocation("cutout"));
+        ModelFile torchwall = models().torchWall(name(wall), texture(name(block), "utility/")).renderType(new ResourceLocation("cutout"));
         simpleBlock(block.get(), torch);
         getVariantBuilder(wall.get()).forAllStates(state ->
                 ConfiguredModel.builder()
@@ -229,7 +285,8 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
                 .texture("particle", texture(name(block), "natural/")).texture("bush", texture(name(block), "natural/")).texture("stem", texture(name(stem), "natural/"))
                 .element().from(0.0F, 0.0F, 0.0F).to(16.0F, 16.0F, 16.0F).shade(true).allFaces((direction, builder) -> builder.texture("#bush").end()).end()
                 .element().from(0.8F, 0.0F, 8.0F).to(15.2F, 16.0F, 8.0F).rotation().origin(8.0F, 8.0F, 8.0F).axis(Direction.Axis.Y).angle(45.0F).rescale(true).end().shade(true).face(Direction.NORTH).texture("#stem").end().face(Direction.SOUTH).texture("#stem").end().end()
-                .element().from(8.0F, 0.0F, 0.8F).to(8.0F, 16.0F, 15.2F).rotation().origin(8.0F, 8.0F, 8.0F).axis(Direction.Axis.Y).angle(45.0F).rescale(true).end().shade(true).face(Direction.WEST).texture("#stem").end().face(Direction.EAST).texture("#stem").end().end();
+                .element().from(8.0F, 0.0F, 0.8F).to(8.0F, 16.0F, 15.2F).rotation().origin(8.0F, 8.0F, 8.0F).axis(Direction.Axis.Y).angle(45.0F).rescale(true).end().shade(true).face(Direction.WEST).texture("#stem").end().face(Direction.EAST).texture("#stem").end().end()
+                .renderType(new ResourceLocation("cutout"));
     }
 
     public BlockModelBuilder pottedStemModel(Supplier<? extends Block> block, Supplier<? extends Block> stem, String location) {
@@ -271,7 +328,7 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
     }
 
     public void pottedStem(Supplier<? extends Block> stem, String location) {
-        ModelFile pot = pottedStemModel(stem, stem, location);
+        ModelFile pot = pottedStemModel(stem, stem, location).renderType(new ResourceLocation("cutout"));
         getVariantBuilder(stem.get()).partialState().addModels(new ConfiguredModel(pot));
     }
 
@@ -284,12 +341,13 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
                 .face(Direction.SOUTH).uvs(3.0F, 3.0F, 13.0F, 13.0F).texture("#bush").end()
                 .face(Direction.WEST).uvs(3.0F, 3.0F, 13.0F, 13.0F).texture("#bush").end()
                 .face(Direction.UP).uvs(3.0F, 3.0F, 13.0F, 13.0F).texture("#bush").end()
-                .face(Direction.DOWN).uvs(3.0F, 3.0F, 13.0F, 13.0F).texture("#bush").end().end();
+                .face(Direction.DOWN).uvs(3.0F, 3.0F, 13.0F, 13.0F).texture("#bush").end().end()
+                .renderType(new ResourceLocation("cutout"));
         getVariantBuilder(bush.get()).partialState().addModels(new ConfiguredModel(pot));
     }
 
     public void pottedPlant(Supplier<? extends Block> block, Supplier<? extends Block> flower, String location) {
-        ModelFile pot = models().withExistingParent(name(block), mcLoc("block/flower_pot_cross")).texture("plant", modLoc("block/" + location + name(flower)));
+        ModelFile pot = models().withExistingParent(name(block), mcLoc("block/flower_pot_cross")).texture("plant", modLoc("block/" + location + name(flower))).renderType(new ResourceLocation("cutout"));
         getVariantBuilder(block.get()).partialState().addModels(new ConfiguredModel(pot));
     }
 
@@ -353,52 +411,15 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
         return models().cubeAll(name(block), texture(name(block), location));
     }
 
+    public ModelFile cubeAllTranslucent(Supplier<? extends Block> block, String location) {
+        return models().cubeAll(name(block), texture(name(block), location)).renderType(new ResourceLocation("translucent"));
+    }
+
     private ModelFile cubeBottomTop(String block, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
         return models().cubeBottomTop(block, side, bottom, top);
     }
 
     private ResourceLocation extend(ResourceLocation rl, String suffix) {
         return new ResourceLocation(rl.getNamespace(), rl.getPath() + suffix);
-    }
-
-    //TODO: Required until https://github.com/MinecraftForge/MinecraftForge/pull/8687 is merged.
-    public void fixedDoorBlock(Supplier<? extends DoorBlock> block, ResourceLocation bottom, ResourceLocation top) {
-        doorBlockInternal(block.get(), name(block), bottom, top);
-    }
-
-    private void doorBlockInternal(DoorBlock block, String baseName, ResourceLocation bottom, ResourceLocation top) {
-        ModelFile bottomLeft = door(baseName + "_bottom_left", "door_bottom_left", bottom, top);
-        ModelFile bottomLeftOpen = door(baseName + "_bottom_left_open", "door_bottom_left_open", bottom, top);
-        ModelFile bottomRight = door(baseName + "_bottom_right", "door_bottom_right", bottom, top);
-        ModelFile bottomRightOpen = door(baseName + "_bottom_right_open", "door_bottom_right_open", bottom, top);
-        ModelFile topLeft = door(baseName + "_top_left", "door_top_left", bottom, top);
-        ModelFile topLeftOpen = door(baseName + "_top_left_open", "door_top_left_open", bottom, top);
-        ModelFile topRight = door(baseName + "_top_right", "door_top_right", bottom, top);
-        ModelFile topRightOpen = door(baseName + "_top_right_open", "door_top_right_open", bottom, top);
-        doorBlock(block, bottomLeft, bottomLeftOpen, bottomRight, bottomRightOpen, topLeft, topLeftOpen, topRight, topRightOpen);
-    }
-
-    private ModelBuilder<?> door(String name, String model, ResourceLocation bottom, ResourceLocation top) {
-        return models().withExistingParent(name, "block/" + model)
-                .texture("bottom", bottom)
-                .texture("top", top);
-    }
-
-    public void doorBlock(DoorBlock block, ModelFile bottomLeft, ModelFile bottomLeftOpen, ModelFile bottomRight, ModelFile bottomRightOpen, ModelFile topLeft, ModelFile topLeftOpen, ModelFile topRight, ModelFile topRightOpen) {
-        getVariantBuilder(block).forAllStatesExcept(state -> {
-            int yRot = ((int) state.getValue(DoorBlock.FACING).toYRot()) + 90;
-            boolean right = state.getValue(DoorBlock.HINGE) == DoorHingeSide.RIGHT;
-            boolean open = state.getValue(DoorBlock.OPEN);
-            if (open) {
-                yRot += 90;
-            }
-            if (right && open) {
-                yRot += 180;
-            }
-            yRot %= 360;
-            return ConfiguredModel.builder().modelFile(state.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER ? (right ? (open ? bottomRightOpen : bottomRight) : (open ? bottomLeftOpen : bottomLeft)) : (right ? (open ? topRightOpen : topRight) : (open ? topLeftOpen : topLeft)))
-                    .rotationY(yRot)
-                    .build();
-        }, DoorBlock.POWERED);
     }
 }

@@ -1,50 +1,50 @@
 package com.gildedgames.aether.client.renderer.level;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Camera;
-import net.minecraft.client.Minecraft;
-import com.mojang.blaze3d.vertex.BufferBuilder;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.FogRenderer;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.BufferUploader;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.VertexBuffer;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import com.mojang.math.Matrix4f;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
-import com.mojang.math.Vector3f;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ISkyRenderHandler;
 
-@OnlyIn(Dist.CLIENT)
-public class AetherSkyRenderer implements ISkyRenderHandler {
+public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: future cleanup.
+{
     private static final ResourceLocation MOON_LOCATION = new ResourceLocation("textures/environment/moon_phases.png");
     private static final ResourceLocation SUN_LOCATION = new ResourceLocation("textures/environment/sun.png");
-
     private VertexBuffer starBuffer, skyBuffer;
 
-    public AetherSkyRenderer() {
-        createLightSky();
-        createStars();
+    public AetherSkyRenderEffects() {
+        super(-5.0F, true, DimensionSpecialEffects.SkyType.NORMAL, false, false);
     }
 
     @Override
-    public void render(int ticks, float pPartialTick, PoseStack pPoseStack, ClientLevel world, Minecraft mc) { 
-        Matrix4f pProjectionMatrix = RenderSystem.getProjectionMatrix();
-        float renderDistance = mc.gameRenderer.getRenderDistance();
-        Camera camera = mc.gameRenderer.getMainCamera();
-        Vec3 camPos = camera.getPosition();
-        boolean shouldRender = world.effects().isFoggyAt(Mth.floor(camPos.x), Mth.floor(camPos.y)) || mc.gui.getBossOverlay().shouldCreateWorldFog();
+    public Vec3 getBrightnessDependentFogColor(Vec3 color, float p_230494_2_) {
+        return color.multiply((p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.94F + 0.06F), (p_230494_2_ * 0.91F + 0.09F));
+    }
 
+    @Override
+    public boolean isFoggyAt(int x, int z) {
+        return false;
+    }
+
+    @Override
+    public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
+        this.createStars();
+        this.createLightSky();
+        this.render(level, partialTick, poseStack, camera, projectionMatrix, isFoggy, setupFog);
+        return true;
+    }
+
+    public void render(ClientLevel world, float pPartialTick, PoseStack pPoseStack, Camera camera, Matrix4f pProjectionMatrix, boolean isFoggy, Runnable pSkyFogSetup) {
         RenderSystem.disableTexture();
         Vec3 vec3 = world.getSkyColor(camera.getPosition(), pPartialTick);
         float f = (float) vec3.x;
@@ -55,7 +55,9 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         RenderSystem.depthMask(false);
         RenderSystem.setShaderColor(f, f1, f2, 1.0F);
         ShaderInstance shaderinstance = RenderSystem.getShader();
+        this.skyBuffer.bind();
         this.skyBuffer.drawWithShader(pPoseStack.last().pose(), pProjectionMatrix, shaderinstance);
+        VertexBuffer.unbind();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         float[] sunRiseRGBA = world.effects().getSunriseColor(world.getTimeOfDay(pPartialTick), pPartialTick);
@@ -74,7 +76,6 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
             Matrix4f matrix4f = pPoseStack.last().pose();
             bufferbuilder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
             bufferbuilder.vertex(matrix4f, 0.0F, 100.0F, 0.0F).color(f4, f5, f6, sunRiseRGBA[3]).endVertex();
-            int i = 16;
 
             for (int j = 0; j <= 16; ++j) {
                 float f7 = (float) j * ((float) Math.PI * 2F) / 16.0F;
@@ -98,8 +99,10 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
         if (f10 > 0.0F) {
             RenderSystem.setShaderColor(f10, f10, f10, f10);
             FogRenderer.setupNoFog();
+            this.starBuffer.bind();
             this.starBuffer.drawWithShader(pPoseStack.last().pose(), pProjectionMatrix, GameRenderer.getPositionShader());
-            FogRenderer.setupFog(camera, FogRenderer.FogMode.FOG_SKY, renderDistance, shouldRender, pPartialTick);
+            VertexBuffer.unbind();
+            pSkyFogSetup.run();
         }
 
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -186,7 +189,9 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
 
         this.skyBuffer = new VertexBuffer();
         BufferBuilder.RenderedBuffer renderedBuffer = this.drawSkyHemisphere(bufferbuilder, 16.0F);
+        this.skyBuffer.bind();
         this.skyBuffer.upload(renderedBuffer);
+        VertexBuffer.unbind();
     }
 
     private BufferBuilder.RenderedBuffer drawSkyHemisphere(BufferBuilder pBuilder, float pY) {
@@ -212,7 +217,9 @@ public class AetherSkyRenderer implements ISkyRenderHandler {
 
         this.starBuffer = new VertexBuffer();
         BufferBuilder.RenderedBuffer renderedBuffer = this.drawStars(bufferbuilder);
+        this.starBuffer.bind();
         this.starBuffer.upload(renderedBuffer);
+        VertexBuffer.unbind();
     }
 
     private BufferBuilder.RenderedBuffer drawStars(BufferBuilder pBuilder) {

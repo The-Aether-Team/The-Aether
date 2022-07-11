@@ -120,7 +120,7 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 					serverPlayer.connection.aboveGroundTickCount = 0;
 					serverPlayer.connection.aboveGroundVehicleTickCount = 0;
 				}
-				this.calculateEntityAnimation(this, false); //todo entity animations super fast now
+				this.calculateEntityAnimation(this, false);
 			} else {
 				this.maxUpStep = 0.5F;
 				this.flyingSpeed = 0.02F;

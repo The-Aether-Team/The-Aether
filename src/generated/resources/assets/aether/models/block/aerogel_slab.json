@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/slab",
+  "render_type": "minecraft:translucent",
   "textures": {
     "bottom": "aether:block/construction/aerogel",
     "side": "aether:block/construction/aerogel",

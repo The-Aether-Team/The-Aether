@@ -4,9 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.CustomizationsOptions;
 import com.gildedgames.aether.client.gui.screen.SunAltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
-import com.gildedgames.aether.client.renderer.AetherOverlays;
 import com.gildedgames.aether.client.renderer.AetherRenderers;
-import com.gildedgames.aether.client.renderer.level.AetherSkyRenderInfo;
 import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
 
@@ -14,7 +12,6 @@ import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -29,14 +26,9 @@ public class AetherClient {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         CustomizationsOptions.initialize();
-        DimensionSpecialEffects.EFFECTS.put(new ResourceLocation(Aether.MODID, "the_aether"), new AetherSkyRenderInfo());
-        AetherKeys.registerKeys();
-        AetherOverlays.registerOverlays();
         AetherRenderers.registerCuriosRenderers();
         event.enqueueWork(() -> {
             AetherAtlases.registerWoodTypeAtlases();
-            AetherRecipeCategories.registerRecipeCategories();
-            AetherRenderers.registerBlockRenderLayers();
             registerGuiFactories();
             registerItemModelProperties();
             registerColors();

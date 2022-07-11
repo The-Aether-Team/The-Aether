@@ -170,6 +170,10 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
         return wallInventory(blockName(block), texture(blockName(baseBlock), location));
     }
 
+    public ItemModelBuilder translucentItemWallBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String location) {
+        return wallInventory(blockName(block), texture(blockName(baseBlock), location)).renderType(new ResourceLocation("translucent"));
+    }
+
     public ItemModelBuilder itemButton(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String location) {
         return withExistingParent(blockName(block), mcLoc("block/button_inventory"))
                 .texture("texture", texture(blockName(baseBlock), location));

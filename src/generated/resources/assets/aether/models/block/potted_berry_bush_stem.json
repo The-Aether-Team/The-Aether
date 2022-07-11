@@ -231,6 +231,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:cutout",
   "textures": {
     "dirt": "minecraft:block/dirt",
     "flowerpot": "minecraft:block/flower_pot",
