@@ -101,15 +101,6 @@ public class GuiHooks {
         return null;
     }
 
-    public static GenericDirtMessageScreen openBufferScreen(Screen screen) {
-        if (screen instanceof TitleScreen) {
-            if (AetherConfig.CLIENT.enable_world_preview.get() && AetherWorldDisplayHelper.loadedLevel == null && AetherWorldDisplayHelper.loadedSummary != null) {
-                return new GenericDirtMessageScreen(Component.literal(""));
-            }
-        }
-        return null;
-    }
-
     public static void setupSplash(Screen screen) {
         if (screen instanceof TitleScreen titleScreen) {
             if (default_menu.splash != null) {
