@@ -1,0 +1,6 @@
+{
+  "type": "aether:large_aercloud",
+  "biomes": "#aether:has_large_aercloud",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

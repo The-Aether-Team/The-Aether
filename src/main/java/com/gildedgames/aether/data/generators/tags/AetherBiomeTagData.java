@@ -21,5 +21,6 @@ public class AetherBiomeTagData extends BiomeTagsProvider {
                 AetherBiomes.SKYROOT_GROVE,
                 AetherBiomes.SKYROOT_THICKET
         );
+        this.tag(AetherTags.Biomes.HAS_LARGE_AERCLOUD).addTag(AetherTags.Biomes.IS_AETHER);
     }
 }
