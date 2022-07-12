@@ -138,7 +138,7 @@ public class AetherBlocks
     public static final RegistryObject<Block> TRAPPED_LIGHT_HELLFIRE_STONE = register("trapped_light_hellfire_stone", () -> new TrappedBlock(AetherEntityTypes.FIRE_MINION::get, () -> LIGHT_HELLFIRE_STONE.get().defaultBlockState(), Block.Properties.copy(LIGHT_HELLFIRE_STONE.get())));
 
     public static final RegistryObject<Block> CHEST_MIMIC = register("chest_mimic", () -> new ChestMimicBlock(Block.Properties.copy(Blocks.CHEST)));
-    public static final RegistryObject<Block> TREASURE_CHEST = register("treasure_chest", () -> new TreasureChestBlock(Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F)));
+    public static final RegistryObject<Block> TREASURE_CHEST = register("treasure_chest", () -> new TreasureChestBlock(Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<RotatedPillarBlock> PILLAR = register("pillar",
             () -> new RotatedPillarBlock(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).requiresCorrectToolForDrops()));

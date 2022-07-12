@@ -225,6 +225,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.LIGHT_ANGELIC_STONE.get(),
                 AetherBlocks.HELLFIRE_STONE.get(),
                 AetherBlocks.LIGHT_HELLFIRE_STONE.get(),
+                AetherBlocks.TREASURE_CHEST.get(),
                 AetherBlocks.PILLAR.get(),
                 AetherBlocks.PILLAR_TOP.get(),
                 AetherBlocks.HOLYSTONE_BUTTON.get(),
@@ -317,6 +318,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.HELLFIRE_STAIRS.get(),
                 AetherBlocks.HELLFIRE_SLAB.get(),
                 AetherBlocks.HELLFIRE_WALL.get(),
+                AetherBlocks.TREASURE_CHEST.get(),
                 AetherBlocks.PILLAR.get(),
                 AetherBlocks.PILLAR_TOP.get());
         tag(BlockTags.NEEDS_IRON_TOOL).add(
