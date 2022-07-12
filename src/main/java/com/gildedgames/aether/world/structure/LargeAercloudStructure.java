@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 
 public class LargeAercloudStructure extends Structure {
-    public static final Codec<LargeAercloudStructure> CODEC = simpleCodec(LargeAercloudStructure::new);
+    public static final Codec<LargeAercloudStructure> CODEC = simpleCodec(LargeAercloudStructure::new); //todo more configuration options.
 
     public LargeAercloudStructure(Structure.StructureSettings settings) {
         super(settings);
