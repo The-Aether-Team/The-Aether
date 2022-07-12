@@ -1,18 +1,11 @@
 package com.gildedgames.aether.block.construction;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.SlabBlock;
-
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.SlabType;
 
 public class AerogelSlabBlock extends SlabBlock
 {
@@ -30,13 +23,22 @@ public class AerogelSlabBlock extends SlabBlock
 		return true;
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
-		return adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
-	}
-
 	@Override
-	public VoxelShape getVisualShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
-		return Shapes.empty();
+    @SuppressWarnings("deprecation")
+	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
+        if (adjacentBlockState.is(this)) {
+            switch (side) {
+                case UP -> {
+                    return state.getValue(TYPE) != SlabType.BOTTOM && adjacentBlockState.getValue(TYPE) != SlabType.TOP;
+                }
+                case DOWN -> {
+                    return state.getValue(TYPE) != SlabType.TOP && adjacentBlockState.getValue(TYPE) != SlabType.BOTTOM;
+                }
+                default -> {
+                    return state.getValue(TYPE) == adjacentBlockState.getValue(TYPE);
+                }
+            }
+        }
+		return super.skipRendering(state, adjacentBlockState, side);
 	}
 }
