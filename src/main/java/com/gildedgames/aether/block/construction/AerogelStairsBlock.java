@@ -41,27 +41,30 @@ public class AerogelStairsBlock extends StairBlock {
         return map;
     });
 
+    /**
+     * TODO: It is theoretically possible to implement this instead by overriding {@link #skipRendering(BlockState, BlockState, Direction)}
+     */
     @Override
     public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
-        if (neighborState.getBlock() != this)  {
-            return super.hidesNeighborFace(level, pos, state, neighborState, dir);
+        if (neighborState.is(this)) {
+            var key = new BlockStatePairKey(neighborState, state, dir.getOpposite());
+            var occlusion_cache = NEIGHBOR_OCCLUSION_CACHE.get();
+            byte b = occlusion_cache.getAndMoveToFirst(key);
+            if (b != 127) {
+                return b != 0;
+            }
+            var voxelshape = neighborState.getFaceOcclusionShape(level, pos.relative(dir), dir.getOpposite());
+            if (voxelshape.isEmpty()) {
+                return false;
+            }
+            var voxelshape1 = state.getFaceOcclusionShape(level, pos, dir);
+            boolean differing = !Shapes.joinIsNotEmpty(voxelshape, voxelshape1, BooleanOp.ONLY_FIRST);
+            if (occlusion_cache.size() == 2048) {
+                occlusion_cache.removeLastByte();
+            }
+            occlusion_cache.putAndMoveToFirst(key, (byte)(differing ? 1 : 0));
+            return differing;
         }
-        var key = new BlockStatePairKey(neighborState, state, dir.getOpposite());
-        var occlusion_cache = NEIGHBOR_OCCLUSION_CACHE.get();
-        byte b = occlusion_cache.getAndMoveToFirst(key);
-        if (b != 127) {
-            return b != 0;
-        }
-        var voxelshape = neighborState.getFaceOcclusionShape(level, pos.relative(dir), dir.getOpposite());
-        if (voxelshape.isEmpty()) {
-            return false;
-        }
-        var voxelshape1 = state.getFaceOcclusionShape(level, pos, dir);
-        boolean differing = !Shapes.joinIsNotEmpty(voxelshape, voxelshape1, BooleanOp.ONLY_FIRST);
-        if (occlusion_cache.size() == 2048) {
-            occlusion_cache.removeLastByte();
-        }
-        occlusion_cache.putAndMoveToFirst(key, (byte)(differing ? 1 : 0));
-        return differing;
+        return super.hidesNeighborFace(level, pos, state, neighborState, dir);
     }
 }
