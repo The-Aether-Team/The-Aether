@@ -165,7 +165,7 @@ public class AetherBlocks
     public static final RegistryObject<WallBlock> MOSSY_HOLYSTONE_WALL = register("mossy_holystone_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get())));
     public static final RegistryObject<WallBlock> ICESTONE_WALL = register("icestone_wall", () -> new IcestoneWallBlock(Block.Properties.copy(AetherBlocks.ICESTONE.get())));
     public static final RegistryObject<WallBlock> HOLYSTONE_BRICK_WALL = register("holystone_brick_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get())));
-    public static final RegistryObject<WallBlock> AEROGEL_WALL = register("aerogel_wall", () -> new AerogelWallBlock(Block.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking(AetherBlocks::never)));
+    public static final RegistryObject<WallBlock> AEROGEL_WALL = register("aerogel_wall", () -> new AerogelWallBlock(Block.Properties.of(Material.STONE, MaterialColor.DIAMOND).strength(1.0F, 2000.0F).sound(SoundType.METAL).requiresCorrectToolForDrops().isViewBlocking(AetherBlocks::never)));
 
     public static final RegistryObject<StairBlock> SKYROOT_STAIRS = register("skyroot_stairs",
             () -> new StairBlock(() -> SKYROOT_PLANKS.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get())));
@@ -223,7 +223,7 @@ public class AetherBlocks
     }
 
     public static void registerFlammability() {
-		FireBlock fireBlock = (FireBlock) Blocks.FIRE;
+        FireBlock fireBlock = (FireBlock) Blocks.FIRE;
         fireBlock.setFlammable(AetherBlocks.SKYROOT_LEAVES.get(), 30, 60);
         fireBlock.setFlammable(AetherBlocks.GOLDEN_OAK_LEAVES.get(), 30, 60);
         fireBlock.setFlammable(AetherBlocks.CRYSTAL_LEAVES.get(), 30, 60);
