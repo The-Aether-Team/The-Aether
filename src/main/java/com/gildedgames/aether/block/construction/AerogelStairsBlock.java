@@ -27,24 +27,6 @@ public class AerogelStairsBlock extends StairBlock {
         return true;
     }
 
-    // @OnlyIn(Dist.CLIENT)
-    // public boolean isSideInvisible(BlockState state, BlockState
-    // adjacentBlockState, Direction side) {
-    // return adjacentBlockState.isIn(this) || super.isSideInvisible(state,
-    // adjacentBlockState, side);
-    // }
-
-    // @Override
-    // public VoxelShape getOcclusionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-    //     return pState.getShape(pLevel, pPos);
-    // }
-
-    // @Override
-    // public VoxelShape getVisualShape(BlockState state, BlockGetter reader,
-    // BlockPos pos, CollisionContext context) {
-    // return Shapes.empty();
-    // }
-
     @Override
     public boolean supportsExternalFaceHiding(BlockState state) {
         return true;
