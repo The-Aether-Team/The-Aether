@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class AetherStructureSets {
     public static final Map<ResourceLocation, StructureSet> STRUCTURE_SETS = new HashMap<>();
-//todo: better spacing and separation.
+
     public static final ResourceKey<StructureSet> LARGE_AERCLOUD = register("large_aercloud", new StructureSet(AetherStructures.dataHolder(AetherStructures.LARGE_AERCLOUD), new RandomSpreadStructurePlacement(5, 2, RandomSpreadType.LINEAR, 15536586)));
 
     public static ResourceKey<StructureSet> register(String name, StructureSet structure) {
