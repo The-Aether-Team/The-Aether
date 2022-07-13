@@ -171,7 +171,7 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
     }
 
     public ItemModelBuilder translucentItemWallBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String location) {
-        return wallInventory(blockName(block), texture(blockName(baseBlock), location)).renderType(new ResourceLocation("translucent"));
+        return singleTexture(blockName(block), new ResourceLocation(Aether.MODID, BLOCK_FOLDER + "/template_translucent_wall_inventory"), "wall", texture(blockName(baseBlock), location));
     }
 
     public ItemModelBuilder itemButton(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String location) {

@@ -1,5 +1,5 @@
 {
-  "parent": "aether:block/template_wall_center_translucent",
+  "parent": "aether:block/template_translucent_wall_t",
   "textures": {
     "wall": "aether:block/construction/aerogel"
   }
