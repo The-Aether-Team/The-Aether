@@ -21,9 +21,6 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
         super(generator, Aether.MODID, fileHelper);
     }
 
-    //todo: https://github.com/MinecraftForge/MinecraftForge/pull/8852 will make some of the new render type-related
-    // methods unnecessary.
-
     protected ResourceLocation texture(String name) {
         return modLoc("block/" + name);
     }
@@ -132,30 +129,11 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
     }
 
     public void doorBlock(Supplier<? extends DoorBlock> block, ResourceLocation bottom, ResourceLocation top) {
-        doorBlockInternal(block.get(), name(block), bottom, top);
-    }
-
-    private void doorBlockInternal(DoorBlock block, String baseName, ResourceLocation bottom, ResourceLocation top) {
-        ModelFile bottomLeft = models().doorBottomLeft(baseName + "_bottom_left", bottom, top).renderType(new ResourceLocation("cutout"));
-        ModelFile bottomLeftOpen = models().doorBottomLeftOpen(baseName + "_bottom_left_open", bottom, top).renderType(new ResourceLocation("cutout"));
-        ModelFile bottomRight = models().doorBottomRight(baseName + "_bottom_right", bottom, top).renderType(new ResourceLocation("cutout"));
-        ModelFile bottomRightOpen = models().doorBottomRightOpen(baseName + "_bottom_right_open", bottom, top).renderType(new ResourceLocation("cutout"));
-        ModelFile topLeft = models().doorTopLeft(baseName + "_top_left", bottom, top).renderType(new ResourceLocation("cutout"));
-        ModelFile topLeftOpen = models().doorTopLeftOpen(baseName + "_top_left_open", bottom, top).renderType(new ResourceLocation("cutout"));
-        ModelFile topRight = models().doorTopRight(baseName + "_top_right", bottom, top).renderType(new ResourceLocation("cutout"));
-        ModelFile topRightOpen = models().doorTopRightOpen(baseName + "_top_right_open", bottom, top).renderType(new ResourceLocation("cutout"));
-        doorBlock(block, bottomLeft, bottomLeftOpen, bottomRight, bottomRightOpen, topLeft, topLeftOpen, topRight, topRightOpen);
+        doorBlockWithRenderType(block.get(), bottom, top, "cutout");
     }
 
     public void trapdoorBlock(Supplier<? extends TrapDoorBlock> block, ResourceLocation texture, boolean orientable) {
-        trapdoorBlockInternal(block.get(), name(block), texture, orientable);
-    }
-
-    private void trapdoorBlockInternal(TrapDoorBlock block, String baseName, ResourceLocation texture, boolean orientable) {
-        ModelFile bottom = orientable ? models().trapdoorOrientableBottom(baseName + "_bottom", texture) : models().trapdoorBottom(baseName + "_bottom", texture).renderType(new ResourceLocation("cutout"));
-        ModelFile top = orientable ? models().trapdoorOrientableTop(baseName + "_top", texture) : models().trapdoorTop(baseName + "_top", texture).renderType(new ResourceLocation("cutout"));
-        ModelFile open = orientable ? models().trapdoorOrientableOpen(baseName + "_open", texture) : models().trapdoorOpen(baseName + "_open", texture).renderType(new ResourceLocation("cutout"));
-        trapdoorBlock(block, bottom, top, open, orientable);
+        trapdoorBlockWithRenderType(block.get(), texture, orientable, "cutout");
     }
 
     public void wallBlock(Supplier<? extends WallBlock> block, Supplier<? extends Block> baseBlock, String location) {
@@ -238,16 +216,7 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
     }
 
     public void pane(Supplier<? extends IronBarsBlock> block, Supplier<? extends GlassBlock> glass, String location) {
-        paneBlockInternal(block.get(), name(block), texture(name(glass), location), extend(texture(name(block), location), "_top"));
-    }
-
-    private void paneBlockInternal(IronBarsBlock block, String baseName, ResourceLocation pane, ResourceLocation edge) {
-        ModelFile post = models().panePost(baseName + "_post", pane, edge).renderType(new ResourceLocation("translucent"));
-        ModelFile side = models().paneSide(baseName + "_side", pane, edge).renderType(new ResourceLocation("translucent"));
-        ModelFile sideAlt = models().paneSideAlt(baseName + "_side_alt", pane, edge).renderType(new ResourceLocation("translucent"));
-        ModelFile noSide = models().paneNoSide(baseName + "_noside", pane).renderType(new ResourceLocation("translucent"));
-        ModelFile noSideAlt = models().paneNoSideAlt(baseName + "_noside_alt", pane).renderType(new ResourceLocation("translucent"));
-        paneBlock(block, post, side, sideAlt, noSide, noSideAlt);
+        paneBlockWithRenderType(block.get(), texture(name(glass), location), extend(texture(name(block), location), "_top"), ResourceLocation.tryParse("translucent"));
     }
 
     public void altar(Supplier<? extends Block> block) {
