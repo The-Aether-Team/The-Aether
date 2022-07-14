@@ -1,4 +1,4 @@
-package com.gildedgames.aether.world.structure;
+package com.gildedgames.aether.world.structure.outdated;
 
 import com.gildedgames.aether.Aether;
 //import com.gildedgames.aether.common.world.structure.BronzeDungeonStructure;
