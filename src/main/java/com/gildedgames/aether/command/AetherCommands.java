@@ -1,10 +1,6 @@
 package com.gildedgames.aether.command;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.command.AetherMenuFixCommand;
-import com.gildedgames.aether.command.AetherTimeCommand;
-import com.gildedgames.aether.command.EternalDayCommand;
-import com.gildedgames.aether.command.SunAltarWhitelistCommand;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -17,7 +13,7 @@ public class AetherCommands {
     @SubscribeEvent
     public static void registerCommands(RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
-        Commands.CommandSelection selection = event.getEnvironment();
+        Commands.CommandSelection selection = event.getCommandSelection();
         SunAltarWhitelistCommand.register(dispatcher);
         AetherTimeCommand.register(dispatcher);
         EternalDayCommand.register(dispatcher);

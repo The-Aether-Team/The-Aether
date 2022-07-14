@@ -25,7 +25,7 @@ public class EntityListener {
     @SubscribeEvent
     public static void onInteractWithEntity(PlayerInteractEvent.EntityInteractSpecific event) {
         Entity targetEntity = event.getTarget();
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         InteractionHand interactionHand = event.getHand();
         EntityHooks.skyrootBucketMilking(targetEntity, player, interactionHand);
         Optional<InteractionResult> result = EntityHooks.pickupBucketable(targetEntity, player, interactionHand);

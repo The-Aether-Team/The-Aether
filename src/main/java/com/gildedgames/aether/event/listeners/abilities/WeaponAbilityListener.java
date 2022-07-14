@@ -22,14 +22,14 @@ import java.util.Collection;
 public class WeaponAbilityListener {
     @SubscribeEvent
     public static void trackEntityDeath(LivingDeathEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
+        LivingEntity livingEntity = event.getEntity();
         DamageSource damageSource = event.getSource();
         SkyrootWeapon.entityKilledBySkyroot(livingEntity, damageSource);
     }
 
     @SubscribeEvent
     public static void doSkyrootDoubleDrops(LivingDropsEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
+        LivingEntity livingEntity = event.getEntity();
         DamageSource damageSource = event.getSource();
         Collection<ItemEntity> drops = event.getDrops();
         SkyrootWeapon.entityDropsBySkyroot(livingEntity, damageSource, drops);
@@ -44,7 +44,7 @@ public class WeaponAbilityListener {
 
     @SubscribeEvent
     public static void onDartHurt(LivingHurtEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
+        LivingEntity livingEntity = event.getEntity();
         DamageSource damageSource = event.getSource();
         AbilityHooks.WeaponHooks.stickDart(livingEntity, damageSource);
     }
@@ -58,7 +58,7 @@ public class WeaponAbilityListener {
 
     @SubscribeEvent
     public static void onHolystoneAbility(LivingHurtEvent event) {
-        LivingEntity target = event.getEntityLiving();
+        LivingEntity target = event.getEntity();
         DamageSource source = event.getSource();
         HolystoneWeapon.dropAmbrosium(target, source);
     }
