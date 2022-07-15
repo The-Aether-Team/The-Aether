@@ -14,7 +14,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 public class AccessoryAbilityClientListener {
     @SubscribeEvent
     public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
-        CuriosApi.getCuriosHelper().findFirstCurio(event.getPlayer(), AetherItems.INVISIBILITY_CLOAK.get()).ifPresent((slotResult) -> event.setCanceled(true));
+        CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), AetherItems.INVISIBILITY_CLOAK.get()).ifPresent((slotResult) -> event.setCanceled(true));
     }
 
     @SubscribeEvent

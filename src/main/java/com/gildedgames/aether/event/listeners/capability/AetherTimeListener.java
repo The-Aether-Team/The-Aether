@@ -13,13 +13,13 @@ import net.minecraftforge.fml.common.Mod;
 public class AetherTimeListener {
     @SubscribeEvent
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         CapabilityHooks.AetherTimeHooks.login(player);
     }
 
     @SubscribeEvent
     public static void onChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         CapabilityHooks.AetherTimeHooks.changeDimension(player);
     }
 }

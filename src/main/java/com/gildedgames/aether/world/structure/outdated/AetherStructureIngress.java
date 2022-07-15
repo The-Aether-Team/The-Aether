@@ -19,7 +19,6 @@ import net.minecraft.world.level.levelgen.FlatLevelSource;
 //import net.minecraft.world.level.levelgen.feature.StructureFeature;
 //import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;

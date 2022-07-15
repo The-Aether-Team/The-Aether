@@ -124,7 +124,8 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
 
     public ItemModelBuilder pane(Supplier<? extends IronBarsBlock> block, Supplier<? extends GlassBlock> glass, String location) {
         return withExistingParent(blockName(block), mcLoc("item/generated"))
-                .texture("layer0", texture(blockName(glass), location));
+                .texture("layer0", texture(blockName(glass), location))
+                .renderType(new ResourceLocation("translucent"));
     }
 
     public ItemModelBuilder itemBlockFlat(Supplier<? extends Block> block, String location) {

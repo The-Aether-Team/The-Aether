@@ -20,20 +20,20 @@ import top.theillusivec4.curios.api.CuriosApi;
 public class AccessoryAbilityListener {
     @SubscribeEvent
     public static void onPlayerAttack(AttackEntityEvent event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         Entity target = event.getTarget();
         AbilityHooks.AccessoryHooks.damageGloves(player, target);
     }
 
     @SubscribeEvent
     public static void onMiningSpeed(PlayerEvent.BreakSpeed event) {
-        CuriosApi.getCuriosHelper().findCurios(event.getPlayer(), AetherItems.ZANITE_RING.get()).forEach((slotResult -> event.setNewSpeed(ZaniteAccessory.handleMiningSpeed(event.getNewSpeed(), slotResult))));
-        CuriosApi.getCuriosHelper().findFirstCurio(event.getPlayer(), AetherItems.ZANITE_PENDANT.get()).ifPresent((slotResult) -> event.setNewSpeed(ZaniteAccessory.handleMiningSpeed(event.getNewSpeed(), slotResult)));
+        CuriosApi.getCuriosHelper().findCurios(event.getEntity(), AetherItems.ZANITE_RING.get()).forEach((slotResult -> event.setNewSpeed(ZaniteAccessory.handleMiningSpeed(event.getNewSpeed(), slotResult))));
+        CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), AetherItems.ZANITE_PENDANT.get()).ifPresent((slotResult) -> event.setNewSpeed(ZaniteAccessory.handleMiningSpeed(event.getNewSpeed(), slotResult)));
     }
 
     @SubscribeEvent
     public static void onTargetSet(LivingEvent.LivingVisibilityEvent event) {
-        CuriosApi.getCuriosHelper().findFirstCurio(event.getEntityLiving(), AetherItems.INVISIBILITY_CLOAK.get()).ifPresent((slotResult) -> event.modifyVisibility(0.0D));
+        CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), AetherItems.INVISIBILITY_CLOAK.get()).ifPresent((slotResult) -> event.modifyVisibility(0.0D));
     }
 
     @SubscribeEvent

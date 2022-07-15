@@ -28,7 +28,7 @@ public record OpenAccessoriesPacket(int playerID, ItemStack carryStack) implemen
         if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
             ItemStack itemStack = serverPlayer.isCreative() ? this.carryStack : serverPlayer.containerMenu.getCarried();
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
-            NetworkHooks.openGui(serverPlayer, new AccessoriesProvider());
+            NetworkHooks.openScreen(serverPlayer, new AccessoriesProvider());
             if (!itemStack.isEmpty()) {
                 serverPlayer.containerMenu.setCarried(itemStack);
                 AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(serverPlayer.getId(), itemStack), serverPlayer);
