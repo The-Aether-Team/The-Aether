@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 public class AetherPlayerClientListener {
     @SubscribeEvent
     public static void onMove(MovementInputUpdateEvent event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         Input input = event.getInput();
         CapabilityClientHooks.AetherPlayerHooks.movementInput(player, input);
     }

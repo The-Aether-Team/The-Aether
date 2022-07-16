@@ -131,6 +131,7 @@ public class AetherTags {
 
 	public static class Biomes {
 		public static final TagKey<Biome> IS_AETHER = tag("is_aether");
+		public static final TagKey<Biome> HAS_LARGE_AERCLOUD = tag("has_large_aercloud");
 
 		private static TagKey<Biome> tag(String name) {
 			return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Aether.MODID, name));

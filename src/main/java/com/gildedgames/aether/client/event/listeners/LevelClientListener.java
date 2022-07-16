@@ -12,7 +12,8 @@ import net.minecraftforge.fml.common.Mod;
 public class LevelClientListener {
     @SubscribeEvent
     public static void onRenderLevelLast(RenderLevelStageEvent event) {
-        LevelClientHooks.renderMenuWithWorld(Minecraft.getInstance());
+        RenderLevelStageEvent.Stage stage = event.getStage();
+        LevelClientHooks.renderMenuWithWorld(stage, Minecraft.getInstance());
     }
 
     @SubscribeEvent

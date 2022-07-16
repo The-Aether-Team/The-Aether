@@ -9,8 +9,8 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class CapeEntityListener {
     @SubscribeEvent
-    public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
+    public static void onEntityUpdate(LivingEvent.LivingTickEvent event) {
+        LivingEntity livingEntity = event.getEntity();
         CapabilityHooks.CapeEntityHooks.update(livingEntity);
     }
 }

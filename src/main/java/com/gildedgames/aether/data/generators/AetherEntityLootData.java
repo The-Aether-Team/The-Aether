@@ -228,6 +228,6 @@ public class AetherEntityLootData extends EntityLoot {
     @Nonnull
     @Override
     protected Iterable<EntityType<?>> getKnownEntities() {
-        return AetherEntityTypes.ENTITIES.getEntries().stream().map(Supplier::get).collect(Collectors.toList());
+        return AetherEntityTypes.ENTITY_TYPES.getEntries().stream().map(Supplier::get).collect(Collectors.toList());
     }
 }

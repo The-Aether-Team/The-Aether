@@ -19,7 +19,7 @@ public class LoreBookItem extends Item
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         if (!worldIn.isClientSide()) {
-            NetworkHooks.openGui((ServerPlayer) playerIn, new LoreBookProvider());
+            NetworkHooks.openScreen((ServerPlayer) playerIn, new LoreBookProvider());
         }
         return super.use(worldIn, playerIn, handIn);
     }

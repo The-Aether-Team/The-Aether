@@ -6,27 +6,30 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 
 public class LevelClientHooks {
-    public static void renderMenuWithWorld(Minecraft minecraft) {
-        if (AetherConfig.CLIENT.enable_world_preview.get()) {
-            if (AetherWorldDisplayHelper.loadedSummary != null) {
-                if (minecraft.screen == null) {
-                    setupMenu(minecraft);
-                } else {
-                    LocalPlayer player = minecraft.player;
-                    if (player != null) {
-                        player.setXRot(0);
-                        player.setYRot(player.getYRot() + 0.02F);
-                    }
-                    if (minecraft.screen instanceof PauseScreen) {
+    public static void renderMenuWithWorld(RenderLevelStageEvent.Stage stage, Minecraft minecraft) {
+        if (stage == RenderLevelStageEvent.Stage.AFTER_WEATHER) {
+            if (AetherConfig.CLIENT.enable_world_preview.get()) {
+                if (AetherWorldDisplayHelper.loadedSummary != null) {
+                    if (minecraft.screen == null) {
                         setupMenu(minecraft);
+                    } else {
+                        LocalPlayer player = minecraft.player;
+                        if (player != null) {
+                            player.setXRot(0);
+                            player.setYRot(player.getYRot() + 0.02F);
+                        }
+                        if (minecraft.screen instanceof PauseScreen) {
+                            setupMenu(minecraft);
+                        }
                     }
                 }
+            } else {
+                AetherWorldDisplayHelper.loadedLevel = null;
+                AetherWorldDisplayHelper.loadedSummary = null;
             }
-        } else {
-            AetherWorldDisplayHelper.loadedLevel = null;
-            AetherWorldDisplayHelper.loadedSummary = null;
         }
     }
 

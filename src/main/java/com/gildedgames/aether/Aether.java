@@ -13,6 +13,7 @@ import com.gildedgames.aether.blockentity.AltarBlockEntity;
 import com.gildedgames.aether.blockentity.FreezerBlockEntity;
 import com.gildedgames.aether.data.generators.*;
 import com.gildedgames.aether.data.generators.tags.*;
+import com.gildedgames.aether.data.resources.*;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
@@ -22,20 +23,17 @@ import com.gildedgames.aether.loot.conditions.AetherLootConditions;
 import com.gildedgames.aether.loot.functions.AetherLootFunctions;
 import com.gildedgames.aether.loot.modifiers.AetherLootModifiers;
 import com.gildedgames.aether.recipe.AetherRecipeSerializers;
-import com.gildedgames.aether.data.resources.AetherBiomes;
-import com.gildedgames.aether.data.resources.AetherDimensions;
-import com.gildedgames.aether.data.resources.AetherNoiseGeneratorSettings;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.world.AetherPOI;
 import com.gildedgames.aether.world.foliageplacer.AetherFoliagePlacerTypes;
-import com.gildedgames.aether.data.resources.AetherConfiguredFeatures;
 import com.gildedgames.aether.world.feature.AetherFeatures;
-import com.gildedgames.aether.data.resources.AetherPlacedFeatures;
 import com.gildedgames.aether.world.placementmodifier.AetherPlacementModifiers;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.client.CombinedResourcePack;
 import com.gildedgames.aether.api.SunAltarWhitelist;
 import com.gildedgames.aether.api.TriviaGenerator;
+import com.gildedgames.aether.world.structure.AetherStructureTypes;
+import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.gildedgames.aether.world.treedecorator.AetherTreeDecoratorTypes;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
@@ -56,6 +54,8 @@ import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -66,10 +66,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.resource.PathResourcePack;
+import net.minecraftforge.resource.PathPackResources;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
@@ -98,8 +98,8 @@ public class Aether
         DeferredRegister<?>[] registers = {
                 AetherBlocks.BLOCKS,
                 AetherItems.ITEMS,
-                AetherEntityTypes.ENTITIES,
-                AetherBlockEntityTypes.BLOCK_ENTITIES,
+                AetherEntityTypes.ENTITY_TYPES,
+                AetherBlockEntityTypes.BLOCK_ENTITY_TYPES,
                 AetherMenuTypes.MENU_TYPES,
                 AetherEffects.EFFECTS,
                 AetherParticleTypes.PARTICLES,
@@ -107,6 +107,8 @@ public class Aether
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
                 AetherTreeDecoratorTypes.TREE_DECORATORS,
                 AetherPOI.POI,
+                AetherStructureTypes.STRUCTURE_TYPES,
+                AetherStructurePieceTypes.STRUCTURE_PIECE_TYPES,
                 AetherRecipeTypes.RECIPE_TYPES,
                 AetherRecipeSerializers.RECIPE_SERIALIZERS,
                 AetherLootFunctions.LOOT_FUNCTION_TYPES,
@@ -184,6 +186,8 @@ public class Aether
         generator.addProvider(event.includeServer(), new AetherDimensionTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<ConfiguredFeature<?, ?>>().create(generator, helper, AetherConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<PlacedFeature>().create(generator, helper, AetherPlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<Structure>().create(generator, helper, AetherStructures.STRUCTURES, Registry.STRUCTURE_REGISTRY));
+        generator.addProvider(event.includeServer(), new AetherDataGenerators<StructureSet>().create(generator, helper, AetherStructureSets.STRUCTURE_SETS, Registry.STRUCTURE_SET_REGISTRY));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<Biome>().create(generator, helper, AetherBiomes.BIOMES, ForgeRegistries.Keys.BIOMES));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<DimensionType>().create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<NoiseGeneratorSettings>().create(BuiltinRegistries.ACCESS, generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
@@ -199,7 +203,7 @@ public class Aether
     private void setupReleasePack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_125");
-            PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
             createCombinedPack(event, resourcePath, pack, "builtin/aether_125_art", "Aether 1.2.5 Textures", "The classic look of the Aether from 1.2.5");
         }
     }
@@ -207,15 +211,15 @@ public class Aether
     private void setupBetaPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_b173");
-            PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
             createCombinedPack(event, resourcePath, pack, "builtin/aether_b173_art", "Aether b1.7.3 Textures", "The original look of the Aether from b1.7.3");
         }
     }
 
-    private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, PathResourcePack pack, String name, String title, String description) {
+    private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, PathPackResources pack, String name, String title, String description) {
         Path baseResourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_base");
-        PathResourcePack basePack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, baseResourcePath);
-        List<PathResourcePack> mergedPacks = List.of(pack, basePack);
+        PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, baseResourcePath);
+        List<PathPackResources> mergedPacks = List.of(pack, basePack);
         event.addRepositorySource((packConsumer, packConstructor) ->
                 packConsumer.accept(Pack.create(
                         name, false,
@@ -227,7 +231,7 @@ public class Aether
     private void setupCTMFixPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("ctm")) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ctm_fix");
-            PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
             event.addRepositorySource((packConsumer, packConstructor) ->
                 packConsumer.accept(packConstructor.create(
                         "builtin/aether_ctm_fix", Component.literal("Aether CTM Fix"), true, () -> pack,

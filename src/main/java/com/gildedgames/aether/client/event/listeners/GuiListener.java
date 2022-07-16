@@ -51,10 +51,6 @@ public class GuiListener {
 		if (aetherMainMenuScreen != null) {
 			event.setNewScreen(aetherMainMenuScreen);
 		}
-		GenericDirtMessageScreen bufferScreen = GuiHooks.openBufferScreen(screen);
-		if (bufferScreen != null) {
-			event.setNewScreen(bufferScreen);
-		}
 		GuiHooks.setupSplash(screen);
 	}
 

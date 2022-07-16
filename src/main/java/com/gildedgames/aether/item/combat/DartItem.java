@@ -12,9 +12,9 @@ import java.util.function.Supplier;
 
 public class DartItem extends Item
 {
-    protected final Supplier<EntityType<?>> dartEntity;
+    protected final Supplier<? extends EntityType<?>> dartEntity;
 
-    public DartItem(Supplier<EntityType<?>> dartEntity, Properties properties) {
+    public DartItem(Supplier<? extends EntityType<?>> dartEntity, Properties properties) {
         super(properties);
         this.dartEntity = dartEntity;
     }
