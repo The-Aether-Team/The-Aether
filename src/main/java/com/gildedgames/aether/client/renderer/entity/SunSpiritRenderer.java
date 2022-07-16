@@ -22,6 +22,7 @@ public class SunSpiritRenderer extends MobRenderer<SunSpirit, SunSpiritModel<Sun
     @Override
     protected void scale(@Nonnull SunSpirit pLivingEntity, PoseStack pMatrixStack, float pPartialTickTime) {
         pMatrixStack.scale(2.25F, 2.25F, 2.25F);
+        pMatrixStack.translate(0, 0.85, 0);
     }
 
     @Override
