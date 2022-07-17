@@ -11,6 +11,7 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
+import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
@@ -35,7 +36,8 @@ public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<A
     @Override
     protected void setupRotations(@Nonnull Aerwhale aerwhale, @Nonnull PoseStack poseStack, float ageInTicks, float pRotationYaw, float partialTicks) {
         super.setupRotations(aerwhale, poseStack, ageInTicks, pRotationYaw, partialTicks);
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(aerwhale.getXRot()));
+        float rot = Mth.lerp(partialTicks, aerwhale.animXRot, aerwhale.getXRot());
+        poseStack.mulPose(Vector3f.XP.rotationDegrees(rot));
     }
 
     @Override

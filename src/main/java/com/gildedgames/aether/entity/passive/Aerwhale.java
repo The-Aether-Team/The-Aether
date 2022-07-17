@@ -30,6 +30,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 public class Aerwhale extends FlyingMob {
+    public float animXRot;
 
     public Aerwhale(EntityType<? extends Aerwhale> type, Level level) {
         super(type, level);
@@ -51,6 +52,12 @@ public class Aerwhale extends FlyingMob {
 
     public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
         return level.getFluidState(pos).is(Fluids.EMPTY) && level.getRawBrightness(pos, 0) > 8 && (reason == MobSpawnType.SPAWNER || level.getBlockState(pos.below()).is(AetherTags.Blocks.AERWHALE_SPAWNABLE_ON));
+    }
+
+    @Override
+    public void aiStep() {
+        this.animXRot = this.getXRot();
+        super.aiStep();
     }
 
     /**
