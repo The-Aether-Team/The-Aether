@@ -29,7 +29,7 @@ public class AerbunnyRenderer extends MobRenderer<Aerbunny, AerbunnyModel> {
     }
 
     @Override
-    protected void setupRotations(Aerbunny aerbunny, @Nonnull PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
+    protected void setupRotations(@Nonnull Aerbunny aerbunny, @Nonnull PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
         super.setupRotations(aerbunny, poseStack, ageInTicks, rotationYaw, partialTicks);
         if (!aerbunny.isOnGround()) {
             if (aerbunny.getDeltaMovement().y > 0.5) {

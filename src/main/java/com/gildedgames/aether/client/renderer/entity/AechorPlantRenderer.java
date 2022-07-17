@@ -26,6 +26,21 @@ public class AechorPlantRenderer extends MobRenderer<AechorPlant, AechorPlantMod
         this.shadowRadius = f2 - 0.25F;
     }
 
+    @Override
+    protected void setupRotations(@Nonnull AechorPlant aechorPlant, @Nonnull PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
+        super.setupRotations(aechorPlant, poseStack, ageInTicks, rotationYaw, partialTicks);
+        if (aechorPlant.hurtTime > 0) {
+            aechorPlant.sinage += 0.03F;
+        } else if (aechorPlant.getTargetingEntity()) {
+            aechorPlant.sinage += 0.02F;
+        } else {
+            aechorPlant.sinage += 0.01F;
+        }
+        if (aechorPlant.sinage > (Math.PI * 2.0F)) {
+            aechorPlant.sinage -= (Math.PI * 2.0F);
+        }
+    }
+
     @Nonnull
     @Override
     public ResourceLocation getTextureLocation(@Nonnull AechorPlant aechorPlant) {

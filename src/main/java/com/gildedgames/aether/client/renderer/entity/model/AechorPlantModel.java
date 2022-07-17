@@ -93,9 +93,9 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
         PartDefinition stamenStem1 = stem.addOrReplaceChild("stamen_stem_1", CubeListBuilder.create().texOffs(36, 13).addBox(0.0F, -9.0F, -1.5F, 1, 6, 1, new CubeDeformation(-0.25F)), PartPose.ZERO);
         PartDefinition stamenStem2 = stem.addOrReplaceChild("stamen_stem_2", CubeListBuilder.create().texOffs(36, 13).addBox(0.0F, -9.0F, -1.5F, 1, 6, 1, new CubeDeformation(-0.25F)), PartPose.ZERO);
         PartDefinition stamenStem3 = stem.addOrReplaceChild("stamen_stem_3", CubeListBuilder.create().texOffs(36, 13).addBox(0.0F, -9.0F, -1.5F, 1, 6, 1, new CubeDeformation(-0.25F)), PartPose.ZERO);
-        stamenStem1.addOrReplaceChild("stamen_tip_1", CubeListBuilder.create().texOffs(32, 15).addBox(0.0F, -10.0F, -1.5F, 1, 1, 1, new CubeDeformation(0.125F)), PartPose.ZERO);
-        stamenStem2.addOrReplaceChild("stamen_tip_2", CubeListBuilder.create().texOffs(32, 15).addBox(0.0F, -10.0F, -1.5F, 1, 1, 1, new CubeDeformation(0.125F)), PartPose.ZERO);
-        stamenStem3.addOrReplaceChild("stamen_tip_3", CubeListBuilder.create().texOffs(32, 15).addBox(0.0F, -10.0F, -1.5F, 1, 1, 1, new CubeDeformation(0.125F)), PartPose.ZERO);
+        stamenStem1.addOrReplaceChild("stamen_tip_1", CubeListBuilder.create().texOffs(32, 15).addBox(0.0F, -9.0F, -1.5F, 1, 1, 1, new CubeDeformation(0.125F)), PartPose.ZERO);
+        stamenStem2.addOrReplaceChild("stamen_tip_2", CubeListBuilder.create().texOffs(32, 15).addBox(0.0F, -9.0F, -1.5F, 1, 1, 1, new CubeDeformation(0.125F)), PartPose.ZERO);
+        stamenStem3.addOrReplaceChild("stamen_tip_3", CubeListBuilder.create().texOffs(32, 15).addBox(0.0F, -9.0F, -1.5F, 1, 1, 1, new CubeDeformation(0.125F)), PartPose.ZERO);
         for (int i = 1; i <= 10; i++) {
             stem.addOrReplaceChild("leaf_" + i, CubeListBuilder.create().texOffs(38, 13).addBox(-2.0F, -1.0F, -9.5F, 4, 1, 8, new CubeDeformation(-0.15F)), PartPose.ZERO);
         }
