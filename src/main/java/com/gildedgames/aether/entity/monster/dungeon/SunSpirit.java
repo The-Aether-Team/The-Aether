@@ -116,7 +116,7 @@ public class SunSpirit extends Monster implements BossMob {
      */
     @Override
     public boolean canBeAffected(@Nonnull MobEffectInstance pEffectInstance) {
-        net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent event = new net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent(this, pEffectInstance);
+        net.minecraftforge.event.entity.living.MobEffectEvent.Applicable event = new net.minecraftforge.event.entity.living.MobEffectEvent.Applicable(this, pEffectInstance);
         net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event);
         if (event.getResult() != net.minecraftforge.eventbus.api.Event.Result.DEFAULT) return event.getResult() == net.minecraftforge.eventbus.api.Event.Result.ALLOW;
         return false;
