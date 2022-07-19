@@ -114,15 +114,18 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     public void aiStep() {
         super.aiStep();
         this.oSinage = this.sinage;
-        if (this.hurtTime > 0) {
-            this.sinage += 0.9F;
-        } else if (this.getTargetingEntity()) {
-            this.sinage += 0.6F;
-        } else {
-            this.sinage += 0.3F;
+        if (this.oSinage >= Mth.TWO_PI) {
+            this.oSinage -= Mth.TWO_PI;
         }
-        if (this.sinage > (Math.PI * 2.0F)) {
-            this.sinage -= (Math.PI * 2.0F);
+        if (this.sinage >= Mth.TWO_PI) {
+            this.sinage -= Mth.TWO_PI;
+        }
+        if (this.hurtTime > 0) {
+            this.sinage += 0.45F;
+        } else if (this.getTargetingEntity()) {
+            this.sinage += 0.3F;
+        } else {
+            this.sinage += 0.15F;
         }
     }
 
