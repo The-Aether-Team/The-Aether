@@ -6,6 +6,9 @@ import com.gildedgames.aether.capability.player.AetherPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -30,7 +33,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 public class Aerwhale extends FlyingMob {
-    public float animXRot;
+    public static final EntityDataAccessor<Float> DATA_X_ROT_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
 
     public Aerwhale(EntityType<? extends Aerwhale> type, Level level) {
         super(type, level);
@@ -50,14 +53,20 @@ public class Aerwhale extends FlyingMob {
                 .add(Attributes.FLYING_SPEED, 0.2);
     }
 
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_X_ROT_ID, this.getXRot());
+    }
+
     public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
         return level.getFluidState(pos).is(Fluids.EMPTY) && level.getRawBrightness(pos, 0) > 8 && (reason == MobSpawnType.SPAWNER || level.getBlockState(pos.below()).is(AetherTags.Blocks.AERWHALE_SPAWNABLE_ON));
     }
 
     @Override
     public void aiStep() {
-        this.animXRot = this.getXRot();
         super.aiStep();
+        this.setXRot(this.getXRotData());
     }
 
     /**
@@ -146,6 +155,14 @@ public class Aerwhale extends FlyingMob {
         return 1;
     }
 
+    public void setXRotData(float rot) {
+        this.entityData.set(DATA_X_ROT_ID, Mth.wrapDegrees(rot));
+    }
+
+    public float getXRotData() {
+        return this.entityData.get(DATA_X_ROT_ID);
+    }
+
     @Override
     protected SoundEvent getAmbientSound() {
         return AetherSoundEvents.ENTITY_AERWHALE_AMBIENT.get();
@@ -165,8 +182,6 @@ public class Aerwhale extends FlyingMob {
     protected float getSoundVolume() {
         return 2.0F;
     }
-
-
 
     public static class SetTravelCourseGoal extends Goal {
         private final Mob mob;
@@ -226,9 +241,11 @@ public class Aerwhale extends FlyingMob {
      * Custom aerwhale move controller to help with keeping a smooth travel course.
      */
     public static class AerwhaleMoveControl extends MoveControl {
+        protected final Aerwhale mob;
 
-        public AerwhaleMoveControl(Mob pMob) {
+        public AerwhaleMoveControl(Aerwhale pMob) {
             super(pMob);
+            this.mob = pMob;
         }
 
         @Override
@@ -246,8 +263,9 @@ public class Aerwhale extends FlyingMob {
 
             float xRotTarget = (float) (Mth.atan2(y, distance) * (180F / (float) Math.PI)); // Pitch
             float xRot = Mth.wrapDegrees(this.mob.getXRot());
-            xRot = Mth.approachDegrees(xRot, xRotTarget, 1F);
+            xRot = Mth.approachDegrees(xRot, xRotTarget, 0.2F);
             this.mob.setXRot(xRot);
+            this.mob.setXRotData(xRot);
 
             float yRotTarget = Mth.wrapDegrees((float) Mth.atan2(z, x) * (180F / (float) Math.PI)); // Yaw
             float yRot = Mth.wrapDegrees(this.mob.getYRot() + 90F);
