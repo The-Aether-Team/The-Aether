@@ -34,6 +34,7 @@ import java.util.List;
 
 public class Aerwhale extends FlyingMob {
     public static final EntityDataAccessor<Float> DATA_X_ROT_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
+    public static final EntityDataAccessor<Float> DATA_Y_ROT_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
 
     public Aerwhale(EntityType<? extends Aerwhale> type, Level level) {
         super(type, level);
@@ -57,6 +58,7 @@ public class Aerwhale extends FlyingMob {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_X_ROT_ID, this.getXRot());
+        this.entityData.define(DATA_Y_ROT_ID, this.getYRot());
     }
 
     public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
@@ -67,6 +69,9 @@ public class Aerwhale extends FlyingMob {
     public void aiStep() {
         super.aiStep();
         this.setXRot(this.getXRotData());
+        this.setYRot(this.getYRotData());
+        this.yBodyRot = this.getYRotData();
+        this.yHeadRot = this.getYRotData();
     }
 
     /**
@@ -161,6 +166,14 @@ public class Aerwhale extends FlyingMob {
 
     public float getXRotData() {
         return this.entityData.get(DATA_X_ROT_ID);
+    }
+
+    public void setYRotData(float rot) {
+        this.entityData.set(DATA_Y_ROT_ID, Mth.wrapDegrees(rot));
+    }
+
+    public float getYRotData() {
+        return this.entityData.get(DATA_Y_ROT_ID);
     }
 
     @Override
@@ -265,12 +278,13 @@ public class Aerwhale extends FlyingMob {
             float xRot = Mth.wrapDegrees(this.mob.getXRot());
             xRot = Mth.approachDegrees(xRot, xRotTarget, 0.2F);
             this.mob.setXRot(xRot);
-            this.mob.setXRotData(xRot);
+            this.mob.setXRotData(this.mob.getXRot());
 
             float yRotTarget = Mth.wrapDegrees((float) Mth.atan2(z, x) * (180F / (float) Math.PI)); // Yaw
             float yRot = Mth.wrapDegrees(this.mob.getYRot() + 90F);
-            yRot = Mth.approachDegrees(yRot, yRotTarget, 2F);
+            yRot = Mth.approachDegrees(yRot, yRotTarget, 0.5F);
             this.mob.setYRot(yRot - 90F);
+            this.mob.setYRotData(this.mob.getYRot());
             this.mob.yBodyRot = yRot;
             this.mob.yHeadRot = yRot;
 
