@@ -42,6 +42,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     public static final EntityDataAccessor<Integer> DATA_POISON_REMAINING_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> DATA_TARGETING_ENTITY_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.BOOLEAN);
 
+    public float oSinage;
     public float sinage;
 
     public AechorPlant(EntityType<? extends AechorPlant> type, Level level) {
@@ -106,6 +107,22 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
             } else if (this.getTarget() == null && this.getTargetingEntity()) {
                 this.setTargetingEntity(false);
             }
+        }
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        this.oSinage = this.sinage;
+        if (this.hurtTime > 0) {
+            this.sinage += 0.9F;
+        } else if (this.getTargetingEntity()) {
+            this.sinage += 0.6F;
+        } else {
+            this.sinage += 0.3F;
+        }
+        if (this.sinage > (Math.PI * 2.0F)) {
+            this.sinage -= (Math.PI * 2.0F);
         }
     }
 
