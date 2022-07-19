@@ -30,7 +30,7 @@ public class AechorPlantRenderer extends MobRenderer<AechorPlant, AechorPlantMod
 
     @Override
     protected float getBob(@Nonnull AechorPlant aechorPlant, float partialTicks) {
-        return Mth.lerp(partialTicks, aechorPlant.oSinage, aechorPlant.sinage);
+        return Mth.lerp(partialTicks, aechorPlant.sinage, aechorPlant.sinage + aechorPlant.sinageAdd);
     }
 
     @Nonnull
