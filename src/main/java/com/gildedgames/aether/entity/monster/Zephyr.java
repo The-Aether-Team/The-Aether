@@ -88,7 +88,8 @@ public class Zephyr extends FlyingMob implements Enemy {
 		if (this.getAttackCharge() > 0 && this.scale < 40) {
 			this.scaleAdd = 1;
 		} else {
-			this.scaleAdd = -this.scale;
+			this.scaleAdd = 0;
+			this.scale = 0;
 		}
 	}
 
