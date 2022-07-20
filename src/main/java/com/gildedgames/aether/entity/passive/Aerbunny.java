@@ -1,6 +1,5 @@
 package com.gildedgames.aether.entity.passive;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.ai.FallingRandomStrollGoal;
 import com.gildedgames.aether.entity.ai.navigator.FallPathNavigation;
@@ -98,7 +97,6 @@ public class Aerbunny extends AetherAnimal {
             this.puffSubtract = 0;
             this.setPuffiness(0);
         }
-        Aether.LOGGER.info(this.getPuffiness());
         if (this.getVehicle() instanceof Player player) {
             EntityUtil.copyRotations(this, player);
 
