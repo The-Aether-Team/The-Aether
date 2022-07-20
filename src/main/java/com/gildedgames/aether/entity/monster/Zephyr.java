@@ -33,9 +33,8 @@ import java.util.EnumSet;
 
 public class Zephyr extends FlyingMob implements Enemy {
 	public static final EntityDataAccessor<Integer> DATA_ATTACK_CHARGE_ID = SynchedEntityData.defineId(Zephyr.class, EntityDataSerializers.INT);
-	public int scaleO;
 	public int scale;
-	//public int scaleGoal;
+	public int scaleAdd;
 
 	public Zephyr(EntityType<? extends Zephyr> type, Level level) {
 		super(type, level);
@@ -81,17 +80,16 @@ public class Zephyr extends FlyingMob implements Enemy {
 
 	@Override
 	public void aiStep() {
-//		if (this.getAttackCharge() > 0) {
-//			this.scaleGoal = 10;
-//		} else {
-//			this.scaleGoal = 0;
-//		}
 		super.aiStep();
-		this.scaleO = this.scale;
 		if (this.getY() < this.level.getMinBuildHeight() - 2 || this.getY() > this.level.getMaxBuildHeight()) {
 			this.discard();
 		}
-		this.scale = this.getAttackCharge();
+		this.scale += this.scaleAdd;
+		if (this.getAttackCharge() > 0) {
+			this.scaleAdd = 1;
+		} else {
+			this.scaleAdd = -this.scale;
+		}
 	}
 
 	@Override

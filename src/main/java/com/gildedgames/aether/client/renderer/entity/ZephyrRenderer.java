@@ -30,9 +30,8 @@ public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephy
 
     @Override
     protected void scale(Zephyr zephyr, @Nonnull PoseStack poseStack, float partialTickTime) {
-        float f = Mth.lerp(partialTickTime, zephyr.scaleO, zephyr.scale);
-        float f1 = f / 20.0F;
-        Aether.LOGGER.info(f1);
+        float f = Mth.lerp(partialTickTime, zephyr.scale, zephyr.scale + zephyr.scaleAdd);
+        float f1 = f / 40.0F;
         if (f1 < 0.0F) {
             f1 = 0.0F;
         }
