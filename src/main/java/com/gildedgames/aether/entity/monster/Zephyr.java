@@ -32,7 +32,9 @@ import javax.annotation.Nonnull;
 import java.util.EnumSet;
 
 public class Zephyr extends FlyingMob implements Enemy {
-	public static final EntityDataAccessor<Integer> ATTACK_CHARGE = SynchedEntityData.defineId(Zephyr.class, EntityDataSerializers.INT);
+	public static final EntityDataAccessor<Integer> DATA_ATTACK_CHARGE_ID = SynchedEntityData.defineId(Zephyr.class, EntityDataSerializers.INT);
+	public int scale;
+	public int scaleAdd;
 
 	public Zephyr(EntityType<? extends Zephyr> type, Level level) {
 		super(type, level);
@@ -57,7 +59,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		this.entityData.define(ATTACK_CHARGE, 0);
+		this.entityData.define(DATA_ATTACK_CHARGE_ID, 0);
 	}
 
 	public static boolean checkZephyrSpawnRules(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
@@ -82,6 +84,12 @@ public class Zephyr extends FlyingMob implements Enemy {
 		if (this.getY() < this.level.getMinBuildHeight() - 2 || this.getY() > this.level.getMaxBuildHeight()) {
 			this.discard();
 		}
+		this.scale += this.scaleAdd;
+		if (this.getAttackCharge() > 0) {
+			this.scaleAdd = 1;
+		} else {
+			this.scaleAdd = -this.scale;
+		}
 	}
 
 	@Override
@@ -90,7 +98,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	}
 
 	public int getAttackCharge() {
-		return this.entityData.get(ATTACK_CHARGE);
+		return this.entityData.get(DATA_ATTACK_CHARGE_ID);
 	}
 
 	/**
@@ -99,7 +107,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	 * zephyr begins to wind up for an attack.
 	 */
 	public void setAttackCharge(int attackTimer) {
-		this.entityData.set(ATTACK_CHARGE, Math.max(attackTimer, 0));
+		this.entityData.set(DATA_ATTACK_CHARGE_ID, Math.max(attackTimer, 0));
 	}
 
 	@Override
@@ -191,7 +199,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 			} else if (this.attackTimer > 0) {
 				this.attackTimer--;
 			}
-			this.parentEntity.setAttackCharge(attackTimer);
+			this.parentEntity.setAttackCharge(this.attackTimer);
 		}
 	}
 
