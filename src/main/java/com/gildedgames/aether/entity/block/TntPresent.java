@@ -95,13 +95,15 @@ public class TntPresent extends Entity {
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compound) {
-        compound.putShort("Fuse", (short) this.getFuse());
+    protected void addAdditionalSaveData(CompoundTag tag) {
+        tag.putShort("Fuse", (short) this.getFuse());
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compound) {
-        this.setFuse(compound.getShort("Fuse"));
+    protected void readAdditionalSaveData(CompoundTag tag) {
+        if (tag.contains("Fuse")) {
+            this.setFuse(tag.getShort("Fuse"));
+        }
     }
 
     @Nonnull

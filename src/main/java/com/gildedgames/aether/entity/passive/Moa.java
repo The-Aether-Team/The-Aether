@@ -488,38 +488,52 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
-		super.readAdditionalSaveData(compound);
-		this.setBaby(compound.getBoolean("IsBaby"));
-		this.setMoaType(AetherMoaTypes.MOA_TYPES.get(compound.getString("MoaType")));
-		if (compound.hasUUID("Rider")) {
-			this.setRider(compound.getUUID("Rider"));
+	public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+		super.readAdditionalSaveData(tag);
+		if (tag.contains("IsBaby")) {
+			this.setBaby(tag.getBoolean("IsBaby"));
 		}
-		if (compound.hasUUID("LastRider")) {
-			this.setLastRider(compound.getUUID("LastRider"));
+		if (tag.contains("MoaType")) {
+			this.setMoaType(AetherMoaTypes.MOA_TYPES.get(tag.getString("MoaType")));
 		}
-		this.setRemainingJumps(compound.getInt("RemainingJumps"));
-		this.setHungry(compound.getBoolean("Hungry"));
-		this.setAmountFed(compound.getInt("AmountFed"));
-		this.setPlayerGrown(compound.getBoolean("PlayerGrown"));
-		this.setSitting(compound.getBoolean("Sitting"));
+		if (tag.hasUUID("Rider")) {
+			this.setRider(tag.getUUID("Rider"));
+		}
+		if (tag.hasUUID("LastRider")) {
+			this.setLastRider(tag.getUUID("LastRider"));
+		}
+		if (tag.contains("RemainingJumps")) {
+			this.setRemainingJumps(tag.getInt("RemainingJumps"));
+		}
+		if (tag.contains("Hungry")) {
+			this.setHungry(tag.getBoolean("Hungry"));
+		}
+		if (tag.contains("AmountFed")) {
+			this.setAmountFed(tag.getInt("AmountFed"));
+		}
+		if (tag.contains("PlayerGrown")) {
+			this.setPlayerGrown(tag.getBoolean("PlayerGrown"));
+		}
+		if (tag.contains("Sitting")) {
+			this.setSitting(tag.getBoolean("Sitting"));
+		}
 	}
 
 	@Override
-	public void addAdditionalSaveData(@Nonnull CompoundTag compound) {
-		super.addAdditionalSaveData(compound);
-		compound.putBoolean("IsBaby", this.isBaby());
-		compound.putString("MoaType", this.getMoaType().getRegistryName());
+	public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
+		tag.putBoolean("IsBaby", this.isBaby());
+		tag.putString("MoaType", this.getMoaType().getRegistryName());
 		if (this.getRider() != null) {
-			compound.putUUID("Rider", this.getRider());
+			tag.putUUID("Rider", this.getRider());
 		}
 		if (this.getLastRider() != null) {
-			compound.putUUID("LastRider", this.getLastRider());
+			tag.putUUID("LastRider", this.getLastRider());
 		}
-		compound.putInt("RemainingJumps", this.getRemainingJumps());
-		compound.putBoolean("Hungry", this.isHungry());
-		compound.putInt("AmountFed", this.getAmountFed());
-		compound.putBoolean("PlayerGrown", this.isPlayerGrown());
-		compound.putBoolean("Sitting", this.isSitting());
+		tag.putInt("RemainingJumps", this.getRemainingJumps());
+		tag.putBoolean("Hungry", this.isHungry());
+		tag.putInt("AmountFed", this.getAmountFed());
+		tag.putBoolean("PlayerGrown", this.isPlayerGrown());
+		tag.putBoolean("Sitting", this.isSitting());
 	}
 }
