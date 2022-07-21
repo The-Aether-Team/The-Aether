@@ -127,6 +127,12 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
+	public void aiStep() {
+		super.aiStep();
+		this.animateWings();
+	}
+
+	@Override
 	public void tick() {
 		super.tick();
 		AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
