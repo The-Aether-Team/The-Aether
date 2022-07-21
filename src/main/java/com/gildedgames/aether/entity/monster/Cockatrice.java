@@ -85,6 +85,12 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     }
 
     @Override
+    public void aiStep() {
+        super.aiStep();
+        this.animateWings();
+    }
+
+    @Override
     public void tick() {
         super.tick();
         if (this.isOnGround()) {

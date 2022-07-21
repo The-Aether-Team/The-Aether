@@ -7,7 +7,6 @@ import com.gildedgames.aether.client.renderer.entity.model.CockatriceModel;
 import com.gildedgames.aether.entity.monster.Cockatrice;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -23,14 +22,13 @@ public class CockatriceRenderer extends MobRenderer<Cockatrice, CockatriceModel>
     }
 
     @Override
-    public void render(@Nonnull Cockatrice cockatrice, float entityYaw, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
-        super.render(cockatrice, entityYaw, partialTicks, poseStack, buffer, packedLight);
-        this.model.setupWingsAnimation(cockatrice);
+	protected void scale(@Nonnull Cockatrice cockatrice, PoseStack poseStack, float partialTickTime) {
+        poseStack.scale(1.8F, 1.8F, 1.8F);
     }
 
     @Override
-	protected void scale(@Nonnull Cockatrice cockatrice, PoseStack poseStack, float partialTickTime) {
-        poseStack.scale(1.8F, 1.8F, 1.8F);
+    protected float getBob(@Nonnull Cockatrice cockatrice, float partialTicks) {
+        return this.model.setupWingsAnimation(cockatrice, partialTicks);
     }
 
     @Nonnull
