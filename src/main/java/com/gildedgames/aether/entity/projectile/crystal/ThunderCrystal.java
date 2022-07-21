@@ -33,7 +33,8 @@ public class ThunderCrystal extends AbstractCrystal {
     }
 
     /**
-     * @param target - The target to home in on.
+     * @param shooter - The entity that created this projectile
+     * @param target - The target to home in on
      */
     public ThunderCrystal(EntityType<? extends ThunderCrystal> entityType, Level level, Entity shooter, Entity target) {
         super(entityType, level);

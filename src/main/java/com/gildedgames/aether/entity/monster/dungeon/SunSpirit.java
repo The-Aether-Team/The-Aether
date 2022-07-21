@@ -21,6 +21,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -29,6 +30,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -110,6 +112,11 @@ public class SunSpirit extends Monster implements BossMob {
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.setFrozen(this.hurtTime > 0);
     }
+
+    /*@Override
+    public void move(MoverType pType, Vec3 pPos) {
+        super.move(pType, new Vec3(pPos.x, 0, pPos.z));
+    }*/
 
     /**
      * The sun spirit is immune to effects, but there is an event fired in case addons want to change that.
