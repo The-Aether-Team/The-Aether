@@ -35,6 +35,8 @@ public class Zephyr extends FlyingMob implements Enemy {
 	public static final EntityDataAccessor<Integer> DATA_ATTACK_CHARGE_ID = SynchedEntityData.defineId(Zephyr.class, EntityDataSerializers.INT);
 	public int scale;
 	public int scaleAdd;
+	public float tailRot;
+	public float tailRotAdd;
 
 	public Zephyr(EntityType<? extends Zephyr> type, Level level) {
 		super(type, level);
@@ -85,11 +87,16 @@ public class Zephyr extends FlyingMob implements Enemy {
 			this.discard();
 		}
 		this.scale += this.scaleAdd;
+		this.tailRot += this.tailRotAdd;
 		if (this.getAttackCharge() > 0 && this.scale < 40) {
 			this.scaleAdd = 1;
 		} else {
 			this.scaleAdd = 0;
 			this.scale = 0;
+		}
+		this.tailRotAdd = 0.015F;
+		if (this.tailRot >= Mth.TWO_PI) {
+			this.tailRot -= Mth.TWO_PI;
 		}
 	}
 

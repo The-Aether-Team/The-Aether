@@ -49,6 +49,11 @@ public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephy
     }
 
     @Override
+    protected float getBob(@Nonnull Zephyr zephyr, float partialTicks) {
+        return Mth.lerp(partialTicks, zephyr.tailRot, zephyr.tailRot + zephyr.tailRotAdd);
+    }
+
+    @Override
     public ZephyrModel getDefaultModel() {
         return this.defaultModel;
     }
