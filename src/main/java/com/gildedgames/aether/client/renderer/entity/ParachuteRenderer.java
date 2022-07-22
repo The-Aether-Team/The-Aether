@@ -2,6 +2,7 @@ package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.entity.miscellaneous.Parachute;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -9,6 +10,9 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 
 import javax.annotation.Nonnull;
@@ -26,8 +30,17 @@ public class ParachuteRenderer extends EntityRenderer<Parachute> {
     @Override
     public void render(@Nonnull Parachute parachute, float entityYaw, float partialTicks, PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
+        Entity passenger = parachute.getControllingPassenger();
+        if (passenger != null) {
+            if (passenger instanceof Player player) {
+                poseStack.mulPose(Vector3f.YP.rotationDegrees(-Mth.lerp(partialTicks, player.yHeadRotO, player.yHeadRot)));
+            } else {
+                poseStack.mulPose(Vector3f.YP.rotationDegrees(-Mth.lerp(partialTicks, passenger.yRotO, passenger.getYRot())));
+            }
+        }
         poseStack.translate(-0.5, 0.0, -0.5);
         Minecraft.getInstance().getBlockRenderer().renderSingleBlock(this.parachuteBlock.get().defaultBlockState(), poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
+
         poseStack.popPose();
         super.render(parachute, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }

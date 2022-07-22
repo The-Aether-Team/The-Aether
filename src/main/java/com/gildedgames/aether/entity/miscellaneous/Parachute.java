@@ -1,5 +1,7 @@
 package com.gildedgames.aether.entity.miscellaneous;
 
+import com.gildedgames.aether.network.AetherPacketHandler;
+import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
 import com.gildedgames.aether.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -82,16 +84,20 @@ public class Parachute extends Entity {
     }
 
     public void spawnExplosionParticle() {
-        for (int i = 0; i < 1; ++i) {
+        if (!this.level.isClientSide) {
+            AetherPacketHandler.sendToAll(new ExplosionParticlePacket(this.getId()));
+        } else {
             EntityUtil.spawnMovementExplosionParticles(this);
         }
     }
 
     public void die() {
+        for (int i = 0; i < 10; i++) {
+            this.spawnExplosionParticle();
+        }
         if (!this.level.isClientSide) {
             this.kill();
         }
-        this.spawnExplosionParticle();
     }
 
     @Override
