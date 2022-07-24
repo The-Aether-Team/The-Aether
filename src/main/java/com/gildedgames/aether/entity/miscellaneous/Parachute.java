@@ -6,7 +6,6 @@ import com.gildedgames.aether.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.phys.Vec3;
@@ -19,11 +18,10 @@ import java.util.List;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 
 public class Parachute extends Entity {
-    private float parachuteSpeed;
-
     public Parachute(EntityType<? extends Parachute> type, Level level) {
         super(type, level);
         this.blocksBuilding = true;
@@ -39,12 +37,9 @@ public class Parachute extends Entity {
     @Override
     public void tick() {
         super.tick();
-        boolean hasControllingPassenger = this.getControllingPassenger() != null;
-        if (hasControllingPassenger) {
-            Entity passenger = this.getControllingPassenger();
+        if (this.getControllingPassenger() instanceof LivingEntity passenger) {
             this.resetFallDistance();
             this.moveParachute(passenger);
-            this.move(MoverType.SELF, this.getDeltaMovement());
             this.spawnExplosionParticle();
             if (this.isOnGround() || this.isInWater() || this.isInLava()) {
                 this.ejectPassengers();
@@ -55,32 +50,43 @@ public class Parachute extends Entity {
         }
     }
 
-    private void moveParachute(Entity passenger) {
+    private void moveParachute(LivingEntity passenger) {
         if (this.isVehicle()) {
-            Vec3 parachuteVec = this.getDeltaMovement();
-            Vec3 passengerVec = passenger.getDeltaMovement();
-            if (passengerVec.x() != 0.0 || passengerVec.z() != 0.0) {
-                this.parachuteSpeed = Mth.approach(this.parachuteSpeed, 0.8F, 0.025F);
-            } else {
-                this.parachuteSpeed = Mth.approach(this.parachuteSpeed, 0.0F, 0.0005F);
+            this.setYRot(passenger.getYRot());
+            this.yRotO = this.getYRot();
+            this.setXRot(passenger.getXRot() * 0.5F);
+            this.setRot(this.getYRot(), this.getXRot());
+            float f = passenger.xxa * 0.5F;
+            float f1 = passenger.zza;
+            if (f1 <= 0.0F) {
+                f1 *= 0.25F;
             }
-            double x = this.parachuteSpeed * (passengerVec.x() * 12.0);
-            double z = this.parachuteSpeed * (passengerVec.z() * 12.0);
-            this.setDeltaMovement(parachuteVec.add((new Vec3(x, 0.0D, z)).subtract(parachuteVec).scale(0.2)));
-            Vec3 parachuteVec2 = this.getDeltaMovement();
+            Vec3 travelVec = new Vec3(f, passenger.yya, f1);
+            AttributeInstance gravity = passenger.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+            double d0 = gravity != null ? gravity.getValue() : 0.08D;
 
-            if (passenger instanceof LivingEntity livingEntity) {
-                AttributeInstance gravity = livingEntity.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
-                if (gravity != null) {
-                    double fallSpeed = Math.max(gravity.getValue() * -1.875, -0.075);
-                    this.setDeltaMovement(parachuteVec2.x(), fallSpeed, parachuteVec2.z());
-                }
+            Vec3 movement = this.calculateMovement(travelVec);
+            double d2 = movement.y;
+            if (!this.isNoGravity()) {
+                d2 -= d0;
             }
+            d2 *= 0.98;
+
+            double fallSpeed = Math.max(d0 * -3.125, -0.25);
+            this.setDeltaMovement(movement.x * (double) 0.91F, Math.max(d2, fallSpeed), movement.z * (double) 0.91F);
+
             if (passenger instanceof ServerPlayer serverPlayer) {
                 serverPlayer.connection.aboveGroundTickCount = 0;
                 serverPlayer.connection.aboveGroundVehicleTickCount = 0;
             }
         }
+    }
+
+    public Vec3 calculateMovement(Vec3 vec3) {
+        float speed = 0.03F;
+        this.moveRelative(speed, vec3);
+        this.move(MoverType.SELF, this.getDeltaMovement());
+        return this.getDeltaMovement();
     }
 
     public void spawnExplosionParticle() {
