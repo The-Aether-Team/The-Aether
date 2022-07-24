@@ -20,20 +20,22 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.EnumSet;
 
 /**
  * Implementation for the sun spirit, the final boss of the Aether. When the sun spirit is defeated, eternal day will
@@ -69,6 +71,7 @@ public class SunSpirit extends Monster implements BossMob {
     @Override
     public void registerGoals() {
         super.registerGoals();
+        this.goalSelector.addGoal(0, new DoNothingGoal(this));
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 48.0F));
     }
 
@@ -113,11 +116,6 @@ public class SunSpirit extends Monster implements BossMob {
         this.setFrozen(this.hurtTime > 0);
     }
 
-    /*@Override
-    public void move(MoverType pType, Vec3 pPos) {
-        super.move(pType, new Vec3(pPos.x, 0, pPos.z));
-    }*/
-
     /**
      * The sun spirit is immune to effects, but there is an event fired in case addons want to change that.
      */
@@ -151,6 +149,12 @@ public class SunSpirit extends Monster implements BossMob {
         this.level.getNearbyPlayers(NON_COMBAT, this, this.getBoundingBox().inflate(16, 16, 16)).forEach(player ->
                 player.sendSystemMessage(message));
     }
+
+    /**
+     * The sun spirit doesn't take knockback
+     */
+    @Override
+    public void knockback(double strength, double ratioX, double ratioZ) { }
 
     /**
      * Add the given player to the list of players tracking this entity. For instance, a player may track a boss in order
@@ -210,5 +214,50 @@ public class SunSpirit extends Monster implements BossMob {
     @Override
     protected SoundEvent getDeathSound() {
         return null;
+    }
+
+    /**
+     * Sets the wanted position of the sun spirit during the fight.
+     */
+    public static class FlyAroundGoal extends Goal {
+
+        public FlyAroundGoal() {
+            this.setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            return false;
+        }
+    }
+
+    /**
+     * The sun spirit will stay at its origin point when not in a boss fight.
+     */
+    private static class DoNothingGoal extends Goal {
+        private final SunSpirit sunSpirit;
+        public DoNothingGoal(SunSpirit sunSpirit) {
+            this.sunSpirit = sunSpirit;
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP));
+        }
+
+        @Override
+        public boolean canUse() {
+            return !this.sunSpirit.isBossFight();
+        }
+
+        /**
+         * Returns the sun spirit to its original position.
+         */
+        @Override
+        public void start() {
+            this.sunSpirit.moveControl.setWantedPosition(this.sunSpirit.originPos.getX(), this.sunSpirit.originPos.getY(), this.sunSpirit.originPos.getZ(), 1);
+        }
+    }
+
+    public static class SunSpiritMoveControl extends MoveControl {
+        public SunSpiritMoveControl(Mob pMob) {
+            super(pMob);
+        }
     }
 }
