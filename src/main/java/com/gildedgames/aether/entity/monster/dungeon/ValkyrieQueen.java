@@ -95,25 +95,6 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
-        tag.putBoolean("BossFight", this.isBossFight());
-        tag.putBoolean("Ready", this.isReady());
-    }
-
-    @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        Component name = Component.Serializer.fromJson(tag.getString("BossName"));
-        if (name != null) {
-            this.setBossName(name);
-        }
-        this.setBossFight(tag.getBoolean("BossFight"));
-        this.setReady(tag.getBoolean("Ready"));
-    }
-
-    @Override
     public void customServerAiStep() {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
@@ -335,6 +316,30 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
         this.tradingPlayer = player;
     }
 
+    @Override
+    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
+        tag.putBoolean("BossFight", this.isBossFight());
+        tag.putBoolean("Ready", this.isReady());
+    }
+
+    @Override
+    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.contains("BossName")) {
+            Component name = Component.Serializer.fromJson(tag.getString("BossName"));
+            if (name != null) {
+                this.setBossName(name);
+            }
+        }
+        if (tag.contains("BossFight")) {
+            this.setBossFight(tag.getBoolean("BossFight"));
+        }
+        if (tag.contains("Ready")) {
+            this.setReady(tag.getBoolean("Ready"));
+        }
+    }
 
     /**
      * Shoots thunder crystals without cancelling the movement of the mob.

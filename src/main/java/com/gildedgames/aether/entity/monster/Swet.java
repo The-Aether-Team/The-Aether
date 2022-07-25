@@ -369,8 +369,12 @@ public class Swet extends MountableAnimal {
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.setWaterDamageScale(tag.getFloat("WaterDamageScale"));
-        this.setDeadInWater(tag.getBoolean("DeadInWater"));
+        if (tag.contains("WaterDamageScale")) {
+            this.setWaterDamageScale(tag.getFloat("WaterDamageScale"));
+        }
+        if (tag.contains("DeadInWater")) {
+            this.setDeadInWater(tag.getBoolean("DeadInWater"));
+        }
     }
 
     @Override

@@ -267,8 +267,12 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.setSize(tag.getInt("Size"));
-        this.setPoisonRemaining(tag.getInt("Poison Remaining"));
+        if (tag.contains("Size")) {
+            this.setSize(tag.getInt("Size"));
+        }
+        if (tag.contains("Poison Remaining")) {
+            this.setPoisonRemaining(tag.getInt("Poison Remaining"));
+        }
     }
 }
 
