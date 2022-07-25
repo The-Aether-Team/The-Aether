@@ -1,6 +1,7 @@
 package com.gildedgames.aether.api.registers;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.api.AetherMoaTypes;
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -9,28 +10,22 @@ import java.util.function.Supplier;
 
 public class MoaType
 {
-    private final String registryName;
     private final Supplier<Item> egg;
     private final int maxJumps;
     private final float speed;
     private final ResourceLocation texture;
     private final ResourceLocation saddleTexture;
 
-    public MoaType(String registryName, MoaType.Properties properties) {
-        this(registryName, properties.egg, properties.maxJumps, properties.speed, properties.texture, properties.saddleTexture);
+    public MoaType(MoaType.Properties properties) {
+        this(properties.egg, properties.maxJumps, properties.speed, properties.texture, properties.saddleTexture);
     }
 
-    public MoaType(String registryName, Supplier<Item> egg, int maxJumps, float speed, ResourceLocation texture, ResourceLocation saddleTexture) {
-        this.registryName = registryName;
+    public MoaType(Supplier<Item> egg, int maxJumps, float speed, ResourceLocation texture, ResourceLocation saddleTexture) {
         this.egg = egg;
         this.maxJumps = maxJumps;
         this.speed = speed;
         this.texture = texture;
         this.saddleTexture = saddleTexture;
-    }
-
-    public String getRegistryName() {
-        return this.registryName;
     }
 
     public Item getEgg() {
@@ -51,6 +46,14 @@ public class MoaType
 
     public ResourceLocation getSaddleTexture() {
         return this.saddleTexture;
+    }
+
+    public ResourceLocation getId() {
+        return AetherMoaTypes.MOA_TYPE_REGISTRY.get().getKey(this);
+    }
+
+    public String toString() {
+        return this.getId().toString();
     }
 
     public static class Properties
