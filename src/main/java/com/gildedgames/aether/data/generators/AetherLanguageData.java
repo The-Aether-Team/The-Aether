@@ -567,6 +567,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addDeath("inebriation", "%1$s was inebriated");
         addDeath("inebriation.player", "%1$s was inebriated by %2$s");
         addDeath("ice_crystal", "%1$s was chilled by %2$s's Ice Crystal");
+        addDeath("incineration", "%1$s was incinerated by %2$s");
 
 
 

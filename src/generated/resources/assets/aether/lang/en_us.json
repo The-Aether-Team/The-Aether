@@ -246,6 +246,7 @@
   "curios.identifier.aether_shield": "Shield",
   "curios.modifiers.aether_gloves": "When on hands:",
   "death.attack.ice_crystal": "%1$s was chilled by %2$s's Ice Crystal",
+  "death.attack.incineration": "%1$s was incinerated by %2$s",
   "death.attack.inebriation": "%1$s was inebriated",
   "death.attack.inebriation.player": "%1$s was inebriated by %2$s",
   "effect.aether.inebriation": "Inebriation",

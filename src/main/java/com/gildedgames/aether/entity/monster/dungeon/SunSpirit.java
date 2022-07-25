@@ -7,6 +7,7 @@ import com.gildedgames.aether.network.packet.client.BossInfoPacket;
 import com.gildedgames.aether.api.BossNameGenerator;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -18,11 +19,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -36,6 +35,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
+import java.util.List;
 
 /**
  * Implementation for the sun spirit, the final boss of the Aether. When the sun spirit is defeated, eternal day will
@@ -55,6 +55,7 @@ public class SunSpirit extends Monster implements BossMob {
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
         this.bossFight.setVisible(false);
         this.xpReward = XP_REWARD_BOSS;
+        this.setNoGravity(true);
     }
 
     /**
@@ -89,23 +90,28 @@ public class SunSpirit extends Monster implements BossMob {
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
-        tag.putInt("OriginX", this.originPos.getX());
-        tag.putInt("OriginY", this.originPos.getY());
-        tag.putInt("OriginZ", this.originPos.getZ());
+    public void tick() {
+        super.tick();
+        if (this.getHealth() > 0) {
+            double x = this.getX() + (this.random.nextFloat() - 0.5F) * this.random.nextFloat();
+            double y = this.getBoundingBox().minY + this.random.nextFloat() - 0.5;
+            double z = this.getZ() + (this.random.nextFloat() - 0.5F) * this.random.nextFloat();
+            this.level.addParticle(ParticleTypes.FLAME, x, y, z, 0, -0.07500000298023224, 0);
+
+            this.burnEntities();
+        }
     }
 
-    @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        Component name = Component.Serializer.fromJson(tag.getString("BossName"));
-        if (name != null) {
-            this.setBossName(name);
-        }
-        if (tag.contains("OriginX")) {
-            this.originPos = new BlockPos(tag.getInt("OriginX"), tag.getInt("OriginY"), tag.getInt("OriginZ"));
+    /**
+     * Burns all entities directly under the sun spirit
+     */
+    public void burnEntities() {
+        List<Entity> entities = this.level.getEntities(this, this.getBoundingBox().expandTowards(0, 4, 0));
+        for (Entity target : entities) {
+            if (target instanceof LivingEntity) {
+                target.hurt(new EntityDamageSource("incineration", this), 10);
+                target.setSecondsOnFire(15);
+            }
         }
     }
 
@@ -207,6 +213,27 @@ public class SunSpirit extends Monster implements BossMob {
     }
 
     @Override
+    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
+        tag.putInt("OriginX", this.originPos.getX());
+        tag.putInt("OriginY", this.originPos.getY());
+        tag.putInt("OriginZ", this.originPos.getZ());
+    }
+
+    @Override
+    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        Component name = Component.Serializer.fromJson(tag.getString("BossName"));
+        if (name != null) {
+            this.setBossName(name);
+        }
+        if (tag.contains("OriginX")) {
+            this.originPos = new BlockPos(tag.getInt("OriginX"), tag.getInt("OriginY"), tag.getInt("OriginZ"));
+        }
+    }
+
+    @Override
     protected SoundEvent getHurtSound(@Nonnull DamageSource pDamageSource) {
         return null;
     }
@@ -251,13 +278,32 @@ public class SunSpirit extends Monster implements BossMob {
          */
         @Override
         public void start() {
-            this.sunSpirit.moveControl.setWantedPosition(this.sunSpirit.originPos.getX(), this.sunSpirit.originPos.getY(), this.sunSpirit.originPos.getZ(), 1);
+            this.sunSpirit.navigation.moveTo(this.sunSpirit.originPos.getX(), this.sunSpirit.originPos.getY(), this.sunSpirit.originPos.getZ(), 1);
         }
     }
 
     public static class SunSpiritMoveControl extends MoveControl {
+        private float yRot = 0;
         public SunSpiritMoveControl(Mob pMob) {
             super(pMob);
+        }
+
+        public void setDirection(float pYRot) {
+            this.yRot = pYRot;
+        }
+
+        public void setWantedMovement(double pSpeed) {
+            this.speedModifier = pSpeed;
+            this.operation = Operation.STRAFE;
+        }
+
+        @Override
+        public void tick() {
+            if (this.operation == Operation.STRAFE) {
+
+            } else {
+                super.tick();
+            }
         }
     }
 }
