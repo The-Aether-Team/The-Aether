@@ -1,5 +1,6 @@
 package com.gildedgames.aether.entity.monster;
 
+import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.NotGrounded;
 import com.gildedgames.aether.entity.WingedBird;
 import com.gildedgames.aether.entity.ai.FallingRandomStrollGoal;
@@ -12,6 +13,8 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.goal.*;
@@ -221,5 +224,10 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     @Override
     public int getMaxFallDistance() {
         return this.isOnGround() ? super.getMaxFallDistance() : 14;
+    }
+
+    @Override
+    public boolean canBeAffected(MobEffectInstance potionEffect) {
+        return potionEffect.getEffect() != AetherEffects.INEBRIATION.get() && super.canBeAffected(potionEffect);
     }
 }
