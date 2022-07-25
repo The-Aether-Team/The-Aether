@@ -488,6 +488,24 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
+	public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
+		tag.putBoolean("IsBaby", this.isBaby());
+		tag.putString("MoaType", this.getMoaType().getRegistryName());
+		if (this.getRider() != null) {
+			tag.putUUID("Rider", this.getRider());
+		}
+		if (this.getLastRider() != null) {
+			tag.putUUID("LastRider", this.getLastRider());
+		}
+		tag.putInt("RemainingJumps", this.getRemainingJumps());
+		tag.putBoolean("Hungry", this.isHungry());
+		tag.putInt("AmountFed", this.getAmountFed());
+		tag.putBoolean("PlayerGrown", this.isPlayerGrown());
+		tag.putBoolean("Sitting", this.isSitting());
+	}
+
+	@Override
 	public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
 		if (tag.contains("IsBaby")) {
@@ -517,23 +535,5 @@ public class Moa extends MountableAnimal implements WingedBird {
 		if (tag.contains("Sitting")) {
 			this.setSitting(tag.getBoolean("Sitting"));
 		}
-	}
-
-	@Override
-	public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
-		super.addAdditionalSaveData(tag);
-		tag.putBoolean("IsBaby", this.isBaby());
-		tag.putString("MoaType", this.getMoaType().getRegistryName());
-		if (this.getRider() != null) {
-			tag.putUUID("Rider", this.getRider());
-		}
-		if (this.getLastRider() != null) {
-			tag.putUUID("LastRider", this.getLastRider());
-		}
-		tag.putInt("RemainingJumps", this.getRemainingJumps());
-		tag.putBoolean("Hungry", this.isHungry());
-		tag.putInt("AmountFed", this.getAmountFed());
-		tag.putBoolean("PlayerGrown", this.isPlayerGrown());
-		tag.putBoolean("Sitting", this.isSitting());
 	}
 }

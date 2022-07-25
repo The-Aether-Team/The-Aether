@@ -428,19 +428,25 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-        compound.putBoolean("Sheared", this.isSheared());
-        compound.putBoolean("Puffed", this.getPuffed());
-        compound.putByte("Color", (byte) this.getColor().getId());
+    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("Sheared", this.isSheared());
+        tag.putBoolean("Puffed", this.getPuffed());
+        tag.putByte("Color", (byte) this.getColor().getId());
     }
 
     @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-        this.setSheared(compound.getBoolean("Sheared"));
-        this.setPuffed(compound.getBoolean("Puffed"));
-        this.setColor(DyeColor.byId(compound.getByte("Color")));
+    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.contains("Sheared")) {
+            this.setSheared(tag.getBoolean("Sheared"));
+        }
+        if (tag.contains("Puffed")) {
+            this.setPuffed(tag.getBoolean("Puffed"));
+        }
+        if (tag.contains("Color")) {
+            this.setColor(DyeColor.byId(tag.getByte("Color")));
+        }
     }
 
     public static class SheepuffContainer extends AbstractContainerMenu {
