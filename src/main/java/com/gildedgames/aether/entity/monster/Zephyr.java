@@ -68,18 +68,6 @@ public class Zephyr extends FlyingMob implements Enemy {
 		return level.getDifficulty() != Difficulty.PEACEFUL && (reason == MobSpawnType.SPAWNER || level.getBlockState(pos.below()).is(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON));
 	}
 
-	/**
-	 * The purpose of this method override is to fix the weird movement from flying mobs.
-	 */
-	@Override
-	public void travel(@Nonnull Vec3 vector3d) {
-		if (this.isEffectiveAi() || this.isControlledByLocalInstance()) {
-			super.travel(vector3d);
-		} else {
-			this.calculateEntityAnimation(this, false);
-		}
-	}
-
 	@Override
 	public void aiStep() {
 		super.aiStep();
