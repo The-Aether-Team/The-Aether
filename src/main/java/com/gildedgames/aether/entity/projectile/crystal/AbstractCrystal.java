@@ -83,15 +83,17 @@ public abstract class AbstractCrystal extends Projectile {
     }
 
     @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag nbt) {
-        super.readAdditionalSaveData(nbt);
-        this.ticksInAir = nbt.getInt("TicksInAir");
+    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("TicksInAir", this.ticksInAir);
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag nbt) {
-        super.addAdditionalSaveData(nbt);
-        nbt.putInt("TicksInAir", this.ticksInAir);
+    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.contains("TicksInAir")) {
+            this.ticksInAir = tag.getInt("TicksInAir");
+        }
     }
 
     @Nonnull
