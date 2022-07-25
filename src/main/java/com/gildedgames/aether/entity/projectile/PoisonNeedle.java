@@ -14,20 +14,18 @@ import javax.annotation.Nonnull;
 public class PoisonNeedle extends AbstractDart {
     public PoisonNeedle(EntityType<? extends PoisonNeedle> type, Level level) {
         super(type, level);
-        this.setBaseDamage(0.0);
+        this.setBaseDamage(1.0);
     }
 
     public PoisonNeedle(Level level, LivingEntity shooter) {
         super(AetherEntityTypes.POISON_NEEDLE.get(), shooter, level);
-        this.setBaseDamage(0.0);
+        this.setBaseDamage(1.0);
     }
 
     @Override
     protected void doPostHurtEffects(@Nonnull LivingEntity living) {
         super.doPostHurtEffects(living);
-        if (!this.level.isClientSide) {
-            living.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION.get(), 500, 0, false, false));
-        }
+        living.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION.get(), 500, 0, false, false));
     }
 
     @Nonnull
