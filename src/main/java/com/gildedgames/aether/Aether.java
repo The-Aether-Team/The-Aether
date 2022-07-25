@@ -121,13 +121,6 @@ public class Aether
                 AetherMoaTypes.MOA_TYPES
         };
 
-        /*
-static final DeferredRegister<Codec<? extends BiomeModifier>> DEFERRED_BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(Keys.BIOME_MODIFIER_SERIALIZERS, Keys.BIOME_MODIFIER_SERIALIZERS.location().getNamespace());
-
-public static final Supplier<IForgeRegistry<Codec<? extends BiomeModifier>>> BIOME_MODIFIER_SERIALIZERS = DEFERRED_BIOME_MODIFIER_SERIALIZERS.makeRegistry(() -> new RegistryBuilder<Codec<? extends BiomeModifier>>().disableSaving().disableSync());
-         */
-
-
         for (DeferredRegister<?> register : registers) {
             register.register(modEventBus);
         }
