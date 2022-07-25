@@ -1,6 +1,7 @@
 package com.gildedgames.aether;
 
 import com.gildedgames.aether.advancement.AetherAdvancementTriggers;
+import com.gildedgames.aether.api.AetherDungeonTypes;
 import com.gildedgames.aether.api.AetherMoaTypes;
 import com.gildedgames.aether.blockentity.AetherBlockEntityTypes;
 import com.gildedgames.aether.block.AetherBlocks;
@@ -116,6 +117,7 @@ public class Aether
                 AetherLootConditions.LOOT_CONDITION_TYPES,
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherSoundEvents.SOUNDS,
+                AetherDungeonTypes.DUNGEON_TYPES,
                 AetherMoaTypes.MOA_TYPES
         };
 
