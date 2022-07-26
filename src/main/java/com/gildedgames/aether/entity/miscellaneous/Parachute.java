@@ -91,16 +91,12 @@ public class Parachute extends Entity {
 
     public void spawnExplosionParticle() {
         if (!this.level.isClientSide) {
-            AetherPacketHandler.sendToAll(new ExplosionParticlePacket(this.getId()));
-        } else {
-            EntityUtil.spawnMovementExplosionParticles(this);
+            AetherPacketHandler.sendToNear(new ExplosionParticlePacket(this.getId(), 1), this.getX(), this.getY(), this.getZ(), 10.0, level.dimension());
         }
     }
 
     public void die() {
-        for (int i = 0; i < 10; i++) {
-            this.spawnExplosionParticle();
-        }
+        this.spawnExplosionParticle();
         if (!this.level.isClientSide) {
             this.kill();
         }
