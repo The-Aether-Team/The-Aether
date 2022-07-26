@@ -71,7 +71,6 @@ public class Sentry extends Slime {
 	@Override
 	public @Nullable SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
 		this.setSize(1, true);
-		this.getAttribute(Attributes.FOLLOW_RANGE).addPermanentModifier(new AttributeModifier("Random spawn bonus", this.random.nextGaussian() * 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
 		this.setLeftHanded(false);
 		return spawnData;
 	}

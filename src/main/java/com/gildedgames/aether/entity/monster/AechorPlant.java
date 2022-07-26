@@ -1,6 +1,7 @@
 package com.gildedgames.aether.entity.monster;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
+import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.ai.goal.target.NearestTaggedTargetGoal;
 import com.gildedgames.aether.entity.projectile.PoisonNeedle;
 
@@ -18,6 +19,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -258,6 +260,11 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     }
 
     @Override
+    public boolean canBeAffected(MobEffectInstance potionEffect) {
+        return potionEffect.getEffect() != AetherEffects.INEBRIATION.get() && super.canBeAffected(potionEffect);
+    }
+
+    @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("Size", this.getSize());
@@ -267,8 +274,12 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.setSize(tag.getInt("Size"));
-        this.setPoisonRemaining(tag.getInt("Poison Remaining"));
+        if (tag.contains("Size")) {
+            this.setSize(tag.getInt("Size"));
+        }
+        if (tag.contains("Poison Remaining")) {
+            this.setPoisonRemaining(tag.getInt("Poison Remaining"));
+        }
     }
 }
 

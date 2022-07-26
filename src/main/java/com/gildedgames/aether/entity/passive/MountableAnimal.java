@@ -292,14 +292,16 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 	}
 
 	@Override
-	public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
-		super.readAdditionalSaveData(compound);
-		this.setSaddled(compound.getBoolean("Saddled"));
+	public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
+		tag.putBoolean("Saddled", this.isSaddled());
 	}
 
 	@Override
-	public void addAdditionalSaveData(@Nonnull CompoundTag compound) {
-		super.addAdditionalSaveData(compound);
-		compound.putBoolean("Saddled", this.isSaddled());
+	public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+		super.readAdditionalSaveData(tag);
+		if (tag.contains("Saddled")) {
+			this.setSaddled(tag.getBoolean("Saddled"));
+		}
 	}
 }

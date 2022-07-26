@@ -130,8 +130,6 @@ public class Aerwhale extends FlyingMob {
                 this.flyingSpeed = 0.02F;
                 super.travel(positionIn);
             }
-        } else {
-            this.calculateEntityAnimation(this, false);
         }
     }
 

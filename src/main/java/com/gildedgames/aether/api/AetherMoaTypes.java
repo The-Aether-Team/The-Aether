@@ -1,29 +1,31 @@
 package com.gildedgames.aether.api;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.api.registers.MoaType;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import net.minecraftforge.registries.*;
 
-import java.util.*;
+import java.util.function.Supplier;
 
-public class AetherMoaTypes
-{
-    public static Map<String, MoaType> MOA_TYPES = new HashMap<>();
+public class AetherMoaTypes {
+    public static final ResourceKey<Registry<MoaType>> MOA_TYPE_REGISTRY_KEY = ResourceKey.createRegistryKey(new ResourceLocation(Aether.MODID, "moa_type"));
+    public static final DeferredRegister<MoaType> MOA_TYPES = DeferredRegister.create(MOA_TYPE_REGISTRY_KEY, Aether.MODID);
+    public static final Supplier<IForgeRegistry<MoaType>> MOA_TYPE_REGISTRY = MOA_TYPES.makeRegistry(RegistryBuilder::new);
 
-    public static final MoaType BLUE = register("blue", new MoaType.Properties().egg(AetherItems.BLUE_MOA_EGG).maxJumps(3).speed(0.15F).texture("textures/entity/mobs/moa/blue_moa.png"));
-    public static final MoaType WHITE = register("white", new MoaType.Properties().egg(AetherItems.WHITE_MOA_EGG).maxJumps(4).speed(0.15F).texture("textures/entity/mobs/moa/white_moa.png"));
-    public static final MoaType BLACK = register("black", new MoaType.Properties().egg(AetherItems.BLACK_MOA_EGG).maxJumps(8).speed(0.15F).texture("textures/entity/mobs/moa/black_moa.png").saddleTexture("textures/entity/mobs/moa/black_moa_saddle.png"));
-    public static final MoaType ORANGE = register("orange", new MoaType.Properties().egg(AetherItems.ORANGE_MOA_EGG).maxJumps(2).speed(0.3F).texture("textures/entity/mobs/moa/orange_moa.png"));
+    public static final RegistryObject<MoaType> BLUE = MOA_TYPES.register("blue", () -> new MoaType(new MoaType.Properties().egg(AetherItems.BLUE_MOA_EGG).maxJumps(3).speed(0.15F).texture("textures/entity/mobs/moa/blue_moa.png")));
+    public static final RegistryObject<MoaType> WHITE = MOA_TYPES.register("white", () -> new MoaType(new MoaType.Properties().egg(AetherItems.WHITE_MOA_EGG).maxJumps(4).speed(0.15F).texture("textures/entity/mobs/moa/white_moa.png")));
+    public static final RegistryObject<MoaType> BLACK = MOA_TYPES.register("black", () -> new MoaType(new MoaType.Properties().egg(AetherItems.BLACK_MOA_EGG).maxJumps(8).speed(0.15F).texture("textures/entity/mobs/moa/black_moa.png").saddleTexture("textures/entity/mobs/moa/black_moa_saddle.png")));
+    public static final RegistryObject<MoaType> ORANGE = MOA_TYPES.register("orange", () -> new MoaType(new MoaType.Properties().egg(AetherItems.ORANGE_MOA_EGG).maxJumps(2).speed(0.3F).texture("textures/entity/mobs/moa/orange_moa.png")));
 
-    public static MoaType register(String registryName, MoaType.Properties properties) {
-        MoaType moaType = new MoaType(registryName, properties);
-        MOA_TYPES.put(registryName, moaType);
-        return moaType;
+    public static MoaType get(String id) {
+        return MOA_TYPE_REGISTRY.get().getValue(new ResourceLocation(id));
     }
 
-    public static MoaType getRandomMoaType() {
-        RandomSource random = RandomSource.create();
-        List<MoaType> moaTypes = new ArrayList<>(MOA_TYPES.values());
-        return moaTypes.get(random.nextInt(moaTypes.size()));
+    public static MoaType random(RandomSource random) {
+        return MOA_TYPE_REGISTRY.get().getValues().toArray(MoaType[]::new)[random.nextInt(MOA_TYPE_REGISTRY.get().getValues().size())];
     }
 }
