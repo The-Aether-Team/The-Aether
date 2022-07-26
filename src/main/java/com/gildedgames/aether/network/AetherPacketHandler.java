@@ -33,7 +33,6 @@ public class AetherPacketHandler {
 		register(BossInfoPacket.Remove.class, BossInfoPacket.Remove::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
-		register(DimensionTypeHolderPacket.class, DimensionTypeHolderPacket::decode);
 		register(EternalDayPacket.class, EternalDayPacket::decode);
 		register(ExplosionParticlePacket.class, ExplosionParticlePacket::decode);
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);

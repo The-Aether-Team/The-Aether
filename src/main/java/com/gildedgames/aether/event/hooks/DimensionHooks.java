@@ -3,7 +3,6 @@ package com.gildedgames.aether.event.hooks;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.AetherTags;
-import com.gildedgames.aether.api.DimensionTagTracking;
 import com.gildedgames.aether.util.LevelUtil;
 import com.gildedgames.aether.data.resources.AetherDimensions;
 import com.gildedgames.aether.world.AetherTeleporter;
@@ -23,7 +22,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -36,7 +34,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
-import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.material.FluidState;
 
@@ -50,7 +47,7 @@ public class DimensionHooks {
     public static int teleportationTimer;
 
     public static boolean checkPlacementBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state) {
-        if (DimensionTagTracking.inTag(level, AetherTags.Dimensions.ULTRACOLD)) {
+        if (level.getBiome(pos).is(AetherTags.Biomes.ULTRACOLD)) {
             if (stack.is(AetherTags.Items.BANNED_IN_AETHER)) {
                 return bannedItemDispatch(level, pos, face, stack);
             }
@@ -97,7 +94,7 @@ public class DimensionHooks {
     public static boolean freezeToAerogel(LevelAccessor accessor, BlockPos pos) {
         if (accessor instanceof Level level) {
             FluidState fluidstate = level.getFluidState(pos);
-            if (DimensionTagTracking.inTag(level, AetherTags.Dimensions.ULTRACOLD) && fluidstate.is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
+            if (level.getBiome(pos).is(AetherTags.Biomes.ULTRACOLD) && fluidstate.is(AetherTags.Fluids.FREEZABLE_TO_AEROGEL)) {
                 level.setBlockAndUpdate(pos, AetherBlocks.AEROGEL.get().defaultBlockState());
                 if (level instanceof ServerLevel serverLevel) {
                     double x = pos.getX() + 0.5;
@@ -132,9 +129,9 @@ public class DimensionHooks {
      */
     public static void fallFromAether(Level level) {
         if (level instanceof ServerLevel serverLevel) {
-            if (DimensionTagTracking.inTag(serverLevel, AetherTags.Dimensions.FALL_TO_OVERWORLD)) {
-                if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
-                    for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
+            if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
+                for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
+                    if (level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.FALL_TO_OVERWORLD)) {
                         if (entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger()) {
                             if ((entity instanceof Player player && !player.getAbilities().flying) || entity.isVehicle()) {
                                 entityFell(entity);
@@ -186,7 +183,7 @@ public class DimensionHooks {
     public static void dimensionTravel(Entity entity, ResourceKey<Level> dimension) {
         // The level passed into shouldReturnPlayerToOverworld() is the dimension the player is leaving
         //  Meaning: We display the Descending GUI text to the player if they're about to leave a dimension that returns them to the OW
-        if (DimensionTagTracking.inTag(entity.level, AetherTags.Dimensions.DISPLAY_TRAVEL_TEXT)) {
+        if (entity.level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.DISPLAY_TRAVEL_TEXT)) {
             if (entity.level.dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) {
                 displayAetherTravel = true;
                 playerLeavingAether = true;
@@ -213,17 +210,6 @@ public class DimensionHooks {
             }
             if (teleportationTimer < 0 || serverPlayer.verticalCollisionBelow) {
                 teleportationTimer = 0;
-            }
-        }
-    }
-
-    public static void syncTrackersFromServer(Player player) {
-        Level level = player.getLevel();
-        if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
-            for (ServerLevel dimension : serverLevel.getServer().getAllLevels()) {
-                for (TagKey<DimensionType> tag : DimensionTagTracking.getTags(level)) {
-                    DimensionTagTracking.syncTrackerFromServer(dimension, tag);
-                }
             }
         }
     }
