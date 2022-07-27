@@ -1,11 +1,10 @@
-// 1.19	2022-06-23T18:09:20.191135	Aether Item Tags
+// 1.19	2022-07-26T17:07:45.5967552	Aether Item Tags
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/aerbunny_temptation_items.json
 f2dedadb4e94e780ebd949b551d3349f0210feb9 data/aether/tags/items/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/items/aerogel.json
 d520be56403df209dca245912dc672e8c5c3bf0e data/aether/tags/items/aether_dirt.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/aether_portal_activation_items.json
-f46fcbdc3004c588cb64e9630be7b0e2896fcc5c data/aether/tags/items/banned_in_aether.json
 4c3f53ffa001534a8db6e1a65a1bdefc3fa0142f data/aether/tags/items/book_of_lore_materials.json
 321cad0c802b794f364a9ba5a34536ecc36271ec data/aether/tags/items/darts.json
 689feb68cd191d91398feec72aac2a3ba6fc6c1e data/aether/tags/items/dart_shooters.json
