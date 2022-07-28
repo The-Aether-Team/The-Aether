@@ -1,17 +1,22 @@
 package com.gildedgames.aether.data.providers;
 
-import com.gildedgames.aether.recipe.builder.AltarRepairBuilder;
+import com.gildedgames.aether.recipe.BlockPropertyPair;
+import com.gildedgames.aether.recipe.BlockStateIngredient;
+import com.gildedgames.aether.recipe.builder.*;
 import com.gildedgames.aether.recipe.AetherRecipeSerializers;
 import com.gildedgames.aether.AetherTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.common.Tags;
 
+import java.util.Map;
 import java.util.function.Supplier;
 
 import net.minecraft.data.recipes.RecipeProvider;
@@ -394,4 +399,47 @@ public abstract class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + ForgeRegistries.ITEMS.getKey(result.asItem()).getPath(), has(result));
     }
 
+    public BlockStateRecipeBuilder swetBallConversion(Block result, Block ingredient) {
+        return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipeSerializers.SWET_BALL_CONVERSION.get());
+    }
+
+    public BlockStateRecipeBuilder swetBallConversionTag(Block result, Block ingredient, TagKey<Biome> tagKey) {
+        return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, tagKey, AetherRecipeSerializers.SWET_BALL_CONVERSION.get());
+    }
+
+    public BlockStateRecipeBuilder icestoneFreezable(Block result, Block ingredient) {
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipeSerializers.ICESTONE_FREEZABLE.get());
+    }
+
+    public BlockStateRecipeBuilder accessoryFreezable(Block result, Block ingredient) {
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipeSerializers.ACCESSORY_FREEZABLE.get());
+    }
+
+    public BlockStateRecipeBuilder convertPlacement(Block result, Block ingredient, TagKey<Biome> biome) {
+        return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, biome, AetherRecipeSerializers.PLACEMENT_CONVERSION.get());
+    }
+
+    public BlockStateRecipeBuilder convertPlacementWithProperties(Block result, Map<Property<?>, Comparable<?>> resultProperties, Block ingredient, Map<Property<?>, Comparable<?>> ingredientProperties, TagKey<Biome> biome) {
+        return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(pair(ingredient, ingredientProperties)), result, resultProperties, biome, AetherRecipeSerializers.PLACEMENT_CONVERSION.get());
+    }
+
+    public PlacementBanBuilder banItemPlacement(ItemLike ingredient, TagKey<Biome> biome) {
+        return ItemBanBuilder.recipe(Ingredient.of(ingredient), BlockStateIngredient.EMPTY, biome, AetherRecipeSerializers.ITEM_PLACEMENT_BAN.get());
+    }
+
+    public PlacementBanBuilder banItemPlacementWithBypass(ItemLike ingredient, TagKey<Block> bypass, TagKey<Biome> biome) {
+        return ItemBanBuilder.recipe(Ingredient.of(ingredient), BlockStateIngredient.of(bypass), biome, AetherRecipeSerializers.ITEM_PLACEMENT_BAN.get());
+    }
+
+    public PlacementBanBuilder banBlockPlacement(Block ingredient, TagKey<Biome> biome) {
+        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), BlockStateIngredient.EMPTY, biome, AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
+    }
+
+    public PlacementBanBuilder banBlockPlacementWithBypass(Block ingredient, TagKey<Block> bypass, TagKey<Biome> biome) {
+        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), BlockStateIngredient.of(bypass), biome, AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
+    }
+
+    protected BlockPropertyPair pair(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {
+        return BlockPropertyPair.of(resultBlock, resultProperties);
+    }
 }

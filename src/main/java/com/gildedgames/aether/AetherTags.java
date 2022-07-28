@@ -4,7 +4,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.*;
@@ -26,6 +25,9 @@ public class AetherTags {
 		public static final TagKey<Block> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final TagKey<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final TagKey<Block> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final TagKey<Block> SENTRY_BLOCKS = tag("sentry_blocks");
+		public static final TagKey<Block> ANGELIC_BLOCKS = tag("angelic_blocks");
+		public static final TagKey<Block> HELLFIRE_BLOCKS = tag("hellfire_blocks");
 		public static final TagKey<Block> GRAVITITE_ABILITY_BLACKLIST = tag("gravitite_ability_blacklist");
 		public static final TagKey<Block> AETHER_ANIMALS_SPAWNABLE_ON = tag("aether_animals_spawnable_on");
 		public static final TagKey<Block> AERWHALE_SPAWNABLE_ON = tag("aerwhale_spawnable_on");
@@ -33,6 +35,8 @@ public class AetherTags {
 		public static final TagKey<Block> AECHOR_PLANT_SPAWNABLE_ON = tag("aechor_plant_spawnable_on");
 		public static final TagKey<Block> ZEPHYR_SPAWNABLE_ON = tag("zephyr_spawnable_on");
 		public static final TagKey<Block> COCKATRICE_SPAWNABLE_BLACKLIST = tag("cockatrice_spawnable_blacklist");
+		public static final TagKey<Block> INFINIBURN = tag("infiniburn");
+		public static final TagKey<Block> ALLOWED_FLAMMABLES = tag("allowed_flammables");
 		public static final TagKey<Block> QUICKSOIL_CAN_GENERATE = tag("quicksoil_can_generate");
 		public static final TagKey<Block> VALKYRIE_TELEPORTABLE_ON = tag("valkyrie_teleportable_on");
 
@@ -55,7 +59,6 @@ public class AetherTags {
 		public static final TagKey<Item> PLANKS_CRAFTING = tag("planks_crafting");
 		public static final TagKey<Item> STONE_CRAFTING = tag("stone_crafting");
 
-		public static final TagKey<Item> BANNED_IN_AETHER = tag("banned_in_aether");
 		public static final TagKey<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 		public static final TagKey<Item> SKYROOT_STICKS = tag("skyroot_stick");
@@ -121,7 +124,6 @@ public class AetherTags {
 	}
 
 	public static class Fluids {
-		public static final TagKey<Fluid> FREEZABLE_TO_AEROGEL = tag("freezable_to_aerogel");
 		public static final TagKey<Fluid> ALLOWED_BUCKET_PICKUP = tag("allowed_bucket_pickup");
 
 		private static TagKey<Fluid> tag(String name) {
@@ -133,24 +135,19 @@ public class AetherTags {
 		public static final TagKey<Biome> IS_AETHER = tag("is_aether");
 		public static final TagKey<Biome> HAS_LARGE_AERCLOUD = tag("has_large_aercloud");
 
+		public static final TagKey<Biome> MYCELIUM_CONVERSION = tag("mycelium_conversion");
+		public static final TagKey<Biome> PODZOL_CONVERSION = tag("podzol_conversion");
+		public static final TagKey<Biome> CRIMSON_NYLIUM_CONVERSION = tag("crimson_nylium_conversion");
+		public static final TagKey<Biome> WARPED_NYLIUM_CONVERSION = tag("warped_nylium_conversion");
+
+		public static final TagKey<Biome> ULTRACOLD = tag("ultracold");
+		public static final TagKey<Biome> NO_WHEAT_SEEDS = tag("no_wheat_seeds");
+		public static final TagKey<Biome> FALL_TO_OVERWORLD = tag("fall_to_overworld");
+		public static final TagKey<Biome> DISPLAY_TRAVEL_TEXT = tag("display_travel_text");
+		public static final TagKey<Biome> AETHER_MUSIC = tag("aether_music");
+
 		private static TagKey<Biome> tag(String name) {
 			return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Aether.MODID, name));
-		}
-	}
-
-	public static class Dimensions {
-		// This should be our most general tag for any worlds that are "Aether-like"
-		// All tags above should reference this tag, for any dimensions added to this tag should apply for all logic above
-		public static final TagKey<DimensionType> HOSTILE_PARADISE = tag("hostile_paradise");
-
-		public static final TagKey<DimensionType> ULTRACOLD = tag("ultracold");
-		public static final TagKey<DimensionType> NO_WHEAT_SEEDS = tag("no_wheat_seeds");
-		public static final TagKey<DimensionType> FALL_TO_OVERWORLD = tag("fall_to_overworld");
-		public static final TagKey<DimensionType> DISPLAY_TRAVEL_TEXT = tag("display_travel_text");
-		public static final TagKey<DimensionType> AETHER_MUSIC = tag("aether_music");
-
-		private static TagKey<DimensionType> tag(String name) {
-			return TagKey.create(Registry.DIMENSION_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 }

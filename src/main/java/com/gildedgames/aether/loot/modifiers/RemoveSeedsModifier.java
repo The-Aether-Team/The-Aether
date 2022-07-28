@@ -1,14 +1,16 @@
 package com.gildedgames.aether.loot.modifiers;
 
 import com.gildedgames.aether.AetherTags;
-import com.gildedgames.aether.api.DimensionTagTracking;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
@@ -24,7 +26,8 @@ public class RemoveSeedsModifier extends LootModifier {
     @Nonnull
     @Override
     public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        if (DimensionTagTracking.inTag(context.getLevel(), AetherTags.Dimensions.NO_WHEAT_SEEDS)) {
+        Vec3 vec3 = context.getParamOrNull(LootContextParams.ORIGIN);
+        if (vec3 != null && context.getLevel().getBiome(new BlockPos(vec3)).is(AetherTags.Biomes.NO_WHEAT_SEEDS)) {
             generatedLoot.removeIf((itemStack) -> itemStack.is(Items.WHEAT_SEEDS));
         }
         return generatedLoot;

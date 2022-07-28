@@ -74,7 +74,7 @@ public class AetherMusicManager {
      * Plays the biome's music over the creative music.
      */
     public static void handleCreativeMusic() {
-        if (currentMusic == null && minecraft.player != null && minecraft.player.level.dimensionTypeRegistration().containsTag(AetherTags.Dimensions.AETHER_MUSIC) && minecraft.player.getAbilities().instabuild && minecraft.player.getAbilities().mayfly) {
+        if (currentMusic == null && minecraft.player != null && minecraft.player.level.getBiome(minecraft.player.blockPosition()).is(AetherTags.Biomes.AETHER_MUSIC) && minecraft.player.getAbilities().instabuild && minecraft.player.getAbilities().mayfly) {
             SoundEvent sound = minecraft.player.level.getBiome(minecraft.player.blockPosition()).get().getBackgroundMusic().orElse(Musics.GAME).getEvent();
             currentMusic = SimpleSoundInstance.forMusic(sound);
             minecraft.getSoundManager().play(currentMusic);

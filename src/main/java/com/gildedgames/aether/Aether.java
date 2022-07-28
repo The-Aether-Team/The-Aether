@@ -48,7 +48,6 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.dimension.DimensionType;
@@ -135,7 +134,6 @@ public class Aether
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
-        AetherItems.registerAbilities();
         AetherPacketHandler.register();
 
         AetherAdvancementTriggers.init();
@@ -149,7 +147,6 @@ public class Aether
         event.enqueueWork(() -> {
             AetherBlocks.registerPots();
             AetherBlocks.registerFlammability();
-            AetherBlocks.registerFreezables();
 
             AetherEntityTypes.registerSpawnPlacements();
 
@@ -187,7 +184,6 @@ public class Aether
         generator.addProvider(event.includeServer(), new AetherEntityTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherFluidTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(generator, helper));
-        generator.addProvider(event.includeServer(), new AetherDimensionTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<ConfiguredFeature<?, ?>>().create(generator, helper, AetherConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<PlacedFeature>().create(generator, helper, AetherPlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
         generator.addProvider(event.includeServer(), new AetherDataGenerators<Structure>().create(generator, helper, AetherStructures.STRUCTURES, Registry.STRUCTURE_REGISTRY));
@@ -246,8 +242,6 @@ public class Aether
     }
 
     private void registerDispenserBehaviors() {
-        AetherDispenseBehaviors.DEFAULT_FIRE_CHARGE_BEHAVIOR = DispenserBlock.DISPENSER_REGISTRY.get(Items.FIRE_CHARGE);
-        AetherDispenseBehaviors.DEFAULT_FLINT_AND_STEEL_BEHAVIOR = DispenserBlock.DISPENSER_REGISTRY.get(Items.FLINT_AND_STEEL);
         DispenserBlock.registerBehavior(AetherItems.GOLDEN_DART.get(), new DispenseDartBehavior(AetherItems.GOLDEN_DART));
         DispenserBlock.registerBehavior(AetherItems.POISON_DART.get(), new DispenseDartBehavior(AetherItems.POISON_DART));
         DispenserBlock.registerBehavior(AetherItems.ENCHANTED_DART.get(), new DispenseDartBehavior(AetherItems.ENCHANTED_DART));
@@ -257,8 +251,6 @@ public class Aether
 		DispenserBlock.registerBehavior(AetherItems.SKYROOT_BUCKET.get(), AetherDispenseBehaviors.SKYROOT_BUCKET_PICKUP_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.AMBROSIUM_SHARD.get(), AetherDispenseBehaviors.DISPENSE_AMBROSIUM_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.SWET_BALL.get(), AetherDispenseBehaviors.DISPENSE_SWET_BALL_BEHAVIOR);
-        DispenserBlock.registerBehavior(Items.FIRE_CHARGE, AetherDispenseBehaviors.DISPENSE_FIRE_CHARGE_BEHAVIOR);
-        DispenserBlock.registerBehavior(Items.FLINT_AND_STEEL, AetherDispenseBehaviors.DISPENSE_FLINT_AND_STEEL);
     }
 
     private void registerCauldronInteractions() {

@@ -1,6 +1,7 @@
 package com.gildedgames.aether.event.listeners;
 
-import com.gildedgames.aether.event.events.AetherBannedItemEvent;
+import com.gildedgames.aether.event.events.PlacementBanEvent;
+import com.gildedgames.aether.event.events.PlacementConvertEvent;
 import com.gildedgames.aether.event.hooks.DimensionHooks;
 import com.gildedgames.aether.data.resources.AetherDimensions;
 import com.gildedgames.aether.world.AetherLevelData;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.SleepFinishedTimeEvent;
@@ -38,21 +38,32 @@ public class DimensionListener {
         Direction direction = event.getFace();
         ItemStack itemStack = event.getItemStack();
         BlockState blockState = level.getBlockState(blockPos);
-        event.setCanceled(DimensionHooks.checkPlacementBanned(player, level, blockPos, direction, itemStack, blockState));
-    }
-
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onBanned(AetherBannedItemEvent.SpawnParticles event) {
-        LevelAccessor levelAccessor = event.getWorld();
-        BlockPos blockPos = event.getPos();
-        DimensionHooks.onPlacementBanned(levelAccessor, blockPos);
+        event.setCanceled(DimensionHooks.checkInteractionBanned(player, level, blockPos, direction, itemStack, blockState));
     }
 
     @SubscribeEvent
     public static void onNeighborNotified(BlockEvent.NeighborNotifyEvent event) {
         LevelAccessor levelAccessor = event.getLevel();
         BlockPos blockPos = event.getPos();
-        event.setCanceled(DimensionHooks.freezeToAerogel(levelAccessor, blockPos));
+        DimensionHooks.checkExistenceBanned(levelAccessor, blockPos);
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onConvert(PlacementConvertEvent event) {
+        LevelAccessor levelAccessor = event.getWorld();
+        BlockPos blockPos = event.getPos();
+        if (!event.isCanceled()) {
+            DimensionHooks.banOrConvert(levelAccessor, blockPos);
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onBanned(PlacementBanEvent.SpawnParticles event) {
+        LevelAccessor levelAccessor = event.getWorld();
+        BlockPos blockPos = event.getPos();
+        if (!event.isCanceled()) {
+            DimensionHooks.banOrConvert(levelAccessor, blockPos);
+        }
     }
 
     @SubscribeEvent
@@ -75,12 +86,6 @@ public class DimensionListener {
     public static void onPlayerTraveling(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
         DimensionHooks.travelling(player);
-    }
-
-    @SubscribeEvent
-    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
-        Player player = event.getEntity();
-        DimensionHooks.syncTrackersFromServer(player);
     }
 
     /**

@@ -1,0 +1,16 @@
+{
+  "type": "aether:placement_conversion",
+  "biome": "#aether:ultracold",
+  "ingredient": {
+    "block": "minecraft:campfire",
+    "properties": {
+      "lit": "true"
+    }
+  },
+  "result": {
+    "block": "minecraft:campfire",
+    "properties": {
+      "lit": "false"
+    }
+  }
+}

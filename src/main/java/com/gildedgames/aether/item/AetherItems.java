@@ -269,9 +269,4 @@ public class AetherItems
 	public static final RegistryObject<SpawnEggItem> VALKYRIE_QUEEN_SPAWN_EGG = ITEMS.register("valkyrie_queen_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.VALKYRIE_QUEEN, 0xF2D200, 0xF9F5E3, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<SpawnEggItem> SUN_SPIRIT_SPAWN_EGG = ITEMS.register("sun_spirit_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.SUN_SPIRIT, 0xFEF500, 0xFF6D01, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.ZEPHYR, 0xDFDFDF, 0x99CFE8, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
-
-	public static void registerAbilities() {
-		SwetBallConversion.registerDefaultConversions();
-		SwetBallConversion.registerBiomeConversions();
-	}
 }
