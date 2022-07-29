@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[41,)"
+loaderVersion = "[42,)"
 license = "LGPL-3.0 License"
 
 [[mods]]
@@ -16,18 +16,18 @@ description = '''
 [[dependencies.aether]]
     modId = "forge"
     mandatory = true
-    versionRange = "[41.0.98,)"
+    versionRange = "[42.0.0,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.aether]]
     modId = "curios"
     mandatory = true
-    versionRange = "[1.19-,)"
+    versionRange = "[1.19.1-,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.aether]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "[1.19]"
+    versionRange = "[1.19.1]"
     ordering = "NONE"
     side = "BOTH"
