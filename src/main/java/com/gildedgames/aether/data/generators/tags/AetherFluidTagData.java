@@ -27,9 +27,6 @@ public class AetherFluidTagData extends FluidTagsProvider
 
     @Override
     protected void addTags() {
-        tag(AetherTags.Fluids.FREEZABLE_TO_AEROGEL).add(
-                Fluids.LAVA,
-                Fluids.FLOWING_LAVA);
         tag(AetherTags.Fluids.ALLOWED_BUCKET_PICKUP).add(
                 Fluids.WATER,
                 Fluids.FLOWING_WATER);

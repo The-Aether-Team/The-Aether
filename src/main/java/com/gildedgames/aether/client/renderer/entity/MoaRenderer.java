@@ -7,7 +7,7 @@ import com.gildedgames.aether.client.renderer.entity.model.MoaModel;
 import com.gildedgames.aether.entity.passive.Moa;
 import com.gildedgames.aether.api.AetherMoaTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
+
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -25,12 +25,6 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 	}
 
 	@Override
-	public void render(@Nonnull Moa moa, float entityYaw, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
-		super.render(moa, entityYaw, partialTicks, poseStack, buffer, packedLight);
-		this.model.setupWingsAnimation(moa);
-	}
-
-	@Override
 	protected void scale(Moa moa, PoseStack poseStack, float partialTickTime) {
 		float moaScale = moa.isBaby() ? 1.0F : 1.8F;
 		poseStack.scale(moaScale, moaScale, moaScale);
@@ -39,13 +33,18 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 		}
 	}
 
+	@Override
+	protected float getBob(@Nonnull Moa moa, float partialTicks) {
+		return this.model.setupWingsAnimation(moa, partialTicks);
+	}
+
 	@Nonnull
 	@Override
 	public ResourceLocation getTextureLocation(Moa moa) {
-		if (moa.hasCustomName() && moa.getName().getString().equals("Mos") && moa.getMoaType() == AetherMoaTypes.ORANGE) {
+		if (moa.hasCustomName() && moa.getName().getString().equals("Mos") && moa.getMoaType() == AetherMoaTypes.ORANGE.get()) {
 			return MOS_TEXTURE;
 		}
-		if ((moa.hasCustomName() && moa.getName().getString().equals("Raptor__") && moa.getMoaType() == AetherMoaTypes.BLUE)
+		if ((moa.hasCustomName() && moa.getName().getString().equals("Raptor__") && moa.getMoaType() == AetherMoaTypes.BLUE.get())
 				|| (moa.getRider() != null && moa.getRider().equals(UUID.fromString("c3e6871e-8e60-490a-8a8d-2bbe35ad1604")))) {
 			return RAPTOR_TEXTURE;
 		}

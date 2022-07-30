@@ -227,10 +227,18 @@ public abstract class AbstractWhirlwind extends Mob {
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.movementAngle = tag.getFloat("Movement Angle");
-        this.movementCurve = tag.getFloat("Movement Curve");
-        this.lifeLeft = tag.getInt("Life Left");
-        this.setColorData(tag.getInt("Color"));
+        if (tag.contains("Movement Angle")) {
+            this.movementAngle = tag.getFloat("Movement Angle");
+        }
+        if (tag.contains("Movement Curve")) {
+            this.movementCurve = tag.getFloat("Movement Curve");
+        }
+        if (tag.contains("Life Left")) {
+            this.lifeLeft = tag.getInt("Life Left");
+        }
+        if (tag.contains("Color")) {
+            this.setColorData(tag.getInt("Color"));
+        }
     }
 
     /**

@@ -1,0 +1,10 @@
+{
+  "type": "aether:item_placement_ban",
+  "biome": "#aether:ultracold",
+  "bypass": {
+    "tag": "aether:allowed_flammables"
+  },
+  "ingredient": {
+    "item": "minecraft:fire_charge"
+  }
+}

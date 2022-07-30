@@ -143,9 +143,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      * Spawns explosion particles.
      */
     public void spawnExplosionParticles() {
-        for (int i = 0; i < 5; i++) {
-            AetherPacketHandler.sendToAll(new ExplosionParticlePacket(this.getId()));
-        }
+        AetherPacketHandler.sendToNear(new ExplosionParticlePacket(this.getId(), 5), this.getX(), this.getY(), this.getZ(), 10.0, level.dimension());
     }
 
     /**

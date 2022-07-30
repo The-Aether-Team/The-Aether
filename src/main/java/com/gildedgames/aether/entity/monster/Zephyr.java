@@ -32,7 +32,11 @@ import javax.annotation.Nonnull;
 import java.util.EnumSet;
 
 public class Zephyr extends FlyingMob implements Enemy {
-	public static final EntityDataAccessor<Integer> ATTACK_CHARGE = SynchedEntityData.defineId(Zephyr.class, EntityDataSerializers.INT);
+	public static final EntityDataAccessor<Integer> DATA_ATTACK_CHARGE_ID = SynchedEntityData.defineId(Zephyr.class, EntityDataSerializers.INT);
+	public int scale;
+	public int scaleAdd;
+	public float tailRot;
+	public float tailRotAdd;
 
 	public Zephyr(EntityType<? extends Zephyr> type, Level level) {
 		super(type, level);
@@ -57,23 +61,11 @@ public class Zephyr extends FlyingMob implements Enemy {
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		this.entityData.define(ATTACK_CHARGE, 0);
+		this.entityData.define(DATA_ATTACK_CHARGE_ID, 0);
 	}
 
 	public static boolean checkZephyrSpawnRules(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
 		return level.getDifficulty() != Difficulty.PEACEFUL && (reason == MobSpawnType.SPAWNER || level.getBlockState(pos.below()).is(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON));
-	}
-
-	/**
-	 * The purpose of this method override is to fix the weird movement from flying mobs.
-	 */
-	@Override
-	public void travel(@Nonnull Vec3 vector3d) {
-		if (this.isEffectiveAi() || this.isControlledByLocalInstance()) {
-			super.travel(vector3d);
-		} else {
-			this.calculateEntityAnimation(this, false);
-		}
 	}
 
 	@Override
@@ -81,6 +73,18 @@ public class Zephyr extends FlyingMob implements Enemy {
 		super.aiStep();
 		if (this.getY() < this.level.getMinBuildHeight() - 2 || this.getY() > this.level.getMaxBuildHeight()) {
 			this.discard();
+		}
+		this.scale += this.scaleAdd;
+		this.tailRot += this.tailRotAdd;
+		if (this.getAttackCharge() > 0 && this.scale < 40) {
+			this.scaleAdd = 1;
+		} else {
+			this.scaleAdd = 0;
+			this.scale = 0;
+		}
+		this.tailRotAdd = 0.015F;
+		if (this.tailRot >= Mth.TWO_PI) {
+			this.tailRot -= Mth.TWO_PI;
 		}
 	}
 
@@ -90,7 +94,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	}
 
 	public int getAttackCharge() {
-		return this.entityData.get(ATTACK_CHARGE);
+		return this.entityData.get(DATA_ATTACK_CHARGE_ID);
 	}
 
 	/**
@@ -99,7 +103,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	 * zephyr begins to wind up for an attack.
 	 */
 	public void setAttackCharge(int attackTimer) {
-		this.entityData.set(ATTACK_CHARGE, Math.max(attackTimer, 0));
+		this.entityData.set(DATA_ATTACK_CHARGE_ID, Math.max(attackTimer, 0));
 	}
 
 	@Override
@@ -191,7 +195,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 			} else if (this.attackTimer > 0) {
 				this.attackTimer--;
 			}
-			this.parentEntity.setAttackCharge(attackTimer);
+			this.parentEntity.setAttackCharge(this.attackTimer);
 		}
 	}
 

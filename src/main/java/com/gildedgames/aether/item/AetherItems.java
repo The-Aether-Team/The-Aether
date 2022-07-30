@@ -207,15 +207,15 @@ public class AetherItems
 	// Misc
 	public static final RegistryObject<Item> VICTORY_MEDAL = ITEMS.register("victory_medal", () -> new Item(new Item.Properties().stacksTo(10).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
 
-	public static final RegistryObject<Item> BRONZE_DUNGEON_KEY = ITEMS.register("bronze_dungeon_key", () -> new DungeonKeyItem(() -> AetherDungeonTypes.BRONZE, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> SILVER_DUNGEON_KEY = ITEMS.register("silver_dungeon_key", () -> new DungeonKeyItem(() -> AetherDungeonTypes.SILVER, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> GOLD_DUNGEON_KEY = ITEMS.register("gold_dungeon_key", () -> new DungeonKeyItem(() -> AetherDungeonTypes.GOLD, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> BRONZE_DUNGEON_KEY = ITEMS.register("bronze_dungeon_key", () -> new DungeonKeyItem(AetherDungeonTypes.BRONZE, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> SILVER_DUNGEON_KEY = ITEMS.register("silver_dungeon_key", () -> new DungeonKeyItem(AetherDungeonTypes.SILVER, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> GOLD_DUNGEON_KEY = ITEMS.register("gold_dungeon_key", () -> new DungeonKeyItem(AetherDungeonTypes.GOLD, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().tab(AetherItemGroups.AETHER_MISC)));
 
-	public static final RegistryObject<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune", () -> new RecordItem(1, AetherSoundEvents.ITEM_MUSIC_DISC_AETHER_TUNE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> MUSIC_DISC_ASCENDING_DAWN  = ITEMS.register("music_disc_ascending_dawn", () -> new RecordItem(2, AetherSoundEvents.ITEM_MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> MUSIC_DISC_WELCOMING_SKIES  = ITEMS.register("music_disc_welcoming_skies", () -> new RecordItem(3, AetherSoundEvents.ITEM_MUSIC_DISC_WELCOMING_SKIES, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> MUSIC_DISC_LEGACY  = ITEMS.register("music_disc_legacy", () -> new RecordItem(4, AetherSoundEvents.ITEM_MUSIC_DISC_LEGACY, new Item.Properties().stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> MUSIC_DISC_CHINCHILLA  = ITEMS.register("music_disc_chinchilla", () -> new RecordItem(5, AetherSoundEvents.ITEM_MUSIC_DISC_CHINCHILLA, new Item.Properties().stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune", () -> new RecordItem(1, AetherSoundEvents.ITEM_MUSIC_DISC_AETHER_TUNE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC), 2980));
+	public static final RegistryObject<Item> MUSIC_DISC_ASCENDING_DAWN  = ITEMS.register("music_disc_ascending_dawn", () -> new RecordItem(2, AetherSoundEvents.ITEM_MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC), 7000));
+	public static final RegistryObject<Item> MUSIC_DISC_WELCOMING_SKIES  = ITEMS.register("music_disc_welcoming_skies", () -> new RecordItem(3, AetherSoundEvents.ITEM_MUSIC_DISC_WELCOMING_SKIES, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC), 4400));
+	public static final RegistryObject<Item> MUSIC_DISC_LEGACY  = ITEMS.register("music_disc_legacy", () -> new RecordItem(4, AetherSoundEvents.ITEM_MUSIC_DISC_LEGACY, new Item.Properties().stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC), 6040));
+	public static final RegistryObject<Item> MUSIC_DISC_CHINCHILLA  = ITEMS.register("music_disc_chinchilla", () -> new RecordItem(5, AetherSoundEvents.ITEM_MUSIC_DISC_CHINCHILLA, new Item.Properties().stacksTo(1).rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_MISC), 3260));
 
 	public static final RegistryObject<Item> SKYROOT_BUCKET = ITEMS.register("skyroot_bucket", () -> new SkyrootBucketItem(() -> Fluids.EMPTY, new Item.Properties().stacksTo(16).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> SKYROOT_WATER_BUCKET = ITEMS.register("skyroot_water_bucket", () -> new SkyrootBucketItem(() -> Fluids.WATER, new Item.Properties().craftRemainder(SKYROOT_BUCKET.get()).stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
@@ -236,10 +236,10 @@ public class AetherItems
 	public static final RegistryObject<Item> COLD_PARACHUTE = ITEMS.register("cold_parachute", () -> new ParachuteItem(AetherEntityTypes.COLD_PARACHUTE, new Item.Properties().durability(1).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> GOLDEN_PARACHUTE = ITEMS.register("golden_parachute", () -> new ParachuteItem(AetherEntityTypes.GOLDEN_PARACHUTE, new Item.Properties().durability(20).tab(AetherItemGroups.AETHER_MISC)));
 
-	public static final RegistryObject<Item> BLUE_MOA_EGG = ITEMS.register("blue_moa_egg", () -> new MoaEggItem(() -> AetherMoaTypes.BLUE, 0x7777FF, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> WHITE_MOA_EGG = ITEMS.register("white_moa_egg", () -> new MoaEggItem(() -> AetherMoaTypes.WHITE, 0xFFFFFF, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> BLACK_MOA_EGG = ITEMS.register("black_moa_egg", () -> new MoaEggItem(() -> AetherMoaTypes.BLACK, 0x222222, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
-	public static final RegistryObject<Item> ORANGE_MOA_EGG = ITEMS.register("orange_moa_egg", () -> new MoaEggItem(() -> AetherMoaTypes.ORANGE, 0xF3C288, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> BLUE_MOA_EGG = ITEMS.register("blue_moa_egg", () -> new MoaEggItem(AetherMoaTypes.BLUE, 0x7777FF, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> WHITE_MOA_EGG = ITEMS.register("white_moa_egg", () -> new MoaEggItem(AetherMoaTypes.WHITE, 0xFFFFFF, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> BLACK_MOA_EGG = ITEMS.register("black_moa_egg", () -> new MoaEggItem(AetherMoaTypes.BLACK, 0x222222, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
+	public static final RegistryObject<Item> ORANGE_MOA_EGG = ITEMS.register("orange_moa_egg", () -> new MoaEggItem(AetherMoaTypes.ORANGE, 0xF3C288, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_MISC)));
 
 	public static final RegistryObject<Item> NATURE_STAFF = ITEMS.register("nature_staff", () -> new Item(new Item.Properties().durability(100).rarity(AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<Item> CLOUD_STAFF = ITEMS.register("cloud_staff", CloudStaffItem::new);
@@ -269,9 +269,4 @@ public class AetherItems
 	public static final RegistryObject<SpawnEggItem> VALKYRIE_QUEEN_SPAWN_EGG = ITEMS.register("valkyrie_queen_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.VALKYRIE_QUEEN, 0xF2D200, 0xF9F5E3, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<SpawnEggItem> SUN_SPIRIT_SPAWN_EGG = ITEMS.register("sun_spirit_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.SUN_SPIRIT, 0xFEF500, 0xFF6D01, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
 	public static final RegistryObject<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.ZEPHYR, 0xDFDFDF, 0x99CFE8, new Item.Properties().tab(AetherItemGroups.AETHER_MISC)));
-
-	public static void registerAbilities() {
-		SwetBallConversion.registerDefaultConversions();
-		SwetBallConversion.registerBiomeConversions();
-	}
 }

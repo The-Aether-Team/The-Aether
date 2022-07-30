@@ -122,23 +122,25 @@ public class ThunderCrystal extends AbstractCrystal {
         }
     }
 
+    @Override
+    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        if (this.target != null) {
+            tag.putInt("Target", this.target.getId());
+        }
+    }
+
+    @Override
+    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.contains("Target")) {
+            this.target = this.level.getEntity(tag.getInt("Target"));
+        }
+    }
+
     @Nonnull
     @Override
     public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag nbt) {
-        super.readAdditionalSaveData(nbt);
-        this.target = this.level.getEntity(nbt.getInt("Target"));
-    }
-
-    @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag nbt) {
-        super.addAdditionalSaveData(nbt);
-        if (this.target != null) {
-            nbt.putInt("Target", this.target.getId());
-        }
     }
 }

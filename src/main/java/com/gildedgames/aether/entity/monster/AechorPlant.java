@@ -1,6 +1,7 @@
 package com.gildedgames.aether.entity.monster;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
+import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.ai.goal.target.NearestTaggedTargetGoal;
 import com.gildedgames.aether.entity.projectile.PoisonNeedle;
 
@@ -18,6 +19,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -43,6 +45,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     public static final EntityDataAccessor<Boolean> DATA_TARGETING_ENTITY_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.BOOLEAN);
 
     public float sinage;
+    public float sinageAdd;
 
     public AechorPlant(EntityType<? extends AechorPlant> type, Level level) {
         super(type, level);
@@ -100,23 +103,28 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
             this.setHealth(0.0F);
         }
 
-        if (this.hurtTime > 0) {
-            this.sinage += 0.9F;
-        } else if (this.getTargetingEntity()) {
-            this.sinage += 0.3F;
-        } else {
-            this.sinage += 0.1F;
-        }
-        if (this.sinage > (Math.PI * 2.0F)) {
-            this.sinage -= (Math.PI * 2.0F);
-        }
-
         if (!this.level.isClientSide()) {
             if (this.getTarget() != null) {
                 this.setTargetingEntity(true);
             } else if (this.getTarget() == null && this.getTargetingEntity()) {
                 this.setTargetingEntity(false);
             }
+        }
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        this.sinage += this.sinageAdd;
+        if (this.hurtTime > 0) {
+            this.sinageAdd = 0.45F;
+        } else if (this.getTargetingEntity()) {
+            this.sinageAdd = 0.3F;
+        } else {
+            this.sinageAdd = 0.15F;
+        }
+        if (this.sinage >= Mth.TWO_PI) {
+            this.sinage -= Mth.TWO_PI;
         }
     }
 
@@ -252,6 +260,11 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     }
 
     @Override
+    public boolean canBeAffected(MobEffectInstance potionEffect) {
+        return potionEffect.getEffect() != AetherEffects.INEBRIATION.get() && super.canBeAffected(potionEffect);
+    }
+
+    @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("Size", this.getSize());
@@ -261,8 +274,12 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.setSize(tag.getInt("Size"));
-        this.setPoisonRemaining(tag.getInt("Poison Remaining"));
+        if (tag.contains("Size")) {
+            this.setSize(tag.getInt("Size"));
+        }
+        if (tag.contains("Poison Remaining")) {
+            this.setPoisonRemaining(tag.getInt("Poison Remaining"));
+        }
     }
 }
 

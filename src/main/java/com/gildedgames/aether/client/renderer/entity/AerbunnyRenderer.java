@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
+import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
@@ -29,14 +30,14 @@ public class AerbunnyRenderer extends MobRenderer<Aerbunny, AerbunnyModel> {
     }
 
     @Override
-    protected void setupRotations(Aerbunny aerbunny, @Nonnull PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
+    protected void setupRotations(@Nonnull Aerbunny aerbunny, @Nonnull PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
         super.setupRotations(aerbunny, poseStack, ageInTicks, rotationYaw, partialTicks);
         if (!aerbunny.isOnGround()) {
             if (aerbunny.getDeltaMovement().y > 0.5) {
-                poseStack.mulPose(Vector3f.XN.rotationDegrees(15.0F));
+                poseStack.mulPose(Vector3f.XN.rotationDegrees(Mth.rotLerp(partialTicks, 0.0F, 15.0F)));
             }
             else if (aerbunny.getDeltaMovement().y < -0.5) {
-                poseStack.mulPose(Vector3f.XN.rotationDegrees(-15.0F));
+                poseStack.mulPose(Vector3f.XN.rotationDegrees(Mth.rotLerp(partialTicks, 0.0F, -15.0F)));
             }
             else {
                 poseStack.mulPose(Vector3f.XN.rotationDegrees((float)(aerbunny.getDeltaMovement().y * 30.0)));

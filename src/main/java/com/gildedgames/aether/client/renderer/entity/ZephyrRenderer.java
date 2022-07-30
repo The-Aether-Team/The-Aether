@@ -10,6 +10,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
@@ -29,7 +30,8 @@ public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephy
 
     @Override
     protected void scale(Zephyr zephyr, @Nonnull PoseStack poseStack, float partialTickTime) {
-        float f1 = ((float) zephyr.getAttackCharge() + partialTickTime) / 20.0F;
+        float f = Mth.lerp(partialTickTime, zephyr.scale, zephyr.scale + zephyr.scaleAdd);
+        float f1 = f / 40.0F;
         if (f1 < 0.0F) {
             f1 = 0.0F;
         }
@@ -44,6 +46,11 @@ public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephy
             poseStack.scale(0.8F, 0.8F, 0.8F);
             poseStack.translate(0.0, -0.1, 0.0);
         }
+    }
+
+    @Override
+    protected float getBob(@Nonnull Zephyr zephyr, float partialTicks) {
+        return Mth.lerp(partialTicks, zephyr.tailRot, zephyr.tailRot + zephyr.tailRotAdd);
     }
 
     @Override

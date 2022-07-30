@@ -44,7 +44,7 @@ import net.minecraftforge.common.ForgeMod;
 
 public class Aerbunny extends AetherAnimal {
     public static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
-
+    public int puffSubtract;
     private Vec3 lastPos;
 
     public Aerbunny(EntityType<? extends Aerbunny> type, Level level) {
@@ -90,8 +90,11 @@ public class Aerbunny extends AetherAnimal {
                 this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
             }
         }
-        this.setPuffiness(this.getPuffiness() - 1);
-        if (this.getPuffiness() < 0) {
+        this.setPuffiness(this.getPuffiness() - this.puffSubtract);
+        if (this.getPuffiness() > 0) {
+            this.puffSubtract = 1;
+        } else {
+            this.puffSubtract = 0;
             this.setPuffiness(0);
         }
         if (this.getVehicle() instanceof Player player) {
@@ -185,9 +188,7 @@ public class Aerbunny extends AetherAnimal {
     }
 
     private void spawnExplosionParticle() {
-        for (int i = 0; i < 5; i++) {
-            AetherPacketHandler.sendToAll(new ExplosionParticlePacket(this.getId()));
-        }
+        AetherPacketHandler.sendToNear(new ExplosionParticlePacket(this.getId(), 5), this.getX(), this.getY(), this.getZ(), 10.0, level.dimension());
     }
 
     public int getPuffiness() {
