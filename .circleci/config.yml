@@ -47,17 +47,14 @@ jobs:
             sudo apt-key add openvpn-repo-pkg-key.pub
             sudo wget -O /etc/apt/sources.list.d/openvpn3.list https://swupdate.openvpn.net/community/openvpn3/repos/openvpn3-focal.list
             sudo apt update && sudo apt install openvpn3
-
       - run:
           name: VPN Setup
           background: true
           command: |
             mkdir -m700 -p .openvpn3/autoload
             CLIENT_PATH=~/project/.openvpn3/autoload/client
-
             echo $VPN_CLIENT_LOAD | base64 --decode > $CLIENT_PATH.autoload
             echo $VPN_CLIENT_CONFIG | base64 --decode > $CLIENT_PATH.ovpn
-
             ET_phone_home=$(ss -Hnto state established '( sport = :ssh )' | head -n1 | awk '{ split($4, a, ":"); print a[1] }')
             
             echo -e "\nroute $ET_phone_home 255.255.255.255 net_gateway" >> $CLIENT_PATH.ovpn
@@ -74,7 +71,6 @@ jobs:
             echo "VPN Connected"
             
             sudo openvpn3 sessions-list
-
       - run:
           name: Reinstall and start server
           command: |
@@ -83,21 +79,18 @@ jobs:
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer ${USER_KEY}" \
                 -d '{ "key": "ARTIFACT_BUILD_NUM", "value": "'"${CIRCLE_PREVIOUS_BUILD_NUM}"'" }')
-
             if [[ $UPDATE_RESPONSE == 200 ]]; then
               echo "Updated server environment variable 'ARTIFACT_BUILD_NUM' with ${CIRCLE_PREVIOUS_BUILD_NUM}"
             else 
               echo "Error updating environment: ${UPDATE_RESPONSE}"
               exit 1
             fi
-
             REINSTALL_RESPONSE=$(curl -s -o /dev/null -I -X POST -w "%{http_code}" \
             "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/settings/reinstall" \
             -H "Authorization: Bearer ${USER_KEY}")
             
             if (( $REINSTALL_RESPONSE >= 200 )); then
               echo "Server received reinstallation request."
-
               if (( $REINSTALL_RESPONSE == 204 )); then
                 while [[ ! $(curl -s "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}" \
                 -H "Authorization: Bearer ${USER_KEY}" | jq '.attributes | .is_installing') ]]; 
@@ -106,7 +99,6 @@ jobs:
                   sleep 2
                 done
               fi
-
               echo "Server reinstallation has started."
               
               while [[ $(curl -s "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}" \
@@ -115,7 +107,6 @@ jobs:
                 echo "Waiting for installation..."
                 sleep 10
               done
-
               echo "Sending start signal to server."
               
               START_RESPONSE=$(curl -X POST -s -o /dev/null -w "%{http_code}" "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/power" \
@@ -123,7 +114,6 @@ jobs:
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer ${USER_KEY}" \
                 -d '{ "signal": "start" }')
-
               if (( $START_RESPONSE == 204 )); then
                 echo "Server received start signal."
               else
@@ -134,7 +124,6 @@ jobs:
               echo "Received ${REINSTALL_RESPONSE}: Reinstall unsucessful."
               exit 1
             fi
-
       - run:
           name: Disconnect from OpenVPN
           command: |
@@ -151,6 +140,6 @@ workflows:
           filters:
             branches:
               only: 
-                - "1.19"
+                - "1.18"
           requires:
             - build
