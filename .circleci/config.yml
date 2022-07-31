@@ -77,15 +77,23 @@ jobs:
 
       - run:
           name: Reinstall and start server
+          environment: 
+            CIRCLE_PIPELINE_ID: << pipeline.id >>
           command: |
+            WORKFLOW_ID=$(curl --request GET --url "https://circleci.com/api/v2/pipeline/${CIRCLE_PIPELINE_ID}/workflow" \
+              --header "Circle-Token: ${CIRCLE_API_TOKEN}" | jq .items[] | select(.name == "build-and-test").id)
+
+            PREVIOUS_BUILD_NUM=$(curl --request GET --url "https://circleci.com/api/v2/workflow/${WORKFLOW_ID}/job" \
+              --header "Circle-Token: ${CIRCLE_API_TOKEN}" | jq .items[] | select(.name == "build").job_number)
+
             UPDATE_RESPONSE=$(curl -X PUT -s -o /dev/null -w "%{http_code}" "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/startup/variable" \
                 -H "Accept: application/json" \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer ${USER_KEY}" \
-                -d '{ "key": "ARTIFACT_BUILD_NUM", "value": "'"${CIRCLE_PREVIOUS_BUILD_NUM}"'" }')
+                -d '{ "key": "ARTIFACT_BUILD_NUM", "value": "'"${PREVIOUS_BUILD_NUM}"'" }')
 
             if [[ $UPDATE_RESPONSE == 200 ]]; then
-              echo "Updated server environment variable 'ARTIFACT_BUILD_NUM' with ${CIRCLE_PREVIOUS_BUILD_NUM}"
+              echo "Updated server environment variable 'ARTIFACT_BUILD_NUM' with ${PREVIOUS_BUILD_NUM}"
             else 
               echo "Error updating environment: ${UPDATE_RESPONSE}"
               exit 1
@@ -148,6 +156,7 @@ workflows:
       - deploy:
           context:
             - vpn
+            - api
           filters:
             branches:
               only: 
