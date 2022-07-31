@@ -30,6 +30,9 @@ public class AetherRecipeCategories {
     public static final Supplier<RecipeBookCategories> FREEZABLE_BLOCKS = Suppliers.memoize(() -> RecipeBookCategories.create("FREEZABLE_BLOCKS", new ItemStack(AetherBlocks.BLUE_AERCLOUD.get())));
     public static final Supplier<RecipeBookCategories> FREEZABLE_MISC = Suppliers.memoize(() -> RecipeBookCategories.create("FREEZABLE_MISC", new ItemStack(AetherItems.ICE_RING.get())));
 
+    public static final Supplier<RecipeBookCategories> INCUBATION_SEARCH = Suppliers.memoize(() -> RecipeBookCategories.create("INCUBATION_SEARCH", new ItemStack(Items.COMPASS)));
+    public static final Supplier<RecipeBookCategories> INCUBATION_MISC = Suppliers.memoize(() -> RecipeBookCategories.create("INCUBATION_MISC", new ItemStack(AetherItems.BLUE_MOA_EGG.get())));
+
 
     /**
      * Registers the mod's categories to be used in-game, along with functions to sort items.
@@ -55,6 +58,9 @@ public class AetherRecipeCategories {
         event.registerBookCategories(AetherRecipeBookTypes.FREEZER, ImmutableList.of(FREEZABLE_SEARCH.get(), FREEZABLE_BLOCKS.get(), FREEZABLE_MISC.get()));
         event.registerAggregateCategory(FREEZABLE_SEARCH.get(), ImmutableList.of(FREEZABLE_BLOCKS.get(), FREEZABLE_MISC.get()));
         event.registerRecipeCategoryFinder(AetherRecipeTypes.FREEZING.get(), recipe -> recipe.getResultItem().getItem() instanceof BlockItem ? FREEZABLE_BLOCKS.get() : FREEZABLE_MISC.get());
-    }
 
+        event.registerBookCategories(AetherRecipeBookTypes.INCUBATOR, ImmutableList.of(INCUBATION_SEARCH.get(), INCUBATION_MISC.get()));
+        event.registerAggregateCategory(INCUBATION_SEARCH.get(), ImmutableList.of(INCUBATION_MISC.get()));
+        event.registerRecipeCategoryFinder(AetherRecipeTypes.INCUBATION.get(), recipe -> INCUBATION_MISC.get());
+    }
 }

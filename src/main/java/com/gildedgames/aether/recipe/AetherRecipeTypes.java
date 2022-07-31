@@ -13,6 +13,7 @@ public class AetherRecipeTypes {
 
     public static RegistryObject<RecipeType<EnchantingRecipe>> ENCHANTING = RECIPE_TYPES.register("enchanting", () -> RecipeType.simple(new ResourceLocation(Aether.MODID, "enchanting")));
     public static RegistryObject<RecipeType<FreezingRecipe>> FREEZING = RECIPE_TYPES.register("freezing", () -> RecipeType.simple(new ResourceLocation(Aether.MODID, "freezing")));
+    public static RegistryObject<RecipeType<IncubationRecipe>> INCUBATION = RECIPE_TYPES.register("incubation", () -> RecipeType.simple(new ResourceLocation(Aether.MODID, "incubation")));
     public static RegistryObject<RecipeType<SwetBallRecipe>> SWET_BALL_CONVERSION = RECIPE_TYPES.register("swet_ball_conversion", () -> RecipeType.simple(new ResourceLocation(Aether.MODID, "swet_ball_conversion")));
     public static RegistryObject<RecipeType<IcestoneFreezableRecipe>> ICESTONE_FREEZABLE = RECIPE_TYPES.register("icestone_freezable", () -> RecipeType.simple(new ResourceLocation(Aether.MODID, "icestone_freezable")));
     public static RegistryObject<RecipeType<AccessoryFreezableRecipe>> ACCESSORY_FREEZABLE = RECIPE_TYPES.register("accessory_freezable", () -> RecipeType.simple(new ResourceLocation(Aether.MODID, "accessory_freezable")));
