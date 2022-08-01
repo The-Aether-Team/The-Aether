@@ -10,7 +10,9 @@ import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.ContainerData;
 
-public class FreezerMenu extends AbstractFurnaceMenu {
+import javax.annotation.Nonnull;
+
+public class FreezerMenu extends AbstractAetherFurnaceMenu {
 	public FreezerMenu(int windowId, Inventory playerInventory) {
 		super(AetherMenuTypes.FREEZER.get(), AetherRecipeTypes.FREEZING.get(), AetherRecipeBookTypes.FREEZER, windowId, playerInventory);
 	}
@@ -20,7 +22,7 @@ public class FreezerMenu extends AbstractFurnaceMenu {
 	}
 
 	@Override
-	protected boolean isFuel(ItemStack stack) {
+	public boolean isFuel(@Nonnull ItemStack stack) {
 		return FreezerBlockEntity.getFreezingMap().containsKey(stack.getItem());
 	}
 }
