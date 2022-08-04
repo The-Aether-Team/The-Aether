@@ -35,10 +35,6 @@ jobs:
           paths: 
             - << pipeline.parameters.artifact-name >>-*.jar
       - run:
-          name: Get artifacts
-          command: |
-            echo "$artifact"
-      - run:
           name: Discord Notification
           command: |
             artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts --header 'authorization: Basic REPLACE_BASIC_AUTH' | jq -r '.items[0].path') 
