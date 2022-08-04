@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  discord: teka23/discord@0.0.1
 
 parameters:
   artifact-name:
@@ -34,6 +36,10 @@ jobs:
           root: ~/project/build/libs
           paths: 
             - << pipeline.parameters.artifact-name >>-*.jar
+      - discord/notify:
+          color: '301898'
+          message: Your job on CircleCI has completed.
+          webhook: '${WEBHOOK_URL}'
 
   deploy:
     machine:
