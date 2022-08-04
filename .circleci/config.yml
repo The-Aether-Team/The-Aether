@@ -1,6 +1,4 @@
 version: 2.1
-orbs:
-  discord: teka23/discord@0.0.1
 
 parameters:
   artifact-name:
@@ -48,7 +46,7 @@ jobs:
                 --data \
                   "{ \
                     \"embeds\": [{ \
-                      \"description\": \"Your job on CircleCI has completed: https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether/1778/workflows/${CIRCLE_WORKFLOW_ID}/jobs/$CIRCLE_BUILD_NUM/artifacts\", \
+                      \"description\": \"The latest CircleCI job has completed, a direct download link for the artifacts can be found here: https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_WORKSPACE_ID}/artifacts/0/~/project/build/libs/<< pipeline.parameters.artifact-name >>-*.jar\", \
                       \"color\": \"301898\", \
                       \"fields\": [ \
                         { \
