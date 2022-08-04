@@ -37,7 +37,7 @@ jobs:
       - run:
           name: Get artifacts
           command: |
-            artifact = $(curl --request GET \
+            artifact=$(curl --request GET \
             --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts \
             --header 'authorization: Basic REPLACE_BASIC_AUTH')
             echo "$artifact"
