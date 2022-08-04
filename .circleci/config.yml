@@ -35,6 +35,18 @@ jobs:
           paths: 
             - << pipeline.parameters.artifact-name >>-*.jar
       - run:
+          name: Get artifacts
+          when: on_fail
+          command: |
+            artifacts=$(curl -X GET "https://circleci.com/api/v2/project/(vcs)/(org)/(project)/$CIRCLE_BUILD_NUM/artifacts" \
+            -H "Accept: application/json" \
+            -u "$CIRCLE_API_TOKEN:")
+            # generate a heredoc in BASH_ENV
+            # the '\<<' is a CircleCI escape
+            echo "read -r -d '' STORED_ARTIFACTS \<< 'EOF_ARTIFACTS'" >> $BASH_ENV
+            echo "$artifacts" >> $BASH_ENV
+            echo "EOF_ARTIFACTS" >> $BASH_ENV
+      - run:
           name: Discord Notification
           command: |
             if [ -z "${WEBHOOK_URL}" ]; then
