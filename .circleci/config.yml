@@ -46,7 +46,7 @@ jobs:
                 --data \
                   "{ \
                     \"embeds\": [{ \
-                      \"description\": \"The latest CircleCI job has completed, a direct download link for the artifacts can be found here: https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_WORKSPACE_ID}/artifacts/0/~/project/build/libs/<< pipeline.parameters.artifact-name >>-*.jar\", \
+                      \"description\": \"<< pipeline.parameters.artifact-name >> -*.jar The latest CircleCI job has completed, a direct download link for the artifacts can be found here: https://output.circle-artifacts.com/output/job/${CIRCLE_WORKING_DIRECTORY}/artifacts/0/~/project/build/libs/<< pipeline.parameters.artifact-name >>-*.jar\", \
                       \"color\": \"301898\", \
                       \"fields\": [ \
                         { \
