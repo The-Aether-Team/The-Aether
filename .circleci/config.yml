@@ -48,7 +48,7 @@ jobs:
                 --data \
                   "{ \
                     \"embeds\": [{ \
-                      \"description\": \"Test message. $CIRCLE_BUILD_URL\", \
+                      \"description\": \"Your job on CircleCI has completed: https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether/1778/workflows/${CIRCLE_WORKFLOW_ID}/jobs/$CIRCLE_BUILD_NUM/artifacts\", \
                       \"color\": \"301898\", \
                       \"fields\": [ \
                         { \
