@@ -61,7 +61,7 @@ jobs:
                           \"value\": \"$CIRCLE_BUILD_NUM\", \
                           \"inline\": true \
                         } \
-                      ], \
+                      ] \
                     }] \
                   }" ${WEBHOOK_URL}
             fi
