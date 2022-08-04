@@ -36,10 +36,35 @@ jobs:
           root: ~/project/build/libs
           paths: 
             - << pipeline.parameters.artifact-name >>-*.jar
-      - discord/notify:
-          color: '301898'
-          message: Your job on CircleCI has completed.
-          webhook: '${WEBHOOK_URL}'
+      - run:
+          name: Discord Notification
+          command: |
+            if [ -z "${WEBHOOK_URL}" ]; then
+              echo "NO DISCORD WEBHOOK SET"
+              echo "Please input your DISCORD_WEBHOOK value either in the settings for this project, or as a parameter for this orb."
+              exit 1
+            else
+              curl -X POST -H 'Content-type: application/json' \
+                --data \
+                  "{ \
+                    \"embeds\": [{ \
+                      \"description\": \"Test message. $CIRCLE_BUILD_URL\", \
+                      \"color\": \"301898\", \
+                      \"fields\": [ \
+                        { \
+                          \"name\": \"Project\", \
+                          \"value\": \"$CIRCLE_PROJECT_REPONAME\", \
+                          \"inline\": true \
+                        }, \
+                        { \
+                          \"name\": \"Job Number\", \
+                          \"value\": \"$CIRCLE_BUILD_NUM\", \
+                          \"inline\": true \
+                        } \
+                      ], \
+                    }] \
+                  }" ${WEBHOOK_URL}
+            fi
 
   deploy:
     machine:
