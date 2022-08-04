@@ -46,7 +46,7 @@ jobs:
                 --data \
                   "{ \
                     \"embeds\": [{ \
-                      \"description\": \"The latest CircleCI job has completed, a direct download link for the artifacts can be found here: https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/0/~/project/build/libs/aether-1.19.1-v1.0.0.jar\", \
+                      \"description\": \"The latest CircleCI job has completed, a direct download link for the build can be found here: https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/0/~/project/build/libs/aether-1.19.1-v1.0.0.jar\", \
                       \"color\": \"301898\", \
                       \"fields\": [ \
                         { \
