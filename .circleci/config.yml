@@ -37,11 +37,11 @@ jobs:
       - run:
           name: Get artifacts
           command: |
-            artifact=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts --header 'authorization: Basic REPLACE_BASIC_AUTH' | jq -r '.items[0].path') 
             echo "$artifact"
       - run:
           name: Discord Notification
           command: |
+            artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts --header 'authorization: Basic REPLACE_BASIC_AUTH' | jq -r '.items[0].path') 
             if [ -z "${WEBHOOK_URL}" ]; then
               echo "NO DISCORD WEBHOOK SET"
               echo "Please input your DISCORD_WEBHOOK value either in the settings for this project, or as a parameter for this orb."
@@ -51,7 +51,7 @@ jobs:
                 --data \
                   "{ \
                     \"embeds\": [{ \
-                      \"description\": \"The latest CircleCI job has completed, a direct download link for the build can be found here: https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/0/~/project/build/libs/aether-1.19.1-v1.0.0.jar\", \
+                      \"description\": \"The latest CircleCI job has completed, a direct download link for the build can be found here: https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/${artifact_path}\", \
                       \"color\": \"301898\", \
                       \"fields\": [ \
                         { \
