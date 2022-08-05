@@ -47,6 +47,7 @@ jobs:
                 --data \
                   "{ \
                     \"embeds\": [{ \
+                      \"title\": \"$CIRCLE_BRANCH\", \
                       \"description\": \"The latest CircleCI job has completed, a direct download link for the build can be found here: https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/${artifact_path}\", \
                       \"color\": \"301898\", \
                       \"fields\": [ \
@@ -170,6 +171,6 @@ workflows:
           filters:
             branches:
               only: 
-                - "1.18"
+                - "1.19"
           requires:
             - build
