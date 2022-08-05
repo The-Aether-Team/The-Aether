@@ -34,6 +34,11 @@ jobs:
           root: ~/project/build/libs
           paths: 
             - << pipeline.parameters.artifact-name >>-*.jar
+
+  notify:
+    machine:
+        image: ubuntu-2004:202201-02
+    steps:
       - run:
           name: Publish artifact link to Discord
           command: |
@@ -164,12 +169,19 @@ workflows:
   build-and-deploy:
     jobs:
       - build
+      - notify:
+          filters:
+            branches:
+              only: 
+                - "1.19"
+          requires:
+            - build
       - deploy:
           context:
             - vpn
           filters:
             branches:
               only: 
-                - "1.18"
+                - "1.19"
           requires:
             - build
