@@ -1,2 +1,3 @@
-// 1.19	2022-07-12T15:17:27.7817675	worldgen/structure generator for aether
+// 1.19.1	2022-07-30T15:13:04.1388289	worldgen/structure generator for aether
+25469d369b63550f721e5ea8bf5205d41e999c3b data/aether/worldgen/structure/gold_dungeon.json
 5d95d82aa273637160cb12c0d82e31d722ace6cd data/aether/worldgen/structure/large_aercloud.json

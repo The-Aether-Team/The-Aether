@@ -24,6 +24,7 @@ public class AetherBiomeTagData extends BiomeTagsProvider {
                 AetherBiomes.SKYROOT_THICKET
         );
         tag(AetherTags.Biomes.HAS_LARGE_AERCLOUD).addTag(AetherTags.Biomes.IS_AETHER);
+        tag(AetherTags.Biomes.HAS_GOLD_DUNGEON).addTag(AetherTags.Biomes.IS_AETHER);
 
         tag(AetherTags.Biomes.MYCELIUM_CONVERSION).add(Biomes.MUSHROOM_FIELDS);
         tag(AetherTags.Biomes.PODZOL_CONVERSION).add(

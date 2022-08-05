@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 15536586,
+    "separation": 3,
+    "spacing": 5
+  },
+  "structures": [
+    {
+      "structure": "aether:gold_dungeon",
+      "weight": 1
+    }
+  ]
+}
