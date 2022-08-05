@@ -166,7 +166,7 @@ jobs:
           when: always
 
 workflows:
-  build-and-deploy:
+  build-notify-deploy:
     jobs:
       - build
       - notify:
