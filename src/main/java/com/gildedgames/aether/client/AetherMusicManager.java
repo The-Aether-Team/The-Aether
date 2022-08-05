@@ -66,6 +66,10 @@ public class AetherMusicManager {
         }
     }
 
+    /**
+     * Vanilla copy
+     * @see MusicManager#startPlaying(Music)
+     */
     public static void startPlaying(Music pSelector) {
         currentMusic = SimpleSoundInstance.forMusic(pSelector.getEvent());
         if (currentMusic.getSound() != SoundManager.EMPTY_SOUND) {
@@ -74,6 +78,10 @@ public class AetherMusicManager {
         nextSongDelay = Integer.MAX_VALUE;
     }
 
+    /**
+     * Vanilla copy
+     * @see MusicManager#stopPlaying()
+     */
     public static void stopPlaying() {
         if (currentMusic != null) {
             minecraft.getSoundManager().stop(currentMusic);
