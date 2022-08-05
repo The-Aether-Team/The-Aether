@@ -34,11 +34,6 @@ jobs:
           root: ~/project/build/libs
           paths: 
             - << pipeline.parameters.artifact-name >>-*.jar
-
-  notify:
-    machine:
-        image: ubuntu-2004:202201-02
-    steps:
       - run:
           name: Publish artifact link to Discord
           command: |
@@ -52,6 +47,7 @@ jobs:
                 --data \
                   "{ \
                     \"embeds\": [{ \
+                      \"title\": \"$CIRCLE_BRANCH\", \
                       \"description\": \"The latest CircleCI job has completed, a direct download link for the build can be found here: https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/${artifact_path}\", \
                       \"color\": \"301898\", \
                       \"fields\": [ \
@@ -166,16 +162,9 @@ jobs:
           when: always
 
 workflows:
-  build-notify-deploy:
+  build-and-deploy:
     jobs:
       - build
-      - notify:
-          filters:
-            branches:
-              only: 
-                - "1.19"
-          requires:
-            - build
       - deploy:
           context:
             - vpn
