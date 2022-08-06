@@ -1,5 +1,11 @@
 name: Add issues and PRs to project automatically
-on: [issues, pull_request]
+on: 
+  issues:
+    types:
+      - opened
+  pull_request:
+    types:
+      - opened
 jobs:
   github-actions-automate-projects:
     runs-on: ubuntu-latest
