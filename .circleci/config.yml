@@ -72,6 +72,8 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/project/build/libs
+      - store_artifacts:
+          path: ~/project/build/libs
       - run:
           name: Install OpenVPN
           command: |
