@@ -300,6 +300,7 @@ public class GuiHooks {
             if (WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null && minecraft.isPaused()) {
                 minecraft.gameRenderer.tick();
                 minecraft.levelRenderer.tick();
+                AetherMusicManager.tick();
                 minecraft.getMusicManager().tick();
                 minecraft.getSoundManager().tick(false);
                 minecraft.level.animateTick(minecraft.player.getBlockX(), minecraft.player.getBlockY(), minecraft.player.getBlockZ());

@@ -1,6 +1,5 @@
 package com.gildedgames.aether.client;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.api.WorldDisplayHelper;
@@ -36,19 +35,14 @@ public class AetherMusicManager {
 
     public static void tick() {
         Music music = getSituationalMusic();
-        Aether.LOGGER.info(0);
         if (music != null) {
-            Aether.LOGGER.info(1);
             if (currentMusic != null) {
-                Aether.LOGGER.info(2);
                 if (!music.getEvent().getLocation().equals(currentMusic.getLocation()) && music.replaceCurrentMusic()) {
-                    Aether.LOGGER.info(3);
                     minecraft.getSoundManager().stop(currentMusic);
                     nextSongDelay = Mth.nextInt(random, 0, music.getMinDelay() / 2);
                 }
 
                 if (!minecraft.getSoundManager().isActive(currentMusic)) {
-                    Aether.LOGGER.info(4);
                     currentMusic = null;
                     nextSongDelay = Math.min(nextSongDelay, Mth.nextInt(random, music.getMinDelay(), music.getMaxDelay()));
                 }
@@ -56,11 +50,9 @@ public class AetherMusicManager {
 
             nextSongDelay = Math.min(nextSongDelay, music.getMaxDelay());
             if (currentMusic == null && nextSongDelay-- <= 0) {
-                Aether.LOGGER.info(5);
                 startPlaying(music);
             }
         } else {
-            Aether.LOGGER.info(6);
             currentMusic = null;
             nextSongDelay = 100;
         }
@@ -98,19 +90,15 @@ public class AetherMusicManager {
     public static Music getSituationalMusic() {
         if (!(minecraft.screen instanceof WinScreen)) {
             if (isAetherWorldPreviewEnabled()) {
-                Aether.LOGGER.info("a");
                 return AetherTitleScreen.MENU;
             } else if (isVanillaWorldPreviewEnabled()) {
-                Aether.LOGGER.info("b");
                 return Musics.MENU;
             } else if (minecraft.player != null) {
                 Holder<Biome> holder = minecraft.player.level.getBiome(minecraft.player.blockPosition());
                 if (isCreative(holder, minecraft.player)) {
-                    Aether.LOGGER.info("c");
                     return (holder.value().getBackgroundMusic().orElse(Musics.GAME));
                 }
             } else if (isAetherMenuEnabled()) {
-                Aether.LOGGER.info("d");
                 return AetherTitleScreen.MENU;
             }
         }
