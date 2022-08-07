@@ -5,6 +5,7 @@ import com.gildedgames.aether.world.structurepiece.GoldDungeonPieces;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -27,14 +28,24 @@ public class GoldDungeonStructure extends Structure {
     }
 
     private static void generatePieces(StructurePiecesBuilder builder, GenerationContext context) {
+        RandomSource randomSource = context.random();
         BlockPos worldPos = context.chunkPos().getWorldPosition();
         BlockPos elevatedPos = new BlockPos(worldPos.getX(), 128, worldPos.getZ());
+        GoldDungeonPieces.Island startPiece = new GoldDungeonPieces.Island(
+                context.structureTemplateManager(),
+                new ResourceLocation(Aether.MODID, "gold_dungeon/island"),
+                elevatedPos
+        );
+
         GoldDungeonPieces.BossRoom bossRoom = new GoldDungeonPieces.BossRoom(
                 context.structureTemplateManager(),
                 new ResourceLocation(Aether.MODID, "gold_dungeon/boss_room"),
-                elevatedPos
+                elevatedPos,
+                randomSource
         );
+        GoldDungeonPieces.TreasureRoom treasureRoom = bossRoom.addTreasureRoom(context.structureTemplateManager());
         builder.addPiece(bossRoom);
+        builder.addPiece(treasureRoom);
     }
 
     @Override

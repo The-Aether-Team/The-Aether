@@ -13,6 +13,7 @@ public class AetherStructurePieceTypes {
 
     public static RegistryObject<StructurePieceType> LARGE_AERCLOUD = register("ALC", LargeAercloudPiece::new);
     public static final RegistryObject<StructurePieceType> GOLD_BOSS_ROOM = register("GBossRoom", GoldDungeonPieces.BossRoom::new);
+    public static final RegistryObject<StructurePieceType> GOLD_TREASURE_ROOM = register("GTreasureRoom", GoldDungeonPieces.TreasureRoom::new);
     public static final RegistryObject<StructurePieceType> GOLD_ISLAND = register("GIsland", GoldDungeonPieces.Island::new);
 
     private static RegistryObject<StructurePieceType> register(String name, StructurePieceType structurePieceType) {
