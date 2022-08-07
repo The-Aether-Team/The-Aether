@@ -1,7 +1,15 @@
 package com.gildedgames.aether.recipe;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.recipe.recipes.*;
+import com.gildedgames.aether.recipe.recipes.ban.BlockBanRecipe;
+import com.gildedgames.aether.recipe.recipes.ban.ItemBanRecipe;
+import com.gildedgames.aether.recipe.recipes.block.AccessoryFreezableRecipe;
+import com.gildedgames.aether.recipe.recipes.block.IcestoneFreezableRecipe;
+import com.gildedgames.aether.recipe.recipes.block.PlacementConversionRecipe;
+import com.gildedgames.aether.recipe.recipes.block.SwetBallRecipe;
+import com.gildedgames.aether.recipe.recipes.item.EnchantingRecipe;
+import com.gildedgames.aether.recipe.recipes.item.FreezingRecipe;
+import com.gildedgames.aether.recipe.recipes.item.IncubationRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.DeferredRegister;

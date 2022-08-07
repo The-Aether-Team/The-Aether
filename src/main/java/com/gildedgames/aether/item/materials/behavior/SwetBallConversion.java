@@ -1,7 +1,7 @@
 package com.gildedgames.aether.item.materials.behavior;
 
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
-import com.gildedgames.aether.recipe.recipes.SwetBallRecipe;
+import com.gildedgames.aether.recipe.recipes.block.SwetBallRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;

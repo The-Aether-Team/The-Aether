@@ -4,7 +4,7 @@ import com.gildedgames.aether.block.FreezingBehavior;
 import com.gildedgames.aether.event.events.FreezeEvent;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
-import com.gildedgames.aether.recipe.recipes.AccessoryFreezableRecipe;
+import com.gildedgames.aether.recipe.recipes.block.AccessoryFreezableRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
