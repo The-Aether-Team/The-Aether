@@ -2,16 +2,9 @@ package com.gildedgames.aether.recipe;
 
 import com.gildedgames.aether.Aether;
 
-import com.gildedgames.aether.recipe.recipes.ban.BlockBanRecipe;
-import com.gildedgames.aether.recipe.recipes.ban.ItemBanRecipe;
-import com.gildedgames.aether.recipe.recipes.block.AccessoryFreezableRecipe;
-import com.gildedgames.aether.recipe.recipes.block.IcestoneFreezableRecipe;
-import com.gildedgames.aether.recipe.recipes.block.PlacementConversionRecipe;
-import com.gildedgames.aether.recipe.recipes.block.SwetBallRecipe;
-import com.gildedgames.aether.recipe.recipes.item.AltarRepairRecipe;
-import com.gildedgames.aether.recipe.recipes.item.EnchantingRecipe;
-import com.gildedgames.aether.recipe.recipes.item.FreezingRecipe;
-import com.gildedgames.aether.recipe.recipes.item.IncubationRecipe;
+import com.gildedgames.aether.recipe.recipes.ban.*;
+import com.gildedgames.aether.recipe.recipes.block.*;
+import com.gildedgames.aether.recipe.recipes.item.*;
 import com.gildedgames.aether.recipe.serializer.BiomeParameterRecipeSerializer;
 import com.gildedgames.aether.recipe.serializer.BlockStateRecipeSerializer;
 import com.gildedgames.aether.recipe.serializer.PlacementBanRecipeSerializer;
@@ -32,6 +25,7 @@ public class AetherRecipeSerializers {
 	public static final RegistryObject<SimpleCookingSerializer<EnchantingRecipe>> ENCHANTING = RECIPE_SERIALIZERS.register("enchanting", EnchantingRecipe.Serializer::new);
 	public static final RegistryObject<SimpleCookingSerializer<FreezingRecipe>> FREEZING = RECIPE_SERIALIZERS.register("freezing", FreezingRecipe.Serializer::new);
 	public static final RegistryObject<RecipeSerializer<IncubationRecipe>> INCUBATION = RECIPE_SERIALIZERS.register("incubation", IncubationRecipe.Serializer::new);
+	public static final RegistryObject<BlockStateRecipeSerializer<AmbrosiumRecipe>> AMBROSIUM_ENCHANTING = RECIPE_SERIALIZERS.register("ambrosium_enchanting", AmbrosiumRecipe.Serializer::new);
 	public static final RegistryObject<BiomeParameterRecipeSerializer<SwetBallRecipe>> SWET_BALL_CONVERSION = RECIPE_SERIALIZERS.register("swet_ball_conversion", SwetBallRecipe.Serializer::new);
 	public static final RegistryObject<BlockStateRecipeSerializer<IcestoneFreezableRecipe>> ICESTONE_FREEZABLE = RECIPE_SERIALIZERS.register("icestone_freezable", IcestoneFreezableRecipe.Serializer::new);
 	public static final RegistryObject<BlockStateRecipeSerializer<AccessoryFreezableRecipe>> ACCESSORY_FREEZABLE = RECIPE_SERIALIZERS.register("accessory_freezable", AccessoryFreezableRecipe.Serializer::new);

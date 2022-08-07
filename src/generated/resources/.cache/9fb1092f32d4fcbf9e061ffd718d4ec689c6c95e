@@ -1,4 +1,4 @@
-// 1.19.1	2022-07-30T18:40:39.456106	Recipes
+// 1.19.1	2022-08-07T11:46:27.7675856	Recipes
 d000da625d82240dda7b149bfae6cafbdc56d4c0 data/aether/advancements/recipes/aether_accessories/blue_cape.json
 e51fddb0b890fa94472e7882ae603719607fc2d6 data/aether/advancements/recipes/aether_accessories/chainmail_gloves_repairing.json
 6a4414227977f3bc902dbeb8a926309ccbe75688 data/aether/advancements/recipes/aether_accessories/diamond_gloves.json
@@ -306,6 +306,7 @@ cc8707e81ffb76bebe922b86a0a8543f87ec08f4 data/aether/recipes/aerogel_wall_stonec
 21037e62e11f6322879a6e930bfe4fd83b306dbf data/aether/recipes/aether_tune_enchanting.json
 7367625d3f1873d3b153ab7721133f224f65e099 data/aether/recipes/altar.json
 09800b9740225a4d56b73708654786913f0d6c73 data/aether/recipes/ambrosium_block.json
+453451e26bd4a68814efc558a9eae20afcbc8c3d data/aether/recipes/ambrosium_enchant_aether_grass_to_enchanted_aether_grass.json
 3ec6110ed9b5e4a35fe6539b6a3063df0e70fbfc data/aether/recipes/ambrosium_shard.json
 538692328ebb7f74f4f2b3966c9c5901a32df15d data/aether/recipes/ambrosium_torch.json
 6f33befa3c195423772aa515758ec9bb4158d877 data/aether/recipes/angelic_slab.json

@@ -4,28 +4,20 @@ import com.gildedgames.aether.recipe.AetherRecipeSerializers;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.BlockStateIngredient;
-import com.gildedgames.aether.recipe.serializer.BiomeParameterRecipeSerializer;
+import com.gildedgames.aether.recipe.serializer.BlockStateRecipeSerializer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-public class SwetBallRecipe extends AbstractBiomeParameterRecipe implements MatchEventRecipe {
-    public SwetBallRecipe(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result) {
-        super(AetherRecipeTypes.SWET_BALL_CONVERSION.get(), id, biomeKey, biomeTag, ingredient, result);
-    }
-
-    public SwetBallRecipe(ResourceLocation id, BlockStateIngredient ingredient,BlockPropertyPair result) {
-        this(id, null, null, ingredient, result);
+public class AmbrosiumRecipe extends AbstractBlockStateRecipe implements MatchEventRecipe {
+    public AmbrosiumRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result) {
+        super(AetherRecipeTypes.AMBROSIUM_ENCHANTING.get(), id, ingredient, result);
     }
 
     public boolean matches(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState) {
@@ -35,12 +27,12 @@ public class SwetBallRecipe extends AbstractBiomeParameterRecipe implements Matc
     @Nonnull
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return AetherRecipeSerializers.SWET_BALL_CONVERSION.get();
+        return AetherRecipeSerializers.AMBROSIUM_ENCHANTING.get();
     }
 
-    public static class Serializer extends BiomeParameterRecipeSerializer<SwetBallRecipe> {
+    public static class Serializer extends BlockStateRecipeSerializer<AmbrosiumRecipe> {
         public Serializer() {
-            super(SwetBallRecipe::new, SwetBallRecipe::new);
+            super(AmbrosiumRecipe::new);
         }
     }
 }
