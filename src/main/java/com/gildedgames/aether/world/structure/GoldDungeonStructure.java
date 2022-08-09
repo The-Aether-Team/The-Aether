@@ -31,21 +31,13 @@ public class GoldDungeonStructure extends Structure {
         RandomSource randomSource = context.random();
         BlockPos worldPos = context.chunkPos().getWorldPosition();
         BlockPos elevatedPos = new BlockPos(worldPos.getX(), 128, worldPos.getZ());
-        GoldDungeonPieces.Island startPiece = new GoldDungeonPieces.Island(
-                context.structureTemplateManager(),
-                new ResourceLocation(Aether.MODID, "gold_dungeon/island"),
-                elevatedPos
-        );
-
         GoldDungeonPieces.BossRoom bossRoom = new GoldDungeonPieces.BossRoom(
                 context.structureTemplateManager(),
                 new ResourceLocation(Aether.MODID, "gold_dungeon/boss_room"),
                 elevatedPos,
                 randomSource
         );
-        GoldDungeonPieces.TreasureRoom treasureRoom = bossRoom.addTreasureRoom(context.structureTemplateManager());
         builder.addPiece(bossRoom);
-        builder.addPiece(treasureRoom);
     }
 
     @Override
