@@ -412,6 +412,10 @@ public abstract class AetherRecipeProvider extends RecipeProvider
                 .unlockedBy("has_" + ForgeRegistries.ITEMS.getKey(ingredient.asItem()).getPath(), has(ingredient));
     }
 
+    public BlockStateRecipeBuilder ambrosiumEnchanting(Block result, Block ingredient) {
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipeSerializers.AMBROSIUM_ENCHANTING.get());
+    }
+
     public BlockStateRecipeBuilder swetBallConversion(Block result, Block ingredient) {
         return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipeSerializers.SWET_BALL_CONVERSION.get());
     }

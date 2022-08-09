@@ -1,4 +1,4 @@
-package com.gildedgames.aether.recipe.recipes;
+package com.gildedgames.aether.recipe.recipes.block;
 
 import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.BlockStateIngredient;
@@ -17,7 +17,7 @@ public abstract class AbstractBiomeParameterRecipe extends AbstractBlockStateRec
     private final ResourceKey<Biome> biomeKey;
     private final TagKey<Biome> biomeTag;
 
-    public AbstractBiomeParameterRecipe(RecipeType<?> type, ResourceLocation id, BlockStateIngredient ingredient, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockPropertyPair result) {
+    public AbstractBiomeParameterRecipe(RecipeType<?> type, ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result) {
         super(type, id, ingredient, result);
         this.biomeKey = biomeKey;
         this.biomeTag = biomeTag;

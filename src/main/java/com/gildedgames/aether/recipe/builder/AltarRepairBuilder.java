@@ -1,6 +1,6 @@
 package com.gildedgames.aether.recipe.builder;
 
-import com.gildedgames.aether.recipe.recipes.AltarRepairRecipe;
+import com.gildedgames.aether.recipe.recipes.item.AltarRepairRecipe;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;

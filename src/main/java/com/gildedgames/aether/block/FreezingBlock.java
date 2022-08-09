@@ -3,7 +3,7 @@ package com.gildedgames.aether.block;
 import com.gildedgames.aether.event.events.FreezeEvent;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
-import com.gildedgames.aether.recipe.recipes.IcestoneFreezableRecipe;
+import com.gildedgames.aether.recipe.recipes.block.IcestoneFreezableRecipe;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;

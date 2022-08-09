@@ -1,4 +1,4 @@
-package com.gildedgames.aether.recipe.recipes;
+package com.gildedgames.aether.recipe.recipes.block;
 
 import com.gildedgames.aether.recipe.AetherRecipeSerializers;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
@@ -10,20 +10,20 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 
 import javax.annotation.Nonnull;
 
-public class IcestoneFreezableRecipe extends AbstractBlockStateRecipe {
-    public IcestoneFreezableRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result) {
-        super(AetherRecipeTypes.ICESTONE_FREEZABLE.get(), id, ingredient, result);
+public class AccessoryFreezableRecipe extends AbstractBlockStateRecipe {
+    public AccessoryFreezableRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result) {
+        super(AetherRecipeTypes.ACCESSORY_FREEZABLE.get(), id, ingredient, result);
     }
 
     @Nonnull
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return AetherRecipeSerializers.ICESTONE_FREEZABLE.get();
+        return AetherRecipeSerializers.ACCESSORY_FREEZABLE.get();
     }
 
-    public static class Serializer extends BlockStateRecipeSerializer<IcestoneFreezableRecipe> {
+    public static class Serializer extends BlockStateRecipeSerializer<AccessoryFreezableRecipe> {
         public Serializer() {
-            super(IcestoneFreezableRecipe::new);
+            super(AccessoryFreezableRecipe::new);
         }
     }
 }

@@ -14,7 +14,6 @@ public class AetherTags {
 	public static class Blocks {
 		public static final TagKey<Block> AETHER_PORTAL_BLOCKS = tag("aether_portal_blocks");
 		public static final TagKey<Block> AETHER_ISLAND_BLOCKS = tag("aether_island_blocks");
-		public static final TagKey<Block> ENCHANTABLE_GRASS_BLOCKS = tag("enchantable_grass_blocks");
 		public static final TagKey<Block> AETHER_DIRT = tag("aether_dirt");
 		public static final TagKey<Block> HOLYSTONE = tag("holystone");
 		public static final TagKey<Block> AERCLOUDS = tag("aerclouds");

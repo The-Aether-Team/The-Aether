@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Map;
 import java.util.Optional;
@@ -138,6 +139,20 @@ public class BlockStateRecipeUtil {
             }
         }
         return properties;
+    }
+
+    public static Pair<ResourceKey<Biome>, TagKey<Biome>> biomeRecipeDataFromJson(JsonObject json) {
+        ResourceKey<Biome> biomeKey = null;
+        TagKey<Biome> biomeTag = null;
+        if (json.has("biome")) {
+            String biomeName = GsonHelper.getAsString(json, "biome");
+            if (biomeName.startsWith("#")) {
+                biomeTag = biomeTagFromJson(json);
+            } else {
+                biomeKey = biomeKeyFromJson(json);
+            }
+        }
+        return Pair.of(biomeKey, biomeTag);
     }
 
     public static ResourceKey<Biome> biomeKeyFromJson(JsonObject json) {
