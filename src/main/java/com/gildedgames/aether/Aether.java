@@ -19,6 +19,7 @@ import com.gildedgames.aether.data.generators.tags.*;
 import com.gildedgames.aether.data.resources.*;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
+import com.gildedgames.aether.event.AetherGameEvents;
 import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
 import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
 import com.gildedgames.aether.item.AetherItems;
@@ -117,6 +118,7 @@ public class Aether
                 AetherLootConditions.LOOT_CONDITION_TYPES,
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherSoundEvents.SOUNDS,
+                AetherGameEvents.GAME_EVENTS,
                 AetherDungeonTypes.DUNGEON_TYPES,
                 AetherMoaTypes.MOA_TYPES
         };
