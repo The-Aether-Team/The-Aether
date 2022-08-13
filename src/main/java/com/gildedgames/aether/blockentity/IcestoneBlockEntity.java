@@ -1,6 +1,5 @@
 package com.gildedgames.aether.blockentity;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.FreezingBlock;
 import com.gildedgames.aether.event.AetherGameEvents;
 import net.minecraft.core.BlockPos;
@@ -17,7 +16,7 @@ public class IcestoneBlockEntity extends BlockEntity implements FreezingBlock {
     public IcestoneBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
         super(AetherBlockEntityTypes.ICESTONE.get(), pWorldPosition, pBlockState);
         PositionSource positionsource = new BlockPositionSource(this.worldPosition);
-        this.listener = new FreezingListener(positionsource, 3);
+        this.listener = new FreezingListener(positionsource, 4);
     }
 
     public FreezingListener getListener() {
@@ -46,9 +45,8 @@ public class IcestoneBlockEntity extends BlockEntity implements FreezingBlock {
 
         @Override
         public boolean handleGameEvent(@Nonnull ServerLevel level, @Nonnull GameEvent.Message event) {
-            if (event.gameEvent() == AetherGameEvents.ICESTONE_FREEZABLE_UPDATE.get()) {
-                Aether.LOGGER.info(event);
-                IcestoneBlockEntity.this.freezeBlocks(level, IcestoneBlockEntity.this.getBlockPos(), IcestoneBlockEntity.this.getBlockState(), FreezingBlock.SQRT_8); //can probably simply freeze the source pos of the game event instead of loop, as long as its within the radius.
+            if (event.gameEvent() == AetherGameEvents.ICESTONE_FREEZABLE_UPDATE.get() || event.gameEvent() == GameEvent.BLOCK_PLACE || event.gameEvent() == GameEvent.FLUID_PLACE || event.gameEvent() == GameEvent.ENTITY_PLACE) {
+                IcestoneBlockEntity.this.freezeBlocks(level, IcestoneBlockEntity.this.getBlockPos(), IcestoneBlockEntity.this.getBlockState(), FreezingBlock.SQRT_8);
                 return true;
             } else {
                 return false;

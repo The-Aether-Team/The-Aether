@@ -2,11 +2,11 @@ package com.gildedgames.aether.event.hooks;
 
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.block.FreezingBlock;
 import com.gildedgames.aether.event.AetherGameEvents;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.gildedgames.aether.recipe.recipes.ban.ItemBanRecipe;
-import com.gildedgames.aether.recipe.recipes.block.IcestoneFreezableRecipe;
 import com.gildedgames.aether.recipe.recipes.block.PlacementConversionRecipe;
 import com.gildedgames.aether.util.LevelUtil;
 import com.gildedgames.aether.data.resources.AetherDimensions;
@@ -243,15 +243,12 @@ public class DimensionHooks {
         }
     }
 
-    public static void sendIcestoneFreezableUpdateEvent(LevelAccessor accessor, BlockPos pos) { //todo: need to apply caching to this to improve performance
+    public static void sendIcestoneFreezableUpdateEvent(LevelAccessor accessor, BlockPos pos) {
         if (accessor instanceof Level level && !level.isClientSide())  {
             BlockState oldBlockState = level.getBlockState(pos);
-            for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.ICESTONE_FREEZABLE.get())) {
-                if (recipe instanceof IcestoneFreezableRecipe freezableRecipe) {
-                    if (freezableRecipe.matches(level, pos, oldBlockState)) {
-                        level.gameEvent(null, AetherGameEvents.ICESTONE_FREEZABLE_UPDATE.get(), pos);
-                    }
-                }
+            FreezingBlock.cacheRecipes(level);
+            if (FreezingBlock.matchesCache(oldBlockState.getBlock(), oldBlockState) != null) {
+                level.gameEvent(null, AetherGameEvents.ICESTONE_FREEZABLE_UPDATE.get(), pos);
             }
         }
     }
