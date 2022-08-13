@@ -46,6 +46,7 @@ public class DimensionListener {
         LevelAccessor levelAccessor = event.getLevel();
         BlockPos blockPos = event.getPos();
         DimensionHooks.checkExistenceBanned(levelAccessor, blockPos);
+        DimensionHooks.sendIcestoneFreezableUpdateEvent(levelAccessor, blockPos);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

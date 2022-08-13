@@ -2,6 +2,8 @@ package com.gildedgames.aether.event.hooks;
 
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.block.FreezingBlock;
+import com.gildedgames.aether.event.AetherGameEvents;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.gildedgames.aether.recipe.recipes.ban.ItemBanRecipe;
@@ -237,6 +239,16 @@ public class DimensionHooks {
             }
             if (teleportationTimer < 0 || serverPlayer.verticalCollisionBelow) {
                 teleportationTimer = 0;
+            }
+        }
+    }
+
+    public static void sendIcestoneFreezableUpdateEvent(LevelAccessor accessor, BlockPos pos) {
+        if (accessor instanceof Level level && !level.isClientSide())  {
+            BlockState oldBlockState = level.getBlockState(pos);
+            FreezingBlock.cacheRecipes(level);
+            if (FreezingBlock.matchesCache(oldBlockState.getBlock(), oldBlockState) != null) {
+                level.gameEvent(null, AetherGameEvents.ICESTONE_FREEZABLE_UPDATE.get(), pos);
             }
         }
     }
