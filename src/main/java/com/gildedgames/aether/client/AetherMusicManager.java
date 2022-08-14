@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.api.WorldDisplayHelper;
@@ -35,14 +36,19 @@ public class AetherMusicManager {
 
     public static void tick() {
         Music music = getSituationalMusic();
+        Aether.LOGGER.info(nextSongDelay);
         if (music != null) {
+            Aether.LOGGER.info("a");
             if (currentMusic != null) {
+                Aether.LOGGER.info("b");
                 if (!music.getEvent().getLocation().equals(currentMusic.getLocation()) && music.replaceCurrentMusic()) {
+                    Aether.LOGGER.info("c");
                     minecraft.getSoundManager().stop(currentMusic);
                     nextSongDelay = Mth.nextInt(random, 0, music.getMinDelay() / 2);
                 }
 
                 if (!minecraft.getSoundManager().isActive(currentMusic)) {
+                    Aether.LOGGER.info("d");
                     currentMusic = null;
                     nextSongDelay = Math.min(nextSongDelay, Mth.nextInt(random, music.getMinDelay(), music.getMaxDelay()));
                 }
@@ -50,9 +56,11 @@ public class AetherMusicManager {
 
             nextSongDelay = Math.min(nextSongDelay, music.getMaxDelay());
             if (currentMusic == null && nextSongDelay-- <= 0) {
+                Aether.LOGGER.info("e");
                 startPlaying(music);
             }
         } else {
+            Aether.LOGGER.info("f");
             currentMusic = null;
             nextSongDelay = 100;
         }
