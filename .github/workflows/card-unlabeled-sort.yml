@@ -1,0 +1,26 @@
+name: Sort unlabeled issues and PRs into Next Up
+on: 
+  issues:
+    types:
+      - unlabeled
+  pull_request:
+    types:
+      - unlabeled
+jobs:
+  github-actions-unlabel-sort:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Remove Issues to Next Up
+      uses: takanabe/github-actions-automate-projects@v0.0.2
+      if: github.event_name == 'issues' && github.event.action == 'unlabeled' && (github.event.label.name == 'status/in-progress' || github.event.label.name == 'status/pending-review')
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_PROJECT_URL: https://github.com/Gilded-Games/The-Aether/projects/1
+        GITHUB_PROJECT_COLUMN_NAME: Next Up
+    - name: Remove PRs to Next Up
+      uses: takanabe/github-actions-automate-projects@v0.0.2
+      if: github.event_name == 'pull_request' && github.event.action == 'unlabeled' && (github.event.label.name == 'status/in-progress' || github.event.label.name == 'status/pending-review')
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_PROJECT_URL: https://github.com/Gilded-Games/The-Aether/projects/1
+        GITHUB_PROJECT_COLUMN_NAME: Next Up
