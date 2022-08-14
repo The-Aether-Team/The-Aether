@@ -12,14 +12,14 @@ jobs:
     steps:
     - name: Add Issues to In Progress
       uses: takanabe/github-actions-automate-projects@v0.0.2
-      if: github.event_name == 'issues' && github.event.action == 'labeled' && github.event.label[name] == 'status/in-progress'
+      if: github.event_name == 'issues' && github.event.action == 'labeled' && github.event.label.name == 'status/in-progress'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_PROJECT_URL: https://github.com/Gilded-Games/The-Aether/projects/1
         GITHUB_PROJECT_COLUMN_NAME: In Progress
     - name: Add PRs to In Progress
       uses: takanabe/github-actions-automate-projects@v0.0.2
-      if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label[name] == 'status/in-progress'
+      if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'status/in-progress'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_PROJECT_URL: https://github.com/Gilded-Games/The-Aether/projects/1
