@@ -1,4 +1,4 @@
-name: Sort issues and PRs into In Progress or Pending Review
+name: Sort labeled issues and PRs into In Progress or Pending Review
 on: 
   issues:
     types:
