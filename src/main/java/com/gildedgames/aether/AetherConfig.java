@@ -148,6 +148,8 @@ public class AetherConfig
         public final ConfigValue<Boolean> align_aether_menu_elements_left;
         public final ConfigValue<Boolean> enable_trivia;
 
+        public final ConfigValue<Integer> music_backup_min_delay;
+        public final ConfigValue<Integer> music_backup_max_delay;
         public final ConfigValue<Boolean> disable_music_manager;
         public final ConfigValue<Boolean> disable_aether_menu_music;
         public final ConfigValue<Boolean> disable_vanilla_world_preview_menu_music;
@@ -205,6 +207,14 @@ public class AetherConfig
             builder.pop();
 
             builder.push("Audio");
+            music_backup_min_delay = builder
+                    .comment("Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether")
+                    .translation("config.aether.client.audio.music_backup_min_delay")
+                    .define("Set backup minimum music delay", 12000);
+            music_backup_max_delay = builder
+                    .comment("Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether")
+                    .translation("config.aether.client.audio.music_backup_max_delay")
+                    .define("Set backup maximum music delay", 24000);
             disable_music_manager = builder
                     .comment("Disables the Aether's internal music manager, if true, this overrides all other audio configs")
                     .translation("config.aether.client.audio.disable_music_manager")
