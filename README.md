@@ -13,7 +13,7 @@ If you enjoy our work, [please consider making a pledge](https://patreon.com/Gil
 
 You can also support the Aether project and Gilded Games by telling your friends, joining our Discord server, and sharing our progress and announcements on social media. Every bit helps!
 
-If you're interested in sponsoring The Aether project or Gilded Games, please [contact us](mailto:support@gildedgames.com).
+If you're interested in sponsoring the Aether project or Gilded Games, please [contact us](mailto:support@gildedgames.com).
 
 ## :package: Download the latest releases
 [![Gilded-Games](https://circleci.com/gh/Gilded-Games/The-Aether/tree/1.19.svg?style=shield)](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether?branch=1.19)
@@ -33,9 +33,9 @@ If you're running into bugs or other problems, feel free to open an issue on our
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://en.wikipedia.org/wiki/All_rights_reserved)
 [![Code license (LGPL v3.0)](https://img.shields.io/badge/code%20license-LGPL%20v3.0-green.svg?style=flat-square)](https://www.gnu.org/licenses/lgpl-3.0.en.html)
 
-If you're wanting to create a gameplay video/review, extension or addon, parody, or any other fan work of your own for the Aether, go for it! We love seeing the content our community creates, and we hope to make it as welcoming as possible for everyone. 
+If you're wanting to create a gameplay video/review, extension or addon, parody, or any other fan work of your own for The Aether, go for it! We love seeing the content our community creates, and we hope to make it as welcoming as possible for everyone. 
 
-We ask however that if you are thinking about using code or assets from The Aether project that you adhere to the licenses below, and that you please don't advertise using our brand (our specific logo assets, team name, official social media posts).
+We ask however that if you are thinking about using code or assets from the Aether project that you adhere to the licenses below, and that you please don't advertise using our brand (our specific logo assets, team name, official social media posts).
 If you do have a reason that you wish to use our brand, please [contact us](mailto:support@gildedgames.com).
 
 **All assets of The Aether for Minecraft 1.7+ (found in the [resources folder](https://github.com/Gilded-Games/The-Aether/tree/1.19/src/main/resources/assets)) are unlicensed and all rights are reserved to them by Gilded Games.** The source code of The Aether mod for Minecraft 1.7+ is under the [LGPL v3.0](https://www.gnu.org/licenses/lgpl-3.0.en.html) license. [GitHub wiki contributions](https://github.com/Gilded-Games/The-Aether/wiki) are under the [CC BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/) unless otherwise stated.
