@@ -1,5 +1,5 @@
 ## Semantic Versioning
-It is recommended that you read up on the [Semantic Versioning website](https://semver.org/) first, then this file will help clarify points from it.
+It is recommended that you read up on the [Semantic Versioning website](https://semver.org/) first, then this file will help clarify how it relates to development.
 
 If you believe there are any examples left out, feel free to suggest more.
 
