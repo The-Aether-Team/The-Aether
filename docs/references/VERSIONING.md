@@ -1,9 +1,9 @@
-## Semantic Versioning
+# Semantic Versioning
 It is recommended that you read up on the [Semantic Versioning website](https://semver.org/) first, then this file will help clarify how it relates to development.
 
 If you believe there are any examples left out, feel free to suggest more.
 
-### Major Version Changes
+## Major Version Changes
 These are signified by any changes in a project that are considered **breaking changes**.
 
 Examples:
@@ -20,7 +20,7 @@ Examples:
 
 How this looks with versions is that if an addon is dependent on version `1.8.0` and The Aether is updated to `2.0.0`, the addon will have to update its dependency to `2.0.0`.
 
-### Minor Version Changes
+## Minor Version Changes
 These are signified by **additions** to a codebase that are backwards-compatible.
 
 Examples:
@@ -35,7 +35,7 @@ Examples:
 
 How this looks with versions is that if an addon is dependent on `1.8.0` and The Aether is updated to `1.9.0`, the addon should still be compatible unless it uses the new additions.
 
-### Patch Version Changes
+## Patch Version Changes
 These are signified by **internal fixes or changes** that are backwards-compatible.
 
 Examples:
