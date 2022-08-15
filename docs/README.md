@@ -18,7 +18,7 @@ If you're interested in sponsoring the Aether project or Gilded Games, please [c
 ## :package: Download the latest releases
 [![Gilded-Games](https://circleci.com/gh/Gilded-Games/The-Aether/tree/1.19.svg?style=shield)](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether?branch=1.19)
 ### Release builds
-The Aether has no stable release builds for the latest version of Minecraft just yet, but this port is in active development so keep an eye out for its eventual release. If you're curious what version we're currently working on, make sure to check out the latest branch.
+The Aether has no stable release builds for the latest version of Minecraft just yet, but this port is in active development so keep an eye out for its eventual release.
 
 ### Bleeding edge builds
 If you’re feeling a bit more adventurous or wish to help test the in-development versions, we provide **bleeding edge builds** which are produced on [CircleCI](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether). These builds are created for every new commit and contain the latest available code. We do not recommend users treat these builds as releases, as they are unfinished and may contain serious issues. If you wish to download these builds, check out [this guide](https://github.com/Gilded-Games/The-Aether/wiki/CircleCI-Guide).
