@@ -6,7 +6,7 @@ Gilded Games presents the original Aether mod! Up to date for modern Minecraft v
 ## :heart: Support Gilded Games
 
 [![Patreon pledgers](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DGildedGames%26type%3Dpatrons&style=flat-square)](https://patreon.com/GildedGames)
-[![Discord user count](https://img.shields.io/discord/118816101936267265.svg?logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/yrFDeVZEwt)
+[![Discord user count](https://img.shields.io/discord/118816101936267265.svg?logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/aethermod)
 [![Twitter followers](https://img.shields.io/twitter/follow/DevAether.svg?logo=twitter&label=twitter&style=flat-square)](https://twitter.com/DevAether)
 
 If you enjoy our work, [please consider making a pledge](https://patreon.com/GildedGames) today to help fund development. Every pledge goes directly into our development process and services, enabling us to continue making the Minecraft mods you know and love.
@@ -27,7 +27,9 @@ If you’re feeling a bit more adventurous or wish to help test the in-developme
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/Gilded-Games/The-Aether/issues). When doing so, make sure to use one of the provided templates and fill out all the requested information. Make sure to keep your issue's description clear and concise. Your issue's title should also be easy to digest, giving our developers and reporters a good idea of what's wrong without including too many details. Failure to follow any of the above may result in your issue being closed.
 
 ## :wrench: Contribute to the project
-*Work in progress...*
+Looking to contribute to the project? We ask that you read over our [Contributor's Guide](https://github.com/Gilded-Games/The-Aether/blob/1.19/docs/CONTRIBUTING.md) for more details as well as our [Contributor License Agreement (CLA)](https://github.com/Gilded-Games/The-Aether/blob/1.19/docs/AGREEMENT.md) before getting started.
+
+Not sure what to help with? Take a look at our issue tracker for some ideas! [Here's a quick link](https://github.com/Gilded-Games/The-Aether/labels/status%2Fhelp-wanted) which shows all the currently open issues that we'd love some help on.
 
 ## :scroll: License information
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://en.wikipedia.org/wiki/All_rights_reserved)

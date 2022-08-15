@@ -1,28 +1,23 @@
-### Getting started for programmers
-We're excited to hear that you're interested in contributing to the Aether!
+# Contributing to The Aether
+## Getting started for programmers
+1. Install the latest 64-bit version of OpenJDK 17. Check out [Adoptium](https://adoptium.net/) for the relevant JDK build for your OS.
 
-Before getting started, you'll need to install the latest 64-bit version of the OpenJDK 8 for your environment.
-- Windows users: We **strongly** recommend you use the Hotspot OpenJDK 8 builds provided by the [AdoptOpenJDK project](https://adoptopenjdk.net/) instead of the builds provided by Oracle.
-- macOS and Linux users: If you are already using a package manager, OpenJDK builds should be present in your software repositories. If not, we recommend using [SDKMan](https://sdkman.io/) to install the Hotspot OpenJDK 8 builds provided by the [AdoptOpenJDK](https://adoptopenjdk.net/) project.
+2. Install the latest 64-bit version of Git, which can be found on the [Git website](https://git-scm.com/).
 
-We strongly recommend you use [IntelliJ IDEA Community Edition](https://www.jetbrains.com/idea/) when making code contributions. While other IDEs may work (in theory, anyways), support is spotty and you will often run into issues and other roadblocks. If you're not familiar with setting up IntelliJ IDEA for use with ForgeGradle projects, cpw has created a setup video which runs over a few of the basics of ForgeGradle [here](https://www.youtube.com/watch?v=PfmlNiHonV0).
+3. Fork The Aether repository with the [Fork](https://github.com/Gilded-Games/The-Aether/fork) button in the top right of GitHub.
 
-If you have any questions or issues, or would just like to discuss Aether development, feel free to [join us on Discord](https://discord.gg/yrFDeVZEwt).
+4. We recommend to use [IntelliJ IDEA Community Edition](https://www.jetbrains.com/idea/) for contributions. Other IDEs may work but any issues or roadblocks will not receive support.
 
-### Creating merge requests
-Please make sure before opening a merge request that:
+5. We recommend a Git client if you are new to contributing, however if you know how to use Git you can also use the [command line](https://docs.gitlab.com/ee/gitlab-basics/start-using-git.html). Some client options are:
+   1. IntelliJ IDEA itself ([Tutorial](https://blog.jetbrains.com/idea/2020/10/clone-a-project-from-github/))
+   2. [GitHub Desktop](https://desktop.github.com/) ([Tutorial](https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/getting-started-with-github-desktop))
+   3. [GitKraken](https://www.gitkraken.com/) ([Tutorial](https://help.gitkraken.com/gitkraken-client/guide/))
+   4. [SourceTree](https://www.sourcetreeapp.com/) ([Tutorial](https://confluence.atlassian.com/get-started-with-sourcetree))
 
-- Your merge request has an overview of the changes it makes, along with a link to the open issue(s) it resolves, if applicable.
-- Your changes include appropriate documentation and conform to our style guidelines.
-- If your merge request contains multiple commits, that you squash them before submitting.
-- You state in the description of your merge request that you agree to the Contributor License Agreement (CLA) found below.
+6. Clone your fork of the repository with Git (note: if using IntelliJ IDEA for Git, this will automatically open the project as well).
 
-### Contributor License Agreement
-By making contributions to this repository you are hereby agreeing that:
+7. Open the locally cloned repository with IntelliJ IDEA and set up the project workspace.
 
-- You grant Gilded Games and other users the right to use your contributions under one of the following respective licenses:
-  - [All Rights Reserved](https://en.wikipedia.org/wiki/All_rights_reserved) for contributed or updated assets in `/src/main/java/resources`.
-  - [LGPL v3.0](https://www.gnu.org/licenses/lgpl-3.0.en.html) for code or other changes.
-- Your contributions are of your own work and are free of legal restrictions (such as patents or copyrights).
+   If you're not familiar with setting up IntelliJ IDEA for use with ForgeGradle projects, cpw has created a setup video on a few of the basics of ForgeGradle [here](https://www.youtube.com/watch?v=PfmlNiHonV0).
 
-If you have any questions about these terms, please [get in contact with us](mailto:support@gildedgames.com). **If you do not agree to these terms, please do not submit contributions to this repository.**
+8. Start developing!
