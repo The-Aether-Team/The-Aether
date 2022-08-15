@@ -16,9 +16,9 @@ Examples:
 - Changing code according to breaking changes caused by a Minecraft or Forge update.
 - Changing gameplay mechanic in a way which may affect addons that interact with them.
 - Changing IDs leading to missing registry objects or deleted content.
-- Breaking compatibility of previous worlds with the current version (not advised).
+- Breaking compatibility of previous worlds with the current version **(not advised)**.
 
-How this looks with versions is that if an addon is dependent on version 1.8.0 and The Aether is updated to 2.0.0, the addon will have to update its dependency to 2.0.0.
+How this looks with versions is that if an addon is dependent on version `1.8.0` and The Aether is updated to `2.0.0`, the addon will have to update its dependency to `2.0.0`.
 
 ### Minor Version Changes
 These are signified by **additions** to a codebase that are backwards-compatible.
@@ -33,7 +33,7 @@ Examples:
 - Adding mod features.
 - Adding mod mechanics.
 
-How this looks with versions is that if an addon is dependent on 1.8.0 and The Aether is updated to 1.9.0, the addon should still be compatible unless it uses the new additions.
+How this looks with versions is that if an addon is dependent on `1.8.0` and The Aether is updated to `1.9.0`, the addon should still be compatible unless it uses the new additions.
 
 ### Patch Version Changes
 These are signified by **internal fixes or changes** that are backwards-compatible.
@@ -45,6 +45,6 @@ Examples:
 - Deleting private methods, fields, and classes.
 - Changing or modifying private methods, fields, or classes for the purpose of fixing incorrect behavior or improving existing code in the internal codebase.
 - Changing or modifying the internals of a public or protected method for the purpose of fixing incorrect behavior or improving existing code in the internal codebase.
-- Adding new methods regardless of protection if they’re annotated as a @SubscribeEvent, as these are not usable externally.
+- Adding new methods regardless of protection if they’re annotated as a `@SubscribeEvent`, as these are not usable externally.
 
-How this looks with versions is that if an addon is dependent on 1.8.0 and The Aether is updated to 1.8.1, the addon should still be compatible.
+How this looks with versions is that if an addon is dependent on `1.8.0` and The Aether is updated to `1.8.1`, the addon should still be compatible.
