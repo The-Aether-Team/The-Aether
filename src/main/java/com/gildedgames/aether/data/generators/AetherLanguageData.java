@@ -670,6 +670,8 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addCommand("menu.fix", "Reset world preview values");
 
+        addCommand("capability.player.life_shards.set", "Set life shard count for %s to %s");
+
         addCommand("capability.time.eternal_day.set", "Set eternal day to %s");
         addCommand("capability.time.eternal_day.query", "Eternal day is set to %s");
 

@@ -193,6 +193,7 @@
   "block.aether.white_flower": "White Flower",
   "block.aether.zanite_block": "Block of Zanite",
   "block.aether.zanite_ore": "Zanite Ore",
+  "commands.aether.capability.player.life_shards.set": "Set life shard count for %s to %s",
   "commands.aether.capability.time.eternal_day.query": "Eternal day is set to %s",
   "commands.aether.capability.time.eternal_day.set": "Set eternal day to %s",
   "commands.aether.menu.fix": "Reset world preview values",
