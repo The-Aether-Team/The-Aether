@@ -21,23 +21,13 @@ If you're interested in sponsoring the Aether project or Gilded Games, please [c
 The Aether has no stable release builds for the latest version of Minecraft just yet, but this port is in active development so keep an eye out for its eventual release. If you're curious what version we're currently working on, make sure to check out the latest branch.
 
 ### Bleeding edge builds
-If you’re feeling a bit more adventurous or wish to help test the in-development versions, we provide **bleeding edge builds** which are produced on [CircleCI](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether). These builds are created for every new commit and contain the latest available code. We do not recommend users treat these builds as releases, as they are unfinished and may contain serious issues. If you wish to download these builds, check out [this guide](https://github.com/Gilded-Games/The-Aether/wiki/CircleCI-Guide)
+If you’re feeling a bit more adventurous or wish to help test the in-development versions, we provide **bleeding edge builds** which are produced on [CircleCI](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether). These builds are created for every new commit and contain the latest available code. We do not recommend users treat these builds as releases, as they are unfinished and may contain serious issues. If you wish to download these builds, check out [this guide](https://github.com/Gilded-Games/The-Aether/wiki/CircleCI-Guide).
 
 ## :bug: Report bugs or other issues
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/Gilded-Games/The-Aether/issues). When doing so, make sure to use one of the provided templates and fill out all the requested information. Make sure to keep your issue's description clear and concise. Your issue's title should also be easy to digest, giving our developers and reporters a good idea of what's wrong without including too many details. Failure to follow any of the above may result in your issue being closed.
 
 ## :wrench: Contribute to the project
-### Getting started for programmers
 *Work in progress...*
-
-### Contributor License Agreement
-By making contributions to this repository you are hereby agreeing that:
-- You grant Gilded Games and other users the right to use your contributions under one of the following respective licenses:
-    - [All Rights Reserved](https://en.wikipedia.org/wiki/All_rights_reserved) for contributed or updated assets in `/src/main/java/resources`.
-    - [LGPL v3.0](https://www.gnu.org/licenses/lgpl-3.0.en.html) for code or other changes.
-- Your contributions are of your own work and are free of legal restrictions (such as patents or copyrights).
-
-If you have any questions about these terms, please [get in contact with us](mailto:support@gildedgames.com). **If you do not agree to these terms, please do not submit contributions to this repository.**
 
 ## :scroll: License information
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://en.wikipedia.org/wiki/All_rights_reserved)
