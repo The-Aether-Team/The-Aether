@@ -1,7 +1,7 @@
 ## Semantic Versioning
 It is recommended that you read up on the [Semantic Versioning website](https://semver.org/) first, then this file will help clarify points from it.
 
-If you believe there are any examples left out of this file, feel free to suggest them.
+If you believe there are any examples left out, feel free to suggest more.
 
 ### Major Version Changes
 These are signified by any changes in a project that are considered **breaking changes**.
