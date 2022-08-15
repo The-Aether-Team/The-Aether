@@ -1,4 +1,4 @@
-![Banner image](doc/banner.webp)
+![Banner image](assets/banner.webp)
 # The Aether
 
 Gilded Games presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer. The Aether is a dimension of floating islands high in the sky, where you can begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons! All you need to do is construct a Glowstone frame and add water to light the mystical portal, and once you step in you’ll be transported immediately to the luscious hostile paradise of the Aether! Gilded Games has ensured to maintain the Aether as close to its original state from 2011 as possible, while continuing to work on the sequel, Aether II.
