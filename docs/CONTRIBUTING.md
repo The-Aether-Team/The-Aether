@@ -18,11 +18,11 @@ Please make sure before opening a merge request that:
 - You state in the description of your merge request that you agree to the Contributor License Agreement (CLA) found below.
 
 ### Contributor License Agreement
-By submitting code, assets, or documentation to the repository you are hereby agreeing that:
+By making contributions to this repository you are hereby agreeing that:
 
 - You grant Gilded Games and other users the right to use your contributions under one of the following respective licenses:
-    - [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) for assets in `/src/main/java/resources` and wiki pages. Older assets in the Aether project are licensed under the All Rights Reserved terms. If you are contributing new assets or updating existing assets, they will be licensed under the newer CC BY-SA 4.0.
-    - [LGPL v3.0](https://www.gnu.org/licenses/lgpl-3.0.en.html) for code or other changes.
+  - [All Rights Reserved](https://en.wikipedia.org/wiki/All_rights_reserved) for contributed or updated assets in `/src/main/java/resources`.
+  - [LGPL v3.0](https://www.gnu.org/licenses/lgpl-3.0.en.html) for code or other changes.
 - Your contributions are of your own work and are free of legal restrictions (such as patents or copyrights).
 
 If you have any questions about these terms, please [get in contact with us](mailto:support@gildedgames.com). **If you do not agree to these terms, please do not submit contributions to this repository.**
