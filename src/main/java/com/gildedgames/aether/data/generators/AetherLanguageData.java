@@ -668,6 +668,12 @@ public class AetherLanguageData extends AetherLanguageProvider
         addMessage("sun_altar.no_permission", "You don't have permission to use this.");
         addMessage("sun_altar.no_power", "The sun spirit has no power over this realm.");
 
+        addCommand("menu.fix", "Reset world preview values");
+
+        addCommand("capability.player.life_shards.set", "Set life shard count for %s to %s");
+
+        addCommand("capability.time.eternal_day.set", "Set eternal day to %s");
+        addCommand("capability.time.eternal_day.query", "Eternal day is set to %s");
 
         addCommand("sun_altar_whitelist.enabled", "Sun Altar's whitelist is now turned on");
         addCommand("sun_altar_whitelist.disabled", "Sun Altar's whitelist is now turned off");
