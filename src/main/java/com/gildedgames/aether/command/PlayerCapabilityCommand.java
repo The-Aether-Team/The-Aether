@@ -14,25 +14,22 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 import java.util.Collection;
 
-public class CapabilityPlayerCommand {
+public class PlayerCapabilityCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("aether")
-                .then(Commands.literal("capability")
-                        .then(Commands.literal("player").requires((commandSourceStack) -> commandSourceStack.hasPermission(2))
-                                .then(Commands.literal("life_shards")
-                                        .then(Commands.literal("set")
-                                                .then(Commands.argument("targets", GameProfileArgument.gameProfile())
-                                                        .suggests((context, builder) -> {
-                                                            PlayerList playerlist = context.getSource().getServer().getPlayerList();
-                                                            return SharedSuggestionProvider.suggest(playerlist.getPlayers().stream().map((player) -> player.getGameProfile().getName()), builder);
-                                                        }).then(Commands.argument("value", IntegerArgumentType.integer(0, 10)).executes((context) -> setLifeShards(context.getSource(), GameProfileArgument.getGameProfiles(context, "targets"), IntegerArgumentType.getInteger(context, "value"))))
-                                                )
+                .then(Commands.literal("player").requires((commandSourceStack) -> commandSourceStack.hasPermission(2))
+                        .then(Commands.literal("life_shards")
+                                .then(Commands.literal("set")
+                                        .then(Commands.argument("targets", GameProfileArgument.gameProfile())
+                                                .suggests((context, builder) -> {
+                                                    PlayerList playerlist = context.getSource().getServer().getPlayerList();
+                                                    return SharedSuggestionProvider.suggest(playerlist.getPlayers().stream().map((player) -> player.getGameProfile().getName()), builder);
+                                                }).then(Commands.argument("value", IntegerArgumentType.integer(0, 10)).executes((context) -> setLifeShards(context.getSource(), GameProfileArgument.getGameProfiles(context, "targets"), IntegerArgumentType.getInteger(context, "value"))))
                                         )
                                 )
                         )

@@ -9,19 +9,15 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 
-public class CapabilityTimeCommand {
+public class EternalDayCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("aether")
-                .then(Commands.literal("capability")
-                        .then(Commands.literal("time").requires((commandSourceStack) -> commandSourceStack.hasPermission(2))
-                                .then(Commands.literal("eternal_day")
-                                        .then(Commands.literal("set")
-                                                .then(Commands.argument("option", BoolArgumentType.bool())
-                                                        .suggests((context, builder) -> SharedSuggestionProvider.suggest(BoolArgumentType.bool().getExamples(), builder))
-                                                        .executes((context) -> setEternalDay(context.getSource(), BoolArgumentType.getBool(context, "option"))))
-                                        ).then(Commands.literal("query").executes((context) -> queryEternalDay(context.getSource())))
-                                )
-                        )
+                .then(Commands.literal("eternal_day").requires((commandSourceStack) -> commandSourceStack.hasPermission(2))
+                        .then(Commands.literal("set")
+                                .then(Commands.argument("option", BoolArgumentType.bool())
+                                        .suggests((context, builder) -> SharedSuggestionProvider.suggest(BoolArgumentType.bool().getExamples(), builder))
+                                        .executes((context) -> setEternalDay(context.getSource(), BoolArgumentType.getBool(context, "option"))))
+                        ).then(Commands.literal("query").executes((context) -> queryEternalDay(context.getSource())))
                 )
         );
     }
