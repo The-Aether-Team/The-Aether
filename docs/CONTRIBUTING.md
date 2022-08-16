@@ -4,7 +4,7 @@
 
 2. Install the latest 64-bit version of Git, which can be found on the [Git website](https://git-scm.com/).
 
-3. Fork The Aether repository with the [Fork](https://github.com/Gilded-Games/The-Aether/fork) button in the top right of GitHub.
+3. Fork The Aether repository with the [fork](https://github.com/Gilded-Games/The-Aether/fork) button in the top right of GitHub.
 
 4. We recommend to use [IntelliJ IDEA Community Edition](https://www.jetbrains.com/idea/) for contributions. Other IDEs may work but any issues or roadblocks will not receive support.
 
@@ -20,4 +20,39 @@
 
    If you're not familiar with setting up IntelliJ IDEA for use with ForgeGradle projects, cpw has created a setup video on a few of the basics of ForgeGradle [here](https://www.youtube.com/watch?v=PfmlNiHonV0).
 
-8. Start developing!
+8. Create a branch for your changes named `feat/<username>/<title>`. Read up on your relevant Git tutorial if you are unsure how to do this.
+
+9. Start developing!
+
+## Writing commits
+If you are looking to commit to your fork and don't know how, make sure to read up on your relevant Git tutorial.
+
+Once you're ready to commit, there are some things to know about our commit styling. The Aether makes uses of conventional commits. To understand this, we recommend you read up on [Semantic Versioning](https://github.com/Gilded-Games/The-Aether/blob/1.19/docs/references/VERSIONING.md) first, and then our [Conventional Commit](https://github.com/Gilded-Games/The-Aether/blob/1.19/docs/references/COMMITS.md) standards.
+
+It is important to use these because The Aether's workflow depends on them for automated versioning and changelogs, and for our code review. Not using it makes management of contributions more difficult.
+
+## Creating pull requests
+To open a pull request, go to the [pull requests page](https://github.com/Gilded-Games/The-Aether/pulls), and an indicator should show up on the page to create a PR from a recent commit to a fork.
+
+When creating a PR:
+- Mark it as a draft if the changes are WIP.
+- Format it according to conventional commits, with the header as the title and the body and footer in the description so that we can use this information for the merge commit. Write this within a code block.
+- Make sure the description contains an overview of the changes made, and the footer any open issues that it resolves and/or if it's a breaking change.
+- Make sure your code is well documented and conforms to the project's code styling.
+- State outside of the rest of the description that you agree to the Contributor License Agreement (CLA).
+
+Example:
+- `(TITLE)` feat(block): Implements Aether Grass Block
+- `(DESCRIPTION)`
+  ```
+  Implements the Aether Grass Block class, model, blockstates, language entry, and adds the block to the registry.
+  
+  closes issue #1
+  ```
+
+  I agree to the Contributor License Agreement (CLA).
+
+## Code review
+After your PR has been opened, we will make sure to label it with the relevant status, feat, and type labels and assign it to a developer for review. We will then review your code and test if it builds through CircleCI, as well as test the contents to verify they do as described.
+
+If we request any changes, you will have to make them for your PR to be accepted.
