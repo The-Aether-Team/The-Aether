@@ -35,6 +35,7 @@ public class AetherPacketHandler {
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
 		register(EternalDayPacket.class, EternalDayPacket::decode);
 		register(ExplosionParticlePacket.class, ExplosionParticlePacket::decode);
+		register(HealthResetPacket.class, HealthResetPacket::decode);
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
 		register(MoaInteractPacket.class, MoaInteractPacket::decode);
 		register(OpenNpcDialoguePacket.class, OpenNpcDialoguePacket::decode);

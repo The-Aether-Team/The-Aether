@@ -1,40 +1,40 @@
 package com.gildedgames.aether.command;
 
-import com.gildedgames.aether.capability.AetherCapabilities;
 import com.gildedgames.aether.capability.time.AetherTime;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 
-// TODO: This is a temporary command for testing.
 public class EternalDayCommand {
-    public static void register(CommandDispatcher<CommandSourceStack> pDispatcher) {
-        pDispatcher.register(Commands.literal("eternalday").requires((commandSourceStack) -> {
-            return commandSourceStack.hasPermission(2);
-        }).then(Commands.literal("set").then(Commands.literal("true").executes((context) -> {
-            return setEternalDay(context.getSource(), true);
-        })).then(Commands.literal("false").executes((context) -> {
-            return setEternalDay(context.getSource(), false);
-        }))).then(Commands.literal("query").executes((context) -> {
-            return queryEternalDay(context.getSource());
-        })));
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+        dispatcher.register(Commands.literal("aether")
+                .then(Commands.literal("eternal_day").requires((commandSourceStack) -> commandSourceStack.hasPermission(2))
+                        .then(Commands.literal("set")
+                                .then(Commands.argument("option", BoolArgumentType.bool())
+                                        .suggests((context, builder) -> SharedSuggestionProvider.suggest(BoolArgumentType.bool().getExamples(), builder))
+                                        .executes((context) -> setEternalDay(context.getSource(), BoolArgumentType.getBool(context, "option"))))
+                        ).then(Commands.literal("query").executes((context) -> queryEternalDay(context.getSource())))
+                )
+        );
     }
 
-    public static int setEternalDay(CommandSourceStack stack, boolean value) {
-        ServerLevel level = stack.getLevel();
-        AetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
-        aetherTime.setEternalDay(value);
-        aetherTime.updateEternalDay();
-        stack.sendSuccess(Component.literal("Set eternal day to " + value), true);
+    private static int setEternalDay(CommandSourceStack source, boolean value) {
+        ServerLevel level = source.getLevel();
+        AetherTime.get(level).ifPresent(aetherTime -> {
+            aetherTime.setEternalDay(value);
+            aetherTime.updateEternalDay();
+            source.sendSuccess(Component.translatable("commands.aether.capability.time.eternal_day.set", value), true);
+        });
         return 1;
     }
 
-    public static int queryEternalDay(CommandSourceStack stack) {
-        ServerLevel level = stack.getLevel();
-        AetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
-        stack.sendSuccess(Component.literal("Eternal day is set to " + aetherTime.getEternalDay()), true);
+    private static int queryEternalDay(CommandSourceStack source) {
+        ServerLevel level = source.getLevel();
+        AetherTime.get(level).ifPresent(aetherTime -> source.sendSuccess(Component.translatable("commands.aether.capability.time.eternal_day.query", aetherTime.getEternalDay()), true));
         return 1;
     }
 }
