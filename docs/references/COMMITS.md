@@ -2,7 +2,9 @@
 It is recommended that you read up on the [Conventional Commits  website](https://www.conventionalcommits.org/en/v1.0.0-beta.4/) first, then this file will help clarify how it relates to development.
 
 ## Types
-The Aether project uses the following types for its commits:
+The Aether project uses the following types for its commits, based on what version number a commit would increase. 
+
+If a commit or PR falls under multiple types, it should attempt to be split up if there are contents not dependent on each other. If that's not possible, choose the highest relevant type for the changes.
 
 ### Updates Minor Version
 1. `update:` Bumps dependency versions (Minecraft, Forge, etc.). 
@@ -23,7 +25,59 @@ The Aether project uses the following types for its commits:
 4. `revert:` Reverts a previous commit.
 
 ## Scopes
-*Work in progress...*
+Scopes are recommended, and should reflect what type of feature a commit implements.
+
+If you're unsure what to put as a scope, look at what other developers have used to maintain consistency. A scope is not necessary if it can't encompass all of a commit's changes.
 
 ## Examples
-*Work in progress...*
+```
+update!: Update to Forge 41.1.0
+
+BREAKING CHANGE: Client code has gone through renaming and reorganization according to Forge changes
+```
+
+```
+feat(item): Add Ambrosium Shards
+```
+
+```
+improv(recipe): Abstracted biome-based block conversion recipe code
+
+Code is now abstracted into more superclasses and util methods for recipe classes to use instead of duplicating code
+
+closes issue #456
+```
+
+```
+perf(block): Icestone no longer greatly impacts TPS
+
+Made use of GameEvents and recipe caching to minimize nested loops which were impacting TPS
+```
+
+```
+fix(item): Swet Balls are no longer missing a usage animation
+```
+
+```
+refactor: Make use of pattern matching for various checks
+
+closes issue #615
+```
+
+```
+style: Added this. to various field calls
+```
+
+```
+docs: More vanilla copied methods have been labeled
+```
+
+```
+ci: Updated config.yml to fix error with deployment to VPN
+```
+
+```
+chore: Update README.md to fix broken link
+
+[ci skip]
+```
