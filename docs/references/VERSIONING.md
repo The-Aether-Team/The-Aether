@@ -24,6 +24,7 @@ How this looks with versions is that if an addon is dependent on version `1.8.0`
 These are signified by **additions** to a codebase that are backwards-compatible.
 
 Examples:
+- Adding new files.
 - Adding new packages.
 - Adding new public or protected methods, fields, or classes.
 - Annotating a public or protected method, field, or class as deprecated.

@@ -21,7 +21,7 @@ If a commit or PR falls under multiple types, it should attempt to be split up i
 ### No Version Updates
 1. `ci:` Modifies the CircleCI configuration.
 2. `test:` Modifies any tests for the project.
-3. `chore:` Edits markdown files, GitHub Action configs, anything that doesn't go into the mod.
+3. `chore:` Edits markdown files or anything else that doesn't go into the mod.
 4. `revert:` Reverts a previous commit.
 
 ## Scopes
