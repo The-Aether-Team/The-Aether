@@ -2,7 +2,7 @@ package com.gildedgames.aether.recipe.builder;
 
 import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.BlockStateIngredient;
-import com.gildedgames.aether.recipe.recipes.AbstractBlockStateRecipe;
+import com.gildedgames.aether.recipe.recipes.block.AbstractBlockStateRecipe;
 import com.gildedgames.aether.recipe.serializer.BlockStateRecipeSerializer;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.CriterionTriggerInstance;

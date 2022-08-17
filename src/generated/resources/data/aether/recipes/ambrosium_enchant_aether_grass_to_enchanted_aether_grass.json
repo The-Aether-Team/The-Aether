@@ -1,0 +1,9 @@
+{
+  "type": "aether:ambrosium_enchanting",
+  "ingredient": {
+    "block": "aether:aether_grass_block"
+  },
+  "result": {
+    "block": "aether:enchanted_aether_grass_block"
+  }
+}

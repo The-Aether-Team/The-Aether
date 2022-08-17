@@ -1,16 +1,14 @@
 package com.gildedgames.aether.item.materials;
 
-import com.gildedgames.aether.block.AetherBlocks;
-
-import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.AetherConfig;
-import net.minecraft.world.level.block.state.BlockState;
+import com.gildedgames.aether.item.materials.behavior.ItemUseConversion;
+import com.gildedgames.aether.recipe.AetherRecipeTypes;
+import com.gildedgames.aether.recipe.recipes.block.AmbrosiumRecipe;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
 import net.minecraft.world.item.Item;
@@ -18,28 +16,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.UseOnContext;
 
-public class AmbrosiumShardItem extends Item
-{
+import javax.annotation.Nonnull;
+
+public class AmbrosiumShardItem extends Item implements ItemUseConversion<AmbrosiumRecipe> {
 	public AmbrosiumShardItem(Item.Properties properties) {
 		super(properties);
 	}
 
+	@Nonnull
 	@Override
-	public InteractionResult useOn(UseOnContext context) {
-		Player playerentity = context.getPlayer();
-		Level world = context.getLevel();
-		BlockPos blockpos = context.getClickedPos();
-		BlockState blockstate = world.getBlockState(blockpos);
-		if (blockstate.is(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)) {
-			world.setBlockAndUpdate(blockpos, AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get().defaultBlockState());
-			if (playerentity != null) {
-				if (!playerentity.getAbilities().instabuild) {
-					context.getItemInHand().shrink(1);
-				}
-				return InteractionResult.sidedSuccess(world.isClientSide);
-			}
-		}
-		return super.useOn(context);
+	public InteractionResult useOn(@Nonnull UseOnContext context) {
+		return this.convertBlock(AetherRecipeTypes.AMBROSIUM_ENCHANTING.get(), context);
 	}
 	
 	@Override

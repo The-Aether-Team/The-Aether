@@ -19,7 +19,6 @@ import com.gildedgames.aether.item.accessories.ring.IceRingItem;
 import com.gildedgames.aether.item.accessories.ring.RingItem;
 import com.gildedgames.aether.item.food.WhiteAppleItem;
 import com.gildedgames.aether.item.materials.AmbrosiumShardItem;
-import com.gildedgames.aether.item.materials.behavior.SwetBallConversion;
 import com.gildedgames.aether.item.tools.skyroot.SkyrootAxeItem;
 import com.gildedgames.aether.item.tools.skyroot.SkyrootHoeItem;
 import com.gildedgames.aether.item.tools.skyroot.SkyrootPickaxeItem;

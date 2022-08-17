@@ -14,7 +14,6 @@ public class AetherTags {
 	public static class Blocks {
 		public static final TagKey<Block> AETHER_PORTAL_BLOCKS = tag("aether_portal_blocks");
 		public static final TagKey<Block> AETHER_ISLAND_BLOCKS = tag("aether_island_blocks");
-		public static final TagKey<Block> ENCHANTABLE_GRASS_BLOCKS = tag("enchantable_grass_blocks");
 		public static final TagKey<Block> AETHER_DIRT = tag("aether_dirt");
 		public static final TagKey<Block> HOLYSTONE = tag("holystone");
 		public static final TagKey<Block> AERCLOUDS = tag("aerclouds");
@@ -94,12 +93,17 @@ public class AetherTags {
 		public static final TagKey<Item> MOA_TEMPTATION_ITEMS = tag("moa_temptation_items");
 		public static final TagKey<Item> MOA_FOOD_ITEMS = tag("moa_food_items");
 
+		public static final TagKey<Item> TOOLS_LANCES = tag("tools/lances");
+		public static final TagKey<Item> TOOLS_HAMMERS = tag("tools/hammers");
+
 		public static final TagKey<Item> AETHER_RING = curio("aether_ring");
 		public static final TagKey<Item> AETHER_PENDANT = curio("aether_pendant");
 		public static final TagKey<Item> AETHER_GLOVES = curio("aether_gloves");
 		public static final TagKey<Item> AETHER_CAPE = curio("aether_cape");
 		public static final TagKey<Item> AETHER_ACCESSORY = curio("aether_accessory");
 		public static final TagKey<Item> AETHER_SHIELD = curio("aether_shield");
+
+		public static final TagKey<Item> ACCESSORIES = tag("accessories");
 
 		private static TagKey<Item> tag(String name) {
 			return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Aether.MODID, name));

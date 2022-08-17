@@ -1,4 +1,4 @@
-// 1.19.1	2022-07-30T15:13:04.1378315	Aether Block Tags
+// 1.19.2	2022-08-14T09:50:51.8411031	Aether Block Tags
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/aechor_plant_spawnable_on.json
 f2dedadb4e94e780ebd949b551d3349f0210feb9 data/aether/tags/blocks/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/blocks/aerogel.json
@@ -12,7 +12,6 @@ befda0e6594eed38bd37a692d75b8fcb44d812c5 data/aether/tags/blocks/allowed_flammab
 c2932f8d1305ae8d20119f3135665f7269003685 data/aether/tags/blocks/angelic_blocks.json
 1e9fbced04ccb4cf0ad615982e1f15cf630a6fba data/aether/tags/blocks/cockatrice_spawnable_blacklist.json
 b7b37d30e23e65ee6925f4068e6d142f874fadd6 data/aether/tags/blocks/dungeon_blocks.json
-fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/enchantable_grass_blocks.json
 65976e3564baed2ae1f9323801f6fdc2faa84331 data/aether/tags/blocks/golden_oak_logs.json
 919fec6673778567a924cacfa590d985b91709d9 data/aether/tags/blocks/gravitite_ability_blacklist.json
 be77fe60ed5ec6378cc5c8b0e8340b02f874450f data/aether/tags/blocks/hellfire_blocks.json

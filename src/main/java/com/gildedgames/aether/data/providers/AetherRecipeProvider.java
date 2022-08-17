@@ -1,11 +1,14 @@
 package com.gildedgames.aether.data.providers;
 
+import com.gildedgames.aether.api.registers.MoaType;
 import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.BlockStateIngredient;
 import com.gildedgames.aether.recipe.builder.*;
 import com.gildedgames.aether.recipe.AetherRecipeSerializers;
 import com.gildedgames.aether.AetherTags;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.*;
@@ -397,6 +400,20 @@ public abstract class AetherRecipeProvider extends RecipeProvider
     public SimpleCookingRecipeBuilder hiddenFreezingRecipe(ItemLike result, ItemLike ingredient, float exp, int duration) {
         return SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, exp, duration, AetherRecipeSerializers.FREEZING.get())
                 .unlockedBy("has_" + ForgeRegistries.ITEMS.getKey(result.asItem()).getPath(), has(result));
+    }
+
+    public IncubationBuilder moaIncubationRecipe(EntityType<?> entity, Supplier<MoaType> moaType, ItemLike ingredient) {
+        CompoundTag tag = new CompoundTag();
+        tag.putBoolean("IsBaby", true);
+        tag.putString("MoaType", moaType.get().toString());
+        tag.putBoolean("Hungry", true);
+        tag.putBoolean("PlayerGrown", true);
+        return IncubationBuilder.incubation(Ingredient.of(ingredient), entity, tag, 5700, AetherRecipeSerializers.INCUBATION.get())
+                .unlockedBy("has_" + ForgeRegistries.ITEMS.getKey(ingredient.asItem()).getPath(), has(ingredient));
+    }
+
+    public BlockStateRecipeBuilder ambrosiumEnchanting(Block result, Block ingredient) {
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipeSerializers.AMBROSIUM_ENCHANTING.get());
     }
 
     public BlockStateRecipeBuilder swetBallConversion(Block result, Block ingredient) {

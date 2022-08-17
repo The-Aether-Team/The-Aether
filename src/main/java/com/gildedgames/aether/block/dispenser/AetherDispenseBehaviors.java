@@ -1,11 +1,8 @@
 package com.gildedgames.aether.block.dispenser;
 
-import com.gildedgames.aether.AetherTags;
-import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.projectile.weapon.HammerProjectile;
 import com.gildedgames.aether.entity.projectile.weapon.ThrownLightningKnife;
 import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.item.materials.behavior.SwetBallConversion;
 import com.gildedgames.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -15,7 +12,6 @@ import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
-import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.DispensibleContainerItem;
@@ -175,38 +171,6 @@ public class AetherDispenseBehaviors {
             } else {
                 return super.execute(source, stack);
             }
-        }
-    };
-
-    public static final DispenseItemBehavior DISPENSE_AMBROSIUM_BEHAVIOR = new OptionalDispenseItemBehavior() {
-        @Nonnull
-        @Override
-        protected ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
-            this.setSuccess(true);
-            Level world = source.getLevel();
-            BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
-            BlockState blockstate = world.getBlockState(blockpos);
-            if (blockstate.is(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS)) {
-                world.setBlockAndUpdate(blockpos, AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get().defaultBlockState());
-                stack.shrink(1);
-            } else {
-                this.setSuccess(false);
-            }
-            return stack;
-        }
-    };
-
-    public static final DispenseItemBehavior DISPENSE_SWET_BALL_BEHAVIOR = new OptionalDispenseItemBehavior() {
-        @Nonnull
-        @Override
-        protected ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
-            this.setSuccess(true);
-            Level world = source.getLevel();
-            BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
-            if (!SwetBallConversion.convertBlockWithoutContext(world, blockpos, stack)) {
-                this.setSuccess(false);
-            }
-            return stack;
         }
     };
 }

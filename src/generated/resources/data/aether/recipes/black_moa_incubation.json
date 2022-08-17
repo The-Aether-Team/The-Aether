@@ -1,0 +1,9 @@
+{
+  "type": "aether:incubation",
+  "entity": "aether:moa",
+  "incubationtime": 5700,
+  "ingredient": {
+    "item": "aether:black_moa_egg"
+  },
+  "tag": "{Hungry:1b,IsBaby:1b,MoaType:\"aether:black\",PlayerGrown:1b}"
+}

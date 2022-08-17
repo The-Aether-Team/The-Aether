@@ -1,8 +1,10 @@
 package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.api.AetherMoaTypes;
 import com.gildedgames.aether.data.providers.AetherRecipeProvider;
 import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.AetherTags;
 import net.minecraft.advancements.critereon.EntityPredicate;
@@ -753,6 +755,13 @@ public class AetherRecipeData extends AetherRecipeProvider
         freezingRecipeWithTag(AetherItems.ICE_RING.get(), AetherTags.Items.FREEZABLE_RINGS, 1.0F, 2500, "ring").save(consumer, name("ice_ring_from_freezing"));
 
         freezingRecipeWithTag(AetherItems.ICE_PENDANT.get(), AetherTags.Items.FREEZABLE_PENDANTS, 1.0F, 2500, "pendant").save(consumer, name("ice_pendant_from_freezing"));
+
+        moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.BLUE, AetherItems.BLUE_MOA_EGG.get()).save(consumer, name("blue_moa_incubation"));
+        moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.WHITE, AetherItems.WHITE_MOA_EGG.get()).save(consumer, name("white_moa_incubation"));
+        moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.BLACK, AetherItems.BLACK_MOA_EGG.get()).save(consumer, name("black_moa_incubation"));
+        moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.ORANGE, AetherItems.ORANGE_MOA_EGG.get()).save(consumer, name("orange_moa_incubation"));
+
+        ambrosiumEnchanting(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_GRASS_BLOCK.get()).save(consumer, name("ambrosium_enchant_aether_grass_to_enchanted_aether_grass"));
 
         swetBallConversion(Blocks.GRASS_BLOCK, Blocks.DIRT).save(consumer, name("swet_ball_dirt_to_grass"));
         swetBallConversion(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT.get()).save(consumer, name("swet_ball_aether_dirt_to_aether_grass"));

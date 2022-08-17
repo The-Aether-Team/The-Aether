@@ -33,7 +33,6 @@ public class AetherBlockTagData extends BlockTagsProvider
     protected void addTags() {
         //aether
         tag(AetherTags.Blocks.AETHER_PORTAL_BLOCKS).add(Blocks.GLOWSTONE);
-        tag(AetherTags.Blocks.ENCHANTABLE_GRASS_BLOCKS).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
         tag(AetherTags.Blocks.AETHER_ISLAND_BLOCKS).add(
                 AetherBlocks.AETHER_DIRT.get(),
                 AetherBlocks.AETHER_GRASS_BLOCK.get(),

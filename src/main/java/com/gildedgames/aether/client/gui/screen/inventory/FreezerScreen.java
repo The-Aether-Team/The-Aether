@@ -9,8 +9,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 
-public class FreezerScreen extends AbstractFurnaceScreen<FreezerMenu>
-{
+public class FreezerScreen extends AbstractAetherFurnaceScreen<FreezerMenu> {
 	private static final ResourceLocation FREEZER_GUI_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/menu/freezer.png");
 	
 	public FreezerScreen(FreezerMenu menu, Inventory inventory, Component title) {

@@ -1,30 +1,47 @@
 package com.gildedgames.aether.block.natural;
 
-import com.gildedgames.aether.block.FreezingBlock;
+import com.gildedgames.aether.blockentity.IcestoneBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEventListener;
+import org.jetbrains.annotations.Nullable;
 
-public class IcestoneBlock extends Block implements FreezingBlock
-{
+import javax.annotation.Nonnull;
+
+public class IcestoneBlock extends BaseEntityBlock {
 	public IcestoneBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 	}
-	
+
+	@Nullable
 	@Override
-	public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-		super.onPlace(state, worldIn, pos, oldState, isMoving);
-		worldIn.scheduleTick(pos, this, 5);
+	public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+		return new IcestoneBlockEntity(pos, state);
 	}
 
+	@Nullable
 	@Override
-	public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
-		super.tick(state, worldIn, pos, random);
-		this.freezeBlocks(worldIn, pos, state, FreezingBlock.SQRT_8);
-		worldIn.scheduleTick(pos, this, 5);
+	public <T extends BlockEntity> GameEventListener getListener(@Nonnull ServerLevel level, @Nonnull T blockEntity) {
+		return blockEntity instanceof IcestoneBlockEntity icestoneBlockEntity ? icestoneBlockEntity.getListener() : null;
+	}
+
+	@Nullable
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> blockEntityType) {
+		return null;
+	}
+
+	@Nonnull
+	@Override
+	public RenderShape getRenderShape(@Nonnull BlockState state) {
+		return RenderShape.MODEL;
 	}
 }

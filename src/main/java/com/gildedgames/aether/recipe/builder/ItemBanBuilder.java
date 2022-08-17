@@ -1,7 +1,7 @@
 package com.gildedgames.aether.recipe.builder;
 
 import com.gildedgames.aether.recipe.BlockStateIngredient;
-import com.gildedgames.aether.recipe.recipes.ItemBanRecipe;
+import com.gildedgames.aether.recipe.recipes.ban.ItemBanRecipe;
 import com.gildedgames.aether.recipe.serializer.PlacementBanRecipeSerializer;
 import com.google.gson.JsonObject;
 import net.minecraft.data.recipes.FinishedRecipe;
