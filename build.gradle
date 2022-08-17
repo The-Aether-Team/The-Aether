@@ -29,6 +29,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
+jarJar.enable()
 
 version = project.mc_version + '-' + project.aether_version
 group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -111,6 +112,18 @@ dependencies {
 
     compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}:api")
     compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
+
+    //implementation fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
+    jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") {
+        jarJar.ranged(it, "[${project.curios_version},)")
+        jarJar.pin(it, "${project.curios_version}")
+    }
+
+//    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:3.1.16")
+//    jarJar fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:3.1.16") {
+//        jarJar.ranged(it, "[3.1.10,4)")
+//        jarJar.pin(it, "3.1.16")
+//    }
 
     // compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
 
