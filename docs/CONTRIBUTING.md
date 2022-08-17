@@ -24,6 +24,8 @@
 
 9. Start developing!
 
+If you have any questions or issues, or would just like to discuss Aether development, feel free to [join us on Discord](https://discord.gg/aethermod).
+
 ## Writing commits
 If you are looking to commit to your fork and don't know how, make sure to read up on your relevant Git tutorial.
 
