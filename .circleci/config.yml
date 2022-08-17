@@ -30,10 +30,6 @@ jobs:
       - run: gradle build
       - store_artifacts:
           path: ~/project/build/libs
-      - run:
-          name: Create artifact name
-          command: |
-            echo curl ~/project/build/libs/(?!(aether)*?nodeps)^.*
       - persist_to_workspace:
           root: ~/project/build/libs
           paths: 

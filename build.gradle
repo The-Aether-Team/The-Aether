@@ -150,10 +150,6 @@ def reobfArtifact = artifacts.add('default', reobfFile) {
     builtBy 'reobfJar'
 }
 
-tasks.jar.configure {
-    archiveClassifier = "nodeps"
-}
-
 tasks.jarJar.configure {
     archiveClassifier = ""
 }
