@@ -114,7 +114,7 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
 
     //implementation fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
-    jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") {
+    jarJar("top.theillusivec4.curios:curios-forge:${project.curios_version}") {
         jarJar.ranged(it, "[${project.curios_version},)")
         jarJar.pin(it, "${project.curios_version}")
     }
@@ -179,4 +179,8 @@ publishing {
 mixin {
     config "aether.mixins.json"
     add sourceSets.main, "aether.refmap.json"
+}
+
+build {
+    dependsOn 'jarJar'
 }
