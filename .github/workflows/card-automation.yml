@@ -9,6 +9,9 @@ on:
 jobs:
   github-actions-automate-projects:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
     - name: Add Issues to Project
       uses: takanabe/github-actions-automate-projects@v0.0.2
