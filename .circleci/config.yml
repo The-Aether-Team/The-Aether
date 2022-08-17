@@ -33,7 +33,7 @@ jobs:
       - persist_to_workspace:
           root: ~/project/build/libs
           paths: 
-            - << pipeline.parameters.artifact-name >>-*!(-nodep).jar
+            - << pipeline.parameters.artifact-name >>-!(*nodeps).jar
       - run:
           name: Publish artifact link to Discord
           command: |
