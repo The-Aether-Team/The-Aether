@@ -109,12 +109,6 @@ dependencies {
         jarJar.pin(it, "${project.curios_version}")
     }
 
-//    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:3.1.16")
-//    jarJar fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:3.1.16") {
-//        jarJar.ranged(it, "[3.1.10,4)")
-//        jarJar.pin(it, "3.1.16")
-//    }
-
     // compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
 
     //compileOnly fg.deobf("curse.maven:colytra-280200:${project.colytra_version}")
