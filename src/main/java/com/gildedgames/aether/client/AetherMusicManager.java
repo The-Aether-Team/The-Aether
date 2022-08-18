@@ -64,7 +64,7 @@ public class AetherMusicManager {
             currentMusic = null;
             if (nextSongDelay-- <= 0) {
                 Aether.LOGGER.info("g");
-                nextSongDelay = Math.min(nextSongDelay, Mth.nextInt(random, AetherConfig.CLIENT.music_backup_min_delay.get(), AetherConfig.CLIENT.music_backup_max_delay.get()));
+                nextSongDelay = Math.min(Integer.MAX_VALUE, Mth.nextInt(random, AetherConfig.CLIENT.music_backup_min_delay.get(), AetherConfig.CLIENT.music_backup_max_delay.get()));
             }
         }
     }
