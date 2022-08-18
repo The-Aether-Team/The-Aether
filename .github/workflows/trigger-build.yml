@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger CircleCI build manually
-        if: github.event.review.state == 'comment'
+        #if: github.event.review.state == 'comment'
         env:
           CIRCLE_TOKEN: ${{ secrets.CIRCLE_TOKEN }}
           ORG: Gilded-Games
