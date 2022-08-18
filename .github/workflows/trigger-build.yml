@@ -1,0 +1,24 @@
+name: Trigger build manually
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  trigger-build:
+    if: ${{ github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger CircleCI build manually
+        env:
+          CIRCLE_BRANCH: ${{ github.head_ref }}
+          CIRCLE_TOKEN: ${{ secrets.CIRCLE_TOKEN }}
+          ORG: Gilded-Games
+          PROJECT: The-Aether
+        run: |
+          curl -X POST \
+          -H "Circle-Token: ${CIRCLE_TOKEN}" \
+          -H 'Content-Type: application/json' \
+          -H 'Accept: application/json' \
+          -d "{\"branch\":\"${CIRCLE_BRANCH}\"}" \
+          https://circleci.com/api/v2/project/github/${ORG}/${PROJECT}/pipeline
