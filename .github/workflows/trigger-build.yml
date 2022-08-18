@@ -1,17 +1,15 @@
 name: Trigger build manually
 
 on:
-  issue_comment:
+  pull_request_review_comment:
     types: [created]
 
 jobs:
   trigger-build:
-    if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
       - name: Trigger CircleCI build manually
         env:
-          CIRCLE_BRANCH: ${{ github.head_ref }}
           CIRCLE_TOKEN: ${{ secrets.CIRCLE_TOKEN }}
           ORG: Gilded-Games
           PROJECT: The-Aether
@@ -20,5 +18,5 @@ jobs:
           -H "Circle-Token: ${CIRCLE_TOKEN}" \
           -H 'Content-Type: application/json' \
           -H 'Accept: application/json' \
-          -d "{\"branch\":\"${CIRCLE_BRANCH}\"}" \
+          -d "{\"branch\":\"${GITHUB_REF}\"}" \
           https://circleci.com/api/v2/project/github/${ORG}/${PROJECT}/pipeline
