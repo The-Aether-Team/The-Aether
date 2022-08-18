@@ -1,0 +1,24 @@
+name: Trigger build on pull request approved
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  trigger-build:
+    runs-on: ubuntu-latest
+    if: github.event.review.state == 'approved'
+    steps:
+      - name: Trigger build
+        env:
+          CIRCLE_BRANCH: ${{ github.head_ref }}
+          CIRCLE_TOKEN: ${{ secrets.CIRCLE_TOKEN }}
+          ORG: Gilded-Games
+          PROJECT: The-Aether
+        run: |
+          curl -X POST \
+          -H "Circle-Token: ${CIRCLE_TOKEN}" \
+          -H 'Content-Type: application/json' \
+          -H 'Accept: application/json' \
+          -d "{\"branch\":\"${CIRCLE_BRANCH}\"}" \
+          https://circleci.com/api/v2/project/github/${ORG}/${PROJECT}/pipeline
