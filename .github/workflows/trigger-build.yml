@@ -16,6 +16,7 @@ jobs:
           ORG: Gilded-Games
           PROJECT: The-Aether
         run: |
+          echo ${CIRCLE_BRANCH}
           curl -X POST \
           -H "Circle-Token: ${CIRCLE_TOKEN}" \
           -H 'Content-Type: application/json' \
