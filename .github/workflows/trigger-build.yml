@@ -1,13 +1,13 @@
 name: Trigger build on pull request approved
 
 on:
-  pull_request_review:
-    types: [submitted]
+  issue_comment:
+    types: [created]
 
 jobs:
   trigger-build:
     runs-on: ubuntu-latest
-    if: github.event.review.state == 'approved'
+    if: ${{ github.event.issue.pull_request }}
     steps:
       - name: Trigger build
         env:
