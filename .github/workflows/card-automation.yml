@@ -6,9 +6,7 @@ on:
   pull_request:
     types:
       - opened
-permissions:
-  issues: write-all
-  pull-requests: write-all
+permissions: write-all
 jobs:
   github-actions-automate-projects:
     runs-on: ubuntu-latest
