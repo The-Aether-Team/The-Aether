@@ -7,8 +7,8 @@ on:
     types:
       - opened
 permissions:
-  issues: read/write
-  pull-requests: read/write
+  issues: write-all
+  pull-requests: write-all
 jobs:
   github-actions-automate-projects:
     runs-on: ubuntu-latest
