@@ -1,6 +1,5 @@
 package com.gildedgames.aether.client.event.listeners;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.event.hooks.AudioHooks;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraftforge.api.distmarker.Dist;
@@ -18,9 +17,7 @@ public class AudioListener {
     @SubscribeEvent
     public static void onPlaySound(PlaySoundEvent event) {
         SoundInstance sound = event.getOriginalSound();
-        Aether.LOGGER.info(sound.getLocation());
         if (AudioHooks.shouldCancelSound(sound)) {
-            Aether.LOGGER.info("canceled");
             event.setSound(null);
         }
     }
