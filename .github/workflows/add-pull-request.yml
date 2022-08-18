@@ -4,6 +4,7 @@ on:
   pull_request:
     types:
       - opened
+permissions: write-all
 jobs:
   add-pull-request-to-project:
     name: Add pull request to project
@@ -12,4 +13,4 @@ jobs:
       - uses: actions/add-to-project@v0.3.0
         with:
           project-url: https://github.com/orgs/Gilded-Games/projects/2
-          github-token: ${{ secrets.PROJECT_ADD_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
