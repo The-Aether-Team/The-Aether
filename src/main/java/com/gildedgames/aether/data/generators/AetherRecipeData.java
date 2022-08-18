@@ -761,6 +761,8 @@ public class AetherRecipeData extends AetherRecipeProvider
         moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.BLACK, AetherItems.BLACK_MOA_EGG.get()).save(consumer, name("black_moa_incubation"));
         moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.ORANGE, AetherItems.ORANGE_MOA_EGG.get()).save(consumer, name("orange_moa_incubation"));
 
+        ambrosiumEnchanting(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_GRASS_BLOCK.get()).save(consumer, name("ambrosium_enchant_aether_grass_to_enchanted_aether_grass"));
+
         swetBallConversion(Blocks.GRASS_BLOCK, Blocks.DIRT).save(consumer, name("swet_ball_dirt_to_grass"));
         swetBallConversion(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT.get()).save(consumer, name("swet_ball_aether_dirt_to_aether_grass"));
         swetBallConversionTag(Blocks.MYCELIUM, Blocks.DIRT, AetherTags.Biomes.MYCELIUM_CONVERSION).save(consumer, name("swet_ball_dirt_to_mycelium"));

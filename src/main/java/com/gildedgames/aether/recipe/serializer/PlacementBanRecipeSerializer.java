@@ -1,7 +1,7 @@
 package com.gildedgames.aether.recipe.serializer;
 
 import com.gildedgames.aether.recipe.BlockStateIngredient;
-import com.gildedgames.aether.recipe.recipes.AbstractPlacementBanRecipe;
+import com.gildedgames.aether.recipe.recipes.ban.AbstractPlacementBanRecipe;
 import com.gildedgames.aether.util.BlockStateRecipeUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,6 +12,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.biome.Biome;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,17 +27,10 @@ public class PlacementBanRecipeSerializer<T, S extends Predicate<T>, F extends A
 
     @Nonnull
     @Override
-    public F fromJson(@Nonnull ResourceLocation recipeId, JsonObject serializedRecipe) {
-        ResourceKey<Biome> biomeKey = null;
-        TagKey<Biome> biomeTag = null;
-        if (serializedRecipe.has("biome")) {
-            String biomeName = GsonHelper.getAsString(serializedRecipe, "biome");
-            if (biomeName.startsWith("#")) {
-                biomeTag = BlockStateRecipeUtil.biomeTagFromJson(serializedRecipe);
-            } else {
-                biomeKey = BlockStateRecipeUtil.biomeKeyFromJson(serializedRecipe);
-            }
-        }
+    public F fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject serializedRecipe) {
+        Pair<ResourceKey<Biome>, TagKey<Biome>> biomeRecipeData = BlockStateRecipeUtil.biomeRecipeDataFromJson(serializedRecipe);
+        ResourceKey<Biome> biomeKey = biomeRecipeData.getLeft();
+        TagKey<Biome> biomeTag = biomeRecipeData.getRight();
         BlockStateIngredient bypassBlock = BlockStateIngredient.EMPTY;
         if (serializedRecipe.has("bypass")) {
             boolean isBypassArray = GsonHelper.isArrayNode(serializedRecipe, "bypass");

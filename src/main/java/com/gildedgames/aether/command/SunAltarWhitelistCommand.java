@@ -26,23 +26,27 @@ public class SunAltarWhitelistCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("aether")
-                .then(Commands.literal("sun_altar_whitelist").requires((p_139234_) -> p_139234_.hasPermission(4))
-                        .then(Commands.literal("on").executes((p_139236_) -> enableWhitelist(p_139236_.getSource())))
-                        .then(Commands.literal("off").executes((p_139232_) -> disableWhitelist(p_139232_.getSource())))
-                        .then(Commands.literal("list").executes((p_139228_) -> showList(p_139228_.getSource())))
+                .then(Commands.literal("sun_altar_whitelist").requires((commandSourceStack) -> commandSourceStack.hasPermission(4))
+                        .then(Commands.literal("on").executes((context) -> enableWhitelist(context.getSource())))
+                        .then(Commands.literal("off").executes((context) -> disableWhitelist(context.getSource())))
+                        .then(Commands.literal("list").executes((context) -> showList(context.getSource())))
                         .then(Commands.literal("add")
                                 .then(Commands.argument("targets", GameProfileArgument.gameProfile())
-                                        .suggests((p_139216_, p_139217_) -> {
-                                            PlayerList playerlist = p_139216_.getSource().getServer().getPlayerList();
-                                            return SharedSuggestionProvider.suggest(playerlist.getPlayers().stream().filter((p_142794_) -> !playerlist.getWhiteList().isWhiteListed(p_142794_.getGameProfile())).map((p_142791_) -> p_142791_.getGameProfile().getName()), p_139217_);
+                                        .suggests((context, builder) -> {
+                                            PlayerList playerlist = context.getSource().getServer().getPlayerList();
+                                            return SharedSuggestionProvider.suggest(playerlist.getPlayers().stream().filter((serverPlayer) -> !playerlist.getWhiteList().isWhiteListed(serverPlayer.getGameProfile())).map((player) -> player.getGameProfile().getName()), builder);
                                         })
-                                        .executes((p_139224_) -> addPlayers(p_139224_.getSource(), GameProfileArgument.getGameProfiles(p_139224_, "targets")))))
-                        .then(Commands.literal("remove")
+                                        .executes((context) -> addPlayers(context.getSource(), GameProfileArgument.getGameProfiles(context, "targets")))
+                                )
+                        ).then(Commands.literal("remove")
                                 .then(Commands.argument("targets", GameProfileArgument.gameProfile())
-                                        .suggests((p_139206_, p_139207_) -> SharedSuggestionProvider.suggest(p_139206_.getSource().getServer().getPlayerList().getWhiteListNames(), p_139207_))
-                                        .executes((p_139214_) -> removePlayers(p_139214_.getSource(), GameProfileArgument.getGameProfiles(p_139214_, "targets")))))
-                        .then(Commands.literal("reload")
-                                .executes((p_139204_) -> reload(p_139204_.getSource()))))
+                                        .suggests((context, builder) -> SharedSuggestionProvider.suggest(context.getSource().getServer().getPlayerList().getWhiteListNames(), builder))
+                                        .executes((context) -> removePlayers(context.getSource(), GameProfileArgument.getGameProfiles(context, "targets")))
+                                )
+                        ).then(Commands.literal("reload")
+                                .executes((context) -> reload(context.getSource()))
+                        )
+                )
         );
     }
 

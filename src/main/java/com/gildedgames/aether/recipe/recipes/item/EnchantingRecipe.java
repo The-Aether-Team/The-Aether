@@ -1,4 +1,4 @@
-package com.gildedgames.aether.recipe.recipes;
+package com.gildedgames.aether.recipe.recipes.item;
 
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.recipe.AetherRecipeSerializers;

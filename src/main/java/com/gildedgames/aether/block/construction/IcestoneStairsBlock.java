@@ -1,31 +1,56 @@
 package com.gildedgames.aether.block.construction;
 
-import com.gildedgames.aether.block.FreezingBlock;
+import com.gildedgames.aether.blockentity.IcestoneBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEventListener;
+import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
-public class IcestoneStairsBlock extends StairBlock implements FreezingBlock
-{
+public class IcestoneStairsBlock extends StairBlock implements EntityBlock {
     public IcestoneStairsBlock(Supplier<BlockState> state, Properties properties) {
         super(state, properties);
     }
 
+    @Nullable
     @Override
-    public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-        super.onPlace(state, worldIn, pos, oldState, isMoving);
-        worldIn.scheduleTick(pos, this, 10);
+    public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+        return new IcestoneBlockEntity(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> GameEventListener getListener(@Nonnull ServerLevel level, @Nonnull T blockEntity) {
+        return blockEntity instanceof IcestoneBlockEntity icestoneBlockEntity ? icestoneBlockEntity.getListener() : null;
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> blockEntityType) {
+        return null;
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
-        super.tick(state, worldIn, pos, random);
-        this.freezeBlocks(worldIn, pos, state, FreezingBlock.SQRT_8);
-        worldIn.scheduleTick(pos, this, 10);
+    public boolean triggerEvent(@Nonnull BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, int id, int param) {
+        super.triggerEvent(state, level, pos, id, param);
+        BlockEntity blockentity = level.getBlockEntity(pos);
+        return blockentity != null && blockentity.triggerEvent(id, param);
+    }
+
+    @Nullable
+    @Override
+    public MenuProvider getMenuProvider(@Nonnull BlockState state, Level level, @Nonnull BlockPos pos) {
+        BlockEntity blockentity = level.getBlockEntity(pos);
+        return blockentity instanceof MenuProvider ? (MenuProvider)blockentity : null;
     }
 }

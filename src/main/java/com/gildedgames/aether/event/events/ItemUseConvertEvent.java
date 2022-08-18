@@ -11,7 +11,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
 
 @Cancelable
-public class SwetBallConvertEvent extends PlayerEvent {
+public class ItemUseConvertEvent extends PlayerEvent {
 	private final LevelAccessor world;
 	private final BlockPos pos;
 	private final ItemStack itemStack;
@@ -20,7 +20,7 @@ public class SwetBallConvertEvent extends PlayerEvent {
 	@Nonnull
 	private BlockState newBlockState;
 
-	public SwetBallConvertEvent(Player player, LevelAccessor world, BlockPos pos, ItemStack itemStack, @Nonnull BlockState oldBlockState, @Nonnull BlockState newBlockState) {
+	public ItemUseConvertEvent(Player player, LevelAccessor world, BlockPos pos, ItemStack itemStack, @Nonnull BlockState oldBlockState, @Nonnull BlockState newBlockState) {
 		super(player);
 		this.world = world;
 		this.pos = pos;

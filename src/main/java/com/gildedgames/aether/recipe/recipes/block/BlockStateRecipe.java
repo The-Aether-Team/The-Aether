@@ -1,4 +1,4 @@
-package com.gildedgames.aether.recipe.recipes;
+package com.gildedgames.aether.recipe.recipes.block;
 
 import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.BlockStateIngredient;

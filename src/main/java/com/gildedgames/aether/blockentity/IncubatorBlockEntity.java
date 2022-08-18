@@ -8,7 +8,7 @@ import com.gildedgames.aether.inventory.menu.IncubatorMenu;
 
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
-import com.gildedgames.aether.recipe.recipes.IncubationRecipe;
+import com.gildedgames.aether.recipe.recipes.item.IncubationRecipe;
 import com.google.common.collect.Maps;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.*;

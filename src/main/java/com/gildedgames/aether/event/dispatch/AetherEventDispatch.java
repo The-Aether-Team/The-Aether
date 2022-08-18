@@ -50,8 +50,8 @@ public class AetherEventDispatch {
 		return event;
 	}
 
-	public static SwetBallConvertEvent onSwetBallConvert(Player player, LevelAccessor world, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState) {
-		SwetBallConvertEvent event = new SwetBallConvertEvent(player, world, pos, stack, oldState, newState);
+	public static ItemUseConvertEvent onItemUseConvert(Player player, LevelAccessor world, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState) {
+		ItemUseConvertEvent event = new ItemUseConvertEvent(player, world, pos, stack, oldState, newState);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}

@@ -40,15 +40,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         this.dissolve();
         if (this.pairs.length != 0) {
             for (BlockPropertyPair pair : this.pairs) {
-                if (state.is(pair.block())) {
-                    Map<Property<?>, Comparable<?>> propertiesForBlock = pair.properties();
-                    if (!propertiesForBlock.isEmpty()) {
-                        HashSet<Map.Entry<Property<?>, Comparable<?>>> stateProperties = Sets.newHashSet();
-                        stateProperties.addAll(state.getValues().entrySet());
-                        return stateProperties.containsAll(propertiesForBlock.entrySet());
-                    }
-                    return true;
-                }
+                return pair.matches(state);
             }
         }
         return false;

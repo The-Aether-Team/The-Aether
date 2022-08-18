@@ -3,6 +3,7 @@ package com.gildedgames.aether;
 import com.gildedgames.aether.advancement.AetherAdvancementTriggers;
 import com.gildedgames.aether.api.AetherDungeonTypes;
 import com.gildedgames.aether.api.AetherMoaTypes;
+import com.gildedgames.aether.block.dispenser.DispenseUsableItemBehavior;
 import com.gildedgames.aether.blockentity.AetherBlockEntityTypes;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.block.AetherCauldronInteractions;
@@ -18,6 +19,7 @@ import com.gildedgames.aether.data.generators.tags.*;
 import com.gildedgames.aether.data.resources.*;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
+import com.gildedgames.aether.event.AetherGameEvents;
 import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
 import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
 import com.gildedgames.aether.item.AetherItems;
@@ -116,6 +118,7 @@ public class Aether
                 AetherLootConditions.LOOT_CONDITION_TYPES,
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherSoundEvents.SOUNDS,
+                AetherGameEvents.GAME_EVENTS,
                 AetherDungeonTypes.DUNGEON_TYPES,
                 AetherMoaTypes.MOA_TYPES
         };
@@ -249,8 +252,8 @@ public class Aether
         DispenserBlock.registerBehavior(AetherItems.HAMMER_OF_NOTCH.get(), AetherDispenseBehaviors.DISPENSE_NOTCH_HAMMER_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.SKYROOT_WATER_BUCKET.get(), AetherDispenseBehaviors.SKYROOT_BUCKET_DISPENSE_BEHAVIOR);
 		DispenserBlock.registerBehavior(AetherItems.SKYROOT_BUCKET.get(), AetherDispenseBehaviors.SKYROOT_BUCKET_PICKUP_BEHAVIOR);
-        DispenserBlock.registerBehavior(AetherItems.AMBROSIUM_SHARD.get(), AetherDispenseBehaviors.DISPENSE_AMBROSIUM_BEHAVIOR);
-        DispenserBlock.registerBehavior(AetherItems.SWET_BALL.get(), AetherDispenseBehaviors.DISPENSE_SWET_BALL_BEHAVIOR);
+        DispenserBlock.registerBehavior(AetherItems.AMBROSIUM_SHARD.get(), new DispenseUsableItemBehavior<>(AetherRecipeTypes.AMBROSIUM_ENCHANTING.get()));
+        DispenserBlock.registerBehavior(AetherItems.SWET_BALL.get(), new DispenseUsableItemBehavior<>(AetherRecipeTypes.SWET_BALL_CONVERSION.get()));
     }
 
     private void registerCauldronInteractions() {

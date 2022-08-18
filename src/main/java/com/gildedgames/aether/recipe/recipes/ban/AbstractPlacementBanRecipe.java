@@ -1,4 +1,4 @@
-package com.gildedgames.aether.recipe.recipes;
+package com.gildedgames.aether.recipe.recipes.ban;
 
 import com.gildedgames.aether.recipe.BlockStateIngredient;
 import net.minecraft.core.BlockPos;
