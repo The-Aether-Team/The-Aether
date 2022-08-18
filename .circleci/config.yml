@@ -15,16 +15,6 @@ jobs:
       _JAVA_OPTIONS: -Xmx3200m
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     steps:
-      - run: 
-          name: Assess source
-          command: |
-            echo << pipeline.project.git_url >>
-            echo << pipeline.git.branch >>
-            echo ${CIRCLE_BRANCH} 
-            echo ${CIRCLE_BUILD_URL} 
-            echo ${CIRCLE_PR_REPONAME} 
-            echo ${CIRCLE_PROJECT_REPONAME} 
-            echo ${CIRCLE_REPOSITORY_URL} 
       - checkout
       - restore_cache:
           keys:
