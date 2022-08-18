@@ -24,13 +24,14 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -45,17 +46,24 @@ public class SunSpirit extends Monster implements BossMob {
     public static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
 
-    /** The sun spirit will return here when not in a fight. */
-    private BlockPos originPos;
     /** Boss health bar manager */
     private final ServerBossEvent bossFight;
+    /** The sun spirit will return here when not in a fight. */
+    private BlockPos originPos;
+
+    private int xMax;
+    private int zMax;
+
+    private float moveRot = 0;
+    private float velocity;
 
     public SunSpirit(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
-        this.bossFight.setVisible(false);
+        this.bossFight.setVisible(true);
         this.xpReward = XP_REWARD_BOSS;
         this.setNoGravity(true);
+        this.noPhysics = true;
     }
 
     /**
@@ -74,6 +82,8 @@ public class SunSpirit extends Monster implements BossMob {
         super.registerGoals();
         this.goalSelector.addGoal(0, new DoNothingGoal(this));
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 48.0F));
+        this.goalSelector.addGoal(2, new ShootFireballGoal(this));
+        this.goalSelector.addGoal(3, new SummonFireGoal(this));
     }
 
     public static AttributeSupplier.Builder createSunSpiritAttributes() {
@@ -120,6 +130,17 @@ public class SunSpirit extends Monster implements BossMob {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.setFrozen(this.hurtTime > 0);
+
+        /*this.velocity = 0.5F - (this.getHealth() / 350F);
+        if (this.getX() >= this.originPos.getX() + this.xMax || this.getX() <= this.originPos.getX() - this.xMax) {
+            this.moveRot = 360 - this.moveRot;
+        }
+        if (this.getZ() >= this.originPos.getZ() + this.zMax || this.getZ() <= this.originPos.getZ() - this.zMax) {
+            this.moveRot = 180 - this.moveRot;
+        }
+        this.moveRot = Mth.wrapDegrees(this.moveRot);
+
+        this.setDeltaMovement(Mth.sin(moveRot) * this.velocity, 0, Mth.cos(moveRot) * this.velocity);*/
     }
 
     /**
@@ -248,7 +269,7 @@ public class SunSpirit extends Monster implements BossMob {
      */
     public static class FlyAroundGoal extends Goal {
 
-        public FlyAroundGoal() {
+        public FlyAroundGoal(SunSpirit sunSpirit) {
             this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
@@ -261,7 +282,7 @@ public class SunSpirit extends Monster implements BossMob {
     /**
      * The sun spirit will stay at its origin point when not in a boss fight.
      */
-    private static class DoNothingGoal extends Goal {
+    public static class DoNothingGoal extends Goal {
         private final SunSpirit sunSpirit;
         public DoNothingGoal(SunSpirit sunSpirit) {
             this.sunSpirit = sunSpirit;
@@ -282,28 +303,61 @@ public class SunSpirit extends Monster implements BossMob {
         }
     }
 
-    public static class SunSpiritMoveControl extends MoveControl {
-        private float yRot = 0;
-        public SunSpiritMoveControl(Mob pMob) {
-            super(pMob);
-        }
+    /**
+     * This goal makes the sun spirit shoot fire crystals and ice crystals randomly. It shoots more crystals as
+     * its health gets lower.
+     */
+    public static class ShootFireballGoal extends Goal {
+        private SunSpirit sunSpirit;
+        private int shootInterval;
 
-        public void setDirection(float pYRot) {
-            this.yRot = pYRot;
-        }
-
-        public void setWantedMovement(double pSpeed) {
-            this.speedModifier = pSpeed;
-            this.operation = Operation.STRAFE;
+        public ShootFireballGoal(SunSpirit sunSpirit) {
+            this.sunSpirit = sunSpirit;
+            this.shootInterval = (int) (55 + sunSpirit.getHealth() / 2);
+            this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
         @Override
-        public void tick() {
-            if (this.operation == Operation.STRAFE) {
+        public boolean canUse() {
+            return this.sunSpirit.isBossFight() && --this.shootInterval <= 0;
+        }
 
-            } else {
-                super.tick();
+        @Override
+        public void start() {
+            //TODO: Shoot projectiles
+            this.shootInterval = (int) (55 + sunSpirit.getHealth() / 2);
+        }
+    }
+
+    /**
+     * Randomly places fire around the sun spirit
+     */
+    public static class SummonFireGoal extends Goal {
+        private SunSpirit sunSpirit;
+        private int shootInterval;
+
+        public SummonFireGoal(SunSpirit sunSpirit) {
+            this.sunSpirit = sunSpirit;
+            this.shootInterval = 0;
+            this.setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            return ++this.shootInterval >= 40;
+        }
+
+        @Override
+        public void start() {
+            BlockPos pos = new BlockPos(this.sunSpirit.getX(), this.sunSpirit.getY(), this.sunSpirit.getZ());
+            for (int i = 0; i <= 3; i++) {
+                if (this.sunSpirit.level.isEmptyBlock(pos) && !this.sunSpirit.level.isEmptyBlock(pos.below())) {
+                    this.sunSpirit.level.setBlock(pos, Blocks.FIRE.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+                    break;
+                }
+                pos = pos.below();
             }
+            this.shootInterval = 0;
         }
     }
 }
