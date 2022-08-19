@@ -1,6 +1,8 @@
 {
     "pack": {
         "description": "Aether Resources",
-        "pack_format": 10
+        "pack_format": 10,
+        "forge:resource_pack_format": 10,
+        "forge:data_pack_format": 10
     }
 }

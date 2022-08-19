@@ -39,6 +39,7 @@ import com.gildedgames.aether.api.TriviaGenerator;
 import com.gildedgames.aether.world.structure.AetherStructureTypes;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.gildedgames.aether.world.treedecorator.AetherTreeDecoratorTypes;
+import com.mojang.logging.LogUtils;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -73,8 +74,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.resource.PathPackResources;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 
 import java.nio.file.Path;
@@ -85,7 +85,7 @@ import java.util.List;
 public class Aether
 {
     public static final String MODID = "aether";
-    public static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
     public static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve("aether");
 
     public static TriviaGenerator TRIVIA_READER;

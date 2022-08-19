@@ -8,15 +8,16 @@ version = "${file.jarVersion}"
 displayName = "The Aether"
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/the-aether"
 logoFile = "aether.png"
-credits = "Credits go to Gilded Games for maintaining the Aether mod, the Aether Collaboration Team (Kingbdogz, Shockah, Kodaichi, Flan, and 303) for creating the original Aether mod, Modding Legacy (115kino, KingPhygieBoo, and Lachney) for originally porting and developing the mod in newer versions, and GitHub contributors for their help throughout development. Credit goes to C4 as well for Curios API, the source code of which can be found at https://github.com/TheIllusiveC4/Curios"
+credits = "Gilded Games for maintaining the Aether mod, the Aether Collaboration Team (Kingbdogz, Shockah, Kodaichi, Flan, and 303) for creating the original Aether mod, Modding Legacy (115kino, KingPhygieBoo, and Lachney) for originally porting and developing the mod in newer versions, and GitHub contributors for their help throughout development, as well as C4 for Curios API, the source code of which can be found at https://github.com/TheIllusiveC4/Curios"
 authors = "bconlon, Burning Cactus, Drullkus, Hugo Payn, Jaryt, Oscar Payn, quek, Raptor, reetam"
 description = '''
-    Gilded Games presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer. The Aether is a dimension of floating islands high in the sky. Ascend through a Glowstone portal and begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons!'''
+    Gilded Games presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer. The Aether is a dimension of floating islands high in the sky. Ascend through a Glowstone portal and begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons!
+    '''
 
 [[dependencies.aether]]
     modId = "forge"
     mandatory = true
-    versionRange = "[43.0.19,)"
+    versionRange = "[43.1.1,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.aether]]
