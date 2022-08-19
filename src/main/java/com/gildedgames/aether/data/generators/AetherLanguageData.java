@@ -1040,8 +1040,11 @@ public class AetherLanguageData extends AetherLanguageProvider
         addClientConfig("gui", "align_aether_menu_elements_left", "Aligns the elements of the Aether menu to the left, only works if 'Align menu left with world preview' is set to false");
         addClientConfig("gui", "enable_trivia", "Adds random trivia and tips to the bottom of loading screens");
 
-        addClientConfig("audio", "disable_aether_menu_music", "Disables the Aether's menu music in case another mod implements its own");
-        addClientConfig("audio", "disable_vanilla_world_preview_menu_music", "Disables the menu music on the vanilla world preview menu");
-        addClientConfig("audio", "disable_aether_world_preview_menu_music", "Disables the menu music on the Aether world preview menu");
+        addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
+        addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
+        addClientConfig("audio", "disable_music_manager", "Disables the Aether's internal music manager, if true, this overrides all other audio configs");
+        addClientConfig("audio", "disable_aether_menu_music", "Disables the Aether's menu music in case another mod implements its own, only works if 'Disables Aether music manager' is false");
+        addClientConfig("audio", "disable_vanilla_world_preview_menu_music", "Disables the menu music on the vanilla world preview menu, only works if 'Disables Aether music manager' is false");
+        addClientConfig("audio", "disable_aether_world_preview_menu_music", "Disables the menu music on the Aether world preview menu, only works if 'Disables Aether music manager' is false");
     }
 }
