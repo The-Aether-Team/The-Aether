@@ -25,8 +25,8 @@ public class AetherCustomizationsScreen extends Screen
     private final Screen lastScreen;
     private final CustomizationsOptions customizations = CustomizationsOptions.INSTANCE;
 
-    public static final ResourceLocation SAVE_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/config/save_button.png");
-    public static final ResourceLocation UNDO_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/config/undo_button.png");
+    public static final ResourceLocation SAVE_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/save_button.png");
+    public static final ResourceLocation UNDO_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/undo_button.png");
 
     public AetherCustomizationsScreen(Screen screen) {
         super(Component.translatable("gui.aether.customization.title"));
