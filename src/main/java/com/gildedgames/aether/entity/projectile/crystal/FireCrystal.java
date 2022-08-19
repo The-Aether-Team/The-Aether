@@ -1,5 +1,6 @@
 package com.gildedgames.aether.entity.projectile.crystal;
 
+import com.gildedgames.aether.entity.AetherEntityTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
@@ -19,8 +20,8 @@ public class FireCrystal extends AbstractCrystal {
     /**
      * @param shooter - The entity that created this projectile
      */
-    public FireCrystal(EntityType<? extends FireCrystal> entityType, Level level, Entity shooter) {
-        this(entityType, level);
+    public FireCrystal(Level level, Entity shooter) {
+        this(AetherEntityTypes.FIRE_CRYSTAL.get(), level);
         this.setOwner(shooter);
         this.setPos(shooter.getX(), shooter.getY(), shooter.getZ());
     }

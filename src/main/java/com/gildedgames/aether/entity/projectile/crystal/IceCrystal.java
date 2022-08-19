@@ -1,6 +1,7 @@
 package com.gildedgames.aether.entity.projectile.crystal;
 
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
+import com.gildedgames.aether.entity.AetherEntityTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -21,8 +22,8 @@ public class IceCrystal extends AbstractCrystal {
     /**
      * @param shooter - The entity that created this projectile
      */
-    public IceCrystal(EntityType<? extends IceCrystal> entityType, Level level, Entity shooter) {
-        this(entityType, level);
+    public IceCrystal(Level level, Entity shooter) {
+        this(AetherEntityTypes.ICE_CRYSTAL.get(), level);
         this.setOwner(shooter);
         this.setPos(shooter.getX(), shooter.getY(), shooter.getZ());
         this.setDeltaMovement((0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1)) / 3,

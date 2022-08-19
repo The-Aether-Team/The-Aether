@@ -1,7 +1,11 @@
 package com.gildedgames.aether.entity.monster.dungeon;
 
+import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.capability.AetherCapabilities;
+import com.gildedgames.aether.entity.projectile.crystal.AbstractCrystal;
+import com.gildedgames.aether.entity.projectile.crystal.FireCrystal;
+import com.gildedgames.aether.entity.projectile.crystal.IceCrystal;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.BossInfoPacket;
 import com.gildedgames.aether.api.BossNameGenerator;
@@ -310,6 +314,7 @@ public class SunSpirit extends Monster implements BossMob {
     public static class ShootFireballGoal extends Goal {
         private SunSpirit sunSpirit;
         private int shootInterval;
+        private int crystalCount = 3;
 
         public ShootFireballGoal(SunSpirit sunSpirit) {
             this.sunSpirit = sunSpirit;
@@ -324,13 +329,20 @@ public class SunSpirit extends Monster implements BossMob {
 
         @Override
         public void start() {
-            //TODO: Shoot projectiles
+            AbstractCrystal crystal;
+            if (--this.crystalCount <= 0) {
+                crystal = new IceCrystal(this.sunSpirit.level, this.sunSpirit);
+                this.crystalCount = 3 + this.sunSpirit.random.nextInt(3);
+            } else {
+                crystal = new FireCrystal(this.sunSpirit.level, this.sunSpirit);
+            }
+            this.sunSpirit.level.addFreshEntity(crystal);
             this.shootInterval = (int) (55 + sunSpirit.getHealth() / 2);
         }
     }
 
     /**
-     * Randomly places fire around the sun spirit
+     * Randomly places fire below the sun spirit
      */
     public static class SummonFireGoal extends Goal {
         private SunSpirit sunSpirit;
