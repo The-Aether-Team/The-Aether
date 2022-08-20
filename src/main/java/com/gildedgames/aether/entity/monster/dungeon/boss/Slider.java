@@ -2,18 +2,24 @@ package com.gildedgames.aether.entity.monster.dungeon.boss;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.api.BossNameGenerator;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.BossInfoPacket;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -25,6 +31,7 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
@@ -36,7 +43,6 @@ import java.util.EnumSet;
 
 public class Slider extends Mob implements BossMob, Enemy {
     public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
-    public static final EntityDataAccessor<Boolean> DATA_CRITICAL_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.COMPONENT);
 
     private final ServerBossEvent bossFight;
@@ -48,6 +54,16 @@ public class Slider extends Mob implements BossMob, Enemy {
         this.xpReward = XP_REWARD_BOSS;
         this.setRot(0, 0);
         //this.moveControl = new SliderMoveControl(this);
+    }
+
+    /**
+     * Generates a name for the boss.
+     */
+    @Override
+    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+        SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+        this.setBossName(BossNameGenerator.generateSliderName());
+        return data;
     }
 
     @Override
@@ -65,7 +81,7 @@ public class Slider extends Mob implements BossMob, Enemy {
     public static AttributeSupplier.Builder createSliderAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
-                .add(Attributes.MAX_HEALTH, 100.0D)
+                .add(Attributes.MAX_HEALTH, 500.0D)
                 .add(Attributes.ATTACK_DAMAGE, 0.1D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D);
     }
@@ -74,14 +90,13 @@ public class Slider extends Mob implements BossMob, Enemy {
     public void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_AWAKE_ID, false);
-        this.entityData.define(DATA_CRITICAL_ID, false);
         this.entityData.define(DATA_BOSS_NAME_ID, Component.literal("Slider"));
     }
 
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
-        this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
+        this.bossFight.setProgress(this.getHealth() / this.getMaxHealth()); //todo doesnt always refresh to 0 on the boss's death.
     }
 
     @Override
@@ -91,9 +106,6 @@ public class Slider extends Mob implements BossMob, Enemy {
                 if (!this.isBossFight()) {
                     this.setAwake(true);
                     this.setBossFight(true);
-                }
-                if (this.getHealth() - amount <= this.getMaxHealth() / 2.0) {
-                    this.setCritical(true);
                 }
             }
         }
@@ -105,26 +117,20 @@ public class Slider extends Mob implements BossMob, Enemy {
      * to view its associated boss bar.
      */
     @Override
-    public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
-        super.startSeenByPlayer(pPlayer);
-        AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
-        this.bossFight.addPlayer(pPlayer);
+    public void startSeenByPlayer(@Nonnull ServerPlayer player) {
+        super.startSeenByPlayer(player);
+        AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), player);
+        this.bossFight.addPlayer(player);
     }
 
     /**
      * Removes the given player from the list of players tracking this entity.
      */
     @Override
-    public void stopSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
-        super.stopSeenByPlayer(pPlayer);
-        AetherPacketHandler.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId()), pPlayer);
-        this.bossFight.removePlayer(pPlayer);
-    }
-
-    @Override
-    public void setCustomName(@Nullable Component pName) {
-        super.setCustomName(pName);
-        this.setBossName(pName);
+    public void stopSeenByPlayer(@Nonnull ServerPlayer player) {
+        super.stopSeenByPlayer(player);
+        AetherPacketHandler.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId()), player);
+        this.bossFight.removePlayer(player);
     }
 
     public boolean isAwake() {
@@ -133,14 +139,6 @@ public class Slider extends Mob implements BossMob, Enemy {
 
     public void setAwake(boolean ready) {
         this.entityData.set(DATA_AWAKE_ID, ready);
-    }
-
-    public boolean isCritical() {
-        return this.entityData.get(DATA_CRITICAL_ID);
-    }
-
-    public void setCritical(boolean ready) {
-        this.entityData.set(DATA_CRITICAL_ID, ready);
     }
 
     @Override
@@ -164,13 +162,57 @@ public class Slider extends Mob implements BossMob, Enemy {
         this.bossFight.setVisible(isFighting);
     }
 
-    public boolean canAttack(LivingEntity pTarget) {
-        return pTarget.canBeSeenAsEnemy();
+    public boolean isCritical() {
+        return this.getHealth() <= 80;
     }
 
-    // Max amount of time the Slider will rest between slides
-    public int getMovementPause() {
-        return 30;
+//    // Max amount of time the Slider will rest between slides
+//    public int getMovementPause() {
+//        return 30;
+//    }
+
+    protected SoundEvent getAwakenSound() {
+        return AetherSoundEvents.ENTITY_SLIDER_AWAKEN.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return AetherSoundEvents.ENTITY_SLIDER_AMBIENT.get();
+    }
+
+    protected SoundEvent getCollideSound() {
+        return AetherSoundEvents.ENTITY_SLIDER_COLLIDE.get();
+    }
+
+    protected SoundEvent getMoveSound() {
+        return AetherSoundEvents.ENTITY_SLIDER_MOVE.get();
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+        return AetherSoundEvents.ENTITY_SLIDER_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return AetherSoundEvents.ENTITY_SLIDER_DEATH.get();
+    }
+
+    @Override
+    public void setCustomName(@Nullable Component name) {
+        super.setCustomName(name);
+        this.setBossName(name);
+    }
+
+    @Override
+    public boolean canAttack(LivingEntity target) {
+        return target.canBeSeenAsEnemy();
+    }
+
+    @Override
+    protected int calculateFallDamage(float distance, float damageMultiplier) {
+        return 0;
     }
 
     /**
@@ -192,201 +234,32 @@ public class Slider extends Mob implements BossMob, Enemy {
     }
 
     @Override
-    protected int calculateFallDamage(float pDistance, float pDamageMultiplier) {
-        return 0;
-    }
-
-    @Override
     public boolean isNoGravity() {
         return true;
     }
 
-//    public static class SliderAttackGoal extends Goal {
-//        private final Slider slime;
-//
-//        public SliderAttackGoal(Slider p_33648_) {
-//            this.slime = p_33648_;
-//            this.setFlags(EnumSet.of(Goal.Flag.LOOK));
-//        }
-//
-//        /**
-//         * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
-//         * method as well.
-//         */
-//        public boolean canUse() {
-//            LivingEntity livingentity = this.slime.getTarget();
-//            if (livingentity == null) {
-//                return false;
-//            } else {
-//                return this.slime.canAttack(livingentity) && this.slime.getMoveControl() instanceof SliderMoveControl;
-//            }
-//        }
-//
-//        /**
-//         * Execute a one shot task or start executing a continuous task
-//         */
-//        public void start() {
-//            super.start();
-//        }
-//
-//        /**
-//         * Returns whether an in-progress EntityAIBase should continue executing
-//         */
-//        public boolean canContinueToUse() {
-//            return true;
-//        }
-//
-//        public boolean requiresUpdateEveryTick() {
-//            return true;
-//        }
-//
-//        /**
-//         * Keep ticking a continuous task that has already been started
-//         */
-//        public void tick() {
-//            LivingEntity livingentity = this.slime.getTarget();
-//
-////            Aether.LOGGER.info(this.slime.getNavigation().getPath());
-//
-//            if (this.slime.getNavigation().isDone() && livingentity != null) {
-//                boolean pathCreated = this.slime.getNavigation().moveTo(livingentity, 1);
-//                Path path = this.slime.getNavigation().getPath();
-//
-//                if (pathCreated && path != null && this.slime.getTarget() instanceof ServerPlayer player) {
-//                    Node last = null;
-//
-//                    for (int i = 0; i < path.getNodeCount(); i++) {
-//                        Node node = path.getNode(i);
-//
-//                        if (last != null) {
-//
-//                            if (node.x != last.x) {
-//                                Node first = last.x < node.x ? last : node;
-//                                Node second = last.x > node.x ? last : node;
-//
-//                                for (int x = first.x; x <= second.x; x++) {
-//                                    this.slime.level.setBlock(new BlockPos(x, first.y, first.z), Blocks.DANDELION.defaultBlockState(), 3);
-//                                }
-//                            }
-//
-//                            if (node.z != last.z) {
-//                                Node first = last.z < node.z ? last : node;
-//                                Node second = last.z > node.z ? last : node;
-//
-//                                for (int z = first.z; z <= second.z; z++) {
-//                                    this.slime.level.setBlock(new BlockPos(first.x, first.y, z), Blocks.POPPY.defaultBlockState(), 3);
-//                                }
-//                            }
-//
-//                            if (node.y != last.y) {
-//                                Node first = last.y < node.y ? last : node;
-//                                Node second = last.y > node.y ? last : node;
-//
-//                                for (int y = first.y; y < second.y; y++) {
-//                                    this.slime.level.setBlock(new BlockPos(first.x, y, first.z), Blocks.TRIPWIRE.defaultBlockState(), 3);
-//                                }
-//                            }
-//                        }
-//
-//                        last = node;
-//                    }
-//                }
-//            }
-//            //
-////            ((SliderEntity.SliderMoveControl) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), true);
-//        }
-//    }
-//
-//    public static class SliderAwakeGoal extends Goal {
-//        private final Slider slime;
-//
-//        public SliderAwakeGoal(Slider p_33660_) {
-//            this.slime = p_33660_;
-//            this.setFlags(EnumSet.of(Goal.Flag.MOVE));
-//        }
-//
-//        /**
-//         * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
-//         * method as well.
-//         */
-//        public boolean canUse() {
-//            return true;
-//        }
-//
-//        /**
-//         * Keep ticking a continuous task that has already been started
-//         */
-//        public void tick() {
-//            ((Slider.SliderMoveControl) this.slime.getMoveControl()).setWantedMovement(1.0D);
-//        }
-//    }
-//
-//
-//    public static class SliderMoveControl extends MoveControl {
-//        private int moveDelay;
-//        private int energyUsed;
-//        private final Slider slider;
-//        private boolean isAggressive;
-//
-//        public SliderMoveControl(Slider slider) {
-//            super(slider);
-//            this.slider = slider;
-//        }
-//
-//        public void setWantedMovement(double pSpeed) {
-//            this.speedModifier = pSpeed;
-//        }
-//
-//        public void recharge() {
-//            this.moveDelay = Math.min(this.energyUsed, this.slider.getMovementPause());
-//            this.operation = Operation.WAIT;
-//        }
-//
-//        @Override
-//        public void setWantedPosition(double pX, double pY, double pZ, double pSpeed) {
-//            this.wantedX = pX;
-//            this.wantedY = pY;
-//            this.wantedZ = pZ;
-//            this.speedModifier = pSpeed;
-//        }
-//
-//        public float getAxisMovement(double cur, double target) {
-//            double dist = Math.abs(cur - target);
-//
-//            if (dist > 0) {
-//                if (dist < this.mob.getSpeed()) {
-//                    return (float) (target - cur);
-//                }
-//
-//                return cur < target ? this.mob.getSpeed() : -this.mob.getSpeed();
-//            }
-//
-//            return 0;
-//        }
-//
-//        public void tick() {
-//            Aether.LOGGER.info(moveDelay + " " + this.operation);
-//
-//            if (this.operation != MoveControl.Operation.MOVE_TO) {
-//                this.mob.setSpeed(0.0F);
-//                this.mob.setDeltaMovement(Vec3.ZERO);
-//
-//                if (this.moveDelay > 0) {
-//                    --this.moveDelay;
-//                } else {
-//                    this.operation = MoveControl.Operation.MOVE_TO;
-//                }
-//            } else {
-//                this.mob.setSpeed((float) (this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
-//                this.energyUsed++;
-//
-//                Vec3 motion = new Vec3(
-//                        getAxisMovement(this.mob.getX(), this.getWantedX()),
-//                        getAxisMovement(this.mob.getY(), this.getWantedY()),
-//                        getAxisMovement(this.mob.getZ(), this.getWantedZ()));
-//
-//                this.mob.setDeltaMovement(motion);
-//            }
-//        }
-//    }
+    @Override
+    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
+        tag.putBoolean("BossFight", this.isBossFight());
+        tag.putBoolean("Awake", this.isAwake());
+    }
+
+    @Override
+    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.contains("BossName")) {
+            Component name = Component.Serializer.fromJson(tag.getString("BossName"));
+            if (name != null) {
+                this.setBossName(name);
+            }
+        }
+        if (tag.contains("BossFight")) {
+            this.setBossFight(tag.getBoolean("BossFight"));
+        }
+        if (tag.contains("Awake")) {
+            this.setAwake(tag.getBoolean("Awake"));
+        }
+    }
 }

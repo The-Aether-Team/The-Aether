@@ -87,7 +87,7 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.of(Sentry::new, MobCategory.MONSTER).sized(2.0F, 2.0F).clientTrackingRange(10).build("sentry"));
 
     public static final RegistryObject<EntityType<Slider>> SLIDER = ENTITY_TYPES.register("slider",
-            () -> EntityType.Builder.<Slider>of(Slider::new, MobCategory.MONSTER).sized(4.0F, 4.0F).build("slider"));
+            () -> EntityType.Builder.of(Slider::new, MobCategory.MONSTER).sized(4.0F, 4.0F).build("slider"));
 
     public static final RegistryObject<EntityType<Valkyrie>> VALKYRIE = ENTITY_TYPES.register("valkyrie",
             () -> EntityType.Builder.of(Valkyrie::new, MobCategory.MONSTER).sized(0.8F, 1.95F).clientTrackingRange(8).build("valkyrie"));

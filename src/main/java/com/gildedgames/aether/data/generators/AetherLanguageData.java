@@ -545,8 +545,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("entity", "mimic.kill", "Mimic burps");
 
         addSubtitle("entity", "slider.awaken", "Slider awakens");
+        addSubtitle("entity", "slider.ambient", "Slider drones");
         addSubtitle("entity", "slider.collide", "Slider smashes");
         addSubtitle("entity", "slider.move", "Slider slides");
+        addSubtitle("entity", "slider.hurt", "Slider hurts");
         addSubtitle("entity", "slider.death", "Slider breaks");
 
         addSubtitle("entity", "valkyrie.death", "Valkyrie dies");
@@ -592,6 +594,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("recipebook.toggleRecipes.enchantable", "Showing Enchantable");
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
         addGuiText("recipebook.toggleRecipes.incubatable", "Showing Incubatable");
+
+        addGuiText("slider.title", "the Slider");
 
         //Valkyrie dialogue
         addGuiText("valkyrie.dialog.1", "What's that? You want to fight? Aww, what a cute little human.");
