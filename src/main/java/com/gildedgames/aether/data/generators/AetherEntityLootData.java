@@ -192,6 +192,14 @@ public class AetherEntityLootData extends EntityLoot {
 
         this.add(AetherEntityTypes.FIRE_MINION.get(), LootTable.lootTable());
 
+        this.add(AetherEntityTypes.SLIDER.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(AetherItems.BRONZE_DUNGEON_KEY.get())
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+                        )
+                )
+        );
+
         this.add(AetherEntityTypes.VALKYRIE_QUEEN.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(AetherItems.SILVER_DUNGEON_KEY.get())

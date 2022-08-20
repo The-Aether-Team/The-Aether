@@ -1,4 +1,4 @@
-// 1.19.2	2022-08-14T09:50:51.8510764	Aether Item Tags
+// 1.19.2	2022-08-19T19:53:18.5197817	Aether Item Tags
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1b83b96d9600b7878597cc26851b843bf99a3dd data/aether/tags/items/accessories.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/aerbunny_temptation_items.json
@@ -38,6 +38,7 @@ df16ed8f5964fbb722ae2040903fb88c95ad2b99 data/aether/tags/items/skyroot_logs.jso
 4d0fcd44af39fa4f1950e841827bfde973be863f data/aether/tags/items/skyroot_stick.json
 2c74a7391445432be791009d340856045d38b372 data/aether/tags/items/skyroot_tools.json
 94579232723f167d86c9f8bcad000fc2f5c2f9be data/aether/tags/items/skyroot_weapons.json
+537fa364dc9ed58bc989c27575c398066f9f6739 data/aether/tags/items/slider_damaging_items.json
 aee947eef06f0e7cb5919612e691918a26dd6321 data/aether/tags/items/stone_crafting.json
 63841952d4f5d2bd2a73437601579bfaa74da9a6 data/aether/tags/items/tools/hammers.json
 191c77a1d1c9e92addf57b23f8e878c1261af5dd data/aether/tags/items/tools/lances.json
