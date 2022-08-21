@@ -17,6 +17,7 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -44,10 +45,13 @@ import java.util.EnumSet;
 public class Slider extends Mob implements BossMob, Enemy {
     public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.COMPONENT);
+    public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
+    public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_X_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
+    public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_Z_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
 
     private final ServerBossEvent bossFight;
 
-    public Slider(EntityType<? extends Mob> entityType, Level level) {
+    public Slider(EntityType<? extends Slider> entityType, Level level) {
         super(entityType, level);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
         this.bossFight.setVisible(false);
@@ -78,7 +82,7 @@ public class Slider extends Mob implements BossMob, Enemy {
 //        return new SlideNavigation(this, level);
 //    }
 
-    public static AttributeSupplier.Builder createSliderAttributes() {
+    public static AttributeSupplier.Builder createSliderAttributes() { //todo verify attributes.
         return Mob.createMobAttributes()
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.MAX_HEALTH, 500.0D)
@@ -91,6 +95,9 @@ public class Slider extends Mob implements BossMob, Enemy {
         super.defineSynchedData();
         this.entityData.define(DATA_AWAKE_ID, false);
         this.entityData.define(DATA_BOSS_NAME_ID, Component.literal("Slider"));
+        this.entityData.define(DATA_HURT_ANGLE_ID, 0.0F);
+        this.entityData.define(DATA_HURT_ANGLE_X_ID, 0.0F);
+        this.entityData.define(DATA_HURT_ANGLE_Z_ID, 0.0F);
     }
 
     @Override
@@ -101,13 +108,44 @@ public class Slider extends Mob implements BossMob, Enemy {
 
     @Override
     public boolean hurt(@Nonnull DamageSource source, float amount) {
-        if (!this.level.isClientSide && source.getEntity() instanceof LivingEntity livingEntity && livingEntity.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) {
-            if (super.hurt(source, amount) && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
-                if (!this.isBossFight()) {
-                    this.setAwake(true);
-                    this.setBossFight(true);
+        if (!this.level.isClientSide && source.getEntity() instanceof LivingEntity livingEntity && level.getDifficulty() != Difficulty.PEACEFUL) {
+            if (livingEntity.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) {
+                if (super.hurt(source, amount) && this.getHealth() > 0) {
+                    if (!this.isBossFight()) {
+                        if (this.getAwakenSound() != null) {
+                            this.level.playSound(null, this.blockPosition(), this.getAwakenSound(), SoundSource.HOSTILE, 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
+                        }
+                        //todo close door
+                        this.setAwake(true);
+                        this.setBossFight(true);
+                    }
+                    this.setDeltaMovement(this.getDeltaMovement().scale(0.75F));
+
+                    double a = Math.abs(this.position().x() - livingEntity.position().x());
+                    double c = Math.abs(this.position().z() - livingEntity.position().z());
+                    if (a > c) {
+                        this.setHurtAngleZ(1);
+                        this.setHurtAngleX(0);
+                        if (this.position().x() > livingEntity.position().x()) {
+                            this.setHurtAngleZ(-1);
+                        }
+                    } else {
+                        this.setHurtAngleX(1);
+                        this.setHurtAngleZ(0);
+                        if (this.position().z() > livingEntity.position().z()) {
+                            this.setHurtAngleX(-1);
+                        }
+                    }
+                    this.setHurtAngle(0.7F - (this.getHealth() / 875));
+                }
+            } else {
+                if (livingEntity instanceof Player player) {
+                    player.sendSystemMessage(Component.translatable("gui.aether.slider.message.attack.invalid")); //todo this text needs some delay.
+                    return false;
                 }
             }
+
+
         }
         return false;
     }
@@ -152,6 +190,30 @@ public class Slider extends Mob implements BossMob, Enemy {
         this.bossFight.setName(component);
     }
 
+    public float getHurtAngleX() {
+        return this.entityData.get(DATA_HURT_ANGLE_X_ID);
+    }
+
+    public void setHurtAngleX(float hurtAngleX) {
+        this.entityData.set(DATA_HURT_ANGLE_X_ID, hurtAngleX);
+    }
+
+    public float getHurtAngleZ() {
+        return this.entityData.get(DATA_HURT_ANGLE_Z_ID);
+    }
+
+    public void setHurtAngleZ(float hurtAngleZ) {
+        this.entityData.set(DATA_HURT_ANGLE_Z_ID, hurtAngleZ);
+    }
+
+    public float getHurtAngle() {
+        return this.entityData.get(DATA_HURT_ANGLE_ID);
+    }
+
+    public void setHurtAngle(float hurtAngle) {
+        this.entityData.set(DATA_HURT_ANGLE_ID, hurtAngle);
+    }
+
     @Override
     public boolean isBossFight() {
         return this.bossFight.isVisible();
@@ -163,7 +225,7 @@ public class Slider extends Mob implements BossMob, Enemy {
     }
 
     public boolean isCritical() {
-        return this.getHealth() <= 80;
+        return this.getHealth() <= 125;
     }
 
 //    // Max amount of time the Slider will rest between slides
@@ -224,6 +286,11 @@ public class Slider extends Mob implements BossMob, Enemy {
     }
 
     @Override
+    public boolean isNoGravity() {
+        return true;
+    }
+
+    @Override
     public boolean shouldDiscardFriction() {
         return true;
     }
@@ -234,8 +301,8 @@ public class Slider extends Mob implements BossMob, Enemy {
     }
 
     @Override
-    public boolean isNoGravity() {
-        return true;
+    public boolean displayFireAnimation() {
+        return false;
     }
 
     @Override

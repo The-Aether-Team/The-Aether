@@ -595,7 +595,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
         addGuiText("recipebook.toggleRecipes.incubatable", "Showing Incubatable");
 
+
         addGuiText("slider.title", "the Slider");
+        addGuiText("slider.message.attack.invalid", "Hmm. Perhaps I need to attack it with a Pickaxe?");
 
         //Valkyrie dialogue
         addGuiText("valkyrie.dialog.1", "What's that? You want to fight? Aww, what a cute little human.");
