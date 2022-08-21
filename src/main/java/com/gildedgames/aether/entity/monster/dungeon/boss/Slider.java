@@ -6,6 +6,7 @@ import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.BossInfoPacket;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -139,6 +140,19 @@ public class Slider extends Mob implements BossMob, Enemy {
             }
         }
         return false;
+    }
+
+    @Override
+    public void die(@Nonnull DamageSource damageSource) {
+        for (int i = 0; i < (this.getHealth() <= 0 ? 16 : 48); i++) {
+            double x = this.position().x() + (double) (this.random.nextFloat() - this.random.nextFloat()) * 1.5D;
+            double y = this.getBoundingBox().minY + 1.75D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 1.5D;
+            double z = this.position().z() + (double) (this.random.nextFloat() - this.random.nextFloat()) * 1.5D;
+            if (this.getHealth() <= 0) {
+                this.level.addParticle(ParticleTypes.POOF, x, y, z, 0.0D, 0.0D, 0.0D);
+            }
+        }
+        super.die(damageSource);
     }
 
     /**

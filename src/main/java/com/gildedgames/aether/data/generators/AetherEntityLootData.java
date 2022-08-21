@@ -198,6 +198,11 @@ public class AetherEntityLootData extends EntityLoot {
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
                         )
                 )
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(AetherBlocks.CARVED_STONE.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(7.0F, 9.0F)))
+                        )
+                )
         );
 
         this.add(AetherEntityTypes.VALKYRIE_QUEEN.get(), LootTable.lootTable()
@@ -209,7 +214,8 @@ public class AetherEntityLootData extends EntityLoot {
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(Items.GOLDEN_SWORD)
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-                        ))
+                        )
+                )
         );
 
         this.add(AetherEntityTypes.SUN_SPIRIT.get(), LootTable.lootTable()
