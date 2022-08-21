@@ -26,7 +26,7 @@ public class SliderRenderer extends MobRenderer<Slider, SliderModel> {
 
     @Override
     protected void setupRotations(@Nonnull Slider slider, @Nonnull PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
-        poseStack.mulPose(new Vector3f(slider.getHurtAngleX(), 0.0F, -slider.getHurtAngleZ()).rotationDegrees(slider.getHurtAngle() * -30.0F));
+        poseStack.mulPose(new Vector3f(slider.getHurtAngleX(), 0.0F, -slider.getHurtAngleZ()).rotationDegrees(slider.getHurtAngle() * -15.0F));
         if (slider.getHurtAngle() > 0.0) {
             slider.setHurtAngle(slider.getHurtAngle() * 0.94F);
         }

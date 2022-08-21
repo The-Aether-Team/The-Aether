@@ -337,6 +337,7 @@
   "gui.aether.recipebook.toggleRecipes.enchantable": "Showing Enchantable",
   "gui.aether.recipebook.toggleRecipes.freezable": "Showing Freezable",
   "gui.aether.recipebook.toggleRecipes.incubatable": "Showing Incubatable",
+  "gui.aether.slider.message.attack.invalid": "Hmm. Perhaps I need to attack it with a Pickaxe?",
   "gui.aether.slider.title": "the Slider",
   "gui.aether.sun_altar.time": "Time",
   "gui.aether.sun_spirit.title": "the Sun Spirit",
