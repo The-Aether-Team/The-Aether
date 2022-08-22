@@ -131,6 +131,7 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> ENTITY_CLOUD_MINION_SHOOT = register("entity.cloud_minion.shoot");
 
 	public static final RegistryObject<SoundEvent> ENTITY_CLOUD_CRYSTAL_EXPLODE = register("entity.cloud_crystal.explode");
+	public static final RegistryObject<SoundEvent> ENTITY_FIRE_CRYSTAL_EXPLODE = register("entity.fire_crystal.explode");
 	public static final RegistryObject<SoundEvent> ENTITY_ICE_CRYSTAL_EXPLODE = register("entity.ice_crystal.explode");
 
 	public static final RegistryObject<SoundEvent> ENTITY_THUNDER_CRYSTAL_EXPLODE = register("entity.thunder_crystal.explode");

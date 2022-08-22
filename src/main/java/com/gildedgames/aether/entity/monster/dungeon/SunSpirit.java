@@ -348,7 +348,7 @@ public class SunSpirit extends Monster implements BossMob {
                 crystal = new IceCrystal(this.sunSpirit.level, this.sunSpirit);
                 this.crystalCount = 3 + this.sunSpirit.random.nextInt(3);
             } else {
-                crystal = new IceCrystal(this.sunSpirit.level, this.sunSpirit);
+                crystal = new FireCrystal(this.sunSpirit.level, this.sunSpirit);
             }
             this.sunSpirit.level.addFreshEntity(crystal);
             this.shootInterval = (int) (55 + sunSpirit.getHealth() / 2);
