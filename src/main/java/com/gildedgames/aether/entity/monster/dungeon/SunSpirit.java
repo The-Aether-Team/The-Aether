@@ -147,6 +147,20 @@ public class SunSpirit extends Monster implements BossMob {
         this.setDeltaMovement(Mth.sin(moveRot) * this.velocity, 0, Mth.cos(moveRot) * this.velocity);*/
     }
 
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (source.getMsgId().equals("ice_crystal")) {
+            //Change velocity possibly?
+            boolean flag = super.hurt(source, amount);
+            if (flag && !this.level.isClientSide) {
+                FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.level);
+                this.level.addFreshEntity(minion);
+            }
+            return flag;
+        }
+        return false;
+    }
+
     /**
      * The sun spirit is immune to effects, but there is an event fired in case addons want to change that.
      */
@@ -334,7 +348,7 @@ public class SunSpirit extends Monster implements BossMob {
                 crystal = new IceCrystal(this.sunSpirit.level, this.sunSpirit);
                 this.crystalCount = 3 + this.sunSpirit.random.nextInt(3);
             } else {
-                crystal = new FireCrystal(this.sunSpirit.level, this.sunSpirit);
+                crystal = new IceCrystal(this.sunSpirit.level, this.sunSpirit);
             }
             this.sunSpirit.level.addFreshEntity(crystal);
             this.shootInterval = (int) (55 + sunSpirit.getHealth() / 2);

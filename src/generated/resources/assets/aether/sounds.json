@@ -182,6 +182,14 @@
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
+  "entity.ice_crystal.explode": {
+    "sounds": [
+      "random/glass1",
+      "random/glass2",
+      "random/glass3"
+    ],
+    "subtitle": "subtitles.entity.ice_crystal.explode"
+  },
   "entity.mimic.attack": {
     "sounds": [
       "random/eat1",
