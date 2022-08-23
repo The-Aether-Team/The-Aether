@@ -1,5 +1,6 @@
 package com.gildedgames.aether.entity.monster.dungeon;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.capability.AetherCapabilities;
@@ -20,14 +21,18 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -36,6 +41,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -55,19 +61,20 @@ public class SunSpirit extends Monster implements BossMob {
     /** The sun spirit will return here when not in a fight. */
     private BlockPos originPos;
 
-    private int xMax;
-    private int zMax;
+    private final int xMax = 11;
+    private final int zMax = 11;
 
-    private float moveRot = 0;
-    private float velocity;
+    protected double velocity;
 
     public SunSpirit(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
+        this.moveControl = new SunSpiritMoveControl(this);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
         this.bossFight.setVisible(true);
         this.xpReward = XP_REWARD_BOSS;
         this.setNoGravity(true);
         this.noPhysics = true;
+        this.velocity =  1 - this.getHealth() / 700;
     }
 
     /**
@@ -88,12 +95,13 @@ public class SunSpirit extends Monster implements BossMob {
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 48.0F));
         this.goalSelector.addGoal(2, new ShootFireballGoal(this));
         this.goalSelector.addGoal(3, new SummonFireGoal(this));
+        this.goalSelector.addGoal(4, new FlyAroundGoal(this));
     }
 
     public static AttributeSupplier.Builder createSunSpiritAttributes() {
         return AbstractValkyrie.createAttributes()
                 .add(Attributes.MAX_HEALTH, 50.0)
-                .add(Attributes.MOVEMENT_SPEED, 1.0);
+                .add(Attributes.MOVEMENT_SPEED, 0.5);
     }
 
     @Override
@@ -134,31 +142,22 @@ public class SunSpirit extends Monster implements BossMob {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.setFrozen(this.hurtTime > 0);
-
-        /*this.velocity = 0.5F - (this.getHealth() / 350F);
-        if (this.getX() >= this.originPos.getX() + this.xMax || this.getX() <= this.originPos.getX() - this.xMax) {
-            this.moveRot = 360 - this.moveRot;
-        }
-        if (this.getZ() >= this.originPos.getZ() + this.zMax || this.getZ() <= this.originPos.getZ() - this.zMax) {
-            this.moveRot = 180 - this.moveRot;
-        }
-        this.moveRot = Mth.wrapDegrees(this.moveRot);
-
-        this.setDeltaMovement(Mth.sin(moveRot) * this.velocity, 0, Mth.cos(moveRot) * this.velocity);*/
     }
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source.getMsgId().equals("ice_crystal")) {
-            //Change velocity possibly?
-            boolean flag = super.hurt(source, amount);
-            if (flag && !this.level.isClientSide) {
-                FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.level);
-                this.level.addFreshEntity(minion);
-            }
-            return flag;
+        boolean flag = super.hurt(source, amount);
+        if (flag && !this.level.isClientSide) {
+            FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.level);
+            this.level.addFreshEntity(minion);
         }
-        return false;
+        this.velocity =  1 - this.getHealth() / 700;
+        return flag;
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource source) {
+        return this.isRemoved() || source != DamageSource.OUT_OF_WORLD && !source.getMsgId().equals("ice_crystal");
     }
 
     /**
@@ -185,6 +184,15 @@ public class SunSpirit extends Monster implements BossMob {
             });
         }
         super.die(pCause);
+    }
+
+    @Override
+    @Nonnull
+    protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
+        if (!this.level.isClientSide) {
+            this.bossFight.setVisible(false);
+        }
+        return super.mobInteract(player, hand);
     }
 
     /**
@@ -283,17 +291,59 @@ public class SunSpirit extends Monster implements BossMob {
     }
 
     /**
-     * Sets the wanted position of the sun spirit during the fight.
+     * Sets the wanted movement direction of the sun spirit during the fight.
      */
     public static class FlyAroundGoal extends Goal {
+        private final SunSpirit sunSpirit;
+        private float rotation;
+        private int courseChangeTimer;
 
         public FlyAroundGoal(SunSpirit sunSpirit) {
+            this.sunSpirit = sunSpirit;
+            this.rotation = sunSpirit.random.nextFloat() * 360;
             this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
         @Override
+        public void tick() {
+            boolean changedCourse = this.outOfBounds();
+            double x = Mth.sin(rotation * Mth.PI / 180F) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.velocity;
+            double z = -Mth.cos(rotation * Mth.PI / 180F) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.velocity;
+            this.sunSpirit.setDeltaMovement(x,
+                    0,
+                    z);
+            if (changedCourse || ++this.courseChangeTimer >= 20) {
+                if (this.sunSpirit.random.nextInt(3) == 0) {
+                    this.rotation += this.sunSpirit.random.nextFloat() - this.sunSpirit.random.nextFloat() * 60;
+                }
+                this.rotation = Mth.wrapDegrees(this.rotation);
+                this.courseChangeTimer = 0;
+            }
+        }
+
+        protected boolean outOfBounds() {
+            boolean flag = false;
+            if ((this.sunSpirit.getDeltaMovement().x >= 0 && this.sunSpirit.getX() >= this.sunSpirit.originPos.getX() + this.sunSpirit.xMax) ||
+                    (this.sunSpirit.getDeltaMovement().x <= 0 && this.sunSpirit.getX() <= this.sunSpirit.originPos.getX() - this.sunSpirit.xMax)) {
+                this.rotation = 360 - this.rotation;
+                flag = true;
+            }
+            if ((this.sunSpirit.getDeltaMovement().z >= 0 && this.sunSpirit.getZ() >= this.sunSpirit.originPos.getZ() + this.sunSpirit.zMax) ||
+                    (this.sunSpirit.getDeltaMovement().z <= 0 && this.sunSpirit.getZ() <= this.sunSpirit.originPos.getZ() - this.sunSpirit.zMax)) {
+                this.rotation = 180 - this.rotation;
+                flag = true;
+            }
+            return flag;
+        }
+
+        @Override
         public boolean canUse() {
-            return false;
+            return this.sunSpirit.isBossFight();
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
         }
     }
 
@@ -317,7 +367,7 @@ public class SunSpirit extends Monster implements BossMob {
          */
         @Override
         public void start() {
-            this.sunSpirit.navigation.moveTo(this.sunSpirit.originPos.getX(), this.sunSpirit.originPos.getY(), this.sunSpirit.originPos.getZ(), 1);
+            this.sunSpirit.setPos(this.sunSpirit.originPos.getX(), this.sunSpirit.originPos.getY(), this.sunSpirit.originPos.getZ());
         }
     }
 
@@ -385,5 +435,15 @@ public class SunSpirit extends Monster implements BossMob {
             }
             this.shootInterval = 0;
         }
+    }
+
+    public static class SunSpiritMoveControl extends MoveControl {
+
+        public SunSpiritMoveControl(Mob mob) {
+            super(mob);
+        }
+
+        @Override
+        public void tick() {}
     }
 }

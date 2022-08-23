@@ -637,6 +637,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         //Sun spirit dialogue
         addGuiText("sun_spirit.title", "the Sun Spirit");
+        addGuiText("sun_spirit.dead", "Such bitter cold... is this the feeling... of pain?");
 
 
 

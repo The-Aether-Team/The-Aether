@@ -134,6 +134,15 @@
     ],
     "subtitle": "subtitles.entity.dart.hit"
   },
+  "entity.fire_crystal.explode": {
+    "sounds": [
+      "random/explode1",
+      "random/explode2",
+      "random/explode3",
+      "random/explode4"
+    ],
+    "subtitle": "subtitles.entity.fire_crystal.explode"
+  },
   "entity.flying_cow.ambient": {
     "sounds": [
       "mob/cow/say1",
