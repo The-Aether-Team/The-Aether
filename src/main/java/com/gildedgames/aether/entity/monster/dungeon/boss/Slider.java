@@ -399,7 +399,7 @@ public class Slider extends Mob implements BossMob, Enemy {
                         this.end();
                     } else {
                         if (this.velocity < 2.0) {
-                            this.velocity += this.slider.isCritical() ? 0.0325F : 0.025F;
+                            this.velocity += this.slider.isCritical() ? 0.07F : 0.035F;
                         }
                         this.slider.setDeltaMovement(Vec3.ZERO);
                         if (this.direction == Direction.UP) {
