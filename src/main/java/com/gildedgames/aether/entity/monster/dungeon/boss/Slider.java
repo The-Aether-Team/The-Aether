@@ -26,6 +26,7 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -53,6 +54,11 @@ public class Slider extends Mob implements BossMob, Enemy {
 
     private final ServerBossEvent bossFight;
     private int chatTime;
+
+    private boolean canMove;
+    private int moveDelay;
+    private float velocity;
+    private Direction direction = Direction.DOWN;
 
     public Slider(EntityType<? extends Slider> entityType, Level level) {
         super(entityType, level);
@@ -149,6 +155,19 @@ public class Slider extends Mob implements BossMob, Enemy {
     }
 
     @Override
+    protected void doPush(@Nonnull Entity entity) {
+        if (this.isAwake()) {
+            boolean attack = entity.hurt(new EntityDamageSource("crush", this), 6);
+            if (attack && entity instanceof LivingEntity livingEntity) {
+                livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.20, 0.0));
+                this.playSound(this.getCollideSound(), 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
+                this.stop();
+            }
+        }
+        super.doPush(entity);
+    }
+
+    @Override
     public void die(@Nonnull DamageSource damageSource) {
         this.explode();
         super.die(damageSource);
@@ -161,6 +180,14 @@ public class Slider extends Mob implements BossMob, Enemy {
             double z = this.position().z() + (double) (this.random.nextFloat() - this.random.nextFloat()) * 1.5;
             this.level.addParticle(ParticleTypes.POOF, x, y, z, 0.0, 0.0, 0.0);
         }
+    }
+
+    private void stop() {
+        this.canMove = false;
+        this.moveDelay = 12;
+        this.direction = Direction.UP;
+        this.velocity = 0.0F;
+        this.setDeltaMovement(Vec3.ZERO);
     }
 
     /**
@@ -358,10 +385,6 @@ public class Slider extends Mob implements BossMob, Enemy {
 
     static class SliderMoveGoal extends Goal {
         private final Slider slider;
-        private boolean canMove;
-        private int moveDelay;
-        private float velocity;
-        private Direction direction = Direction.DOWN;
 
         public SliderMoveGoal(Slider slider) {
             this.slider = slider;
@@ -385,66 +408,66 @@ public class Slider extends Mob implements BossMob, Enemy {
 
         @Override
         public void stop() {
-            this.end();
+            this.slider.stop();
             //todo set not awake?
         }
 
         public void tick() {
             if (this.slider.getTarget() != null) {
-                if (this.canMove) {
+                if (this.slider.canMove) {
                     boolean crushed = this.crushedBlocks();
                     if (crushed) {
                         this.slider.level.playSound(null, this.slider.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 3.0F, (0.625F + (this.slider.random.nextFloat() - this.slider.random.nextFloat()) * 0.2F) * 0.7F);
                         this.slider.playSound(this.slider.getCollideSound(), 2.5F, 1.0F / (this.slider.random.nextFloat() * 0.2F + 0.9F));
-                        this.end();
+                        this.slider.stop();
                     } else {
-                        if (this.velocity < 2.0) {
-                            this.velocity += this.slider.isCritical() ? 0.07F : 0.035F;
+                        if (this.slider.velocity < 2.0) {
+                            this.slider.velocity += this.slider.isCritical() ? 0.07F : 0.035F;
                         }
                         this.slider.setDeltaMovement(Vec3.ZERO);
-                        if (this.direction == Direction.UP) {
-                            this.slider.setDeltaMovement(0.0, this.velocity, 0.0);
+                        if (this.slider.direction == Direction.UP) {
+                            this.slider.setDeltaMovement(0.0, this.slider.velocity, 0.0);
                             if (this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY + 0.35) {
                                 this.stop();
-                                this.moveDelay = 8;
+                                this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
-                        } else if (this.direction == Direction.DOWN) {
-                            this.slider.setDeltaMovement(0.0, -this.velocity, 0.0);
+                        } else if (this.slider.direction == Direction.DOWN) {
+                            this.slider.setDeltaMovement(0.0, -this.slider.velocity, 0.0);
                             if (this.slider.getBoundingBox().minY < this.slider.getTarget().getBoundingBox().minY - 0.25) {
                                 this.stop();
-                                this.moveDelay = 8;
+                                this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
-                        } else if (this.direction == Direction.EAST) {
-                            this.slider.setDeltaMovement(this.velocity, 0.0, 0.0);
+                        } else if (this.slider.direction == Direction.EAST) {
+                            this.slider.setDeltaMovement(this.slider.velocity, 0.0, 0.0);
                             if (this.slider.position().x() > this.slider.getTarget().position().x() + 0.125) {
                                 this.stop();
-                                this.moveDelay = 8;
+                                this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
-                        } else if (this.direction == Direction.WEST) {
-                            this.slider.setDeltaMovement(-this.velocity, 0.0, 0.0);
+                        } else if (this.slider.direction == Direction.WEST) {
+                            this.slider.setDeltaMovement(-this.slider.velocity, 0.0, 0.0);
                             if (this.slider.position().x() < this.slider.getTarget().position().x() - 0.125) {
                                 this.stop();
-                                this.moveDelay = 8;
+                                this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
-                        } else if (this.direction == Direction.SOUTH) {
-                            this.slider.setDeltaMovement(0.0, 0.0, this.velocity);
+                        } else if (this.slider.direction == Direction.SOUTH) {
+                            this.slider.setDeltaMovement(0.0, 0.0, this.slider.velocity);
                             if (this.slider.position().z() > this.slider.getTarget().position().z() + 0.125) {
                                 this.stop();
-                                this.moveDelay = 8;
+                                this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
-                        } else if (this.direction == Direction.NORTH) {
-                            this.slider.setDeltaMovement(0.0, 0.0, -this.velocity);
+                        } else if (this.slider.direction == Direction.NORTH) {
+                            this.slider.setDeltaMovement(0.0, 0.0, -this.slider.velocity);
                             if (this.slider.position().z() < this.slider.getTarget().position().z() - 0.125) {
                                 this.stop();
-                                this.moveDelay = 8;
+                                this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         }
                     }
                 } else {
-                    if (this.moveDelay > 0) {
-                        --this.moveDelay;
+                    if (this.slider.moveDelay > 0) {
+                        --this.slider.moveDelay;
                         if (this.slider.isCritical() && this.slider.random.nextInt(2) == 0) {
-                            --this.moveDelay;
+                            --this.slider.moveDelay;
                         }
                         this.slider.setDeltaMovement(Vec3.ZERO);
                     } else {
@@ -452,66 +475,58 @@ public class Slider extends Mob implements BossMob, Enemy {
                         double yDiff = Math.abs(this.slider.getBoundingBox().minY - this.slider.getTarget().getBoundingBox().minY);
                         double zDiff = Math.abs(this.slider.position().z() - this.slider.getTarget().position().z());
                         if (xDiff > zDiff) {
-                            this.direction = Direction.EAST;
+                            this.slider.direction = Direction.EAST;
                             if (this.slider.position().x() > this.slider.getTarget().position().x()) {
-                                this.direction = Direction.WEST;
+                                this.slider.direction = Direction.WEST;
                             }
                         } else {
-                            this.direction = Direction.SOUTH;
+                            this.slider.direction = Direction.SOUTH;
                             if (this.slider.position().z() > this.slider.getTarget().position().z()) {
-                                this.direction = Direction.NORTH;
+                                this.slider.direction = Direction.NORTH;
                             }
                         }
 
                         //todo theres something up here with how this is setup and it may be the root of the stuck bug
                         //todo may need to make use of the collision check here to make better behavior for the slider's movement to get unstuck and account for verticality
                         if (yDiff > xDiff && yDiff > zDiff || yDiff > 0.25D && this.slider.random.nextInt(5) == 0) {
-                            this.direction = Direction.UP;
+                            this.slider.direction = Direction.UP;
                             if (this.slider.position().y() > this.slider.getTarget().position().y()) {
-                                this.direction = Direction.DOWN;
+                                this.slider.direction = Direction.DOWN;
                             }
                         }
                         this.slider.playSound(this.slider.getMoveSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
-                        this.canMove = true;
+                        this.slider.canMove = true;
                     }
                 }
             } else {
-                this.end();
+                this.slider.stop();
             }
         }
 
-        private void end() {
-            this.canMove = false;
-            this.moveDelay = 12;
-            this.direction = Direction.UP;
-            this.velocity = 0.0F;
-            this.slider.setDeltaMovement(Vec3.ZERO);
-        }
-
         public boolean crushedBlocks() {
-            Aether.LOGGER.info(this.direction);
+            Aether.LOGGER.info(this.slider.direction);
             AABB entity = this.slider.getBoundingBox();
-            if (this.direction == Direction.UP) {
+            if (this.slider.direction == Direction.UP) {
                 BlockPos min = new BlockPos(entity.minX, entity.maxY, entity.minZ);
                 BlockPos max = new BlockPos(Math.ceil(entity.maxX - 1), entity.maxY, Math.ceil(entity.maxZ - 1));
                 return crush(min, max);
-            } else if (this.direction == Direction.DOWN) {
+            } else if (this.slider.direction == Direction.DOWN) {
                 BlockPos min = new BlockPos(entity.minX, entity.minY - 1, entity.minZ);
                 BlockPos max = new BlockPos(Math.ceil(entity.maxX - 1), entity.minY - 1, Math.ceil(entity.maxZ - 1));
                 return crush(min, max);
-            } else if (this.direction == Direction.EAST) {
+            } else if (this.slider.direction == Direction.EAST) {
                 BlockPos min = new BlockPos(entity.maxX, entity.minY, entity.minZ);
                 BlockPos max = new BlockPos(entity.maxX, Math.ceil(entity.maxY - 1), Math.ceil(entity.maxZ - 1));
                 return crush(min, max);
-            } else if (this.direction == Direction.WEST) {
+            } else if (this.slider.direction == Direction.WEST) {
                 BlockPos min = new BlockPos(entity.minX - 1, entity.minY, entity.minZ);
                 BlockPos max = new BlockPos(entity.minX - 1, Math.ceil(entity.maxY - 1), Math.ceil(entity.maxZ - 1));
                 return crush(min, max);
-            } else if (this.direction == Direction.SOUTH) {
+            } else if (this.slider.direction == Direction.SOUTH) {
                 BlockPos min = new BlockPos(entity.minX, entity.minY, entity.maxZ);
                 BlockPos max = new BlockPos(Math.ceil(entity.maxX - 1), Math.ceil(entity.maxY - 1), entity.maxZ);
                 return crush(min, max);
-            } else if (this.direction == Direction.NORTH) {
+            } else if (this.slider.direction == Direction.NORTH) {
                 BlockPos min = new BlockPos(entity.minX, entity.minY, entity.minZ - 1);
                 BlockPos max = new BlockPos(Math.ceil(entity.maxX - 1), Math.ceil(entity.maxY - 1), entity.minZ - 1);
                 return crush(min, max);
