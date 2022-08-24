@@ -546,37 +546,42 @@ public class Slider extends Mob implements BossMob, Enemy {
         private boolean crushedBlocks() {
             Aether.LOGGER.info(this.slider.direction);
             AABB entity = this.slider.getBoundingBox();
+            BlockPos minInside = new BlockPos(entity.minX, entity.minY, entity.minZ);
+            BlockPos maxInside = new BlockPos(Math.ceil(entity.maxX - 1), Math.ceil(entity.maxY - 1), Math.ceil(entity.maxZ - 1));
+            if (this.crush(minInside, maxInside, true)) {
+                return true;
+            }
             if (this.slider.direction == Direction.UP) {
                 BlockPos min = new BlockPos(entity.minX, entity.maxY, entity.minZ);
                 BlockPos max = new BlockPos(Math.ceil(entity.maxX - 1), entity.maxY, Math.ceil(entity.maxZ - 1));
-                return crush(min, max);
+                return this.crush(min, max, false);
             } else if (this.slider.direction == Direction.DOWN) {
                 BlockPos min = new BlockPos(entity.minX, entity.minY - 1, entity.minZ);
                 BlockPos max = new BlockPos(Math.ceil(entity.maxX - 1), entity.minY - 1, Math.ceil(entity.maxZ - 1));
-                return crush(min, max);
+                return this.crush(min, max, false);
             } else if (this.slider.direction == Direction.EAST) {
                 BlockPos min = new BlockPos(entity.maxX, entity.minY, entity.minZ);
                 BlockPos max = new BlockPos(entity.maxX, Math.ceil(entity.maxY - 1), Math.ceil(entity.maxZ - 1));
-                return crush(min, max);
+                return this.crush(min, max, false);
             } else if (this.slider.direction == Direction.WEST) {
                 BlockPos min = new BlockPos(entity.minX - 1, entity.minY, entity.minZ);
                 BlockPos max = new BlockPos(entity.minX - 1, Math.ceil(entity.maxY - 1), Math.ceil(entity.maxZ - 1));
-                return crush(min, max);
+                return this.crush(min, max, false);
             } else if (this.slider.direction == Direction.SOUTH) {
                 BlockPos min = new BlockPos(entity.minX, entity.minY, entity.maxZ);
                 BlockPos max = new BlockPos(Math.ceil(entity.maxX - 1), Math.ceil(entity.maxY - 1), entity.maxZ);
-                return crush(min, max);
+                return this.crush(min, max, false);
             } else if (this.slider.direction == Direction.NORTH) {
                 BlockPos min = new BlockPos(entity.minX, entity.minY, entity.minZ - 1);
                 BlockPos max = new BlockPos(Math.ceil(entity.maxX - 1), Math.ceil(entity.maxY - 1), entity.minZ - 1);
-                return crush(min, max);
+                return this.crush(min, max, false);
             }
             return false;
         }
 
-        private boolean crush(BlockPos min, BlockPos max) {
+        private boolean crush(BlockPos min, BlockPos max, boolean isInside) {
             boolean flag = false;
-            if (this.slider.getDeltaMovement().equals(Vec3.ZERO)) {
+            if (this.slider.getDeltaMovement().equals(Vec3.ZERO) || isInside) {
                 for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
                     BlockState blockState = this.slider.level.getBlockState(pos);
                     if (!blockState.isAir() && !blockState.is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
