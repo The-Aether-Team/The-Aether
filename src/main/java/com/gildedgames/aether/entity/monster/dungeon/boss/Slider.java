@@ -36,6 +36,8 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -101,6 +103,15 @@ public class Slider extends Mob implements BossMob, Enemy {
         this.entityData.define(DATA_HURT_ANGLE_ID, 0.0F);
         this.entityData.define(DATA_HURT_ANGLE_X_ID, 0.0F);
         this.entityData.define(DATA_HURT_ANGLE_Z_ID, 0.0F);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (!this.canMove) {
+            this.setDeltaMovement(Vec3.ZERO);
+        }
+        this.evaporate();
     }
 
     @Override
@@ -173,6 +184,27 @@ public class Slider extends Mob implements BossMob, Enemy {
         super.die(damageSource);
     }
 
+    private void stop() {
+        this.canMove = false;
+        this.moveDelay = 12;
+        this.direction = Direction.UP;
+        this.velocity = 0.0F;
+        this.setDeltaMovement(Vec3.ZERO);
+    }
+
+    private void evaporate() {
+        AABB entity = this.getBoundingBox();
+        BlockPos min = new BlockPos(entity.minX - 1, entity.minY - 1, entity.minZ - 1);
+        BlockPos max = new BlockPos(Math.ceil(entity.maxX - 1) + 1, Math.ceil(entity.maxY - 1) + 1, Math.ceil(entity.maxZ - 1) + 1);
+
+        for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
+            if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
+                this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                this.blockDestroySmoke(pos);
+            }
+        }
+    }
+
     private void explode() {
         for (int i = 0; i < (this.getHealth() <= 0 ? 16 : 48); i++) {
             double x = this.position().x() + (double) (this.random.nextFloat() - this.random.nextFloat()) * 1.5;
@@ -182,12 +214,13 @@ public class Slider extends Mob implements BossMob, Enemy {
         }
     }
 
-    private void stop() {
-        this.canMove = false;
-        this.moveDelay = 12;
-        this.direction = Direction.UP;
-        this.velocity = 0.0F;
-        this.setDeltaMovement(Vec3.ZERO);
+    private void blockDestroySmoke(BlockPos pos) {
+        double a = pos.getX() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
+        double b = pos.getY() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
+        double c = pos.getZ() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
+        if (this.level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.POOF, a, b, c, 1, 0.0, 0.0, 0.0, 0.0);
+        }
     }
 
     /**
@@ -391,6 +424,7 @@ public class Slider extends Mob implements BossMob, Enemy {
             this.setFlags(EnumSet.of(Goal.Flag.MOVE));
         }
 
+        @Override
         public boolean canUse() {
             return this.slider.isAwake() && this.slider.getTarget() != null;
         }
@@ -412,6 +446,7 @@ public class Slider extends Mob implements BossMob, Enemy {
             //todo set not awake?
         }
 
+        @Override
         public void tick() {
             if (this.slider.getTarget() != null) {
                 if (this.slider.canMove) {
@@ -503,7 +538,7 @@ public class Slider extends Mob implements BossMob, Enemy {
             }
         }
 
-        public boolean crushedBlocks() {
+        private boolean crushedBlocks() {
             Aether.LOGGER.info(this.slider.direction);
             AABB entity = this.slider.getBoundingBox();
             if (this.slider.direction == Direction.UP) {
@@ -534,15 +569,15 @@ public class Slider extends Mob implements BossMob, Enemy {
             return false;
         }
 
-        public boolean crush(BlockPos min, BlockPos max) {
+        private boolean crush(BlockPos min, BlockPos max) {
             boolean flag = false;
             if (this.slider.getDeltaMovement().equals(Vec3.ZERO)) {
                 for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
-                    BlockState state = this.slider.level.getBlockState(pos);
-                    if (!state.isAir() && !state.is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                    BlockState blockState = this.slider.level.getBlockState(pos);
+                    if (!blockState.isAir() && !blockState.is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
                         if (ForgeEventFactory.getMobGriefingEvent(this.slider.level, this.slider)) {
                             this.slider.level.destroyBlock(pos, true, this.slider);
-                            this.blockExplode(pos);
+                            this.slider.blockDestroySmoke(pos);
                             flag = true;
                         }
                     }
@@ -550,19 +585,5 @@ public class Slider extends Mob implements BossMob, Enemy {
             }
             return flag;
         }
-
-        public void blockExplode(BlockPos pos) {
-            double a = pos.getX() + 0.5D + (double) (this.slider.random.nextFloat() - this.slider.random.nextFloat()) * 0.375D;
-            double b = pos.getY() + 0.5D + (double) (this.slider.random.nextFloat() - this.slider.random.nextFloat()) * 0.375D;
-            double c = pos.getZ() + 0.5D + (double) (this.slider.random.nextFloat() - this.slider.random.nextFloat()) * 0.375D;
-            if (this.slider.level instanceof ServerLevel serverLevel) {
-                serverLevel.sendParticles(ParticleTypes.POOF, a, b, c, 1, 0.0, 0.0, 0.0, 0.0);
-            }
-        }
-
-//        @Override
-//        public boolean requiresUpdateEveryTick() {
-//            return true;
-//        }
     }
 }
