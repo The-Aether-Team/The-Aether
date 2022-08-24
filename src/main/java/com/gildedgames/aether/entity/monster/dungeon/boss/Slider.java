@@ -34,6 +34,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -170,6 +171,10 @@ public class Slider extends Mob implements BossMob, Enemy {
         if (this.isAwake()) {
             boolean attack = entity.hurt(new EntityDamageSource("crush", this), 6);
             if (attack && entity instanceof LivingEntity livingEntity) {
+                if (livingEntity instanceof Player player && player.getUseItem().is(Items.SHIELD) && player.isBlocking()) {
+                    player.getCooldowns().addCooldown(Items.SHIELD, 100);
+                    this.level.broadcastEntityEvent(player, (byte) 30);
+                }
                 livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.20, 0.0));
                 this.playSound(this.getCollideSound(), 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
                 this.stop();
