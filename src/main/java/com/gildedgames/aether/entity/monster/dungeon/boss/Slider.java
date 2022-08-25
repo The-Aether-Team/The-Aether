@@ -61,7 +61,9 @@ public class Slider extends Mob implements BossMob, Enemy {
     private boolean canMove;
     private int moveDelay;
     private float velocity;
-    private Direction direction = Direction.UP;
+    private Direction direction = null;
+    private Direction lastDirection = null;
+    private int unstuckTimer = 0;
 
     public Slider(EntityType<? extends Slider> entityType, Level level) {
         super(entityType, level);
@@ -461,47 +463,49 @@ public class Slider extends Mob implements BossMob, Enemy {
                 if (this.slider.canMove) {
                     boolean crushed = this.crushedBlocks();
                     if (!crushed) {
+                        --this.slider.unstuckTimer;
                         if (this.slider.velocity < 2.0) {
                             this.slider.velocity += this.slider.isCritical() ? 0.07F : 0.035F;
                         }
                         this.slider.setDeltaMovement(Vec3.ZERO);
                         if (this.slider.direction == Direction.UP) {
                             this.slider.setDeltaMovement(0.0, this.slider.velocity, 0.0);
-                            if (this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY + 0.35) {
-                                this.stop();
+                            if (this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY + 0.35 && this.slider.unstuckTimer <= 0) {
+                                this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.DOWN) {
                             this.slider.setDeltaMovement(0.0, -this.slider.velocity, 0.0);
-                            if (this.slider.getBoundingBox().minY < this.slider.getTarget().getBoundingBox().minY - 0.25) {
-                                this.stop();
+                            if (this.slider.getBoundingBox().minY < this.slider.getTarget().getBoundingBox().minY - 0.25 && this.slider.unstuckTimer <= 0) {
+                                this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.EAST) {
                             this.slider.setDeltaMovement(this.slider.velocity, 0.0, 0.0);
-                            if (this.slider.position().x() > this.slider.getTarget().position().x() + 0.125) {
-                                this.stop();
+                            if (this.slider.position().x() > this.slider.getTarget().position().x() + 0.125 && this.slider.unstuckTimer <= 0) {
+                                this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.WEST) {
                             this.slider.setDeltaMovement(-this.slider.velocity, 0.0, 0.0);
-                            if (this.slider.position().x() < this.slider.getTarget().position().x() - 0.125) {
-                                this.stop();
+                            if (this.slider.position().x() < this.slider.getTarget().position().x() - 0.125 && this.slider.unstuckTimer <= 0) {
+                                this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.SOUTH) {
                             this.slider.setDeltaMovement(0.0, 0.0, this.slider.velocity);
-                            if (this.slider.position().z() > this.slider.getTarget().position().z() + 0.125) {
-                                this.stop();
+                            if (this.slider.position().z() > this.slider.getTarget().position().z() + 0.125 && this.slider.unstuckTimer <= 0) {
+                                this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.NORTH) {
                             this.slider.setDeltaMovement(0.0, 0.0, -this.slider.velocity);
-                            if (this.slider.position().z() < this.slider.getTarget().position().z() - 0.125) {
-                                this.stop();
+                            if (this.slider.position().z() < this.slider.getTarget().position().z() - 0.125 && this.slider.unstuckTimer <= 0) {
+                                this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         }
+                        this.slider.lastDirection = null;
                     }
                 } else {
                     if (this.slider.moveDelay > 0) {
@@ -514,6 +518,7 @@ public class Slider extends Mob implements BossMob, Enemy {
                         double xDiff = Math.abs(this.slider.position().x() - this.slider.getTarget().position().x());
                         double yDiff = Math.abs(this.slider.getBoundingBox().minY - this.slider.getTarget().getBoundingBox().minY);
                         double zDiff = Math.abs(this.slider.position().z() - this.slider.getTarget().position().z());
+
                         if (xDiff > zDiff) {
                             this.slider.direction = Direction.EAST;
                             if (this.slider.position().x() > this.slider.getTarget().position().x()) {
@@ -526,14 +531,23 @@ public class Slider extends Mob implements BossMob, Enemy {
                             }
                         }
 
-                        //todo theres something up here with how this is setup and it may be the root of the stuck bug
-                        //todo may need to make use of the collision check here to make better behavior for the slider's movement to get unstuck and account for verticality
                         if (yDiff > xDiff && yDiff > zDiff || yDiff > 0.25D && this.slider.random.nextInt(5) == 0) {
                             this.slider.direction = Direction.UP;
                             if (this.slider.position().y() > this.slider.getTarget().position().y()) {
                                 this.slider.direction = Direction.DOWN;
                             }
                         }
+
+                        if (this.slider.unstuckTimer > 0) {
+                            if (this.slider.direction != null && this.slider.lastDirection != null && this.slider.direction == this.slider.lastDirection) {
+                                if (this.slider.direction.getAxis().getPlane() == Direction.Plane.HORIZONTAL) {
+                                    this.slider.direction = Direction.UP;
+                                } else {
+                                    this.slider.direction = Direction.getRandom(this.slider.random);
+                                }
+                            }
+                        }
+
                         this.slider.playSound(this.slider.getMoveSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
                         this.slider.canMove = true;
                     }
@@ -593,6 +607,8 @@ public class Slider extends Mob implements BossMob, Enemy {
                             flag = true;
                         }
                     } else if (blockState.is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                        this.slider.unstuckTimer = 8;
+                        this.slider.lastDirection = this.slider.direction;
                         this.slider.stop();
                         flag = true;
                     }
