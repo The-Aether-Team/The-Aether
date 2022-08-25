@@ -61,7 +61,7 @@ public class Slider extends Mob implements BossMob, Enemy {
     private boolean canMove;
     private int moveDelay;
     private float velocity;
-    private Direction direction = Direction.DOWN;
+    private Direction direction = Direction.UP;
 
     public Slider(EntityType<? extends Slider> entityType, Level level) {
         super(entityType, level);
@@ -108,6 +108,10 @@ public class Slider extends Mob implements BossMob, Enemy {
 
     @Override
     public void tick() {
+        if (!this.level.isClientSide) {
+            Aether.LOGGER.info(this.direction);
+            Aether.LOGGER.info(this.canMove);
+        }
         super.tick();
         if (!this.canMove) {
             this.setDeltaMovement(Vec3.ZERO);
@@ -456,11 +460,7 @@ public class Slider extends Mob implements BossMob, Enemy {
             if (this.slider.getTarget() != null) {
                 if (this.slider.canMove) {
                     boolean crushed = this.crushedBlocks();
-                    if (crushed) {
-                        this.slider.level.playSound(null, this.slider.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 3.0F, (0.625F + (this.slider.random.nextFloat() - this.slider.random.nextFloat()) * 0.2F) * 0.7F);
-                        this.slider.playSound(this.slider.getCollideSound(), 2.5F, 1.0F / (this.slider.random.nextFloat() * 0.2F + 0.9F));
-                        this.slider.stop();
-                    } else {
+                    if (!crushed) {
                         if (this.slider.velocity < 2.0) {
                             this.slider.velocity += this.slider.isCritical() ? 0.07F : 0.035F;
                         }
@@ -544,7 +544,6 @@ public class Slider extends Mob implements BossMob, Enemy {
         }
 
         private boolean crushedBlocks() {
-            Aether.LOGGER.info(this.slider.direction);
             AABB entity = this.slider.getBoundingBox();
             BlockPos minInside = new BlockPos(entity.minX, entity.minY, entity.minZ);
             BlockPos maxInside = new BlockPos(Math.ceil(entity.maxX - 1), Math.ceil(entity.maxY - 1), Math.ceil(entity.maxZ - 1));
@@ -588,8 +587,14 @@ public class Slider extends Mob implements BossMob, Enemy {
                         if (ForgeEventFactory.getMobGriefingEvent(this.slider.level, this.slider)) {
                             this.slider.level.destroyBlock(pos, true, this.slider);
                             this.slider.blockDestroySmoke(pos);
+                            this.slider.level.playSound(null, this.slider.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 3.0F, (0.625F + (this.slider.random.nextFloat() - this.slider.random.nextFloat()) * 0.2F) * 0.7F);
+                            this.slider.playSound(this.slider.getCollideSound(), 2.5F, 1.0F / (this.slider.random.nextFloat() * 0.2F + 0.9F));
+                            this.slider.stop();
                             flag = true;
                         }
+                    } else if (blockState.is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                        this.slider.stop();
+                        flag = true;
                     }
                 }
             }
