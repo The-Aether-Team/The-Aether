@@ -518,7 +518,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
 
         @Override
         public boolean canContinueToUse() {
-            return this.slider.getTarget() != null;
+            return this.slider.isAwake() && this.slider.getTarget() != null;
         }
 
         @Override
@@ -682,7 +682,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
                 for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
                     BlockState blockState = this.slider.level.getBlockState(pos);
                     if (!blockState.isAir() && !blockState.is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
-                        if (ForgeEventFactory.getMobGriefingEvent(this.slider.level, this.slider)) {
+                        if (ForgeEventFactory.getMobGriefingEvent(this.slider.level, this.slider) && (this.slider.getDungeon() == null || this.slider.getDungeon().roomBounds().contains(Vec3.atCenterOf(pos)))) {
                             this.slider.level.destroyBlock(pos, true, this.slider);
                             this.slider.blockDestroySmoke(pos);
                             this.slider.level.playSound(null, this.slider.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 3.0F, (0.625F + (this.slider.random.nextFloat() - this.slider.random.nextFloat()) * 0.2F) * 0.7F);
