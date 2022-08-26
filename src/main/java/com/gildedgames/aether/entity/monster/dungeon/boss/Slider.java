@@ -143,7 +143,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
 
     @Override
     public boolean hurt(@Nonnull DamageSource source, float amount) {
-        if (!this.level.isClientSide && source.getEntity() instanceof LivingEntity livingEntity && level.getDifficulty() != Difficulty.PEACEFUL) {
+        if (!this.level.isClientSide && source.getDirectEntity() instanceof LivingEntity livingEntity && level.getDifficulty() != Difficulty.PEACEFUL) {
             if (livingEntity.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) {
                 if (super.hurt(source, amount) && this.getHealth() > 0) {
                     if (!this.isBossFight()) {
