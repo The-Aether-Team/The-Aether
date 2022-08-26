@@ -449,10 +449,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addAdvancementDesc("incubator", "Incubate a Moa");
         addAdvancementDesc("altar", "Craft an Altar");
         addAdvancementDesc("gravitite_tools", "Craft a Gravitite tool");
-        addAdvancementDesc("mount_phyg", "Fly on a Phyg");
-        addAdvancementDesc("bronze_dungeon", "Defeat the Bronze Dungeon boss");
-        addAdvancementDesc("silver_dungeon", "Defeat the Silver Dungeon boss");
-        addAdvancementDesc("gold_dungeon", "Defeat the Golden Dungeon boss");
+        addAdvancementDesc("mount_phyg", "Fly on a Phyg!");
+        addAdvancementDesc("bronze_dungeon", "Defeat the bronze boss");
+        addAdvancementDesc("silver_dungeon", "Defeat the silver boss");
+        addAdvancementDesc("gold_dungeon", "Defeat the gold boss");
 
 
         addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");

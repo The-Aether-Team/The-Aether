@@ -1,11 +1,14 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.api.BossNameGenerator;
+import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
+import com.gildedgames.aether.entity.BossRoom;
 import com.gildedgames.aether.entity.ai.controller.SliderMovementController;
+import com.gildedgames.aether.entity.ai.goal.target.InBossRoomTargetGoal;
+import com.gildedgames.aether.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.BossInfoPacket;
 import net.minecraft.core.BlockPos;
@@ -31,7 +34,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -48,16 +51,19 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
-public class Slider extends Mob implements BossMob, Enemy {
+public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Slider> {
     public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.COMPONENT);
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_X_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_Z_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
 
+    private DungeonTracker<Slider> bronzeDungeon;
     private final ServerBossEvent bossFight;
+    private MostDamageTargetGoal mostDamageTargetGoal;
     private int chatTime;
 
+    private Vec3 targetPosition;
     private boolean canMove;
     private int moveDelay;
     private float velocity;
@@ -72,6 +78,7 @@ public class Slider extends Mob implements BossMob, Enemy {
         this.xpReward = XP_REWARD_BOSS;
         this.setRot(0, 0);
         this.moveControl = new SliderMovementController(this);
+        this.setPersistenceRequired();
     }
 
     /**
@@ -86,15 +93,16 @@ public class Slider extends Mob implements BossMob, Enemy {
 
     @Override
     protected void registerGoals() {
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.goalSelector.addGoal(2, new SliderMoveGoal(this));
+        this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
+        this.targetSelector.addGoal(1, this.mostDamageTargetGoal); //todo: will need to verify if this hierarchy of target goals works as intended in multiplayer
+        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(3, new InBossRoomTargetGoal<>(this, Player.class));
+        this.goalSelector.addGoal(1, new SliderMoveGoal(this));
     }
 
-    public static AttributeSupplier.Builder createSliderAttributes() { //todo verify attributes.
+    public static AttributeSupplier.Builder createSliderAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.MAX_HEALTH, 500.0D)
-                .add(Attributes.ATTACK_DAMAGE, 0.1D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D);
     }
 
@@ -110,21 +118,27 @@ public class Slider extends Mob implements BossMob, Enemy {
 
     @Override
     public void tick() {
-        if (!this.level.isClientSide) {
-            Aether.LOGGER.info(this.direction);
-            Aether.LOGGER.info(this.canMove);
+        if (!this.level.isClientSide() && this.getDungeon() == null) {
+            DungeonTracker.createDebugDungeon(this);
         }
         super.tick();
+        if (!this.isAwake() || (this.getTarget() instanceof Player player && (player.isCreative() || player.isSpectator()))) {
+            this.setTarget(null);
+        }
+        if (!this.level.isClientSide() && this.getDungeon() == null && (this.getTarget() == null || !this.getTarget().isAlive() || this.getTarget().getHealth() <= 0.0)) {
+            this.reset();
+        }
         if (!this.canMove) {
             this.setDeltaMovement(Vec3.ZERO);
         }
         this.evaporate();
+        this.trackDungeon();
     }
 
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
-        this.bossFight.setProgress(this.getHealth() / this.getMaxHealth()); //todo doesnt always refresh to 0 on the boss's death.
+        this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
     @Override
@@ -133,12 +147,7 @@ public class Slider extends Mob implements BossMob, Enemy {
             if (livingEntity.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) {
                 if (super.hurt(source, amount) && this.getHealth() > 0) {
                     if (!this.isBossFight()) {
-                        if (this.getAwakenSound() != null) {
-                            this.playSound(this.getAwakenSound(), 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
-                        }
-                        //todo close door
-                        this.setAwake(true);
-                        this.setBossFight(true);
+                        this.start();
                     }
                     this.setDeltaMovement(this.getDeltaMovement().scale(0.75F));
 
@@ -158,12 +167,16 @@ public class Slider extends Mob implements BossMob, Enemy {
                         }
                     }
                     this.setHurtAngle(0.7F - (this.getHealth() / 875.0F));
+
+                    livingEntity.getMainHandItem().hurtAndBreak(1, livingEntity, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+
+                    this.mostDamageTargetGoal.addAggro(livingEntity, amount);
                 }
             } else {
                 if (livingEntity instanceof Player player) {
                     if (this.chatTime-- <= 0) {
                         player.sendSystemMessage(Component.translatable("gui.aether.slider.message.attack.invalid"));
-                        this.chatTime = 30;
+                        this.chatTime = 15;
                         return false;
                     }
                 }
@@ -192,15 +205,35 @@ public class Slider extends Mob implements BossMob, Enemy {
     @Override
     public void die(@Nonnull DamageSource damageSource) {
         this.explode();
+        if (this.getDungeon() != null) {
+            this.getDungeon().grantAdvancements(damageSource);
+        }
+        if (this.level instanceof ServerLevel) {
+            this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
+        }
+        //todo open door and open treasure chest compartment
         super.die(damageSource);
     }
 
-    private void stop() {
-        this.canMove = false;
-        this.moveDelay = 12;
-        this.direction = Direction.UP;
-        this.velocity = 0.0F;
-        this.setDeltaMovement(Vec3.ZERO);
+    private void start() {
+        if (this.getAwakenSound() != null) {
+            this.playSound(this.getAwakenSound(), 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
+        }
+        this.setAwake(true);
+        this.setBossFight(true);
+        if (this.getDungeon() != null) {
+            this.getDungeon().debugBounds();
+        }
+        //todo close door
+    }
+
+    private void trackDungeon() {
+        if (!this.level.isClientSide() && this.getDungeon() != null) {
+            this.getDungeon().trackPlayers();
+            if (this.isAwake() && this.getDungeon().dungeonPlayers().isEmpty()) {
+                this.reset();
+            }
+        }
     }
 
     private void evaporate() {
@@ -213,6 +246,27 @@ public class Slider extends Mob implements BossMob, Enemy {
                 this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                 this.blockDestroySmoke(pos);
             }
+        }
+    }
+
+    private void stop() {
+        this.canMove = false;
+        this.moveDelay = 12;
+        this.direction = Direction.UP;
+        this.velocity = 0.0F;
+        this.setDeltaMovement(Vec3.ZERO);
+    }
+
+    private void reset() {
+        this.lastDirection = null;
+        this.unstuckTimer = 0;
+        this.stop();
+        this.setAwake(false);
+        this.setBossFight(false);
+        this.setTarget(null);
+        this.setHealth(this.getMaxHealth());
+        if (this.getDungeon() != null) {
+            this.setPos(this.getDungeon().originCoordinates());
         }
     }
 
@@ -296,6 +350,21 @@ public class Slider extends Mob implements BossMob, Enemy {
 
     public void setHurtAngle(float hurtAngle) {
         this.entityData.set(DATA_HURT_ANGLE_ID, hurtAngle);
+    }
+
+    @Override
+    public DungeonTracker<Slider> getDungeon() {
+        return this.bronzeDungeon;
+    }
+
+    @Override
+    public void setDungeon(DungeonTracker<Slider> dungeon) {
+        this.bronzeDungeon = dungeon;
+    }
+
+    @Override
+    public int getDeathScore() {
+        return this.deathScore;
     }
 
     @Override
@@ -408,11 +477,14 @@ public class Slider extends Mob implements BossMob, Enemy {
         tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
         tag.putBoolean("BossFight", this.isBossFight());
         tag.putBoolean("Awake", this.isAwake());
+        if (this.getDungeon() != null) {
+            tag.put("Dungeon", this.getDungeon().addAdditionalSaveData());
+        }
     }
 
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
+        super.readAdditionalSaveData(tag); //todo: Should abstract this duplicated code to the boss interface
         if (tag.contains("BossName")) {
             Component name = Component.Serializer.fromJson(tag.getString("BossName"));
             if (name != null) {
@@ -424,6 +496,10 @@ public class Slider extends Mob implements BossMob, Enemy {
         }
         if (tag.contains("Awake")) {
             this.setAwake(tag.getBoolean("Awake"));
+        }
+        if (tag.contains("Dungeon") && tag.get("Dungeon") instanceof CompoundTag dungeonTag) {
+            this.setDungeon(DungeonTracker.readAdditionalSaveData(dungeonTag, this));
+
         }
     }
 
@@ -443,22 +519,30 @@ public class Slider extends Mob implements BossMob, Enemy {
         @Override
         public boolean canContinueToUse() {
             return this.slider.getTarget() != null;
-            //todo all players alive?
         }
-
-//        @Override
-//        public void start() {
-//
-//        }
 
         @Override
         public void stop() {
             this.slider.stop();
-            //todo set not awake?
         }
 
         @Override
         public void tick() {
+            if (this.slider.getDungeon() != null) {
+                if (!this.slider.getDungeon().isBossWithinRoom()) {
+                    this.slider.targetPosition = this.slider.getDungeon().originCoordinates();
+                } else {
+                    if (this.slider.targetPosition == null || !this.slider.targetPosition.equals(this.slider.getDungeon().originCoordinates()) || this.slider.getDungeon().isBossWithinOrigin()) {
+                        if (this.slider.getTarget() != null) {
+                            this.slider.targetPosition = new Vec3(this.slider.getTarget().position().x, this.slider.getTarget().getBoundingBox().minY, this.slider.getTarget().position().z);
+                        }
+                    }
+                }
+            } else {
+                if (this.slider.getTarget() != null) {
+                    this.slider.targetPosition = new Vec3(this.slider.getTarget().position().x, this.slider.getTarget().getBoundingBox().minY, this.slider.getTarget().position().z);
+                }
+            }
             if (this.slider.getTarget() != null) {
                 if (this.slider.canMove) {
                     boolean crushed = this.crushedBlocks();
@@ -470,37 +554,37 @@ public class Slider extends Mob implements BossMob, Enemy {
                         this.slider.setDeltaMovement(Vec3.ZERO);
                         if (this.slider.direction == Direction.UP) {
                             this.slider.setDeltaMovement(0.0, this.slider.velocity, 0.0);
-                            if (this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY + 0.35 && this.slider.unstuckTimer <= 0) {
+                            if (this.slider.getBoundingBox().minY > this.slider.targetPosition.y() + 0.35 && this.slider.unstuckTimer <= 0) {
                                 this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.DOWN) {
                             this.slider.setDeltaMovement(0.0, -this.slider.velocity, 0.0);
-                            if (this.slider.getBoundingBox().minY < this.slider.getTarget().getBoundingBox().minY - 0.25 && this.slider.unstuckTimer <= 0) {
+                            if (this.slider.getBoundingBox().minY < this.slider.targetPosition.y() - 0.25 && this.slider.unstuckTimer <= 0) {
                                 this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.EAST) {
                             this.slider.setDeltaMovement(this.slider.velocity, 0.0, 0.0);
-                            if (this.slider.position().x() > this.slider.getTarget().position().x() + 0.125 && this.slider.unstuckTimer <= 0) {
+                            if (this.slider.position().x() > this.slider.targetPosition.x() + 0.125 && this.slider.unstuckTimer <= 0) {
                                 this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.WEST) {
                             this.slider.setDeltaMovement(-this.slider.velocity, 0.0, 0.0);
-                            if (this.slider.position().x() < this.slider.getTarget().position().x() - 0.125 && this.slider.unstuckTimer <= 0) {
+                            if (this.slider.position().x() < this.slider.targetPosition.x() - 0.125 && this.slider.unstuckTimer <= 0) {
                                 this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.SOUTH) {
                             this.slider.setDeltaMovement(0.0, 0.0, this.slider.velocity);
-                            if (this.slider.position().z() > this.slider.getTarget().position().z() + 0.125 && this.slider.unstuckTimer <= 0) {
+                            if (this.slider.position().z() > this.slider.targetPosition.z() + 0.125 && this.slider.unstuckTimer <= 0) {
                                 this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.NORTH) {
                             this.slider.setDeltaMovement(0.0, 0.0, -this.slider.velocity);
-                            if (this.slider.position().z() < this.slider.getTarget().position().z() - 0.125 && this.slider.unstuckTimer <= 0) {
+                            if (this.slider.position().z() < this.slider.targetPosition.z() - 0.125 && this.slider.unstuckTimer <= 0) {
                                 this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
@@ -515,25 +599,25 @@ public class Slider extends Mob implements BossMob, Enemy {
                         }
                         this.slider.setDeltaMovement(Vec3.ZERO);
                     } else {
-                        double xDiff = Math.abs(this.slider.position().x() - this.slider.getTarget().position().x());
-                        double yDiff = Math.abs(this.slider.getBoundingBox().minY - this.slider.getTarget().getBoundingBox().minY);
-                        double zDiff = Math.abs(this.slider.position().z() - this.slider.getTarget().position().z());
+                        double xDiff = Math.abs(this.slider.position().x() - this.slider.targetPosition.x());
+                        double yDiff = Math.abs(this.slider.getBoundingBox().minY - this.slider.targetPosition.y());
+                        double zDiff = Math.abs(this.slider.position().z() - this.slider.targetPosition.z());
 
                         if (xDiff > zDiff) {
                             this.slider.direction = Direction.EAST;
-                            if (this.slider.position().x() > this.slider.getTarget().position().x()) {
+                            if (this.slider.position().x() > this.slider.targetPosition.x()) {
                                 this.slider.direction = Direction.WEST;
                             }
                         } else {
                             this.slider.direction = Direction.SOUTH;
-                            if (this.slider.position().z() > this.slider.getTarget().position().z()) {
+                            if (this.slider.position().z() > this.slider.targetPosition.z()) {
                                 this.slider.direction = Direction.NORTH;
                             }
                         }
 
                         if (yDiff > xDiff && yDiff > zDiff || yDiff > 0.25D && this.slider.random.nextInt(5) == 0) {
                             this.slider.direction = Direction.UP;
-                            if (this.slider.position().y() > this.slider.getTarget().position().y()) {
+                            if (this.slider.position().y() > this.slider.targetPosition.y()) {
                                 this.slider.direction = Direction.DOWN;
                             }
                         }
