@@ -78,9 +78,9 @@ public class SunAltarBlock extends BaseEntityBlock {
 			BlockEntity blockentity = pLevel.getBlockEntity(pPos);
 			if (blockentity instanceof SunAltarBlockEntity sunAltar) {
 				sunAltar.setCustomName(pStack.getHoverName());
+				sunAltar.setChanged();
 			}
 		}
-
 	}
 
 	@Override
