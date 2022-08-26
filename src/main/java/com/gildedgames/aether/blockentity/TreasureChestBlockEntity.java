@@ -192,6 +192,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         boolean keyMatches = stack.getItem() instanceof DungeonKeyItem dungeonKeyItem && this.getKind().equals(dungeonKeyItem.getDungeonType());
         if (this.getLocked() && keyMatches && this.getLevel() != null) {
             this.setLocked(false);
+            this.setChanged();
             this.getLevel().markAndNotifyBlock(this.worldPosition, this.getLevel().getChunkAt(this.worldPosition), this.getBlockState(), this.getBlockState(), 2, 512);
             return true;
         } else {

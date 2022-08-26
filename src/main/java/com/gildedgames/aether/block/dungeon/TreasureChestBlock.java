@@ -114,6 +114,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof TreasureChestBlockEntity treasureChestBlockEntity) {
 				treasureChestBlockEntity.setCustomName(stack.getHoverName());
+				treasureChestBlockEntity.setChanged();
 			}
 		}
 	}
