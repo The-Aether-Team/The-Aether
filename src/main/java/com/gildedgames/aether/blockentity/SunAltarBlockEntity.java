@@ -1,11 +1,12 @@
 package com.gildedgames.aether.blockentity;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.AetherClient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -19,6 +20,17 @@ public class SunAltarBlockEntity extends BlockEntity implements Nameable {
 
     public SunAltarBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
         super(AetherBlockEntityTypes.SUN_ALTAR.get(), pWorldPosition, pBlockState);
+    }
+
+    @Nonnull
+    @Override
+    public CompoundTag getUpdateTag() {
+        return this.saveWithoutMetadata();
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        this.load(tag);
     }
 
     @Override
@@ -38,9 +50,14 @@ public class SunAltarBlockEntity extends BlockEntity implements Nameable {
     }
 
     @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
-        super.onDataPacket(net, packet);
-        AetherClient.setToSunAltarScreen(this.getName());
+        CompoundTag compound = packet.getTag();
+        this.handleUpdateTag(compound);
     }
 
     @Nonnull
