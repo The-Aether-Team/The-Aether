@@ -87,13 +87,6 @@ public class MostDamageTargetGoal extends TargetGoal {
         this.attackers.mergeDouble(attacker, damage, (Double::sum));
     }
 
-    public void removeAggro(LivingEntity attacker) {
-        this.attackers.removeDouble(attacker);
-        if (this.primaryTarget != null && attacker.is(this.primaryTarget)) {
-            this.primaryTarget = null;
-        }
-    }
-
     /**
      * Decreases aggro toward all mobs every second. This removes mobs that are dead or have no aggro and are dead.
      */
