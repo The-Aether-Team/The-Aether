@@ -490,6 +490,11 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
     }
 
     @Override
+    public boolean isFullyFrozen() {
+        return false;
+    }
+
+    @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
