@@ -43,6 +43,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -187,19 +188,14 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
 
     @Override
     protected void doPush(@Nonnull Entity entity) {
-        if (this.isAwake()) {
-            boolean attack = entity.hurt(new EntityDamageSource("crush", this), 6);
-            if (attack && entity instanceof LivingEntity livingEntity) {
-                if (livingEntity instanceof Player player && player.getUseItem().is(Items.SHIELD) && player.isBlocking()) {
-                    player.getCooldowns().addCooldown(Items.SHIELD, 100);
-                    this.level.broadcastEntityEvent(player, (byte) 30);
-                }
-                livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.20, 0.0));
-                this.playSound(this.getCollideSound(), 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
-                this.stop();
-            }
-        }
+        this.collide(entity);
         super.doPush(entity);
+    }
+
+    @Override
+    public void playerTouch(@Nonnull Player player) {
+        this.collide(player);
+        super.playerTouch(player);
     }
 
     @Override
@@ -236,6 +232,21 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
         }
     }
 
+    public void collide(Entity entity) {
+        if (this.isAwake()) {
+            boolean attack = entity.hurt(new EntityDamageSource("crush", this), 6);
+            if (attack && entity instanceof LivingEntity livingEntity) {
+                if (livingEntity instanceof Player player && player.getUseItem().is(Items.SHIELD) && player.isBlocking()) {
+                    player.getCooldowns().addCooldown(Items.SHIELD, 100);
+                    this.level.broadcastEntityEvent(player, (byte) 30);
+                }
+                livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(2.0, 1.0, 2.0).add(0.0, 0.2, 0.0));
+                this.playSound(this.getCollideSound(), 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
+                this.stop();
+            }
+        }
+    }
+
     private void evaporate() {
         AABB entity = this.getBoundingBox();
         BlockPos min = new BlockPos(entity.minX - 1, entity.minY - 1, entity.minZ - 1);
@@ -245,6 +256,8 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
             if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
                 this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                 this.blockDestroySmoke(pos);
+            } else if (!this.level.getFluidState(pos).isEmpty()) {
+                this.level.setBlockAndUpdate(pos, this.level.getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
             }
         }
     }
@@ -448,7 +461,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
 
     @Override
     public boolean canBeCollidedWith() {
-        return false;
+        return true;
     }
 
     @Override
