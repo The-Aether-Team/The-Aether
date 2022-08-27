@@ -1,0 +1,40 @@
+package com.gildedgames.aether.entity;
+
+import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.item.AetherItems;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.level.GameRules;
+
+public interface SkyrootBoatBehavior {
+    default void fall(Boat boat, double y, boolean onGround) {
+        boat.lastYd = boat.getDeltaMovement().y;
+        if (!boat.isPassenger()) {
+            if (onGround) {
+                if (boat.fallDistance > 3.0F) {
+                    if (boat.status != Boat.Status.ON_LAND) {
+                        boat.resetFallDistance();
+                        return;
+                    }
+                    boat.causeFallDamage(boat.fallDistance, 1.0F, DamageSource.FALL);
+                    if (!boat.level.isClientSide && !boat.isRemoved()) {
+                        boat.kill();
+                        if (boat.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                            for(int i = 0; i < 3; ++i) {
+                                boat.spawnAtLocation(AetherBlocks.SKYROOT_PLANKS.get());
+                            }
+
+                            for(int j = 0; j < 2; ++j) {
+                                boat.spawnAtLocation(AetherItems.SKYROOT_STICK.get());
+                            }
+                        }
+                    }
+                }
+                boat.resetFallDistance();
+            } else if (!boat.level.getFluidState(boat.blockPosition().below()).is(FluidTags.WATER) && y < 0.0D) {
+                boat.fallDistance -= (float) y;
+            }
+        }
+    }
+}

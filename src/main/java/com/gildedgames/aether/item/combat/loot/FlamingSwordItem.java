@@ -29,7 +29,7 @@ public class FlamingSwordItem extends SwordItem
 
 	@SubscribeEvent
 	public static void onEntityAttack(AttackEntityEvent event) {
-		Player player = event.getPlayer();
+		Player player = event.getEntity();
 		Entity target = event.getTarget();
 		if (player.getMainHandItem().is(AetherItems.FLAMING_SWORD.get())) {
 			if (target.isAttackable() && !target.skipAttackInteraction(player)) {

@@ -2,7 +2,7 @@ package com.gildedgames.aether.client;
 
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
-import net.minecraftforge.resource.DelegatingResourcePack;
+import net.minecraftforge.resource.DelegatingPackResources;
 
 import javax.annotation.Nonnull;
 import java.io.FileNotFoundException;
@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
-public class CombinedResourcePack extends DelegatingResourcePack
+public class CombinedResourcePack extends DelegatingPackResources
 {
     private final Path source;
 

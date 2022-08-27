@@ -34,7 +34,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
@@ -198,9 +198,9 @@ public class AetherPortalBlock extends Block
 	public static void onBlockRightClicked(PlayerInteractEvent.RightClickBlock event) {
         BlockHitResult hitVec = event.getHitVec();
         BlockPos pos = hitVec.getBlockPos().relative(hitVec.getDirection());
-		if (event.getItemStack().is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS) && (event.getWorld().dimension() == LevelUtil.returnDimension() || event.getWorld().dimension() == LevelUtil.destinationDimension())) {
+		if (event.getItemStack().is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS) && (event.getLevel().dimension() == LevelUtil.returnDimension() || event.getLevel().dimension() == LevelUtil.destinationDimension())) {
 			if (!AetherConfig.COMMON.disable_aether_portal.get()) {
-				if (fillPortalBlocks(event.getWorld(), pos, event.getPlayer(), event.getHand(), event.getItemStack())) {
+				if (fillPortalBlocks(event.getLevel(), pos, event.getEntity(), event.getHand(), event.getItemStack())) {
 					event.setCanceled(true);
 				}
 			}
@@ -210,7 +210,7 @@ public class AetherPortalBlock extends Block
 	@SubscribeEvent
 	public static void onNeighborNotify(BlockEvent.NeighborNotifyEvent event) {
 		BlockPos pos = event.getPos();
-		Level world = (Level) event.getWorld();
+		Level world = (Level) event.getLevel();
 		BlockState blockstate = world.getBlockState(pos);
 		FluidState fluidstate = world.getFluidState(pos);
 		if (fluidstate.is(Fluids.WATER) && !blockstate.isAir()) {
@@ -251,11 +251,11 @@ public class AetherPortalBlock extends Block
 					if (!player.isCreative()) {
 						if (stack.getCount() > 1) {
 							stack.shrink(1);
-							player.addItem(stack.hasContainerItem() ? stack.getContainerItem() : ItemStack.EMPTY);
+							player.addItem(stack.hasCraftingRemainingItem() ? stack.getCraftingRemainingItem() : ItemStack.EMPTY);
 						} else if (stack.isDamageableItem()) {
 							stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
 						} else {
-							player.setItemInHand(hand, stack.hasContainerItem() ? stack.getContainerItem() : ItemStack.EMPTY);
+							player.setItemInHand(hand, stack.hasCraftingRemainingItem() ? stack.getCraftingRemainingItem() : ItemStack.EMPTY);
 						}
 					}
 					return true;

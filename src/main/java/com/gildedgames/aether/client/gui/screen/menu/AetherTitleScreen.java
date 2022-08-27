@@ -35,8 +35,7 @@ public class AetherTitleScreen extends TitleScreen {
 	private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
 	private static final ResourceLocation AETHER_LOGO = new ResourceLocation(Aether.MODID, "textures/gui/title/aether.png");
 
-
-	private AetherNotificationModUpdateScreen modUpdateNotification;
+	private AetherTitleScreenModUpdateIndicator modUpdateNotification;
 	public boolean fading;
 	public long fadeInStart;
 
@@ -51,7 +50,7 @@ public class AetherTitleScreen extends TitleScreen {
 		super.init();
 		this.alignedLeft = this.alignElementsLeft();
 		this.setupButtons();
-		this.modUpdateNotification = new AetherNotificationModUpdateScreen();
+		this.modUpdateNotification = new AetherTitleScreenModUpdateIndicator();
 		this.modUpdateNotification.init();
 	}
 

@@ -79,24 +79,14 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
             this.leftLeg.xRot = Mth.cos((float) (limbSwing * 0.6662F + Math.PI)) * 1.4F * limbSwingAmount;
         }
 
-        float rotVal = bipedBird.getPrevWingRotation() + (bipedBird.getWingRotation() - bipedBird.getPrevWingRotation());
-        float destVal = bipedBird.getPrevDestPos() + (bipedBird.getDestPos() - bipedBird.getPrevDestPos());
-
-        this.rightWing.yRot = (Mth.sin(rotVal * 0.225F) + 1.0F) * destVal;
+        this.rightWing.yRot = ageInTicks;
         this.leftWing.yRot = -this.rightWing.yRot;
     }
 
-    public void setupWingsAnimation(T bipedBird) {
-        bipedBird.setPrevWingRotation(bipedBird.getWingRotation());
-        bipedBird.setPrevDestPos(bipedBird.getDestPos());
-        if (!bipedBird.isEntityOnGround()) {
-            bipedBird.setDestPos(bipedBird.getDestPos() + 0.2F);
-            bipedBird.setDestPos(Math.min(1.0F, Math.max(0.01F, bipedBird.getDestPos())));
-        } else {
-            bipedBird.setDestPos(0.0F);
-            bipedBird.setWingRotation(0.0F);
-        }
-        bipedBird.setWingRotation(bipedBird.getWingRotation() + 1.233F);
+    public float setupWingsAnimation(T bipedBird, float partialTicks) {
+        float rotVal = Mth.lerp(partialTicks, bipedBird.getPrevWingRotation(), bipedBird.getWingRotation());
+        float destVal = Mth.lerp(partialTicks, bipedBird.getPrevDestPos(), bipedBird.getDestPos());
+        return (Mth.sin(rotVal * 0.225F) + 1.0F) * destVal;
     }
 
     @Override

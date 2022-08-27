@@ -25,69 +25,31 @@ import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BedRenderer;
 import net.minecraft.client.renderer.blockentity.ChestRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
-
-import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherRenderers {
     public static final Lazy<BlockEntityWithoutLevelRenderer> blockEntityWithoutLevelRenderer = () ->
             new AetherBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
 
-    public static final IItemRenderProperties entityBlockItemRenderProperties = new IItemRenderProperties() {
+    public static final IClientItemExtensions entityBlockItemRenderProperties = new IClientItemExtensions() {
         @Override
-        public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+        public BlockEntityWithoutLevelRenderer getCustomRenderer() {
             return AetherRenderers.blockEntityWithoutLevelRenderer.get();
         }
     };
-
-    public static void registerBlockRenderLayers() {
-        RenderType cutout = RenderType.cutout();
-        RenderType translucent = RenderType.translucent();
-
-        registerBlockRenderer(AetherBlocks.SKYROOT_DOOR, cutout);
-        registerBlockRenderer(AetherBlocks.SKYROOT_TRAPDOOR, cutout);
-        registerBlockRenderer(AetherBlocks.COLD_AERCLOUD, translucent);
-        registerBlockRenderer(AetherBlocks.BLUE_AERCLOUD, translucent);
-        registerBlockRenderer(AetherBlocks.GOLDEN_AERCLOUD, translucent);
-        registerBlockRenderer(AetherBlocks.PINK_AERCLOUD, translucent);
-        registerBlockRenderer(AetherBlocks.AEROGEL, translucent);
-        registerBlockRenderer(AetherBlocks.AEROGEL_SLAB, translucent);
-        registerBlockRenderer(AetherBlocks.AEROGEL_STAIRS, translucent);
-        registerBlockRenderer(AetherBlocks.AEROGEL_WALL, translucent);
-        registerBlockRenderer(AetherBlocks.QUICKSOIL_GLASS, translucent);
-        registerBlockRenderer(AetherBlocks.QUICKSOIL_GLASS_PANE, translucent);
-        registerBlockRenderer(AetherBlocks.AETHER_PORTAL, translucent);
-        registerBlockRenderer(AetherBlocks.BERRY_BUSH, cutout);
-        registerBlockRenderer(AetherBlocks.BERRY_BUSH_STEM, cutout);
-        registerBlockRenderer(AetherBlocks.AMBROSIUM_TORCH, cutout);
-        registerBlockRenderer(AetherBlocks.AMBROSIUM_WALL_TORCH, cutout);
-        registerBlockRenderer(AetherBlocks.SKYROOT_SAPLING, cutout);
-        registerBlockRenderer(AetherBlocks.GOLDEN_OAK_SAPLING, cutout);
-        registerBlockRenderer(AetherBlocks.PURPLE_FLOWER, cutout);
-        registerBlockRenderer(AetherBlocks.WHITE_FLOWER, cutout);
-        registerBlockRenderer(AetherBlocks.POTTED_BERRY_BUSH, cutout);
-        registerBlockRenderer(AetherBlocks.POTTED_BERRY_BUSH_STEM, cutout);
-        registerBlockRenderer(AetherBlocks.POTTED_PURPLE_FLOWER, cutout);
-        registerBlockRenderer(AetherBlocks.POTTED_WHITE_FLOWER, cutout);
-        registerBlockRenderer(AetherBlocks.POTTED_SKYROOT_SAPLING, cutout);
-        registerBlockRenderer(AetherBlocks.POTTED_GOLDEN_OAK_SAPLING, cutout);
-    }
 
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
@@ -250,9 +212,5 @@ public class AetherRenderers {
                 playerRenderer.addLayer(new PlayerWingsLayer<>(playerRenderer, Minecraft.getInstance().getEntityModels()));
             }
         }
-    }
-
-    private static void registerBlockRenderer(Supplier<? extends Block> block, RenderType render) {
-        ItemBlockRenderTypes.setRenderLayer(block.get(), render);
     }
 }

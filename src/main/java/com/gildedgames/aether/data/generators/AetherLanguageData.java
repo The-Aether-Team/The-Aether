@@ -589,6 +589,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addGuiText("recipebook.toggleRecipes.enchantable", "Showing Enchantable");
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
+        addGuiText("recipebook.toggleRecipes.incubatable", "Showing Incubatable");
 
         //Valkyrie dialogue
         addGuiText("valkyrie.dialog.1", "What's that? You want to fight? Aww, what a cute little human.");
@@ -618,6 +619,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("queen.dialog.deny_fight", "So be it then. Goodbye adventurer.");
         addGuiText("queen.dialog.fight", "This will be your final battle!");
         addGuiText("queen.dialog.goodbye", "Goodbye adventurer.");
+        addGuiText("queen.dialog.no_medals", "Take your time.");
         addGuiText("queen.dialog.peaceful", "Sorry, I don't fight with weaklings.");
         addGuiText("queen.dialog.playerdeath", "As expected of a human.");
         addGuiText("queen.dialog.ready", "If you wish to challenge me, strike at any time.");
@@ -666,6 +668,12 @@ public class AetherLanguageData extends AetherLanguageProvider
         addMessage("sun_altar.no_permission", "You don't have permission to use this.");
         addMessage("sun_altar.no_power", "The sun spirit has no power over this realm.");
 
+        addCommand("menu.fix", "Reset world preview values");
+
+        addCommand("capability.player.life_shards.set", "Set life shard count for %s to %s");
+
+        addCommand("capability.time.eternal_day.set", "Set eternal day to %s");
+        addCommand("capability.time.eternal_day.query", "Eternal day is set to %s");
 
         addCommand("sun_altar_whitelist.enabled", "Sun Altar's whitelist is now turned on");
         addCommand("sun_altar_whitelist.disabled", "Sun Altar's whitelist is now turned off");
@@ -1032,8 +1040,11 @@ public class AetherLanguageData extends AetherLanguageProvider
         addClientConfig("gui", "align_aether_menu_elements_left", "Aligns the elements of the Aether menu to the left, only works if 'Align menu left with world preview' is set to false");
         addClientConfig("gui", "enable_trivia", "Adds random trivia and tips to the bottom of loading screens");
 
-        addClientConfig("audio", "disable_aether_menu_music", "Disables the Aether's menu music in case another mod implements its own");
-        addClientConfig("audio", "disable_vanilla_world_preview_menu_music", "Disables the menu music on the vanilla world preview menu");
-        addClientConfig("audio", "disable_aether_world_preview_menu_music", "Disables the menu music on the Aether world preview menu");
+        addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
+        addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
+        addClientConfig("audio", "disable_music_manager", "Disables the Aether's internal music manager, if true, this overrides all other audio configs");
+        addClientConfig("audio", "disable_aether_menu_music", "Disables the Aether's menu music in case another mod implements its own, only works if 'Disables Aether music manager' is false");
+        addClientConfig("audio", "disable_vanilla_world_preview_menu_music", "Disables the menu music on the vanilla world preview menu, only works if 'Disables Aether music manager' is false");
+        addClientConfig("audio", "disable_aether_world_preview_menu_music", "Disables the menu music on the Aether world preview menu, only works if 'Disables Aether music manager' is false");
     }
 }

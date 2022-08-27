@@ -46,7 +46,7 @@ import java.util.function.Predicate;
 
 public class FloatingBlockEntity extends Entity {
     protected static final EntityDataAccessor<BlockPos> DATA_START_POS = SynchedEntityData.defineId(FloatingBlockEntity.class, EntityDataSerializers.BLOCK_POS);
-    private BlockState blockState;
+    private BlockState blockState = Blocks.SAND.defaultBlockState();
     public int time;
     public boolean dropItem = true;
     private boolean cancelDrop;
@@ -88,9 +88,6 @@ public class FloatingBlockEntity extends Entity {
                 BlockPos blockPos = this.blockPosition();
                 if (this.level.getBlockState(blockPos).is(block)) {
                     this.level.removeBlock(blockPos, false);
-                } else if (!this.level.isClientSide) {
-                    this.discard();
-                    return;
                 }
             }
 
@@ -299,8 +296,12 @@ public class FloatingBlockEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
-        this.blockState = NbtUtils.readBlockState(tag.getCompound("BlockState"));
-        this.time = tag.getInt("Time");
+        if (tag.contains("BlockState")) {
+            this.blockState = NbtUtils.readBlockState(tag.getCompound("BlockState"));
+        }
+        if (tag.contains("Time")) {
+            this.time = tag.getInt("Time");
+        }
         if (tag.contains("HurtEntities", 99)) {
             this.hurtEntities = tag.getBoolean("HurtEntities");
             this.fallDamagePerDistance = tag.getFloat("FallHurtAmount");

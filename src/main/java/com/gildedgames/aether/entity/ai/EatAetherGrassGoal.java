@@ -42,7 +42,7 @@ public class EatAetherGrassGoal extends Goal {
 
     @Override
     public void start() {
-        this.eatAnimationTick = 40;
+        this.eatAnimationTick = this.adjustedTickDelay(40);
         this.level.broadcastEntityEvent(this.mob, (byte) 10);
         this.mob.getNavigation().stop();
     }

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.mixin.mixins.client;
 
-import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
+import com.gildedgames.aether.api.WorldDisplayHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
@@ -14,15 +14,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class WorldListEntryMixin {
     @Inject(at = @At(value = "HEAD"), method = "doDeleteWorld")
     public void doDeleteWorld(CallbackInfo info) {
-        if (Minecraft.getInstance().screen != null && AetherWorldDisplayHelper.loadedLevel != null) {
-            AetherWorldDisplayHelper.disableWorldPreview(null);
+        if (Minecraft.getInstance().screen != null && WorldDisplayHelper.loadedLevel != null) {
+            WorldDisplayHelper.disableWorldPreview(null);
         }
     }
 
     @Inject(at = @At(value = "HEAD"), method = "loadWorld")
     private void doLoadLevel(CallbackInfo info) {
-        if (AetherWorldDisplayHelper.loadedLevel != null && AetherWorldDisplayHelper.loadedSummary != null) {
-            AetherWorldDisplayHelper.stopWorld(Minecraft.getInstance(), new GenericDirtMessageScreen(Component.literal("")));
+        if (WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null) {
+            WorldDisplayHelper.stopWorld(Minecraft.getInstance(), new GenericDirtMessageScreen(Component.literal("")));
         }
     }
 }

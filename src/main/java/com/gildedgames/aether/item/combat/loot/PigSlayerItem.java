@@ -56,7 +56,7 @@ public class PigSlayerItem extends SwordItem
 	@SubscribeEvent
 	public static void doPigSlayerDrops(LivingDropsEvent event) {
 		if (event.getSource() instanceof EntityDamageSource) {
-			LivingEntity entity = event.getEntityLiving();
+			LivingEntity entity = event.getEntity();
 			EntityDamageSource source = (EntityDamageSource) event.getSource();
 			if (source.getDirectEntity() instanceof Player) {
 				Player player = (Player) source.getDirectEntity();

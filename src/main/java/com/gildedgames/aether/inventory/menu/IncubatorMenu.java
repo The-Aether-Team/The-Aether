@@ -2,20 +2,22 @@ package com.gildedgames.aether.inventory.menu;
 
 import com.gildedgames.aether.blockentity.IncubatorBlockEntity;
 
-import com.gildedgames.aether.inventory.menu.slot.IncubatorEggSlot;
+import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
 import com.gildedgames.aether.inventory.menu.slot.IncubatorFuelSlot;
-import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
-public class IncubatorMenu extends AbstractContainerMenu
+public class IncubatorMenu extends RecipeBookMenu<Container>
 {
 	public final Container container;
 	public final ContainerData data;
@@ -32,7 +34,7 @@ public class IncubatorMenu extends AbstractContainerMenu
 		this.container = incubatorInventory;
 		this.data = incubatorData;
 		this.level = playerInventory.player.level;
-		this.addSlot(new IncubatorEggSlot(this, incubatorInventory, 0, 73, 17));
+		this.addSlot(new Slot(incubatorInventory, 0, 73, 17));
 		this.addSlot(new IncubatorFuelSlot(this, incubatorInventory, 1, 73, 53));
 
 		for (int i = 0; i < 3; ++i) {
@@ -46,6 +48,38 @@ public class IncubatorMenu extends AbstractContainerMenu
 		}
 
 		this.addDataSlots(incubatorData);
+	}
+
+	@Override
+	public void fillCraftSlotsStackedContents(@Nonnull StackedContents itemHelper) {
+		if (this.container instanceof StackedContentsCompatible stackedContentsCompatible) {
+			stackedContentsCompatible.fillStackedContents(itemHelper);
+		}
+	}
+
+	@Override
+	public void clearCraftingContent() {
+		this.getSlot(0).set(ItemStack.EMPTY);
+	}
+
+	@Override
+	public boolean recipeMatches(Recipe<? super Container> recipe) {
+		return recipe.matches(this.container, this.level);
+	}
+
+	@Override
+	public int getResultSlotIndex() {
+		return -1;
+	}
+
+	@Override
+	public int getGridWidth() {
+		return 1;
+	}
+
+	@Override
+	public int getGridHeight() {
+		return 1;
 	}
 
 	public int getSize() {
@@ -65,7 +99,7 @@ public class IncubatorMenu extends AbstractContainerMenu
 			ItemStack itemStack1 = slot.getItem();
 			itemStack = itemStack1.copy();
 			if (index != 1 && index != 0) {
-				if (this.isEgg(itemStack1)) {
+				if (this.canIncubate(itemStack1)) {
 					if (!this.moveItemStackTo(itemStack1, 0, 1, false)) {
 						return ItemStack.EMPTY;
 					}
@@ -99,8 +133,8 @@ public class IncubatorMenu extends AbstractContainerMenu
 		return itemStack;
 	}
 
-	public boolean isEgg(ItemStack stack) {
-		return stack.is(AetherTags.Items.MOA_EGGS);
+	protected boolean canIncubate(ItemStack stack) {
+		return this.level.getRecipeManager().getRecipeFor(AetherRecipeTypes.INCUBATION.get(), new SimpleContainer(stack), this.level).isPresent();
 	}
 
 	public boolean isFuel(ItemStack stack) {
@@ -117,5 +151,16 @@ public class IncubatorMenu extends AbstractContainerMenu
 
 	public int getIncubationTimeRemaining() {
 		return (this.data.get(0) * 12) / 500;
+	}
+
+	@Nonnull
+	@Override
+	public RecipeBookType getRecipeBookType() {
+		return AetherRecipeBookTypes.INCUBATOR;
+	}
+
+	@Override
+	public boolean shouldMoveToInventory(int slot) {
+		return slot != 1;
 	}
 }

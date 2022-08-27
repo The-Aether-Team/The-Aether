@@ -22,7 +22,6 @@
     "client.ElytraLayerMixin",
     "client.LocalPlayerMixin",
     "client.PanoramaRendererMixin",
-    "client.SplashManagerMixin",
     "client.TippableArrowRendererMixin",
     "client.TitleScreenMixin",
     "client.WorldListEntryMixin"

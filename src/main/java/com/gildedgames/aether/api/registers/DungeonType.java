@@ -1,14 +1,11 @@
 package com.gildedgames.aether.api.registers;
 
-public class DungeonType
-{
-	private final String registryName;
+import com.gildedgames.aether.api.AetherDungeonTypes;
 
-	public DungeonType(String registryName) {
-		this.registryName = registryName;
-	}
+public class DungeonType {
+	public DungeonType() { }
 
-	public String getRegistryName() {
-		return this.registryName;
+	public String getId() {
+		return AetherDungeonTypes.DUNGEON_TYPE_REGISTRY.get().getKey(this).getPath();
 	}
 }

@@ -1,8 +1,10 @@
 package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.api.AetherMoaTypes;
 import com.gildedgames.aether.data.providers.AetherRecipeProvider;
 import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.AetherTags;
 import net.minecraft.advancements.critereon.EntityPredicate;
@@ -17,9 +19,12 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Items;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.CandleBlock;
 import net.minecraftforge.common.Tags;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class AetherRecipeData extends AetherRecipeProvider
@@ -750,6 +755,40 @@ public class AetherRecipeData extends AetherRecipeProvider
         freezingRecipeWithTag(AetherItems.ICE_RING.get(), AetherTags.Items.FREEZABLE_RINGS, 1.0F, 2500, "ring").save(consumer, name("ice_ring_from_freezing"));
 
         freezingRecipeWithTag(AetherItems.ICE_PENDANT.get(), AetherTags.Items.FREEZABLE_PENDANTS, 1.0F, 2500, "pendant").save(consumer, name("ice_pendant_from_freezing"));
+
+        moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.BLUE, AetherItems.BLUE_MOA_EGG.get()).save(consumer, name("blue_moa_incubation"));
+        moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.WHITE, AetherItems.WHITE_MOA_EGG.get()).save(consumer, name("white_moa_incubation"));
+        moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.BLACK, AetherItems.BLACK_MOA_EGG.get()).save(consumer, name("black_moa_incubation"));
+        moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.ORANGE, AetherItems.ORANGE_MOA_EGG.get()).save(consumer, name("orange_moa_incubation"));
+
+        ambrosiumEnchanting(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_GRASS_BLOCK.get()).save(consumer, name("ambrosium_enchant_aether_grass_to_enchanted_aether_grass"));
+
+        swetBallConversion(Blocks.GRASS_BLOCK, Blocks.DIRT).save(consumer, name("swet_ball_dirt_to_grass"));
+        swetBallConversion(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT.get()).save(consumer, name("swet_ball_aether_dirt_to_aether_grass"));
+        swetBallConversionTag(Blocks.MYCELIUM, Blocks.DIRT, AetherTags.Biomes.MYCELIUM_CONVERSION).save(consumer, name("swet_ball_dirt_to_mycelium"));
+        swetBallConversionTag(Blocks.PODZOL, Blocks.GRASS_BLOCK, AetherTags.Biomes.PODZOL_CONVERSION).save(consumer, name("swet_ball_grass_to_podzol"));
+        swetBallConversionTag(Blocks.CRIMSON_NYLIUM, Blocks.NETHERRACK, AetherTags.Biomes.CRIMSON_NYLIUM_CONVERSION).save(consumer, name("swet_ball_netherrack_to_crimson_nylium"));
+        swetBallConversionTag(Blocks.WARPED_NYLIUM, Blocks.NETHERRACK, AetherTags.Biomes.WARPED_NYLIUM_CONVERSION).save(consumer, name("swet_ball_netherrack_to_warped_nylium"));
+
+        icestoneFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("icestone_freeze_water"));
+        icestoneFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("icestone_freeze_lava"));
+
+        accessoryFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("accessory_freeze_water"));
+        accessoryFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("accessory_freeze_lava"));
+
+        convertPlacement(AetherBlocks.AEROGEL.get(), Blocks.LAVA, AetherTags.Biomes.ULTRACOLD).save(consumer, name("aerogel_conversion"));
+        convertPlacementWithProperties(Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, false), Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, name("campfire_conversion"));
+        convertPlacementWithProperties(Blocks.CANDLE, Map.of(CandleBlock.LIT, false), Blocks.CANDLE, Map.of(CandleBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, name("candle_conversion"));
+        convertPlacement(Blocks.CARVED_PUMPKIN, Blocks.JACK_O_LANTERN, AetherTags.Biomes.ULTRACOLD).save(consumer, name("jack_o_lantern_conversion"));
+
+        banItemPlacementWithBypass(Items.FLINT_AND_STEEL, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Biomes.ULTRACOLD).save(consumer, name("flint_and_steel_item_ban"));
+        banItemPlacementWithBypass(Items.FIRE_CHARGE, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Biomes.ULTRACOLD).save(consumer, name("fire_charge_item_ban"));
+        banItemPlacement(Items.TORCH, AetherTags.Biomes.ULTRACOLD).save(consumer, name("torch_item_ban"));
+        banItemPlacement(Items.LANTERN, AetherTags.Biomes.ULTRACOLD).save(consumer, name("lantern_item_ban"));
+
+        banBlockPlacementWithBypass(Blocks.FIRE, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Biomes.ULTRACOLD).save(consumer, name("fire_block_ban"));
+        banBlockPlacement(Blocks.TORCH, AetherTags.Biomes.ULTRACOLD).save(consumer, name("torch_block_ban"));
+        banBlockPlacement(Blocks.LANTERN, AetherTags.Biomes.ULTRACOLD).save(consumer, name("lantern_block_ban"));
     }
 
     private ResourceLocation name(String name) {

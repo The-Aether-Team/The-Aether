@@ -13,19 +13,19 @@ import net.minecraftforge.fml.common.Mod;
 public class AetherPlayerClientListener {
     @SubscribeEvent
     public static void onMove(MovementInputUpdateEvent event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         Input input = event.getInput();
         CapabilityClientHooks.AetherPlayerHooks.movementInput(player, input);
     }
 
     @SubscribeEvent
-    public static void onClick(InputEvent.MouseInputEvent event) {
+    public static void onClick(InputEvent.MouseButton.Post event) {
         int button = event.getButton();
         CapabilityClientHooks.AetherPlayerHooks.mouseInput(button);
     }
 
     @SubscribeEvent
-    public static void onClick(InputEvent.KeyInputEvent event) {
+    public static void onClick(InputEvent.Key event) {
         int key = event.getKey();
         CapabilityClientHooks.AetherPlayerHooks.keyInput(key);
     }

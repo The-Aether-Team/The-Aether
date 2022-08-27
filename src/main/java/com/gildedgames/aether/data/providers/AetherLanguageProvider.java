@@ -30,7 +30,7 @@ public abstract class AetherLanguageProvider extends LanguageProvider
     }
 
     public void addContainerType(Supplier<? extends MenuType<?>> key, String name) {
-        add("menu." + ForgeRegistries.CONTAINERS.getKey(key.get()).toString().replace(":", "."), name);
+        add("menu." + ForgeRegistries.MENU_TYPES.getKey(key.get()).toString().replace(":", "."), name);
     }
 
     public void addContainerType(String key, String name) {

@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraftforge.client.gui.NotificationModUpdateScreen;
+import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
 import net.minecraftforge.internal.BrandingControl;
 
 import javax.annotation.Nonnull;
@@ -30,7 +30,7 @@ public class VanillaLeftTitleScreen extends TitleScreen {
     public boolean fading;
     public long fadeInStart;
 
-    private NotificationModUpdateScreen modUpdateNotification;
+    private TitleScreenModUpdateIndicator modUpdateNotification;
 
     public VanillaLeftTitleScreen() {
         this.fading = true;
@@ -53,7 +53,7 @@ public class VanillaLeftTitleScreen extends TitleScreen {
                     button.setWidth(200);
                     buttonCount++;
                     if (button.getMessage().equals(Component.translatable("fml.menu.mods"))) {
-                        this.modUpdateNotification = NotificationModUpdateScreen.init(this, button);
+                        this.modUpdateNotification = TitleScreenModUpdateIndicator.init(this, button);
                     }
                 }
             }

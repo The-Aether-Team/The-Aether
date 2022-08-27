@@ -1,14 +1,14 @@
 package com.gildedgames.aether.loot.modifiers;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.loot.modifiers.RemoveSeedsModifier;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import com.mojang.serialization.Codec;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class AetherLootModifiers {
-    public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLOBAL_LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, Aether.MODID);
+    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> GLOBAL_LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Aether.MODID);
 
-    public static final RegistryObject<RemoveSeedsModifier.Serializer> REMOVE_SEEDS = GLOBAL_LOOT_MODIFIERS.register("remove_seeds", RemoveSeedsModifier.Serializer::new);
+    public static final RegistryObject<Codec<RemoveSeedsModifier>> REMOVE_SEEDS = GLOBAL_LOOT_MODIFIERS.register("remove_seeds", () -> RemoveSeedsModifier.CODEC);
 }

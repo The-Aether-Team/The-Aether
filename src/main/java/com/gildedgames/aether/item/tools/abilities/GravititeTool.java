@@ -27,8 +27,10 @@ public interface GravititeTool {
                             }
                             level.addFreshEntity(entity);
                             stack.hurtAndBreak(4, player, (p) -> p.broadcastBreakEvent(hand));
-                            return true;
+                        } else {
+                            player.swing(hand);
                         }
+                        return true;
                     }
                 }
             }

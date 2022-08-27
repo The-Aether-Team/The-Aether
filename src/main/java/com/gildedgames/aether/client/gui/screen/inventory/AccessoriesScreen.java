@@ -143,7 +143,7 @@ public class AccessoriesScreen extends AbstractContainerScreen<AccessoriesMenu> 
 
     @Override
     public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
-        if (AetherKeys.openAccessoryInventory.isActiveAndMatches(InputConstants.getKey(p_keyPressed_1_, p_keyPressed_2_))) {
+        if (AetherKeys.OPEN_ACCESSORY_INVENTORY.isActiveAndMatches(InputConstants.getKey(p_keyPressed_1_, p_keyPressed_2_))) {
             LocalPlayer playerEntity = this.getMinecraft().player;
             if (playerEntity != null) {
                 playerEntity.closeContainer();

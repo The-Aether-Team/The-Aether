@@ -33,6 +33,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,15 +43,15 @@ import java.util.function.Supplier;
 
 public class MoaEggItem extends Item
 {
-    private static final Map<MoaType, MoaEggItem> BY_ID = Maps.newIdentityHashMap();
+    private static final Map<RegistryObject<MoaType>, MoaEggItem> BY_ID = Maps.newIdentityHashMap();
     private final Supplier<MoaType> moaType;
     private final int color;
 
-    public MoaEggItem(Supplier<MoaType> moaType, int shellColor, Properties properties) {
+    public MoaEggItem(RegistryObject<MoaType> moaType, int shellColor, Properties properties) {
         super(properties);
         this.moaType = moaType;
         this.color = shellColor;
-        BY_ID.put(moaType.get(), this);
+        BY_ID.put(moaType, this);
     }
 
     @Nonnull
@@ -72,7 +73,7 @@ public class MoaEggItem extends Item
                         BaseSpawner basespawner = spawnerBlockEntity.getSpawner();
                         EntityType<Moa> entityType1 = AetherEntityTypes.MOA.get();
                         basespawner.setEntityId(entityType1);
-                        basespawner.nextSpawnData.getEntityToSpawn().putString("MoaType", this.getMoaType().get().getRegistryName());
+                        basespawner.nextSpawnData.getEntityToSpawn().putString("MoaType", this.getMoaType().toString());
                         basespawner.nextSpawnData.getEntityToSpawn().putBoolean("PlayerGrown", true);
                         blockentity.setChanged();
                         level.sendBlockUpdated(blockPos, blockState, blockState, 3);
@@ -137,7 +138,7 @@ public class MoaEggItem extends Item
         ItemStack itemStack = stack.copy();
         CompoundTag tag = itemStack.getOrCreateTag();
         tag.putBoolean("IsBaby", isBaby);
-        tag.putString("MoaType", moaType.getRegistryName());
+        tag.putString("MoaType", moaType.toString());
         tag.putBoolean("Hungry", isHungry);
         tag.putBoolean("PlayerGrown", isPlayerGrown);
         return itemStack;
@@ -153,8 +154,13 @@ public class MoaEggItem extends Item
     }
 
     @Nullable
-    public static MoaEggItem byId(@Nullable MoaType moaType) {
-        return BY_ID.get(moaType);
+    public static MoaEggItem byId(MoaType moaType) {
+        for (Map.Entry<RegistryObject<MoaType>, MoaEggItem> holder : BY_ID.entrySet()) {
+            if (moaType.getId().equals(holder.getKey().get().getId())) {
+                return holder.getValue();
+            }
+        }
+        return null;
     }
 
     public static Iterable<MoaEggItem> moaEggs() {

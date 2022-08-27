@@ -10,8 +10,9 @@ import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.ContainerData;
 
-public class AltarMenu extends AbstractFurnaceMenu
-{
+import javax.annotation.Nonnull;
+
+public class AltarMenu extends AbstractAetherFurnaceMenu {
 	public AltarMenu(int windowId, Inventory playerInventory) {
 		super(AetherMenuTypes.ALTAR.get(), AetherRecipeTypes.ENCHANTING.get(), AetherRecipeBookTypes.ALTAR, windowId, playerInventory);
 	}
@@ -21,7 +22,7 @@ public class AltarMenu extends AbstractFurnaceMenu
 	}
 
 	@Override
-	protected boolean isFuel(ItemStack stack) {
+	public boolean isFuel(@Nonnull ItemStack stack) {
 		return AltarBlockEntity.getEnchantingMap().containsKey(stack.getItem());
 	}
 }

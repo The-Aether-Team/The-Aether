@@ -33,10 +33,10 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         farmland(AetherBlocks.AETHER_FARMLAND, AetherBlocks.AETHER_DIRT);
         dirtPath(AetherBlocks.AETHER_DIRT_PATH, AetherBlocks.AETHER_DIRT);
 
-        block(AetherBlocks.COLD_AERCLOUD, "natural/");
-        block(AetherBlocks.BLUE_AERCLOUD, "natural/");
-        block(AetherBlocks.GOLDEN_AERCLOUD, "natural/");
-        block(AetherBlocks.PINK_AERCLOUD, "natural/");
+        translucentBlock(AetherBlocks.COLD_AERCLOUD, "natural/");
+        translucentBlock(AetherBlocks.BLUE_AERCLOUD, "natural/");
+        translucentBlock(AetherBlocks.GOLDEN_AERCLOUD, "natural/");
+        translucentBlock(AetherBlocks.PINK_AERCLOUD, "natural/");
 
         block(AetherBlocks.ICESTONE, "natural/");
         block(AetherBlocks.AMBROSIUM_ORE, "natural/");
@@ -59,9 +59,9 @@ public class AetherBlockStateData extends AetherBlockStateProvider
 
         block(AetherBlocks.SKYROOT_PLANKS, "construction/");
         block(AetherBlocks.HOLYSTONE_BRICKS, "construction/");
-        block(AetherBlocks.QUICKSOIL_GLASS, "construction/");
+        translucentBlock(AetherBlocks.QUICKSOIL_GLASS, "construction/");
         pane(AetherBlocks.QUICKSOIL_GLASS_PANE, AetherBlocks.QUICKSOIL_GLASS, "construction/");
-        block(AetherBlocks.AEROGEL, "construction/");
+        translucentBlock(AetherBlocks.AEROGEL, "construction/");
 
         block(AetherBlocks.AMBROSIUM_BLOCK, "construction/");
         block(AetherBlocks.ZANITE_BLOCK, "construction/");
@@ -121,8 +121,8 @@ public class AetherBlockStateData extends AetherBlockStateProvider
 
         fence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS, "construction/");
         fenceGateBlock(AetherBlocks.SKYROOT_FENCE_GATE, AetherBlocks.SKYROOT_PLANKS, "construction/");
-        fixedDoorBlock(AetherBlocks.SKYROOT_DOOR, texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_bottom"), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_top"));
-        trapdoorBlock(AetherBlocks.SKYROOT_TRAPDOOR.get(), texture(name(AetherBlocks.SKYROOT_TRAPDOOR), "construction/"), false);
+        doorBlock(AetherBlocks.SKYROOT_DOOR, texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_bottom"), texture(name(AetherBlocks.SKYROOT_DOOR), "construction/", "_top"));
+        trapdoorBlock(AetherBlocks.SKYROOT_TRAPDOOR, texture(name(AetherBlocks.SKYROOT_TRAPDOOR), "construction/"), false);
         buttonBlock(AetherBlocks.SKYROOT_BUTTON, texture(name(AetherBlocks.SKYROOT_PLANKS), "construction/"));
         pressurePlateBlock(AetherBlocks.SKYROOT_PRESSURE_PLATE, texture(name(AetherBlocks.SKYROOT_PLANKS), "construction/"));
 
@@ -154,7 +154,7 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         slab(AetherBlocks.MOSSY_HOLYSTONE_SLAB, AetherBlocks.MOSSY_HOLYSTONE, "natural/");
         slab(AetherBlocks.ICESTONE_SLAB, AetherBlocks.ICESTONE, "natural/");
         slab(AetherBlocks.HOLYSTONE_BRICK_SLAB, AetherBlocks.HOLYSTONE_BRICKS, "construction/");
-        slab(AetherBlocks.AEROGEL_SLAB, AetherBlocks.AEROGEL, "construction/");
+        translucentSlab(AetherBlocks.AEROGEL_SLAB, AetherBlocks.AEROGEL, "construction/");
 
         sunAltar(AetherBlocks.SUN_ALTAR);
 

@@ -25,9 +25,7 @@ public class PoisonDart extends AbstractDart {
     @Override
     protected void doPostHurtEffects(@Nonnull LivingEntity living) {
         super.doPostHurtEffects(living);
-        if (!this.level.isClientSide) {
-            living.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION.get(), 500, 0, false, false));
-        }
+        living.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION.get(), 500, 0, false, false));
     }
 
     @Nonnull

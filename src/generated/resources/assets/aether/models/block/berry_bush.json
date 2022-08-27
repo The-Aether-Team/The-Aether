@@ -94,6 +94,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:cutout",
   "textures": {
     "bush": "aether:block/natural/berry_bush",
     "particle": "aether:block/natural/berry_bush",

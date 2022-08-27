@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/template_glass_pane_side",
+  "render_type": "minecraft:translucent",
   "textures": {
     "edge": "aether:block/construction/quicksoil_glass_pane_top",
     "pane": "aether:block/construction/quicksoil_glass"

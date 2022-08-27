@@ -1,0 +1,10 @@
+{
+  "type": "aether:swet_ball_conversion",
+  "biome": "#aether:crimson_nylium_conversion",
+  "ingredient": {
+    "block": "minecraft:netherrack"
+  },
+  "result": {
+    "block": "minecraft:crimson_nylium"
+  }
+}

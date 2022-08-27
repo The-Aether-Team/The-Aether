@@ -33,9 +33,9 @@ public class AetherPacketHandler {
 		register(BossInfoPacket.Remove.class, BossInfoPacket.Remove::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
-		register(DimensionTypeHolderPacket.class, DimensionTypeHolderPacket::decode);
 		register(EternalDayPacket.class, EternalDayPacket::decode);
 		register(ExplosionParticlePacket.class, ExplosionParticlePacket::decode);
+		register(HealthResetPacket.class, HealthResetPacket::decode);
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
 		register(MoaInteractPacket.class, MoaInteractPacket::decode);
 		register(OpenNpcDialoguePacket.class, OpenNpcDialoguePacket::decode);
@@ -67,7 +67,7 @@ public class AetherPacketHandler {
 	}
 
 	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
-		INSTANCE.messageBuilder(packet, index++).encoder(AetherPacket::encode).decoder(decoder).consumer(AetherPacket::handle).add();
+		INSTANCE.messageBuilder(packet, index++).encoder(AetherPacket::encode).decoder(decoder).consumerMainThread(AetherPacket::handle).add();
 	}
 
 	public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

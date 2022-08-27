@@ -1,6 +1,6 @@
 package com.gildedgames.aether.mixin.mixins.client;
 
-import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
+import com.gildedgames.aether.api.WorldDisplayHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ConnectScreen;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
@@ -15,10 +15,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ConnectScreen.class)
 public class ConnectScreenMixin {
+    /**
+     * Prevents a deadlock when connecting to servers with the world preview.
+     * @see net.minecraftforge.client.event.ClientPlayerNetworkEvent.LoggedOutEvent for a possible alternative method.
+     */
     @Inject(at = @At(value = "HEAD"), method = "startConnecting")
     private static void startConnecting(Screen screen, Minecraft minecraft, ServerAddress serverAddress, ServerData serverData, CallbackInfo ci) {
-        if (AetherWorldDisplayHelper.loadedLevel != null && AetherWorldDisplayHelper.loadedSummary != null) {
-            AetherWorldDisplayHelper.stopWorld(Minecraft.getInstance(), new GenericDirtMessageScreen(Component.literal("")));
+        if (WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null) {
+            WorldDisplayHelper.stopWorld(Minecraft.getInstance(), new GenericDirtMessageScreen(Component.literal("")));
         }
     }
 }

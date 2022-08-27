@@ -15,7 +15,7 @@ public class AccessoriesProvider implements MenuProvider
     @Nonnull
     @Override
     public Component getDisplayName() {
-        return Component.translatable("menu.crafting");
+        return Component.translatable("container.crafting");
     }
 
     @Nullable

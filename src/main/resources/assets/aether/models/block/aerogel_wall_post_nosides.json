@@ -1,0 +1,6 @@
+{
+  "parent": "aether:block/template_translucent_wall_post_nosides",
+  "textures": {
+    "wall": "aether:block/construction/aerogel"
+  }
+}

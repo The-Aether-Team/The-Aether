@@ -68,7 +68,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     public TreasureChestBlockEntity(BlockPos pos, BlockState state) {
         this(AetherBlockEntityTypes.TREASURE_CHEST.get(), pos, state);
-        this.kind = AetherDungeonTypes.BRONZE.getRegistryName();
+        this.kind = AetherDungeonTypes.BRONZE.get().getId();
         this.locked = true;
     }
 
@@ -108,7 +108,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     public void load(@Nonnull CompoundTag tag) {
         super.load(tag);
         this.locked = !tag.contains("Locked") || tag.getBoolean("Locked");
-        this.kind = tag.contains("Kind") ? tag.getString("Kind") : AetherDungeonTypes.BRONZE.getRegistryName();
+        this.kind = tag.contains("Kind") ? tag.getString("Kind") : AetherDungeonTypes.BRONZE.get().getId();
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
             ContainerHelper.loadAllItems(tag, this.items);
@@ -188,7 +188,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     public boolean tryUnlock(Player player) {
         ItemStack stack = player.getMainHandItem();
-        boolean keyMatches = stack.getItem() instanceof DungeonKeyItem dungeonKeyItem && this.getKind().equals(dungeonKeyItem.getDungeonType().getRegistryName());
+        boolean keyMatches = stack.getItem() instanceof DungeonKeyItem dungeonKeyItem && this.getKind().equals(dungeonKeyItem.getDungeonType().getId());
         if (this.getLocked() && keyMatches && this.getLevel() != null) {
             this.setLocked(false);
             this.getLevel().markAndNotifyBlock(this.worldPosition, this.getLevel().getChunkAt(this.worldPosition), this.getBlockState(), this.getBlockState(), 2, 512);

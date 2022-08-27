@@ -80,15 +80,16 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 	@Override
 	public void travel(@Nonnull Vec3 vector3d) {
 		if (this.isAlive()) {
-			if (this.isVehicle() && this.isControlledByLocalInstance() && this.getControllingPassenger() instanceof Player player) {
-				this.setYRot(player.getYRot());
+			LivingEntity entity = this.getControllingPassenger();
+			if (this.isVehicle() && entity != null) {
+				this.setYRot(entity.getYRot());
 				this.yRotO = this.getYRot();
-				this.setXRot(player.getXRot() * 0.5F);
+				this.setXRot(entity.getXRot() * 0.5F);
 				this.setRot(this.getYRot(), this.getXRot());
 				this.yBodyRot = this.getYRot();
 				this.yHeadRot = this.yBodyRot;
-				float f = player.xxa * 0.5F;
-				float f1 = player.zza;
+				float f = entity.xxa * 0.5F;
+				float f1 = entity.zza;
 				if (f1 <= 0.0F) {
 					f1 *= 0.25F;
 				}
@@ -106,22 +107,20 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 				this.maxUpStep = 1.0F;
 				this.flyingSpeed = this.getSteeringSpeed() * 0.25F;
 				if (this.isControlledByLocalInstance()) {
-					float speed = this.getSteeringSpeed();
-					this.setSpeed(speed);
+					this.setSpeed(this.getSteeringSpeed());
 					this.travelWithInput(new Vec3(f, vector3d.y, f1));
-					this.lerpSteps = 0;
-				} else {
-					this.calculateEntityAnimation(this, false);
+				} else if (entity instanceof Player)  {
 					this.setDeltaMovement(Vec3.ZERO);
 				}
 				if (this.onGround) {
 					this.setPlayerJumped(false);
 					this.setMountJumping(false);
 				}
-				if (player instanceof ServerPlayer serverPlayer) {
+				if (entity instanceof ServerPlayer serverPlayer) {
 					serverPlayer.connection.aboveGroundTickCount = 0;
 					serverPlayer.connection.aboveGroundVehicleTickCount = 0;
 				}
+				this.calculateEntityAnimation(this, false);
 			} else {
 				this.maxUpStep = 0.5F;
 				this.flyingSpeed = 0.02F;
@@ -131,8 +130,8 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 	}
 
 	@Override
-	public void travelWithInput(@Nonnull Vec3 vector3d) {
-		super.travel(vector3d);
+	public void travelWithInput(Vec3 travelVec) {
+		super.travel(travelVec);
 	}
 
 	@Override
@@ -201,14 +200,11 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 
 	@Nullable
 	@Override
-	public Entity getControllingPassenger() {
-		return this.getPassengers().isEmpty() ? null : this.getPassengers().get(0);
-	}
-
-	@Override
-	public boolean isControlledByLocalInstance() {
-		Entity entity = this.getControllingPassenger();
-		return entity instanceof Player && this.isSaddled();
+	public LivingEntity getControllingPassenger() {
+		if (this.getFirstPassenger() instanceof LivingEntity livingEntity && this.isSaddled()) {
+			return livingEntity;
+		}
+		return null;
 	}
 
 	@Override
@@ -296,14 +292,16 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 	}
 
 	@Override
-	public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
-		super.readAdditionalSaveData(compound);
-		this.setSaddled(compound.getBoolean("Saddled"));
+	public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
+		tag.putBoolean("Saddled", this.isSaddled());
 	}
 
 	@Override
-	public void addAdditionalSaveData(@Nonnull CompoundTag compound) {
-		super.addAdditionalSaveData(compound);
-		compound.putBoolean("Saddled", this.isSaddled());
+	public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+		super.readAdditionalSaveData(tag);
+		if (tag.contains("Saddled")) {
+			this.setSaddled(tag.getBoolean("Saddled"));
+		}
 	}
 }

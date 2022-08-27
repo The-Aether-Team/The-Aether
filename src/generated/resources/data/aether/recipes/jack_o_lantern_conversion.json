@@ -1,0 +1,10 @@
+{
+  "type": "aether:placement_conversion",
+  "biome": "#aether:ultracold",
+  "ingredient": {
+    "block": "minecraft:jack_o_lantern"
+  },
+  "result": {
+    "block": "minecraft:carved_pumpkin"
+  }
+}
