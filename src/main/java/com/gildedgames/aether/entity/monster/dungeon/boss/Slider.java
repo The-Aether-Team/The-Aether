@@ -172,6 +172,8 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
                     livingEntity.getMainHandItem().hurtAndBreak(1, livingEntity, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 
                     this.mostDamageTargetGoal.addAggro(livingEntity, amount);
+
+                    return true;
                 }
             } else {
                 if (!this.level.isClientSide && livingEntity instanceof Player player) {
@@ -220,7 +222,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
         }
     }
 
-    public void collide() {
+    private void collide() {
         if (this.isAwake()) {
             AABB collisionBounds = new AABB(this.getBoundingBox().minX - 0.1, this.getBoundingBox().minY - 0.1, this.getBoundingBox().minZ - 0.1,
                     this.getBoundingBox().maxX + 0.1, this.getBoundingBox().maxY + 0.1, this.getBoundingBox().maxZ + 0.1);
