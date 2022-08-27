@@ -432,6 +432,11 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
     }
 
     @Override
+    public boolean ignoreExplosion() {
+        return true;
+    }
+
+    @Override
     protected int calculateFallDamage(float distance, float damageMultiplier) {
         return 0;
     }
