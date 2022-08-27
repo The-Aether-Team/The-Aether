@@ -230,6 +230,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
                 if (entity instanceof LivingEntity livingEntity && entity.hurt(new EntityDamageSource("crush", this), 6)) {
                     if (livingEntity instanceof Player player && player.getUseItem().is(Items.SHIELD) && player.isBlocking()) {
                         player.getCooldowns().addCooldown(Items.SHIELD, 100);
+                        player.stopUsingItem();
                         this.level.broadcastEntityEvent(player, (byte) 30);
                     }
                     entity.setDeltaMovement(entity.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
