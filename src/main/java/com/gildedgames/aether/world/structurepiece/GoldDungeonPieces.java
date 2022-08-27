@@ -1,13 +1,17 @@
 package com.gildedgames.aether.world.structurepiece;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.entity.AetherEntityTypes;
+import com.gildedgames.aether.entity.monster.dungeon.SunSpirit;
 import com.gildedgames.aether.world.processor.HellfireStoneProcessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
@@ -39,8 +43,15 @@ public class GoldDungeonPieces {
         }
 
         @Override
-        protected void handleDataMarker(String p_226906_, BlockPos p_226907_, ServerLevelAccessor p_226908_, RandomSource p_226909_, BoundingBox p_226910_) {
-            // TODO
+        protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox aabb) {
+            if (name.equals("Sun Spirit")) {
+                SunSpirit sunSpirit = new SunSpirit(AetherEntityTypes.SUN_SPIRIT.get(), level.getLevel());
+                sunSpirit.setPersistenceRequired();
+                sunSpirit.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+                sunSpirit.finalizeSpawn(level, level.getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
+                level.getLevel().addFreshEntity(sunSpirit);
+                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+            }
         }
     }
 

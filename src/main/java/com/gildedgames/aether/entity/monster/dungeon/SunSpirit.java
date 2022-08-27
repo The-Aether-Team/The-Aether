@@ -58,7 +58,7 @@ public class SunSpirit extends Monster implements BossMob {
     /** Boss health bar manager */
     private final ServerBossEvent bossFight;
     /** The sun spirit will return here when not in a fight. */
-    private BlockPos originPos;
+    private Vec3 originPos;
 
     private final int xMax = 11;
     private final int zMax = 11;
@@ -85,7 +85,7 @@ public class SunSpirit extends Monster implements BossMob {
     public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
         this.setBossName(BossNameGenerator.generateSunSpiritName());
-        this.originPos = new BlockPos(this.getX() + 0.5, this.getY(), this.getZ() + 0.5);
+        this.originPos = new Vec3(this.getX(), this.getY(), this.getZ());
         return data;
     }
 
@@ -298,9 +298,9 @@ public class SunSpirit extends Monster implements BossMob {
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
-        tag.putInt("OriginX", this.originPos.getX());
-        tag.putInt("OriginY", this.originPos.getY());
-        tag.putInt("OriginZ", this.originPos.getZ());
+        tag.putDouble("OriginX", this.originPos.x);
+        tag.putDouble("OriginY", this.originPos.y);
+        tag.putDouble("OriginZ", this.originPos.z);
     }
 
     @Override
@@ -311,7 +311,7 @@ public class SunSpirit extends Monster implements BossMob {
             this.setBossName(name);
         }
         if (tag.contains("OriginX")) {
-            this.originPos = new BlockPos(tag.getInt("OriginX"), tag.getInt("OriginY"), tag.getInt("OriginZ"));
+            this.originPos = new Vec3(tag.getDouble("OriginX"), tag.getDouble("OriginY"), tag.getDouble("OriginZ"));
         }
     }
 
@@ -358,13 +358,13 @@ public class SunSpirit extends Monster implements BossMob {
 
         protected boolean outOfBounds() {
             boolean flag = false;
-            if ((this.sunSpirit.getDeltaMovement().x >= 0 && this.sunSpirit.getX() >= this.sunSpirit.originPos.getX() + this.sunSpirit.xMax) ||
-                    (this.sunSpirit.getDeltaMovement().x <= 0 && this.sunSpirit.getX() <= this.sunSpirit.originPos.getX() - this.sunSpirit.xMax)) {
+            if ((this.sunSpirit.getDeltaMovement().x >= 0 && this.sunSpirit.getX() >= this.sunSpirit.originPos.x + this.sunSpirit.xMax) ||
+                    (this.sunSpirit.getDeltaMovement().x <= 0 && this.sunSpirit.getX() <= this.sunSpirit.originPos.x - this.sunSpirit.xMax)) {
                 this.rotation = 360 - this.rotation;
                 flag = true;
             }
-            if ((this.sunSpirit.getDeltaMovement().z >= 0 && this.sunSpirit.getZ() >= this.sunSpirit.originPos.getZ() + this.sunSpirit.zMax) ||
-                    (this.sunSpirit.getDeltaMovement().z <= 0 && this.sunSpirit.getZ() <= this.sunSpirit.originPos.getZ() - this.sunSpirit.zMax)) {
+            if ((this.sunSpirit.getDeltaMovement().z >= 0 && this.sunSpirit.getZ() >= this.sunSpirit.originPos.z + this.sunSpirit.zMax) ||
+                    (this.sunSpirit.getDeltaMovement().z <= 0 && this.sunSpirit.getZ() <= this.sunSpirit.originPos.z - this.sunSpirit.zMax)) {
                 this.rotation = 180 - this.rotation;
                 flag = true;
             }
@@ -403,7 +403,7 @@ public class SunSpirit extends Monster implements BossMob {
         @Override
         public void start() {
             this.sunSpirit.setDeltaMovement(Vec3.ZERO);
-            this.sunSpirit.setPos(this.sunSpirit.originPos.getX(), this.sunSpirit.originPos.getY(), this.sunSpirit.originPos.getZ());
+            this.sunSpirit.setPos(this.sunSpirit.originPos.x, this.sunSpirit.originPos.y, this.sunSpirit.originPos.z);
         }
     }
 
@@ -412,7 +412,7 @@ public class SunSpirit extends Monster implements BossMob {
      * its health gets lower.
      */
     public static class ShootFireballGoal extends Goal {
-        private SunSpirit sunSpirit;
+        private final SunSpirit sunSpirit;
         private int shootInterval;
         private int crystalCount = 3;
 
@@ -445,7 +445,7 @@ public class SunSpirit extends Monster implements BossMob {
      * Randomly places fire below the sun spirit
      */
     public static class SummonFireGoal extends Goal {
-        private SunSpirit sunSpirit;
+        private final SunSpirit sunSpirit;
         private int shootInterval;
 
         public SummonFireGoal(SunSpirit sunSpirit) {
