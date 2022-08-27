@@ -133,6 +133,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
             this.setDeltaMovement(Vec3.ZERO);
         }
         this.evaporate();
+        this.collide();
         this.trackDungeon();
     }
 
@@ -187,18 +188,6 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
     }
 
     @Override
-    protected void doPush(@Nonnull Entity entity) {
-        this.collide(entity);
-        super.doPush(entity);
-    }
-
-    @Override
-    public void playerTouch(@Nonnull Player player) {
-        this.collide(player);
-        super.playerTouch(player);
-    }
-
-    @Override
     public void die(@Nonnull DamageSource damageSource) {
         this.explode();
         if (this.getDungeon() != null) {
@@ -232,17 +221,22 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
         }
     }
 
-    public void collide(Entity entity) {
+    public void collide() {
         if (this.isAwake()) {
-            boolean attack = entity.hurt(new EntityDamageSource("crush", this), 6);
-            if (attack && entity instanceof LivingEntity livingEntity) {
-                if (livingEntity instanceof Player player && player.getUseItem().is(Items.SHIELD) && player.isBlocking()) {
-                    player.getCooldowns().addCooldown(Items.SHIELD, 100);
-                    this.level.broadcastEntityEvent(player, (byte) 30);
+            AABB collisionBounds = new AABB(this.getBoundingBox().minX - 0.1, this.getBoundingBox().minY - 0.1, this.getBoundingBox().minZ - 0.1,
+                    this.getBoundingBox().maxX + 0.1, this.getBoundingBox().maxY + 0.1, this.getBoundingBox().maxZ + 0.1);
+            for (Entity entity : this.getLevel().getEntities(this, collisionBounds)) {
+                if (entity instanceof LivingEntity livingEntity && entity.hurt(new EntityDamageSource("crush", this), 6)) {
+                    if (livingEntity instanceof Player player && player.getUseItem().is(Items.SHIELD) && player.isBlocking()) {
+                        player.getCooldowns().addCooldown(Items.SHIELD, 100);
+                        this.level.broadcastEntityEvent(player, (byte) 30);
+                    }
+                    entity.setDeltaMovement(entity.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
+                    this.playSound(this.getCollideSound(), 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
+                    this.stop();
+                } else {
+                    entity.setDeltaMovement(this.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
                 }
-                livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(2.0, 1.0, 2.0).add(0.0, 0.2, 0.0));
-                this.playSound(this.getCollideSound(), 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
-                this.stop();
             }
         }
     }
@@ -437,6 +431,16 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
     @Override
     public boolean canAttack(LivingEntity target) {
         return target.canBeSeenAsEnemy();
+    }
+
+    @Override
+    public boolean startRiding(@Nonnull Entity vehicle) {
+        return false;
+    }
+
+    @Override
+    public boolean startRiding(@Nonnull Entity entity, boolean force) {
+        return false;
     }
 
     @Override
