@@ -145,7 +145,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
 
     @Override
     public boolean hurt(@Nonnull DamageSource source, float amount) {
-        if (!this.level.isClientSide && source.getDirectEntity() instanceof LivingEntity livingEntity && level.getDifficulty() != Difficulty.PEACEFUL) {
+        if (source.getDirectEntity() instanceof LivingEntity livingEntity && this.level.getDifficulty() != Difficulty.PEACEFUL) {
             if (livingEntity.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) {
                 if (super.hurt(source, amount) && this.getHealth() > 0) {
                     if (!this.isBossFight()) {
@@ -175,7 +175,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
                     this.mostDamageTargetGoal.addAggro(livingEntity, amount);
                 }
             } else {
-                if (livingEntity instanceof Player player) {
+                if (!this.level.isClientSide && livingEntity instanceof Player player) {
                     if (this.chatTime-- <= 0) {
                         player.sendSystemMessage(Component.translatable("gui.aether.slider.message.attack.invalid"));
                         this.chatTime = 15;
@@ -434,16 +434,6 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
     }
 
     @Override
-    public boolean startRiding(@Nonnull Entity vehicle) {
-        return false;
-    }
-
-    @Override
-    public boolean startRiding(@Nonnull Entity entity, boolean force) {
-        return false;
-    }
-
-    @Override
     public void knockback(double pStrength, double pX, double pZ) {
 
     }
@@ -461,6 +451,11 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
     @Override
     public float getYRot() {
         return 0;
+    }
+
+    @Override
+    protected boolean canRide(@Nonnull Entity vehicle) {
+        return false;
     }
 
     @Override
