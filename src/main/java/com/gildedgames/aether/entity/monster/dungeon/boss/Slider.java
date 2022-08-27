@@ -131,9 +131,9 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
         if (!this.canMove) {
             this.setDeltaMovement(Vec3.ZERO);
         }
-        this.evaporate();
-        this.collide();
         this.trackDungeon();
+        this.collide();
+        this.evaporate();
     }
 
     @Override
@@ -246,7 +246,6 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
         AABB entity = this.getBoundingBox();
         BlockPos min = new BlockPos(entity.minX - 1, entity.minY - 1, entity.minZ - 1);
         BlockPos max = new BlockPos(Math.ceil(entity.maxX - 1) + 1, Math.ceil(entity.maxY - 1) + 1, Math.ceil(entity.maxZ - 1) + 1);
-
         for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
             if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
                 this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
