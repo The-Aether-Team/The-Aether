@@ -64,7 +64,6 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
     private MostDamageTargetGoal mostDamageTargetGoal;
     private int chatTime;
 
-    private Vec3 targetPosition;
     private boolean canMove;
     private int moveDelay;
     private float velocity;
@@ -215,7 +214,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
     private void trackDungeon() {
         if (!this.level.isClientSide() && this.getDungeon() != null) {
             this.getDungeon().trackPlayers();
-            if (this.isAwake() && this.getDungeon().dungeonPlayers().isEmpty()) {
+            if (this.isAwake() && (this.getDungeon().dungeonPlayers().isEmpty() || !this.getDungeon().isBossWithinRoom())) {
                 this.reset();
             }
         }
@@ -550,21 +549,6 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
 
         @Override
         public void tick() {
-            if (this.slider.getDungeon() != null) {
-                if (!this.slider.getDungeon().isBossWithinRoom()) {
-                    this.slider.targetPosition = this.slider.getDungeon().originCoordinates();
-                } else {
-                    if (this.slider.targetPosition == null || !this.slider.targetPosition.equals(this.slider.getDungeon().originCoordinates()) || this.slider.getDungeon().isBossWithinOrigin()) {
-                        if (this.slider.getTarget() != null) {
-                            this.slider.targetPosition = new Vec3(this.slider.getTarget().position().x, this.slider.getTarget().getBoundingBox().minY, this.slider.getTarget().position().z);
-                        }
-                    }
-                }
-            } else {
-                if (this.slider.getTarget() != null) {
-                    this.slider.targetPosition = new Vec3(this.slider.getTarget().position().x, this.slider.getTarget().getBoundingBox().minY, this.slider.getTarget().position().z);
-                }
-            }
             if (this.slider.getTarget() != null) {
                 if (this.slider.canMove) {
                     boolean crushed = this.crushedBlocks();
@@ -576,37 +560,37 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
                         this.slider.setDeltaMovement(Vec3.ZERO);
                         if (this.slider.direction == Direction.UP) {
                             this.slider.setDeltaMovement(0.0, this.slider.velocity, 0.0);
-                            if (this.slider.getBoundingBox().minY > this.slider.targetPosition.y() + 0.35 && this.slider.unstuckTimer <= 0) {
+                            if (this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY + 0.35 && this.slider.unstuckTimer <= 0) {
                                 this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.DOWN) {
                             this.slider.setDeltaMovement(0.0, -this.slider.velocity, 0.0);
-                            if (this.slider.getBoundingBox().minY < this.slider.targetPosition.y() - 0.25 && this.slider.unstuckTimer <= 0) {
+                            if (this.slider.getBoundingBox().minY < this.slider.getTarget().getBoundingBox().minY - 0.25 && this.slider.unstuckTimer <= 0) {
                                 this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.EAST) {
                             this.slider.setDeltaMovement(this.slider.velocity, 0.0, 0.0);
-                            if (this.slider.position().x() > this.slider.targetPosition.x() + 0.125 && this.slider.unstuckTimer <= 0) {
+                            if (this.slider.position().x() > this.slider.getTarget().position().x() + 0.125 && this.slider.unstuckTimer <= 0) {
                                 this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.WEST) {
                             this.slider.setDeltaMovement(-this.slider.velocity, 0.0, 0.0);
-                            if (this.slider.position().x() < this.slider.targetPosition.x() - 0.125 && this.slider.unstuckTimer <= 0) {
+                            if (this.slider.position().x() < this.slider.getTarget().position().x() - 0.125 && this.slider.unstuckTimer <= 0) {
                                 this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.SOUTH) {
                             this.slider.setDeltaMovement(0.0, 0.0, this.slider.velocity);
-                            if (this.slider.position().z() > this.slider.targetPosition.z() + 0.125 && this.slider.unstuckTimer <= 0) {
+                            if (this.slider.position().z() > this.slider.getTarget().position().z() + 0.125 && this.slider.unstuckTimer <= 0) {
                                 this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
                         } else if (this.slider.direction == Direction.NORTH) {
                             this.slider.setDeltaMovement(0.0, 0.0, -this.slider.velocity);
-                            if (this.slider.position().z() < this.slider.targetPosition.z() - 0.125 && this.slider.unstuckTimer <= 0) {
+                            if (this.slider.position().z() < this.slider.getTarget().position().z() - 0.125 && this.slider.unstuckTimer <= 0) {
                                 this.slider.stop();
                                 this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
                             }
@@ -621,25 +605,25 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
                         }
                         this.slider.setDeltaMovement(Vec3.ZERO);
                     } else {
-                        double xDiff = Math.abs(this.slider.position().x() - this.slider.targetPosition.x());
-                        double yDiff = Math.abs(this.slider.getBoundingBox().minY - this.slider.targetPosition.y());
-                        double zDiff = Math.abs(this.slider.position().z() - this.slider.targetPosition.z());
+                        double xDiff = Math.abs(this.slider.position().x() - this.slider.getTarget().position().x());
+                        double yDiff = Math.abs(this.slider.getBoundingBox().minY - this.slider.getTarget().getBoundingBox().minY);
+                        double zDiff = Math.abs(this.slider.position().z() - this.slider.getTarget().position().z());
 
                         if (xDiff > zDiff) {
                             this.slider.direction = Direction.EAST;
-                            if (this.slider.position().x() > this.slider.targetPosition.x()) {
+                            if (this.slider.position().x() > this.slider.getTarget().position().x()) {
                                 this.slider.direction = Direction.WEST;
                             }
                         } else {
                             this.slider.direction = Direction.SOUTH;
-                            if (this.slider.position().z() > this.slider.targetPosition.z()) {
+                            if (this.slider.position().z() > this.slider.getTarget().position().z()) {
                                 this.slider.direction = Direction.NORTH;
                             }
                         }
 
                         if (yDiff > xDiff && yDiff > zDiff || yDiff > 0.25D && this.slider.random.nextInt(5) == 0) {
                             this.slider.direction = Direction.UP;
-                            if (this.slider.position().y() > this.slider.targetPosition.y()) {
+                            if (this.slider.position().y() > this.slider.getTarget().getBoundingBox().minY) {
                                 this.slider.direction = Direction.DOWN;
                             }
                         }
