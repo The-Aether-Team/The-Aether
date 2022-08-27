@@ -638,6 +638,20 @@ public class AetherLanguageData extends AetherLanguageProvider
         //Sun spirit dialogue
         addGuiText("sun_spirit.title", "the Sun Spirit");
         addGuiText("sun_spirit.dead", "Such bitter cold... is this the feeling... of pain?");
+        addGuiText("sun_spirit.line0", "You are certainly a brave soul to have entered this chamber.");
+        addGuiText("sun_spirit.line1", "Begone human, you serve no purpose here.");
+        addGuiText("sun_spirit.line2", "Your presence annoys me. Do you not fear my burning aura?");
+        addGuiText("sun_spirit.line3", "I have nothing to offer you, fool. Leave me at peace.");
+        addGuiText("sun_spirit.line4", "Perhaps you are ignorant. Do you wish to know who I am?");
+        addGuiText("sun_spirit.line5.1", "I am a sun spirit, embodiment of Aether's eternal daylight. As");
+        addGuiText("sun_spirit.line5.2", "long as I am alive, the sun will never set on this world.");
+        addGuiText("sun_spirit.line6.1", "My body burns with the anger of a thousand beasts. No man,");
+        addGuiText("sun_spirit.line6.2", "hero, or villain can harm me. You are no exception.");
+        addGuiText("sun_spirit.line7.1", "You wish to challenge the might of the sun? You are mad.");
+        addGuiText("sun_spirit.line7.2", "Do not further insult me or you will feel my wrath.");
+        addGuiText("sun_spirit.line8", "This is your final warning. Leave now, or prepare to burn.");
+        addGuiText("sun_spirit.line9", "As you wish, your death will be slow and agonizing.");
+        addGuiText("sun_spirit.line10", "Did your previous death not satisfy your curiosity, human?");
 
 
 

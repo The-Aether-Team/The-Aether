@@ -40,7 +40,7 @@ public class FireCrystal extends AbstractCrystal {
     public FireCrystal(Level level, Entity shooter) {
         this(AetherEntityTypes.FIRE_CRYSTAL.get(), level);
         this.setOwner(shooter);
-        this.setPos(shooter.getX(), shooter.getY(), shooter.getZ());
+        this.setPos(shooter.getX(), shooter.getY() + 0.5, shooter.getZ());
         this.xPower = 0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1);
         this.yPower = 0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1);
         this.zPower = 0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1);

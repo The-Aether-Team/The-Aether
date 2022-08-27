@@ -1,6 +1,5 @@
 package com.gildedgames.aether.entity.monster.dungeon;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.capability.AetherCapabilities;
@@ -64,15 +63,17 @@ public class SunSpirit extends Monster implements BossMob {
     private final int xMax = 11;
     private final int zMax = 11;
 
+    private int chatLine = 0;
+    private int chatCooldown = 0;
+
     protected double velocity;
 
     public SunSpirit(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new SunSpiritMoveControl(this);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
-        this.bossFight.setVisible(true);
+        this.setBossFight(false);
         this.xpReward = XP_REWARD_BOSS;
-        this.setNoGravity(true);
         this.noPhysics = true;
         this.velocity =  1 - this.getHealth() / 700;
     }
@@ -84,7 +85,7 @@ public class SunSpirit extends Monster implements BossMob {
     public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
         this.setBossName(BossNameGenerator.generateSunSpiritName());
-        this.originPos = new BlockPos(this.position());
+        this.originPos = new BlockPos(this.getX() + 0.5, this.getY(), this.getZ() + 0.5);
         return data;
     }
 
@@ -113,6 +114,7 @@ public class SunSpirit extends Monster implements BossMob {
 
     @Override
     public void tick() {
+        this.setNoGravity(true);
         super.tick();
         if (this.getHealth() > 0) {
             double x = this.getX() + (this.random.nextFloat() - 0.5F) * this.random.nextFloat();
@@ -142,6 +144,9 @@ public class SunSpirit extends Monster implements BossMob {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.setFrozen(this.hurtTime > 0);
+        if (this.chatCooldown > 0) {
+            this.chatCooldown--;
+        }
     }
 
     @Override
@@ -189,8 +194,38 @@ public class SunSpirit extends Monster implements BossMob {
     @Override
     @Nonnull
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
-        if (!this.level.isClientSide) {
-            this.bossFight.setVisible(false);
+        if (!this.level.isClientSide && !this.isBossFight()) {
+            if (this.chatCooldown <= 0) {
+                this.chatCooldown = 100;
+                switch (this.chatLine++) {
+                    case 0 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line0").withStyle(ChatFormatting.RED));
+                    case 1 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line1").withStyle(ChatFormatting.RED));
+                    case 2 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line2").withStyle(ChatFormatting.RED));
+                    case 3 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line3").withStyle(ChatFormatting.RED));
+                    case 4 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line4").withStyle(ChatFormatting.RED));
+                    case 5 -> {
+                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line5.1").withStyle(ChatFormatting.RED));
+                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line5.2").withStyle(ChatFormatting.RED));
+                    }
+                    case 6 -> {
+                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line6.1").withStyle(ChatFormatting.RED));
+                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line6.2").withStyle(ChatFormatting.RED));
+                    }
+                    case 7 -> {
+                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line7.1").withStyle(ChatFormatting.RED));
+                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line7.2").withStyle(ChatFormatting.RED));
+                    }
+                    case 8 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line8").withStyle(ChatFormatting.RED));
+                    case 9 -> {
+                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line9").withStyle(ChatFormatting.RED));
+                        this.setBossFight(true);
+                    }
+                    case 10 -> {
+                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line10").withStyle(ChatFormatting.RED));
+                        this.setBossFight(true);
+                    }
+                }
+            }
         }
         return super.mobInteract(player, hand);
     }
@@ -199,7 +234,7 @@ public class SunSpirit extends Monster implements BossMob {
      * Sends a message to nearby players. Useful for boss fights.
      */
     protected void chatWithNearby(Component message) {
-        this.level.getNearbyPlayers(NON_COMBAT, this, this.getBoundingBox().inflate(16, 16, 16)).forEach(player ->
+        this.level.getNearbyPlayers(NON_COMBAT, this, this.getBoundingBox().inflate(16)).forEach(player ->
                 player.sendSystemMessage(message));
     }
 
@@ -367,6 +402,7 @@ public class SunSpirit extends Monster implements BossMob {
          */
         @Override
         public void start() {
+            this.sunSpirit.setDeltaMovement(Vec3.ZERO);
             this.sunSpirit.setPos(this.sunSpirit.originPos.getX(), this.sunSpirit.originPos.getY(), this.sunSpirit.originPos.getZ());
         }
     }
