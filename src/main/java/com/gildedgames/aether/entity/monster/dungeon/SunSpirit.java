@@ -1,5 +1,6 @@
 package com.gildedgames.aether.entity.monster.dungeon;
 
+import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.capability.AetherCapabilities;
@@ -220,9 +221,14 @@ public class SunSpirit extends Monster implements BossMob {
                         this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line9").withStyle(ChatFormatting.RED));
                         this.setBossFight(true);
                     }
-                    case 10 -> {
-                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line10").withStyle(ChatFormatting.RED));
-                        this.setBossFight(true);
+                    default -> {
+                        if (AetherConfig.COMMON.repeat_sun_spirit_dialogue.get()) {
+                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line0").withStyle(ChatFormatting.RED));
+                            this.chatLine = 1;
+                        } else {
+                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line10").withStyle(ChatFormatting.RED));
+                            this.chatLine = 9;
+                        }
                     }
                 }
             }
@@ -301,6 +307,7 @@ public class SunSpirit extends Monster implements BossMob {
         tag.putDouble("OriginX", this.originPos.x);
         tag.putDouble("OriginY", this.originPos.y);
         tag.putDouble("OriginZ", this.originPos.z);
+        tag.putInt("ChatLine", this.chatLine);
     }
 
     @Override
@@ -312,6 +319,9 @@ public class SunSpirit extends Monster implements BossMob {
         }
         if (tag.contains("OriginX")) {
             this.originPos = new Vec3(tag.getDouble("OriginX"), tag.getDouble("OriginY"), tag.getDouble("OriginZ"));
+        }
+        if (tag.contains("ChatLine")) {
+            this.chatLine = tag.getInt("ChatLine");
         }
     }
 
