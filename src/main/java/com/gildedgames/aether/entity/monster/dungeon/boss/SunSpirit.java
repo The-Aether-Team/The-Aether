@@ -101,7 +101,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new DoNothingGoal(this));
-        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 48.0F));
+        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 16, 1));
         this.goalSelector.addGoal(2, new ShootFireballGoal(this));
         this.goalSelector.addGoal(3, new SummonFireGoal(this));
         this.goalSelector.addGoal(4, new FlyAroundGoal(this));
