@@ -1,11 +1,9 @@
 package com.gildedgames.aether.world.structurepiece;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import com.gildedgames.aether.entity.monster.dungeon.SunSpirit;
+import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.gildedgames.aether.world.processor.HellfireStoneProcessor;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;

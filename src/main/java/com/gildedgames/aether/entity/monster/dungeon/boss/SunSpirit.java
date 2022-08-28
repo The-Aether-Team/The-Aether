@@ -1,9 +1,12 @@
-package com.gildedgames.aether.entity.monster.dungeon;
+package com.gildedgames.aether.entity.monster.dungeon.boss;
 
 import com.gildedgames.aether.AetherConfig;
+import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.capability.AetherCapabilities;
+import com.gildedgames.aether.entity.monster.dungeon.AbstractValkyrie;
+import com.gildedgames.aether.entity.monster.dungeon.FireMinion;
 import com.gildedgames.aether.entity.projectile.crystal.AbstractCrystal;
 import com.gildedgames.aether.entity.projectile.crystal.FireCrystal;
 import com.gildedgames.aether.entity.projectile.crystal.IceCrystal;
@@ -42,6 +45,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -198,6 +202,14 @@ public class SunSpirit extends Monster implements BossMob {
         if (!this.level.isClientSide && !this.isBossFight()) {
             if (this.chatCooldown <= 0) {
                 this.chatCooldown = 100;
+                LazyOptional<AetherPlayer> aetherPlayer = player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
+                if (!AetherConfig.COMMON.repeat_sun_spirit_dialogue.get()) {
+                    aetherPlayer.ifPresent(cap -> {
+                        if (cap.hasSeenSunSpiritDialogue() && this.chatLine == 0) {
+                            this.chatLine = 10;
+                        }
+                    });
+                }
                 switch (this.chatLine++) {
                     case 0 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line0").withStyle(ChatFormatting.RED));
                     case 1 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line1").withStyle(ChatFormatting.RED));
@@ -220,15 +232,11 @@ public class SunSpirit extends Monster implements BossMob {
                     case 9 -> {
                         this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line9").withStyle(ChatFormatting.RED));
                         this.setBossFight(true);
+                        aetherPlayer.ifPresent(cap -> cap.setSeenSunSpiritDialogue(true));
                     }
                     default -> {
-                        if (AetherConfig.COMMON.repeat_sun_spirit_dialogue.get()) {
-                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line0").withStyle(ChatFormatting.RED));
-                            this.chatLine = 1;
-                        } else {
-                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line10").withStyle(ChatFormatting.RED));
-                            this.chatLine = 9;
-                        }
+                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line10").withStyle(ChatFormatting.RED));
+                        this.chatLine = 9;
                     }
                 }
             }
@@ -428,7 +436,7 @@ public class SunSpirit extends Monster implements BossMob {
 
         public ShootFireballGoal(SunSpirit sunSpirit) {
             this.sunSpirit = sunSpirit;
-            this.shootInterval = (int) (55 + sunSpirit.getHealth() / 2);
+            this.shootInterval = (int) (28 + sunSpirit.getHealth() / 4);
             this.setFlags(EnumSet.of(Flag.MOVE));
         }
 

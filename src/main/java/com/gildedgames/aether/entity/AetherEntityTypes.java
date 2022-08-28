@@ -8,6 +8,7 @@ import com.gildedgames.aether.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.entity.block.TntPresent;
 import com.gildedgames.aether.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.entity.monster.dungeon.boss.Slider;
+import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.gildedgames.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.gildedgames.aether.entity.passive.*;
 import com.gildedgames.aether.entity.projectile.PoisonNeedle;

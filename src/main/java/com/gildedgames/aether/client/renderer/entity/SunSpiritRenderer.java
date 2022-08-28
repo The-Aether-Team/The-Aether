@@ -3,7 +3,7 @@ package com.gildedgames.aether.client.renderer.entity;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.entity.model.SunSpiritModel;
-import com.gildedgames.aether.entity.monster.dungeon.SunSpirit;
+import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
