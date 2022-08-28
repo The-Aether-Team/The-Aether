@@ -1,6 +1,6 @@
 package com.gildedgames.aether.network.packet.client;
 
-import com.gildedgames.aether.client.gui.screen.SunAltarScreen;
+import com.gildedgames.aether.client.AetherClient;
 import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
@@ -21,7 +21,7 @@ public record OpenSunAltarPacket(Component name) implements AetherPacket {
     @Override
     public void execute(Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            Minecraft.getInstance().setScreen(new SunAltarScreen(this.name));
+            AetherClient.setToSunAltarScreen(this.name);
         }
     }
 }

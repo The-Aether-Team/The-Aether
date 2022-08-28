@@ -223,7 +223,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
     }
 
     private void collide() {
-        if (this.isAwake()) {
+        if (this.isAwake() && !this.isDeadOrDying()) {
             AABB collisionBounds = new AABB(this.getBoundingBox().minX - 0.1, this.getBoundingBox().minY - 0.1, this.getBoundingBox().minZ - 0.1,
                     this.getBoundingBox().maxX + 0.1, this.getBoundingBox().maxY + 0.1, this.getBoundingBox().maxZ + 0.1);
             for (Entity entity : this.getLevel().getEntities(this, collisionBounds)) {

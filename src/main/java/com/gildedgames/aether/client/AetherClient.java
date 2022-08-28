@@ -2,6 +2,7 @@ package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.CustomizationsOptions;
+import com.gildedgames.aether.client.gui.screen.SunAltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
 import com.gildedgames.aether.client.renderer.AetherRenderers;
 import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
@@ -12,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraftforge.api.distmarker.Dist;
@@ -67,5 +69,12 @@ public class AetherClient {
         for (MoaEggItem moaEggItem : MoaEggItem.moaEggs()) {
             colors.register((color, itemProvider) -> moaEggItem.getColor(), moaEggItem);
         }
+    }
+
+    /**
+     * Used to work around a classloading crash on the server.
+     */
+    public static void setToSunAltarScreen(Component name) {
+        Minecraft.getInstance().setScreen(new SunAltarScreen(name));
     }
 }
