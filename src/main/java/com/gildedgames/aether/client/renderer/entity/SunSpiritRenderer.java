@@ -7,6 +7,7 @@ import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -29,5 +30,10 @@ public class SunSpiritRenderer extends MobRenderer<SunSpirit, SunSpiritModel<Sun
     @Nonnull
     public ResourceLocation getTextureLocation(SunSpirit sunSpirit) {
         return sunSpirit.isFrozen() ? FROZEN_SPIRIT_TEXTURE : SUN_SPIRIT_TEXTURE;
+    }
+
+    @Override
+    protected int getBlockLightLevel(SunSpirit sunSpirit, BlockPos pos) {
+        return 15;
     }
 }

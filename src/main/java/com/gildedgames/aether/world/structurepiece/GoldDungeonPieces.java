@@ -45,7 +45,7 @@ public class GoldDungeonPieces {
         }
 
         @Override
-        protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox boundingBox) {
+        protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox chunkBB) {
             if (name.equals("Sun Spirit")) {
                 SunSpirit sunSpirit = new SunSpirit(AetherEntityTypes.SUN_SPIRIT.get(), level.getLevel());
                 sunSpirit.setPersistenceRequired();

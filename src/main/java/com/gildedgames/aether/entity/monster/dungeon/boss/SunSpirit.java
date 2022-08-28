@@ -37,7 +37,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -78,6 +77,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
     public SunSpirit(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
+//        this.lookControl = new SunSpiritLookControl(this);
         this.moveControl = new BlankMoveControl(this);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
         this.setBossFight(false);
@@ -99,7 +99,6 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
     @Override
     public void registerGoals() {
-        super.registerGoals();
         this.goalSelector.addGoal(0, new DoNothingGoal(this));
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 16, 1));
         this.goalSelector.addGoal(2, new ShootFireballGoal(this));
@@ -132,6 +131,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
             this.burnEntities();
         }
+        this.setYRot(Mth.rotateIfNecessary(this.getYRot(), this.yHeadRot, 20));
     }
 
     /**
