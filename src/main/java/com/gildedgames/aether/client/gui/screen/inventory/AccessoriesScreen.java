@@ -21,13 +21,12 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.PacketDistributor;
 import top.theillusivec4.curios.Curios;
@@ -57,14 +56,13 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     private boolean widthTooNarrow;
     private boolean buttonClicked;
     private boolean isRenderButtonHovered;
-    private final Inventory playerInventory;
     @Nullable
     private Slot destroyItemSlot;
+    private static final SimpleContainer DESTROY_ITEM_CONTAINER = new SimpleContainer(1);
 
     public AccessoriesScreen(AccessoriesMenu accessoriesMenu, Inventory playerInventory, Component title) {
         super(accessoriesMenu, playerInventory, title);
         this.passEvents = true;
-        this.playerInventory = playerInventory;
     }
 
     @Override
@@ -196,7 +194,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
             if (this.minecraft != null && this.minecraft.player != null) {
                 if (this.minecraft.player.isCreative() && this.destroyItemSlot == null) {
-                    this.destroyItemSlot = new Slot(this.playerInventory, 0, 172, 142);
+                    this.destroyItemSlot = new Slot(DESTROY_ITEM_CONTAINER, 0, 172, 142);
                     this.menu.slots.add(this.destroyItemSlot);
                 } else if (!this.minecraft.player.isCreative() && this.destroyItemSlot != null) {
                     this.menu.slots.remove(this.destroyItemSlot);
@@ -296,31 +294,24 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     }
 
     @Override
-    protected void slotClicked(@Nonnull Slot slot, int slotId, int mouseButton, @Nonnull ClickType type) {
+    protected void slotClicked(@Nullable Slot slot, int slotId, int mouseButton, @Nonnull ClickType type) {
         this.recipeBookComponent.slotClicked(slot);
         if (this.minecraft != null && this.minecraft.player != null && this.minecraft.gameMode != null) {
-            Aether.LOGGER.info(0);
             boolean flag = type == ClickType.QUICK_MOVE;
             type = slotId == -999 && type == ClickType.PICKUP ? ClickType.THROW : type;
             if (slot != null || type == ClickType.QUICK_CRAFT) {
-                Aether.LOGGER.info(1);
                 if (slot == null || slot.mayPickup(this.minecraft.player)) {
-                    Aether.LOGGER.info(2);
                     if (slot == this.destroyItemSlot && flag) {
-                        Aether.LOGGER.info(3);
                         for (int j = 0; j < this.minecraft.player.inventoryMenu.getItems().size(); ++j) {
                             this.minecraft.gameMode.handleCreativeModeItemAdd(ItemStack.EMPTY, j);
                         }
-                    } else if (slot == this.destroyItemSlot) {
-                        Aether.LOGGER.info(4);
-
-                        Aether.LOGGER.info(5);
-                        Aether.LOGGER.info(this.menu.getCarried());
-                        this.menu.setCarried(ItemStack.EMPTY); //todo this just doesnt work even though its called.
-                        AetherPacketHandler.sendToNear(new ClearItemPacket(this.minecraft.player.getId()), this.minecraft.player.getX(), this.minecraft.player.getY(), this.minecraft.player.getZ(), 5.0, this.minecraft.player.level.dimension());
-
                     } else {
-                        super.slotClicked(slot, slotId, mouseButton, type);
+                        if (slot == this.destroyItemSlot) {
+                            this.menu.setCarried(ItemStack.EMPTY);
+                            AetherPacketHandler.sendToServer(new ClearItemPacket(this.minecraft.player.getId()));
+                        } else {
+                            super.slotClicked(slot, slotId, mouseButton, type);
+                        }
                     }
                 } else {
                     super.slotClicked(slot, slotId, mouseButton, type);
