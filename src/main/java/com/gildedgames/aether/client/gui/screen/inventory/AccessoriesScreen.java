@@ -164,6 +164,13 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     }
 
     @Override
+    public boolean canSeeEffects() {
+        int i = this.leftPos + this.imageWidth + 2 + this.creativeXOffset();
+        int j = this.width - i;
+        return j > 13;
+    }
+
+    @Override
     public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(poseStack);
         if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
@@ -218,8 +225,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             RenderSystem.setShaderTexture(0, this.minecraft.player.isCreative() ? ACCESSORIES_INVENTORY_CREATIVE : ACCESSORIES_INVENTORY);
             int i = this.getGuiLeft();
             int j = this.getGuiTop();
-            int xAddition = this.minecraft.player.isCreative() ? 18 : 0;
-            this.blit(matrixStack, i, j, 0, 0, this.getXSize() + xAddition, this.getYSize());
+            this.blit(matrixStack, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());
             InventoryScreen.renderEntityInInventory(i + 33, j + 75, 30, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.minecraft.player);
         }
     }
@@ -339,5 +345,13 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     @Override
     public RecipeBookComponent getRecipeBookComponent() {
         return this.recipeBookComponent;
+    }
+
+    public int creativeXOffset() {
+        if (this.minecraft != null && this.minecraft.player != null && this.minecraft.player.isCreative()) {
+            return 18;
+        } else {
+            return 0;
+        }
     }
 }
