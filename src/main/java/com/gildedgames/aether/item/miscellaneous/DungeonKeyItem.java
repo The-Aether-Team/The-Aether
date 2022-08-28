@@ -1,19 +1,17 @@
 package com.gildedgames.aether.item.miscellaneous;
 
-import com.gildedgames.aether.api.registers.DungeonType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
-import java.util.function.Supplier;
-
 public class DungeonKeyItem extends Item {
-    private final Supplier<DungeonType> dungeonTypeGetter;
+    private final ResourceLocation dungeonType;
 
-    public DungeonKeyItem(Supplier<DungeonType> dungeonTypeGetter, Item.Properties properties) {
+    public DungeonKeyItem(ResourceLocation dungeonType, Item.Properties properties) {
         super(properties);
-        this.dungeonTypeGetter = dungeonTypeGetter;
+        this.dungeonType = dungeonType;
     }
 
-    public DungeonType getDungeonType() {
-        return this.dungeonTypeGetter.get();
+    public ResourceLocation getDungeonType() {
+        return this.dungeonType;
     }
 }

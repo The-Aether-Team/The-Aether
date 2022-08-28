@@ -1,7 +1,6 @@
 package com.gildedgames.aether;
 
 import com.gildedgames.aether.advancement.AetherAdvancementTriggers;
-import com.gildedgames.aether.api.AetherDungeonTypes;
 import com.gildedgames.aether.api.AetherMoaTypes;
 import com.gildedgames.aether.block.dispenser.DispenseUsableItemBehavior;
 import com.gildedgames.aether.blockentity.AetherBlockEntityTypes;
@@ -119,7 +118,6 @@ public class Aether
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherSoundEvents.SOUNDS,
                 AetherGameEvents.GAME_EVENTS,
-                AetherDungeonTypes.DUNGEON_TYPES,
                 AetherMoaTypes.MOA_TYPES
         };
 

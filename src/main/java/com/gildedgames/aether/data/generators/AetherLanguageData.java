@@ -358,6 +358,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG, "Evil Whirlwind Spawn Egg");
         addItem(AetherItems.VALKYRIE_SPAWN_EGG, "Valkyrie Spawn Egg");
         addItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG, "Valkyrie Queen Spawn Egg");
+        addItem(AetherItems.SLIDER_SPAWN_EGG, "Slider Spawn Egg");
         addItem(AetherItems.SUN_SPIRIT_SPAWN_EGG, "Sun Spirit Spawn Egg");
         addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
 
@@ -382,6 +383,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.VALKYRIE, "Valkyrie");
         addEntityType(AetherEntityTypes.FIRE_MINION, "Fire Minion");
 
+        addEntityType(AetherEntityTypes.SLIDER, "Slider");
         addEntityType(AetherEntityTypes.VALKYRIE_QUEEN, "Valkyrie Queen");
         addEntityType(AetherEntityTypes.SUN_SPIRIT, "Sun Spirit");
 
@@ -447,10 +449,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addAdvancementDesc("incubator", "Incubate a Moa");
         addAdvancementDesc("altar", "Craft an Altar");
         addAdvancementDesc("gravitite_tools", "Craft a Gravitite tool");
-        addAdvancementDesc("mount_phyg", "Fly on a Phyg");
-        addAdvancementDesc("bronze_dungeon", "Defeat the Bronze Dungeon boss");
-        addAdvancementDesc("silver_dungeon", "Defeat the Silver Dungeon boss");
-        addAdvancementDesc("gold_dungeon", "Defeat the Golden Dungeon boss");
+        addAdvancementDesc("mount_phyg", "Fly on a Phyg!");
+        addAdvancementDesc("bronze_dungeon", "Defeat the bronze boss");
+        addAdvancementDesc("silver_dungeon", "Defeat the silver boss");
+        addAdvancementDesc("gold_dungeon", "Defeat the gold boss");
 
 
         addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");
@@ -543,8 +545,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("entity", "mimic.kill", "Mimic burps");
 
         addSubtitle("entity", "slider.awaken", "Slider awakens");
+        addSubtitle("entity", "slider.ambient", "Slider drones");
         addSubtitle("entity", "slider.collide", "Slider smashes");
         addSubtitle("entity", "slider.move", "Slider slides");
+        addSubtitle("entity", "slider.hurt", "Slider hurts");
         addSubtitle("entity", "slider.death", "Slider breaks");
 
         addSubtitle("entity", "valkyrie.death", "Valkyrie dies");
@@ -566,6 +570,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addDeath("inebriation", "%1$s was inebriated");
         addDeath("inebriation.player", "%1$s was inebriated by %2$s");
+        addDeath("crush", "%1$s was crushed by %2$s");
         addDeath("ice_crystal", "%1$s was chilled by %2$s's Ice Crystal");
 
 
@@ -590,6 +595,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("recipebook.toggleRecipes.enchantable", "Showing Enchantable");
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
         addGuiText("recipebook.toggleRecipes.incubatable", "Showing Incubatable");
+
+
+        addGuiText("slider.title", "the Slider");
+        addGuiText("slider.message.attack.invalid", "Hmm. Perhaps I need to attack it with a Pickaxe?");
 
         //Valkyrie dialogue
         addGuiText("valkyrie.dialog.1", "What's that? You want to fight? Aww, what a cute little human.");

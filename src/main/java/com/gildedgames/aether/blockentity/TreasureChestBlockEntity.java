@@ -1,10 +1,11 @@
 package com.gildedgames.aether.blockentity;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.item.miscellaneous.DungeonKeyItem;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.api.AetherDungeonTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -60,7 +61,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     };
     private final ChestLidController chestLidController = new ChestLidController();
     private boolean locked;
-    private String kind;
+    private ResourceLocation kind;
 
     protected TreasureChestBlockEntity(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
         super(tileEntityType, pos, state);
@@ -68,7 +69,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     public TreasureChestBlockEntity(BlockPos pos, BlockState state) {
         this(AetherBlockEntityTypes.TREASURE_CHEST.get(), pos, state);
-        this.kind = AetherDungeonTypes.BRONZE.get().getId();
+        this.kind = new ResourceLocation(Aether.MODID, "bronze");
         this.locked = true;
     }
 
@@ -85,7 +86,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     @Nonnull
     @Override
     protected Component getDefaultName() {
-        return Component.translatable("menu.aether." + this.getKind() + "_dungeon_chest");
+        return Component.translatable("menu." + this.getKind().getNamespace() + "." + this.getKind().getPath() + "_dungeon_chest");
     }
 
     @Override
@@ -108,7 +109,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     public void load(@Nonnull CompoundTag tag) {
         super.load(tag);
         this.locked = !tag.contains("Locked") || tag.getBoolean("Locked");
-        this.kind = tag.contains("Kind") ? tag.getString("Kind") : AetherDungeonTypes.BRONZE.get().getId();
+        this.kind = tag.contains("Kind") ? new ResourceLocation(tag.getString("Kind")) : new ResourceLocation(Aether.MODID, "bronze");
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
             ContainerHelper.loadAllItems(tag, this.items);
@@ -119,7 +120,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     public void saveAdditional(@Nonnull CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putBoolean("Locked", this.getLocked());
-        tag.putString("Kind", this.getKind());
+        tag.putString("Kind", this.getKind().toString());
         if (!this.trySaveLootTable(tag)) {
             ContainerHelper.saveAllItems(tag, this.items);
         }
@@ -188,13 +189,14 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     public boolean tryUnlock(Player player) {
         ItemStack stack = player.getMainHandItem();
-        boolean keyMatches = stack.getItem() instanceof DungeonKeyItem dungeonKeyItem && this.getKind().equals(dungeonKeyItem.getDungeonType().getId());
+        boolean keyMatches = stack.getItem() instanceof DungeonKeyItem dungeonKeyItem && this.getKind().equals(dungeonKeyItem.getDungeonType());
         if (this.getLocked() && keyMatches && this.getLevel() != null) {
             this.setLocked(false);
+            this.setChanged();
             this.getLevel().markAndNotifyBlock(this.worldPosition, this.getLevel().getChunkAt(this.worldPosition), this.getBlockState(), this.getBlockState(), 2, 512);
             return true;
         } else {
-            player.displayClientMessage(Component.translatable("aether." + this.getKind() + "_dungeon_chest_locked"), true);
+            player.displayClientMessage(Component.translatable(this.getKind().getNamespace() + "." + this.getKind().getPath() + "_dungeon_chest_locked"), true);
             return false;
         }
     }
@@ -207,7 +209,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         return this.locked;
     }
 
-    public String getKind() {
+    public ResourceLocation getKind() {
         return this.kind;
     }
 

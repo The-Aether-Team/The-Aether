@@ -1,4 +1,4 @@
-// 1.19.2	2022-08-14T09:50:51.8450926	Aether Loot Tables
+// 1.19.2	2022-08-21T11:23:39.3684842	Aether Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 9e100e6de96b47a3a1b9533e76ad9847d364b9c0 data/aether/loot_tables/blocks/aerogel_slab.json
@@ -169,6 +169,7 @@ ad98befa66667293ed0a27422ec7cc1835b2fb68 data/aether/loot_tables/entities/sheepu
 60edabaa892b5ba3808bac820532045e3f84bbd4 data/aether/loot_tables/entities/sheepuff/red.json
 4faf444eeb3dd7f28cda15a911f56a5367b50ee2 data/aether/loot_tables/entities/sheepuff/white.json
 3b0e201e9d16f2e0eff23cd7b36e023ba9a1a72c data/aether/loot_tables/entities/sheepuff/yellow.json
+a9c67b47e0556720d3e240870e651fadf7242e29 data/aether/loot_tables/entities/slider.json
 2b99bdf792447c803a8bae89792d1e8f3b589368 data/aether/loot_tables/entities/sun_spirit.json
 9e4ecaa2cd33edd4484569823c0924f729d39ce2 data/aether/loot_tables/entities/valkyrie.json
 8e267b22d9f609c074879de93c81d347f3c5e21c data/aether/loot_tables/entities/valkyrie_queen.json
