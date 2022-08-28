@@ -1,7 +1,6 @@
 package com.gildedgames.aether;
 
 import com.gildedgames.aether.advancement.AetherAdvancementTriggers;
-import com.gildedgames.aether.api.AetherDungeonTypes;
 import com.gildedgames.aether.api.AetherMoaTypes;
 import com.gildedgames.aether.block.dispenser.DispenseUsableItemBehavior;
 import com.gildedgames.aether.blockentity.AetherBlockEntityTypes;
@@ -121,7 +120,6 @@ public class Aether
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherSoundEvents.SOUNDS,
                 AetherGameEvents.GAME_EVENTS,
-                AetherDungeonTypes.DUNGEON_TYPES,
                 AetherMoaTypes.MOA_TYPES
         };
 
@@ -189,14 +187,14 @@ public class Aether
         generator.addProvider(event.includeServer(), new AetherEntityTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherFluidTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(generator, helper));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<ConfiguredFeature<?, ?>>().create(generator, helper, AetherConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<PlacedFeature>().create(generator, helper, AetherPlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<Structure>().create(generator, helper, AetherStructures.STRUCTURES, Registry.STRUCTURE_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<StructureSet>().create(generator, helper, AetherStructureSets.STRUCTURE_SETS, Registry.STRUCTURE_SET_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<Biome>().create(generator, helper, AetherBiomes.BIOMES, ForgeRegistries.Keys.BIOMES));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<DimensionType>().create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<NoiseGeneratorSettings>().create(BuiltinRegistries.ACCESS, generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
-        generator.addProvider(event.includeServer(), new AetherDataGenerators<LevelStem>().levelStem(generator, helper));
+        generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
+        generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherPlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
+        generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherStructures.STRUCTURES, Registry.STRUCTURE_REGISTRY));
+        generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherStructureSets.STRUCTURE_SETS, Registry.STRUCTURE_SET_REGISTRY));
+        generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherBiomes.BIOMES, ForgeRegistries.Keys.BIOMES));
+        generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
+        generator.addProvider(event.includeServer(), AetherDataGenerators.create(BuiltinRegistries.ACCESS, generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
+        generator.addProvider(event.includeServer(), AetherDataGenerators.levelStem(generator, helper));
     }
 
     public void packSetup(AddPackFindersEvent event) {

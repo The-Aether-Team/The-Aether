@@ -116,8 +116,10 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> ENTITY_MIMIC_KILL = register("entity.mimic.kill");
 
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_AWAKEN = register("entity.slider.awaken");
+	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_AMBIENT = register("entity.slider.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_COLLIDE = register("entity.slider.collide");
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_MOVE = register("entity.slider.move");
+	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_HURT = register("entity.slider.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_DEATH = register("entity.slider.death");
 
 	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_DEATH = register("entity.valkyrie.death");

@@ -358,6 +358,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG, "Evil Whirlwind Spawn Egg");
         addItem(AetherItems.VALKYRIE_SPAWN_EGG, "Valkyrie Spawn Egg");
         addItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG, "Valkyrie Queen Spawn Egg");
+        addItem(AetherItems.SLIDER_SPAWN_EGG, "Slider Spawn Egg");
         addItem(AetherItems.SUN_SPIRIT_SPAWN_EGG, "Sun Spirit Spawn Egg");
         addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
 
@@ -382,6 +383,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.VALKYRIE, "Valkyrie");
         addEntityType(AetherEntityTypes.FIRE_MINION, "Fire Minion");
 
+        addEntityType(AetherEntityTypes.SLIDER, "Slider");
         addEntityType(AetherEntityTypes.VALKYRIE_QUEEN, "Valkyrie Queen");
         addEntityType(AetherEntityTypes.SUN_SPIRIT, "Sun Spirit");
 
@@ -447,10 +449,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addAdvancementDesc("incubator", "Incubate a Moa");
         addAdvancementDesc("altar", "Craft an Altar");
         addAdvancementDesc("gravitite_tools", "Craft a Gravitite tool");
-        addAdvancementDesc("mount_phyg", "Fly on a Phyg");
-        addAdvancementDesc("bronze_dungeon", "Defeat the Bronze Dungeon boss");
-        addAdvancementDesc("silver_dungeon", "Defeat the Silver Dungeon boss");
-        addAdvancementDesc("gold_dungeon", "Defeat the Golden Dungeon boss");
+        addAdvancementDesc("mount_phyg", "Fly on a Phyg!");
+        addAdvancementDesc("bronze_dungeon", "Defeat the bronze boss");
+        addAdvancementDesc("silver_dungeon", "Defeat the silver boss");
+        addAdvancementDesc("gold_dungeon", "Defeat the gold boss");
 
 
         addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");
@@ -543,8 +545,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("entity", "mimic.kill", "Mimic burps");
 
         addSubtitle("entity", "slider.awaken", "Slider awakens");
+        addSubtitle("entity", "slider.ambient", "Slider drones");
         addSubtitle("entity", "slider.collide", "Slider smashes");
         addSubtitle("entity", "slider.move", "Slider slides");
+        addSubtitle("entity", "slider.hurt", "Slider hurts");
         addSubtitle("entity", "slider.death", "Slider breaks");
 
         addSubtitle("entity", "valkyrie.death", "Valkyrie dies");
@@ -568,6 +572,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addDeath("inebriation", "%1$s was inebriated");
         addDeath("inebriation.player", "%1$s was inebriated by %2$s");
+        addDeath("crush", "%1$s was crushed by %2$s");
         addDeath("ice_crystal", "%1$s was chilled by %2$s's Ice Crystal");
         addDeath("incineration", "%1$s was incinerated by %2$s");
 
@@ -593,6 +598,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("recipebook.toggleRecipes.enchantable", "Showing Enchantable");
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
         addGuiText("recipebook.toggleRecipes.incubatable", "Showing Incubatable");
+
+
+        addGuiText("slider.title", "the Slider");
+        addGuiText("slider.message.attack.invalid", "Hmm. Perhaps I need to attack it with a Pickaxe?");
 
         //Valkyrie dialogue
         addGuiText("valkyrie.dialog.1", "What's that? You want to fight? Aww, what a cute little human.");
@@ -1058,8 +1067,11 @@ public class AetherLanguageData extends AetherLanguageProvider
         addClientConfig("gui", "align_aether_menu_elements_left", "Aligns the elements of the Aether menu to the left, only works if 'Align menu left with world preview' is set to false");
         addClientConfig("gui", "enable_trivia", "Adds random trivia and tips to the bottom of loading screens");
 
-        addClientConfig("audio", "disable_aether_menu_music", "Disables the Aether's menu music in case another mod implements its own");
-        addClientConfig("audio", "disable_vanilla_world_preview_menu_music", "Disables the menu music on the vanilla world preview menu");
-        addClientConfig("audio", "disable_aether_world_preview_menu_music", "Disables the menu music on the Aether world preview menu");
+        addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
+        addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
+        addClientConfig("audio", "disable_music_manager", "Disables the Aether's internal music manager, if true, this overrides all other audio configs");
+        addClientConfig("audio", "disable_aether_menu_music", "Disables the Aether's menu music in case another mod implements its own, only works if 'Disables Aether music manager' is false");
+        addClientConfig("audio", "disable_vanilla_world_preview_menu_music", "Disables the menu music on the vanilla world preview menu, only works if 'Disables Aether music manager' is false");
+        addClientConfig("audio", "disable_aether_world_preview_menu_music", "Disables the menu music on the Aether world preview menu, only works if 'Disables Aether music manager' is false");
     }
 }

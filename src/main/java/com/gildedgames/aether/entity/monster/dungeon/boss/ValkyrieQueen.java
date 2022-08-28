@@ -1,10 +1,11 @@
-package com.gildedgames.aether.entity.monster.dungeon;
+package com.gildedgames.aether.entity.monster.dungeon.boss;
 
 import com.gildedgames.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.entity.NpcDialogue;
 import com.gildedgames.aether.entity.ai.goal.NpcDialogueGoal;
+import com.gildedgames.aether.entity.monster.dungeon.AbstractValkyrie;
 import com.gildedgames.aether.entity.projectile.crystal.ThunderCrystal;
 import com.gildedgames.aether.network.packet.server.NpcPlayerInteractPacket;
 import com.gildedgames.aether.entity.AetherEntityTypes;

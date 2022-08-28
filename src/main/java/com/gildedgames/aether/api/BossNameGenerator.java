@@ -85,6 +85,14 @@ public class BossNameGenerator {
     }
 
     /**
+     * Generates a name for the slider boss.
+     */
+    public static MutableComponent generateSliderName() {
+        MutableComponent result = generateBossName();
+        return result.append(Component.translatable("gui.aether.slider.title"));
+    }
+
+    /**
      * Generates a name for the valkyrie queen boss.
      */
     public static MutableComponent generateValkyrieName() {
