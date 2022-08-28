@@ -4,6 +4,8 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.gildedgames.aether.client.AetherKeys;
 import com.gildedgames.aether.inventory.menu.AccessoriesMenu;
+import com.gildedgames.aether.network.AetherPacketHandler;
+import com.gildedgames.aether.network.packet.server.ClearItemPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -20,10 +22,13 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.PacketDistributor;
 import top.theillusivec4.curios.Curios;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
@@ -34,9 +39,11 @@ import top.theillusivec4.curios.common.network.NetworkHandler;
 import top.theillusivec4.curios.common.network.client.CPacketToggleRender;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class AccessoriesScreen extends EffectRenderingInventoryScreen<AccessoriesMenu> implements RecipeUpdateListener {
     public static final ResourceLocation ACCESSORIES_INVENTORY = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories.png");
+    public static final ResourceLocation ACCESSORIES_INVENTORY_CREATIVE = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories_creative.png");
     public static final ResourceLocation CURIO_INVENTORY = new ResourceLocation(Curios.MODID, "textures/gui/inventory.png");
 
     public static final ResourceLocation ACCESSORIES_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/inventory/button/accessories_button.png");
@@ -50,10 +57,14 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     private boolean widthTooNarrow;
     private boolean buttonClicked;
     private boolean isRenderButtonHovered;
+    private final Inventory playerInventory;
+    @Nullable
+    private Slot destroyItemSlot;
 
     public AccessoriesScreen(AccessoriesMenu accessoriesMenu, Inventory playerInventory, Component title) {
         super(accessoriesMenu, playerInventory, title);
         this.passEvents = true;
+        this.playerInventory = playerInventory;
     }
 
     @Override
@@ -182,6 +193,20 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                     this.renderTooltip(poseStack, Component.literal(curioSlot.getSlotName()), mouseX, mouseY);
                 }
             }
+
+            if (this.minecraft != null && this.minecraft.player != null) {
+                if (this.minecraft.player.isCreative() && this.destroyItemSlot == null) {
+                    this.destroyItemSlot = new Slot(this.playerInventory, 0, 172, 142);
+                    this.menu.slots.add(this.destroyItemSlot);
+                } else if (!this.minecraft.player.isCreative() && this.destroyItemSlot != null) {
+                    this.menu.slots.remove(this.destroyItemSlot);
+                    this.destroyItemSlot = null;
+                }
+            }
+
+            if (this.destroyItemSlot != null && this.isHovering(this.destroyItemSlot.x, this.destroyItemSlot.y, 16, 16, mouseX, mouseY)) {
+                this.renderTooltip(poseStack, Component.translatable("inventory.binSlot"), mouseX, mouseY);
+            }
         }
         this.renderTooltip(poseStack, mouseX, mouseY);
         this.recipeBookComponent.renderTooltip(poseStack, this.leftPos, this.topPos, mouseX, mouseY);
@@ -192,10 +217,11 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
         if (this.minecraft != null && this.minecraft.player != null) {
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, ACCESSORIES_INVENTORY);
+            RenderSystem.setShaderTexture(0, this.minecraft.player.isCreative() ? ACCESSORIES_INVENTORY_CREATIVE : ACCESSORIES_INVENTORY);
             int i = this.getGuiLeft();
             int j = this.getGuiTop();
-            this.blit(matrixStack, i, j, 0, 0, this.getXSize(), this.getYSize());
+            int xAddition = this.minecraft.player.isCreative() ? 18 : 0;
+            this.blit(matrixStack, i, j, 0, 0, this.getXSize() + xAddition, this.getYSize());
             InventoryScreen.renderEntityInInventory(i + 33, j + 75, 30, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.minecraft.player);
         }
     }
@@ -271,8 +297,38 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
     @Override
     protected void slotClicked(@Nonnull Slot slot, int slotId, int mouseButton, @Nonnull ClickType type) {
-        super.slotClicked(slot, slotId, mouseButton, type);
         this.recipeBookComponent.slotClicked(slot);
+        if (this.minecraft != null && this.minecraft.player != null && this.minecraft.gameMode != null) {
+            Aether.LOGGER.info(0);
+            boolean flag = type == ClickType.QUICK_MOVE;
+            type = slotId == -999 && type == ClickType.PICKUP ? ClickType.THROW : type;
+            if (slot != null || type == ClickType.QUICK_CRAFT) {
+                Aether.LOGGER.info(1);
+                if (slot == null || slot.mayPickup(this.minecraft.player)) {
+                    Aether.LOGGER.info(2);
+                    if (slot == this.destroyItemSlot && flag) {
+                        Aether.LOGGER.info(3);
+                        for (int j = 0; j < this.minecraft.player.inventoryMenu.getItems().size(); ++j) {
+                            this.minecraft.gameMode.handleCreativeModeItemAdd(ItemStack.EMPTY, j);
+                        }
+                    } else if (slot == this.destroyItemSlot) {
+                        Aether.LOGGER.info(4);
+
+                        Aether.LOGGER.info(5);
+                        Aether.LOGGER.info(this.menu.getCarried());
+                        this.menu.setCarried(ItemStack.EMPTY); //todo this just doesnt work even though its called.
+                        AetherPacketHandler.sendToNear(new ClearItemPacket(this.minecraft.player.getId()), this.minecraft.player.getX(), this.minecraft.player.getY(), this.minecraft.player.getZ(), 5.0, this.minecraft.player.level.dimension());
+
+                    } else {
+                        super.slotClicked(slot, slotId, mouseButton, type);
+                    }
+                } else {
+                    super.slotClicked(slot, slotId, mouseButton, type);
+                }
+            } else {
+                super.slotClicked(slot, slotId, mouseButton, type);
+            }
+        }
     }
 
     @Override

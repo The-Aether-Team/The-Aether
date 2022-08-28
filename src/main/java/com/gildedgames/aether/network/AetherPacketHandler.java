@@ -50,6 +50,7 @@ public class AetherPacketHandler {
 
 		// SERVER
 		register(AerbunnyPuffPacket.class, AerbunnyPuffPacket::decode);
+		register(ClearItemPacket.class, ClearItemPacket::decode);
 		register(HittingPacket.class, HittingPacket::decode);
 		register(JumpPacket.class, JumpPacket::decode);
 		register(LoreExistsPacket.class, LoreExistsPacket::decode);
