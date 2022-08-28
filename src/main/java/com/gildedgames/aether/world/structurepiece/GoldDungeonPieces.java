@@ -1,5 +1,6 @@
 package com.gildedgames.aether.world.structurepiece;
 
+import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.gildedgames.aether.world.processor.HellfireStoneProcessor;
@@ -16,6 +17,9 @@ import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import net.minecraft.world.phys.AABB;
+
+import java.util.ArrayList;
 
 /**
  * Class for all the pieces of the gold dungeon.
@@ -41,12 +45,16 @@ public class GoldDungeonPieces {
         }
 
         @Override
-        protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox aabb) {
+        protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox boundingBox) {
             if (name.equals("Sun Spirit")) {
                 SunSpirit sunSpirit = new SunSpirit(AetherEntityTypes.SUN_SPIRIT.get(), level.getLevel());
                 sunSpirit.setPersistenceRequired();
                 sunSpirit.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
                 sunSpirit.finalizeSpawn(level, level.getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
+                sunSpirit.setDungeon(new DungeonTracker<>(sunSpirit,
+                        sunSpirit.position(),
+                        new AABB(this.boundingBox.minX(), this.boundingBox.minY(), this.boundingBox.minZ(), this.boundingBox.maxX(), this.boundingBox.maxY(), this.boundingBox.maxZ()),
+                        new ArrayList<>()));
                 level.getLevel().addFreshEntity(sunSpirit);
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
             }
@@ -56,7 +64,7 @@ public class GoldDungeonPieces {
     /**
      * The chunks of land surrounding the boss room to form an island.
      */
-    public static class Island extends TemplateStructurePiece {
+    public static class Island extends TemplateStructurePiece { // TODO: This might be unnecessary.
 
         public Island(StructureTemplateManager manager, ResourceLocation id, BlockPos pos) {
             super(AetherStructurePieceTypes.GOLD_ISLAND.get(), 0, manager, id, id.toString(), makeSettings(), pos);

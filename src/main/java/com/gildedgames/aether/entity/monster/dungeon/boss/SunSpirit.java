@@ -1,10 +1,12 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss;
 
 import com.gildedgames.aether.AetherConfig;
+import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.capability.AetherCapabilities;
+import com.gildedgames.aether.entity.ai.controller.BlankMoveControl;
 import com.gildedgames.aether.entity.monster.dungeon.AbstractValkyrie;
 import com.gildedgames.aether.entity.monster.dungeon.FireMinion;
 import com.gildedgames.aether.entity.projectile.crystal.AbstractCrystal;
@@ -56,10 +58,11 @@ import java.util.List;
  * Implementation for the sun spirit, the final boss of the Aether. When the sun spirit is defeated, eternal day will
  * end in the dimension.
  */
-public class SunSpirit extends Monster implements BossMob {
+public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
 
+    private DungeonTracker<SunSpirit> goldDungeon;
     /** Boss health bar manager */
     private final ServerBossEvent bossFight;
     /** The sun spirit will return here when not in a fight. */
@@ -75,7 +78,7 @@ public class SunSpirit extends Monster implements BossMob {
 
     public SunSpirit(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
-        this.moveControl = new SunSpiritMoveControl(this);
+        this.moveControl = new BlankMoveControl(this);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
         this.setBossFight(false);
         this.xpReward = XP_REWARD_BOSS;
@@ -90,7 +93,7 @@ public class SunSpirit extends Monster implements BossMob {
     public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
         this.setBossName(BossNameGenerator.generateSunSpiritName());
-        this.originPos = new Vec3(this.getX(), this.getY(), this.getZ());
+        this.originPos = this.position();
         return data;
     }
 
@@ -152,6 +155,7 @@ public class SunSpirit extends Monster implements BossMob {
         if (this.chatCooldown > 0) {
             this.chatCooldown--;
         }
+        this.trackDungeon();
     }
 
     @Override
@@ -185,15 +189,18 @@ public class SunSpirit extends Monster implements BossMob {
      * Plays the sun spirit's defeat message and ends eternal day.
      */
     @Override
-    public void die(@Nonnull DamageSource pCause) {
+    public void die(@Nonnull DamageSource cause) {
         if (!this.level.isClientSide) {
             this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.dead").withStyle(ChatFormatting.AQUA));
             this.level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent(aetherTime -> {
                 aetherTime.setEternalDay(false);
                 aetherTime.updateEternalDay();
             });
+            if (this.getDungeon() != null) {
+                this.getDungeon().grantAdvancements(cause);
+            }
         }
-        super.die(pCause);
+        super.die(cause);
     }
 
     @Override
@@ -316,6 +323,9 @@ public class SunSpirit extends Monster implements BossMob {
         tag.putDouble("OriginY", this.originPos.y);
         tag.putDouble("OriginZ", this.originPos.z);
         tag.putInt("ChatLine", this.chatLine);
+        if (this.getDungeon() != null) {
+            tag.put("Dungeon", this.getDungeon().addAdditionalSaveData());
+        }
     }
 
     @Override
@@ -331,6 +341,9 @@ public class SunSpirit extends Monster implements BossMob {
         if (tag.contains("ChatLine")) {
             this.chatLine = tag.getInt("ChatLine");
         }
+        if (tag.contains("Dungeon") && tag.get("Dungeon") instanceof CompoundTag dungeonTag) {
+            this.setDungeon(DungeonTracker.readAdditionalSaveData(dungeonTag, this));
+        }
     }
 
     @Override
@@ -341,6 +354,27 @@ public class SunSpirit extends Monster implements BossMob {
     @Override
     protected SoundEvent getDeathSound() {
         return null;
+    }
+
+    @Override
+    public DungeonTracker<SunSpirit> getDungeon() {
+        return this.goldDungeon;
+    }
+
+    @Override
+    public void setDungeon(DungeonTracker<SunSpirit> dungeon) {
+        this.goldDungeon = dungeon;
+    }
+
+    @Override
+    public int getDeathScore() {
+        return 0;
+    }
+
+    @Override
+    public void reset() {
+        this.setBossFight(false);
+        this.setHealth(this.getMaxHealth());
     }
 
     /**
@@ -489,15 +523,5 @@ public class SunSpirit extends Monster implements BossMob {
             }
             this.shootInterval = 0;
         }
-    }
-
-    public static class SunSpiritMoveControl extends MoveControl {
-
-        public SunSpiritMoveControl(Mob mob) {
-            super(mob);
-        }
-
-        @Override
-        public void tick() {}
     }
 }
