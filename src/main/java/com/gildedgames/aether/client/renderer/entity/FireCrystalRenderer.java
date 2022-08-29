@@ -9,16 +9,16 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class IceCrystalRenderer<T extends AbstractCrystal> extends AbstractCrystalRenderer<T> {
-    private static final ResourceLocation ICE_CRYSTAL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/crystals/ice_ball.png");
+public class FireCrystalRenderer<T extends AbstractCrystal> extends AbstractCrystalRenderer<T> {
+    private static final ResourceLocation FIRE_CRYSTAL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/crystals/fire_ball.png");
 
-    public IceCrystalRenderer(EntityRendererProvider.Context context) {
+    public FireCrystalRenderer(EntityRendererProvider.Context context) {
         super(context, new CrystalModel<>(context.bakeLayer(AetherModelLayers.CLOUD_CRYSTAL)));
     }
 
     @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull T crystal) {
-        return ICE_CRYSTAL_TEXTURE;
+    public ResourceLocation getTextureLocation(@Nonnull T pEntity) {
+        return FIRE_CRYSTAL_TEXTURE;
     }
 }

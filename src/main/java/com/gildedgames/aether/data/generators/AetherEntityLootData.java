@@ -224,6 +224,11 @@ public class AetherEntityLootData extends EntityLoot {
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
                         )
                 )
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(AetherBlocks.SUN_ALTAR.get())
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+                        )
+                )
         );
     }
 
