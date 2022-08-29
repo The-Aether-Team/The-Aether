@@ -286,7 +286,6 @@ public class AetherOverlays {
         int overallHearts = Mth.ceil((double) displayOverallHealth / 2.0D);
         int lifeShardHearts = Mth.ceil((double) displayLifeShardHealth / 2.0D);
         int maxDefaultHearts = Mth.ceil((double) maxDefaultHealth / 2.0D);
-        int maxHealth = lifeShardHearts * 2;
         for (int i = lifeShardHearts - 1; i >= 0; --i) {
             int j1 = i / 10;
             int k1 = i % 10;
@@ -295,16 +294,7 @@ public class AetherOverlays {
             if (i + maxDefaultHearts < overallHearts && i + maxDefaultHearts == regen) {
                 i2 -= 2;
             }
-            gui.renderHeart(poseStack, Gui.HeartType.CONTAINER, l1, i2, 0, highlight, false);
             int j = i * 2;
-            boolean flag = i >= j;
-            if (flag) {
-                int k2 = j - maxHealth;
-                if (k2 < 0) {
-                    boolean flag1 = k2 + 1 == 0;
-                    gui.renderHeart(poseStack, heartType == Gui.HeartType.WITHERED ? heartType : Gui.HeartType.ABSORBING, l1, i2, 0, false, flag1);
-                }
-            }
             if (highlight && j < lastLifeShardHealth) {
                 boolean flag2 = j + 1 == lastLifeShardHealth;
                 gui.renderHeart(poseStack, heartType, l1, i2, 0, true, flag2);
