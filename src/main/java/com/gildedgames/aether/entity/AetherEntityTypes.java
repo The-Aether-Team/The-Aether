@@ -102,7 +102,7 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.of(FireMinion::new, MobCategory.MONSTER).fireImmune().sized(0.8F, 1.95F).clientTrackingRange(8).build("fire_minion"));
 
     public static final RegistryObject<EntityType<SunSpirit>> SUN_SPIRIT = ENTITY_TYPES.register("sun_spirit",
-            () -> EntityType.Builder.of(SunSpirit::new, MobCategory.MONSTER).sized(2.5F, 2.8F).fireImmune().clientTrackingRange(10).build("sun_spirit"));
+            () -> EntityType.Builder.of(SunSpirit::new, MobCategory.MONSTER).sized(2.8F, 3.4F).fireImmune().clientTrackingRange(10).build("sun_spirit"));
 
 
     // Miscellaneous
@@ -135,10 +135,10 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.<CloudCrystal>of(CloudCrystal::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(10).build("cloud_crystal"));
 
     public static final RegistryObject<EntityType<FireCrystal>> FIRE_CRYSTAL = ENTITY_TYPES.register("fire_crystal",
-            () -> EntityType.Builder.<FireCrystal>of(FireCrystal::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(10).fireImmune().build("fire_crystal"));
+            () -> EntityType.Builder.<FireCrystal>of(FireCrystal::new, MobCategory.MISC).sized(0.9F, 0.9F).clientTrackingRange(4).updateInterval(10).fireImmune().build("fire_crystal"));
 
     public static final RegistryObject<EntityType<IceCrystal>> ICE_CRYSTAL = ENTITY_TYPES.register("ice_crystal",
-            () -> EntityType.Builder.<IceCrystal>of(IceCrystal::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(10).fireImmune().build("ice_crystal"));
+            () -> EntityType.Builder.<IceCrystal>of(IceCrystal::new, MobCategory.MISC).sized(0.9F, 0.9F).clientTrackingRange(4).updateInterval(10).fireImmune().build("ice_crystal"));
 
     public static final RegistryObject<EntityType<ThunderCrystal>> THUNDER_CRYSTAL = ENTITY_TYPES.register("thunder_crystal",
             () -> EntityType.Builder.<ThunderCrystal>of(ThunderCrystal::new, MobCategory.MISC).sized(0.7F, 0.7F).updateInterval(2).build("thunder_crystal"));

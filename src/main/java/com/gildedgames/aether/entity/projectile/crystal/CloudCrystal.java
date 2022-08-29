@@ -56,6 +56,12 @@ public class CloudCrystal extends AbstractCrystal {
     }
 
     @Override
+    protected void tickMovement() {
+        super.tickMovement();
+        this.setDeltaMovement(this.getDeltaMovement().scale(0.99F));
+    }
+
+    @Override
     protected void onHitBlock(@Nonnull BlockHitResult result) {
         super.onHitBlock(result);
         this.spawnExplosionParticles();

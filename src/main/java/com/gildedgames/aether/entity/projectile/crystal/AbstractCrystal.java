@@ -72,7 +72,6 @@ public abstract class AbstractCrystal extends Projectile {
         double d0 = this.getY() + vector3d.y;
         double d1 = this.getZ() + vector3d.z;
         this.updateRotation();
-        this.setDeltaMovement(vector3d.scale(0.99F));
         this.setPos(d2, d0, d1);
     }
 

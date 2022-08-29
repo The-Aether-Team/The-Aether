@@ -192,6 +192,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     @Override
     public void die(@Nonnull DamageSource cause) {
         if (!this.level.isClientSide) {
+            this.setFrozen(true);
             this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.dead").withStyle(ChatFormatting.AQUA));
             this.level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent(aetherTime -> {
                 aetherTime.setEternalDay(false);
@@ -490,7 +491,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
                 crystal = new FireCrystal(this.sunSpirit.level, this.sunSpirit);
             }
             this.sunSpirit.level.addFreshEntity(crystal);
-            this.shootInterval = (int) (55 + sunSpirit.getHealth() / 2);
+            this.shootInterval = (int) (28 + sunSpirit.getHealth() / 4);
         }
     }
 
@@ -509,7 +510,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
         @Override
         public boolean canUse() {
-            return ++this.shootInterval >= 40;
+            return ++this.shootInterval >= 20;
         }
 
         @Override

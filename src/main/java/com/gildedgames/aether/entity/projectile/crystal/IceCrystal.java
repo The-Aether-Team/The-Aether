@@ -42,7 +42,7 @@ public class IceCrystal extends AbstractCrystal {
     public IceCrystal(Level level, Entity shooter) {
         this(AetherEntityTypes.ICE_CRYSTAL.get(), level);
         this.setOwner(shooter);
-        this.setPos(shooter.getX(), shooter.getY() + 0.5, shooter.getZ());
+        this.setPos(shooter.getX(), shooter.getY() + 1, shooter.getZ());
         this.xPower = (0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1)) / 3;
         this.zPower = (0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1)) / 3;
         this.setDeltaMovement(this.xPower, 0, this.zPower);
