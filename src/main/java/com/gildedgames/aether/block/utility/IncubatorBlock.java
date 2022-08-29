@@ -92,6 +92,7 @@ public class IncubatorBlock extends BaseEntityBlock
 			BlockEntity blockentity = level.getBlockEntity(pos);
 			if (blockentity instanceof IncubatorBlockEntity incubatorBlockEntity) {
 				incubatorBlockEntity.setCustomName(stack.getHoverName());
+				incubatorBlockEntity.setChanged();
 			}
 		}
 	}

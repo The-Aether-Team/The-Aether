@@ -20,17 +20,17 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
-        classpath 'org.parchmentmc:librarian:1.+'
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7.+', changing: true
+        classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+', changing: true
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
-apply plugin: 'org.spongepowered.mixin'
 
-version = project.mc_version + '-v' + project.aether_version
+version = project.mc_version + '-' + project.aether_version
 group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'aether'
 
@@ -49,10 +49,6 @@ minecraft {
             //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             //property 'forge.logging.console.level', 'debug'
 
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-            arg "--mixin=aether.mixins.json"
-
             mods {
                 aether {
                     source sourceSets.main
@@ -65,10 +61,6 @@ minecraft {
 
             //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             //property 'forge.logging.console.level', 'debug'
-
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-            arg "--mixin=aether.mixins.json"
 
             mods {
                 aether {
@@ -103,7 +95,7 @@ sourceSets.main.resources {
 dependencies {
     minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.5-SNAPSHOT:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}:api")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
@@ -111,6 +103,11 @@ dependencies {
 
     compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}:api")
     compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
+
+    jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") {
+        jarJar.ranged(it, "[${project.curios_version},)")
+        jarJar.pin(it, "${project.curios_version}")
+    }
 
     // compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
 
@@ -123,7 +120,6 @@ dependencies {
 }
 
 repositories {
-    maven { url = "https://repo.spongepowered.org/maven" }
     maven { url = "https://maven.blamejared.com" }
     maven { url = "https://maven.theillusivec4.top/" }
     maven { url = "https://www.cursemaven.com" }
@@ -144,10 +140,18 @@ jar {
     }
 }
 
+jar.finalizedBy('reobfJar')
+
+reobf.create('jarJar')
+
 def reobfFile = file("$buildDir/reobfJar/output.jar")
 def reobfArtifact = artifacts.add('default', reobfFile) {
     type 'jar'
     builtBy 'reobfJar'
+}
+
+tasks.jarJar.configure {
+    archiveClassifier = ""
 }
 
 publishing {
@@ -166,4 +170,8 @@ publishing {
 mixin {
     config "aether.mixins.json"
     add sourceSets.main, "aether.refmap.json"
+}
+
+build {
+    dependsOn 'jarJar'
 }

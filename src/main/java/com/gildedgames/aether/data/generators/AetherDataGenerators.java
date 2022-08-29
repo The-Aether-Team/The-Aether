@@ -29,18 +29,18 @@ import net.minecraftforge.common.data.JsonCodecProvider;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AetherDataGenerators<T> {
+public class AetherDataGenerators {
     public static RegistryAccess DATA_REGISTRY = RegistryAccess.builtinCopy();
 
-    public DataProvider create(DataGenerator generator, ExistingFileHelper helper, Map<ResourceLocation, T> map, ResourceKey<Registry<T>> registryKey) {
+    public static <T> DataProvider create(DataGenerator generator, ExistingFileHelper helper, Map<ResourceLocation, T> map, ResourceKey<Registry<T>> registryKey) {
         return JsonCodecProvider.forDatapackRegistry(generator, helper, Aether.MODID, RegistryOps.create(JsonOps.INSTANCE, DATA_REGISTRY), registryKey, map);
     }
 
-    public DataProvider create(RegistryAccess registryAccess, DataGenerator generator, ExistingFileHelper helper, Map<ResourceLocation, T> map, ResourceKey<Registry<T>> registryKey) {
+    public static <T> DataProvider create(RegistryAccess registryAccess, DataGenerator generator, ExistingFileHelper helper, Map<ResourceLocation, T> map, ResourceKey<Registry<T>> registryKey) {
         return JsonCodecProvider.forDatapackRegistry(generator, helper, Aether.MODID, RegistryOps.create(JsonOps.INSTANCE, registryAccess), registryKey, map);
     }
 
-    public DataProvider levelStem(DataGenerator generator, ExistingFileHelper helper) {
+    public static DataProvider levelStem(DataGenerator generator, ExistingFileHelper helper) {
         RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, DATA_REGISTRY);
         Map<ResourceLocation, LevelStem> map = new HashMap<>();
         Registry<Biome> biomeRegistry = registryOps.registry(Registry.BIOME_REGISTRY).orElseThrow();
@@ -57,7 +57,7 @@ public class AetherDataGenerators<T> {
         return new JsonCodecProvider<>(generator, helper, Aether.MODID, registryOps, PackType.SERVER_DATA, registryFolder, LevelStem.CODEC, map);
     }
 
-    public Holder<NoiseGeneratorSettings> getNoiseGeneratorSettings(Registry<NoiseGeneratorSettings> registry) {
+    public static Holder<NoiseGeneratorSettings> getNoiseGeneratorSettings(Registry<NoiseGeneratorSettings> registry) {
         Holder.Reference<NoiseGeneratorSettings> holder = (Holder.Reference<NoiseGeneratorSettings>) registry.getOrCreateHolderOrThrow(AetherNoiseGeneratorSettings.SKYLANDS);
         NoiseGeneratorSettings noiseGeneratorSettings = AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS.get(AetherNoiseGeneratorSettings.SKYLANDS.location());
         holder.bind(AetherNoiseGeneratorSettings.SKYLANDS, noiseGeneratorSettings);

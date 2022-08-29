@@ -9,5 +9,6 @@ import net.minecraftforge.registries.RegistryObject;
 public class AetherStructureTypes {
     public static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES = DeferredRegister.create(Registry.STRUCTURE_TYPE_REGISTRY, Aether.MODID);
 
-    public static RegistryObject<StructureType<LargeAercloudStructure>> LARGE_AERCLOUD = STRUCTURE_TYPES.register("large_aercloud", () -> () -> LargeAercloudStructure.CODEC);
+    public static final RegistryObject<StructureType<LargeAercloudStructure>> LARGE_AERCLOUD = STRUCTURE_TYPES.register("large_aercloud", () -> () -> LargeAercloudStructure.CODEC);
+    public static final RegistryObject<StructureType<GoldDungeonStructure>> GOLD_DUNGEON = STRUCTURE_TYPES.register("gold_dungeon", () -> () -> GoldDungeonStructure.CODEC);
 }

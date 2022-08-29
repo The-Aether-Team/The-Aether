@@ -1,4 +1,4 @@
-// 1.19.1	2022-07-30T12:42:07.5890705	Aether Item Models
+// 1.19.2	2022-08-19T18:20:55.9859835	Aether Item Models
 88dbeab79e0017737773db746d2e719a21fdb198 assets/aether/models/item/aechor_petal.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aechor_plant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aerbunny_spawn_egg.json
@@ -225,6 +225,7 @@ f06d9a4ad525af37c8a00eab1299fb67cd3d076a assets/aether/models/item/skyroot_sword
 e0387df2707c173961406c32ca673a4e5fba405d assets/aether/models/item/skyroot_tropical_fish_bucket.json
 67bdeabe9255c36fee5b8cfcaa80c7c5bb065a76 assets/aether/models/item/skyroot_water_bucket.json
 3895ca817a3ea5cdae74b4f61a7ce4ece15bb9fc assets/aether/models/item/skyroot_wood.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/slider_spawn_egg.json
 35509e4f53fd8b6519f382ee0f85006d094ad023 assets/aether/models/item/stripped_skyroot_log.json
 2738e8e7598c8b3c1659ea7a07ddb5167c59efad assets/aether/models/item/stripped_skyroot_wood.json
 93fdd82aa5b74627525621d3924796b4da7a1f57 assets/aether/models/item/sun_altar.json

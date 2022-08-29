@@ -1,6 +1,6 @@
 package com.gildedgames.aether.mixin.mixins.client;
 
-import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
+import com.gildedgames.aether.api.WorldDisplayHelper;
 import net.minecraft.client.gui.screens.TitleScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class TitleScreenMixin {
     @Inject(at = @At(value = "HEAD"), method = "isPauseScreen", cancellable = true)
     public void isPauseScreen(CallbackInfoReturnable<Boolean> cir) {
-        if (AetherWorldDisplayHelper.loadedSummary != null && AetherWorldDisplayHelper.loadedLevel != null) {
+        if (WorldDisplayHelper.loadedSummary != null && WorldDisplayHelper.loadedLevel != null) {
             cir.setReturnValue(true);
         }
     }

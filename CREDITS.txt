@@ -26,6 +26,9 @@ CDAGaming:
 InsomniaKitten
 - Providing the accessory inventory texture.
 
+Jonathing
+- Fixes to jarJar-built file not reobfuscating.
+
 Kelvin285
 - Implementation of the world preview feature for the Aether's main menu.
 

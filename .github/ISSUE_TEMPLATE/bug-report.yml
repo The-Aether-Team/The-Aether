@@ -14,10 +14,10 @@ body:
         - Block
         - Config
         - Copy
+        - Docs
         - Entity
+        - Gui
         - Item
-        - Performance
-        - Server
         - System
         - World-Gen
         - Other (Please Describe)
@@ -34,8 +34,11 @@ body:
       label: What Type of Bug Is This?
       options:
         - Annoyance
-        - Unexpected Behavior
+        - Compatibility
         - Crash
+        - Design
+        - Performance
+        - Unexpected Behavior
   - type: input
     id: forge-ver
     attributes:

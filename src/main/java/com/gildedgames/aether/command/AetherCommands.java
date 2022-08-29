@@ -14,9 +14,10 @@ public class AetherCommands {
     public static void registerCommands(RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
         Commands.CommandSelection selection = event.getCommandSelection();
-        SunAltarWhitelistCommand.register(dispatcher);
         AetherTimeCommand.register(dispatcher);
         EternalDayCommand.register(dispatcher);
-        AetherMenuFixCommand.register(dispatcher, selection == Commands.CommandSelection.INTEGRATED);
+        PlayerCapabilityCommand.register(dispatcher);
+        SunAltarWhitelistCommand.register(dispatcher);
+        WorldPreviewFixCommand.register(dispatcher, selection == Commands.CommandSelection.INTEGRATED);
     }
 }
