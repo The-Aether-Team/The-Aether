@@ -147,6 +147,7 @@ public class AetherConfig
         public final ConfigValue<Boolean> align_vanilla_menu_elements_left;
         public final ConfigValue<Boolean> align_aether_menu_elements_left;
         public final ConfigValue<Boolean> enable_trivia;
+        public final ConfigValue<Boolean> enable_silver_hearts;
 
         public final ConfigValue<Integer> music_backup_min_delay;
         public final ConfigValue<Integer> music_backup_max_delay;
@@ -204,6 +205,10 @@ public class AetherConfig
                     .comment("Adds random trivia and tips to the bottom of loading screens")
                     .translation("config.aether.client.gui.enable_trivia")
                     .define("Enables random trivia", true);
+            enable_silver_hearts = builder
+                    .comment("Makes the extra hearts given by life shards display as silver colored")
+                    .translation("config.aether.client.gui.enable_silver_hearts")
+                    .define("Enables silver life shard hearts", true);
             builder.pop();
 
             builder.push("Audio");
