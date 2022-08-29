@@ -219,6 +219,7 @@
   "config.aether.client.gui.enable_aether_menu": "Changes the vanilla Minecraft menu into the Aether menu",
   "config.aether.client.gui.enable_aether_menu_button": "Adds a button to the top right of the main menu screen to toggle between the Aether and vanilla menu",
   "config.aether.client.gui.enable_quick_load_button": "Adds a button to the top right of the main menu screen to allow quick loading into a world if the world preview is enabled",
+  "config.aether.client.gui.enable_silver_hearts": "Makes the extra hearts given by life shards display as silver colored",
   "config.aether.client.gui.enable_trivia": "Adds random trivia and tips to the bottom of loading screens",
   "config.aether.client.gui.enable_world_preview": "Changes the background panorama into a preview of the latest played world",
   "config.aether.client.gui.enable_world_preview_button": "Adds a button to the top right of the main menu screen to toggle between the panorama and world preview",
