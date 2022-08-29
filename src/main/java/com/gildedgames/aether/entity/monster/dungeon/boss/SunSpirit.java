@@ -24,6 +24,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -45,6 +46,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -77,7 +81,6 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
     public SunSpirit(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
-//        this.lookControl = new SunSpiritLookControl(this);
         this.moveControl = new BlankMoveControl(this);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
         this.setBossFight(false);
@@ -156,6 +159,10 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
             this.chatCooldown--;
         }
         this.trackDungeon();
+        if (this.tickCount % 10 == 0) {
+            this.evaporate();
+        }
+        this.checkIceCrystals();
     }
 
     @Override
@@ -251,6 +258,38 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
             }
         }
         return super.mobInteract(player, hand);
+    }
+
+
+    private void evaporate() {
+        AABB aabb = this.getBoundingBox();
+        BlockPos min = new BlockPos(aabb.minX - this.xMax, aabb.minY - 3, aabb.minZ - this.zMax);
+        BlockPos max = new BlockPos(Math.ceil(aabb.maxX - 1) + this.xMax, Math.ceil(aabb.maxY - 1) + 4, Math.ceil(aabb.maxZ - 1) + this.zMax);
+        for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
+            if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
+                this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                this.blockDestroySmoke(pos);
+            } else if (!this.level.getFluidState(pos).isEmpty()) {
+                this.level.setBlockAndUpdate(pos, this.level.getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
+            }
+        }
+    }
+
+    private void blockDestroySmoke(BlockPos pos) {
+        double a = pos.getX() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
+        double b = pos.getY() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
+        double c = pos.getZ() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
+        if (this.level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.POOF, a, b, c, 1, 0.0, 0.0, 0.0, 0.0);
+        }
+    }
+
+    private void checkIceCrystals() {
+        for (IceCrystal iceCrystal : this.level.getEntitiesOfClass(IceCrystal.class, this.getBoundingBox().inflate(0.1))) {
+            if (iceCrystal.getOwner() != this) {
+                iceCrystal.doDamage(this);
+            }
+        }
     }
 
     /**

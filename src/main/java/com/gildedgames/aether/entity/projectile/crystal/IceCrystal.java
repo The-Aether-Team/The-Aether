@@ -50,7 +50,10 @@ public class IceCrystal extends AbstractCrystal {
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
-        Entity entity = result.getEntity();
+        this.doDamage(result.getEntity());
+    }
+
+    public void doDamage(Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
             if (livingEntity.hurt(new IndirectEntityDamageSource("ice_crystal", this, this.getOwner()).setProjectile(), 5.0F)) {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
