@@ -21,8 +21,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -99,9 +97,9 @@ public class AetherOverlays {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             int[] lastLifeShardHealth = {0};
-            int[] lastCompleteHealth = {0};
+            int[] lastOverallHealth = {0};
             if (player != null) {
-                renderSilverLifeShardHearts(pStack, gui, player, screenWidth, screenHeight, lastLifeShardHealth, lastCompleteHealth);
+                renderSilverLifeShardHearts(pStack, gui, player, screenWidth, screenHeight, lastLifeShardHealth, lastOverallHealth);
             }
         });
     }
@@ -242,7 +240,7 @@ public class AetherOverlays {
         }
     }
 
-    private static void renderSilverLifeShardHearts(PoseStack poseStack, ForgeGui gui, LocalPlayer player, int width, int height, int[] lastLifeShardHealth, int[] lastCompleteHealth) {
+    private static void renderSilverLifeShardHearts(PoseStack poseStack, ForgeGui gui, LocalPlayer player, int width, int height, int[] lastLifeShardHealth, int[] lastOverallHealth) {
         if (AetherConfig.CLIENT.enable_silver_hearts.get() && gui.shouldDrawSurvivalElements()) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                 if (aetherPlayer.getLifeShardCount() > 0) {
@@ -250,29 +248,32 @@ public class AetherOverlays {
                     RenderSystem.setShaderTexture(0, TEXTURE_LIFE_SHARD_HEARTS);
                     RenderSystem.enableBlend();
 
-                    AttributeInstance attrTrueMaxHealth = player.getAttribute(Attributes.MAX_HEALTH);
-                    AttributeModifier attrLifeShardMaxHealth = aetherPlayer.getLifeShardHealthAttributeModifier();
+                    double overallHealth = player.getAttribute(Attributes.MAX_HEALTH).getValue();
+                    double maxLifeShardHealth = aetherPlayer.getLifeShardHealthAttributeModifier().getAmount();
 
-                    int completeHealth = Mth.ceil(player.getHealth());
-                    int vanillaHealth = Mth.ceil(player.getMaxHealth() - attrLifeShardMaxHealth.getAmount());
-                    int lifeShardHealth = Mth.ceil(player.getHealth() - vanillaHealth); // need to make this adapt
+                    int maxDefaultHealth = Mth.ceil(overallHealth - maxLifeShardHealth);
+
+                    int currentOverallHealth = Mth.ceil(player.getHealth());
+                    int currentLifeShardHealth = Mth.ceil(player.getHealth() - maxDefaultHealth);
+
                     boolean highlight = gui.healthBlinkTime > (long) gui.getGuiTicks() && (gui.healthBlinkTime - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
                     if (Util.getMillis() - gui.lastHealthTime > 1000L) {
-                        lastCompleteHealth[0] = completeHealth;
-                        lastLifeShardHealth[0] = lifeShardHealth;
+                        lastOverallHealth[0] = currentOverallHealth;
+                        lastLifeShardHealth[0] = currentLifeShardHealth;
                     }
 
-                    float trueHealthMax = Math.max((float) attrTrueMaxHealth.getValue(), Math.max(lastCompleteHealth[0], completeHealth));
-                    float lifeShardHealthMax = Math.max((float) attrLifeShardMaxHealth.getAmount(), Math.max(lastLifeShardHealth[0], lifeShardHealth));
+                    float displayOverallHealth = Math.max((float) overallHealth, Math.max(lastOverallHealth[0], currentOverallHealth));
+                    float displayLifeShardHealth = Math.max((float) maxLifeShardHealth, Math.max(lastLifeShardHealth[0], currentLifeShardHealth));
 
                     int left = width / 2 - 91;
                     int top = height - 49;
 
                     int regen = -1;
                     if (player.hasEffect(MobEffects.REGENERATION)) {
-                        regen = gui.getGuiTicks() % Mth.ceil(trueHealthMax + 5.0F);
+                        regen = gui.getGuiTicks() % Mth.ceil(displayOverallHealth + 5.0F);
                     }
-                    renderHearts(poseStack, player, gui, left, top, regen, lifeShardHealthMax, trueHealthMax, lifeShardHealth, vanillaHealth, lastLifeShardHealth[0], highlight);
+
+                    renderHearts(poseStack, player, gui, left, top, regen, displayOverallHealth, displayLifeShardHealth, maxDefaultHealth, currentLifeShardHealth, lastLifeShardHealth[0], highlight);
 
                     RenderSystem.disableBlend();
                 }
@@ -280,36 +281,36 @@ public class AetherOverlays {
         }
     }
 
-    private static void renderHearts(PoseStack poseStack, Player player, ForgeGui gui, int left, int top, int regen, float healthMax, float trueHealthMax, int health, int vanillaHealth, int lastHealth, boolean highlight) {
+    private static void renderHearts(PoseStack poseStack, Player player, ForgeGui gui, int left, int top, int regen, float displayOverallHealth, float displayLifeShardHealth, int maxDefaultHealth, int lifeShardHealth, int lastLifeShardHealth, boolean highlight) {
         Gui.HeartType heartType = Gui.HeartType.forPlayer(player);
-        int heartsMax = Mth.ceil((double) healthMax / 2.0D);
-        int heartsFull = Mth.ceil((double) trueHealthMax / 2.0D);
-        int heartsVanilla = Mth.ceil((double) vanillaHealth / 2.0D);
-        int maxHealth = heartsMax * 2;
-        for (int i = heartsMax - 1; i >= 0; --i) {
+        int overallHearts = Mth.ceil((double) displayOverallHealth / 2.0D);
+        int lifeShardHearts = Mth.ceil((double) displayLifeShardHealth / 2.0D);
+        int maxDefaultHearts = Mth.ceil((double) maxDefaultHealth / 2.0D);
+        int maxHealth = lifeShardHearts * 2;
+        for (int i = lifeShardHearts - 1; i >= 0; --i) {
             int j1 = i / 10;
             int k1 = i % 10;
             int l1 = left + k1 * 8;
             int i2 = top - j1 * 11;
-            if (i + heartsVanilla < heartsFull && i + heartsVanilla == regen) { // need to make this adapt
+            if (i + maxDefaultHearts < overallHearts && i + maxDefaultHearts == regen) {
                 i2 -= 2;
             }
             gui.renderHeart(poseStack, Gui.HeartType.CONTAINER, l1, i2, 0, highlight, false);
-            int heartHealth = i * 2;
-            boolean flag = i >= heartsMax;
+            int j = i * 2;
+            boolean flag = i >= j;
             if (flag) {
-                int k2 = heartHealth - maxHealth;
+                int k2 = j - maxHealth;
                 if (k2 < 0) {
                     boolean flag1 = k2 + 1 == 0;
                     gui.renderHeart(poseStack, heartType == Gui.HeartType.WITHERED ? heartType : Gui.HeartType.ABSORBING, l1, i2, 0, false, flag1);
                 }
             }
-            if (highlight && heartHealth < lastHealth) {
-                boolean flag2 = heartHealth + 1 == lastHealth;
+            if (highlight && j < lastLifeShardHealth) {
+                boolean flag2 = j + 1 == lastLifeShardHealth;
                 gui.renderHeart(poseStack, heartType, l1, i2, 0, true, flag2);
             }
-            if (heartHealth < health) {
-                boolean flag3 = heartHealth + 1 == health;
+            if (j < lifeShardHealth) {
+                boolean flag3 = j + 1 == lifeShardHealth;
                 gui.renderHeart(poseStack, heartType, l1, i2, 0, false, flag3);
             }
         }
