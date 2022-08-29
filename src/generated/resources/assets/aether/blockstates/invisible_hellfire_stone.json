@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "invisible=false": {
+      "model": "aether:block/hellfire_stone"
+    },
+    "invisible=true": {
+      "model": "aether:block/invisible_hellfire_stone"
+    }
+  }
+}

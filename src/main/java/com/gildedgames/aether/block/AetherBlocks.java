@@ -3,6 +3,7 @@ package com.gildedgames.aether.block;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.construction.*;
 import com.gildedgames.aether.block.dungeon.ChestMimicBlock;
+import com.gildedgames.aether.block.dungeon.InvisibleBlock;
 import com.gildedgames.aether.block.dungeon.TrappedBlock;
 import com.gildedgames.aether.block.dungeon.TreasureChestBlock;
 import com.gildedgames.aether.blockentity.ChestMimicBlockEntity;
@@ -30,6 +31,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.Material;
@@ -129,6 +131,8 @@ public class AetherBlocks
     public static final RegistryObject<Block> LOCKED_LIGHT_ANGELIC_STONE = register("locked_light_angelic_stone", () -> new Block(Block.Properties.copy(LOCKED_ANGELIC_STONE.get()).lightLevel(AetherBlocks::lightLevel11)));
     public static final RegistryObject<Block> LOCKED_HELLFIRE_STONE = register("locked_hellfire_stone", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.NETHER).strength(-1.0F, 3600000.0F).isValidSpawn(AetherBlocks::never)));
     public static final RegistryObject<Block> LOCKED_LIGHT_HELLFIRE_STONE = register("locked_light_hellfire_stone", () -> new Block(Block.Properties.copy(LOCKED_HELLFIRE_STONE.get()).lightLevel(AetherBlocks::lightLevel11)));
+
+    public static final RegistryObject<Block> INVISIBLE_HELLFIRE_STONE = register("invisible_hellfire_stone", () -> new InvisibleBlock(BlockBehaviour.Properties.copy(LOCKED_HELLFIRE_STONE.get())));
 
     public static final RegistryObject<Block> TRAPPED_CARVED_STONE = register("trapped_carved_stone", () -> new TrappedBlock(AetherEntityTypes.SENTRY::get, () -> CARVED_STONE.get().defaultBlockState(), Block.Properties.copy(CARVED_STONE.get())));
     public static final RegistryObject<Block> TRAPPED_SENTRY_STONE = register("trapped_sentry_stone", () -> new TrappedBlock(AetherEntityTypes.SENTRY::get, () -> SENTRY_STONE.get().defaultBlockState(), Block.Properties.copy(SENTRY_STONE.get())));

@@ -3,6 +3,7 @@ package com.gildedgames.aether.data.providers;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.construction.AetherFarmlandBlock;
 import com.gildedgames.aether.block.AetherBlockStateProperties;
+import com.gildedgames.aether.block.dungeon.InvisibleBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BedPart;
@@ -323,6 +324,18 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
     public void dungeonBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock) {
         ConfiguredModel dungeonBlock = new ConfiguredModel(models().cubeAll(name(baseBlock), texture(name(baseBlock), "dungeon/")));
         getVariantBuilder(block.get()).partialState().setModels(dungeonBlock);
+    }
+
+    public void invisibleBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock) {
+        ModelFile visible = models().cubeAll(name(baseBlock), texture(name(baseBlock), "dungeon/"));
+        ModelFile invisible = models().getBuilder(name(block));
+        getVariantBuilder(block.get()).forAllStatesExcept(state -> {
+            if (!state.getValue(InvisibleBlock.INVISIBLE)) {
+                return ConfiguredModel.builder().modelFile(visible).build();
+            } else {
+                return ConfiguredModel.builder().modelFile(invisible).build();
+            }
+        });
     }
 
     public void chestMimic(Supplier<? extends Block> block, Supplier<? extends Block> dummyBlock) {

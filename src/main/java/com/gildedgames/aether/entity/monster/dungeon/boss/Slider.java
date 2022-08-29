@@ -268,6 +268,15 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         }
     }
 
+    /**
+     * Called on every block in the dungeon when the boss is defeated.
+     */
+    @Override
+    @Nullable
+    public BlockState convertBlock(BlockState state) { //TODO
+        return null;
+    }
+
     private void explode() {
         for (int i = 0; i < (this.getHealth() <= 0 ? 16 : 48); i++) {
             double x = this.position().x() + (double) (this.random.nextFloat() - this.random.nextFloat()) * 1.5;

@@ -1,4 +1,4 @@
-// 1.19.2	2022-08-19T18:20:55.9859835	Aether Item Models
+// 1.19.2	2022-08-29T01:21:06.6261373	Aether Item Models
 88dbeab79e0017737773db746d2e719a21fdb198 assets/aether/models/item/aechor_petal.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aechor_plant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aerbunny_spawn_egg.json
@@ -120,6 +120,7 @@ ebdced37fa721572d79522c596d9641c407f6c3b assets/aether/models/item/icestone_wall
 6963d00742cdffc091de9a57a12c6c6f84e4fcfe assets/aether/models/item/ice_ring.json
 e221be02d2e36dab16a4007800502b8c87faf699 assets/aether/models/item/incubator.json
 ee1bb9de31abd4267f148740a5f97998da2a89a7 assets/aether/models/item/invisibility_cloak.json
+0a3c540c1c31ff77764746724c383d89a48bc394 assets/aether/models/item/invisible_hellfire_stone.json
 35b997e55f2fc4d048f0a6e1b35463dba35c5906 assets/aether/models/item/iron_bubble.json
 f17bedc793c58d99fc950f78238bd660703afa73 assets/aether/models/item/iron_gloves.json
 c2d0568c3579d68fe7d2ae0a8a319128e0c3aaff assets/aether/models/item/iron_pendant.json

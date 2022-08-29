@@ -11,6 +11,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.CompoundContainer;
 import net.minecraft.world.Container;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.*;
@@ -75,6 +76,17 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     public TreasureChestBlockEntity() {
         super(AetherBlockEntityTypes.TREASURE_CHEST.get(), BlockPos.ZERO, AetherBlocks.TREASURE_CHEST.get().defaultBlockState());
+    }
+
+    public static void setDungeonType(BlockGetter level, BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof TreasureChestBlockEntity treasure) {
+            treasure.setKind(new ResourceLocation(Aether.MODID, "gold"));
+        }
+    }
+
+    public void setKind(ResourceLocation kind) {
+        this.kind = kind;
     }
 
     @Nonnull

@@ -1,8 +1,12 @@
 package com.gildedgames.aether.world.structurepiece;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.DungeonTracker;
+import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
+import com.gildedgames.aether.data.generators.AetherLootTableData;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
+import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.world.processor.HellfireStoneProcessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -12,6 +16,8 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
@@ -56,6 +62,12 @@ public class GoldDungeonPieces {
                         new AABB(this.boundingBox.minX(), this.boundingBox.minY(), this.boundingBox.minZ(), this.boundingBox.maxX(), this.boundingBox.maxY(), this.boundingBox.maxZ()),
                         new ArrayList<>()));
                 level.getLevel().addFreshEntity(sunSpirit);
+                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+            }
+            else if (name.equals("Treasure Chest")) {
+                BlockPos chest = pos.below();
+                RandomizableContainerBlockEntity.setLootTable(level, random, chest, AetherLoot.GOLD_DUNGEON_REWARD);
+                TreasureChestBlockEntity.setDungeonType(level, chest);
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
             }
         }

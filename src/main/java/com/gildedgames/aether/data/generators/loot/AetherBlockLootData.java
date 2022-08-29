@@ -107,6 +107,8 @@ public class AetherBlockLootData extends AetherBlockLootProvider {
         dropNone(AetherBlocks.LOCKED_HELLFIRE_STONE);
         dropNone(AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE);
 
+        dropNone(AetherBlocks.INVISIBLE_HELLFIRE_STONE);
+
         dropNone(AetherBlocks.TRAPPED_CARVED_STONE);
         dropNone(AetherBlocks.TRAPPED_SENTRY_STONE);
         dropNone(AetherBlocks.TRAPPED_ANGELIC_STONE);
