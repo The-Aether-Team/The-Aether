@@ -163,6 +163,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         boolean flag = super.hurt(source, amount);
         if (flag && !this.level.isClientSide) {
             FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.level);
+            minion.setPos(this.position());
             this.level.addFreshEntity(minion);
         }
         this.velocity =  1 - this.getHealth() / 700;
