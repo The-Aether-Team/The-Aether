@@ -1,4 +1,4 @@
-// 1.19.2	2022-08-29T01:21:06.623144	Aether Loot Tables
+// 1.19.2	2022-08-29T16:30:55.4582358	Aether Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 9e100e6de96b47a3a1b9533e76ad9847d364b9c0 data/aether/loot_tables/blocks/aerogel_slab.json
@@ -59,6 +59,8 @@ ba4349dd2a2110053ddd804eb78220a26d3871c3 data/aether/loot_tables/blocks/holyston
 82148b76ff3c5e3eb6d7da40be4492bf763237ec data/aether/loot_tables/blocks/icestone_stairs.json
 eb198e1bd0b4dc7cbc6b9b06a280286c02c90b7e data/aether/loot_tables/blocks/icestone_wall.json
 7cf775b7b64772bed140c89a668ff3f534674c13 data/aether/loot_tables/blocks/incubator.json
+1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/invisible_angelic_stone.json
+1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/invisible_carved_stone.json
 1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/invisible_hellfire_stone.json
 b6661dce95629db6de24db7d675a1f90d7d0857e data/aether/loot_tables/blocks/light_angelic_stone.json
 3c5039ccfe8124de5d9ae2298ab3b306333dcbe5 data/aether/loot_tables/blocks/light_hellfire_stone.json

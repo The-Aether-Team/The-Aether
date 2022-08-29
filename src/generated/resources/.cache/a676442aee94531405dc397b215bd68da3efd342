@@ -1,4 +1,4 @@
-// 1.19.2	2022-08-29T14:42:40.7944036	Aether Block States
+// 1.19.2	2022-08-29T16:30:55.4642198	Aether Block States
 79cb0c0ea34a92e86b03080a209cb60f268cb31e assets/aether/blockstates/aerogel.json
 28f7eea22b621bda459b2328c2252cdebe0bcdb9 assets/aether/blockstates/aerogel_slab.json
 0866f96b2339b894ff4c8a01aebb3d87103eb0fb assets/aether/blockstates/aether_dirt.json
@@ -56,6 +56,8 @@ a8f89e43b49b6f106ca677f3a8b6f59e5053479b assets/aether/blockstates/hellfire_wall
 7917c562ae1649d1710c53096685540df3d7f1c2 assets/aether/blockstates/icestone_stairs.json
 99be7da6e7116c06a98a5c9228b71b6d6c25d57d assets/aether/blockstates/icestone_wall.json
 d23464648265d4a3de3e67631f1f27a613388d74 assets/aether/blockstates/incubator.json
+1e91be501c622284a12fbd389004f85c0fe9766d assets/aether/blockstates/invisible_angelic_stone.json
+2abcfb6cba4ef73a6391d6ab0fb8d89b829fa226 assets/aether/blockstates/invisible_carved_stone.json
 739a3fa11db46ae6889f24aa82bd490b4c39bd6d assets/aether/blockstates/invisible_hellfire_stone.json
 07148c9dcf70e89b2eb0ffa22debd20634e1b7cc assets/aether/blockstates/light_angelic_stone.json
 70717519790d42656f9e16599e92b1801addcd4c assets/aether/blockstates/light_hellfire_stone.json
@@ -209,6 +211,8 @@ bb43bc50dd96185432166681ac0988cc362cec51 assets/aether/models/block/icestone_sta
 13a9ff7c690fe352dd2071752c9dd24d2ce8c160 assets/aether/models/block/icestone_wall_side.json
 4a3dab21308d3e3cda5fef4662047e4ca33e7e39 assets/aether/models/block/icestone_wall_side_tall.json
 e2cd1cf4f0fd97a65ab3af919a7ef8db2158f910 assets/aether/models/block/incubator.json
+bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f assets/aether/models/block/invisible_angelic_stone.json
+bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f assets/aether/models/block/invisible_carved_stone.json
 bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f assets/aether/models/block/invisible_hellfire_stone.json
 49e53237a7999367e0f0cd816a76ece14b5564c1 assets/aether/models/block/light_angelic_stone.json
 9f176834f3eb3c277a509cfee21c529e3e6573de assets/aether/models/block/light_hellfire_stone.json

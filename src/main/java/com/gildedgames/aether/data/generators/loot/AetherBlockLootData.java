@@ -107,14 +107,16 @@ public class AetherBlockLootData extends AetherBlockLootProvider {
         dropNone(AetherBlocks.LOCKED_HELLFIRE_STONE);
         dropNone(AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE);
 
-        dropNone(AetherBlocks.INVISIBLE_HELLFIRE_STONE);
-
         dropNone(AetherBlocks.TRAPPED_CARVED_STONE);
         dropNone(AetherBlocks.TRAPPED_SENTRY_STONE);
         dropNone(AetherBlocks.TRAPPED_ANGELIC_STONE);
         dropNone(AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE);
         dropNone(AetherBlocks.TRAPPED_HELLFIRE_STONE);
         dropNone(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE);
+
+        dropNone(AetherBlocks.INVISIBLE_CARVED_STONE);
+        dropNone(AetherBlocks.INVISIBLE_ANGELIC_STONE);
+        dropNone(AetherBlocks.INVISIBLE_HELLFIRE_STONE);
 
         dropNone(AetherBlocks.CHEST_MIMIC);
         this.add(AetherBlocks.TREASURE_CHEST.get(), AetherBlockLootProvider::droppingTreasureChest);
