@@ -1,7 +1,7 @@
 package com.gildedgames.aether.api;
 
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.entity.BossRoom;
+import com.gildedgames.aether.entity.BossMob;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
@@ -17,14 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public record DungeonTracker<T extends Mob & BossRoom<T>>(T boss, Vec3 originCoordinates, AABB roomBounds, List<UUID> dungeonPlayers) {
+public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoordinates, AABB roomBounds, List<UUID> dungeonPlayers) {
     //todo:
     //  treasure chest door coords/bounds
     //  door position. this might be complicated but its necessary so its known what to close and then reopen.
     //      might need to have this be non-final and set it from the boss awakening and have it hunt the position to add to the dungeon
 
     //this is a backup if for some reason the boss isnt spawned with a dungeon bounds. might just be used for debugging as well and will be removed.
-    public static <T extends Mob & BossRoom<T>> void createDebugDungeon(T boss) {
+    public static <T extends Mob & BossMob<T>> void createDebugDungeon(T boss) {
         boss.setDungeon(new DungeonTracker<>(
                 boss,
                 boss.position(),
@@ -100,7 +100,7 @@ public record DungeonTracker<T extends Mob & BossRoom<T>>(T boss, Vec3 originCoo
         return tag;
     }
 
-    public static <T extends Mob & BossRoom<T>> DungeonTracker<T> readAdditionalSaveData(@Nonnull CompoundTag tag, T boss) {
+    public static <T extends Mob & BossMob<T>> DungeonTracker<T> readAdditionalSaveData(@Nonnull CompoundTag tag, T boss) {
         double originX = tag.getDouble("OriginX");
         double originY = tag.getDouble("OriginY");
         double originZ = tag.getDouble("OriginZ");

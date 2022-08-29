@@ -35,6 +35,7 @@ import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.client.CombinedResourcePack;
 import com.gildedgames.aether.api.SunAltarWhitelist;
 import com.gildedgames.aether.api.TriviaGenerator;
+import com.gildedgames.aether.world.processor.AetherStructureProcessors;
 import com.gildedgames.aether.world.structure.AetherStructureTypes;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.gildedgames.aether.world.treedecorator.AetherTreeDecoratorTypes;
@@ -111,6 +112,7 @@ public class Aether
                 AetherPOI.POI,
                 AetherStructureTypes.STRUCTURE_TYPES,
                 AetherStructurePieceTypes.STRUCTURE_PIECE_TYPES,
+                AetherStructureProcessors.STRUCTURE_PROCESSOR_TYPES,
                 AetherRecipeTypes.RECIPE_TYPES,
                 AetherRecipeSerializers.RECIPE_SERIALIZERS,
                 AetherLootFunctions.LOOT_FUNCTION_TYPES,

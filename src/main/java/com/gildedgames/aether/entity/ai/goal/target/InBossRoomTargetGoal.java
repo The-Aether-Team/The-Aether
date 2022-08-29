@@ -1,7 +1,7 @@
 package com.gildedgames.aether.entity.ai.goal.target;
 
 import com.gildedgames.aether.api.DungeonTracker;
-import com.gildedgames.aether.entity.BossRoom;
+import com.gildedgames.aether.entity.BossMob;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.UUID;
 
-public class InBossRoomTargetGoal<T extends LivingEntity, J extends Mob & BossRoom<J>> extends TargetGoal {
+public class InBossRoomTargetGoal<T extends LivingEntity, J extends Mob & BossMob<J>> extends TargetGoal {
     protected final Class<T> targetType;
     @Nullable
     protected LivingEntity target;

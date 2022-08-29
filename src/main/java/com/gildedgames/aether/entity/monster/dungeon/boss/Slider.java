@@ -5,8 +5,7 @@ import com.gildedgames.aether.api.BossNameGenerator;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
-import com.gildedgames.aether.entity.BossRoom;
-import com.gildedgames.aether.entity.ai.controller.SliderMovementController;
+import com.gildedgames.aether.entity.ai.controller.BlankMoveControl;
 import com.gildedgames.aether.entity.ai.goal.target.InBossRoomTargetGoal;
 import com.gildedgames.aether.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.network.AetherPacketHandler;
@@ -52,7 +51,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
-public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Slider> {
+public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.COMPONENT);
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
@@ -77,7 +76,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
         this.bossFight.setVisible(false);
         this.xpReward = XP_REWARD_BOSS;
         this.setRot(0, 0);
-        this.moveControl = new SliderMovementController(this);
+        this.moveControl = new BlankMoveControl(this);
         this.setPersistenceRequired();
     }
 
@@ -131,7 +130,6 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
         if (!this.canMove) {
             this.setDeltaMovement(Vec3.ZERO);
         }
-        this.trackDungeon();
         this.collide();
         this.evaporate();
     }
@@ -140,6 +138,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
     public void customServerAiStep() {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
+        this.trackDungeon();
     }
 
     @Override
@@ -213,15 +212,6 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
         //todo close door
     }
 
-    private void trackDungeon() {
-        if (!this.level.isClientSide() && this.getDungeon() != null) {
-            this.getDungeon().trackPlayers();
-            if (this.isAwake() && (this.getDungeon().dungeonPlayers().isEmpty() || !this.getDungeon().isBossWithinRoom())) {
-                this.reset();
-            }
-        }
-    }
-
     private void collide() {
         if (this.isAwake() && !this.isDeadOrDying()) {
             AABB collisionBounds = new AABB(this.getBoundingBox().minX - 0.1, this.getBoundingBox().minY - 0.1, this.getBoundingBox().minZ - 0.1,
@@ -265,7 +255,7 @@ public class Slider extends PathfinderMob implements BossMob, Enemy, BossRoom<Sl
         this.setDeltaMovement(Vec3.ZERO);
     }
 
-    private void reset() {
+    public void reset() {
         this.lastDirection = null;
         this.unstuckTimer = 0;
         this.stop();
