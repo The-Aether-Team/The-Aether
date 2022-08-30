@@ -67,7 +67,7 @@ public class GoldDungeonPieces {
             else if (name.equals("Treasure Chest")) {
                 BlockPos chest = pos.below();
                 RandomizableContainerBlockEntity.setLootTable(level, random, chest, AetherLoot.GOLD_DUNGEON_REWARD);
-                TreasureChestBlockEntity.setDungeonType(level, chest);
+                TreasureChestBlockEntity.setDungeonType(level, chest, new ResourceLocation(Aether.MODID, "gold"));
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
             }
         }

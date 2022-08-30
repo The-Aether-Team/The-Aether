@@ -78,10 +78,10 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         super(AetherBlockEntityTypes.TREASURE_CHEST.get(), BlockPos.ZERO, AetherBlocks.TREASURE_CHEST.get().defaultBlockState());
     }
 
-    public static void setDungeonType(BlockGetter level, BlockPos pos) {
+    public static void setDungeonType(BlockGetter level, BlockPos pos, ResourceLocation dungeonType) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof TreasureChestBlockEntity treasure) {
-            treasure.setKind(new ResourceLocation(Aether.MODID, "gold"));
+            treasure.setKind(dungeonType);
         }
     }
 
