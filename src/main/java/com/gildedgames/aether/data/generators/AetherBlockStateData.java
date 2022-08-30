@@ -1,6 +1,5 @@
 package com.gildedgames.aether.data.generators;
 
-import com.gildedgames.aether.block.dungeon.InvisibleBlock;
 import com.gildedgames.aether.data.providers.AetherBlockStateProvider;
 import com.gildedgames.aether.block.AetherBlocks;
 import net.minecraft.data.DataGenerator;
@@ -8,7 +7,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
-import java.util.function.Supplier;
 
 public class AetherBlockStateData extends AetherBlockStateProvider
 {
@@ -116,6 +114,10 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         invisibleBlock(AetherBlocks.INVISIBLE_CARVED_STONE, AetherBlocks.CARVED_STONE);
         invisibleBlock(AetherBlocks.INVISIBLE_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
         invisibleBlock(AetherBlocks.INVISIBLE_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
+
+        invisibleBlock(AetherBlocks.TREASURE_ROOM_CARVED_STONE, AetherBlocks.CARVED_STONE);
+        invisibleBlock(AetherBlocks.TREASURE_ROOM_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
+        invisibleBlock(AetherBlocks.TREASURE_ROOM_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
 
         chestMimic(AetherBlocks.CHEST_MIMIC, () -> Blocks.OAK_PLANKS);
         treasureChest(AetherBlocks.TREASURE_CHEST, AetherBlocks.CARVED_STONE);

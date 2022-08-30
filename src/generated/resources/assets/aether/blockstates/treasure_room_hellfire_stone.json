@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "invisible=false": {
+      "model": "aether:block/hellfire_stone"
+    },
+    "invisible=true": {
+      "model": "aether:block/treasure_room_hellfire_stone"
+    }
+  }
+}

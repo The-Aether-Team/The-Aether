@@ -439,7 +439,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         if (state.is(AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get())) {
             return AetherBlocks.LIGHT_HELLFIRE_STONE.get().defaultBlockState();
         }
-        if (state.is(AetherBlocks.INVISIBLE_HELLFIRE_STONE.get())) {
+        if (state.is(AetherBlocks.INVISIBLE_HELLFIRE_STONE.get()) || state.is(AetherBlocks.TREASURE_ROOM_HELLFIRE_STONE.get())) {
             return Blocks.AIR.defaultBlockState();
         }
         return null;

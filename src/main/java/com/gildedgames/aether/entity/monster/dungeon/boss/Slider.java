@@ -284,7 +284,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         if (state.is(AetherBlocks.LOCKED_SENTRY_STONE.get())) {
             return AetherBlocks.SENTRY_STONE.get().defaultBlockState();
         }
-        if (state.is(AetherBlocks.INVISIBLE_CARVED_STONE.get())) {
+        if (state.is(AetherBlocks.INVISIBLE_CARVED_STONE.get()) || state.is(AetherBlocks.TREASURE_ROOM_CARVED_STONE.get())) {
             return Blocks.AIR.defaultBlockState();
         }
         return null;

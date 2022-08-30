@@ -2,24 +2,13 @@ package com.gildedgames.aether.entity;
 
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.dungeon.InvisibleBlock;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
+import com.gildedgames.aether.block.dungeon.TreasureRoomBlock;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AirBlock;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.phys.AABB;
 
 import javax.annotation.Nullable;
-import java.util.function.Consumer;
 
 /**
  * Interface for applying names to Aether bosses without displaying a name tag.
@@ -63,7 +52,7 @@ public interface BossMob<T extends Mob & BossMob<T>> {
     default void closeRoom() {
         this.getDungeon().modifyRoom(state -> {
             if (state.getBlock() instanceof InvisibleBlock) {
-                return state.setValue(InvisibleBlock.INVISIBLE, false);
+                return state.setValue(TreasureRoomBlock.INVISIBLE, false);
             } else {
                 return null;
             }
@@ -73,7 +62,7 @@ public interface BossMob<T extends Mob & BossMob<T>> {
     default void openRoom() {
         this.getDungeon().modifyRoom(state -> {
             if (state.getBlock() instanceof InvisibleBlock) {
-                return state.setValue(InvisibleBlock.INVISIBLE, true);
+                return state.setValue(TreasureRoomBlock.INVISIBLE, true);
             } else {
                 return null;
             }
