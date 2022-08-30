@@ -54,12 +54,14 @@ public class IceCrystal extends AbstractCrystal {
     }
 
     public void doDamage(Entity entity) {
-        if (entity instanceof LivingEntity livingEntity) {
-            if (livingEntity.hurt(new IndirectEntityDamageSource("ice_crystal", this, this.getOwner()).setProjectile(), 5.0F)) {
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
-                this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
-                this.spawnExplosionParticles();
-                this.discard();
+        if (this.getOwner() != entity) {
+            if (entity instanceof LivingEntity livingEntity) {
+                if (livingEntity.hurt(new IndirectEntityDamageSource("ice_crystal", this, this.getOwner()).setProjectile(), 5.0F)) {
+                    livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
+                    this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
+                    this.spawnExplosionParticles();
+                    this.discard();
+                }
             }
         }
     }

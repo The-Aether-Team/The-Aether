@@ -102,7 +102,7 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.of(FireMinion::new, MobCategory.MONSTER).fireImmune().sized(0.8F, 1.95F).clientTrackingRange(8).build("fire_minion"));
 
     public static final RegistryObject<EntityType<SunSpirit>> SUN_SPIRIT = ENTITY_TYPES.register("sun_spirit",
-            () -> EntityType.Builder.of(SunSpirit::new, MobCategory.MONSTER).sized(2.8F, 3.4F).fireImmune().clientTrackingRange(10).build("sun_spirit"));
+            () -> EntityType.Builder.of(SunSpirit::new, MobCategory.MONSTER).sized(2.5F, 3.4F).fireImmune().clientTrackingRange(10).build("sun_spirit"));
 
 
     // Miscellaneous
