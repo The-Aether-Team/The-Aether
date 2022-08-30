@@ -286,9 +286,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
     private void checkIceCrystals() {
         for (IceCrystal iceCrystal : this.level.getEntitiesOfClass(IceCrystal.class, this.getBoundingBox().inflate(0.1))) {
-            if (iceCrystal.getOwner() != this) {
-                iceCrystal.doDamage(this);
-            }
+            iceCrystal.doDamage(this);
         }
     }
 
