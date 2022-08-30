@@ -1,8 +1,10 @@
 package com.gildedgames.aether.util;
 
+import com.gildedgames.aether.block.AetherBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
 public class BlockPlacementUtil {
@@ -58,6 +60,7 @@ public class BlockPlacementUtil {
 
     @SuppressWarnings("UnusedReturnValue") // Retain the boolean feedback from setting block
     public static boolean placeProvidedBlock(WorldGenLevel level, BlockStateProvider provider, BlockPos pos, RandomSource random) {
-        return level.setBlock(pos, provider.getState(random, pos), 2);
+        if (!level.getBlockState(pos).is(AetherBlocks.HOLYSTONE.get()) && !level.getBlockState(pos).is(AetherBlocks.AETHER_DIRT.get())) return level.setBlock(pos, provider.getState(random, pos), 2);
+        return false;
     }
 }
