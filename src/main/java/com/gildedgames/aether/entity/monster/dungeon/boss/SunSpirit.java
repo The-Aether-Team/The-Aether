@@ -2,6 +2,7 @@ package com.gildedgames.aether.entity.monster.dungeon.boss;
 
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.api.DungeonTracker;
+import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.BossMob;
@@ -47,6 +48,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -207,6 +209,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
             });
             if (this.getDungeon() != null) {
                 this.getDungeon().grantAdvancements(cause);
+                this.tearDownRoom();
             }
         }
         super.die(cause);
@@ -248,6 +251,9 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
                     case 9 -> {
                         this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line9").withStyle(ChatFormatting.RED));
                         this.setBossFight(true);
+                        if (this.goldDungeon != null) {
+                            this.closeRoom();
+                        }
                         aetherPlayer.ifPresent(cap -> cap.setSeenSunSpiritDialogue(true));
                     }
                     default -> {
@@ -414,6 +420,27 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public void reset() {
         this.setBossFight(false);
         this.setHealth(this.getMaxHealth());
+        if (this.goldDungeon != null) {
+            this.openRoom();
+        }
+    }
+
+    /**
+     * Called on every block in the dungeon when the boss is defeated.
+     */
+    @Override
+    @Nullable
+    public BlockState convertBlock(BlockState state) {
+        if (state.is(AetherBlocks.LOCKED_HELLFIRE_STONE.get())) {
+            return AetherBlocks.HELLFIRE_STONE.get().defaultBlockState();
+        }
+        if (state.is(AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get())) {
+            return AetherBlocks.LIGHT_HELLFIRE_STONE.get().defaultBlockState();
+        }
+        if (state.is(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE.get()) || state.is(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE.get())) {
+            return Blocks.AIR.defaultBlockState();
+        }
+        return null;
     }
 
     /**

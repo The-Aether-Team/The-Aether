@@ -9,6 +9,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -16,12 +18,9 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoordinates, AABB roomBounds, List<UUID> dungeonPlayers) {
-    //todo:
-    //  treasure chest door coords/bounds
-    //  door position. this might be complicated but its necessary so its known what to close and then reopen.
-    //      might need to have this be non-final and set it from the boss awakening and have it hunt the position to add to the dungeon
 
     //this is a backup if for some reason the boss isnt spawned with a dungeon bounds. might just be used for debugging as well and will be removed.
     public static <T extends Mob & BossMob<T>> void createDebugDungeon(T boss) {
@@ -76,6 +75,21 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
             Player player = this.boss().getLevel().getPlayerByUUID(uuid);
             if (player != null) {
                 player.awardKillScore(this.boss(), this.boss().getDeathScore(), damageSource);
+            }
+        }
+    }
+
+    /**
+     * Iterates on every block within the bounds of the dungeon
+     */
+    public void modifyRoom(Function<BlockState, BlockState> function) {
+        AABB bounds = this.roomBounds();
+        Level level = this.boss().getLevel();
+        for (BlockPos pos : BlockPos.betweenClosed((int) bounds.minX, (int) bounds.minY, (int) bounds.minZ, (int) bounds.maxX, (int) bounds.maxY, (int) bounds.maxZ)) {
+            BlockState state = level.getBlockState(pos);
+            BlockState newState = function.apply(state);
+            if (newState != null) {
+                level.setBlock(pos, newState, 3);
             }
         }
     }

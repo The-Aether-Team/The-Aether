@@ -1,6 +1,7 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss;
 
 import com.gildedgames.aether.api.DungeonTracker;
+import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
@@ -37,6 +38,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -256,6 +259,24 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Override
     public void reset() {
 
+    }
+
+    /**
+     * Called on every block in the dungeon when the boss is defeated.
+     */
+    @Override
+    @Nullable
+    public BlockState convertBlock(BlockState state) {
+        if (state.is(AetherBlocks.LOCKED_ANGELIC_STONE.get())) {
+            return AetherBlocks.ANGELIC_STONE.get().defaultBlockState();
+        }
+        if (state.is(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get())) {
+            return AetherBlocks.LIGHT_ANGELIC_STONE.get().defaultBlockState();
+        }
+        if (state.is(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get()) || state.is(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get())) {
+            return Blocks.AIR.defaultBlockState();
+        }
+        return null;
     }
 
     @Override

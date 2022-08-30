@@ -3,6 +3,7 @@ package com.gildedgames.aether.entity.monster.dungeon.boss;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.api.BossNameGenerator;
 import com.gildedgames.aether.api.DungeonTracker;
+import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.entity.ai.controller.BlankMoveControl;
@@ -143,7 +144,9 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
     @Override
     public boolean hurt(@Nonnull DamageSource source, float amount) {
-        if (source.getDirectEntity() instanceof LivingEntity livingEntity && this.level.getDifficulty() != Difficulty.PEACEFUL) {
+        if (source == DamageSource.OUT_OF_WORLD) {
+            super.hurt(source, amount);
+        } else if (source.getDirectEntity() instanceof LivingEntity livingEntity && this.level.getDifficulty() != Difficulty.PEACEFUL) {
             if (livingEntity.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) {
                 if (super.hurt(source, amount) && this.getHealth() > 0) {
                     if (!this.isBossFight()) {
@@ -190,13 +193,13 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     @Override
     public void die(@Nonnull DamageSource damageSource) {
         this.explode();
-        if (this.getDungeon() != null) {
-            this.getDungeon().grantAdvancements(damageSource);
-        }
         if (this.level instanceof ServerLevel) {
             this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
+            if (this.getDungeon() != null) {
+                this.getDungeon().grantAdvancements(damageSource);
+                this.tearDownRoom();
+            }
         }
-        //todo open door and open treasure chest compartment
         super.die(damageSource);
     }
 
@@ -208,8 +211,8 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.setBossFight(true);
         if (this.getDungeon() != null) {
             this.getDungeon().debugBounds();
+            this.closeRoom();
         }
-        //todo close door
     }
 
     private void collide() {
@@ -265,7 +268,26 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.setHealth(this.getMaxHealth());
         if (this.getDungeon() != null) {
             this.setPos(this.getDungeon().originCoordinates());
+            this.openRoom();
         }
+    }
+
+    /**
+     * Called on every block in the dungeon when the boss is defeated.
+     */
+    @Override
+    @Nullable
+    public BlockState convertBlock(BlockState state) {
+        if (state.is(AetherBlocks.LOCKED_CARVED_STONE.get())) {
+            return AetherBlocks.CARVED_STONE.get().defaultBlockState();
+        }
+        if (state.is(AetherBlocks.LOCKED_SENTRY_STONE.get())) {
+            return AetherBlocks.SENTRY_STONE.get().defaultBlockState();
+        }
+        if (state.is(AetherBlocks.BOSS_DOORWAY_CARVED_STONE.get()) || state.is(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE.get())) {
+            return Blocks.AIR.defaultBlockState();
+        }
+        return null;
     }
 
     private void explode() {

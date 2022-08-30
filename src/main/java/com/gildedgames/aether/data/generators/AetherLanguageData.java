@@ -99,6 +99,14 @@ public class AetherLanguageData extends AetherLanguageProvider
         addBlock(AetherBlocks.TRAPPED_HELLFIRE_STONE, "Trapped Hellfire Stone");
         addBlock(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE, "Trapped Light Hellfire Stone");
 
+        addBlock(AetherBlocks.BOSS_DOORWAY_CARVED_STONE, "Boss Doorway Carved Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE, "Boss Doorway Angelic Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE, "Boss Doorway Hellfire Stone");
+
+        addBlock(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE, "Treasure Doorway Carved Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE, "Treasure Doorway Angelic Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE, "Treasure Doorway Hellfire Stone");
+
         addBlock(AetherBlocks.CHEST_MIMIC, "Chest Mimic");
         addBlock(AetherBlocks.TREASURE_CHEST, "Treasure Chest");
 

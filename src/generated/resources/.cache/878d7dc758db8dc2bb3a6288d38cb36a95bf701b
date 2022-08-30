@@ -1,4 +1,4 @@
-// 1.19.2	2022-08-19T18:20:55.9859835	Aether Item Models
+// 1.19.2	2022-08-29T21:53:22.8789214	Aether Item Models
 88dbeab79e0017737773db746d2e719a21fdb198 assets/aether/models/item/aechor_petal.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aechor_plant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aerbunny_spawn_egg.json
@@ -32,6 +32,9 @@ cf7b2783076dfa52685c372f30df78d633653b41 assets/aether/models/item/blue_cape.jso
 844560cd220fc6dd90531a06ccb1ffbbd28fe829 assets/aether/models/item/blue_moa_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/blue_swet_spawn_egg.json
 b511582e963e02e1c5c1e4dc18331df7e638621f assets/aether/models/item/book_of_lore.json
+a630d72b1012009b69e12a5a1b35d6371881f8a9 assets/aether/models/item/boss_doorway_angelic_stone.json
+43a4d3e76d9e21f0f28a4280d484e9ae90b79ccf assets/aether/models/item/boss_doorway_carved_stone.json
+665e3fff09c145ad098cab6e38ae8ee36a616dff assets/aether/models/item/boss_doorway_hellfire_stone.json
 5b0199a2805fcee4a69b63ded1ca106a22207704 assets/aether/models/item/bronze_dungeon_key.json
 5267ca41c7a25c538947c478299c33d0e5cbbe77 assets/aether/models/item/candy_cane.json
 2c102972f03a81b7df5d9011039a1a1d72b22449 assets/aether/models/item/candy_cane_sword.json
@@ -239,6 +242,9 @@ b5c64159449dec119815b1810947746a4044159a assets/aether/models/item/trapped_light
 b6d97f27ada126993504ffa147127eef3e85d090 assets/aether/models/item/trapped_light_hellfire_stone.json
 83519a5dcf955f9a85bbe9a2b87f40cdaa11d776 assets/aether/models/item/trapped_sentry_stone.json
 f6caba399494a58683561699d72ad1cc86e3d339 assets/aether/models/item/treasure_chest.json
+a630d72b1012009b69e12a5a1b35d6371881f8a9 assets/aether/models/item/treasure_doorway_angelic_stone.json
+43a4d3e76d9e21f0f28a4280d484e9ae90b79ccf assets/aether/models/item/treasure_doorway_carved_stone.json
+665e3fff09c145ad098cab6e38ae8ee36a616dff assets/aether/models/item/treasure_doorway_hellfire_stone.json
 c6790cd0595e0e9c1ba9fc72897be53dd0e196c5 assets/aether/models/item/valkyrie_axe.json
 db253500a2d4d5a185f0b0111f9ca227a1972a82 assets/aether/models/item/valkyrie_boots.json
 8f9faf9d3071ee8803304fa07906cdc3cabd829a assets/aether/models/item/valkyrie_cape.json
