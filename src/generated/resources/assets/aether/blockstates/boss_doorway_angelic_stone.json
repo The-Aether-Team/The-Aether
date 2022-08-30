@@ -4,7 +4,7 @@
       "model": "aether:block/angelic_stone"
     },
     "invisible=true": {
-      "model": "aether:block/treasure_room_angelic_stone"
+      "model": "aether:block/boss_doorway_angelic_stone"
     }
   }
 }

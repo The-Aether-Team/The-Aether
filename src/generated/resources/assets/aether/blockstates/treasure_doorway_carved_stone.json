@@ -4,7 +4,7 @@
       "model": "aether:block/carved_stone"
     },
     "invisible=true": {
-      "model": "aether:block/invisible_carved_stone"
+      "model": "aether:block/treasure_doorway_carved_stone"
     }
   }
 }
