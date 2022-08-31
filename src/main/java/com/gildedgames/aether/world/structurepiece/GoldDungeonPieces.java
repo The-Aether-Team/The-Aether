@@ -3,11 +3,10 @@ package com.gildedgames.aether.world.structurepiece;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
-import com.gildedgames.aether.data.generators.AetherLootTableData;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.gildedgames.aether.loot.AetherLoot;
-import com.gildedgames.aether.world.processor.HellfireStoneProcessor;
+import com.gildedgames.aether.world.processor.DungeonStoneProcessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +15,6 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
@@ -47,7 +45,7 @@ public class GoldDungeonPieces {
         }
 
         private static StructurePlaceSettings makeSettings() {
-            return new StructurePlaceSettings().addProcessor(HellfireStoneProcessor.INSTANCE);
+            return new StructurePlaceSettings().addProcessor(DungeonStoneProcessor.HELLFIRE);
         }
 
         @Override
