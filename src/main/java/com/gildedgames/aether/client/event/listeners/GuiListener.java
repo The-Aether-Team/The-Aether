@@ -22,6 +22,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import net.minecraft.client.gui.screens.Screen;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -100,6 +101,18 @@ public class GuiListener {
 		if (event.phase == TickEvent.Phase.END) {
 			GuiHooks.openAccessoryMenu();
 			GuiHooks.tickMenuWhenPaused(minecraft);
+		}
+	}
+
+	@SubscribeEvent
+	public static void onRenderEffects(ScreenEvent.RenderInventoryMobEffects event) {
+		Screen screen = event.getScreen();
+		int horizontalOffset = event.getHorizontalOffset();
+
+		Pair<Integer, Boolean> newOffset = GuiHooks.offsetPotionEffects(screen, horizontalOffset);
+		if (newOffset != null) {
+			event.addHorizontalOffset(newOffset.getLeft());
+			event.setCompact(newOffset.getRight());
 		}
 	}
 

@@ -114,6 +114,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof TreasureChestBlockEntity treasureChestBlockEntity) {
 				treasureChestBlockEntity.setCustomName(stack.getHoverName());
+				treasureChestBlockEntity.setChanged();
 			}
 		}
 	}
@@ -190,7 +191,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 		if (treasureChestBlockEntity != null) {
 			CompoundTag compound = new CompoundTag();
 			compound.putBoolean("Locked", treasureChestBlockEntity.getLocked());
-			compound.putString("Kind", treasureChestBlockEntity.getKind());
+			compound.putString("Kind", treasureChestBlockEntity.getKind().toString());
 			stack.addTagElement("BlockEntityTag", compound);
 		}
 		return stack;

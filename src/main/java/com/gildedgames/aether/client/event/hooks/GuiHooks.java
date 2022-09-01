@@ -17,6 +17,7 @@ import com.mojang.realmsclient.gui.screens.RealmsPlayerScreen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.LerpingBossEvent;
@@ -26,10 +27,12 @@ import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import org.apache.commons.lang3.tuple.Pair;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 import java.util.Calendar;
@@ -250,7 +253,12 @@ public class GuiHooks {
         if (screen instanceof GenericDirtMessageScreen || screen instanceof LevelLoadingScreen || screen instanceof ReceivingLevelScreen) {
             Component triviaLine = Aether.TRIVIA_READER.getTriviaLine();
             if (triviaLine != null && AetherConfig.CLIENT.enable_trivia.get()) {
-                Screen.drawCenteredString(poseStack, screen.getMinecraft().font, triviaLine, screen.width / 2, screen.height - 16, 16777113);
+                Font font = Minecraft.getInstance().font;
+                int y = (screen.height - 7) - font.wordWrapHeight(triviaLine, screen.width);
+                for (FormattedCharSequence sequence : font.split(triviaLine, screen.width)) {
+                    Screen.drawCenteredString(poseStack, font, sequence, screen.width / 2, y, 16777113);
+                    y += 9;
+                }
             }
             if (screen != lastScreen) {
                 if (!Aether.TRIVIA_READER.getTrivia().isEmpty()) {
@@ -307,6 +315,17 @@ public class GuiHooks {
                 Minecraft.getInstance().particleEngine.tick();
             }
         }
+    }
+
+    public static Pair<Integer, Boolean> offsetPotionEffects(Screen screen, int horizontalOffset) {
+        if (screen instanceof AccessoriesScreen accessoriesScreen) {
+            int offset = accessoriesScreen.creativeXOffset();
+            int i = horizontalOffset + offset;
+            int j = accessoriesScreen.width - i;
+            boolean flag = j >= 120;
+            return Pair.of(offset, !flag);
+        }
+        return null;
     }
 
     /**

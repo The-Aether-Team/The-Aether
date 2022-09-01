@@ -99,6 +99,14 @@ public class AetherLanguageData extends AetherLanguageProvider
         addBlock(AetherBlocks.TRAPPED_HELLFIRE_STONE, "Trapped Hellfire Stone");
         addBlock(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE, "Trapped Light Hellfire Stone");
 
+        addBlock(AetherBlocks.BOSS_DOORWAY_CARVED_STONE, "Boss Doorway Carved Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE, "Boss Doorway Angelic Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE, "Boss Doorway Hellfire Stone");
+
+        addBlock(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE, "Treasure Doorway Carved Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE, "Treasure Doorway Angelic Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE, "Treasure Doorway Hellfire Stone");
+
         addBlock(AetherBlocks.CHEST_MIMIC, "Chest Mimic");
         addBlock(AetherBlocks.TREASURE_CHEST, "Treasure Chest");
 
@@ -358,6 +366,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG, "Evil Whirlwind Spawn Egg");
         addItem(AetherItems.VALKYRIE_SPAWN_EGG, "Valkyrie Spawn Egg");
         addItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG, "Valkyrie Queen Spawn Egg");
+        addItem(AetherItems.SLIDER_SPAWN_EGG, "Slider Spawn Egg");
         addItem(AetherItems.SUN_SPIRIT_SPAWN_EGG, "Sun Spirit Spawn Egg");
         addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
 
@@ -382,6 +391,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.VALKYRIE, "Valkyrie");
         addEntityType(AetherEntityTypes.FIRE_MINION, "Fire Minion");
 
+        addEntityType(AetherEntityTypes.SLIDER, "Slider");
         addEntityType(AetherEntityTypes.VALKYRIE_QUEEN, "Valkyrie Queen");
         addEntityType(AetherEntityTypes.SUN_SPIRIT, "Sun Spirit");
 
@@ -447,10 +457,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addAdvancementDesc("incubator", "Incubate a Moa");
         addAdvancementDesc("altar", "Craft an Altar");
         addAdvancementDesc("gravitite_tools", "Craft a Gravitite tool");
-        addAdvancementDesc("mount_phyg", "Fly on a Phyg");
-        addAdvancementDesc("bronze_dungeon", "Defeat the Bronze Dungeon boss");
-        addAdvancementDesc("silver_dungeon", "Defeat the Silver Dungeon boss");
-        addAdvancementDesc("gold_dungeon", "Defeat the Golden Dungeon boss");
+        addAdvancementDesc("mount_phyg", "Fly on a Phyg!");
+        addAdvancementDesc("bronze_dungeon", "Defeat the bronze boss");
+        addAdvancementDesc("silver_dungeon", "Defeat the silver boss");
+        addAdvancementDesc("gold_dungeon", "Defeat the gold boss");
 
 
         addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");
@@ -543,8 +553,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("entity", "mimic.kill", "Mimic burps");
 
         addSubtitle("entity", "slider.awaken", "Slider awakens");
+        addSubtitle("entity", "slider.ambient", "Slider drones");
         addSubtitle("entity", "slider.collide", "Slider smashes");
         addSubtitle("entity", "slider.move", "Slider slides");
+        addSubtitle("entity", "slider.hurt", "Slider hurts");
         addSubtitle("entity", "slider.death", "Slider breaks");
 
         addSubtitle("entity", "valkyrie.death", "Valkyrie dies");
@@ -558,6 +570,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("entity", "cloud_minion.shoot", "Cloud Minion spits");
 
         addSubtitle("entity", "cloud_crystal.explode", "Crystal explodes");
+        addSubtitle("entity", "fire_crystal.explode", "Crystal explodes");
+        addSubtitle("entity", "ice_crystal.explode", "Crystal explodes");
         addSubtitle("entity", "thunder_crystal.explode", "Crystal explodes");
 
         addSubtitle("entity", "dart.hit", "Dart hits");
@@ -566,7 +580,9 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addDeath("inebriation", "%1$s was inebriated");
         addDeath("inebriation.player", "%1$s was inebriated by %2$s");
+        addDeath("crush", "%1$s was crushed by %2$s");
         addDeath("ice_crystal", "%1$s was chilled by %2$s's Ice Crystal");
+        addDeath("incineration", "%1$s was incinerated by %2$s");
 
 
 
@@ -590,6 +606,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("recipebook.toggleRecipes.enchantable", "Showing Enchantable");
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
         addGuiText("recipebook.toggleRecipes.incubatable", "Showing Incubatable");
+
+
+        addGuiText("slider.title", "the Slider");
+        addGuiText("slider.message.attack.invalid", "Hmm. Perhaps I need to attack it with a Pickaxe?");
 
         //Valkyrie dialogue
         addGuiText("valkyrie.dialog.1", "What's that? You want to fight? Aww, what a cute little human.");
@@ -634,6 +654,21 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         //Sun spirit dialogue
         addGuiText("sun_spirit.title", "the Sun Spirit");
+        addGuiText("sun_spirit.dead", "Such bitter cold... is this the feeling... of pain?");
+        addGuiText("sun_spirit.line0", "You are certainly a brave soul to have entered this chamber.");
+        addGuiText("sun_spirit.line1", "Begone human, you serve no purpose here.");
+        addGuiText("sun_spirit.line2", "Your presence annoys me. Do you not fear my burning aura?");
+        addGuiText("sun_spirit.line3", "I have nothing to offer you, fool. Leave me at peace.");
+        addGuiText("sun_spirit.line4", "Perhaps you are ignorant. Do you wish to know who I am?");
+        addGuiText("sun_spirit.line5.1", "I am a sun spirit, embodiment of Aether's eternal daylight. As");
+        addGuiText("sun_spirit.line5.2", "long as I am alive, the sun will never set on this world.");
+        addGuiText("sun_spirit.line6.1", "My body burns with the anger of a thousand beasts. No man,");
+        addGuiText("sun_spirit.line6.2", "hero, or villain can harm me. You are no exception.");
+        addGuiText("sun_spirit.line7.1", "You wish to challenge the might of the sun? You are mad.");
+        addGuiText("sun_spirit.line7.2", "Do not further insult me or you will feel my wrath.");
+        addGuiText("sun_spirit.line8", "This is your final warning. Leave now, or prepare to burn.");
+        addGuiText("sun_spirit.line9", "As you wish, your death will be slow and agonizing.");
+        addGuiText("sun_spirit.line10", "Did your previous death not satisfy your curiosity, human?");
 
 
 
@@ -1039,6 +1074,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addClientConfig("gui", "align_vanilla_menu_elements_left", "Aligns the elements of the vanilla menu to the left, only works if 'Align menu left with world preview' is set to false");
         addClientConfig("gui", "align_aether_menu_elements_left", "Aligns the elements of the Aether menu to the left, only works if 'Align menu left with world preview' is set to false");
         addClientConfig("gui", "enable_trivia", "Adds random trivia and tips to the bottom of loading screens");
+        addClientConfig("gui", "enable_silver_hearts", "Makes the extra hearts given by life shards display as silver colored");
 
         addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
