@@ -581,7 +581,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addDeath("inebriation", "%1$s was inebriated");
         addDeath("inebriation.player", "%1$s was inebriated by %2$s");
         addDeath("crush", "%1$s was crushed by %2$s");
+        addDeath("fire_crystal", "%1$s was incinerated by %2$s's Fire Crystal");
         addDeath("ice_crystal", "%1$s was chilled by %2$s's Ice Crystal");
+        addDeath("thunder_crystal", "%1$s was zapped by %2$s's Thunder Crystal");
         addDeath("incineration", "%1$s was incinerated by %2$s");
 
 
@@ -655,6 +657,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         //Sun spirit dialogue
         addGuiText("sun_spirit.title", "the Sun Spirit");
         addGuiText("sun_spirit.dead", "Such bitter cold... is this the feeling... of pain?");
+        addGuiText("sun_spirit.playerdeath", "Such is the fate of a being who opposes the might of the sun.");
         addGuiText("sun_spirit.line0", "You are certainly a brave soul to have entered this chamber.");
         addGuiText("sun_spirit.line1", "Begone human, you serve no purpose here.");
         addGuiText("sun_spirit.line2", "Your presence annoys me. Do you not fear my burning aura?");
