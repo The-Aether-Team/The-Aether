@@ -139,6 +139,8 @@ public class AetherTags {
 	public static class Biomes {
 		public static final TagKey<Biome> IS_AETHER = tag("is_aether");
 		public static final TagKey<Biome> HAS_LARGE_AERCLOUD = tag("has_large_aercloud");
+		public static final TagKey<Biome> HAS_BRONZE_DUNGEON = tag("has_bronze_dungeon");
+		public static final TagKey<Biome> HAS_SILVER_DUNGEON = tag("has_silver_dungeon");
 		public static final TagKey<Biome> HAS_GOLD_DUNGEON = tag("has_gold_dungeon");
 
 		public static final TagKey<Biome> MYCELIUM_CONVERSION = tag("mycelium_conversion");

@@ -1,0 +1,6 @@
+{
+  "type": "aether:bronze_dungeon",
+  "biomes": "#aether:has_bronze_dungeon",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

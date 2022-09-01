@@ -18,8 +18,8 @@ import org.jetbrains.annotations.Nullable;
 public class DungeonStoneProcessor extends StructureProcessor {
     // Pass this instance to the structure pieces that use it
     public static final DungeonStoneProcessor SENTRY = new DungeonStoneProcessor(AetherBlocks.LOCKED_CARVED_STONE.get(), AetherBlocks.LOCKED_SENTRY_STONE.get(), 0.1F);
-    public static final DungeonStoneProcessor ANGELIC = new DungeonStoneProcessor(AetherBlocks.LOCKED_ANGELIC_STONE.get(), AetherBlocks.LOCKED_ANGELIC_STONE.get(), 0.1F);
-    public static final DungeonStoneProcessor HELLFIRE = new DungeonStoneProcessor(AetherBlocks.LOCKED_HELLFIRE_STONE.get(), AetherBlocks.LOCKED_HELLFIRE_STONE.get(), 0.1F);
+    public static final DungeonStoneProcessor ANGELIC = new DungeonStoneProcessor(AetherBlocks.LOCKED_ANGELIC_STONE.get(), AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(), 0.1F);
+    public static final DungeonStoneProcessor HELLFIRE = new DungeonStoneProcessor(AetherBlocks.LOCKED_HELLFIRE_STONE.get(), AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get(), 0.1F);
     public static final Codec<DungeonStoneProcessor> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             ForgeRegistries.BLOCKS.getCodec().fieldOf("baseblock").forGetter(o -> o.baseBlock),
             ForgeRegistries.BLOCKS.getCodec().fieldOf("replacement").forGetter(o -> o.replacement),
@@ -44,7 +44,7 @@ public class DungeonStoneProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos pos, BlockPos pPos, StructureTemplate.StructureBlockInfo pBlockInfo, StructureTemplate.StructureBlockInfo pRelativeBlockInfo, StructurePlaceSettings pSettings, @Nullable StructureTemplate template) {
         RandomSource randomSource = RandomSource.create(Mth.getSeed(pRelativeBlockInfo.pos));
         if (pRelativeBlockInfo.state.is(this.baseBlock) && randomSource.nextFloat() < this.probability) {
-            return new StructureTemplate.StructureBlockInfo(pRelativeBlockInfo.pos, AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get().defaultBlockState(), null);
+            return new StructureTemplate.StructureBlockInfo(pRelativeBlockInfo.pos, this.replacement.defaultBlockState(), null);
         }
         return pRelativeBlockInfo;
     }

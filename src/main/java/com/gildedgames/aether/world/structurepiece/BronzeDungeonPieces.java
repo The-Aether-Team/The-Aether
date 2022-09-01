@@ -29,14 +29,18 @@ public class BronzeDungeonPieces {
         }
     }
 
-    public static class BossRoom extends BronzeDungeonPiece {
+    public static class BossRoom extends TemplateStructurePiece {
 
         public BossRoom(StructureTemplateManager manager, ResourceLocation id, BlockPos pos, RandomSource random) {
             super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), 0, manager, id, id.toString(), makeSettings(), pos);
         }
 
         public BossRoom(StructurePieceSerializationContext context, CompoundTag tag) {
-            super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), context, tag);
+            super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
+        }
+
+        static StructurePlaceSettings makeSettings() {
+            return new StructurePlaceSettings().addProcessor(DungeonStoneProcessor.SENTRY);
         }
 
         @Override
