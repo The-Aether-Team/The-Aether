@@ -22,7 +22,7 @@ public class AerbunnyRenderer extends MobRenderer<Aerbunny, AerbunnyModel> {
     }
 
     @Override
-    protected void scale(Aerbunny aerbunny, PoseStack poseStack, float scale) {
+    protected void scale(Aerbunny aerbunny, PoseStack poseStack, float partialTickTime) {
         poseStack.translate(0.0, 0.2, 0.0);
         if (aerbunny.isBaby()) {
             poseStack.scale(0.5F, 0.5F, 0.5F);
