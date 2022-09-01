@@ -311,9 +311,9 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemInvisibleBlock(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
         itemInvisibleBlock(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
 
-        itemInvisibleBlock(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE, AetherBlocks.CARVED_STONE);
-        itemInvisibleBlock(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
-        itemInvisibleBlock(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
+        itemTreasureBlock(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE, AetherBlocks.CARVED_STONE);
+        itemTreasureBlock(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
+        itemTreasureBlock(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
 
         lookalikeBlock(AetherBlocks.CHEST_MIMIC, mcLoc("item/chest"));
         lookalikeBlock(AetherBlocks.TREASURE_CHEST, mcLoc("item/chest"));
