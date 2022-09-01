@@ -68,13 +68,15 @@ public class SliderSpawnEggItem extends ForgeSpawnEggItem {
 
             BlockPos blockpos2;
             BlockPos blockpos3;
-            if (blockstate.getCollisionShape(level, blockpos).isEmpty()) {
+/*            if (blockstate.getCollisionShape(level, blockpos).isEmpty()) {
                 blockpos2 = blockpos1;
                 blockpos3 = blockpos;
             } else {
                 blockpos2 = blockpos1.relative(direction);
                 blockpos3 = blockpos.relative(direction);
-            }
+            }*/
+            blockpos2 = blockpos1.relative(direction);
+            blockpos3 = blockpos.relative(direction);
             EntityType<?> entitytype = this.getType(itemstack.getTag());
             Entity entity = entitytype.spawn((ServerLevel)level, itemstack, pContext.getPlayer(), blockpos2, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos3) && direction == Direction.UP);
             if (entity != null) {

@@ -629,7 +629,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                 this.stop();
             }
             // Sets the slider's position to the block it is on, because it sometimes moves slightly up
-            if (this.slider.getY() % 1 <= 0.1 && (this.slider.direction.getAxis() != Direction.Axis.Y || (this.slider.getDeltaMovement().length() <= 0.1)))
+            if (this.slider.getY() % 1 <= 0.1 && (this.slider.direction.getAxis() != Direction.Axis.Y))
             {
                 this.slider.setPos(this.slider.getX(), Mth.floor(this.slider.getY()), this.slider.getZ());
             }
@@ -671,13 +671,13 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             }
 
             if // Slider is much further above than any other axis
-            (this.slider.getPodiumBounds() != null && usePodiumCalcLogic && (((yDiff > (xDiff * 0.75F) && yDiff > (zDiff * 0.75F))
+            (usePodiumCalcLogic && (((yDiff > (xDiff * 0.75F) && yDiff > (zDiff * 0.75F))
                     // slider is above target
                     && (this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY))
                     // Slider has a dungeon
                     || (this.slider.getDungeon() != null
                     // Target is low enough to be hit if the Slider is on the ground and the slider is not above the podium
-                    && (((this.slider.getPodiumBounds() == null || !this.doesBoxIntersectPodiumY(this.slider.getTarget().getBoundingBox())) && (this.slider.getTarget().getBoundingBox().minY < (this.getFloorLevel() + (this.slider.getBoundingBox().getYsize())) && !((this.doesBoxIntersectPodiumY(this.slider.getBoundingBox())))))
+                    && (((!this.doesBoxIntersectPodiumY(this.slider.getTarget().getBoundingBox())) && (this.slider.getTarget().getBoundingBox().minY < (this.getFloorLevel() + (this.slider.getBoundingBox().getYsize()))))
                     // Slider is not already on the floor
                     && this.slider.getBoundingBox().minY > this.getFloorLevel())))) {
                 newDirection = Direction.DOWN;
@@ -693,7 +693,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             }
             return newDirection;
         }
-        
+
         public boolean reachedTarget()
         {
             if (this.slider.direction == Direction.UP) {
@@ -810,30 +810,32 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             return false;
         }
 
+
         protected boolean doesBoxIntersectPodiumY(AABB box)
         {
-            return this.slider.getPodiumBounds().minX < box.maxX && this.slider.getPodiumBounds().maxX > box.minX
-                    && this.slider.getPodiumBounds().minZ < box.maxZ && this.slider.getPodiumBounds().maxY > box.minZ;
+            return this.slider.getPodiumBounds() != null && (this.slider.getPodiumBounds().minX < box.maxX && this.slider.getPodiumBounds().maxX > box.minX
+                   && this.slider.getPodiumBounds().minZ < box.maxZ && this.slider.getPodiumBounds().maxZ > box.minZ);
         }
 
         protected boolean doesBoxIntersectPodiumX(AABB box)
         {
-            return this.slider.getPodiumBounds().minY < box.maxY && this.slider.getPodiumBounds().maxY > box.minY
-                    && this.slider.getPodiumBounds().minZ < box.maxZ && this.slider.getPodiumBounds().maxY > box.minZ &&
-                    ((this.slider.getBoundingBox().minX < this.slider.getPodiumBounds().maxX &&
-                    this.slider.getTarget().getBoundingBox().maxX > this.slider.getPodiumBounds().minX) ||
-                    (this.slider.getBoundingBox().maxX > this.slider.getPodiumBounds().minX &&
-                    this.slider.getTarget().getBoundingBox().minX < this.slider.getPodiumBounds().maxX));
+            return this.slider.getPodiumBounds() != null && ((this.slider.getPodiumBounds().minY < box.maxY && this.slider.getPodiumBounds().maxY > box.minY
+                   && this.slider.getPodiumBounds().minZ < box.maxZ && this.slider.getPodiumBounds().maxZ > box.minZ) &&
+                   ((this.slider.getBoundingBox().minX < this.slider.getPodiumBounds().maxX &&
+                   this.slider.getTarget().getBoundingBox().maxX > this.slider.getPodiumBounds().minX) ||
+                   (this.slider.getBoundingBox().maxX > this.slider.getPodiumBounds().minX &&
+                   this.slider.getTarget().getBoundingBox().minX < this.slider.getPodiumBounds().maxX)));
         }
 
         protected boolean doesBoxIntersectPodiumZ(AABB box)
         {
-            return this.slider.getPodiumBounds().minX < box.maxX && this.slider.getPodiumBounds().maxX > box.minX
-                    && this.slider.getPodiumBounds().minY < box.maxY && this.slider.getPodiumBounds().maxY > box.minY &&
-                    ((this.slider.getBoundingBox().minZ < this.slider.getPodiumBounds().maxZ &&
-                    this.slider.getTarget().getBoundingBox().maxZ > this.slider.getPodiumBounds().minZ) ||
-                    (this.slider.getBoundingBox().maxZ > this.slider.getPodiumBounds().minZ &&
-                    this.slider.getTarget().getBoundingBox().minZ < this.slider.getPodiumBounds().maxZ));
+            return this.slider.getPodiumBounds() != null && ((this.slider.getPodiumBounds().minX < box.maxX && this.slider.getPodiumBounds().maxX > box.minX
+                   && this.slider.getPodiumBounds().minY < box.maxY && this.slider.getPodiumBounds().maxY > box.minY) &&
+                   ((this.slider.getBoundingBox().minZ < this.slider.getPodiumBounds().maxZ &&
+                   this.slider.getTarget().getBoundingBox().maxZ > this.slider.getPodiumBounds().minZ) ||
+                   (this.slider.getBoundingBox().maxZ > this.slider.getPodiumBounds().minZ &&
+                   this.slider.getTarget().getBoundingBox().minZ < this.slider.getPodiumBounds().maxZ)));
+
         }
 
         /**
