@@ -2,6 +2,7 @@ package com.gildedgames.aether.api;
 
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.BossMob;
+import com.gildedgames.aether.entity.monster.dungeon.boss.Slider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
@@ -26,7 +27,7 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
     public static <T extends Mob & BossMob<T>> void createDebugDungeon(T boss) {
         boss.setDungeon(new DungeonTracker<>(
                 boss,
-                boss.position(),
+                boss.position().add(0, 1, 0),
                 new AABB(boss.position().x() - 7, boss.position().y() - 1, boss.position().z() - 7,
                         boss.position().x() + 7, boss.position().y() + 7, boss.position().z() + 7),
                 new ArrayList<>()
@@ -41,6 +42,16 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
                     if (x == Math.floor(this.roomBounds().minX) || x == Math.ceil(this.roomBounds().maxX)
                             || y == Math.floor(this.roomBounds().minY) || y == Math.ceil(this.roomBounds().maxY)
                             || z == Math.floor(this.roomBounds().minZ) || z == Math.ceil(this.roomBounds().maxZ)) {
+                        this.boss().getLevel().setBlockAndUpdate(new BlockPos(x, y, z), AetherBlocks.LOCKED_SENTRY_STONE.get().defaultBlockState());
+                    }
+                }
+            }
+        }
+        if (this.boss() instanceof Slider slider) {
+
+            for (int x = (int) Math.floor(slider.getPodiumBounds().minX); x <= Math.floor(slider.getPodiumBounds().maxX - 1); x++) {
+                for (int y = (int) Math.floor(slider.getPodiumBounds().minY); y <= Math.floor(slider.getPodiumBounds().maxY - 1); y++) {
+                    for (int z = (int) Math.floor(slider.getPodiumBounds().minZ); z <= Math.floor(slider.getPodiumBounds().maxZ - 1); z++) {
                         this.boss().getLevel().setBlockAndUpdate(new BlockPos(x, y, z), AetherBlocks.LOCKED_SENTRY_STONE.get().defaultBlockState());
                     }
                 }
