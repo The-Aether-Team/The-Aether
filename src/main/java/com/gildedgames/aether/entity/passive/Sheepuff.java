@@ -65,7 +65,7 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
     private static final EntityDataAccessor<Byte> DATA_WOOL_COLOR_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> DATA_PUFFED_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BOOLEAN);
 
-    private static final Map<DyeColor, ItemLike> ITEM_BY_DYE = Util.make(Maps.newEnumMap(DyeColor.class), (p_203402_0_) -> {
+    private static final Map<DyeColor, ItemLike> ITEM_BY_DYE = Util.make(new EnumMap<>(DyeColor.class), (p_203402_0_) -> {
         p_203402_0_.put(DyeColor.WHITE, Blocks.WHITE_WOOL);
         p_203402_0_.put(DyeColor.ORANGE, Blocks.ORANGE_WOOL);
         p_203402_0_.put(DyeColor.MAGENTA, Blocks.MAGENTA_WOOL);
@@ -83,7 +83,7 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
         p_203402_0_.put(DyeColor.RED, Blocks.RED_WOOL);
         p_203402_0_.put(DyeColor.BLACK, Blocks.BLACK_WOOL);
     });
-    private static final Map<DyeColor, float[]> COLOR_ARRAY_BY_COLOR = Maps.newEnumMap(Arrays.stream(DyeColor.values()).collect(Collectors.toMap((DyeColor p_200204_0_) -> p_200204_0_, Sheepuff::createSheepColor)));
+    private static final Map<DyeColor, float[]> COLOR_ARRAY_BY_COLOR = new EnumMap<>(Arrays.stream(DyeColor.values()).collect(Collectors.toMap((DyeColor p_200204_0_) -> p_200204_0_, Sheepuff::createSheepColor)));
 
     private int eatAnimationTick, amountEaten;
     private EatAetherGrassGoal eatBlockGoal;
