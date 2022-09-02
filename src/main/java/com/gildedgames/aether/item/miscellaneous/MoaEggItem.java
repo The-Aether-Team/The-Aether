@@ -38,13 +38,14 @@ import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
 public class MoaEggItem extends Item
 {
-    private static final Map<Supplier<? extends MoaType>, MoaEggItem> BY_ID = Maps.newIdentityHashMap();
+    private static final Map<Supplier<? extends MoaType>, MoaEggItem> BY_ID = new IdentityHashMap<>();
     private final Supplier<? extends MoaType> moaType;
     private final ResourceLocation moaTypeId;
     private final int color;

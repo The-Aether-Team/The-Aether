@@ -31,11 +31,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
 public class SkyrootBucketItem extends BucketItem {
-    public static Map<Holder<Item>, Supplier<Item>> REPLACEMENTS = Maps.newHashMap();
+    public static Map<Holder<Item>, Supplier<Item>> REPLACEMENTS = new HashMap<>();
 
     public SkyrootBucketItem(Supplier<? extends Fluid> supplier, Item.Properties properties) {
         super(supplier, properties);
