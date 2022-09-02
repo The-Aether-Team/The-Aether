@@ -261,7 +261,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     @Override
     protected void renderLabels(@Nonnull PoseStack matrixStack, int mouseX, int mouseY) {
         if (this.minecraft != null && this.minecraft.player != null) {
-            this.font.draw(matrixStack, this.title, 115, 8, 4210752);
+            this.font.draw(matrixStack, this.title, 115, 6, 4210752);
         }
     }
 
