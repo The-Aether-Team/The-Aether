@@ -1,6 +1,6 @@
 package com.gildedgames.aether.mixin.mixins.client;
 
-import com.gildedgames.aether.api.WorldDisplayHelper;
+import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ConnectScreen;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
@@ -21,8 +21,8 @@ public class ConnectScreenMixin {
      */
     @Inject(at = @At(value = "HEAD"), method = "startConnecting")
     private static void startConnecting(Screen screen, Minecraft minecraft, ServerAddress serverAddress, ServerData serverData, CallbackInfo ci) {
-        if (WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null) {
-            WorldDisplayHelper.stopWorld(Minecraft.getInstance(), new GenericDirtMessageScreen(Component.literal("")));
+        if (AetherWorldDisplayHelper.loadedLevel != null && AetherWorldDisplayHelper.loadedSummary != null) {
+            AetherWorldDisplayHelper.stopWorld(Minecraft.getInstance(), new GenericDirtMessageScreen(Component.literal("")));
         }
     }
 }

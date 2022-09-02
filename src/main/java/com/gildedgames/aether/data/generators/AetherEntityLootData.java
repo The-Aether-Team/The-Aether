@@ -192,19 +192,6 @@ public class AetherEntityLootData extends EntityLoot {
 
         this.add(AetherEntityTypes.FIRE_MINION.get(), LootTable.lootTable());
 
-        this.add(AetherEntityTypes.SLIDER.get(), LootTable.lootTable()
-                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(AetherItems.BRONZE_DUNGEON_KEY.get())
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-                        )
-                )
-                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(AetherBlocks.CARVED_STONE.get())
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(7.0F, 9.0F)))
-                        )
-                )
-        );
-
         this.add(AetherEntityTypes.VALKYRIE_QUEEN.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(AetherItems.SILVER_DUNGEON_KEY.get())
@@ -214,18 +201,12 @@ public class AetherEntityLootData extends EntityLoot {
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(Items.GOLDEN_SWORD)
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-                        )
-                )
+                        ))
         );
 
         this.add(AetherEntityTypes.SUN_SPIRIT.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(AetherItems.GOLD_DUNGEON_KEY.get())
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-                        )
-                )
-                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(AetherBlocks.SUN_ALTAR.get())
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
                         )
                 )

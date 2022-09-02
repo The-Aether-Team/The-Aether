@@ -142,7 +142,6 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.FREEZABLE_PENDANTS)
                 .add(AetherItems.IRON_PENDANT.get())
                 .add(AetherItems.GOLDEN_PENDANT.get());
-        tag(AetherTags.Items.SLIDER_DAMAGING_ITEMS).addTag(Tags.Items.TOOLS_PICKAXES);
 
         tag(AetherTags.Items.PHYG_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
         tag(AetherTags.Items.FLYING_COW_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());

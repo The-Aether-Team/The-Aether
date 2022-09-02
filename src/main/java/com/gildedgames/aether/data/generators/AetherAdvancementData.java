@@ -70,6 +70,7 @@ public class AetherAdvancementData extends AdvancementProvider
                             FrameType.TASK, true, true, false)
                     .addCriterion("lore_book_entry", LoreTrigger.Instance.forAny())
                     .save(consumer, "aether:read_lore");
+
             Advancement loreception = Advancement.Builder.advancement()
                     .parent(moreYouKnow)
                     .display(AetherItems.BOOK_OF_LORE.get(),
@@ -131,34 +132,6 @@ public class AetherAdvancementData extends AdvancementProvider
                     .addCriterion("gravitite_axe", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_AXE.get()))
                     .addCriterion("gravitite_shovel", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_SHOVEL.get()))
                     .save(consumer, "aether:gravitite_tools");
-
-            Advancement bronzeDungeon = Advancement.Builder.advancement()
-                    .parent(enterAether)
-                    .display(AetherItems.BRONZE_DUNGEON_KEY.get(),
-                            Component.translatable("advancement.aether.bronze_dungeon"),
-                            Component.translatable("advancement.aether.bronze_dungeon.desc"),
-                            null,
-                            FrameType.GOAL, true, true, false)
-                    .addCriterion("kill_slider", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.SLIDER.get())))
-                    .save(consumer, "aether:bronze_dungeon");
-            Advancement silverDungeon = Advancement.Builder.advancement()
-                    .parent(bronzeDungeon)
-                    .display(AetherItems.SILVER_DUNGEON_KEY.get(),
-                            Component.translatable("advancement.aether.silver_dungeon"),
-                            Component.translatable("advancement.aether.silver_dungeon.desc"),
-                            null,
-                            FrameType.GOAL, true, true, false)
-                    .addCriterion("kill_valkyrie_queen", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.VALKYRIE_QUEEN.get())))
-                    .save(consumer, "aether:silver_dungeon");
-            Advancement goldDungeon = Advancement.Builder.advancement()
-                    .parent(silverDungeon)
-                    .display(AetherItems.GOLD_DUNGEON_KEY.get(),
-                            Component.translatable("advancement.aether.gold_dungeon"),
-                            Component.translatable("advancement.aether.gold_dungeon.desc"),
-                            null,
-                            FrameType.GOAL, true, true, false)
-                    .addCriterion("kill_sun_spirit", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.SUN_SPIRIT.get())))
-                    .save(consumer, "aether:gold_dungeon");
         }
     }
 }

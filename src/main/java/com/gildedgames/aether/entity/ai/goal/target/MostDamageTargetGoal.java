@@ -7,7 +7,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nullable;
 import java.util.Comparator;
@@ -95,7 +94,7 @@ public class MostDamageTargetGoal extends TargetGoal {
             this.aiTicks = 0;
             this.attackers.forEach((livingEntity, oldAggro) -> {
                 double aggro = oldAggro - this.calmDownRate;
-                if (!livingEntity.isAlive() || (aggro <= 0 && !this.canAttack(livingEntity, HURT_BY_TARGETING)) || (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator()))) {
+                if (!livingEntity.isAlive() || (aggro <= 0 && !this.canAttack(livingEntity, HURT_BY_TARGETING))) {
                     this.attackers.removeDouble(livingEntity);
                 } else {
                     this.attackers.put(livingEntity, aggro);
