@@ -357,4 +357,8 @@ public class GuiHooks {
             GuiComponent.blit(pPoseStack, pX, pY, -90, 0, 0, health, 16, 256, 256);
         }
     }
+
+    public static boolean hideOverlays() {
+        return AetherConfig.CLIENT.enable_world_preview.get() && WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null;
+    }
 }
