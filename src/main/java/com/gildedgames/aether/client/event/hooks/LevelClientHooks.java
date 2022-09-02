@@ -1,6 +1,6 @@
 package com.gildedgames.aether.client.event.hooks;
 
-import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
+import com.gildedgames.aether.api.WorldDisplayHelper;
 import com.gildedgames.aether.AetherConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
@@ -12,7 +12,7 @@ public class LevelClientHooks {
     public static void renderMenuWithWorld(RenderLevelStageEvent.Stage stage, Minecraft minecraft) {
         if (stage == RenderLevelStageEvent.Stage.AFTER_WEATHER) {
             if (AetherConfig.CLIENT.enable_world_preview.get()) {
-                if (AetherWorldDisplayHelper.loadedSummary != null) {
+                if (WorldDisplayHelper.loadedSummary != null) {
                     if (minecraft.screen == null) {
                         setupMenu(minecraft);
                     } else {
@@ -27,19 +27,19 @@ public class LevelClientHooks {
                     }
                 }
             } else {
-                AetherWorldDisplayHelper.loadedLevel = null;
-                AetherWorldDisplayHelper.loadedSummary = null;
+                WorldDisplayHelper.loadedLevel = null;
+                WorldDisplayHelper.loadedSummary = null;
             }
         }
     }
 
     public static void setupMenu(Minecraft minecraft) {
-        AetherWorldDisplayHelper.setupLevelForDisplay();
+        WorldDisplayHelper.setupLevelForDisplay();
         minecraft.forceSetScreen(GuiHooks.getMenu());
     }
 
     public static boolean shouldRenderPlayer() {
-        return AetherConfig.CLIENT.enable_world_preview.get() && AetherWorldDisplayHelper.loadedLevel != null && AetherWorldDisplayHelper.loadedSummary != null;
+        return AetherConfig.CLIENT.enable_world_preview.get() && WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null;
     }
 
     public static void adjustShadow(PlayerRenderer renderer) {
