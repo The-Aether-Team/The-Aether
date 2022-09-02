@@ -192,6 +192,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
     @Override
     public void die(@Nonnull DamageSource damageSource) {
+        this.setDeltaMovement(Vec3.ZERO);
         this.explode();
         if (this.level instanceof ServerLevel) {
             this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
