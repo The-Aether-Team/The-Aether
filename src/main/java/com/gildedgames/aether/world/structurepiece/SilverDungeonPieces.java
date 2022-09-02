@@ -28,6 +28,28 @@ import net.minecraft.world.phys.AABB;
 import java.util.ArrayList;
 
 public class SilverDungeonPieces {
+    /**
+     * For testing the silver dungeon grid.
+     */
+    public static void main(String[] args) {
+        RandomSource randomsource = RandomSource.create();
+        long i = randomsource.nextLong();
+        System.out.println("Seed: " + i);
+        randomsource.setSeed(i);
+    }
+
+    static class FloorGrid {
+        private final int[][] grid;
+        private final int width;
+        private final int length;
+
+        public FloorGrid(int width, int length) {
+            this.grid = new int[width][length];
+            this.width = width;
+            this.length = length;
+        }
+    }
+
     public static class SilverDungeonPiece extends TemplateStructurePiece {
 
         public SilverDungeonPiece(StructureTemplateManager manager, ResourceLocation id, BlockPos pos, RandomSource random) {
