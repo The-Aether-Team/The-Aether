@@ -6,28 +6,23 @@ import com.gildedgames.aether.client.gui.component.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.gildedgames.aether.client.gui.screen.menu.AetherTitleScreen;
 
-import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
 import com.gildedgames.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.client.resources.sounds.SoundInstance;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import net.minecraft.client.gui.screens.Screen;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -106,35 +101,18 @@ public class GuiListener {
 		if (event.phase == TickEvent.Phase.END) {
 			GuiHooks.openAccessoryMenu();
 			GuiHooks.tickMenuWhenPaused(minecraft);
-			AetherMusicManager.tick();
 		}
 	}
 
-	/**
-	 * Resets the music on respawn.
-	 */
 	@SubscribeEvent
-	public static void onPlayerRespawn(ClientPlayerNetworkEvent.Clone event) {
-		AetherMusicManager.stopMusic();
-	}
+	public static void onRenderEffects(ScreenEvent.RenderInventoryMobEffects event) {
+		Screen screen = event.getScreen();
+		int horizontalOffset = event.getHorizontalOffset();
 
-	/**
-	 * Stops other music from playing over Aether music.
-	 */
-	@SubscribeEvent
-	public static void onPlaySound(PlaySoundEvent event) {
-		SoundInstance sound = event.getOriginalSound();
-		if (sound.getSource() == SoundSource.MUSIC) {
-			if (sound.getLocation().equals(SoundEvents.MUSIC_MENU.getLocation())) {
-				AetherMusicManager.handleMenuMusic();
-			} else if (AetherWorldDisplayHelper.loadedLevel != null) {
-				AetherMusicManager.handleWorldPreviewMusic();
-			} else if (sound.getLocation().equals(SoundEvents.MUSIC_CREATIVE.getLocation())) {
-				AetherMusicManager.handleCreativeMusic();
-			}
-			if (AetherMusicManager.isPlaying) {
-				event.setSound(null);
-			}
+		Pair<Integer, Boolean> newOffset = GuiHooks.offsetPotionEffects(screen, horizontalOffset);
+		if (newOffset != null) {
+			event.addHorizontalOffset(newOffset.getLeft());
+			event.setCompact(newOffset.getRight());
 		}
 	}
 

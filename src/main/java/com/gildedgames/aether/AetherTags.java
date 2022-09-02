@@ -85,6 +85,7 @@ public class AetherTags {
 		public static final TagKey<Item> FREEZABLE_BUCKETS = tag("freezable_buckets");
 		public static final TagKey<Item> FREEZABLE_RINGS = tag("freezable_rings");
 		public static final TagKey<Item> FREEZABLE_PENDANTS = tag("freezable_pendants");
+		public static final TagKey<Item> SLIDER_DAMAGING_ITEMS = tag("slider_damaging_items");
 
 		public static final TagKey<Item> PHYG_TEMPTATION_ITEMS = tag("phyg_temptation_items");
 		public static final TagKey<Item> FLYING_COW_TEMPTATION_ITEMS = tag("flying_cow_temptation_items");
@@ -138,6 +139,7 @@ public class AetherTags {
 	public static class Biomes {
 		public static final TagKey<Biome> IS_AETHER = tag("is_aether");
 		public static final TagKey<Biome> HAS_LARGE_AERCLOUD = tag("has_large_aercloud");
+		public static final TagKey<Biome> HAS_GOLD_DUNGEON = tag("has_gold_dungeon");
 
 		public static final TagKey<Biome> MYCELIUM_CONVERSION = tag("mycelium_conversion");
 		public static final TagKey<Biome> PODZOL_CONVERSION = tag("podzol_conversion");

@@ -78,7 +78,7 @@ public class AetherRenderers {
         event.registerEntityRenderer(AetherEntityTypes.VALKYRIE.get(), ValkyrieRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.FIRE_MINION.get(), FireMinionRenderer::new);
 
-//        event.registerEntityRenderer(AetherEntityTypes.SLIDER.get(), SliderRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.SLIDER.get(), SliderRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.VALKYRIE_QUEEN.get(), ValkyrieQueenRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.SUN_SPIRIT.get(), SunSpiritRenderer::new);
 
@@ -92,6 +92,8 @@ public class AetherRenderers {
 
         event.registerEntityRenderer(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), (context) -> new ThrownItemRenderer<>(context, 3.0F, true));
         event.registerEntityRenderer(AetherEntityTypes.CLOUD_CRYSTAL.get(), IceCrystalRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.FIRE_CRYSTAL.get(), FireCrystalRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.ICE_CRYSTAL.get(), IceCrystalRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.THUNDER_CRYSTAL.get(), ThunderCrystalRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.GOLDEN_DART.get(), GoldenDartRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.POISON_DART.get(), PoisonDartRenderer::new);
@@ -137,8 +139,9 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.VALKYRIE_WINGS, () -> ValkyrieWingsModel.createMainLayer(4.5F, 2.5F));
         event.registerLayerDefinition(AetherModelLayers.FIRE_MINION, SunSpiritModel::createBodyLayer);
 
-//        event.registerLayerDefinition(AetherModelLayers.SLIDER, SliderModel::createBodyLayer);
-//        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_QUEEN, ValkyrieQueenModel:createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.SLIDER, SliderModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_QUEEN, ValkyrieModel::createBodyLayer);
+        event.registerLayerDefinition(AetherModelLayers.VALKYRIE_QUEEN_WINGS, () -> ValkyrieWingsModel.createMainLayer(4.5F, 2.5F));
         event.registerLayerDefinition(AetherModelLayers.SUN_SPIRIT, SunSpiritModel::createBodyLayer);
 
         event.registerLayerDefinition(AetherModelLayers.SKYROOT_BOAT, () -> BoatModel.createBodyModel(false));

@@ -1,0 +1,39 @@
+{
+  "parent": "aether:silver_dungeon",
+  "criteria": {
+    "kill_sun_spirit": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether:sun_spirit"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.aether.gold_dungeon.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "aether:gold_dungeon_key"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.aether.gold_dungeon"
+    }
+  },
+  "requirements": [
+    [
+      "kill_sun_spirit"
+    ]
+  ]
+}

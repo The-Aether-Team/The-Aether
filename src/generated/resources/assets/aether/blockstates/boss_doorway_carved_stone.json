@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "invisible=false": {
+      "model": "aether:block/carved_stone"
+    },
+    "invisible=true": {
+      "model": "aether:block/boss_doorway_carved_stone"
+    }
+  }
+}

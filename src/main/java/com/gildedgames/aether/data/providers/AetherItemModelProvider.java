@@ -146,6 +146,10 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
         return itemOverlayDungeonBlock(block, baseBlock, "exclamation");
     }
 
+    public ItemModelBuilder itemInvisibleBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock) {
+        return withExistingParent(blockName(block), texture(blockName(baseBlock)));
+    }
+
     public ItemModelBuilder itemOverlayDungeonBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String overlay) {
         return withExistingParent(blockName(block), mcLoc("block/cube"))
                 .texture("overlay", texture(overlay, "dungeon/")).texture("face", texture(blockName(baseBlock), "dungeon/"))

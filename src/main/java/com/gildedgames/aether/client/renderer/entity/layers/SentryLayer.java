@@ -22,6 +22,7 @@ public class SentryLayer<T extends Sentry, M extends SlimeModel<T>> extends Eyes
 		super(entityRenderer);
 	}
 
+	@Override
 	public void render(@Nonnull PoseStack poseStack, MultiBufferSource buffer, int packedLight, @Nonnull T sentry, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		VertexConsumer consumer = buffer.getBuffer(this.renderType());
 		if (sentry.isAwake()) {

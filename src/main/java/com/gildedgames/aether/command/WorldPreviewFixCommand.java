@@ -1,6 +1,6 @@
 package com.gildedgames.aether.command;
 
-import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
+import com.gildedgames.aether.api.WorldDisplayHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -16,8 +16,8 @@ public class WorldPreviewFixCommand {
     }
 
     public static int fix(CommandSourceStack source) {
-        AetherWorldDisplayHelper.loadedLevel = null;
-        AetherWorldDisplayHelper.loadedSummary = null;
+        WorldDisplayHelper.loadedLevel = null;
+        WorldDisplayHelper.loadedSummary = null;
         source.sendSuccess(Component.translatable("commands.aether.menu.fix"), true);
         return 0;
     }
