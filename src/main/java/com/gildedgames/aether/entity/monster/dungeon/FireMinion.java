@@ -1,7 +1,5 @@
 package com.gildedgames.aether.entity.monster.dungeon;
 
-import com.gildedgames.aether.entity.AetherEntityTypes;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -59,10 +57,5 @@ public class FireMinion extends Monster {
             double z = this.getZ() + d2 * d1;
             this.level.addParticle(particle, x, y, z, 0.0, -0.075, 0.0);
         }
-    }
-
-    @Override
-    public boolean isInvulnerableTo(DamageSource source) {
-        return super.isInvulnerableTo(source) || source.getEntity() != null && source.getEntity().getType() == AetherEntityTypes.SUN_SPIRIT.get();
     }
 }

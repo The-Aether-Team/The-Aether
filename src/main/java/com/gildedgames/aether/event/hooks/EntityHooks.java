@@ -2,7 +2,6 @@ package com.gildedgames.aether.event.hooks;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.monster.Swet;
-import com.gildedgames.aether.entity.monster.dungeon.boss.Slider;
 import com.gildedgames.aether.entity.passive.FlyingCow;
 import com.gildedgames.aether.entity.passive.MountableAnimal;
 import com.gildedgames.aether.item.miscellaneous.bucket.SkyrootBucketItem;
@@ -20,12 +19,9 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 
 import java.util.Optional;
 
@@ -80,12 +76,5 @@ public class EntityHooks {
             }
         }
         return interactionResult;
-    }
-
-    public static boolean preventSliderHooked(Entity projectileEntity, HitResult rayTraceResult) {
-        if (rayTraceResult instanceof EntityHitResult entityHitResult) {
-            return entityHitResult.getEntity() instanceof Slider && projectileEntity instanceof FishingHook;
-        }
-        return false;
     }
 }

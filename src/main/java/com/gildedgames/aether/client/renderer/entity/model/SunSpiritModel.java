@@ -7,8 +7,8 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
@@ -54,6 +54,6 @@ public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
 
     @Override
     public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.base.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, alpha);
+        this.base.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

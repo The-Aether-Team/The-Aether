@@ -52,7 +52,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	private boolean isMoving;
 	private boolean isJumping;
 	private boolean isGravititeJumpActive;
-	private boolean seenSunSpiritDialogue;
 
 	private int goldenDartCount;
 	private int poisonDartCount;
@@ -101,7 +100,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		tag.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
 		tag.putFloat("SavedHealth", this.getSavedHealth());
 		tag.putInt("LifeShardCount", this.getLifeShardCount());
-		tag.putBoolean("HasSeenSunSpirit", this.hasSeenSunSpiritDialogue());
 		if (this.getMountedAerbunnyTag() != null) {
 			tag.put("MountedAerbunnyTag", this.getMountedAerbunnyTag());
 		}
@@ -130,9 +128,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		}
 		if (tag.contains("LifeShardCount")) {
 			this.setLifeShardCount(tag.getInt("LifeShardCount"));
-		}
-		if (tag.contains("HasSeenSunSpirit")) {
-			this.setSeenSunSpiritDialogue(tag.getBoolean("HasSeenSunSpirit"));
 		}
 		if (tag.contains("MountedAerbunnyTag")) {
 			this.setMountedAerbunnyTag(tag.getCompound("MountedAerbunnyTag"));
@@ -530,16 +525,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public boolean isGravititeJumpActive() {
 		return this.isGravititeJumpActive;
-	}
-
-	@Override
-	public void setSeenSunSpiritDialogue(boolean seenDialogue) {
-		this.seenSunSpiritDialogue = seenDialogue;
-	}
-
-	@Override
-	public boolean hasSeenSunSpiritDialogue() {
-		return this.seenSunSpiritDialogue;
 	}
 
 	@Override

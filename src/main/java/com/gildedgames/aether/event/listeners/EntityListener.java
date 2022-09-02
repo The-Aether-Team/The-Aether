@@ -5,9 +5,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.EntityMountEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -33,12 +31,5 @@ public class EntityListener {
         Optional<InteractionResult> result = EntityHooks.pickupBucketable(targetEntity, player, interactionHand);
         result.ifPresent(event::setCancellationResult);
         event.setCanceled(result.isPresent());
-    }
-
-    @SubscribeEvent
-    public static void onProjectileHitEntity(ProjectileImpactEvent event) {
-        Entity projectileEntity = event.getEntity();
-        HitResult rayTraceResult = event.getRayTraceResult();
-        event.setCanceled(EntityHooks.preventSliderHooked(projectileEntity, rayTraceResult));
     }
 }

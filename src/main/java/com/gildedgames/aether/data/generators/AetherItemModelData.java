@@ -223,7 +223,6 @@ public class AetherItemModelData extends AetherItemModelProvider
         eggItem(AetherItems.VALKYRIE_SPAWN_EGG);
         eggItem(AetherItems.FIRE_MINION_SPAWN_EGG);
 
-        eggItem(AetherItems.SLIDER_SPAWN_EGG);
         eggItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG);
         eggItem(AetherItems.SUN_SPIRIT_SPAWN_EGG);
 
@@ -306,14 +305,6 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemTrappedDungeonBlock(AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE, AetherBlocks.LIGHT_ANGELIC_STONE);
         itemTrappedDungeonBlock(AetherBlocks.TRAPPED_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
         itemTrappedDungeonBlock(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE, AetherBlocks.LIGHT_HELLFIRE_STONE);
-
-        itemInvisibleBlock(AetherBlocks.BOSS_DOORWAY_CARVED_STONE, AetherBlocks.CARVED_STONE);
-        itemInvisibleBlock(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
-        itemInvisibleBlock(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
-
-        itemInvisibleBlock(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE, AetherBlocks.CARVED_STONE);
-        itemInvisibleBlock(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
-        itemInvisibleBlock(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
 
         lookalikeBlock(AetherBlocks.CHEST_MIMIC, mcLoc("item/chest"));
         lookalikeBlock(AetherBlocks.TREASURE_CHEST, mcLoc("item/chest"));

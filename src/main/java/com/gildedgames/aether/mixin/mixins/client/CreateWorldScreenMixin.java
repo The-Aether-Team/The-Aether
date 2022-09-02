@@ -1,6 +1,6 @@
 package com.gildedgames.aether.mixin.mixins.client;
 
-import com.gildedgames.aether.api.WorldDisplayHelper;
+import com.gildedgames.aether.client.gui.screen.menu.AetherWorldDisplayHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class CreateWorldScreenMixin {
     @Inject(at = @At(value = "HEAD"), method = "openFresh")
     private static void openFresh(Minecraft minecraft, Screen screen, CallbackInfo ci) {
-        if (WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null) {
-            WorldDisplayHelper.stopWorld(Minecraft.getInstance(), new GenericDirtMessageScreen(Component.literal("")));
+        if (AetherWorldDisplayHelper.loadedLevel != null && AetherWorldDisplayHelper.loadedSummary != null) {
+            AetherWorldDisplayHelper.stopWorld(Minecraft.getInstance(), new GenericDirtMessageScreen(Component.literal("")));
         }
     }
 }

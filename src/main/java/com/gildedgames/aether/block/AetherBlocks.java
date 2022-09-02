@@ -2,7 +2,9 @@ package com.gildedgames.aether.block;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.construction.*;
-import com.gildedgames.aether.block.dungeon.*;
+import com.gildedgames.aether.block.dungeon.ChestMimicBlock;
+import com.gildedgames.aether.block.dungeon.TrappedBlock;
+import com.gildedgames.aether.block.dungeon.TreasureChestBlock;
 import com.gildedgames.aether.blockentity.ChestMimicBlockEntity;
 import com.gildedgames.aether.blockentity.SkyrootBedBlockEntity;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
@@ -28,7 +30,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.Material;
@@ -135,14 +136,6 @@ public class AetherBlocks
     public static final RegistryObject<Block> TRAPPED_LIGHT_ANGELIC_STONE = register("trapped_light_angelic_stone", () -> new TrappedBlock(AetherEntityTypes.VALKYRIE::get, () -> LIGHT_ANGELIC_STONE.get().defaultBlockState(), Block.Properties.copy(LIGHT_ANGELIC_STONE.get())));
     public static final RegistryObject<Block> TRAPPED_HELLFIRE_STONE = register("trapped_hellfire_stone", () -> new TrappedBlock(AetherEntityTypes.FIRE_MINION::get, () -> HELLFIRE_STONE.get().defaultBlockState(), Block.Properties.copy(HELLFIRE_STONE.get())));
     public static final RegistryObject<Block> TRAPPED_LIGHT_HELLFIRE_STONE = register("trapped_light_hellfire_stone", () -> new TrappedBlock(AetherEntityTypes.FIRE_MINION::get, () -> LIGHT_HELLFIRE_STONE.get().defaultBlockState(), Block.Properties.copy(LIGHT_HELLFIRE_STONE.get())));
-
-    public static final RegistryObject<Block> BOSS_DOORWAY_CARVED_STONE = register("boss_doorway_carved_stone", () -> new InvisibleBlock(BlockBehaviour.Properties.copy(LOCKED_HELLFIRE_STONE.get())));
-    public static final RegistryObject<Block> BOSS_DOORWAY_ANGELIC_STONE = register("boss_doorway_angelic_stone", () -> new InvisibleBlock(BlockBehaviour.Properties.copy(LOCKED_HELLFIRE_STONE.get())));
-    public static final RegistryObject<Block> BOSS_DOORWAY_HELLFIRE_STONE = register("boss_doorway_hellfire_stone", () -> new InvisibleBlock(BlockBehaviour.Properties.copy(LOCKED_HELLFIRE_STONE.get())));
-
-    public static final RegistryObject<Block> TREASURE_DOORWAY_CARVED_STONE = register("treasure_doorway_carved_stone", () -> new TreasureRoomBlock(BlockBehaviour.Properties.copy(LOCKED_HELLFIRE_STONE.get())));
-    public static final RegistryObject<Block> TREASURE_DOORWAY_ANGELIC_STONE = register("treasure_doorway_angelic_stone", () -> new TreasureRoomBlock(BlockBehaviour.Properties.copy(LOCKED_HELLFIRE_STONE.get())));
-    public static final RegistryObject<Block> TREASURE_DOORWAY_HELLFIRE_STONE = register("treasure_doorway_hellfire_stone", () -> new TreasureRoomBlock(BlockBehaviour.Properties.copy(LOCKED_HELLFIRE_STONE.get())));
 
     public static final RegistryObject<Block> CHEST_MIMIC = register("chest_mimic", () -> new ChestMimicBlock(Block.Properties.copy(Blocks.CHEST)));
     public static final RegistryObject<Block> TREASURE_CHEST = register("treasure_chest", () -> new TreasureChestBlock(Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).requiresCorrectToolForDrops()));

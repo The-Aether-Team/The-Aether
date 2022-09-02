@@ -1,4 +1,4 @@
-package com.gildedgames.aether.api;
+package com.gildedgames.aether.client.gui.screen.menu;
 
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.AetherConfig;
@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class WorldDisplayHelper {
+public class AetherWorldDisplayHelper {
     public static Level loadedLevel = null;
     public static LevelSummary loadedSummary = null;
 

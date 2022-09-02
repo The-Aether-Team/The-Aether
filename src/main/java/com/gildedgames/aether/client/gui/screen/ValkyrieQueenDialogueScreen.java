@@ -2,7 +2,7 @@ package com.gildedgames.aether.client.gui.screen;
 
 import com.gildedgames.aether.client.gui.component.NpcDialogueComponent;
 import com.gildedgames.aether.client.gui.component.PlayerDialogueButton;
-import com.gildedgames.aether.entity.monster.dungeon.boss.ValkyrieQueen;
+import com.gildedgames.aether.entity.monster.dungeon.ValkyrieQueen;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.server.NpcPlayerInteractPacket;

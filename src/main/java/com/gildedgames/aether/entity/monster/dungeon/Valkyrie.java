@@ -52,7 +52,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     }
 
     @Nonnull
-    public static AttributeSupplier.Builder createMobAttributes() {
+    public static AttributeSupplier.Builder createValkyrieAttributes() {
         return createAttributes()
                 .add(Attributes.FOLLOW_RANGE, 16.0)
                 .add(Attributes.ATTACK_DAMAGE, 10.0)

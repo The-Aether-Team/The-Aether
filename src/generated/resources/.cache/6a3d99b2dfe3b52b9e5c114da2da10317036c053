@@ -1,4 +1,4 @@
-// 1.19.2	2022-08-29T21:53:22.880917	Aether Loot Tables
+// 1.19.2	2022-08-14T09:50:51.8450926	Aether Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 9e100e6de96b47a3a1b9533e76ad9847d364b9c0 data/aether/loot_tables/blocks/aerogel_slab.json
@@ -21,9 +21,6 @@ c6fa40b8f4c6090d949b5006deed5809600ede91 data/aether/loot_tables/blocks/angelic_
 17fc2f17553b754d9dada4451bb3779583b9e063 data/aether/loot_tables/blocks/berry_bush.json
 43fed59caef30ed669337807c1808a0d4c33395e data/aether/loot_tables/blocks/berry_bush_stem.json
 3c5c73ce4c3d84594ec85f3f9d45a15f77b8eda3 data/aether/loot_tables/blocks/blue_aercloud.json
-1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/boss_doorway_angelic_stone.json
-1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/boss_doorway_carved_stone.json
-1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/boss_doorway_hellfire_stone.json
 adb04805cf256bd9a9ca62d6ddb0418121fea094 data/aether/loot_tables/blocks/carved_slab.json
 4afee1d7022c562586c130d7e29f557271f9487a data/aether/loot_tables/blocks/carved_stairs.json
 e0ee5881d425fc92516a6a5f4b358c1de179cbb8 data/aether/loot_tables/blocks/carved_stone.json
@@ -115,9 +112,6 @@ aef28ccaa6b0f973eb16fbd41a29c98db3359637 data/aether/loot_tables/blocks/stripped
 1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/trapped_light_hellfire_stone.json
 1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/trapped_sentry_stone.json
 50a9e24d188f74c43878b88b03bade4b18f636f9 data/aether/loot_tables/blocks/treasure_chest.json
-1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/treasure_doorway_angelic_stone.json
-1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/treasure_doorway_carved_stone.json
-1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/treasure_doorway_hellfire_stone.json
 3d38ae738dd87b3c150772f1fc6134f05c8c5e60 data/aether/loot_tables/blocks/white_flower.json
 025ba998abc1c5871345d309e55a23e3ffd5dbb9 data/aether/loot_tables/blocks/zanite_block.json
 9b732a4fc2bdcdd492d43070a1247062a5c481a3 data/aether/loot_tables/blocks/zanite_ore.json
@@ -175,8 +169,7 @@ ad98befa66667293ed0a27422ec7cc1835b2fb68 data/aether/loot_tables/entities/sheepu
 60edabaa892b5ba3808bac820532045e3f84bbd4 data/aether/loot_tables/entities/sheepuff/red.json
 4faf444eeb3dd7f28cda15a911f56a5367b50ee2 data/aether/loot_tables/entities/sheepuff/white.json
 3b0e201e9d16f2e0eff23cd7b36e023ba9a1a72c data/aether/loot_tables/entities/sheepuff/yellow.json
-a9c67b47e0556720d3e240870e651fadf7242e29 data/aether/loot_tables/entities/slider.json
-9c94cbc81b55cbd3e7de7f70f284011c376dc6a1 data/aether/loot_tables/entities/sun_spirit.json
+2b99bdf792447c803a8bae89792d1e8f3b589368 data/aether/loot_tables/entities/sun_spirit.json
 9e4ecaa2cd33edd4484569823c0924f729d39ce2 data/aether/loot_tables/entities/valkyrie.json
 8e267b22d9f609c074879de93c81d347f3c5e21c data/aether/loot_tables/entities/valkyrie_queen.json
 ef017fe8afbc1e704a7cfb4818ece7ba018f9c91 data/aether/loot_tables/entities/whirlwind.json

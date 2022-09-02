@@ -41,7 +41,6 @@ public class AetherModelLayers {
 
     public static final ModelLayerLocation SLIDER = register("slider");
     public static final ModelLayerLocation VALKYRIE_QUEEN = register("valkyrie_queen");
-    public static final ModelLayerLocation VALKYRIE_QUEEN_WINGS = register("valkyrie_queen_wings");
     public static final ModelLayerLocation SUN_SPIRIT = register("sun_spirit");
 
     public static final ModelLayerLocation SKYROOT_BOAT = register("skyroot_boat");

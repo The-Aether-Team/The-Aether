@@ -15,12 +15,6 @@ public class AetherStructureSets {
     public static final Map<ResourceLocation, StructureSet> STRUCTURE_SETS = new HashMap<>();
 
     public static final ResourceKey<StructureSet> LARGE_AERCLOUD = register("large_aercloud", new StructureSet(AetherStructures.dataHolder(AetherStructures.LARGE_AERCLOUD), new RandomSpreadStructurePlacement(4, 2, RandomSpreadType.LINEAR, 15536586)));
-    public static final ResourceKey<StructureSet> GOLD_DUNGEON = register("gold_dungeon",
-            new StructureSet(
-                    AetherStructures.dataHolder(AetherStructures.GOLD_DUNGEON),
-                    new RandomSpreadStructurePlacement(20, 6, RandomSpreadType.LINEAR, 15436785)
-            )
-    );
 
     public static ResourceKey<StructureSet> register(String name, StructureSet structure) {
         ResourceLocation location = new ResourceLocation(Aether.MODID, name);
