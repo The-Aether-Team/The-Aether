@@ -6,9 +6,10 @@ import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.capability.AetherCapabilities;
 import com.gildedgames.aether.capability.time.AetherTime;
 import com.gildedgames.aether.api.SunAltarWhitelist;
+import com.gildedgames.aether.network.AetherPacketHandler;
+import com.gildedgames.aether.network.packet.client.OpenSunAltarPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.LivingEntity;
@@ -64,10 +65,10 @@ public class SunAltarBlock extends BaseEntityBlock {
 	}
 
 	protected void openScreen(Level level, @Nonnull BlockPos pos, @Nonnull Player player) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof SunAltarBlockEntity sunAltar) {
-				((ServerPlayer)player).connection.send(ClientboundBlockEntityDataPacket.create(sunAltar));
+				AetherPacketHandler.sendToPlayer(new OpenSunAltarPacket(sunAltar.getName()), serverPlayer);
 			}
 		}
 	}
@@ -78,9 +79,9 @@ public class SunAltarBlock extends BaseEntityBlock {
 			BlockEntity blockentity = pLevel.getBlockEntity(pPos);
 			if (blockentity instanceof SunAltarBlockEntity sunAltar) {
 				sunAltar.setCustomName(pStack.getHoverName());
+				sunAltar.setChanged();
 			}
 		}
-
 	}
 
 	@Override

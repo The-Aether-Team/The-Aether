@@ -85,6 +85,7 @@ public class AetherTags {
 		public static final TagKey<Item> FREEZABLE_BUCKETS = tag("freezable_buckets");
 		public static final TagKey<Item> FREEZABLE_RINGS = tag("freezable_rings");
 		public static final TagKey<Item> FREEZABLE_PENDANTS = tag("freezable_pendants");
+		public static final TagKey<Item> SLIDER_DAMAGING_ITEMS = tag("slider_damaging_items");
 
 		public static final TagKey<Item> PHYG_TEMPTATION_ITEMS = tag("phyg_temptation_items");
 		public static final TagKey<Item> FLYING_COW_TEMPTATION_ITEMS = tag("flying_cow_temptation_items");
@@ -93,12 +94,17 @@ public class AetherTags {
 		public static final TagKey<Item> MOA_TEMPTATION_ITEMS = tag("moa_temptation_items");
 		public static final TagKey<Item> MOA_FOOD_ITEMS = tag("moa_food_items");
 
+		public static final TagKey<Item> TOOLS_LANCES = tag("tools/lances");
+		public static final TagKey<Item> TOOLS_HAMMERS = tag("tools/hammers");
+
 		public static final TagKey<Item> AETHER_RING = curio("aether_ring");
 		public static final TagKey<Item> AETHER_PENDANT = curio("aether_pendant");
 		public static final TagKey<Item> AETHER_GLOVES = curio("aether_gloves");
 		public static final TagKey<Item> AETHER_CAPE = curio("aether_cape");
 		public static final TagKey<Item> AETHER_ACCESSORY = curio("aether_accessory");
 		public static final TagKey<Item> AETHER_SHIELD = curio("aether_shield");
+
+		public static final TagKey<Item> ACCESSORIES = tag("accessories");
 
 		private static TagKey<Item> tag(String name) {
 			return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Aether.MODID, name));
@@ -133,6 +139,7 @@ public class AetherTags {
 	public static class Biomes {
 		public static final TagKey<Biome> IS_AETHER = tag("is_aether");
 		public static final TagKey<Biome> HAS_LARGE_AERCLOUD = tag("has_large_aercloud");
+		public static final TagKey<Biome> HAS_GOLD_DUNGEON = tag("has_gold_dungeon");
 
 		public static final TagKey<Biome> MYCELIUM_CONVERSION = tag("mycelium_conversion");
 		public static final TagKey<Biome> PODZOL_CONVERSION = tag("podzol_conversion");
