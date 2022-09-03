@@ -52,23 +52,16 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
         return this.roomBounds().contains(this.boss().position());
     }
 
-    public boolean isBossWithinOrigin() {
-        AABB originBounds = new AABB(this.originCoordinates.x() - 1, this.originCoordinates.y() - 1, this.originCoordinates.z() - 1,
-                this.originCoordinates.x() + 1, this.originCoordinates.y() + 1, this.originCoordinates.z() + 1);
-        return originBounds.contains(this.boss().position());
-    }
-
     public void trackPlayers() {
         this.boss().getLevel().getEntities(EntityType.PLAYER, this.roomBounds(), Entity::isAlive).forEach(player -> {
             if (!this.dungeonPlayers().contains(player.getUUID())) {
+                this.boss().onDungeonPlayerAdded(player);
                 this.dungeonPlayers().add(player.getUUID());
             }
         });
         this.dungeonPlayers().removeIf(uuid -> {
             Player player = this.boss().getLevel().getPlayerByUUID(uuid);
-            if (player != null && !player.isAlive()) {
-                this.boss().onPlayerKilled(player);
-            }
+            this.boss().onDungeonPlayerRemoved(player);
             return player != null && (!this.roomBounds().contains(player.position()) || !player.isAlive());
         });
     }

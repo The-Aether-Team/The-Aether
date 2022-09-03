@@ -428,8 +428,8 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     }
 
     @Override
-    public void onPlayerKilled(Player player) {
-        if (player instanceof ServerPlayer serverPlayer && player.getHealth() <= 0) {
+    public void onDungeonPlayerRemoved(@Nullable Player player) {
+        if (player instanceof ServerPlayer serverPlayer && !player.isAlive()) {
             serverPlayer.sendSystemMessage(Component.translatable("gui.aether.sun_spirit.playerdeath").withStyle(ChatFormatting.RED));
         }
     }

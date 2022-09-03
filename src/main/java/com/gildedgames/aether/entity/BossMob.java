@@ -40,7 +40,9 @@ public interface BossMob<T extends Mob & BossMob<T>> {
         }
     }
 
-    default void onPlayerKilled(Player player) { }
+    default void onDungeonPlayerAdded(@Nullable Player player) { }
+
+    default void onDungeonPlayerRemoved(@Nullable Player player) { }
 
     void reset();
 
