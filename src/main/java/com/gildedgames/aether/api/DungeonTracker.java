@@ -61,8 +61,11 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
         });
         this.dungeonPlayers().removeIf(uuid -> {
             Player player = this.boss().getLevel().getPlayerByUUID(uuid);
-            this.boss().onDungeonPlayerRemoved(player);
-            return player != null && (!this.roomBounds().contains(player.position()) || !player.isAlive());
+            boolean shouldRemove = player != null && (!this.roomBounds().contains(player.position()) || !player.isAlive());
+            if (shouldRemove) {
+                this.boss().onDungeonPlayerRemoved(player);
+            }
+            return shouldRemove;
         });
     }
 
