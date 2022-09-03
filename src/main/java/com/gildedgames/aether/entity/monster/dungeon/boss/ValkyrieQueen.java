@@ -253,7 +253,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
 
     @Override
     public int getDeathScore() {
-        return 0;
+        return this.deathScore;
     }
 
     @Override

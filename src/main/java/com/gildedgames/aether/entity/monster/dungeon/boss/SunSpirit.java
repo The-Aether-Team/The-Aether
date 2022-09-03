@@ -415,7 +415,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
     @Override
     public int getDeathScore() {
-        return 0;
+        return this.deathScore;
     }
 
     @Override
