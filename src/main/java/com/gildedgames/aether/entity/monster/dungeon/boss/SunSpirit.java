@@ -205,6 +205,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     @Override
     public void die(@Nonnull DamageSource cause) {
         if (!this.level.isClientSide) {
+            this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
             this.setFrozen(true);
             this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.dead").withStyle(ChatFormatting.AQUA));
             this.level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent(aetherTime -> {
@@ -322,7 +323,6 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
-        this.bossFight.addPlayer(pPlayer);
     }
 
     /**
@@ -332,7 +332,23 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public void stopSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.stopSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId()), pPlayer);
-        this.bossFight.removePlayer(pPlayer);
+    }
+
+    @Override
+    public void onDungeonPlayerAdded(@Nullable Player player) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            this.bossFight.addPlayer(serverPlayer);
+        }
+    }
+
+    @Override
+    public void onDungeonPlayerRemoved(@Nullable Player player) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            this.bossFight.removePlayer(serverPlayer);
+            if (!player.isAlive()) {
+                serverPlayer.sendSystemMessage(Component.translatable("gui.aether.sun_spirit.playerdeath").withStyle(ChatFormatting.RED));
+            }
+        }
     }
 
     public boolean isFrozen() {
@@ -424,13 +440,6 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         this.setHealth(this.getMaxHealth());
         if (this.goldDungeon != null) {
             this.openRoom();
-        }
-    }
-
-    @Override
-    public void onDungeonPlayerRemoved(@Nullable Player player) {
-        if (player instanceof ServerPlayer serverPlayer && !player.isAlive()) {
-            serverPlayer.sendSystemMessage(Component.translatable("gui.aether.sun_spirit.playerdeath").withStyle(ChatFormatting.RED));
         }
     }
 

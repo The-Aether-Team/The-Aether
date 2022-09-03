@@ -158,6 +158,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Override
     public void die(@Nonnull DamageSource pCause) {
         if (!this.level.isClientSide) {
+            this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
             this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.defeated"));
             this.spawnExplosionParticles();
         }
@@ -193,7 +194,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
-        this.bossFight.addPlayer(pPlayer);
+        this.bossFight.addPlayer(pPlayer); //todo remove
     }
 
     /**
@@ -203,8 +204,22 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     public void stopSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.stopSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId()), pPlayer);
-        this.bossFight.removePlayer(pPlayer);
+        this.bossFight.removePlayer(pPlayer); //todo remove
     }
+
+//    @Override
+//    public void onDungeonPlayerAdded(@Nullable Player player) {
+//        if (player instanceof ServerPlayer serverPlayer) {
+//            this.bossFight.addPlayer(serverPlayer);
+//        }
+//    }
+//
+//    @Override
+//    public void onDungeonPlayerRemoved(@Nullable Player player) {
+//        if (player instanceof ServerPlayer serverPlayer) {
+//            this.bossFight.removePlayer(serverPlayer);
+//        }
+//    }
 
     @Override
     public void setCustomName(@Nullable Component pName) {
