@@ -1,9 +1,12 @@
 package com.gildedgames.aether.block.dungeon;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -65,5 +68,23 @@ public class TreasureRoomBlock extends Block {
         } else {
             return super.use(state, level, pos, player, hand, hit);
         }
+    }
+
+    @Override
+    public boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
+        boolean flag = super.canBeReplaced(state, context);
+        if (!flag) {
+            Level level = context.getLevel();
+            BlockPos pos = context.getClickedPos();
+            for (int i = 0; i < 2; i++) {
+                double a = pos.getX() + 0.5D + (double) (level.random.nextFloat() - level.random.nextFloat()) * 0.375D;
+                double b = pos.getY() + 0.5D + (double) (level.random.nextFloat() - level.random.nextFloat()) * 0.375D;
+                double c = pos.getZ() + 0.5D + (double) (level.random.nextFloat() - level.random.nextFloat()) * 0.375D;
+                if (level instanceof ServerLevel serverLevel) {
+                    serverLevel.sendParticles(ParticleTypes.POOF, a, b, c, 1, 0.0, 0.0, 0.0, 0.0);
+                }
+            }
+        }
+        return flag;
     }
 }
