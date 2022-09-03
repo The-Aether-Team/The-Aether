@@ -6,6 +6,7 @@ import com.gildedgames.aether.block.dungeon.TreasureRoomBlock;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
@@ -38,6 +39,8 @@ public interface BossMob<T extends Mob & BossMob<T>> {
             }
         }
     }
+
+    default void onPlayerKilled(Player player) { }
 
     void reset();
 

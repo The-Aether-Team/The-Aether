@@ -184,15 +184,6 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     }
 
     @Override
-    public boolean doHurtTarget(@Nonnull Entity pEntity) {
-        boolean result = super.doHurtTarget(pEntity);
-        if (pEntity instanceof ServerPlayer player && player.getHealth() <= 0) {
-            player.sendSystemMessage(Component.translatable("gui.aether.sun_spirit.playerdeath").withStyle(ChatFormatting.RED));
-        }
-        return result;
-    }
-
-    @Override
     public boolean isInvulnerableTo(DamageSource source) {
         return this.isRemoved() || source != DamageSource.OUT_OF_WORLD && !source.getMsgId().equals("ice_crystal");
     }
@@ -433,6 +424,13 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         this.setHealth(this.getMaxHealth());
         if (this.goldDungeon != null) {
             this.openRoom();
+        }
+    }
+
+    @Override
+    public void onPlayerKilled(Player player) {
+        if (player instanceof ServerPlayer serverPlayer && player.getHealth() <= 0) {
+            serverPlayer.sendSystemMessage(Component.translatable("gui.aether.sun_spirit.playerdeath").withStyle(ChatFormatting.RED));
         }
     }
 
