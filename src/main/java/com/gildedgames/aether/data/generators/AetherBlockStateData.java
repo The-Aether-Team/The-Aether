@@ -118,12 +118,12 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         invisibleBlock(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
         invisibleBlock(AetherBlocks.BOSS_DOORWAY_LIGHT_HELLFIRE_STONE, AetherBlocks.LIGHT_HELLFIRE_STONE);
 
-        invisibleBlock(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE, AetherBlocks.CARVED_STONE);
-        invisibleBlock(AetherBlocks.TREASURE_DOORWAY_SENTRY_STONE, AetherBlocks.SENTRY_STONE);
-        invisibleBlock(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
-        invisibleBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_ANGELIC_STONE, AetherBlocks.LIGHT_ANGELIC_STONE);
-        invisibleBlock(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
-        invisibleBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_HELLFIRE_STONE, AetherBlocks.LIGHT_HELLFIRE_STONE);
+        dungeonBlock(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE, AetherBlocks.CARVED_STONE);
+        dungeonBlock(AetherBlocks.TREASURE_DOORWAY_SENTRY_STONE, AetherBlocks.SENTRY_STONE);
+        dungeonBlock(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
+        dungeonBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_ANGELIC_STONE, AetherBlocks.LIGHT_ANGELIC_STONE);
+        dungeonBlock(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
+        dungeonBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_HELLFIRE_STONE, AetherBlocks.LIGHT_HELLFIRE_STONE);
 
         chestMimic(AetherBlocks.CHEST_MIMIC, () -> Blocks.OAK_PLANKS);
         treasureChest(AetherBlocks.TREASURE_CHEST, AetherBlocks.CARVED_STONE);

@@ -31,11 +31,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * A block that can switch between being air and a solid block. This is useful for creating doors in dungeons, as bosses
  * can detect and switch these blocks. Only creative players can interact with these blocks when they're invisible.
  */
-public class TreasureRoomBlock extends Block {
+public class DoorwayBlock extends Block {
     public static final BooleanProperty INVISIBLE = BooleanProperty.create("invisible");
     public static final VoxelShape SHAPE = Block.box(5.0D, 5.0D, 5.0D, 11.0D, 11.0D, 11.0D);
 
-    public TreasureRoomBlock(Properties pProperties) {
+    public DoorwayBlock(Properties pProperties) {
         super(pProperties);
         this.registerDefaultState(this.stateDefinition.any().setValue(INVISIBLE, false));
     }
@@ -103,7 +103,7 @@ public class TreasureRoomBlock extends Block {
             Item item = itemstack.getItem();
             if (item instanceof BlockItem blockItem) {
                 if (blockItem.getBlock() == this && state.getValue(INVISIBLE)) {
-                    minecraft.level.addParticle(AetherParticleTypes.TREASURE_DOORWAY_BLOCK.get(), (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+                    minecraft.level.addParticle(AetherParticleTypes.BOSS_DOORWAY_BLOCK.get(), (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
                 }
             }
         }

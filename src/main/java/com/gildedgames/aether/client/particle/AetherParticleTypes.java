@@ -27,7 +27,6 @@ public class AetherParticleTypes {
 	public static final RegistryObject<SimpleParticleType> EVIL_WHIRLWIND = PARTICLES.register("evil_whirlwind", () -> new SimpleParticleType(false));
 	public static final RegistryObject<SimpleParticleType> ZEPHYR_SNOWFLAKE = PARTICLES.register("zephyr_snowflake", () -> new SimpleParticleType(false));
 	public static final RegistryObject<SimpleParticleType> BOSS_DOORWAY_BLOCK = PARTICLES.register("door", () -> new SimpleParticleType(false));
-	public static final RegistryObject<SimpleParticleType> TREASURE_DOORWAY_BLOCK = PARTICLES.register("treasure", () -> new SimpleParticleType(false));
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
@@ -41,6 +40,5 @@ public class AetherParticleTypes {
 		event.register(EVIL_WHIRLWIND.get(), EvilWhirlyParticle.Factory::new);
 		event.register(ZEPHYR_SNOWFLAKE.get(), SnowflakeParticle.Provider::new);
 		event.register(BOSS_DOORWAY_BLOCK.get(), DungeonBlockOverlayParticle.Factory::new);
-		event.register(TREASURE_DOORWAY_BLOCK.get(), DungeonBlockOverlayParticle.Factory::new);
 	}
 }
