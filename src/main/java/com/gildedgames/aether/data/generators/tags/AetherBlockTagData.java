@@ -84,11 +84,21 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get(),
                 AetherBlocks.TRAPPED_HELLFIRE_STONE.get(),
                 AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE.get());
+        tag(AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS).add(
+                AetherBlocks.BOSS_DOORWAY_CARVED_STONE.get(),
+                AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get(),
+                AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE.get());
+        tag(AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS).add(
+                AetherBlocks.TREASURE_DOORWAY_CARVED_STONE.get(),
+                AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get(),
+                AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE.get());
         tag(AetherTags.Blocks.SENTRY_BLOCKS).add(
                 AetherBlocks.CARVED_STONE.get(),
                 AetherBlocks.SENTRY_STONE.get(),
                 AetherBlocks.LOCKED_CARVED_STONE.get(),
                 AetherBlocks.LOCKED_SENTRY_STONE.get(),
+                AetherBlocks.BOSS_DOORWAY_CARVED_STONE.get(),
+                AetherBlocks.TREASURE_DOORWAY_CARVED_STONE.get(),
                 AetherBlocks.CARVED_STAIRS.get(),
                 AetherBlocks.CARVED_SLAB.get(),
                 AetherBlocks.CARVED_WALL.get());
@@ -97,6 +107,8 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.LIGHT_ANGELIC_STONE.get(),
                 AetherBlocks.LOCKED_ANGELIC_STONE.get(),
                 AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(),
+                AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get(),
+                AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get(),
                 AetherBlocks.ANGELIC_STAIRS.get(),
                 AetherBlocks.ANGELIC_SLAB.get(),
                 AetherBlocks.ANGELIC_WALL.get());
@@ -105,6 +117,8 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.LIGHT_HELLFIRE_STONE.get(),
                 AetherBlocks.LOCKED_HELLFIRE_STONE.get(),
                 AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get(),
+                AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE.get(),
+                AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE.get(),
                 AetherBlocks.HELLFIRE_STAIRS.get(),
                 AetherBlocks.HELLFIRE_SLAB.get(),
                 AetherBlocks.HELLFIRE_WALL.get());
