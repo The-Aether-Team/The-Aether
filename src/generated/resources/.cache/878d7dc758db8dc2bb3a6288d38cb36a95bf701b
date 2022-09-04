@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-01T11:17:43.1969679	Aether Item Models
+// 1.19.2	2022-09-03T21:15:38.1944781	Aether Item Models
 88dbeab79e0017737773db746d2e719a21fdb198 assets/aether/models/item/aechor_petal.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aechor_plant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aerbunny_spawn_egg.json
@@ -35,6 +35,9 @@ b511582e963e02e1c5c1e4dc18331df7e638621f assets/aether/models/item/book_of_lore.
 38009a82b1be2cefa0ba7ecdef3b9e4f96796292 assets/aether/models/item/boss_doorway_angelic_stone.json
 8dd31a077d3ce16cfb5e755448beed536d75d120 assets/aether/models/item/boss_doorway_carved_stone.json
 a2d2dc58910189328906bccc22f009ccbd9faad9 assets/aether/models/item/boss_doorway_hellfire_stone.json
+7bdd9631922e33d6810445783ae7f59cac252b19 assets/aether/models/item/boss_doorway_light_angelic_stone.json
+54a894044906b11327b09d6edd21aa4c98dbde75 assets/aether/models/item/boss_doorway_light_hellfire_stone.json
+935cb78a2b2755a9d1b5e5684aabcda671d0efb8 assets/aether/models/item/boss_doorway_sentry_stone.json
 5b0199a2805fcee4a69b63ded1ca106a22207704 assets/aether/models/item/bronze_dungeon_key.json
 5267ca41c7a25c538947c478299c33d0e5cbbe77 assets/aether/models/item/candy_cane.json
 2c102972f03a81b7df5d9011039a1a1d72b22449 assets/aether/models/item/candy_cane_sword.json
@@ -245,6 +248,9 @@ f6caba399494a58683561699d72ad1cc86e3d339 assets/aether/models/item/treasure_ches
 52b0cc0358f4c1afd024d81dda2ffe7fef1e04c2 assets/aether/models/item/treasure_doorway_angelic_stone.json
 85ed6bd1c03ebd3d489b6d70d579d5677e71b84d assets/aether/models/item/treasure_doorway_carved_stone.json
 841b613be5644d47d6ed98c4dc265f70842b343e assets/aether/models/item/treasure_doorway_hellfire_stone.json
+ed4bb81dca4ad6ed593f23d609cb034fd32ba72d assets/aether/models/item/treasure_doorway_light_angelic_stone.json
+f157da5e2c8fde0ca97c653b8e735e723ae285a3 assets/aether/models/item/treasure_doorway_light_hellfire_stone.json
+9c03d7362d78d86eb7191315fbbdd7e20f5592df assets/aether/models/item/treasure_doorway_sentry_stone.json
 c6790cd0595e0e9c1ba9fc72897be53dd0e196c5 assets/aether/models/item/valkyrie_axe.json
 db253500a2d4d5a185f0b0111f9ca227a1972a82 assets/aether/models/item/valkyrie_boots.json
 8f9faf9d3071ee8803304fa07906cdc3cabd829a assets/aether/models/item/valkyrie_cape.json

@@ -74,9 +74,7 @@ public class LevelClientHooks {
                 }
                 for (int i = 0; i < positionsForTypes.size(); i++) {
                     renderOverlays(poseStack, modelDataManager, renderBuffers, level, vecX, vecY, vecZ, minecraft, i);
-                    if (i != type) {
-                        updatePositions(playerPos, level, stack, range, i, true);
-                    }
+                    updatePositions(playerPos, level, stack, range, i, true);
                 }
             }
         }
@@ -91,16 +89,19 @@ public class LevelClientHooks {
             int x = playerPos.getX() + level.random.nextInt(range) - level.random.nextInt(range);
             int y = playerPos.getY() + level.random.nextInt(range) - level.random.nextInt(range);
             int z = playerPos.getZ() + level.random.nextInt(range) - level.random.nextInt(range);
-            BlockPos pos = new BlockPos(x, y, z);
             if (!depopulate) {
+                BlockPos pos = new BlockPos(x, y, z);
                 if (stack.is(level.getBlockState(pos).getBlock().asItem())) {
                     positionsForTypes.get(type).add(pos);
                 }
             } else {
                 List<BlockPos> positions = positionsForTypes.get(type);
                 if (positions.size() > 0 && level.random.nextInt(750) == 0) {
-                    positions.remove(level.random.nextInt(positions.size()));
-                    positionsForTypes.put(type, positions);
+                    BlockPos pos = positions.get(level.random.nextInt(positions.size()));
+                    if (!stack.is(level.getBlockState(pos).getBlock().asItem())) {
+                        positions.remove(pos);
+                        positionsForTypes.put(type, positions);
+                    }
                 }
             }
         }
