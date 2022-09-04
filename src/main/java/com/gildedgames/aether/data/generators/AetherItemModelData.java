@@ -308,12 +308,18 @@ public class AetherItemModelData extends AetherItemModelProvider
         itemTrappedDungeonBlock(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE, AetherBlocks.LIGHT_HELLFIRE_STONE);
 
         itemInvisibleBlock(AetherBlocks.BOSS_DOORWAY_CARVED_STONE, AetherBlocks.CARVED_STONE);
+        itemInvisibleBlock(AetherBlocks.BOSS_DOORWAY_SENTRY_STONE, AetherBlocks.SENTRY_STONE);
         itemInvisibleBlock(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
+        itemInvisibleBlock(AetherBlocks.BOSS_DOORWAY_LIGHT_ANGELIC_STONE, AetherBlocks.LIGHT_ANGELIC_STONE);
         itemInvisibleBlock(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
+        itemInvisibleBlock(AetherBlocks.BOSS_DOORWAY_LIGHT_HELLFIRE_STONE, AetherBlocks.LIGHT_HELLFIRE_STONE);
 
-        itemInvisibleBlock(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE, AetherBlocks.CARVED_STONE);
-        itemInvisibleBlock(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
-        itemInvisibleBlock(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
+        itemTreasureBlock(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE, AetherBlocks.CARVED_STONE);
+        itemTreasureBlock(AetherBlocks.TREASURE_DOORWAY_SENTRY_STONE, AetherBlocks.SENTRY_STONE);
+        itemTreasureBlock(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
+        itemTreasureBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_ANGELIC_STONE, AetherBlocks.LIGHT_ANGELIC_STONE);
+        itemTreasureBlock(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
+        itemTreasureBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_HELLFIRE_STONE, AetherBlocks.LIGHT_HELLFIRE_STONE);
 
         lookalikeBlock(AetherBlocks.CHEST_MIMIC, mcLoc("item/chest"));
         lookalikeBlock(AetherBlocks.TREASURE_CHEST, mcLoc("item/chest"));
