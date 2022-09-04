@@ -332,6 +332,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public void stopSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.stopSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId()), pPlayer);
+        this.bossFight.removePlayer(pPlayer);
     }
 
     @Override

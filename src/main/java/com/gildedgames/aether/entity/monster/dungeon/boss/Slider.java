@@ -325,6 +325,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public void stopSeenByPlayer(@Nonnull ServerPlayer player) {
         super.stopSeenByPlayer(player);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId()), player);
+        this.bossFight.removePlayer(player);
     }
 
     @Override

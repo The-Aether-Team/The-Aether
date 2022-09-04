@@ -204,7 +204,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     public void stopSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.stopSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId()), pPlayer);
-        this.bossFight.removePlayer(pPlayer); //todo remove
+        this.bossFight.removePlayer(pPlayer);
     }
 
 //    @Override
