@@ -307,12 +307,12 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             type = slotId == -999 && type == ClickType.PICKUP ? ClickType.THROW : type;
             if (slot != null || type == ClickType.QUICK_CRAFT) {
                 if (slot == null || slot.mayPickup(this.minecraft.player)) {
-                    if (slot == this.destroyItemSlot && flag) {
+                    if (slot == this.destroyItemSlot && this.destroyItemSlot != null && flag) {
                         for (int j = 0; j < this.minecraft.player.inventoryMenu.getItems().size(); ++j) {
                             this.minecraft.gameMode.handleCreativeModeItemAdd(ItemStack.EMPTY, j);
                         }
                     } else {
-                        if (slot == this.destroyItemSlot) {
+                        if (slot == this.destroyItemSlot && this.destroyItemSlot != null) {
                             this.menu.setCarried(ItemStack.EMPTY);
                             AetherPacketHandler.sendToServer(new ClearItemPacket(this.minecraft.player.getId()));
                         } else {
