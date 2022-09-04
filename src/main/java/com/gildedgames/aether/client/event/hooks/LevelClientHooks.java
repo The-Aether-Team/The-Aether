@@ -27,17 +27,8 @@ public class LevelClientHooks {
         if (stage == RenderLevelStageEvent.Stage.AFTER_WEATHER) {
             if (AetherConfig.CLIENT.enable_world_preview.get()) {
                 if (WorldDisplayHelper.loadedSummary != null) {
-                    if (minecraft.screen == null) {
+                    if (minecraft.screen == null || minecraft.screen instanceof PauseScreen) {
                         setupMenu(minecraft);
-                    } else {
-                        LocalPlayer player = minecraft.player;
-                        if (player != null) {
-                            player.setXRot(0);
-                            player.setYRot(player.getYRot() + 0.02F);
-                        }
-                        if (minecraft.screen instanceof PauseScreen) {
-                            setupMenu(minecraft);
-                        }
                     }
                 }
             } else {
@@ -50,6 +41,21 @@ public class LevelClientHooks {
     public static void setupMenu(Minecraft minecraft) {
         WorldDisplayHelper.setupLevelForDisplay();
         minecraft.forceSetScreen(GuiHooks.getMenu());
+    }
+
+    private static Float prevRotation = null;
+
+    public static Float angleCamera(float prevYaw) {
+        if (AetherConfig.CLIENT.enable_world_preview.get() && WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null && Minecraft.getInstance().player != null) {
+            if (prevRotation == null) {
+                prevRotation = prevYaw;
+            }
+            float newYaw = prevRotation + 0.01F;
+            prevRotation = newYaw;
+            return newYaw;
+        }
+        prevRotation = null;
+        return null;
     }
 
     private static final HashMap<Integer, List<BlockPos>> positionsForTypes = new HashMap<>();
