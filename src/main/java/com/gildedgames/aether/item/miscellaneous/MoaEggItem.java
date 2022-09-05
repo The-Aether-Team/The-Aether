@@ -8,7 +8,6 @@ import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -38,26 +37,19 @@ import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
 public class MoaEggItem extends Item
 {
-    private static final Map<Supplier<? extends MoaType>, MoaEggItem> BY_ID = new IdentityHashMap<>();
-    private final Supplier<? extends MoaType> moaType;
-    private final ResourceLocation moaTypeId;
+    private static final Map<RegistryObject<MoaType>, MoaEggItem> BY_ID = Maps.newIdentityHashMap();
+    private final Supplier<MoaType> moaType;
     private final int color;
 
-    public MoaEggItem(RegistryObject<? extends MoaType> moaType, int shellColor, Properties properties) {
-        this(moaType, moaType.getId(), shellColor, properties);
-    }
-
-    public MoaEggItem(Supplier<? extends MoaType> moaType, ResourceLocation moaTypeId, int shellColor, Properties properties) {
+    public MoaEggItem(RegistryObject<MoaType> moaType, int shellColor, Properties properties) {
         super(properties);
         this.moaType = moaType;
-        this.moaTypeId = moaTypeId;
         this.color = shellColor;
         BY_ID.put(moaType, this);
     }
@@ -81,7 +73,7 @@ public class MoaEggItem extends Item
                         BaseSpawner basespawner = spawnerBlockEntity.getSpawner();
                         EntityType<Moa> entityType1 = AetherEntityTypes.MOA.get();
                         basespawner.setEntityId(entityType1);
-                        basespawner.nextSpawnData.getEntityToSpawn().putString("MoaType", this.getMoaTypeId().toString());
+                        basespawner.nextSpawnData.getEntityToSpawn().putString("MoaType", this.getMoaType().toString());
                         basespawner.nextSpawnData.getEntityToSpawn().putBoolean("PlayerGrown", true);
                         blockentity.setChanged();
                         level.sendBlockUpdated(blockPos, blockState, blockState, 3);
@@ -97,7 +89,7 @@ public class MoaEggItem extends Item
                     blockPos1 = blockPos.relative(direction);
                 }
 
-                ItemStack spawnStack = this.getStackWithTags(itemStack, false, this.getMoaType(), false, true);
+                ItemStack spawnStack = this.getStackWithTags(itemStack, false, this.getMoaType().get(), false, true);
                 Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, spawnStack, player, blockPos1, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, blockPos1) && direction == Direction.UP);
                 if (entity instanceof Moa) {
                     level.gameEvent(player, GameEvent.ENTITY_PLACE, blockPos);
@@ -124,7 +116,7 @@ public class MoaEggItem extends Item
                 if (!(level.getBlockState(blockpos).getBlock() instanceof LiquidBlock)) {
                     return InteractionResultHolder.pass(itemstack);
                 } else if (level.mayInteract(player, blockpos) && player.mayUseItemAt(blockpos, hitResult.getDirection(), itemstack)) {
-                    ItemStack spawnStack = this.getStackWithTags(itemstack, false, this.getMoaType(), false, true);
+                    ItemStack spawnStack = this.getStackWithTags(itemstack, false, this.getMoaType().get(), false, true);
                     Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, spawnStack, player, blockpos, MobSpawnType.SPAWN_EGG, false, false);
                     if (entity == null) {
                         return InteractionResultHolder.pass(itemstack);
@@ -157,17 +149,13 @@ public class MoaEggItem extends Item
         return this.color;
     }
 
-    public MoaType getMoaType() {
-        return this.moaType.get();
-    }
-
-    public ResourceLocation getMoaTypeId() {
-        return this.moaTypeId;
+    public Supplier<MoaType> getMoaType() {
+        return this.moaType;
     }
 
     @Nullable
     public static MoaEggItem byId(MoaType moaType) {
-        for (Map.Entry<Supplier<? extends MoaType>, MoaEggItem> holder : BY_ID.entrySet()) {
+        for (Map.Entry<RegistryObject<MoaType>, MoaEggItem> holder : BY_ID.entrySet()) {
             if (moaType.getId().equals(holder.getKey().get().getId())) {
                 return holder.getValue();
             }

@@ -115,18 +115,12 @@ public class AetherBlockLootData extends AetherBlockLootProvider {
         dropNone(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE);
 
         dropNone(AetherBlocks.BOSS_DOORWAY_CARVED_STONE);
-        dropNone(AetherBlocks.BOSS_DOORWAY_SENTRY_STONE);
         dropNone(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE);
-        dropNone(AetherBlocks.BOSS_DOORWAY_LIGHT_ANGELIC_STONE);
         dropNone(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE);
-        dropNone(AetherBlocks.BOSS_DOORWAY_LIGHT_HELLFIRE_STONE);
 
         dropNone(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE);
-        dropNone(AetherBlocks.TREASURE_DOORWAY_SENTRY_STONE);
         dropNone(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE);
-        dropNone(AetherBlocks.TREASURE_DOORWAY_LIGHT_ANGELIC_STONE);
         dropNone(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE);
-        dropNone(AetherBlocks.TREASURE_DOORWAY_LIGHT_HELLFIRE_STONE);
 
         dropNone(AetherBlocks.CHEST_MIMIC);
         this.add(AetherBlocks.TREASURE_CHEST.get(), AetherBlockLootProvider::droppingTreasureChest);

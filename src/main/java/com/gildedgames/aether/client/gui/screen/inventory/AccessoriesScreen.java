@@ -261,7 +261,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     @Override
     protected void renderLabels(@Nonnull PoseStack matrixStack, int mouseX, int mouseY) {
         if (this.minecraft != null && this.minecraft.player != null) {
-            this.font.draw(matrixStack, this.title, 115, 6, 4210752);
+            this.font.draw(matrixStack, this.title, 115, 8, 4210752);
         }
     }
 
@@ -307,12 +307,12 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             type = slotId == -999 && type == ClickType.PICKUP ? ClickType.THROW : type;
             if (slot != null || type == ClickType.QUICK_CRAFT) {
                 if (slot == null || slot.mayPickup(this.minecraft.player)) {
-                    if (slot == this.destroyItemSlot && this.destroyItemSlot != null && flag) {
+                    if (slot == this.destroyItemSlot && flag) {
                         for (int j = 0; j < this.minecraft.player.inventoryMenu.getItems().size(); ++j) {
                             this.minecraft.gameMode.handleCreativeModeItemAdd(ItemStack.EMPTY, j);
                         }
                     } else {
-                        if (slot == this.destroyItemSlot && this.destroyItemSlot != null) {
+                        if (slot == this.destroyItemSlot) {
                             this.menu.setCarried(ItemStack.EMPTY);
                             AetherPacketHandler.sendToServer(new ClearItemPacket(this.minecraft.player.getId()));
                         } else {

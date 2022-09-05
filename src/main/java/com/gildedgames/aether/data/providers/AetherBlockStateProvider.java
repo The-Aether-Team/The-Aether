@@ -3,7 +3,7 @@ package com.gildedgames.aether.data.providers;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.construction.AetherFarmlandBlock;
 import com.gildedgames.aether.block.AetherBlockStateProperties;
-import com.gildedgames.aether.block.dungeon.DoorwayBlock;
+import com.gildedgames.aether.block.dungeon.TreasureRoomBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BedPart;
@@ -330,7 +330,7 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
         ModelFile visible = models().cubeAll(name(baseBlock), texture(name(baseBlock), "dungeon/"));
         ModelFile invisible = models().getBuilder(name(block));
         getVariantBuilder(block.get()).forAllStatesExcept(state -> {
-            if (!state.getValue(DoorwayBlock.INVISIBLE)) {
+            if (!state.getValue(TreasureRoomBlock.INVISIBLE)) {
                 return ConfiguredModel.builder().modelFile(visible).build();
             } else {
                 return ConfiguredModel.builder().modelFile(invisible).build();

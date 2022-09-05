@@ -1,6 +1,5 @@
 package com.gildedgames.aether.client.event.listeners;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.AetherMusicManager;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.client.gui.component.AccessoryButton;
@@ -17,7 +16,6 @@ import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -127,13 +125,6 @@ public class GuiListener {
 		if (BOSS_EVENTS.contains(bossEvent.getId())) {
 			GuiHooks.drawBossHealthBar(event.getPoseStack(), event.getX(), event.getY(), bossEvent);
 			event.setIncrement(event.getIncrement() + 13);
-			event.setCanceled(true);
-		}
-	}
-
-	@SubscribeEvent
-	public static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) {
-		if (GuiHooks.hideOverlays()) {
 			event.setCanceled(true);
 		}
 	}

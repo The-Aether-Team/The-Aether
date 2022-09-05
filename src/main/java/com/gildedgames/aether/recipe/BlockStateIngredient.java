@@ -214,7 +214,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
 
         @Override
         public Collection<BlockPropertyPair> getPairs() {
-            List<BlockPropertyPair> list = new ArrayList<>();
+            List<BlockPropertyPair> list = Lists.newArrayList();
             Registry.BLOCK.getTagOrEmpty(this.tag).forEach(holder -> list.add(BlockPropertyPair.of(holder.value(), Map.of())));
             return list;
         }

@@ -2,19 +2,15 @@ package com.gildedgames.aether.entity.projectile.crystal;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.capability.lightning.LightningTracker;
-import com.gildedgames.aether.client.particle.AetherParticleTypes;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -51,7 +47,7 @@ public class ThunderCrystal extends AbstractCrystal {
     public void tickMovement() {
         if (!this.level.isClientSide) {
             if (this.ticksInAir >= this.getLifeSpan() || this.target == null || !this.target.isAlive()) {
-                this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
+                this.placeLightning();
             } else {
                 Vec3 motion = this.getDeltaMovement().scale(0.9);
                 Vec3 targetMotion = new Vec3(this.target.getX() - this.getX(), (this.target.getEyeY() - 0.1) - this.getY(), this.target.getZ() - this.getZ()).normalize();
@@ -63,40 +59,44 @@ public class ThunderCrystal extends AbstractCrystal {
         this.setPos(this.getX() + motion.x, this.getY() + motion.y, this.getZ() + motion.z);
     }
 
-    @Override
-    protected ParticleOptions getExplosionParticle() {
-        return AetherParticleTypes.FROZEN.get();
-    }
-
     /**
      * Called when the projectile hits an entity
      */
     @Override
-    protected void onHitEntity(EntityHitResult pResult) {
-        if (pResult.getEntity() instanceof LivingEntity target && target != this.getOwner()) {
-            target.hurt(new IndirectEntityDamageSource("thunder_crystal", this, this.getOwner()).setProjectile(), 5.0F);
-            this.knockback(0.1, this.position().subtract(target.position()));
+    protected void onHit(@Nonnull HitResult pResult) {
+        super.onHit(pResult);
+        if (!this.level.isClientSide) {
+            if (pResult instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() == this.getOwner())
+                return;
+            this.placeLightning();
         }
     }
+
+    /**
+     * This method summons lightning for the impact.
+     */
+    private void placeLightning() {
+        LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
+        if (lightningBolt != null) {
+            LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(this.getOwner()));
+            lightningBolt.moveTo(this.getX(), this.getY(), this.getZ());
+            this.level.addFreshEntity(lightningBolt);
+        }
+        this.discard();
+    }
+
 
     /**
      * Called when the entity is attacked.
      */
     @Override
-    public boolean hurt(@Nonnull DamageSource source, float pAmount) {
-        if (!this.level.isClientSide && source.getSourcePosition() != null) {
+    public boolean hurt(@Nonnull DamageSource pSource, float pAmount) {
+        if (!this.level.isClientSide) {
             ((ServerLevel) this.level).sendParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 15, 0.2D, 0.2D, 0.2D, 0.0D);
-            this.ticksInAir += pAmount * 10;
-            this.knockback(0.15 + pAmount / 8, this.position().subtract(source.getSourcePosition()));
+            this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
+            this.discard();
         }
         return true;
-    }
-
-    public void knockback(double strength, Vec3 target) {
-        this.hasImpulse = true;
-        Vec3 vec3 = this.getDeltaMovement();
-        Vec3 vec31 = target.normalize().scale(strength);
-        this.setDeltaMovement(vec3.x / 2.0D - vec31.x, vec3.y / 2 - vec31.y, vec3.z / 2.0D - vec31.z);
     }
 
     /**

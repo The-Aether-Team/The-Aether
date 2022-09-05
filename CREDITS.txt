@@ -4,7 +4,6 @@
 AerodDev:
 - Implementation of the CTM textures.
 - Fixes to the Aether Dirt Path texture.
-- Fixes to the silver Life Shard hearts texture.
 
 Aethyus:
 - fr_fr translation.
@@ -28,8 +27,6 @@ InsomniaKitten
 - Providing the accessory inventory texture.
 
 Jonathing
-- Refactors to use Supplier instead of RegistryObject for parameters taking a MoaType.
-- Refactors to use constructors instead of Google's helper methods for data structures.
 - Fixes to jarJar-built file not reobfuscating.
 
 Kelvin285
@@ -37,10 +34,6 @@ Kelvin285
 
 Parallel011:
 - zh_cn translation.
-
-saintselect
-- Converting entity audio files from stereo to mono.
-- Fixes to the Gravitite Sword ability performing when it shouldn't.
 
 StonedCoal:
 - Implementation of the Aether's main menu.

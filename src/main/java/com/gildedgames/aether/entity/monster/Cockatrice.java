@@ -212,6 +212,11 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     }
 
     @Override
+    protected float getSoundVolume() {
+        return 0.25F;
+    }
+
+    @Override
     protected int calculateFallDamage(float distance, float damageMultiplier) {
         return 0;
     }

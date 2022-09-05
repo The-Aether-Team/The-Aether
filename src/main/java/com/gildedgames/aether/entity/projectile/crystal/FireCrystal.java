@@ -2,7 +2,6 @@ package com.gildedgames.aether.entity.projectile.crystal;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -52,7 +51,7 @@ public class FireCrystal extends AbstractCrystal {
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
-            if (livingEntity.hurt(new IndirectEntityDamageSource("fire_crystal", this, this.getOwner()).setProjectile(), 5.0F)) {
+            if (livingEntity.hurt(new IndirectEntityDamageSource("incineration", this, this.getOwner()).setProjectile(), 5.0F)) {
                 livingEntity.setSecondsOnFire(5);
                 this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
                 this.spawnExplosionParticles();
@@ -70,6 +69,18 @@ public class FireCrystal extends AbstractCrystal {
             case WEST, EAST -> this.xPower = -this.xPower;
         }
         this.setDeltaMovement(this.xPower, this.yPower, this.zPower);
+    }
+
+    @Override
+    public void spawnExplosionParticles() {
+        if (this.level instanceof ServerLevel level) {
+            for (int i = 0; i < 20; i++) {
+                double x = (this.random.nextFloat() - 0.5F) * 0.5;
+                double y = (this.random.nextFloat() - 0.5F) * 0.5;
+                double z = (this.random.nextFloat() - 0.5F) * 0.5;
+                level.sendParticles(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), 1, x, y, z, 0.0F);
+            }
+        }
     }
 
     protected SoundEvent getImpactExplosionSoundEvent() {
@@ -108,11 +119,6 @@ public class FireCrystal extends AbstractCrystal {
     @Override
     public boolean isPickable() {
         return true;
-    }
-
-    @Override
-    protected ParticleOptions getExplosionParticle() {
-        return ParticleTypes.FLAME;
     }
 
     @Override

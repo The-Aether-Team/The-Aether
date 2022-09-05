@@ -147,11 +147,7 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
     }
 
     public ItemModelBuilder itemInvisibleBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock) {
-        return itemOverlayDungeonBlock(block, baseBlock, "door");
-    }
-
-    public ItemModelBuilder itemTreasureBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock) {
-        return itemOverlayDungeonBlock(block, baseBlock, "treasure");
+        return withExistingParent(blockName(block), texture(blockName(baseBlock)));
     }
 
     public ItemModelBuilder itemOverlayDungeonBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String overlay) {

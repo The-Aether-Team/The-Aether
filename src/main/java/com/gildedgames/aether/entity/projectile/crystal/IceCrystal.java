@@ -3,7 +3,6 @@ package com.gildedgames.aether.entity.projectile.crystal;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -87,6 +86,18 @@ public class IceCrystal extends AbstractCrystal {
         this.setDeltaMovement(this.xPower, 0, this.zPower);
     }
 
+    @Override
+    public void spawnExplosionParticles() {
+        if (this.level instanceof ServerLevel level) {
+            for (int i = 0; i < 20; i++) {
+                double x = (this.random.nextFloat() - 0.5F) * 0.5;
+                double y = (this.random.nextFloat() - 0.5F) * 0.5;
+                double z = (this.random.nextFloat() - 0.5F) * 0.5;
+                level.sendParticles(AetherParticleTypes.FROZEN.get(), this.getX(), this.getY(), this.getZ(), 1, x, y, z, 0.0F);
+            }
+        }
+    }
+
     /** [VANILLA COPY] - AbstractHurtingProjectile.hurt(DamageSource, float)
      * The ice crystal needs to move only horizontally when attacked, so yPower isn't copied over.
      */
@@ -122,11 +133,6 @@ public class IceCrystal extends AbstractCrystal {
 
     public SoundEvent getImpactExplosionSoundEvent() {
         return AetherSoundEvents.ENTITY_ICE_CRYSTAL_EXPLODE.get();
-    }
-
-    @Override
-    protected ParticleOptions getExplosionParticle() {
-        return AetherParticleTypes.FROZEN.get();
     }
 
     @Override

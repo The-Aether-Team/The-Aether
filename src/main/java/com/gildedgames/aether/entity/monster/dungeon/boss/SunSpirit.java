@@ -56,7 +56,6 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -71,6 +70,8 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     private DungeonTracker<SunSpirit> goldDungeon;
     /** Boss health bar manager */
     private final ServerBossEvent bossFight;
+    /** The sun spirit will return here when not in a fight. */
+    private Vec3 originPos;
 
     private final int xMax = 11;
     private final int zMax = 11;
@@ -97,12 +98,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
         this.setBossName(BossNameGenerator.generateSunSpiritName());
-        if (this.goldDungeon == null) {
-            this.goldDungeon = new DungeonTracker<>(this,
-                    this.position(),
-                    new AABB(this.position().subtract(13.5, 2, 13.5), this.position().add(13.5, 5, 13.5)),
-                    new ArrayList<>());
-        }
+        this.originPos = this.position();
         return data;
     }
 
@@ -205,7 +201,6 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     @Override
     public void die(@Nonnull DamageSource cause) {
         if (!this.level.isClientSide) {
-            this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
             this.setFrozen(true);
             this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.dead").withStyle(ChatFormatting.AQUA));
             this.level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent(aetherTime -> {
@@ -305,7 +300,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
      * Sends a message to nearby players. Useful for boss fights.
      */
     protected void chatWithNearby(Component message) {
-        this.level.getNearbyPlayers(NON_COMBAT, this, this.goldDungeon.roomBounds()).forEach(player ->
+        this.level.getNearbyPlayers(NON_COMBAT, this, this.getBoundingBox().inflate(16)).forEach(player ->
                 player.sendSystemMessage(message));
     }
 
@@ -323,6 +318,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
+        this.bossFight.addPlayer(pPlayer);
     }
 
     /**
@@ -333,23 +329,6 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         super.stopSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId()), pPlayer);
         this.bossFight.removePlayer(pPlayer);
-    }
-
-    @Override
-    public void onDungeonPlayerAdded(@Nullable Player player) {
-        if (player instanceof ServerPlayer serverPlayer) {
-            this.bossFight.addPlayer(serverPlayer);
-        }
-    }
-
-    @Override
-    public void onDungeonPlayerRemoved(@Nullable Player player) {
-        if (player instanceof ServerPlayer serverPlayer) {
-            this.bossFight.removePlayer(serverPlayer);
-            if (!player.isAlive()) {
-                serverPlayer.sendSystemMessage(Component.translatable("gui.aether.sun_spirit.playerdeath").withStyle(ChatFormatting.RED));
-            }
-        }
     }
 
     public boolean isFrozen() {
@@ -385,7 +364,9 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
-        tag.putBoolean("BossFight", this.isBossFight());
+        tag.putDouble("OriginX", this.originPos.x);
+        tag.putDouble("OriginY", this.originPos.y);
+        tag.putDouble("OriginZ", this.originPos.z);
         tag.putInt("ChatLine", this.chatLine);
         if (this.getDungeon() != null) {
             tag.put("Dungeon", this.getDungeon().addAdditionalSaveData());
@@ -399,8 +380,8 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         if (name != null) {
             this.setBossName(name);
         }
-        if (tag.contains("BossFight")) {
-            this.setBossFight(tag.getBoolean("BossFight"));
+        if (tag.contains("OriginX")) {
+            this.originPos = new Vec3(tag.getDouble("OriginX"), tag.getDouble("OriginY"), tag.getDouble("OriginZ"));
         }
         if (tag.contains("ChatLine")) {
             this.chatLine = tag.getInt("ChatLine");
@@ -432,7 +413,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
     @Override
     public int getDeathScore() {
-        return this.deathScore;
+        return 0;
     }
 
     @Override
@@ -495,13 +476,13 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
         protected boolean outOfBounds() {
             boolean flag = false;
-            if ((this.sunSpirit.getDeltaMovement().x >= 0 && this.sunSpirit.getX() >= this.sunSpirit.getDungeon().originCoordinates().x + this.sunSpirit.xMax) ||
-                    (this.sunSpirit.getDeltaMovement().x <= 0 && this.sunSpirit.getX() <= this.sunSpirit.getDungeon().originCoordinates().x - this.sunSpirit.xMax)) {
+            if ((this.sunSpirit.getDeltaMovement().x >= 0 && this.sunSpirit.getX() >= this.sunSpirit.originPos.x + this.sunSpirit.xMax) ||
+                    (this.sunSpirit.getDeltaMovement().x <= 0 && this.sunSpirit.getX() <= this.sunSpirit.originPos.x - this.sunSpirit.xMax)) {
                 this.rotation = 360 - this.rotation;
                 flag = true;
             }
-            if ((this.sunSpirit.getDeltaMovement().z >= 0 && this.sunSpirit.getZ() >= this.sunSpirit.getDungeon().originCoordinates().z + this.sunSpirit.zMax) ||
-                    (this.sunSpirit.getDeltaMovement().z <= 0 && this.sunSpirit.getZ() <= this.sunSpirit.getDungeon().originCoordinates().z - this.sunSpirit.zMax)) {
+            if ((this.sunSpirit.getDeltaMovement().z >= 0 && this.sunSpirit.getZ() >= this.sunSpirit.originPos.z + this.sunSpirit.zMax) ||
+                    (this.sunSpirit.getDeltaMovement().z <= 0 && this.sunSpirit.getZ() <= this.sunSpirit.originPos.z - this.sunSpirit.zMax)) {
                 this.rotation = 180 - this.rotation;
                 flag = true;
             }
@@ -540,9 +521,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         @Override
         public void start() {
             this.sunSpirit.setDeltaMovement(Vec3.ZERO);
-            this.sunSpirit.setPos(this.sunSpirit.getDungeon().originCoordinates().x,
-                    this.sunSpirit.getDungeon().originCoordinates().y,
-                    this.sunSpirit.getDungeon().originCoordinates().z);
+            this.sunSpirit.setPos(this.sunSpirit.originPos.x, this.sunSpirit.originPos.y, this.sunSpirit.originPos.z);
         }
     }
 
