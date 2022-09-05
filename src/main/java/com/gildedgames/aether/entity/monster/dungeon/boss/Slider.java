@@ -141,7 +141,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         if (!this.isAwake() || (this.getTarget() instanceof Player player && (player.isCreative() || player.isSpectator()))) {
             this.setTarget(null);
         }
-        if (!this.level.isClientSide() && this.getDungeon() != null && (this.getTarget() == null || !this.getTarget().isAlive() || this.getTarget().getHealth() <= 0.0)) {
+        if (!this.level.isClientSide() && this.getDungeon() == null && (this.getTarget() == null || !this.getTarget().isAlive() || this.getTarget().getHealth() <= 0.0)) {
             this.reset();
         }
         if (!this.canMove) {
