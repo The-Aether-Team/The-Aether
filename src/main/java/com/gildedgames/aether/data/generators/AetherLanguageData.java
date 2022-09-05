@@ -100,12 +100,18 @@ public class AetherLanguageData extends AetherLanguageProvider
         addBlock(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE, "Trapped Light Hellfire Stone");
 
         addBlock(AetherBlocks.BOSS_DOORWAY_CARVED_STONE, "Boss Doorway Carved Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_SENTRY_STONE, "Boss Doorway Sentry Stone");
         addBlock(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE, "Boss Doorway Angelic Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_LIGHT_ANGELIC_STONE, "Boss Doorway Light Angelic Stone");
         addBlock(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE, "Boss Doorway Hellfire Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_LIGHT_HELLFIRE_STONE, "Boss Doorway Light Hellfire Stone");
 
         addBlock(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE, "Treasure Doorway Carved Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_SENTRY_STONE, "Treasure Doorway Sentry Stone");
         addBlock(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE, "Treasure Doorway Angelic Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_ANGELIC_STONE, "Treasure Doorway Light Angelic Stone");
         addBlock(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE, "Treasure Doorway Hellfire Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_HELLFIRE_STONE, "Treasure Doorway Light Hellfire Stone");
 
         addBlock(AetherBlocks.CHEST_MIMIC, "Chest Mimic");
         addBlock(AetherBlocks.TREASURE_CHEST, "Treasure Chest");
@@ -581,7 +587,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addDeath("inebriation", "%1$s was inebriated");
         addDeath("inebriation.player", "%1$s was inebriated by %2$s");
         addDeath("crush", "%1$s was crushed by %2$s");
+        addDeath("fire_crystal", "%1$s was incinerated by %2$s's Fire Crystal");
         addDeath("ice_crystal", "%1$s was chilled by %2$s's Ice Crystal");
+        addDeath("thunder_crystal", "%1$s was zapped by %2$s's Thunder Crystal");
         addDeath("incineration", "%1$s was incinerated by %2$s");
 
 
@@ -655,6 +663,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         //Sun spirit dialogue
         addGuiText("sun_spirit.title", "the Sun Spirit");
         addGuiText("sun_spirit.dead", "Such bitter cold... is this the feeling... of pain?");
+        addGuiText("sun_spirit.playerdeath", "Such is the fate of a being who opposes the might of the sun.");
         addGuiText("sun_spirit.line0", "You are certainly a brave soul to have entered this chamber.");
         addGuiText("sun_spirit.line1", "Begone human, you serve no purpose here.");
         addGuiText("sun_spirit.line2", "Your presence annoys me. Do you not fear my burning aura?");

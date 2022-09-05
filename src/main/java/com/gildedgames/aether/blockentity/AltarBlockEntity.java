@@ -18,11 +18,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nonnull;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity
 {
-	private static final Map<Item, Integer> enchantingMap = Maps.newLinkedHashMap();
+	private static final Map<Item, Integer> enchantingMap = new LinkedHashMap<>();
 
 	public AltarBlockEntity(BlockPos pos, BlockState state) {
 		super(AetherBlockEntityTypes.ALTAR.get(), pos, state, AetherRecipeTypes.ENCHANTING.get());

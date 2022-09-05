@@ -1,6 +1,8 @@
 package com.gildedgames.aether.entity.projectile.crystal;
 
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.EntityType;
@@ -75,7 +77,18 @@ public abstract class AbstractCrystal extends Projectile {
         this.setPos(d2, d0, d1);
     }
 
-    public void spawnExplosionParticles() { }
+    public void spawnExplosionParticles() {
+        if (this.level instanceof ServerLevel level) {
+            for (int i = 0; i < 20; i++) {
+                double x = (this.random.nextFloat() - 0.5F) * 0.5;
+                double y = (this.random.nextFloat() - 0.5F) * 0.5;
+                double z = (this.random.nextFloat() - 0.5F) * 0.5;
+                level.sendParticles(this.getExplosionParticle(), this.getX(), this.getY(), this.getZ(), 1, x, y, z, 0.0F);
+            }
+        }
+    }
+
+    protected abstract ParticleOptions getExplosionParticle();
 
     public int getLifeSpan() {
         return 300;

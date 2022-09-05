@@ -46,6 +46,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class IncubatorBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible
@@ -81,7 +82,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 			return 3;
 		}
 	};
-	private static final Map<Item, Integer> incubatingMap = Maps.newLinkedHashMap();
+	private static final Map<Item, Integer> incubatingMap = new LinkedHashMap<>();
 	private final Object2IntOpenHashMap<ResourceLocation> recipesUsed = new Object2IntOpenHashMap<>();
 	private final RecipeManager.CachedCheck<Container, IncubationRecipe> quickCheck;
 
