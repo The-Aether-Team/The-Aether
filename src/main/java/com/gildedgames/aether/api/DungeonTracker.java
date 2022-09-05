@@ -60,6 +60,7 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
                     }
                 }
             }
+            slider.moveTo(this.originCoordinates());
         }
     }
 

@@ -135,7 +135,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public void tick() {
         if (!this.level.isClientSide() && this.getDungeon() == null) {
             DungeonTracker.createDebugDungeon(this);
-            this.moveTo(this.getDungeon().originCoordinates());
         }
         super.tick();
         if (!this.isAwake() || (this.getTarget() instanceof Player player && (player.isCreative() || player.isSpectator()))) {
