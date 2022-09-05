@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -58,12 +59,12 @@ public class BlockStateRecipeUtil {
 
     public static BlockPropertyPair readPair(FriendlyByteBuf buf) {
         if (!buf.readBoolean()) {
-            return BlockPropertyPair.of(Blocks.AIR, Maps.newHashMap());
+            return BlockPropertyPair.of(Blocks.AIR, new HashMap<>());
         } else {
             int id = buf.readVarInt();
             Block block = Registry.BLOCK.byId(id);
 
-            Map<Property<?>, Comparable<?>> properties = Maps.newHashMap();
+            Map<Property<?>, Comparable<?>> properties = new HashMap<>();
             CompoundTag tag = buf.readNbt();
 
             if (tag != null) {
@@ -127,7 +128,7 @@ public class BlockStateRecipeUtil {
     }
 
     public static Map<Property<?>, Comparable<?>> propertiesFromJson(JsonObject json, Block block) {
-        Map<Property<?>, Comparable<?>> properties = Maps.newHashMap();
+        Map<Property<?>, Comparable<?>> properties = new HashMap<>();
         StateDefinition<Block, BlockState> stateDefinition = block.getStateDefinition();
         JsonObject propertyObject = GsonHelper.getAsJsonObject(json, "properties");
         for (String propertyName : propertyObject.keySet()) {
