@@ -40,49 +40,48 @@ public class SliderSpawnEggItem extends ForgeSpawnEggItem {
     public SliderSpawnEggItem(Supplier<? extends EntityType<? extends Mob>> type, int backgroundColor, int highlightColor, Properties props) {
         super(type, backgroundColor, highlightColor, props);
     }
-
+    /**
+     * Identical to {@link net.minecraft.world.item.SpawnEggItem#useOn(UseOnContext)}, except it rounds the X/Z values based on the exact click location.
+     * Entity placement adds 0.5 to the X and Z values after this, so the slider rounds it's X and Z coordinates down after spawning.
+     */
     public InteractionResult useOn(UseOnContext pContext) {
         Level level = pContext.getLevel();
         if (!(level instanceof ServerLevel)) {
             return InteractionResult.SUCCESS;
         } else {
             ItemStack itemstack = pContext.getItemInHand();
-            Vec3 location = pContext.getClickLocation();
             BlockPos blockpos = pContext.getClickedPos();
-            BlockPos blockpos1 = new BlockPos(Math.round(location.x),pContext.getClickedPos().getY(),Math.round(location.z));
             Direction direction = pContext.getClickedFace();
             BlockState blockstate = level.getBlockState(blockpos);
             if (blockstate.is(Blocks.SPAWNER)) {
-                BlockEntity blockentity = level.getBlockEntity(blockpos1);
+                BlockEntity blockentity = level.getBlockEntity(blockpos);
                 if (blockentity instanceof SpawnerBlockEntity) {
                     BaseSpawner basespawner = ((SpawnerBlockEntity)blockentity).getSpawner();
                     EntityType<?> entitytype1 = this.getType(itemstack.getTag());
                     basespawner.setEntityId(entitytype1);
                     blockentity.setChanged();
-                    level.sendBlockUpdated(blockpos1, blockstate, blockstate, 3);
-                    level.gameEvent(pContext.getPlayer(), GameEvent.BLOCK_CHANGE, blockpos1);
+                    level.sendBlockUpdated(blockpos, blockstate, blockstate, 3);
+                    level.gameEvent(pContext.getPlayer(), GameEvent.BLOCK_CHANGE, blockpos);
                     itemstack.shrink(1);
                     return InteractionResult.CONSUME;
                 }
             }
 
-            BlockPos blockpos2;
-            BlockPos blockpos3;
-/*            if (blockstate.getCollisionShape(level, blockpos).isEmpty()) {
-                blockpos2 = blockpos1;
-                blockpos3 = blockpos;
+            BlockPos blockpos1;
+            if (blockstate.getCollisionShape(level, blockpos).isEmpty()) {
+                blockpos1 = blockpos;
             } else {
-                blockpos2 = blockpos1.relative(direction);
-                blockpos3 = blockpos.relative(direction);
-            }*/
-            blockpos2 = blockpos1.relative(direction);
-            blockpos3 = blockpos.relative(direction);
-            EntityType<?> entitytype = this.getType(itemstack.getTag());
-            Entity entity = entitytype.spawn((ServerLevel)level, itemstack, pContext.getPlayer(), blockpos2, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos3) && direction == Direction.UP);
-            if (entity != null) {
-                itemstack.shrink(1);
-                level.gameEvent(pContext.getPlayer(), GameEvent.ENTITY_PLACE, blockpos1);
+                blockpos1 = blockpos.relative(direction);
             }
+            Vec3 clickLoc = pContext.getClickLocation();
+            BlockPos roundedpos = new BlockPos(Math.round(clickLoc.x()), blockpos1.getY(), Math.round(clickLoc.z()));
+
+            EntityType<?> entitytype = this.getType(itemstack.getTag());
+            if (entitytype.spawn((ServerLevel)level, itemstack, pContext.getPlayer(), roundedpos, MobSpawnType.SPAWN_EGG, false, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP) != null) {
+                itemstack.shrink(1);
+                level.gameEvent(pContext.getPlayer(), GameEvent.ENTITY_PLACE, blockpos);
+            }
+
             return InteractionResult.CONSUME;
         }
     }

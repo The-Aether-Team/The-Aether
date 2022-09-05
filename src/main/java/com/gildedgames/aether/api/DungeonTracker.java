@@ -49,9 +49,9 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
         }
         if (this.boss() instanceof Slider slider) {
 
-            for (int x = (int) Math.floor(slider.getPodiumBounds().minX); x <= Math.floor(slider.getPodiumBounds().maxX - 1); x++) {
-                for (int y = (int) Math.floor(slider.getPodiumBounds().minY); y <= Math.floor(slider.getPodiumBounds().maxY - 1); y++) {
-                    for (int z = (int) Math.floor(slider.getPodiumBounds().minZ); z <= Math.floor(slider.getPodiumBounds().maxZ - 1); z++) {
+            for (int x = (int) Math.floor(slider.getSpawnPlatformBoundingBox().minX); x <= Math.floor(slider.getSpawnPlatformBoundingBox().maxX - 1); x++) {
+                for (int y = (int) Math.floor(slider.getSpawnPlatformBoundingBox().minY); y <= Math.floor(slider.getSpawnPlatformBoundingBox().maxY - 1); y++) {
+                    for (int z = (int) Math.floor(slider.getSpawnPlatformBoundingBox().minZ); z <= Math.floor(slider.getSpawnPlatformBoundingBox().maxZ - 1); z++) {
                         this.boss().getLevel().setBlockAndUpdate(new BlockPos(x, y, z), AetherBlocks.LOCKED_SENTRY_STONE.get().defaultBlockState());
                     }
                 }
