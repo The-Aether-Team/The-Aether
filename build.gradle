@@ -127,12 +127,17 @@ dependencies {
     //runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 
     //compileOnly fileTree(dir: 'libs', include: '*.jar')
+
+    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}"))
+    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}"))
+    runtimeOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}"))
 }
 
 repositories {
     maven { url = "https://maven.blamejared.com" }
     maven { url = "https://maven.theillusivec4.top/" }
     maven { url = "https://www.cursemaven.com" }
+    maven { url = "https://dvs1.progwml6.com/files/maven/"}
 //    maven githubPackage.invoke("Gilded-Games/Nitrogen")
 }
 
