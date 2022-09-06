@@ -427,9 +427,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addContainerType(AetherMenuTypes.ALTAR, "Altar");
         addContainerType(AetherMenuTypes.FREEZER, "Freezer");
         addContainerType(AetherMenuTypes.INCUBATOR, "Incubator");
-        addContainerType("bronze_dungeon_chest", "Bronze Dungeon Chest");
-        addContainerType("silver_dungeon_chest", "Silver Dungeon Chest");
-        addContainerType("gold_dungeon_chest", "Gold Dungeon Chest");
+        addContainerType("bronze_treasure_chest", "Bronze Treasure Chest");
+        addContainerType("silver_treasure_chest", "Silver Treasure Chest");
+        addContainerType("gold_treasure_chest", "Gold Treasure Chest");
         addContainerType("sun_altar", "Sun Altar");
 
 
@@ -705,9 +705,9 @@ public class AetherLanguageData extends AetherLanguageProvider
 
 
         addMessage("life_shard_limit", "You can only use a total of %s Life Shards.");
-        addMessage("bronze_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
-        addMessage("silver_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
-        addMessage("gold_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Golden Key.");
+        addMessage("bronze_treasure_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
+        addMessage("silver_treasure_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
+        addMessage("gold_treasure_chest_locked", "This Treasure Chest must be unlocked with a Golden Key.");
         addMessage("sun_altar.in_control", "The sun spirit is still in control of this realm.");
         addMessage("sun_altar.no_permission", "You don't have permission to use this.");
         addMessage("sun_altar.no_power", "The sun spirit has no power over this realm.");
