@@ -26,7 +26,6 @@ import java.util.Objects;
 
 @JeiPlugin
 public class AetherJEIPlugin implements IModPlugin {
-    public static final RecipeType<EnchantingRecipe> ENCHANTING = RecipeType.create(Aether.MODID, "enchanting", EnchantingRecipe.class);
 
     @Override
     public ResourceLocation getPluginUid() {
