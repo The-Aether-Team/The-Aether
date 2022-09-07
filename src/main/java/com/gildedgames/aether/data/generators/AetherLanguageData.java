@@ -615,6 +615,11 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
         addGuiText("recipebook.toggleRecipes.incubatable", "Showing Incubatable");
 
+        addGuiText("jei.altar.enchanting", "Enchanting");
+        addGuiText("jei.altar.repairing", "Repairing");
+        addGuiText("jei.freezing", "Freezing");
+        addGuiText("jei.incubating", "Incubating");
+
 
         addGuiText("slider.title", "the Slider");
         addGuiText("slider.message.attack.invalid", "Hmm. Perhaps I need to attack it with a Pickaxe?");
