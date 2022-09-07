@@ -24,6 +24,8 @@ public class AetherTags {
 		public static final TagKey<Block> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final TagKey<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final TagKey<Block> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final TagKey<Block> BOSS_DOORWAY_DUNGEON_BLOCKS = tag("boss_doorway_dungeon_blocks");
+		public static final TagKey<Block> TREASURE_DOORWAY_DUNGEON_BLOCKS = tag("treasure_doorway_dungeon_blocks");
 		public static final TagKey<Block> SENTRY_BLOCKS = tag("sentry_blocks");
 		public static final TagKey<Block> ANGELIC_BLOCKS = tag("angelic_blocks");
 		public static final TagKey<Block> HELLFIRE_BLOCKS = tag("hellfire_blocks");
@@ -54,6 +56,11 @@ public class AetherTags {
 		public static final TagKey<Item> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final TagKey<Item> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final TagKey<Item> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final TagKey<Item> BOSS_DOORWAY_DUNGEON_BLOCKS = tag("boss_doorway_dungeon_blocks");
+		public static final TagKey<Item> TREASURE_DOORWAY_DUNGEON_BLOCKS = tag("treasure_doorway_dungeon_blocks");
+		public static final TagKey<Item> SENTRY_BLOCKS = tag("sentry_blocks");
+		public static final TagKey<Item> ANGELIC_BLOCKS = tag("angelic_blocks");
+		public static final TagKey<Item> HELLFIRE_BLOCKS = tag("hellfire_blocks");
 
 		public static final TagKey<Item> PLANKS_CRAFTING = tag("planks_crafting");
 		public static final TagKey<Item> STONE_CRAFTING = tag("stone_crafting");
@@ -85,6 +92,7 @@ public class AetherTags {
 		public static final TagKey<Item> FREEZABLE_BUCKETS = tag("freezable_buckets");
 		public static final TagKey<Item> FREEZABLE_RINGS = tag("freezable_rings");
 		public static final TagKey<Item> FREEZABLE_PENDANTS = tag("freezable_pendants");
+		public static final TagKey<Item> SLIDER_DAMAGING_ITEMS = tag("slider_damaging_items");
 
 		public static final TagKey<Item> PHYG_TEMPTATION_ITEMS = tag("phyg_temptation_items");
 		public static final TagKey<Item> FLYING_COW_TEMPTATION_ITEMS = tag("flying_cow_temptation_items");
@@ -138,6 +146,7 @@ public class AetherTags {
 	public static class Biomes {
 		public static final TagKey<Biome> IS_AETHER = tag("is_aether");
 		public static final TagKey<Biome> HAS_LARGE_AERCLOUD = tag("has_large_aercloud");
+		public static final TagKey<Biome> HAS_GOLD_DUNGEON = tag("has_gold_dungeon");
 
 		public static final TagKey<Biome> MYCELIUM_CONVERSION = tag("mycelium_conversion");
 		public static final TagKey<Biome> PODZOL_CONVERSION = tag("podzol_conversion");

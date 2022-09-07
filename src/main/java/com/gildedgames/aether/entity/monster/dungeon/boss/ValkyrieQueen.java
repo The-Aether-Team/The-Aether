@@ -1,10 +1,13 @@
-package com.gildedgames.aether.entity.monster.dungeon;
+package com.gildedgames.aether.entity.monster.dungeon.boss;
 
+import com.gildedgames.aether.api.DungeonTracker;
+import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.entity.NpcDialogue;
 import com.gildedgames.aether.entity.ai.goal.NpcDialogueGoal;
+import com.gildedgames.aether.entity.monster.dungeon.AbstractValkyrie;
 import com.gildedgames.aether.entity.projectile.crystal.ThunderCrystal;
 import com.gildedgames.aether.network.packet.server.NpcPlayerInteractPacket;
 import com.gildedgames.aether.entity.AetherEntityTypes;
@@ -35,6 +38,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -45,7 +50,7 @@ import javax.annotation.Nullable;
  * This class holds the implementation of valkyrie queens. They are the boss version of valkyries, and they fight
  * in the same way, with the additional ability to shoot thunder crystal projectiles at their enemies.
  */
-public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialogue {
+public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQueen>, NpcDialogue {
     public static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
     /** The player whom the valkyrie queen is currently conversing with */
@@ -153,6 +158,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     @Override
     public void die(@Nonnull DamageSource pCause) {
         if (!this.level.isClientSide) {
+            this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
             this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.defeated"));
             this.spawnExplosionParticles();
         }
@@ -188,7 +194,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
-        this.bossFight.addPlayer(pPlayer);
+        this.bossFight.addPlayer(pPlayer); //todo remove
     }
 
     /**
@@ -200,6 +206,20 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId()), pPlayer);
         this.bossFight.removePlayer(pPlayer);
     }
+
+//    @Override
+//    public void onDungeonPlayerAdded(@Nullable Player player) {
+//        if (player instanceof ServerPlayer serverPlayer) {
+//            this.bossFight.addPlayer(serverPlayer);
+//        }
+//    }
+//
+//    @Override
+//    public void onDungeonPlayerRemoved(@Nullable Player player) {
+//        if (player instanceof ServerPlayer serverPlayer) {
+//            this.bossFight.removePlayer(serverPlayer);
+//        }
+//    }
 
     @Override
     public void setCustomName(@Nullable Component pName) {
@@ -234,6 +254,44 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob, NpcDialo
     @Override
     public void setBossFight(boolean isFighting) {
         this.bossFight.setVisible(isFighting);
+    }
+
+    @Override
+    public DungeonTracker<ValkyrieQueen> getDungeon() { // TODO
+        return null;
+    }
+
+    @Override
+    public void setDungeon(DungeonTracker<ValkyrieQueen> dungeon) {
+
+    }
+
+    @Override
+    public int getDeathScore() {
+        return this.deathScore;
+    }
+
+    @Override
+    public void reset() {
+
+    }
+
+    /**
+     * Called on every block in the dungeon when the boss is defeated.
+     */
+    @Override
+    @Nullable
+    public BlockState convertBlock(BlockState state) {
+        if (state.is(AetherBlocks.LOCKED_ANGELIC_STONE.get())) {
+            return AetherBlocks.ANGELIC_STONE.get().defaultBlockState();
+        }
+        if (state.is(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get())) {
+            return AetherBlocks.LIGHT_ANGELIC_STONE.get().defaultBlockState();
+        }
+        if (state.is(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get()) || state.is(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get())) {
+            return Blocks.AIR.defaultBlockState();
+        }
+        return null;
     }
 
     @Override

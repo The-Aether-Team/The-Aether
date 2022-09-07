@@ -2,7 +2,6 @@ package com.gildedgames.aether.recipe;
 
 import com.gildedgames.aether.util.BlockStateRecipeUtil;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.google.gson.*;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
@@ -40,7 +39,9 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         this.dissolve();
         if (this.pairs.length != 0) {
             for (BlockPropertyPair pair : this.pairs) {
-                return pair.matches(state);
+                if (pair.matches(state)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -213,7 +214,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
 
         @Override
         public Collection<BlockPropertyPair> getPairs() {
-            List<BlockPropertyPair> list = Lists.newArrayList();
+            List<BlockPropertyPair> list = new ArrayList<>();
             Registry.BLOCK.getTagOrEmpty(this.tag).forEach(holder -> list.add(BlockPropertyPair.of(holder.value(), Map.of())));
             return list;
         }

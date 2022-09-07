@@ -17,7 +17,7 @@ public class AetherPlayerRankings
     private static final Map<UUID, Set<PlayerRanking>> RANKS;
 
     static {
-        Map<UUID, Set<PlayerRanking>> ranks = Maps.newHashMap();
+        Map<UUID, Set<PlayerRanking>> ranks = new HashMap<>();
         MinecraftForge.EVENT_BUS.post(new RankingEvent(ranks));
         for (Map.Entry<UUID, Set<PlayerRanking>> entry : ranks.entrySet()) {
             entry.setValue(ImmutableSet.copyOf(entry.getValue()));

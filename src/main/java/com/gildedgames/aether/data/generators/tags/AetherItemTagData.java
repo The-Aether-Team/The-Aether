@@ -43,6 +43,11 @@ public class AetherItemTagData extends ItemTagsProvider
         copy(AetherTags.Blocks.DUNGEON_BLOCKS, AetherTags.Items.DUNGEON_BLOCKS);
         copy(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS, AetherTags.Items.LOCKED_DUNGEON_BLOCKS);
         copy(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS, AetherTags.Items.TRAPPED_DUNGEON_BLOCKS);
+        copy(AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS, AetherTags.Items.BOSS_DOORWAY_DUNGEON_BLOCKS);
+        copy(AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS, AetherTags.Items.TREASURE_DOORWAY_DUNGEON_BLOCKS);
+        copy(AetherTags.Blocks.SENTRY_BLOCKS, AetherTags.Items.SENTRY_BLOCKS);
+        copy(AetherTags.Blocks.ANGELIC_BLOCKS, AetherTags.Items.ANGELIC_BLOCKS);
+        copy(AetherTags.Blocks.HELLFIRE_BLOCKS, AetherTags.Items.HELLFIRE_BLOCKS);
 
         tag(AetherTags.Items.PLANKS_CRAFTING).addTag(ItemTags.PLANKS).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
         tag(AetherTags.Items.STONE_CRAFTING).addTag(ItemTags.STONE_CRAFTING_MATERIALS).add(AetherBlocks.HOLYSTONE.get().asItem());
@@ -142,6 +147,7 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.FREEZABLE_PENDANTS)
                 .add(AetherItems.IRON_PENDANT.get())
                 .add(AetherItems.GOLDEN_PENDANT.get());
+        tag(AetherTags.Items.SLIDER_DAMAGING_ITEMS).addTag(Tags.Items.TOOLS_PICKAXES);
 
         tag(AetherTags.Items.PHYG_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
         tag(AetherTags.Items.FLYING_COW_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
