@@ -6,11 +6,7 @@ AerodDev:
 - Fixes to the Aether Dirt Path texture.
 - Fixes to the silver Life Shard hearts texture.
 
-Aethyus:
-- fr_fr translation.
-
 baguchan:
-- ja_jp translation.
 - Improvements to entity AI to avoid entities falling out of the Aether.
 - Contributions to the Swet death animation.
 - Contributions to Skyroot Bed renderer.
@@ -35,9 +31,6 @@ Jonathing
 Kelvin285
 - Implementation of the world preview feature for the Aether's main menu.
 
-Parallel011:
-- zh_cn translation.
-
 saintselect
 - Converting entity audio files from stereo to mono.
 - Fixes to the Gravitite Sword ability performing when it shouldn't.
@@ -45,7 +38,3 @@ saintselect
 StonedCoal:
 - Implementation of the Aether's main menu.
 - Fixes to the Aerbunny.
-
-ZolaKluke:
-- de_de translation.
-- en_ud translation.

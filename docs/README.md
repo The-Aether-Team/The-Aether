@@ -47,7 +47,30 @@ our unlicensed assets, please [get in contact with us](mailto:support@gildedgame
 
 ## :star2: Special mentions
 ### :speech_balloon: Translations
-*Coming soon...*
+The Aether is available in these languages thanks to the following contributors:
+
+| Language             | Locale  | Translators                                                 |
+|----------------------|---------|-------------------------------------------------------------|
+| Chinese Simplified*  | (zh_cn) | ETStareak, Parallel011, Haku98                              |
+| Chinese Traditional* | (zh_tw) | y830705                                                     |
+| Dutch*               | (nl_nl) | Critical                                                    |
+| French*              | (fr_fr) | lololoustau, Beethov46, Aethyus                             |
+| German*              | (de_de) | DarkBread                                                   |
+| Indonesian*          | (id_id) | F640                                                        |
+| Italian*             | (it_it) | ?                                                           |
+| Japanese*            | (ja_jp) | baguchan                                                    |
+| Korean*              | (ko_kr) | minejango2                                                  |
+| Mexican Spanish*     | (es_mx) | Aer-ink                                                     |
+| Polish*              | (pl_pl) | DarkKnightComes                                             |
+| Romanian*            | (ro_ro) | ?                                                           |
+| Russian*             | (ru_ru) | LeyxorCheysen, andreyalex1236, LunarP1, zombi1944, Foxgreat |
+| Swedish*             | (sv_se) | magicus                                                     |
+| Thai*                | (th_th) | ?                                                           |
+| Ukranian*            | (uk_ua) | ?                                                           |
+
+_\* Indicates only partial language support._
+
+If your name is missing from the above list, please contact us.
 
 ### :hammer: Contributions
-All our contributor credits can be found [here](https://github.com/Gilded-Games/The-Aether/blob/1.19/CREDITS.txt). If you contributed to the project and do not see your name, please contact us.
+All our code contribution credits can be found [here](https://github.com/Gilded-Games/The-Aether/blob/1.19/CREDITS.txt). If you contributed to the project and do not see your name, please contact us.
