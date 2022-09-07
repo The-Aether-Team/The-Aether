@@ -1,5 +1,6 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
@@ -119,9 +120,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
                     this.setTradingPlayer(serverPlayer);
                 }
             }
-            return InteractionResult.SUCCESS;
+        } else {
+            if (!this.level.isClientSide()) {
+                MutableComponent message = Component.translatable("gui.aether.queen.dialog.ready");
+                this.chatWithNearby(message);
+            }
         }
-        return super.mobInteract(player, hand);
+        return InteractionResult.SUCCESS;
     }
 
     /**
@@ -166,7 +171,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     }
 
     public void readyUp() {
-        MutableComponent message = Component.translatable("gui.aether.queen.dialog.ready");
+        MutableComponent message = Component.translatable("gui.aether.queen.dialog.begin");
         this.chatWithNearby(message);
         this.setReady(true);
     }
