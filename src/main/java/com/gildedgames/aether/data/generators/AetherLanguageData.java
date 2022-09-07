@@ -309,7 +309,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addItem(AetherItems.BRONZE_DUNGEON_KEY, "Bronze Key");
         addItem(AetherItems.SILVER_DUNGEON_KEY, "Silver Key");
-        addItem(AetherItems.GOLD_DUNGEON_KEY, "Golden Key");
+        addItem(AetherItems.GOLD_DUNGEON_KEY, "Gold Key");
 
         addItem(AetherItems.MUSIC_DISC_AETHER_TUNE, "Blue Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_AETHER_TUNE, "Noisestorm - Aether Tune");
@@ -708,7 +708,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addMessage("life_shard_limit", "You can only use a total of %s Life Shards.");
         addMessage("bronze_treasure_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
         addMessage("silver_treasure_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
-        addMessage("gold_treasure_chest_locked", "This Treasure Chest must be unlocked with a Golden Key.");
+        addMessage("gold_treasure_chest_locked", "This Treasure Chest must be unlocked with a Gold Key.");
         addMessage("sun_altar.in_control", "The sun spirit is still in control of this realm.");
         addMessage("sun_altar.no_permission", "You don't have permission to use this.");
         addMessage("sun_altar.no_power", "The sun spirit has no power over this realm.");
