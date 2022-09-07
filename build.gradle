@@ -9,12 +9,12 @@ buildscript {
             url 'https://repo.spongepowered.org/maven'
         }
         maven {
-            name 'Gradle'
-            url "https://plugins.gradle.org/m2/"
-        }
-        maven {
             name 'Parchment'
             url 'https://maven.parchmentmc.org'
+        }
+        maven {
+            name 'Gradle'
+            url "https://plugins.gradle.org/m2/"
         }
         mavenCentral()
     }
@@ -22,6 +22,7 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7.+', changing: true
         classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+', changing: true
+        classpath group: 'io.github.0ffz', name: 'gpr-for-gradle', version: '1.+', changing: true
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -29,6 +30,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'io.github.0ffz.github-packages'
 
 version = project.mc_version + '-' + project.aether_version
 group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -97,12 +99,20 @@ dependencies {
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}:api")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
+//    compileOnly "com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}"
+//    runtimeOnly fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}")
+
+    compileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}:api"
+    compileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}"
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
 
-    compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}:api")
-    compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
+    compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}:api"
+    compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}"
+
+//    jarJar fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}") {
+//        jarJar.ranged(it, "[${project.nitrogen_version},)")
+//        jarJar.pin(it, "${project.nitrogen_version}")
+//    }
 
     jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") {
         jarJar.ranged(it, "[${project.curios_version},)")
@@ -123,6 +133,7 @@ repositories {
     maven { url = "https://maven.blamejared.com" }
     maven { url = "https://maven.theillusivec4.top/" }
     maven { url = "https://www.cursemaven.com" }
+//    maven githubPackage.invoke("Gilded-Games/Nitrogen")
 }
 
 jar {

@@ -102,7 +102,7 @@ public class LevelClientHooks {
                 }
             } else {
                 List<BlockPos> positions = positionsForTypes.get(type);
-                if (positions.size() > 0 && level.random.nextInt(750) == 0) {
+                if (positions.size() > 0 && level.random.nextInt(100) == 0) {
                     BlockPos pos = positions.get(level.random.nextInt(positions.size()));
                     if (!stack.is(level.getBlockState(pos).getBlock().asItem())) {
                         positions.remove(pos);
