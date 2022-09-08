@@ -11,8 +11,7 @@ jobs:
       image: ubuntu-2004:202111-02
     resource_class: large
     environment:
-      JVM_OPTS: -Xmx3200m
-      _JAVA_OPTIONS: -Xmx3200m
+      _JAVA_OPTIONS: -Xmx9600m
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     steps:
       - checkout
