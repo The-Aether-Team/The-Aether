@@ -210,7 +210,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.setAwake(true);
         this.setBossFight(true);
         if (this.getDungeon() != null) {
-            this.getDungeon().debugBounds();
             this.closeRoom();
         }
     }
@@ -284,8 +283,11 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         if (state.is(AetherBlocks.LOCKED_SENTRY_STONE.get())) {
             return AetherBlocks.SENTRY_STONE.get().defaultBlockState();
         }
-        if (state.is(AetherBlocks.BOSS_DOORWAY_CARVED_STONE.get()) || state.is(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE.get())) {
+        if (state.is(AetherBlocks.BOSS_DOORWAY_CARVED_STONE.get())) {
             return Blocks.AIR.defaultBlockState();
+        }
+        if (state.is(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE.get())) {
+            return AetherBlocks.SKYROOT_TRAPDOOR.get().defaultBlockState();
         }
         return null;
     }

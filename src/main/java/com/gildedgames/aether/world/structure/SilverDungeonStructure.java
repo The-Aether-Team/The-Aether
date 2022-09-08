@@ -22,14 +22,14 @@ public class SilverDungeonStructure extends Structure {
     @Override
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         ChunkPos chunkpos = context.chunkPos();
-        BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), 64, chunkpos.getMiddleBlockZ());
+        BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), 100, chunkpos.getMiddleBlockZ());
         return Optional.of(new GenerationStub(blockpos, (piecesBuilder) -> generatePieces(piecesBuilder, context)));
     }
 
     private static void generatePieces(StructurePiecesBuilder builder, GenerationContext context) {
         RandomSource randomSource = context.random();
         BlockPos worldPos = context.chunkPos().getWorldPosition();
-        BlockPos elevatedPos = new BlockPos(worldPos.getX(), 64, worldPos.getZ());
+        BlockPos elevatedPos = new BlockPos(worldPos.getX(), 100, worldPos.getZ());
         SilverDungeonPieces.BossRoom bossRoom = new SilverDungeonPieces.BossRoom(
                 context.structureTemplateManager(),
                 new ResourceLocation(Aether.MODID, "silver_dungeon/boss_room"),

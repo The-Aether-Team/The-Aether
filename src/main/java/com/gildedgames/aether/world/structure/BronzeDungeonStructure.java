@@ -29,7 +29,7 @@ public class BronzeDungeonStructure extends Structure {
     private static void generatePieces(StructurePiecesBuilder builder, Structure.GenerationContext context) {
         RandomSource randomSource = context.random();
         BlockPos worldPos = context.chunkPos().getWorldPosition();
-        BlockPos elevatedPos = new BlockPos(worldPos.getX(), 80, worldPos.getZ());
+        BlockPos elevatedPos = new BlockPos(worldPos.getX(), 50, worldPos.getZ());
         BronzeDungeonPieces.BossRoom bossRoom = new BronzeDungeonPieces.BossRoom(
                 context.structureTemplateManager(),
                 new ResourceLocation(Aether.MODID, "bronze_dungeon/boss_room"),
