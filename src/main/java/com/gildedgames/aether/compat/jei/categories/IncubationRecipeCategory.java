@@ -15,6 +15,8 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -32,7 +34,7 @@ public class IncubationRecipeCategory implements IRecipeCategory<IncubationRecip
     private final IDrawableAnimated animatedProgressArrow;
 
     public IncubationRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 83);
+        this.background = helper.createDrawable(TEXTURE, 72, 16, 70, 54);
         this.fuelIndicator = helper.createDrawable(TEXTURE, 176, 0, 14, 13);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(AetherBlocks.INCUBATOR.get()));
         IDrawableStatic progressArrow = helper.createDrawable(TEXTURE, 179, 16, 10, 54 );
@@ -67,13 +69,25 @@ public class IncubationRecipeCategory implements IRecipeCategory<IncubationRecip
     public void setRecipe(IRecipeLayoutBuilder builder, IncubationRecipe recipe, IFocusGroup focusGroup) {
         NonNullList<Ingredient> recipeIngredients = recipe.getIngredients();
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 73, 17).addIngredients(recipeIngredients.get(0));
-        builder.addSlot(RecipeIngredientRole.INPUT, 73, 53).addIngredients(Ingredient.of(AetherBlocks.AMBROSIUM_TORCH.get()));
+        builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(recipeIngredients.get(0));
     }
 
     @Override
     public void draw(IncubationRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        animatedProgressArrow.draw(stack, 103, 16);
-        fuelIndicator.draw(stack, 73, 36);
+        animatedProgressArrow.draw(stack, 31, 0);
+        fuelIndicator.draw(stack, 1, 20);
+        drawIncubationTime(recipe, stack, 45);
+    }
+
+    protected void drawIncubationTime(IncubationRecipe recipe, PoseStack poseStack, int y) {
+        int incubationTime = recipe.getIncubationTime();
+        if (incubationTime > 0) {
+            int incubationTimeSeconds = incubationTime / 20;
+            Component timeString = Component.translatable("gui.jei.category.smelting.time.seconds", incubationTimeSeconds);
+            Minecraft minecraft = Minecraft.getInstance();
+            Font fontRenderer = minecraft.font;
+            int stringWidth = fontRenderer.width(timeString);
+            fontRenderer.draw(poseStack, timeString, background.getWidth() - stringWidth, y, 0xFF808080);
+        }
     }
 }

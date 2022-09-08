@@ -21,7 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
-public class FreezingRecipeCategory implements IRecipeCategory<FreezingRecipe> {
+public class FreezingRecipeCategory extends AbstractAetherCookingRecipeCategory implements IRecipeCategory<FreezingRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "freezing");
     public static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/freezer.png");
     public static final RecipeType<FreezingRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "freezing", FreezingRecipe.class);
@@ -32,7 +32,7 @@ public class FreezingRecipeCategory implements IRecipeCategory<FreezingRecipe> {
     private final IDrawableAnimated animatedProgressArrow;
 
     public FreezingRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 83);
+        this.background = helper.createDrawable(TEXTURE, 55, 16, 82, 54);
         this.fuelIndicator = helper.createDrawable(TEXTURE, 176, 0, 14, 13);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(AetherBlocks.FREEZER.get()));
         IDrawableStatic progressArrow = helper.createDrawable(TEXTURE, 176, 14, 23, 16 );
@@ -67,14 +67,15 @@ public class FreezingRecipeCategory implements IRecipeCategory<FreezingRecipe> {
     public void setRecipe(IRecipeLayoutBuilder builder, FreezingRecipe recipe, IFocusGroup focusGroup) {
         NonNullList<Ingredient> recipeIngredients = recipe.getIngredients();
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 56, 17).addIngredients(recipeIngredients.get(0));
-        builder.addSlot(RecipeIngredientRole.INPUT, 56, 53).addIngredients(Ingredient.of(AetherBlocks.ICESTONE.get()));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 116, 35).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(recipeIngredients.get(0));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 19).addItemStack(recipe.getResultItem());
     }
 
     @Override
     public void draw(FreezingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        animatedProgressArrow.draw(stack, 79, 34);
-        fuelIndicator.draw(stack, 56, 36);
+        animatedProgressArrow.draw(stack, 24, 18);
+        fuelIndicator.draw(stack, 1, 20);
+        drawExperience(recipe, stack, 1, background);
+        drawCookTime(recipe, stack, 45, background);
     }
 }

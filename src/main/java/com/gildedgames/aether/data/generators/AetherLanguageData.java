@@ -619,6 +619,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("jei.altar.repairing", "Repairing");
         addGuiText("jei.freezing", "Freezing");
         addGuiText("jei.incubating", "Incubating");
+        addGuiText("jei.fuel", "Aether Fuel");
 
 
         addGuiText("slider.title", "the Slider");

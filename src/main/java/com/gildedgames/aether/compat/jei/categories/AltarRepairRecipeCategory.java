@@ -22,7 +22,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
-public class AltarRepairRecipeCategory implements IRecipeCategory<AltarRepairRecipe> {
+public class AltarRepairRecipeCategory extends AbstractAetherCookingRecipeCategory implements IRecipeCategory<AltarRepairRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "repairing");
     public static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/altar.png");
     public static final RecipeType<AltarRepairRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "repairing", AltarRepairRecipe.class);
@@ -33,7 +33,7 @@ public class AltarRepairRecipeCategory implements IRecipeCategory<AltarRepairRec
     private final IDrawableAnimated animatedProgressArrow;
 
     public AltarRepairRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 83);
+        this.background = helper.createDrawable(TEXTURE, 55, 16, 82, 54);
         this.fuelIndicator = helper.createDrawable(TEXTURE, 176, 0, 14, 13);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(AetherBlocks.ALTAR.get()));
         IDrawableStatic progressArrow = helper.createDrawable(TEXTURE, 176, 14, 23, 16 );
@@ -71,14 +71,15 @@ public class AltarRepairRecipeCategory implements IRecipeCategory<AltarRepairRec
         ItemStack damagedItem = recipeIngredients.get(0).getItems()[0].copy();
         damagedItem.setDamageValue(damagedItem.getMaxDamage() * 3 / 4);
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 56, 17).addIngredients(Ingredient.of(damagedItem));
-        builder.addSlot(RecipeIngredientRole.INPUT, 56, 53).addIngredients(Ingredient.of(AetherItems.AMBROSIUM_SHARD.get()));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 116, 35).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(Ingredient.of(damagedItem));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 19).addItemStack(recipe.getResultItem());
     }
 
     @Override
     public void draw(AltarRepairRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        animatedProgressArrow.draw(stack, 79, 34);
-        fuelIndicator.draw(stack, 56, 36);
+        animatedProgressArrow.draw(stack, 24, 18);
+        fuelIndicator.draw(stack, 1, 20);
+        drawExperience(recipe, stack, 1, background);
+        drawCookTime(recipe, stack, 45, background);
     }
 }
