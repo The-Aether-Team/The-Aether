@@ -612,6 +612,14 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.chatCooldown += amount;
     }
 
+    public boolean canMove() {
+        return this.canMove;
+    }
+
+    public void setCanMove(boolean move) {
+        this.canMove = move;
+    }
+
     public static class SliderMoveGoal extends Goal {
         protected final Slider slider;
 
