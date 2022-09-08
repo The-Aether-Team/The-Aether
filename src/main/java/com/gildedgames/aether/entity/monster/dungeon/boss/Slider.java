@@ -1,6 +1,5 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.api.BossNameGenerator;
 import com.gildedgames.aether.api.DungeonTracker;
@@ -585,8 +584,8 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.moveDelay = moveDelay;
     }
 
-    public void increaseMoveDelay(int amount) {
-        this.moveDelay += amount;
+    public void decreaseMoveDelay(int amount) {
+        this.moveDelay -= amount;
     }
 
     public float getVelocity() {
@@ -650,38 +649,40 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     boolean crushed = this.crushedBlocks();
                     if (!crushed) {
                         if (this.slider.velocity < this.getMaxVelocity()) {
+                            // The Slider increases it's speed based on the speed it has saved
                             this.slider.velocity += this.getVelocityIncrease();
                         }
                         this.slider.setDeltaMovement(Vec3.ZERO);
                         if (this.slider.direction != null) {
+                            // The Slider moves based on its direction
                             this.slider.setDeltaMovement(this.slider.direction.getStepX() * this.slider.velocity, this.slider.direction.getStepY() * this.slider.velocity, this.slider.direction.getStepZ() * this.slider.velocity);
                             if (this.reachedTarget()) {
+                                // Once the Slider reaches its target, it stops moving, and starts the movement delay timer.
                                 this.stop();
-                                this.resetMoveDelay();
+                                this.slider.moveDelay = this.calculateMoveDelay();
                             }
                         }
                     }
                 } else if (this.slider.moveDelay > 0) {
-                    this.decreaseMoveDelay();
+                    // When the Slider decreases its move delay
+                    this.slider.decreaseMoveDelay(this.getMoveDelayDecrease());
                     this.slider.setDeltaMovement(Vec3.ZERO);
                 } else {
+                    // When the Slider starts moving
                     this.slider.direction = this.calculateDirection();
                     this.slider.playSound(this.slider.getMoveSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
                     this.slider.canMove = true;
                 }
             } else {
+                // The Slider stops moving if it's target is null
                 this.stop();
             }
-            // Sets the slider's position to the block it is on, because it sometimes moves slightly up
-            if (this.slider.getY() % 1 <= 0.1 && (this.slider.direction.getAxis() != Direction.Axis.Y))
-            {
-                this.slider.setPos(this.slider.getX(), Mth.floor(this.slider.getY()), this.slider.getZ());
-            }
+            // When hitting walls, the Slider sometimes moves up a TINY fraction of a block.
+            // This realigns it as long as it's not moving up or down and is within 1/20 of a block above or below a block.
+            this.alignNearY();
         }
 
-        /**
-         * Calculates what direction the slider should slide
-         */
+        /** Calculates what direction the slider should slide */
         public Direction calculateDirection() {
             Direction newDirection;
 
@@ -822,52 +823,56 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             return flag;
         }
 
-        /**
-         * Returns how much should be added to the Slider's velocity when sliding
-         */
+        /** Returns the Slider which this goal is for */
+        public Slider getSlider() {
+            return this.slider;
+        }
+
+        /** Destroys a block and spawns smoke. Added so addons can use this private method in their custom Slider AI, if they have one */
+        protected void blockDestroySmoke(BlockPos pos){
+            this.slider.blockDestroySmoke(pos);
+        }
+
+        /** Sets the slider's position to the block it is on, because it sometimes moves slightly up (or possibly down, added just in case) */
+        protected void alignNearY() {
+            if (this.slider.getY() % 1 != 0.0) {
+                if (this.slider.getY() % 1 <= 0.05 && (this.slider.direction.getAxis() != Direction.Axis.Y)) {
+                    this.slider.setPos(this.slider.getX(), Mth.floor(this.slider.getY()), this.slider.getZ());
+                } else if (this.slider.getY() % 1 >= 0.95 && (this.slider.direction.getAxis() != Direction.Axis.Y)) {
+                    this.slider.setPos(this.slider.getX(), Mth.ceil(this.slider.getY()), this.slider.getZ());
+                }
+            }
+        }
+
+        /** Returns how much should be added to the Slider's velocity when sliding */
         protected float getVelocityIncrease() {
             float velocity = this.slider.isCritical() ? 0.07F : 0.035F;
             return velocity;
         }
 
-        /**
-         * Resets the delay of the Slider's movement
-         */
-        protected void resetMoveDelay() {
-            this.slider.moveDelay = this.slider.isCritical() ? 4 : 8;
+        /** Returns what the delay of the Slider's movement should be set to when it stops, based on whether or not the Slider is in the critical stage or not */
+        protected int calculateMoveDelay() {
+            return this.slider.isCritical() ? 4 : 8;
         }
 
-        /**
-         * Decreases the movement delay of the Slider
-         */
-        protected void decreaseMoveDelay() {
-            --this.slider.moveDelay;
-            if (this.slider.isCritical() && this.slider.random.nextInt(2) == 0) {
-                --this.slider.moveDelay;
-            }
+        /** Returns the decrease (negative) that the move delay should decrease each tick */
+        protected int getMoveDelayDecrease() {
+            return (this.slider.isCritical() && this.slider.moveDelay > 1 && this.slider.random.nextInt(2) == 0) ? 2 : 1;
         }
 
-        /**
-         * Returns the fastest the slider can go
-         */
+        /** Returns the fastest the slider can go */
         protected float getMaxVelocity() {
             return 2.0F;
         }
 
+        /** Returns the Y level of the floor */
         protected double getFloorLevel() {
-            return (this.slider.getDungeon().roomBounds().minY + 1);
+            return this.slider.getDungeon().roomBounds().minY + 1;
         }
 
+        /** Returns the Y level of the ceiling */
         protected double getCeilingLevel() {
-            return (this.slider.getDungeon().roomBounds().maxY);
-        }
-
-        public Slider getSlider() {
-            return this.slider;
-        }
-
-        protected void blockDestroySmoke(BlockPos pos){
-            this.slider.blockDestroySmoke(pos);
+            return this.slider.getDungeon().roomBounds().maxY;
         }
     }
 }
