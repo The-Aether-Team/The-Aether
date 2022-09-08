@@ -27,15 +27,12 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
     public static <T extends Mob & BossMob<T>> void createDebugDungeon(T boss) {
         DungeonTracker<T> dungeon = new DungeonTracker<>(
                 boss,
-                boss.position().add(0, 1, 0),
+                boss.position(),
                 new AABB(boss.position().x() - 7, boss.position().y() - 1, boss.position().z() - 7,
                         boss.position().x() + 7, boss.position().y() + 7, boss.position().z() + 7),
                 new ArrayList<>()
         );
         boss.setDungeon(dungeon);
-        if (boss instanceof Slider slider) {
-            slider.setPlatformBounds(new AABB(dungeon.originCoordinates().add(-2, -1, -2),dungeon.originCoordinates().add(2, 0, 2)));
-        }
     }
 
     //debugging
@@ -50,17 +47,6 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
                     }
                 }
             }
-        }
-        if (this.boss() instanceof Slider slider) {
-
-            for (int x = (int) Math.floor(slider.platformBounds().minX); x <= Math.floor(slider.platformBounds().maxX - 1); x++) {
-                for (int y = (int) Math.floor(slider.platformBounds().minY); y <= Math.floor(slider.platformBounds().maxY - 1); y++) {
-                    for (int z = (int) Math.floor(slider.platformBounds().minZ); z <= Math.floor(slider.platformBounds().maxZ - 1); z++) {
-                        this.boss().getLevel().setBlockAndUpdate(new BlockPos(x, y, z), AetherBlocks.LOCKED_SENTRY_STONE.get().defaultBlockState());
-                    }
-                }
-            }
-            slider.moveTo(this.originCoordinates());
         }
     }
 

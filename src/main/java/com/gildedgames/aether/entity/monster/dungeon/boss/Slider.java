@@ -65,18 +65,12 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     private final ServerBossEvent bossFight;
     private MostDamageTargetGoal mostDamageTargetGoal;
 
-    @Nullable
-    private AABB spawnPlatformBoundingBox;
-
     private int chatCooldown;
 
     private boolean canMove;
     private int moveDelay;
     private float velocity;
     private Direction direction = null;
-    /** Where the slider intends to go next, if it goes over the spawn platform */
-    @Nullable
-    private Direction nextIntendedDirection = null;
 
     public Slider(EntityType<? extends Slider> entityType, Level level) {
         super(entityType, level);
@@ -417,13 +411,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.bronzeDungeon = dungeon;
     }
 
-    public AABB platformBounds() {
-        return this.spawnPlatformBoundingBox;
-    }
-
-    public void setPlatformBounds(@Nullable AABB spawnPlatformBoundingBox) {
-        this.spawnPlatformBoundingBox = spawnPlatformBoundingBox;
-    }
 
     @Override
     public int getDeathScore() {
@@ -557,15 +544,12 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         tag.putBoolean("Awake", this.isAwake());
         if (this.getDungeon() != null) {
             tag.put("Dungeon", this.getDungeon().addAdditionalSaveData());
-            if (this.platformBounds() != null) {
-                tag.put("SpawnPlatform", this.savePlatformBounds());
-            }
         }
     }
 
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
-        super.readAdditionalSaveData(tag); //todo: Should abstract this duplicated code to the boss interface (other than the platform bounding box)
+        super.readAdditionalSaveData(tag); //todo: Should abstract this duplicated code to the boss interface
         if (tag.contains("BossName")) {
             Component name = Component.Serializer.fromJson(tag.getString("BossName"));
             if (name != null) {
@@ -580,45 +564,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         }
         if (tag.contains("Dungeon") && tag.get("Dungeon") instanceof CompoundTag dungeonTag) {
             this.setDungeon(DungeonTracker.readAdditionalSaveData(dungeonTag, this));
-            if (tag.contains("SpawnPlatform") && tag.get("SpawnPlatform") instanceof CompoundTag platformTag) {
-                this.setPlatformBounds(this.readPlatformBounds(platformTag));
-
-            }
         }
-    }
-
-
-    public AABB readPlatformBounds(CompoundTag tag) {
-        if (tag.contains("PlatformBoundsMinX") &&
-            tag.contains("PlatformBoundsMinY") &&
-            tag.contains("PlatformBoundsMinZ") &&
-            tag.contains("PlatformBoundsMaxX") &&
-            tag.contains("PlatformBoundsMaxY") &&
-            tag.contains("PlatformBoundsMaxZ")) {
-            double minX = tag.getDouble("PlatformBoundsMinX");
-            double minY = tag.getDouble("PlatformBoundsMinY");
-            double minZ = tag.getDouble("PlatformBoundsMinZ");
-            double maxX = tag.getDouble("PlatformBoundsMaxX");
-            double maxY = tag.getDouble("PlatformBoundsMaxY");
-            double maxZ = tag.getDouble("PlatformBoundsMaxZ");
-
-            return new AABB(minX, minY, minZ, maxX, maxY, maxZ);
-        } else {
-            return null;
-        }
-    }
-
-    public CompoundTag savePlatformBounds() {
-        CompoundTag tag = new CompoundTag();
-        if (this.platformBounds() != null) {
-            tag.putDouble("PlatformBoundsMinX", this.platformBounds().minX);
-            tag.putDouble("PlatformBoundsMinY", this.platformBounds().minY);
-            tag.putDouble("PlatformBoundsMinZ", this.platformBounds().minZ);
-            tag.putDouble("PlatformBoundsMaxX", this.platformBounds().maxX);
-            tag.putDouble("PlatformBoundsMaxY", this.platformBounds().maxY);
-            tag.putDouble("PlatformBoundsMaxZ", this.platformBounds().maxZ);
-        }
-        return tag;
     }
 
     @Override
@@ -630,14 +576,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.direction = direction;
     }
 
-    @Nullable
-    public Direction getNextIntendedDirection() {
-        return this.nextIntendedDirection;
-    }
-
-    public void setNextIntendedDirection(@Nullable Direction nextIntendedDirection) {
-        this.nextIntendedDirection = nextIntendedDirection;
-    }
 
     public int getMoveDelay() {
         return this.moveDelay;
@@ -719,19 +657,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     this.decreaseMoveDelay();
                     this.slider.setDeltaMovement(Vec3.ZERO);
                 } else {
-                    if (this.slider.nextIntendedDirection == null) {
-                        this.slider.direction = this.calculateDirection(true);
-                    } else {
-                        Direction currentIntention = this.calculateDirection(false);
-                        if (!willHitPlatform(currentIntention, this.slider.getBoundingBox()));
-                        {
-                            if (currentIntention != this.slider.nextIntendedDirection) {
-                                Aether.LOGGER.warn("Slider calculated not necessarily expected direction!");
-                            }
-                            this.slider.direction = currentIntention;
-                            this.slider.nextIntendedDirection = null;
-                        }
-                    }
+                    this.slider.direction = this.calculateDirection();
                     this.slider.playSound(this.slider.getMoveSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
                     this.slider.canMove = true;
                 }
@@ -748,7 +674,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         /**
          * Calculates what direction the slider should slide
          */
-        public Direction calculateDirection(boolean platformMoveLogic) {
+        public Direction calculateDirection() {
             Direction newDirection;
 
             double xDiff = Math.abs(this.slider.position().x() - this.slider.getTarget().position().x());
@@ -767,39 +693,28 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                 }
             }
 
-
-
             if // Dungeon exists
-            (platformMoveLogic && (((this.slider.getDungeon() != null &&
-                    // Target is too high to be hit if the Slider was on the floor
-                    this.slider.getTarget().getBoundingBox().minY >= (this.getFloorLevel() + this.slider.getBoundingBox().getYsize()))
-                    // The target is above the slider
-                    && (this.slider.getBoundingBox().maxY - this.slider.getTarget().getBoundingBox().minY) <= 0)
-                    // The target is farther away on the Y axis
-                    && (yDiff > xDiff && yDiff > zDiff))) {
+            ((((this.slider.getDungeon() != null &&
+            // Target is too high to be hit if the Slider was on the floor
+            this.slider.getTarget().getBoundingBox().minY >= (this.getFloorLevel() + this.slider.getBoundingBox().getYsize()))
+            // The target is above the slider
+            && (this.slider.getBoundingBox().maxY - this.slider.getTarget().getBoundingBox().minY) <= 0)
+            // The target is farther away on the Y axis
+            && (yDiff > xDiff && yDiff > zDiff))) {
                 newDirection = Direction.UP;
             }
 
             if // Slider is much further above than any other axis
-            (platformMoveLogic && (((yDiff > (xDiff * 0.75F) && yDiff > (zDiff * 0.75F))
-                    // slider is above target
-                    && (this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY))
-                    // Slider has a dungeon
-                    || (this.slider.getDungeon() != null
-                    // Target is low enough to be hit if the Slider is on the ground and the slider is not above the spawn platform
-                    && (((!this.willHitPlatformY(this.slider.getTarget().getBoundingBox())) && (this.slider.getTarget().getBoundingBox().minY < (this.getFloorLevel() + (this.slider.getBoundingBox().getYsize()))))
-                    // Slider is not already on the floor
-                    && this.slider.getBoundingBox().minY > this.getFloorLevel())))) {
+            ((((yDiff > (xDiff * 0.75F) && yDiff > (zDiff * 0.75F))
+            // slider is above target
+            && (this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY))
+            // Slider has a dungeon
+            || (this.slider.getDungeon() != null
+            // Target is low enough to be hit if the Slider is on the ground
+            && (((this.slider.getTarget().getBoundingBox().minY < (this.getFloorLevel() + (this.slider.getBoundingBox().getYsize()))))
+            // Slider is not already on the floor
+            && this.slider.getBoundingBox().minY > this.getFloorLevel())))) {
                 newDirection = Direction.DOWN;
-            }
-            if (this.slider.platformBounds() != null && platformMoveLogic)
-            {
-                Direction ingnorePlatformDirection = this.calculateDirection(false);
-                if (willHitPlatform(ingnorePlatformDirection, this.slider.getBoundingBox()) && this.slider.getBoundingBox().minY < this.slider.platformBounds().maxY)
-                {
-                    this.slider.nextIntendedDirection = ingnorePlatformDirection;
-                    newDirection = Direction.UP;
-                }
             }
             return newDirection;
         }
@@ -810,24 +725,19 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                 return
                 // If the dungeon exists
                 (this.slider.getDungeon() != null ?
-                // Return whether or not the player is low enough to be hit from the floor, and the Slider is above the spawn platform if it needs to be.
-                        ((this.willHitPlatform(this.slider.nextIntendedDirection, this.slider.getBoundingBox()))
-                                ? (this.slider.getBoundingBox().minY >= this.slider.platformBounds().maxY) && (this.slider.getTarget().getBoundingBox().minY < this.slider.getBoundingBox().minY) :
-                                (this.slider.getTarget().getBoundingBox().minY < (this.getFloorLevel() + this.slider.getBoundingBox().getYsize()))
-
-                // Or/Otherwise the default logic
+                // Return whether or not the player is low enough to be hit from the floor
+                (((this.slider.getTarget().getBoundingBox().minY < (this.getFloorLevel() + this.slider.getBoundingBox().getYsize()))
+                // Or/Otherwise whether or not the slider has reached the player's hitbox
                 || ((this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY)))
-                        : (this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY));
-
-
-
+                // Or the slider has reached the dungeon ceiling
+                || this.slider.getBoundingBox().maxY >= this.getCeilingLevel())
+                : (this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY));
             } else if (this.slider.direction == Direction.DOWN) {
-
                 return
                 // If the dungeon exists, and the player's height is low enough that it could be hit by the slider if it was on the floor (the bottom of the player's hitbox is below where the top of the slider's hitbox would be if it was on the floor)
                 (this.slider.getDungeon() != null &&
                 (this.slider.getTarget().getBoundingBox().minY < (this.getFloorLevel() + this.slider.getBoundingBox().getYsize())))
-                // then return whether or not the slider is on the ground already (or the spawn platform, if it is above the spawn platform)
+                // then return whether or not the slider is on the ground already
                 ? this.slider.getBoundingBox().minY <= this.getFloorLevel() :
                 // Otherwise, return the default logic (whether or not the Slider is above the player)
                 ((this.slider.getBoundingBox().minY <= this.slider.getTarget().getBoundingBox().minY));
@@ -859,7 +769,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     return this.crush(min, max, false);
                 } else if (this.slider.direction == Direction.DOWN) {
                     // The Slider does not try to break the dungeon floor
-                    min = new BlockPos(entity.minX, (this.slider.getDungeon() != null ? Math.max(entity.minY - 1.0, this.slider.getDungeon().roomBounds().minY + 1.0F + (this.willHitPlatformY(this.slider.getBoundingBox()) ? this.slider.platformBounds().getYsize() : 0)) : entity.minY - 1.0), entity.minZ);
+                    min = new BlockPos(entity.minX, (this.slider.getDungeon() != null ? Math.max(entity.minY - 1.0, this.slider.getDungeon().roomBounds().minY + 1.0F) : entity.minY - 1.0), entity.minZ);
                     max = new BlockPos(Math.ceil(entity.maxX - 1.0), (this.slider.getDungeon() != null ? Math.min(entity.maxY - 1.0, this.slider.getDungeon().roomBounds().maxY - 1.0F) : entity.maxY - 1.0), Math.ceil(entity.maxZ - 1.0));
                     return this.crush(min, max, false);
                 } else if (this.slider.direction == Direction.EAST) {
@@ -892,7 +802,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     if (!blockState.isAir() && !blockState.is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
                         if (ForgeEventFactory.getMobGriefingEvent(this.slider.level, this.slider) && this.slider.getDungeon() != null && this.slider.getDungeon().roomBounds().contains(Vec3.atCenterOf(pos))) {
                             this.slider.level.destroyBlock(pos, true, this.slider);
-                            this.slider.blockDestroySmoke(pos);
+                            this.blockDestroySmoke(pos);
                             this.slider.level.playSound(null, this.slider.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 3.0F, (0.625F + (this.slider.random.nextFloat() - this.slider.random.nextFloat()) * 0.2F) * 0.7F);
                             this.slider.playSound(this.slider.getCollideSound(), 2.5F, 1.0F / (this.slider.random.nextFloat() * 0.2F + 0.9F));
                             this.stop();
@@ -902,50 +812,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                 }
             }
             return flag;
-        }
-
-
-        protected boolean willHitPlatform(Direction dir, AABB boundingBox)
-        {
-            if (dir != null && boundingBox != null) {
-                Direction.Axis axis = dir.getAxis();
-                if (axis == Direction.Axis.X) {
-                    return willHitPlatformX(boundingBox);
-                } else if (axis == Direction.Axis.Y) {
-                    return willHitPlatformY(boundingBox);
-                } else if (axis == Direction.Axis.Z) {
-                    return willHitPlatformZ(boundingBox);
-                }
-            }
-            return false;
-        }
-
-
-        protected boolean willHitPlatformY(AABB box)
-        {
-            return this.slider.platformBounds() != null && (this.slider.platformBounds().minX < box.maxX && this.slider.platformBounds().maxX > box.minX
-                   && this.slider.platformBounds().minZ < box.maxZ && this.slider.platformBounds().maxZ > box.minZ);
-        }
-
-        protected boolean willHitPlatformX(AABB box)
-        {
-            return this.slider.platformBounds() != null && ((this.slider.platformBounds().minY < box.maxY && this.slider.platformBounds().maxY > box.minY
-                   && this.slider.platformBounds().minZ < box.maxZ && this.slider.platformBounds().maxZ > box.minZ) &&
-                   ((this.slider.getBoundingBox().minX < this.slider.platformBounds().maxX &&
-                   this.slider.getTarget().getBoundingBox().maxX > this.slider.platformBounds().minX) ||
-                   (this.slider.getBoundingBox().maxX > this.slider.platformBounds().minX &&
-                   this.slider.getTarget().getBoundingBox().minX < this.slider.platformBounds().maxX)));
-        }
-
-        protected boolean willHitPlatformZ(AABB box)
-        {
-            return this.slider.platformBounds() != null && ((this.slider.platformBounds().minX < box.maxX && this.slider.platformBounds().maxX > box.minX
-                   && this.slider.platformBounds().minY < box.maxY && this.slider.platformBounds().maxY > box.minY) &&
-                   ((this.slider.getBoundingBox().minZ < this.slider.platformBounds().maxZ &&
-                   this.slider.getTarget().getBoundingBox().maxZ > this.slider.platformBounds().minZ) ||
-                   (this.slider.getBoundingBox().maxZ > this.slider.platformBounds().minZ &&
-                   this.slider.getTarget().getBoundingBox().minZ < this.slider.platformBounds().maxZ)));
-
         }
 
         /**
@@ -981,7 +847,19 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         }
 
         protected double getFloorLevel() {
-            return (this.slider.getDungeon().roomBounds().minY + 1 + (this.slider.platformBounds() != null && willHitPlatformY(this.slider.getBoundingBox()) ? this.slider.platformBounds().getYsize() : 0));
+            return (this.slider.getDungeon().roomBounds().minY + 1);
+        }
+
+        protected double getCeilingLevel() {
+            return (this.slider.getDungeon().roomBounds().maxY);
+        }
+
+        public Slider getSlider() {
+            return this.slider;
+        }
+
+        protected void blockDestroySmoke(BlockPos pos){
+            this.slider.blockDestroySmoke(pos);
         }
     }
 }
