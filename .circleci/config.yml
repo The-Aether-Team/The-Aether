@@ -8,7 +8,7 @@ parameters:
 jobs:
   build:
     machine:
-      image: ubuntu-2004:202111-02
+      image: ubuntu-2204:2022.07.1
     resource_class: large
     environment:
       _JAVA_OPTIONS: -Xmx9600m
@@ -17,14 +17,14 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v4-dependencies-{{ checksum "build.gradle" }}
-            - v4-dependencies-
+            - v5-dependencies-{{ checksum "build.gradle" }}
+            - v5-dependencies-
 
       - run: gradle dependencies
       - save_cache:
           paths:
             - ~/repo/.gradle
-          key: v4-dependencies-{{ checksum "build.gradle" }}
+          key: v5-dependencies-{{ checksum "build.gradle" }}
       - run: gradle test
       - run: gradle build
       - store_artifacts:
