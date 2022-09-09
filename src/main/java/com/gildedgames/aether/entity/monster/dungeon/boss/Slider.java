@@ -649,7 +649,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     boolean crushed = this.crushedBlocks();
                     if (!crushed) {
                         if (this.slider.velocity < this.getMaxVelocity()) {
-                            // The Slider increases it's speed based on the speed it has saved
+                            // The Slider increases its speed based on the speed it has saved
                             this.slider.velocity += this.getVelocityIncrease();
                         }
                         this.slider.setDeltaMovement(Vec3.ZERO);
