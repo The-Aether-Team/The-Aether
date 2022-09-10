@@ -40,7 +40,7 @@ When creating a PR:
 - Mark it as a draft if the changes are WIP.
 - Format it according to conventional commits, with the header as the title and the body and footer in the description so that we can use this information for the merge commit. Write this within a code block.
 - Make sure the description contains an overview of the changes made, and the footer any open issues that it resolves and/or if it's a breaking change.
-- Make sure your code is well documented and conforms to the project's code styling.
+- Make sure your code conforms to the project's documentation and code styling.
 - State outside of the rest of the description that you agree to the Contributor License Agreement (CLA).
 
 Example:
