@@ -19,14 +19,6 @@ jobs:
           keys:
             - v5-dependencies-{{ checksum "build.gradle" }}
             - v5-dependencies-
-      - run:
-          command: |
-            while true; do
-              sleep 5
-              ps auxwwf
-              echo "======"
-            done
-          background: true
       - run: gradle dependencies
       - save_cache:
           paths:
