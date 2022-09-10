@@ -17,15 +17,17 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v5-dependencies-{{ checksum "build.gradle" }}
-            - v5-dependencies-
-      - run: gradle dependencies
+            - v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+            - v1-gradle-cache-{{ checksum "build.gradle" }}
+      - run: gradle build #-x test
       - save_cache:
           paths:
-            - ~/repo/.gradle
-          key: v5-dependencies-{{ checksum "build.gradle" }}
-      - run: gradle test
-      - run: gradle build
+            - ~/.gradle/wrapper
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - save_cache:
+          paths:
+            - ~/.gradle/caches
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
       - store_artifacts:
           path: ~/project/build/libs
       - persist_to_workspace:
