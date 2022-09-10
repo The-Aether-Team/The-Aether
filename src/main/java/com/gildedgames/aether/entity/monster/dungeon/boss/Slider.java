@@ -323,6 +323,9 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public void startSeenByPlayer(@Nonnull ServerPlayer player) {
         super.startSeenByPlayer(player);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), player);
+        if (this.getDungeon() != null && this.getDungeon().isPlayerWithinRoom(player)) {
+            this.bossFight.addPlayer(player);
+        }
     }
 
     /**

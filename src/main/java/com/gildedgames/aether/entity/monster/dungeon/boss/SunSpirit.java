@@ -331,6 +331,9 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
+        if (this.getDungeon() != null && this.getDungeon().isPlayerWithinRoom(pPlayer)) {
+            this.bossFight.addPlayer(pPlayer);
+        }
     }
 
     /**
