@@ -142,7 +142,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.collide();
         this.evaporate();
 
-        if (this.chatCooldown > 0) {
+        if (this.getChatCooldown() > 0) {
             this.chatCooldown--;
         }
     }
@@ -191,9 +191,9 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                 }
             } else {
                 if (!this.level.isClientSide && livingEntity instanceof Player player) {
-                    if (this.chatCooldown <= 0) {
+                    if (this.getChatCooldown() <= 0) {
                         this.displayInvalidToolMessage(player);
-                        this.chatCooldown = 15;
+                        this.setChatCooldown(15);
                         return false;
                     }
                 }
@@ -575,7 +575,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.direction = direction;
     }
 
-
     public int getMoveDelay() {
         return this.moveDelay;
     }
@@ -603,6 +602,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public int getChatCooldown() {
         return this.chatCooldown;
     }
+
     public void setChatCooldown(int cooldown) {
         this.chatCooldown = cooldown;
     }
@@ -645,33 +645,33 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         @Override
         public void tick() {
             if (this.slider.getTarget() != null) {
-                if (this.slider.canMove) {
+                if (this.slider.canMove()) {
                     boolean crushed = this.crushedBlocks();
                     if (!crushed) {
-                        if (this.slider.velocity < this.getMaxVelocity()) {
+                        if (this.slider.getVelocity() < this.getMaxVelocity()) {
                             // The Slider increases its speed based on the speed it has saved
-                            this.slider.velocity += this.getVelocityIncrease();
+                            this.slider.increaseVelocity(this.getVelocityIncrease());
                         }
                         this.slider.setDeltaMovement(Vec3.ZERO);
-                        if (this.slider.direction != null) {
+                        if (this.slider.getDirection() != null) {
                             // The Slider moves based on its direction
-                            this.slider.setDeltaMovement(this.slider.direction.getStepX() * this.slider.velocity, this.slider.direction.getStepY() * this.slider.velocity, this.slider.direction.getStepZ() * this.slider.velocity);
+                            this.slider.setDeltaMovement(this.slider.getDirection().getStepX() * this.slider.getVelocity(), this.slider.getDirection().getStepY() * this.slider.getVelocity(), this.slider.getDirection().getStepZ() * this.slider.getVelocity());
                             if (this.reachedTarget()) {
                                 // Once the Slider reaches its target, it stops moving, and starts the movement delay timer.
                                 this.stop();
-                                this.slider.moveDelay = this.calculateMoveDelay();
+                                this.slider.setMoveDelay(this.calculateMoveDelay());
                             }
                         }
                     }
-                } else if (this.slider.moveDelay > 0) {
+                } else if (this.slider.getMoveDelay() > 0) {
                     // When the Slider decreases its move delay
                     this.slider.decreaseMoveDelay(this.getMoveDelayDecrease());
                     this.slider.setDeltaMovement(Vec3.ZERO);
                 } else {
                     // When the Slider starts moving
-                    this.slider.direction = this.calculateDirection();
+                    this.slider.setDirection(this.calculateDirection());
                     this.slider.playSound(this.slider.getMoveSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
-                    this.slider.canMove = true;
+                    this.slider.setCanMove(true);
                 }
             } else {
                 // The Slider stops moving if it's target is null
@@ -730,7 +730,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
         public boolean reachedTarget()
         {
-            if (this.slider.direction == Direction.UP) {
+            if (this.slider.getDirection() == Direction.UP) {
                 return
                 // If the dungeon exists
                 (this.slider.getDungeon() != null ?
@@ -751,13 +751,13 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                 // Otherwise, return the default logic (whether or not the Slider is above the player)
                 ((this.slider.getBoundingBox().minY <= this.slider.getTarget().getBoundingBox().minY));
 
-            } else if (this.slider.direction == Direction.EAST) {
+            } else if (this.slider.getDirection() == Direction.EAST) {
                 return  (this.slider.position().x() > this.slider.getTarget().position().x() + 0.125);
-            } else if (this.slider.direction == Direction.WEST) {
+            } else if (this.slider.getDirection() == Direction.WEST) {
                 return (this.slider.position().x() < this.slider.getTarget().position().x() - 0.125);
-            } else if (this.slider.direction == Direction.SOUTH) {
+            } else if (this.slider.getDirection() == Direction.SOUTH) {
                 return (this.slider.position().z() > this.slider.getTarget().position().z() + 0.125);
-            } else if (this.slider.direction == Direction.NORTH) {
+            } else if (this.slider.getDirection() == Direction.NORTH) {
                 return  (this.slider.position().z() < this.slider.getTarget().position().z() - 0.125);
             }
             return false;
@@ -772,28 +772,28 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             } else {
                 BlockPos min;
                 BlockPos max;
-                if (this.slider.direction == Direction.UP) {
+                if (this.slider.getDirection() == Direction.UP) {
                     min = new BlockPos(entity.minX, entity.maxY, entity.minZ);
                     max = new BlockPos(Math.ceil(entity.maxX - 1.0), entity.maxY, Math.ceil(entity.maxZ - 1.0));
                     return this.crush(min, max, false);
-                } else if (this.slider.direction == Direction.DOWN) {
+                } else if (this.slider.getDirection() == Direction.DOWN) {
                     // The Slider does not try to break the dungeon floor
                     min = new BlockPos(entity.minX, (this.slider.getDungeon() != null ? Math.max(entity.minY - 1.0, this.slider.getDungeon().roomBounds().minY + 1.0F) : entity.minY - 1.0), entity.minZ);
                     max = new BlockPos(Math.ceil(entity.maxX - 1.0), (this.slider.getDungeon() != null ? Math.min(entity.maxY - 1.0, this.slider.getDungeon().roomBounds().maxY - 1.0F) : entity.maxY - 1.0), Math.ceil(entity.maxZ - 1.0));
                     return this.crush(min, max, false);
-                } else if (this.slider.direction == Direction.EAST) {
+                } else if (this.slider.getDirection() == Direction.EAST) {
                     min = new BlockPos(entity.maxX, entity.minY, entity.minZ);
                     max = new BlockPos(entity.maxX, Math.ceil(entity.maxY - 1.0), Math.ceil(entity.maxZ - 1.0));
                     return this.crush(min, max, false);
-                } else if (this.slider.direction == Direction.WEST) {
+                } else if (this.slider.getDirection() == Direction.WEST) {
                     min = new BlockPos(entity.minX - 1.0, entity.minY, entity.minZ);
                     max = new BlockPos(entity.minX - 1.0, Math.ceil(entity.maxY - 1.0), Math.ceil(entity.maxZ - 1.0));
                     return this.crush(min, max, false);
-                } else if (this.slider.direction == Direction.SOUTH) {
+                } else if (this.slider.getDirection() == Direction.SOUTH) {
                     min = new BlockPos(entity.minX, entity.minY, entity.maxZ);
                     max = new BlockPos(Math.ceil(entity.maxX - 1.0), Math.ceil(entity.maxY - 1.0), entity.maxZ);
                     return this.crush(min, max, false);
-                } else if (this.slider.direction == Direction.NORTH) {
+                } else if (this.slider.getDirection() == Direction.NORTH) {
                     min = new BlockPos(entity.minX, entity.minY, entity.minZ - 1.0);
                     max = new BlockPos(Math.ceil(entity.maxX - 1.0), Math.ceil(entity.maxY - 1.0), entity.minZ - 1.0);
                     return this.crush(min, max, false);
