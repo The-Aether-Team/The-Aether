@@ -107,6 +107,7 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
         tag.putDouble("RoomBoundsMaxX", this.roomBounds().maxX);
         tag.putDouble("RoomBoundsMaxY", this.roomBounds().maxY);
         tag.putDouble("RoomBoundsMaxZ", this.roomBounds().maxZ);
+
         tag.putInt("DungeonPlayersSize", this.dungeonPlayers().size());
         for (int i = 0; i < this.dungeonPlayers().size(); i++) {
             tag.putUUID("Player" + i, this.dungeonPlayers().get(i));
