@@ -585,6 +585,11 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         }
 
         @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
+        }
+
+        @Override
         public void tick() {
             if (this.slider.getTarget() != null) {
                 if (this.slider.canMove) {
