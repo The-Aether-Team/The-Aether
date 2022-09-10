@@ -2,7 +2,6 @@ package com.gildedgames.aether.api;
 
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.BossMob;
-import com.gildedgames.aether.entity.monster.dungeon.boss.Slider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
