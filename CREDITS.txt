@@ -32,9 +32,13 @@ Kelvin285
 - Implementation of the world preview feature for the Aether's main menu.
 
 saintselect
+- Integration for JEI.
 - Converting entity audio files from stereo to mono.
 - Fixes to the Gravitite Sword ability performing when it shouldn't.
 
 StonedCoal:
 - Implementation of the Aether's main menu.
 - Fixes to the Aerbunny.
+
+Zepalesque
+- Fixes to the Slider.
