@@ -820,6 +820,7 @@
   "menu.aether.incubator": "Incubator",
   "menu.aether.silver_treasure_chest": "Silver Treasure Chest",
   "menu.aether.sun_altar": "Sun Altar",
+  "subtitles.block.aether.water.evaporate": "Water evaporated",
   "subtitles.block.aether_portal.ambient": "Aether Portal whooshes",
   "subtitles.block.aether_portal.trigger": "Aether Portal noise intensifies",
   "subtitles.block.chest_mimic.open": "Mimic awakens",
