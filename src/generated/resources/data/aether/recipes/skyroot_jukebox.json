@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "jukebox",
+  "group": "minecraft:jukebox",
   "key": {
     "D": {
       "tag": "forge:gems/diamond"

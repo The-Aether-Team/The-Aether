@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "loom",
+  "group": "minecraft:loom",
   "key": {
     "S": {
       "tag": "aether:planks_crafting"
