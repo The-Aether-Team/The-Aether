@@ -327,16 +327,6 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .unlockedBy("has_leather", has(Items.LEATHER))
                 .save(consumer, name("aether_saddle"));
 
-        ShapedRecipeBuilder.shaped(Items.LEAD, 2)
-                .pattern("SS ")
-                .pattern("SB ")
-                .pattern("  S")
-                .define('B', AetherItems.SWET_BALL.get())
-                .define('S', Tags.Items.STRING)
-                .unlockedBy("has_swet_ball", has(AetherItems.SWET_BALL.get()))
-                .group("lead")
-                .save(consumer, name("swet_lead"));
-
         ShapedRecipeBuilder.shaped(AetherBlocks.SKYROOT_DOOR.get(), 3)
                 .pattern("SS")
                 .pattern("SS")
@@ -381,6 +371,16 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .save(consumer);
 
         // The group IDs below match the IDs of the respective vanilla recipes
+        ShapedRecipeBuilder.shaped(Items.LEAD, 2)
+                .pattern("SS ")
+                .pattern("SB ")
+                .pattern("  S")
+                .define('B', AetherItems.SWET_BALL.get())
+                .define('S', Tags.Items.STRING)
+                .unlockedBy("has_swet_ball", has(AetherItems.SWET_BALL.get()))
+                .group("minecraft:lead")
+                .save(consumer, name("swet_lead"));
+
         ShapedRecipeBuilder.shaped(Blocks.BARREL, 1)
                 .pattern("SHS")
                 .pattern("S S")
