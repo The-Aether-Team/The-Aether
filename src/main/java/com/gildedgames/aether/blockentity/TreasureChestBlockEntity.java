@@ -98,7 +98,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     @Nonnull
     @Override
     protected Component getDefaultName() {
-        return Component.translatable("menu." + this.getKind().getNamespace() + "." + this.getKind().getPath() + "_dungeon_chest");
+        return Component.translatable("menu." + this.getKind().getNamespace() + "." + this.getKind().getPath() + "_treasure_chest");
     }
 
     @Override
@@ -208,7 +208,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
             this.getLevel().markAndNotifyBlock(this.worldPosition, this.getLevel().getChunkAt(this.worldPosition), this.getBlockState(), this.getBlockState(), 2, 512);
             return true;
         } else {
-            player.displayClientMessage(Component.translatable(this.getKind().getNamespace() + "." + this.getKind().getPath() + "_dungeon_chest_locked"), true);
+            player.displayClientMessage(Component.translatable(this.getKind().getNamespace() + "." + this.getKind().getPath() + "_treasure_chest_locked"), true);
             return false;
         }
     }

@@ -309,7 +309,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addItem(AetherItems.BRONZE_DUNGEON_KEY, "Bronze Key");
         addItem(AetherItems.SILVER_DUNGEON_KEY, "Silver Key");
-        addItem(AetherItems.GOLD_DUNGEON_KEY, "Golden Key");
+        addItem(AetherItems.GOLD_DUNGEON_KEY, "Gold Key");
 
         addItem(AetherItems.MUSIC_DISC_AETHER_TUNE, "Blue Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_AETHER_TUNE, "Noisestorm - Aether Tune");
@@ -427,9 +427,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addContainerType(AetherMenuTypes.ALTAR, "Altar");
         addContainerType(AetherMenuTypes.FREEZER, "Freezer");
         addContainerType(AetherMenuTypes.INCUBATOR, "Incubator");
-        addContainerType("bronze_dungeon_chest", "Bronze Dungeon Chest");
-        addContainerType("silver_dungeon_chest", "Silver Dungeon Chest");
-        addContainerType("gold_dungeon_chest", "Gold Dungeon Chest");
+        addContainerType("bronze_treasure_chest", "Bronze Treasure Chest");
+        addContainerType("silver_treasure_chest", "Silver Treasure Chest");
+        addContainerType("gold_treasure_chest", "Gold Treasure Chest");
         addContainerType("sun_altar", "Sun Altar");
 
 
@@ -615,6 +615,12 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
         addGuiText("recipebook.toggleRecipes.incubatable", "Showing Incubatable");
 
+        addGuiText("jei.altar.enchanting", "Enchanting");
+        addGuiText("jei.altar.repairing", "Repairing");
+        addGuiText("jei.freezing", "Freezing");
+        addGuiText("jei.incubating", "Incubating");
+        addGuiText("jei.fuel", "Aether Fuel");
+
 
         addGuiText("slider.title", "the Slider");
         addGuiText("slider.message.attack.invalid", "Hmm. Perhaps I need to attack it with a Pickaxe?");
@@ -650,6 +656,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("queen.dialog.no_medals", "Take your time.");
         addGuiText("queen.dialog.peaceful", "Sorry, I don't fight with weaklings.");
         addGuiText("queen.dialog.playerdeath", "As expected of a human.");
+        addGuiText("queen.dialog.begin", "Now then, let's begin!");
         addGuiText("queen.dialog.ready", "If you wish to challenge me, strike at any time.");
         addGuiText("queen.title", "the Valkyrie Queen");
 
@@ -705,9 +712,9 @@ public class AetherLanguageData extends AetherLanguageProvider
 
 
         addMessage("life_shard_limit", "You can only use a total of %s Life Shards.");
-        addMessage("bronze_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
-        addMessage("silver_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
-        addMessage("gold_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Golden Key.");
+        addMessage("bronze_treasure_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
+        addMessage("silver_treasure_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
+        addMessage("gold_treasure_chest_locked", "This Treasure Chest must be unlocked with a Gold Key.");
         addMessage("sun_altar.in_control", "The sun spirit is still in control of this realm.");
         addMessage("sun_altar.no_permission", "You don't have permission to use this.");
         addMessage("sun_altar.no_power", "The sun spirit has no power over this realm.");

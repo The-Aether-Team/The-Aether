@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "note_block",
+  "group": "minecraft:note_block",
   "key": {
     "R": {
       "tag": "forge:dusts/redstone"

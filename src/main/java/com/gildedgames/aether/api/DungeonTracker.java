@@ -24,13 +24,14 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
 
     //this is a backup if for some reason the boss isnt spawned with a dungeon bounds. might just be used for debugging as well and will be removed.
     public static <T extends Mob & BossMob<T>> void createDebugDungeon(T boss) {
-        boss.setDungeon(new DungeonTracker<>(
+        DungeonTracker<T> dungeon = new DungeonTracker<>(
                 boss,
                 boss.position(),
                 new AABB(boss.position().x() - 7, boss.position().y() - 1, boss.position().z() - 7,
                         boss.position().x() + 7, boss.position().y() + 7, boss.position().z() + 7),
                 new ArrayList<>()
-        ));
+        );
+        boss.setDungeon(dungeon);
     }
 
     //debugging
