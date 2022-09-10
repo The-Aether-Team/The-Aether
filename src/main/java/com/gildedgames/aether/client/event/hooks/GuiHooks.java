@@ -32,7 +32,6 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import org.apache.commons.lang3.tuple.Pair;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 import java.util.Calendar;
@@ -315,17 +314,6 @@ public class GuiHooks {
                 Minecraft.getInstance().particleEngine.tick();
             }
         }
-    }
-
-    public static Pair<Integer, Boolean> offsetPotionEffects(Screen screen, int horizontalOffset) {
-        if (screen instanceof AccessoriesScreen accessoriesScreen) {
-            int offset = accessoriesScreen.creativeXOffset();
-            int i = horizontalOffset + offset;
-            int j = accessoriesScreen.width - i;
-            boolean flag = j >= 120;
-            return Pair.of(offset, !flag);
-        }
-        return null;
     }
 
     /**
