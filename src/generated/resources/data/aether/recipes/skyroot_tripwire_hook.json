@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "tripwire_hook",
+  "group": "minecraft:tripwire_hook",
   "key": {
     "I": {
       "tag": "forge:ingots/iron"

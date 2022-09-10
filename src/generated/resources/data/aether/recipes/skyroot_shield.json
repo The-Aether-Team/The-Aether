@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "shield",
+  "group": "minecraft:shield",
   "key": {
     "I": {
       "tag": "forge:ingots/iron"

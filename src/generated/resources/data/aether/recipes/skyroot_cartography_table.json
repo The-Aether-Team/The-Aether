@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "cartography_table",
+  "group": "minecraft:cartography_table",
   "key": {
     "P": {
       "item": "minecraft:paper"

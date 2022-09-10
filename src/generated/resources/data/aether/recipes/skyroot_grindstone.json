@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "grindstone",
+  "group": "minecraft:grindstone",
   "key": {
     "H": {
       "item": "minecraft:stone_slab"
