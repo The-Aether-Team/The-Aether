@@ -397,6 +397,7 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON).add(AetherBlocks.ICESTONE.get());
 
         //forge
+        tag(Tags.Blocks.BOOKSHELVES).add(AetherBlocks.SKYROOT_BOOKSHELF.get());
         tag(Tags.Blocks.FENCE_GATES_WOODEN).add(AetherBlocks.SKYROOT_FENCE_GATE.get());
         tag(Tags.Blocks.FENCES_WOODEN).add(AetherBlocks.SKYROOT_FENCE.get());
         tag(Tags.Blocks.GLASS_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS.get());

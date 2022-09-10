@@ -1,4 +1,4 @@
-package com.gildedgames.aether.compat.jei.categories.fuel;
+package com.gildedgames.aether.integration.jei.categories.fuel;
 
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.blockentity.AltarBlockEntity;

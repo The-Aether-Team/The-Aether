@@ -1,8 +1,8 @@
-package com.gildedgames.aether.compat.jei.categories;
+package com.gildedgames.aether.integration.jei.categories;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.recipe.recipes.item.FreezingRecipe;
+import com.gildedgames.aether.recipe.recipes.item.EnchantingRecipe;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -21,27 +21,27 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
-public class FreezingRecipeCategory extends AbstractAetherCookingRecipeCategory implements IRecipeCategory<FreezingRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "freezing");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/freezer.png");
-    public static final RecipeType<FreezingRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "freezing", FreezingRecipe.class);
+public class EnchantingCookingRecipeCategory extends AbstractAetherCookingRecipeCategory implements IRecipeCategory<EnchantingRecipe> {
+    public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "enchanting");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/altar.png");
+    public static final RecipeType<EnchantingRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "enchanting", EnchantingRecipe.class);
 
     private final IDrawable background;
     private final IDrawable fuelIndicator;
     private final IDrawable icon;
     private final IDrawableAnimated animatedProgressArrow;
 
-    public FreezingRecipeCategory(IGuiHelper helper) {
+    public EnchantingCookingRecipeCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(TEXTURE, 55, 16, 82, 54);
         this.fuelIndicator = helper.createDrawable(TEXTURE, 176, 0, 14, 13);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(AetherBlocks.FREEZER.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(AetherBlocks.ALTAR.get()));
         IDrawableStatic progressArrow = helper.createDrawable(TEXTURE, 176, 14, 23, 16 );
         this.animatedProgressArrow = helper.createAnimatedDrawable(progressArrow, 100, IDrawableAnimated.StartDirection.LEFT, false);
     }
 
     @Override
     public Component getTitle() {
-        return Component.translatable("gui." + Aether.MODID + ".jei.freezing");
+        return Component.translatable("gui." + Aether.MODID + ".jei.altar.enchanting");
     }
 
     @Override
@@ -59,12 +59,12 @@ public class FreezingRecipeCategory extends AbstractAetherCookingRecipeCategory 
     }
 
     @Override
-    public RecipeType<FreezingRecipe> getRecipeType() {
+    public RecipeType<EnchantingRecipe> getRecipeType() {
         return RECIPE_TYPE;
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, FreezingRecipe recipe, IFocusGroup focusGroup) {
+    public void setRecipe(IRecipeLayoutBuilder builder, EnchantingRecipe recipe, IFocusGroup focusGroup) {
         NonNullList<Ingredient> recipeIngredients = recipe.getIngredients();
 
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(recipeIngredients.get(0));
@@ -72,7 +72,7 @@ public class FreezingRecipeCategory extends AbstractAetherCookingRecipeCategory 
     }
 
     @Override
-    public void draw(FreezingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(EnchantingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
         animatedProgressArrow.draw(stack, 24, 18);
         fuelIndicator.draw(stack, 1, 20);
         drawExperience(recipe, stack, 1, background);

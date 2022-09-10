@@ -1,4 +1,4 @@
-package com.gildedgames.aether.compat.jei.categories;
+package com.gildedgames.aether.integration.jei.categories;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.gui.drawable.IDrawable;
