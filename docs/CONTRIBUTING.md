@@ -37,10 +37,10 @@ It is important to use these because The Aether's workflow depends on them for a
 To open a pull request, go to the [pull requests page](https://github.com/Gilded-Games/The-Aether/pulls), and an indicator should show up on the page to create a PR from a recent commit to a fork.
 
 When creating a PR:
+- Make sure your code conforms to the project's documentation and code styling.
 - Mark it as a draft if the changes are WIP.
 - Format it according to conventional commits, with the header as the title and the body and footer in the description so that we can use this information for the merge commit. Write this within a code block.
 - Make sure the description contains an overview of the changes made, and the footer any open issues that it resolves and/or if it's a breaking change.
-- Make sure your code conforms to the project's documentation and code styling.
 - State outside of the rest of the description that you agree to the Contributor License Agreement (CLA).
 
 Example:
