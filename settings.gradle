@@ -1,10 +1,10 @@
-buildCache {
-    local {
-        enabled = true
-        directory = new File(rootDir, 'build-cache')
-        removeUnusedEntriesAfterDays = 30
-    }
-    remote(HttpBuildCache) {
-        enabled = false
-    }
-}
+//buildCache {
+//    local {
+//        enabled = true
+//        directory = new File(rootDir, 'build-cache')
+//        removeUnusedEntriesAfterDays = 30
+//    }
+//    remote(HttpBuildCache) {
+//        enabled = false
+//    }
+//}
