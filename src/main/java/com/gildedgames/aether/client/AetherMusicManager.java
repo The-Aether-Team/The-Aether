@@ -65,6 +65,7 @@ public class AetherMusicManager {
      * @see MusicManager#startPlaying(Music)
      */
     public static void startPlaying(Music pSelector) {
+        musicManager.stopPlaying(); // non-copy, cancels vanilla music if Aether music starts
         currentMusic = SimpleSoundInstance.forMusic(pSelector.getEvent());
         if (currentMusic.getSound() != SoundManager.EMPTY_SOUND) {
             minecraft.getSoundManager().play(currentMusic);
