@@ -92,6 +92,9 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     public void init() {
         super.init();
         if (this.minecraft != null) {
+            if (this.minecraft.player != null) {
+                this.imageWidth = this.minecraft.player.isCreative() ? 176 + this.creativeXOffset() : 176;
+            }
             this.widthTooNarrow = this.width < 379;
             this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
             this.recipeBookComponentInitialized = true;
@@ -211,6 +214,10 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
             if (this.destroyItemSlot != null && this.isHovering(this.destroyItemSlot.x, this.destroyItemSlot.y, 16, 16, mouseX, mouseY)) {
                 this.renderTooltip(poseStack, Component.translatable("inventory.binSlot"), mouseX, mouseY);
+            }
+
+            if (this.minecraft != null && this.minecraft.player != null) {
+                this.imageWidth = this.minecraft.player.isCreative() ? 176 + this.creativeXOffset() : 176;
             }
         }
         this.renderTooltip(poseStack, mouseX, mouseY);
