@@ -16,7 +16,6 @@ jobs:
     environment:
       _JAVA_OPTIONS: -Xmx9600m
       GRADLE_OPTS: -Dorg.gradle.daemon=false
-      
     steps:
       - checkout
       - gradle/with_cache:
