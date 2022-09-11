@@ -572,7 +572,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
         public ShootFireballGoal(SunSpirit sunSpirit) {
             this.sunSpirit = sunSpirit;
-            this.shootInterval = (int) (28 + sunSpirit.getHealth() / 4);
+            this.shootInterval = (int) (55 + sunSpirit.getHealth() / 2);
             this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
@@ -594,6 +594,11 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
             this.sunSpirit.level.addFreshEntity(crystal);
             this.shootInterval = (int) (28 + sunSpirit.getHealth() / 4);
         }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
+        }
     }
 
     /**
@@ -611,7 +616,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
         @Override
         public boolean canUse() {
-            return ++this.shootInterval >= 20;
+            return ++this.shootInterval >= 40;
         }
 
         @Override
@@ -625,6 +630,11 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
                 pos = pos.below();
             }
             this.shootInterval = 0;
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
         }
     }
 }
