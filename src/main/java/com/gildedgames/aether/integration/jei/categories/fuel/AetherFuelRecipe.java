@@ -1,4 +1,4 @@
-package com.gildedgames.aether.compat.jei.categories.fuel;
+package com.gildedgames.aether.integration.jei.categories.fuel;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.world.item.ItemStack;

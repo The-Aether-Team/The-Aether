@@ -1,4 +1,4 @@
-package com.gildedgames.aether.compat.jei.categories;
+package com.gildedgames.aether.integration.jei.categories;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
