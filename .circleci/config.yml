@@ -21,7 +21,7 @@ jobs:
       - checkout
       - gradle/with_cache:
           steps: 
-            - run: gradle build
+            - run: gradle build --build-cache
       - store_artifacts:
           path: ~/project/build/libs
       - persist_to_workspace:
