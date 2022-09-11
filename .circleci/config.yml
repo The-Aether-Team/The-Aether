@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  gradle: circleci/gradle@3.0.0
+
 parameters:
   artifact-name:
     type: string
@@ -16,19 +19,9 @@ jobs:
       
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-            - v1-gradle-cache-{{ checksum "build.gradle" }}
-      - run: gradle build
-      - save_cache:
-          paths:
-            - ~/repo/.gradle/wrapper
-          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-      - save_cache:
-          paths:
-            - ~/repo/.gradle/caches
-          key: v1-gradle-cache-{{ checksum "build.gradle" }}
+      - gradle/with_cache:
+          steps: 
+            - run: gradle build
       - store_artifacts:
           path: ~/project/build/libs
       - persist_to_workspace:
