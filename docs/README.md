@@ -41,15 +41,11 @@ Not sure what to help with? Take a look at our issue tracker for some ideas! [He
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://en.wikipedia.org/wiki/All_rights_reserved)
 [![Code license (LGPL v3.0)](https://img.shields.io/badge/code%20license-LGPL%20v3.0-green.svg?style=flat-square)](https://github.com/Gilded-Games/The-Aether/blob/1.19/LICENSE.txt)
 
-If you're wanting to create a gameplay video/review, extension or addon, parody, or any other fan work of your own for The Aether, go for it! We love seeing the content our community creates, and we hope to make it as welcoming as possible for everyone. 
+If you're wanting to create a gameplay video/review, extension or addon, parody, or any other fan work of your own for The Aether, go for it! We love seeing the content our community creates, and we hope to make it as welcoming as possible for everyone. We ask however that you please don't advertise using our brand (our specific logo assets, team name, official social media posts).
 
-We ask however that if you are thinking about using code or assets from the Aether project that you adhere to the licenses below, and that you please don't advertise using our brand (our specific logo assets, team name, official social media posts).
-If you do have a reason that you wish to use our brand, please [contact us](mailto:support@gildedgames.com).
+If you are thinking about using the Aether project's code or assets, please note our licensing. **All assets of The Aether are unlicensed and all rights are reserved to them by Gilded Games and their respective authors.** The source code of The Aether mod for Minecraft 1.7+ is under the LGPL v3.0 license. Any previous versions' source code is unlicensed and all rights are reserved to it by Gilded Games.
 
-**All assets of The Aether for Minecraft 1.7+ (found in the [resources folder](https://github.com/Gilded-Games/The-Aether/tree/1.19/src/main/resources/assets)) are unlicensed and all rights are reserved to them by Gilded Games.** The source code of The Aether mod for Minecraft 1.7+ is under the [LGPL v3.0](https://github.com/Gilded-Games/The-Aether/blob/1.19/LICENSE.txt) license.
-
-Previous versions of The Aether are not licensed freely and all rights are reserved to them by Gilded Games. Unlicensed assets are owned and copyrighted by their respective authors and all other rights to them are reserved by Gilded Games. If you would like to use
-our unlicensed assets, please [get in contact with us](mailto:support@gildedgames.com) for details.
+If you have a reason that you wish to use our brand or any unlicensed material, please [get in contact with us](mailto:support@gildedgames.com) for details.
 
 ## :star2: Special mentions
 ### :speech_balloon: Translations
