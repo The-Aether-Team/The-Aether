@@ -260,11 +260,17 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
             if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
                 this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                this.blockDestroySmoke(pos);
+                this.evaporateEffects(pos);
             } else if (!this.level.getFluidState(pos).isEmpty()) {
                 this.level.setBlockAndUpdate(pos, this.level.getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
+                this.evaporateEffects(pos);
             }
         }
+    }
+
+    private void evaporateEffects(BlockPos pos) {
+        this.blockDestroySmoke(pos);
+        this.level.playSound(null, pos, AetherSoundEvents.WATER_EVAPORATE.get(), SoundSource.BLOCKS, 0.5F, 2.6F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.8F);
     }
 
     private void stop() {
@@ -331,6 +337,9 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public void startSeenByPlayer(@Nonnull ServerPlayer player) {
         super.startSeenByPlayer(player);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), player);
+        if (this.getDungeon() != null && this.getDungeon().isPlayerWithinRoom(player)) {
+            this.bossFight.addPlayer(player);
+        }
     }
 
     /**
@@ -640,6 +649,11 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         @Override
         public void stop() {
             this.slider.stop();
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
         }
 
         @Override

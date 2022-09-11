@@ -40,6 +40,10 @@ public class AetherSoundData extends SoundDefinitionsProvider
                         sound("aether:block/dungeon_trap/trigger6")
                 ).subtitle("subtitles.block.dungeon_trap.trigger")
         );
+        this.add(AetherSoundEvents.WATER_EVAPORATE,
+                definition().with(sound("minecraft:random/fizz")
+                ).subtitle("subtitles.block.aether.water.evaporate")
+        );
 
 
         //Items

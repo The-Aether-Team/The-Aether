@@ -4,6 +4,7 @@ import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.capability.AetherCapabilities;
@@ -28,6 +29,7 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
@@ -279,11 +281,17 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
             if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
                 this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                this.blockDestroySmoke(pos);
+                this.evaporateEffects(pos);
             } else if (!this.level.getFluidState(pos).isEmpty()) {
                 this.level.setBlockAndUpdate(pos, this.level.getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
+                this.evaporateEffects(pos);
             }
         }
+    }
+
+    private void evaporateEffects(BlockPos pos) {
+        this.blockDestroySmoke(pos);
+        this.level.playSound(null, pos, AetherSoundEvents.WATER_EVAPORATE.get(), SoundSource.BLOCKS, 0.5F, 2.6F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.8F);
     }
 
     private void blockDestroySmoke(BlockPos pos) {
@@ -323,6 +331,9 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
+        if (this.getDungeon() != null && this.getDungeon().isPlayerWithinRoom(pPlayer)) {
+            this.bossFight.addPlayer(pPlayer);
+        }
     }
 
     /**
@@ -408,6 +419,10 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         if (tag.contains("Dungeon") && tag.get("Dungeon") instanceof CompoundTag dungeonTag) {
             this.setDungeon(DungeonTracker.readAdditionalSaveData(dungeonTag, this));
         }
+    }
+
+    protected SoundEvent getShootSound() {
+        return AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT.get();
     }
 
     @Override
@@ -575,6 +590,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
             } else {
                 crystal = new FireCrystal(this.sunSpirit.level, this.sunSpirit);
             }
+            this.sunSpirit.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.level.random.nextFloat() - this.sunSpirit.level.random.nextFloat() * 0.2F + 1.2F);
             this.sunSpirit.level.addFreshEntity(crystal);
             this.shootInterval = (int) (28 + sunSpirit.getHealth() / 4);
         }

@@ -473,6 +473,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("block", "aether_portal.trigger", "Aether Portal noise intensifies");
         addSubtitle("block", "chest_mimic.open", "Mimic awakens");
         addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
+        addSubtitle("block", "aether.water.evaporate", "Water evaporated");
 
         addSubtitle("item", "dart_shooter.shoot", "Dart Shooter fired");
         addSubtitle("item", "lightning_knife.shoot", "Lightning Knife flies");

@@ -53,9 +53,13 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
         return this.roomBounds().contains(this.boss().position());
     }
 
+    public boolean isPlayerWithinRoom(Player player) {
+        return this.dungeonPlayers().contains(player.getUUID());
+    }
+
     public void trackPlayers() {
         this.boss().getLevel().getEntities(EntityType.PLAYER, this.roomBounds(), Entity::isAlive).forEach(player -> {
-            if (!this.dungeonPlayers().contains(player.getUUID())) {
+            if (!isPlayerWithinRoom(player)) {
                 this.boss().onDungeonPlayerAdded(player);
                 this.dungeonPlayers().add(player.getUUID());
             }
