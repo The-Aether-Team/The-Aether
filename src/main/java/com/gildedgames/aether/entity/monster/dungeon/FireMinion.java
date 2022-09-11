@@ -25,7 +25,6 @@ public class FireMinion extends Monster {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.5, true));
         this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));

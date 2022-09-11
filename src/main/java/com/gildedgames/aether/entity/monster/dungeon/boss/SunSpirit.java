@@ -111,7 +111,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     @Override
     public void registerGoals() {
         this.goalSelector.addGoal(0, new DoNothingGoal(this));
-        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 16, 1));
+        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 40, 1));
         this.goalSelector.addGoal(2, new ShootFireballGoal(this));
         this.goalSelector.addGoal(3, new SummonFireGoal(this));
         this.goalSelector.addGoal(4, new FlyAroundGoal(this));
@@ -176,9 +176,10 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         boolean flag = super.hurt(source, amount);
-        if (flag && !this.level.isClientSide) {
+        if (!this.level.isClientSide && flag && this.getHealth() > 0 && source.getEntity() instanceof LivingEntity entity) {
             FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.level);
             minion.setPos(this.position());
+            minion.setTarget(entity);
             this.level.addFreshEntity(minion);
         }
         this.velocity =  1 - this.getHealth() / 700;

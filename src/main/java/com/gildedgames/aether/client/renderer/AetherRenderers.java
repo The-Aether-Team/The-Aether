@@ -91,7 +91,7 @@ public class AetherRenderers {
         event.registerEntityRenderer(AetherEntityTypes.TNT_PRESENT.get(), TNTPresentRenderer::new);
 
         event.registerEntityRenderer(AetherEntityTypes.ZEPHYR_SNOWBALL.get(), (context) -> new ThrownItemRenderer<>(context, 3.0F, true));
-        event.registerEntityRenderer(AetherEntityTypes.CLOUD_CRYSTAL.get(), IceCrystalRenderer::new);
+        event.registerEntityRenderer(AetherEntityTypes.CLOUD_CRYSTAL.get(), CloudCrystalRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.FIRE_CRYSTAL.get(), FireCrystalRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.ICE_CRYSTAL.get(), IceCrystalRenderer::new);
         event.registerEntityRenderer(AetherEntityTypes.THUNDER_CRYSTAL.get(), ThunderCrystalRenderer::new);
