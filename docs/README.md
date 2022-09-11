@@ -79,4 +79,4 @@ _\* Indicates only partial language support._
 If your name is missing from the above list, please contact us.
 
 ### :hammer: Contributions
-All our code contribution credits can be found [here](https://github.com/Gilded-Games/The-Aether/blob/1.19/CREDITS.txt). If you contributed to the project and do not see your name, please contact us.
+All of our code contribution credits can be found [here](https://github.com/Gilded-Games/The-Aether/blob/1.19/CREDITS.txt). If you contributed to the project and do not see your name, please contact us.
