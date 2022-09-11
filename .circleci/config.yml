@@ -19,15 +19,14 @@ jobs:
           keys:
             - v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
             - v1-gradle-cache-{{ checksum "build.gradle" }}
-      - run: gradle test
       - run: gradle build
       - save_cache:
           paths:
-            - ~/.gradle/wrapper
+            - ~/repo/.gradle/wrapper
           key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
       - save_cache:
           paths:
-            - ~/.gradle/caches
+            - ~/repo/.gradle/caches
           key: v1-gradle-cache-{{ checksum "build.gradle" }}
       - store_artifacts:
           path: ~/project/build/libs
