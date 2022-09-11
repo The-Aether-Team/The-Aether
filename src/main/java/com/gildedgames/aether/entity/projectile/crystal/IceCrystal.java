@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -43,9 +44,12 @@ public class IceCrystal extends AbstractCrystal {
     public IceCrystal(Level level, Entity shooter) {
         this(AetherEntityTypes.ICE_CRYSTAL.get(), level);
         this.setOwner(shooter);
-        this.setPos(shooter.getX(), shooter.getY() + 1, shooter.getZ());
-        this.xPower = (0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1)) / 3;
-        this.zPower = (0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1)) / 3;
+        this.setPos(shooter.getX(), shooter.getY(), shooter.getZ());
+        float rotation = this.random.nextFloat() * 360;
+        this.xPower = Mth.sin(rotation) * 0.15;
+        this.zPower = -Mth.cos(rotation) * 0.15;
+//        this.xPower = (0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1)) / 3;
+//        this.zPower = (0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1)) / 3;
         this.setDeltaMovement(this.xPower, 0, this.zPower);
     }
 
@@ -99,8 +103,8 @@ public class IceCrystal extends AbstractCrystal {
             if (entity != null) {
                 if (!this.level.isClientSide) {
                     Vec3 vec3 = entity.getLookAngle();
-                    this.xPower = vec3.x;
-                    this.zPower = vec3.z;
+                    this.xPower = vec3.x * 2;
+                    this.zPower = vec3.z * 2;
                     this.setDeltaMovement(xPower, 0, zPower);
                     this.setOwner(entity);
                     this.attacked = true;
