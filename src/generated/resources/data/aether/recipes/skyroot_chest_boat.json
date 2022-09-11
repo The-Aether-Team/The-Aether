@@ -3,10 +3,10 @@
   "group": "chest_boat",
   "ingredients": [
     {
-      "item": "aether:skyroot_boat"
+      "tag": "forge:chests/wooden"
     },
     {
-      "tag": "forge:chests"
+      "item": "aether:skyroot_boat"
     }
   ],
   "result": {
