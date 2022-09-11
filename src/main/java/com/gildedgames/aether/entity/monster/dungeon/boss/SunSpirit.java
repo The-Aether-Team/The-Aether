@@ -227,7 +227,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
         if (!this.level.isClientSide && !this.isBossFight()) {
             if (this.chatCooldown <= 0) {
-                this.chatCooldown = 100;
+                this.chatCooldown = 14;
                 LazyOptional<AetherPlayer> aetherPlayer = player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
                 if (!AetherConfig.COMMON.repeat_sun_spirit_dialogue.get()) {
                     aetherPlayer.ifPresent(cap -> {
