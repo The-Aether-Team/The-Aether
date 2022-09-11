@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "beehive",
+  "group": "minecraft:beehive",
   "key": {
     "C": {
       "item": "minecraft:honeycomb"

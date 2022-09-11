@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "barrel",
+  "group": "minecraft:barrel",
   "key": {
     "H": {
       "tag": "minecraft:wooden_slabs"
