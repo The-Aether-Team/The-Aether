@@ -7,6 +7,7 @@ import com.gildedgames.aether.client.renderer.entity.model.SunSpiritModel;
 import com.gildedgames.aether.entity.monster.dungeon.FireMinion;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.*;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -34,5 +35,15 @@ public class FireMinionRenderer extends MobRenderer<FireMinion, SunSpiritModel<F
             }
         }
         return SUN_SPIRIT_TEXTURE;
+    }
+
+    @Override
+    protected int getBlockLightLevel(FireMinion fireMinion, BlockPos pos) {
+        return 15;
+    }
+
+    @Override
+    protected int getSkyLightLevel(FireMinion fireMinion, BlockPos pos) {
+        return 15;
     }
 }
