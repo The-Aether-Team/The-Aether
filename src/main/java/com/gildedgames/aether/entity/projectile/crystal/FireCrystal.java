@@ -44,8 +44,8 @@ public class FireCrystal extends AbstractCrystal {
         this.setOwner(shooter);
         this.setPos(shooter.getX(), shooter.getY() + 1, shooter.getZ());
         float rotation = this.random.nextFloat() * 360;
-        this.xPower = Mth.sin(rotation) * 0.45;
-        this.zPower = -Mth.cos(rotation) * 0.45;
+        this.xPower = Mth.sin(rotation) * 0.6;
+        this.zPower = -Mth.cos(rotation) * 0.6;
         this.yPower = Mth.sin(this.random.nextFloat() * 360) * 0.45;
         double verticalOffset = 1 - Math.abs(this.yPower);
         this.xPower *= verticalOffset;
