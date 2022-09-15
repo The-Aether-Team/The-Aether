@@ -102,7 +102,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     @Override
     protected void registerGoals() {
         this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
-        this.targetSelector.addGoal(1, this.mostDamageTargetGoal); //todo: will need to verify if this hierarchy of target goals works as intended in multiplayer
+        this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(3, new InBossRoomTargetGoal<>(this, Player.class));
         this.goalSelector.addGoal(1, new SliderMoveGoal(this));
