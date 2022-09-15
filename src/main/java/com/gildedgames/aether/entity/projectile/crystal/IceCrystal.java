@@ -48,8 +48,6 @@ public class IceCrystal extends AbstractCrystal {
         float rotation = this.random.nextFloat() * 360;
         this.xPower = Mth.sin(rotation) * 0.15;
         this.zPower = -Mth.cos(rotation) * 0.15;
-//        this.xPower = (0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1)) / 3;
-//        this.zPower = (0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1)) / 3;
         this.setDeltaMovement(this.xPower, 0, this.zPower);
     }
 
