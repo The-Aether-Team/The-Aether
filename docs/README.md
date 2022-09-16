@@ -27,7 +27,64 @@ The Aether has no stable release builds for the latest version of Minecraft just
 If you’re feeling a bit more adventurous or wish to help test the in-development versions, we provide **bleeding edge builds** which are produced on [CircleCI](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether). These builds are created for every new commit and contain the latest available code. We do not recommend users treat these builds as releases, as they are unfinished and may contain serious issues. If you wish to download these builds, check out [this guide](https://github.com/Gilded-Games/The-Aether/wiki/CircleCI-Guide).
 
 ### Packages
-*Coming soon...*
+To install this mod through GitHub Packages in Gradle for development, you will need the [Gradle Github Packages Plugin](https://github.com/0ffz/gpr-for-gradle). To use it, make sure you have access to the Gradle plugins maven and the plugin as a buildscript dependency:
+
+<details>
+<summary> Buildscript Code</summary>
+
+```
+buildscript {
+  repositories {
+    ...
+    maven {
+        name 'Gradle'
+        url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    ...
+    classpath group: 'io.github.0ffz', name: 'gpr-for-gradle', version: '1.+', changing: true
+  }
+}
+```
+
+</details>
+
+Then you need to specify the package you want to use in your repository:
+
+<details>
+<summary> Repositories Code</summary>
+
+```
+repositories {
+  ...
+  maven githubPackage.invoke("Gilded-Games/The-Aether")
+}
+```
+
+</details>
+
+*TODO: We don't have packages yet, I don't know what our package path will be*
+
+Then load it through your dependencies, with `project.aether_version` specified in the `gradle.properties`:
+
+<details>
+<summary> Dependencies Code</summary>
+
+```
+dependencies {
+  ...
+  compileOnly "com.gildedgames.the-aether:aether:${project.aether_version}"
+  runtimeOnly fg.deobf("com.gildedgames.the-aether:aether:${project.aether_version}")
+  ...
+  jarJar fg.deobf("com.gildedgames.the-aether:aether:${project.aether_version}") {
+    jarJar.ranged(it, "[${project.aether_version},)")
+    jarJar.pin(it, "${project.aether_version}")
+  }
+}
+```
+
+</details>
 
 ## :bug: Report bugs or other issues
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/Gilded-Games/The-Aether/issues). When doing so, make sure to use one of the provided templates and fill out all the requested information. Make sure to keep your issue's description clear and concise. Your issue's title should also be easy to digest, giving our developers and reporters a good idea of what's wrong without including too many details. Failure to follow any of the above may result in your issue being closed.
