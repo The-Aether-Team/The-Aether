@@ -143,10 +143,10 @@ repositories {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : project.name,
+                "Specification-Title"     : "The Aether",
                 "Specification-Vendor"    : "Gilded Games",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
-                "Implementation-Title"    : project.name,
+                "Implementation-Title"    : "The Aether",
                 "Implementation-Version"  : "${version}",
                 "Implementation-Vendor"   : "Gilded Games",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
