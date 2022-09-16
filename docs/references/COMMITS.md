@@ -20,9 +20,10 @@ If a commit or PR falls under multiple types, it should attempt to be split up i
 
 ### No Version Updates
 1. `ci:` Modifies the CircleCI configuration.
-2. `test:` Modifies any tests for the project.
-3. `chore:` Edits markdown files or anything else that doesn't go into the mod.
-4. `revert:` Reverts a previous commit.
+2. `build:` Modifies gradle files or anything else build-related.
+3. `test:` Modifies any tests for the project.
+4. `chore:` Edits markdown files or anything else that doesn't go into the mod.
+5. `revert:` Reverts a previous commit.
 
 ## Scopes
 Scopes are recommended, and should reflect what type of feature a commit implements.
