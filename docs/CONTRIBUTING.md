@@ -22,7 +22,9 @@
 
 8. Create a branch for your changes named `feat/<username>/<title>`. Read up on your relevant Git tutorial if you are unsure how to do this.
 
-9. Start developing!
+9. Run `git config core.hooksPath .githooks` in your Git client's terminal to configure git hooks for the workspace.
+
+10. Start developing!
 
 If you have any questions or issues, or would just like to discuss Aether development, feel free to [join us on Discord](https://discord.gg/aethermod).
 
