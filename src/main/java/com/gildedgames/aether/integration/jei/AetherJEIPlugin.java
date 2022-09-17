@@ -1,13 +1,13 @@
-package com.gildedgames.aether.compat.jei;
+package com.gildedgames.aether.integration.jei;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.compat.jei.categories.AltarRepairRecipeCategory;
-import com.gildedgames.aether.compat.jei.categories.EnchantingCookingRecipeCategory;
-import com.gildedgames.aether.compat.jei.categories.FreezingRecipeCategory;
-import com.gildedgames.aether.compat.jei.categories.IncubationRecipeCategory;
-import com.gildedgames.aether.compat.jei.categories.fuel.AetherFuelCategory;
-import com.gildedgames.aether.compat.jei.categories.fuel.AetherFuelRecipeMaker;
+import com.gildedgames.aether.integration.jei.categories.AltarRepairRecipeCategory;
+import com.gildedgames.aether.integration.jei.categories.EnchantingCookingRecipeCategory;
+import com.gildedgames.aether.integration.jei.categories.FreezingRecipeCategory;
+import com.gildedgames.aether.integration.jei.categories.IncubationRecipeCategory;
+import com.gildedgames.aether.integration.jei.categories.fuel.AetherFuelCategory;
+import com.gildedgames.aether.integration.jei.categories.fuel.AetherFuelRecipeMaker;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.recipes.item.AltarRepairRecipe;
 import com.gildedgames.aether.recipe.recipes.item.EnchantingRecipe;
@@ -21,13 +21,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @JeiPlugin
 public class AetherJEIPlugin implements IModPlugin {
-
+    @Nonnull
     @Override
     public ResourceLocation getPluginUid() {
         return new ResourceLocation(Aether.MODID, "jei");
@@ -50,13 +51,9 @@ public class AetherJEIPlugin implements IModPlugin {
         List<AltarRepairRecipe> repairRecipes = new ArrayList<>();
         List<EnchantingRecipe> enchantingRecipes = new ArrayList<>();
         unfilteredRecipes.stream().filter(recipe -> recipe instanceof AltarRepairRecipe) //filters altar repair and regular altar recipes.
-                .forEach(recipe -> {
-                    repairRecipes.add((AltarRepairRecipe) recipe);
-                });
+                .forEach(recipe -> repairRecipes.add((AltarRepairRecipe) recipe));
         unfilteredRecipes.stream().filter(recipe -> recipe instanceof EnchantingRecipe)
-                .forEach(recipe -> {
-                    enchantingRecipes.add((EnchantingRecipe) recipe);
-                });
+                .forEach(recipe -> enchantingRecipes.add((EnchantingRecipe) recipe));
 
         registration.addRecipes(EnchantingCookingRecipeCategory.RECIPE_TYPE, enchantingRecipes);
         registration.addRecipes(AltarRepairRecipeCategory.RECIPE_TYPE, repairRecipes);

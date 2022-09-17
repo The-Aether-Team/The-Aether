@@ -1,8 +1,7 @@
-package com.gildedgames.aether.compat.jei.categories;
+package com.gildedgames.aether.integration.jei.categories;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.recipe.recipes.item.AltarRepairRecipe;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;

@@ -225,9 +225,9 @@ public class AetherRecipeData extends AetherRecipeProvider
 
         ShapelessRecipeBuilder.shapeless(AetherItems.POISON_DART_SHOOTER.get(), 1)
                 .requires(AetherItems.GOLDEN_DART_SHOOTER.get())
-                .requires(AetherItems.SKYROOT_POISON_BUCKET.get())
+                .requires(AetherItems.AECHOR_PETAL.get())
                 .unlockedBy("has_golden_dart_shooter", has(AetherItems.GOLDEN_DART_SHOOTER.get()))
-                .unlockedBy("has_poison_bucket", has(AetherItems.SKYROOT_POISON_BUCKET.get()))
+                .unlockedBy("has_aechor_petal", has(AetherItems.AECHOR_PETAL.get()))
                 .save(consumer);
 
         makeHelmet(AetherItems.ZANITE_HELMET, AetherItems.ZANITE_GEMSTONE).save(consumer);
@@ -313,8 +313,8 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(AetherItems.SKYROOT_CHEST_BOAT.get(), 1)
+                .requires(Tags.Items.CHESTS_WOODEN)
                 .requires(AetherItems.SKYROOT_BOAT.get())
-                .requires(Tags.Items.CHESTS)
                 .unlockedBy("has_boat", has(AetherItems.SKYROOT_BOAT.get()))
                 .group("chest_boat")
                 .save(consumer);
@@ -353,7 +353,6 @@ public class AetherRecipeData extends AetherRecipeProvider
         ShapelessRecipeBuilder.shapeless(AetherBlocks.HOLYSTONE_BUTTON.get(), 1)
                 .requires(AetherBlocks.HOLYSTONE.get())
                 .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
-                .group("button")
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(AetherBlocks.SKYROOT_PRESSURE_PLATE.get(), 1)
@@ -367,7 +366,6 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .pattern("HH")
                 .define('H', AetherBlocks.HOLYSTONE.get())
                 .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
-                .group("pressure_plate")
                 .save(consumer);
 
         // The group IDs below match the IDs of the respective vanilla recipes

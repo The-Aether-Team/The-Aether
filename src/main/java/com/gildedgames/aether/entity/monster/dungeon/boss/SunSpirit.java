@@ -4,6 +4,7 @@ import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.capability.AetherCapabilities;
@@ -28,6 +29,7 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
@@ -109,7 +111,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     @Override
     public void registerGoals() {
         this.goalSelector.addGoal(0, new DoNothingGoal(this));
-        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 16, 1));
+        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 40, 1));
         this.goalSelector.addGoal(2, new ShootFireballGoal(this));
         this.goalSelector.addGoal(3, new SummonFireGoal(this));
         this.goalSelector.addGoal(4, new FlyAroundGoal(this));
@@ -174,9 +176,10 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         boolean flag = super.hurt(source, amount);
-        if (flag && !this.level.isClientSide) {
+        if (!this.level.isClientSide && flag && this.getHealth() > 0 && source.getEntity() instanceof LivingEntity entity) {
             FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.level);
             minion.setPos(this.position());
+            minion.setTarget(entity);
             this.level.addFreshEntity(minion);
         }
         this.velocity =  1 - this.getHealth() / 700;
@@ -225,7 +228,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
         if (!this.level.isClientSide && !this.isBossFight()) {
             if (this.chatCooldown <= 0) {
-                this.chatCooldown = 100;
+                this.chatCooldown = 14;
                 LazyOptional<AetherPlayer> aetherPlayer = player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
                 if (!AetherConfig.COMMON.repeat_sun_spirit_dialogue.get()) {
                     aetherPlayer.ifPresent(cap -> {
@@ -279,11 +282,17 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
             if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
                 this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                this.blockDestroySmoke(pos);
+                this.evaporateEffects(pos);
             } else if (!this.level.getFluidState(pos).isEmpty()) {
                 this.level.setBlockAndUpdate(pos, this.level.getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
+                this.evaporateEffects(pos);
             }
         }
+    }
+
+    private void evaporateEffects(BlockPos pos) {
+        this.blockDestroySmoke(pos);
+        this.level.playSound(null, pos, AetherSoundEvents.WATER_EVAPORATE.get(), SoundSource.BLOCKS, 0.5F, 2.6F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.8F);
     }
 
     private void blockDestroySmoke(BlockPos pos) {
@@ -323,6 +332,9 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
+        if (this.getDungeon() != null && this.getDungeon().isPlayerWithinRoom(pPlayer)) {
+            this.bossFight.addPlayer(pPlayer);
+        }
     }
 
     /**
@@ -408,6 +420,10 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         if (tag.contains("Dungeon") && tag.get("Dungeon") instanceof CompoundTag dungeonTag) {
             this.setDungeon(DungeonTracker.readAdditionalSaveData(dungeonTag, this));
         }
+    }
+
+    protected SoundEvent getShootSound() {
+        return AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT.get();
     }
 
     @Override
@@ -557,8 +573,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
         public ShootFireballGoal(SunSpirit sunSpirit) {
             this.sunSpirit = sunSpirit;
-            this.shootInterval = (int) (28 + sunSpirit.getHealth() / 4);
-            this.setFlags(EnumSet.of(Flag.MOVE));
+            this.shootInterval = (int) (55 + sunSpirit.getHealth() / 2);
         }
 
         @Override
@@ -575,8 +590,14 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
             } else {
                 crystal = new FireCrystal(this.sunSpirit.level, this.sunSpirit);
             }
+            this.sunSpirit.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.level.random.nextFloat() - this.sunSpirit.level.random.nextFloat() * 0.2F + 1.2F);
             this.sunSpirit.level.addFreshEntity(crystal);
             this.shootInterval = (int) (28 + sunSpirit.getHealth() / 4);
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
         }
     }
 
@@ -589,13 +610,12 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
         public SummonFireGoal(SunSpirit sunSpirit) {
             this.sunSpirit = sunSpirit;
-            this.shootInterval = 0;
-            this.setFlags(EnumSet.of(Flag.MOVE));
+            this.shootInterval = 12 + sunSpirit.random.nextInt(18);
         }
 
         @Override
         public boolean canUse() {
-            return ++this.shootInterval >= 20;
+            return this.sunSpirit.isBossFight() && --this.shootInterval <= 0;
         }
 
         @Override
@@ -608,7 +628,12 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
                 }
                 pos = pos.below();
             }
-            this.shootInterval = 0;
+            this.shootInterval = 12 + this.sunSpirit.random.nextInt(18);
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
         }
     }
 }

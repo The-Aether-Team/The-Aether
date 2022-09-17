@@ -36,6 +36,12 @@
     ],
     "subtitle": "subtitles.block.dungeon_trap.trigger"
   },
+  "block.water.evaporate": {
+    "sounds": [
+      "random/fizz"
+    ],
+    "subtitle": "subtitles.block.aether.water.evaporate"
+  },
   "entity.aechor_plant.death": {
     "sounds": [
       "damage/fallbig"

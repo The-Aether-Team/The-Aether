@@ -1,7 +1,5 @@
 package com.gildedgames.aether.client.event.listeners;
 
-import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.AetherMusicManager;
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.client.gui.component.AccessoryButton;
 import com.gildedgames.aether.client.gui.screen.inventory.AccessoriesScreen;
@@ -16,7 +14,6 @@ import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
@@ -24,7 +21,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import net.minecraft.client.gui.screens.Screen;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -103,18 +99,6 @@ public class GuiListener {
 		if (event.phase == TickEvent.Phase.END) {
 			GuiHooks.openAccessoryMenu();
 			GuiHooks.tickMenuWhenPaused(minecraft);
-		}
-	}
-
-	@SubscribeEvent
-	public static void onRenderEffects(ScreenEvent.RenderInventoryMobEffects event) {
-		Screen screen = event.getScreen();
-		int horizontalOffset = event.getHorizontalOffset();
-
-		Pair<Integer, Boolean> newOffset = GuiHooks.offsetPotionEffects(screen, horizontalOffset);
-		if (newOffset != null) {
-			event.addHorizontalOffset(newOffset.getLeft());
-			event.setCompact(newOffset.getRight());
 		}
 	}
 
