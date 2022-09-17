@@ -31,7 +31,9 @@ If you are looking to commit to your fork and don't know how, make sure to read 
 
 Once you're ready to commit, there are some things to know about our commit styling. The Aether makes uses of conventional commits. To understand this, we recommend you read up on [Semantic Versioning](https://github.com/Gilded-Games/The-Aether/blob/1.19/docs/references/VERSIONING.md) first, and then our [Conventional Commit](https://github.com/Gilded-Games/The-Aether/blob/1.19/docs/references/COMMITS.md) standards.
 
-It is important to use these because The Aether's workflow depends on them for code review and changelogs. Not using it makes management of contributions more difficult.
+It is important to use conventional commits because The Aether's workflow depends on them for code review and changelogs. Not using it makes management of contributions more difficult.
+
+It is also important to understand semantic versioning as we recommend avoiding breaking changes, and also avoiding anything that could lead to future breaking changes being made.
 
 ## Creating pull requests
 To open a pull request, go to the [pull requests page](https://github.com/Gilded-Games/The-Aether/pulls), and an indicator should show up on the page to create a PR from a recent commit to a fork.
