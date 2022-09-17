@@ -7,6 +7,7 @@ import com.gildedgames.aether.client.renderer.entity.model.SliderModel;
 import com.gildedgames.aether.entity.monster.dungeon.boss.Slider;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -25,12 +26,22 @@ public class SliderRenderer extends MobRenderer<Slider, SliderModel> {
     }
 
     @Override
+    public void render(@Nonnull Slider slider, float entityYaw, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
+        if (!slider.isDeadOrDying()) {
+            super.render(slider, entityYaw, partialTicks, poseStack, buffer, packedLight);
+        }
+    }
+
+    @Override
     protected void setupRotations(@Nonnull Slider slider, @Nonnull PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
         poseStack.mulPose(new Vector3f(slider.getHurtAngleX(), 0.0F, -slider.getHurtAngleZ()).rotationDegrees(slider.getHurtAngle() * -15.0F));
         if (slider.getHurtAngle() > 0.0) {
             slider.setHurtAngle(slider.getHurtAngle() * 0.94F);
         }
-        super.setupRotations(slider, poseStack, ageInTicks, rotationYaw, partialTicks);
+        if (isEntityUpsideDown(slider)) {
+            poseStack.translate(0.0D, slider.getBbHeight() + 0.1F, 0.0D);
+            poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
+        }
     }
 
     @Nonnull

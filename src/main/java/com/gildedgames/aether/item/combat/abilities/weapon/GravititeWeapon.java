@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 
 public interface GravititeWeapon {
     static void launchEntity(LivingEntity target, DamageSource damageSource) {
-        if (damageSource != null && damageSource.getEntity() instanceof LivingEntity source) {
+        if (damageSource != null && damageSource.getEntity() instanceof LivingEntity source && !damageSource.isProjectile() && !damageSource.isExplosion() && !damageSource.isMagic()) {
             ItemStack itemStack = source.getMainHandItem();
             if (itemStack.is(AetherTags.Items.GRAVITITE_WEAPONS)) {
                 target.push(0.0, 1.0, 0.0);

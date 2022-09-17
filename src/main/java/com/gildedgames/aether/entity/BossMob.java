@@ -1,11 +1,11 @@
 package com.gildedgames.aether.entity;
 
 import com.gildedgames.aether.api.DungeonTracker;
-import com.gildedgames.aether.block.dungeon.InvisibleBlock;
-import com.gildedgames.aether.block.dungeon.TreasureRoomBlock;
+import com.gildedgames.aether.block.dungeon.DoorwayBlock;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
@@ -39,6 +39,10 @@ public interface BossMob<T extends Mob & BossMob<T>> {
         }
     }
 
+    default void onDungeonPlayerAdded(@Nullable Player player) { }
+
+    default void onDungeonPlayerRemoved(@Nullable Player player) { }
+
     void reset();
 
     /**
@@ -51,8 +55,8 @@ public interface BossMob<T extends Mob & BossMob<T>> {
 
     default void closeRoom() {
         this.getDungeon().modifyRoom(state -> {
-            if (state.getBlock() instanceof InvisibleBlock) {
-                return state.setValue(TreasureRoomBlock.INVISIBLE, false);
+            if (state.getBlock() instanceof DoorwayBlock) {
+                return state.setValue(DoorwayBlock.INVISIBLE, false);
             } else {
                 return null;
             }
@@ -61,8 +65,8 @@ public interface BossMob<T extends Mob & BossMob<T>> {
 
     default void openRoom() {
         this.getDungeon().modifyRoom(state -> {
-            if (state.getBlock() instanceof InvisibleBlock) {
-                return state.setValue(TreasureRoomBlock.INVISIBLE, true);
+            if (state.getBlock() instanceof DoorwayBlock) {
+                return state.setValue(DoorwayBlock.INVISIBLE, true);
             } else {
                 return null;
             }

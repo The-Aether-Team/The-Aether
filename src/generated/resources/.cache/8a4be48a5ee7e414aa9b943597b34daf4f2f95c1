@@ -1,10 +1,11 @@
-// 1.19.2	2022-08-14T09:50:51.8361165	Aether Entity Tags
+// 1.19.2	2022-09-09T22:28:14.3162932	Aether Entity Tags
 331548dcbc0ed9c39c0925678c3c465d98ce752a data/aether/tags/entity_types/aechor_plant_targets.json
 b0ea008baac0b727410a488f5b81e907b5a65cd2 data/aether/tags/entity_types/aercloud_spawnable.json
 b3a379df5d7bd0f9d26800bb985a7acba83143fe data/aether/tags/entity_types/deflectable_projectiles.json
 f7203aae71175bb0e7c7c2df595579e99489b9ab data/aether/tags/entity_types/no_skyroot_double_drops.json
 2bd7356d8661b5745b019dfe60733e365ba7de97 data/aether/tags/entity_types/pigs.json
 331548dcbc0ed9c39c0925678c3c465d98ce752a data/aether/tags/entity_types/swet_targets.json
+7a86e782b9d5015ed364e40f3ab230fd511275a1 data/forge/tags/entity_types/bosses.json
 fd1fd899644858c42074bc12567ce1434d593fb1 data/minecraft/tags/entity_types/freeze_hurts_extra_types.json
 3846caad0243d60bf29645697423ab2232dba40a data/minecraft/tags/entity_types/frog_food.json
 9841d227292494bea8b4d39f268f41ec4230c608 data/minecraft/tags/entity_types/impact_projectiles.json

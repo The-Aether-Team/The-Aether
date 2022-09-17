@@ -24,13 +24,14 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
 
     //this is a backup if for some reason the boss isnt spawned with a dungeon bounds. might just be used for debugging as well and will be removed.
     public static <T extends Mob & BossMob<T>> void createDebugDungeon(T boss) {
-        boss.setDungeon(new DungeonTracker<>(
+        DungeonTracker<T> dungeon = new DungeonTracker<>(
                 boss,
                 boss.position(),
                 new AABB(boss.position().x() - 7, boss.position().y() - 1, boss.position().z() - 7,
                         boss.position().x() + 7, boss.position().y() + 7, boss.position().z() + 7),
                 new ArrayList<>()
-        ));
+        );
+        boss.setDungeon(dungeon);
     }
 
     //debugging
@@ -52,21 +53,24 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
         return this.roomBounds().contains(this.boss().position());
     }
 
-    public boolean isBossWithinOrigin() {
-        AABB originBounds = new AABB(this.originCoordinates.x() - 1, this.originCoordinates.y() - 1, this.originCoordinates.z() - 1,
-                this.originCoordinates.x() + 1, this.originCoordinates.y() + 1, this.originCoordinates.z() + 1);
-        return originBounds.contains(this.boss().position());
+    public boolean isPlayerWithinRoom(Player player) {
+        return this.dungeonPlayers().contains(player.getUUID());
     }
 
     public void trackPlayers() {
         this.boss().getLevel().getEntities(EntityType.PLAYER, this.roomBounds(), Entity::isAlive).forEach(player -> {
-            if (!this.dungeonPlayers().contains(player.getUUID())) {
+            if (!isPlayerWithinRoom(player)) {
+                this.boss().onDungeonPlayerAdded(player);
                 this.dungeonPlayers().add(player.getUUID());
             }
         });
         this.dungeonPlayers().removeIf(uuid -> {
             Player player = this.boss().getLevel().getPlayerByUUID(uuid);
-            return player != null && (!this.roomBounds().contains(player.position()) || !player.isAlive());
+            boolean shouldRemove = player != null && (!this.roomBounds().contains(player.position()) || !player.isAlive());
+            if (shouldRemove) {
+                this.boss().onDungeonPlayerRemoved(player);
+            }
+            return shouldRemove;
         });
     }
 

@@ -1,24 +1,21 @@
 package com.gildedgames.aether.client.renderer.entity;
 
-import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.client.renderer.AetherModelLayers;
-import com.gildedgames.aether.client.renderer.entity.model.CrystalModel;
 import com.gildedgames.aether.entity.projectile.crystal.AbstractCrystal;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-
-public class IceCrystalRenderer<T extends AbstractCrystal> extends AbstractCrystalRenderer<T> {
-    private static final ResourceLocation ICE_CRYSTAL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/crystals/ice_ball.png");
-
+public class IceCrystalRenderer<T extends AbstractCrystal> extends CloudCrystalRenderer<T> {
     public IceCrystalRenderer(EntityRendererProvider.Context context) {
-        super(context, new CrystalModel<>(context.bakeLayer(AetherModelLayers.CLOUD_CRYSTAL)));
+        super(context);
     }
 
-    @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull T crystal) {
-        return ICE_CRYSTAL_TEXTURE;
+    public void render(@NotNull T crystal, float entityYaw, float partialTicks, @NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight) {
+        poseStack.pushPose();
+        poseStack.translate(0, 0.4, 0);
+        super.render(crystal, entityYaw, partialTicks, poseStack, buffer, packedLight);
+        poseStack.popPose();
     }
 }

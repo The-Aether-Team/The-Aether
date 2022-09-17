@@ -9,6 +9,7 @@ import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.tags.EntityTypeTags;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
@@ -77,6 +78,13 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
         tag(AetherTags.Entities.AERCLOUD_SPAWNABLE).add(
                 AetherEntityTypes.AERWHALE.get(),
                 AetherEntityTypes.ZEPHYR.get()
+        );
+
+        //forge
+        tag(Tags.EntityTypes.BOSSES).add(
+                AetherEntityTypes.SLIDER.get(),
+                AetherEntityTypes.VALKYRIE_QUEEN.get(),
+                AetherEntityTypes.SUN_SPIRIT.get()
         );
 
         //vanilla
