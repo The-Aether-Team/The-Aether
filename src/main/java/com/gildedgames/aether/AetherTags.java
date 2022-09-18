@@ -63,7 +63,6 @@ public class AetherTags {
 		public static final TagKey<Item> HELLFIRE_BLOCKS = tag("hellfire_blocks");
 
 		public static final TagKey<Item> PLANKS_CRAFTING = tag("planks_crafting");
-		public static final TagKey<Item> STONE_CRAFTING = tag("stone_crafting");
 
 		public static final TagKey<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
@@ -125,6 +124,8 @@ public class AetherTags {
 	public static class Entities {
 		public static final TagKey<EntityType<?>> PIGS = tag("pigs");
 		public static final TagKey<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
+		public static final TagKey<EntityType<?>> NO_AMBROSIUM_DROPS = tag("no_ambrosium_drops");
+		public static final TagKey<EntityType<?>> UNLAUNCHABLE = tag("unlaunchable");
 		public static final TagKey<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
 		public static final TagKey<EntityType<?>> SWET_TARGETS = tag("swet_targets");
 		public static final TagKey<EntityType<?>> AECHOR_PLANT_TARGETS = tag("aechor_plant_targets");

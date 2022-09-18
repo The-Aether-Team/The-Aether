@@ -53,8 +53,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import net.minecraftforge.registries.RegistryObject;
 
-public class AetherItems
-{
+public class AetherItems {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Aether.MODID);
 
 	public static final Rarity AETHER_LOOT = Rarity.create("AETHER_LOOT", ChatFormatting.GREEN);
@@ -87,11 +86,11 @@ public class AetherItems
 
 	// Weapons
 	public static final RegistryObject<SwordItem> SKYROOT_SWORD = ITEMS.register("skyroot_sword", SkyrootSwordItem::new);
-	public static final RegistryObject<SwordItem> HOLYSTONE_SWORD = ITEMS.register("holystone_sword", () -> new SwordItem(AetherItemTiers.HOLYSTONE, 3, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
-	public static final RegistryObject<SwordItem> ZANITE_SWORD = ITEMS.register("zanite_sword", () -> new SwordItem(AetherItemTiers.ZANITE, 3, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
-	public static final RegistryObject<SwordItem> GRAVITITE_SWORD = ITEMS.register("gravitite_sword", () -> new SwordItem(AetherItemTiers.GRAVITITE, 3, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS)));
+	public static final RegistryObject<SwordItem> HOLYSTONE_SWORD = ITEMS.register("holystone_sword", HolystoneSwordItem::new);
+	public static final RegistryObject<SwordItem> ZANITE_SWORD = ITEMS.register("zanite_sword", ZaniteSword::new);
+	public static final RegistryObject<SwordItem> GRAVITITE_SWORD = ITEMS.register("gravitite_sword", GravititeSword::new);
 
-	public static final RegistryObject<Item> VALKYRIE_LANCE = ITEMS.register("valkyrie_lance", () -> new ValkyrieLanceItem(AetherItemTiers.VALKYRIE, 3, -2.4F));
+	public static final RegistryObject<Item> VALKYRIE_LANCE = ITEMS.register("valkyrie_lance", ValkyrieLanceItem::new);
 
 	public static final RegistryObject<SwordItem> FLAMING_SWORD = ITEMS.register("flaming_sword", FlamingSwordItem::new);
 	public static final RegistryObject<SwordItem> LIGHTNING_SWORD = ITEMS.register("lightning_sword", LightningSwordItem::new);

@@ -42,6 +42,8 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 EntityType.PLAYER,
                 EntityType.WITHER,
                 EntityType.ENDER_DRAGON);
+        tag(AetherTags.Entities.NO_AMBROSIUM_DROPS).add(EntityType.PLAYER);
+        tag(AetherTags.Entities.UNLAUNCHABLE);
         tag(AetherTags.Entities.DEFLECTABLE_PROJECTILES).addTag(EntityTypeTags.ARROWS).add(
                 EntityType.EGG,
                 EntityType.SMALL_FIREBALL,
