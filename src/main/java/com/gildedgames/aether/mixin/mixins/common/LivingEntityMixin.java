@@ -9,7 +9,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;aiStep()V", shift = At.Shift.AFTER), method = "tick")
+    /**
+     * The cape rotation and movement handling must be injected into the end of the {@link LivingEntity#aiStep()}; otherwise calling it from a tick event has different rotation and movement results compared to vanilla capes.
+     */
+    @Inject(at = @At(value = "RETURN"), method = "aiStep")
     private void tick(CallbackInfo ci) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
         CapeEntity.get(livingEntity).ifPresent(CapeEntity::moveCloak);
