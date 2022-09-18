@@ -19,8 +19,8 @@ public enum AetherItemTiers implements Tier {
 	HOLY(3, 502, 9.0F, 4.0F, 15, () -> Ingredient.EMPTY),
 	VAMPIRE(3, 2031, 9.0F, 4.0F, 15, () -> Ingredient.EMPTY),
 	PIG_SLAYER(2, 200, 6.0F, 2.0F, 15, () -> Ingredient.EMPTY),
-	CANDY_CANE(0, 32, 12.0F, 0.0F, 22, () -> Ingredient.EMPTY),
-	HAMMER_OF_NOTCH(2, 250, 6.0F, 2.0F, 14, () -> Ingredient.EMPTY);
+	HAMMER_OF_NOTCH(2, 250, 6.0F, 2.0F, 14, () -> Ingredient.EMPTY),
+	CANDY_CANE(0, 32, 12.0F, 0.0F, 22, () -> Ingredient.of(AetherItems.CANDY_CANE.get()));
 
 	private final int harvestLevel;
 	private final int maxUses;
