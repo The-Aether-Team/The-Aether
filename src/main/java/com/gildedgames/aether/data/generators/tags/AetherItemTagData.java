@@ -167,6 +167,10 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.PIG_SLAYER_REPAIRABLE);
         tag(AetherTags.Items.HAMMER_OF_NOTCH_REPAIRABLE);
         tag(AetherTags.Items.CANDY_CANE_REPAIRABLE).add(AetherItems.CANDY_CANE.get());
+        tag(AetherTags.Items.NEPTUNE_REPAIRABLE);
+        tag(AetherTags.Items.PHOENIX_REPAIRABLE);
+        tag(AetherTags.Items.OBSIDIAN_REPAIRABLE);
+        tag(AetherTags.Items.SENTRY_REPAIRABLE);
 
         tag(AetherTags.Items.TOOLS_LANCES).add(AetherItems.VALKYRIE_LANCE.get());
         tag(AetherTags.Items.TOOLS_HAMMERS).add(AetherItems.HAMMER_OF_NOTCH.get());

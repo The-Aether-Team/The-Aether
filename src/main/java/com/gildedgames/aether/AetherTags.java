@@ -112,6 +112,10 @@ public class AetherTags {
 		public static final TagKey<Item> PIG_SLAYER_REPAIRABLE = tag("pig_slayer_repairable");
 		public static final TagKey<Item> HAMMER_OF_NOTCH_REPAIRABLE = tag("hammer_of_notch_repairable");
 		public static final TagKey<Item> CANDY_CANE_REPAIRABLE = tag("candy_cane_repairable");
+		public static final TagKey<Item> NEPTUNE_REPAIRABLE = tag("neptune_repairable");
+		public static final TagKey<Item> PHOENIX_REPAIRABLE = tag("phoenix_repairable");
+		public static final TagKey<Item> OBSIDIAN_REPAIRABLE = tag("obsidian_repairable");
+		public static final TagKey<Item> SENTRY_REPAIRABLE = tag("sentry_repairable");
 
 		public static final TagKey<Item> TOOLS_LANCES = tag("tools/lances");
 		public static final TagKey<Item> TOOLS_HAMMERS = tag("tools/hammers");

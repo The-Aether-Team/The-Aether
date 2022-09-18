@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-17T20:51:58.5020014	Aether Item Tags
+// 1.19.2	2022-09-17T21:05:44.2737751	Aether Item Tags
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1b83b96d9600b7878597cc26851b843bf99a3dd data/aether/tags/items/accessories.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/aerbunny_temptation_items.json
@@ -38,13 +38,17 @@ c64fffe7d7a1354e56de630556ccd522d7f09d14 data/aether/tags/items/holystone_weapon
 27515cc6012baf242e2835b3aaee05b65357b60a data/aether/tags/items/moa_eggs.json
 c674b7a242891866e5ebc42cb684a2d8113fd673 data/aether/tags/items/moa_food_items.json
 d0f09b8dfc6381aa826e9b27dfc398b8b7c02625 data/aether/tags/items/moa_temptation_items.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/neptune_repairable.json
 0ccf61b5231088ebc40dcd9ac0e64406ad73ff2c data/aether/tags/items/no_skyroot_double_drops.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/obsidian_repairable.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/phoenix_repairable.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/phyg_temptation_items.json
 33cb78441f05ba4ca385d72ebd7ddc4849b986d1 data/aether/tags/items/pig_drops.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/pig_slayer_repairable.json
 d57e931f91a1b51aa96c3007c5fce585e2e84cc2 data/aether/tags/items/planks_crafting.json
 7662bf8395dc6e9d79fc291d51aae6ef32a050fd data/aether/tags/items/save_nbt_in_recipe.json
 adc60af0231716fa635707337a7147da3eef4eb6 data/aether/tags/items/sentry_blocks.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/sentry_repairable.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/sheepuff_temptation_items.json
 df16ed8f5964fbb722ae2040903fb88c95ad2b99 data/aether/tags/items/skyroot_logs.json
 d57e931f91a1b51aa96c3007c5fce585e2e84cc2 data/aether/tags/items/skyroot_repairable.json

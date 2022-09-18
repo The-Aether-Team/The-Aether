@@ -3,8 +3,8 @@ package com.gildedgames.aether.item.combat;
 import com.gildedgames.aether.AetherTags;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.util.LazyLoadedValue;
 
+import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public enum AetherItemTiers implements Tier {
@@ -26,15 +26,15 @@ public enum AetherItemTiers implements Tier {
 	private final float efficiency;
 	private final float attackDamage;
 	private final int enchantability;
-	private final LazyLoadedValue<Ingredient> repairMaterial;
+	private final Supplier<Ingredient> repairMaterial;
 
-	AetherItemTiers(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
-		this.harvestLevel = harvestLevelIn;
-		this.maxUses = maxUsesIn;
-		this.efficiency = efficiencyIn;
-		this.attackDamage = attackDamageIn;
-		this.enchantability = enchantabilityIn;
-		this.repairMaterial = new LazyLoadedValue<>(repairMaterialIn);
+	AetherItemTiers(int harvestLevel, int maxUses, float efficiency, float attackDamage, int enchantability, Supplier<Ingredient> repairMaterial) {
+		this.harvestLevel = harvestLevel;
+		this.maxUses = maxUses;
+		this.efficiency = efficiency;
+		this.attackDamage = attackDamage;
+		this.enchantability = enchantability;
+		this.repairMaterial = repairMaterial;
 	}
 
 	@Override
@@ -62,6 +62,7 @@ public enum AetherItemTiers implements Tier {
 		return this.enchantability;
 	}
 
+	@Nonnull
 	@Override
 	public Ingredient getRepairIngredient() {
 		return this.repairMaterial.get();
