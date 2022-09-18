@@ -100,6 +100,19 @@ public class AetherTags {
 		public static final TagKey<Item> MOA_TEMPTATION_ITEMS = tag("moa_temptation_items");
 		public static final TagKey<Item> MOA_FOOD_ITEMS = tag("moa_food_items");
 
+		public static final TagKey<Item> SKYROOT_REPAIRABLE = tag("skyroot_repairable");
+		public static final TagKey<Item> HOLYSTONE_REPAIRABLE = tag("holystone_repairable");
+		public static final TagKey<Item> ZANITE_REPAIRABLE = tag("zanite_repairable");
+		public static final TagKey<Item> GRAVITITE_REPAIRABLE = tag("gravitite_repairable");
+		public static final TagKey<Item> VALKYRIE_REPAIRABLE = tag("valkyrie_repairable");
+		public static final TagKey<Item> FLAMING_REPAIRABLE = tag("flaming_repairable");
+		public static final TagKey<Item> LIGHTNING_REPAIRABLE = tag("lightning_repairable");
+		public static final TagKey<Item> HOLY_REPAIRABLE = tag("holy_repairable");
+		public static final TagKey<Item> VAMPIRE_REPAIRABLE = tag("vampire_repairable");
+		public static final TagKey<Item> PIG_SLAYER_REPAIRABLE = tag("pig_slayer_repairable");
+		public static final TagKey<Item> HAMMER_OF_NOTCH_REPAIRABLE = tag("hammer_of_notch_repairable");
+		public static final TagKey<Item> CANDY_CANE_REPAIRABLE = tag("candy_cane_repairable");
+
 		public static final TagKey<Item> TOOLS_LANCES = tag("tools/lances");
 		public static final TagKey<Item> TOOLS_HAMMERS = tag("tools/hammers");
 

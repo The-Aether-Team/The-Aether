@@ -155,6 +155,19 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.MOA_TEMPTATION_ITEMS).add(AetherItems.NATURE_STAFF.get());
         tag(AetherTags.Items.MOA_FOOD_ITEMS).add(AetherItems.AECHOR_PETAL.get());
 
+        tag(AetherTags.Items.SKYROOT_REPAIRABLE).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
+        tag(AetherTags.Items.HOLYSTONE_REPAIRABLE).add(AetherBlocks.HOLYSTONE.get().asItem());
+        tag(AetherTags.Items.ZANITE_REPAIRABLE).add(AetherItems.ZANITE_GEMSTONE.get());
+        tag(AetherTags.Items.GRAVITITE_REPAIRABLE).add(AetherBlocks.ENCHANTED_GRAVITITE.get().asItem());
+        tag(AetherTags.Items.VALKYRIE_REPAIRABLE);
+        tag(AetherTags.Items.FLAMING_REPAIRABLE);
+        tag(AetherTags.Items.LIGHTNING_REPAIRABLE);
+        tag(AetherTags.Items.HOLY_REPAIRABLE);
+        tag(AetherTags.Items.VAMPIRE_REPAIRABLE);
+        tag(AetherTags.Items.PIG_SLAYER_REPAIRABLE);
+        tag(AetherTags.Items.HAMMER_OF_NOTCH_REPAIRABLE);
+        tag(AetherTags.Items.CANDY_CANE_REPAIRABLE).add(AetherItems.CANDY_CANE.get());
+
         tag(AetherTags.Items.TOOLS_LANCES).add(AetherItems.VALKYRIE_LANCE.get());
         tag(AetherTags.Items.TOOLS_HAMMERS).add(AetherItems.HAMMER_OF_NOTCH.get());
 
