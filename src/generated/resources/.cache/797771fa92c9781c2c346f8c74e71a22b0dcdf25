@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-18T15:41:56.2356554	Aether Item Tags
+// 1.19.2	2022-09-18T15:54:38.4275388	Aether Item Tags
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1b83b96d9600b7878597cc26851b843bf99a3dd data/aether/tags/items/accessories.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/aerbunny_temptation_items.json
@@ -25,13 +25,11 @@ bbd431b5ea0dbbac9aa71e30c71140e28ae93250 data/aether/tags/items/freezable_rings.
 65976e3564baed2ae1f9323801f6fdc2faa84331 data/aether/tags/items/golden_oak_logs.json
 24739a7c6e39fa7efc02d98276194ef47fa70290 data/aether/tags/items/gravitite_repairable.json
 040cb245d3d65374cd913886fe43237bcbb9dfd9 data/aether/tags/items/gravitite_tools.json
-26656f54a0044ad806b38b21098e96dfa152b140 data/aether/tags/items/gravitite_weapons.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/hammer_of_notch_repairable.json
 14656c5bacbe085775af17b37cc6fe661f3c5c00 data/aether/tags/items/hellfire_blocks.json
 7a6ab5f621a7a401034f482edac807cc203ff72b data/aether/tags/items/holystone.json
 336a5cf28e3a807615f25965e0a90c7bf33dd3ac data/aether/tags/items/holystone_repairable.json
 43a975b6aa11712069f3433fb50f125a63346ccd data/aether/tags/items/holystone_tools.json
-c64fffe7d7a1354e56de630556ccd522d7f09d14 data/aether/tags/items/holystone_weapons.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/holy_repairable.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/lightning_repairable.json
 022a06d2a296e488a68e47fe0cebd62c586c55ea data/aether/tags/items/locked_dungeon_blocks.json
@@ -53,19 +51,15 @@ adc60af0231716fa635707337a7147da3eef4eb6 data/aether/tags/items/sentry_blocks.js
 df16ed8f5964fbb722ae2040903fb88c95ad2b99 data/aether/tags/items/skyroot_logs.json
 d57e931f91a1b51aa96c3007c5fce585e2e84cc2 data/aether/tags/items/skyroot_repairable.json
 4d0fcd44af39fa4f1950e841827bfde973be863f data/aether/tags/items/skyroot_stick.json
-94579232723f167d86c9f8bcad000fc2f5c2f9be data/aether/tags/items/skyroot_weapons.json
 537fa364dc9ed58bc989c27575c398066f9f6739 data/aether/tags/items/slider_damaging_items.json
 63841952d4f5d2bd2a73437601579bfaa74da9a6 data/aether/tags/items/tools/hammers.json
 191c77a1d1c9e92addf57b23f8e878c1261af5dd data/aether/tags/items/tools/lances.json
 35939e5beaa968e84aa88a102d8a79663d47ab1d data/aether/tags/items/trapped_dungeon_blocks.json
 c26f64255e81ace6a67fcf973a34043471ebff1d data/aether/tags/items/treasure_doorway_dungeon_blocks.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/valkyrie_repairable.json
-fe78ccc25db4a594e0eeaee1e62e5400e33cb16a data/aether/tags/items/valkyrie_tools.json
-191c77a1d1c9e92addf57b23f8e878c1261af5dd data/aether/tags/items/valkyrie_weapons.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/vampire_repairable.json
 794ba2e4990dd4fa1823ea008d8b78437527dacd data/aether/tags/items/zanite_repairable.json
 5c10034125eaa0646096f255f1515f56e26a161a data/aether/tags/items/zanite_tools.json
-1f6d77beb5541b6b088029f8e6b650916c4a5388 data/aether/tags/items/zanite_weapons.json
 89af558945f41e6e1e5e29c9da8dc0324f4c9cc2 data/curios/tags/items/aether_accessory.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/curios/tags/items/aether_cape.json
 cd6129430937fd4b57b84a64be78f993ba915b85 data/curios/tags/items/aether_gloves.json

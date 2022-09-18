@@ -2,7 +2,6 @@ package com.gildedgames.aether.item.combat.abilities.weapon;
 
 import com.gildedgames.aether.AetherTags;
 import net.minecraft.core.NonNullList;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -67,15 +66,14 @@ public interface SkyrootWeapon {
     }
 
     /**
-     * Basic checks to perform the ability if the source is living, the stack is a skyroot weapon, the target can have their drops doubled, and if the attacker attacked with full attack strength if they're a player.
+     * Basic checks to perform the ability if the source is living, the target can have their drops doubled, and if the attacker attacked with full attack strength if they're a player.
      * @param target The killed entity.
      * @param source The attacking damage source.
      */
     static boolean performAbility(LivingEntity target, DamageSource source) {
         if (source instanceof EntityDamageSource entityDamageSource && entityDamageSource.getDirectEntity() instanceof LivingEntity livingEntity) {
-            ItemStack stack = livingEntity.getItemInHand(InteractionHand.MAIN_HAND);
             if ((livingEntity instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(livingEntity instanceof Player)) {
-                return stack.is(AetherTags.Items.SKYROOT_WEAPONS) && !target.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS);
+                return !target.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS);
             }
         }
         return false;

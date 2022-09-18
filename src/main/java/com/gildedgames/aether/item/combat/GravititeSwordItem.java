@@ -9,14 +9,14 @@ import net.minecraft.world.item.SwordItem;
 
 import javax.annotation.Nonnull;
 
-public class GravititeSword extends SwordItem implements GravititeWeapon {
-    public GravititeSword() {
+public class GravititeSwordItem extends SwordItem implements GravititeWeapon {
+    public GravititeSwordItem() {
         super(AetherItemTiers.GRAVITITE, 3, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override
     public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
-        this.launchEntity(stack, target, attacker);
+        this.launchEntity(target, attacker);
         return super.hurtEnemy(stack, target, attacker);
     }
 }

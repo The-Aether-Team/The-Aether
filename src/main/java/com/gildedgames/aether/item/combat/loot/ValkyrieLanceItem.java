@@ -24,7 +24,7 @@ public class ValkyrieLanceItem extends SwordItem implements ValkyrieTool {
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
-        return this.extendReachModifier(super.getAttributeModifiers(slot, stack), stack, slot);
+        return this.extendReachModifier(super.getAttributeModifiers(slot, stack), slot);
     }
 
     @Override

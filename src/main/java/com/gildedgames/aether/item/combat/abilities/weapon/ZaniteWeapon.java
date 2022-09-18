@@ -1,6 +1,5 @@
 package com.gildedgames.aether.item.combat.abilities.weapon;
 
-import com.gildedgames.aether.AetherTags;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -19,14 +18,14 @@ public interface ZaniteWeapon {
 	UUID DAMAGE_MODIFIER_UUID = UUID.fromString("CAE1DE8D-8A7F-4391-B6BD-C060B1DD49C5");
 
 	/**
-	 * Sets up the attributes for the item if it is a zanite weapon and is in the entity's main hand, adding an attribute for the damage bonus value alongside the default item attributes.
+	 * Sets up the attributes for the item if it is in the entity's main hand, adding an attribute for the damage bonus value alongside the default item attributes.
 	 * @param map The item's default attributes.
 	 * @param stack The stack correlating to the item.
 	 * @param slot The slot the stack is in.
 	 * @return The new attributes made up of the old attributes and the damage bonus attribute.
 	 */
     default Multimap<Attribute, AttributeModifier> increaseDamage(Multimap<Attribute, AttributeModifier> map, ItemStack stack, EquipmentSlot slot) {
-        if (stack.is(AetherTags.Items.ZANITE_WEAPONS) && slot == EquipmentSlot.MAINHAND) {
+        if (slot == EquipmentSlot.MAINHAND) {
 			ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();
 			attributeBuilder.putAll(map);
 			attributeBuilder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(DAMAGE_MODIFIER_UUID, "Damage modifier", this.calculateIncrease(map, stack), AttributeModifier.Operation.ADDITION));

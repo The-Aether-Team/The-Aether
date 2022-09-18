@@ -10,8 +10,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
-public class ZaniteSword extends SwordItem implements ZaniteWeapon {
-    public ZaniteSword() {
+public class ZaniteSwordItem extends SwordItem implements ZaniteWeapon {
+    public ZaniteSwordItem() {
         super(AetherItemTiers.ZANITE, 3, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS));
     }
 

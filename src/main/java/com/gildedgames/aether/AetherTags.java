@@ -68,15 +68,9 @@ public class AetherTags {
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 		public static final TagKey<Item> SKYROOT_STICKS = tag("skyroot_stick");
 		public static final TagKey<Item> EFFECTIVE_IN_AETHER = tag("effective_in_aether");
-		public static final TagKey<Item> SKYROOT_WEAPONS = tag("skyroot_weapons");
 		public static final TagKey<Item> HOLYSTONE_TOOLS = tag("holystone_tools");
-		public static final TagKey<Item> HOLYSTONE_WEAPONS = tag("holystone_weapons");
 		public static final TagKey<Item> ZANITE_TOOLS = tag("zanite_tools");
-		public static final TagKey<Item> ZANITE_WEAPONS = tag("zanite_weapons");
 		public static final TagKey<Item> GRAVITITE_TOOLS = tag("gravitite_tools");
-		public static final TagKey<Item> GRAVITITE_WEAPONS = tag("gravitite_weapons");
-		public static final TagKey<Item> VALKYRIE_TOOLS = tag("valkyrie_tools");
-		public static final TagKey<Item> VALKYRIE_WEAPONS = tag("valkyrie_weapons");
 		public static final TagKey<Item> GOLDEN_AMBER_HARVESTERS = tag("golden_amber_harvesters");
 		public static final TagKey<Item> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 		public static final TagKey<Item> PIG_DROPS = tag("pig_drops");

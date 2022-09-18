@@ -16,7 +16,7 @@ public class HolystoneSwordItem extends SwordItem implements HolystoneWeapon {
 
     @Override
     public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
-        this.dropAmbrosium(stack, target, attacker);
+        this.dropAmbrosium(target, attacker);
         return super.hurtEnemy(stack, target, attacker);
     }
 }
