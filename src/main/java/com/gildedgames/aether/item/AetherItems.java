@@ -90,7 +90,7 @@ public class AetherItems {
 	public static final RegistryObject<SwordItem> ZANITE_SWORD = ITEMS.register("zanite_sword", ZaniteSword::new);
 	public static final RegistryObject<SwordItem> GRAVITITE_SWORD = ITEMS.register("gravitite_sword", GravititeSword::new);
 
-	public static final RegistryObject<Item> VALKYRIE_LANCE = ITEMS.register("valkyrie_lance", ValkyrieLanceItem::new);
+	public static final RegistryObject<SwordItem> VALKYRIE_LANCE = ITEMS.register("valkyrie_lance", ValkyrieLanceItem::new);
 
 	public static final RegistryObject<SwordItem> FLAMING_SWORD = ITEMS.register("flaming_sword", FlamingSwordItem::new);
 	public static final RegistryObject<SwordItem> LIGHTNING_SWORD = ITEMS.register("lightning_sword", LightningSwordItem::new);
