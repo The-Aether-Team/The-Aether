@@ -7,6 +7,7 @@ import com.gildedgames.aether.entity.projectile.dart.PoisonDart;
 import com.gildedgames.aether.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.item.tools.abilities.HolystoneTool;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.data.resources.AetherDimensions;
@@ -123,6 +124,12 @@ public class AbilityHooks {
                         }
                     }
                 }
+            }
+        }
+
+        public static void handleHolystoneToolAbility(Player player, Level level, BlockPos pos, ItemStack stack) {
+            if (stack.getItem() instanceof HolystoneTool holystoneTool) {
+                holystoneTool.dropAmbrosium(player, level, pos);
             }
         }
 

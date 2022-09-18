@@ -19,6 +19,10 @@ import com.gildedgames.aether.item.accessories.ring.IceRingItem;
 import com.gildedgames.aether.item.accessories.ring.RingItem;
 import com.gildedgames.aether.item.food.WhiteAppleItem;
 import com.gildedgames.aether.item.materials.AmbrosiumShardItem;
+import com.gildedgames.aether.item.tools.holystone.HolystoneAxeItem;
+import com.gildedgames.aether.item.tools.holystone.HolystoneHoeItem;
+import com.gildedgames.aether.item.tools.holystone.HolystonePickaxeItem;
+import com.gildedgames.aether.item.tools.holystone.HolystoneShovelItem;
 import com.gildedgames.aether.item.tools.skyroot.SkyrootAxeItem;
 import com.gildedgames.aether.item.tools.skyroot.SkyrootHoeItem;
 import com.gildedgames.aether.item.tools.skyroot.SkyrootPickaxeItem;
@@ -64,10 +68,10 @@ public class AetherItems {
 	public static final RegistryObject<ShovelItem> SKYROOT_SHOVEL = ITEMS.register("skyroot_shovel", SkyrootShovelItem::new);
 	public static final RegistryObject<HoeItem> SKYROOT_HOE = ITEMS.register("skyroot_hoe", SkyrootHoeItem::new);
 
-	public static final RegistryObject<PickaxeItem> HOLYSTONE_PICKAXE = ITEMS.register("holystone_pickaxe", () -> new PickaxeItem(AetherItemTiers.HOLYSTONE, 1, -2.8F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS)));
-	public static final RegistryObject<AxeItem> HOLYSTONE_AXE = ITEMS.register("holystone_axe", () -> new AxeItem(AetherItemTiers.HOLYSTONE, 7.0F, -3.2F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS)));
-	public static final RegistryObject<ShovelItem> HOLYSTONE_SHOVEL = ITEMS.register("holystone_shovel", () -> new ShovelItem(AetherItemTiers.HOLYSTONE, 1.5F, -3.0F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS)));
-	public static final RegistryObject<HoeItem> HOLYSTONE_HOE = ITEMS.register("holystone_hoe", () -> new HoeItem(AetherItemTiers.HOLYSTONE, -1, -2.0F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS)));
+	public static final RegistryObject<PickaxeItem> HOLYSTONE_PICKAXE = ITEMS.register("holystone_pickaxe", HolystonePickaxeItem::new);
+	public static final RegistryObject<AxeItem> HOLYSTONE_AXE = ITEMS.register("holystone_axe", HolystoneAxeItem::new);
+	public static final RegistryObject<ShovelItem> HOLYSTONE_SHOVEL = ITEMS.register("holystone_shovel", HolystoneShovelItem::new);
+	public static final RegistryObject<HoeItem> HOLYSTONE_HOE = ITEMS.register("holystone_hoe", HolystoneHoeItem::new);
 
 	public static final RegistryObject<PickaxeItem> ZANITE_PICKAXE = ITEMS.register("zanite_pickaxe", () -> new PickaxeItem(AetherItemTiers.ZANITE, 1, -2.8F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS)));
 	public static final RegistryObject<AxeItem> ZANITE_AXE = ITEMS.register("zanite_axe", () -> new AxeItem(AetherItemTiers.ZANITE, 6.0F, -3.1F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS)));

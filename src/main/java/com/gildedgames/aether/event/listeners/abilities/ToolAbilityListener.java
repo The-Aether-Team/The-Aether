@@ -26,11 +26,11 @@ public class ToolAbilityListener {
         Level level = player.getLevel();
         BlockPos blockPos = event.getPos();
         ItemStack itemStack = player.getMainHandItem();
-        HolystoneTool.dropAmbrosium(player, level, blockPos, itemStack);
+        AbilityHooks.ToolHooks.handleHolystoneToolAbility(player, level, blockPos, itemStack);
     }
 
     @SubscribeEvent
-    public static void doZaniteAbility(PlayerEvent.BreakSpeed event) {
+    public static void doZaniteAbility(PlayerEvent.BreakSpeed event) { //todo split reduce tool effectiveness out of this method
         Player player = event.getEntity();
         BlockState blockState = event.getState();
         ItemStack itemStack = player.getMainHandItem();
