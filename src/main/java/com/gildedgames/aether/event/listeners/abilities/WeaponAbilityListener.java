@@ -29,6 +29,9 @@ public class WeaponAbilityListener {
         AbilityHooks.WeaponHooks.stickDart(livingEntity, damageSource);
     }
 
+    /**
+     * @see AbilityHooks.WeaponHooks#lightningTracking(EntityStruckByLightningEvent, Entity, LightningBolt) 
+     */
     @SubscribeEvent
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
         Entity entity = event.getEntity();

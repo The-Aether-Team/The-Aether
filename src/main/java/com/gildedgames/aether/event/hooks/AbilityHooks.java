@@ -199,6 +199,11 @@ public class AbilityHooks {
             }
         }
 
+        /**
+         * Prevents an entity from being hurt by a lightning strike if {@link com.gildedgames.aether.capability.lightning.LightningTrackerCapability} finds an owner associated with the lightning, if it was summoned through usage of a weapon.
+         * @param entity The entity struck by the lightning bolt.
+         * @param lightning The lightning bolt that struck the entity.
+         */
         public static void lightningTracking(EntityStruckByLightningEvent event, Entity entity, LightningBolt lightning) {
             if (entity instanceof LivingEntity livingEntity) {
                 LightningTracker.get(lightning).ifPresent(lightningTracker -> {
