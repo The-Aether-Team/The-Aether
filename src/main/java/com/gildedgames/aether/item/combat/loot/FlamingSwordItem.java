@@ -22,13 +22,20 @@ public class FlamingSwordItem extends SwordItem {
 	}
 
 	/**
-	 * Inflicts 30 seconds of fire on the target with an extra 4 seconds for every level of fire aspect the item has. This occurs if the attacker attacked with full attack strength if they're a player.
+	 * @see FlamingSwordItem#handleFlamingSwordAbility(LivingEntity, DamageSource) 
 	 */
 	@SubscribeEvent
 	public static void onLivingDamage(LivingDamageEvent event) {
 		LivingEntity target = event.getEntity();
 		DamageSource damageSource = event.getSource();
-		if (damageSource.getDirectEntity() instanceof LivingEntity attacker) {
+		handleFlamingSwordAbility(target, damageSource);
+	}
+
+	/**
+	 * Inflicts 30 seconds of fire on the target with an extra 4 seconds for every level of fire aspect the item has. This occurs if the attacker attacked with full attack strength if they're a player.
+	 */
+	private static void handleFlamingSwordAbility(LivingEntity target, DamageSource source) {
+		if (source.getDirectEntity() instanceof LivingEntity attacker) {
 			if ((attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player)) {
 				ItemStack heldStack = attacker.getMainHandItem();
 				if (heldStack.is(AetherItems.FLAMING_SWORD.get())) {

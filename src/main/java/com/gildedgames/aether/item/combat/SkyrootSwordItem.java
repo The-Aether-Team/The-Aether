@@ -4,7 +4,6 @@ import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.abilities.weapon.SkyrootWeapon;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -64,11 +63,10 @@ public class SkyrootSwordItem extends SwordItem implements SkyrootWeapon {
      * @param source The attacking damage source.
      */
     private static SkyrootWeapon canPerformAbility(LivingEntity target, DamageSource source) {
-        if (source instanceof EntityDamageSource entityDamageSource && entityDamageSource.getDirectEntity() instanceof LivingEntity livingEntity) {
-            ItemStack heldStack = livingEntity.getMainHandItem();
+        if (source.getDirectEntity() instanceof LivingEntity livingEntity) {
             if ((livingEntity instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(livingEntity instanceof Player)) {
                 if (!target.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
-                    if (heldStack.getItem() instanceof SkyrootWeapon skyrootWeapon) {
+                    if (livingEntity.getMainHandItem().getItem() instanceof SkyrootWeapon skyrootWeapon) {
                         return skyrootWeapon;
                     }
                 }

@@ -12,9 +12,10 @@ public interface HolystoneWeapon {
      * @param attacker The attacking entity.
      */
     default void dropAmbrosium(LivingEntity target, LivingEntity attacker) {
-        if (!target.getType().is(AetherTags.Entities.NO_AMBROSIUM_DROPS) && target.getLevel().getRandom().nextInt(25) == 0
-                && ((attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player))) {
-            target.spawnAtLocation(AetherItems.AMBROSIUM_SHARD.get());
+        if ((attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player)) {
+            if (!target.getType().is(AetherTags.Entities.NO_AMBROSIUM_DROPS) && target.getLevel().getRandom().nextInt(25) == 0) {
+                target.spawnAtLocation(AetherItems.AMBROSIUM_SHARD.get());
+            }
         }
     }
 }

@@ -13,11 +13,12 @@ public interface GravititeWeapon {
      * @param attacker The attacking entity.
      */
     default void launchEntity(LivingEntity target, LivingEntity attacker) {
-        if (!target.getType().is(AetherTags.Entities.UNLAUNCHABLE) && target.isOnGround()
-                && ((attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player))) {
-            target.push(0.0, 1.0, 0.0);
-            if (target instanceof ServerPlayer serverPlayer) {
-                serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(serverPlayer));
+        if ((attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player)) {
+            if (!target.getType().is(AetherTags.Entities.UNLAUNCHABLE) && target.isOnGround()) {
+                target.push(0.0, 1.0, 0.0);
+                if (target instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(serverPlayer));
+                }
             }
         }
     }

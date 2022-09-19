@@ -30,16 +30,17 @@ public class HolySwordItem extends SwordItem {
      */
     @Override
     public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
-        if (target.getMobType() == MobType.UNDEAD || target.isInvertedHealAndHarm()
-                && (attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player)) {
-            DamageSource damageSource = attacker instanceof Player player ? DamageSource.playerAttack(player) : DamageSource.mobAttack(attacker);
-            float damageAmount = 15.0F;
-            int smiteModifier = stack.getEnchantmentLevel(Enchantments.SMITE);
-            if (smiteModifier > 0) {
-                damageAmount += (smiteModifier * 2.5);
+        if ((attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player)) {
+            if (target.getMobType() == MobType.UNDEAD || target.isInvertedHealAndHarm()) {
+                DamageSource damageSource = attacker instanceof Player player ? DamageSource.playerAttack(player) : DamageSource.mobAttack(attacker);
+                float damageAmount = 15.0F;
+                int smiteModifier = stack.getEnchantmentLevel(Enchantments.SMITE);
+                if (smiteModifier > 0) {
+                    damageAmount += (smiteModifier * 2.5);
+                }
+                target.hurt(damageSource, damageAmount);
+                stack.hurtAndBreak(10, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             }
-            target.hurt(damageSource, damageAmount);
-            stack.hurtAndBreak(10, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
         }
         return super.hurtEnemy(stack, target, attacker);
     }
