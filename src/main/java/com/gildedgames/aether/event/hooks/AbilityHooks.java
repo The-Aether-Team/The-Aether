@@ -13,7 +13,6 @@ import com.gildedgames.aether.item.tools.abilities.HolystoneTool;
 import com.gildedgames.aether.item.tools.abilities.ZaniteTool;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.AetherTags;
-import com.gildedgames.aether.data.resources.AetherDimensions;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.capability.arrow.PhoenixArrow;
 import com.gildedgames.aether.capability.lightning.LightningTracker;
@@ -140,15 +139,24 @@ public class AbilityHooks {
             return false;
         }
 
-        public static float reduceToolEffectiveness(Level level, BlockState state, ItemStack stack, float amount) { //todo wait did i ever even add functionality for this for aether tools to have regular effectiveness
+        /**
+         * Debuffs the mining speed of blocks if they're Aether blocks (according to the description id, and the tags {@link AetherTags.Blocks#TREATED_AS_AETHER_BLOCK} and {@link AetherTags.Blocks#TREATED_AS_VANILLA_BLOCK}),
+         * and if the item is non-Aether (according to the description id, and the tag {@link AetherTags.Items#TREATED_AS_AETHER_ITEM}), as long as it's not an empty item (no item at all) and as long as its detected as the correct tool type for the block.
+         * The debuffed value is the original value to the power of -0.2.
+         * @param state The state of the block being mined.
+         * @param stack The stack being used for mining.
+         * @param speed The mining speed of the stack.
+         * @return The debuffed mining speed.
+         */
+        public static float reduceToolEffectiveness(BlockState state, ItemStack stack, float speed) {
             if (AetherConfig.COMMON.tools_debuff.get()) {
-                if (level.dimension() == AetherDimensions.AETHER_LEVEL) {
-                    if (!stack.isEmpty() && !stack.is(AetherTags.Items.EFFECTIVE_IN_AETHER) && stack.isCorrectToolForDrops(state)) {
-                        amount = (float) Math.pow(amount, -0.2);
+                if ((state.getBlock().getDescriptionId().startsWith("block.aether.") || state.is(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK)) && !state.is(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK)) {
+                    if (!stack.isEmpty() && stack.isCorrectToolForDrops(state) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) {
+                        speed = (float) Math.pow(speed, -0.2);
                     }
                 }
             }
-            return amount;
+            return speed;
         }
 
         public static void stripGoldenOak(LevelAccessor accessor, BlockState state, ItemStack stack, ToolAction action, UseOnContext context) {

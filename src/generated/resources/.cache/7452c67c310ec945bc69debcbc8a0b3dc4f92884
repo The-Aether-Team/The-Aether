@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-09T22:28:14.3093118	Aether Block Tags
+// 1.19.2	2022-09-19T16:05:52.8223825	Aether Block Tags
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/aechor_plant_spawnable_on.json
 f2dedadb4e94e780ebd949b551d3349f0210feb9 data/aether/tags/blocks/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/blocks/aerogel.json
@@ -25,6 +25,8 @@ df16ed8f5964fbb722ae2040903fb88c95ad2b99 data/aether/tags/blocks/skyroot_logs.js
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/swet_spawnable_on.json
 35939e5beaa968e84aa88a102d8a79663d47ab1d data/aether/tags/blocks/trapped_dungeon_blocks.json
 c26f64255e81ace6a67fcf973a34043471ebff1d data/aether/tags/blocks/treasure_doorway_dungeon_blocks.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/blocks/treated_as_aether_block.json
+7baa023a160427eae50cd2776294d1b1efb98aa2 data/aether/tags/blocks/treated_as_vanilla_block.json
 a0808651f2affc744453ff3a55611487af148934 data/aether/tags/blocks/valkyrie_teleportable_on.json
 b322cfaf18dab472190eacef2ee8397cbf37c94c data/aether/tags/blocks/zephyr_spawnable_on.json
 01f606af3f58ae6c9742c9c6e927e787256e6274 data/forge/tags/blocks/bookshelves.json
