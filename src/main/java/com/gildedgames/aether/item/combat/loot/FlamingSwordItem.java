@@ -28,7 +28,7 @@ public class FlamingSwordItem extends SwordItem {
 	public static void onLivingDamage(LivingDamageEvent event) {
 		LivingEntity target = event.getEntity();
 		DamageSource damageSource = event.getSource();
-		if (damageSource.getEntity() instanceof LivingEntity attacker) {
+		if (damageSource.getDirectEntity() instanceof LivingEntity attacker) {
 			if ((attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player)) {
 				ItemStack heldStack = attacker.getMainHandItem();
 				if (heldStack.is(AetherItems.FLAMING_SWORD.get())) {
