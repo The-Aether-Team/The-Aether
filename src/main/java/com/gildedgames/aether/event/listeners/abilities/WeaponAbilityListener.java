@@ -15,18 +15,24 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class WeaponAbilityListener {
-    @SubscribeEvent
-    public static void onArrowHit(ProjectileImpactEvent event) {
-        HitResult hitResult = event.getRayTraceResult();
-        Projectile projectile = event.getProjectile();
-        AbilityHooks.WeaponHooks.phoenixArrowHit(hitResult, projectile);
-    }
-
+    /**
+     * @see AbilityHooks.WeaponHooks#stickDart(LivingEntity, DamageSource)
+     */
     @SubscribeEvent
     public static void onDartHurt(LivingHurtEvent event) {
         LivingEntity livingEntity = event.getEntity();
         DamageSource damageSource = event.getSource();
         AbilityHooks.WeaponHooks.stickDart(livingEntity, damageSource);
+    }
+
+    /**
+     * @see AbilityHooks.WeaponHooks#phoenixArrowHit(HitResult, Projectile)
+     */
+    @SubscribeEvent
+    public static void onArrowHit(ProjectileImpactEvent event) {
+        HitResult hitResult = event.getRayTraceResult();
+        Projectile projectile = event.getProjectile();
+        AbilityHooks.WeaponHooks.phoenixArrowHit(hitResult, projectile);
     }
 
     /**
@@ -36,6 +42,6 @@ public class WeaponAbilityListener {
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
         Entity entity = event.getEntity();
         LightningBolt lightningBolt = event.getLightning();
-        AbilityHooks.WeaponHooks.lightningTracking(event, entity, lightningBolt); // Has to take event due to the event being canceled within a lambda.
+        AbilityHooks.WeaponHooks.lightningTracking(event, entity, lightningBolt); // Has to take the event due to it being canceled within a lambda.
     }
 }

@@ -87,6 +87,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
                 if (!level.isClientSide()) {
                     DartItem dartItem = (DartItem) (ammoItem.getItem() instanceof DartItem dart ? dart : this.getDartType().get());
                     AbstractDart dart = dartItem.createDart(level, player);
+                    dart = customDart(dart);
                     dart.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.0F, 1.0F);
                     dart.setNoGravity(true); // Darts have no gravity.
 
@@ -140,6 +141,10 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
     @Override
     public Predicate<ItemStack> getAllSupportedProjectiles() {
         return (stack) -> stack.is(this.getDartType().get());
+    }
+
+    public AbstractDart customDart(AbstractDart dart) {
+        return dart;
     }
 
     /**

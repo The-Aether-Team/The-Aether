@@ -175,19 +175,13 @@ public class AbilityHooks {
     }
 
     public static class WeaponHooks {
-        public static void phoenixArrowHit(HitResult result, Projectile projectile) {
-            if (result.getType() == HitResult.Type.ENTITY && result instanceof EntityHitResult entityHitResult && projectile instanceof AbstractArrow abstractArrow) {
-                Entity impactedEntity = entityHitResult.getEntity();
-                PhoenixArrow.get(abstractArrow).ifPresent(phoenixArrow -> {
-                    if (phoenixArrow.isPhoenixArrow() && phoenixArrow.getFireTime() > 0) {
-                        impactedEntity.setSecondsOnFire(phoenixArrow.getFireTime());
-                    }
-                });
-            }
-        }
-
+        /**
+         * Renders darts that hit the player as stuck on their model, similar to arrows. This is done through increasing values stored in {@link com.gildedgames.aether.capability.player.AetherPlayerCapability} that track the amount of different darts stuck in the player.
+         * @param entity The hurt entity.
+         * @param source The source of the damage that hurt the entity.
+         */
         public static void stickDart(LivingEntity entity, DamageSource source) {
-            if (entity instanceof Player player && !player.level.isClientSide()) {
+            if (entity instanceof Player player && !player.getLevel().isClientSide()) {
                 Entity sourceEntity = source.getDirectEntity();
                 if (sourceEntity instanceof GoldenDart) {
                     AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setGoldenDartCount(aetherPlayer.getGoldenDartCount() + 1));
@@ -196,6 +190,22 @@ public class AbilityHooks {
                 } else if (sourceEntity instanceof EnchantedDart) {
                     AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setEnchantedDartCount(aetherPlayer.getEnchantedDartCount() + 1));
                 }
+            }
+        }
+
+        /**
+         * Sets the hit entity on fire for the amount of seconds the phoenix arrow has stored, as determined by {@link com.gildedgames.aether.item.combat.loot.PhoenixBowItem#customArrow(AbstractArrow)}.
+         * @param result The hit result of the projectile.
+         * @param projectile The projectile that hit something.
+         */
+        public static void phoenixArrowHit(HitResult result, Projectile projectile) {
+            if (result.getType() == HitResult.Type.ENTITY && result instanceof EntityHitResult entityHitResult && projectile instanceof AbstractArrow abstractArrow) {
+                Entity impactedEntity = entityHitResult.getEntity();
+                PhoenixArrow.get(abstractArrow).ifPresent(phoenixArrow -> {
+                    if (phoenixArrow.isPhoenixArrow() && phoenixArrow.getFireTime() > 0) {
+                        impactedEntity.setSecondsOnFire(phoenixArrow.getFireTime());
+                    }
+                });
             }
         }
 
