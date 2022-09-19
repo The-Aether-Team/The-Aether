@@ -1,5 +1,6 @@
 package com.gildedgames.aether.item.combat.abilities.weapon;
 
+import com.gildedgames.aether.util.EquipmentUtil;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -35,8 +36,7 @@ public interface ZaniteWeapon {
     }
 
 	/**
-	 * Calculates damage increase based on the weapon's attack damage (minus player's base attack strength, which is default 1.0), the stack's maximum durability, and the amount of damage taken (maximum durability - current durability).<br>
-	 * <a href="https://www.desmos.com/calculator/6nscexk6ez">See math visually.</a>
+	 * Calculates damage increase using the weapon's attack damage (minus player's base attack strength, which is default 1.0) inputted into the zanite value buff function, which the original attack damage is then subtracted from to get the bonus damage amount from the difference.<br>
 	 * @param map The item's default attributes.
 	 * @param stack The stack correlating to the item.
 	 * @return The damage bonus value for the zanite weapon.
@@ -47,7 +47,7 @@ public interface ZaniteWeapon {
 			AttributeModifier modifier = it.next();
 			baseDamage += modifier.getAmount();
 		}
-		double boostedDamage = baseDamage * (2.0 * ((double) stack.getDamageValue()) / ((double) stack.getMaxDamage()) + 0.5);
+		double boostedDamage = EquipmentUtil.calculateZaniteBuff(stack, baseDamage);
 		boostedDamage -= baseDamage;
 		if (boostedDamage < 0.0) {
 			boostedDamage = 0.0;

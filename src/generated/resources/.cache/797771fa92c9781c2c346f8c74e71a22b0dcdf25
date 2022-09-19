@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-18T16:31:06.1113885	Aether Item Tags
+// 1.19.2	2022-09-18T17:08:36.4051085	Aether Item Tags
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1b83b96d9600b7878597cc26851b843bf99a3dd data/aether/tags/items/accessories.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/aerbunny_temptation_items.json
@@ -58,7 +58,6 @@ c26f64255e81ace6a67fcf973a34043471ebff1d data/aether/tags/items/treasure_doorway
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/valkyrie_repairable.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/vampire_repairable.json
 794ba2e4990dd4fa1823ea008d8b78437527dacd data/aether/tags/items/zanite_repairable.json
-5c10034125eaa0646096f255f1515f56e26a161a data/aether/tags/items/zanite_tools.json
 89af558945f41e6e1e5e29c9da8dc0324f4c9cc2 data/curios/tags/items/aether_accessory.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/curios/tags/items/aether_cape.json
 cd6129430937fd4b57b84a64be78f993ba915b85 data/curios/tags/items/aether_gloves.json

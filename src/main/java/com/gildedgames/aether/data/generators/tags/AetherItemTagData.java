@@ -57,11 +57,6 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.AMBROSIUM_SHARD.get());
         tag(AetherTags.Items.SKYROOT_STICKS).add(AetherItems.SKYROOT_STICK.get());
         tag(AetherTags.Items.EFFECTIVE_IN_AETHER);
-        tag(AetherTags.Items.ZANITE_TOOLS).add(
-                AetherItems.ZANITE_PICKAXE.get(),
-                AetherItems.ZANITE_AXE.get(),
-                AetherItems.ZANITE_SHOVEL.get(),
-                AetherItems.ZANITE_HOE.get());
         tag(AetherTags.Items.GRAVITITE_TOOLS).add(
                 AetherItems.GRAVITITE_PICKAXE.get(),
                 AetherItems.GRAVITITE_AXE.get(),

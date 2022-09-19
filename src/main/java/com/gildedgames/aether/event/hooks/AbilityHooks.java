@@ -8,6 +8,7 @@ import com.gildedgames.aether.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.item.tools.abilities.HolystoneTool;
+import com.gildedgames.aether.item.tools.abilities.ZaniteTool;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.data.resources.AetherDimensions;
@@ -104,6 +105,33 @@ public class AbilityHooks {
             return old;
         }
 
+        public static void handleHolystoneToolAbility(Player player, Level level, BlockPos pos, ItemStack stack) {
+            if (stack.getItem() instanceof HolystoneTool holystoneTool) {
+                holystoneTool.dropAmbrosium(player, level, pos);
+            }
+        }
+
+        public static float handleZaniteToolAbility(ItemStack stack, float speed) {
+            if (stack.getItem() instanceof ZaniteTool zaniteTool) {
+                return zaniteTool.increaseSpeed(stack, speed);
+            } else {
+                return speed;
+            }
+        }
+
+        public static float reduceToolEffectiveness(Level level, BlockState state, ItemStack stack, float amount) {
+            if (AetherConfig.COMMON.tools_debuff.get()) {
+                if (level.dimension() == AetherDimensions.AETHER_LEVEL) {
+                    if (!stack.isEmpty()
+                            && !stack.is(AetherTags.Items.EFFECTIVE_IN_AETHER)
+                            && stack.isCorrectToolForDrops(state)) {
+                        amount = (float) Math.pow(amount, -0.2);
+                    }
+                }
+            }
+            return amount;
+        }
+
         public static void stripGoldenOak(LevelAccessor accessor, BlockState state, ItemStack stack, ToolAction action, UseOnContext context) {
             if (action == ToolActions.AXE_STRIP) {
                 if (accessor instanceof Level level) {
@@ -125,25 +153,6 @@ public class AbilityHooks {
                     }
                 }
             }
-        }
-
-        public static void handleHolystoneToolAbility(Player player, Level level, BlockPos pos, ItemStack stack) {
-            if (stack.getItem() instanceof HolystoneTool holystoneTool) {
-                holystoneTool.dropAmbrosium(player, level, pos);
-            }
-        }
-
-        public static float reduceToolEffectiveness(Level level, BlockState state, ItemStack stack, float amount) {
-            if (AetherConfig.COMMON.tools_debuff.get()) {
-                if (level.dimension() == AetherDimensions.AETHER_LEVEL) {
-                    if (!stack.isEmpty()
-                            && !stack.is(AetherTags.Items.EFFECTIVE_IN_AETHER)
-                            && stack.isCorrectToolForDrops(state)) {
-                        amount = (float) Math.pow(amount, -0.2);
-                    }
-                }
-            }
-            return amount;
         }
     }
 

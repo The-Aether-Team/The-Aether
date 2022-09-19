@@ -2,8 +2,6 @@ package com.gildedgames.aether.event.listeners.abilities;
 
 import com.gildedgames.aether.event.hooks.AbilityHooks;
 import com.gildedgames.aether.item.tools.abilities.GravititeTool;
-import com.gildedgames.aether.item.tools.abilities.HolystoneTool;
-import com.gildedgames.aether.item.tools.abilities.ZaniteTool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -21,6 +19,18 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class ToolAbilityListener {
     @SubscribeEvent
+    public static void setupToolModifications(BlockEvent.BlockToolModificationEvent event) {
+        LevelAccessor levelAccessor = event.getLevel();
+        BlockPos pos = event.getPos();
+        BlockState oldState = event.getState();
+        ToolAction toolAction = event.getToolAction();
+        BlockState newState = AbilityHooks.ToolHooks.setupToolActions(levelAccessor, pos, oldState, toolAction);
+        if (newState != oldState && !event.isSimulated()) {
+            event.setFinalState(newState);
+        }
+    }
+
+    @SubscribeEvent
     public static void doHolystoneAbility(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
         Level level = player.getLevel();
@@ -30,12 +40,12 @@ public class ToolAbilityListener {
     }
 
     @SubscribeEvent
-    public static void doZaniteAbility(PlayerEvent.BreakSpeed event) { //todo split reduce tool effectiveness out of this method
-        Player player = event.getEntity();
+    public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
         BlockState blockState = event.getState();
+        Player player = event.getEntity();
         ItemStack itemStack = player.getMainHandItem();
         Level level = player.getLevel();
-        event.setNewSpeed(ZaniteTool.increaseSpeed(itemStack, event.getNewSpeed()));
+        event.setNewSpeed(AbilityHooks.ToolHooks.handleZaniteToolAbility(itemStack, event.getNewSpeed()));
         event.setNewSpeed(AbilityHooks.ToolHooks.reduceToolEffectiveness(level, blockState, itemStack, event.getNewSpeed()));
     }
 
@@ -52,17 +62,6 @@ public class ToolAbilityListener {
         }
     }
 
-    @SubscribeEvent
-    public static void setupToolModifications(BlockEvent.BlockToolModificationEvent event) {
-        LevelAccessor levelAccessor = event.getLevel();
-        BlockPos pos = event.getPos();
-        BlockState oldState = event.getState();
-        ToolAction toolAction = event.getToolAction();
-        BlockState newState = AbilityHooks.ToolHooks.setupToolActions(levelAccessor, pos, oldState, toolAction);
-        if (newState != oldState && !event.isSimulated()) {
-            event.setFinalState(newState);
-        }
-    }
     @SubscribeEvent
     public static void doGoldenOakStripping(BlockEvent.BlockToolModificationEvent event) {
         LevelAccessor levelAccessor = event.getLevel();
