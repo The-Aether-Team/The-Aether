@@ -5,6 +5,7 @@ import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.util.EntityUtil;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -16,31 +17,41 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-public class CloudStaffItem extends Item
-{
+import javax.annotation.Nonnull;
+
+public class CloudStaffItem extends Item {
     public CloudStaffItem() {
         super(new Item.Properties().durability(60).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC));
     }
 
+    /**
+     * Summons two cloud minions if the player has none summoned, spawning particles and taking 1 durability off the item. If the player already has cloud minions, nothing happens. If the player shifts and right clicks, the cloud minions are despawned.
+     * The tracking for whether cloud minions are summoned or not is handled with {@link com.gildedgames.aether.capability.player.AetherPlayerCapability}.
+     * @param level The level of the user.
+     * @param player The entity using this item.
+     * @param hand The hand in which the item is being used.
+     * @return Pass (do nothing) (we handle swing behavior manually in the lambda earlier on).
+     */
+    @Nonnull
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand hand) {
-        ItemStack heldItem = playerIn.getItemInHand(hand);
-        AetherPlayer.get(playerIn).ifPresent(aetherPlayer -> {
+    public InteractionResultHolder<ItemStack> use(@Nonnull Level level, Player player, @Nonnull InteractionHand hand) {
+        ItemStack heldItem = player.getItemInHand(hand);
+        AetherPlayer.get(player).ifPresent(aetherPlayer -> {
             if (aetherPlayer.getCloudMinions().isEmpty()) {
-                playerIn.swing(hand);
-                if (!worldIn.isClientSide) {
-                    if (!playerIn.getAbilities().instabuild) {
-                        heldItem.hurtAndBreak(1, playerIn, (p) -> p.broadcastBreakEvent(hand));
+                player.swing(hand);
+                if (!level.isClientSide()) {
+                    if (!player.getAbilities().instabuild) {
+                        heldItem.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
                     }
-                    CloudMinion cloudMinionRight = new CloudMinion(worldIn, playerIn, HumanoidArm.RIGHT);
-                    CloudMinion cloudMinionLeft = new CloudMinion(worldIn, playerIn, HumanoidArm.LEFT);
-                    worldIn.addFreshEntity(cloudMinionRight);
-                    worldIn.addFreshEntity(cloudMinionLeft);
+                    CloudMinion cloudMinionRight = new CloudMinion(level, player, HumanoidArm.RIGHT);
+                    CloudMinion cloudMinionLeft = new CloudMinion(level, player, HumanoidArm.LEFT);
+                    level.addFreshEntity(cloudMinionRight);
+                    level.addFreshEntity(cloudMinionLeft);
                     aetherPlayer.setCloudMinions(cloudMinionRight, cloudMinionLeft);
                 }
-                this.spawnExplosionParticles(playerIn);
-            } else if (playerIn.isShiftKeyDown()) {
-                playerIn.swing(hand);
+                this.spawnExplosionParticles(player);
+            } else if (player.isShiftKeyDown()) {
+                player.swing(hand);
                 for (CloudMinion cloudMinion : aetherPlayer.getCloudMinions()) {
                     cloudMinion.setLifeSpan(0);
                 }
@@ -49,10 +60,16 @@ public class CloudStaffItem extends Item
         return InteractionResultHolder.pass(heldItem);
     }
 
+    /**
+     * Sets that the cloud minions should shoot and sets a 40 tick cooldown on the item. The actual shooting behavior is handled in {@link CloudMinion#tick()}.
+     * @param stack The stack being swung.
+     * @param entity The swinging entity.
+     * @return Whether the item was successfully swung (we don't change this, so it uses the superclass' behavior).
+     */
     @Override
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
-        if (entity instanceof Player) {
-            AetherPlayer.get((Player) entity).ifPresent(aetherPlayer -> {
+        if (entity instanceof Player player) {
+            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                 if (!aetherPlayer.getCloudMinions().isEmpty()) {
                     if (!aetherPlayer.getPlayer().getCooldowns().isOnCooldown(this) && aetherPlayer.isHitting()) {
                         CloudMinion cloudMinionRight = aetherPlayer.getCloudMinions().get(0);
@@ -73,14 +90,18 @@ public class CloudStaffItem extends Item
         return super.onEntitySwing(stack, entity);
     }
 
+    /**
+     * @see EntityUtil#spawnSummoningExplosionParticles(Entity)
+     * @param player The player to spawn the particles at.
+     */
     private void spawnExplosionParticles(Player player) {
-        if (player.level.isClientSide()) {
+        if (player.getLevel().isClientSide()) {
             EntityUtil.spawnSummoningExplosionParticles(player);
         }
     }
 
     @Override
-    public boolean canAttackBlock(BlockState state, Level worldIn, BlockPos pos, Player player) {
+    public boolean canAttackBlock(@Nonnull BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, Player player) {
         return !player.isCreative();
     }
 }
