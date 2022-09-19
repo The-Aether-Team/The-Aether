@@ -5,6 +5,7 @@ import com.gildedgames.aether.capability.player.AetherPlayerCapability;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.world.entity.LivingEntity;
 
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +21,7 @@ public class VampireBladeItem extends SwordItem {
     }
 
     /**
-     * Heals the attacker for half a heart when hurting the enemy if the attacker attacked with full attack strength if they're a player.
+     * Heals the attacker for half a heart when hurting the enemy if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
      * For players, this is done through tracking whether they should be healed through {@link AetherPlayerCapability#setVampireHealing(boolean)}.
      * @param stack The stack used to hurt the target
      * @param target The hurt entity.
@@ -29,7 +30,7 @@ public class VampireBladeItem extends SwordItem {
      */
     @Override
     public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
-        if ((attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player)) {
+        if (EquipmentUtil.isFullStrength(attacker)) {
             if (attacker.getHealth() < attacker.getMaxHealth()) {
                 if (attacker instanceof Player player) {
                     AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setVampireHealing(true));

@@ -3,11 +3,11 @@ package com.gildedgames.aether.item.combat.loot;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -32,11 +32,11 @@ public class FlamingSwordItem extends SwordItem {
 	}
 
 	/**
-	 * Inflicts 30 seconds of fire on the target with an extra 4 seconds for every level of fire aspect the item has. This occurs if the attacker attacked with full attack strength if they're a player.
+	 * Inflicts 30 seconds of fire on the target with an extra 4 seconds for every level of fire aspect the item has. This occurs if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
 	 */
 	private static void handleFlamingSwordAbility(LivingEntity target, DamageSource source) {
 		if (source.getDirectEntity() instanceof LivingEntity attacker) {
-			if ((attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player)) {
+			if (EquipmentUtil.isFullStrength(attacker)) {
 				ItemStack heldStack = attacker.getMainHandItem();
 				if (heldStack.is(AetherItems.FLAMING_SWORD.get())) {
 					int defaultTime = 30;

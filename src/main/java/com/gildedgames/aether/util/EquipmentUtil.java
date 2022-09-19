@@ -3,11 +3,21 @@ package com.gildedgames.aether.util;
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.CuriosApi;
 
 public class EquipmentUtil {
+    /**
+     * An attack is full strength if either it's a player that attacked with full attack strength, or if the entity is not a player.
+     * @param attacker The attacking entity.
+     * @return Whether the attack was full strength.
+     */
+    public static boolean isFullStrength(LivingEntity attacker) {
+        return !(attacker instanceof Player player) || player.getAttackStrengthScale(1.0F) == 1.0F;
+    }
+
     /**
      * Calculates damage increase based on a base value, the amount of damage taken (maximum durability - current durability), and the stack's maximum durability.<br>
      * <a href="https://www.desmos.com/calculator/gmaj2zduis">See math visually.</a>

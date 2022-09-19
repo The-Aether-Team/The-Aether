@@ -3,8 +3,8 @@ package com.gildedgames.aether.item.combat;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +18,7 @@ public class CandyCaneSwordItem extends SwordItem {
     }
 
     /**
-     * Drops candy canes if the target can drop them and if the attacker attacked with full attack strength if they're a player, with a 1/2 chance.
+     * Drops candy canes if the target can drop them and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}, with a 1/2 chance.
      * @param stack The stack used to hurt the target
      * @param target The hurt entity.
      * @param attacker The attacking entity.
@@ -26,7 +26,7 @@ public class CandyCaneSwordItem extends SwordItem {
      */
     @Override
     public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
-        if ((attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player)) {
+        if (EquipmentUtil.isFullStrength(attacker)) {
             if (!target.getType().is(AetherTags.Entities.NO_CANDY_CANE_DROPS) && target.getLevel().getRandom().nextBoolean()) {
                 target.spawnAtLocation(AetherItems.CANDY_CANE.get());
             }

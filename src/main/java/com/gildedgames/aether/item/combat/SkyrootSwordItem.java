@@ -3,10 +3,10 @@ package com.gildedgames.aether.item.combat;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.abilities.weapon.SkyrootWeapon;
+import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
@@ -58,15 +58,15 @@ public class SkyrootSwordItem extends SwordItem implements SkyrootWeapon {
     }
 
     /**
-     * Basic checks to perform the ability if the source is living, the target can have their drops doubled, the item is a skyroot weapon, and if the attacker attacked with full attack strength if they're a player.
+     * Basic checks to perform the ability if the source is living, the target can have their drops doubled, the item is a skyroot weapon, and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
      * @param target The killed entity.
      * @param source The attacking damage source.
      */
     private static SkyrootWeapon canPerformAbility(LivingEntity target, DamageSource source) {
-        if (source.getDirectEntity() instanceof LivingEntity livingEntity) {
-            if ((livingEntity instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(livingEntity instanceof Player)) {
+        if (source.getDirectEntity() instanceof LivingEntity attacker) {
+            if (EquipmentUtil.isFullStrength(attacker)) {
                 if (!target.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
-                    if (livingEntity.getMainHandItem().getItem() instanceof SkyrootWeapon skyrootWeapon) {
+                    if (attacker.getMainHandItem().getItem() instanceof SkyrootWeapon skyrootWeapon) {
                         return skyrootWeapon;
                     }
                 }

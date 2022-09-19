@@ -5,6 +5,7 @@ import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
 
 import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -31,7 +32,7 @@ public class PigSlayerItem extends SwordItem {
 	}
 
 	/**
-	 * Instantly kills the target if they're a pig entity and if the attacker attacked with full attack strength if they're a player. Flame particles are spawned around the target when hit.
+	 * Instantly kills the target if they're a pig entity and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}. Flame particles are spawned around the target when hit.
 	 * @param stack The stack used to hurt the target
 	 * @param target The hurt entity.
 	 * @param attacker The attacking entity.
@@ -39,7 +40,7 @@ public class PigSlayerItem extends SwordItem {
 	 */
 	@Override
 	public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
-		if ((attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player)) {
+		if (EquipmentUtil.isFullStrength(attacker)) {
 			if (target.getType().is(AetherTags.Entities.PIGS)) {
 				DamageSource damageSource = attacker instanceof Player player ? DamageSource.playerAttack(player) : DamageSource.mobAttack(attacker);
 				target.hurt(damageSource, 9999);
@@ -74,15 +75,15 @@ public class PigSlayerItem extends SwordItem {
 	}
 
 	/**
-	 * Basic checks to perform the ability if the source is living, the target is a pig, the item is a pig slayer, and if the attacker attacked with full attack strength if they're a player.
+	 * Basic checks to perform the ability if the source is living, the target is a pig, the item is a pig slayer, and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
 	 * @param target The killed entity.
 	 * @param source The attacking damage source.
 	 */
 	private static boolean canPerformAbility(LivingEntity target, DamageSource source) {
-		if (source.getDirectEntity() instanceof LivingEntity livingEntity) {
-			if ((livingEntity instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(livingEntity instanceof Player)) {
+		if (source.getDirectEntity() instanceof LivingEntity attacker) {
+			if (EquipmentUtil.isFullStrength(attacker)) {
 				if (target.getType().is(AetherTags.Entities.PIGS)) {
-					return livingEntity.getMainHandItem().is(AetherItems.PIG_SLAYER.get());
+					return attacker.getMainHandItem().is(AetherItems.PIG_SLAYER.get());
 				}
 			}
 		}
