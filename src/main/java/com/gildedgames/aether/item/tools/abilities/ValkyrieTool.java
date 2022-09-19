@@ -52,6 +52,6 @@ public interface ValkyrieTool {
      * @return The default reach modifier value.
      */
     private double getModifier() {
-        return 3.5D;
+        return 3.5;
     }
 }

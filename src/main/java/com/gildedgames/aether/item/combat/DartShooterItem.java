@@ -92,7 +92,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
 
                     int powerModifier = stack.getEnchantmentLevel(Enchantments.POWER_ARROWS);
                     if (powerModifier > 0) {
-                        dart.setBaseDamage(dart.getBaseDamage() + powerModifier * 0.5D + 0.5D);
+                        dart.setBaseDamage(dart.getBaseDamage() + powerModifier * 0.5 + 0.5);
                     }
 
                     int punchModifier = stack.getEnchantmentLevel(Enchantments.PUNCH_ARROWS);

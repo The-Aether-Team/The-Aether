@@ -30,7 +30,7 @@ public class DartItem extends Item {
     public AbstractDart createDart(Level level, LivingEntity shooter) {
         AbstractDart dart = this.createDart(level);
         if (dart != null) {
-            dart.setPos(shooter.getX(), shooter.getEyeY() - 0.1D, shooter.getZ());
+            dart.setPos(shooter.getX(), shooter.getEyeY() - 0.1, shooter.getZ());
             dart.setOwner(shooter);
             return dart;
         } else {

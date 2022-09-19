@@ -199,7 +199,7 @@ public class AbilityHooks {
             }
         }
 
-        public static void lightningSwordTracking(EntityStruckByLightningEvent event, Entity entity, LightningBolt lightning) {
+        public static void lightningTracking(EntityStruckByLightningEvent event, Entity entity, LightningBolt lightning) {
             if (entity instanceof LivingEntity livingEntity) {
                 LightningTracker.get(lightning).ifPresent(lightningTracker -> {
                     if (lightningTracker.getOwner() != null) {

@@ -16,7 +16,7 @@ public interface HolystoneTool {
      */
     default void dropAmbrosium(Player player, Level level, BlockPos pos) {
         if (!level.isClientSide() && player.getRandom().nextInt(50) == 0) {
-            ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, new ItemStack(AetherItems.AMBROSIUM_SHARD.get()));
+            ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(AetherItems.AMBROSIUM_SHARD.get()));
             level.addFreshEntity(itemEntity);
         }
     }

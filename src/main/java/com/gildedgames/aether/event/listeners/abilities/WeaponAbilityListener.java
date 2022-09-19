@@ -33,6 +33,6 @@ public class WeaponAbilityListener {
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
         Entity entity = event.getEntity();
         LightningBolt lightningBolt = event.getLightning();
-        AbilityHooks.WeaponHooks.lightningSwordTracking(event, entity, lightningBolt); //Has to take event due to the event being canceled within a lambda.
+        AbilityHooks.WeaponHooks.lightningTracking(event, entity, lightningBolt); // Has to take event due to the event being canceled within a lambda.
     }
 }
