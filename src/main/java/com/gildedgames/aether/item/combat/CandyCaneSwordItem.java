@@ -18,7 +18,7 @@ public class CandyCaneSwordItem extends SwordItem {
     }
 
     /**
-     * Drops candy canes if the target can drop them, if the call isn't clientside, and if the attacker attacked with full attack strength if they're a player, with a 1/2 chance.
+     * Drops candy canes if the target can drop them and if the attacker attacked with full attack strength if they're a player, with a 1/2 chance.
      * @param stack The stack used to hurt the target
      * @param target The hurt entity.
      * @param attacker The attacking entity.
@@ -26,7 +26,7 @@ public class CandyCaneSwordItem extends SwordItem {
      */
     @Override
     public boolean hurtEnemy(@Nonnull ItemStack stack, LivingEntity target, @Nonnull LivingEntity attacker) {
-        if (!target.getType().is(AetherTags.Entities.NO_CANDY_CANE_DROPS) && !attacker.getLevel().isClientSide() && target.getLevel().getRandom().nextBoolean()
+        if (!target.getType().is(AetherTags.Entities.NO_CANDY_CANE_DROPS) && target.getLevel().getRandom().nextBoolean()
                 && ((attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player))) {
             target.spawnAtLocation(AetherItems.CANDY_CANE.get());
         }
