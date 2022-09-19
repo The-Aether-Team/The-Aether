@@ -13,14 +13,23 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public interface GravititeTool {
-    static boolean floatBlock(Level level, BlockPos pos, ItemStack stack, BlockState state, Player player, InteractionHand hand) {
-        if (stack.is(AetherTags.Items.GRAVITITE_TOOLS) && stack.getItem() instanceof TieredItem tieredItem) {
+    /**
+     * Floats a block by spawning a floating entity version at its position and removing the block. This occurs if the player isn't holding shift, if the tool can harvest the block, if the block has space above it, if it isn't a block entity, if the block is a singular block that's not in the blacklist tag, and if the call isn't clientside.
+     * This damages the tool for 4 durability. There is also behavior to allow the floating block to damage entities if it is an anvil.
+     * @param level The level of the block.
+     * @param pos The position of the block.
+     * @param stack The stack of the tool.
+     * @param state The state of the block.
+     * @param player The player using the tool.
+     * @param hand The hand the tool was used in.
+     * @return Whether the block was successfully floated or not.
+     */
+    default boolean floatBlock(Level level, BlockPos pos, ItemStack stack, BlockState state, Player player, InteractionHand hand) {
+        if (stack.getItem() instanceof TieredItem tieredItem) {
             if (player != null && !player.isShiftKeyDown()) {
-                float destroySpeed = stack.getDestroySpeed(state);
-                float efficiency = tieredItem.getTier().getSpeed();
-                if ((destroySpeed == efficiency || stack.isCorrectToolForDrops(state)) && level.isEmptyBlock(pos.above())) {
+                if ((stack.getDestroySpeed(state) == tieredItem.getTier().getSpeed() || stack.isCorrectToolForDrops(state)) && level.isEmptyBlock(pos.above())) {
                     if (level.getBlockEntity(pos) == null && state.getDestroySpeed(level, pos) >= 0.0F && !state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF) && !state.is(AetherTags.Blocks.GRAVITITE_ABILITY_BLACKLIST)) {
-                        if (!level.isClientSide) {
+                        if (!level.isClientSide()) {
                             FloatingBlockEntity entity = new FloatingBlockEntity(level, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, state);
                             if (state.is(BlockTags.ANVIL)) {
                                 entity.setHurtsEntities(2.0F, 40);

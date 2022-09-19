@@ -7,6 +7,7 @@ import com.gildedgames.aether.entity.projectile.dart.PoisonDart;
 import com.gildedgames.aether.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.item.tools.abilities.GravititeTool;
 import com.gildedgames.aether.item.tools.abilities.HolystoneTool;
 import com.gildedgames.aether.item.tools.abilities.ZaniteTool;
 import com.gildedgames.aether.loot.AetherLoot;
@@ -21,6 +22,7 @@ import com.gildedgames.aether.util.EquipmentUtil;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -105,26 +107,42 @@ public class AbilityHooks {
             return old;
         }
 
+        /**
+         * Handles ability for {@link com.gildedgames.aether.item.tools.abilities.HolystoneTool}.
+         * @see HolystoneTool#dropAmbrosium(Player, Level, BlockPos)
+         */
         public static void handleHolystoneToolAbility(Player player, Level level, BlockPos pos, ItemStack stack) {
             if (stack.getItem() instanceof HolystoneTool holystoneTool) {
                 holystoneTool.dropAmbrosium(player, level, pos);
             }
         }
 
+        /**
+         * Handles ability for {@link com.gildedgames.aether.item.tools.abilities.ZaniteTool}.<br>
+         * @see ZaniteTool#increaseSpeed(ItemStack, float)
+         */
         public static float handleZaniteToolAbility(ItemStack stack, float speed) {
             if (stack.getItem() instanceof ZaniteTool zaniteTool) {
                 return zaniteTool.increaseSpeed(stack, speed);
-            } else {
-                return speed;
             }
+            return speed;
         }
 
-        public static float reduceToolEffectiveness(Level level, BlockState state, ItemStack stack, float amount) {
+        /**
+         * Handles ability for {@link com.gildedgames.aether.item.tools.abilities.GravititeTool}.
+         * @see GravititeTool#floatBlock(Level, BlockPos, ItemStack, BlockState, Player, InteractionHand)
+         */
+        public static boolean handleGravititeToolAbility(Level level, BlockPos pos, ItemStack stack, BlockState state, Player player, InteractionHand hand) {
+            if (stack.getItem() instanceof GravititeTool gravititeTool) {
+                return gravititeTool.floatBlock(level, pos, stack, state, player, hand);
+            }
+            return false;
+        }
+
+        public static float reduceToolEffectiveness(Level level, BlockState state, ItemStack stack, float amount) { //todo wait did i ever even add functionality for this for aether tools to have regular effectiveness
             if (AetherConfig.COMMON.tools_debuff.get()) {
                 if (level.dimension() == AetherDimensions.AETHER_LEVEL) {
-                    if (!stack.isEmpty()
-                            && !stack.is(AetherTags.Items.EFFECTIVE_IN_AETHER)
-                            && stack.isCorrectToolForDrops(state)) {
+                    if (!stack.isEmpty() && !stack.is(AetherTags.Items.EFFECTIVE_IN_AETHER) && stack.isCorrectToolForDrops(state)) {
                         amount = (float) Math.pow(amount, -0.2);
                     }
                 }

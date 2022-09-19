@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 
 public interface HolystoneTool {
     /**
-     * Drops ambrosium from a block if the call isn't clientside with a 1/50 chance.
+     * Drops ambrosium at a block's position if the call isn't clientside with a 1/50 chance.
      * @param player The player that mined the block.
      * @param level The level of the block.
      * @param pos The position of the block.

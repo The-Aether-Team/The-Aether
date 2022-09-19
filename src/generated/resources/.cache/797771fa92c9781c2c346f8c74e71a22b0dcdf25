@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-18T17:08:36.4051085	Aether Item Tags
+// 1.19.2	2022-09-18T17:51:53.3477048	Aether Item Tags
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1b83b96d9600b7878597cc26851b843bf99a3dd data/aether/tags/items/accessories.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/aerbunny_temptation_items.json
@@ -24,7 +24,6 @@ bbd431b5ea0dbbac9aa71e30c71140e28ae93250 data/aether/tags/items/freezable_rings.
 1fa02ed3118a751ff7ef2022d14fa9d0ba8b31e6 data/aether/tags/items/golden_amber_harvesters.json
 65976e3564baed2ae1f9323801f6fdc2faa84331 data/aether/tags/items/golden_oak_logs.json
 24739a7c6e39fa7efc02d98276194ef47fa70290 data/aether/tags/items/gravitite_repairable.json
-040cb245d3d65374cd913886fe43237bcbb9dfd9 data/aether/tags/items/gravitite_tools.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/hammer_of_notch_repairable.json
 14656c5bacbe085775af17b37cc6fe661f3c5c00 data/aether/tags/items/hellfire_blocks.json
 7a6ab5f621a7a401034f482edac807cc203ff72b data/aether/tags/items/holystone.json

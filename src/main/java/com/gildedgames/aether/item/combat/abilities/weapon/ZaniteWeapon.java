@@ -36,7 +36,9 @@ public interface ZaniteWeapon {
     }
 
 	/**
-	 * Calculates damage increase using the weapon's attack damage (minus player's base attack strength, which is default 1.0) inputted into the zanite value buff function, which the original attack damage is then subtracted from to get the bonus damage amount from the difference.<br>
+	 * Calculates damage increase using the weapon's attack damage (minus player's base attack strength, which is default 1.0) inputted into the zanite value buff function, which the original attack damage is then subtracted from to get the bonus damage amount from the difference.
+	 * The minimum possible damage bonus is 1 and the maximum possible damage bonus is 7.<br>
+	 * <a href="https://www.desmos.com/calculator/rnnveeodba">See math visually.</a>
 	 * @param map The item's default attributes.
 	 * @param stack The stack correlating to the item.
 	 * @return The damage bonus value for the zanite weapon.

@@ -1,7 +1,6 @@
 package com.gildedgames.aether.event.listeners.abilities;
 
 import com.gildedgames.aether.event.hooks.AbilityHooks;
-import com.gildedgames.aether.item.tools.abilities.GravititeTool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -30,6 +29,9 @@ public class ToolAbilityListener {
         }
     }
 
+    /**
+     * @see AbilityHooks.ToolHooks#handleHolystoneToolAbility(Player, Level, BlockPos, ItemStack) 
+     */
     @SubscribeEvent
     public static void doHolystoneAbility(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
@@ -38,7 +40,11 @@ public class ToolAbilityListener {
         ItemStack itemStack = player.getMainHandItem();
         AbilityHooks.ToolHooks.handleHolystoneToolAbility(player, level, blockPos, itemStack);
     }
-
+    
+    /**
+     * @see AbilityHooks.ToolHooks#handleZaniteToolAbility(ItemStack, float)
+     * @see AbilityHooks.ToolHooks#reduceToolEffectiveness(Level, BlockState, ItemStack, float) 
+     */
     @SubscribeEvent
     public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
         BlockState blockState = event.getState();
@@ -49,6 +55,9 @@ public class ToolAbilityListener {
         event.setNewSpeed(AbilityHooks.ToolHooks.reduceToolEffectiveness(level, blockState, itemStack, event.getNewSpeed()));
     }
 
+    /**
+     * @see AbilityHooks.ToolHooks#handleGravititeToolAbility(Level, BlockPos, ItemStack, BlockState, Player, InteractionHand) 
+     */
     @SubscribeEvent
     public static void doGravititeAbility(BlockEvent.BlockToolModificationEvent event) {
         Level level = event.getContext().getLevel();
@@ -57,7 +66,7 @@ public class ToolAbilityListener {
         BlockState blockState = event.getState();
         Player player = event.getPlayer();
         InteractionHand interactionHand = event.getContext().getHand();
-        if (GravititeTool.floatBlock(level, blockPos, itemStack, blockState, player, interactionHand)) {
+        if (AbilityHooks.ToolHooks.handleGravititeToolAbility(level, blockPos, itemStack, blockState, player, interactionHand)) {
             event.setCanceled(true);
         }
     }

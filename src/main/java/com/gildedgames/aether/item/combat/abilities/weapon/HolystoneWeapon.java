@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 
 public interface HolystoneWeapon {
     /**
-     * Drops ambrosium if the target can drop ambrosium, if the call isn't clientside, and if the attacker attacked with full attack strength if they're a player, with a 1/25 chance.
+     * Drops ambrosium at a target's position if it can drop ambrosium, if the call isn't clientside, and if the attacker attacked with full attack strength if they're a player, with a 1/25 chance.
      * @param target The hurt entity.
      * @param attacker The attacking entity.
      */
