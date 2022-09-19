@@ -5,6 +5,7 @@ import com.gildedgames.aether.api.CustomizationsOptions;
 import com.gildedgames.aether.client.gui.screen.SunAltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
 import com.gildedgames.aether.client.renderer.AetherRenderers;
+import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
 
@@ -17,6 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterEntitySpectatorShadersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -69,6 +71,11 @@ public class AetherClient {
         for (MoaEggItem moaEggItem : MoaEggItem.moaEggs()) {
             colors.register((color, itemProvider) -> moaEggItem.getColor(), moaEggItem);
         }
+    }
+
+    @SubscribeEvent
+    public static void registerSpectatorShaders(RegisterEntitySpectatorShadersEvent event) {
+        event.register(AetherEntityTypes.SUN_SPIRIT.get(), new ResourceLocation(Aether.MODID, "shaders/post/sun_spirit.json"));
     }
 
     /**
