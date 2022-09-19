@@ -10,72 +10,103 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
+import javax.annotation.Nonnull;
+
 @Mod.EventBusSubscriber
-public class PigSlayerItem extends SwordItem
-{
+public class PigSlayerItem extends SwordItem {
 	public PigSlayerItem() {
-		super(AetherItemTiers.PIG_SLAYER, 3, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+		super(AetherItemTiers.PIG_SLAYER, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
 	}
 
+	/**
+	 * Instantly kills the target if they're a pig entity and if the attacker attacked with full attack strength if they're a player. Flame particles are spawned around the target when hit.
+	 * @param stack The stack used to hurt the target
+	 * @param target The hurt entity.
+	 * @param attacker The attacking entity.
+	 * @return Whether the enemy was hurt or not.
+	 */
 	@Override
-	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (target.getType().is(AetherTags.Entities.PIGS)) {
-			if (target.getHealth() > 0.0F) {
-				target.hurt(DamageSource.mobAttack(attacker), 9999);
-			}
-			if (target.level instanceof ServerLevel) {
-				ServerLevel world = (ServerLevel) target.level;
-				for (int i = 0; i < 20; i++) {
-					double d0 = world.getRandom().nextGaussian() * 0.02;
-					double d1 = world.getRandom().nextGaussian() * 0.02;
-					double d2 = world.getRandom().nextGaussian() * 0.02;
-					double d3 = 5.0D;
-					double x = target.getX() + (world.getRandom().nextFloat() * target.getBbWidth() * 2.0) - target.getBbWidth() - d0 * d3;
-					double y = target.getY() + (world.getRandom().nextFloat() * target.getBbHeight()) - d1 * d3;
-					double z = target.getZ() + (world.getRandom().nextFloat() * target.getBbWidth() * 2.0) - target.getBbWidth() - d2 * d3;
-					world.sendParticles(ParticleTypes.FLAME, x, y, z, 1, d0, d1, d2, 0.0F);
+	public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
+		if ((attacker instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(attacker instanceof Player)) {
+			if (target.getType().is(AetherTags.Entities.PIGS)) {
+				DamageSource damageSource = attacker instanceof Player player ? DamageSource.playerAttack(player) : DamageSource.mobAttack(attacker);
+				target.hurt(damageSource, 9999);
+				if (target.getLevel() instanceof ServerLevel level) {
+					for (int i = 0; i < 20; i++) {
+						double d0 = level.getRandom().nextGaussian() * 0.02;
+						double d1 = level.getRandom().nextGaussian() * 0.02;
+						double d2 = level.getRandom().nextGaussian() * 0.02;
+						double d3 = 5.0;
+						double x = target.getX() + (level.getRandom().nextFloat() * target.getBbWidth() * 2.0) - target.getBbWidth() - d0 * d3;
+						double y = target.getY() + (level.getRandom().nextFloat() * target.getBbHeight()) - d1 * d3;
+						double z = target.getZ() + (level.getRandom().nextFloat() * target.getBbWidth() * 2.0) - target.getBbWidth() - d2 * d3;
+						level.sendParticles(ParticleTypes.FLAME, x, y, z, 1, d0, d1, d2, 0.0);
+					}
 				}
 			}
 		}
 		return super.hurtEnemy(stack, target, attacker);
 	}
 
+	/**
+	 * @see PigSlayerItem#handlePigSlayerAbility(LivingEntity, Collection)
+	 */
 	@SubscribeEvent
 	public static void doPigSlayerDrops(LivingDropsEvent event) {
-		if (event.getSource() instanceof EntityDamageSource) {
-			LivingEntity entity = event.getEntity();
-			EntityDamageSource source = (EntityDamageSource) event.getSource();
-			if (source.getDirectEntity() instanceof Player) {
-				Player player = (Player) source.getDirectEntity();
-				ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
-				if (stack.is(AetherItems.PIG_SLAYER.get()) && entity.getType().is(AetherTags.Entities.PIGS)) {
-					if (entity.getRandom().nextInt(4) == 0) {
-						ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
-						for (ItemEntity drop : event.getDrops()) {
-							ItemStack droppedStack = drop.getItem();
-							if (droppedStack.is(AetherTags.Items.PIG_DROPS)) {
-								ItemEntity dropEntity = new ItemEntity(entity.level, drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy());
-								dropEntity.setDefaultPickUpDelay();
-								newDrops.add(dropEntity);
-							}
-						}
-						event.getDrops().addAll(newDrops);
-					}
+		LivingEntity livingEntity = event.getEntity();
+		DamageSource damageSource = event.getSource();
+		Collection<ItemEntity> drops = event.getDrops();
+		if (canPerformAbility(livingEntity, damageSource)) {
+			handlePigSlayerAbility(livingEntity, drops);
+		}
+	}
+
+	/**
+	 * Basic checks to perform the ability if the source is living, the target is a pig, the item is a pig slayer, and if the attacker attacked with full attack strength if they're a player.
+	 * @param target The killed entity.
+	 * @param source The attacking damage source.
+	 */
+	private static boolean canPerformAbility(LivingEntity target, DamageSource source) {
+		if (source.getDirectEntity() instanceof LivingEntity livingEntity) {
+			if ((livingEntity instanceof Player player && player.getAttackStrengthScale(1.0F) == 1.0F) || !(livingEntity instanceof Player)) {
+				if (target.getType().is(AetherTags.Entities.PIGS)) {
+					return livingEntity.getMainHandItem().is(AetherItems.PIG_SLAYER.get());
 				}
 			}
+		}
+		return false;
+	}
+
+	/**
+	 * Determines what drops should be doubled when a target is killed, with a 1/4 chance. Any items tagged as {@link AetherTags.Items#PIG_DROPS} are doubled.
+	 * The items that are able to be doubled are tracked in newDrops and added into drops which {@link PigSlayerItem#doPigSlayerDrops(LivingDropsEvent)} has access to.
+	 * @param target The killed entity.
+	 * @param drops The normal drops of the killed entity.
+	 */
+	private static void handlePigSlayerAbility(LivingEntity target, Collection<ItemEntity> drops) {
+		if (target.getRandom().nextInt(4) == 0) {
+			ArrayList<ItemEntity> newDrops = new ArrayList<>(drops.size());
+			for (ItemEntity drop : drops) {
+				ItemStack droppedStack = drop.getItem();
+				if (droppedStack.is(AetherTags.Items.PIG_DROPS)) {
+					ItemEntity dropEntity = new ItemEntity(target.getLevel(), drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy());
+					dropEntity.setDefaultPickUpDelay();
+					newDrops.add(dropEntity);
+				}
+			}
+			drops.addAll(newDrops);
 		}
 	}
 }

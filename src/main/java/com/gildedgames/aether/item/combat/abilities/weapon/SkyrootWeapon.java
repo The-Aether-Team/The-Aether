@@ -7,6 +7,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,7 +38,7 @@ public interface SkyrootWeapon {
 
     /**
      * Determines what drops should be doubled when a target is killed. Any items tagged as {@link AetherTags.Items#NO_SKYROOT_DOUBLE_DROPS} and any equipped items tracked by {@link SkyrootWeapon#doubleDropEntities} aren't doubled.
-     * The items that are able to be doubled are tracked in newDrops and added into drops which {@link net.minecraftforge.event.entity.living.LivingDropsEvent} has access to.
+     * The items that are able to be doubled are tracked in newDrops and added into drops which {@link com.gildedgames.aether.item.combat.SkyrootSwordItem#doSkyrootDoubleDrops(LivingDropsEvent)} has access to.
      * @param target The killed entity.
      * @param drops The normal drops of the killed entity.
      */
