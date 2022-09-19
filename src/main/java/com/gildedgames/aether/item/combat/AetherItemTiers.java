@@ -67,10 +67,4 @@ public enum AetherItemTiers implements Tier {
 	public Ingredient getRepairIngredient() {
 		return this.repairMaterial.get();
 	}
-
-	//TODO: Implement to work with new tag system for tool efficiency.
-//	@Nullable
-//	public Tag<Block> getTag() {
-//		return ForgeHooks.getTagFromVanillaTier(this);
-//	}
 }
