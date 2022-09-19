@@ -22,7 +22,8 @@ public class LightningSwordItem extends SwordItem {
     }
 
     /**
-     * Summons lightning at the position of the target if the attacker attacked with full attack strength if they're a player. {@link com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onLightningStrike(EntityStruckByLightningEvent)} prevents the attacker from being injured by the lightning.
+     * Summons lightning at the position of the target if the attacker attacked with full attack strength if they're a player.
+     * {@link com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onLightningStrike(EntityStruckByLightningEvent)} prevents the attacker from being injured by the lightning.
      * @param stack The stack used to hurt the target
      * @param target The hurt entity.
      * @param attacker The attacking entity.

@@ -20,7 +20,7 @@ public class PhoenixBowItem extends BowItem {
 
     /**
      * Marks any arrow shot from the bow as a phoenix arrow with a default fire infliction time of 20 seconds, and 40 seconds if the bow has flame.
-     * This uses {@link com.gildedgames.aether.capability.arrow.PhoenixArrowCapability} to track these values, and uses
+     * This uses {@link com.gildedgames.aether.capability.arrow.PhoenixArrowCapability#setPhoenixArrow(boolean)} and {@link com.gildedgames.aether.capability.arrow.PhoenixArrowCapability#setFireTime(int)} to track these values .
      * @param arrow The arrow created by the bow.
      * @return The original arrow (the phoenix bow doesn't modify it).
      */

@@ -14,6 +14,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 
 import javax.annotation.Nonnull;
 
@@ -24,6 +25,7 @@ public class LightningKnifeItem extends Item {
 
 	/**
 	 * Spawns a lightning knife projectile when right-clicking, consuming the item.
+	 * {@link com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onLightningStrike(EntityStruckByLightningEvent)} prevents the attacker from being injured by the lightning.
 	 * @param level The level of the user.
 	 * @param player The entity using this item.
 	 * @param hand The hand in which the item is being used.

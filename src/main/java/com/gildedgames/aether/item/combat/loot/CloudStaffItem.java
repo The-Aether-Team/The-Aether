@@ -1,5 +1,6 @@
 package com.gildedgames.aether.item.combat.loot;
 
+import com.gildedgames.aether.capability.player.AetherPlayerCapability;
 import com.gildedgames.aether.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
@@ -26,7 +27,7 @@ public class CloudStaffItem extends Item {
 
     /**
      * Summons two cloud minions if the player has none summoned, spawning particles and taking 1 durability off the item. If the player already has cloud minions, nothing happens. If the player shifts and right clicks, the cloud minions are despawned.
-     * The tracking for whether cloud minions are summoned or not is handled with {@link com.gildedgames.aether.capability.player.AetherPlayerCapability}.
+     * The tracking for whether cloud minions are summoned or not is handled with {@link AetherPlayerCapability#setCloudMinions(CloudMinion, CloudMinion)} and {@link AetherPlayerCapability#getCloudMinions()}.
      * @param level The level of the user.
      * @param player The entity using this item.
      * @param hand The hand in which the item is being used.

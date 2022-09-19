@@ -1,5 +1,6 @@
 package com.gildedgames.aether.event.hooks;
 
+import com.gildedgames.aether.capability.lightning.LightningTrackerCapability;
 import com.gildedgames.aether.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.entity.projectile.dart.EnchantedDart;
 import com.gildedgames.aether.entity.projectile.dart.GoldenDart;
@@ -210,7 +211,7 @@ public class AbilityHooks {
         }
 
         /**
-         * Prevents an entity from being hurt by a lightning strike if {@link com.gildedgames.aether.capability.lightning.LightningTrackerCapability} finds an owner associated with the lightning, if it was summoned through usage of a weapon.
+         * Prevents an entity from being hurt by a lightning strike if {@link LightningTrackerCapability#getOwner()} finds an owner associated with the lightning, if it was summoned through usage of a weapon.
          * @param entity The entity struck by the lightning bolt.
          * @param lightning The lightning bolt that struck the entity.
          */
