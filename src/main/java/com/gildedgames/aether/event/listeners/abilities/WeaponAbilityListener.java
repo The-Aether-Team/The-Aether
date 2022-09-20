@@ -22,7 +22,9 @@ public class WeaponAbilityListener {
     public static void onDartHurt(LivingHurtEvent event) {
         LivingEntity livingEntity = event.getEntity();
         DamageSource damageSource = event.getSource();
-        AbilityHooks.WeaponHooks.stickDart(livingEntity, damageSource);
+        if (!event.isCanceled()) {
+            AbilityHooks.WeaponHooks.stickDart(livingEntity, damageSource);
+        }
     }
 
     /**
@@ -32,7 +34,9 @@ public class WeaponAbilityListener {
     public static void onArrowHit(ProjectileImpactEvent event) {
         HitResult hitResult = event.getRayTraceResult();
         Projectile projectile = event.getProjectile();
-        AbilityHooks.WeaponHooks.phoenixArrowHit(hitResult, projectile);
+        if (!event.isCanceled()) {
+            AbilityHooks.WeaponHooks.phoenixArrowHit(hitResult, projectile);
+        }
     }
 
     /**
@@ -42,6 +46,8 @@ public class WeaponAbilityListener {
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
         Entity entity = event.getEntity();
         LightningBolt lightningBolt = event.getLightning();
-        AbilityHooks.WeaponHooks.lightningTracking(event, entity, lightningBolt); // Has to take the event due to it being canceled within a lambda.
+        if (!event.isCanceled()) {
+            AbilityHooks.WeaponHooks.lightningTracking(event, entity, lightningBolt); // Has to take the event due to it being canceled within a lambda.
+        }
     }
 }

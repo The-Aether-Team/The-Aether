@@ -22,10 +22,12 @@ public class ArmorAbilityListener {
     @SubscribeEvent
     public static void onEntityUpdate(LivingEvent.LivingTickEvent event) {
         LivingEntity livingEntity = event.getEntity();
-        ValkyrieArmor.handleFlight(livingEntity);
-        NeptuneArmor.boostWaterSwimming(livingEntity);
-        PhoenixArmor.boostLavaSwimming(livingEntity);
-        PhoenixArmor.damageArmor(livingEntity);
+        if (!event.isCanceled()) {
+            ValkyrieArmor.handleFlight(livingEntity);
+            NeptuneArmor.boostWaterSwimming(livingEntity);
+            PhoenixArmor.boostLavaSwimming(livingEntity);
+            PhoenixArmor.damageArmor(livingEntity);
+        }
     }
 
     /**
@@ -43,7 +45,9 @@ public class ArmorAbilityListener {
     @SubscribeEvent
     public static void onEntityFall(LivingFallEvent event) {
         LivingEntity livingEntity = event.getEntity();
-        event.setCanceled(AbilityHooks.ArmorHooks.fallCancellation(livingEntity));
+        if (!event.isCanceled()) {
+            event.setCanceled(AbilityHooks.ArmorHooks.fallCancellation(livingEntity));
+        }
     }
 
     /**
@@ -53,7 +57,9 @@ public class ArmorAbilityListener {
     public static void onEntityAttack(LivingAttackEvent event) {
         LivingEntity livingEntity = event.getEntity();
         DamageSource damageSource = event.getSource();
-        event.setCanceled(PhoenixArmor.extinguishUser(livingEntity, damageSource));
+        if (!event.isCanceled()) {
+            event.setCanceled(PhoenixArmor.extinguishUser(livingEntity, damageSource));
+        }
     }
 
     /**
@@ -63,6 +69,8 @@ public class ArmorAbilityListener {
     public static void onEntityHurt(LivingHurtEvent event) {
         LivingEntity entity = event.getEntity();
         float damageAmount = event.getAmount();
-        event.setAmount(ObsidianArmor.protectUser(entity, damageAmount));
+        if (!event.isCanceled()) {
+            event.setAmount(ObsidianArmor.protectUser(entity, damageAmount));
+        }
     }
 }
