@@ -22,7 +22,7 @@ public class LightningSwordItem extends SwordItem {
     }
 
     /**
-     * Summons lightning at the position of the target if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
+     * Summons lightning at the position of the target if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.<br><br>
      * {@link com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onLightningStrike(EntityStruckByLightningEvent)} prevents the attacker from being injured by the lightning.
      * @param stack The {@link ItemStack} used to hurt the target
      * @param target The hurt {@link LivingEntity}.

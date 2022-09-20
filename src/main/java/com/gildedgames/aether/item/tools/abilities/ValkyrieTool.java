@@ -28,8 +28,8 @@ public interface ValkyrieTool {
     UUID ATTACK_RANGE_MODIFIER_OFFHAND_UUID = UUID.fromString("87771DE8-25F0-4D55-A545-61628712FD07");
 
     /**
-     * Sets up the attributes for the item if it is in the entity's main hand or offhand, adding attributes for the mining reach distance and the attack range distance alongside the default item attributes.
-     * Different UUIDs for each hand are necessary to avoid bugs when switching items between hands. parse(Map&lt;String, String&gt;, String, String)
+     * Sets up the attributes for the item if it is in the entity's main hand or offhand, adding attributes for the mining reach distance and the attack range distance alongside the default item attributes.<br><br>
+     * Different UUIDs for each hand are necessary to avoid bugs when switching items between hands.
      * @param map The item's default attributes ({@link Multimap Multimap&lt;Attribute, AttributeModifier&gt;}).
      * @param slot The {@link EquipmentSlot} the stack is in.
      * @return The new attributes ({@link Multimap Multimap&lt;Attribute, AttributeModifier&gt;}) made up of the old attributes and the reach attributes.

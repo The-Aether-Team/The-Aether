@@ -24,7 +24,7 @@ public class LightningKnifeItem extends Item {
 	}
 
 	/**
-	 * Spawns a lightning knife projectile when right-clicking, consuming the item.
+	 * Spawns a lightning knife projectile when right-clicking, consuming the item.<br><br>
 	 * {@link com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onLightningStrike(EntityStruckByLightningEvent)} prevents the attacker from being injured by the lightning.
 	 * @param level The {@link Level} of the user.
 	 * @param player The {@link Player} using this item.

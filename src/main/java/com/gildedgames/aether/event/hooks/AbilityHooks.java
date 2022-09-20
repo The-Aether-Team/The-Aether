@@ -173,7 +173,7 @@ public class AbilityHooks {
 
         /**
          * Debuffs the mining speed of blocks if they're Aether blocks (according to the description id, and the tags {@link AetherTags.Blocks#TREATED_AS_AETHER_BLOCK} and {@link AetherTags.Blocks#TREATED_AS_VANILLA_BLOCK}),
-         * and if the item is non-Aether (according to the description id, and the tag {@link AetherTags.Items#TREATED_AS_AETHER_ITEM}), as long as it's not an empty item (no item at all) and as long as its detected as the correct tool type for the block.
+         * and if the item is non-Aether (according to the description id, and the tag {@link AetherTags.Items#TREATED_AS_AETHER_ITEM}), as long as it's not an empty item (no item at all) and as long as its detected as the correct tool type for the block.<br><br>
          * The debuffed value is the original value to the power of -0.2.
          * @param state The {@link BlockState} of the block being mined.
          * @param stack The {@link ItemStack} being used for mining.
@@ -227,7 +227,8 @@ public class AbilityHooks {
 
     public static class WeaponHooks {
         /**
-         * Renders darts that hit the player as stuck on their model, similar to arrows. This is done through increasing values stored in {@link com.gildedgames.aether.capability.player.AetherPlayerCapability} that track the amount of different darts stuck in the player.
+         * Renders darts that hit the player as stuck on their model, similar to arrows.<br><br>
+         * This is done through increasing values stored in {@link com.gildedgames.aether.capability.player.AetherPlayerCapability} that track the amount of different darts stuck in the player.
          * @param entity The hurt {@link LivingEntity}.
          * @param source The {@link DamageSource} that hurt the entity.
          * @see com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onDartHurt(LivingHurtEvent)

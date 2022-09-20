@@ -38,8 +38,8 @@ public interface SkyrootWeapon {
     }
 
     /**
-     * Determines what drops should be doubled when a target is killed. Any items tagged as {@link AetherTags.Items#NO_SKYROOT_DOUBLE_DROPS} and any equipped items tracked by {@link SkyrootWeapon#doubleDropEntities} aren't doubled.
-     * The items that are able to be doubled are tracked in newDrops and added into drops which {@link com.gildedgames.aether.item.combat.SkyrootSwordItem#doSkyrootDoubleDrops(LivingDropsEvent)} has access to.
+     * Determines what drops should be doubled when a target is killed. Any items tagged as {@link AetherTags.Items#NO_SKYROOT_DOUBLE_DROPS} and any equipped items tracked by {@link SkyrootWeapon#doubleDropEntities} aren't doubled.<br><br>
+     * The items that will be doubled are tracked in newDrops and added into drops which {@link com.gildedgames.aether.item.combat.SkyrootSwordItem#doSkyrootDoubleDrops(LivingDropsEvent)} has access to.
      * @param target The killed {@link LivingEntity}.
      * @param drops The normal drops of the killed entity, as a {@link Collection Collection&lt;ItemEntity&gt;}.
      * @see com.gildedgames.aether.item.combat.SkyrootSwordItem

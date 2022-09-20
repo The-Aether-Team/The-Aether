@@ -23,7 +23,7 @@ import java.util.Map;
 
 public interface PhoenixArmor {
     /**
-     * Boosts the entity's movement in lava if wearing a full set of phoenix armor. The default boost is a multiplier of 10.5, but an extra 1.5 is added for every depth strider level up to depth strider 3.
+     * Boosts the entity's movement in lava if wearing a full set of phoenix armor. The default boost is a multiplier of 10.5, but an extra 1.5 is added for every depth strider level up to depth strider 3.<br><br>
      * Wearing phoenix armor also clears any fire from the wearer and spawns flame particles around them.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @see com.gildedgames.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
@@ -52,7 +52,8 @@ public interface PhoenixArmor {
     }
 
     /**
-     * Slowly damages the wearer's phoenix armor if they're in water, rain, or a bubble column. This is done by looping through the armor {@link EquipmentSlot}s and also checking with {@link top.theillusivec4.curios.common.CuriosHelper#findFirstCurio(LivingEntity, Item)} for the gloves.
+     * Slowly damages the wearer's phoenix armor if they're in water, rain, or a bubble column.<br><br>
+     * This is done by looping through the armor {@link EquipmentSlot}s and also checking with {@link top.theillusivec4.curios.common.CuriosHelper#findFirstCurio(LivingEntity, Item)} for the gloves.<br><br>
      * The methods used for this are {@link PhoenixArmor#breakPhoenixArmor(LivingEntity, ItemStack, ItemStack, EquipmentSlot)} and {@link PhoenixArmor#breakPhoenixGloves(LivingEntity, SlotResult, ItemStack)}.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @see com.gildedgames.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)

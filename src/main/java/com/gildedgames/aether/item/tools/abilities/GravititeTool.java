@@ -14,7 +14,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public interface GravititeTool {
     /**
-     * Floats a block by spawning a floating entity version at its position and removing the block. This occurs if the player isn't holding shift, if the tool can harvest the block, if the block has space above it, if it isn't a block entity, if the block is a singular block that's not in the blacklist tag, and if the call isn't clientside.
+     * Floats a block by spawning a floating entity version at its position and removing the block.<br><br>
+     * This occurs if the player isn't holding shift, if the tool can harvest the block, if the block has space above it, if it isn't a block entity, if the block is a singular block that's not in the {@link AetherTags.Blocks#GRAVITITE_ABILITY_BLACKLIST} tag, and if the call isn't clientside.<br><br>
      * This damages the tool for 4 durability. There is also behavior to allow the floating block to damage entities if it is an anvil.
      * @param level The {@link Level} of the block.
      * @param pos The {@link BlockPos} of the block.

@@ -34,8 +34,8 @@ public class PigSlayerItem extends SwordItem {
 	}
 
 	/**
-	 * Deals 20 hearts of damage to the target if they're a pig entity and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
-	 * Flame particles are spawned around the target when hit.
+	 * Deals 20 hearts of damage to the target if they're a pig entity and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.<br><br>
+	 * Flame particles are also spawned around the target when hit.
 	 * @param stack The {@link ItemStack} used to hurt the target
 	 * @param target The hurt {@link LivingEntity}.
 	 * @param attacker The attacking {@link LivingEntity}.
@@ -112,8 +112,8 @@ public class PigSlayerItem extends SwordItem {
 	}
 
 	/**
-	 * Determines what drops should be doubled when a target is killed, with a 1/4 chance. Any items tagged as {@link AetherTags.Items#PIG_DROPS} are doubled.
-	 * The items that are able to be doubled are tracked in newDrops and added into drops which {@link PigSlayerItem#doPigSlayerDrops(LivingDropsEvent)} has access to.
+	 * Determines what drops should be doubled when a target is killed, with a 1/4 chance. Any items tagged as {@link AetherTags.Items#PIG_DROPS} are doubled.<br><br>
+	 * The items that will be doubled are tracked in newDrops and added into drops which {@link PigSlayerItem#doPigSlayerDrops(LivingDropsEvent)} has access to.
 	 * @param target The killed {@link LivingEntity}.
 	 * @param drops The normal drops of the killed entity, as a {@link Collection Collection&lt;ItemEntity&gt;}.
 	 */
