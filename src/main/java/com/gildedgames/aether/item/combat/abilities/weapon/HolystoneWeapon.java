@@ -10,6 +10,7 @@ public interface HolystoneWeapon {
      * Drops ambrosium at a target's position if it can drop ambrosium, and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}, with a 1/25 chance.
      * @param target The hurt {@link LivingEntity}.
      * @param attacker The attacking {@link LivingEntity}.
+     * @see com.gildedgames.aether.item.combat.HolystoneSwordItem
      */
     default void dropAmbrosium(LivingEntity target, LivingEntity attacker) {
         if (EquipmentUtil.isFullStrength(attacker)) {

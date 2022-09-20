@@ -13,6 +13,12 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class ArmorAbilityListener {
+    /**
+     * @see ValkyrieArmor#handleFlight(LivingEntity)
+     * @see NeptuneArmor#boostWaterSwimming(LivingEntity)
+     * @see PhoenixArmor#boostLavaSwimming(LivingEntity)
+     * @see PhoenixArmor#damageArmor(LivingEntity)
+     */
     @SubscribeEvent
     public static void onEntityUpdate(LivingEvent.LivingTickEvent event) {
         LivingEntity livingEntity = event.getEntity();
@@ -22,18 +28,27 @@ public class ArmorAbilityListener {
         PhoenixArmor.damageArmor(livingEntity);
     }
 
+    /**
+     * @see GravititeArmor#boostedJump(LivingEntity)
+     */
     @SubscribeEvent
     public static void onEntityJump(LivingEvent.LivingJumpEvent event) {
         LivingEntity livingEntity = event.getEntity();
         GravititeArmor.boostedJump(livingEntity);
     }
 
+    /**
+     * @see AbilityHooks.ArmorHooks#fallCancellation(LivingEntity)
+     */
     @SubscribeEvent
     public static void onEntityFall(LivingFallEvent event) {
         LivingEntity livingEntity = event.getEntity();
         event.setCanceled(AbilityHooks.ArmorHooks.fallCancellation(livingEntity));
     }
 
+    /**
+     * @see PhoenixArmor#extinguishUser(LivingEntity, DamageSource)
+     */
     @SubscribeEvent
     public static void onEntityAttack(LivingAttackEvent event) {
         LivingEntity livingEntity = event.getEntity();
@@ -41,6 +56,9 @@ public class ArmorAbilityListener {
         event.setCanceled(PhoenixArmor.extinguishUser(livingEntity, damageSource));
     }
 
+    /**
+     * @see ObsidianArmor#protectUser(LivingEntity, float)
+     */
     @SubscribeEvent
     public static void onEntityHurt(LivingHurtEvent event) {
         LivingEntity entity = event.getEntity();

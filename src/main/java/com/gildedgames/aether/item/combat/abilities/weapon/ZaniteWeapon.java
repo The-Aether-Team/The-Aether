@@ -24,6 +24,7 @@ public interface ZaniteWeapon {
 	 * @param stack The {@link ItemStack} correlating to the item.
 	 * @param slot The {@link EquipmentSlot} the stack is in.
 	 * @return The new attributes ({@link Multimap Multimap&lt;Attribute, AttributeModifier&gt;}) made up of the old attributes and the damage bonus attribute.
+	 * @see com.gildedgames.aether.item.combat.ZaniteSwordItem
 	 */
     default Multimap<Attribute, AttributeModifier> increaseDamage(Multimap<Attribute, AttributeModifier> map, ItemStack stack, EquipmentSlot slot) {
         if (slot == EquipmentSlot.MAINHAND) {

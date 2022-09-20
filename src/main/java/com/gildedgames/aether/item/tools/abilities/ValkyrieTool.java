@@ -33,6 +33,8 @@ public interface ValkyrieTool {
      * @param map The item's default attributes ({@link Multimap Multimap&lt;Attribute, AttributeModifier&gt;}).
      * @param slot The {@link EquipmentSlot} the stack is in.
      * @return The new attributes ({@link Multimap Multimap&lt;Attribute, AttributeModifier&gt;}) made up of the old attributes and the reach attributes.
+     * @see com.gildedgames.aether.item.tools.valkyrie
+     * @see com.gildedgames.aether.item.combat.loot.ValkyrieLanceItem
      */
     default Multimap<Attribute, AttributeModifier> extendReachModifier(Multimap<Attribute, AttributeModifier> map, EquipmentSlot slot) {
         if (slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND) {

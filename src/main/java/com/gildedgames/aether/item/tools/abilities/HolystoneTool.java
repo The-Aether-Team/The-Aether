@@ -13,6 +13,7 @@ public interface HolystoneTool {
      * @param player The {@link Player} that mined the block.
      * @param level The {@link Level} of the block.
      * @param pos The {@link BlockPos} of the block.
+     * @see com.gildedgames.aether.event.hooks.AbilityHooks.ToolHooks#handleHolystoneToolAbility(Player, Level, BlockPos, ItemStack)
      */
     default void dropAmbrosium(Player player, Level level, BlockPos pos) {
         if (!level.isClientSide() && player.getRandom().nextInt(50) == 0) {

@@ -9,6 +9,7 @@ public interface ZaniteTool {
      * @param stack The {@link ItemStack} being used for mining.
      * @param speed The mining speed of the stack as a {@link Float}.
      * @return The buffed mining speed of the zanite tool as a {@link Float}.
+     * @see com.gildedgames.aether.event.hooks.AbilityHooks.ToolHooks#handleZaniteToolAbility(ItemStack, float)
      */
     default float increaseSpeed(ItemStack stack, float speed) {
         return (float) EquipmentUtil.calculateZaniteBuff(stack, speed);

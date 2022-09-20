@@ -23,6 +23,7 @@ public interface SkyrootWeapon {
     /**
      * Tracks a killed entity and adds any held or worn items corresponding with that entity to a list {@link SkyrootWeapon#doubleDropEntities}.
      * @param target The killed {@link LivingEntity}.
+     * @see com.gildedgames.aether.item.combat.SkyrootSwordItem
      */
     default void entityKilledBySkyroot(LivingEntity target) {
         NonNullList<Item> inventory = NonNullList.create();
@@ -41,6 +42,7 @@ public interface SkyrootWeapon {
      * The items that are able to be doubled are tracked in newDrops and added into drops which {@link com.gildedgames.aether.item.combat.SkyrootSwordItem#doSkyrootDoubleDrops(LivingDropsEvent)} has access to.
      * @param target The killed {@link LivingEntity}.
      * @param drops The normal drops of the killed entity, as a {@link Collection Collection&lt;ItemEntity&gt;}.
+     * @see com.gildedgames.aether.item.combat.SkyrootSwordItem
      */
     default void entityDropsBySkyroot(LivingEntity target, Collection<ItemEntity> drops) {
         ArrayList<ItemEntity> newDrops = new ArrayList<>(drops.size());

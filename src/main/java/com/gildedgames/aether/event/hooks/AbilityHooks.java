@@ -44,6 +44,11 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.List;
@@ -52,7 +57,7 @@ import java.util.Map;
 public class AbilityHooks {
     public static class AccessoryHooks {
         public static void damageGloves(Player player, Entity target) {
-            if (!player.level.isClientSide() && target instanceof LivingEntity livingTarget) {
+            if (!player.getLevel().isClientSide() && target instanceof LivingEntity livingTarget) {
                 if (livingTarget.isAttackable() && !livingTarget.skipAttackInteraction(player)) {
                     CuriosApi.getCuriosHelper().findFirstCurio(player, (stack) -> stack.getItem() instanceof GlovesItem).ifPresent((slotResult) -> slotResult.stack().hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND)));
                 }
@@ -61,6 +66,12 @@ public class AbilityHooks {
     }
 
     public static class ArmorHooks {
+        /**
+         * Cancels fall damage if the wearer either has sentry boots, a full gravitite armor set, or a full valkyrie armor set.
+         * @param entity The {@link LivingEntity} wearing the armor.
+         * @return Whether the wearer's fall damage should be cancelled, as a {@link Boolean}.
+         * @see com.gildedgames.aether.event.listeners.abilities.ArmorAbilityListener#onEntityFall(LivingFallEvent)
+         */
         public static boolean fallCancellation(LivingEntity entity) {
             return entity.getItemBySlot(EquipmentSlot.FEET).is(AetherItems.SENTRY_BOOTS.get()) || EquipmentUtil.hasFullGravititeSet(entity) || EquipmentUtil.hasFullValkyrieSet(entity);
         }
@@ -103,6 +114,7 @@ public class AbilityHooks {
          * @param old The old {@link BlockState} of the block an action is being performed on.
          * @param action The {@link ToolAction} being performed on the block.
          * @return The new {@link BlockState} of the block.
+         * @see com.gildedgames.aether.event.listeners.abilities.ToolAbilityListener#setupToolModifications(BlockEvent.BlockToolModificationEvent)
          */
         public static BlockState setupToolActions(LevelAccessor accessor, BlockPos pos, BlockState old, ToolAction action) {
             Block oldBlock = old.getBlock();
@@ -127,6 +139,7 @@ public class AbilityHooks {
         /**
          * Handles ability for {@link com.gildedgames.aether.item.tools.abilities.HolystoneTool}.
          * @see HolystoneTool#dropAmbrosium(Player, Level, BlockPos)
+         * @see com.gildedgames.aether.event.listeners.abilities.ToolAbilityListener#doHolystoneAbility(BlockEvent.BreakEvent)
          */
         public static void handleHolystoneToolAbility(Player player, Level level, BlockPos pos, ItemStack stack) {
             if (stack.getItem() instanceof HolystoneTool holystoneTool) {
@@ -137,6 +150,7 @@ public class AbilityHooks {
         /**
          * Handles ability for {@link com.gildedgames.aether.item.tools.abilities.ZaniteTool}.<br>
          * @see ZaniteTool#increaseSpeed(ItemStack, float)
+         * @see com.gildedgames.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvent.BreakSpeed)
          */
         public static float handleZaniteToolAbility(ItemStack stack, float speed) {
             if (stack.getItem() instanceof ZaniteTool zaniteTool) {
@@ -148,6 +162,7 @@ public class AbilityHooks {
         /**
          * Handles ability for {@link com.gildedgames.aether.item.tools.abilities.GravititeTool}.
          * @see GravititeTool#floatBlock(Level, BlockPos, ItemStack, BlockState, Player, InteractionHand)
+         * @see com.gildedgames.aether.event.listeners.abilities.ToolAbilityListener#doGravititeAbility(BlockEvent.BlockToolModificationEvent)
          */
         public static boolean handleGravititeToolAbility(Level level, BlockPos pos, ItemStack stack, BlockState state, Player player, InteractionHand hand) {
             if (stack.getItem() instanceof GravititeTool gravititeTool) {
@@ -164,6 +179,7 @@ public class AbilityHooks {
          * @param stack The {@link ItemStack} being used for mining.
          * @param speed The mining speed of the stack, as a {@link Float}.
          * @return The debuffed mining speed, as a {@link Float}.
+         * @see com.gildedgames.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvent.BreakSpeed)
          */
         public static float reduceToolEffectiveness(BlockState state, ItemStack stack, float speed) {
             if (AetherConfig.COMMON.tools_debuff.get()) {
@@ -176,13 +192,22 @@ public class AbilityHooks {
             return speed;
         }
 
+//        /**
+//         * Spawns
+//         * @param accessor The {@link LevelAccessor} of the level.
+//         * @param state The {@link BlockState} an action is being performed on.
+//         * @param stack The {@link ItemStack} performing an action.
+//         * @param action The {@link ToolAction} being performed.
+//         * @param context The {@link UseOnContext} of this interaction.
+//         * @see com.gildedgames.aether.event.listeners.abilities.ToolAbilityListener#doGoldenOakStripping(BlockEvent.BlockToolModificationEvent)
+//         */
         public static void stripGoldenOak(LevelAccessor accessor, BlockState state, ItemStack stack, ToolAction action, UseOnContext context) {
             if (action == ToolActions.AXE_STRIP) {
-                if (accessor instanceof Level level) {
+                if (accessor instanceof Level level) { //todo make this more generic and less hardcoded.
                     if (state.is(AetherTags.Blocks.GOLDEN_OAK_LOGS)) {
-                        if (level.getServer() != null) {
+                        if (level.getServer() != null && level instanceof ServerLevel serverLevel) {
                             Vec3 vector = context.getClickLocation();
-                            LootContext.Builder lootContext = new LootContext.Builder((ServerLevel) level)
+                            LootContext.Builder lootContext = new LootContext.Builder(serverLevel)
                                     .withParameter(LootContextParams.BLOCK_STATE, state)
                                     .withParameter(LootContextParams.ORIGIN, vector)
                                     .withParameter(LootContextParams.TOOL, stack);
@@ -205,6 +230,7 @@ public class AbilityHooks {
          * Renders darts that hit the player as stuck on their model, similar to arrows. This is done through increasing values stored in {@link com.gildedgames.aether.capability.player.AetherPlayerCapability} that track the amount of different darts stuck in the player.
          * @param entity The hurt {@link LivingEntity}.
          * @param source The {@link DamageSource} that hurt the entity.
+         * @see com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onDartHurt(LivingHurtEvent)
          */
         public static void stickDart(LivingEntity entity, DamageSource source) {
             if (entity instanceof Player player && !player.getLevel().isClientSide()) {
@@ -223,6 +249,7 @@ public class AbilityHooks {
          * Sets the hit entity on fire for the amount of seconds the phoenix arrow has stored, as determined by {@link com.gildedgames.aether.item.combat.loot.PhoenixBowItem#customArrow(AbstractArrow)}.
          * @param result The {@link HitResult} of the projectile.
          * @param projectile The {@link Projectile} that hit something.
+         * @see com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onArrowHit(ProjectileImpactEvent)
          */
         public static void phoenixArrowHit(HitResult result, Projectile projectile) {
             if (result.getType() == HitResult.Type.ENTITY && result instanceof EntityHitResult entityHitResult && projectile instanceof AbstractArrow abstractArrow) {
@@ -239,6 +266,7 @@ public class AbilityHooks {
          * Prevents an entity from being hurt by a lightning strike if {@link LightningTrackerCapability#getOwner()} finds an owner associated with the lightning, if it was summoned through usage of a weapon.
          * @param entity The {@link Entity} struck by the lightning bolt.
          * @param lightning The {@link LightningBolt} that struck the entity.
+         * @see com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onLightningStrike(EntityStruckByLightningEvent)
          */
         public static void lightningTracking(EntityStruckByLightningEvent event, Entity entity, LightningBolt lightning) {
             if (entity instanceof LivingEntity livingEntity) {
