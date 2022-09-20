@@ -31,7 +31,7 @@ If you have any questions or issues, or would just like to discuss Aether develo
 ## Writing commits
 If you are looking to commit to your fork and don't know how, make sure to read up on your relevant Git tutorial.
 
-Once you're ready to commit, there are some things to know about our commit styling. The Aether makes uses of conventional commits. To understand this, we recommend you read up on [Semantic Versioning](https://github.com/Gilded-Games/The-Aether/blob/1.19/docs/references/VERSIONING.md) first, and then our [Conventional Commit](https://github.com/Gilded-Games/The-Aether/blob/1.19/docs/references/COMMITS.md) standards.
+Once you're ready to commit, there are some things to know about our commit styling. The Aether makes uses of conventional commits. To understand this, we recommend you read up on [Semantic Versioning](https://github.com/Gilded-Games/.github/blob/main/references/VERSIONING.md) first, and then our [Conventional Commit](https://github.com/Gilded-Games/.github/blob/main/references/COMMITS.md) standards.
 
 It is important to use conventional commits because The Aether's workflow depends on them for code review and changelogs. Not using it makes management of contributions more difficult.
 
