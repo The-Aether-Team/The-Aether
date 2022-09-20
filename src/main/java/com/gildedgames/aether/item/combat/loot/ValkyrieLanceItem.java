@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 
 public class ValkyrieLanceItem extends SwordItem implements ValkyrieTool {
     public ValkyrieLanceItem() {
-        super(AetherItemTiers.VALKYRIE, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+        super(AetherItemTiers.VALKYRIE, 3, -2.6F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override
