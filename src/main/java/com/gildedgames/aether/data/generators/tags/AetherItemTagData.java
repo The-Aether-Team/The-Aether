@@ -70,7 +70,9 @@ public class AetherItemTagData extends ItemTagsProvider
                 Items.WITHER_SKELETON_SKULL,
                 Items.DRAGON_HEAD,
                 Items.NETHER_STAR);
-        tag(AetherTags.Items.PIG_DROPS).add(Items.PORKCHOP);
+        tag(AetherTags.Items.PIG_DROPS).add(
+                Items.PORKCHOP,
+                Items.COOKED_PORKCHOP);
         tag(AetherTags.Items.DARTS).add(
                 AetherItems.GOLDEN_DART.get(),
                 AetherItems.POISON_DART.get(),

@@ -8,6 +8,7 @@ import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
@@ -32,7 +33,8 @@ public class PigSlayerItem extends SwordItem {
 	}
 
 	/**
-	 * Instantly kills the target if they're a pig entity and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}. Flame particles are spawned around the target when hit.
+	 * Deals 20 damage (plus an extra 3.5 for every armor point the target might have) to the target if they're a pig entity and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
+	 * Flame particles are spawned around the target when hit.
 	 * @param stack The stack used to hurt the target
 	 * @param target The hurt entity.
 	 * @param attacker The attacking entity.
@@ -42,8 +44,12 @@ public class PigSlayerItem extends SwordItem {
 	public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
 		if (EquipmentUtil.isFullStrength(attacker)) {
 			if (target.getType().is(AetherTags.Entities.PIGS)) {
+				if (target instanceof ZombifiedPiglin zombifiedPiglin) {
+					zombifiedPiglin.setTarget(attacker);
+					zombifiedPiglin.alertOthers(); // AT: m_34473_()V
+				}
 				DamageSource damageSource = attacker instanceof Player player ? DamageSource.playerAttack(player) : DamageSource.mobAttack(attacker);
-				target.hurt(damageSource, 9999);
+				target.hurt(damageSource, 20 + (target.getArmorValue() * 3.5F));
 				if (target.getLevel() instanceof ServerLevel level) {
 					for (int i = 0; i < 20; i++) {
 						double d0 = level.getRandom().nextGaussian() * 0.02;
