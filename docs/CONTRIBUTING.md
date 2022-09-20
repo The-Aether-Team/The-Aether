@@ -45,7 +45,7 @@ When creating a PR:
 - Mark it as a draft if the changes are WIP.
 - Follow the template and example given when creating the PR. 
 - Follow the instructions of anything written in `[]`.
-- Make sure the section in the code block meets conventional commit standards, as we put the information into the merge commit.
+- Make sure the section in the code block meets [Conventional Commit](https://github.com/Gilded-Games/.github/blob/main/references/COMMITS.md) standards, as we put the information into the merge commit, just keep in mind the header becomes the title of the PR.
 
 ## Code review
 After your PR has been opened, we will make sure to label it with the relevant status, feat, and type labels and assign it to a developer for review. We will then review your code and test if it builds through CircleCI, as well as test the contents to verify they do as described.
