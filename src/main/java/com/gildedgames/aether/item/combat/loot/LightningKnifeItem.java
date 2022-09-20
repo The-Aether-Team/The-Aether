@@ -24,7 +24,7 @@ public class LightningKnifeItem extends Item {
 	}
 
 	/**
-	 * Spawns a lightning knife projectile when right-clicking, consuming the item.<br><br>
+	 * Spawns a thrown Lightning Knife projectile when right-clicking, consuming the item.<br><br>
 	 * {@link com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onLightningStrike(EntityStruckByLightningEvent)} prevents the attacker from being injured by the lightning.
 	 * @param level The {@link Level} of the user.
 	 * @param player The {@link Player} using this item.
@@ -36,7 +36,7 @@ public class LightningKnifeItem extends Item {
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, @Nonnull InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 		if (!level.isClientSide()) {
-			if (!player.getAbilities().instabuild && heldStack.getEnchantmentLevel(Enchantments.INFINITY_ARROWS) == 0) { // Note: Lightning knives can't be enchanted with infinity in survival, but we still implement the behavior.
+			if (!player.getAbilities().instabuild && heldStack.getEnchantmentLevel(Enchantments.INFINITY_ARROWS) == 0) { // Note: Lightning knives can't be enchanted with Infinity in survival, but we still implement the behavior.
 				heldStack.shrink(1);
 			}
 			ThrownLightningKnife lightningKnife = new ThrownLightningKnife(player, level);

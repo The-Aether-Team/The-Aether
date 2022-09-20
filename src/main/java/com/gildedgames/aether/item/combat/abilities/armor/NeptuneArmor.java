@@ -9,7 +9,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 
 public interface NeptuneArmor {
     /**
-     * Boosts the entity's movement in water or bubble columns if wearing a full set of neptune armor. The default boost is a multiplier of 1.55, but an extra 0.15 is added for every depth strider level up to depth strider 3.
+     * Boosts the entity's movement in water or bubble columns if wearing a full set of Neptune Armor. The default boost is a multiplier of 1.55, but an extra 0.15 is added for every Depth Strider level up to Depth Strider 3.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @see com.gildedgames.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
      */

@@ -19,7 +19,7 @@ public class EquipmentUtil {
     }
 
     /**
-     * Calculates damage increase based on a base value, the amount of damage taken (maximum durability - current durability), and the stack's maximum durability.<br>
+     * Calculates damage increase based on a base value, the amount of damage taken (maximum durability - current durability), and the stack's maximum durability.<br><br>
      * <a href="https://www.desmos.com/calculator/gmaj2zduis">See math visually.</a>
      * @param stack A {@link ItemStack} to check the durability of.
      * @param baseValue A base {@link Double} value.

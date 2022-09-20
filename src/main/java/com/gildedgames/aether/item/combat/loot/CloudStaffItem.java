@@ -26,9 +26,9 @@ public class CloudStaffItem extends Item {
     }
 
     /**
-     * Summons two cloud minions if the player has none summoned, spawning particles and taking 1 durability off the item. If the player already has cloud minions, nothing happens. <br><br>
-     * If the player shifts and right clicks, the cloud minions are despawned.<br><br>
-     * The tracking for whether cloud minions are summoned or not is handled with {@link AetherPlayerCapability#setCloudMinions(CloudMinion, CloudMinion)} and {@link AetherPlayerCapability#getCloudMinions()}.
+     * Summons two Cloud Minions if the player has none summoned, spawning particles and taking 1 durability off the item. If the player already has Cloud Minions, nothing happens. <br><br>
+     * If the player shifts and right clicks, the Cloud Minions are despawned.<br><br>
+     * The tracking for whether Cloud Minions are summoned or not is handled with {@link AetherPlayerCapability#setCloudMinions(CloudMinion, CloudMinion)} and {@link AetherPlayerCapability#getCloudMinions()}.
      * @param level The {@link Level} of the user.
      * @param player The {@link Player} using this item.
      * @param hand The {@link InteractionHand} in which the item is being used.

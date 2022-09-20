@@ -6,7 +6,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public interface ObsidianArmor {
     /**
-     * Halves the damage taken by an entity if wearing a full set of obsidian armor.
+     * Halves the damage taken by an entity if wearing a full set of Obsidian Armor.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @param amount The original damage amount as a {@link Float}.
      * @return The new damage amount as a {@link Float}.

@@ -34,7 +34,7 @@ public class PigSlayerItem extends SwordItem {
 	}
 
 	/**
-	 * Deals 20 hearts of damage to the target if they're a pig entity and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.<br><br>
+	 * Deals 20 hearts of damage to the target if they're a Pig-type entity and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.<br><br>
 	 * Flame particles are also spawned around the target when hit.
 	 * @param stack The {@link ItemStack} used to hurt the target
 	 * @param target The hurt {@link LivingEntity}.
@@ -71,7 +71,7 @@ public class PigSlayerItem extends SwordItem {
 	}
 
 	/**
-	 * Sets the normal weapon damage from the pig slayer to 0 if a pig is being attacked. This allows for more consistent damage handling in {@link PigSlayerItem#hurtEnemy(ItemStack, LivingEntity, LivingEntity)}.
+	 * Sets the normal weapon damage from the Pig Slayer to 0 if a Pig-type entity is being attacked. This allows for more consistent damage handling in {@link PigSlayerItem#hurtEnemy(ItemStack, LivingEntity, LivingEntity)}.
 	 */
 	@SubscribeEvent
 	public static void onPigSlayerHurt(LivingHurtEvent event) {
@@ -96,7 +96,7 @@ public class PigSlayerItem extends SwordItem {
 	}
 
 	/**
-	 * Basic checks to perform the ability if the source is living, the target is a pig, the item is a pig slayer, and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
+	 * Basic checks to perform the ability if the source is living, the target is a Pig-type entity, the item is a Pig Slayer, and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
 	 * @param target The killed {@link LivingEntity}.
 	 * @param source The attacking {@link DamageSource}.
 	 */

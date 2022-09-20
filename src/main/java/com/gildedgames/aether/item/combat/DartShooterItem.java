@@ -62,7 +62,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
     }
 
     /**
-     * Based somewhat on {@link net.minecraft.world.item.BowItem#releaseUsing(ItemStack, Level, LivingEntity, int)}, although we use {@link Item#finishUsingItem(ItemStack, Level, LivingEntity)} instead to allow for the dart shooter to shoot continuously without releasing.
+     * Based somewhat on {@link net.minecraft.world.item.BowItem#releaseUsing(ItemStack, Level, LivingEntity, int)}, although we use {@link Item#finishUsingItem(ItemStack, Level, LivingEntity)} instead to allow for the Dart Shooter to shoot continuously without releasing.
      * @param stack The {@link ItemStack} in use.
      * @param level The {@link Level} of the user.
      * @param user The {@link LivingEntity} using the stack.
@@ -74,7 +74,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
         if (user instanceof Player player) {
             ItemStack ammoItem = player.getProjectile(stack); // Gets matching ammo stack from inventory according to DartShooterItem#getAllSupportedProjectiles().
 
-            boolean creativeOrShooterIsInfinite = player.getAbilities().instabuild || stack.getEnchantmentLevel(Enchantments.INFINITY_ARROWS) > 0; // Note: Dart shooters can't be enchanted with infinity in survival, but we still implement the behavior.
+            boolean creativeOrShooterIsInfinite = player.getAbilities().instabuild || stack.getEnchantmentLevel(Enchantments.INFINITY_ARROWS) > 0; // Note: Dart shooters can't be enchanted with Infinity in survival, but we still implement the behavior.
             boolean stillHasAmmo = !ammoItem.isEmpty() || creativeOrShooterIsInfinite;
 
             ForgeEventFactory.onArrowLoose(stack, level, player, 0, stillHasAmmo);
@@ -123,7 +123,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
     }
 
     /**
-     * The dart shooter has a very short usage duration to make it almost instant but still play the usage animation; any shorter duration breaks the animation.
+     * The Dart Shooter has a very short usage duration to make it almost instant but still play the usage animation; any shorter duration breaks the animation.
      * @param stack The {@link ItemStack} in use.
      * @return The usage duration in ticks as an {@link Integer}.
      */
@@ -167,7 +167,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
     }
 
     /**
-     * @return A {@link Supplier Supplier&lt;Item&gt;} that gives the dart item that this dart shooter is capable of using as ammo.
+     * @return A {@link Supplier Supplier&lt;Item&gt;} that gives the Dart item that this Dart Shooter is capable of using as ammo.
      */
     public Supplier<Item> getDartType() {
         return this.dartType;

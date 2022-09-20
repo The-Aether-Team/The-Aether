@@ -10,7 +10,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 
 public interface ValkyrieArmor {
     /**
-     * Allows an entity temporary upwards flight if wearing a full set of valkyrie armor. This only works for players.
+     * Allows an entity temporary upwards flight if wearing a full set of Valkyrie Armor. This only works for players.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @see com.gildedgames.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
      */

@@ -66,7 +66,7 @@ public class AbilityHooks {
 
     public static class ArmorHooks {
         /**
-         * Cancels fall damage if the wearer either has sentry boots, a full gravitite armor set, or a full valkyrie armor set.
+         * Cancels fall damage if the wearer either has Sentry Boots, a full Gravitite Armor set, or a full Valkyrie Armor set.
          * @param entity The {@link LivingEntity} wearing the armor.
          * @return Whether the wearer's fall damage should be cancelled, as a {@link Boolean}.
          * @see com.gildedgames.aether.event.listeners.abilities.ArmorAbilityListener#onEntityFall(LivingFallEvent)
@@ -224,7 +224,7 @@ public class AbilityHooks {
 
     public static class WeaponHooks {
         /**
-         * Renders darts that hit the player as stuck on their model, similar to arrows.<br><br>
+         * Renders Darts that hit the player as stuck on their model, similar to Arrows.<br><br>
          * This is done through increasing values stored in {@link com.gildedgames.aether.capability.player.AetherPlayerCapability} that track the amount of different darts stuck in the player.
          * @param entity The hurt {@link LivingEntity}.
          * @param source The {@link DamageSource} that hurt the entity.
@@ -244,7 +244,7 @@ public class AbilityHooks {
         }
 
         /**
-         * Sets the hit entity on fire for the amount of seconds the phoenix arrow has stored, as determined by {@link com.gildedgames.aether.item.combat.loot.PhoenixBowItem#customArrow(AbstractArrow)}.
+         * Sets the hit entity on fire for the amount of seconds the Phoenix Arrow has stored, as determined by {@link com.gildedgames.aether.item.combat.loot.PhoenixBowItem#customArrow(AbstractArrow)}.
          * @param result The {@link HitResult} of the projectile.
          * @param projectile The {@link Projectile} that hit something.
          * @see com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onArrowHit(ProjectileImpactEvent)

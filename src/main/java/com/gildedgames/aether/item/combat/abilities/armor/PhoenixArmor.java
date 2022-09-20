@@ -23,8 +23,8 @@ import java.util.Map;
 
 public interface PhoenixArmor {
     /**
-     * Boosts the entity's movement in lava if wearing a full set of phoenix armor. The default boost is a multiplier of 10.5, but an extra 1.5 is added for every depth strider level up to depth strider 3.<br><br>
-     * Wearing phoenix armor also clears any fire from the wearer and spawns flame particles around them.
+     * Boosts the entity's movement in lava if wearing a full set of Phoenix Armor. The default boost is a multiplier of 10.5, but an extra 1.5 is added for every Depth Strider level up to Depth Strider 3.<br><br>
+     * Wearing Phoenix Armor also clears any fire from the wearer and spawns flame particles around them.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @see com.gildedgames.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
      */
@@ -52,7 +52,7 @@ public interface PhoenixArmor {
     }
 
     /**
-     * Slowly damages the wearer's phoenix armor if they're in water, rain, or a bubble column.<br><br>
+     * Slowly damages the wearer's Phoenix Armor if they're in water, rain, or a bubble column.<br><br>
      * This is done by looping through the armor {@link EquipmentSlot}s and also checking with {@link top.theillusivec4.curios.common.CuriosHelper#findFirstCurio(LivingEntity, Item)} for the gloves.<br><br>
      * The methods used for this are {@link PhoenixArmor#breakPhoenixArmor(LivingEntity, ItemStack, ItemStack, EquipmentSlot)} and {@link PhoenixArmor#breakPhoenixGloves(LivingEntity, SlotResult, ItemStack)}.
      * @param entity The {@link LivingEntity} wearing the armor.
@@ -125,7 +125,7 @@ public interface PhoenixArmor {
     }
 
     /**
-     * Prevents a user from receiving fire damage if wearing a full set of phoenix armor.
+     * Prevents a user from receiving fire damage if wearing a full set of Phoenix Armor.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @param source The attacking {@link DamageSource}.
      * @return Whether the fire damage should be cancelled, as a {@link Boolean}.
