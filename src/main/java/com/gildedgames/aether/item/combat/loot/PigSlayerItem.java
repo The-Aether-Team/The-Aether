@@ -36,10 +36,10 @@ public class PigSlayerItem extends SwordItem {
 	/**
 	 * Deals 20 hearts of damage to the target if they're a pig entity and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
 	 * Flame particles are spawned around the target when hit.
-	 * @param stack The stack used to hurt the target
-	 * @param target The hurt entity.
-	 * @param attacker The attacking entity.
-	 * @return Whether the enemy was hurt or not.
+	 * @param stack The {@link ItemStack} used to hurt the target
+	 * @param target The hurt {@link LivingEntity}.
+	 * @param attacker The attacking {@link LivingEntity}.
+	 * @return Whether the enemy was hurt or not, as a {@link Boolean}.
 	 */
 	@Override
 	public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
@@ -97,8 +97,8 @@ public class PigSlayerItem extends SwordItem {
 
 	/**
 	 * Basic checks to perform the ability if the source is living, the target is a pig, the item is a pig slayer, and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
-	 * @param target The killed entity.
-	 * @param source The attacking damage source.
+	 * @param target The killed {@link LivingEntity}.
+	 * @param source The attacking {@link DamageSource}.
 	 */
 	private static boolean canPerformAbility(LivingEntity target, DamageSource source) {
 		if (source.getDirectEntity() instanceof LivingEntity attacker) {
@@ -114,8 +114,8 @@ public class PigSlayerItem extends SwordItem {
 	/**
 	 * Determines what drops should be doubled when a target is killed, with a 1/4 chance. Any items tagged as {@link AetherTags.Items#PIG_DROPS} are doubled.
 	 * The items that are able to be doubled are tracked in newDrops and added into drops which {@link PigSlayerItem#doPigSlayerDrops(LivingDropsEvent)} has access to.
-	 * @param target The killed entity.
-	 * @param drops The normal drops of the killed entity.
+	 * @param target The killed {@link LivingEntity}.
+	 * @param drops The normal drops of the killed entity, as a {@link Collection Collection&lt;ItemEntity&gt;}.
 	 */
 	private static void handlePigSlayerAbility(LivingEntity target, Collection<ItemEntity> drops) {
 		if (target.getRandom().nextInt(4) == 0) {

@@ -8,10 +8,10 @@ import net.minecraft.world.level.block.state.BlockState;
 public interface SkyrootTool {
     /**
      * Doubles the count of item drops as long as the harvesting tool doesn't have silk touch and the block is able to have double drops.
-     * @param drop The stack dropped from a block.
-     * @param tool The tool used to harvest the block.
-     * @param state The state of the block.
-     * @return The new modified stack of the item drop.
+     * @param drop The {@link ItemStack} dropped from a block.
+     * @param tool The {@link ItemStack} of the tool used to harvest the block.
+     * @param state The {@link BlockState} of the block.
+     * @return The new modified {@link ItemStack} of the item drop.
      */
     default ItemStack doubleDrops(ItemStack drop, ItemStack tool, BlockState state) {
         if (tool != null && tool.getEnchantmentLevel(Enchantments.SILK_TOUCH) == 0) {

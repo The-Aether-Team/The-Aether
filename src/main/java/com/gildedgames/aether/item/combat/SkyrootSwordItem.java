@@ -59,8 +59,8 @@ public class SkyrootSwordItem extends SwordItem implements SkyrootWeapon {
 
     /**
      * Basic checks to perform the ability if the source is living, the target can have their drops doubled, the item is a skyroot weapon, and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
-     * @param target The killed entity.
-     * @param source The attacking damage source.
+     * @param target The killed {@link LivingEntity}.
+     * @param source The attacking {@link DamageSource}.
      */
     private static SkyrootWeapon canPerformAbility(LivingEntity target, DamageSource source) {
         if (source.getDirectEntity() instanceof LivingEntity attacker) {

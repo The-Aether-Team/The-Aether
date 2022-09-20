@@ -20,10 +20,10 @@ public interface ZaniteWeapon {
 
 	/**
 	 * Sets up the attributes for the item if it is in the entity's main hand, adding an attribute for the damage bonus value alongside the default item attributes.
-	 * @param map The item's default attributes.
-	 * @param stack The stack correlating to the item.
-	 * @param slot The slot the stack is in.
-	 * @return The new attributes made up of the old attributes and the damage bonus attribute.
+	 * @param map The item's default attributes ({@link Multimap Multimap&lt;Attribute, AttributeModifier&gt;}).
+	 * @param stack The {@link ItemStack} correlating to the item.
+	 * @param slot The {@link EquipmentSlot} the stack is in.
+	 * @return The new attributes ({@link Multimap Multimap&lt;Attribute, AttributeModifier&gt;}) made up of the old attributes and the damage bonus attribute.
 	 */
     default Multimap<Attribute, AttributeModifier> increaseDamage(Multimap<Attribute, AttributeModifier> map, ItemStack stack, EquipmentSlot slot) {
         if (slot == EquipmentSlot.MAINHAND) {
@@ -39,9 +39,9 @@ public interface ZaniteWeapon {
 	 * Calculates damage increase using the weapon's attack damage (minus player's base attack strength, which is default 1.0) inputted into the zanite value buff function, which the original attack damage is then subtracted from to get the bonus damage amount from the difference.
 	 * The minimum possible damage bonus is 1 and the maximum possible damage bonus is 7.<br>
 	 * <a href="https://www.desmos.com/calculator/rnnveeodba">See math visually.</a>
-	 * @param map The item's default attributes.
-	 * @param stack The stack correlating to the item.
-	 * @return The damage bonus value for the zanite weapon.
+	 * @param map The item's default attributes ({@link Multimap Multimap&lt;Attribute, AttributeModifier&gt;}).
+	 * @param stack The {@link ItemStack} correlating to the item.
+	 * @return The damage bonus value for the zanite weapon, as an {@link Integer}.
 	 */
 	private int calculateIncrease(Multimap<Attribute, AttributeModifier> map, ItemStack stack) {
 		double baseDamage = 0.0;

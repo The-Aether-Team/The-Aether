@@ -33,6 +33,8 @@ public class FlamingSwordItem extends SwordItem {
 
 	/**
 	 * Inflicts 30 seconds of fire on the target with an extra 4 seconds for every level of fire aspect the item has. This occurs if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
+	 * @param target The damaged {@link LivingEntity}
+	 * @param source The attacking {@link DamageSource}
 	 */
 	private static void handleFlamingSwordAbility(LivingEntity target, DamageSource source) {
 		if (source.getDirectEntity() instanceof LivingEntity attacker) {

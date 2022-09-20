@@ -28,10 +28,10 @@ public class CloudStaffItem extends Item {
     /**
      * Summons two cloud minions if the player has none summoned, spawning particles and taking 1 durability off the item. If the player already has cloud minions, nothing happens. If the player shifts and right clicks, the cloud minions are despawned.
      * The tracking for whether cloud minions are summoned or not is handled with {@link AetherPlayerCapability#setCloudMinions(CloudMinion, CloudMinion)} and {@link AetherPlayerCapability#getCloudMinions()}.
-     * @param level The level of the user.
-     * @param player The entity using this item.
-     * @param hand The hand in which the item is being used.
-     * @return Pass (do nothing) (we handle swing behavior manually in the lambda earlier on).
+     * @param level The {@link Level} of the user.
+     * @param player The {@link Player} using this item.
+     * @param hand The {@link InteractionHand} in which the item is being used.
+     * @return Pass (do nothing) (we handle swing behavior manually in the lambda earlier on). This is an {@link InteractionResultHolder InteractionResultHolder&lt;ItemStack&gt;}.
      */
     @Nonnull
     @Override
@@ -63,9 +63,9 @@ public class CloudStaffItem extends Item {
 
     /**
      * Sets that the cloud minions should shoot and sets a 40 tick cooldown on the item. The actual shooting behavior is handled in {@link CloudMinion#tick()}.
-     * @param stack The stack being swung.
-     * @param entity The swinging entity.
-     * @return Whether the item was successfully swung (we don't change this, so it uses the superclass' behavior).
+     * @param stack The {@link ItemStack} being swung.
+     * @param entity The swinging {@link LivingEntity}.
+     * @return Whether the item was successfully swung (we don't change this, so it uses the superclass' behavior), as a {@link Boolean}.
      */
     @Override
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
@@ -93,7 +93,7 @@ public class CloudStaffItem extends Item {
 
     /**
      * @see EntityUtil#spawnSummoningExplosionParticles(Entity)
-     * @param player The player to spawn the particles at.
+     * @param player The {@link Player} to spawn the particles at.
      */
     private void spawnExplosionParticles(Player player) {
         if (player.getLevel().isClientSide()) {

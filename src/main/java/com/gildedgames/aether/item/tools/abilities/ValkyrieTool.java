@@ -29,10 +29,10 @@ public interface ValkyrieTool {
 
     /**
      * Sets up the attributes for the item if it is in the entity's main hand or offhand, adding attributes for the mining reach distance and the attack range distance alongside the default item attributes.
-     * Different UUIDs for each hand are necessary to avoid bugs when switching items between hands.
-     * @param map The item's default attributes.
-     * @param slot The slot the stack is in.
-     * @return The new attributes made up of the old attributes and the reach attributes.
+     * Different UUIDs for each hand are necessary to avoid bugs when switching items between hands. parse(Map&lt;String, String&gt;, String, String)
+     * @param map The item's default attributes ({@link Multimap Multimap&lt;Attribute, AttributeModifier&gt;}).
+     * @param slot The {@link EquipmentSlot} the stack is in.
+     * @return The new attributes ({@link Multimap Multimap&lt;Attribute, AttributeModifier&gt;}) made up of the old attributes and the reach attributes.
      */
     default Multimap<Attribute, AttributeModifier> extendReachModifier(Multimap<Attribute, AttributeModifier> map, EquipmentSlot slot) {
         if (slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND) {
@@ -49,7 +49,7 @@ public interface ValkyrieTool {
     }
 
     /**
-     * @return The default reach modifier value.
+     * @return The default reach modifier value as a {@link Double}.
      */
     private double getModifier() {
         return 3.5;

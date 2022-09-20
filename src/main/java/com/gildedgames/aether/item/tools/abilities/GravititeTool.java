@@ -16,13 +16,13 @@ public interface GravititeTool {
     /**
      * Floats a block by spawning a floating entity version at its position and removing the block. This occurs if the player isn't holding shift, if the tool can harvest the block, if the block has space above it, if it isn't a block entity, if the block is a singular block that's not in the blacklist tag, and if the call isn't clientside.
      * This damages the tool for 4 durability. There is also behavior to allow the floating block to damage entities if it is an anvil.
-     * @param level The level of the block.
-     * @param pos The position of the block.
-     * @param stack The stack of the tool.
-     * @param state The state of the block.
-     * @param player The player using the tool.
-     * @param hand The hand the tool was used in.
-     * @return Whether the block was successfully floated or not.
+     * @param level The {@link Level} of the block.
+     * @param pos The {@link BlockPos} of the block.
+     * @param stack The {@link ItemStack} of the tool.
+     * @param state The {@link BlockState} of the block.
+     * @param player The {@link Player} using the tool.
+     * @param hand The {@link InteractionHand} the tool was used in.
+     * @return Whether the block was successfully floated or not, as a {@link Boolean}.
      */
     default boolean floatBlock(Level level, BlockPos pos, ItemStack stack, BlockState state, Player player, InteractionHand hand) {
         if (stack.getItem() instanceof TieredItem tieredItem) {

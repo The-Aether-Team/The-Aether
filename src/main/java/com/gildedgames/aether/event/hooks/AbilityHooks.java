@@ -98,11 +98,11 @@ public class AbilityHooks {
 
         /**
          * Handles modifying blocks when a {@link ToolAction} is performed on them.
-         * @param accessor The accessor of the level.
-         * @param pos The position within the level.
-         * @param old The old state of the block an action is being performed on.
-         * @param action The action being performed on the block.
-         * @return The new state of the block.
+         * @param accessor The {@link LevelAccessor} of the level.
+         * @param pos The {@link Block} within the level.
+         * @param old The old {@link BlockState} of the block an action is being performed on.
+         * @param action The {@link ToolAction} being performed on the block.
+         * @return The new {@link BlockState} of the block.
          */
         public static BlockState setupToolActions(LevelAccessor accessor, BlockPos pos, BlockState old, ToolAction action) {
             Block oldBlock = old.getBlock();
@@ -160,10 +160,10 @@ public class AbilityHooks {
          * Debuffs the mining speed of blocks if they're Aether blocks (according to the description id, and the tags {@link AetherTags.Blocks#TREATED_AS_AETHER_BLOCK} and {@link AetherTags.Blocks#TREATED_AS_VANILLA_BLOCK}),
          * and if the item is non-Aether (according to the description id, and the tag {@link AetherTags.Items#TREATED_AS_AETHER_ITEM}), as long as it's not an empty item (no item at all) and as long as its detected as the correct tool type for the block.
          * The debuffed value is the original value to the power of -0.2.
-         * @param state The state of the block being mined.
-         * @param stack The stack being used for mining.
-         * @param speed The mining speed of the stack.
-         * @return The debuffed mining speed.
+         * @param state The {@link BlockState} of the block being mined.
+         * @param stack The {@link ItemStack} being used for mining.
+         * @param speed The mining speed of the stack, as a {@link Float}.
+         * @return The debuffed mining speed, as a {@link Float}.
          */
         public static float reduceToolEffectiveness(BlockState state, ItemStack stack, float speed) {
             if (AetherConfig.COMMON.tools_debuff.get()) {
@@ -203,8 +203,8 @@ public class AbilityHooks {
     public static class WeaponHooks {
         /**
          * Renders darts that hit the player as stuck on their model, similar to arrows. This is done through increasing values stored in {@link com.gildedgames.aether.capability.player.AetherPlayerCapability} that track the amount of different darts stuck in the player.
-         * @param entity The hurt entity.
-         * @param source The source of the damage that hurt the entity.
+         * @param entity The hurt {@link LivingEntity}.
+         * @param source The {@link DamageSource} that hurt the entity.
          */
         public static void stickDart(LivingEntity entity, DamageSource source) {
             if (entity instanceof Player player && !player.getLevel().isClientSide()) {
@@ -221,8 +221,8 @@ public class AbilityHooks {
 
         /**
          * Sets the hit entity on fire for the amount of seconds the phoenix arrow has stored, as determined by {@link com.gildedgames.aether.item.combat.loot.PhoenixBowItem#customArrow(AbstractArrow)}.
-         * @param result The hit result of the projectile.
-         * @param projectile The projectile that hit something.
+         * @param result The {@link HitResult} of the projectile.
+         * @param projectile The {@link Projectile} that hit something.
          */
         public static void phoenixArrowHit(HitResult result, Projectile projectile) {
             if (result.getType() == HitResult.Type.ENTITY && result instanceof EntityHitResult entityHitResult && projectile instanceof AbstractArrow abstractArrow) {
@@ -237,8 +237,8 @@ public class AbilityHooks {
 
         /**
          * Prevents an entity from being hurt by a lightning strike if {@link LightningTrackerCapability#getOwner()} finds an owner associated with the lightning, if it was summoned through usage of a weapon.
-         * @param entity The entity struck by the lightning bolt.
-         * @param lightning The lightning bolt that struck the entity.
+         * @param entity The {@link Entity} struck by the lightning bolt.
+         * @param lightning The {@link LightningBolt} that struck the entity.
          */
         public static void lightningTracking(EntityStruckByLightningEvent event, Entity entity, LightningBolt lightning) {
             if (entity instanceof LivingEntity livingEntity) {

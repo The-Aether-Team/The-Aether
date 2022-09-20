@@ -9,8 +9,8 @@ import net.minecraft.world.entity.LivingEntity;
 public interface GravititeWeapon {
     /**
      * Launches an entity in the air if the target is launchable, the target is on the ground, and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
-     * @param target The hurt entity.
-     * @param attacker The attacking entity.
+     * @param target The hurt {@link LivingEntity}.
+     * @param attacker The attacking {@link LivingEntity}.
      */
     default void launchEntity(LivingEntity target, LivingEntity attacker) {
         if (EquipmentUtil.isFullStrength(attacker)) {

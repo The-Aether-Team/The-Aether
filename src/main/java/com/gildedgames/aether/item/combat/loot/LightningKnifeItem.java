@@ -26,10 +26,10 @@ public class LightningKnifeItem extends Item {
 	/**
 	 * Spawns a lightning knife projectile when right-clicking, consuming the item.
 	 * {@link com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onLightningStrike(EntityStruckByLightningEvent)} prevents the attacker from being injured by the lightning.
-	 * @param level The level of the user.
-	 * @param player The entity using this item.
-	 * @param hand The hand in which the item is being used.
-	 * @return Success (the item is swung).
+	 * @param level The {@link Level} of the user.
+	 * @param player The {@link Player} using this item.
+	 * @param hand The {@link InteractionHand} in which the item is being used.
+	 * @return Success (the item is swung). This is an {@link InteractionResultHolder InteractionResultHolder&lt;ItemStack&gt;}.
 	 */
 	@Nonnull
 	@Override

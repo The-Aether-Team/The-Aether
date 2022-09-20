@@ -19,10 +19,10 @@ public class CandyCaneSwordItem extends SwordItem {
 
     /**
      * Drops candy canes if the target can drop them and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}, with a 1/2 chance.
-     * @param stack The stack used to hurt the target
-     * @param target The hurt entity.
-     * @param attacker The attacking entity.
-     * @return Whether the enemy was hurt or not.
+     * @param stack The {@link ItemStack} used to hurt the target
+     * @param target The hurt {@link LivingEntity}.
+     * @param attacker The attacking {@link LivingEntity}.
+     * @return Whether the enemy was hurt or not, as a {@link Boolean}.
      */
     @Override
     public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {

@@ -11,8 +11,8 @@ import top.theillusivec4.curios.api.CuriosApi;
 public class EquipmentUtil {
     /**
      * An attack is full strength if either it's a player that attacked with full attack strength, or if the entity is not a player.
-     * @param attacker The attacking entity.
-     * @return Whether the attack was full strength.
+     * @param attacker The attacking {@link LivingEntity}.
+     * @return Whether the attack was full strength, as a {@link Boolean}.
      */
     public static boolean isFullStrength(LivingEntity attacker) {
         return !(attacker instanceof Player player) || player.getAttackStrengthScale(1.0F) == 1.0F;
@@ -21,9 +21,9 @@ public class EquipmentUtil {
     /**
      * Calculates damage increase based on a base value, the amount of damage taken (maximum durability - current durability), and the stack's maximum durability.<br>
      * <a href="https://www.desmos.com/calculator/gmaj2zduis">See math visually.</a>
-     * @param stack A stack to base durability checks off of.
-     * @param baseValue A base value.
-     * @return The buffed value.
+     * @param stack A {@link ItemStack} to check the durability of.
+     * @param baseValue A base {@link Double} value.
+     * @return The buffed {@link Double} value.
      */
     public static double calculateZaniteBuff(ItemStack stack, double baseValue) {
         return baseValue * (2.0 * ((double) stack.getDamageValue()) / ((double) stack.getMaxDamage()) + 0.5);

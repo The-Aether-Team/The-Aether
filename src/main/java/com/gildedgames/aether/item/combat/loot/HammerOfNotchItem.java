@@ -24,10 +24,10 @@ public class HammerOfNotchItem extends SwordItem {
 
     /**
      * Spawns a hammer projectile when right-clicking, setting a cooldown of 200 ticks for the item and taking off 1 durability.
-     * @param level The level of the user.
-     * @param player The entity using this item.
-     * @param hand The hand in which the item is being used.
-     * @return Success (the item is swung).
+     * @param level The {@link Level} of the user.
+     * @param player The {@link Player} using this item.
+     * @param hand The {@link InteractionHand} in which the item is being used.
+     * @return Success (the item is swung). This is an {@link InteractionResultHolder InteractionResultHolder&lt;ItemStack&gt;}.
      */
     @Nonnull
     @Override

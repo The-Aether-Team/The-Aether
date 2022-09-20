@@ -36,10 +36,11 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
 
     /**
      * Rearranged version of {@link net.minecraft.world.item.BowItem#use(Level, Player, InteractionHand)}.
-     * @param level The level of the user.
-     * @param player The entity using this item.
-     * @param hand The hand in which the item is being used.
+     * @param level The {@link Level} of the user.
+     * @param player The {@link Player} using this item.
+     * @param hand The {@link InteractionHand} in which the item is being used.
      * @return Consume (cause the item to bob down then up in hand) if the player has ammo or is in creative, or fail (do nothing) if those conditions aren't meant, or use the result of the Forge event hook if there is one.
+     * This is an {@link InteractionResultHolder InteractionResultHolder&lt;ItemStack&gt;}.
      */
     @Nonnull
     @Override
@@ -62,10 +63,10 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
 
     /**
      * Based somewhat on {@link net.minecraft.world.item.BowItem#releaseUsing(ItemStack, Level, LivingEntity, int)}, although we use {@link Item#finishUsingItem(ItemStack, Level, LivingEntity)} instead to allow for the dart shooter to shoot continuously without releasing.
-     * @param stack The stack in use.
-     * @param level The level of the user.
-     * @param user The entity using the stack.
-     * @return The used stack.
+     * @param stack The {@link ItemStack} in use.
+     * @param level The {@link Level} of the user.
+     * @param user The {@link LivingEntity} using the stack.
+     * @return The used {@link ItemStack}.
      */
     @Nonnull
     @Override
@@ -123,8 +124,8 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
 
     /**
      * The dart shooter has a very short usage duration to make it almost instant but still play the usage animation; any shorter duration breaks the animation.
-     * @param stack The stack in use.
-     * @return The usage duration in ticks.
+     * @param stack The {@link ItemStack} in use.
+     * @return The usage duration in ticks as an {@link Integer}.
      */
     @Override
     public int getUseDuration(@Nonnull ItemStack stack) {
@@ -148,7 +149,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
     }
 
     /**
-     * @return The block range that an entity's AI is capable of targeting to shoot with this weapon.
+     * @return The block range as an {@link Integer} that an entity's AI is capable of targeting to shoot with this weapon.
      */
     @Override
     public int getDefaultProjectileRange() {
@@ -166,7 +167,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
     }
 
     /**
-     * @return The dart item that this dart shooter is capable of using as ammo.
+     * @return A {@link Supplier Supplier&lt;Item&gt;} that gives the dart item that this dart shooter is capable of using as ammo.
      */
     public Supplier<Item> getDartType() {
         return this.dartType;

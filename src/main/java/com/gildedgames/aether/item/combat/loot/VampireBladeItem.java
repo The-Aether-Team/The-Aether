@@ -23,10 +23,10 @@ public class VampireBladeItem extends SwordItem {
     /**
      * Heals the attacker for half a heart when hurting the enemy if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
      * For players, this is done through tracking whether they should be healed through {@link AetherPlayerCapability#setVampireHealing(boolean)}.
-     * @param stack The stack used to hurt the target
-     * @param target The hurt entity.
-     * @param attacker The attacking entity.
-     * @return Whether the enemy was hurt or not.
+     * @param stack The {@link ItemStack} used to hurt the target
+     * @param target The hurt {@link LivingEntity}.
+     * @param attacker The attacking {@link LivingEntity}.
+     * @return Whether the enemy was hurt or not, as a {@link Boolean}.
      */
     @Override
     public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {

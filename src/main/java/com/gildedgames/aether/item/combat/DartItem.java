@@ -23,9 +23,9 @@ public class DartItem extends Item {
     /**
      * Creates dart with setup using shooter entity.
      * @see DartItem#createDart(Level)
-     * @param level Level of shooter entity.
-     * @param shooter Entity shooting dart.
-     * @return Dart entity created from dart entity type.
+     * @param level {@link Level} of shooter entity.
+     * @param shooter {@link LivingEntity} shooting dart.
+     * @return {@link AbstractDart} entity created from dart entity type.
      */
     public AbstractDart createDart(Level level, LivingEntity shooter) {
         AbstractDart dart = this.createDart(level);
@@ -40,8 +40,8 @@ public class DartItem extends Item {
 
     /**
      * Creates dart from given dart entity type.
-     * @param level The corresponding level.
-     * @return Dart entity created from dart entity type.
+     * @param level The corresponding {@link Level}.
+     * @return {@link AbstractDart} entity created from dart entity type.
      */
     public AbstractDart createDart(Level level) {
         Entity entity = this.getDartEntityType().get().create(level);
@@ -54,8 +54,8 @@ public class DartItem extends Item {
 
     /**
      * Based on {@link net.minecraft.world.item.ArrowItem#isInfinite(ItemStack, ItemStack, Player)}. Checks if the dart item is allowed to be infinite, if the dart shooter item has the infinity enchantment and the dart item is specifically DartItem and not a subclass.
-     * @param dartShooter The dart shooter stack.
-     * @return Whether the dart item ammo is allowed to be infinite.
+     * @param dartShooter The dart shooter {@link ItemStack}.
+     * @return Whether the dart item ammo is allowed to be infinite, as a {@link Boolean}.
      */
     public boolean isInfinite(ItemStack dartShooter) {
         int enchant = dartShooter.getEnchantmentLevel(Enchantments.INFINITY_ARROWS);
@@ -63,7 +63,7 @@ public class DartItem extends Item {
     }
 
     /**
-     * @return The entity type correlating with the projectile that can be created by this dart.
+     * @return A {@link Supplier Supplier&lt;? extends EntityType&lt;?&gt;&gt;} that gives the entity type correlating with the projectile that can be created by this dart.
      */
     public Supplier<? extends EntityType<?>> getDartEntityType() {
         return this.dartEntityType;
