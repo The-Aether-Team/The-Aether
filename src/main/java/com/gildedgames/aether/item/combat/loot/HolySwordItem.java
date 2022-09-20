@@ -23,7 +23,7 @@ public class HolySwordItem extends SwordItem {
     }
 
     /**
-     * Deals 15 damage to undead mobs or mobs that treat healing and harming effects as inverted, with an extra 2.5 damage for every level of smite the item has.
+     * Deals 15 damage to undead mobs or mobs that treat healing and harming effects as inverted, with an extra 2.5 damage for every level of smite the item has, in addition to the weapon's default damage.
      * This occurs if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}. This also reduces the item's durability by 10.
      * @param stack The stack used to hurt the target
      * @param target The hurt entity.
