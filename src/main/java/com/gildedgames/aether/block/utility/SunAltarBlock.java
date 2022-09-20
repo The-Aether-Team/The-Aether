@@ -26,6 +26,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public class SunAltarBlock extends BaseEntityBlock {
 	public SunAltarBlock(BlockBehaviour.Properties properties) {
@@ -48,19 +49,17 @@ public class SunAltarBlock extends BaseEntityBlock {
 				player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.no_permission"), true);
 				return InteractionResult.SUCCESS;
 			}
-			AetherTime aetherTime = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).orElse(null);
-			if(aetherTime != null) {
-				if(!aetherTime.getEternalDay() || AetherConfig.COMMON.disable_eternal_day.get()) {
+			Optional<AetherTime> aetherTimeOptional = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).resolve();
+			if (aetherTimeOptional.isPresent()) {
+				if (!aetherTimeOptional.get().getEternalDay() || AetherConfig.COMMON.disable_eternal_day.get()) {
 					this.openScreen(level, pos, player);
-					return InteractionResult.SUCCESS;
 				} else {
 					player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.in_control"), true);
-					return InteractionResult.SUCCESS;
 				}
 			} else {
 				player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.no_power"), true);
-				return InteractionResult.SUCCESS;
 			}
+			return InteractionResult.SUCCESS;
 		}
 	}
 
