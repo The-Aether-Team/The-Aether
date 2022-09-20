@@ -14,6 +14,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -33,7 +34,7 @@ public class PigSlayerItem extends SwordItem {
 	}
 
 	/**
-	 * Deals 20 damage (plus an extra 3.5 for every armor point the target might have) to the target if they're a pig entity and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
+	 * Deals 20 hearts of damage to the target if they're a pig entity and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
 	 * Flame particles are spawned around the target when hit.
 	 * @param stack The stack used to hurt the target
 	 * @param target The hurt entity.
@@ -45,11 +46,13 @@ public class PigSlayerItem extends SwordItem {
 		if (EquipmentUtil.isFullStrength(attacker)) {
 			if (target.getType().is(AetherTags.Entities.PIGS)) {
 				if (target instanceof ZombifiedPiglin zombifiedPiglin) {
-					zombifiedPiglin.setTarget(attacker);
-					zombifiedPiglin.alertOthers(); // AT: m_34473_()V
+					if (!(attacker instanceof Player player) || !player.isCreative()) {
+						zombifiedPiglin.setTarget(attacker);
+						zombifiedPiglin.alertOthers(); // AT: m_34473_()V
+					}
 				}
-				DamageSource damageSource = attacker instanceof Player player ? DamageSource.playerAttack(player) : DamageSource.mobAttack(attacker);
-				target.hurt(damageSource, 20 + (target.getArmorValue() * 3.5F));
+				DamageSource damageSource = (attacker instanceof Player player ? DamageSource.playerAttack(player) : DamageSource.mobAttack(attacker)).bypassArmor();
+				target.hurt(damageSource, 26); // This doesn't deal 26 hearts of damage, it deals 20.
 				if (target.getLevel() instanceof ServerLevel level) {
 					for (int i = 0; i < 20; i++) {
 						double d0 = level.getRandom().nextGaussian() * 0.02;
@@ -65,6 +68,18 @@ public class PigSlayerItem extends SwordItem {
 			}
 		}
 		return super.hurtEnemy(stack, target, attacker);
+	}
+
+	/**
+	 * Sets the normal weapon damage from the pig slayer to 0 if a pig is being attacked. This allows for more consistent damage handling in {@link PigSlayerItem#hurtEnemy(ItemStack, LivingEntity, LivingEntity)}.
+	 */
+	@SubscribeEvent
+	public static void onPigSlayerHurt(LivingHurtEvent event) {
+		LivingEntity livingEntity = event.getEntity();
+		DamageSource damageSource = event.getSource();
+		if (canPerformAbility(livingEntity, damageSource) && !damageSource.isBypassArmor()) {
+			event.setAmount(0);
+		}
 	}
 
 	/**
