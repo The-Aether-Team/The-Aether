@@ -40,14 +40,14 @@ public class WeaponAbilityListener {
     }
 
     /**
-     * @see AbilityHooks.WeaponHooks#lightningTracking(EntityStruckByLightningEvent, Entity, LightningBolt) 
+     * @see AbilityHooks.WeaponHooks#lightningTracking(Entity, LightningBolt)
      */
     @SubscribeEvent
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
         Entity entity = event.getEntity();
         LightningBolt lightningBolt = event.getLightning();
-        if (!event.isCanceled()) {
-            AbilityHooks.WeaponHooks.lightningTracking(event, entity, lightningBolt); // Has to take the event due to it being canceled within a lambda.
+        if (!event.isCanceled() && AbilityHooks.WeaponHooks.lightningTracking(entity, lightningBolt)) {
+            event.setCanceled(true);
         }
     }
 }

@@ -52,6 +52,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class AbilityHooks {
     public static class AccessoryHooks {
@@ -264,18 +265,20 @@ public class AbilityHooks {
          * Prevents an entity from being hurt by a lightning strike if {@link LightningTrackerCapability#getOwner()} finds an owner associated with the lightning, if it was summoned through usage of a weapon.
          * @param entity The {@link Entity} struck by the lightning bolt.
          * @param lightning The {@link LightningBolt} that struck the entity.
+         * @return Whether the entity being hurt by the lightning strike should be prevented, as a {@link Boolean}.
          * @see com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onLightningStrike(EntityStruckByLightningEvent)
          */
-        public static void lightningTracking(EntityStruckByLightningEvent event, Entity entity, LightningBolt lightning) {
+        public static boolean lightningTracking(Entity entity, LightningBolt lightning) {
             if (entity instanceof LivingEntity livingEntity) {
-                LightningTracker.get(lightning).ifPresent(lightningTracker -> {
+                Optional<LightningTracker> lightningTrackerOptional = LightningTracker.get(lightning).resolve();
+                if (lightningTrackerOptional.isPresent()) {
+                    LightningTracker lightningTracker = lightningTrackerOptional.get();
                     if (lightningTracker.getOwner() != null) {
-                        if (livingEntity == lightningTracker.getOwner() || livingEntity == lightningTracker.getOwner().getVehicle()) {
-                            event.setCanceled(true);
-                        }
+                        return livingEntity == lightningTracker.getOwner() || livingEntity == lightningTracker.getOwner().getVehicle();
                     }
-                });
+                }
             }
+            return false;
         }
     }
 }
