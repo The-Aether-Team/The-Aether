@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-03T21:11:51.7531524	Aether Loot Tables
+// 1.19.2	2022-09-20T13:53:40.7855913	Aether Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 9e100e6de96b47a3a1b9533e76ad9847d364b9c0 data/aether/loot_tables/blocks/aerogel_slab.json
@@ -189,4 +189,4 @@ ef017fe8afbc1e704a7cfb4818ece7ba018f9c91 data/aether/loot_tables/entities/whirlw
 6c23285f715832ff60c8a44557a88fc725cec0b7 data/aether/loot_tables/entities/zephyr.json
 d95f56736ab0bb1de8a301451892772aaebf64dc data/aether/loot_tables/selectors/evil_whirlwind_junk.json
 26ffb89facc96442309fe03658e96dc78e02b0ec data/aether/loot_tables/selectors/whirlwind_junk.json
-b99f653fedeb9d89b4d063f41e8822afec57dc79 data/aether/loot_tables/stripping/strip_golden_oak.json
+e71c7d2a73557fdbb098bbfcdb658cb9ed2902c0 data/aether/loot_tables/stripping/strip_golden_oak.json

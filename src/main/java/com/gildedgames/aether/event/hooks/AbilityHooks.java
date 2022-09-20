@@ -37,7 +37,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -192,25 +191,23 @@ public class AbilityHooks {
             return speed;
         }
 
-//        /**
-//         * Spawns
-//         * @param accessor The {@link LevelAccessor} of the level.
-//         * @param state The {@link BlockState} an action is being performed on.
-//         * @param stack The {@link ItemStack} performing an action.
-//         * @param action The {@link ToolAction} being performed.
-//         * @param context The {@link UseOnContext} of this interaction.
-//         * @see com.gildedgames.aether.event.listeners.abilities.ToolAbilityListener#doGoldenOakStripping(BlockEvent.BlockToolModificationEvent)
-//         */
+        /**
+         * Spawns Golden Amber at the user's click position when stripping Golden Oak Logs ({@link AetherTags.Blocks#GOLDEN_OAK_LOGS}), as long as the tool in usage can harvest Golden Amber ({@link AetherTags.Items#GOLDEN_AMBER_HARVESTERS}).<br><br>
+         * The drops are handled using a special loot context type {@link AetherLootContexts#STRIPPING}, used for a loot table found in {@link com.gildedgames.aether.data.generators.loot.AetherStrippingLootData}.
+         * @param accessor The {@link LevelAccessor} of the level.
+         * @param state The {@link BlockState} an action is being performed on.
+         * @param stack The {@link ItemStack} performing an action.
+         * @param action The {@link ToolAction} being performed.
+         * @param context The {@link UseOnContext} of this interaction.
+         * @see com.gildedgames.aether.event.listeners.abilities.ToolAbilityListener#doGoldenOakStripping(BlockEvent.BlockToolModificationEvent)
+         */
         public static void stripGoldenOak(LevelAccessor accessor, BlockState state, ItemStack stack, ToolAction action, UseOnContext context) {
             if (action == ToolActions.AXE_STRIP) {
-                if (accessor instanceof Level level) { //todo make this more generic and less hardcoded.
-                    if (state.is(AetherTags.Blocks.GOLDEN_OAK_LOGS)) {
+                if (accessor instanceof Level level) {
+                    if (state.is(AetherTags.Blocks.GOLDEN_OAK_LOGS) && stack.is(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)) {
                         if (level.getServer() != null && level instanceof ServerLevel serverLevel) {
                             Vec3 vector = context.getClickLocation();
-                            LootContext.Builder lootContext = new LootContext.Builder(serverLevel)
-                                    .withParameter(LootContextParams.BLOCK_STATE, state)
-                                    .withParameter(LootContextParams.ORIGIN, vector)
-                                    .withParameter(LootContextParams.TOOL, stack);
+                            LootContext.Builder lootContext = new LootContext.Builder(serverLevel);
                             LootTable loottable = level.getServer().getLootTables().get(AetherLoot.STRIP_GOLDEN_OAK);
                             List<ItemStack> list = loottable.getRandomItems(lootContext.create(AetherLootContexts.STRIPPING));
                             for (ItemStack itemStack : list) {

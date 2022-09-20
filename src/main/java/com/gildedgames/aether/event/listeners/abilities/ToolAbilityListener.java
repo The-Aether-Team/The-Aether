@@ -27,7 +27,7 @@ public class ToolAbilityListener {
         BlockState oldState = event.getState();
         ToolAction toolAction = event.getToolAction();
         BlockState newState = AbilityHooks.ToolHooks.setupToolActions(levelAccessor, pos, oldState, toolAction);
-        if (newState != oldState && !event.isSimulated()) {
+        if (newState != oldState && !event.isSimulated() && !event.isCanceled()) {
             event.setFinalState(newState);
         }
     }
@@ -41,7 +41,9 @@ public class ToolAbilityListener {
         Level level = player.getLevel();
         BlockPos blockPos = event.getPos();
         ItemStack itemStack = player.getMainHandItem();
-        AbilityHooks.ToolHooks.handleHolystoneToolAbility(player, level, blockPos, itemStack);
+        if (!event.isCanceled()) {
+            AbilityHooks.ToolHooks.handleHolystoneToolAbility(player, level, blockPos, itemStack);
+        }
     }
     
     /**
@@ -53,8 +55,10 @@ public class ToolAbilityListener {
         BlockState blockState = event.getState();
         Player player = event.getEntity();
         ItemStack itemStack = player.getMainHandItem();
-        event.setNewSpeed(AbilityHooks.ToolHooks.handleZaniteToolAbility(itemStack, event.getNewSpeed()));
-        event.setNewSpeed(AbilityHooks.ToolHooks.reduceToolEffectiveness(blockState, itemStack, event.getNewSpeed()));
+        if (!event.isCanceled()) {
+            event.setNewSpeed(AbilityHooks.ToolHooks.handleZaniteToolAbility(itemStack, event.getNewSpeed()));
+            event.setNewSpeed(AbilityHooks.ToolHooks.reduceToolEffectiveness(blockState, itemStack, event.getNewSpeed()));
+        }
     }
 
     /**
@@ -68,8 +72,10 @@ public class ToolAbilityListener {
         BlockState blockState = event.getState();
         Player player = event.getPlayer();
         InteractionHand interactionHand = event.getContext().getHand();
-        if (AbilityHooks.ToolHooks.handleGravititeToolAbility(level, blockPos, itemStack, blockState, player, interactionHand)) {
-            event.setCanceled(true);
+        if (!event.isSimulated() && !event.isCanceled()) {
+            if (AbilityHooks.ToolHooks.handleGravititeToolAbility(level, blockPos, itemStack, blockState, player, interactionHand)) {
+                event.setCanceled(true);
+            }
         }
     }
 
@@ -83,7 +89,7 @@ public class ToolAbilityListener {
         ItemStack itemStack = event.getHeldItemStack();
         ToolAction toolAction = event.getToolAction();
         UseOnContext context = event.getContext();
-        if (!event.isSimulated()) {
+        if (!event.isSimulated() && !event.isCanceled()) {
             AbilityHooks.ToolHooks.stripGoldenOak(levelAccessor, oldState, itemStack, toolAction, context);
         }
     }
