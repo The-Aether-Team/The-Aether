@@ -17,6 +17,9 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class ToolAbilityListener {
+    /**
+     * @see AbilityHooks.ToolHooks#setupToolActions(LevelAccessor, BlockPos, BlockState, ToolAction)
+     */
     @SubscribeEvent
     public static void setupToolModifications(BlockEvent.BlockToolModificationEvent event) {
         LevelAccessor levelAccessor = event.getLevel();
@@ -70,6 +73,9 @@ public class ToolAbilityListener {
         }
     }
 
+    /**
+     * @see AbilityHooks.ToolHooks#stripGoldenOak(LevelAccessor, BlockState, ItemStack, ToolAction, UseOnContext)
+     */
     @SubscribeEvent
     public static void doGoldenOakStripping(BlockEvent.BlockToolModificationEvent event) {
         LevelAccessor levelAccessor = event.getLevel();

@@ -67,6 +67,9 @@ public class AbilityHooks {
     }
 
     public static class ToolHooks {
+        /**
+         * Blocks able to be stripped with {@link ToolActions#AXE_STRIP}, and the equivalent result block.
+         */
         public static final Map<Block, Block> STRIPPABLES = (new ImmutableMap.Builder<Block, Block>())
                 .put(AetherBlocks.SKYROOT_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
                 .put(AetherBlocks.GOLDEN_OAK_LOG.get(), AetherBlocks.STRIPPED_SKYROOT_LOG.get())
@@ -74,12 +77,18 @@ public class AbilityHooks {
                 .put(AetherBlocks.GOLDEN_OAK_WOOD.get(), AetherBlocks.STRIPPED_SKYROOT_WOOD.get())
                 .build();
 
+        /**
+         * Blocks able to be flattened with {@link ToolActions#SHOVEL_FLATTEN}, and the equivalent result block.
+         */
         public static final Map<Block, Block> FLATTENABLES = (new ImmutableMap.Builder<Block, Block>())
                 .put(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT_PATH.get())
                 .put(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT_PATH.get())
                 .put(AetherBlocks.AETHER_DIRT.get(), AetherBlocks.AETHER_DIRT_PATH.get())
                 .build();
 
+        /**
+         * Blocks able to be tilled with {@link ToolActions#HOE_TILL}, and the equivalent result block.
+         */
         public static final Map<Block, Block> TILLABLES = (new ImmutableMap.Builder<Block, Block>())
                 .put(AetherBlocks.AETHER_DIRT.get(), AetherBlocks.AETHER_FARMLAND.get())
                 .put(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_FARMLAND.get())
@@ -87,6 +96,14 @@ public class AbilityHooks {
                 .put(AetherBlocks.AETHER_DIRT_PATH.get(), AetherBlocks.AETHER_FARMLAND.get())
                 .build();
 
+        /**
+         * Handles modifying blocks when a {@link ToolAction} is performed on them.
+         * @param accessor The accessor of the level.
+         * @param pos The position within the level.
+         * @param old The old state of the block an action is being performed on.
+         * @param action The action being performed on the block.
+         * @return The new state of the block.
+         */
         public static BlockState setupToolActions(LevelAccessor accessor, BlockPos pos, BlockState old, ToolAction action) {
             Block oldBlock = old.getBlock();
             if (action == ToolActions.AXE_STRIP) {
