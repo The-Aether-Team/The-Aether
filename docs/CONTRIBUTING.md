@@ -43,20 +43,9 @@ To open a pull request, go to the [pull requests page](https://github.com/Gilded
 When creating a PR:
 - Make sure your code conforms to the project's documentation and code styling.
 - Mark it as a draft if the changes are WIP.
-- Format it according to conventional commits, with the header as the title and the body and footer in the description so that we can use this information for the merge commit. Write this within a code block.
-- Make sure the description contains an overview of the changes made, and the footer any open issues that it resolves and/or if it's a breaking change.
-- State outside of the rest of the description that you agree to the Contributor License Agreement (CLA).
-
-Example:
-- `(TITLE)` feat(block): Implements Aether Grass Block
-- `(DESCRIPTION)`
-  ```
-  Implements the Aether Grass Block class, model, blockstates, language entry, and adds the block to the registry.
-  
-  closes issue #1
-  ```
-
-  I agree to the Contributor License Agreement (CLA).
+- Follow the template and example given when creating the PR. 
+- Follow the instructions of anything written in `[]`.
+- Make sure the section in the code block meets conventional commit standards, as we put the information into the merge commit.
 
 ## Code review
 After your PR has been opened, we will make sure to label it with the relevant status, feat, and type labels and assign it to a developer for review. We will then review your code and test if it builds through CircleCI, as well as test the contents to verify they do as described.
