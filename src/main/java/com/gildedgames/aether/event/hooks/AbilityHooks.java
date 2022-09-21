@@ -5,6 +5,7 @@ import com.gildedgames.aether.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.entity.projectile.dart.EnchantedDart;
 import com.gildedgames.aether.entity.projectile.dart.GoldenDart;
 import com.gildedgames.aether.entity.projectile.dart.PoisonDart;
+import com.gildedgames.aether.item.accessories.abilities.ZaniteAccessory;
 import com.gildedgames.aether.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.AetherItems;
@@ -49,6 +50,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
 
 import java.util.List;
 import java.util.Map;
@@ -56,12 +58,42 @@ import java.util.Optional;
 
 public class AbilityHooks {
     public static class AccessoryHooks {
-        public static void damageGloves(Player player, Entity target) {
-            if (!player.getLevel().isClientSide() && target instanceof LivingEntity livingTarget) {
-                if (livingTarget.isAttackable() && !livingTarget.skipAttackInteraction(player)) {
-                    CuriosApi.getCuriosHelper().findFirstCurio(player, (stack) -> stack.getItem() instanceof GlovesItem).ifPresent((slotResult) -> slotResult.stack().hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND)));
-                }
+        /**
+         * Damages an entity's Gloves when they hurt another entity.
+         * @param source The attacking {@link DamageSource}.
+         * @see com.gildedgames.aether.event.listeners.abilities.AccessoryAbilityListener#onLivingHurt(LivingHurtEvent)
+         */
+        public static void damageGloves(DamageSource source) {
+            if (source.getDirectEntity() instanceof Player player) {
+                CuriosApi.getCuriosHelper().findFirstCurio(player, (stack) -> stack.getItem() instanceof GlovesItem).ifPresent((slotResult) -> slotResult.stack().hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND)));
             }
+        }
+
+        /**
+         * Handles ability for {@link ZaniteAccessory} for Zanite Rings (accounts for if multiple are equipped).
+         * @see ZaniteAccessory#handleMiningSpeed(float, SlotResult)
+         * @see com.gildedgames.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)
+         */
+        public static float handleZaniteRingAbility(LivingEntity entity, float speed) {
+            float newSpeed = speed;
+            List<SlotResult> slotResults = CuriosApi.getCuriosHelper().findCurios(entity, AetherItems.ZANITE_RING.get());
+            for (SlotResult slotResult : slotResults) {
+                newSpeed = ZaniteAccessory.handleMiningSpeed(newSpeed, slotResult);
+            }
+            return newSpeed;
+        }
+
+        /**
+         * Handles ability for {@link ZaniteAccessory} for the Zanite Pendant.
+         * @see ZaniteAccessory#handleMiningSpeed(float, SlotResult)
+         * @see com.gildedgames.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)
+         */
+        public static float handleZanitePendantAbility(LivingEntity entity, float speed) {
+            Optional<SlotResult> slotResultOptional = CuriosApi.getCuriosHelper().findFirstCurio(entity, AetherItems.ZANITE_PENDANT.get());
+            if (slotResultOptional.isPresent()) {
+                speed = ZaniteAccessory.handleMiningSpeed(speed, slotResultOptional.get());
+            }
+            return speed;
         }
     }
 
@@ -148,7 +180,7 @@ public class AbilityHooks {
         }
 
         /**
-         * Handles ability for {@link com.gildedgames.aether.item.tools.abilities.ZaniteTool}.<br>
+         * Handles ability for {@link com.gildedgames.aether.item.tools.abilities.ZaniteTool}.
          * @see ZaniteTool#increaseSpeed(ItemStack, float)
          * @see com.gildedgames.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvent.BreakSpeed)
          */

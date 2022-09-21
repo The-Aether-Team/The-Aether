@@ -14,11 +14,10 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import javax.annotation.Nonnull;
 
-public class AccessoryItem extends Item implements ICurioItem, Vanishable
-{
+public class AccessoryItem extends Item implements ICurioItem, Vanishable {
     public AccessoryItem(Properties properties) {
         super(properties);
-        DispenserBlock.registerBehavior(this, AetherDispenseBehaviors.DISPENSE_ACCESSORY_BEHAVIOR);
+        DispenserBlock.registerBehavior(this, AetherDispenseBehaviors.DISPENSE_ACCESSORY_BEHAVIOR); // Behavior to allow accessories to be equipped from a Dispenser.
     }
 
     @Override
@@ -29,7 +28,7 @@ public class AccessoryItem extends Item implements ICurioItem, Vanishable
     @Nonnull
     @Override
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
-        return new ICurio.SoundInfo(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GENERIC.get(), 1.0f, 1.0f);
+        return new ICurio.SoundInfo(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GENERIC.get(), 1.0F, 1.0F);
     }
 
     @Override

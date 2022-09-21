@@ -108,6 +108,7 @@ public class AetherTags {
 		public static final TagKey<Item> PHOENIX_REPAIRING = tag("phoenix_repairing");
 		public static final TagKey<Item> OBSIDIAN_REPAIRING = tag("obsidian_repairing");
 		public static final TagKey<Item> SENTRY_REPAIRING = tag("sentry_repairing");
+		public static final TagKey<Item> ICE_REPAIRING = tag("ice_repairing");
 
 		public static final TagKey<Item> TOOLS_LANCES = tag("tools/lances");
 		public static final TagKey<Item> TOOLS_HAMMERS = tag("tools/hammers");

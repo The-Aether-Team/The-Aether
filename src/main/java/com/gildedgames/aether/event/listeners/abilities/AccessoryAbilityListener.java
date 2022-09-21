@@ -2,44 +2,61 @@ package com.gildedgames.aether.event.listeners.abilities;
 
 import com.gildedgames.aether.event.hooks.AbilityHooks;
 import com.gildedgames.aether.item.accessories.abilities.ShieldOfRepulsionAccessory;
-import com.gildedgames.aether.item.accessories.abilities.ZaniteAccessory;
-import com.gildedgames.aether.item.AetherItems;
-import net.minecraft.world.entity.Entity;
+import com.gildedgames.aether.util.EquipmentUtil;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import top.theillusivec4.curios.api.CuriosApi;
 
 @Mod.EventBusSubscriber
 public class AccessoryAbilityListener {
+    /**
+     * @see AbilityHooks.AccessoryHooks#damageGloves(DamageSource)
+     */
     @SubscribeEvent
-    public static void onPlayerAttack(AttackEntityEvent event) {
-        Player player = event.getEntity();
-        Entity target = event.getTarget();
-        AbilityHooks.AccessoryHooks.damageGloves(player, target);
+    public static void onLivingHurt(LivingHurtEvent event) {
+        DamageSource damageSource = event.getSource();
+        AbilityHooks.AccessoryHooks.damageGloves(damageSource);
     }
 
+    /**
+     * @see AbilityHooks.AccessoryHooks#handleZaniteRingAbility(LivingEntity, float)
+     * @see AbilityHooks.AccessoryHooks#handleZanitePendantAbility(LivingEntity, float)
+     */
     @SubscribeEvent
     public static void onMiningSpeed(PlayerEvent.BreakSpeed event) {
-        CuriosApi.getCuriosHelper().findCurios(event.getEntity(), AetherItems.ZANITE_RING.get()).forEach((slotResult -> event.setNewSpeed(ZaniteAccessory.handleMiningSpeed(event.getNewSpeed(), slotResult))));
-        CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), AetherItems.ZANITE_PENDANT.get()).ifPresent((slotResult) -> event.setNewSpeed(ZaniteAccessory.handleMiningSpeed(event.getNewSpeed(), slotResult)));
+        Player player = event.getEntity();
+        if (!event.isCanceled()) {
+            event.setNewSpeed(AbilityHooks.AccessoryHooks.handleZaniteRingAbility(player, event.getNewSpeed()));
+            event.setNewSpeed(AbilityHooks.AccessoryHooks.handleZanitePendantAbility(player, event.getNewSpeed()));
+        }
     }
 
+    /**
+     * Makes the wearer invisible to other mobs' targeting if wearing an Invisibility Cloak.
+     */
     @SubscribeEvent
     public static void onTargetSet(LivingEvent.LivingVisibilityEvent event) {
-        CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), AetherItems.INVISIBILITY_CLOAK.get()).ifPresent((slotResult) -> event.modifyVisibility(0.0D));
+        LivingEntity livingEntity = event.getEntity();
+        if (EquipmentUtil.hasInvisibilityCloak(livingEntity)) {
+            event.modifyVisibility(0.0);
+        }
     }
 
+    /**
+     * @see ShieldOfRepulsionAccessory#deflectProjectile(ProjectileImpactEvent, HitResult, Projectile)
+     */
     @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
         HitResult hitResult = event.getRayTraceResult();
         Projectile projectile = event.getProjectile();
-        ShieldOfRepulsionAccessory.deflectProjectile(event, hitResult, projectile); //Has to take event due to the event being canceled within a lambda.
+        ShieldOfRepulsionAccessory.deflectProjectile(event, hitResult, projectile); // Has to take event due to the event being canceled within a lambda and also mid-behavior.
     }
 }

@@ -143,6 +143,7 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.PHOENIX_REPAIRING);
         tag(AetherTags.Items.OBSIDIAN_REPAIRING);
         tag(AetherTags.Items.SENTRY_REPAIRING);
+        tag(AetherTags.Items.ICE_REPAIRING);
 
         tag(AetherTags.Items.TOOLS_LANCES).add(AetherItems.VALKYRIE_LANCE.get());
         tag(AetherTags.Items.TOOLS_HAMMERS).add(AetherItems.HAMMER_OF_NOTCH.get());

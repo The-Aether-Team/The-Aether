@@ -33,6 +33,10 @@ public class EquipmentUtil {
         return CuriosApi.getCuriosHelper().findFirstCurio(entity, AetherItems.SWET_CAPE.get()).isPresent();
     }
 
+    public static boolean hasInvisibilityCloak(LivingEntity entity) {
+        return CuriosApi.getCuriosHelper().findFirstCurio(entity, AetherItems.INVISIBILITY_CLOAK.get()).isPresent();
+    }
+
     public static boolean hasSentryBoots(LivingEntity entity) {
         return entity.getItemBySlot(EquipmentSlot.FEET).is(AetherItems.SENTRY_BOOTS.get());
     }

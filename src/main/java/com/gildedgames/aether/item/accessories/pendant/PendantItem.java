@@ -11,8 +11,7 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
-public class PendantItem extends AccessoryItem
-{
+public class PendantItem extends AccessoryItem {
     protected ResourceLocation PENDANT_LOCATION;
     protected final Supplier<SoundEvent> equipSound;
 
