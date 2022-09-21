@@ -4,8 +4,8 @@ import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.util.ConstantsUtil;
+import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.client.player.Input;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
@@ -31,12 +31,13 @@ public interface ShieldOfRepulsionAccessory {
         if (hitResult.getType() == HitResult.Type.ENTITY && hitResult instanceof EntityHitResult entityHitResult) {
             if (entityHitResult.getEntity() instanceof LivingEntity impactedLiving) {
                 if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
-                    CuriosApi.getCuriosHelper().findFirstCurio(impactedLiving, AetherItems.SHIELD_OF_REPULSION.get()).ifPresent((slotResult) -> {
+                    SlotResult slotResult = EquipmentUtil.getCurio(impactedLiving, AetherItems.SHIELD_OF_REPULSION.get());
+                    if (slotResult != null) {
                         Vec3 motion = impactedLiving.getDeltaMovement();
                         if (impactedLiving instanceof Player player) {
                             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                                 if (!aetherPlayer.isMoving()) {
-                                    if (!player.level.isClientSide()) { // Values used by the Shield of Repulsion screen overlay vignette.
+                                    if (!player.getLevel().isClientSide()) { // Values used by the Shield of Repulsion screen overlay vignette.
                                         aetherPlayer.setProjectileImpactedMaximum(150);
                                         aetherPlayer.setProjectileImpactedTimer(150);
                                     }
@@ -48,7 +49,7 @@ public interface ShieldOfRepulsionAccessory {
                                 handleDeflection(event, projectile, impactedLiving, slotResult);
                             }
                         }
-                    });
+                    }
                 }
             }
         }

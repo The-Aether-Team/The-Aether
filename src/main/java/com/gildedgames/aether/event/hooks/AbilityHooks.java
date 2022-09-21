@@ -6,9 +6,7 @@ import com.gildedgames.aether.entity.projectile.dart.EnchantedDart;
 import com.gildedgames.aether.entity.projectile.dart.GoldenDart;
 import com.gildedgames.aether.entity.projectile.dart.PoisonDart;
 import com.gildedgames.aether.item.accessories.abilities.ZaniteAccessory;
-import com.gildedgames.aether.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.item.tools.abilities.GravititeTool;
 import com.gildedgames.aether.item.tools.abilities.HolystoneTool;
 import com.gildedgames.aether.item.tools.abilities.ZaniteTool;
@@ -49,8 +47,6 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
 
 import java.util.List;
 import java.util.Map;
@@ -65,33 +61,36 @@ public class AbilityHooks {
          */
         public static void damageGloves(DamageSource source) {
             if (source.getDirectEntity() instanceof Player player) {
-                CuriosApi.getCuriosHelper().findFirstCurio(player, (stack) -> stack.getItem() instanceof GlovesItem).ifPresent((slotResult) -> slotResult.stack().hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND)));
+                ItemStack glovesStack = EquipmentUtil.getGloves(player);
+                if (!glovesStack.isEmpty()) {
+                    glovesStack.hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                }
             }
         }
 
         /**
          * Handles ability for {@link ZaniteAccessory} for Zanite Rings (accounts for if multiple are equipped).
-         * @see ZaniteAccessory#handleMiningSpeed(float, SlotResult)
+         * @see ZaniteAccessory#handleMiningSpeed(float, ItemStack)
          * @see com.gildedgames.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)
          */
         public static float handleZaniteRingAbility(LivingEntity entity, float speed) {
             float newSpeed = speed;
-            List<SlotResult> slotResults = CuriosApi.getCuriosHelper().findCurios(entity, AetherItems.ZANITE_RING.get());
-            for (SlotResult slotResult : slotResults) {
-                newSpeed = ZaniteAccessory.handleMiningSpeed(newSpeed, slotResult);
+            List<ItemStack> itemStacks = EquipmentUtil.getZaniteRings(entity);
+            for (ItemStack itemStack : itemStacks) {
+                newSpeed = ZaniteAccessory.handleMiningSpeed(newSpeed, itemStack);
             }
             return newSpeed;
         }
 
         /**
          * Handles ability for {@link ZaniteAccessory} for the Zanite Pendant.
-         * @see ZaniteAccessory#handleMiningSpeed(float, SlotResult)
+         * @see ZaniteAccessory#handleMiningSpeed(float, ItemStack)
          * @see com.gildedgames.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)
          */
         public static float handleZanitePendantAbility(LivingEntity entity, float speed) {
-            Optional<SlotResult> slotResultOptional = CuriosApi.getCuriosHelper().findFirstCurio(entity, AetherItems.ZANITE_PENDANT.get());
-            if (slotResultOptional.isPresent()) {
-                speed = ZaniteAccessory.handleMiningSpeed(speed, slotResultOptional.get());
+            ItemStack itemStack = EquipmentUtil.getZanitePendant(entity);
+            if (!itemStack.isEmpty()) {
+                speed = ZaniteAccessory.handleMiningSpeed(speed, itemStack);
             }
             return speed;
         }
@@ -105,7 +104,7 @@ public class AbilityHooks {
          * @see com.gildedgames.aether.event.listeners.abilities.ArmorAbilityListener#onEntityFall(LivingFallEvent)
          */
         public static boolean fallCancellation(LivingEntity entity) {
-            return entity.getItemBySlot(EquipmentSlot.FEET).is(AetherItems.SENTRY_BOOTS.get()) || EquipmentUtil.hasFullGravititeSet(entity) || EquipmentUtil.hasFullValkyrieSet(entity);
+            return EquipmentUtil.hasSentryBoots(entity) || EquipmentUtil.hasFullGravititeSet(entity) || EquipmentUtil.hasFullValkyrieSet(entity);
         }
     }
 

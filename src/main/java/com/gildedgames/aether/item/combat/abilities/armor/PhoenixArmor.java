@@ -74,7 +74,10 @@ public interface PhoenixArmor {
                     }
                 }
             }
-            CuriosApi.getCuriosHelper().findFirstCurio(entity, AetherItems.PHOENIX_GLOVES.get()).ifPresent((slotResult) -> breakPhoenixGloves(entity, slotResult, new ItemStack(AetherItems.OBSIDIAN_GLOVES.get())));
+            SlotResult slotResult = EquipmentUtil.getCurio(entity, AetherItems.PHOENIX_GLOVES.get());
+            if (slotResult != null) {
+                breakPhoenixGloves(entity, slotResult, new ItemStack(AetherItems.OBSIDIAN_GLOVES.get()));
+            }
         }
     }
 
@@ -107,7 +110,7 @@ public interface PhoenixArmor {
     private static void breakPhoenixGloves(LivingEntity entity, SlotResult slotResult, ItemStack outcomeStack) {
         if (entity.getLevel().getGameTime() % 10 == 0) {
             slotResult.stack().hurtAndBreak(1, entity, (p) -> p.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-            if (CuriosApi.getCuriosHelper().findFirstCurio(entity, AetherItems.PHOENIX_GLOVES.get()).isEmpty()) { // Can't find Curio anymore if it broke.
+            if (EquipmentUtil.getCurioStack(entity, AetherItems.PHOENIX_GLOVES.get()).isEmpty()) { // Can't find Curio anymore if it broke.
                 EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(slotResult.stack()), outcomeStack);
                 if (slotResult.stack().hasTag()) {
                     outcomeStack.setTag(slotResult.stack().getTag());

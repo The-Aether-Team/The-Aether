@@ -1,12 +1,18 @@
 package com.gildedgames.aether.util;
 
 import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.item.accessories.gloves.GlovesItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class EquipmentUtil {
     /**
@@ -29,12 +35,46 @@ public class EquipmentUtil {
         return baseValue * (2.0 * ((double) stack.getDamageValue()) / ((double) stack.getMaxDamage()) + 0.5);
     }
 
+    public static ItemStack getGloves(LivingEntity entity) {
+        Optional<SlotResult> slotResultOptional = CuriosApi.getCuriosHelper().findFirstCurio(entity, (stack) -> stack.getItem() instanceof GlovesItem);
+        return slotResultOptional.map(SlotResult::stack).orElse(ItemStack.EMPTY);
+    }
+
+    public static List<ItemStack> getZaniteRings(LivingEntity entity) {
+        return getCurios(entity, AetherItems.ZANITE_RING.get()).stream().map((SlotResult::stack)).collect(Collectors.toList());
+    }
+
+    public static ItemStack getZanitePendant(LivingEntity entity) {
+        return getCurioStack(entity, AetherItems.ZANITE_PENDANT.get());
+    }
+
     public static boolean hasSwetCape(LivingEntity entity) {
-        return CuriosApi.getCuriosHelper().findFirstCurio(entity, AetherItems.SWET_CAPE.get()).isPresent();
+        return hasCurio(entity, AetherItems.SWET_CAPE.get());
     }
 
     public static boolean hasInvisibilityCloak(LivingEntity entity) {
-        return CuriosApi.getCuriosHelper().findFirstCurio(entity, AetherItems.INVISIBILITY_CLOAK.get()).isPresent();
+        return hasCurio(entity, AetherItems.INVISIBILITY_CLOAK.get());
+    }
+
+    public static boolean hasCurio(LivingEntity entity, Item item) {
+        return CuriosApi.getCuriosHelper().findFirstCurio(entity, item).isPresent();
+    }
+
+    public static ItemStack getCurioStack(LivingEntity entity, Item item) {
+        SlotResult slotResult = getCurio(entity, item);
+        if (slotResult != null) {
+            return slotResult.stack();
+        } else {
+            return ItemStack.EMPTY;
+        }
+    }
+
+    public static SlotResult getCurio(LivingEntity entity, Item item) {
+        return CuriosApi.getCuriosHelper().findFirstCurio(entity, item).orElse(null);
+    }
+
+    public static List<SlotResult> getCurios(LivingEntity entity, Item item) {
+        return CuriosApi.getCuriosHelper().findCurios(entity, item);
     }
 
     public static boolean hasSentryBoots(LivingEntity entity) {
