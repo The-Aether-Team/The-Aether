@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       remote_user:
-        description: 'GitHub username of pull request creator'
+        description: 'GitHub name of the fork organization'
         required: true
         default: 'Gilded-Games'
         type: string
