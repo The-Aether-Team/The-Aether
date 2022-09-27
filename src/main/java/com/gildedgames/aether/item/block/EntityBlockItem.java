@@ -13,8 +13,8 @@ import java.util.function.Consumer;
 public class EntityBlockItem extends BlockItem {
     private final LazyOptional<BlockEntity> blockEntity;
 
-    public <B extends Block> EntityBlockItem(B block, NonNullSupplier<BlockEntity> blockEntity, Properties tab) {
-        super(block, tab);
+    public <B extends Block> EntityBlockItem(B block, NonNullSupplier<BlockEntity> blockEntity, Properties properties) {
+        super(block, properties);
         this.blockEntity = LazyOptional.of(blockEntity);
     }
 
