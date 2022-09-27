@@ -39,7 +39,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
      * @param level The {@link Level} of the user.
      * @param player The {@link Player} using this item.
      * @param hand The {@link InteractionHand} in which the item is being used.
-     * @return Consume (cause the item to bob down then up in hand) if the player has ammo or is in creative, or fail (do nothing) if those conditions aren't meant, or use the result of the Forge event hook if there is one.
+     * @return Consume (cause the item to bob down then up in hand) if the player has ammo or is in creative, or fail (do nothing) if those conditions aren't met, or use the result of the Forge event hook if there is one.
      * This is an {@link InteractionResultHolder InteractionResultHolder&lt;ItemStack&gt;}.
      */
     @Nonnull
