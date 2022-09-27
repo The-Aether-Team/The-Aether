@@ -77,10 +77,6 @@ dependencies {
   compileOnly "com.gildedgames.the-aether:aether:${project.aether_version}"
   runtimeOnly fg.deobf("com.gildedgames.the-aether:aether:${project.aether_version}")
   ...
-  jarJar fg.deobf("com.gildedgames.the-aether:aether:${project.aether_version}") {
-    jarJar.ranged(it, "[${project.aether_version},)")
-    jarJar.pin(it, "${project.aether_version}")
-  }
 }
 ```
 
