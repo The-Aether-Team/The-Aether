@@ -3,9 +3,7 @@ package com.gildedgames.aether.item.food;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.AetherConfig;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.stats.Stats;
+import com.gildedgames.aether.item.miscellaneous.ConsumableItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -18,7 +16,7 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
-public class GummySwetItem extends Item {
+public class GummySwetItem extends Item implements ConsumableItem {
 	public GummySwetItem() {
 		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).food(AetherFoods.GUMMY_SWET).tab(AetherItemGroups.AETHER_FOOD));
 	}
@@ -29,6 +27,7 @@ public class GummySwetItem extends Item {
 	 * @param player The {@link Player} using this item.
 	 * @param hand The {@link InteractionHand} in which the item is being used.
 	 * @return Consume (cause the item to bob down then up in hand) if the item is successfully used whether it be for eating or healing, or fail (do nothing) if those conditions aren't met.
+	 * This is an {@link InteractionResultHolder InteractionResultHolder&lt;ItemStack&gt;}.
 	 */
 	@Nonnull
 	@Override
@@ -54,7 +53,7 @@ public class GummySwetItem extends Item {
 
 	/**
 	 * Performs the {@link LivingEntity#eat(Level, ItemStack)} code if the Gummy Swet is edible/behaves as food.
-	 * Otherwise, it heals the player, and manually consumes the item and triggers the {@link CriteriaTriggers#CONSUME_ITEM} advancement criteria and gives the {@link Stats#ITEM_USED} stat to the player for the item.
+	 * Otherwise, it heals the player, and consumes the item using {@link ConsumableItem#consume(Item, ItemStack, LivingEntity)}.
 	 * @param stack The {@link ItemStack} in use.
 	 * @param level The {@link Level} of the user.
 	 * @param user The {@link LivingEntity} using the stack.
@@ -67,15 +66,7 @@ public class GummySwetItem extends Item {
 			return user.eat(level, stack); // Automatically handles the criteria trigger and stat awarding code.
 		} else { // If AetherConfig.COMMON.healing_gummy_swets.get() is true.
 			user.heal(user.getMaxHealth());
-			if (user instanceof Player player) {
-				if (!player.getAbilities().instabuild) {
-					stack.shrink(1);
-				}
-				if (player instanceof ServerPlayer serverPlayer) {
-					CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
-					serverPlayer.awardStat(Stats.ITEM_USED.get(this));
-				}
-			}
+			this.consume(this, stack, user);
 			return stack;
 		}
 	}
@@ -93,6 +84,7 @@ public class GummySwetItem extends Item {
 
 	/**
 	 * @return A {@link Boolean} based on if the Gummy Swet heals or fills hunger. When the {@link AetherConfig.Common#healing_gummy_swets} config is false, this is true.
+	 * This is based on the difference of Gummy Swets being used to heal in b1.7.3 and being used for hunger in 1.2.5.
 	 */
 	@Override
 	public boolean isEdible() {

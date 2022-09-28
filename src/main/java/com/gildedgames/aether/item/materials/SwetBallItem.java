@@ -10,7 +10,7 @@ import net.minecraft.world.InteractionResult;
 import javax.annotation.Nonnull;
 
 public class SwetBallItem extends Item implements ItemUseConversion<SwetBallRecipe> {
-	public SwetBallItem(Item.Properties properties) {
+	public SwetBallItem(Properties properties) {
 		super(properties);
 	}
 	
