@@ -76,29 +76,29 @@ public class MoaEggItem extends Item {
                 Direction direction = context.getClickedFace();
                 BlockState blockState = level.getBlockState(blockPos);
                 if (blockState.is(Blocks.SPAWNER)) {
-                    BlockEntity blockentity = level.getBlockEntity(blockPos);
-                    if (blockentity instanceof SpawnerBlockEntity spawnerBlockEntity) {
-                        BaseSpawner basespawner = spawnerBlockEntity.getSpawner();
-                        EntityType<Moa> entityType1 = AetherEntityTypes.MOA.get();
-                        basespawner.setEntityId(entityType1);
-                        basespawner.nextSpawnData.getEntityToSpawn().putString("MoaType", this.getMoaTypeId().toString());
-                        basespawner.nextSpawnData.getEntityToSpawn().putBoolean("PlayerGrown", true); // Moas spawned from a Mob Spawner as set by a Moa Egg will always be tamed.
-                        blockentity.setChanged();
+                    BlockEntity blockEntity = level.getBlockEntity(blockPos);
+                    if (blockEntity instanceof SpawnerBlockEntity spawnerBlockEntity) {
+                        BaseSpawner baseSpawner = spawnerBlockEntity.getSpawner();
+                        EntityType<Moa> entityType = AetherEntityTypes.MOA.get();
+                        baseSpawner.setEntityId(entityType);
+                        baseSpawner.nextSpawnData.getEntityToSpawn().putString("MoaType", this.getMoaTypeId().toString());
+                        baseSpawner.nextSpawnData.getEntityToSpawn().putBoolean("PlayerGrown", true); // Moas spawned from a Mob Spawner as set by a Moa Egg will always be tamed.
+                        blockEntity.setChanged();
                         level.sendBlockUpdated(blockPos, blockState, blockState, 3);
                         itemStack.shrink(1);
                         return InteractionResult.CONSUME;
                     }
                 }
 
-                BlockPos blockPos1;
+                BlockPos relativePos;
                 if (blockState.getCollisionShape(level, blockPos).isEmpty()) {
-                    blockPos1 = blockPos;
+                    relativePos = blockPos;
                 } else {
-                    blockPos1 = blockPos.relative(direction);
+                    relativePos = blockPos.relative(direction);
                 }
 
                 ItemStack spawnStack = this.getStackWithTags(itemStack, false, this.getMoaType(), false, true); // Setup tags for spawning entity.
-                Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, spawnStack, player, blockPos1, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, blockPos1) && direction == Direction.UP);
+                Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, spawnStack, player, relativePos, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, relativePos) && direction == Direction.UP);
                 if (entity instanceof Moa) {
                     level.gameEvent(player, GameEvent.ENTITY_PLACE, blockPos);
                 }
@@ -117,33 +117,33 @@ public class MoaEggItem extends Item {
      */
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        ItemStack itemstack = player.getItemInHand(hand);
+        ItemStack heldStack = player.getItemInHand(hand);
         if (player.isCreative()) {
             BlockHitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
             if (hitResult.getType() != HitResult.Type.BLOCK) {
-                return InteractionResultHolder.pass(itemstack);
+                return InteractionResultHolder.pass(heldStack);
             } else if (!(level instanceof ServerLevel serverLevel)) {
-                return InteractionResultHolder.success(itemstack);
+                return InteractionResultHolder.success(heldStack);
             } else {
                 BlockPos blockpos = hitResult.getBlockPos();
                 if (!(level.getBlockState(blockpos).getBlock() instanceof LiquidBlock)) {
-                    return InteractionResultHolder.pass(itemstack);
-                } else if (level.mayInteract(player, blockpos) && player.mayUseItemAt(blockpos, hitResult.getDirection(), itemstack)) {
-                    ItemStack spawnStack = this.getStackWithTags(itemstack, false, this.getMoaType(), false, true);
+                    return InteractionResultHolder.pass(heldStack);
+                } else if (level.mayInteract(player, blockpos) && player.mayUseItemAt(blockpos, hitResult.getDirection(), heldStack)) {
+                    ItemStack spawnStack = this.getStackWithTags(heldStack, false, this.getMoaType(), false, true);
                     Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, spawnStack, player, blockpos, MobSpawnType.SPAWN_EGG, false, false);
                     if (entity == null) {
-                        return InteractionResultHolder.pass(itemstack);
+                        return InteractionResultHolder.pass(heldStack);
                     } else {
                         player.awardStat(Stats.ITEM_USED.get(this));
                         level.gameEvent(player, GameEvent.ENTITY_PLACE, blockpos);
-                        return InteractionResultHolder.consume(itemstack);
+                        return InteractionResultHolder.consume(heldStack);
                     }
                 } else {
-                    return InteractionResultHolder.fail(itemstack);
+                    return InteractionResultHolder.fail(heldStack);
                 }
             }
         } else {
-            return InteractionResultHolder.fail(itemstack);
+            return InteractionResultHolder.fail(heldStack);
         }
     }
 
