@@ -83,7 +83,7 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
                 this.createPages(entry);
 
                 if (this.currentPageNumber == 0) {
-                    Component title = Component.translatable(itemStack.getDescriptionId());
+                    Component title = itemStack.getHoverName();
                     createText(matrixStack, this.font.split(title, 98), 136, 10);
 
                     createText(matrixStack, this.pages.get(0), 136, 32);

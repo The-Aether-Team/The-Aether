@@ -97,10 +97,6 @@ public class EquipmentUtil {
         return hasArmorSet(entity, AetherItems.PHOENIX_HELMET.get(), AetherItems.PHOENIX_CHESTPLATE.get(), AetherItems.PHOENIX_LEGGINGS.get(), AetherItems.PHOENIX_BOOTS.get(), AetherItems.PHOENIX_GLOVES.get());
     }
 
-    public static boolean hasFullObsidianSet(LivingEntity entity) {
-        return hasArmorSet(entity, AetherItems.OBSIDIAN_HELMET.get(), AetherItems.OBSIDIAN_CHESTPLATE.get(), AetherItems.OBSIDIAN_LEGGINGS.get(), AetherItems.OBSIDIAN_BOOTS.get(), AetherItems.OBSIDIAN_GLOVES.get());
-    }
-
     private static boolean hasArmorSet(LivingEntity entity, Item helmet, Item chestplate, Item leggings, Item boots, Item gloves) {
         return entity.getItemBySlot(EquipmentSlot.HEAD).is(helmet)
                 && entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)

@@ -7,7 +7,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -59,18 +58,6 @@ public class ArmorAbilityListener {
         DamageSource damageSource = event.getSource();
         if (!event.isCanceled()) {
             event.setCanceled(PhoenixArmor.extinguishUser(livingEntity, damageSource));
-        }
-    }
-
-    /**
-     * @see ObsidianArmor#protectUser(LivingEntity, float)
-     */
-    @SubscribeEvent
-    public static void onEntityHurt(LivingHurtEvent event) {
-        LivingEntity entity = event.getEntity();
-        float damageAmount = event.getAmount();
-        if (!event.isCanceled()) {
-            event.setAmount(ObsidianArmor.protectUser(entity, damageAmount));
         }
     }
 }

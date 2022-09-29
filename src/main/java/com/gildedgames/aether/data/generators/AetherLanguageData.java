@@ -994,6 +994,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "A music disc that plays Welcoming Skies by Voyed.");
         addLore(AetherItems.MUSIC_DISC_CHINCHILLA,"A music disc that plays chinchilla by RENREN.");
 
+        addLoreUnique("item.aether.hammer_of_jeb", "A mysterious hammer that can shoot projectiles. At one point it vanished from existence. It's said this was actually Jeb's hammer at one point.");
+
 
         addProTip("skyroot_tool_ability", "Skyroot tools gain double drops from blocks.");
         addProTip("holystone_tool_ability", "Holystone tools occasionally generate Ambrosium.");
