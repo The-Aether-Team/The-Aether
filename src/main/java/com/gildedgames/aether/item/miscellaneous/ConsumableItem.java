@@ -8,8 +8,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
-
 public interface ConsumableItem {
     /**
      * Manually consumes the item and triggers the {@link CriteriaTriggers#CONSUME_ITEM} advancement criteria and gives the {@link Stats#ITEM_USED} stat to the player for the item.
@@ -17,7 +15,7 @@ public interface ConsumableItem {
      * @param stack The {@link ItemStack} in use.
      * @param user The {@link LivingEntity} using the stack.
      */
-    default void consume(Item item, @Nonnull ItemStack stack, @Nonnull LivingEntity user) {
+    default void consume(Item item, ItemStack stack, LivingEntity user) {
         if (user instanceof Player player) {
             if (!player.getAbilities().instabuild) {
                 stack.shrink(1);
